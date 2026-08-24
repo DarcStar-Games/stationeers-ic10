@@ -1,0 +1,179 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## What this repository is
+
+A deployable framework of **171 Stationeers IC10 assembly programs** (`ic10/**/*.ic10`) plus a Python
+tooling layer that generates, validates, and releases them. There is no application runtime here: the
+Python code exists to *model*, *check*, and *emit* IC10 source, never to run alongside it in-game.
+
+Two things follow from that, and they drive almost every convention in the repo:
+
+- IC10 programs are severely size-constrained and cannot be unit-tested in the game, so correctness is
+  enforced by static validators plus deterministic Python protocol models.
+- Behavior is split across many small cooperating ICs that talk through the device stack (`S0..S511`)
+  and logic properties. Coherence is a *publication-ordering* discipline, not a lock.
+
+## Commands
+
+Run everything from the repository root (Python 3.10+; `python3` locally).
+
+```bash
+python3 run_validation.py                # full suite: 21 validators + 33 protocol/execution tests
+python3 run_validation.py --resume       # reuse prior PASSes, only if the input-tree fingerprint matches
+python3 tests/test_job_abi.py            # run one test  (plain script, exit code = pass/fail)
+python3 validation/validators/validate_ic10.py   # run one validator
+python3 build_release.py --output rel.zip        # regenerate, validate, hash, and package a release
+```
+
+`run_validation.py` writes per-script stdout to `validation/evidence/`, the pass/fail inventory to
+`validation/FULL_VALIDATION_RUN.txt`, and regenerates `VALIDATION_SUMMARY.txt`. Those files plus
+`validation/VALIDATION_STATE.json` are tracked in git, so a validation run dirties the working tree.
+
+Code generators (run when their JSON source changes; `build_release.py` runs the first three itself):
+
+```bash
+python3 generate_directory_adapters.py           # --check verifies no drift
+python3 update_user_deployment_inventory.py      # refreshes generated blocks in USER_DEPLOYMENT_GUIDE.md
+python3 generate_source_catalog.py               # regenerates docs/SCRIPT_INDEX.md
+python3 generate_input_profiles.py               # from input_profiles.json
+python3 generate_resource_profiles.py            # from resource_profiles.json
+python3 generate_resource_transforms.py          # from resource_transforms.json
+python3 generate_recipe_catalog.py --game-data recipe_fixture_data --output <tmpdir> --clean
+```
+
+Field evidence (Roadmap Item 12, the one active milestone):
+
+```bash
+python3 live_commission.py list
+python3 live_commission.py init   --session ../field_evidence/base_a.json --label "Base A"
+python3 live_commission.py record --session ... --case ... --status PASS --precondition ... --action ... --observed ...
+python3 live_commission.py verify --session ...
+```
+
+Sessions are bound to the framework input fingerprint and `live_commissioning_cases.json` SHA; any
+source change makes an existing session STALE and it must be re-run. Never relabel automated evidence
+under `validation/evidence/` as a live-game PASS — that separation is a validated release rule.
+
+## Architecture
+
+### The core split
+
+**Generic services move and persist state; family-specific services define what that state means.**
+A new controller family supplies only a Runtime, a Config Policy, and optionally an Input Profile
+record. Discovery, physical input scanning/resolution, config editing, A/B persistence, diagnostics,
+and transactions are shared and must not gain family-specific branches. If adding a family seems to
+require editing a generic service, semantics are leaking across a boundary.
+
+Five layers, no downward reaching (a selector never reads a Dial; a runtime never implements A/B
+recovery): discovery → physical input → UI/selection → configuration/persistence → runtime/telemetry.
+`docs/ARCHITECTURE.md` has the full data flow.
+
+### Cross-cutting protocol standards
+
+Four reusable contracts carry most of the correctness burden. Each has a Python reference model that
+is the executable semantic source of truth — read the model before changing IC10 that implements it.
+
+| Standard | Doc | Python model |
+|---|---|---|
+| `ASYNC_REQUEST_V1` — request-identity fencing | `docs/ASYNC_REQUEST_STANDARD.md` | `async_request.py` |
+| `BANKED_TRANSACTION_V1` — durable old-or-new commit | `docs/BANKED_TRANSACTION_STANDARD.md` | `banked_transaction.py` |
+| `GENERIC_JOB_ABI_V1` — job record + lifecycle | `docs/GENERIC_JOB_ABI.md` | `job_abi.py` |
+| Catalog Store ABI5 / Loader ABI4 / Coordinator ABI3 | `docs/CATALOG_SCHEMA.md`, `docs/CATALOG_COORDINATION.md` | `catalog_schema.py` |
+
+These are separate authorities and must stay separate: async tokens fence *observation*, banked
+revisions establish *durability*, reservation epochs/ownership tokens authorize *mutation*, and
+`ProcessCondition` expresses *demand* and never authorizes movement.
+
+### Invariants that break things silently when violated
+
+`README.md` has the full 24-item list. The ones that bite hardest:
+
+- **Publish the generation/token last.** Payload cells first, the marker that makes them readable last.
+  Consumers snapshot the generation, read, and re-check the same positive generation afterward.
+- **ABI versions are exact.** A consumer requiring ABI2 must reject ABI1 and ABI3, and magic + schema
+  id + schema version must all match before a directory or catalog is consumed.
+- **Physical slots are never repurposed.** Removed config fields become reserved holes. "Physical slot"
+  (stable 0..31 address) and "active ordinal" (contiguous 1..N UI number) are different concepts.
+- **Fail closed.** Missing capacity, stale generations, duplicate identities, overflowed directories
+  (controller 65+), and torn publication found after reflash must block execution, not degrade.
+- **IC10 registers and stack survive reflash and power loss.** Explicitly initialize any persistent
+  register or stack cell whose starting value matters; do not assume zeroes.
+
+## IC10 source constraints
+
+`validation/validators/validate_ic10.py` is authoritative and enforces, per file:
+
+- **≤ 120 lines** (project ceiling; the game's hard limit is 128 and the margin is deliberate)
+- ≤ 90 characters per line, ≤ 4096 bytes when CRLF-encoded
+- registers `r0..r15` only (plus `sp`/`ra`), device pins `d0..d5` only, literal stack addresses `0..511`
+- named labels only — **no relative `br*` branches**; no duplicate labels; every `j`/`jal`/`b*` target must resolve
+- no `db` as a direct operand to `add/sub/mul/div/min/max/pow/and/or/sll`
+
+51 of 171 programs sit at ≥117 lines. Do **not** merge adjacent services just to reduce IC count: the
+split boundaries exist to keep transactional ownership explicit and stay under the ceiling. See
+`docs/LINE_COUNT_OPTIMIZATION.md`.
+
+Filenames are *semantic name* + `_v<major>_<minor>` under `ic10/<deployment-family>/`. **Do not infer
+execution order, ABI number, or deployment order from a filename** — version suffixes are revisions,
+not ABIs. Use `source_manifest.json`, `docs/SCRIPT_INDEX.md`, and `USER_DEPLOYMENT_GUIDE.md`.
+
+## Generated files — never hand-edit
+
+| Output | Generator | Source of truth |
+|---|---|---|
+| `ic10/resource-grid-core/resource_{endpoint,link,reservation}_directory_adapter_*.ic10` | `generate_directory_adapters.py` | `directory_adapter_specs.json` |
+| `ic10/input-profile-catalog/*` | `generate_input_profiles.py` | `input_profiles.json` |
+| `ic10/resource-profile-catalog/*`, `ic10/dependency-planning/manufacturing_reagent_resolver_*` | `generate_resource_profiles.py` | `resource_profiles.json` |
+| `ic10/transform-catalog/*`, `ic10/dependency-planning/item_producer_resolver_*` | `generate_resource_transforms.py` | `resource_transforms.json` |
+| `docs/SCRIPT_INDEX.md` | `generate_source_catalog.py` | `ic10/` + `source_manifest.json` |
+| `<!-- FAMILY_PROGRAMS:… -->` blocks in `USER_DEPLOYMENT_GUIDE.md` | `update_user_deployment_inventory.py` | `source_manifest.json` |
+| `validation/evidence/`, `VALIDATION_SUMMARY.txt`, `validation/FULL_VALIDATION_RUN.txt`, `*.sha256` | `run_validation.py` / `build_release.py` | — |
+
+Recipe-catalog loaders are generated into a temp directory for fixtures only and are never shipped;
+`ic10/recipe-catalog/` holds only the hand-maintained Lookup and Execution Profile View.
+
+Tests assert regeneration is byte-stable (`tests/test_input_profiles.py`, `tests/test_resource_profiles.py`,
+`tests/test_resource_transforms.py`), so drift fails validation.
+
+## Adding code
+
+### A new IC10 program
+
+Every production `.ic10` must resolve to exactly one deployment family and one class
+(`resident`, `conditional-resident`, `commissioning`, `one-shot`, `on-demand`) before release
+validation passes. Add its exact semantic path to `source_manifest.json` (or extend
+`generated_deployment_rules` for a generated family), give the family a human-owned chapter in
+`USER_DEPLOYMENT_GUIDE.md`, then run `update_user_deployment_inventory.py`,
+`generate_source_catalog.py`, and the `validation/validators/validate_source_catalog.py` and
+`validation/validators/validate_user_deployment_guide.py` validators. A program with no deployment family is an incomplete
+feature even if its tests pass. Full walkthrough: `docs/ADDING_CONTROLLERS.md`.
+
+### A new test or validator
+
+Tests and validators are **plain executable scripts, not pytest**: they exit non-zero on failure and
+print a `... PASS` summary line. Each file starts with the four-line `_ProjectPath` bootstrap that puts
+the repo root on `sys.path` (needed because they run as scripts from `run_validation.py` and import
+the top-level models). Copy that preamble verbatim into new files, and add the script to the
+`VALIDATORS` or `TESTS` list in `run_validation.py` — anything not listed there is not part of the
+release contract.
+
+`ic10_harness.py` is a tiny deterministic IC10 interpreter (not a Stationeers emulator) supporting only
+the instruction subset the tests exercise; extend it when a test needs a new opcode.
+`fault_injection.py` replays a scenario with a crash after every operation boundary — use it for any
+new restart/interruption coverage rather than hand-rolling cut points.
+
+Framework-only test controllers live in `tests/ic10/`; `ControllerTest` is deliberately not a
+production family.
+
+## Documentation discipline
+
+`validation/validators/validate_documentation.py` fails the build on broken local markdown links,
+backticked references to nonexistent files, and a maintained blocklist of **stale terminology**
+(superseded ABI numbers, removed script names, retired magic values). When you bump an ABI or delete a
+program, update the prose everywhere and add the old phrasing to that blocklist. `docs/ABI_REFERENCE.md`
+is the magic-value/ABI registry; keep it in sync with any new service.
+
+`ROADMAP.md` tracks milestones — Items 1–11 are complete (records in `docs/COMPLETED_MILESTONES.md`);
+Item 12 (live-game commissioning evidence) is the only active one.
