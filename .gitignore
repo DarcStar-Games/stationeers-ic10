@@ -1,0 +1,9 @@
+# Python bytecode. build_release.py deletes these before packaging, and both the
+# validation input fingerprint and the release inventory already skip them.
+__pycache__/
+*.pyc
+
+# Release archives from `build_release.py --output <name>.zip`. The build excludes
+# its own requested output from the manifest, but any earlier archive left in the
+# tree would otherwise be packaged into the next one.
+*.zip
