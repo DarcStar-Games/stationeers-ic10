@@ -4,6 +4,9 @@ from pathlib import Path
 import argparse, hashlib, shutil, subprocess, sys, zipfile
 
 ROOT=Path(__file__).resolve().parent
+# Local VCS/tooling state is not shippable framework content. Keep in sync with
+# run_validation.py.
+TOOLING_DIRS={'.git','.claude','.githooks'}
 
 def sha(path):
     h=hashlib.sha256()
@@ -25,7 +28,7 @@ def tracked_files(exclude=()):
     excluded={Path(x).resolve() for x in exclude}
     files=[]
     for p in ROOT.rglob('*'):
-        if not p.is_file() or '.git' in p.parts or p.name in skip or '__pycache__' in p.parts or p.suffix=='.pyc': continue
+        if not p.is_file() or TOOLING_DIRS&set(p.parts) or p.name in skip or '__pycache__' in p.parts or p.suffix=='.pyc': continue
         if p.resolve() in excluded: continue
         files.append(p)
     return sorted(files,key=lambda p:p.relative_to(ROOT).as_posix())
