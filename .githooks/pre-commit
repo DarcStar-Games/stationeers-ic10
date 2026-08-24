@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Keep committed validation evidence in sync with the source it attests to.
+#
+# run_validation.py hashes and validates the WORKING TREE, not the index. If the
+# tree holds anything that will not be part of this commit, refreshed evidence
+# would describe a tree that never enters history. So this fails closed rather
+# than stashing behind your back.
+#
+# Bypass (commits without refreshing evidence):  git commit --no-verify
+# Partial commits (git commit -- <path>) are not supported; use --no-verify.
+set -uo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)" || exit 1
+cd "$ROOT" || exit 1
+
+problem=0
+if ! git diff --quiet; then
+    echo "pre-commit: unstaged changes to tracked files:" >&2
+    git diff --name-only | sed 's/^/    /' >&2
+    problem=1
+fi
+untracked="$(git ls-files --others --exclude-standard)"
+if [ -n "$untracked" ]; then
+    echo "pre-commit: untracked files present:" >&2
+    printf '%s\n' "$untracked" | sed 's/^/    /' >&2
+    problem=1
+fi
+if [ "$problem" -ne 0 ]; then
+    cat >&2 <<'MSG'
+
+Validation hashes the working tree, so evidence committed now would describe a
+tree that is never committed. Stage them, stash them, or add them to .gitignore.
+To commit anyway without refreshing evidence:  git commit --no-verify
+MSG
+    exit 1
+fi
+
+echo "pre-commit: running validation suite (reuses results when no framework input changed)..."
+if ! python3 run_validation.py --resume; then
+    {
+        echo ""
+        echo "pre-commit: validation FAILED - commit aborted."
+        echo "  Inventory:         validation/FULL_VALIDATION_RUN.txt"
+        echo "  Per-script output: validation/evidence/"
+        echo "  Generated-file drift is reported by the validators; rerun the"
+        echo "  matching generate_*.py rather than editing generated source."
+    } >&2
+    exit 1
+fi
+
+# Land refreshed evidence in the same commit as the change that caused it.
+git add -- VALIDATION_SUMMARY.txt validation/VALIDATION_STATE.json \
+           validation/FULL_VALIDATION_RUN.txt validation/evidence || exit 1
