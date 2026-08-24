@@ -29,12 +29,12 @@ SCRIPTS=VALIDATORS+TESTS
 def evidence_name(script): return Path(script).stem.upper()+'.txt'
 
 def input_fingerprint():
-    """Hash validation inputs, excluding mutable validation/release outputs."""
+    """Hash validation inputs, excluding repository metadata and mutable validation/release outputs."""
     h=hashlib.sha256()
     skip_names={'FULL_VALIDATION_RUN.txt','VALIDATION_STATE.json','VALIDATION_SUMMARY.txt','DEPLOYMENT_BASELINE.sha256','ARCHIVE_MANIFEST.sha256'}
     files=[]
     for p in ROOT.rglob('*'):
-        if not p.is_file() or '__pycache__' in p.parts or p.suffix in {'.pyc','.zip'}: continue
+        if not p.is_file() or '.git' in p.parts or '__pycache__' in p.parts or p.suffix in {'.pyc','.zip'}: continue
         if p.name in skip_names or EVIDENCE in p.parents or (ROOT/'field_evidence') in p.parents: continue
         files.append(p)
     for p in sorted(files,key=lambda x:x.relative_to(ROOT).as_posix()):
