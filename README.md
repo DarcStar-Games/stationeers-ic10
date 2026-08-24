@@ -359,6 +359,14 @@ python build_release.py --output <release.zip>
 
 These checks validate static contracts, model the important transaction/persistence protocols, and execute selected transaction-critical IC10 source directly through `ic10_harness.py`. They do not replace live-game commissioning tests; see `docs/FRAMEWORK_HARDENING_TESTS.md`.
 
+When working from a git clone, enable the evidence-sync pre-commit hook once per clone:
+
+```text
+git config core.hooksPath .githooks
+```
+
+It runs the suite before each commit and stages the refreshed evidence, so committed evidence always matches the source it attests to. Validation hashes the working tree rather than the index, so the hook refuses to run against a tree with unstaged or untracked files; bypass it with `git commit --no-verify`. Local VCS/tooling state (`.git`, `.claude`, `.githooks`) is excluded from the validation input fingerprint and from release archives, so hook or editor configuration never invalidates recorded live commissioning evidence.
+
 
 ## Catalog Coordinator v3
 
