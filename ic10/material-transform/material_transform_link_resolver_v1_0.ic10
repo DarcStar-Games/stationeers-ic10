@@ -1,0 +1,118 @@
+poke 0 31415978
+poke 1 1
+Loop:
+yield
+bdns d0 Bad
+bdns d1 Bad
+bdns d2 Bad
+get r14 d0 9
+blez r14 Bad
+get r0 d0 0
+bne r0 31415977 Bad
+get r0 d0 1
+bne r0 1 Bad
+get r0 d0 8
+bne r0 1 Bad
+get r2 d0 2
+get r3 d0 3
+get r4 d0 4
+get r13 d0 7
+get r0 d1 0
+bne r0 31415952 Bad
+get r0 d1 1
+bne r0 4 Bad
+get r0 d1 6
+bne r0 r13 Bad
+get r0 d2 0
+bne r0 31415981 Bad
+get r0 d2 1
+bne r0 1 Bad
+get r0 d2 9
+bne r0 HASH("DirectorySchema.ResourceLink") Bad
+get r0 d2 10
+bne r0 1 Bad
+get r12 d2 2
+add r0 r12 3
+get r11 d2 r0
+add r0 r12 7
+get r0 d2 r0
+bgtz r0 Bad
+add r0 r12 5
+get r10 d2 r0
+mul r9 r12 64
+add r9 r9 32
+move r7 0
+Input:
+bge r7 r4 Publish
+mul r0 r7 4
+add r0 r0 9
+get r5 d1 r0
+add r0 r0 2
+get r8 d1 r0
+move r6 2
+move sp 0
+Find:
+bge sp r10 Bad
+add r0 r9 sp
+get r1 d2 r0
+add sp sp 1
+getd r0 r1 0
+bne r0 31415953 Find
+getd r0 r1 1
+bne r0 1 Find
+getd r0 r1 9
+blez r0 Find
+getd r0 r1 4
+bne r0 2 Find
+getd r0 r1 5
+bne r0 r5 Find
+getd r0 r1 22
+bne r0 r3 Find
+getd r15 r1 2
+getd r0 r15 0
+bne r0 31415950 Find
+getd r0 r15 1
+bne r0 1 Find
+getd r0 r15 3
+bne r0 2 Find
+getd r0 r15 4
+bne r0 r5 Find
+getd r0 r15 10
+bne r0 2 Find
+getd r0 r15 9
+blez r0 Find
+getd r0 r15 6
+blt r0 r8 Find
+mul r0 r7 4
+add r0 r0 16
+poke r0 r1
+add r0 r0 1
+poke r0 r8
+add r0 r0 1
+poke r0 r5
+add r0 r0 1
+poke r0 r6
+add r7 r7 1
+j Input
+Publish:
+get r0 d2 2
+bne r0 r12 Loop
+get r0 d0 9
+bne r0 r14 Loop
+add r0 r12 3
+get r0 d2 r0
+bne r0 r11 Loop
+poke 2 r2
+poke 3 r4
+poke 4 r3
+poke 5 r13
+move r0 1
+j Result
+Bad:
+move r0 -1
+Result:
+poke 6 r0
+get r0 db 7
+add r0 r0 1
+poke 7 r0
+j Loop

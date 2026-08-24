@@ -1,0 +1,94 @@
+# Resource Profile View v4: dynamic Store ABI5 item directory; d0=any Store.
+poke 0 31415963
+poke 1 1
+poke 4 0
+poke 5 0
+Loop:
+yield
+get r10 db 2
+get r11 db 3
+bdns d0 Bad
+l r2 d0 ReferenceId
+get r12 d0 11
+blez r12 Bad
+getd r0 r12 0
+bne r0 31415970 Bad
+getd r15 r12 7
+mod r0 r15 2
+bnez r0 Bad
+get r13 d0 4
+First:
+getd r1 r2 6
+blez r1 Store
+move r2 r1
+j First
+Store:
+getd r0 r2 0
+bne r0 31415968 Bad
+getd r0 r2 1
+bne r0 5 Bad
+getd r0 r2 2
+bne r0 HASH("CatalogSchema.ResourceProfile") Bad
+getd r0 r2 3
+bne r0 2 Bad
+getd r0 r2 4
+bne r0 r13 Bad
+getd r14 r2 17
+mod r0 r14 2
+bnez r0 Loop
+getd r7 r2 9
+move r5 0
+Scan:
+bge r5 r7 StoreDone
+mul r8 r5 2
+add r8 r8 32
+getd r8 r2 r8
+add r0 r8 1
+getd r0 r2 r0
+bne r0 r10 Next
+getd r0 r2 r8
+bne r0 r11 Next
+poke 5 0
+add r0 r8 1
+getd r0 r2 r0
+poke 8 r0
+getd r0 r2 r8
+poke 9 r0
+move r9 2
+Copy:
+bge r9 14 Done
+add r1 r8 r9
+getd r0 r2 r1
+add r1 r9 8
+poke r1 r0
+add r9 r9 1
+j Copy
+Done:
+getd r0 r2 17
+bne r0 r14 Loop
+getd r0 r12 7
+bne r0 r15 Loop
+poke 22 r13
+getd r0 r12 6
+poke 23 r0
+poke 4 1
+poke 5 r14
+j Loop
+Next:
+add r5 r5 1
+j Scan
+StoreDone:
+getd r1 r2 7
+blez r1 Missing
+move r2 r1
+j Store
+Bad:
+poke 5 0
+poke 4 -2
+j Loop
+Missing:
+getd r0 r12 7
+bne r0 r15 Loop
+poke 5 0
+poke 4 -3
+j Loop

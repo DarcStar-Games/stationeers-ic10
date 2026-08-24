@@ -1,0 +1,56 @@
+# Catalog Coordinator Recovery v2.0: d0 Core,d1 Registry ABI3; epoch takeover.
+Loop:
+yield
+bdns d0 Loop
+bdns d1 Loop
+get r0 d0 0
+bne r0 31415970 Loop
+get r0 d1 0
+bne r0 31415982 Loop
+get r0 d1 1
+bne r0 3 Loop
+get r0 d1 2
+bne r0 HASH("DirectorySchema.CatalogStoreNode") Loop
+get r0 d1 19
+bne r0 1 Loop
+get r11 d1 23
+mod r0 r11 2
+bnez r0 Loop
+l r12 d1 ReferenceId
+l r15 d0 ReferenceId
+get r13 d0 2
+get r14 d0 3
+move r7 1
+Scan:
+bgt r7 64 Done
+mul r0 r7 6
+add r0 r0 58
+getd r1 r12 r0
+blez r1 Next
+add r0 r0 1
+getd r6 r12 r0
+beq r6 1 Next
+beq r6 5 Next
+getd r0 r1 5
+bne r0 r13 Next
+getd r0 r1 12
+bge r0 r14 Next
+get r0 d1 23
+bne r0 r11 Loop
+putd r1 11 r15
+putd r1 12 r14
+get r0 d0 22
+add r0 r0 1
+put d0 22 r0
+Next:
+add r7 r7 1
+j Scan
+Done:
+get r0 d1 23
+bne r0 r11 Loop
+poke 0 31415976
+poke 1 2
+get r0 db 2
+add r0 r0 1
+poke 2 r0
+j Loop

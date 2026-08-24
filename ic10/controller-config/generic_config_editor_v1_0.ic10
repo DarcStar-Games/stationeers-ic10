@@ -1,0 +1,109 @@
+# Generic Config Editor v1.0: block-image staging + commit controls.
+# d0 Save,d1 Reload,d2 Apply; Config Bridge publishes physical slot/value at S20/S21.
+# S32..63 image,S64..95 UI ordinal->slot map,S96..99 loaded block masks.
+alias SaveField d0
+alias ReloadConfig d1
+alias ApplyConfig d2
+alias selector r1
+get r0 db 0
+bne r0 22360680 Reset
+get r0 db 1
+beq r0 1 Header
+Reset:
+get r1 db 2
+clr db
+poke 2 r1
+Header:
+poke 0 22360680
+poke 1 1
+Loop:
+yield
+get r0 db 16
+s db Setting r0 # housing shows commissioning state/error code
+get selector db 2
+blez selector NoSelector
+getd r0 selector 0
+bne r0 17320508 NoSelector
+getd r0 selector 1
+bne r0 2 NoSelector
+getd r0 selector 8
+bne r0 1 NoTarget
+getd r15 selector 5
+blez r15 NoTarget
+get r0 db 12
+beq r0 r15 Controls
+poke 12 r15
+poke 15 0
+poke 25 0
+poke 16 1 # LOADING
+Controls:
+get r0 db 16
+beq r0 4 Loop # freeze staging while Apply is in flight
+move r0 0
+bdnvl SaveField Setting SaveState
+l r0 SaveField Setting
+SaveState:
+get r9 db 6
+poke 6 r0
+blez r0 ReloadButton
+bgtz r9 ReloadButton
+get r9 db 15
+beqz r9 ReloadButton
+get r9 db 25
+beqz r9 ReloadButton
+get r9 db 26
+get r0 db 18
+bne r9 r0 ReloadButton
+get r12 db 20 # physical config-image slot 0..31 from Config Bridge
+bltz r12 ReloadButton
+bgt r12 31 ReloadButton
+get r11 db 21
+bnan r11 ReloadButton
+add r12 r12 32
+poke r12 r11
+get r9 db 11
+add r9 r9 1
+poke 11 r9
+poke 16 3 # MODIFIED
+ReloadButton:
+move r0 0
+bdnvl ReloadConfig Setting ReloadState
+l r0 ReloadConfig Setting
+ReloadState:
+get r9 db 7
+poke 7 r0
+blez r0 ApplyButton
+bgtz r9 ApplyButton
+poke 15 0
+poke 25 0
+poke 16 1
+ApplyButton:
+move r0 0
+bdnvl ApplyConfig Setting Loop
+l r0 ApplyConfig Setting
+get r9 db 8
+poke 8 r0
+blez r0 Loop
+bgtz r9 Loop
+get r9 db 15
+beqz r9 Loop
+get r9 db 10
+bne r9 r15 Loop
+get r9 db 11
+poke 13 r9 # capture staging revision
+poke 14 r15 # capture physical controller RefId
+get r9 db 5
+add r9 r9 1
+poke 5 r9
+poke 16 4 # APPLY PENDING publishes request last
+j Loop
+NoSelector:
+move r0 -1
+j Fault
+NoTarget:
+move r0 -2
+Fault:
+poke 15 0
+poke 25 0
+poke 16 r0
+j Loop

@@ -1,0 +1,118 @@
+poke 0 31415941
+poke 1 1
+move r15 -1
+Loop:
+yield
+get r14 db 6
+beq r14 r15 Loop
+get r1 db 2
+get r2 db 3
+get r3 db 4
+get r4 db 5
+get r0 db 6
+bne r0 r14 Loop
+blez r2 Reject
+blez r4 Reject
+bdns d0 Reject
+bdns d1 Reject
+get r0 d0 0
+bne r0 31415944 Reject
+get r0 d1 0
+bne r0 31415938 Reject
+get r0 d1 1
+bne r0 3 Reject
+get r10 db 12
+add r10 r10 1
+poke 12 r10
+put d0 2 r1
+put d0 3 r2
+put d0 4 r3
+put d0 5 r4
+put d0 6 r10
+WaitPath:
+yield
+get r0 d0 10
+bne r0 r10 WaitPath
+get r0 d0 9
+bltz r0 Reject
+beqz r0 None
+get r5 d0 7
+get r6 d0 8
+move r7 0
+move r8 r6
+QuoteLoop:
+bge r7 r5 CommitStart
+add sp r7 16
+get r9 d0 sp
+move r6 r8
+move r13 1
+jal Request
+blez r0 NoGrant
+min r8 r8 r12
+add r7 r7 1
+j QuoteLoop
+CommitStart:
+blez r8 NoGrant
+move r7 0
+CommitLoop:
+bge r7 r5 Success
+add sp r7 16
+get r9 d0 sp
+move r6 r8
+move r13 0
+jal Request
+bne r0 1 Cleanup
+add r7 r7 1
+j CommitLoop
+Success:
+mul r0 r8 r4
+poke 7 r0
+poke 8 1
+poke 10 r5
+poke 11 r8
+j Respond
+Cleanup:
+move r6 r7
+CleanLoop:
+blez r6 NoGrant
+sub r6 r6 1
+add sp r6 16
+get r9 d0 sp
+putd r9 109 -1
+putd r9 108 0
+j CleanLoop
+NoGrant:
+None:
+poke 7 0
+poke 8 0
+poke 10 0
+poke 11 0
+j Respond
+Reject:
+poke 7 0
+poke 8 -1
+poke 10 0
+poke 11 0
+Respond:
+poke 9 r14
+move r15 r14
+j Loop
+Request:
+get r10 db 13
+add r10 r10 1
+poke 13 r10
+put d1 2 r1
+put d1 3 r2
+put d1 4 r3
+put d1 5 r9
+put d1 10 3
+put d1 11 r6
+put d1 16 r13
+put d1 6 r10
+WaitAlloc:
+yield
+get r0 d1 9
+bne r0 r10 WaitAlloc
+get r0 d1 8
+get r12 d1 12
+j ra

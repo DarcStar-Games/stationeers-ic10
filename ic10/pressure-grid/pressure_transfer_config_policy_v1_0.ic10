@@ -1,0 +1,69 @@
+alias Host d0 # PressureTransfer Policy v1.0.
+Boot:
+yield
+bdns Host Boot
+get r0 Host 0
+bne r0 31415928 Boot
+get r0 Host 1
+bne r0 1 Boot
+put Host 2 HASH("ControllerPressureTransfer")
+put Host 4 1
+put Host 10 1
+put Host 16 15
+put Host 17 0
+put Host 18 0
+put Host 19 0
+put Host 12 HASH("CFG1|ControllerPressureTransfer|1|1|15|0|0|0")
+move sp 32
+move r0 0
+Zero:
+put Host sp 0
+add sp sp 1
+add r0 r0 1
+blt r0 4 Zero
+put Host 32 1
+put Host 33 5
+put Host 34 0.05
+put Host 35 10
+get r0 Host 7
+put Host 20 r0
+get r0 Host 13
+add r0 r0 1
+put Host 13 r0
+Loop:
+yield
+get r15 Host 6
+get r0 Host 20
+beq r15 r0 Loop
+move r0 1
+move sp 128
+Load:
+get rr0 Host sp
+bnan rr0 Malformed
+add sp sp 1
+add r0 r0 1
+ble r0 4 Load
+move sp -91
+bltz r2 Reject
+bgt r2 500 Reject
+blez r3 Reject
+bgt r3 1 Reject
+blez r4 Reject
+bgt r4 100 Reject
+select r1 r1 1 0
+move r0 1
+move sp 128
+Store:
+put Host sp rr0
+add sp sp 1
+add r0 r0 1
+ble r0 4 Store
+move sp 5
+j Respond
+Malformed:
+move sp -5
+Reject:
+Respond:
+put Host 21 sp
+put Host 20 r15
+j Loop

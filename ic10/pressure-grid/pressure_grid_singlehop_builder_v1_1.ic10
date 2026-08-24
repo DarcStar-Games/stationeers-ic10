@@ -1,0 +1,120 @@
+poke 0 31415942
+poke 1 1
+poke 13 -1
+move r14 0
+Loop:
+yield
+beqz r14 New
+get r0 d0 2
+bne r0 r5 Fail
+add sp r5 3
+get r0 d0 sp
+bne r0 r6 Fail
+bgtz r13 Wait
+bge r8 r7 Done
+mul sp r5 192
+add sp sp 32
+mul r0 r8 3
+add sp sp r0
+get r9 d0 sp
+bne r4 1 Request
+getd r0 r9 101
+beq r0 2 LockSink
+bne r0 3 Request
+getd sp r9 106
+getd r0 sp 13
+bgtz r0 Skip
+j Request
+LockSink:
+getd sp r9 107
+getd r0 sp 12
+bgtz r0 Skip
+Request:
+get r13 db 12
+add r13 r13 1
+poke 12 r13
+put d1 2 r1
+put d1 3 r2
+put d1 4 r3
+put d1 5 r9
+put d1 10 r4
+put d1 11 pinf
+put d1 16 0
+put d1 6 r13
+j Loop
+Wait:
+get r0 d1 9
+bne r0 r13 Loop
+get r0 d1 8
+blez r0 Next
+add r10 r10 1
+get r0 d1 7
+add r11 r11 r0
+Next:
+move r13 0
+Skip:
+add r8 r8 1
+j Loop
+New:
+get r15 db 7
+get r0 db 13
+beq r15 r0 Loop
+get r1 db 2
+get r2 db 3
+get r3 db 4
+get r4 db 6
+get r0 db 7
+bne r0 r15 Loop
+blez r1 Reject
+blt r4 1 Reject
+bgt r4 2 Reject
+bdns d0 Reject
+get r0 d0 0
+bne r0 31415981 Reject
+get r0 d0 1
+bne r0 1 Reject
+get r0 d0 9
+bne r0 HASH("DirectorySchema.PressureGridLink") Reject
+get r0 d0 10
+bne r0 1 Reject
+get r0 d0 11
+bne r0 3 Reject
+bdns d1 Reject
+get r0 d1 0
+bne r0 31415938 Reject
+get r0 d1 1
+bne r0 3 Reject
+get r5 d0 2
+add sp r5 3
+get r6 d0 sp
+add sp r5 7
+get r0 d0 sp
+bgtz r0 Reject
+add sp r5 5
+get r7 d0 sp
+clamp r7 r7 0 64
+move r8 0
+move r10 0
+move r11 0
+move r14 1
+j Loop
+Done:
+poke 8 r10
+poke 9 r11
+select r0 r10 1 0
+poke 10 r0
+j Respond
+Fail:
+move r0 -2
+j Error
+Reject:
+move r0 -1
+Error:
+poke 8 0
+poke 9 0
+poke 10 r0
+Respond:
+poke 11 r15
+poke 13 r15
+move r14 0
+j Loop

@@ -1,0 +1,93 @@
+{
+  "catalog_store_abi": 5,
+  "catalog_store_magic": 31415968,
+  "catalog_loader_abi": 4,
+  "catalog_loader_magic": 31415969,
+  "catalog_coordinator_abi": 3,
+  "catalog_coordinator_magic": 31415970,
+  "store_model": "generic_dynamic_item_heap",
+  "loader_model": "one_shot_sparse_relocatable_whole_items",
+  "control_plane": "catalog_coordinator_v3_runtime_placement_item_migration",
+  "cell_block_width": 4,
+  "store_header_cells": 32,
+  "store_item_directory_width": 2,
+  "catalog_schema_id": "CatalogSchema.ResourceProfile",
+  "catalog_schema_version": 2,
+  "catalog_instance_id": "Catalog.ResourceProfiles.Schema2",
+  "store_count": 5,
+  "total_item_count": 39,
+  "catalog_sha256": "c17a1b88463adec5ae90ef1b3016cbd798799d9c0b704e3778d4d3d323ff34cc",
+  "regions": [],
+  "format": "RESOURCE_PROFILE_CATALOG_V6",
+  "catalog_token": "RP6:c17a1b88463adec5",
+  "profile_count": 39,
+  "semantic_record_width": 14,
+  "physical_item_width": 16,
+  "storage_partition": "resource_class",
+  "runtime_store_placement": true,
+  "runtime_min_store_count": 5,
+  "loader_segment_count": 7,
+  "loaders": [
+    "ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10",
+    "ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10",
+    "ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10",
+    "ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10",
+    "ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10",
+    "ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10",
+    "ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10"
+  ],
+  "partitions": [
+    {
+      "partition_key": 1,
+      "partition": "ResourceClass.FLUID",
+      "item_count": 10,
+      "item_cells": 16,
+      "runtime_min_store_count": 1,
+      "loader_count": 2,
+      "loaders": [
+        "ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10",
+        "ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10"
+      ]
+    },
+    {
+      "partition_key": 2,
+      "partition": "ResourceClass.ITEM",
+      "item_count": 27,
+      "item_cells": 16,
+      "runtime_min_store_count": 2,
+      "loader_count": 3,
+      "loaders": [
+        "ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10",
+        "ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10",
+        "ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10"
+      ]
+    },
+    {
+      "partition_key": 4,
+      "partition": "ResourceClass.POWER",
+      "item_count": 1,
+      "item_cells": 16,
+      "runtime_min_store_count": 1,
+      "loader_count": 1,
+      "loaders": [
+        "ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10"
+      ]
+    },
+    {
+      "partition_key": 5,
+      "partition": "ResourceClass.ENERGY",
+      "item_count": 1,
+      "item_cells": 16,
+      "runtime_min_store_count": 1,
+      "loader_count": 1,
+      "loaders": [
+        "ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10"
+      ]
+    }
+  ],
+  "loader_item_atomicity": "logical_item_never_split",
+  "loader_sparse_zero_init": true,
+  "generic_store_program": "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10",
+  "coordinator_core_program": "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10",
+  "loader_router_program": "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10"
+}

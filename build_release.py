@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+"""Build a verified release archive in validation-before-manifest order."""
+from pathlib import Path
+import argparse, hashlib, shutil, subprocess, sys, zipfile
+
+ROOT=Path(__file__).resolve().parent
+
+def sha(path):
+    h=hashlib.sha256()
+    with path.open('rb') as f:
+        for block in iter(lambda:f.read(1024*1024),b''): h.update(block)
+    return h.hexdigest()
+
+def clean_transients():
+    for d in ROOT.rglob('__pycache__'): shutil.rmtree(d)
+    legacy=ROOT/'recipe_catalog_fixture_generated'
+    if legacy.exists(): shutil.rmtree(legacy)
+
+def write_deployment_baseline():
+    files=sorted((ROOT/'ic10').rglob('*.ic10'),key=lambda p:p.relative_to(ROOT).as_posix())
+    (ROOT/'DEPLOYMENT_BASELINE.sha256').write_text(''.join(f'{sha(p)}  {p.relative_to(ROOT).as_posix()}\n' for p in files))
+
+def tracked_files(exclude=()):
+    skip={'ARCHIVE_MANIFEST.sha256'}
+    excluded={Path(x).resolve() for x in exclude}
+    files=[]
+    for p in ROOT.rglob('*'):
+        if not p.is_file() or p.name in skip or '__pycache__' in p.parts or p.suffix=='.pyc': continue
+        if p.resolve() in excluded: continue
+        files.append(p)
+    return sorted(files,key=lambda p:p.relative_to(ROOT).as_posix())
+
+def write_archive_manifest(exclude=()):
+    files=tracked_files(exclude)
+    (ROOT/'ARCHIVE_MANIFEST.sha256').write_text(''.join(f'{sha(p)}  {p.relative_to(ROOT).as_posix()}\n' for p in files))
+    return len(files)
+
+def verify_manifest(manifest):
+    for line in manifest.read_text().splitlines():
+        digest,rel=line.split('  ',1); p=ROOT/rel
+        if not p.exists() or sha(p)!=digest: raise RuntimeError(f'manifest mismatch: {rel}')
+
+def main():
+    ap=argparse.ArgumentParser();ap.add_argument('--output',required=True);args=ap.parse_args()
+    out=Path(args.output).resolve()
+    # Remove/exclude the requested output before any manifest inventory is built.
+    if out.exists(): out.unlink()
+    clean_transients()
+    subprocess.run([sys.executable,str(ROOT/'generate_directory_adapters.py')],cwd=ROOT,check=True)
+    subprocess.run([sys.executable,str(ROOT/'update_user_deployment_inventory.py')],cwd=ROOT,check=True)
+    subprocess.run([sys.executable,str(ROOT/'generate_source_catalog.py')],cwd=ROOT,check=True)
+    subprocess.run([sys.executable,str(ROOT/'run_validation.py'),'--resume'],cwd=ROOT,check=True)
+    # No source/generated-doc mutation is allowed after validation except release evidence/manifests.
+    write_deployment_baseline(); count=write_archive_manifest({out}); verify_manifest(ROOT/'ARCHIVE_MANIFEST.sha256')
+    files=tracked_files({out})
+    with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED) as z:
+        for p in files+[ROOT/'ARCHIVE_MANIFEST.sha256']:
+            z.write(p,p.relative_to(ROOT).as_posix())
+    with zipfile.ZipFile(out) as z:
+        bad=z.testzip()
+        if bad: raise RuntimeError(f'ZIP integrity failure: {bad}')
+    print(f'Built {out}')
+    print(f'Tracked files: {count}')
+    print(f'Archive SHA-256: {sha(out)}')
+
+if __name__=='__main__': main()

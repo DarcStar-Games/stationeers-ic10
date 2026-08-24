@@ -1,0 +1,117 @@
+# Catalog Coordinator Core v3.0: runtime Store claim/topology authority; d0 Directory.
+Boot:
+yield
+get r13 db 2
+get r14 db 3
+get r0 db 0
+beq r0 31415970 Loop
+clr db
+max r13 r13 1
+max r14 r14 1
+poke 0 31415970
+poke 1 3
+poke 2 r13
+poke 3 r14
+poke 5 1
+poke 25 0
+Loop:
+yield
+bdns d0 Loop
+get r0 d0 0
+bne r0 31415982 Loop
+get r0 d0 1
+bne r0 3 Loop
+get r0 d0 2
+bne r0 HASH("DirectorySchema.CatalogStoreNode") Loop
+get r0 d0 19
+bne r0 1 Loop
+l r12 d0 ReferenceId
+poke 23 r12
+get r0 d0 6
+poke 8 r0
+get r0 d0 14
+poke 9 r0
+get r0 d0 11
+poke 10 r0
+get r0 d0 9
+poke 11 r0
+get r0 d0 7
+poke 12 r0
+get r0 d0 8
+poke 13 r0
+get r0 db 25
+blez r0 Publish
+jal Claim
+Publish:
+get r0 db 4
+add r0 r0 1
+poke 4 r0
+j Loop
+Claim:
+getd r15 r12 23
+mod r0 r15 2
+bnez r0 ra
+move r7 1
+Find:
+bgt r7 64 ClaimFail
+mul r0 r7 6
+add r0 r0 58
+add r2 r0 1
+getd r6 r12 r2
+bne r6 1 Next
+getd r1 r12 r0
+blez r1 Next
+getd r6 r1 16
+bne r6 1 Next
+getd r0 r1 29
+get r2 db 32
+blt r0 r2 Next
+j Do
+Next:
+add r7 r7 1
+j Find
+Do:
+getd r0 r12 23
+bne r0 r15 ra
+get r0 db 7
+add r0 r0 1
+poke 7 r0
+get r2 db 27
+putd r1 2 r2
+get r2 db 28
+putd r1 3 r2
+get r2 db 29
+putd r1 4 r2
+get r2 db 2
+putd r1 5 r2
+get r2 db 30
+putd r1 6 r2
+blez r2 LinkDone
+putd r2 7 r1
+LinkDone:
+get r2 db 31
+putd r1 8 r2
+l r2 db ReferenceId
+putd r1 11 r2
+get r2 db 3
+putd r1 12 r2
+get r2 db 26
+putd r1 23 r2
+get r2 db 20
+add r2 r2 1
+poke 20 r2
+putd r1 26 r2
+putd r1 31 r2
+putd r1 16 2
+get r0 db 6
+add r0 r0 1
+poke 6 r0
+get r0 db 7
+add r0 r0 1
+poke 7 r0
+poke 17 r7
+poke 25 0
+j ra
+ClaimFail:
+poke 19 -1
+j ra

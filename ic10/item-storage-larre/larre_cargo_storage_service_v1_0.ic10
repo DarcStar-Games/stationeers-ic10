@@ -1,0 +1,119 @@
+poke 0 31415986
+poke 1 1
+Loop:
+yield
+get r15 db 8
+get r0 db 14
+beq r15 r0 Loop
+bdns d0 Invalid
+l r0 d0 Power
+blez r0 Fault
+get r2 db 2
+beq r2 1 Scan
+beq r2 2 Move
+beq r2 3 Recover
+j Invalid
+Scan:
+get r3 db 3
+get r4 db 4
+get r5 db 5
+get r6 db 6
+get r7 db 7
+blez r5 Invalid
+s d0 Setting r3
+jal Idle
+move r8 0
+move r9 0
+add r10 r4 r5
+move r11 -1
+move r12 0
+move sp -1
+ScanSlot:
+s d0 TargetSlotIndex r4
+yield
+ls r0 d0 255 Occupied
+beqz r0 Empty
+ls r0 d0 255 OccupantHash
+bne r0 r7 Next
+ls r0 d0 255 Quantity
+add r8 r8 r0
+bgez r11 Next
+move r11 r4
+move r12 r0
+j Next
+Empty:
+add r9 r9 r6
+bgez sp Next
+move sp r4
+Next:
+add r4 r4 1
+blt r4 r10 ScanSlot
+poke 10 r8
+poke 11 r9
+poke 12 r11
+poke 13 r12
+poke 16 sp
+move r0 1
+j Reply
+Move:
+ls r0 d0 0 Occupied
+bnez r0 Fault
+get r3 db 3
+get r4 db 4
+get r7 db 7
+s d0 Setting r3
+jal Idle
+s d0 TargetSlotIndex r4
+yield
+ls r0 d0 255 Occupied
+beqz r0 Fault
+ls r0 d0 255 OccupantHash
+bne r0 r7 Fault
+ls r13 d0 255 Quantity
+get r0 db 15
+bne r13 r0 Fault
+s d0 Activate 1
+jal Idle
+ls r0 d0 0 Occupied
+beqz r0 Fault
+j Drop
+Recover:
+ls r0 d0 0 Occupied
+beqz r0 Fault
+ls r13 d0 0 Quantity
+Drop:
+get r5 db 5
+get r6 db 6
+s d0 Setting r5
+jal Idle
+s d0 TargetSlotIndex r6
+yield
+ls r0 d0 255 Occupied
+bnez r0 Fault
+s d0 Activate 1
+jal Idle
+ls r0 d0 0 Occupied
+bnez r0 Fault
+poke 13 r13
+move r0 1
+j Reply
+Idle:
+yield
+l r0 d0 Error
+bgtz r0 Fault
+l r0 d0 Idle
+beqz r0 Idle
+j ra
+Invalid:
+move r1 -5
+j Fail
+Fail:
+move r0 r1
+j Reply
+Fault:
+ls r1 d0 0 Occupied
+select r0 r1 -6 -1
+Reply:
+poke 9 r0
+poke 14 r15
+j Loop

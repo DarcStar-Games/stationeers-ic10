@@ -1,0 +1,80 @@
+# Sweep priority-ordered POWER sinks. d0 SinkSelector,d1 FlowBuilder,d2 PlanStore.
+poke 0 31416033
+poke 1 1
+poke 20 0
+Loop:
+yield
+get r0 db 20
+beq r0 1 WaitSink
+beq r0 2 WaitFlow
+get r15 db 2
+get r0 db 3
+beq r15 r0 Loop
+poke 21 r15
+poke 22 0
+poke 23 0
+poke 24 0
+j AskSink
+AskSink:
+get r0 db 22
+put d0 2 r0
+get r15 db 21
+put d0 3 r15
+poke 20 1
+j Loop
+WaitSink:
+get r15 db 21
+get r0 d0 4
+bne r0 r15 Loop
+get r0 d0 5
+beq r0 -3 Done
+bne r0 1 Fail
+get r2 d0 6
+get r3 d0 7
+get r0 d0 8
+poke 22 r0
+get r4 d0 10
+get r5 d0 11
+get r0 d0 9
+poke 25 r0
+put d1 2 r2
+put d1 3 r3
+put d1 4 r4
+put d1 5 r5
+put d1 6 r15
+poke 20 2
+j Loop
+WaitFlow:
+get r15 db 21
+get r0 d1 7
+bne r0 r15 Loop
+get r0 d1 8
+bltz r0 Fail
+bgtz r0 AskSink
+get r3 d0 7
+get r4 d0 10
+blt r4 5000000 Shed
+j AskSink
+Shed:
+get r0 db 23
+add r0 r0 r3
+poke 23 r0
+blt r4 4000000 Critical
+j AskSink
+Critical:
+poke 24 1
+j AskSink
+Done:
+get r0 db 23
+put d2 14 r0
+get r0 db 24
+put d2 15 r0
+poke 4 1
+j Reply
+Fail:
+poke 4 -1
+Reply:
+get r15 db 21
+poke 3 r15
+poke 20 0
+j Loop

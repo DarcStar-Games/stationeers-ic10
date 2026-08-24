@@ -1,0 +1,94 @@
+alias Host d0 # Phase-pressure Policy v1.0: pressure requirement semantics.
+Boot:
+yield
+bdns Host Boot
+get r0 Host 0
+bne r0 31415928 Boot
+get r0 Host 1
+bne r0 1 Boot
+put Host 2 HASH("ControllerPhasePressure")
+put Host 4 1
+put Host 10 2
+put Host 16 255
+put Host 17 1
+put Host 18 0
+put Host 19 0
+put Host 12 HASH("CFG1|ControllerPhasePressure|1|2|255|1|0|0")
+move sp 32
+move r0 0
+Zero:
+put Host sp 0
+add sp sp 1
+add r0 r0 1
+blt r0 16 Zero
+put Host 32 1
+put Host 33 0
+put Host 34 0.95
+put Host 35 1.05
+put Host 36 0
+put Host 37 6000
+put Host 38 100
+put Host 39 LogicType.Setting
+put Host 40 1
+get r0 Host 7
+put Host 20 r0
+get r0 Host 13
+add r0 r0 1
+put Host 13 r0
+Loop:
+yield
+get r15 Host 6
+get r0 Host 20
+beq r15 r0 Loop
+move r0 1
+move sp 128
+Load:
+get rr0 Host sp
+bnan rr0 Malformed
+add sp sp 1
+add r0 r0 1
+ble r0 9 Load
+move sp -81
+blez r3 Reject
+bgt r3 1 Reject
+blt r4 1 Reject
+bgt r4 10 Reject
+move sp -82
+bltz r5 Reject
+bgt r5 r6 Reject
+blt r7 r5 Reject
+bgt r7 r6 Reject
+move sp -83
+round r0 r2
+bna r2 r0 0 Reject
+move r2 r0
+bltz r2 Reject
+bgt r2 2 Reject
+round r0 r8
+bna r8 r0 0 Reject
+move r8 r0
+select r1 r1 1 0
+select r9 r9 1 0
+move r0 1
+move sp 128
+Store:
+put Host sp rr0
+add sp sp 1
+add r0 r0 1
+ble r0 9 Store
+move sp 137
+move r0 0
+Pad:
+put Host sp 0
+add sp sp 1
+add r0 r0 1
+blt r0 7 Pad
+move sp 5
+j Respond
+Malformed:
+move sp -5
+Reject:
+Respond:
+put Host 21 sp
+put Host 20 r15
+j Loop

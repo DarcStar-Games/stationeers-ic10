@@ -1,0 +1,74 @@
+# Reuse active future-output claim or create one child. d0 ClaimView,d1 ChildCreator.
+poke 0 31416011
+poke 1 2
+Loop:
+yield
+get r15 db 13
+get r0 db 14
+beq r15 r0 Loop
+get r2 db 2
+get r8 db 8
+blez r2 Bad
+blez r8 Bad
+put d0 2 r8
+put d0 3 r2
+put d0 4 0
+put d0 5 r15
+WaitC:
+yield
+get r0 d0 6
+bne r0 r15 WaitC
+get r0 d0 7
+bne r0 1 New
+get r1 d0 9
+get sp d0 14
+sub sp r1 sp
+get r0 db 9
+blt sp r0 New
+j Shared
+New:
+put d1 2 r2
+get r0 db 3
+put d1 3 r0
+get r0 db 4
+put d1 4 r0
+get r0 db 5
+put d1 5 r0
+get r0 db 6
+put d1 6 r0
+get r0 db 7
+put d1 7 r0
+put d1 8 r8
+get r0 db 9
+put d1 9 r0
+put d1 10 r15
+WaitN:
+yield
+get r0 d1 11
+bne r0 r15 WaitN
+get r0 d1 12
+bne r0 1 ChildFail
+get r0 d1 13
+poke 16 r0
+get r0 d1 15
+poke 17 r0
+poke 18 0
+j Good
+Shared:
+get r0 d0 8
+poke 16 r0
+get r0 d0 9
+poke 17 r0
+poke 18 1
+Good:
+poke 15 1
+poke 14 r15
+j Loop
+ChildFail:
+poke 15 r0
+poke 14 r15
+j Loop
+Bad:
+poke 15 -1
+poke 14 r15
+j Loop

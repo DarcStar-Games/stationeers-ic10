@@ -1,0 +1,94 @@
+# Break-before-make Transformer Setting/On executor. d0 PlanStore,d1 Allocator.
+poke 0 31416039
+poke 1 1
+Loop:
+yield
+move r6 0
+Scan:
+get r1 db:0 r6
+blt r1 0 Loop
+add r6 r6 1
+getd r0 r1 0
+bne r0 31415953 Scan
+getd r0 r1 4
+bne r0 4 Scan
+getd r0 r1 6
+bne r0 2 Scan
+getd r3 r1 10
+blez r3 Scan
+move r4 0
+move r5 0
+get r0 d1 4
+bne r0 1 Set
+get r7 d1 2
+get r8 d1 3
+blez r8 Set
+get r9 d0 2
+mod r0 r9 2
+bnez r0 Set
+get r0 d0 3
+bne r0 r7 Set
+get r10 d0 4
+l r11 d1 ReferenceId
+move r12 0
+Find:
+bge r12 r10 Stable
+mul r0 r12 8
+add r0 r0 32
+get r13 d0 r0
+bne r13 r1 Next
+add r13 r0 1
+get r14 d0 r13
+add r13 r13 1
+get r15 d0 r13
+add r13 r13 1
+get r4 d0 r13
+add r13 r13 2
+get r2 d0 r13
+add r13 r13 1
+get sp d0 r13
+add r13 r13 1
+get ra d0 r13
+getd r0 r1 12
+bne r0 ra Next
+getd r0 r14 17
+bne r0 r11 Next
+getd r0 r14 18
+bne r0 r8 Next
+getd r0 r14 19
+bne r0 r2 Next
+getd r0 r15 17
+bne r0 r11 Next
+getd r0 r15 18
+bne r0 r8 Next
+getd r0 r15 19
+bne r0 sp Next
+move r5 1
+j Stable
+Next:
+add r12 r12 1
+j Find
+Stable:
+get r0 d0 2
+bne r0 r9 Off
+Set:
+# Turning ON requires authority to remain exact at the physical write boundary.
+beqz r5 Write
+get r0 d1 4
+bne r0 1 Off
+get r0 d1 2
+bne r0 r7 Off
+get r0 d1 3
+bne r0 r8 Off
+get r0 d0 2
+bne r0 r9 Off
+get r0 d0 3
+bne r0 r7 Off
+j Write
+Off:
+move r4 0
+move r5 0
+Write:
+sd r3 Setting r4
+sd r3 On r5
+j Scan

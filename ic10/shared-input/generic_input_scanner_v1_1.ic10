@@ -1,0 +1,84 @@
+# Generic Input Scanner v1.1: classify six interchangeable commissioning screws.
+# S3 Field,S4 Value,S5 Memory,S6 Switch,S7 caps,S8 pins,S9 count,S10 ordinal,S11 Profile.
+alias ref r1
+poke 0 31415930
+poke 1 1
+Loop:
+yield
+move r2 0
+move r3 0
+move r4 0
+move r5 0
+move r6 0
+move r7 0 # caps: field=1,value=2,memory=4,switch=8,profile=16
+move r8 0 # populated/assigned screw mask
+move r11 0 # optional generic Input Profile RefId
+Scan:
+sdse r0 dr2
+beqz r0 Next
+l ref dr2 ReferenceId
+sll sp 1 r2
+or r8 r8 sp
+ld r0 ref PrefabHash
+beq r0 -128473777 ProfileProbe
+bne r0 2037291645 InputProbe
+ProfileProbe:
+getd r0 ref 0
+bne r0 31415929 InputProbe
+getd r0 ref 1
+bne r0 1 InputProbe
+move r11 ref
+or r7 r7 16
+j Next
+InputProbe:
+bdnvl dr2 Setting Next
+bdnvs dr2 Mode NotDial
+bdnvl dr2 Ratio NotDial
+bnez r3 ValueDial
+move r3 ref
+or r7 r7 1
+j Next
+ValueDial:
+bnez r4 Next
+move r4 ref
+or r7 r7 2
+j Next
+NotDial:
+bdnvl dr2 Open Memory
+bnez r6 Next
+move r6 ref
+or r7 r7 8
+j Next
+Memory:
+bnez r5 Next
+move r5 ref
+or r7 r7 4
+Next:
+add r2 r2 1
+blt r2 6 Scan
+poke 3 r3
+poke 4 r4
+poke 5 r5
+poke 6 r6
+poke 7 r7
+poke 8 r8
+# S9 is a domain-neutral requested control count; Scanner owns Field Dial mechanics.
+move r9 0
+get r0 db 9
+blez r0 Publish
+clamp r0 r0 1 32
+blez r3 Publish
+sub sp r0 1
+bdnvs r3 Mode Publish
+sd r3 Mode sp
+bdnvl r3 Setting Publish
+ld r9 r3 Setting
+clamp r9 r9 0 sp
+add r9 r9 1
+Publish:
+poke 10 r9
+poke 11 r11
+get r0 db 2
+add r0 r0 1
+poke 2 r0 # complete hardware snapshot publishes LAST
+j Loop

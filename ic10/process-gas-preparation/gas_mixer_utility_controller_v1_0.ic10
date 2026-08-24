@@ -1,0 +1,111 @@
+# Gas Mixer Utility ABI1. d0/d1 inputs,d2 output,d3 mixer,d4 profile,d5 demand.
+poke 0 31416049
+poke 1 1
+Loop:
+yield
+bdns d4 Bad
+bdns d5 Bad
+get r15 d4 5
+blez r15 Bad
+get r0 d4 0
+bne r0 31415963 Bad
+get r0 d4 8
+bne r0 1 Bad
+get r0 d4 11
+bne r0 5 Bad
+get r0 d4 12
+bne r0 1 Bad
+get r1 d4 9
+get r2 d4 13
+get r3 d4 14
+get r4 d4 15
+get r5 d4 16
+get r6 d4 17
+get r0 d4 5
+bne r0 r15 Loop
+get sp d5 11
+blez sp Bad
+get r0 d5 0
+bne r0 31416048 Bad
+get r0 d5 12
+bne r0 1 Bad
+get r0 d5 10
+beqz r0 Off
+get r0 d5 3
+bne r0 r1 Bad
+get r14 d5 4
+get r0 d5 11
+bne r0 sp Loop
+bdnvl d0 Temperature Bad
+bdnvl d1 Temperature Bad
+bdnvl d0 r2 Bad
+bdnvl d1 r4 Bad
+l r7 d0 Temperature
+l r8 d1 Temperature
+l r9 d0 r2
+l r10 d1 r4
+blez r7 Bad
+blez r8 Bad
+sub r11 1 r3
+mul r11 r11 r8
+mul r12 r3 r7
+add r11 r11 r12
+blez r11 Bad
+div r12 r12 r11
+mul r12 r12 100
+clamp r12 r12 0 100
+mul r13 r6 4
+sub r13 1 r13
+max r13 r13 0.95
+blt r9 r13 Bad
+blt r10 r13 Bad
+bdnvl d3 Setting Bad
+bdnvl d3 On Bad
+get r0 d4 5
+bne r0 r15 Loop
+get r0 d5 11
+bne r0 sp Loop
+s d3 Setting r12
+move r11 2
+bdns d2 Mix
+bdnvl d2 TotalMoles Mix
+bdnvl d2 Pressure Mix
+bdnvl d2 r2 Mix
+bdnvl d2 r4 Mix
+l r0 d2 TotalMoles
+blez r0 Mix
+l r0 d2 Pressure
+blt r0 r14 Mix
+l r9 d2 r2
+l r10 d2 r4
+sub r9 r9 r3
+abs r9 r9
+sub r10 r10 r5
+abs r10 r10
+bgt r9 r6 Mix
+bgt r10 r6 Mix
+s d3 On 0
+move r11 1
+j Publish
+Mix:
+get r0 d5 11
+bne r0 sp Loop
+s d3 On 1
+j Publish
+Off:
+bdnvs d3 On OffPub
+s d3 On 0
+OffPub:
+move r11 0
+j Publish
+Bad:
+move r11 -1
+bdnvs d3 On Publish
+s d3 On 0
+Publish:
+poke 2 r11
+poke 3 r12
+get r0 db 4
+add r0 r0 1
+poke 4 r0
+j Loop

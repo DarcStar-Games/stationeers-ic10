@@ -1,0 +1,53 @@
+# Catalog Store Retirement Manager v2.0: d0 Core,d1 Registry ABI3.
+Loop:
+yield
+bdns d0 Loop
+bdns d1 Loop
+get r0 d0 0
+bne r0 31415970 Loop
+get r0 d1 0
+bne r0 31415982 Loop
+get r0 d1 1
+bne r0 3 Loop
+get r0 d1 2
+bne r0 HASH("DirectorySchema.CatalogStoreNode") Loop
+get r0 d1 19
+bne r0 1 Loop
+get r11 d1 23
+mod r0 r11 2
+bnez r0 Loop
+move r7 1
+Scan:
+bgt r7 64 Loop
+mul r0 r7 6
+add r0 r0 58
+get r1 d1 r0
+blez r1 Next
+getd r0 r1 16
+bne r0 3 Next
+getd r0 r1 9
+bgtz r0 Next
+get r0 d1 23
+bne r0 r11 Loop
+get r0 d0 7
+add r0 r0 1
+put d0 7 r0
+getd r2 r1 6
+getd r3 r1 7
+blez r2 NoPrev
+putd r2 7 r3
+NoPrev:
+blez r3 NoNext
+putd r3 6 r2
+NoNext:
+putd r1 16 5
+get r0 d0 6
+add r0 r0 1
+put d0 6 r0
+get r0 d0 7
+add r0 r0 1
+put d0 7 r0
+j Loop
+Next:
+add r7 r7 1
+j Scan

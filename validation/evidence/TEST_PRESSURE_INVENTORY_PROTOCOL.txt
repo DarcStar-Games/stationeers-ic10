@@ -1,0 +1,6 @@
+Pressure-domain inventory/purity model: PASS
+ - Purity Guard dynamically reads Resource Profile View gas ratio and rejects contamination
+ - Inventory refuses capacity unless purity guard is good
+ - Inventory snapshots PressureDomain telemetry coherently
+ - empty buses pass purity; contaminated nonempty buses fail
+ - LOW/HIGH/STORAGE capacity remains molar ideal-gas accounting

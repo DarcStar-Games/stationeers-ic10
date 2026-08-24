@@ -1,0 +1,82 @@
+# PressureTransfer -> Generic Resource Link ABI1. d0 Transfer,d1/d2 Resource Reservations.
+poke 0 31415953
+poke 1 1
+poke 12 0
+Loop:
+yield
+bdns d0 Bad
+bdns d1 Bad
+bdns d2 Bad
+get r15 d0 115
+blez r15 Bad
+get r0 d0 96
+bne r0 27182818 Bad
+get r0 d0 97
+bne r0 2 Bad
+get r0 d0 99
+bne r0 HASH("ControllerPressureTransfer") Bad
+get r3 d0 100
+get r4 d0 101
+get r5 d0 102
+get r6 d0 103
+get r7 d0 106
+get r8 d0 107
+get r0 d0 115
+bne r0 r15 Loop
+get r14 d1 12
+blez r14 Bad
+get r0 d1 0
+bne r0 31415950 Bad
+get r0 d1 1
+bne r0 1 Bad
+get r9 d1 2
+get r0 d1 3
+bne r0 1 Bad
+get r0 d1 4
+bne r0 r5 Bad
+get r0 d1 12
+bne r0 r14 Loop
+get r13 d2 12
+blez r13 Bad
+get r0 d2 0
+bne r0 31415950 Bad
+get r0 d2 1
+bne r0 1 Bad
+get r10 d2 2
+get r0 d2 3
+bne r0 1 Bad
+get r0 d2 4
+bne r0 r5 Bad
+get r0 d2 12
+bne r0 r13 Loop
+getd r11 r7 2
+getd r12 r8 2
+getd r0 r9 9
+bne r0 r11 Bad
+getd r0 r10 9
+bne r0 r12 Bad
+l r13 d1 ReferenceId
+l r14 d2 ReferenceId
+l r1 d0 ReferenceId
+poke 2 r13
+poke 3 r14
+poke 4 1 # ResourceClass FLUID
+poke 5 r5
+poke 6 r4
+poke 7 r3
+poke 8 0 # generic cost hint unavailable here
+poke 9 r6
+poke 10 r1
+poke 11 r15
+get r0 db 12
+add r0 r0 1
+poke 12 r0
+poke 13 1 # directed physical link
+j Loop
+Bad:
+poke 7 0
+poke 9 -1
+get r0 db 12
+add r0 r0 1
+poke 12 r0
+j Loop

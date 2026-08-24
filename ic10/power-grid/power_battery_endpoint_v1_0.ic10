@@ -1,0 +1,113 @@
+# POWER battery Endpoint ABI1. d0 battery; policy S16..22/S50..51.
+poke 0 31415949
+poke 1 1
+poke 2 4
+poke 3 HASH("Power.Electrical")
+poke 4 7
+poke 12 4
+poke 13 3
+poke 35 3
+Loop:
+yield
+bdns d0 Bad
+move r1 1
+bdnvl d0 On OnReady
+l r1 d0 On
+OnReady:
+move r2 0
+bdnvl d0 Error ErrorReady
+l r2 d0 Error
+ErrorReady:
+get r0 db 23
+beqz r0 OnPolicy
+blez r1 Bad
+OnPolicy:
+bgtz r2 Bad
+bdnvl d0 Charge Bad
+bdnvl d0 Maximum Bad
+l r3 d0 Charge
+l r4 d0 Maximum
+bnan r3 Bad
+bnan r4 Bad
+blez r4 Bad
+clamp r3 r3 0 r4
+get r5 db 18
+clamp r5 r5 0 1
+get r6 db 19
+clamp r6 r6 r5 1
+mul r7 r4 r5
+mul r8 r4 r6
+sub r9 r3 r7
+max r9 r9 0
+sub r10 r8 r3
+max r10 r10 0
+get r11 db 17
+max r11 r11 0
+min r9 r9 r11
+get r12 db 16
+max r12 r12 0
+min r10 r10 r12
+get r13 db 50
+beq r13 3 ChargeOnly
+beq r13 4 DischargeOnly
+beq r13 5 Hold
+j CapOverride
+ChargeOnly:
+move r9 0
+j CapOverride
+DischargeOnly:
+move r10 0
+j CapOverride
+Hold:
+move r9 0
+move r10 0
+CapOverride:
+get r14 db 51
+blez r14 Publish
+min r9 r9 r14
+min r10 r10 r14
+Publish:
+l r15 d0 ReferenceId
+get r0 db 20
+poke 38 r0
+get r0 db 21
+poke 39 r0
+get r0 db 22
+clamp r0 r0 0 999
+mul r0 r0 16
+add r0 r0 8
+poke 40 r0
+poke 5 r9
+poke 6 r10
+poke 7 r3
+poke 8 1
+poke 9 r15
+poke 10 r13
+poke 41 r3
+poke 42 r4
+poke 43 r7
+poke 44 r8
+move r1 0
+bdnvl d0 PowerPotential PotReady
+l r1 d0 PowerPotential
+PotReady:
+poke 45 r1
+move r1 0
+bdnvl d0 PowerActual ActReady
+l r1 d0 PowerActual
+ActReady:
+poke 46 r1
+div r1 r3 r4
+poke 47 r1
+get r0 db 11
+add r0 r0 1
+poke 11 r0
+j Loop
+Bad:
+poke 5 0
+poke 6 0
+poke 8 -1
+get r0 db 11
+add r0 r0 1
+poke 11 r0
+j Loop

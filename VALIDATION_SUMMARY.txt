@@ -1,0 +1,25 @@
+Stationeers IC10 Framework — Clean Release Validation
+=====================================================
+
+Overall: PASS (54/54 validation/test scripts)
+Validators: 21/21 PASS
+Execution/protocol tests: 33/33 PASS
+Production IC10 programs: 171
+Maximum production line count: 120/120
+Tight programs (>=117 lines): 51
+
+Release hygiene
+---------------
+- docs/SCRIPT_INDEX.md is generated from deployable IC10 source plus source_manifest.json metadata.
+- USER_DEPLOYMENT_GUIDE.md program inventories are machine-linked to source_manifest.json deployment-family/class metadata.
+- Repetitive Resource Endpoint/Link/Reservation directory adapters are generated from directory_adapter_specs.json.
+- Recipe Catalog test fixtures are generated into temporary directories; no generated recipe fixture is shipped.
+- Per-script machine output is stored only under validation/evidence/.
+- Validation resume is accepted only when validation/VALIDATION_STATE.json matches the complete input-tree fingerprint.
+- Completed Roadmap Items 1–11 are preserved in docs/COMPLETED_MILESTONES.md; Item 12 live-game commissioning remains active until field evidence closes.
+- ASYNC_REQUEST_V1 and BANKED_TRANSACTION_V1 remain separate request-identity and durable-commit authorities.
+
+Evidence
+--------
+- validation/FULL_VALIDATION_RUN.txt contains the complete 54-script pass/fail inventory.
+- validation/evidence/ contains stdout for each validator/test.

@@ -1,0 +1,120 @@
+poke 0 31415940
+poke 1 2
+Loop:
+yield
+get r14 db 6
+beq r14 r15 Loop
+get r1 db 2
+get r2 db 3
+get r3 db 4
+blez r1 Bad
+bdns d0 Bad
+get r0 d0 0
+bne r0 31415981 Bad
+get r0 d0 1
+bne r0 1 Bad
+get r0 d0 9
+bne r0 HASH("DirectorySchema.PressureGridLink") Bad
+get r0 d0 10
+bne r0 1 Bad
+get r0 db 5
+get sp db 11
+beq r0 sp Search
+poke 11 r0
+get r4 d0 2
+add sp r4 3
+get r5 d0 sp
+add sp r4 7
+get r0 d0 sp
+bgtz r0 Bad
+add sp r4 5
+get r6 d0 sp
+beqz r6 None
+mod r7 r2 r6
+move r8 0
+poke 24 0
+Search:
+get r0 d0 2
+bne r0 r4 Bad
+add sp r4 3
+get r0 d0 sp
+bne r0 r5 Bad
+add sp r8 24
+get r9 db sp
+bge r9 r6 Back
+add r0 r7 r9
+mod r0 r0 r6
+add r9 r9 1
+poke sp r9
+mul sp r4 192
+add sp sp 32
+mul r0 r0 3
+add sp sp r0
+get r10 d0 sp
+add sp sp 1
+get r11 d0 sp
+add sp sp 1
+get r12 d0 sp
+getd r0 r10 102
+bne r0 r3 Search
+getd r0 r10 103
+bne r0 1 Search
+getd r0 r10 109
+bne r0 r2 Fresh
+getd r0 r10 110
+beq r0 r1 Search
+Fresh:
+getd r13 r10 100
+blez r13 Search
+beqz r8 Root
+add r0 r8 19
+get r0 db r0
+bne r11 r0 Search
+j Store
+Root:
+getd r0 r11 4
+bne r0 1 Search
+getd r0 r12 4
+bne r0 3 Search
+Store:
+add r0 r8 16
+poke r0 r10
+add r0 r8 20
+poke r0 r12
+beqz r8 Rate
+add r0 r8 27
+get r0 db r0
+min r13 r13 r0
+Rate:
+add r0 r8 28
+poke r0 r13
+getd r9 r12 4
+beq r9 2 Found
+bne r9 3 Search
+bge r8 2 Search
+add r8 r8 1
+add sp r8 24
+poke sp 0
+j Search
+Found:
+add r0 r8 1
+poke 7 r0
+poke 8 r13
+poke 9 1
+j Respond
+Back:
+beqz r8 None
+sub r8 r8 1
+j Search
+None:
+poke 9 0
+j Empty
+Bad:
+poke 9 -1
+Empty:
+poke 7 0
+poke 8 0
+Respond:
+poke 10 r14
+move r15 r14
+j Loop

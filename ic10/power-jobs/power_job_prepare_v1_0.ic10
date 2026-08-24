@@ -1,0 +1,104 @@
+# Prepare one POWER job step. d0 lifecycle,d1 resolver,d2 apply.
+poke 0 31416045
+poke 1 1
+poke 20 0
+Loop:
+yield
+get r0 db 20
+beq r0 1 WaitLife
+beq r0 2 WaitResolve
+beq r0 3 WaitApply
+get r15 db 9
+get r0 db 10
+beq r15 r0 Loop
+get r2 db 2
+get r3 db 3
+get r4 db 4
+get r5 db 5
+get r6 db 6
+get r7 db 7
+get r8 db 8
+move r10 0
+beq r4 1 ToPlanning
+beq r4 2 ToReserving
+beq r4 3 ToReady
+beq r4 4 Resolve
+blt r4 8 Bad
+ble r4 10 ToPlanning
+j Bad
+ToPlanning:
+move r11 2
+j Life
+ToReserving:
+move r11 3
+j Life
+ToReady:
+move r11 4
+j Life
+Resolve:
+put d1 2 r8
+put d1 3 r15
+poke 20 2
+j Loop
+WaitResolve:
+get r15 db 9
+get r0 d1 4
+bne r0 r15 Loop
+get r0 d1 5
+beq r0 1 Resolved
+beq r0 -2 WaitResource
+j FaultState
+Resolved:
+put d2 2 r2
+put d2 3 r3
+put d2 4 r7
+put d2 5 r8
+put d2 6 r5
+put d2 7 r6
+put d2 8 r15
+poke 20 3
+j Loop
+WaitApply:
+get r15 db 9
+get r0 d2 9
+bne r0 r15 Loop
+get r0 d2 10
+bne r0 1 FaultState
+move r11 5
+j Life
+Life:
+put d0 2 r2
+put d0 3 r5
+put d0 4 r11
+put d0 5 r10
+put d0 6 r15
+poke 20 1
+j Loop
+WaitLife:
+get r15 db 9
+get r0 d0 7
+bne r0 r15 Loop
+get r0 d0 8
+bne r0 1 ReplyBad
+get r5 d0 9
+poke 11 1
+poke 12 r11
+poke 13 r5
+j Reply
+WaitResource:
+move r11 8
+move r10 1
+j Life
+Bad:
+FaultState:
+move r11 11
+move r10 -1
+j Life
+ReplyBad:
+poke 11 -1
+poke 12 r4
+poke 13 r5
+Reply:
+poke 10 r15
+poke 20 0
+j Loop

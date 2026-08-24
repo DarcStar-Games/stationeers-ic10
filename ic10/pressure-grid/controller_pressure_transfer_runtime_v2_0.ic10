@@ -1,0 +1,120 @@
+# PressureTransfer v2.0: d0 source,d1 sink,d2 pump,d3 GrantGuard,d4 Host.
+poke 96 27182818
+poke 97 2
+poke 98 30
+poke 99 HASH("ControllerPressureTransfer")
+poke 115 0
+poke 121 0
+Loop:
+yield
+poke 115 0
+bdns d4 Fault
+get r0 d4 1
+bne r0 1 Fault
+get r0 d4 8
+blez r0 Fault
+get sp d4 5
+move r0 1
+move ra 96
+Load:
+get rr0 d4 ra
+add ra ra 1
+add r0 r0 1
+ble r0 4 Load
+get r0 d4 5
+bne r0 sp Loop
+l r0 d4 ReferenceId
+poke 116 r0
+beqz r1 Inactive
+bdns d0 Fault
+get r15 d0 11
+blez r15 Fault
+get r0 d0 0
+bne r0 31415936 Fault
+get r0 d0 1
+bne r0 1 Fault
+get r7 d0 4
+get r9 d0 5
+l r5 d0 ReferenceId
+get r10 d0 6
+get r12 d0 8
+get r13 d0 9
+get r0 d0 11
+bne r0 r15 Loop
+bdns d1 Fault
+get r15 d1 11
+blez r15 Fault
+get r0 d1 0
+bne r0 31415936 Fault
+get r0 d1 1
+bne r0 1 Fault
+get r8 d1 4
+get r0 d1 5
+bne r0 r9 Fault
+l r6 d1 ReferenceId
+get sp d1 7
+get r0 d1 11
+bne r0 r15 Loop
+beq r7 2 Fault
+beq r8 1 Fault
+beq r5 r6 Fault
+sub r11 r8 1
+seq r0 r7 3
+mul r0 r0 2
+add r11 r11 r0
+poke 101 r11
+poke 102 r9
+poke 106 r5
+poke 107 r6
+min sp r10 sp
+blez sp Inactive
+div r14 sp r12
+ble r14 r2 Inactive
+sub r14 r14 r2
+mul r14 r14 r3
+min r14 r14 r4
+bdnvl d2 Maximum Fault
+bdnvl d2 Setting Fault
+bdnvl d2 On Fault
+l sp d2 Maximum
+bnan sp Fault
+blez sp Fault
+min r14 r14 sp
+mul r10 r14 r13
+poke 100 r10
+poke 103 1
+bdns d3 SafeOff
+get r15 d3 7
+blez r15 SafeOff
+get r0 d3 0
+bne r0 31415948 SafeOff
+get r0 d3 1
+bne r0 1 SafeOff
+l r5 db ReferenceId
+get r0 d3 6
+bne r0 r5 SafeOff
+get r0 d3 4
+bne r0 1 SafeOff
+get r0 d3 2
+get r6 d3 7
+bne r6 r15 SafeOff
+min r0 r0 r10
+div r0 r0 r13
+s d2 Setting r0
+s d2 On 1
+j Commit
+Inactive:
+poke 103 0
+SafeOff:
+bdnvs d2 On Commit
+s d2 On 0
+j Commit
+Fault:
+poke 103 -1
+j SafeOff
+Commit:
+get r0 db 121
+add r0 r0 1
+poke 121 r0
+poke 115 r0
+j Loop

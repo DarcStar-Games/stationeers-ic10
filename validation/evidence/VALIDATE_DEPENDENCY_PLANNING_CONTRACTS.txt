@@ -1,0 +1,4 @@
+Dependency planning contracts: PASS
+ - dependency lanes share one four-lane Gateway and one Store executor
+ - 8-cell commit-last plans, active-only claims, surplus accounting, bounded depth and quote overflow are enforced
+ - scheduler routes lifecycle through Gateway and execution through Dependency Gate

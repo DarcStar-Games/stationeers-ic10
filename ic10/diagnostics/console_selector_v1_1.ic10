@@ -1,0 +1,92 @@
+# Console Selector v1.1: pure Registry resolver with desired/advance transactions.
+# S2 Registry,S3 ordinal,S4 display,S5 status,S10 advance,S12 desired,S13 request gen.
+alias registry r1
+poke 0 17320509
+poke 1 1
+Loop:
+yield
+get registry db 2
+blez registry NoRegistry
+getd r0 registry 0
+bne r0 14142136 NoRegistry
+getd r0 registry 1
+bne r0 1 NoRegistry
+getd r8 registry 2
+add r12 r8 3
+getd r9 registry r12
+add r12 r8 5
+getd r10 registry r12
+blez r10 NoConsole
+# Start from persistent selection, then apply any new desired request and advance.
+get r13 db 3
+select r13 r13 r13 1
+get r15 db 13
+get r6 db 14
+beq r15 r6 CheckAdvance
+get r13 db 12
+CheckAdvance:
+get r4 db 10
+get r5 db 11
+beq r4 r5 Resolve
+clamp r13 r13 1 r10
+mod r13 r13 r10
+add r13 r13 1
+Resolve:
+round r13 r13
+clamp r13 r13 1 r10
+sub r0 r13 1
+mul r12 r8 128
+add r12 r12 32
+mul r0 r0 2
+add r12 r12 r0
+add r12 r12 1
+getd r14 registry r12
+# Reject concurrent Registry or request changes before identity publication.
+getd r0 registry 2
+bne r0 r8 Updating
+add r12 r8 3
+getd r0 registry r12
+bne r0 r9 Updating
+get r0 db 13
+bne r0 r15 Updating
+get r0 db 10
+bne r0 r4 Updating
+# Restore the previous display before blinking a different selected console.
+get r0 db 8
+blez r0 Blink
+beq r0 r14 Blink
+bdnvs r0 On Blink
+sd r0 On 1
+Blink:
+poke 8 r14
+bdnvs r14 On Publish
+get r0 db 6
+seq r0 r0 0
+poke 6 r0
+sd r14 On r0
+Publish:
+poke 3 r13
+poke 4 r14
+poke 7 r9
+poke 5 1
+poke 14 r15 # handled desired token after complete result/status
+poke 11 r4 # handled advance token after complete result/status
+s db Setting r13
+j Loop
+Updating:
+move r0 0
+j Status
+NoRegistry:
+move r0 -1
+j Status
+NoConsole:
+move r0 -2
+Status:
+get r12 db 8 # never leave a previously selected display disabled on faults
+blez r12 PublishStatus
+bdnvs r12 On PublishStatus
+sd r12 On 1
+PublishStatus:
+poke 5 r0
+s db Setting r0
+j Loop

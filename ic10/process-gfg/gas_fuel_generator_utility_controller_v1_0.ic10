@@ -1,0 +1,114 @@
+# GFG utility + ProcessCondition ABI1. d0 GFG,d1 PowerPlan,d2 ambient,d3 mix Guard.
+# S16 medium,S17 min kPa,S18 max kPa,S19 shed W,S20 on.
+poke 0 31416048
+poke 1 1
+poke 11 0
+Loop:
+yield
+get r0 db 20
+beqz r0 Inactive
+bdns d0 Bad
+bdns d1 Bad
+bdns d2 Bad
+bdns d3 Bad
+get r0 d1 0
+bne r0 31416028 Bad
+get r0 d1 1
+bne r0 1 Bad
+l r0 d0 PrefabHash
+bne r0 HASH("StructureGasGenerator") Bad
+get r15 d1 2
+and r0 r15 1
+bnez r0 Loop
+get r4 d1 5
+get r5 d1 6
+get r0 d1 2
+bne r0 r15 Loop
+get r6 db 19
+sgt r0 r4 0
+slt r6 r4 r6
+seq r6 r6 0
+and r6 r6 r0
+or r6 r6 r5
+beqz r6 Inactive
+l r7 d0 Pressure
+l r8 d0 Temperature
+l r9 d2 Pressure
+l r10 d2 Temperature
+l r11 d0 ReferenceId
+get r12 d3 7
+blez r12 Bad
+get r0 d3 5
+bne r0 1 FuelWait
+get r0 d3 7
+bne r0 r12 Loop
+get r13 db 17
+get r14 db 18
+move r2 0
+blt r7 r13 PBad
+blez r14 PGood
+bgt r7 r14 PBad
+j PGood
+PBad:
+or r2 r2 1
+PGood:
+blt r9 20 EnvBad
+blt r10 278 EnvBad
+bgt r10 328 EnvBad
+l r0 d0 Error
+bgtz r0 Bad
+beqz r2 Start
+j FuelWait
+Start:
+get r0 d1 2
+bne r0 r15 Loop
+get r0 d3 7
+bne r0 r12 Loop
+s d0 On 1
+move r3 1
+j Request
+FuelWait:
+s d0 On 0
+move r3 2
+j Request
+EnvBad:
+s d0 On 0
+move r3 -4
+Request:
+get r0 db 16
+poke 2 r11
+poke 3 r0
+poke 4 r13
+poke 5 r14
+poke 6 1
+poke 7 5000
+poke 8 r2
+poke 9 HASH("Process.GasFuelGenerator")
+poke 10 1
+poke 12 1
+poke 13 2
+poke 14 r13
+poke 15 r8
+poke 21 r3
+j Publish
+Inactive:
+bdnvs d0 On InactivePub
+s d0 On 0
+InactivePub:
+poke 10 0
+poke 12 1
+poke 8 0
+poke 21 0
+j Publish
+Bad:
+bdnvs d0 On BadPub
+s d0 On 0
+BadPub:
+poke 10 0
+poke 12 -1
+poke 21 -1
+Publish:
+get r0 db 11
+add r0 r0 1
+poke 11 r0
+j Loop

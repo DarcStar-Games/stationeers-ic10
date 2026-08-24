@@ -1,0 +1,117 @@
+# Printer Directory Adapter v1.0: six supported printer families; Adapter ABI2 snapshot.
+Boot:
+clr db
+poke 0 31415983
+poke 1 2
+poke 2 HASH("DirectorySchema.Printer")
+poke 3 2
+poke 4 3
+poke 5 64
+poke 10 1
+Loop:
+yield
+get r0 db 11
+beqz r0 ScanStart
+poke 12 r0
+j Loop
+ScanStart:
+poke 12 0
+get r15 db 8
+add r15 r15 1
+poke 8 r15
+poke 9 0
+move r7 0
+move r8 0
+Scan:
+get r1 db:0 r7
+blt r1 0 Publish
+add r7 r7 1
+ld r0 r1 PrefabHash
+beq r0 HASH("StructureAutolathe") Auto1
+beq r0 HASH("StructureAutolatheMKII") Auto2
+beq r0 HASH("StructureElectronicsPrinter") Elec1
+beq r0 HASH("StructureElectronicsPrinterMKII") Elec2
+beq r0 HASH("StructureHydraulicPipeBender") Pipe1
+beq r0 HASH("StructurePipeBender") Pipe1
+beq r0 HASH("StructurePipeBenderMKII") Pipe2
+beq r0 HASH("StructureToolManufactory") Tool1
+beq r0 HASH("StructureToolmaker") Tool1
+beq r0 HASH("StructureToolmakerMKII") Tool2
+beq r0 HASH("StructureSecurityPrinter") Security
+bne r0 HASH("StructureRocketManufactory") Scan
+move r2 HASH("Printer.RocketManufactory")
+move r3 1
+j Status
+Auto1:
+move r2 HASH("Printer.Autolathe")
+move r3 1
+j Status
+Auto2:
+move r2 HASH("Printer.Autolathe")
+move r3 2
+j Status
+Elec1:
+move r2 HASH("Printer.ElectronicsPrinter")
+move r3 1
+j Status
+Elec2:
+move r2 HASH("Printer.ElectronicsPrinter")
+move r3 2
+j Status
+Pipe1:
+move r2 HASH("Printer.HydraulicPipeBender")
+move r3 1
+j Status
+Pipe2:
+move r2 HASH("Printer.HydraulicPipeBender")
+move r3 2
+j Status
+Tool1:
+move r2 HASH("Printer.ToolManufactory")
+move r3 1
+j Status
+Tool2:
+move r2 HASH("Printer.ToolManufactory")
+move r3 2
+j Status
+Security:
+move r2 HASH("Printer.SecurityPrinter")
+move r3 1
+Status:
+ld r4 r1 Power
+ld r5 r1 On
+ld r6 r1 Activate
+ld r9 r1 Error
+ld r10 r1 Lock
+mul r4 r4 256
+mul r6 r6 512
+mul r9 r9 1024
+mul r5 r5 2048
+mul r10 r10 4096
+add r3 r3 r4
+add r3 r3 r5
+add r3 r3 r6
+add r3 r3 r9
+add r3 r3 r10
+bge r8 64 Overflow
+mul r4 r8 3
+add r4 r4 16
+poke r4 r1
+add r4 r4 1
+poke r4 r2
+add r4 r4 1
+poke r4 r3
+add r8 r8 1
+j Scan
+Overflow:
+poke 9 1
+j Scan
+Publish:
+poke 6 r8
+get r0 db 7
+add r0 r0 1
+poke 7 r0
+get r0 db 8
+add r0 r0 1
+poke 8 r0
+j Loop

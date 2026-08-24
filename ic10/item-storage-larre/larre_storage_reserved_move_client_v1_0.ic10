@@ -1,0 +1,115 @@
+poke 0 31415991
+poke 1 1
+Loop:
+yield
+get r15 db 5
+get r0 db 8
+beq r15 r0 Loop
+bdns d0 Bad
+get r0 d0 35
+bne r0 HASH("StorageAccess.LArRE") Bad
+get r13 db 2
+beq r13 3 RecoverStart
+bdns d1 Bad
+bdns d2 Bad
+l r12 d0 ReferenceId
+get r0 d1 2
+bne r0 r12 Bad
+get r10 db 3
+get r11 db 4
+get r0 d1 17
+get r1 d2 17
+blez r0 Stale
+bne r0 r1 Stale
+get r0 d1 18
+bne r0 r10 Stale
+get r0 d2 18
+bne r0 r11 Stale
+get r0 d1 12
+get r1 d1 19
+bne r0 r1 Stale
+get r0 d2 12
+get r1 d2 19
+bne r0 r1 Stale
+get r2 d1 4
+get r3 d2 4
+bne r2 r3 Bad
+beq r13 1 Outbound
+bne r13 2 Bad
+Inbound:
+get r0 d1 16
+bne r0 2 Stale
+get r0 d2 16
+bne r0 1 Stale
+get r6 d2 14
+get r0 d1 15
+blt r0 r6 Capacity
+get r5 d1 27
+bltz r5 Capacity
+get r3 db 15
+get r4 db 16
+get r7 d0 20
+move r8 r5
+j StartMove
+Outbound:
+get r0 d1 16
+bne r0 1 Stale
+get r0 d2 16
+bne r0 2 Stale
+get r6 d1 26
+blez r6 Capacity
+get r0 d1 14
+blt r0 r6 Stale
+get r0 d2 15
+blt r0 r6 Capacity
+get r3 d0 20
+get r4 d1 25
+get r7 db 15
+get r8 db 16
+StartMove:
+poke 11 r3
+poke 12 r4
+poke 13 r6
+get r9 d0 34
+add r9 r9 1
+put d0 24 2
+put d0 25 r3
+put d0 26 r4
+put d0 27 r7
+put d0 28 r8
+put d0 30 r6
+put d0 31 r9
+j Wait
+RecoverStart:
+get r6 db 13
+blez r6 Bad
+get r7 db 11
+get r8 db 12
+get r9 d0 34
+add r9 r9 1
+put d0 24 3
+put d0 27 r7
+put d0 28 r8
+put d0 30 r6
+put d0 31 r9
+j Wait
+Wait:
+yield
+get r0 d0 34
+bne r0 r9 Wait
+get r0 d0 32
+get r6 d0 33
+j Reply
+Capacity:
+move r0 -3
+j Reply
+Stale:
+move r0 -2
+j Reply
+Bad:
+move r0 -1
+Reply:
+poke 6 r0
+poke 7 r6
+poke 8 r15
+j Loop

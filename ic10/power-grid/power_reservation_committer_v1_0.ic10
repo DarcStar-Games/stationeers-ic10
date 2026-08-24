@@ -1,0 +1,97 @@
+# Commit POWER Reservation ownership for one plan. d0 PlanStore,d1 Allocator owner.
+poke 0 31416036
+poke 1 1
+Loop:
+yield
+get r15 db 4
+get r0 db 5
+beq r15 r0 Loop
+get r2 db 2
+get r3 db 3
+blez r2 Bad
+blez r3 Bad
+get r14 d0 2
+mod r0 r14 2
+bnez r0 Bad
+get r0 d0 3
+bne r0 r2 Bad
+get r6 d0 4
+l r12 d1 ReferenceId
+move r4 0
+Flow:
+bge r4 r6 Stable
+mul r5 r4 8
+add r5 r5 32
+add r0 r5 1
+get r7 d0 r0
+add r0 r0 1
+get r8 d0 r0
+add r0 r0 1
+get r9 d0 r0
+add r0 r0 1
+get r10 d0 r0
+add r0 r0 1
+get r11 d0 r0
+add r0 r0 1
+get r13 d0 r0
+getd r0 r7 12
+bne r0 r11 Bad
+getd r0 r8 12
+bne r0 r13 Bad
+getd r0 r7 17
+beqz r0 SrcOwnerOK
+bne r0 r12 Bad
+SrcOwnerOK:
+getd r0 r8 17
+beqz r0 SinkOwnerOK
+bne r0 r12 Bad
+SinkOwnerOK:
+move sp 0
+move ra 0
+move r1 0
+Sum:
+bge r1 r6 Write
+mul r0 r1 8
+add r0 r0 33
+get r5 d0 r0
+bne r5 r7 SumSink
+add r0 r0 3
+get r5 d0 r0
+add sp sp r5
+SumSink:
+add r0 r0 1
+get r5 d0 r0
+bne r5 r8 SumNext
+sub r0 r0 2
+get r5 d0 r0
+add ra ra r5
+SumNext:
+add r1 r1 1
+j Sum
+Write:
+putd r7 13 r3
+putd r7 14 sp
+putd r7 15 0
+putd r7 16 1
+putd r7 17 r12
+putd r7 18 r3
+putd r7 19 r11
+putd r8 13 r3
+putd r8 14 0
+putd r8 15 ra
+putd r8 16 2
+putd r8 17 r12
+putd r8 18 r3
+putd r8 19 r13
+add r4 r4 1
+j Flow
+Stable:
+get r0 d0 2
+bne r0 r14 Bad
+poke 6 1
+j Reply
+Bad:
+poke 6 -1
+Reply:
+poke 5 r15
+j Loop

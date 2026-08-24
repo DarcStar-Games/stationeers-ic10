@@ -1,0 +1,96 @@
+# Dependency Gate ABI2. d0 Planner,d1 DriverRouter,d2 JobSelector.
+poke 0 31416012
+poke 1 2
+Loop:
+yield
+get r15 db 9
+get r0 db 10
+beq r15 r0 Loop
+get r0 d2 5
+bne r0 1 Bad
+get r2 d2 7
+get r3 d2 6
+get r4 d2 16
+get r5 d2 8
+get r6 d2 10
+get r7 d2 13
+get r8 d2 14
+blez r2 Bad
+put d0 2 r2
+put d0 3 r3
+put d0 4 r4
+put d0 5 r5
+put d0 6 r6
+put d0 7 r7
+put d0 8 r8
+put d0 9 r15
+WaitPlan:
+yield
+get r0 d0 10
+bne r0 r15 WaitPlan
+get r0 d0 11
+beq r0 1 Dispatch
+beq r0 2 WaitActive
+beq r0 3 WaitPublish
+beq r0 4 Probe
+beq r0 -2 QuoteOverflow
+beq r0 -4 Depth
+beq r0 -5 NoProducer
+beq r0 -6 Capacity
+beq r0 -31 ChildFail
+beq r0 -32 Cycle
+j Bad
+Dispatch:
+get r0 d2 7
+bne r0 r2 Loop
+get r0 d2 16
+bne r0 r4 Loop
+put d1 9 r15
+WaitDriver:
+yield
+get r0 d1 10
+bne r0 r15 WaitDriver
+get r0 d1 11
+poke 11 r0
+get r0 d1 12
+poke 12 r0
+j Reply
+WaitActive:
+move r0 101
+j WaitResource
+WaitPublish:
+move r0 102
+j WaitResource
+Probe:
+move r0 103
+j WaitResource
+QuoteOverflow:
+move r0 104
+j WaitResource
+Depth:
+move r0 105
+j WaitResource
+NoProducer:
+move r0 106
+WaitResource:
+poke 11 8
+poke 12 r0
+j Reply
+Capacity:
+poke 11 10
+poke 12 107
+j Reply
+ChildFail:
+poke 11 11
+poke 12 -31
+j Reply
+Cycle:
+poke 11 11
+poke 12 -32
+j Reply
+Bad:
+poke 11 11
+poke 12 -30
+Reply:
+poke 10 r15
+j Loop

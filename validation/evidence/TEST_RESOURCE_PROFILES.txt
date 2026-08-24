@@ -1,0 +1,5 @@
+Unified Resource Profile catalog schema: PASS
+ - 39 profiles placed at runtime into FLUID=10, ITEM=26+1, POWER=1, ENERGY=1 across 5 generic Stores
+ - 7 sparse relocatable loaders contain only whole 16-cell profile items
+ - no Loader preassigns a Store; Router capacity placement leaves no outstanding reservations
+ - View resolves all profiles from an arbitrary Store anchor; human-name comments preserved

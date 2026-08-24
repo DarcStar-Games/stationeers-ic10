@@ -1,0 +1,93 @@
+# Normalize TRANSFORM/PRINT ITEM requirements.
+poke 0 31416002
+poke 1 1
+Loop:
+yield
+get r15 db 6
+get r0 db 7
+beq r15 r0 Loop
+get r2 db 2
+get r3 db 3
+get r4 db 4
+get r5 db 5
+blez r4 Bad
+beq r2 1 Transform
+beq r2 2 Print
+j Bad
+Transform:
+put d0 2 r3
+get r14 d0 6
+get r0 d0 68
+bne r0 r3 Loop
+get r0 d0 69
+bne r0 1 Bad
+get r6 d0 3
+get r7 d0 4
+get r8 d0 33
+get r9 d0 35
+bltz r5 THead
+bge r5 r7 Bad
+mul r0 r5 4
+add r0 r0 8
+add r1 r0 1
+get r10 d0 r1
+add r1 r0 3
+get r11 d0 r1
+mul r11 r11 r4
+j TCheck
+THead:
+move r10 0
+move r11 0
+TCheck:
+get r0 d0 6
+bne r0 r14 Loop
+j Publish
+Print:
+put d1 2 r3
+get r14 d1 6
+get r0 d1 41
+bne r0 r3 Loop
+get r0 d1 7
+bne r0 1 Bad
+get r6 d1 4
+get r7 d1 5
+move r8 r3
+move r9 1
+bltz r5 PHead
+bge r5 r7 Bad
+mul r0 r5 2
+add r0 r0 8
+get r10 d1 r0
+add r0 r0 1
+get r11 d1 r0
+mul r11 r11 r4
+put d2 2 r10
+put d2 3 r15
+WaitAlias:
+yield
+get r0 d2 4
+bne r0 r15 WaitAlias
+get r0 d2 5
+bne r0 1 Bad
+get r10 d2 6
+j PCheck
+PHead:
+move r10 0
+move r11 0
+PCheck:
+get r0 d1 6
+bne r0 r14 Loop
+Publish:
+poke 9 r6
+poke 10 r7
+poke 11 r8
+poke 12 r9
+poke 13 r10
+poke 14 r11
+poke 8 1
+poke 7 r15
+j Loop
+Bad:
+poke 8 -1
+poke 7 r15
+j Loop

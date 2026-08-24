@@ -1,0 +1,119 @@
+# Manufacturing Scheduler ABI1: d0 Job Gateway,d1 Job Selector,d2 Dependency Gate.
+Boot:
+get r0 db 0
+beq r0 31415995 Loop
+clr db
+poke 0 31415995
+poke 1 1
+poke 21 -1
+Loop:
+yield
+get r0 db 20
+beqz r0 Select
+beq r0 1 SelectWait
+beq r0 2 StoreWait
+j Drive
+Select:
+get r0 db 30
+add r0 r0 1
+poke 30 r0
+poke 31 r0
+get r1 db 23
+put d1 2 r1
+put d1 3 r0
+poke 20 1
+j Loop
+SelectWait:
+get r15 db 31
+get r0 d1 4
+bne r0 r15 Loop
+get r0 d1 5
+beq r0 1 Selected
+poke 23 0
+poke 20 0
+j Loop
+Selected:
+get r0 d1 6
+poke 21 r0
+get r0 d1 15
+poke 25 r0
+get r0 d1 16
+poke 26 r0
+move r4 2
+move r5 0
+j Request
+StoreWait:
+get r15 db 29
+get r0 d0 8
+bne r0 r15 Loop
+get r0 d0 9
+bne r0 1 Release
+get r0 db 28
+poke 25 r0
+get r1 db 26
+add r1 r1 1
+poke 26 r1
+beq r0 2 MaybeDispatch
+beq r0 7 Release
+beq r0 11 Release
+blt r0 8 Continue
+ble r0 10 WaitRelease
+Continue:
+poke 20 3
+j Loop
+WaitRelease:
+get r1 d1 7
+poke 23 r1
+j Release
+MaybeDispatch:
+get r8 db 30
+add r8 r8 1
+poke 30 r8
+put d2 9 r8
+poke 27 r8
+j Continue
+Drive:
+get r0 d2 10
+get r1 db 27
+bne r0 r1 Loop
+get r4 d2 11
+get r5 d2 12
+get r2 db 25
+beq r4 r2 Loop
+beq r4 11 Fault
+blt r4 8 Chain
+ble r4 10 WaitTarget
+j Fault
+Chain:
+blt r4 r2 Fault
+add r4 r2 1
+move r5 0
+j Request
+WaitTarget:
+blt r2 2 Fault
+bgt r2 4 Fault
+j Request
+Fault:
+move r4 11
+bltz r5 Request
+move r5 -1
+Request:
+get r0 db 30
+add r0 r0 1
+poke 30 r0
+poke 28 r4
+poke 29 r0
+put d0 11 2
+get r1 db 21
+put d0 12 r1
+get r1 db 26
+put d0 13 r1
+put d0 14 r4
+put d0 15 r5
+put d0 7 r0
+poke 20 2
+j Loop
+Release:
+poke 20 0
+poke 21 -1
+j Loop

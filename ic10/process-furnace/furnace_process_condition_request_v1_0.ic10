@@ -1,0 +1,95 @@
+# Furnace Process Condition ABI1. d0 Transform View,d1 furnace.
+poke 0 31416048
+poke 1 1
+poke 11 0
+Loop:
+yield
+get r0 db 17
+beqz r0 Inactive
+bdns d0 Bad
+bdns d1 Bad
+get r14 d0 6
+blez r14 Bad
+get r0 d0 0
+bne r0 31415952 Bad
+get r0 d0 1
+bne r0 4 Bad
+get r15 d0 68
+get r0 d0 69
+bne r0 1 Bad
+get r0 d0 6
+bne r0 r14 Loop
+l r2 d1 PrefabHash
+seq r0 r2 HASH("StructureFurnace")
+seq r1 r2 HASH("StructureAdvancedFurnace")
+or r0 r0 r1
+beqz r0 Bad
+l r3 d1 Pressure
+l r4 d1 Temperature
+bnan r3 Bad
+bnan r4 Bad
+get r5 d0 64
+get r6 d0 65
+get r7 d0 66
+get r8 d0 67
+bltz r5 Bad
+blez r7 Bad
+move r9 0
+blt r3 r5 PBad
+blez r6 PGood
+bgt r3 r6 PBad
+j PGood
+PBad:
+or r9 r9 1
+PGood:
+blt r4 r7 TBad
+blez r8 TGood
+bgt r4 r8 TBad
+j TGood
+TBad:
+or r9 r9 2
+TGood:
+move r10 r5
+blez r6 PHint
+add r10 r5 r6
+div r10 r10 2
+PHint:
+move r12 r7
+blez r8 THint
+blt r8 100000 TAvg
+j THint
+TAvg:
+add r12 r7 r8
+div r12 r12 2
+THint:
+l r13 d1 ReferenceId
+get r2 db 16
+get r3 db 18
+poke 2 r13
+poke 3 r2
+poke 4 r5
+poke 5 r6
+poke 6 r7
+poke 7 r8
+poke 8 r9
+poke 9 r15
+poke 10 1
+poke 12 1
+poke 13 r3
+poke 14 r10
+poke 15 r12
+j Publish
+Inactive:
+poke 10 0
+poke 12 1
+poke 8 0
+j Publish
+Bad:
+poke 10 0
+poke 12 -1
+poke 8 0
+Publish:
+get r0 db 11
+add r0 r0 1
+poke 11 r0
+j Loop

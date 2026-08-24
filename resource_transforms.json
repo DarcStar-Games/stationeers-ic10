@@ -1,0 +1,754 @@
+{
+  "schema": 4,
+  "transforms": [
+    {
+      "slug": "smelt_iron",
+      "name": "SmeltIron",
+      "display_name": "Smelt Iron Ore -> Iron Ingot",
+      "inputs": [
+        {
+          "resource_class": 2,
+          "resource_type": 1758427767,
+          "resource_type_name": "ItemIronOre",
+          "human_name": "Ore (Iron)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "outputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -1301215609,
+          "resource_type_name": "ItemIronIngot",
+          "human_name": "Ingot (Iron)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "conditions": {
+        "min_pressure_kpa": 100,
+        "max_pressure_kpa": 100000,
+        "min_temperature_k": 800,
+        "max_temperature_k": 100000
+      },
+      "notes": "Iron ore to Iron ingot, 1:1",
+      "required_capability_mask": 1,
+      "required_capabilities": [
+        "SMELT_BASIC"
+      ]
+    },
+    {
+      "slug": "smelt_copper",
+      "name": "SmeltCopper",
+      "display_name": "Smelt Copper Ore -> Copper Ingot",
+      "inputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -707307845,
+          "resource_type_name": "ItemCopperOre",
+          "human_name": "Ore (Copper)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "outputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -404336834,
+          "resource_type_name": "ItemCopperIngot",
+          "human_name": "Ingot (Copper)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "conditions": {
+        "min_pressure_kpa": 100,
+        "max_pressure_kpa": 100000,
+        "min_temperature_k": 600,
+        "max_temperature_k": 100000
+      },
+      "notes": "Copper ore to Copper ingot, 1:1",
+      "required_capability_mask": 1,
+      "required_capabilities": [
+        "SMELT_BASIC"
+      ]
+    },
+    {
+      "slug": "smelt_gold",
+      "name": "SmeltGold",
+      "display_name": "Smelt Gold Ore -> Gold Ingot",
+      "inputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -1348105509,
+          "resource_type_name": "ItemGoldOre",
+          "human_name": "Ore (Gold)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "outputs": [
+        {
+          "resource_class": 2,
+          "resource_type": 226410516,
+          "resource_type_name": "ItemGoldIngot",
+          "human_name": "Ingot (Gold)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "conditions": {
+        "min_pressure_kpa": 100,
+        "max_pressure_kpa": 100000,
+        "min_temperature_k": 600,
+        "max_temperature_k": 100000
+      },
+      "notes": "Gold ore to Gold ingot, 1:1",
+      "required_capability_mask": 1,
+      "required_capabilities": [
+        "SMELT_BASIC"
+      ]
+    },
+    {
+      "slug": "smelt_lead",
+      "name": "SmeltLead",
+      "display_name": "Smelt Lead Ore -> Lead Ingot",
+      "inputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -190236170,
+          "resource_type_name": "ItemLeadOre",
+          "human_name": "Ore (Lead)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "outputs": [
+        {
+          "resource_class": 2,
+          "resource_type": 2134647745,
+          "resource_type_name": "ItemLeadIngot",
+          "human_name": "Ingot (Lead)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "conditions": {
+        "min_pressure_kpa": 100,
+        "max_pressure_kpa": 100000,
+        "min_temperature_k": 400,
+        "max_temperature_k": 100000
+      },
+      "notes": "Lead ore to Lead ingot, 1:1",
+      "required_capability_mask": 1,
+      "required_capabilities": [
+        "SMELT_BASIC"
+      ]
+    },
+    {
+      "slug": "smelt_nickel",
+      "name": "SmeltNickel",
+      "display_name": "Smelt Nickel Ore -> Nickel Ingot",
+      "inputs": [
+        {
+          "resource_class": 2,
+          "resource_type": 1830218956,
+          "resource_type_name": "ItemNickelOre",
+          "human_name": "Ore (Nickel)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "outputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -1406385572,
+          "resource_type_name": "ItemNickelIngot",
+          "human_name": "Ingot (Nickel)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "conditions": {
+        "min_pressure_kpa": 100,
+        "max_pressure_kpa": 100000,
+        "min_temperature_k": 800,
+        "max_temperature_k": 100000
+      },
+      "notes": "Nickel ore to Nickel ingot, 1:1",
+      "required_capability_mask": 1,
+      "required_capabilities": [
+        "SMELT_BASIC"
+      ]
+    },
+    {
+      "slug": "smelt_silicon",
+      "name": "SmeltSilicon",
+      "display_name": "Smelt Silicon Ore -> Silicon Ingot",
+      "inputs": [
+        {
+          "resource_class": 2,
+          "resource_type": 1103972403,
+          "resource_type_name": "ItemSiliconOre",
+          "human_name": "Ore (Silicon)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "outputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -290196476,
+          "resource_type_name": "ItemSiliconIngot",
+          "human_name": "Ingot (Silicon)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "conditions": {
+        "min_pressure_kpa": 100,
+        "max_pressure_kpa": 100000,
+        "min_temperature_k": 900,
+        "max_temperature_k": 100000
+      },
+      "notes": "Silicon ore to Silicon ingot, 1:1",
+      "required_capability_mask": 1,
+      "required_capabilities": [
+        "SMELT_BASIC"
+      ]
+    },
+    {
+      "slug": "smelt_silver",
+      "name": "SmeltSilver",
+      "display_name": "Smelt Silver Ore -> Silver Ingot",
+      "inputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -916518678,
+          "resource_type_name": "ItemSilverOre",
+          "human_name": "Ore (Silver)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "outputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -929742000,
+          "resource_type_name": "ItemSilverIngot",
+          "human_name": "Ingot (Silver)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "conditions": {
+        "min_pressure_kpa": 100,
+        "max_pressure_kpa": 100000,
+        "min_temperature_k": 600,
+        "max_temperature_k": 100000
+      },
+      "notes": "Silver ore to Silver ingot, 1:1",
+      "required_capability_mask": 1,
+      "required_capabilities": [
+        "SMELT_BASIC"
+      ]
+    },
+    {
+      "slug": "alloy_steel",
+      "name": "AlloySteel",
+      "display_name": "Alloy Steel",
+      "inputs": [
+        {
+          "resource_class": 2,
+          "resource_type": 1758427767,
+          "resource_type_name": "ItemIronOre",
+          "human_name": "Ore (Iron)",
+          "unit": 2,
+          "quantity": 3
+        },
+        {
+          "resource_class": 2,
+          "resource_type": 1724793494,
+          "resource_type_name": "ItemCoalOre",
+          "human_name": "Ore (Coal)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "outputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -654790771,
+          "resource_type_name": "ItemSteelIngot",
+          "human_name": "Ingot (Steel)",
+          "unit": 2,
+          "quantity": 4
+        }
+      ],
+      "conditions": {
+        "min_pressure_kpa": 1000,
+        "max_pressure_kpa": 100000,
+        "min_temperature_k": 900,
+        "max_temperature_k": 100000
+      },
+      "notes": "3 Iron + 1 Coal -> 4 Steel",
+      "required_capability_mask": 2,
+      "required_capabilities": [
+        "FURNACE_ALLOY"
+      ]
+    },
+    {
+      "slug": "alloy_electrum",
+      "name": "AlloyElectrum",
+      "display_name": "Alloy Electrum",
+      "inputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -1348105509,
+          "resource_type_name": "ItemGoldOre",
+          "human_name": "Ore (Gold)",
+          "unit": 2,
+          "quantity": 1
+        },
+        {
+          "resource_class": 2,
+          "resource_type": -916518678,
+          "resource_type_name": "ItemSilverOre",
+          "human_name": "Ore (Silver)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "outputs": [
+        {
+          "resource_class": 2,
+          "resource_type": 502280180,
+          "resource_type_name": "ItemElectrumIngot",
+          "human_name": "Ingot (Electrum)",
+          "unit": 2,
+          "quantity": 2
+        }
+      ],
+      "conditions": {
+        "min_pressure_kpa": 800,
+        "max_pressure_kpa": 2400,
+        "min_temperature_k": 600,
+        "max_temperature_k": 100000
+      },
+      "notes": "1 Gold + 1 Silver -> 2 Electrum",
+      "required_capability_mask": 2,
+      "required_capabilities": [
+        "FURNACE_ALLOY"
+      ]
+    },
+    {
+      "slug": "alloy_invar",
+      "name": "AlloyInvar",
+      "display_name": "Alloy Invar",
+      "inputs": [
+        {
+          "resource_class": 2,
+          "resource_type": 1758427767,
+          "resource_type_name": "ItemIronOre",
+          "human_name": "Ore (Iron)",
+          "unit": 2,
+          "quantity": 1
+        },
+        {
+          "resource_class": 2,
+          "resource_type": 1830218956,
+          "resource_type_name": "ItemNickelOre",
+          "human_name": "Ore (Nickel)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "outputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -297990285,
+          "resource_type_name": "ItemInvarIngot",
+          "human_name": "Ingot (Invar)",
+          "unit": 2,
+          "quantity": 2
+        }
+      ],
+      "conditions": {
+        "min_pressure_kpa": 18000,
+        "max_pressure_kpa": 20000,
+        "min_temperature_k": 1200,
+        "max_temperature_k": 1500
+      },
+      "notes": "1 Iron + 1 Nickel -> 2 Invar",
+      "required_capability_mask": 2,
+      "required_capabilities": [
+        "FURNACE_ALLOY"
+      ]
+    },
+    {
+      "slug": "alloy_constantan",
+      "name": "AlloyConstantan",
+      "display_name": "Alloy Constantan",
+      "inputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -707307845,
+          "resource_type_name": "ItemCopperOre",
+          "human_name": "Ore (Copper)",
+          "unit": 2,
+          "quantity": 1
+        },
+        {
+          "resource_class": 2,
+          "resource_type": 1830218956,
+          "resource_type_name": "ItemNickelOre",
+          "human_name": "Ore (Nickel)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "outputs": [
+        {
+          "resource_class": 2,
+          "resource_type": 1058547521,
+          "resource_type_name": "ItemConstantanIngot",
+          "human_name": "Ingot (Constantan)",
+          "unit": 2,
+          "quantity": 2
+        }
+      ],
+      "conditions": {
+        "min_pressure_kpa": 20000,
+        "max_pressure_kpa": 100000,
+        "min_temperature_k": 1000,
+        "max_temperature_k": 10000
+      },
+      "notes": "1 Copper + 1 Nickel -> 2 Constantan",
+      "required_capability_mask": 2,
+      "required_capabilities": [
+        "FURNACE_ALLOY"
+      ]
+    },
+    {
+      "slug": "alloy_solder",
+      "name": "AlloySolder",
+      "display_name": "Alloy Solder",
+      "inputs": [
+        {
+          "resource_class": 2,
+          "resource_type": 1758427767,
+          "resource_type_name": "ItemIronOre",
+          "human_name": "Ore (Iron)",
+          "unit": 2,
+          "quantity": 1
+        },
+        {
+          "resource_class": 2,
+          "resource_type": -190236170,
+          "resource_type_name": "ItemLeadOre",
+          "human_name": "Ore (Lead)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "outputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -82508479,
+          "resource_type_name": "ItemSolderIngot",
+          "human_name": "Ingot (Solder)",
+          "unit": 2,
+          "quantity": 2
+        }
+      ],
+      "conditions": {
+        "min_pressure_kpa": 1000,
+        "max_pressure_kpa": 100000,
+        "min_temperature_k": 350,
+        "max_temperature_k": 550
+      },
+      "notes": "1 Iron + 1 Lead -> 2 Solder",
+      "required_capability_mask": 2,
+      "required_capabilities": [
+        "FURNACE_ALLOY"
+      ]
+    },
+    {
+      "slug": "alloy_astroloy",
+      "name": "AlloyAstroloy",
+      "display_name": "Alloy Astroloy",
+      "inputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -654790771,
+          "resource_type_name": "ItemSteelIngot",
+          "human_name": "Ingot (Steel)",
+          "unit": 2,
+          "quantity": 2
+        },
+        {
+          "resource_class": 2,
+          "resource_type": -707307845,
+          "resource_type_name": "ItemCopperOre",
+          "human_name": "Ore (Copper)",
+          "unit": 2,
+          "quantity": 1
+        },
+        {
+          "resource_class": 2,
+          "resource_type": -983091249,
+          "resource_type_name": "ItemCobaltOre",
+          "human_name": "Ore (Cobalt)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "outputs": [
+        {
+          "resource_class": 2,
+          "resource_type": 412924554,
+          "resource_type_name": "ItemAstroloyIngot",
+          "human_name": "Ingot (Astroloy)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "conditions": {
+        "min_pressure_kpa": 30000,
+        "max_pressure_kpa": 40000,
+        "min_temperature_k": 1000,
+        "max_temperature_k": 100000
+      },
+      "notes": "2 Steel + 1 Copper + 1 Cobalt -> 1 Astroloy",
+      "required_capability_mask": 4,
+      "required_capabilities": [
+        "ADVANCED_ALLOY"
+      ]
+    },
+    {
+      "slug": "alloy_hastelloy",
+      "name": "AlloyHastelloy",
+      "display_name": "Alloy Hastelloy",
+      "inputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -916518678,
+          "resource_type_name": "ItemSilverOre",
+          "human_name": "Ore (Silver)",
+          "unit": 2,
+          "quantity": 2
+        },
+        {
+          "resource_class": 2,
+          "resource_type": 1830218956,
+          "resource_type_name": "ItemNickelOre",
+          "human_name": "Ore (Nickel)",
+          "unit": 2,
+          "quantity": 1
+        },
+        {
+          "resource_class": 2,
+          "resource_type": -983091249,
+          "resource_type_name": "ItemCobaltOre",
+          "human_name": "Ore (Cobalt)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "outputs": [
+        {
+          "resource_class": 2,
+          "resource_type": 1579842814,
+          "resource_type_name": "ItemHastelloyIngot",
+          "human_name": "Ingot (Hastelloy)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "conditions": {
+        "min_pressure_kpa": 25000,
+        "max_pressure_kpa": 30000,
+        "min_temperature_k": 950,
+        "max_temperature_k": 1000
+      },
+      "notes": "2 Silver + 1 Nickel + 1 Cobalt -> 1 Hastelloy",
+      "required_capability_mask": 4,
+      "required_capabilities": [
+        "ADVANCED_ALLOY"
+      ]
+    },
+    {
+      "slug": "alloy_inconel",
+      "name": "AlloyInconel",
+      "display_name": "Alloy Inconel",
+      "inputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -1348105509,
+          "resource_type_name": "ItemGoldOre",
+          "human_name": "Ore (Gold)",
+          "unit": 2,
+          "quantity": 2
+        },
+        {
+          "resource_class": 2,
+          "resource_type": 1830218956,
+          "resource_type_name": "ItemNickelOre",
+          "human_name": "Ore (Nickel)",
+          "unit": 2,
+          "quantity": 1
+        },
+        {
+          "resource_class": 2,
+          "resource_type": -654790771,
+          "resource_type_name": "ItemSteelIngot",
+          "human_name": "Ingot (Steel)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "outputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -787796599,
+          "resource_type_name": "ItemInconelIngot",
+          "human_name": "Ingot (Inconel)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "conditions": {
+        "min_pressure_kpa": 23500,
+        "max_pressure_kpa": 24000,
+        "min_temperature_k": 600,
+        "max_temperature_k": 100000
+      },
+      "notes": "2 Gold + 1 Nickel + 1 Steel -> 1 Inconel",
+      "required_capability_mask": 4,
+      "required_capabilities": [
+        "ADVANCED_ALLOY"
+      ]
+    },
+    {
+      "slug": "alloy_stellite",
+      "name": "AlloyStellite",
+      "display_name": "Alloy Stellite",
+      "inputs": [
+        {
+          "resource_class": 2,
+          "resource_type": 1103972403,
+          "resource_type_name": "ItemSiliconOre",
+          "human_name": "Ore (Silicon)",
+          "unit": 2,
+          "quantity": 2
+        },
+        {
+          "resource_class": 2,
+          "resource_type": -916518678,
+          "resource_type_name": "ItemSilverOre",
+          "human_name": "Ore (Silver)",
+          "unit": 2,
+          "quantity": 1
+        },
+        {
+          "resource_class": 2,
+          "resource_type": -983091249,
+          "resource_type_name": "ItemCobaltOre",
+          "human_name": "Ore (Cobalt)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "outputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -1897868623,
+          "resource_type_name": "ItemStelliteIngot",
+          "human_name": "Ingot (Stellite)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "conditions": {
+        "min_pressure_kpa": 10000,
+        "max_pressure_kpa": 20000,
+        "min_temperature_k": 1800,
+        "max_temperature_k": 100000
+      },
+      "notes": "2 Silicon + 1 Silver + 1 Cobalt -> 1 Stellite",
+      "required_capability_mask": 4,
+      "required_capabilities": [
+        "ADVANCED_ALLOY"
+      ]
+    },
+    {
+      "slug": "alloy_waspaloy",
+      "name": "AlloyWaspaloy",
+      "display_name": "Alloy Waspaloy",
+      "inputs": [
+        {
+          "resource_class": 2,
+          "resource_type": -190236170,
+          "resource_type_name": "ItemLeadOre",
+          "human_name": "Ore (Lead)",
+          "unit": 2,
+          "quantity": 2
+        },
+        {
+          "resource_class": 2,
+          "resource_type": -916518678,
+          "resource_type_name": "ItemSilverOre",
+          "human_name": "Ore (Silver)",
+          "unit": 2,
+          "quantity": 1
+        },
+        {
+          "resource_class": 2,
+          "resource_type": 1830218956,
+          "resource_type_name": "ItemNickelOre",
+          "human_name": "Ore (Nickel)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "outputs": [
+        {
+          "resource_class": 2,
+          "resource_type": 156348098,
+          "resource_type_name": "ItemWaspaloyIngot",
+          "human_name": "Ingot (Waspaloy)",
+          "unit": 2,
+          "quantity": 1
+        }
+      ],
+      "conditions": {
+        "min_pressure_kpa": 50000,
+        "max_pressure_kpa": 100000,
+        "min_temperature_k": 400,
+        "max_temperature_k": 800
+      },
+      "notes": "2 Lead + 1 Silver + 1 Nickel -> 1 Waspaloy",
+      "required_capability_mask": 4,
+      "required_capabilities": [
+        "ADVANCED_ALLOY"
+      ]
+    }
+  ],
+  "catalog_schema_id": "CatalogSchema.ResourceTransform",
+  "catalog_schema_version": 4,
+  "catalog_instance_id": "Catalog.ResourceTransforms.Schema4",
+  "cell_block_width": 4,
+  "units": {
+    "PRESSURE": "kPa",
+    "TEMPERATURE": "K"
+  },
+  "input_policy": "canonical physical item forms; furnace reagent-equivalent alternatives are not expanded in Transform Profile ABI3",
+  "processor_capability_model": {
+    "SMELT_BASIC": 1,
+    "FURNACE_ALLOY": 2,
+    "ADVANCED_ALLOY": 4,
+    "StructureArcFurnace": 1,
+    "StructureFurnace": 3,
+    "StructureAdvancedFurnace": 7
+  }
+}

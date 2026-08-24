@@ -1,0 +1,112 @@
+# Existing-plan decision + ref-aware cancel.
+poke 0 31416019
+poke 1 1
+Loop:
+yield
+get r15 db 10
+get r0 db 11
+beq r15 r0 Loop
+get r2 db 2
+get r3 db 9
+blez r2 Bad
+put d0 12 1
+put d0 13 r2
+put d0 9 r15
+WaitPlan:
+yield
+get r0 d0 10
+bne r0 r15 WaitPlan
+get r0 d0 11
+beq r0 -2 Missing
+bne r0 1 Bad
+get r6 d0 33
+get r7 d0 34
+beq r3 1 Cleanup
+get r0 db 5
+put d1 2 r0
+get r0 db 6
+put d1 3 r0
+get r0 db 7
+put d1 4 r0
+put d1 5 r6
+put d1 6 r7
+get r0 d0 36
+put d1 7 r0
+get r0 d0 37
+put d1 8 r0
+get r0 d0 38
+put d1 9 r0
+get r0 d0 39
+put d1 10 r0
+put d1 11 r15
+WaitEval:
+yield
+get r0 d1 12
+bne r0 r15 WaitEval
+get r0 d1 13
+beq r0 1 ClearReady
+beq r0 2 NoAction
+beq r0 3 NoAction
+beq r0 4 NoAction
+beq r0 5 Replan
+beq r0 -3 Replan
+beq r0 -4 ChildFail
+j NoAction
+Replan:
+jal Release
+move r0 5
+move r1 1
+j Reply
+ChildFail:
+move r0 -31
+move r1 1
+j Reply
+ClearReady:
+move r0 1
+move r1 1
+j Reply
+Cleanup:
+jal Release
+move r0 1
+move r1 1
+j Reply
+Missing:
+select r0 r3 1 5
+move r1 0
+j Reply
+NoAction:
+move r1 0
+j Reply
+Bad:
+move r0 -1
+move r1 0
+Reply:
+poke 12 r0
+poke 13 r1
+poke 11 r15
+j Loop
+Release:
+put d2 2 r2
+put d2 3 r6
+put d2 4 r7
+put d2 5 r15
+WaitRelease:
+yield
+get r0 d2 6
+bne r0 r15 WaitRelease
+get r0 d2 8
+beqz r0 ReleaseDone
+put d3 36 2
+get r0 d2 9
+put d3 37 r0
+get r0 d2 10
+put d3 38 r0
+put d3 39 12
+put d3 40 -20
+put d3 32 r15
+WaitCancel:
+yield
+get r0 d3 33
+bne r0 r15 WaitCancel
+ReleaseDone:
+j ra

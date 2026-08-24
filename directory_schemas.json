@@ -1,0 +1,358 @@
+{
+  "format": "GENERIC_DIRECTORY_SCHEMAS_V10",
+  "snapshot_host": {
+    "generic_magic": 31415981,
+    "data_base": 32,
+    "max_entry_width": 3,
+    "max_capacity": 64,
+    "publication": "sorted_double_buffer",
+    "request_generation_slot": 14,
+    "ack_generation_slot": 15,
+    "command_slot": 16,
+    "candidate_base": 17,
+    "adapter_bridge": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+    "input_model": "DIRECTORY_ADAPTER_ABI_V2 through generic bridge",
+    "publication_header": {
+      "magic_slot": 0,
+      "magic": 31415981,
+      "abi_slot": 1,
+      "abi": 1,
+      "schema_id_slot": 9,
+      "schema_version_slot": 10,
+      "entry_width_slot": 11,
+      "capacity_slot": 12
+    },
+    "boot_marker_slot": 31,
+    "boot_marker_value": 31415981
+  },
+  "registry_host": {
+    "publication": "persistent_direct_index_seqlock",
+    "adapter_input": "DIRECTORY_ADAPTER_ABI_V2",
+    "registry_entry_width": 6,
+    "registry_capacity": 64,
+    "registry_base": 64,
+    "publication_header": {
+      "magic_slot": 0,
+      "magic": 31415982,
+      "abi_slot": 1,
+      "abi": 3,
+      "schema_id_slot": 2,
+      "schema_version_slot": 19,
+      "entry_width_slot": 20,
+      "capacity_slot": 21
+    },
+    "publication_sequence_slot": 23
+  },
+  "schemas": [
+    {
+      "schema_id": "DirectorySchema.Controller",
+      "schema_version": 1,
+      "mode": "snapshot",
+      "entry_width": 2,
+      "capacity": 64,
+      "fields": [
+        "ControllerType",
+        "ReferenceId"
+      ],
+      "sort_key": [
+        "ControllerType",
+        "ReferenceId"
+      ],
+      "adapter": "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10",
+      "bridge": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+      "host": "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    },
+    {
+      "schema_id": "DirectorySchema.PressureGridLink",
+      "schema_version": 1,
+      "mode": "snapshot",
+      "entry_width": 3,
+      "capacity": 64,
+      "fields": [
+        "LinkReferenceId",
+        "SourceReferenceId",
+        "SinkReferenceId"
+      ],
+      "sort_key": [
+        "LinkReferenceId",
+        "SourceReferenceId",
+        "SinkReferenceId"
+      ],
+      "adapter": "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10",
+      "bridge": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+      "host": "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    },
+    {
+      "schema_id": "DirectorySchema.ResourceEndpoint",
+      "schema_version": 1,
+      "mode": "snapshot",
+      "entry_width": 3,
+      "capacity": 64,
+      "fields": [
+        "ResourceClass",
+        "ResourceType",
+        "ReferenceId"
+      ],
+      "sort_key": [
+        "ResourceClass",
+        "ResourceType",
+        "ReferenceId"
+      ],
+      "adapter": "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10",
+      "bridge": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+      "host": "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    },
+    {
+      "schema_id": "DirectorySchema.ResourceReservation",
+      "schema_version": 1,
+      "mode": "snapshot",
+      "entry_width": 3,
+      "capacity": 64,
+      "fields": [
+        "ResourceClass",
+        "ResourceType",
+        "ReservationReferenceId"
+      ],
+      "sort_key": [
+        "ResourceClass",
+        "ResourceType",
+        "ReservationReferenceId"
+      ],
+      "adapter": "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10",
+      "bridge": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+      "host": "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    },
+    {
+      "schema_id": "DirectorySchema.PowerReservation",
+      "schema_version": 1,
+      "mode": "snapshot",
+      "entry_width": 3,
+      "capacity": 64,
+      "fields": [
+        "DispatchKey",
+        "PolicyId",
+        "ReservationReferenceId"
+      ],
+      "sort_key": [
+        "DispatchKey",
+        "PolicyId",
+        "ReservationReferenceId"
+      ],
+      "adapter": "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10",
+      "bridge": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+      "host": "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    },
+    {
+      "schema_id": "DirectorySchema.ResourceLink",
+      "schema_version": 1,
+      "mode": "snapshot",
+      "entry_width": 1,
+      "capacity": 64,
+      "fields": [
+        "ReferenceId"
+      ],
+      "sort_key": [
+        "ReferenceId"
+      ],
+      "adapter": "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10",
+      "bridge": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+      "host": "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    },
+    {
+      "schema_id": "DirectorySchema.Printer",
+      "schema_version": 2,
+      "mode": "snapshot",
+      "entry_width": 3,
+      "capacity": 64,
+      "fields": [
+        "ReferenceId",
+        "FamilyHash",
+        "ProcessorSpec"
+      ],
+      "sort_key": [
+        "ReferenceId",
+        "FamilyHash",
+        "ProcessorSpec"
+      ],
+      "adapter": "ic10/printer-directory/printer_directory_adapter_v1_0.ic10",
+      "bridge": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+      "host": "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10",
+      "families": [
+        {
+          "family_hash": "Printer.Autolathe",
+          "base_prefabs": [
+            "StructureAutolathe"
+          ],
+          "tier2_prefabs": [
+            "StructureAutolatheMKII"
+          ]
+        },
+        {
+          "family_hash": "Printer.ElectronicsPrinter",
+          "base_prefabs": [
+            "StructureElectronicsPrinter"
+          ],
+          "tier2_prefabs": [
+            "StructureElectronicsPrinterMKII"
+          ]
+        },
+        {
+          "family_hash": "Printer.HydraulicPipeBender",
+          "base_prefabs": [
+            "StructureHydraulicPipeBender",
+            "StructurePipeBender"
+          ],
+          "tier2_prefabs": [
+            "StructurePipeBenderMKII"
+          ]
+        },
+        {
+          "family_hash": "Printer.ToolManufactory",
+          "base_prefabs": [
+            "StructureToolManufactory",
+            "StructureToolmaker"
+          ],
+          "tier2_prefabs": [
+            "StructureToolmakerMKII"
+          ]
+        },
+        {
+          "family_hash": "Printer.SecurityPrinter",
+          "base_prefabs": [
+            "StructureSecurityPrinter"
+          ],
+          "fixed_capability": 1
+        },
+        {
+          "family_hash": "Printer.RocketManufactory",
+          "base_prefabs": [
+            "StructureRocketManufactory"
+          ],
+          "fixed_capability": 1
+        }
+      ],
+      "processor_spec": {
+        "bits_0_7": "capability tier",
+        "bit_8": "Power",
+        "bit_9": "Busy/Active",
+        "bit_10": "Error",
+        "bit_11": "On",
+        "bit_12": "Lock"
+      }
+    },
+    {
+      "schema_id": "DirectorySchema.PrinterExecution",
+      "schema_version": 1,
+      "mode": "snapshot",
+      "entry_width": 3,
+      "capacity": 64,
+      "fields": [
+        "PrinterReferenceId",
+        "FamilyHash",
+        "ProcessorSpec"
+      ],
+      "sort_key": [
+        "PrinterReferenceId",
+        "FamilyHash",
+        "ProcessorSpec"
+      ],
+      "adapter": "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10",
+      "bridge": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+      "host": "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10",
+      "source_directory": "DirectorySchema.Printer v2",
+      "execution_bank": "ic10/printer-directory/printer_execution_bank_v2_0.ic10",
+      "processor_spec": {
+        "bits_0_7": "capability tier",
+        "bit_8": "Power",
+        "bit_9": "Busy/Active/reserved",
+        "bit_10": "Error",
+        "bit_11": "On",
+        "bit_12": "Lock",
+        "bit_13": "output slot occupied",
+        "bit_14": "output capacity known",
+        "bits_16_18": "Execution Bank pin index"
+      },
+      "identity": "exact live Printer ReferenceId; Execution Bank/pin is resolved and revalidated at reservation time"
+    },
+    {
+      "schema_id": "DirectorySchema.CatalogStoreNode",
+      "schema_version": 1,
+      "mode": "registry",
+      "entry_width": 6,
+      "capacity": 64,
+      "base_cell": 64,
+      "fields": [
+        "ReferenceId",
+        "State",
+        "UsedCells",
+        "AssignmentEpoch",
+        "CatalogInstanceId",
+        "LastSeenEpoch"
+      ],
+      "identity_key": [
+        "NodeId"
+      ],
+      "adapter": "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10",
+      "adapter_entry_width": 6,
+      "adapter_fields": [
+        "NodeId",
+        "ReferenceId",
+        "State",
+        "UsedCells",
+        "AssignmentEpoch",
+        "CatalogInstanceId"
+      ],
+      "published_entry_width": 6,
+      "host": "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
+    },
+    {
+      "schema_id": "DirectorySchema.TransformLane",
+      "schema_version": 1,
+      "mode": "snapshot",
+      "entry_width": 3,
+      "capacity": 64,
+      "fields": [
+        "RuntimeReferenceId",
+        "ProcessorReferenceId",
+        "ProcessorSpec"
+      ],
+      "sort_key": [
+        "RuntimeReferenceId",
+        "ProcessorReferenceId",
+        "ProcessorSpec"
+      ],
+      "adapter": "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10",
+      "bridge": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+      "host": "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10",
+      "processor_spec": {
+        "bits_0_7": "capability mask",
+        "bit_8": "Power",
+        "bit_9": "Busy",
+        "bit_10": "Error"
+      }
+    }
+  ],
+  "adapter_abi": {
+    "magic_slot": 0,
+    "magic": 31415983,
+    "abi_slot": 1,
+    "abi": 2,
+    "schema_id_slot": 2,
+    "schema_version_slot": 3,
+    "entry_width_slot": 4,
+    "capacity_slot": 5,
+    "candidate_count_slot": 6,
+    "candidate_generation_slot": 7,
+    "sequence_slot": 8,
+    "overflow_slot": 9,
+    "mode_slot": 10,
+    "candidate_base": 16,
+    "modes": {
+      "snapshot": 1,
+      "registry": 2
+    },
+    "publication": "adapter owns candidate stack; consumer requests a freeze token in S11 and waits for matching S12; sequence is odd only while rebuilding and generation advances after a coherent candidate snapshot",
+    "freeze_request_slot": 11,
+    "freeze_ack_slot": 12
+  }
+}

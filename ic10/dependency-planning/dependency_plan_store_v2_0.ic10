@@ -1,0 +1,115 @@
+Boot:
+get r0 db 0
+bne r0 31416007 Init
+get r0 db 1
+bne r0 2 Init
+get r0 db 40
+and r1 r0 1
+beqz r1 Loop
+add r0 r0 1
+poke 40 r0
+j Loop
+Init:
+clr db
+poke 0 31416007
+poke 1 2
+Loop:
+yield
+get r15 db 9
+get r0 db 10
+beq r15 r0 Loop
+get r2 db 12
+blt r2 1 Bad
+bgt r2 3 Bad
+get r3 db 13
+blez r3 Bad
+move r6 0
+move r7 -1
+Scan:
+bge r6 32 ScanDone
+mul r0 r6 8
+add r0 r0 128
+get r1 db r0
+beq r1 r3 Found
+bnez r1 Next
+bgez r7 Next
+move r7 r6
+Next:
+add r6 r6 1
+j Scan
+Found:
+move r7 r6
+ScanDone:
+beq r2 1 Lookup
+beq r2 2 Upsert
+bltz r7 Missing
+j Clear
+Lookup:
+bltz r7 Missing
+mul r0 r7 8
+add r0 r0 128
+move r1 32
+move r6 0
+CopyOut:
+get r3 db r0
+poke r1 r3
+add r0 r0 1
+add r1 r1 1
+add r6 r6 1
+blt r6 8 CopyOut
+move r0 1
+j Reply
+Upsert:
+bltz r7 Full
+jal Begin
+mul r0 r7 8
+add r0 r0 128
+poke r0 0
+add r0 r0 1
+move r1 14
+move r6 0
+Write:
+get r3 db r1
+poke r0 r3
+add r0 r0 1
+add r1 r1 1
+add r6 r6 1
+blt r6 7 Write
+sub r0 r0 8
+get r3 db 13
+poke r0 r3
+jal End
+move r0 1
+j Reply
+Clear:
+jal Begin
+mul r0 r7 8
+add r0 r0 128
+poke r0 0
+jal End
+move r0 1
+j Reply
+Missing:
+move r0 -2
+j Reply
+Full:
+move r0 -3
+j Reply
+Bad:
+move r0 -1
+Reply:
+poke 11 r0
+poke 10 r15
+j Loop
+Begin:
+get r0 db 40
+and r1 r0 1
+bnez r1 Begin
+add r0 r0 1
+poke 40 r0
+j ra
+End:
+get r0 db 40
+add r0 r0 1
+poke 40 r0
+j ra

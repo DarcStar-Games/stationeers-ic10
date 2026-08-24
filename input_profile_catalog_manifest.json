@@ -1,0 +1,70 @@
+{
+  "catalog_store_abi": 5,
+  "catalog_store_magic": 31415968,
+  "catalog_loader_abi": 4,
+  "catalog_loader_magic": 31415969,
+  "catalog_coordinator_abi": 3,
+  "catalog_coordinator_magic": 31415970,
+  "store_model": "generic_dynamic_item_heap",
+  "loader_model": "one_shot_sparse_relocatable_whole_items",
+  "control_plane": "catalog_coordinator_v3_runtime_placement_item_migration",
+  "cell_block_width": 4,
+  "store_header_cells": 32,
+  "store_item_directory_width": 2,
+  "catalog_schema_id": "CatalogSchema.InputProfile",
+  "catalog_schema_version": 3,
+  "catalog_instance_id": "Catalog.InputProfiles.Schema3",
+  "store_count": 1,
+  "total_item_count": 6,
+  "catalog_sha256": "3182a081a3b7ca822235e8b39e5741f7e8026c9c6c0ac7bc8ffdb62898dfb893",
+  "regions": [],
+  "format": "INPUT_PROFILE_CATALOG_V4",
+  "catalog_token": "IP4:3182a081a3b7ca82",
+  "profile_count": 6,
+  "runtime_store_placement": true,
+  "runtime_min_store_count": 1,
+  "runtime_store_item_counts": [
+    6
+  ],
+  "item_cell_lengths": [
+    100,
+    32,
+    84,
+    52,
+    48,
+    20
+  ],
+  "loader_segment_count": 3,
+  "loaders": [
+    "ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10",
+    "ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10",
+    "ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10"
+  ],
+  "loader_items": [
+    {
+      "item_count": 2,
+      "line_count": 109
+    },
+    {
+      "item_count": 1,
+      "line_count": 82
+    },
+    {
+      "item_count": 3,
+      "line_count": 112
+    }
+  ],
+  "profiles": [
+    "pi",
+    "diagnostic",
+    "sequencer",
+    "phase_pressure",
+    "pressure_domain",
+    "pressure_transfer"
+  ],
+  "loader_item_atomicity": "profile_never_split",
+  "loader_sparse_zero_init": true,
+  "generic_store_program": "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10",
+  "coordinator_core_program": "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10",
+  "loader_router_program": "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10"
+}

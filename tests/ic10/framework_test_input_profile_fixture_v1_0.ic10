@@ -1,0 +1,26 @@
+# Test-only Generic Input Profile fixture for ControllerTest; not in production catalog.
+clr db
+poke 0 31415929
+poke 1 1
+poke 4 6
+poke 32 0
+poke 36 1
+poke 37 -10
+poke 38 10
+poke 39 999
+poke 40 2
+poke 42 20
+poke 43 20
+poke 44 3
+poke 46 1
+poke 48 3
+poke 49 -1
+poke 50 1
+poke 52 4
+poke 53 128
+poke 54 4
+poke 128 10
+poke 129 20
+poke 130 30
+poke 131 40
+poke 5 1

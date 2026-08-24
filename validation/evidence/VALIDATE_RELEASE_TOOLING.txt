@@ -1,0 +1,3 @@
+Release tooling validation: PASS
+ - in-tree output archive is excluded before manifest and ZIP inventory
+ - build ordering removes stale output, refreshes deployment inventory, then source index before validation/manifest generation

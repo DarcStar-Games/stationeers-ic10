@@ -1,0 +1,103 @@
+# Validate one coherent POWER dispatch plan. d0 PlanStore.
+poke 0 31416035
+poke 1 1
+Loop:
+yield
+get r15 db 3
+get r0 db 4
+beq r15 r0 Loop
+get r2 db 2
+get r14 d0 2
+mod r0 r14 2
+bnez r0 Bad
+get r0 d0 3
+bne r0 r2 Bad
+get r3 d0 4
+blt r3 0 Bad
+bgt r3 8 Bad
+move r4 0
+Flow:
+bge r4 r3 Stable
+mul r5 r4 8
+add r5 r5 32
+get r6 d0 r5
+add r5 r5 1
+get r7 d0 r5
+add r5 r5 1
+get r8 d0 r5
+add r5 r5 1
+get r9 d0 r5
+add r5 r5 1
+get r10 d0 r5
+add r5 r5 1
+get r11 d0 r5
+add r5 r5 1
+get r12 d0 r5
+add r5 r5 1
+get r13 d0 r5
+blez r9 Bad
+blt r10 r9 Bad
+getd r0 r7 0
+bne r0 31415950 Bad
+getd r0 r8 0
+bne r0 31415950 Bad
+getd r0 r7 3
+bne r0 4 Bad
+getd r0 r8 3
+bne r0 4 Bad
+getd r0 r7 9
+blez r0 Bad
+getd r0 r8 9
+blez r0 Bad
+getd r0 r7 12
+bne r0 r11 Bad
+getd r0 r8 12
+bne r0 r12 Bad
+getd r0 r6 0
+bne r0 31415953 Bad
+getd r0 r6 4
+bne r0 4 Bad
+getd r0 r6 2
+bne r0 r7 Bad
+getd r0 r6 3
+bne r0 r8 Bad
+getd r0 r6 9
+bne r0 1 Bad
+getd r0 r6 12
+bne r0 r13 Bad
+getd r0 r6 6
+beq r0 2 Transformer
+bne r10 r9 Bad
+j Direction
+Transformer:
+getd r0 r6 14
+add r0 r0 r9
+bne r0 r10 Bad
+Direction:
+move r1 0
+Check:
+bge r1 r3 Next
+beq r1 r4 CheckNext
+mul r0 r1 8
+add r0 r0 33
+get r5 d0 r0
+beq r5 r8 Bad
+add r0 r0 1
+get r5 d0 r0
+beq r5 r7 Bad
+CheckNext:
+add r1 r1 1
+j Check
+Next:
+add r4 r4 1
+j Flow
+Stable:
+get r0 d0 2
+bne r0 r14 Bad
+poke 5 1
+j Reply
+Bad:
+poke 5 -1
+Reply:
+poke 4 r15
+j Loop

@@ -1,0 +1,1367 @@
+{
+  "format": "SOURCE_MANIFEST_V3",
+  "scripts": {
+    "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10": {
+      "layer": "Catalog control plane",
+      "purpose": "Coordinator Core ABI3; claims Stores, assigns runtime ordinals, and owns topology/capacity epochs.",
+      "deployment_family": "catalog-control-plane",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10": {
+      "layer": "Catalog control plane",
+      "purpose": "Publishes Generic Store membership as Directory Adapter ABI2 registry candidates.",
+      "deployment_family": "catalog-control-plane",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10": {
+      "layer": "Catalog telemetry",
+      "purpose": "Aggregates Store lifecycle counts and used/free/capacity telemetry; marks missing nodes.",
+      "deployment_family": "catalog-control-plane",
+      "deployment_class": "on-demand"
+    },
+    "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10": {
+      "layer": "Catalog diagnostics",
+      "purpose": "Selectable Store-directory view plus Coordinator aggregate health telemetry.",
+      "deployment_family": "catalog-control-plane",
+      "deployment_class": "on-demand"
+    },
+    "ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10": {
+      "layer": "Catalog recovery",
+      "purpose": "Rebinds persisted Stores to a replacement Coordinator with a higher CoordinatorEpoch.",
+      "deployment_family": "catalog-control-plane",
+      "deployment_class": "on-demand"
+    },
+    "ic10/catalog-control-plane/catalog_inspector_v4_0.ic10": {
+      "layer": "Catalog diagnostics",
+      "purpose": "Generic Store ABI5 / Coordinator ABI3 inspector for node identity, item capacity, topology, and telemetry.",
+      "deployment_family": "catalog-control-plane",
+      "deployment_class": "on-demand"
+    },
+    "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10": {
+      "layer": "Catalog migration",
+      "purpose": "Plans whole-item compaction from DRAINING Stores into compatible live Store capacity.",
+      "deployment_family": "catalog-control-plane",
+      "deployment_class": "on-demand"
+    },
+    "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10": {
+      "layer": "Catalog migration",
+      "purpose": "Copies and commits one whole item to reserved destination capacity, then reclaims the source tail.",
+      "deployment_family": "catalog-control-plane",
+      "deployment_class": "on-demand"
+    },
+    "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10": {
+      "layer": "Catalog control plane",
+      "purpose": "Loader Router ABI3; places whole Loader ABI4 items into live unreserved Store capacity.",
+      "deployment_family": "catalog-control-plane",
+      "deployment_class": "on-demand"
+    },
+    "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10": {
+      "layer": "Catalog lifecycle",
+      "purpose": "Safely retires an empty Store and repairs neighboring topology.",
+      "deployment_family": "catalog-control-plane",
+      "deployment_class": "on-demand"
+    },
+    "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10": {
+      "layer": "Catalog storage",
+      "purpose": "Generic Store ABI5 node with item directory + payload heap; imports runtime-routed relocatable items.",
+      "deployment_family": "catalog-control-plane",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/controller-config/config_input_bridge_v1_0.ic10": {
+      "layer": "Configuration adapter",
+      "purpose": "Maps Resolver active ordinal/value into Editor physical slots.",
+      "deployment_family": "controller-config",
+      "deployment_class": "commissioning"
+    },
+    "ic10/controller-config/generic_config_committer_v1_1.ic10": {
+      "layer": "Configuration UI",
+      "purpose": "Copies staged values into Host candidate config and starts apply.",
+      "deployment_family": "controller-config",
+      "deployment_class": "commissioning"
+    },
+    "ic10/controller-config/generic_config_editor_v1_0.ic10": {
+      "layer": "Configuration UI",
+      "purpose": "Owns staged config image and Save/Reload/Apply UI state.",
+      "deployment_family": "controller-config",
+      "deployment_class": "commissioning"
+    },
+    "ic10/controller-config/generic_config_loader_v1_2.ic10": {
+      "layer": "Configuration UI",
+      "purpose": "Loads selected Host/Profile state and builds active-ordinal mapping.",
+      "deployment_family": "controller-config",
+      "deployment_class": "commissioning"
+    },
+    "ic10/controller-config/generic_persistent_config_host_v1_1.ic10": {
+      "layer": "Persistence",
+      "purpose": "BANKED_TRANSACTION REVISION_BANK host: owns candidate/effective config, A/B persistence, recovery, and post-commit replay acknowledgement.",
+      "deployment_family": "controller-config",
+      "deployment_class": "resident"
+    },
+    "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10": {
+      "layer": "Discovery adapter",
+      "purpose": "Publishes Controller Directory Adapter ABI2 candidates; Generic Adapter Bridge + Snapshot Host own publication.",
+      "deployment_family": "controller-discovery",
+      "deployment_class": "commissioning"
+    },
+    "ic10/controller-discovery/controller_selector_v3_0.ic10": {
+      "layer": "Selection",
+      "purpose": "Directly derives type/member groups from the sorted Generic Controller Directory and resolves one ReferenceId; rejects overflowed discovery.",
+      "deployment_family": "controller-discovery",
+      "deployment_class": "commissioning"
+    },
+    "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10": {
+      "layer": "Runtime",
+      "purpose": "Derives pressure requirements from a coherently committed medium profile; telemetry ABI2.",
+      "deployment_family": "controller-phase-pressure",
+      "deployment_class": "resident"
+    },
+    "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10": {
+      "layer": "Family semantics",
+      "purpose": "PhasePressure bounds/factors/mode validation and signature.",
+      "deployment_family": "controller-phase-pressure",
+      "deployment_class": "resident"
+    },
+    "ic10/controller-pi/controller_pi_runtime_v1_1.ic10": {
+      "layer": "Runtime",
+      "purpose": "Continuous PI controller consuming Generic Host effective config.",
+      "deployment_family": "controller-pi",
+      "deployment_class": "resident"
+    },
+    "ic10/controller-pi/pi_config_policy_v1_0.ic10": {
+      "layer": "Family semantics",
+      "purpose": "PI defaults, masks, validation, normalization, signature.",
+      "deployment_family": "controller-pi",
+      "deployment_class": "resident"
+    },
+    "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10": {
+      "layer": "Runtime",
+      "purpose": "Fill/settle/drain discrete state-machine controller.",
+      "deployment_family": "controller-sequencer",
+      "deployment_class": "resident"
+    },
+    "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10": {
+      "layer": "Family semantics",
+      "purpose": "Sequencer defaults, timing/threshold validation, signature.",
+      "deployment_family": "controller-sequencer",
+      "deployment_class": "resident"
+    },
+    "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10": {
+      "layer": "Dependency safety",
+      "purpose": "Bounds dependency depth to two edges and rejects self/immediate-ancestor producer cycles.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10": {
+      "layer": "Dependency cleanup",
+      "purpose": "Detects terminal/reaped parents and requests reference-aware dependency cleanup through the Planner.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/dependency-planning/dependency_child_creator_v2_0.ic10": {
+      "layer": "Dependency creation",
+      "purpose": "Builds one bounded child Job request after producer, ancestry, output, quantity, and parent-generation checks.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/dependency-planning/dependency_child_validity_v1_0.ic10": {
+      "layer": "Dependency validation",
+      "purpose": "Validates one child Job against live Job Store state and current producer/catalog output semantics.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/dependency-planning/dependency_claim_view_v1_0.ic10": {
+      "layer": "Dependency sharing",
+      "purpose": "Read-only active future-output claim view with per-parent claim aggregation and unclaimed-surplus accounting.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10": {
+      "layer": "Dependency planning",
+      "purpose": "Builds new dependency plans using coherent inventory, active future-output claims, and bounded child creation.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10": {
+      "layer": "Dependency evaluation",
+      "purpose": "Revalidates child identity/state and parent inventory; child completion alone never releases the parent.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10": {
+      "layer": "Dependency cleanup",
+      "purpose": "Read-only release advisor deciding whether a child is still shared/active and therefore cancellable.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/dependency-planning/dependency_plan_store_v2_0.ic10": {
+      "layer": "Dependency persistence",
+      "purpose": "Owns 32 committed eight-cell parent/child dependency plan records with ParentJobId commit markers.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10": {
+      "layer": "Dependency control",
+      "purpose": "Existing-plan controller: evaluate, replan, clear-ready, or reference-aware cancel without owning Plan Store mutation.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/dependency-planning/generic_job_monitor_v1_0.ic10": {
+      "layer": "Dependency observation",
+      "purpose": "Coherently resolves one exact JobId and its current state/generation from Generic Job Store.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/dependency-planning/item_producer_resolver_v1_0.ic10": {
+      "layer": "Dependency metadata",
+      "purpose": "Generated reverse producer index from ITEM output ResourceType to transform or print producer identity.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10": {
+      "layer": "Dependency planning",
+      "purpose": "Quotes current ITEM inventory across Resource Reservations and publishes exact/lower-bound deficit plus rolling quote fingerprints.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/dependency-planning/job_requirement_view_v1_0.ic10": {
+      "layer": "Dependency planning",
+      "purpose": "Normalizes TRANSFORM and PRINT job requirements into one bounded ITEM requirement/output view.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10": {
+      "layer": "Manufacturing scheduling",
+      "purpose": "Dependency Gate ABI2; only dependency-ready jobs reach the existing Transform/Print Driver Router.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10": {
+      "layer": "Dependency control",
+      "purpose": "Sole Dependency Plan Store mutation coordinator; applies plan upsert/clear and cancellation sequencing.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10": {
+      "layer": "Manufacturing metadata",
+      "purpose": "Resolves Recipe manufacturing-reagent aliases into canonical ITEM ResourceTypes for dependency planning.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10": {
+      "layer": "Dependency control",
+      "purpose": "New-plan controller: orchestrates bounded plan construction and returns mutation intent to the sole Planner.",
+      "deployment_family": "dependency-planning",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/diagnostics/console_registry_v1_0.ic10": {
+      "layer": "Discovery",
+      "purpose": "Discovers diagnostic consoles and publishes stable identities.",
+      "deployment_family": "diagnostics",
+      "deployment_class": "commissioning"
+    },
+    "ic10/diagnostics/console_selector_v1_1.ic10": {
+      "layer": "Selection",
+      "purpose": "Resolves console ordinals and post-commit advance.",
+      "deployment_family": "diagnostics",
+      "deployment_class": "commissioning"
+    },
+    "ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10": {
+      "layer": "Diagnostics adapter",
+      "purpose": "Owns diagnostic desired-state/change generations.",
+      "deployment_family": "diagnostics",
+      "deployment_class": "commissioning"
+    },
+    "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10": {
+      "layer": "Diagnostics",
+      "purpose": "Commits resolved display/controller/channel mappings.",
+      "deployment_family": "diagnostics",
+      "deployment_class": "commissioning"
+    },
+    "ic10/diagnostics/diagnostic_renderer_v1_1.ic10": {
+      "layer": "Diagnostics",
+      "purpose": "Renders generic telemetry into committed displays; accepts compatible telemetry ABI revisions.",
+      "deployment_family": "diagnostics",
+      "deployment_class": "commissioning"
+    },
+    "ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10": {
+      "layer": "Diagnostics adapter",
+      "purpose": "Publishes atomic desired controller/console selection.",
+      "deployment_family": "diagnostics",
+      "deployment_class": "commissioning"
+    },
+    "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10": {
+      "layer": "Directory infrastructure",
+      "purpose": "Consumes frozen Adapter ABI2 snapshots and drives Generic Snapshot Host BEGIN/ADD/COMMIT.",
+      "deployment_family": "directory-core",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/directory-core/generic_registry_directory_host_v2_0.ic10": {
+      "layer": "Directory infrastructure",
+      "purpose": "Generic Registry Directory Host ABI3; consumes Adapter ABI2 and persists NodeId-indexed membership.",
+      "deployment_family": "directory-core",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10": {
+      "layer": "Directory infrastructure",
+      "purpose": "Generic sorted A/B Snapshot Directory Host: width 1..3, capacity 64, dedupe/overflow/generation.",
+      "deployment_family": "directory-core",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10": {
+      "layer": "Generic job control",
+      "purpose": "Four-lane Job command arbiter for manufacturing lifecycle, dependency cancellation/creation, and POWER lifecycle requests.",
+      "deployment_family": "generic-jobs",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/generic-jobs/generic_job_selector_v3_0.ic10": {
+      "layer": "Generic job scheduling",
+      "purpose": "Read-only coherent Job Store selector: default TRANSFORM/PRINT mode or exact JobType mode, Priority descending, JobId cursor fairness.",
+      "deployment_family": "generic-jobs",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10": {
+      "layer": "Generic job mutation",
+      "purpose": "Sole Item-8 Job Store mailbox writer; atomically allocates child slots and checks parent JobId/generation/state.",
+      "deployment_family": "generic-jobs",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/generic-jobs/generic_job_store_v1_0.ic10": {
+      "layer": "Generic job substrate",
+      "purpose": "BANKED_TRANSACTION SELECTOR_BANK store: 32 Generic Job ABI1 records with Store-owned JobIds, optimistic generation, ABI-gated recovery, and crash-safe publication.",
+      "deployment_family": "generic-jobs",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10": {
+      "layer": "Input metadata",
+      "purpose": "One-shot relocatable Loader ABI4 candidate containing whole self-contained Input Profile items.",
+      "deployment_family": "input-profile-catalog",
+      "deployment_class": "one-shot"
+    },
+    "ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10": {
+      "layer": "Input metadata",
+      "purpose": "One-shot relocatable Loader ABI4 candidate containing whole self-contained Input Profile items.",
+      "deployment_family": "input-profile-catalog",
+      "deployment_class": "one-shot"
+    },
+    "ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10": {
+      "layer": "Input metadata",
+      "purpose": "One-shot relocatable Loader ABI4 candidate containing whole self-contained Input Profile items.",
+      "deployment_family": "input-profile-catalog",
+      "deployment_class": "one-shot"
+    },
+    "ic10/input-profile-catalog/input_profile_view_v5_0.ic10": {
+      "layer": "Input metadata",
+      "purpose": "Selects one Input schema-v3 Store ABI5 catalog context and republishes Generic Input Profile ABI1.",
+      "deployment_family": "input-profile-catalog",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10": {
+      "layer": "Item storage allocation",
+      "purpose": "Commits one coherent ITEM reservation quote with allocator identity, epoch, direction, and mirror-generation fencing.",
+      "deployment_family": "item-storage-common",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10": {
+      "layer": "Item storage planning",
+      "purpose": "Read-only bounded ITEM reservation selector; aggregates up to six physical source/destination reservations without mutation.",
+      "deployment_family": "item-storage-common",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10": {
+      "layer": "Item storage",
+      "purpose": "Publishes bounded directly readable slot storage as a policy-aware Generic ITEM Resource Endpoint.",
+      "deployment_family": "item-storage-direct",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10": {
+      "layer": "Item storage",
+      "purpose": "Serialized Cargo LArRE owner for proxy-slot SCAN and whole-stack MOVE_STACK operations.",
+      "deployment_family": "item-storage-larre",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10": {
+      "layer": "Item storage",
+      "purpose": "Publishes LArRE-accessible slot storage as Generic ITEM Resource Endpoint and serializes all LArRE movement requests.",
+      "deployment_family": "item-storage-larre",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10": {
+      "layer": "Item storage movement",
+      "purpose": "Validates paired source/destination reservations and drives serialized LArRE outbound, inbound, or held-item recovery movement.",
+      "deployment_family": "item-storage-larre",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10": {
+      "layer": "Material feeder",
+      "purpose": "Adapts a dedicated SDB Silo plus Stacker to Material Feeder ABI1 and meters exact requested quantities after FIFO stack export.",
+      "deployment_family": "item-storage-sdb",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10": {
+      "layer": "Item storage",
+      "purpose": "Publishes a dedicated SDB Silo as conservative lower-bound ITEM availability/capacity without pretending stack count is exact quantity.",
+      "deployment_family": "item-storage-sdb",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/item-storage-vending/material_vending_inventory_v1_0.ic10": {
+      "layer": "Material inventory",
+      "purpose": "Incrementally scans a Vending Machine for one ItemHash and publishes Generic Resource Endpoint ABI1.",
+      "deployment_family": "item-storage-vending",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10": {
+      "layer": "On-demand commissioning",
+      "purpose": "Read-only six-source live commissioning snapshot probe with optional stack-generation fencing.",
+      "deployment_family": "live-commissioning",
+      "deployment_class": "on-demand"
+    },
+    "ic10/manufacturing/generic_print_runtime_v2_0.ic10": {
+      "layer": "Manufacturing runtime",
+      "purpose": "Runs a bounded printer batch through native ExecuteRecipe and verifies coherent ExportCount completion.",
+      "deployment_family": "manufacturing",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10": {
+      "layer": "Manufacturing selection",
+      "purpose": "Generic schema/version-qualified candidate selector for TransformLane or PrinterExecution snapshots; supports tier or bitmask capability matching.",
+      "deployment_family": "manufacturing",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10": {
+      "layer": "Manufacturing scheduling",
+      "purpose": "Normalizes TRANSFORM and PRINT domain drivers behind one scheduler-facing result ABI.",
+      "deployment_family": "manufacturing",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10": {
+      "layer": "Manufacturing scheduling",
+      "purpose": "Sole production Generic Job lifecycle writer; applies one legal generation-checked edge at a time.",
+      "deployment_family": "manufacturing",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/manufacturing/print_candidate_executor_v2_0.ic10": {
+      "layer": "Manufacturing execution",
+      "purpose": "Evaluates one print candidate, reserves output capacity, resolves/material-allocates reagents, and launches the generic print runtime.",
+      "deployment_family": "manufacturing",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/manufacturing/print_job_driver_v2_0.ic10": {
+      "layer": "Manufacturing driver",
+      "purpose": "Resolves Recipe execution shape, iterates PrinterExecution candidates, and normalizes print planning/execution progress for the scheduler.",
+      "deployment_family": "manufacturing",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/manufacturing/print_material_resolver_v1_0.ic10": {
+      "layer": "Manufacturing planning",
+      "purpose": "Maps Recipe reagent semantics onto reachable MaterialGrid ResourceTypes and publishes transform-compatible multi-input records.",
+      "deployment_family": "manufacturing",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/manufacturing/transform_candidate_executor_v2_0.ic10": {
+      "layer": "Manufacturing execution",
+      "purpose": "Evaluates and launches one transform candidate through the existing Admission/Resolver/Stager/Allocator/Runtime transaction.",
+      "deployment_family": "manufacturing",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10": {
+      "layer": "Manufacturing readiness",
+      "purpose": "Fences Transform Profile/Admission/Link-Resolver completion to one exact transform candidate request before execution.",
+      "deployment_family": "manufacturing",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/manufacturing/transform_job_driver_v2_0.ic10": {
+      "layer": "Manufacturing driver",
+      "purpose": "Iterates TransformLane candidates and normalizes transform planning/execution progress for the scheduler.",
+      "deployment_family": "manufacturing",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10": {
+      "layer": "Manufacturing discovery",
+      "purpose": "Publishes schema-qualified TransformLane Adapter ABI2 candidates with processor identity and common ProcessorSpec.",
+      "deployment_family": "manufacturing",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/material-grid/material_export_slot_endpoint_v1_0.ic10": {
+      "layer": "Material endpoint",
+      "purpose": "Publishes one exact export slot, such as a Chute Export Bin, as a source-only ITEM Resource Endpoint.",
+      "deployment_family": "material-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/material-grid/material_import_slot_endpoint_v1_0.ic10": {
+      "layer": "Material endpoint",
+      "purpose": "Publishes one processor import slot as a typed ITEM sink endpoint.",
+      "deployment_family": "material-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/material-grid/material_resource_link_v1_0.ic10": {
+      "layer": "Material link",
+      "purpose": "Publishes a Vending/Stacker/Sorter route as Generic Resource Link ABI1 with native topology identity.",
+      "deployment_family": "material-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/material-grid/material_transfer_executor_v1_0.ic10": {
+      "layer": "Material execution",
+      "purpose": "Executes one Guard-authorized exact material batch and confirms destination import.",
+      "deployment_family": "material-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10": {
+      "layer": "Material safety",
+      "purpose": "Topology-binds committed material grants and consumes invalid epochs.",
+      "deployment_family": "material-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10": {
+      "layer": "Material feeder",
+      "purpose": "Uses Vending + Stacker + Logic Sorter to prepare and release an exact routed item quantity.",
+      "deployment_family": "material-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10": {
+      "layer": "Transform runtime",
+      "purpose": "Runs generic catalog-defined transforms and confirms coherent output growth.",
+      "deployment_family": "material-transform",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/material-transform/material_transform_admission_v1_0.ic10": {
+      "layer": "Transform admission",
+      "purpose": "Generic 1..3-input capability-based transform admission: processor conditions and output capacity.",
+      "deployment_family": "material-transform",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/material-transform/material_transform_link_resolver_v1_0.ic10": {
+      "layer": "Transform planning",
+      "purpose": "Resolves typed Material Links for every transform input against the exact processor.",
+      "deployment_family": "material-transform",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10": {
+      "layer": "Material allocation",
+      "purpose": "Allocator ABI2 atomically commits one common epoch after every input is staged.",
+      "deployment_family": "material-transform",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10": {
+      "layer": "Material allocation",
+      "purpose": "Stages 1..3 input reservations and Guard payloads without publishing the commit epoch.",
+      "deployment_family": "material-transform",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_battery_endpoint_v1_0.ic10": {
+      "layer": "Power resource",
+      "purpose": "Publishes bidirectional battery POWER capacity with reserve, target, rate, and policy-override semantics.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_consumer_endpoint_v1_0.ic10": {
+      "layer": "Power resource",
+      "purpose": "Publishes one managed POWER consumer demand and priority/shedding policy as a Generic Resource Endpoint.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_dispatch_cycle_v1_0.ic10": {
+      "layer": "Power planning",
+      "purpose": "Owns Power PlanStore BEGIN -> sweep -> COMMIT transaction boundaries.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10": {
+      "layer": "Power planning",
+      "purpose": "Owns one coherent bounded eight-flow power dispatch plan with odd/even publication fencing.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_dispatch_sweep_v1_0.ic10": {
+      "layer": "Power planning",
+      "purpose": "Sweeps priority-ordered sinks, stages flows, and records shed/critical-shortage state.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_link_executor_v1_0.ic10": {
+      "layer": "Power execution",
+      "purpose": "Sole transformer Setting/On actuator with exact plan, source/sink Reservation, epoch, and Link fencing.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_link_selector_v1_0.ic10": {
+      "layer": "Power planning",
+      "purpose": "Resolves a live source-to-sink POWER Resource Link and computes transformer source-side overhead.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_load_executor_v1_0.ic10": {
+      "layer": "Power execution",
+      "purpose": "Break-before-make actuator for managed consumer and battery On state under committed plan authority.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_plan_validator_v1_0.ic10": {
+      "layer": "Power safety",
+      "purpose": "Revalidates a complete power plan against exact Reservation and Link generations before mutation.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_producer_endpoint_v1_0.ic10": {
+      "layer": "Power resource",
+      "purpose": "Publishes one exact POWER producer/aggregate supply as a Generic Resource Endpoint.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_reservation_allocator_v1_0.ic10": {
+      "layer": "Power allocation",
+      "purpose": "Validates, commits, cleans old/orphan epochs, and publishes the active power allocator authority.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_reservation_committer_v1_0.ic10": {
+      "layer": "Power allocation",
+      "purpose": "Commits one common POWER reservation epoch with shared-source aggregation and foreign-owner protection.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10": {
+      "layer": "Power discovery",
+      "purpose": "Publishes priority-ordered PowerReservation candidates through Generic Directory Adapter ABI2.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_sink_flow_builder_v1_0.ic10": {
+      "layer": "Power planning",
+      "purpose": "Builds one sink flow, retrying later sources until a compatible physical path is found.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_sink_selector_v1_0.ic10": {
+      "layer": "Power planning",
+      "purpose": "Selects managed POWER sinks in critical/sheddable/charge dispatch order.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_source_selector_v1_0.ic10": {
+      "layer": "Power planning",
+      "purpose": "Selects available POWER sources by preference while accounting for staged use and battery direction.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_static_link_v1_0.ic10": {
+      "layer": "Power topology",
+      "purpose": "Publishes a commissioned passive electrical path as a Generic POWER Resource Link.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-grid/power_transformer_link_v1_0.ic10": {
+      "layer": "Power topology",
+      "purpose": "Publishes a transformer POWER Resource Link with safe delivered ceiling and source-side self-power overhead.",
+      "deployment_family": "power-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-jobs/power_job_finalize_v1_0.ic10": {
+      "layer": "Power jobs",
+      "purpose": "Verifies applied POWER policy and advances RUNNING -> VERIFYING -> COMPLETE.",
+      "deployment_family": "power-jobs",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10": {
+      "layer": "Power jobs",
+      "purpose": "Gateway-lane-D lifecycle client returning ExpectedGeneration+1 after successful SET_STATE.",
+      "deployment_family": "power-jobs",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-jobs/power_job_policy_apply_v1_0.ic10": {
+      "layer": "Power jobs",
+      "purpose": "Revalidates a READY POWER job and applies the endpoint policy override/watt cap.",
+      "deployment_family": "power-jobs",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-jobs/power_job_policy_verify_v1_0.ic10": {
+      "layer": "Power jobs",
+      "purpose": "Verifies Generic Resource Reservation coherently reflects the requested POWER policy semantics.",
+      "deployment_family": "power-jobs",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-jobs/power_job_prepare_v1_0.ic10": {
+      "layer": "Power jobs",
+      "purpose": "Prepares POWER jobs through READY, applies policy, and advances to RUNNING.",
+      "deployment_family": "power-jobs",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-jobs/power_job_scheduler_v1_0.ic10": {
+      "layer": "Power jobs",
+      "purpose": "Coordinates selection, prepare/apply, and verify/finalize for finite POWER policy jobs.",
+      "deployment_family": "power-jobs",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": {
+      "layer": "Power jobs",
+      "purpose": "Resolves one PolicyId to exactly one current managed POWER Reservation/Endpoint.",
+      "deployment_family": "power-jobs",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": {
+      "layer": "Runtime / pressure grid",
+      "purpose": "Owns LOW/HIGH target or passive STORAGE envelope; telemetry ABI2.",
+      "deployment_family": "pressure-domain",
+      "deployment_class": "resident"
+    },
+    "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10": {
+      "layer": "Pressure-grid service",
+      "purpose": "Reduces coherent PhasePressure ABI2 requests for one LOW/HIGH domain; rejects directory overflow.",
+      "deployment_family": "pressure-domain",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10": {
+      "layer": "Family semantics",
+      "purpose": "PressureDomain role/bounds validation and signature.",
+      "deployment_family": "pressure-domain",
+      "deployment_class": "resident"
+    },
+    "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10": {
+      "layer": "Runtime / pressure grid",
+      "purpose": "One physical pump edge; publishes coherent candidate topology and executes only Guard-authorized leases.",
+      "deployment_family": "pressure-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10": {
+      "layer": "Pressure-grid resource model",
+      "purpose": "Purity-gated gas inventory; converts P/T/V/n into molar export/import capacity.",
+      "deployment_family": "pressure-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/pressure-grid/pressure_grid_cost_profile_v1_0.ic10": {
+      "layer": "Pressure-grid policy",
+      "purpose": "Publishes dimensionless route-ranking weights and candidate budget.",
+      "deployment_family": "pressure-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10": {
+      "layer": "Pressure-grid discovery adapter",
+      "purpose": "Publishes coherent Pressure Link Adapter ABI2 candidates from the schema-qualified Generic Snapshot Controller directory and Transfer telemetry.",
+      "deployment_family": "pressure-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10": {
+      "layer": "Pressure-grid routing",
+      "purpose": "Quotes every selected path hop, then exact-commits one common mol/tick rate.",
+      "deployment_family": "pressure-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10": {
+      "layer": "Pressure-grid routing",
+      "purpose": "Incrementally enumerates available 2/3-hop LOW-to-HIGH candidates through STORAGE.",
+      "deployment_family": "pressure-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10": {
+      "layer": "Pressure-grid planning",
+      "purpose": "Orchestrates direct reuse -> ranked routed reuse -> fallback before Planner commit.",
+      "deployment_family": "pressure-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10": {
+      "layer": "Pressure-grid commit",
+      "purpose": "Medium-specific commit authority; publishes plan epoch only after successful construction.",
+      "deployment_family": "pressure-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10": {
+      "layer": "Pressure-grid routing",
+      "purpose": "Route Ranker ABI2: scores using remaining endpoint capacity, lift, hops, storage and throughput.",
+      "deployment_family": "pressure-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10": {
+      "layer": "Pressure-grid routing",
+      "purpose": "Route Selector ABI2: bounded reservation-aware candidate comparison.",
+      "deployment_family": "pressure-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10": {
+      "layer": "Pressure-grid planning",
+      "purpose": "Stages direct reuse or storage fallback while preserving fallback anti-circulation.",
+      "deployment_family": "pressure-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10": {
+      "layer": "Pressure-grid ledger",
+      "purpose": "Mirrors one Inventory ABI2 and owns mutable per-build endpoint reservation counters.",
+      "deployment_family": "pressure-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10": {
+      "layer": "Pressure-grid safety",
+      "purpose": "Verifies actual analyzer gas ratio against the selected medium profile purity threshold.",
+      "deployment_family": "pressure-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10": {
+      "layer": "Pressure-grid allocator",
+      "purpose": "Allocator ABI3: non-mutating quote, exact commit, topology-bound staged grants.",
+      "deployment_family": "pressure-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10": {
+      "layer": "Family semantics",
+      "purpose": "Validates the four-field PressureTransfer schema.",
+      "deployment_family": "pressure-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10": {
+      "layer": "Pressure-grid safety",
+      "purpose": "Topology-binds staged grants to Planner commit and consumes each committed epoch at most once.",
+      "deployment_family": "pressure-grid",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/printer-directory/printer_capacity_client_v2_0.ic10": {
+      "layer": "Printer execution capacity",
+      "purpose": "Reserves/releases exact selected printers by ReferenceId and advertised execution-bank pin; fails closed on pin swaps.",
+      "deployment_family": "printer-directory",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/printer-directory/printer_directory_adapter_v1_0.ic10": {
+      "layer": "Manufacturing discovery",
+      "purpose": "Publishes six supported printer families as DirectorySchema.Printer v2 Adapter ABI2 candidates with common ProcessorSpec.",
+      "deployment_family": "printer-directory",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/printer-directory/printer_execution_bank_v2_0.ic10": {
+      "layer": "Printer execution capacity",
+      "purpose": "Locally manages up to six pinned printers so output-slot occupancy can be read safely and Lock can guard one reservation.",
+      "deployment_family": "printer-directory",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10": {
+      "layer": "Manufacturing discovery",
+      "purpose": "Joins Item-4 Printer Directory metadata with local Execution Bank capacity and publishes exact-Printer PrinterExecution Adapter ABI2 records.",
+      "deployment_family": "printer-directory",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10": {
+      "layer": "Pressure execution",
+      "purpose": "Projects an Advanced Furnace embedded inlet/outlet pump as ControllerPressureTransfer ABI2 and actuates only under PressureGrid GrantGuard authority.",
+      "deployment_family": "process-furnace",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10": {
+      "layer": "Process utilities",
+      "purpose": "Publishes Transform-backed ProcessCondition ABI1 pressure/temperature demand for a selected Furnace or Advanced Furnace.",
+      "deployment_family": "process-furnace",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10": {
+      "layer": "Process/pressure bridge",
+      "purpose": "Projects one active ProcessCondition target as standard ControllerPressureDomain ABI2 for ordinary PressureGrid planning.",
+      "deployment_family": "process-furnace",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10": {
+      "layer": "Process utilities",
+      "purpose": "Controls a Gas Mixer with temperature-corrected component ratios from a prepared-mixture Resource Profile.",
+      "deployment_family": "process-gas-preparation",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10": {
+      "layer": "Process utilities",
+      "purpose": "Validates a two-component prepared gas mixture through the existing PurityGuard ABI using Resource Profile kind 5.",
+      "deployment_family": "process-gas-preparation",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10": {
+      "layer": "Process utilities",
+      "purpose": "Controls a hot/cold Gas Mixer to satisfy a ProcessCondition temperature window without owning pressure-routing authority.",
+      "deployment_family": "process-gas-preparation",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10": {
+      "layer": "Power/process bridge",
+      "purpose": "Converts coherent PowerPlan shortage into a fuel ProcessCondition/PressureDomain demand and safely starts/stops a Gas Fuel Generator after fuel and ambient verification.",
+      "deployment_family": "process-gfg",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10": {
+      "layer": "Recipe metadata",
+      "purpose": "Recipe Lookup v8 ABI3 across runtime-placed Recipe schema-v3 Store ABI5 printer-family partitions.",
+      "deployment_family": "recipe-catalog",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10": {
+      "layer": "Manufacturing metadata",
+      "purpose": "Resolves exact RecipeHash execution metadata from Recipe schema-v3 stores, including bounded reagent requirements and stale-response echo.",
+      "deployment_family": "recipe-catalog",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10": {
+      "layer": "Resource-grid adapter",
+      "purpose": "Normalizes PressureDomain Inventory ABI2 into Generic Resource Endpoint ABI1.",
+      "deployment_family": "resource-grid-core",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10": {
+      "layer": "Resource-grid adapter",
+      "purpose": "Projects a topology-bound PressureTransfer into Generic Resource Link ABI1.",
+      "deployment_family": "resource-grid-core",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10": {
+      "layer": "Resource-grid discovery adapter",
+      "purpose": "Publishes typed Resource Endpoint Adapter ABI2 candidates on its own stack.",
+      "deployment_family": "resource-grid-core",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10": {
+      "layer": "Resource-grid discovery adapter",
+      "purpose": "Publishes Resource Link Adapter ABI2 candidates on its own stack.",
+      "deployment_family": "resource-grid-core",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10": {
+      "layer": "Resource-grid discovery adapter",
+      "purpose": "Publishes Generic Resource Reservation mirrors as DirectorySchema.ResourceReservation snapshot candidates.",
+      "deployment_family": "resource-grid-core",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10": {
+      "layer": "Resource-grid release",
+      "purpose": "Clears Generic Resource Reservation ownership only for an exact owner ReferenceId and plan epoch.",
+      "deployment_family": "resource-grid-core",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/resource-grid-core/resource_reservation_v1_0.ic10": {
+      "layer": "Resource-grid core",
+      "purpose": "Mirrors any Generic Resource Endpoint into a domain-neutral reservation surface.",
+      "deployment_family": "resource-grid-core",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10": {
+      "layer": "Resource metadata",
+      "purpose": "One-shot relocatable ENERGY Resource Profile Loader ABI4 candidate.",
+      "deployment_family": "resource-profile-catalog",
+      "deployment_class": "one-shot"
+    },
+    "ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10": {
+      "layer": "Resource metadata",
+      "purpose": "One-shot relocatable POWER Resource Profile Loader ABI4 candidate.",
+      "deployment_family": "resource-profile-catalog",
+      "deployment_class": "one-shot"
+    },
+    "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10": {
+      "layer": "Resource metadata",
+      "purpose": "Resolves one Resource Profile across runtime-placed Store ABI5 items and republishes View ABI1.",
+      "deployment_family": "resource-profile-catalog",
+      "deployment_class": "conditional-resident"
+    },
+    "ic10/shared-input/generic_input_resolver_v1_0.ic10": {
+      "layer": "Shared input",
+      "purpose": "Resolves logical commissioning controls from Scanner + Profile metadata.",
+      "deployment_family": "shared-input",
+      "deployment_class": "commissioning"
+    },
+    "ic10/shared-input/generic_input_scanner_v1_1.ic10": {
+      "layer": "Shared input",
+      "purpose": "Discovers/classifies physical commissioning controls.",
+      "deployment_family": "shared-input",
+      "deployment_class": "commissioning"
+    },
+    "ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10": {
+      "layer": "Transformation metadata",
+      "purpose": "One-shot relocatable Transform Loader ABI4 candidate; each transform is a whole self-contained item.",
+      "deployment_family": "transform-catalog",
+      "deployment_class": "one-shot"
+    },
+    "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": {
+      "layer": "Transformation metadata",
+      "purpose": "Selects a Store ABI5 schema-v4 transform and publishes capability-based variable-input Transform Profile ABI4.",
+      "deployment_family": "transform-catalog",
+      "deployment_class": "conditional-resident"
+    }
+  },
+  "deployment_classes": {
+    "resident": "Normally remains powered whenever its family is installed.",
+    "conditional-resident": "Remains powered only while the optional subsystem or live consumer that uses it is enabled.",
+    "commissioning": "Needed to configure, select, map, or commission; may be reclaimed when no live consumer depends on it.",
+    "one-shot": "Immutable/import producer; reclaim after successful durable import.",
+    "on-demand": "Diagnostic, lifecycle, recovery, migration, or field-evidence tool; deploy only when needed."
+  },
+  "deployment_families": {
+    "directory-core": {
+      "title": "Generic Directory Infrastructure",
+      "docs": [
+        "docs/DIRECTORY_STANDARD.md",
+        "docs/ARCHITECTURE.md"
+      ],
+      "live_cases": [
+        "LG-SHARED-INPUT"
+      ]
+    },
+    "controller-discovery": {
+      "title": "Controller Discovery and Selection",
+      "docs": [
+        "docs/DIRECTORY_STANDARD.md",
+        "docs/COMMISSIONING_QUICKSTART.md"
+      ],
+      "live_cases": [
+        "LG-SHARED-INPUT"
+      ]
+    },
+    "controller-config": {
+      "title": "Controller Configuration and Persistence",
+      "docs": [
+        "docs/CONFIG_INPUTS.md",
+        "docs/CONFIG_BLOCKS.md",
+        "docs/CONFIG_POLICY.md",
+        "docs/PERSISTENCE_STANDARD.md"
+      ],
+      "live_cases": [
+        "LG-PERSISTENCE",
+        "LG-SHARED-INPUT"
+      ]
+    },
+    "shared-input": {
+      "title": "Shared Commissioning Input Panel",
+      "docs": [
+        "docs/SHARED_INPUT_SYSTEM.md",
+        "docs/COMMISSIONING_QUICKSTART.md"
+      ],
+      "live_cases": [
+        "LG-SHARED-INPUT"
+      ]
+    },
+    "diagnostics": {
+      "title": "Diagnostics and Console Mapping",
+      "docs": [
+        "docs/DIAGNOSTIC_INPUTS.md",
+        "docs/COMMISSIONING_QUICKSTART.md"
+      ],
+      "live_cases": [
+        "LG-SHARED-INPUT"
+      ]
+    },
+    "controller-pi": {
+      "title": "PI Controller",
+      "docs": [
+        "README.md",
+        "docs/COMMISSIONING_QUICKSTART.md"
+      ],
+      "live_cases": [
+        "LG-PERSISTENCE"
+      ]
+    },
+    "controller-sequencer": {
+      "title": "Sequencer Controller",
+      "docs": [
+        "docs/SEQUENCER_CONTROLLER.md",
+        "docs/COMMISSIONING_QUICKSTART.md"
+      ],
+      "live_cases": [
+        "LG-SEQUENCER"
+      ]
+    },
+    "controller-phase-pressure": {
+      "title": "PhasePressure Controller",
+      "docs": [
+        "docs/PHASE_PRESSURE_CONTROLLER.md",
+        "docs/PHASE_MEDIUM_PROFILE.md"
+      ],
+      "live_cases": [
+        "LG-PHASE-PRESSURE"
+      ]
+    },
+    "pressure-domain": {
+      "title": "PressureDomain and Request Arbitration",
+      "docs": [
+        "docs/PRESSURE_DOMAIN_CONTROLLER.md",
+        "docs/PRESSURE_INVENTORY_MODEL.md"
+      ],
+      "live_cases": [
+        "LG-PRESSURE-DOMAIN"
+      ]
+    },
+    "pressure-grid": {
+      "title": "PressureGrid Routing and Transfer",
+      "docs": [
+        "docs/PRESSURE_GRID_CONTROLLER.md",
+        "docs/PRESSURE_RESERVATION_MODEL.md",
+        "docs/PRESSURE_MULTI_HOP_ROUTING.md",
+        "docs/PRESSURE_ROUTE_COST_MODEL.md"
+      ],
+      "live_cases": [
+        "LG-PRESSURE-CORE",
+        "LG-PRESSURE-MULTIHOP",
+        "LG-PRESSURE-COST"
+      ]
+    },
+    "resource-grid-core": {
+      "title": "Generic ResourceGrid Core",
+      "docs": [
+        "docs/RESOURCE_GRID_CORE.md",
+        "docs/DIRECTORY_STANDARD.md"
+      ],
+      "live_cases": [
+        "LG-PRESSURE-CORE",
+        "LG-MATERIAL",
+        "LG-POWER"
+      ]
+    },
+    "catalog-control-plane": {
+      "title": "Generic Catalog Coordinator and Stores",
+      "docs": [
+        "docs/CATALOG_COORDINATION.md",
+        "docs/CATALOG_STORAGE.md"
+      ],
+      "live_cases": [
+        "LG-SHARED-INPUT",
+        "LG-MANUFACTURING"
+      ]
+    },
+    "input-profile-catalog": {
+      "title": "Input Profile Catalog",
+      "docs": [
+        "docs/SHARED_INPUT_SYSTEM.md",
+        "docs/CATALOG_SCHEMA.md"
+      ],
+      "live_cases": [
+        "LG-SHARED-INPUT"
+      ]
+    },
+    "resource-profile-catalog": {
+      "title": "Resource Profile Catalog",
+      "docs": [
+        "docs/RESOURCE_PROFILES.md",
+        "docs/CATALOG_SCHEMA.md"
+      ],
+      "live_cases": [
+        "LG-PHASE-PRESSURE",
+        "LG-MATERIAL",
+        "LG-POWER"
+      ]
+    },
+    "transform-catalog": {
+      "title": "Resource Transform Catalog",
+      "docs": [
+        "docs/ORE_PROCESSING_TRANSFORMS.md",
+        "docs/CATALOG_SCHEMA.md"
+      ],
+      "live_cases": [
+        "LG-MATERIAL",
+        "LG-MANUFACTURING"
+      ]
+    },
+    "recipe-catalog": {
+      "title": "Printer Recipe Catalog",
+      "docs": [
+        "docs/RECIPE_CATALOG.md",
+        "docs/CATALOG_SCHEMA.md"
+      ],
+      "live_cases": [
+        "LG-MANUFACTURING"
+      ]
+    },
+    "material-grid": {
+      "title": "MaterialGrid Transport",
+      "docs": [
+        "docs/MATERIAL_GRID_FOUNDATION.md",
+        "docs/MATERIAL_TRANSFER_SYSTEM.md"
+      ],
+      "live_cases": [
+        "LG-MATERIAL"
+      ]
+    },
+    "material-transform": {
+      "title": "Furnace and Material Transform Execution",
+      "docs": [
+        "docs/ORE_PROCESSING_TRANSFORMS.md",
+        "docs/MATERIAL_GRID_FOUNDATION.md"
+      ],
+      "live_cases": [
+        "LG-MATERIAL",
+        "LG-XDOMAIN-FURNACE"
+      ]
+    },
+    "printer-directory": {
+      "title": "Printer Discovery and Capacity",
+      "docs": [
+        "docs/PRINTER_DIRECTORY.md",
+        "docs/MANUFACTURING_SCHEDULER.md"
+      ],
+      "live_cases": [
+        "LG-MANUFACTURING"
+      ]
+    },
+    "generic-jobs": {
+      "title": "Generic Job Store and Command Gateway",
+      "docs": [
+        "docs/GENERIC_JOB_ABI.md",
+        "docs/BANKED_TRANSACTION_STANDARD.md"
+      ],
+      "live_cases": [
+        "LG-JOB-STORE"
+      ]
+    },
+    "manufacturing": {
+      "title": "Manufacturing Scheduler",
+      "docs": [
+        "docs/MANUFACTURING_SCHEDULER.md"
+      ],
+      "live_cases": [
+        "LG-MANUFACTURING"
+      ]
+    },
+    "dependency-planning": {
+      "title": "Manufacturing Dependency Planner",
+      "docs": [
+        "docs/DEPENDENCY_PLANNING.md"
+      ],
+      "live_cases": [
+        "LG-MANUFACTURING",
+        "LG-ITEM-STORAGE"
+      ]
+    },
+    "item-storage-common": {
+      "title": "Generic ITEM Reservation and Storage Brokerage",
+      "docs": [
+        "docs/ITEM_STORAGE_SYSTEM.md",
+        "docs/RESOURCE_GRID_CORE.md"
+      ],
+      "live_cases": [
+        "LG-ITEM-STORAGE"
+      ]
+    },
+    "item-storage-vending": {
+      "title": "Vending ITEM Storage Provider",
+      "docs": [
+        "docs/ITEM_STORAGE_SYSTEM.md",
+        "docs/MATERIAL_GRID_FOUNDATION.md"
+      ],
+      "live_cases": [
+        "LG-ITEM-STORAGE",
+        "LG-MATERIAL"
+      ]
+    },
+    "item-storage-larre": {
+      "title": "LArRE Storage and Movement",
+      "docs": [
+        "docs/ITEM_STORAGE_SYSTEM.md"
+      ],
+      "live_cases": [
+        "LG-ITEM-STORAGE"
+      ]
+    },
+    "item-storage-direct": {
+      "title": "Direct-Slot ITEM Storage",
+      "docs": [
+        "docs/ITEM_STORAGE_SYSTEM.md"
+      ],
+      "live_cases": [
+        "LG-ITEM-STORAGE"
+      ]
+    },
+    "item-storage-sdb": {
+      "title": "SDB Silo ITEM Storage",
+      "docs": [
+        "docs/ITEM_STORAGE_SYSTEM.md"
+      ],
+      "live_cases": [
+        "LG-ITEM-STORAGE"
+      ]
+    },
+    "power-grid": {
+      "title": "POWER Endpoints, Dispatch, Batteries and Transformers",
+      "docs": [
+        "docs/POWER_MANAGEMENT.md",
+        "docs/RESOURCE_GRID_CORE.md"
+      ],
+      "live_cases": [
+        "LG-POWER"
+      ]
+    },
+    "power-jobs": {
+      "title": "POWER Policy Jobs",
+      "docs": [
+        "docs/POWER_MANAGEMENT.md",
+        "docs/GENERIC_JOB_ABI.md"
+      ],
+      "live_cases": [
+        "LG-POWER",
+        "LG-JOB-STORE"
+      ]
+    },
+    "process-gas-preparation": {
+      "title": "Prepared Gas Mixture and Thermal Conditioning",
+      "docs": [
+        "docs/PROCESS_UTILITY_ORCHESTRATION.md",
+        "docs/RESOURCE_PROFILES.md"
+      ],
+      "live_cases": [
+        "LG-XDOMAIN-FURNACE",
+        "LG-XDOMAIN-GFG",
+        "LG-XDOMAIN-RESTART"
+      ]
+    },
+    "process-furnace": {
+      "title": "Cross-Domain Furnace Utility Orchestration",
+      "docs": [
+        "docs/PROCESS_UTILITY_ORCHESTRATION.md",
+        "docs/ORE_PROCESSING_TRANSFORMS.md"
+      ],
+      "live_cases": [
+        "LG-XDOMAIN-FURNACE",
+        "LG-XDOMAIN-RESTART"
+      ]
+    },
+    "process-gfg": {
+      "title": "Gas Fuel Generator Utility Orchestration",
+      "docs": [
+        "docs/PROCESS_UTILITY_ORCHESTRATION.md",
+        "docs/POWER_MANAGEMENT.md"
+      ],
+      "live_cases": [
+        "LG-XDOMAIN-GFG",
+        "LG-XDOMAIN-RESTART"
+      ]
+    },
+    "live-commissioning": {
+      "title": "Live Commissioning Evidence Tools",
+      "docs": [
+        "docs/LIVE_COMMISSIONING.md",
+        "docs/FRAMEWORK_HARDENING_TESTS.md"
+      ],
+      "live_cases": []
+    }
+  },
+  "generated_deployment_rules": [
+    {
+      "pattern": "^(?:.*/)?input_profile_catalog_loader_.*\\.ic10$",
+      "deployment_family": "input-profile-catalog",
+      "deployment_class": "one-shot",
+      "layer": "Input metadata",
+      "purpose": "One-shot relocatable Loader ABI4 candidate; whole self-contained Input Profile items only."
+    },
+    {
+      "pattern": "^(?:.*/)?resource_transform_catalog_loader_.*\\.ic10$",
+      "deployment_family": "transform-catalog",
+      "deployment_class": "one-shot",
+      "layer": "Transformation metadata",
+      "purpose": "One-shot relocatable Loader ABI4 candidate; each Transform and all descriptors remain one atomic item."
+    },
+    {
+      "pattern": "^(?:.*/)?resource_profile_loader_.*\\.ic10$",
+      "deployment_family": "resource-profile-catalog",
+      "deployment_class": "one-shot",
+      "layer": "Resource metadata",
+      "purpose": "One-shot relocatable Resource Profile Loader ABI4 candidate; whole records only, own-stack zero-init."
+    },
+    {
+      "pattern": "^(?:.*/)?resource_profile_fluid_store_.*\\.ic10$",
+      "deployment_family": "resource-profile-catalog",
+      "deployment_class": "conditional-resident",
+      "layer": "Resource metadata",
+      "purpose": "Generic Store ABI5 data node; FLUID placement and ordinal are runtime Coordinator-owned."
+    },
+    {
+      "pattern": "^(?:.*/)?resource_profile_item_store_.*\\.ic10$",
+      "deployment_family": "resource-profile-catalog",
+      "deployment_class": "conditional-resident",
+      "layer": "Resource metadata",
+      "purpose": "Generic Store ABI5 data node; ITEM placement and ordinal are runtime Coordinator-owned."
+    }
+  ]
+}

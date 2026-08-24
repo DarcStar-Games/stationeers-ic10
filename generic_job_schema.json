@@ -1,0 +1,126 @@
+{
+  "format": "GENERIC_JOB_ABI_V1",
+  "magic": 31415984,
+  "abi": 1,
+  "store_program": "ic10/generic-jobs/generic_job_store_v1_0.ic10",
+  "capacity": 32,
+  "logical_record_width": 11,
+  "intent_slot_width": 8,
+  "intent_base": 32,
+  "state_slot_width": 7,
+  "state_base": 288,
+  "fields": [
+    "JobId",
+    "JobType",
+    "RequiredCapability",
+    "Identity",
+    "InputCount",
+    "OutputCount",
+    "RequestedQuantity",
+    "Priority",
+    "State",
+    "Generation",
+    "ErrorStatus"
+  ],
+  "job_types": {
+    "TRANSFORM": 1,
+    "PRINT": 2,
+    "TRANSFER": 3,
+    "POWER": 4
+  },
+  "identity_semantics": {
+    "TRANSFORM": "TransformType",
+    "PRINT": "RecipeHash",
+    "TRANSFER": "ResourceType",
+    "POWER": "Power operation/profile identity"
+  },
+  "capability_semantics": {
+    "TRANSFORM": "RequiredCapabilityMask",
+    "PRINT": "minimum printer capability tier",
+    "TRANSFER": "0 unless a transfer executor defines a capability contract",
+    "POWER": "domain-defined non-negative capability value"
+  },
+  "states": {
+    "QUEUED": 1,
+    "PLANNING": 2,
+    "RESERVING": 3,
+    "READY": 4,
+    "RUNNING": 5,
+    "VERIFYING": 6,
+    "COMPLETE": 7,
+    "WAIT_RESOURCE": 8,
+    "WAIT_PROCESSOR": 9,
+    "WAIT_CAPACITY": 10,
+    "FAULT": 11,
+    "CANCELLED": 12
+  },
+  "normal_chain": [
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      4,
+      5
+    ],
+    [
+      5,
+      6
+    ],
+    [
+      6,
+      7
+    ]
+  ],
+  "wait_from": [
+    2,
+    3,
+    4
+  ],
+  "wait_states": [
+    8,
+    9,
+    10
+  ],
+  "wait_resume_state": 2,
+  "terminal_states": [
+    7,
+    11,
+    12
+  ],
+  "store_commands": {
+    "PUBLISH_NEW": 1,
+    "SET_STATE": 2,
+    "REAP": 3
+  },
+  "store_request_cells": {
+    "RequestGeneration": 7,
+    "ResponseGeneration": 8,
+    "ResponseStatus": 9,
+    "ResponseJobId": 10,
+    "Command": 11,
+    "SlotOrdinal": 12,
+    "ExpectedJobGeneration": 13,
+    "DesiredState": 14,
+    "ErrorStatus": 15
+  },
+  "publication_cells": {
+    "QueueSequence": 2,
+    "QueueGeneration": 3,
+    "NextJobId": 23
+  },
+  "banked_transaction_profile": "SELECTOR_BANK",
+  "storage_compatibility": {
+    "magic": 31415984,
+    "abi": 1,
+    "rule": "both must match before durable stack geometry is interpreted"
+  }
+}

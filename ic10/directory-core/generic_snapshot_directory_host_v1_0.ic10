@@ -1,0 +1,120 @@
+Boot:
+yield
+get r0 db 31
+beq r0 31415981 Loop
+clr db
+poke 31 31415981
+poke 0 31415981
+poke 1 1
+Loop:
+yield
+get r15 db 14
+get r0 db 15
+beq r15 r0 Loop
+get r2 db 11
+blt r2 1 Error
+bgt r2 3 Error
+get r3 db 12
+blt r3 1 Error
+bgt r3 64 Error
+mul r4 r2 r3
+bgt r4 192 Error
+get r5 db 16
+beq r5 1 Begin
+beq r5 2 Add
+beq r5 3 Commit
+j Error
+Begin:
+get r5 db 2
+seq r6 r5 0
+poke 20 r6
+poke 21 0
+poke 22 0
+mul r7 r6 r4
+add r7 r7 32
+move r8 0
+Clear:
+add r9 r7 r8
+poke r9 0
+add r8 r8 1
+blt r8 r4 Clear
+j Ack
+Add:
+get r6 db 21
+get r7 db 20
+mul r7 r7 r4
+add r7 r7 32
+move r8 r6
+Compare:
+blez r8 Insert
+sub r9 r8 1
+mul r10 r9 r2
+add r10 r10 r7
+move r11 0
+CmpCell:
+bge r11 r2 Ack
+add r12 r10 r11
+get r13 db r12
+add r12 r11 17
+get r14 db r12
+bgt r13 r14 Shift
+blt r13 r14 Insert
+add r11 r11 1
+j CmpCell
+Shift:
+bge r6 r3 Full
+mul r12 r8 r2
+add r12 r12 r7
+move r11 0
+ShiftCell:
+bge r11 r2 Shifted
+add r9 r10 r11
+get r13 db r9
+add r9 r12 r11
+poke r9 r13
+add r11 r11 1
+j ShiftCell
+Shifted:
+sub r8 r8 1
+j Compare
+Insert:
+bge r6 r3 Full
+mul r12 r8 r2
+add r12 r12 r7
+move r11 0
+WriteCell:
+bge r11 r2 Added
+add r9 r11 17
+get r13 db r9
+add r9 r12 r11
+poke r9 r13
+add r11 r11 1
+j WriteCell
+Added:
+add r6 r6 1
+poke 21 r6
+j Ack
+Full:
+poke 22 1
+j Ack
+Commit:
+get r6 db 20
+poke 2 r6
+get r9 db 21
+add r10 r6 5
+poke r10 r9
+get r9 db 22
+add r10 r6 7
+poke r10 r9
+get r9 db 3
+get r10 db 4
+max r9 r9 r10
+add r9 r9 1
+add r10 r6 3
+poke r10 r9
+j Ack
+Error:
+poke 23 -1
+Ack:
+poke 15 r15
+j Loop

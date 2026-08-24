@@ -1,0 +1,120 @@
+get r0 db 0
+beq r0 31415961 Init
+poke 6 0
+poke 10 0
+poke 20 0
+Init:
+poke 0 31415961
+poke 1 1
+Loop:
+yield
+bdns d0 Bad
+bdns d1 Bad
+bdns d2 Bad
+l r1 d0 ReferenceId
+l r2 d1 ReferenceId
+l r0 d2 ReferenceId
+poke 11 r0
+ls r3 d1 2 Occupied
+move r4 0
+move r5 0
+beqz r3 Buffer
+ls r4 d1 2 OccupantHash
+ls r5 d1 2 Quantity
+Buffer:
+poke 2 r1
+poke 3 r2
+poke 4 r5
+poke 5 r4
+get r15 db 20
+beqz r15 CheckRequest
+get r0 db 23
+add r0 r0 1
+poke 23 r0
+bgt r0 256 Fail
+beq r15 1 Fill
+beq r15 2 WaitImport
+beq r15 3 Ready
+beq r15 4 WaitExport
+j Fail
+CheckRequest:
+get r6 db 18
+get r7 db 7
+beq r6 r7 Publish
+blez r6 Publish
+get r8 db 16
+get r9 db 17
+blez r9 Fail
+beqz r3 Start
+bne r4 r8 Fail
+Start:
+poke 6 0
+poke 23 0
+s d2 Mode 1
+clr d2
+sll r0 r8 8
+or r0 r0 1
+put d2 0 r0
+s d2 On 1
+s d1 Mode 1
+s d1 On 1
+poke 20 1
+poke 7 r6 # LIVE_CURRENT identity LAST after request-specific reset/init
+j Publish
+Fill:
+get r8 db 16
+get r9 db 17
+beqz r3 Need
+bne r4 r8 Fail
+bge r5 r9 IsReady
+Need:
+l r0 d1 ImportCount
+poke 21 r0
+s d0 RequestHash r8
+poke 20 2
+j Publish
+WaitImport:
+l r0 d1 ImportCount
+get r1 db 21
+beq r0 r1 Publish
+poke 20 1
+j Publish
+IsReady:
+poke 8 r6
+poke 6 1
+poke 20 3
+j Publish
+Ready:
+get r0 db 19
+bne r0 r6 Publish
+s d1 Setting r9
+l r0 d1 ExportCount
+poke 22 r0
+s d1 Output 0
+poke 20 4
+j Publish
+WaitExport:
+l r0 d1 ExportCount
+get r1 db 22
+beq r0 r1 Publish
+poke 9 r6
+poke 6 2
+poke 20 0
+j Publish
+Bad:
+get r0 db 18
+poke 6 -1
+poke 20 0
+poke 7 r0 # accepted fault publishes current identity LAST
+j Publish
+Fail:
+s d1 On 0
+s d2 On 0
+get r0 db 18
+poke 6 -1
+poke 20 0
+Publish:
+get r0 db 10
+add r0 r0 1
+poke 10 r0
+j Loop

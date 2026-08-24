@@ -1,0 +1,113 @@
+# Generic Input Resolver v1.0: S2 Scanner,S3 count,S4 Profile; S5/6/7 result.
+alias scanner r1
+alias profile r2
+poke 0 31415931
+poke 1 1
+Loop:
+yield
+get scanner db 2
+blez scanner Invalid
+getd r0 scanner 0
+bne r0 31415930 Invalid
+getd r0 scanner 1
+bne r0 1 Invalid
+get r6 db 3
+blt r6 1 Invalid
+bgt r6 32 Invalid
+putd scanner 9 r6 # domain supplies count; Scanner owns Field Dial mechanics
+getd r15 scanner 2
+getd r9 scanner 10 # selected control ordinal 1..N
+blez r9 Invalid
+bgt r9 r6 Invalid
+get profile db 4
+move r14 0
+move r10 0 # default descriptor => Logic Memory
+move r11 0
+move r12 0
+move r13 0
+blez profile Choose
+getd r0 profile 0
+bne r0 31415929 Invalid
+getd r0 profile 1
+bne r0 1 Invalid
+getd r0 profile 4
+bne r0 r6 Invalid
+getd r14 profile 5
+blez r14 Invalid
+sub r0 r9 1
+mul r0 r0 4
+add r0 r0 32
+move r4 10
+Desc:
+getd rr4 profile r0
+add r4 r4 1
+add r0 r0 1
+blt r4 14 Desc
+bltz r10 KindMemory
+ble r10 4 Choose
+KindMemory:
+move r10 0
+Choose:
+# kind0=>Scanner S5,kind3=>S6,all others=>S4; missing preferred falls to Memory.
+seq r0 r10 0
+select r5 r0 5 4
+seq r0 r10 3
+select r5 r0 6 r5
+getd r8 scanner r5
+bgtz r8 HaveInput
+beqz r10 Invalid
+move r10 0
+j Choose
+HaveInput:
+beqz r10 ReadSetting
+beq r10 3 ReadSetting
+beq r10 4 EnumSetup
+clamp r13 r13 1 999 # Dial descriptors own their step count
+bdnvs r8 Mode Invalid
+sd r8 Mode r13
+bdnvl r8 Ratio Invalid
+ld r0 r8 Ratio
+lerp r0 r11 r12 r0
+bne r10 2 Publish
+round r0 r0
+j Publish
+EnumSetup:
+sub r13 r12 1
+clamp r13 r13 0 999
+bdnvs r8 Mode Invalid
+sd r8 Mode r13
+ReadSetting:
+bdnvl r8 Setting Invalid
+ld r0 r8 Setting
+beqz r10 Publish
+beq r10 3 SwitchMap
+clamp r0 r0 0 r13
+add r0 r0 r11
+getd r0 profile r0
+j Publish
+SwitchMap:
+sgtz r0 r0
+select r0 r0 r12 r11
+Publish:
+bnan r0 Invalid
+getd sp scanner 2
+bne sp r15 Loop
+blez profile Snapshot
+getd sp profile 5
+bne sp r14 Loop
+Snapshot:
+s db Setting r0
+poke 5 r9
+poke 6 r0
+poke 7 r10
+poke 11 1
+get sp db 12
+add sp sp 1
+poke 12 sp # coherent resolved snapshot publishes LAST
+j Loop
+Invalid:
+poke 11 -1
+move r0 nan
+poke 6 r0
+s db Setting r0
+j Loop

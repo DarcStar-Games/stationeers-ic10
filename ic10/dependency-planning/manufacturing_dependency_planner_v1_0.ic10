@@ -1,0 +1,120 @@
+poke 0 31416010
+poke 1 1
+Loop:
+yield
+get r15 db 25
+get r0 db 26
+bne r15 r0 Cleanup
+get r15 db 9
+get r0 db 10
+beq r15 r0 Loop
+get r2 db 2
+blez r2 Bad
+move r3 0
+jal Existing
+get r4 d1 12
+get r5 d1 13
+beqz r5 ExistingResult
+jal Clear
+ExistingResult:
+bne r4 5 Reply
+jal New
+get r4 d2 12
+bne r4 6 Reply
+put d0 12 2
+put d0 13 r2
+get r0 d2 13
+put d0 14 r0
+get r0 d2 14
+put d0 15 r0
+get r0 d2 15
+put d0 16 r0
+get r0 d2 16
+put d0 17 r0
+get r0 d2 17
+put d0 18 r0
+get r0 d2 18
+put d0 19 r0
+get r0 d2 19
+put d0 20 r0
+mul r13 r15 16
+add r13 r13 4
+put d0 9 r13
+WaitUpsert:
+yield
+get r0 d0 10
+bne r0 r13 WaitUpsert
+get r0 d0 11
+bne r0 1 PlanFull
+move r4 2
+j Reply
+Cleanup:
+get r2 db 24
+blez r2 CleanupBad
+move r3 1
+jal Existing
+get r0 d1 13
+beqz r0 CleanupDone
+jal ClearCleanup
+CleanupDone:
+poke 27 1
+poke 26 r15
+j Loop
+CleanupBad:
+poke 27 -1
+poke 26 r15
+j Loop
+PlanFull:
+move r4 -6
+j Reply
+Bad:
+move r4 -1
+Reply:
+poke 11 r4
+poke 10 r15
+j Loop
+Existing:
+put d1 2 r2
+move r0 3
+CopyExisting:
+get r1 db r0
+put d1 r0 r1
+add r0 r0 1
+ble r0 8 CopyExisting
+put d1 9 r3
+mul r13 r15 16
+mul r0 r3 4
+add r13 r13 r0
+add r13 r13 1
+put d1 10 r13
+WaitExisting:
+yield
+get r0 d1 11
+bne r0 r13 WaitExisting
+j ra
+New:
+put d2 2 r2
+mul r13 r15 16
+add r13 r13 2
+put d2 3 r13
+WaitNew:
+yield
+get r0 d2 4
+bne r0 r13 WaitNew
+j ra
+Clear:
+move r0 8
+j ClearDo
+ClearCleanup:
+move r0 12
+ClearDo:
+put d0 12 3
+put d0 13 r2
+mul r13 r15 16
+add r13 r13 r0
+put d0 9 r13
+WaitClear:
+yield
+get r0 d0 10
+bne r0 r13 WaitClear
+j ra

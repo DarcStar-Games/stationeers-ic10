@@ -1,0 +1,120 @@
+Boot:
+poke 0 31415928
+poke 1 1
+poke 8 0
+yield
+get r14 db 13 # Policy generation; Policy publishes metadata/defaults first
+blez r14 Boot
+get r6 db 10
+blt r6 1 Boot
+bgt r6 4 Boot
+get r13 db 12 # persistence schema signature supplied by Policy
+beqz r13 Boot
+poke 26 r14
+move sp 224
+jal BankRevision
+move r11 r15
+move sp 227
+jal BankRevision
+move r12 r15
+sgt r0 r12 r11
+select r15 r0 r12 r11
+select r10 r0 1 0
+blez r15 Defaults
+poke 24 r10
+poke 25 r15
+mul sp r10 3
+add sp sp 225
+get r0 db sp
+poke 9 r0
+mul r2 r10 32
+add r2 r2 160
+j PublishSource
+Defaults:
+poke 24 -1
+poke 25 0
+poke 9 0
+move r2 32
+PublishSource:
+jal PublishImage # shared boot/commit effective-image copy
+get r15 db 6
+get r0 db 9
+bne r15 r0 NoReplay
+poke 11 5
+poke 7 r15
+NoReplay:
+get r0 db 5
+add r0 r0 1
+poke 5 r0
+poke 8 1
+Loop:
+yield
+get r0 db 13
+get sp db 26
+bne r0 sp Boot # Policy/schema reflash forces deterministic recovery
+get r15 db 6
+get r0 db 7
+beq r15 r0 Loop
+get r0 db 20 # Policy response generation; normalized candidate precedes it
+bne r0 r15 Loop
+get r0 db 21
+bne r0 5 Reject
+get r10 db 24
+seq r10 r10 0 # A active=>B; B/none=>A
+mul sp r10 3
+add sp sp 226
+poke sp 0 # invalidate destination footer before image mutation
+mul sp r10 32
+add sp sp 160
+move r2 128
+sll r3 r6 3
+add r3 r3 128
+Persist:
+get r0 db r2
+push r0
+add r2 r2 1
+blt r2 r3 Persist
+get r0 db 6
+bne r0 r15 Loop
+mul sp r10 3
+add sp sp 224
+push r13 # schema signature
+push r15 # controller config revision
+get r11 db 25
+add r11 r11 1
+push r11 # bank revision/commit token LAST
+poke 24 r10
+poke 25 r11
+poke 9 r15
+move r2 128
+jal PublishImage
+get r0 db 5
+add r0 r0 1
+poke 5 r0
+poke 11 5
+poke 7 r15
+j Loop
+Reject:
+poke 11 r0
+poke 7 r15
+j Loop
+PublishImage:
+move sp 96
+sll r3 r6 3
+add r3 r3 r2
+PublishLoop:
+get r0 db r2
+push r0
+add r2 r2 1
+blt r2 r3 PublishLoop
+j ra
+BankRevision:
+get r0 db sp
+bne r0 r13 BankBad
+add sp sp 2
+get r15 db sp
+bgtz r15 BankReturn
+BankBad:
+move r15 0
+BankReturn:
+j ra

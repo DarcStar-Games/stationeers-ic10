@@ -1,0 +1,5 @@
+Pressure-grid route-cost model: PASS
+ - Ranker explicitly rejects NaN cost weights/budget
+ - Ranker caps throughput by remaining endpoint reservations
+ - Route Selector passes lease length into reservation-aware ranking
+ - cost policy still permits a better longer route to beat a poor shorter route

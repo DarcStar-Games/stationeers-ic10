@@ -1,0 +1,119 @@
+poke 96 27182818
+poke 97 1
+poke 98 62 # ch1 process,2 state,3 state ticks,4 cycles,5 status
+poke 99 HASH("ControllerSequencer")
+move r10 0 # state: 0 fill,1 settle,2 drain,3 complete,4 timeout
+move r11 0
+move r12 0 # completed cycles; registers persist across reflash
+move r13 -1 # paired Host ReferenceId
+move r14 -1 # effective generation
+Loop:
+yield
+bdnvl d3 ReferenceId ConfigBad
+l r0 d3 ReferenceId
+sne sp r0 r13
+move r13 r0
+poke 116 r0
+get r0 d3 1
+bne r0 1 ConfigBad
+get r15 d3 5
+bnez sp Reload
+beq r15 r14 Control
+Reload:
+get r0 d3 12
+bne r0 HASH("CFG1|ControllerSequencer|1|2|255|1|0|0") ConfigBad
+move r0 1
+move ra 96
+LoadConfig:
+get rr0 d3 ra
+bnan rr0 ConfigBad
+add ra ra 1
+add r0 r0 1
+ble r0 9 LoadConfig
+get sp d3 5
+bne sp r15 Loop
+move r14 r15
+move r10 0
+move r11 0
+Control:
+move r15 0
+bdnvl d0 r2 InputBad
+l ra d0 r2
+bnan ra NumericFault
+poke 100 ra
+beqz r1 Disabled
+beqz r10 FillState
+beq r10 1 Settle
+beq r10 2 DrainState
+beq r10 3 Complete
+beq r10 4 Timeout
+j NumericState
+FillState:
+bge ra r4 EnterSettle
+add r11 r11 1
+bge r11 r8 Timeout
+j Actuate
+EnterSettle:
+move r10 1
+move r11 0
+j Actuate
+Settle:
+add r11 r11 1
+blt r11 r7 Actuate
+move r10 2
+move r11 0
+j Actuate
+DrainState:
+ble ra r3 CycleDone
+add r11 r11 1
+bge r11 r8 Timeout
+j Actuate
+CycleDone:
+add r12 r12 1
+beqz r9 CompleteNow
+move r10 0
+move r11 0
+j Actuate
+CompleteNow:
+move r10 3
+Complete:
+j SafeActuate
+Timeout:
+move r15 -6
+move r10 4
+j SafeActuate
+Disabled:
+move r10 0
+move r11 0
+SafeActuate:
+move sp 0
+move ra 0
+j Write
+Actuate:
+seq sp r10 0
+seq ra r10 2
+Write:
+bdnvs d1 r5 DrainWrite
+s d1 r5 sp
+DrainWrite:
+bdnvs d2 r6 End
+s d2 r6 ra
+End:
+poke 101 r10
+poke 102 r11
+poke 103 r12
+poke 104 r15
+j Loop
+InputBad:
+move r15 -1
+move ra nan
+poke 100 ra
+j SafeActuate
+NumericFault:
+move r10 5
+NumericState:
+move r15 -5
+j SafeActuate
+ConfigBad:
+move r15 -4
+j SafeActuate

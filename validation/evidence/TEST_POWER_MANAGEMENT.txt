@@ -1,0 +1,6 @@
+Power management protocol: PASS
+ - live producer/consumer/battery endpoints and Reservation mirror
+ - live source/sink/link selectors use correct generic offsets
+ - live PlanStore coherent transaction and transformer overhead
+ - priority/load-shed/battery-charge reference model
+ - POWER Job Gateway lane-D generation contract

@@ -1,0 +1,89 @@
+# Catalog Store Directory Adapter v3.0: Adapter ABI2; unique NodeId candidates.
+Boot:
+clr db
+poke 0 31415983
+poke 1 2
+poke 2 HASH("DirectorySchema.CatalogStoreNode")
+poke 3 1
+poke 4 6
+poke 5 64
+poke 10 2
+Loop:
+yield
+get r0 db 11
+beqz r0 ScanStart
+poke 12 r0
+j Loop
+ScanStart:
+poke 12 0
+get r15 db 8
+add r15 r15 1
+poke 8 r15
+poke 9 0
+move r6 448
+Clear:
+poke r6 0
+add r6 r6 1
+ble r6 511 Clear
+move r7 0
+move r8 0
+Scan:
+get r1 db:0 r7
+blt r1 0 Publish
+add r7 r7 1
+getd r0 r1 0
+bne r0 31415968 Scan
+getd r0 r1 1
+bne r0 5 Scan
+getd r2 r1 18
+blez r2 Scan
+bgt r2 64 Scan
+add r5 r2 447
+get r6 db r5
+bgtz r6 Duplicate
+bge r8 64 Overflow
+mul r3 r8 6
+add r3 r3 16
+poke r3 r2
+add r3 r3 1
+ld r0 r1 ReferenceId
+poke r3 r0
+add r3 r3 1
+getd r0 r1 16
+poke r3 r0
+add r3 r3 1
+getd r0 r1 22
+poke r3 r0
+add r3 r3 1
+getd r0 r1 26
+poke r3 r0
+add r3 r3 1
+getd r0 r1 4
+poke r3 r0
+add r6 r8 1
+poke r5 r6
+add r8 r8 1
+j Scan
+Duplicate:
+sub r6 r6 1
+mul r6 r6 6
+add r6 r6 16
+add r3 r6 1
+get r0 db r3
+putd r0 16 4
+putd r1 16 4
+add r3 r6 2
+poke r3 8
+j Scan
+Overflow:
+poke 9 1
+j Scan
+Publish:
+poke 6 r8
+get r0 db 7
+add r0 r0 1
+poke 7 r0
+get r0 db 8
+add r0 r0 1
+poke 8 r0
+j Loop

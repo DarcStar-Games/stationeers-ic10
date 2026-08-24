@@ -1,0 +1,119 @@
+# Material Grant Guard ABI1. d0 Link,d1 Allocator,d2 Executor. One activation/epoch.
+get r0 db 31
+beq r0 31415960 Init
+poke 8 -1
+poke 31 31415960
+Init:
+poke 0 31415960
+poke 1 1
+poke 4 0
+poke 6 0
+Loop:
+yield
+poke 4 0
+bdns d0 Bad
+bdns d1 Bad
+bdns d2 Bad
+get r14 d0 12
+blez r14 Bad
+get r0 d0 0
+bne r0 31415953 Bad
+get r0 d0 1
+bne r0 1 Bad
+get r0 d0 9
+blez r0 Bad
+l r1 d0 ReferenceId
+get r2 d0 2
+get r3 d0 3
+get r4 d0 5
+get r5 d0 16
+get r6 d0 21
+get r7 d0 22
+get r10 d0 15
+get r0 d0 12
+bne r0 r14 Loop
+l r11 d2 ReferenceId
+bne r10 r11 Bad
+get r0 d1 0
+bne r0 31415954 Bad
+get r0 d1 1
+bne r0 2 Bad
+l r12 d1 ReferenceId
+get r13 d1 14
+blez r13 Publish
+get r14 db 17
+bne r13 r14 Publish
+get r0 db 8
+beq r0 r13 Publish
+get r0 db 18
+bne r0 r12 Consume
+get r0 db 19
+bne r0 r2 Consume
+get r0 db 20
+bne r0 r3 Consume
+get r0 db 21
+bne r0 r4 Consume
+get r0 db 22
+bne r0 r5 Consume
+get r0 db 23
+bne r0 r6 Consume
+get r0 db 24
+bne r0 r7 Consume
+get r0 db 25
+bne r0 r1 Consume
+get r0 db 26
+bne r0 r11 Consume
+get r0 db 16
+blez r0 Consume
+move sp r2
+jal CheckRes
+beqz r0 Consume
+move sp r3
+jal CheckRes
+beqz r0 Consume
+get r0 d2 2
+beq r0 r13 Consume
+get r0 db 16
+poke 2 r0
+poke 3 r13
+poke 4 1
+poke 5 r1
+j Publish
+Consume:
+poke 8 r13
+poke 2 0
+poke 3 r13
+poke 4 -1
+poke 5 r1
+j Publish
+Bad:
+poke 2 0
+poke 3 0
+poke 4 -1
+Publish:
+get r0 db 6
+add r0 r0 1
+poke 6 r0
+j Loop
+CheckRes:
+getd r9 sp 12
+blez r9 ResBad
+getd r0 sp 0
+bne r0 31415950 ResBad
+getd r0 sp 1
+bne r0 1 ResBad
+getd r0 sp 3
+bne r0 2 ResBad
+getd r0 sp 4
+bne r0 r4 ResBad
+getd r0 sp 9
+blez r0 ResBad
+getd r0 sp 10
+bne r0 2 ResBad
+getd r0 sp 12
+bne r0 r9 ResBad
+move r0 1
+j ra
+ResBad:
+move r0 0
+j ra

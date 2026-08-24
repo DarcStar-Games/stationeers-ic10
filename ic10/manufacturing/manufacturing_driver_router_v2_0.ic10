@@ -1,0 +1,75 @@
+# Driver Router ABI2: mirrors only the selected current request.
+poke 0 31415994
+poke 1 2
+poke 11 2
+Loop:
+yield
+get r15 db 9
+get r0 db 14
+bne r15 r0 Dispatch
+get r0 db 13
+beq r0 1 TMirror
+beq r0 2 PMirror
+j Loop
+Dispatch:
+get r2 d2 8
+get r3 d2 7
+get r4 d2 9
+get r5 d2 10
+get r6 d2 11
+get r7 d2 12
+get r8 d2 13
+blt r2 1 Bad
+bgt r2 2 Bad
+blez r3 Bad
+blez r4 Bad
+beqz r5 Bad
+bltz r6 Bad
+bltz r7 Bad
+blez r8 Bad
+beq r2 1 Transform
+put d1 2 r3
+put d1 3 r5
+put d1 4 r4
+put d1 5 r6
+put d1 6 r7
+put d1 7 r8
+put d1 8 r15
+poke 13 2
+j Sent
+Transform:
+put d0 2 r3
+put d0 3 r5
+put d0 4 r4
+put d0 5 r6
+put d0 6 r7
+put d0 7 r8
+put d0 8 r15
+poke 13 1
+Sent:
+poke 11 2
+poke 12 0
+poke 14 r15
+j Loop
+TMirror:
+get r0 d0 9
+bne r0 r15 Loop
+get r1 d0 10
+get r2 d0 11
+j Publish
+PMirror:
+get r0 d1 9
+bne r0 r15 Loop
+get r1 d1 10
+get r2 d1 11
+Publish:
+poke 11 r1
+poke 12 r2
+poke 10 r15
+j Loop
+Bad:
+poke 11 11
+poke 12 -1
+poke 14 r15
+poke 10 r15
+j Loop

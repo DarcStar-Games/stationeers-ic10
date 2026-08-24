@@ -1,0 +1,120 @@
+clr db
+poke 96 27182818
+poke 97 2
+poke 98 126
+poke 99 HASH("ControllerPressureDomain")
+Loop:
+yield
+poke 115 0
+bdnvl d5 ReferenceId ConfigBad
+l r0 d5 ReferenceId
+get sp db 116
+sne ra r0 sp
+poke 116 r0
+get r0 d5 8
+blez r0 ConfigBad
+get sp d5 5
+get r0 db 117
+bnez ra Reload
+beq sp r0 Inputs
+Reload:
+get r0 d5 12
+bne r0 HASH("CFG1|ControllerPressureDomain|1|1|255|0|0|0") ConfigBad
+move r0 1
+move ra 96
+Load:
+get rr0 d5 ra
+bnan rr0 ConfigBad
+add ra ra 1
+add r0 r0 1
+ble r0 8 Load
+get r0 d5 5
+bne r0 sp Loop
+poke 117 sp
+Inputs:
+move r0 nan
+bdnvl d0 Pressure Sensor
+l r0 d0 Pressure
+Sensor:
+poke 100 r0
+bdns d1 ProfileBad
+get r15 d1 5
+blez r15 ProfileBad
+get r0 d1 0
+bne r0 31415963 ProfileBad
+get r0 d1 8
+bne r0 1 ProfileBad
+get r9 d1 9
+get r0 d1 5
+bne r0 r15 Loop
+beq r2 3 Storage
+bdns d2 ArbiterBad
+get r0 d2 0
+bne r0 31415933 ArbiterBad
+put d2 3 r1
+put d2 4 r2
+put d2 5 r9
+get r10 db 117
+put d2 6 r10
+get r13 d2 12
+blez r13 NoRequest
+get r0 d2 13
+bne r0 r10 NoRequest
+get r0 d2 14
+bne r0 r9 NoRequest
+get r11 d2 8
+get r12 d2 9
+get r14 d2 10
+get r0 d2 12
+bne r0 r13 NoRequest
+bltz r14 SafeFault
+beqz r12 NoRequest
+slt sp r11 r3
+sgt ra r11 r4
+seq r0 r2 1
+select sp r0 sp ra
+select r14 sp -8 r2
+clamp r11 r11 r3 r4
+j Publish
+Storage:
+move r11 r3
+move r12 r4
+select r14 r1 3 0
+j Publish
+NoRequest:
+move r11 r5
+move r12 0
+move r14 0
+Publish:
+poke 101 r11
+poke 102 r12
+poke 103 r2
+poke 104 r9
+poke 105 r14
+beq r2 3 Commit
+beqz r8 Commit
+bdnvs d3 r6 OutputBad
+bdnvs d4 r7 OutputBad
+s d3 r6 r11
+s d4 r7 r11
+j Commit
+ProfileBad:
+move r14 -6
+j SafeFault
+ArbiterBad:
+move r14 -7
+SafeFault:
+move r11 r5
+move r12 0
+j Publish
+OutputBad:
+poke 105 -2
+j Commit
+ConfigBad:
+poke 105 -4
+Commit:
+get r0 db 119
+add r0 r0 1
+poke 119 r0
+poke 115 r0
+j Loop

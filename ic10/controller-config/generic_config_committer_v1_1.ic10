@@ -1,0 +1,97 @@
+# Config ABI v1: copy only valid slots; request generation is published last.
+alias editor r1
+alias controller r2
+alias host r3
+Loop:
+yield
+get editor db 2
+blez editor Loop
+getd r0 editor 0
+bne r0 22360680 Loop
+getd r0 editor 1
+bne r0 1 Loop
+getd r0 editor 16
+bne r0 4 Loop
+move r13 -5
+getd r15 editor 5
+getd r14 editor 13
+getd r0 editor 11
+bne r0 r14 Fail
+getd controller editor 14
+blez controller Fail
+jal ResolveHost
+getd r0 editor 10
+bne r0 controller Fail
+getd r0 editor 18
+bne r0 host Fail
+getd r0 editor 19
+getd r12 host 4
+bne r0 r12 Fail
+getd r0 editor 30
+bne r0 r5 Fail
+getd r0 host 7
+beq r0 r15 Response
+getd r0 host 6
+beq r0 r15 Loop
+move r7 0
+Block:
+add r8 r7 16
+getd r10 host r8
+add r8 r7 96
+getd r11 editor r8
+bne r10 r11 Fail # schema mask must match loaded Editor snapshot
+move r8 0
+Slot:
+and r0 r10 1
+beqz r0 Skip
+sll r12 r7 3
+add r12 r12 r8
+add r9 r12 32
+getd r9 editor r9
+bnan r9 Fail
+add r12 r12 128
+putd host r12 r9
+Skip:
+srl r10 r10 1
+beqz r10 NextBlock
+add r8 r8 1
+blt r8 8 Slot
+NextBlock:
+add r7 r7 1
+blt r7 r5 Block
+getd r0 editor 11
+bne r0 r14 Loop
+getd r0 editor 5
+bne r0 r15 Loop
+getd r0 editor 16
+bne r0 4 Loop
+putd host 6 r15 # publish only after complete masked candidate copy
+j Loop
+Response:
+getd r0 host 11
+putd editor 16 r0
+j Loop
+Fail:
+putd editor 16 r13
+j Loop
+ResolveHost:
+getd r0 controller 96
+bne r0 27182818 Fail
+getd r0 controller 97
+blt r0 1 Fail
+bgt r0 2 Fail
+getd r4 controller 99
+getd host controller 116
+blez host Fail
+getd r0 host 0
+bne r0 31415928 Fail
+getd r0 host 1
+bne r0 1 Fail
+getd r0 host 2
+bne r0 r4 Fail
+getd r0 host 8
+blez r0 Fail
+getd r5 host 10
+blt r5 1 Fail
+bgt r5 4 Fail
+j ra

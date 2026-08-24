@@ -1,0 +1,46 @@
+# Diagnostic Selector Bridge v1.0: UI state -> transactional selector requests.
+# S2 Diagnostic Input Bridge,S3 Controller Selector,S4 Console Selector.
+alias input r1
+alias controllerSelector r2
+alias consoleSelector r3
+poke 0 17320512
+poke 1 1
+Loop:
+yield
+get input db 2
+get controllerSelector db 3
+get consoleSelector db 4
+blez input Invalid
+blez controllerSelector Invalid
+blez consoleSelector Invalid
+getd r0 input 0
+bne r0 17320511 Invalid
+getd r0 input 1
+bne r0 1 Invalid
+getd r0 input 7
+bne r0 1 Invalid
+getd r0 controllerSelector 0
+bne r0 17320508 Invalid
+getd r0 controllerSelector 1
+bne r0 2 Invalid
+getd r0 consoleSelector 0
+bne r0 17320509 Invalid
+getd r0 consoleSelector 1
+bne r0 1 Invalid
+# Desired pair is written before generation; selector accepts it atomically.
+getd r10 input 16
+getd r11 input 17
+getd r12 input 24
+putd controllerSelector 10 r10
+putd controllerSelector 11 r11
+putd controllerSelector 12 r12
+getd r10 input 18
+getd r12 input 25
+putd consoleSelector 12 r10
+putd consoleSelector 13 r12
+poke 5 r12 # last observed console-request generation
+s db Setting 1
+j Loop
+Invalid:
+s db Setting -1
+j Loop

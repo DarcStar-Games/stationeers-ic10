@@ -1,0 +1,5 @@
+Generic Job ABI validation: PASS
+ - 11-field logical record, four job types and 12-state lifecycle match GENERIC_JOB_ABI_V1
+ - 32 crash-safe slots publish through per-slot A/B state banks and queue seqlock/generation
+ - optimistic JobGeneration rejects stale updates; terminal jobs are immutable and reap-only
+ - pre-flip reflash retries; post-flip reflash retains and acknowledges the committed mutation

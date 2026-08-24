@@ -1,0 +1,106 @@
+# Create one bounded dependency child.
+poke 0 31416006
+poke 1 2
+Loop:
+yield
+get r15 db 10
+get r0 db 11
+beq r15 r0 Loop
+get r2 db 2
+get r3 db 3
+get r4 db 4
+get r5 db 5
+get r6 db 6
+get r7 db 7
+get r8 db 8
+get r9 db 9
+blez r2 Bad
+blez r9 Bad
+put d0 2 r8
+put d0 3 r15
+WaitP:
+yield
+get r0 d0 4
+bne r0 r15 WaitP
+get r0 d0 5
+bne r0 1 NoProducer
+get r10 d0 6
+get r11 d0 7
+put d2 2 r2
+put d2 3 r5
+put d2 4 r6
+put d2 5 r10
+put d2 6 r11
+put d2 7 r15
+WaitA:
+yield
+get r0 d2 8
+bne r0 r15 WaitA
+get r0 d2 9
+beq r0 -2 Depth
+beq r0 -3 Cycle
+bne r0 1 Bad
+put d1 2 r10
+put d1 3 r11
+put d1 4 1
+put d1 5 -1
+put d1 6 r15
+WaitR:
+yield
+get r0 d1 7
+bne r0 r15 WaitR
+get r0 d1 8
+bne r0 1 NoProducer
+get r12 d1 11
+bne r12 r8 NoProducer
+get r13 d1 12
+blez r13 Bad
+get sp d1 9
+get ra d1 10
+div r0 r9 r13
+round r1 r0
+slt r12 r1 r0
+add r1 r1 r12
+max r1 r1 1
+Stage:
+put d3 53 r2
+put d3 54 r4
+put d3 55 r3
+put d3 56 r10
+put d3 57 sp
+put d3 58 r11
+put d3 59 ra
+put d3 60 1
+put d3 61 r1
+add r0 r7 1
+put d3 62 r0
+put d3 63 -1
+put d3 48 r15
+WaitG:
+yield
+get r0 d3 49
+bne r0 r15 WaitG
+get r0 d3 50
+bne r0 1 Bad
+get r0 d3 51
+poke 13 r0
+mul r0 r1 r13
+poke 15 r0
+poke 12 1
+poke 11 r15
+j Loop
+NoProducer:
+move r0 -5
+j Fail
+Depth:
+move r0 -4
+j Fail
+Cycle:
+move r0 -32
+j Fail
+Bad:
+move r0 -1
+Fail:
+poke 12 r0
+poke 11 r15
+j Loop

@@ -1,0 +1,112 @@
+# Input Profile View v5: dynamic Store ABI5 self-contained profile items.
+poke 0 31415929
+poke 1 1
+poke 5 0
+Loop:
+yield
+get r10 db 2
+get r11 db 3
+bdns d0 Bad
+l r2 d0 ReferenceId
+get r12 d0 11
+blez r12 Bad
+getd r0 r12 0
+bne r0 31415970 Bad
+getd r15 r12 7
+mod r0 r15 2
+bnez r0 Bad
+get r13 d0 4
+First:
+getd r1 r2 6
+blez r1 Store
+move r2 r1
+j First
+Store:
+getd r0 r2 0
+bne r0 31415968 Bad
+getd r0 r2 1
+bne r0 5 Bad
+getd r0 r2 2
+bne r0 HASH("CatalogSchema.InputProfile") Bad
+getd r0 r2 3
+bne r0 3 Bad
+getd r0 r2 4
+bne r0 r13 Bad
+getd r14 r2 17
+mod r0 r14 2
+bnez r0 Loop
+getd r7 r2 9
+move r5 0
+Find:
+bge r5 r7 StoreDone
+mul r8 r5 2
+add r8 r8 32
+getd r8 r2 r8
+getd r0 r2 r8
+bne r0 r10 Next
+add r9 r8 1
+getd r0 r2 r9
+bne r0 r11 Next
+add r9 r8 2
+getd r4 r2 r9
+blt r4 1 Bad
+bgt r4 32 Bad
+add r9 r8 3
+getd r6 r2 r9
+poke 5 0
+move r9 0
+Zero:
+add r1 r9 32
+poke r1 0
+add r9 r9 1
+blt r9 224 Zero
+move r9 0
+mul r1 r4 4
+add r7 r8 4
+CopyDesc:
+bge r9 r1 EnumStart
+add sp r7 r9
+getd ra r2 sp
+add sp r9 32
+poke sp ra
+add r9 r9 1
+j CopyDesc
+EnumStart:
+add r7 r7 r1
+move r9 0
+Enum:
+bge r9 r6 Done
+mul sp r9 2
+add sp sp r7
+getd ra r2 sp
+add sp sp 1
+getd sp r2 sp
+blt ra 128 Bad
+bgt ra 255 Bad
+poke ra sp
+add r9 r9 1
+j Enum
+Done:
+getd r0 r2 17
+bne r0 r14 Loop
+getd r0 r12 7
+bne r0 r15 Loop
+poke 4 r4
+poke 5 r14
+j Loop
+Next:
+add r5 r5 1
+j Find
+StoreDone:
+getd r1 r2 7
+blez r1 Missing
+move r2 r1
+j Store
+Bad:
+poke 5 0
+j Loop
+Missing:
+getd r0 r12 7
+bne r0 r15 Loop
+poke 5 0
+j Loop

@@ -1,0 +1,76 @@
+# Two-gas Purity Guard ABI1. d0 analyzer,d1 mixture Profile.
+poke 0 31415947
+poke 1 1
+Loop:
+yield
+bdns d1 ProfileBad
+get r15 d1 5
+blez r15 ProfileBad
+get r0 d1 0
+bne r0 31415963 ProfileBad
+get r0 d1 8
+bne r0 1 ProfileBad
+get r0 d1 11
+bne r0 5 ProfileBad
+get r0 d1 12
+bne r0 1 ProfileBad
+get r1 d1 9
+get r2 d1 13
+get r3 d1 14
+get r4 d1 15
+get r5 d1 16
+get r6 d1 17
+get r7 d1 18
+get r8 d1 19
+get r0 d1 5
+bne r0 r15 Loop
+bdnvl d0 TotalMoles SensorBad
+bdnvl d0 Temperature SensorBad
+bdnvl d0 r2 SensorBad
+bdnvl d0 r4 SensorBad
+l r9 d0 TotalMoles
+l r10 d0 Temperature
+l r11 d0 r2
+l r12 d0 r4
+bnan r9 NumericBad
+bnan r10 NumericBad
+bnan r11 NumericBad
+bnan r12 NumericBad
+bltz r9 NumericBad
+blez r9 Good
+sub r13 r11 r3
+abs r13 r13
+bgt r13 r6 MixedBad
+sub r13 r12 r5
+abs r13 r13
+bgt r13 r6 MixedBad
+blt r10 r7 MixedBad
+blez r8 Good
+bgt r10 r8 MixedBad
+Good:
+move r14 1
+j Publish
+MixedBad:
+move r14 -4
+j Publish
+ProfileBad:
+move r14 -1
+j Fault
+SensorBad:
+move r14 -2
+j Fault
+NumericBad:
+move r14 -3
+Fault:
+move r1 0
+move r11 0
+Publish:
+poke 2 r1
+poke 3 r11
+poke 4 r6
+poke 5 r14
+poke 6 r15
+get r0 db 7
+add r0 r0 1
+poke 7 r0
+j Loop

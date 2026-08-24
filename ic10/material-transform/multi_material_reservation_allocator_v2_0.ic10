@@ -1,0 +1,114 @@
+# Multi Material Allocator ABI2. d0 Resolver,d1 Stager. Commit S14 LAST.
+get r0 db 31
+beq r0 31415954 Init
+clr db
+poke 31 31415954
+Init:
+poke 0 31415954
+poke 1 2
+Loop:
+yield
+get r0 db 5
+beq r0 1 Active
+beq r0 3 WaitStage
+beq r0 4 WaitClean
+get r15 db 4
+get r0 db 16
+beq r15 r0 Loop
+get r6 db 2
+get r7 db 3
+blez r6 Reject
+blez r7 Reject
+get r14 d0 5
+blez r14 Reject
+get r0 d0 6
+bne r0 1 Reject
+get r8 d0 3
+get r1 db 13
+add r1 r1 1
+poke 13 r1
+poke 9 r8
+poke 10 r15
+poke 11 r7
+poke 12 r14
+get r0 db 17
+add r0 r0 1
+poke 17 r0
+put d1 3 r1
+put d1 4 r6
+put d1 5 r0
+put d1 2 1
+poke 18 r0
+poke 5 3
+j Loop
+WaitStage:
+get r1 db 18
+get r0 d1 7
+bne r0 r1 Loop
+get r0 d1 6
+bne r0 1 StageFail
+get r14 db 12
+get r0 d0 5
+bne r0 r14 StageFail
+get r1 db 13
+poke 14 r1
+get r15 db 10
+poke 5 1
+poke 16 r15
+j Loop
+Active:
+get r15 db 10
+get r0 db 6
+beq r0 r15 Cancel
+get r1 db 14
+get r8 db 9
+move r12 0
+Done:
+bge r12 r8 Complete
+mul r0 r12 4
+add r0 r0 16
+get r9 d0 r0
+getd r0 r9 23
+bne r0 r1 Loop
+add r12 r12 1
+j Done
+Complete:
+poke 15 r1
+move r0 2
+j StartClean
+Cancel:
+move r0 -2
+StartClean:
+poke 14 0
+poke 19 r0
+get r1 db 17
+add r1 r1 1
+poke 17 r1
+put d1 5 r1
+put d1 2 2
+poke 18 r1
+poke 5 4
+j Loop
+WaitClean:
+get r1 db 18
+get r0 d1 7
+bne r0 r1 Loop
+get r0 d1 6
+bne r0 2 RejectClean
+get r0 db 19
+poke 5 r0
+get r15 db 10
+poke 16 r15
+j Loop
+StageFail:
+poke 14 0
+move r0 -1
+j StartClean
+RejectClean:
+poke 5 -3
+j PublishReject
+Reject:
+poke 5 -1
+poke 16 r15
+PublishReject:
+j Loop

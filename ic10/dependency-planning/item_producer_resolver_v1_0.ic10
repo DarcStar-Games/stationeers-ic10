@@ -1,0 +1,78 @@
+# Generated ITEM producer resolver.
+Boot:
+get r0 db 0
+beq r0 31416003 Table
+clr db
+poke 0 31416003
+poke 1 1
+Table:
+move sp 32
+push -1301215609
+push HASH("SmeltIron")
+push -404336834
+push HASH("SmeltCopper")
+push 226410516
+push HASH("SmeltGold")
+push 2134647745
+push HASH("SmeltLead")
+push -1406385572
+push HASH("SmeltNickel")
+push -290196476
+push HASH("SmeltSilicon")
+push -929742000
+push HASH("SmeltSilver")
+push -654790771
+push HASH("AlloySteel")
+push 502280180
+push HASH("AlloyElectrum")
+push -297990285
+push HASH("AlloyInvar")
+push 1058547521
+push HASH("AlloyConstantan")
+push -82508479
+push HASH("AlloySolder")
+push 412924554
+push HASH("AlloyAstroloy")
+push 1579842814
+push HASH("AlloyHastelloy")
+push -787796599
+push HASH("AlloyInconel")
+push -1897868623
+push HASH("AlloyStellite")
+push 156348098
+push HASH("AlloyWaspaloy")
+Loop:
+yield
+get r15 db 3
+get r0 db 4
+beq r15 r0 Loop
+get r2 db 2
+beqz r2 Bad
+move r6 0
+move r7 32
+Find:
+bge r6 17 Print
+get r0 db r7
+beq r0 r2 Found
+add r7 r7 2
+add r6 r6 1
+j Find
+Found:
+add r7 r7 1
+get r0 db r7
+poke 6 1
+poke 7 r0
+j Good
+Print:
+poke 6 2
+poke 7 r2
+Good:
+poke 5 1
+poke 4 r15
+j Loop
+Bad:
+poke 5 -1
+poke 6 0
+poke 7 0
+poke 4 r15
+j Loop

@@ -1,0 +1,120 @@
+poke 0 31415946
+poke 1 2
+poke 22 -1
+move r15 -1
+Loop:
+yield
+get r14 db 8
+beq r14 r15 Loop
+get r1 db 2
+get r2 db 3
+get r3 db 4
+get ra db 11
+blt r2 2 Bad
+bgt r2 3 Bad
+blez r3 Bad
+blez ra Bad
+bdns d0 Bad
+get r0 d0 0
+bne r0 31415945 Bad
+get r0 d0 1
+bne r0 1 Bad
+get r4 d0 2
+get r5 d0 3
+get r6 d0 4
+get r7 d0 5
+bnan r4 Bad
+bnan r5 Bad
+bnan r6 Bad
+bnan r7 Bad
+blez r4 Bad
+bltz r5 Bad
+bltz r6 Bad
+bltz r7 Bad
+get r0 d0 6
+bnan r0 Bad
+get r0 db 22
+beq r0 r1 Score
+poke 22 r1
+poke 19 0
+poke 21 pinf
+poke 23 0
+get r0 d0 6
+clamp r0 r0 1 64
+poke 24 r0
+Score:
+move r9 0
+Hop:
+bge r9 r2 Cost
+add sp r9 5
+get r10 db sp
+getd r11 r10 106
+getd r12 r10 107
+getd r0 r11 6
+getd r13 r11 12
+sub r0 r0 r13
+div r0 r0 ra
+min r3 r3 r0
+getd r0 r12 7
+getd r13 r12 13
+sub r0 r0 r13
+div r0 r0 ra
+min r3 r3 r0
+blez r3 Skip
+getd r11 r11 2
+getd r12 r12 2
+getd r0 r11 10
+getd r13 r12 10
+bnan r0 Bad
+bnan r13 Bad
+sub r13 r13 r0
+max r13 r13 0
+get r8 db 25
+add r8 r8 r13
+poke 25 r8
+add r9 r9 1
+j Hop
+Cost:
+get r8 db 25
+mul r8 r8 r6
+mul r0 r4 r2
+add r8 r8 r0
+sub r0 r2 1
+mul r0 r0 r5
+add r8 r8 r0
+div r0 r7 r3
+add r8 r8 r0
+get r0 db 19
+beqz r0 Better
+get r0 db 21
+blt r8 r0 Better
+bgt r8 r0 Skip
+get r0 db 20
+ble r3 r0 Skip
+Better:
+poke 19 r2
+poke 20 r3
+poke 21 r8
+move r9 0
+Save:
+bge r9 r2 Skip
+add sp r9 5
+get r10 db sp
+add sp r9 16
+poke sp r10
+add r9 r9 1
+j Save
+Skip:
+poke 25 0
+get r0 db 23
+add r0 r0 1
+poke 23 r0
+poke 9 1
+j Respond
+Bad:
+poke 25 0
+poke 9 -1
+Respond:
+poke 10 r14
+move r15 r14
+j Loop

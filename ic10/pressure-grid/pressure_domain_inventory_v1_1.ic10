@@ -1,0 +1,120 @@
+poke 0 31415935
+poke 1 2
+Loop:
+yield
+bdns d0 DomainBad
+get r15 d0 115
+blez r15 DomainBad
+get r0 d0 96
+bne r0 27182818 DomainBad
+get r0 d0 97
+bne r0 2 DomainBad
+get r0 d0 99
+bne r0 HASH("ControllerPressureDomain") DomainBad
+l r14 d0 ReferenceId
+get r1 d0 103
+get r2 d0 104
+get r3 d0 105
+get r0 d0 115
+bne r0 r15 Loop
+blt r1 1 DomainBad
+bgt r1 3 DomainBad
+bne r3 r1 DomainBad
+bdns d2 PurityBad
+get r15 d2 7
+blez r15 PurityBad
+get r0 d2 0
+bne r0 31415947 PurityBad
+get r0 d2 2
+bne r0 r2 PurityBad
+get r0 d2 5
+bne r0 1 PurityBad
+get r0 d2 7
+bne r0 r15 Loop
+bdnvl d1 Pressure SensorBad
+bdnvl d1 Temperature SensorBad
+bdnvl d1 Volume SensorBad
+bdnvl d1 TotalMoles SensorBad
+bdnvl d1 VolumeOfLiquid SensorBad
+l r4 d1 Pressure
+l r5 d1 Temperature
+l r6 d1 Volume
+l r7 d1 TotalMoles
+l r15 d1 VolumeOfLiquid
+bnan r4 NumericBad
+bnan r5 NumericBad
+bnan r6 NumericBad
+bnan r7 NumericBad
+bnan r15 NumericBad
+bltz r4 NumericBad
+blez r5 NumericBad
+blez r6 NumericBad
+bltz r7 NumericBad
+bltz r15 NumericBad
+bgtz r15 LiquidBad
+mul sp 8.3144 r5
+div r8 r6 sp
+div r9 r4 sp
+move r10 0
+move r11 0
+beq r1 1 Low
+beq r1 2 High
+get r0 d0 101
+bnan r0 NumericBad
+mul r12 r0 r8
+sub r10 r7 r12
+max r10 r10 0
+get r0 d0 102
+bnan r0 NumericBad
+mul r12 r0 r8
+sub r11 r12 r7
+max r11 r11 0
+j Publish
+Low:
+get r0 d0 101
+bnan r0 NumericBad
+mul r12 r0 r8
+sub r10 r7 r12
+max r10 r10 0
+j Publish
+High:
+get r0 d0 101
+bnan r0 NumericBad
+mul r12 r0 r8
+sub r11 r12 r7
+max r11 r11 0
+Publish:
+poke 2 r14
+poke 3 r1
+poke 4 r2
+poke 5 r10
+poke 6 r11
+poke 7 r8
+poke 8 r9
+poke 9 r7
+poke 10 r4
+poke 11 1
+j Commit
+DomainBad:
+move r0 -1
+j Invalid
+SensorBad:
+move r0 -2
+j Invalid
+NumericBad:
+move r0 -3
+j Invalid
+LiquidBad:
+move r0 -4
+j Invalid
+PurityBad:
+move r0 -6
+Invalid:
+poke 5 0
+poke 6 0
+poke 11 r0
+Commit:
+get r0 db 12
+add r0 r0 1
+poke 12 r0
+j Loop

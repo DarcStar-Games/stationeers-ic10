@@ -1,0 +1,63 @@
+# POWER producer Endpoint ABI1. d0 provider; config S16..20.
+poke 0 31415949
+poke 1 1
+poke 2 4
+poke 3 HASH("Power.Electrical")
+poke 4 1
+poke 12 4
+poke 13 1
+poke 35 1
+Loop:
+yield
+bdns d0 Bad
+get r2 db 16
+move r3 0
+bdnvl d0 r2 Bad
+l r3 d0 r2
+bnan r3 Bad
+max r3 r3 0
+get r4 db 17
+blez r4 CapDone
+min r3 r3 r4
+CapDone:
+move r5 1
+bdnvl d0 On OnDone
+l r5 d0 On
+OnDone:
+move r6 0
+bdnvl d0 Error ErrDone
+l r6 d0 Error
+ErrDone:
+blez r5 Off
+bgtz r6 Off
+j Publish
+Off:
+move r3 0
+Publish:
+l r7 d0 ReferenceId
+get r8 db 18
+get r9 db 19
+get r10 db 20
+clamp r10 r10 0 999
+mul r10 r10 16
+poke 5 r3
+poke 6 0
+poke 7 0
+poke 8 1
+poke 9 r7
+poke 10 0
+poke 38 r8
+poke 39 r9
+poke 40 r10
+get r0 db 11
+add r0 r0 1
+poke 11 r0
+j Loop
+Bad:
+poke 5 0
+poke 6 0
+poke 8 -1
+get r0 db 11
+add r0 r0 1
+poke 11 r0
+j Loop

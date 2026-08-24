@@ -1,0 +1,120 @@
+poke 0 31415992
+poke 1 2
+Loop:
+yield
+get r0 db 20
+beq r0 1 Profile
+beq r0 2 SelectWait
+beq r0 3 ExecWait
+get r15 db 8
+get r0 db 9
+beq r15 r0 Loop
+poke 10 2
+poke 11 0
+poke 9 r15
+get r0 db 3
+put d1 2 r0
+poke 23 0
+poke 24 0
+poke 20 1
+j Loop
+Profile:
+get r0 db 3
+get r1 d1 41
+bne r0 r1 Loop
+get r1 d1 7
+bne r1 1 Fault
+get r0 db 5
+get r1 d1 5
+bne r0 r1 Fault
+get r0 db 6
+bne r0 1 Fault
+get r1 d1 3
+put d0 3 r1
+Select:
+get r0 db 30
+add r0 r0 1
+poke 30 r0
+poke 21 r0
+l r1 d3 ReferenceId
+put d0 16 r1
+put d0 2 HASH("DirectorySchema.PrinterExecution")
+put d0 15 1
+get r1 db 4
+put d0 4 r1
+put d0 5 2
+get r1 db 23
+put d0 6 r1
+put d0 7 r0
+poke 20 2
+j Loop
+SelectWait:
+get r15 db 21
+get r0 d0 8
+bne r0 r15 Loop
+get r0 d0 9
+beq r0 1 Candidate
+beq r0 -2 NoPrinter
+j Fault
+Candidate:
+get r1 d0 10
+get r0 d0 13
+poke 23 r0
+get r0 db 30
+add r0 r0 1
+poke 30 r0
+poke 22 r0
+put d2 2 r1
+get r1 db 3
+put d2 3 r1
+get r1 db 4
+put d2 4 r1
+get r1 db 5
+put d2 5 r1
+get r1 db 6
+put d2 6 r1
+get r1 db 7
+put d2 7 r1
+put d2 8 r0
+get r1 d0 12
+put d2 13 r1
+poke 20 3
+j Loop
+ExecWait:
+get r15 db 22
+get r1 d2 10
+bne r1 r15 Loop
+get r0 d2 11
+bgt r0 2 Mirror
+get r0 d2 9
+beq r0 -2 Select
+beq r0 -3 MarkRes
+beq r0 -4 MarkCap
+j Fault
+Mirror:
+poke 10 r0
+get r1 d2 12
+poke 11 r1
+bge r0 7 Done
+j Loop
+MarkRes:
+poke 24 3
+j Select
+MarkCap:
+poke 24 4
+j Select
+NoPrinter:
+get r0 db 24
+seq r1 r0 3
+seq r2 r0 4
+sub r0 9 r1
+add r0 r0 r2
+poke 10 r0
+poke 11 0
+j Done
+Fault:
+poke 10 11
+poke 11 -1
+Done:
+poke 20 0
+j Loop

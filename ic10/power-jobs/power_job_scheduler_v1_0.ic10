@@ -1,0 +1,74 @@
+# POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.
+poke 0 31416047
+poke 1 1
+poke 20 0
+put d0 18 4
+Loop:
+yield
+get r0 db 20
+beq r0 1 WaitSelect
+beq r0 2 WaitWork
+get r15 db 30
+add r15 r15 1
+poke 30 r15
+get r0 db 22
+put d0 2 r0
+put d0 3 r15
+poke 20 1
+j Loop
+WaitSelect:
+get r15 db 30
+get r0 d0 4
+bne r0 r15 Loop
+get r0 d0 5
+bne r0 1 Idle
+get r2 d0 6
+get r3 d0 7
+get r4 d0 9
+get r5 d0 10
+get r6 d0 13
+get r7 d0 15
+get r8 d0 16
+poke 23 r3
+seq r1 r7 5
+seq r0 r7 6
+or r1 r1 r0
+select r9 r1 2 1
+put dr9 2 r2
+put dr9 3 r3
+put dr9 4 r7
+put dr9 5 r8
+put dr9 6 r6
+put dr9 7 r4
+put dr9 8 r5
+put dr9 9 r15
+poke 21 r9
+poke 20 2
+j Loop
+WaitWork:
+get r15 db 30
+get r9 db 21
+get r0 dr9 10
+bne r0 r15 Loop
+get r0 dr9 11
+bltz r0 Fault
+poke 31 r0
+get r0 db 23
+poke 22 r0
+get r0 dr9 12
+poke 32 r0
+get r0 dr9 13
+poke 33 r0
+poke 20 0
+j Loop
+Fault:
+get r0 db 23
+poke 22 r0
+poke 31 -1
+poke 20 0
+j Loop
+Idle:
+poke 22 0
+poke 31 0
+poke 20 0
+j Loop

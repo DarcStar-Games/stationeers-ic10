@@ -1,0 +1,117 @@
+# Material Link ABI1. d0 srcRes,d1 sinkRes,d2 Feeder,d3 Guard,d4 Exec.
+poke 0 31415953
+poke 1 1
+poke 4 2
+poke 6 HASH("MaterialStackerSorter")
+poke 8 0
+poke 12 0
+poke 13 7
+Loop:
+yield
+bdns d0 Bad
+bdns d1 Bad
+bdns d2 Bad
+bdns d3 Bad
+bdns d4 Bad
+get r14 d0 12
+blez r14 Bad
+get r0 d0 0
+bne r0 31415950 Bad
+get r0 d0 1
+bne r0 1 Bad
+get r2 d0 4
+get r0 d0 3
+bne r0 2 Bad
+get r0 d0 10
+bne r0 2 Bad
+l r3 d0 ReferenceId
+get r5 d0 2
+get r0 d0 12
+bne r0 r14 Loop
+get r13 d1 12
+blez r13 Bad
+get r0 d1 0
+bne r0 31415950 Bad
+get r0 d1 1
+bne r0 1 Bad
+get r0 d1 4
+bne r0 r2 Bad
+get r0 d1 3
+bne r0 2 Bad
+get r0 d1 10
+bne r0 2 Bad
+l r4 d1 ReferenceId
+get r6 d1 2
+get r0 d1 12
+bne r0 r13 Loop
+getd r7 r5 9
+getd r8 r6 9
+get r14 d2 10
+blez r14 Bad
+get r0 d2 0
+bne r0 31415961 Bad
+get r0 d2 1
+bne r0 1 Bad
+l r9 d2 ReferenceId
+get r10 d2 2
+bne r7 r10 Bad
+get r11 d2 3
+get r12 d2 4
+get sp d2 5
+get r13 d2 11
+get r0 d2 10
+bne r0 r14 Loop
+get r0 d3 0
+bne r0 31415960 Bad
+get r0 d3 1
+bne r0 1 Bad
+get r0 d3 6
+blez r0 Bad
+l r14 d3 ReferenceId
+get r0 d4 0
+bne r0 31415958 Bad
+get r0 d4 1
+bne r0 1 Bad
+get r0 d4 7
+blez r0 Bad
+l r15 d4 ReferenceId
+l r1 db ReferenceId
+poke 2 r3
+poke 3 r4
+poke 5 r2
+get r0 d4 5
+poke 7 r0
+poke 9 1
+poke 10 r1
+poke 14 r14
+poke 15 r15
+poke 16 r9
+poke 17 r12
+poke 18 sp
+poke 19 r10
+poke 20 r11
+poke 21 r13
+poke 22 r8
+get r0 d4 3
+poke 23 r0
+get r0 d4 4
+poke 24 r0
+get r0 d4 5
+poke 25 r0
+get r0 d4 6
+poke 26 r0
+getd r0 r5 14
+getd r0 r0 15
+poke 27 r0
+get r0 db 12
+add r0 r0 1
+poke 11 r0
+poke 12 r0
+j Loop
+Bad:
+poke 7 0
+poke 9 -1
+get r0 db 12
+add r0 r0 1
+poke 12 r0
+j Loop

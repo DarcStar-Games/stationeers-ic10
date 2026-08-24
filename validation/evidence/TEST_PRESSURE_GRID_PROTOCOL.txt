@@ -1,0 +1,6 @@
+Pressure-grid hardening model: PASS
+ - Transfer ABI2 executes only coherent GrantGuard output
+ - GrantGuard binds lease to coherent topology and Planner commit
+ - Allocator supports quote and topology-bound staging
+ - Route Ranker uses remaining reserved capacity
+ - Link Directory snapshots Transfer topology coherently

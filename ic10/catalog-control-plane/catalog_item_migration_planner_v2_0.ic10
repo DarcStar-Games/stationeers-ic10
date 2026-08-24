@@ -1,0 +1,111 @@
+# Catalog Item Migration Planner v2.0: d0 Core,d1 Directory.
+Loop:
+yield
+bdns d0 Loop
+bdns d1 Loop
+get r0 d0 0
+bne r0 31415970 Loop
+get r0 d0 40
+bgtz r0 Loop
+get r0 d1 0
+bne r0 31415982 Loop
+get r0 d1 1
+bne r0 3 Loop
+get r0 d1 2
+bne r0 HASH("DirectorySchema.CatalogStoreNode") Loop
+get r0 d1 19
+bne r0 1 Loop
+get r12 d1 23
+mod r0 r12 2
+bnez r0 Loop
+move r7 1
+FindSrc:
+bgt r7 64 Loop
+jal DirRef
+blez r1 NextSrc
+getd r0 r1 16
+bne r0 3 NextSrc
+getd r3 r1 9
+blez r3 NextSrc
+sub r3 r3 1
+mul r4 r3 2
+add r4 r4 32
+add r4 r4 1
+getd r9 r1 r4
+add r11 r9 2
+move r13 r1
+move r15 0
+move r6 1
+FindDst:
+bgt r6 64 NeedStore
+move r14 r7
+move r7 r6
+jal DirRef
+move r7 r14
+blez r2 DNext
+beq r2 r13 DNext
+getd r0 r2 16
+bne r0 2 DNext
+getd r0 r2 2
+getd r5 r13 2
+bne r0 r5 DNext
+getd r0 r2 3
+getd r5 r13 3
+bne r0 r5 DNext
+getd r0 r2 4
+getd r5 r13 4
+bne r0 r5 DNext
+getd r0 r2 23
+getd r5 r13 23
+bne r0 r5 DNext
+getd r0 r2 29
+blt r0 r11 DNext
+getd r0 r2 27
+blez r0 DFree
+move r15 1
+j DNext
+DFree:
+get r0 d1 23
+bne r0 r12 Loop
+putd r2 27 r11
+put d0 40 r13
+put d0 41 r2
+get r0 d0 42
+add r0 r0 1
+put d0 42 r0
+j Loop
+DNext:
+add r6 r6 1
+j FindDst
+NeedStore:
+get r0 d1 23
+bne r0 r12 Loop
+bgtz r15 Loop
+get r0 d0 25
+bgtz r0 Loop
+getd r0 r13 23
+put d0 26 r0
+getd r0 r13 2
+put d0 27 r0
+getd r0 r13 3
+put d0 28 r0
+getd r0 r13 4
+put d0 29 r0
+getd r0 r13 7
+put d0 30 r0
+getd r0 r13 8
+add r0 r0 1
+put d0 31 r0
+put d0 32 r11
+put d0 25 1
+j Loop
+DirRef:
+sub r0 r7 1
+mul r0 r0 6
+add r0 r0 64
+get r1 d1 r0
+move r2 r1
+j ra
+NextSrc:
+add r7 r7 1
+j FindSrc

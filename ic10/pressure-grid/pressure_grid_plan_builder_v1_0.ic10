@@ -1,0 +1,120 @@
+# Grid Plan Builder v1.0: d0 SingleHop Builder,d1 Path Allocator.
+poke 0 31415943
+poke 1 1
+poke 13 -1
+move r14 0
+Loop:
+yield
+beqz r14 New
+beq r14 1 WaitDirect
+beq r14 2 Path
+j WaitFallback
+WaitDirect:
+get r0 d0 11
+bne r0 r13 Loop
+get r0 d0 10
+bltz r0 Fail
+get r0 d0 8
+add r8 r8 r0
+get r0 d0 9
+add r9 r9 r0
+move r14 2
+move r13 0
+j Loop
+Path:
+beqz r13 AskPath
+get r0 d1 9
+bne r0 r13 Loop
+get r0 d1 8
+bltz r0 Fail
+beqz r0 AskFallback
+get r0 d1 10
+add r8 r8 r0
+get r0 d1 7
+add r9 r9 r0
+move r13 0
+j Loop
+AskPath:
+get r13 db 12
+add r13 r13 1
+poke 12 r13
+put d1 2 r1
+put d1 3 r2
+put d1 4 r3
+put d1 5 r4
+put d1 6 r13
+j Loop
+AskFallback:
+get r13 db 11
+add r13 r13 1
+poke 11 r13
+put d0 2 r1
+put d0 3 r2
+put d0 4 r3
+put d0 6 1
+put d0 7 r13
+move r14 3
+j Loop
+WaitFallback:
+get r0 d0 11
+bne r0 r13 Loop
+get r0 d0 10
+bltz r0 Fail
+get r0 d0 8
+add r8 r8 r0
+get r0 d0 9
+add r9 r9 r0
+poke 7 r8
+poke 8 r9
+select r0 r8 1 0
+poke 9 r0
+j Respond
+New:
+get r15 db 6
+get r0 db 13
+beq r15 r0 Loop
+get r1 db 2
+get r2 db 3
+get r3 db 4
+get r4 db 5
+get r0 db 6
+bne r0 r15 Loop
+blez r1 Reject
+blez r2 Reject
+blez r4 Reject
+bdns d0 Reject
+get r0 d0 0
+bne r0 31415942 Reject
+get r0 d0 1
+bne r0 1 Reject
+bdns d1 Reject
+get r0 d1 0
+bne r0 31415941 Reject
+get r0 d1 1
+bne r0 1 Reject
+move r8 0
+move r9 0
+get r13 db 11
+add r13 r13 1
+poke 11 r13
+put d0 2 r1
+put d0 3 r2
+put d0 4 r3
+put d0 6 2
+put d0 7 r13
+move r14 1
+j Loop
+Fail:
+move r0 -2
+j Error
+Reject:
+move r0 -1
+Error:
+poke 7 0
+poke 8 0
+poke 9 r0
+Respond:
+poke 10 r15
+poke 13 r15
+move r14 0
+j Loop

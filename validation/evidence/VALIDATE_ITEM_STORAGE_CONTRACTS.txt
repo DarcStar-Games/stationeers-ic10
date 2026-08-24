@@ -1,0 +1,5 @@
+Item storage contracts: PASS
+ - ITEM storage uses one Generic Endpoint/Reservation model across Vending, LArRE, direct slots, chute export and SDB
+ - split reservation quotes are read-only; commits bind allocator identity/epoch, semantic mirror generation, and exact physical action hints
+ - physical LArRE movement requires current source and destination reservations before pickup and supports held-item recovery
+ - SDB inventory is conservative lower-bound while Stacker-backed dispense meters exact requested quantities

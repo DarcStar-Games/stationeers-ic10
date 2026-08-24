@@ -1,0 +1,4 @@
+Sequencer protocol model: PASS
+ - one-shot cycle reaches COMPLETE safely
+ - repeat cycle re-enters FILL and increments cycle count
+ - timeout, missing input, numeric fault, and disable are safe-off

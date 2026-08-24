@@ -1,0 +1,120 @@
+poke 0 31415949
+poke 1 1
+poke 2 2
+poke 12 2
+poke 13 3
+l r0 d1 ReferenceId
+poke 14 r0
+poke 35 HASH("StorageAccess.LArRE")
+poke 4 7
+Loop:
+yield
+bdns d0 Bad
+bdns d1 Bad
+get r0 d0 0
+bne r0 31415986 Bad
+get r14 d1 5
+blez r14 Bad
+get r0 d1 0
+bne r0 31415963 Bad
+get r0 d1 8
+bne r0 2 Bad
+get r2 d1 9
+get r3 d1 13
+get r0 d1 5
+bne r0 r14 Loop
+get r4 db 20
+get r5 db 21
+get r6 db 22
+blez r6 Bad
+get r15 db 31
+get r0 db 34
+bne r15 r0 Move
+get r7 db 23
+add r7 r7 1
+poke 23 r7
+put d0 2 1
+put d0 3 r4
+put d0 4 r5
+put d0 5 r6
+put d0 6 r3
+put d0 7 r2
+put d0 8 r7
+WaitScan:
+yield
+get r0 d0 14
+bne r0 r7 WaitScan
+get r0 d0 9
+bne r0 1 Bad
+get r8 d0 10
+get r9 d0 11
+get r10 d0 12
+get r11 d0 13
+get r12 d0 16
+get r0 d1 5
+bne r0 r14 Loop
+get r13 db 37
+sub r8 r8 r13
+max r8 r8 0
+get r0 db 36
+and r1 r0 9
+select r8 r1 0 r8
+and r1 r0 10
+select r9 r1 0 r9
+l r1 db ReferenceId
+poke 3 r2
+poke 5 r8
+poke 6 r9
+poke 8 1
+poke 9 r1
+poke 10 r7
+poke 38 r10
+poke 39 r11
+poke 40 r12
+get r0 db 11
+add r0 r0 1
+poke 11 r0
+j Loop
+Move:
+get r13 db 24
+blt r13 2 MoveBad
+bgt r13 3 MoveBad
+get r7 db 23
+add r7 r7 1
+poke 23 r7
+put d0 2 r13
+get r0 db 25
+put d0 3 r0
+get r0 db 26
+put d0 4 r0
+get r0 db 27
+put d0 5 r0
+get r0 db 28
+put d0 6 r0
+put d0 7 r2
+get r0 db 30
+put d0 15 r0
+put d0 8 r7
+WaitMove:
+yield
+get r0 d0 14
+bne r0 r7 WaitMove
+get r0 d0 9
+poke 32 r0
+get r1 d0 13
+poke 33 r1
+poke 34 r15
+j Loop
+MoveBad:
+poke 32 -5
+poke 33 0
+poke 34 r15
+j Loop
+Bad:
+poke 5 0
+poke 6 0
+poke 8 -1
+get r0 db 11
+add r0 r0 1
+poke 11 r0
+j Loop

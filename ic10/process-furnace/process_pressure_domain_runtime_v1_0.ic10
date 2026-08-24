@@ -1,0 +1,61 @@
+# Process PressureDomain ABI2. d0 condition,d1 target.
+poke 96 27182818
+poke 97 2
+poke 98 126
+poke 99 HASH("ControllerPressureDomain")
+poke 115 0
+Loop:
+yield
+poke 115 0
+bdns d0 Fault
+bdns d1 Fault
+get r15 d0 11
+blez r15 Fault
+get r0 d0 0
+bne r0 31416048 Fault
+get r0 d0 1
+bne r0 1 Fault
+get r1 d0 10
+get r2 d0 12
+get r3 d0 3
+get r4 d0 4
+get r5 d0 5
+get r6 d0 2
+get r0 d0 11
+bne r0 r15 Loop
+bne r2 1 Fault
+beqz r1 Inactive
+bltz r4 Fault
+blez r5 NoMax
+blt r5 r4 Fault
+NoMax:
+l r7 d1 Pressure
+bnan r7 Fault
+l r0 d1 ReferenceId
+bne r0 r6 Fault
+poke 100 r7
+poke 101 r4
+select r5 r5 r5 r4
+poke 102 r5
+poke 103 3
+poke 104 r3
+poke 105 3
+j Commit
+Inactive:
+l r7 d1 Pressure
+poke 100 r7
+poke 101 r7
+poke 102 r7
+poke 103 3
+poke 104 r3
+poke 105 -8
+j Commit
+Fault:
+poke 103 3
+poke 105 -1
+Commit:
+get r0 db 119
+add r0 r0 1
+poke 119 r0
+poke 115 r0
+j Loop

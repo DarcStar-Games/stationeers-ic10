@@ -1,0 +1,120 @@
+# Printer Capacity Client ABI2: exact-ref, retry-safe reserve/release.
+poke 0 31415997
+poke 1 2
+Loop:
+yield
+get r15 db 5
+get r0 db 6
+beq r15 r0 Loop
+get r0 db 4
+beq r0 1 Reserve
+beq r0 2 Release
+j Bad
+Reserve:
+get r4 db 2
+get r2 db 3
+blez r4 Bad
+blez r15 Bad
+div r0 r2 65536
+floor r0 r0
+mod r3 r0 8
+bge r3 6 Bad
+move r7 0
+FindBank:
+get r1 db:0 r7
+blt r1 0 Missing
+add r7 r7 1
+getd r0 r1 0
+bne r0 31415996 FindBank
+getd r0 r1 1
+bne r0 2 FindBank
+add r0 r3 16
+getd r0 r1 r0
+bne r0 r4 FindBank
+poke 8 r4
+poke 9 r1
+poke 10 r3
+poke 11 r15
+WaitReserve:
+yield
+add r0 r3 32
+putd r1 r0 r4
+add r0 r3 40
+putd r1 r0 r15
+add r0 r3 56
+getd r0 r1 r0
+bne r0 r15 WaitReserve
+add r0 r3 48
+getd r14 r1 r0
+bne r14 1 ReserveFail
+add r0 r3 16
+getd r0 r1 r0
+bne r0 r4 Cleanup
+add r0 r3 64
+getd r0 r1 r0
+bne r0 r4 Cleanup
+add r0 r3 72
+getd r0 r1 r0
+bne r0 r15 Cleanup
+move r0 1
+j Reply
+Cleanup:
+mul r12 r15 -1
+CleanWait:
+yield
+add r0 r3 32
+putd r1 r0 r4
+add r0 r3 40
+putd r1 r0 r12
+add r0 r3 56
+getd r0 r1 r0
+bne r0 r12 CleanWait
+poke 8 0
+poke 9 0
+poke 10 0
+poke 11 0
+move r0 -2
+j Reply
+ReserveFail:
+poke 8 0
+poke 9 0
+poke 10 0
+poke 11 0
+move r0 r14
+j Reply
+Missing:
+move r0 -2
+j ClearReply
+Release:
+get r1 db 9
+blez r1 ReleaseOK
+get r3 db 10
+get r4 db 8
+get r12 db 11
+mul r12 r12 -1
+ReleaseWait:
+yield
+add r0 r3 32
+putd r1 r0 r4
+add r0 r3 40
+putd r1 r0 r12
+add r0 r3 56
+getd r0 r1 r0
+bne r0 r12 ReleaseWait
+add r0 r3 48
+getd r0 r1 r0
+bne r0 1 Bad
+ReleaseOK:
+move r0 1
+ClearReply:
+poke 8 0
+poke 9 0
+poke 10 0
+poke 11 0
+j Reply
+Bad:
+move r0 -1
+Reply:
+poke 7 r0
+poke 6 r15
+j Loop

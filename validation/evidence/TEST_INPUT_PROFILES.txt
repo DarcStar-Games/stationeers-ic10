@@ -1,0 +1,3 @@
+Input Profile catalog schema: PASS
+ - 6 self-contained profiles are runtime-placed in one Generic Store from 3 relocatable sparse loaders
+ - every profile keeps descriptors + enums atomic and 4-cell aligned; View ABI1 unchanged

@@ -1,0 +1,5 @@
+MaterialGrid protocol model: PASS
+ - material endpoint/link/feeder/executor primitives remain exact-batch safe
+ - Grant Guard requires Allocator ABI2
+ - one canonical 1..3-input transform execution path remains
+ - obsolete serialized Allocator/Arc-Furnace compatibility ICs are absent

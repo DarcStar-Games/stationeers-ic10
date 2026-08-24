@@ -1,0 +1,95 @@
+{
+  "catalog_store_abi": 5,
+  "catalog_store_magic": 31415968,
+  "catalog_loader_abi": 4,
+  "catalog_loader_magic": 31415969,
+  "catalog_coordinator_abi": 3,
+  "catalog_coordinator_magic": 31415970,
+  "store_model": "generic_dynamic_item_heap",
+  "loader_model": "one_shot_sparse_relocatable_whole_items",
+  "control_plane": "catalog_coordinator_v3_runtime_placement_item_migration",
+  "cell_block_width": 4,
+  "store_header_cells": 32,
+  "store_item_directory_width": 2,
+  "catalog_schema_id": "CatalogSchema.ResourceTransform",
+  "catalog_schema_version": 4,
+  "catalog_instance_id": "Catalog.ResourceTransforms.Schema4",
+  "store_count": 1,
+  "total_item_count": 17,
+  "catalog_sha256": "7d4b10ea07b9b70607fbec4a574ebdd71ca025d1feac6cc27b32e4e17724ec6d",
+  "regions": [],
+  "format": "RESOURCE_TRANSFORM_CATALOG_V6",
+  "catalog_token": "RT5:7d4b10ea07b9b706",
+  "transform_count": 17,
+  "input_descriptor_count": 32,
+  "output_descriptor_count": 17,
+  "runtime_store_placement": true,
+  "runtime_min_store_count": 1,
+  "runtime_store_item_counts": [
+    17
+  ],
+  "item_cell_lengths": [
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    24,
+    24,
+    24,
+    24,
+    24,
+    28,
+    28,
+    28,
+    28,
+    28
+  ],
+  "loader_segment_count": 5,
+  "loaders": [
+    "ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10",
+    "ic10/transform-catalog/resource_transform_catalog_loader_01_v6_0.ic10",
+    "ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10",
+    "ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10",
+    "ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10"
+  ],
+  "loader_items": [
+    {
+      "item_count": 5,
+      "line_count": 109
+    },
+    {
+      "item_count": 4,
+      "line_count": 98
+    },
+    {
+      "item_count": 4,
+      "line_count": 110
+    },
+    {
+      "item_count": 3,
+      "line_count": 95
+    },
+    {
+      "item_count": 1,
+      "line_count": 41
+    }
+  ],
+  "view_magic": 31415952,
+  "view_abi": 4,
+  "processor_capability_model": {
+    "SMELT_BASIC": 1,
+    "FURNACE_ALLOY": 2,
+    "ADVANCED_ALLOY": 4,
+    "StructureArcFurnace": 1,
+    "StructureFurnace": 3,
+    "StructureAdvancedFurnace": 7
+  },
+  "loader_item_atomicity": "transform_never_split",
+  "loader_sparse_zero_init": true,
+  "generic_store_program": "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10",
+  "coordinator_core_program": "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10",
+  "loader_router_program": "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10"
+}

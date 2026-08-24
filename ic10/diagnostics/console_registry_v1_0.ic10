@@ -1,0 +1,79 @@
+# Console Registry v1.0: discover and stably sort diagnostic LED displays.
+# Enrolled displays use NameHash S7 (0 defaults to HASH("DiagAuto")).
+# S2 active bank,S3/4 generation A/B,S5/6 console count A/B.
+# Console A=S32..159/B=S160..287 as [PrefabHash,ReferenceId].
+alias ref r1
+move r7 0 # db:0 enumeration index
+move r3 0 # displays staged into inactive bank
+get r5 db 2
+seq r5 r5 1 # script-owned bank is discrete; no round/clamp pair needed
+seq r14 r5 0
+poke 0 14142136
+poke 1 1
+Loop:
+yield
+get ref db:0 r7
+blt ref 0 Commit
+add r7 r7 1
+# Name is the enrollment tag; capabilities distinguish LED displays from memory.
+ld r6 ref NameHash
+get r0 db 7
+select r0 r0 r0 HASH("DiagAuto")
+bne r6 r0 Loop
+bdnvs ref Setting Loop
+bdnvs ref Mode Loop
+bdnvs ref Color Loop
+bdnvs ref On Loop
+bge r3 64 Loop
+ld r6 ref PrefabHash # primary sort key; ReferenceId breaks ties
+mul r10 r14 128
+add r10 r10 32
+move r11 r3
+jal InsertPair
+move r3 r11
+j Loop
+Commit:
+# Publish completed inactive bank only after count/generation are written.
+add r12 r14 5
+poke r12 r3
+add r12 r5 3
+get r0 db r12
+add r0 r0 1
+add r12 r14 3
+poke r12 r0
+poke 2 r14
+move r5 r14
+seq r14 r5 0
+move r7 0
+move r3 0
+j Loop
+# Insert [r6 PrefabHash,r1 ReferenceId] into pair directory r10/count r11.
+InsertPair:
+move sp r11
+InsertLoop:
+blez sp InsertHere
+sub r0 sp 1
+mul r12 r0 2
+add r12 r12 r10
+get r0 db r12
+add r12 r12 1
+get r15 db r12
+bgt r0 r6 Shift
+blt r0 r6 InsertHere
+ble r15 ref InsertHere
+Shift:
+mul r12 sp 2
+add r12 r12 r10
+poke r12 r0
+add r12 r12 1
+poke r12 r15
+sub sp sp 1
+j InsertLoop
+InsertHere:
+mul r12 sp 2
+add r12 r12 r10
+poke r12 r6
+add r12 r12 1
+poke r12 ref
+add r11 r11 1
+j ra

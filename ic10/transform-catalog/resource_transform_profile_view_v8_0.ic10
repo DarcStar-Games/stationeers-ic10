@@ -1,0 +1,120 @@
+# Resource Transform View v8: Store ABI5 items; ABI4 resolved-request fencing.
+poke 0 31415952
+poke 1 4
+Loop:
+yield
+get r10 db 2
+bdns d0 Bad
+l r2 d0 ReferenceId
+get r12 d0 11
+blez r12 Bad
+getd r0 r12 0
+bne r0 31415970 Bad
+getd r15 r12 7
+mod r0 r15 2
+bnez r0 Bad
+First:
+getd r1 r2 6
+blez r1 Store
+move r2 r1
+j First
+Store:
+getd r0 r2 0
+bne r0 31415968 Bad
+getd r0 r2 1
+bne r0 5 Bad
+getd r14 r2 17
+mod r0 r14 2
+bnez r0 Loop
+getd r7 r2 9
+move r5 0
+Scan:
+bge r5 r7 StoreDone
+mul r8 r5 2
+add r8 r8 32
+getd r8 r2 r8
+getd r0 r2 r8
+beq r0 r10 Found
+add r5 r5 1
+j Scan
+Found:
+move r9 8
+Clear:
+poke r9 0
+add r9 r9 1
+blt r9 68 Clear
+add r0 r8 1
+getd r0 r2 r0
+poke 3 r0
+add r0 r8 2
+getd r4 r2 r0
+bgt r4 6 Bad
+poke 4 r4
+add r0 r8 3
+getd r5 r2 r0
+bgt r5 8 Bad
+poke 5 r5
+add r0 r8 8
+getd r0 r2 r0
+poke 7 r0
+move r9 0
+Bounds:
+add r0 r8 r9
+add r0 r0 4
+getd r0 r2 r0
+add r1 r9 64
+poke r1 r0
+add r9 r9 1
+blt r9 4 Bounds
+add r6 r8 12
+move r1 8
+move r11 r4
+jal CopyPool
+mul r0 r4 4
+add r6 r6 r0
+move r1 32
+move r11 r5
+jal CopyPool
+getd r0 r2 17
+bne r0 r14 Loop
+getd r0 r12 7
+bne r0 r15 Loop
+poke 68 r10
+poke 69 1
+poke 6 r14
+j Loop
+StoreDone:
+getd r1 r2 7
+blez r1 Missing
+move r2 r1
+j Store
+Bad:
+poke 68 r10
+poke 69 -2
+j Loop
+Missing:
+getd r0 r12 7
+bne r0 r15 Loop
+poke 68 r10
+poke 69 -3
+j Loop
+CopyPool:
+move r9 0
+CPItem:
+bge r9 r11 CPDone
+mul r0 r9 4
+add r0 r0 r6
+mul r10 r9 4
+add r10 r10 r1
+move r7 0
+CPCell:
+add r13 r0 r7
+getd r13 r2 r13
+add sp r10 r7
+poke sp r13
+add r7 r7 1
+blt r7 4 CPCell
+add r9 r9 1
+j CPItem
+CPDone:
+j ra

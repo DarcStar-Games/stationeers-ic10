@@ -1,0 +1,87 @@
+# Power Dispatch Plan Store ABI1: 8 staged flows, coherent commit.
+Boot:
+get r0 db 0
+bne r0 31416028 Init
+get r0 db 2
+and r1 r0 1
+beqz r1 Loop
+# Interrupted COMMIT: invalidate torn plan before making sequence readable again.
+poke 3 0
+poke 4 0
+poke 5 0
+poke 6 0
+add r0 r0 1
+poke 2 r0
+j Loop
+Init:
+clr db
+poke 0 31416028
+poke 1 1
+Loop:
+yield
+get r15 db 10
+get r0 db 11
+beq r15 r0 Loop
+get r1 db 12
+beq r1 1 Begin
+beq r1 2 Add
+beq r1 3 Commit
+j Bad
+Begin:
+poke 24 0
+poke 25 0
+poke 26 0
+move r0 1
+j Reply
+Add:
+get r2 db 24
+bge r2 8 Full
+mul r3 r2 8
+add r3 r3 128
+move r4 16
+CopyIn:
+get r0 db r4
+poke r3 r0
+add r3 r3 1
+add r4 r4 1
+ble r4 23 CopyIn
+add r2 r2 1
+poke 24 r2
+move r0 1
+j Reply
+Commit:
+get r2 db 24
+get r3 db 2
+add r3 r3 1
+poke 2 r3
+move r4 0
+CopyPlan:
+bge r4 64 Header
+add r5 r4 128
+get r0 db r5
+add r5 r4 32
+poke r5 r0
+add r4 r4 1
+j CopyPlan
+Header:
+poke 4 r2
+get r0 db 14
+poke 5 r0
+get r0 db 15
+poke 6 r0
+get r0 db 3
+add r0 r0 1
+poke 3 r0
+add r3 r3 1
+poke 2 r3
+move r0 1
+j Reply
+Full:
+move r0 -2
+j Reply
+Bad:
+move r0 -1
+Reply:
+poke 13 r0
+poke 11 r15
+j Loop

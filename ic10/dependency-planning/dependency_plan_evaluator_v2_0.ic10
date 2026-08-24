@@ -1,0 +1,86 @@
+# Evaluate one persisted dependency plan. d0 ChildValidity,d1 Preflight.
+poke 0 31416008
+poke 1 2
+Loop:
+yield
+get r15 db 11
+get r0 db 12
+beq r15 r0 Loop
+get r5 db 5
+get r6 db 6
+blez r5 Bad
+put d0 2 r5
+put d0 3 r6
+put d0 4 r15
+WaitC:
+yield
+get r0 d0 5
+bne r0 r15 WaitC
+get r0 d0 6
+get r7 d0 7
+get r8 d0 8
+get r9 d0 9
+poke 17 r7
+poke 18 r9
+poke 19 r8
+bne r0 1 Stale
+poke 17 r7
+poke 18 r9
+poke 19 r8
+beq r8 7 Complete
+bge r8 11 ChildFail
+move r0 2
+j Reply
+Complete:
+get r2 db 2
+get r3 db 3
+get r4 db 4
+put d1 2 r2
+put d1 3 r3
+put d1 4 r4
+put d1 5 r15
+WaitP:
+yield
+get r0 d1 6
+bne r0 r15 WaitP
+get r0 d1 7
+beq r0 1 Ready
+beq r0 2 Probe
+beq r0 -2 Overflow
+bne r0 3 Bad
+get r10 d1 11
+get r11 d1 13
+get r12 d1 14
+poke 14 r10
+poke 15 r11
+poke 16 r12
+get r0 db 9
+bne r11 r0 Replan
+get r0 db 10
+bne r12 r0 Replan
+move r0 3
+j Reply
+Ready:
+move r0 1
+j Reply
+Probe:
+move r0 4
+j Reply
+Replan:
+move r0 5
+j Reply
+Overflow:
+move r0 -2
+j Reply
+Stale:
+move r0 -3
+j Reply
+ChildFail:
+move r0 -4
+j Reply
+Bad:
+move r0 -1
+Reply:
+poke 13 r0
+poke 12 r15
+j Loop

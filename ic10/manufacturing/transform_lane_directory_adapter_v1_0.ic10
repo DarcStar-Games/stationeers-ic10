@@ -1,0 +1,78 @@
+# Transform Lane Directory Adapter v1.0: Transform Runtime ABI2; Adapter ABI2 snapshot.
+Boot:
+clr db
+poke 0 31415983
+poke 1 2
+poke 2 HASH("DirectorySchema.TransformLane")
+poke 3 1
+poke 4 3
+poke 5 64
+poke 10 1
+Loop:
+yield
+get r0 db 11
+beqz r0 ScanStart
+poke 12 r0
+j Loop
+ScanStart:
+poke 12 0
+get r15 db 8
+add r15 r15 1
+poke 8 r15
+poke 9 0
+move r7 0
+move r8 0
+Scan:
+get r1 db:0 r7
+blt r1 0 Publish
+add r7 r7 1
+getd r0 r1 0
+bne r0 31415980 Scan
+getd r0 r1 1
+bne r0 2 Scan
+getd r2 r1 14
+blez r2 Scan
+ld r0 r2 PrefabHash
+seq r3 r0 HASH("StructureArcFurnace")
+seq r4 r0 HASH("StructureFurnace")
+mul r4 r4 3
+add r3 r3 r4
+seq r4 r0 HASH("StructureAdvancedFurnace")
+mul r4 r4 7
+add r3 r3 r4
+blez r3 Scan
+ld r4 r2 Power
+ld r5 r2 Error
+ld r6 r2 Activate
+getd r9 r1 3
+getd r10 r1 6
+sne r9 r9 r10
+or r6 r6 r9
+mul r4 r4 256
+mul r6 r6 512
+mul r5 r5 1024
+add r3 r3 r4
+add r3 r3 r6
+add r3 r3 r5
+bge r8 64 Overflow
+mul r4 r8 3
+add r4 r4 16
+poke r4 r1
+add r4 r4 1
+poke r4 r2
+add r4 r4 1
+poke r4 r3
+add r8 r8 1
+j Scan
+Overflow:
+poke 9 1
+j Scan
+Publish:
+poke 6 r8
+get r0 db 7
+add r0 r0 1
+poke 7 r0
+get r0 db 8
+add r0 r0 1
+poke 8 r0
+j Loop

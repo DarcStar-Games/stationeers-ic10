@@ -1,0 +1,91 @@
+# New-plan decision. d0 Preflight,d1 Builder,d2 JobMonitor.
+poke 0 31416020
+poke 1 1
+Loop:
+yield
+get r15 db 3
+get r0 db 4
+beq r15 r0 Loop
+get r2 db 2
+blez r2 Bad
+put d2 2 r2
+put d2 3 r15
+WaitJob:
+yield
+get r0 d2 4
+bne r0 r15 WaitJob
+get r0 d2 5
+bne r0 1 Bad
+get r3 d2 6
+get r4 d2 12
+get r5 d2 7
+get r6 d2 8
+get r7 d2 9
+get r8 d2 10
+get r0 d2 11
+bne r0 2 Bad
+put d0 2 r5
+put d0 3 r6
+put d0 4 r7
+put d0 5 r15
+WaitPre:
+yield
+get r0 d0 6
+bne r0 r15 WaitPre
+get r0 d0 7
+beq r0 1 Ready
+beq r0 2 Probe
+beq r0 -2 Overflow
+bne r0 3 Bad
+get r9 d0 9
+get r10 d0 10
+get r11 d0 11
+get r12 d0 12
+get r13 d0 13
+get r14 d0 14
+put d1 2 r2
+put d1 3 r3
+put d1 4 r4
+put d1 5 r5
+put d1 6 r6
+put d1 7 r8
+put d1 8 r9
+put d1 9 r12
+put d1 10 r11
+put d1 11 r13
+put d1 12 r14
+put d1 13 r15
+WaitBuild:
+yield
+get r0 d1 14
+bne r0 r15 WaitBuild
+get r0 d1 15
+bne r0 1 BuildFail
+get r0 d1 16
+poke 13 r0
+poke 14 r9
+poke 15 r10
+poke 16 r11
+get r0 d1 17
+poke 17 r0
+poke 18 r13
+poke 19 r14
+move r0 6
+j Reply
+Ready:
+move r0 1
+j Reply
+Probe:
+move r0 4
+j Reply
+Overflow:
+move r0 -2
+j Reply
+BuildFail:
+j Reply
+Bad:
+move r0 -1
+Reply:
+poke 5 r0
+poke 4 r15
+j Loop

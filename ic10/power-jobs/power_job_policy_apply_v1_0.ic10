@@ -1,0 +1,79 @@
+# Apply guarded POWER policy while exact job remains READY. d0 JobStore,d1 Resolver.
+poke 0 31416042
+poke 1 1
+Loop:
+yield
+get r15 db 8
+get r0 db 9
+beq r15 r0 Loop
+get r2 db 2
+get r3 db 3
+get r4 db 4
+get r5 db 5
+get r6 db 6
+get r7 db 7
+blt r2 0 Bad
+bge r2 32 Bad
+blt r4 0 Bad
+bgt r4 5 Bad
+mul r0 r2 8
+add r0 r0 32
+get r1 d0 r0
+bne r1 r3 Bad
+add r0 r0 1
+get r1 d0 r0
+bne r1 4 Bad
+add r0 r0 1
+get r1 d0 r0
+bne r1 r4 Bad
+add r0 r0 1
+get r1 d0 r0
+bne r1 r5 Bad
+mul r0 r2 7
+add r0 r0 288
+get r1 d0 r0
+mul r1 r1 3
+add r1 r1 r0
+add r1 r1 1
+get r10 d0 r1
+bne r10 4 Bad
+add r1 r1 1
+get r11 d0 r1
+bne r11 r6 Bad
+put d1 2 r5
+put d1 3 r15
+WaitR:
+yield
+get r0 d1 4
+bne r0 r15 WaitR
+get r0 d1 5
+bne r0 1 Bad
+get r12 d1 6
+get r13 d1 7
+get r14 d1 8
+beq r14 2 Consumer
+beq r14 3 Battery
+j Bad
+Consumer:
+bgt r4 2 Bad
+j Recheck
+Battery:
+blt r4 3 Bad
+Recheck:
+get r0 d0 r1
+bne r0 r10 Bad
+add r1 r1 1
+get r0 d0 r1
+bne r0 r11 Bad
+putd r13 50 r4
+putd r13 51 r7
+poke 10 1
+poke 11 r12
+poke 12 r13
+poke 13 r14
+j Reply
+Bad:
+poke 10 -1
+Reply:
+poke 9 r15
+j Loop

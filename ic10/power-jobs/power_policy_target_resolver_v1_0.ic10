@@ -1,0 +1,74 @@
+# Resolve PolicyId to one POWER Reservation/Endpoint.
+poke 0 31416041
+poke 1 1
+Loop:
+yield
+get r15 db 3
+get r0 db 4
+beq r15 r0 Loop
+get r2 db 2
+bnez r2 Start
+j Bad
+Start:
+get r0 d0 0
+bne r0 31415981 Bad
+get r0 d0 9
+bne r0 HASH("DirectorySchema.PowerReservation") Bad
+get r0 d0 10
+bne r0 1 Bad
+get r8 d0 2
+add r0 r8 7
+get r0 d0 r0
+bgtz r0 Bad
+add r0 r8 5
+get r9 d0 r0
+mul r10 r8 192
+add r10 r10 32
+move r6 0
+move r7 0
+Find:
+bge r6 r9 Done
+mul r0 r6 3
+add r0 r0 r10
+add r0 r0 1
+get r1 d0 r0
+bne r1 r2 Next
+add r0 r0 1
+get r1 d0 r0
+beqz r7 First
+beq r1 r7 Next
+j Ambig
+First:
+move r7 r1
+Next:
+add r6 r6 1
+j Find
+Done:
+blez r7 None
+getd r14 r7 12
+blez r14 None
+getd r0 r7 0
+bne r0 31415950 None
+getd r0 r7 3
+bne r0 4 None
+getd r1 r7 2
+getd r5 r7 28
+getd r0 r7 12
+bne r0 r14 Loop
+poke 5 1
+poke 6 r7
+poke 7 r1
+poke 8 r5
+poke 9 r14
+j Reply
+None:
+poke 5 -2
+j Reply
+Ambig:
+poke 5 -3
+j Reply
+Bad:
+poke 5 -1
+Reply:
+poke 4 r15
+j Loop

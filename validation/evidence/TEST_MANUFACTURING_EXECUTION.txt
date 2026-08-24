@@ -1,0 +1,6 @@
+Manufacturing execution substrate: PASS
+ - candidate selection is schema/version-qualified for Printer v2 and TransformLane v1
+ - print reagents resolve through MaterialGrid links into existing four-cell allocator records
+ - resource vs capacity shortages remain distinct scheduler wait reasons
+ - Generic Print Runtime reuses Multi Material Allocator completion and confirms exported output
+ - Transform Lane Directory publishes the common ProcessorSpec used by generic selection

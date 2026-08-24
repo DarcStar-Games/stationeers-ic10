@@ -1,0 +1,114 @@
+# Transform Job Driver ABI2: d0 shared Selector,d1 Executor,d2 Transform Directory.
+poke 0 31415991
+poke 1 2
+poke 10 2
+Loop:
+yield
+get r0 db 20
+beq r0 1 SelectWait
+beq r0 2 ExecWait
+get r15 db 8
+get r0 db 9
+beq r15 r0 Loop
+poke 10 2
+poke 11 0
+poke 9 r15
+poke 23 0
+poke 24 0
+j Select
+Select:
+get r0 db 30
+add r0 r0 1
+poke 30 r0
+poke 21 r0
+l r1 d2 ReferenceId
+put d0 16 r1
+put d0 2 HASH("DirectorySchema.TransformLane")
+put d0 15 1
+put d0 3 0
+get r1 db 4
+put d0 4 r1
+put d0 5 1
+get r1 db 23
+put d0 6 r1
+put d0 7 r0
+poke 20 1
+poke 10 2
+j Loop
+SelectWait:
+get r15 db 21
+get r0 d0 8
+bne r0 r15 Loop
+get r0 d0 9
+beq r0 1 Candidate
+beq r0 -2 NoLane
+j Fault
+Candidate:
+get r1 d0 10
+get r0 d0 13
+poke 23 r0
+get r0 db 30
+add r0 r0 1
+poke 30 r0
+poke 22 r0
+put d1 2 r1
+get r1 db 3
+put d1 3 r1
+get r1 db 4
+put d1 4 r1
+get r1 db 5
+put d1 5 r1
+get r1 db 6
+put d1 6 r1
+get r1 db 7
+put d1 7 r1
+put d1 8 r0
+get r1 db 2
+put d1 14 r1
+poke 20 2
+j Loop
+ExecWait:
+get r15 db 22
+get r1 d1 10
+bne r1 r15 Loop
+get r0 d1 11
+bgt r0 2 Mirror
+get r0 d1 9
+beq r0 -3 MarkRes
+beq r0 -4 MarkCap
+beq r0 -2 Retry
+j Fault
+Mirror:
+poke 10 r0
+get r1 d1 12
+poke 11 r1
+bge r0 7 Done
+j Loop
+MarkRes:
+poke 24 3
+j Retry
+MarkCap:
+poke 24 4
+Retry:
+j Select
+NoLane:
+get r0 db 24
+beq r0 3 WaitRes
+beq r0 4 WaitCap
+move r0 9
+j Wait
+WaitRes:
+move r0 8
+j Wait
+WaitCap:
+move r0 10
+Wait:
+poke 10 r0
+poke 11 0
+j Done
+Fault:
+poke 10 11
+poke 11 -1
+Done:
+poke 20 0
+j Loop

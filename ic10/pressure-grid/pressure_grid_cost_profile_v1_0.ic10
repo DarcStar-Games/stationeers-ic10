@@ -1,0 +1,11 @@
+# Grid Cost Profile v1.0: dimensionless bounded-route ranking weights.
+poke 0 31415945
+poke 1 1
+poke 2 100
+poke 3 25
+poke 4 0.01
+poke 5 100
+poke 6 32
+Loop:
+yield
+j Loop

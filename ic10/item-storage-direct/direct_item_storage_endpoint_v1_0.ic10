@@ -1,0 +1,90 @@
+# Direct ITEM storage endpoint: bounded no-yield slot scan, max 16 slots.
+poke 0 31415949
+poke 1 1
+poke 2 2
+poke 4 7
+poke 12 2
+poke 13 3
+l r0 d1 ReferenceId
+poke 14 r0
+poke 35 HASH("StorageAccess.Direct")
+Loop:
+yield
+bdns d0 Bad
+bdns d1 Bad
+get r14 d1 5
+blez r14 Bad
+get r0 d1 0
+bne r0 31415963 Bad
+get r0 d1 8
+bne r0 2 Bad
+get r2 d1 9
+get r3 d1 13
+blez r3 Bad
+get r0 d1 5
+bne r0 r14 Loop
+get r4 db 20
+get r5 db 21
+blt r5 1 Bad
+bgt r5 16 Bad
+add r6 r4 r5
+move r8 0
+move r9 0
+move r10 -1
+move r11 0
+move r12 -1
+Scan:
+ls r0 d0 r4 Occupied
+beqz r0 Empty
+ls r0 d0 r4 OccupantHash
+bne r0 r2 Next
+ls r0 d0 r4 Quantity
+add r8 r8 r0
+bgez r10 Known
+move r10 r4
+move r11 r0
+Known:
+ls r1 d0 r4 MaxQuantity
+sub r1 r1 r0
+max r1 r1 0
+add r9 r9 r1
+j Next
+Empty:
+add r9 r9 r3
+bgez r12 Next
+move r12 r4
+Next:
+add r4 r4 1
+blt r4 r6 Scan
+get r0 d1 5
+bne r0 r14 Loop
+get r0 db 37
+sub r8 r8 r0
+max r8 r8 0
+get r0 db 36
+and r1 r0 9
+select r8 r1 0 r8
+and r1 r0 10
+select r9 r1 0 r9
+l r1 d0 ReferenceId
+poke 3 r2
+poke 5 r8
+poke 6 r9
+poke 8 1
+poke 9 r1
+poke 10 0
+poke 38 r10
+poke 39 r11
+poke 40 r12
+get r0 db 11
+add r0 r0 1
+poke 11 r0
+j Loop
+Bad:
+poke 5 0
+poke 6 0
+poke 8 -1
+get r0 db 11
+add r0 r0 1
+poke 11 r0
+j Loop

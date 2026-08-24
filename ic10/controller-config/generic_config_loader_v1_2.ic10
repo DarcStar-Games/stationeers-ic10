@@ -1,0 +1,119 @@
+# Config ABI v1: width=8,S10 blocks,S16..19 masks,S96 effective image.
+alias editor r1
+alias controller r2
+alias host r3
+Loop:
+yield
+get editor db 2
+blez editor Loop
+getd r0 editor 0
+bne r0 22360680 Loop
+getd r0 editor 1
+bne r0 1 Loop
+getd r0 editor 16
+beq r0 4 Loop
+getd r0 editor 15
+bnez r0 Loop
+getd controller editor 12
+blez controller Fail
+jal ResolveHost
+getd r15 host 6
+getd r0 host 7
+bne r15 r0 Loop
+putd editor 5 r0
+getd r14 host 5 # coherent effective-generation snapshot
+move r7 0 # block index
+move r6 0 # active-field/UI ordinal count derived from masks
+Block:
+add r12 r7 16
+getd r10 host r12 # 8-bit validity mask
+and r0 r10 255
+bne r0 r10 Fail
+add r11 r7 96
+putd editor r11 r10 # snapshot mask at Editor S96..99
+move r8 0
+Slot:
+and r0 r10 1
+beqz r0 Skip
+sll r12 r7 3
+add r12 r12 r8 # physical image slot
+add r11 r12 96
+getd r9 host r11
+bnan r9 Fail
+add r11 r12 32
+putd editor r11 r9 # stage only valid slots
+add r11 r6 64
+putd editor r11 r12 # UI ordinal -> stable physical slot
+add r6 r6 1
+Skip:
+srl r10 r10 1
+beqz r10 NextBlock
+add r8 r8 1
+blt r8 8 Slot
+NextBlock:
+add r7 r7 1
+blt r7 r5 Block
+blez r6 Fail
+getd r0 host 5
+bne r0 r14 Loop
+getd r0 editor 12
+bne r0 controller Loop
+putd editor 27 0 # stale ABI/generation are ignored when Profile RefId is zero
+get r8 db 3
+blez r8 ProfileDone
+getd r0 r8 0
+bne r0 31415930 ProfileDone
+getd r8 r8 11
+blez r8 ProfileDone
+getd r0 r8 0
+bne r0 31415929 ProfileDone
+getd r0 r8 1
+bne r0 1 ProfileDone
+getd r11 r8 2
+bne r11 r4 ProfileDone
+getd r11 r8 3
+bne r11 r13 ProfileDone
+getd r11 r8 4
+bne r11 r6 ProfileDone
+getd r11 r8 5
+blez r11 ProfileDone
+putd editor 27 r8
+putd editor 28 r0
+putd editor 29 r11
+ProfileDone:
+getd r0 editor 11
+add r0 r0 1
+putd editor 11 r0
+putd editor 17 r6
+putd editor 18 host
+putd editor 19 r13
+putd editor 30 r5 # loaded block count
+putd editor 10 controller
+putd editor 16 2
+putd editor 15 1 # READY publishes complete image/map last
+j Loop
+Fail:
+putd editor 16 -4
+j Loop
+ResolveHost:
+getd r0 controller 96
+bne r0 27182818 Fail
+getd r0 controller 97
+blt r0 1 Fail
+bgt r0 2 Fail
+getd r4 controller 99
+getd host controller 116
+blez host Fail
+getd r0 host 0
+bne r0 31415928 Fail
+getd r0 host 1
+bne r0 1 Fail
+getd r0 host 2
+bne r0 r4 Fail
+getd r13 host 4 # cache schema for Profile check + Editor publication
+getd r0 host 8
+blez r0 Fail
+getd r5 host 10
+blt r5 1 Fail
+bgt r5 4 Fail
+j ra

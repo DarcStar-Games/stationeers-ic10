@@ -1,0 +1,119 @@
+get r0 db 31
+beq r0 31415980 Init
+clr db
+poke 31 31415980
+Init:
+poke 0 31415980
+poke 1 2
+l r0 d0 ReferenceId
+poke 14 r0
+l r0 d4 ReferenceId
+poke 15 r0
+l r0 d1 ReferenceId
+poke 17 r0
+l r0 d2 ReferenceId
+poke 18 r0
+Loop:
+yield
+get r0 db 4
+beq r0 1 WaitAlloc
+beq r0 2 WaitInput
+beq r0 3 WaitOutput
+get r15 db 3
+get r0 db 6
+beq r15 r0 Idle
+get r6 db 2
+poke 5 2
+poke 6 r15
+blez r6 Fault
+bdns d0 Fault
+bdns d1 Fault
+bdns d2 Fault
+bdns d3 Fault
+bdns d4 Fault
+get r14 d1 7
+blez r14 Fault
+get r0 d1 8
+bne r0 1 Fault
+get r13 d2 5
+blez r13 Fault
+get r0 d2 6
+bne r0 1 Fault
+bne r13 r14 Fault
+l r7 db ReferenceId
+poke 9 r14
+poke 10 r13
+put d3 2 r6
+put d3 3 r7
+put d3 4 r15
+poke 4 1
+j Publish
+WaitAlloc:
+get r15 db 3
+get r0 d3 16
+bne r0 r15 Publish
+get r0 d3 5
+bltz r0 Fault
+bne r0 1 Publish
+get r0 d3 14
+blez r0 Fault
+poke 7 r0
+poke 4 2
+poke 5 3
+j Publish
+WaitInput:
+get r15 db 3
+get r0 d3 16
+bne r0 r15 Fault
+get r0 d3 5
+bltz r0 Fault
+bne r0 2 Publish
+get r11 d4 6
+get r12 d4 12
+s d0 Activate 1
+poke 13 0
+poke 4 3
+poke 5 4
+j Publish
+WaitOutput:
+get r0 db 13
+add r0 r0 1
+poke 13 r0
+bgt r0 512 Fault
+l r0 d0 Error
+bgtz r0 Fault
+get r0 d1 8
+bne r0 1 Fault
+get r0 d1 7
+get r1 db 9
+bne r0 r1 Fault
+get r0 d2 6
+bne r0 1 Fault
+get r0 d2 5
+get r1 db 9
+bne r0 r1 Fault
+get r0 d4 12
+get r1 db 12
+beq r0 r1 Publish
+get r0 d4 6
+get r1 db 11
+sub r0 r0 r1
+get r1 d1 5
+get r2 db 2
+mul r1 r1 r2
+blt r0 r1 Publish
+s d0 Activate 0
+poke 4 0
+poke 5 1
+j Publish
+Idle:
+poke 5 1
+j Publish
+Fault:
+s d0 Activate 0
+get r0 db 3
+put d3 6 r0
+poke 4 0
+poke 5 -1
+Publish:
+j Loop

@@ -1,0 +1,66 @@
+# Pressure Medium Purity Guard v1.0: d0 Pipe Analyzer,d1 Resource Profile View.
+poke 0 31415947
+poke 1 1
+Loop:
+yield
+bdns d1 ProfileBad
+get r15 d1 5
+blez r15 ProfileBad
+get r0 d1 0
+bne r0 31415963 ProfileBad
+get r0 d1 1
+bne r0 1 ProfileBad
+get r0 d1 4
+blez r0 ProfileBad
+get r0 d1 8
+bne r0 1 ProfileBad
+get r0 d1 11
+bne r0 1 ProfileBad
+get r0 d1 12
+bne r0 2 ProfileBad
+get r1 d1 9
+get r2 d1 19
+get r3 d1 20
+bnan r3 ProfileBad
+blt r3 0 ProfileBad
+bgt r3 1 ProfileBad
+get r0 d1 5
+bne r0 r15 Loop
+bdnvl d0 TotalMoles SensorBad
+bdnvl d0 r2 SensorBad
+l r4 d0 TotalMoles
+l r5 d0 r2
+bnan r4 NumericBad
+bnan r5 NumericBad
+bltz r4 NumericBad
+bltz r5 NumericBad
+bgt r5 1 NumericBad
+blez r4 Good
+blt r5 r3 Contaminated
+Good:
+move r6 1
+j Publish
+Contaminated:
+move r6 -4
+j Publish
+ProfileBad:
+move r6 -1
+j Fault
+SensorBad:
+move r6 -2
+j Fault
+NumericBad:
+move r6 -3
+Fault:
+move r1 0
+move r5 0
+Publish:
+poke 2 r1
+poke 3 r5
+poke 4 r3
+poke 5 r6
+poke 6 r15
+get r0 db 7
+add r0 r0 1
+poke 7 r0
+j Loop

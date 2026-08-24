@@ -1,0 +1,117 @@
+poke 0 31415987
+poke 1 1
+Loop:
+yield
+get r15 db 6
+get r0 db 7
+beq r15 r0 Loop
+get r2 db 2
+get r3 db 3
+get r4 db 4
+blez r3 Bad
+blt r4 1 Bad
+bgt r4 2 Bad
+bdns d0 Bad
+get r0 d0 0
+bne r0 31415981 Bad
+get r0 d0 9
+bne r0 HASH("DirectorySchema.ResourceReservation") Bad
+get r0 d0 10
+bne r0 1 Bad
+get r12 d0 2
+add r0 r12 7
+get r0 d0 r0
+bgtz r0 Overflow
+add r0 r12 3
+get r11 d0 r0
+add r0 r12 5
+get r10 d0 r0
+mul r9 r12 192
+add r9 r9 32
+move r6 0
+move r7 0
+move r8 0
+get r14 db 5
+Find:
+bge r6 r10 Quoted
+mul r0 r6 3
+add r0 r0 r9
+get r1 d0 r0
+add r0 r0 1
+get sp d0 r0
+add r0 r0 1
+get ra d0 r0
+add r6 r6 1
+bne r1 2 Find
+bne sp r2 Find
+getd r13 ra 12
+blez r13 Find
+getd r0 ra 9
+blez r0 Find
+getd r0 ra 17
+bnez r0 Find
+getd r0 ra 5
+and sp r0 r14
+bne sp r14 Find
+beq r4 1 Export
+and r0 r0 2
+beqz r0 Find
+getd r1 ra 11
+and r1 r1 18
+beqz r1 Find
+getd r1 ra 7
+getd sp ra 15
+j Free
+Export:
+and r0 r0 1
+beqz r0 Find
+getd r1 ra 11
+and r1 r1 9
+beqz r1 Find
+getd r1 ra 6
+getd sp ra 14
+Free:
+sub r1 r1 sp
+blez r1 Find
+sub sp r3 r7
+min sp sp r1
+beq r4 2 Store
+getd r0 ra 21
+bne r0 HASH("StorageAccess.LArRE") Store
+getd sp ra 23
+blez sp Find
+bgt sp r1 Find
+Store:
+getd r0 ra 12
+bne r0 r13 Find
+bge r8 6 Overflow
+mul r0 r8 3
+add r0 r0 32
+poke r0 ra
+add r0 r0 1
+poke r0 sp
+add r0 r0 1
+poke r0 r13
+add r7 r7 sp
+add r8 r8 1
+blt r7 r3 Find
+Quoted:
+get r0 d0 2
+bne r0 r12 Loop
+add r0 r12 3
+get r0 d0 r0
+bne r0 r11 Loop
+poke 9 r7
+poke 10 r8
+slt r0 r7 r3
+select r0 r0 -2 1
+j Reply
+Overflow:
+move r0 -3
+j Reply
+Bad:
+move r0 -1
+Reply:
+poke 8 r0
+poke 7 r15
+j Loop

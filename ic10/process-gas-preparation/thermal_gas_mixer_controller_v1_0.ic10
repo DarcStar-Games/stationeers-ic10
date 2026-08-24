@@ -1,0 +1,82 @@
+# Thermal Gas Mixer ABI1. d0 hot,d1 cold,d2 out,d3 mixer,d4 condition.
+poke 0 31416050
+poke 1 1
+Loop:
+yield
+bdns d4 Bad
+get r15 d4 11
+blez r15 Bad
+get r0 d4 0
+bne r0 31416048 Bad
+get r0 d4 12
+bne r0 1 Bad
+get r0 d4 10
+beqz r0 Off
+get r3 d4 4
+get r4 d4 6
+get r5 d4 7
+get r0 d4 11
+bne r0 r15 Loop
+move r6 r4
+blez r5 Target
+blt r5 100000 Avg
+j Target
+Avg:
+add r6 r4 r5
+div r6 r6 2
+Target:
+bdnvl d0 Temperature Bad
+bdnvl d1 Temperature Bad
+l r7 d0 Temperature
+l r8 d1 Temperature
+blez r7 Bad
+blez r8 Bad
+sub r9 r8 r7
+beqz r9 Bad
+mul r10 r7 r8
+div r10 r10 r6
+sub r10 r10 r7
+mul r10 r10 100
+div r10 r10 r9
+clamp r10 r10 0 100
+get r0 d4 11
+bne r0 r15 Loop
+s d3 Setting r10
+move r11 2
+bdns d2 Mix
+bdnvl d2 Temperature Mix
+bdnvl d2 Pressure Mix
+l r12 d2 Temperature
+blt r12 r4 Mix
+blez r5 PReady
+bgt r12 r5 Mix
+PReady:
+l r12 d2 Pressure
+blt r12 r3 Mix
+Ready:
+s d3 On 0
+move r11 1
+j Publish
+Mix:
+get r0 d4 11
+bne r0 r15 Loop
+s d3 On 1
+j Publish
+Off:
+bdnvs d3 On OffPub
+s d3 On 0
+OffPub:
+move r11 0
+j Publish
+Bad:
+move r11 -1
+bdnvs d3 On Publish
+s d3 On 0
+Publish:
+poke 2 r11
+poke 3 r10
+poke 4 r6
+get r0 db 5
+add r0 r0 1
+poke 5 r0
+j Loop

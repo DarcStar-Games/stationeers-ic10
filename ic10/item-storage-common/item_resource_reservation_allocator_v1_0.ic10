@@ -1,0 +1,101 @@
+# ITEM Reservation Allocator ABI1: commits one coherent Selector quote.
+poke 0 31415988
+poke 1 1
+Loop:
+yield
+get r15 db 4
+get r0 db 5
+beq r15 r0 Loop
+bdns d0 Bad
+get r14 db 3
+get r0 d0 0
+bne r0 31415987 Bad
+get r0 d0 1
+bne r0 1 Bad
+get r0 d0 7
+bne r0 r14 Bad
+get r0 d0 8
+bne r0 1 Bad
+get r8 d0 10
+blt r8 1 Bad
+bgt r8 6 Bad
+get r5 d0 4
+get r7 d0 9
+move r6 0
+Quote:
+bge r6 r8 Quoted
+mul r0 r6 3
+add r0 r0 32
+get r1 d0 r0
+add r0 r0 1
+get sp d0 r0
+add r0 r0 1
+get ra d0 r0
+getd r0 r1 12
+bne r0 ra Bad
+getd r0 r1 17
+bnez r0 Bad
+getd r0 r1 9
+blez r0 Bad
+beq r5 1 QuoteExport
+getd r0 r1 7
+getd r2 r1 15
+j QuoteFree
+QuoteExport:
+getd r0 r1 6
+getd r2 r1 14
+QuoteFree:
+sub r0 r0 r2
+blt r0 sp Bad
+add r6 r6 1
+j Quote
+Quoted:
+get r0 d0 7
+bne r0 r14 Bad
+get r13 db 10
+add r13 r13 1
+poke 10 r13
+l r12 db ReferenceId
+move r6 0
+Commit:
+bge r6 r8 Committed
+mul r0 r6 3
+add r0 r0 32
+get r1 d0 r0
+add r0 r0 1
+get sp d0 r0
+add r0 r0 1
+get ra d0 r0
+putd r1 13 r13
+beq r5 1 CommitExport
+putd r1 14 0
+putd r1 15 sp
+j Owner
+CommitExport:
+putd r1 14 sp
+putd r1 15 0
+Owner:
+putd r1 16 r5
+putd r1 17 r12
+putd r1 18 r13
+putd r1 19 ra
+getd r0 r1 22
+putd r1 25 r0
+getd r0 r1 23
+putd r1 26 r0
+getd r0 r1 24
+putd r1 27 r0
+add r6 r6 1
+j Commit
+Committed:
+poke 7 r13
+poke 8 r7
+poke 9 r8
+move r0 1
+j Reply
+Bad:
+move r0 -1
+Reply:
+poke 6 r0
+poke 5 r15
+j Loop

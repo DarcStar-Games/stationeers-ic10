@@ -1,0 +1,86 @@
+alias Host d0 # PI Config Policy v1.0: metadata/defaults + candidate semantics
+Boot:
+yield
+bdns Host Boot
+get r0 Host 0
+bne r0 31415928 Boot
+get r0 Host 1
+bne r0 1 Boot
+put Host 2 HASH("ControllerPI")
+put Host 4 1
+put Host 10 2
+put Host 16 255
+put Host 17 63
+put Host 18 0
+put Host 19 0
+put Host 12 HASH("CFG1|ControllerPI|1|2|255|63|0|0")
+move sp 32
+move r0 0
+DefaultsZero:
+put Host sp 0
+add sp sp 1
+add r0 r0 1
+blt r0 16 DefaultsZero
+put Host 33 1
+put Host 34 0.1
+put Host 36 100
+put Host 37 -1000
+put Host 38 1000
+put Host 41 1
+put Host 43 LogicType.Setting
+put Host 44 LogicType.Setting
+put Host 45 1
+get r0 Host 7
+put Host 20 r0 # policy response starts synchronized with Host response
+get r0 Host 13
+add r0 r0 1
+put Host 13 r0 # Policy generation publishes metadata/defaults LAST
+Loop:
+yield
+get r15 Host 6
+get r0 Host 20
+beq r15 r0 Loop
+move r0 1
+move sp 128
+Load:
+get rr0 Host sp
+bnan rr0 Malformed
+add sp sp 1
+add r0 r0 1
+ble r0 14 Load
+move sp -51
+bgt r4 r5 Reject
+move sp -52
+bgt r6 r7 Reject
+abs r9 r9
+select r10 r10 1 0
+round sp r12
+bna r12 sp 0 DiscreteBad
+move r12 sp
+round sp r13
+bna r13 sp 0 DiscreteBad
+move r13 sp
+sltz r0 r14
+select r14 r0 -1 1
+move r0 1
+move sp 128
+Store:
+put Host sp rr0
+add sp sp 1
+add r0 r0 1
+ble r0 14 Store
+put Host 142 0
+put Host 143 0
+move sp 5
+j Respond
+Malformed:
+move sp -5
+j Respond
+DiscreteBad:
+move sp -53
+j Respond
+Reject:
+Respond:
+put Host 21 sp
+put Host 20 r15 # response generation LAST after normalized/rejected image
+j Loop

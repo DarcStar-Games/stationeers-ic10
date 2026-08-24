@@ -1,0 +1,119 @@
+# Sole Job Store command writer; create supports atomic free-slot allocation.
+Boot:
+get r0 db 0
+bne r0 31416015 Init
+get r0 db 1
+bne r0 1 Init
+get r0 db 31
+bgtz r0 StoreWait
+j Loop
+Init:
+clr db
+poke 0 31416015
+poke 1 1
+Loop:
+yield
+get r0 db 31
+bgtz r0 StoreWait
+get r15 db 2
+get r0 db 3
+beq r15 r0 Loop
+get r10 db 7
+blt r10 1 Bad
+bgt r10 3 Bad
+get r11 db 8
+beq r10 1 CreateSlot
+blt r11 0 Bad
+bge r11 32 Bad
+j Issue
+CreateSlot:
+bgez r11 Create
+move r11 0
+FindFree:
+bge r11 32 Bad
+mul r0 r11 7
+add r1 r0 288
+get r2 d0 r1
+mul r2 r2 3
+add r2 r2 r1
+add r2 r2 1
+get r3 d0 r2
+beqz r3 Create
+add r11 r11 1
+j FindFree
+Create:
+bge r11 32 Bad
+get r6 db 22
+blt r6 0 Bad
+bge r6 32 Bad
+mul r0 r6 8
+add r1 r0 32
+get r2 d0 r1
+get r8 db 12
+bne r2 r8 Bad
+mul r0 r6 7
+add r1 r0 288
+get r2 d0 r1
+mul r2 r2 3
+add r2 r2 r1
+add r2 r2 1
+get r3 d0 r2
+bne r3 2 Bad
+add r2 r2 1
+get r3 d0 r2
+get r9 db 13
+bne r3 r9 Bad
+mul r0 r11 7
+add r1 r0 288
+get r2 d0 r1
+mul r2 r2 3
+add r2 r2 r1
+add r2 r2 1
+get r3 d0 r2
+bnez r3 Bad
+mul r0 r11 8
+add r1 r0 33
+move r2 14
+Stage:
+get r0 db r2
+put d0 r1 r0
+add r1 r1 1
+add r2 r2 1
+ble r2 20 Stage
+Issue:
+get r0 db 30
+add r0 r0 1
+poke 30 r0
+poke 31 r0
+poke 32 r15
+poke 34 r11
+put d0 11 r10
+put d0 12 r11
+get r1 db 9
+put d0 13 r1
+get r1 db 10
+put d0 14 r1
+get r1 db 11
+put d0 15 r1
+put d0 7 r0
+j StoreWait
+StoreWait:
+get r0 db 31
+get r1 d0 8
+bne r1 r0 Loop
+get r2 d0 9
+get r3 d0 10
+get r11 db 34
+get r15 db 32
+poke 31 0
+poke 4 r2
+poke 5 r3
+poke 6 r11
+poke 3 r15
+j Loop
+Bad:
+poke 4 -1
+poke 5 0
+poke 6 -1
+poke 3 r15
+j Loop

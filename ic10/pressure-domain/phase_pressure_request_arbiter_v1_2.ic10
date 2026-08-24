@@ -1,0 +1,119 @@
+poke 0 31415933
+poke 1 1
+Loop:
+yield
+beqz r15 Start
+get r0 db 6
+bne r0 r4 Start
+get r0 db 5
+bne r0 r3 Start
+get r0 d0 2
+bne r0 r6 Start
+add sp r6 3
+get r0 d0 sp
+bne r0 r7 Start
+bge r9 r8 Commit
+mul sp r6 128
+add sp sp 32
+mul r0 r9 2
+add sp sp r0
+get r0 d0 sp
+bne r0 HASH("ControllerPhasePressure") Next
+add sp sp 1
+get ra d0 sp
+getd r0 ra 99
+bne r0 HASH("ControllerPhasePressure") Next
+getd r0 ra 97
+bne r0 2 Next
+getd r12 ra 115
+blez r12 Next
+getd r0 ra 106
+bne r0 r3 Next
+getd r0 ra 105
+bne r0 r2 Next
+getd r0 ra 104
+bne r0 r2 Next
+getd sp ra 103
+getd r0 ra 115
+bne r0 r12 Next
+bnan sp Next
+min r12 r10 sp
+max r10 r10 sp
+seq r0 r2 1
+select r10 r0 r12 r10
+add r11 r11 1
+Next:
+add r9 r9 1
+j Loop
+Start:
+bdns d0 BadDirectory
+get r0 d0 0
+bne r0 31415981 BadDirectory
+get r0 d0 1
+bne r0 1 BadDirectory
+get r0 d0 9
+bne r0 HASH("DirectorySchema.Controller") BadDirectory
+get r0 d0 10
+bne r0 1 BadDirectory
+get r1 db 3
+get r2 db 4
+get r3 db 5
+get r4 db 6
+blez r4 BadContext
+blt r2 1 BadContext
+bgt r2 2 BadContext
+get r6 d0 2
+add sp r6 7
+get r0 d0 sp
+bgtz r0 BadDirectory
+add sp r6 3
+get r7 d0 sp
+add sp r6 5
+get r8 d0 sp
+clamp r8 r8 0 64
+move r9 0
+seq r0 r2 1
+select r10 r0 pinf ninf
+move r11 0
+move r15 1
+bnez r1 Loop
+Commit:
+get r0 db 6
+bne r0 r4 Start
+get r0 db 5
+bne r0 r3 Start
+get r0 d0 2
+bne r0 r6 Start
+add sp r6 3
+get r0 d0 sp
+bne r0 r7 Start
+select r13 r11 r2 0
+select r10 r11 r10 0
+poke 8 r10
+poke 9 r11
+poke 10 r13
+poke 11 r7
+poke 13 r4
+poke 14 r3
+get r0 db 12
+add r0 r0 1
+poke 12 r0
+j Start
+BadDirectory:
+move r13 -3
+j Fault
+BadContext:
+move r13 -9
+Fault:
+poke 8 0
+poke 9 0
+poke 10 r13
+poke 11 0
+get r0 db 6
+poke 13 r0
+get r0 db 5
+poke 14 r0
+get r0 db 12
+add r0 r0 1
+poke 12 r0
+j Start

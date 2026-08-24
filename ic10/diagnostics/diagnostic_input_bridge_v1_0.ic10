@@ -1,0 +1,112 @@
+# Diagnostic Input Bridge v1.0: S2 Resolver,S3 Profile; UI state S16..25.
+alias resolver r1
+poke 16 1
+poke 17 1
+poke 18 1
+poke 19 1
+poke 20 0
+poke 21 6
+poke 22 0
+poke 23 0
+poke 24 1 # initial Controller Selector request generation
+poke 25 1 # initial Console desired-request generation
+poke 0 17320511
+poke 1 1
+Loop:
+yield
+get r2 db 3
+blez r2 Invalid
+getd r0 r2 0
+bne r0 31415929 Invalid
+getd r0 r2 1
+bne r0 1 Invalid
+getd r0 r2 2
+bne r0 HASH("DiagnosticMapping") Invalid
+getd r0 r2 3
+bne r0 1 Invalid
+getd r0 r2 4
+bne r0 7 Invalid
+getd r14 r2 5 # capture Profile generation before resolution
+blez r14 Invalid
+get resolver db 2
+blez resolver Invalid
+getd r0 resolver 0
+bne r0 31415931 Invalid
+getd r0 resolver 1
+bne r0 1 Invalid
+putd resolver 3 7
+putd resolver 4 r2
+getd r15 resolver 12 # coherent Resolver snapshot generation
+getd r0 resolver 11
+bne r0 1 Invalid
+getd r8 resolver 5
+getd r9 resolver 6
+getd r0 resolver 12
+bne r0 r15 Loop
+getd r0 r2 5
+bne r0 r14 Loop
+bnan r9 Invalid
+round r9 r9 # diagnostic controls are discrete even through Memory fallback
+beq r8 7 Dispatch
+poke 22 0
+Dispatch:
+ble r8 2 SetController
+beq r8 3 SetConsole
+beq r8 4 SetChannel
+beq r8 5 SetMode
+beq r8 6 SetColor
+beq r8 7 SetCommit
+j Invalid
+SetController: # controls 1/2 map directly to state S16/S17
+clamp r9 r9 1 16
+add r0 r8 15
+get sp db r0
+beq sp r9 Ready
+poke r0 r9
+jal BumpController
+j Ready
+SetConsole: # desired Console request is independent from auto-advance
+clamp r9 r9 1 64
+get r0 db 18
+beq r0 r9 Ready
+poke 18 r9
+get r0 db 25
+add r0 r0 1
+poke 25 r0
+j Ready
+SetChannel:
+clamp r9 r9 1 16
+poke 19 r9
+j Ready
+SetMode:
+clamp r9 r9 0 14
+poke 20 r9
+j Ready
+SetColor:
+clamp r9 r9 0 11
+poke 21 r9
+j Ready
+SetCommit: # convert switch state into a rising-edge request generation
+sgtz r9 r9
+get r0 db 22
+poke 22 r9
+beqz r9 Ready
+bgtz r0 Ready
+get r0 db 23
+add r0 r0 1
+poke 23 r0
+j Ready
+BumpController: # changing Type or Member republishes the pair
+get r0 db 24
+add r0 r0 1
+poke 24 r0
+j ra
+Ready:
+poke 7 1
+s db Setting r9
+j Loop
+Invalid:
+poke 7 -1
+move r0 nan
+s db Setting r0
+j Loop

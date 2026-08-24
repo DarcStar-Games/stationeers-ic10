@@ -1,0 +1,115 @@
+# ControllerPI v1.1: d0 process,d1 actuator,d2 GenericHost; telemetry S96..118.
+alias Process d0
+alias Actuator d1
+alias ConfigHost d2
+poke 96 27182818
+poke 97 1
+poke 98 2046
+poke 99 HASH("ControllerPI")
+poke 117 -1
+Loop:
+yield
+bdnvl ConfigHost ReferenceId ConfigBad
+l r0 ConfigHost ReferenceId
+get sp db 116
+sne ra r0 sp # host identity change also forces static validation/reload
+poke 116 r0
+get r0 ConfigHost 8
+blez r0 ConfigBad
+get r15 ConfigHost 5
+get r0 db 117
+bnez ra ValidateHost
+beq r15 r0 Control
+ValidateHost:
+get r0 ConfigHost 0
+bne r0 31415928 ConfigBad
+get r0 ConfigHost 1
+bne r0 1 ConfigBad
+get r0 ConfigHost 2
+bne r0 HASH("ControllerPI") ConfigBad
+get r0 ConfigHost 4
+bne r0 1 ConfigBad
+move r0 1
+move ra 96
+LoadConfig:
+get rr0 ConfigHost ra
+bnan rr0 ConfigBad
+add ra ra 1
+add r0 r0 1
+ble r0 14 LoadConfig
+get sp ConfigHost 5
+bne sp r15 Loop # reject torn mirror
+get sp ConfigHost 9
+poke 118 sp
+poke 117 r15
+Control:
+get r15 db 104
+and r15 r15 768 # retain latched config/numeric history
+or r15 r15 3 # pessimistically mark both current I/O faults
+bdnvl Process r12 InputBad
+l sp Process r12
+bnan sp NumericFault
+poke 100 sp
+xor r15 r15 1 # valid input clears bit 0; bit was just forced on
+sub r0 r1 sp
+poke 106 r0
+mul r0 r0 r14
+abs sp r0
+sgt sp sp r9
+select r0 sp r0 0
+poke 107 r0
+poke 105 r1
+poke 108 r10
+get ra db 102
+beqz r10 Manual
+mul sp r3 ra
+add sp sp r8
+mul r0 r2 r0
+add sp sp r0
+poke 109 sp
+clamp r0 sp r4 r5
+poke 101 r0
+sub sp sp r0
+poke 103 sp
+get r0 db 107
+mul sp sp r0
+bgtz sp WriteOutput # saturation*error>0 would integrate farther into saturation
+mul r0 r0 0.5
+add ra ra r0
+clamp ra ra r6 r7
+poke 102 ra
+j WriteOutput
+Manual:
+poke 109 r11
+clamp r0 r11 r4 r5
+poke 101 r0
+sub sp r11 r0
+poke 103 sp
+beqz r3 WriteOutput
+get sp db 107
+mul sp r2 sp
+sub ra r0 sp
+sub ra ra r8
+div ra ra r3
+clamp ra ra r6 r7
+poke 102 ra
+WriteOutput:
+bdnvs Actuator r13 End
+get r0 db 101
+bnan r0 NumericFault
+s Actuator r13 r0
+xor r15 r15 2 # valid output clears bit 1
+j End
+InputBad:
+poke 100 nan
+j End
+NumericFault:
+or r15 r15 512
+End:
+poke 104 r15
+j Loop
+ConfigBad:
+get r15 db 104
+or r15 r15 259 # current I/O faults + latched config fault
+poke 104 r15
+j Loop

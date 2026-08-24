@@ -1,0 +1,93 @@
+# POWER source selector. d0 PowerReservation directory,d1 PlanStore.
+poke 0 31416029
+poke 1 1
+Loop:
+yield
+get r15 db 3
+get r0 db 4
+beq r15 r0 Loop
+get r6 db 2
+bdns d0 Bad
+bdns d1 Bad
+get r0 d0 0
+bne r0 31415981 Bad
+get r0 d0 9
+bne r0 HASH("DirectorySchema.PowerReservation") Bad
+get r0 d0 10
+bne r0 1 Bad
+get r5 d0 2
+add r0 r5 7
+get r0 d0 r0
+bgtz r0 Overflow
+add r0 r5 5
+get r7 d0 r0
+mul r8 r5 192
+add r8 r8 32
+Find:
+bge r6 r7 None
+mul r0 r6 3
+add r0 r0 r8
+get r9 d0 r0
+add r0 r0 2
+get r10 d0 r0
+add r6 r6 1
+blt r9 1000000 Find
+bge r9 3000000 None
+getd r14 r10 12
+blez r14 Find
+getd r0 r10 0
+bne r0 31415950 Find
+getd r0 r10 3
+bne r0 4 Find
+getd r0 r10 9
+blez r0 Find
+getd r11 r10 6
+blez r11 Find
+get r12 d1 24
+move r13 0
+move r1 0
+Used:
+bge r1 r12 Direction
+mul r0 r1 8
+add r2 r0 128
+add r3 r2 1
+get r4 d1 r3
+beq r4 r10 AddUsed
+add r3 r2 2
+get r4 d1 r3
+beq r4 r10 Find
+j UsedNext
+AddUsed:
+add r3 r2 4
+get r4 d1 r3
+add r13 r13 r4
+UsedNext:
+add r1 r1 1
+j Used
+Direction:
+sub r11 r11 r13
+blez r11 Find
+getd r0 r10 12
+bne r0 r14 Find
+poke 5 1
+poke 6 r10
+poke 7 r11
+poke 8 r6
+poke 9 r14
+getd r0 r10 28
+poke 10 r0
+j Reply
+None:
+poke 5 -3
+poke 6 0
+poke 7 0
+poke 8 r6
+j Reply
+Overflow:
+poke 5 -2
+j Reply
+Bad:
+poke 5 -1
+Reply:
+poke 4 r15
+j Loop

@@ -1,0 +1,109 @@
+# Controller Selector v3.0: direct sorted Generic Controller Directory selection.
+# ABI2. S2 Directory,S3/4 selection,S5 controller,S6 index,S7 type,S8 status,S9 gen.
+# S10/11 desired type/member,S12 request generation,S13 handled request generation.
+alias directory r1
+poke 0 17320508
+poke 1 2
+Loop:
+yield
+get directory db 2
+blez directory NoDirectory
+getd r0 directory 0
+bne r0 31415981 NoDirectory
+getd r0 directory 1
+bne r0 1 NoDirectory
+getd r0 directory 9
+bne r0 HASH("DirectorySchema.Controller") NoDirectory
+getd r0 directory 10
+bne r0 1 NoDirectory
+getd r0 directory 11
+bne r0 2 NoDirectory
+getd r10 directory 2
+add r12 r10 3
+getd r9 directory r12
+add r12 r10 5
+getd r11 directory r12
+add r12 r10 7
+getd r0 directory r12
+bgtz r0 Overflow
+blez r11 NoControllers
+get r4 db 12
+get r3 db 13
+get r14 db 3
+get r15 db 4
+beq r4 r3 RequestReady
+get r14 db 10
+get r15 db 11
+RequestReady:
+round r14 r14
+round r15 r15
+max r14 r14 1
+max r15 r15 1
+mul r8 r10 128
+add r8 r8 32
+move r2 -1
+move r3 0
+move r6 0
+move r7 0
+move r13 0
+move r5 0
+Scan:
+bge r5 r11 ScanDone
+mul r12 r5 2
+add r12 r12 r8
+getd r0 directory r12
+beq r0 r2 SameType
+move r2 r0
+add r3 r3 1
+bgt r3 r14 Next
+move r7 r0
+move r6 r5
+move r13 1
+j Next
+SameType:
+bgt r3 r14 Next
+add r13 r13 1
+Next:
+add r5 r5 1
+j Scan
+ScanDone:
+min r14 r14 r3
+clamp r15 r15 1 r13
+add r6 r6 r15
+sub r6 r6 1
+mul r12 r6 2
+add r12 r12 r8
+add r12 r12 1
+getd r5 directory r12
+getd r0 directory 2
+bne r0 r10 Updating
+add r12 r10 3
+getd r0 directory r12
+bne r0 r9 Updating
+get r0 db 12
+bne r0 r4 Updating
+poke 3 r14
+poke 4 r15
+poke 5 r5
+poke 6 r6
+poke 7 r7
+poke 9 r9
+poke 8 1
+poke 13 r4 # TERMINAL_RESPONSE token LAST
+s db Setting r15
+j Loop
+Updating:
+move r0 0
+j Status
+NoDirectory:
+move r0 -1
+j Status
+NoControllers:
+move r0 -2
+j Status
+Overflow:
+move r0 -3
+Status:
+poke 8 r0
+s db Setting r0
+j Loop

@@ -1,0 +1,591 @@
+{
+  "format": "INPUT_PROFILE_CATALOG_V4",
+  "profile_abi_magic": 31415929,
+  "profile_abi": 1,
+  "profiles": [
+    {
+      "slug": "pi",
+      "name": "PI Config",
+      "profile_type": "ControllerPI",
+      "schema": 1,
+      "field_count": 14,
+      "descriptors": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          20,
+          999
+        ],
+        [
+          1,
+          0,
+          2,
+          999
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          10,
+          999
+        ],
+        [
+          3,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          128,
+          16,
+          0
+        ],
+        [
+          4,
+          160,
+          4,
+          0
+        ],
+        [
+          3,
+          -1,
+          1,
+          0
+        ]
+      ],
+      "enum_pairs": [
+        [
+          128,
+          "LogicType.Setting"
+        ],
+        [
+          129,
+          "LogicType.Pressure"
+        ],
+        [
+          130,
+          "LogicType.Temperature"
+        ],
+        [
+          131,
+          "LogicType.Ratio"
+        ],
+        [
+          132,
+          "LogicType.Charge"
+        ],
+        [
+          133,
+          "LogicType.Power"
+        ],
+        [
+          134,
+          "LogicType.PowerActual"
+        ],
+        [
+          135,
+          "LogicType.PowerPotential"
+        ],
+        [
+          136,
+          "LogicType.Volume"
+        ],
+        [
+          137,
+          "LogicType.Quantity"
+        ],
+        [
+          138,
+          "LogicType.On"
+        ],
+        [
+          139,
+          "LogicType.Open"
+        ],
+        [
+          140,
+          "LogicType.Mode"
+        ],
+        [
+          141,
+          "LogicType.Output"
+        ],
+        [
+          142,
+          "LogicType.PressureSetting"
+        ],
+        [
+          143,
+          "LogicType.TemperatureSetting"
+        ],
+        [
+          160,
+          "LogicType.Setting"
+        ],
+        [
+          161,
+          "LogicType.PressureSetting"
+        ],
+        [
+          162,
+          "LogicType.TemperatureSetting"
+        ],
+        [
+          163,
+          "LogicType.Maximum"
+        ]
+      ],
+      "scope": "production"
+    },
+    {
+      "slug": "diagnostic",
+      "name": "Diagnostic Mapping",
+      "profile_type": "DiagnosticMapping",
+      "schema": 1,
+      "field_count": 7,
+      "descriptors": [
+        [
+          2,
+          1,
+          16,
+          15
+        ],
+        [
+          2,
+          1,
+          16,
+          15
+        ],
+        [
+          2,
+          1,
+          64,
+          63
+        ],
+        [
+          2,
+          1,
+          16,
+          15
+        ],
+        [
+          2,
+          0,
+          14,
+          14
+        ],
+        [
+          2,
+          0,
+          11,
+          11
+        ],
+        [
+          3,
+          0,
+          1,
+          0
+        ]
+      ],
+      "enum_pairs": [],
+      "scope": "production"
+    },
+    {
+      "slug": "sequencer",
+      "name": "Sequencer Config",
+      "profile_type": "ControllerSequencer",
+      "schema": 1,
+      "field_count": 9,
+      "descriptors": [
+        [
+          3,
+          0,
+          1,
+          0
+        ],
+        [
+          4,
+          128,
+          16,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          160,
+          5,
+          0
+        ],
+        [
+          4,
+          160,
+          5,
+          0
+        ],
+        [
+          2,
+          0,
+          999,
+          999
+        ],
+        [
+          2,
+          1,
+          999,
+          998
+        ],
+        [
+          3,
+          0,
+          1,
+          0
+        ]
+      ],
+      "enum_pairs": [
+        [
+          128,
+          "LogicType.Setting"
+        ],
+        [
+          129,
+          "LogicType.Pressure"
+        ],
+        [
+          130,
+          "LogicType.Temperature"
+        ],
+        [
+          131,
+          "LogicType.Ratio"
+        ],
+        [
+          132,
+          "LogicType.Charge"
+        ],
+        [
+          133,
+          "LogicType.Power"
+        ],
+        [
+          134,
+          "LogicType.PowerActual"
+        ],
+        [
+          135,
+          "LogicType.PowerPotential"
+        ],
+        [
+          136,
+          "LogicType.Volume"
+        ],
+        [
+          137,
+          "LogicType.Quantity"
+        ],
+        [
+          138,
+          "LogicType.On"
+        ],
+        [
+          139,
+          "LogicType.Open"
+        ],
+        [
+          140,
+          "LogicType.Mode"
+        ],
+        [
+          141,
+          "LogicType.Output"
+        ],
+        [
+          142,
+          "LogicType.PressureSetting"
+        ],
+        [
+          143,
+          "LogicType.TemperatureSetting"
+        ],
+        [
+          160,
+          "LogicType.On"
+        ],
+        [
+          161,
+          "LogicType.Open"
+        ],
+        [
+          162,
+          "LogicType.Activate"
+        ],
+        [
+          163,
+          "LogicType.Setting"
+        ],
+        [
+          164,
+          "LogicType.Mode"
+        ]
+      ],
+      "scope": "production"
+    },
+    {
+      "slug": "phase_pressure",
+      "name": "Phase Pressure Config",
+      "profile_type": "ControllerPhasePressure",
+      "schema": 1,
+      "field_count": 9,
+      "descriptors": [
+        [
+          3,
+          0,
+          1,
+          0
+        ],
+        [
+          4,
+          128,
+          3,
+          0
+        ],
+        [
+          1,
+          0.05,
+          1,
+          999
+        ],
+        [
+          1,
+          1,
+          2,
+          999
+        ],
+        [
+          1,
+          0,
+          6000,
+          999
+        ],
+        [
+          1,
+          0,
+          6000,
+          999
+        ],
+        [
+          1,
+          0,
+          6000,
+          999
+        ],
+        [
+          4,
+          160,
+          2,
+          0
+        ],
+        [
+          3,
+          0,
+          1,
+          0
+        ]
+      ],
+      "enum_pairs": [
+        [
+          128,
+          0
+        ],
+        [
+          129,
+          1
+        ],
+        [
+          130,
+          2
+        ],
+        [
+          160,
+          "LogicType.Setting"
+        ],
+        [
+          161,
+          "LogicType.PressureSetting"
+        ]
+      ],
+      "scope": "production"
+    },
+    {
+      "slug": "pressure_domain",
+      "name": "Pressure Domain Config",
+      "profile_type": "ControllerPressureDomain",
+      "schema": 1,
+      "field_count": 8,
+      "descriptors": [
+        [
+          3,
+          0,
+          1,
+          0
+        ],
+        [
+          4,
+          128,
+          3,
+          0
+        ],
+        [
+          1,
+          0,
+          6000,
+          999
+        ],
+        [
+          1,
+          0,
+          6000,
+          999
+        ],
+        [
+          1,
+          0,
+          6000,
+          999
+        ],
+        [
+          4,
+          160,
+          2,
+          0
+        ],
+        [
+          4,
+          160,
+          2,
+          0
+        ],
+        [
+          3,
+          0,
+          1,
+          0
+        ]
+      ],
+      "enum_pairs": [
+        [
+          128,
+          1
+        ],
+        [
+          129,
+          2
+        ],
+        [
+          130,
+          3
+        ],
+        [
+          160,
+          "LogicType.Setting"
+        ],
+        [
+          161,
+          "LogicType.PressureSetting"
+        ]
+      ],
+      "scope": "production"
+    },
+    {
+      "slug": "pressure_transfer",
+      "name": "Pressure Transfer Config",
+      "profile_type": "ControllerPressureTransfer",
+      "schema": 1,
+      "field_count": 4,
+      "descriptors": [
+        [
+          3,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          500,
+          999
+        ],
+        [
+          1,
+          0.001,
+          1,
+          999
+        ],
+        [
+          1,
+          0.1,
+          100,
+          999
+        ]
+      ],
+      "enum_pairs": [],
+      "scope": "production"
+    }
+  ],
+  "catalog_schema_id": "CatalogSchema.InputProfile",
+  "catalog_schema_version": 3,
+  "catalog_instance_id": "Catalog.InputProfiles.Schema3",
+  "cell_block_width": 4
+}

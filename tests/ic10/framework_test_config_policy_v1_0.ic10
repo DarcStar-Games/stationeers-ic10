@@ -1,0 +1,103 @@
+alias Host d0
+alias FaultInject d1 # Test Policy v1.0: same Generic Host, semantic fault injection
+Boot:
+yield
+bdns Host Boot
+get r0 Host 0
+bne r0 31415928 Boot
+get r0 Host 1
+bne r0 1 Boot
+put Host 2 HASH("ControllerTest")
+put Host 4 1
+put Host 10 1
+put Host 16 63
+put Host 17 0
+put Host 18 0
+put Host 19 0
+put Host 12 HASH("CFG1|ControllerTest|1|1|63|0|0|0")
+put Host 32 -5
+put Host 33 0
+put Host 34 10
+put Host 35 0
+put Host 36 -1
+put Host 37 30
+put Host 38 0
+put Host 39 0
+get r0 Host 7
+put Host 20 r0
+get r0 Host 13
+add r0 r0 1
+put Host 13 r0 # generation publishes metadata/defaults LAST
+Loop:
+yield
+get r15 Host 6
+get r0 Host 20
+beq r15 r0 Loop
+move r10 0
+bdnvl FaultInject Setting Validate
+l r10 FaultInject Setting
+bap r10 2 0 Loop # hold request by withholding Policy response
+bap r10 1 0 InjectReject
+Validate:
+move r0 1
+move sp 128
+Load:
+get rr0 Host sp
+bnan rr0 Malformed
+add sp sp 1
+add r0 r0 1
+ble r0 6 Load
+move sp -60
+blt r2 -10 Reject
+bgt r2 10 Reject
+round r10 r3
+move sp -61
+bna r3 r10 0 Reject
+clamp r3 r10 0 20
+bne r3 r10 Reject
+round r10 r4
+move sp -62
+bna r4 r10 0 Reject
+clamp r4 r10 0 1
+bne r4 r10 Reject
+round r10 r5
+move sp -63
+bna r5 r10 0 Reject
+move r5 r10
+abs r11 r5
+bne r11 1 Reject
+round r10 r6
+move sp -64
+bna r6 r10 0 Reject
+move r6 r10
+sub r11 r6 10
+mod r11 r11 10
+bnez r11 Reject
+blt r6 10 Reject
+bgt r6 40 Reject
+move sp -66
+bgt r1 r2 Reject
+move r0 1
+move sp 128
+Store:
+put Host sp rr0
+add sp sp 1
+add r0 r0 1
+ble r0 6 Store
+put Host 134 0
+put Host 135 0
+move sp 5
+j Respond
+InjectReject:
+bdnvs FaultInject Setting Injected
+s FaultInject Setting 0
+Injected:
+move sp -90
+j Respond
+Malformed:
+move sp -5
+Reject:
+Respond:
+put Host 21 sp
+put Host 20 r15
+j Loop

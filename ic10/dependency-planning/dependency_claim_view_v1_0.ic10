@@ -1,0 +1,120 @@
+# Active future-output claim lookup over Plan Store + Child Validity.
+poke 0 31416016
+poke 1 1
+Loop:
+yield
+get r15 db 5
+get r0 db 6
+beq r15 r0 Loop
+get r2 db 2
+get r3 db 3
+get r4 db 4
+beqz r2 Bad
+get r0 d0 0
+bne r0 31416007 Bad
+get r0 d0 1
+bne r0 2 Bad
+get r14 d0 40
+and r0 r14 1
+bnez r0 Loop
+move r7 0
+Find:
+bge r7 32 Missing
+mul r0 r7 8
+add r0 r0 128
+get r8 d0 r0
+beqz r8 Next
+beq r8 r3 Next
+add r0 r0 1
+get r9 d0 r0
+beqz r9 Next
+bgtz r4 CheckChild
+j CheckResource
+CheckChild:
+bne r9 r4 Next
+CheckResource:
+add r0 r0 1
+get r10 d0 r0
+bne r10 r2 Next
+add r0 r0 3
+get r11 d0 r0
+blez r11 Next
+get r0 d0 40
+bne r0 r14 Loop
+put d1 2 r9
+put d1 3 r2
+mul r13 r15 64
+add r13 r13 r7
+add r13 r13 1
+put d1 4 r13
+WaitC:
+yield
+get r0 d1 5
+bne r0 r13 WaitC
+get r0 d0 40
+bne r0 r14 Loop
+get r0 d1 6
+bne r0 1 Next
+get r12 d1 8
+get r13 d1 7
+beq r12 7 Next
+bge r12 11 Next
+move r5 r9
+move r6 r11
+get sp d1 9
+j Count
+Next:
+add r7 r7 1
+j Find
+Count:
+move r7 0
+move ra 0
+move r4 0
+CountLoop:
+bge r7 32 CountDone
+mul r0 r7 8
+add r0 r0 128
+get r8 d0 r0
+beqz r8 CountNext
+beq r8 r3 CountNext
+add r0 r0 1
+get r9 d0 r0
+bne r9 r5 CountNext
+add r0 r0 1
+get r10 d0 r0
+bne r10 r2 CountNext
+add ra ra 1
+add r0 r0 1
+get r1 d0 r0
+add r0 r0 1
+get r0 d0 r0
+sub r1 r1 r0
+max r1 r1 0
+add r4 r4 r1
+CountNext:
+add r7 r7 1
+j CountLoop
+CountDone:
+get r0 d0 40
+bne r0 r14 Loop
+poke 8 r5
+poke 9 r6
+poke 10 ra
+poke 11 r12
+poke 12 sp
+poke 13 r13
+poke 14 r4
+poke 7 1
+poke 6 r15
+j Loop
+Missing:
+poke 7 -2
+poke 8 0
+poke 9 0
+poke 10 0
+poke 6 r15
+j Loop
+Bad:
+poke 7 -1
+poke 6 r15
+j Loop

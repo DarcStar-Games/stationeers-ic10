@@ -1,0 +1,120 @@
+poke 96 27182818
+poke 97 2
+poke 98 254
+poke 99 HASH("ControllerPhasePressure")
+poke 115 0
+poke 117 -1
+poke 119 0
+Loop:
+yield
+poke 115 0
+bdnvl d2 ReferenceId ConfigBad
+l r0 d2 ReferenceId
+get sp db 116
+sne ra r0 sp
+poke 116 r0
+get r0 d2 8
+blez r0 ConfigBad
+get sp d2 5
+get r0 db 117
+bnez ra Reload
+beq sp r0 Profile
+Reload:
+get r0 d2 12
+bne r0 HASH("CFG1|ControllerPhasePressure|1|2|255|1|0|0") ConfigBad
+move r0 1
+move ra 96
+Load:
+get rr0 d2 ra
+bnan rr0 ConfigBad
+add ra ra 1
+add r0 r0 1
+ble r0 9 Load
+get r0 d2 5
+bne r0 sp Loop
+poke 117 sp
+Profile:
+bdns d1 ProfileBad
+get r9 d1 5
+blez r9 ProfileBad
+get r0 d1 0
+bne r0 31415963 ProfileBad
+get r0 d1 11
+bne r0 1 ProfileBad
+get r10 d1 13
+get r11 d1 14
+get r12 d1 15
+get r13 d1 16
+get r14 d1 17
+get r15 d1 18
+get r0 d1 9
+poke 106 r0
+get r0 d1 5
+bne r0 r9 Loop
+bdnvl d0 Pressure InputBad
+l sp d0 Pressure
+bnan sp NumericBad
+poke 100 sp
+bdnvl d0 Temperature InputBad
+l ra d0 Temperature
+bnan ra NumericBad
+poke 101 ra
+beqz r1 Standby
+beqz r2 Standby
+blt ra r14 RangeBad
+bgt ra r15 RangeBad
+pow r0 ra r11
+mul r0 r0 r10
+bnan r0 ProfileBad
+clamp r0 r0 r12 r13
+poke 102 r0
+seq sp r2 1
+select sp sp r3 r4
+mul r0 r0 sp
+move ra r2
+j Target
+Standby:
+move r0 r7
+move ra 0
+j Publish
+Target:
+clamp r0 r0 r5 r6
+Publish:
+poke 103 r0
+poke 104 r2
+poke 105 ra
+beqz r1 Commit
+beqz r9 Commit
+bdnvs d0 r8 OutputBad
+s d0 r8 r0
+j Commit
+RangeBad:
+move ra -7
+j OperationalFault
+ProfileBad:
+move ra -6
+j OperationalFault
+NumericBad:
+move ra -5
+j OperationalFault
+InputBad:
+move ra -1
+OperationalFault:
+move r0 r7
+poke 103 r0
+poke 105 ra
+beqz r9 Commit
+bdnvs d0 r8 Commit
+s d0 r8 r0
+j Commit
+OutputBad:
+poke 105 -2
+j Commit
+ConfigBad:
+poke 105 -4
+Commit:
+get r0 db 119
+add r0 r0 1
+poke 119 r0
+poke 115 r0
+j Loop

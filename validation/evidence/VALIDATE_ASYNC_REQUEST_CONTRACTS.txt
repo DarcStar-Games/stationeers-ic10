@@ -1,0 +1,5 @@
+Async request contracts: PASS
+ - LIVE_CURRENT producers initialize state before current request identity; invalid accepted requests bind identity
+ - diagnostic selector and material-feeder consumers reject stale status/results before exact token equality
+ - pressure, config, recipe, Job Store, print resolver, printer bank, LArRE storage and directory handshakes are registered TERMINAL_RESPONSE users
+ - request payload publication is token-last and transaction/directory/snapshot authorities remain distinct

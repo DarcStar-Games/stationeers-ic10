@@ -1,0 +1,66 @@
+# Diagnostic Renderer v1.1: render committed, fully resolved mappings only.
+# It has no Registry dependency and consumes no device screws.
+# S2 record count,S3 refresh quota (default 2,range 1..4).
+# Records S64..383: [displayRef,controllerRef,channel,Mode,Color], max 64.
+alias display r1
+alias controller r2
+move r6 0 # round-robin record cursor
+poke 0 16180339
+poke 1 1
+Loop:
+yield
+get r14 db 2
+clamp r14 r14 0 64
+beqz r14 Loop
+mod r6 r6 r14
+# Limit work per game tick; higher values update panels faster but cost CPU.
+get ra db 3
+select ra ra ra 2
+round ra ra
+clamp ra ra 1 4
+RenderLoop:
+# Record N occupies five contiguous stack cells beginning at S64.
+mul r12 r6 5
+add r12 r12 64
+get display db r12 # committed display ReferenceId
+add r12 r12 1
+get controller db r12 # committed controller ReferenceId
+add r12 r12 1
+get r8 db r12 # telemetry channel
+add r12 r12 1
+get r9 db r12 # LED Mode
+add r12 r12 1
+get r10 db r12 # LED Color
+blez display Next
+blez controller Next
+bdnvs display Setting Next
+# A committed controller must still advertise the generic telemetry ABI.
+getd r0 controller 96
+bne r0 27182818 Next
+getd r0 controller 97
+blt r0 1 Next
+bgt r0 2 Next
+clamp r8 r8 1 16
+getd r11 controller 98
+sll r0 1 r8
+and r0 r0 r11
+beqz r0 Next
+# Telemetry channel N lives at controller stack S99+N.
+add r12 r8 99
+getd r0 controller r12
+bnan r0 Next
+sd display Setting r0
+# Presentation settings are optional; skip unsupported properties safely.
+bdnvs display Mode WriteColor
+clamp r9 r9 0 14
+sd display Mode r9
+WriteColor:
+bdnvs display Color Next
+clamp r10 r10 0 11
+sd display Color r10
+Next:
+add r6 r6 1
+mod r6 r6 r14
+sub ra ra 1
+bgtz ra RenderLoop
+j Loop

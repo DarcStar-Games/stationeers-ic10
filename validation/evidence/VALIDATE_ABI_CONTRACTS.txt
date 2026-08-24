@@ -1,0 +1,4 @@
+ABI contract validation: PASS
+ - Store ABI5 / Loader ABI4 / Coordinator ABI3 separate runtime placement from payload schema versions
+ - Directory Adapter ABI2 freezes coherent candidates for Snapshot Host ABI1 or Registry Host ABI3
+ - Resource/Input consumer ABIs remain ABI1; Transform/Recipe Lookup remain ABI3; manufacturing services use explicit ABI1/ABI2 contracts; changed async-token semantics are ABI2

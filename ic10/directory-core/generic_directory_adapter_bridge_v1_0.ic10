@@ -1,0 +1,109 @@
+# Generic Directory Adapter Bridge v1.0: d0 Adapter ABI2,d1 Snapshot Host ABI1.
+Loop:
+yield
+bdns d0 Loop
+bdns d1 Loop
+get r0 d0 0
+bne r0 31415983 Loop
+get r0 d0 1
+bne r0 2 Loop
+get r0 d0 10
+bne r0 1 Loop
+get r0 d1 0
+bne r0 31415981 Loop
+get r0 d1 1
+bne r0 1 Loop
+get r11 db 3
+add r11 r11 1
+poke 3 r11
+Freeze:
+put d0 11 r11
+yield
+get r0 d0 12
+bne r0 r11 Freeze
+get r15 d0 8
+mod r0 r15 2
+bnez r0 Release
+get r10 d0 7
+get r14 db 2
+beq r10 r14 Release
+get r2 d0 4
+get r3 d0 5
+get r0 d0 2
+put d1 9 r0
+get r0 d0 3
+put d1 10 r0
+put d1 11 r2
+put d1 12 r3
+move r6 1
+jal Send
+get r0 d0 9
+put d1 22 r0
+get r13 d0 6
+move r7 0
+Candidate:
+bge r7 r13 Verify
+mul r4 r7 r2
+add r4 r4 16
+move r5 0
+CopyCandidate:
+bge r5 r2 Add
+add r0 r4 r5
+get r0 d0 r0
+add r1 r5 17
+put d1 r1 r0
+add r5 r5 1
+j CopyCandidate
+Add:
+move r6 2
+jal Send
+add r7 r7 1
+j Candidate
+Verify:
+get r0 d0 8
+bne r0 r15 Release
+get r0 d0 7
+bne r0 r10 Release
+get r0 d1 2
+add r1 r0 5
+get r1 d1 r1
+get r4 d1 21
+bne r1 r4 Commit
+add r1 r0 7
+get r1 d1 r1
+get r4 d1 22
+bne r1 r4 Commit
+mul r4 r2 r3
+mul r1 r0 r4
+add r1 r1 32
+get r0 d1 20
+mul r0 r0 r4
+add r0 r0 32
+move r5 0
+Same:
+bge r5 r4 Remember
+add sp r1 r5
+get r8 d1 sp
+add sp r0 r5
+get r9 d1 sp
+bne r8 r9 Commit
+add r5 r5 1
+j Same
+Commit:
+move r6 3
+jal Send
+Remember:
+poke 2 r10
+Release:
+put d0 11 0
+j Loop
+Send:
+get r12 d1 14
+add r12 r12 1
+put d1 16 r6
+put d1 14 r12
+Wait:
+yield
+get r0 d1 15
+bne r0 r12 Wait
+j ra

@@ -1,0 +1,108 @@
+# Generic Manufacturing Candidate Selector ABI2: dynamic Snapshot Directory RefId in S16.
+poke 0 31415986
+poke 1 2
+Loop:
+yield
+get r15 db 7
+get r0 db 8
+beq r15 r0 Loop
+get r2 db 2
+get r3 db 3
+get r4 db 4
+get r5 db 5
+get r6 db 6
+get r9 db 16
+beqz r2 Bad
+blez r4 Bad
+blt r5 1 Bad
+bgt r5 2 Bad
+bltz r6 Bad
+blez r9 Bad
+getd r0 r9 0
+bne r0 31415981 Bad
+getd r0 r9 1
+bne r0 1 Bad
+getd r0 r9 9
+bne r0 r2 Bad
+getd r0 r9 10
+get r1 db 15
+bne r0 r1 Bad
+getd r0 r9 11
+bne r0 3 Bad
+getd r8 r9 2
+beqz r8 BankA
+getd r10 r9 4
+getd r11 r9 6
+getd r12 r9 8
+move r13 224
+j Scan
+BankA:
+getd r10 r9 3
+getd r11 r9 5
+getd r12 r9 7
+move r13 32
+Scan:
+bnez r12 Bad
+bge r6 r11 None
+mul r0 r6 3
+add r0 r0 r13
+getd r1 r9 r0
+add r0 r0 1
+getd r7 r9 r0
+add r0 r0 1
+getd r14 r9 r0
+add r6 r6 1
+beqz r3 KeyOK
+bne r7 r3 Scan
+KeyOK:
+and r0 r14 255
+beq r5 2 Tier
+and r0 r0 r4
+bne r0 r4 Scan
+j Status
+Tier:
+blt r0 r4 Scan
+Status:
+and r0 r14 256
+beqz r0 Scan
+and r0 r14 512
+bnez r0 Scan
+and r0 r14 1024
+bnez r0 Scan
+bne r2 HASH("DirectorySchema.PrinterExecution") Stable
+and r0 r14 16384
+beqz r0 Scan
+and r0 r14 12288
+bnez r0 Scan
+Stable:
+getd r0 r9 2
+bne r0 r8 Loop
+beqz r8 GenA
+getd r0 r9 4
+j Gen
+GenA:
+getd r0 r9 3
+Gen:
+bne r0 r10 Loop
+poke 9 1
+poke 10 r1
+poke 11 r7
+poke 12 r14
+poke 13 r6
+poke 14 r10
+poke 8 r15
+j Loop
+None:
+poke 9 -2
+poke 10 0
+poke 11 0
+poke 13 r6
+poke 14 r10
+poke 8 r15
+j Loop
+Bad:
+poke 9 -1
+poke 10 0
+poke 11 0
+poke 8 r15
+j Loop

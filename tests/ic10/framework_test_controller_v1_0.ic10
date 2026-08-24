@@ -1,0 +1,55 @@
+# Framework Test Controller v1.0: telemetry loopback for generic-config tests.
+# d0=paired Test Config Host. Channels 1..6 mirror effective config fields.
+# ch7=last Host result,ch8=effective generation,ch9=config revision.
+alias ConfigHost d0
+poke 96 27182818
+poke 97 1
+poke 98 1022 # capability bits 1..9
+poke 99 HASH("ControllerTest")
+poke 117 -1
+Loop:
+yield
+bdnvl ConfigHost ReferenceId HostBad
+l r0 ConfigHost ReferenceId
+poke 116 r0
+get r0 ConfigHost 8
+blez r0 HostBad
+get r15 ConfigHost 5
+get r0 db 117
+beq r15 r0 PublishStatus
+get r0 ConfigHost 0
+bne r0 31415928 HostBad
+get r0 ConfigHost 1
+bne r0 1 HostBad
+get r0 ConfigHost 2
+bne r0 HASH("ControllerTest") HostBad
+get r0 ConfigHost 4
+bne r0 1 HostBad
+move r0 1
+move sp 96
+Load:
+get rr0 ConfigHost sp
+bnan rr0 HostBad
+add sp sp 1
+add r0 r0 1
+ble r0 6 Load
+get sp ConfigHost 5
+bne sp r15 Loop # reject torn effective mirror
+poke 117 r15
+move sp 100
+move r0 1
+Mirror:
+push rr0
+add r0 r0 1
+ble r0 6 Mirror
+PublishStatus:
+get r0 ConfigHost 11
+poke 106 r0
+get r0 ConfigHost 5
+poke 107 r0
+get r0 ConfigHost 9
+poke 108 r0
+j Loop
+HostBad:
+poke 106 -99
+j Loop

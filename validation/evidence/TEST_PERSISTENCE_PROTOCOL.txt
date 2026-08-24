@@ -1,0 +1,5 @@
+Persistence protocol simulation: PASS
+ - 21 interruption points checked through shared REVISION_BANK model
+ - old bank wins until destination bankRevision is written LAST
+ - committed bank wins after final token
+ - schema-signature mismatch invalidates both banks

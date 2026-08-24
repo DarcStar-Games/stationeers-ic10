@@ -1,0 +1,120 @@
+Boot:
+get r0 db 0
+bne r0 31415984 Reset
+get r0 db 1
+beq r0 1 Recover
+Reset:
+clr db
+poke 0 31415984
+poke 1 1
+poke 5 32
+poke 23 1
+j Loop
+Recover:
+get r0 db 2
+and r1 r0 1
+beqz r1 Loop
+get r2 db 25
+get r3 db 26
+get r4 db r2
+seq r5 r3 r4
+get r6 db 24
+select r6 r5 0 r6
+poke 24 r6
+get r6 db 3
+add r6 r6 1
+poke 3 r6
+add r0 r0 1
+poke 2 r0
+Loop:
+yield
+get r15 db 7
+blez r15 Loop
+get r0 db 8
+beq r0 r15 Loop
+get r0 db 24
+beq r0 r15 Ack
+get r10 db 11
+blt r10 1 Respond
+bgt r10 3 Respond
+get r0 db 12
+blt r0 0 Respond
+bge r0 32 Respond
+mul r1 r0 8
+add r1 r1 32
+mul r3 r0 7
+add r3 r3 288
+get r4 db r3
+mul r5 r4 3
+add r5 r5 r3
+add r5 r5 1
+get r6 db r5
+beq r10 1 New
+blez r6 Respond
+add r5 r5 1
+get r7 db r5
+get r8 db 13
+bne r7 r8 Respond
+beq r10 3 Reap
+beq r6 7 Respond
+bgt r6 10 Respond
+get r9 db 14
+blt r9 1 Respond
+bgt r9 12 Respond
+get r12 db 15
+add r7 r7 1
+j Mutate
+New:
+bgtz r6 Respond
+get r11 db 23
+poke r1 r11
+add r0 r11 1
+poke 23 r0
+move r9 1
+move r7 1
+move r12 0
+j Mutate
+Reap:
+beq r6 7 ReapOK
+blt r6 11 Respond
+bgt r6 12 Respond
+ReapOK:
+move r9 0
+move r12 0
+add r7 r7 1
+Mutate:
+seq r2 r4 0
+mul r5 r2 3
+add r5 r5 r3
+add r5 r5 1
+poke 9 1
+poke 10 r11
+poke 25 r3
+poke 26 r4
+get r13 db 2
+add r13 r13 1
+poke 2 r13
+poke 24 r15
+poke r5 r9
+add r5 r5 1
+poke r5 r7
+add r5 r5 1
+poke r5 r12
+poke r3 r2
+get r0 db 3
+add r0 r0 1
+poke 3 r0
+add r13 r13 1
+poke 2 r13
+poke 8 r15
+j Loop
+Respond:
+get r0 db 7
+bne r0 r15 Loop
+poke 9 -1
+poke 24 r15
+poke 8 r15
+j Loop
+Ack:
+poke 8 r15
+j Loop

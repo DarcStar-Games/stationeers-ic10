@@ -1,0 +1,120 @@
+Boot:
+clr db
+poke 0 31415983
+poke 1 2
+poke 2 HASH("DirectorySchema.PrinterExecution")
+poke 3 1
+poke 4 3
+poke 5 64
+poke 10 1
+Loop:
+yield
+get r0 db 11
+beqz r0 ScanStart
+poke 12 r0
+j Loop
+ScanStart:
+poke 12 0
+get r0 d0 0
+bne r0 31415981 Loop
+get r0 d0 1
+bne r0 1 Loop
+get r0 d0 9
+bne r0 HASH("DirectorySchema.Printer") Loop
+get r0 d0 10
+bne r0 2 Loop
+get r0 d0 11
+bne r0 3 Loop
+get r11 d0 2
+add r0 r11 3
+get r10 d0 r0
+add r0 r11 5
+get r12 d0 r0
+add r0 r11 7
+get r0 d0 r0
+bnez r0 Loop
+mul r13 r11 192
+add r13 r13 32
+get r15 db 8
+add r15 r15 1
+poke 8 r15
+poke 9 0
+move r7 0
+move r8 0
+Bank:
+get r1 db:0 r7
+blt r1 0 VerifyRaw
+add r7 r7 1
+getd r0 r1 0
+bne r0 31415996 Bank
+getd r0 r1 1
+bne r0 2 Bank
+getd r14 r1 2
+mod r0 r14 2
+bnez r0 ScanStart
+move r6 0
+Pin:
+bge r6 6 VerifyBank
+add r0 r6 16
+getd r2 r1 r0
+blez r2 NextPin
+move r5 0
+Find:
+bge r5 r12 NextPin
+mul r0 r5 3
+add r0 r0 r13
+get r3 d0 r0
+bne r3 r2 FindNext
+add r0 r0 1
+get r3 d0 r0
+add r0 r0 1
+get r4 d0 r0
+add r0 r6 24
+getd r9 r1 r0
+and r0 r9 2
+mul r0 r0 256
+or r4 r4 r0
+and r0 r9 1
+mul r0 r0 8192
+or r4 r4 r0
+and r0 r9 4
+mul r0 r0 4096
+or r4 r4 r0
+sll r0 r6 16
+or r4 r4 r0
+bge r8 64 Overflow
+mul r0 r8 3
+add r0 r0 16
+poke r0 r2
+add r0 r0 1
+poke r0 r3
+add r0 r0 1
+poke r0 r4
+add r8 r8 1
+j NextPin
+FindNext:
+add r5 r5 1
+j Find
+Overflow:
+poke 9 1
+NextPin:
+add r6 r6 1
+j Pin
+VerifyBank:
+getd r0 r1 2
+bne r0 r14 ScanStart
+j Bank
+VerifyRaw:
+get r0 d0 2
+bne r0 r11 ScanStart
+add r0 r11 3
+get r0 d0 r0
+bne r0 r10 ScanStart
+poke 6 r8
+get r0 db 7
+add r0 r0 1
+poke 7 r0
+get r0 db 8
+add r0 r0 1
+poke 8 r0
+j Loop

@@ -1,0 +1,119 @@
+poke 0 31415989
+poke 1 1
+poke 5 0
+poke 6 0
+Loop:
+yield
+get r15 db 12
+get r0 db 13
+beq r15 r0 Loop
+get r2 db 2
+get r6 db 11
+blez r2 Bad
+blez r6 Bad
+get r14 d0 6
+poke 14 r14
+blez r14 Bad
+get r0 d0 7
+bne r0 1 Bad
+get r8 d0 5
+blt r8 1 Bad
+bgt r8 16 Bad
+get r0 d1 9
+bne r0 HASH("DirectorySchema.ResourceLink") Bad
+get r0 d1 10
+bne r0 1 Bad
+get r0 d1 2
+beqz r0 BankA
+get r10 d1 4
+get r11 d1 6
+get r12 d1 8
+move r13 224
+j Start
+BankA:
+get r10 d1 3
+get r11 d1 5
+get r12 d1 7
+move r13 32
+Start:
+bnez r12 Bad
+move r7 0
+Input:
+bge r7 r8 Ready
+mul r0 r7 2
+add r0 r0 8
+get r9 d0 r0
+add r0 r0 1
+get r12 d0 r0
+blez r12 Bad
+move sp 0
+move ra 0
+Find:
+bge sp r11 Missing
+add r0 r13 sp
+get r1 d1 r0
+add sp sp 1
+getd r0 r1 9
+blez r0 Find
+getd r0 r1 22
+bne r0 r2 Find
+getd r0 r1 27
+bne r0 r9 Find
+getd r3 r1 2
+getd r4 r1 3
+getd r5 r1 5
+mul r0 r12 r6
+getd r14 r3 6
+blt r14 r0 NoRes
+getd r14 r4 7
+blt r14 r0 NoCap
+mul r0 r7 4
+add r0 r0 16
+poke r0 r1
+add r0 r0 1
+poke r0 r12
+add r0 r0 1
+poke r0 r5
+add r0 r0 1
+poke r0 2
+add r7 r7 1
+j Input
+NoRes:
+move ra 1
+j Find
+NoCap:
+move ra 2
+j Find
+Missing:
+beq ra 2 Capacity
+move r0 -3
+j Fail
+Capacity:
+move r0 -4
+j Fail
+Ready:
+get r14 db 14
+get r0 d0 6
+bne r0 r14 Loop
+get r0 d1 2
+beqz r0 GenA
+get r0 d1 4
+j Gen
+GenA:
+get r0 d1 3
+Gen:
+bne r0 r10 Loop
+poke 3 r8
+get r0 db 5
+add r0 r0 1
+poke 5 r0
+poke 6 1
+poke 15 r10
+poke 13 r15
+j Loop
+Bad:
+move r0 -1
+Fail:
+poke 6 r0
+poke 13 r15
+j Loop
