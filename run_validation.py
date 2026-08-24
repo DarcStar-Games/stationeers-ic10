@@ -8,6 +8,10 @@ EVIDENCE=ROOT/'validation'/'evidence'
 RUN_LOG=ROOT/'validation'/'FULL_VALIDATION_RUN.txt'
 SUMMARY=ROOT/'VALIDATION_SUMMARY.txt'
 STATE=ROOT/'validation'/'VALIDATION_STATE.json'
+# Local VCS/tooling state is not framework source and must never move the input
+# fingerprint: doing so marks live commissioning evidence STALE with no source
+# change. Keep in sync with build_release.py.
+TOOLING_DIRS={'.git','.claude','.githooks'}
 
 VALIDATORS=[
 'validation/validators/validate_abi_contracts.py','validation/validators/validate_async_request_contracts.py','validation/validators/validate_banked_transaction_contracts.py',
@@ -34,7 +38,7 @@ def input_fingerprint():
     skip_names={'FULL_VALIDATION_RUN.txt','VALIDATION_STATE.json','VALIDATION_SUMMARY.txt','DEPLOYMENT_BASELINE.sha256','ARCHIVE_MANIFEST.sha256'}
     files=[]
     for p in ROOT.rglob('*'):
-        if not p.is_file() or '.git' in p.parts or '__pycache__' in p.parts or p.suffix in {'.pyc','.zip'}: continue
+        if not p.is_file() or TOOLING_DIRS&set(p.parts) or '__pycache__' in p.parts or p.suffix in {'.pyc','.zip'}: continue
         if p.name in skip_names or EVIDENCE in p.parents or (ROOT/'field_evidence') in p.parents: continue
         files.append(p)
     for p in sorted(files,key=lambda x:x.relative_to(ROOT).as_posix()):
