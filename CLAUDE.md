@@ -31,6 +31,12 @@ python3 build_release.py --output rel.zip        # regenerate, validate, hash, a
 `validation/FULL_VALIDATION_RUN.txt`, and regenerates `VALIDATION_SUMMARY.txt`. Those files plus
 `validation/VALIDATION_STATE.json` are tracked in git, so a validation run dirties the working tree.
 
+A pre-commit hook in `.githooks/` runs the suite and stages that refreshed evidence into the same
+commit, so it is normally not something you run by hand before committing. Enable it once per clone
+with `git config core.hooksPath .githooks`. It **refuses to run against a tree with unstaged or
+untracked files** — validation hashes the working tree, not the index, so a dirty tree would record
+evidence describing a tree that never enters history. Stage everything, or pass `--no-verify`.
+
 Code generators (run when their JSON source changes; `build_release.py` runs the first three itself):
 
 ```bash
