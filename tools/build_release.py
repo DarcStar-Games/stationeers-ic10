@@ -33,9 +33,15 @@ def tracked_files(exclude=()):
     excluded={Path(x).resolve() for x in exclude}
     files=[]
     for p in ROOT.rglob('*'):
-        if not p.is_file() or TOOLING_DIRS&set(p.parts) or p.name in skip or '__pycache__' in p.parts or p.suffix=='.pyc': continue
+        if not p.is_file(): continue
+        # Match inside the repository: p.parts carries the absolute path, so a checkout under a
+        # directory named .git/.claude/__pycache__ would otherwise exclude the whole repository.
+        inside=set(p.relative_to(ROOT).parts)
+        if TOOLING_DIRS&inside or '__pycache__' in inside or p.name in skip or p.suffix=='.pyc': continue
         if p.resolve() in excluded: continue
         files.append(p)
+    # Fail closed rather than shipping an empty archive under a manifest that verifies.
+    if not files: raise RuntimeError('release inventory swept to empty')
     return sorted(files,key=lambda p:p.relative_to(ROOT).as_posix())
 
 def write_archive_manifest(exclude=()):
