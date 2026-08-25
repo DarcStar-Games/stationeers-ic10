@@ -117,6 +117,11 @@ revisions establish *durability*, reservation epochs/ownership tokens authorize 
 - named labels only — **no relative `br*` branches**; no duplicate labels; every `j`/`jal`/`b*` target must resolve
 - no `db` as a direct operand to `add/sub/mul/div/min/max/pow/and/or/sll`
 
+`validation/validators/validate_ic10_opcodes.py` separately checks every mnemonic and operand count
+against `ic10_instruction_set.json`, which is extracted from game data rather than wiki prose. Treat
+that file as authoritative for whether an instruction exists; the community wiki's list is lossy.
+Minimum compatible game build is 2026-07-02 (`clamp`).
+
 51 of 171 programs sit at ≥117 lines. Do **not** merge adjacent services just to reduce IC count: the
 split boundaries exist to keep transactional ownership explicit and stay under the ceiling. See
 `docs/LINE_COUNT_OPTIMIZATION.md`.

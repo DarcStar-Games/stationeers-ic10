@@ -18,6 +18,29 @@ The current Integrated Circuit reference also documents that IC10 registers and 
 
 - Stationeers Community Wiki, `Integrated Circuit (IC10)`: https://www.stationeers-wiki.com/Integrated_Circuit_%28IC10%29
 
+## Instruction set provenance
+
+The authoritative mnemonic/signature list is vendored as `ic10_instruction_set.json` and enforced by
+`validation/validators/validate_ic10_opcodes.py`. It is extracted from Stationeers **game data**
+(Stationpedia command definitions) by the WikiExtractorMod BepInEx mod, not transcribed from wiki
+prose, and carries the source commit and extraction date. Refresh it by re-exporting against the
+running game or re-pulling the recorded source path, then rerun that validator.
+
+**Do not use the community wiki's instruction list to conclude that an instruction does not exist.**
+That page is lossy: it omits `ld`, `sd`, `sne` and `snez`, all four of which are present in game data
+with current signatures (`ld r? id(r?|id) logicType`, `sd id(r?|id) logicType r?`). The wiki remains
+useful for prose semantics; game data is authoritative for existence and operand counts.
+
+The framework's minimum compatible game build is **2026-07-02**. `clamp` was introduced by that
+update alongside `ror`, `rol` and `sgn`; `bdnvl`, `bdnvs` and `lerp` require the 2025-09-15 update.
+Earlier builds cannot run this framework. The current target is the latest branch published
+2026-08-12.
+
+Indirect addressing deserves live scrutiny rather than trust: the 2025-09-15 notes state that `dr`
+use "is not fully supported yet", 2025-09-23 fixed indirect addressing, and 2026-07-02 fixed
+indirect register resolution in `l`/`s` specifically. The framework uses 35 `drN` and 35 `rrN`
+operands, and no deterministic model can confirm that behaviour.
+
 ## Phase-pressure references
 
 The PhasePressure family was checked against current phase-change documentation in August 2026. The relevant game-model points are:

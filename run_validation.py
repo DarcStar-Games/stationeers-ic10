@@ -16,7 +16,7 @@ TOOLING_DIRS={'.git','.claude','.githooks'}
 VALIDATORS=[
 'validation/validators/validate_abi_contracts.py','validation/validators/validate_async_request_contracts.py','validation/validators/validate_banked_transaction_contracts.py',
 'validation/validators/validate_catalog_storage.py','validation/validators/validate_config_contracts.py','validation/validators/validate_dependency_planning_contracts.py','validation/validators/validate_directory_contracts.py',
-'validation/validators/validate_documentation.py','validation/validators/validate_ic10.py','validation/validators/validate_input_contracts.py','validation/validators/validate_job_contracts.py',
+'validation/validators/validate_documentation.py','validation/validators/validate_ic10.py','validation/validators/validate_ic10_opcodes.py','validation/validators/validate_input_contracts.py','validation/validators/validate_job_contracts.py',
 'validation/validators/validate_manufacturing_contracts.py','validation/validators/validate_power_management_contracts.py','validation/validators/validate_fault_injection_contracts.py',
 'validation/validators/validate_release_tooling.py','validation/validators/validate_generated_directory_adapters.py','validation/validators/validate_source_catalog.py','validation/validators/validate_user_deployment_guide.py','validation/validators/validate_item_storage_contracts.py','validation/validators/validate_process_utility_contracts.py','validation/validators/validate_live_commissioning_contracts.py']
 TESTS=[

@@ -7,6 +7,7 @@ PASS validation/validators/validate_dependency_planning_contracts.py
 PASS validation/validators/validate_directory_contracts.py
 PASS validation/validators/validate_documentation.py
 PASS validation/validators/validate_ic10.py
+PASS validation/validators/validate_ic10_opcodes.py
 PASS validation/validators/validate_input_contracts.py
 PASS validation/validators/validate_job_contracts.py
 PASS validation/validators/validate_manufacturing_contracts.py
@@ -52,4 +53,4 @@ PASS tests/test_power_management.py
 PASS tests/test_fault_injection.py
 PASS tests/test_process_utility.py
 PASS tests/test_live_commissioning.py
-FULL_SUITE: PASS (54/54 scripts)
+FULL_SUITE: PASS (55/55 scripts)
