@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Keep committed validation evidence in sync with the source it attests to.
 #
-# run_validation.py hashes and validates the WORKING TREE, not the index. If the
+# tools/run_validation.py hashes and validates the WORKING TREE, not the index. If the
 # tree holds anything that will not be part of this commit, refreshed evidence
 # would describe a tree that never enters history. So this fails closed rather
 # than stashing behind your back.
@@ -36,7 +36,7 @@ MSG
 fi
 
 echo "pre-commit: running validation suite (reuses results when no framework input changed)..."
-if ! python3 run_validation.py --resume; then
+if ! python3 tools/run_validation.py --resume; then
     {
         echo ""
         echo "pre-commit: validation FAILED - commit aborted."

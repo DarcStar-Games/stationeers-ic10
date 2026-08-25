@@ -268,7 +268,7 @@ Do not edit files under `validation/evidence/` by hand to record live results. T
 
 ## Item 12 field-evidence workflow
 
-Item 12 makes the recording rule above executable. `data/live_commissioning_cases.json` defines the required field suites; `live_commission.py` creates release-fingerprint-bound sessions and records append-only PASS/FAIL/BLOCKED observations; `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` can capture up to six read-only LogicType/stack observations during a live test. See `docs/LIVE_COMMISSIONING.md`.
+Item 12 makes the recording rule above executable. `data/live_commissioning_cases.json` defines the required field suites; `tools/live_commission.py` creates release-fingerprint-bound sessions and records append-only PASS/FAIL/BLOCKED observations; `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` can capture up to six read-only LogicType/stack observations during a live test. See `docs/LIVE_COMMISSIONING.md`.
 
 A live session becomes stale when the framework input fingerprint or commissioning catalog changes. Item 12 remains ACTIVE until every required suite has a current PASS. Automated validators and `framework/ic10_harness.py` remain prerequisites and regression tools, not substitutes for those physical results.
 

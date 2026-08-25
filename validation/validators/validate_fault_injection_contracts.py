@@ -30,7 +30,7 @@ def ordered_after(path,anchor,*terms):
 
 need('framework/fault_injection.py','inject_every_boundary','deepcopy','recover','check')
 need('tests/test_fault_injection.py','ic10/power-grid/power_dispatch_plan_store_v1_0.ic10','allowed_transition','internal_token','LArRE')
-need('run_validation.py','validation/validators/validate_fault_injection_contracts.py','tests/test_fault_injection.py')
+need('tools/run_validation.py','validation/validators/validate_fault_injection_contracts.py','tests/test_fault_injection.py')
 # Whole-item migration publishes destination generation before source record removal.
 ordered('ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10','putd r2 15 r0','putd r1 9 r0')
 # LArRE client persists origin/quantity before issuing the Storage Service request generation.

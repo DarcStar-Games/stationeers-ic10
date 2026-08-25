@@ -2,7 +2,7 @@
 
 This is the operator-facing deployment manual for the Stationeers IC10 framework. It answers **what to install, in what order, what stays resident, what can be reclaimed, what healthy state looks like, and how to prove each family in game**. Exact stack-cell ABI layouts remain in `docs/ABI_REFERENCE.md`; architecture rationale remains in the domain documents. This guide is intentionally procedural.
 
-The program inventory under every family is machine-linked to `data/source_manifest.json`. `update_user_deployment_inventory.py` refreshes those blocks, and release validation fails if any deployable IC10 program has no deployment family or if a family disappears from this guide.
+The program inventory under every family is machine-linked to `data/source_manifest.json`. `tools/generate/update_user_deployment_inventory.py` refreshes those blocks, and release validation fails if any deployable IC10 program has no deployment family or if a family disappears from this guide.
 
 ## Before deploying anything
 
@@ -12,7 +12,7 @@ The program inventory under every family is machine-linked to `data/source_manif
 4. Treat all actuator paths as fail-closed. Pumps, transformers, managed loads, LArRE moves, feeders, mixers, furnaces, printers, and generators must remain safe/off until current authority is visible.
 5. Use the same semantic `ResourceType`/profile everywhere in a path. Never fix a mismatch by weakening a type or generation check.
 6. Set human-owned identities before starting a service when required: for example Catalog Store `NodeId` and commissioned physical topology identifiers.
-7. Record physical commissioning through `live_commission.py`. Automated evidence lives under `validation/evidence/`; live evidence is deliberately separate.
+7. Record physical commissioning through `tools/live_commission.py`. Automated evidence lives under `validation/evidence/`; live evidence is deliberately separate.
 
 ## Deployment classes
 
@@ -1761,13 +1761,13 @@ This family contains the deployment classes shown in its generated program inven
 <!-- FAMILY_PROGRAMS:live-commissioning END -->
 
 ### Prerequisites
-Current verified release, `data/live_commissioning_cases.json`, `live_commission.py`, and a real Stationeers installation under test.
+Current verified release, `data/live_commissioning_cases.json`, `tools/live_commission.py`, and a real Stationeers installation under test.
 
 ### Wiring and configuration
 `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` is a read-only six-source snapshot probe. Each descriptor can read a dynamic LogicType or stack cell, with optional generation fencing for coherent stack capture. It must never sit in an actuator path.
 
 ### Deployment procedure
-Create a session with `live_commission.py`, configure the probe only for cases that benefit from coherent capture, perform the physical action, record PASS/FAIL/BLOCKED plus notes/observations, and verify session fingerprint before accepting it.
+Create a session with `tools/live_commission.py`, configure the probe only for cases that benefit from coherent capture, perform the physical action, record PASS/FAIL/BLOCKED plus notes/observations, and verify session fingerprint before accepting it.
 
 ### Healthy state
 Every accepted observation is bound to exact framework fingerprint and case-catalog hash. Framework/case changes make old evidence stale rather than reusable.

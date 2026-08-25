@@ -1,9 +1,13 @@
+from pathlib import Path as _ProjectPath
+import sys as _project_sys
+_PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
+if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 #!/usr/bin/env python3
 from pathlib import Path
 from collections import defaultdict
 import json
 from framework.catalog_schema import *
-R=Path(__file__).resolve().parent;OUT=R/'ic10'/'resource-profile-catalog';DEP=R/'ic10'/'dependency-planning';OUT.mkdir(parents=True,exist_ok=True);DEP.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R)
+R=_PROJECT_ROOT;OUT=R/'ic10'/'resource-profile-catalog';DEP=R/'ic10'/'dependency-planning';OUT.mkdir(parents=True,exist_ok=True);DEP.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R)
 D=json.loads((R/'data/resource_profiles.json').read_text());P=D['profiles']
 SCHEMA='CatalogSchema.ResourceProfile';SCHEMA_VERSION=2;INSTANCE='Catalog.ResourceProfiles.Schema2'
 VIEW_MAGIC=31415963;VIEW_ABI=1;SEMANTIC_WIDTH=14;ITEM_CELLS=16

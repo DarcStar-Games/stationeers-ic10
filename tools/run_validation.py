@@ -1,9 +1,13 @@
+from pathlib import Path as _ProjectPath
+import sys as _project_sys
+_PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
+if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 #!/usr/bin/env python3
 """Run the complete framework validation suite with fingerprint-guarded resumable evidence."""
 from pathlib import Path
 import argparse,hashlib,json,shutil,subprocess,sys
 
-ROOT=Path(__file__).resolve().parent
+ROOT=_PROJECT_ROOT
 EVIDENCE=ROOT/'validation'/'evidence'
 RUN_LOG=ROOT/'validation'/'FULL_VALIDATION_RUN.txt'
 SUMMARY=ROOT/'VALIDATION_SUMMARY.txt'

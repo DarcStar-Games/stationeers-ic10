@@ -13,7 +13,7 @@ def files():
  M=json.loads((R/'data/input_profile_catalog_manifest.json').read_text())
  return [R/M['generic_store_program'],R/M['coordinator_core_program'],R/M['loader_router_program'],*[R/f for f in M['loaders']],R/'ic10/input-profile-catalog/input_profile_view_v5_0.ic10',R/'data/input_profile_catalog_manifest.json',R/'data/input_profiles.json']
 def hs():return {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in files()}
-b=hs();subprocess.run([sys.executable,str(R/'generate_input_profiles.py')],cwd=R,check=True,stdout=subprocess.DEVNULL);a=hs()
+b=hs();subprocess.run([sys.executable,str(R/'tools'/'generate'/'generate_input_profiles.py')],cwd=R,check=True,stdout=subprocess.DEVNULL);a=hs()
 if a!=b:fails.append('generation is not deterministic')
 M=json.loads((R/'data/input_profile_catalog_manifest.json').read_text())
 if D.get('catalog_schema_version') not in (2,3): pass

@@ -5,7 +5,7 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 #!/usr/bin/env python3
 from pathlib import Path
 import tempfile,sys
-import build_release as br
+import tools.build_release as br
 R=_PROJECT_ROOT;fails=[]
 
 def ck(x,msg):
@@ -20,7 +20,7 @@ try:
 finally:
  probe.unlink(missing_ok=True)
 # Main build order must unlink output before source/index/validation/manifest work.
-s=(R/'build_release.py').read_text()
+s=(R/'tools'/'build_release.py').read_text()
 try:
  unlink=s.index('if out.exists(): out.unlink()')
  guide=s.index("update_user_deployment_inventory.py")

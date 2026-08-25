@@ -13,7 +13,7 @@ def files():
  M=json.loads((R/'data/resource_transform_catalog_manifest.json').read_text())
  return [R/M['generic_store_program'],R/M['coordinator_core_program'],R/M['loader_router_program'],*[R/f for f in M['loaders']],R/'ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10',R/'ic10/dependency-planning/item_producer_resolver_v1_0.ic10',R/'data/resource_transform_catalog_manifest.json']
 def hs():return {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in files()}
-b=hs();subprocess.run([sys.executable,str(R/'generate_resource_transforms.py')],cwd=R,check=True,stdout=subprocess.DEVNULL);a=hs()
+b=hs();subprocess.run([sys.executable,str(R/'tools'/'generate'/'generate_resource_transforms.py')],cwd=R,check=True,stdout=subprocess.DEVNULL);a=hs()
 if a!=b:fails.append('generation is not deterministic')
 D=json.loads((R/'data/resource_transforms.json').read_text());T=D['transforms'];M=json.loads((R/'data/resource_transform_catalog_manifest.json').read_text())
 if len(T)!=17:fails.append(f'expected 17 transforms, got {len(T)}')

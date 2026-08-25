@@ -1,8 +1,12 @@
+from pathlib import Path as _ProjectPath
+import sys as _project_sys
+_PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
+if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 #!/usr/bin/env python3
 from pathlib import Path
 import json
 from framework.catalog_schema import *
-R=Path(__file__).resolve().parent;OUT=R/'ic10'/'transform-catalog';DEP=R/'ic10'/'dependency-planning';OUT.mkdir(parents=True,exist_ok=True);DEP.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R);D=json.loads((R/'data/resource_transforms.json').read_text());T=D['transforms']
+R=_PROJECT_ROOT;OUT=R/'ic10'/'transform-catalog';DEP=R/'ic10'/'dependency-planning';OUT.mkdir(parents=True,exist_ok=True);DEP.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R);D=json.loads((R/'data/resource_transforms.json').read_text());T=D['transforms']
 SCHEMA='CatalogSchema.ResourceTransform';SCHEMA_VERSION=4;INSTANCE='Catalog.ResourceTransforms.Schema4';VIEW_MAGIC=31415952;VIEW_ABI=4
 seen=set();items=[];input_total=output_total=0
 for t in T:

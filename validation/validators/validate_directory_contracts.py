@@ -61,7 +61,7 @@ else:
     for k,v in {'bits_0_7':'capability tier','bit_8':'Power','bit_9':'Busy/Active','bit_10':'Error','bit_11':'On','bit_12':'Lock'}.items():
         if spec.get(k)!=v: fail('Printer ProcessorSpec '+k+' mismatch')
     fams={x.get('family_hash') for x in ps.get('families',[])}
-    recipe_src=(R/'generate_recipe_catalog.py').read_text()
+    recipe_src=(R/'tools'/'generate'/'generate_recipe_catalog.py').read_text()
     recipe_fams=set(re.findall(r"\('(?:[^']+)'\s*,\s*'([^']+)'\s*,",recipe_src.split('TIER_WORDS',1)[0]))
     if fams!=recipe_fams: fail('Printer FamilyHash set differs from Recipe Catalog FAMILIES')
 need('ic10/printer-directory/printer_directory_adapter_v1_0.ic10','poke 2 HASH("DirectorySchema.Printer")','poke 3 2','HASH("Printer.Autolathe")','HASH("Printer.SecurityPrinter")','HASH("Printer.RocketManufactory")','ld r4 r1 Power','ld r6 r1 Activate','ld r9 r1 Error')

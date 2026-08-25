@@ -6,7 +6,7 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 from pathlib import Path
 import subprocess,sys
 R=_PROJECT_ROOT
-p=subprocess.run([sys.executable,str(R/'generate_directory_adapters.py'),'--check'],cwd=R,text=True,capture_output=True)
+p=subprocess.run([sys.executable,str(R/'tools'/'generate'/'generate_directory_adapters.py'),'--check'],cwd=R,text=True,capture_output=True)
 print(p.stdout,end='')
 if p.stderr:print(p.stderr,end='')
 raise SystemExit(p.returncode)

@@ -32,7 +32,7 @@ else:
 for name,needle in [('ROADMAP.md','## 12. Live-game commissioning and evidence closure — ACTIVE'),('README.md','docs/LIVE_COMMISSIONING.md'),('docs/FRAMEWORK_HARDENING_TESTS.md','Item 12 field-evidence workflow'),('docs/ABI_REFERENCE.md','Live Commission Snapshot Probe ABI1')]:
     p=R/name
     if not p.exists() or needle not in p.read_text(): fails.append(f'{name}: missing commissioning contract marker')
-rv=(R/'run_validation.py').read_text()
+rv=(R/'tools'/'run_validation.py').read_text()
 for n in ('validation/validators/validate_live_commissioning_contracts.py','tests/test_live_commissioning.py'):
     if n not in rv: fails.append(f'run_validation missing {n}')
 manifest=json.loads((R/'data/source_manifest.json').read_text()).get('scripts',{})

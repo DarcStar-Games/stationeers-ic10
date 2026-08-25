@@ -452,12 +452,12 @@ Physical specializations then reuse existing authorities. `ic10/process-furnace/
 
 ## Field-evidence plane
 
-Item 12 adds no new control authority. `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` is a read-only observer and `live_commission.py` is an offline evidence recorder. Production ownership remains with the same Hosts, directories, reservation allocators, planners, guards, executors, and domain runtimes. A field PASS therefore documents observed behavior; it cannot authorize a physical mutation or repair a missing reservation.
+Item 12 adds no new control authority. `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` is a read-only observer and `tools/live_commission.py` is an offline evidence recorder. Production ownership remains with the same Hosts, directories, reservation allocators, planners, guards, executors, and domain runtimes. A field PASS therefore documents observed behavior; it cannot authorize a physical mutation or repair a missing reservation.
 
 ## Operator deployment metadata
 
 Executable ownership and operator deployment ownership are deliberately connected but not conflated. `data/source_manifest.json` `SOURCE_MANIFEST_V3` records each hand-maintained deployable program's architecture layer/purpose plus one `deployment_family` and one deployment class. Generated-file rules provide the same metadata for catalog-generated IC10 programs whose concrete file count may change.
 
-`docs/SCRIPT_INDEX.md` is generated from that metadata for engineering navigation. `USER_DEPLOYMENT_GUIDE.md` is the operator-facing view: its generated program inventories are refreshed by `update_user_deployment_inventory.py`, while its procedures remain human-authored. `validation/validators/validate_user_deployment_guide.py` requires every deployable IC10 program to appear exactly once and requires every family to retain the standard install/health/commission/reflash/reclaim sections.
+`docs/SCRIPT_INDEX.md` is generated from that metadata for engineering navigation. `USER_DEPLOYMENT_GUIDE.md` is the operator-facing view: its generated program inventories are refreshed by `tools/generate/update_user_deployment_inventory.py`, while its procedures remain human-authored. `validation/validators/validate_user_deployment_guide.py` requires every deployable IC10 program to appear exactly once and requires every family to retain the standard install/health/commission/reflash/reclaim sections.
 
 This prevents a recurring failure mode in large IC10 deployments: adding a technically correct service that has no clear physical deployment home, residency rule, or commissioning procedure.

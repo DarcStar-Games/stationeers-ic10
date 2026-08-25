@@ -1,8 +1,12 @@
+from pathlib import Path as _ProjectPath
+import sys as _project_sys
+_PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
+if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 #!/usr/bin/env python3
 from pathlib import Path
 import json
 from framework.catalog_schema import *
-R=Path(__file__).resolve().parent;OUT=R/'ic10'/'input-profile-catalog';OUT.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R);D=json.loads((R/'data/input_profiles.json').read_text());P=D['profiles']
+R=_PROJECT_ROOT;OUT=R/'ic10'/'input-profile-catalog';OUT.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R);D=json.loads((R/'data/input_profiles.json').read_text());P=D['profiles']
 SCHEMA='CatalogSchema.InputProfile';SCHEMA_VERSION=3;INSTANCE='Catalog.InputProfiles.Schema3';PROFILE_MAGIC=31415929;PROFILE_ABI=1
 for p in P:
  if p['field_count']!=len(p['descriptors']):raise SystemExit(p['slug']+': field count mismatch')

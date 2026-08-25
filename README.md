@@ -49,9 +49,8 @@ data/                         JSON sources of truth: schemas, profiles, manifest
 tests/                        executable protocol/model tests + tests/ic10 fixtures
 validation/validators/        structural and release-contract validators
 validation/evidence/          generated per-check machine evidence
-build_release.py              canonical verified-release entrypoint
-run_validation.py             canonical automated validation entrypoint
-live_commission.py            release-bound field-evidence entrypoint
+tools/                        command-line entrypoints
+tools/generate/               code generators driven by data/
 ```
 
 Do not infer execution order, ABI identity, or deployment order from a filename. Use the semantic path, version suffix, `data/source_manifest.json`, `docs/SCRIPT_INDEX.md`, and `USER_DEPLOYMENT_GUIDE.md`.
@@ -231,7 +230,7 @@ Family/profile files:
 - `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10`
 - `data/resource_profile_catalog_manifest.json`
 - `data/resource_profiles.json`
-- `generate_resource_profiles.py`
+- `tools/generate/generate_resource_profiles.py`
 
 Working-medium constants remain outside the controller runtime, but they no longer require one IC10 program per medium. The same unified catalog also owns material-item profile metadata. Configure a Resource Profile View with `S2=FLUID` and `S3=HASH(<medium>)`, connect its `d0` to any Store in the runtime Resource Profile topology after the Coordinator has placed the profile items, and connect the controller or purity service to the View. The current runtime topology derives one FLUID Store, two ITEM Stores, one POWER Store, and one ENERGY Store from capacity; loader filenames are authoritative in `data/resource_profile_catalog_manifest.json`. See `docs/RESOURCE_PROFILES.md` for the shared catalog/view ABI and `docs/PHASE_MEDIUM_PROFILE.md` for thermodynamic selection guidance.
 
@@ -347,15 +346,15 @@ When debugging or extending the framework, preserve these rules:
 Run the complete validator/protocol suite from the bundle directory:
 
 ```text
-python run_validation.py
+python3 tools/run_validation.py
 ```
 
-This runs the complete validator/test inventory defined in `run_validation.py`, writes per-script machine evidence under `validation/evidence/`, writes the pass/fail inventory to `validation/FULL_VALIDATION_RUN.txt`, and regenerates `VALIDATION_SUMMARY.txt`.
+This runs the complete validator/test inventory defined in `tools/run_validation.py`, writes per-script machine evidence under `validation/evidence/`, writes the pass/fail inventory to `validation/FULL_VALIDATION_RUN.txt`, and regenerates `VALIDATION_SUMMARY.txt`.
 
 To produce a verified release archive in the required ordering—generated index, validation, evidence, deployment hashes, archive manifest, ZIP integrity—run:
 
 ```text
-python build_release.py --output <release.zip>
+python3 tools/build_release.py --output <release.zip>
 ```
 
 These checks validate static contracts, model the important transaction/persistence protocols, and execute selected transaction-critical IC10 source directly through `framework/ic10_harness.py`. They do not replace live-game commissioning tests; see `docs/FRAMEWORK_HARDENING_TESTS.md`.

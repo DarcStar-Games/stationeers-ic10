@@ -1,10 +1,14 @@
+from __future__ import annotations
+from pathlib import Path as _ProjectPath
+import sys as _project_sys
+_PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
+if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 #!/usr/bin/env python3
 """Create and maintain field commissioning evidence bound to one framework input fingerprint."""
-from __future__ import annotations
 from pathlib import Path
 import argparse, datetime as dt, hashlib, json, sys
 
-ROOT=Path(__file__).resolve().parent
+ROOT=_PROJECT_ROOT
 CATALOG=ROOT/'data/live_commissioning_cases.json'
 FORMAT='LIVE_COMMISSION_SESSION_V1'
 VALID={'PASS','FAIL','BLOCKED'}
@@ -18,7 +22,7 @@ def load_catalog(root=ROOT):
 def framework_fingerprint(root=ROOT):
     # Reuse the release validator's immutable-input fingerprint. field_evidence is excluded there.
     import importlib.util
-    spec=importlib.util.spec_from_file_location('_rv',root/'run_validation.py'); mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+    spec=importlib.util.spec_from_file_location('_rv',root/'tools'/'run_validation.py'); mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
     return mod.input_fingerprint()
 
 def catalog_sha(root=ROOT): return sha_bytes((root/'data/live_commissioning_cases.json').read_bytes())

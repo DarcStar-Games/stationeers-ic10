@@ -66,7 +66,7 @@ A Profile controls commissioning UX, not the durable schema. It can therefore be
 - add one four-value descriptor per active field in **active ordinal order**;
 - Dial descriptors provide explicit step count in descriptor `+3`;
 - enum tables remain numeric/symbolic source entries that the generator compiles into sparse numeric target/value pairs;
-- run `generate_input_profiles.py`;
+- run `tools/generate/generate_input_profiles.py`;
 - verify all generated loaders still fit the 120-line soft target and the one catalog store remains below 512 cells;
 - configure View `S2=ControllerType`, `S3=schema` and verify it republishes Generic Input Profile magic `31415929`, ABI 1, with positive generation `S5`.
 

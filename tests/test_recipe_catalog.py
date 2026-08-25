@@ -55,7 +55,7 @@ with tempfile.TemporaryDirectory() as td:
    tier='<RecipeTier>TierTwo</RecipeTier>' if i>=100 else ''
    rows.append(f'<RecipeData><PrefabName>ItemSyntheticF{fi}R{i:03d}</PrefabName>{tier}</RecipeData>')
   (d/fn).write_text(f'<GameData><{sec}>'+''.join(rows)+f'</{sec}></GameData>')
- subprocess.run([sys.executable,str(R/'generate_recipe_catalog.py'),'--game-data',str(d),'--output',str(o),'--clean'],check=True,stdout=subprocess.DEVNULL)
+ subprocess.run([sys.executable,str(R/'tools'/'generate'/'generate_recipe_catalog.py'),'--game-data',str(d),'--output',str(o),'--clean'],check=True,stdout=subprocess.DEVNULL)
  m=json.loads((o/'recipe_catalog_manifest.json').read_text());loader_invariants(o,m)
  if m['recipe_count']!=780 or m['runtime_min_store_count']!=18 or any(f['runtime_min_store_count']!=3 or f['runtime_store_item_counts']!=[48,48,34] for f in m['families']):fails.append('780-recipe runtime capacity estimate mismatch')
  if any(len(p.read_text().splitlines())>120 for p in o.glob('*.ic10')):fails.append('generated Recipe IC exceeds 120-line soft limit')
@@ -66,7 +66,7 @@ with tempfile.TemporaryDirectory() as td:
   count=49 if fi==0 else 1;rows=[]
   for i in range(count):rows.append(f'<RecipeData><PrefabName>ItemRuntimeF{fi}R{i:03d}</PrefabName></RecipeData>')
   (d/fn).write_text(f'<GameData><{sec}>'+''.join(rows)+f'</{sec}></GameData>')
- subprocess.run([sys.executable,str(R/'generate_recipe_catalog.py'),'--game-data',str(d),'--output',str(o),'--clean'],check=True,stdout=subprocess.DEVNULL)
+ subprocess.run([sys.executable,str(R/'tools'/'generate'/'generate_recipe_catalog.py'),'--game-data',str(d),'--output',str(o),'--clean'],check=True,stdout=subprocess.DEVNULL)
  m=json.loads((o/'recipe_catalog_manifest.json').read_text())
  # This execution check only needs the overflowing Autolathe partition. The small fixture above already executes all six family partitions; loading unrelated one-item families here adds interpreter cost without additional boundary coverage.
  af=next(f for f in m['families'] if f['key']=='autolathe')

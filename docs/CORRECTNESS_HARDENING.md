@@ -26,7 +26,7 @@ PI, Test, and Sequencer telemetry remain ABI1 because current consumers do not r
 
 ## 2. Unified Resource Profiles and coherent publication
 
-`data/resource_profiles.json` is now the single source of truth for phase-medium and material-item profile metadata. `generate_resource_profiles.py` produces ResourceClass-partitioned active Stores plus one-shot sparse whole-profile Loader candidates; the Coordinator-selected Generic Store imports assigned candidate ranges transactionally while `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` resolves one typed record and publishes it with `S5` as the positive commit token. Dedicated per-medium and per-item profile programs were removed.
+`data/resource_profiles.json` is now the single source of truth for phase-medium and material-item profile metadata. `tools/generate/generate_resource_profiles.py` produces ResourceClass-partitioned active Stores plus one-shot sparse whole-profile Loader candidates; the Coordinator-selected Generic Store imports assigned candidate ranges transactionally while `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` resolves one typed record and publishes it with `S5` as the positive commit token. Dedicated per-medium and per-item profile programs were removed.
 
 `ControllerPhasePressure` captures and rechecks Resource Profile View `S5`; a catalog/view that is incomplete, being reflashed, or changes during the read cannot be consumed as a valid thermodynamic snapshot.
 
