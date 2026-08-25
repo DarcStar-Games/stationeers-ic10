@@ -131,7 +131,7 @@ Until a durable bank exists, defaults are the recovery source. This is normal on
 
 ### 6. Diagnostic services
 
-1. Deploy `ic10/diagnostics/console_registry_v1_0.ic10` and enroll displays with the expected NameHash (default `HASH("DiagAuto")` when registry `S7` is zero).
+1. Deploy `ic10/diagnostics/console_registry_v1_1.ic10` and enroll displays with the expected NameHash (default `HASH("DiagAuto")` when registry `S7` is zero).
 2. Deploy `ic10/diagnostics/console_selector_v1_1.ic10` and point it at Console Registry.
 3. Deploy `ic10/diagnostics/diagnostic_renderer_v1_1.ic10`.
 4. Deploy `ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10` and wire Renderer + Controller/Console selectors.

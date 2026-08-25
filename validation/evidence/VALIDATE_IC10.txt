@@ -42,8 +42,9 @@ PASS ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10 lines= 96 
 PASS ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10 lines=120 headroom= 8 max=23 CRLF=1594 comments= 0
 PASS ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10 lines=115 headroom=13 max=70 CRLF=1517 comments= 1
 PASS ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10 lines= 91 headroom=37 max=59 CRLF=1210 comments= 1
-PASS ic10/diagnostics/console_registry_v1_0.ic10 lines= 79 headroom=49 max=80 CRLF=1730 comments=11
+PASS ic10/diagnostics/console_registry_v1_1.ic10 lines= 84 headroom=44 max=82 CRLF=1866 comments=12
 PASS ic10/diagnostics/console_selector_v1_1.ic10 lines= 92 headroom=36 max=86 CRLF=1939 comments= 8
+PASS ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10 lines= 46 headroom=82 max=79 CRLF=1245 comments=13
 PASS ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10 lines=112 headroom=16 max=75 CRLF=2180 comments=10
 PASS ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10 lines=120 headroom= 8 max=88 CRLF=2422 comments= 4
 PASS ic10/diagnostics/diagnostic_renderer_v1_1.ic10 lines= 66 headroom=62 max=76 CRLF=1727 comments=15

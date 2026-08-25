@@ -12,7 +12,7 @@ def need(path,*tokens):
   if x not in t:fails.append(path+': missing '+repr(x))
 # Existing consumer-facing service ABIs.
 for f,toks in {
-'ic10/diagnostics/console_registry_v1_0.ic10':['poke 1 1'],'ic10/controller-discovery/controller_selector_v3_0.ic10':['poke 1 2','HASH("DirectorySchema.Controller")'],'ic10/controller-config/generic_persistent_config_host_v1_1.ic10':['poke 1 1'],'ic10/shared-input/generic_input_resolver_v1_0.ic10':['poke 1 1'],'ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10':['poke 97 2'],'ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10':['poke 97 2'],
+'ic10/diagnostics/console_registry_v1_1.ic10':['poke 1 1'],'ic10/controller-discovery/controller_selector_v3_0.ic10':['poke 1 2','HASH("DirectorySchema.Controller")'],'ic10/controller-config/generic_persistent_config_host_v1_1.ic10':['poke 1 1'],'ic10/shared-input/generic_input_resolver_v1_0.ic10':['poke 1 1'],'ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10':['poke 97 2'],'ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10':['poke 97 2'],
 'ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10':['poke 0 31415968','poke 1 5','poke 10 32','poke 19 32','poke 20 512'],
 'ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10':['poke 0 31415970','poke 1 3'],
 'ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10':['poke 0 31415971','poke 1 3','putd ra 27 r11'],

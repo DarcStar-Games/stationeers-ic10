@@ -57,6 +57,7 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 | Diagnostic Input Bridge | `17320511` | `S1` | 1 |
 | Diagnostic Selector Bridge | `17320512` | `S1` | 1 |
 | Diagnostic Renderer | `16180339` | `S1` | 1 |
+| Hash Console Mode | `17320513` | `S1` | 1 |
 | Generic Config Editor | `22360680` | `S1` | 1 |
 | Config Input Bridge | `22360681` | `S1` | 1 |
 

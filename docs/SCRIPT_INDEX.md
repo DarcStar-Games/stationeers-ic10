@@ -2,7 +2,7 @@
 
 Generated from the deployable `ic10/` inventory. Semantic paths plus version suffixes are the executable source identity; historical numeric source ordinals are intentionally not part of filenames. Deployment family/class metadata is resolved from `source_manifest.json`.
 
-Production IC10 programs: 171
+Production IC10 programs: 172
 
 ## Script index
 
@@ -50,8 +50,9 @@ Production IC10 programs: 171
 | `ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10` | 120 | Dependency control | `dependency-planning` | `conditional-resident` | Sole Dependency Plan Store mutation coordinator; applies plan upsert/clear and cancellation sequencing. |
 | `ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10` | 115 | Manufacturing metadata | `dependency-planning` | `conditional-resident` | Resolves Recipe manufacturing-reagent aliases into canonical ITEM ResourceTypes for dependency planning. |
 | `ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10` | 91 | Dependency control | `dependency-planning` | `conditional-resident` | New-plan controller: orchestrates bounded plan construction and returns mutation intent to the sole Planner. |
-| `ic10/diagnostics/console_registry_v1_0.ic10` | 79 | Discovery | `diagnostics` | `commissioning` | Discovers diagnostic consoles and publishes stable identities. |
+| `ic10/diagnostics/console_registry_v1_1.ic10` | 84 | Discovery | `diagnostics` | `commissioning` | Discovers diagnostic consoles and mirror sinks and publishes stable identities. |
 | `ic10/diagnostics/console_selector_v1_1.ic10` | 92 | Selection | `diagnostics` | `commissioning` | Resolves console ordinals and post-commit advance. |
+| `ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10` | 46 | Diagnostics | `diagnostics` | `commissioning` | Sets Console circuitboard Mode (HashType) from IC through logic slot set. |
 | `ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10` | 112 | Diagnostics adapter | `diagnostics` | `commissioning` | Owns diagnostic desired-state/change generations. |
 | `ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10` | 120 | Diagnostics | `diagnostics` | `commissioning` | Commits resolved display/controller/channel mappings. |
 | `ic10/diagnostics/diagnostic_renderer_v1_1.ic10` | 66 | Diagnostics | `diagnostics` | `commissioning` | Renders generic telemetry into committed displays; accepts compatible telemetry ABI revisions. |
