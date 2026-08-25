@@ -12,4 +12,8 @@ module-level constant. Nothing keeps those copies equal.
 `validation/validators/validate_script_headers.py` rejects the bare form here
 and equally under `tools/generate/`, `tests/` and `validation/validators/`,
 which have no package marker in which to say so.
+
+Importing one is also safe: everything here does its work in `main()` behind
+`if __name__ == "__main__"`, so an import defines and never acts. That is
+enforced too, and it is why the rule above can be followed without side effects.
 """

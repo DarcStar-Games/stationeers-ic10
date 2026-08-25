@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Structural checks on Python source: the entry-point contract, bootstrap placement, one import name per module."""
+"""Structural checks on Python source: the entry-point contract, bootstrap placement, import names, import-time work."""
 from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
@@ -14,6 +14,15 @@ SHEBANG = "#!/usr/bin/env python3"
 # validation runner and by hand. Everything else -- framework/ reference models
 # and package markers -- is imported and must not advertise an entry point.
 ENTRY_ROOTS = {"tools", "tests", "validation"}
+# A tools/ entry point is a command: running it does the work, importing it must
+# not. Four generators once ran their entire body at module level, so
+# `import tools.generate.generate_source_catalog` rewrote docs/SCRIPT_INDEX.md --
+# invisible only because regeneration happens to be byte-stable. Tests and
+# validators under the other entry roots do run at import -- CLAUDE.md defines them
+# as plain scripts -- and several regenerate tracked output by subprocess to assert
+# byte-stability: `import tests.test_input_profiles` writes seventeen tracked files.
+# Their exemption is about their contract, not about being side-effect free.
+WORK_FREE_ROOT = "tools"
 SKIP_PARTS = {".git", ".claude", ".githooks", "__pycache__", "field_evidence"}
 # The kernel honours an interpreter line only at byte 0, so a shebang pushed
 # below the bootstrap hands Python source to /bin/sh, which hangs. The line-1
@@ -58,11 +67,12 @@ def shadowable_modules(paths):
 def check_import_names(tree, shadowable, failures):
     """An in-tree module must be imported through its package, never by bare name.
 
-    Naming the package is the whole rule here, but it is not the whole advice: everything
-    this guards lives under an entry root, and most of it does its work at module level
-    rather than behind `if __name__`. Importing tools/generate/generate_source_catalog.py
-    under either name rewrites docs/SCRIPT_INDEX.md. Say so, so a corrected import does not
-    become a second mistake.
+    Naming the package is the whole rule here, but it is not the whole advice: outside
+    tools/, where check_work_in_main holds the line, most entry points work at
+    module level rather than behind `if __name__`, and importing tests/test_job_abi.py
+    under either name runs the whole test. A handful are guarded, which is why the
+    message says "usually" instead of asserting it. Say so, so a corrected import does
+    not become a second mistake.
     """
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
@@ -75,9 +85,10 @@ def check_import_names(tree, shadowable, failures):
         for name in names:
             package = shadowable.get(name.split(".")[0])
             if package:
+                # Only tools/ is proven work-free; elsewhere the fixed import still runs the file.
+                runs = "" if package.startswith(WORK_FREE_ROOT + ".") else " -- and outside tools/ importing an entry point usually runs it"
                 failures.append(
-                    f"line {node.lineno}: bare-name import of {name!r}; its only name is {package!r}"
-                    " -- and that file is an entry point, so check it does not run at import"
+                    f"line {node.lineno}: bare-name import of {name!r}; its only name is {package!r}{runs}"
                 )
 
 
@@ -89,14 +100,20 @@ def is_future(node) -> bool:
     return isinstance(node, ast.ImportFrom) and node.module == "__future__"
 
 
-def check_bootstrap(rel: Path, lines, tree, failures):
-    """The bootstrap must be the first executable statement and name the right depth."""
-    body = tree.body
+def header_end(body) -> int:
+    """Index of the first statement past the docstring and any __future__ imports."""
     at = 0
     if body and is_docstring(body[0]):
         at = 1
     while at < len(body) and is_future(body[at]):
         at += 1
+    return at
+
+
+def check_bootstrap(rel: Path, lines, tree, failures):
+    """The bootstrap must be the first executable statement and name the right depth."""
+    body = tree.body
+    at = header_end(body)
     if at >= len(body):
         failures.append("bootstrap missing")
         return
@@ -112,6 +129,44 @@ def check_bootstrap(rel: Path, lines, tree, failures):
                 failures.append(f"  want {want!r}")
                 failures.append(f"  got  {got!r}")
                 break
+
+
+def check_work_in_main(rel: Path, tree, entry, has_bootstrap, failures):
+    """Under tools/, module level may import, define and name constants -- main() acts.
+
+    Two halves, and the second is the one that fails open. Nothing may run at import:
+    no static check can prove a call is pure, so this one allows none outside the
+    bootstrap, because `COORD_PROGRAMS=ensure_coordination_programs(R)` reads like a
+    constant and writes eleven IC10 programs. A pure value that genuinely wants to be a
+    module constant can be written as a literal. Decorator calls are the one call this
+    does not inspect, since every decorator worth having here is pure and rejecting
+    `@lru_cache()` would buy nothing.
+
+    And something must still run when the file is executed. A body moved into main()
+    with the guard forgotten is a command that exits 0 having done nothing:
+    build_release.py runs three generators with check=True and would accept it, and the
+    byte-stability tests hash the tree, regenerate, and compare -- which a generator
+    that writes nothing passes trivially. So an entry point here must carry the guard.
+
+    The first half covers the package markers too. Work in tools/__init__.py would run
+    on every `import tools.anything`, which is the worst place in the tree for it, so
+    the bootstrap is skipped by whether it is there rather than by role.
+    """
+    if rel.parts[0] != WORK_FREE_ROOT:
+        return
+    guarded = False
+    for node in tree.body[header_end(tree.body) + (len(BOOTSTRAP) if has_bootstrap else 0):]:
+        if isinstance(node, ast.If) and any(isinstance(n, ast.Name) and n.id == "__name__" for n in ast.walk(node.test)):
+            guarded = True
+            continue
+        if isinstance(node, (ast.Import, ast.ImportFrom, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            continue
+        if isinstance(node, (ast.Assign, ast.AnnAssign, ast.AugAssign)) and not any(isinstance(n, ast.Call) for n in ast.walk(node)):
+            continue
+        source = ast.unparse(node).splitlines()[0]
+        failures.append(f"line {node.lineno}: {source[:60]!r} runs at import; under tools/ the work belongs in main()")
+    if entry and not guarded:
+        failures.append("nothing runs when this is executed: no `if __name__` guard to call main()")
 
 
 def inspect(path: Path, shadowable):
@@ -155,6 +210,7 @@ def inspect(path: Path, shadowable):
     elif has_bootstrap:
         check_bootstrap(rel, lines, tree, failures)
     check_import_names(tree, shadowable, failures)
+    check_work_in_main(rel, tree, entry, has_bootstrap, failures)
 
     return entry, executable, failures
 
@@ -180,6 +236,9 @@ def main():
     entries = sum(1 for row in rows if row[1])
     print(f"Checked {len(rows)} files: {entries} entry points, {len(rows)-entries} imported modules")
     print(f"Single import name enforced for {len(shadowable)} modules reachable from a script directory")
+    scoped = [row for row in rows if row[0].startswith(WORK_FREE_ROOT + "/")]
+    print(f"No work at import for all {len(scoped)} modules under {WORK_FREE_ROOT}/,"
+          f" and a guard reaches main() in each of the {sum(1 for row in scoped if row[1])} entry points")
     print("Result:", "FAIL" if failed else "PASS")
     return 1 if failed else 0
 

@@ -83,13 +83,21 @@ every module beside an entry point answers to a second, bare name. Import in-tre
 package — `import tools.build_release`, never `import build_release` — or one file becomes two
 module objects holding two copies of its constants, with nothing keeping them equal.
 
+Under `tools/`, module level may only import, define, and name constants; the work happens in
+`main()` behind `if __name__ == "__main__"`. Running a generator regenerates its outputs — importing
+one must not. Tests and validators are the deliberate exception: running at import *is* their
+contract, and several of them regenerate tracked catalog output by subprocess to assert that
+regeneration is byte-stable. Importing one is not side-effect free — which is another reason to
+run them rather than import them.
+
 Headers are ordered **shebang, docstring, `__future__`, bootstrap** — the shebang has to reach byte 0
 or the kernel hands the file to `/bin/sh`, and a docstring below the bootstrap is a dead expression,
 not a docstring. Under `tools/`, `tests/` and `validation/validators/`, every module except a
 package marker like `tools/__init__.py` is an entry point: shebang plus mode 755 plus the bootstrap.
 Package markers and `framework/` reference models are imported, so they carry none of the three.
 `validation/validators/validate_script_headers.py` enforces all of it, including the `parents[N]`
-depth and the import form.
+depth, the import form, and that work under `tools/` sits in a guarded `main()` — nothing running
+at import, and nothing left unreachable behind a missing guard.
 
 ## Architecture
 

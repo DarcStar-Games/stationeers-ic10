@@ -80,4 +80,5 @@ PASS validation/validators/validate_user_deployment_guide.py    entry  +x
 ====================================================================================================
 Checked 77 files: 66 entry points, 11 imported modules
 Single import name enforced for 66 modules reachable from a script directory
+No work at import for all 12 modules under tools/, and a guard reaches main() in each of the 10 entry points
 Result: PASS
