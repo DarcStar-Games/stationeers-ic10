@@ -96,7 +96,8 @@ not a docstring. Under `tools/`, `tests/` and `validation/validators/`, every mo
 package marker like `tools/__init__.py` is an entry point: shebang plus mode 755 plus the bootstrap.
 Package markers and `framework/` reference models are imported, so they carry none of the three.
 `validation/validators/validate_script_headers.py` enforces all of it, including the `parents[N]`
-depth, the import form, and that nothing under `tools/` acts at import.
+depth, the import form, and that work under `tools/` sits in a guarded `main()` — nothing running
+at import, and nothing left unreachable behind a missing guard.
 
 ## Architecture
 
