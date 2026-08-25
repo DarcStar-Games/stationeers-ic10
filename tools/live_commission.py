@@ -21,9 +21,10 @@ def load_catalog(root=ROOT):
 
 def framework_fingerprint(root=ROOT):
     # Reuse the release validator's immutable-input fingerprint. field_evidence is excluded there.
-    import importlib.util
-    spec=importlib.util.spec_from_file_location('_rv',root/'tools'/'run_validation.py'); mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
-    return mod.input_fingerprint()
+    # Imported by package name: loading run_validation.py by path instead would build a second
+    # module object of a file already importable, which is the aliasing tools/__init__.py forbids.
+    import tools.run_validation as rv
+    return rv.input_fingerprint(root)
 
 def catalog_sha(root=ROOT): return sha_bytes((root/'data/live_commissioning_cases.json').read_bytes())
 def now(): return dt.datetime.now(dt.timezone.utc).isoformat()

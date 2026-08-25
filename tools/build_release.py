@@ -8,8 +8,9 @@ from pathlib import Path
 import argparse, hashlib, shutil, subprocess, sys, zipfile
 
 ROOT=_PROJECT_ROOT
-# Local VCS/tooling state is not shippable framework content. Keep in sync with
-# run_validation.py.
+# Local VCS/tooling state is not shippable framework content. run_validation.py
+# excludes the same set from the input fingerprint, and
+# validation/validators/validate_release_tooling.py fails if the two diverge.
 TOOLING_DIRS={'.git','.claude','.githooks'}
 
 def sha(path):

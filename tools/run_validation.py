@@ -14,7 +14,8 @@ SUMMARY=ROOT/'VALIDATION_SUMMARY.txt'
 STATE=ROOT/'validation'/'VALIDATION_STATE.json'
 # Local VCS/tooling state is not framework source and must never move the input
 # fingerprint: doing so marks live commissioning evidence STALE with no source
-# change. Keep in sync with build_release.py.
+# change. build_release.py excludes the same set from the release inventory, and
+# validation/validators/validate_release_tooling.py fails if the two diverge.
 TOOLING_DIRS={'.git','.claude','.githooks'}
 
 VALIDATORS=[
@@ -36,17 +37,21 @@ SCRIPTS=VALIDATORS+TESTS
 
 def evidence_name(script): return Path(script).stem.upper()+'.txt'
 
-def input_fingerprint():
-    """Hash validation inputs, excluding repository metadata and mutable validation/release outputs."""
+def input_fingerprint(root=ROOT):
+    """Hash the validation inputs under `root`, excluding repository metadata and mutable validation/release outputs."""
+    # `root` is a parameter so a caller can fingerprint a checkout other than this
+    # one without loading a second copy of this module to move ROOT. tools/live_commission.py
+    # is that caller.
+    root=Path(root);evidence=root/'validation'/'evidence'
     h=hashlib.sha256()
     skip_names={'FULL_VALIDATION_RUN.txt','VALIDATION_STATE.json','VALIDATION_SUMMARY.txt','DEPLOYMENT_BASELINE.sha256','ARCHIVE_MANIFEST.sha256'}
     files=[]
-    for p in ROOT.rglob('*'):
+    for p in root.rglob('*'):
         if not p.is_file() or TOOLING_DIRS&set(p.parts) or '__pycache__' in p.parts or p.suffix in {'.pyc','.zip'}: continue
-        if p.name in skip_names or EVIDENCE in p.parents or (ROOT/'field_evidence') in p.parents: continue
+        if p.name in skip_names or evidence in p.parents or (root/'field_evidence') in p.parents: continue
         files.append(p)
-    for p in sorted(files,key=lambda x:x.relative_to(ROOT).as_posix()):
-        rel=p.relative_to(ROOT).as_posix().encode();h.update(len(rel).to_bytes(4,'big'));h.update(rel)
+    for p in sorted(files,key=lambda x:x.relative_to(root).as_posix()):
+        rel=p.relative_to(root).as_posix().encode();h.update(len(rel).to_bytes(4,'big'));h.update(rel)
         data=p.read_bytes();h.update(len(data).to_bytes(8,'big'));h.update(data)
     return h.hexdigest()
 
