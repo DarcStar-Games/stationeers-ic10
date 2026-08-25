@@ -1,7 +1,7 @@
 from pathlib import Path
 import json,subprocess,sys
-from ic10_harness import IC10,Device
-R=Path(__file__).resolve().parent
+from framework.ic10_harness import IC10,Device
+R=Path(__file__).resolve().parents[1]
 
 def generate_recipe_fixture(output):
     """Generate the small deterministic Recipe Catalog fixture into a caller-owned temporary directory."""

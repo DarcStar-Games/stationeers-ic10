@@ -6,7 +6,7 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 """Verify semantic source index and deployment metadata cover every deployable IC10 file."""
 from pathlib import Path
 import re,sys
-from source_metadata import load_manifest,resolve_script_metadata,deployable_scripts,VALID_CLASSES
+from framework.source_metadata import load_manifest,resolve_script_metadata,deployable_scripts,VALID_CLASSES
 ROOT=_PROJECT_ROOT
 idx=(ROOT/'docs'/'SCRIPT_INDEX.md').read_text();rows={}
 for name,lines,family,dclass in re.findall(r'^\|\s*`([^`]+\.ic10)`\s*\|\s*(\d+)\s*\|[^|]*\|\s*`([^`]+)`\s*\|\s*`([^`]+)`\s*\|',idx,re.M):

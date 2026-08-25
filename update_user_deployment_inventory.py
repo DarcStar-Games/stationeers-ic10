@@ -2,7 +2,7 @@
 """Refresh only generated program-inventory blocks inside USER_DEPLOYMENT_GUIDE.md."""
 from pathlib import Path
 import re
-from source_metadata import load_manifest,family_inventory
+from framework.source_metadata import load_manifest,family_inventory
 ROOT=Path(__file__).resolve().parent
 GUIDE=ROOT/'USER_DEPLOYMENT_GUIDE.md'
 START='<!-- FAMILY_PROGRAMS:{slug} START -->'

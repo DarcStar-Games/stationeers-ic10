@@ -4,7 +4,7 @@ import argparse,json,re,shutil,sys
 from dataclasses import dataclass
 from pathlib import Path
 import xml.etree.ElementTree as ET
-from catalog_schema import *
+from framework.catalog_schema import *
 SCHEMA='CatalogSchema.Recipe';SCHEMA_VERSION=3;INSTANCE='Catalog.Recipes.Printers.Schema3';MAX_INPUTS=16
 FAMILIES=(('autolathe','Printer.Autolathe','autolathe.xml','AutolatheRecipes'),('electronics','Printer.ElectronicsPrinter','electronics.xml','ElectronicsPrinterRecipes'),('pipe_bender','Printer.HydraulicPipeBender','PipeBender.xml','HydraulicPipeBenderRecipes'),('tool_manufactory','Printer.ToolManufactory','toolmanufacturer.xml','ToolManufactoryRecipes'),('security','Printer.SecurityPrinter','security.xml','SecurityPrinterRecipes'),('rocket_manufactory','Printer.RocketManufactory','rocketmanufactory.xml','RocketManufactoryRecipes'))
 TIER_WORDS={'TierOne':1,'Tier1':1,'One':1,'TierTwo':2,'Tier2':2,'Two':2,'TierThree':3,'Tier3':3,'Three':3,'TierFour':4,'Tier4':4,'Four':4,'TierFive':5,'Tier5':5,'Five':5}

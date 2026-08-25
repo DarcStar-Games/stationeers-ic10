@@ -28,7 +28,7 @@ def ordered_after(path,anchor,*terms):
   if i<0:fails.append(f'{path}: missing post-anchor marker {term!r}')
  if all(i>=0 for i in pos) and pos!=sorted(pos):fails.append(f'{path}: unsafe post-anchor ordering for {terms!r}')
 
-need('fault_injection.py','inject_every_boundary','deepcopy','recover','check')
+need('framework/fault_injection.py','inject_every_boundary','deepcopy','recover','check')
 need('tests/test_fault_injection.py','ic10/power-grid/power_dispatch_plan_store_v1_0.ic10','allowed_transition','internal_token','LArRE')
 need('run_validation.py','validation/validators/validate_fault_injection_contracts.py','tests/test_fault_injection.py')
 # Whole-item migration publishes destination generation before source record removal.

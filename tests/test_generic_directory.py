@@ -5,7 +5,7 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 #!/usr/bin/env python3
 from pathlib import Path
 import json,sys
-from ic10_harness import Device,IC10,run_round_robin
+from framework.ic10_harness import Device,IC10,run_round_robin
 R=_PROJECT_ROOT;fails=[]
 H=(R/'ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10').read_text();B=(R/'ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10').read_text()
 S=json.loads((R/'directory_schemas.json').read_text())

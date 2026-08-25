@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import re
-from source_metadata import load_manifest,resolve_script_metadata,deployable_scripts
+from framework.source_metadata import load_manifest,resolve_script_metadata,deployable_scripts
 ROOT=Path(__file__).resolve().parent
 MANIFEST=load_manifest(ROOT)
 

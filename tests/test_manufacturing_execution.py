@@ -5,7 +5,7 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 #!/usr/bin/env python3
 from pathlib import Path
 import sys
-from ic10_harness import IC10,Device
+from framework.ic10_harness import IC10,Device
 R=_PROJECT_ROOT;fails=[]
 def ck(x,m):
  if not x:fails.append(m)

@@ -2,7 +2,7 @@
 from pathlib import Path
 from collections import defaultdict
 import json
-from catalog_schema import *
+from framework.catalog_schema import *
 R=Path(__file__).resolve().parent;OUT=R/'ic10'/'resource-profile-catalog';DEP=R/'ic10'/'dependency-planning';OUT.mkdir(parents=True,exist_ok=True);DEP.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R)
 D=json.loads((R/'resource_profiles.json').read_text());P=D['profiles']
 SCHEMA='CatalogSchema.ResourceProfile';SCHEMA_VERSION=2;INSTANCE='Catalog.ResourceProfiles.Schema2'

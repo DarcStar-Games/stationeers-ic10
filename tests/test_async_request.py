@@ -5,7 +5,7 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 #!/usr/bin/env python3
 from pathlib import Path
 import sys
-from ic10_harness import IC10,Device
+from framework.ic10_harness import IC10,Device
 R=_PROJECT_ROOT;fails=[]
 def ck(x,m):
  if not x:fails.append(m)
@@ -89,7 +89,7 @@ mx.run(1)
 ck(mx.stack.get(9)==2 and feeder.stack.get(19)==41,'Executor did not advance after Feeder CurrentToken matched')
 
 # Generic TERMINAL_RESPONSE semantics reject request N while N+1 is expected.
-from async_request import terminal,consume_terminal
+from framework.async_request import terminal,consume_terminal
 ck(consume_terminal(102,terminal(101,1)) is None,'stale TERMINAL_RESPONSE result was accepted for a newer request')
 
 if fails:

@@ -83,10 +83,10 @@ is the executable semantic source of truth — read the model before changing IC
 
 | Standard | Doc | Python model |
 |---|---|---|
-| `ASYNC_REQUEST_V1` — request-identity fencing | `docs/ASYNC_REQUEST_STANDARD.md` | `async_request.py` |
-| `BANKED_TRANSACTION_V1` — durable old-or-new commit | `docs/BANKED_TRANSACTION_STANDARD.md` | `banked_transaction.py` |
-| `GENERIC_JOB_ABI_V1` — job record + lifecycle | `docs/GENERIC_JOB_ABI.md` | `job_abi.py` |
-| Catalog Store ABI5 / Loader ABI4 / Coordinator ABI3 | `docs/CATALOG_SCHEMA.md`, `docs/CATALOG_COORDINATION.md` | `catalog_schema.py` |
+| `ASYNC_REQUEST_V1` — request-identity fencing | `docs/ASYNC_REQUEST_STANDARD.md` | `framework/async_request.py` |
+| `BANKED_TRANSACTION_V1` — durable old-or-new commit | `docs/BANKED_TRANSACTION_STANDARD.md` | `framework/banked_transaction.py` |
+| `GENERIC_JOB_ABI_V1` — job record + lifecycle | `docs/GENERIC_JOB_ABI.md` | `framework/job_abi.py` |
+| Catalog Store ABI5 / Loader ABI4 / Coordinator ABI3 | `docs/CATALOG_SCHEMA.md`, `docs/CATALOG_COORDINATION.md` | `framework/catalog_schema.py` |
 
 These are separate authorities and must stay separate: async tokens fence *observation*, banked
 revisions establish *durability*, reservation epochs/ownership tokens authorize *mutation*, and
@@ -171,9 +171,9 @@ the top-level models). Copy that preamble verbatim into new files, and add the s
 `VALIDATORS` or `TESTS` list in `run_validation.py` — anything not listed there is not part of the
 release contract.
 
-`ic10_harness.py` is a tiny deterministic IC10 interpreter (not a Stationeers emulator) supporting only
+`framework/ic10_harness.py` is a tiny deterministic IC10 interpreter (not a Stationeers emulator) supporting only
 the instruction subset the tests exercise; extend it when a test needs a new opcode.
-`fault_injection.py` replays a scenario with a crash after every operation boundary — use it for any
+`framework/fault_injection.py` replays a scenario with a crash after every operation boundary — use it for any
 new restart/interruption coverage rather than hand-rolling cut points.
 
 Framework-only test controllers live in `tests/ic10/`; `ControllerTest` is deliberately not a

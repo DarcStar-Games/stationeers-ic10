@@ -4,10 +4,10 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 #!/usr/bin/env python3
 from pathlib import Path
-from banked_transaction import (
+from framework.banked_transaction import (
     RevisionBank, SelectorState, choose_revision_bank, revision_commit_trace,
     selector_commit_trace, request_recovery, storage_compatible)
-from ic10_harness import IC10
+from framework.ic10_harness import IC10
 R=_PROJECT_ROOT
 fails=[]
 def ck(v,m):

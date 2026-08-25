@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import json
-from catalog_schema import *
+from framework.catalog_schema import *
 R=Path(__file__).resolve().parent;OUT=R/'ic10'/'transform-catalog';DEP=R/'ic10'/'dependency-planning';OUT.mkdir(parents=True,exist_ok=True);DEP.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R);D=json.loads((R/'resource_transforms.json').read_text());T=D['transforms']
 SCHEMA='CatalogSchema.ResourceTransform';SCHEMA_VERSION=4;INSTANCE='Catalog.ResourceTransforms.Schema4';VIEW_MAGIC=31415952;VIEW_ABI=4
 seen=set();items=[];input_total=output_total=0

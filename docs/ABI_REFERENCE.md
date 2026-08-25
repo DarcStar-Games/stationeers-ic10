@@ -191,7 +191,7 @@ S288..511  32 x 7 mutable state slots
 
 A free slot has active `State=0`. `PUBLISH_NEW` assigns a fresh JobId and atomically publishes `QUEUED/Generation=1/ErrorStatus=0`. `SET_STATE` requires the exact current JobGeneration and refuses to reopen terminal jobs. `REAP` requires exact generation and accepts only COMPLETE/FAULT/CANCELLED.
 
-Lifecycle-edge legality is the required writer contract in `docs/GENERIC_JOB_ABI.md`, `generic_job_schema.json`, and `job_abi.py`. Queue readers capture even `S2`, read intent plus the active state bank, then require unchanged even `S2` before accepting the record. Same-service odd-sequence recovery distinguishes pre-flip rollback from post-flip commit using S25/S26.
+Lifecycle-edge legality is the required writer contract in `docs/GENERIC_JOB_ABI.md`, `generic_job_schema.json`, and `framework/job_abi.py`. Queue readers capture even `S2`, read intent plus the active state bank, then require unchanged even `S2` before accepting the record. Same-service odd-sequence recovery distinguishes pre-flip rollback from post-flip commit using S25/S26.
 
 ## Generic telemetry ABI v1 and v2
 

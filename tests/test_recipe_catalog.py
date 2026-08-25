@@ -4,8 +4,8 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 #!/usr/bin/env python3
 from pathlib import Path
-from ic10_harness import IC10
-from catalog_test_helpers import load_catalog_chain,generate_recipe_fixture
+from framework.ic10_harness import IC10
+from framework.catalog_test_helpers import load_catalog_chain,generate_recipe_fixture
 import json,re,subprocess,tempfile,sys
 R=_PROJECT_ROOT;fails=[];fixture_tmp=tempfile.TemporaryDirectory();fixture=Path(fixture_tmp.name);M=generate_recipe_fixture(fixture)
 if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_coordinator_abi'),M.get('catalog_schema_version'))!=('RECIPE_CATALOG_V6',5,4,3,3):fails.append('Recipe runtime/schema ABI mismatch')

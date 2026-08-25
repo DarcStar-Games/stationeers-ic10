@@ -4,8 +4,8 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 #!/usr/bin/env python3
 from pathlib import Path
-from ic10_harness import IC10
-from catalog_test_helpers import load_catalog_chain
+from framework.ic10_harness import IC10
+from framework.catalog_test_helpers import load_catalog_chain
 import hashlib,json,re,subprocess,sys
 R=_PROJECT_ROOT;fails=[]
 

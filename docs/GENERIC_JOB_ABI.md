@@ -6,7 +6,7 @@ The ABI deliberately separates storage/lifecycle law from scheduling policy. Ite
 
 The production implementation is `ic10/generic-jobs/generic_job_store_v1_0.ic10`. It owns JobId allocation, slot publication, per-job generation changes, queue publication fencing, terminal immutability, and terminal reaping. It does **not** choose processors or validate domain-specific recipes/resources.
 
-`generic_job_schema.json` is the machine-readable contract. `job_abi.py` is the executable reference model for intent and lifecycle validation. `tests/test_job_abi.py` verifies both the model and the live IC10 Store behavior. The Store's persistence mechanics implement the `SELECTOR_BANK` profile of `BANKED_TRANSACTION_V1`; see `docs/BANKED_TRANSACTION_STANDARD.md` and `banked_transaction.py`.
+`generic_job_schema.json` is the machine-readable contract. `framework/job_abi.py` is the executable reference model for intent and lifecycle validation. `tests/test_job_abi.py` verifies both the model and the live IC10 Store behavior. The Store's persistence mechanics implement the `SELECTOR_BANK` profile of `BANKED_TRANSACTION_V1`; see `docs/BANKED_TRANSACTION_STANDARD.md` and `framework/banked_transaction.py`.
 
 ## 1. Logical job record
 

@@ -100,7 +100,7 @@ The ordinary lifecycle is:
 
 with explicit `WAIT_RESOURCE`, `WAIT_PROCESSOR`, `WAIT_CAPACITY`, `FAULT`, and `CANCELLED` states. WAIT states return to PLANNING so topology, resources, capacity, and processor choice are revalidated rather than resumed from a stale plan.
 
-`ic10/generic-jobs/generic_job_store_v1_0.ic10` provides 32 crash-safe physical slots. Immutable intent and per-slot A/B state banks fit in one 512-cell stack. JobId is Store-owned, state mutation uses expected JobGeneration, queue readers fence on an odd/even QueueSequence, terminal states are immutable, and only terminal records can be reaped. The Store owns mechanical publication; lifecycle legality is the versioned writer contract in `generic_job_schema.json` / `job_abi.py`.
+`ic10/generic-jobs/generic_job_store_v1_0.ic10` provides 32 crash-safe physical slots. Immutable intent and per-slot A/B state banks fit in one 512-cell stack. JobId is Store-owned, state mutation uses expected JobGeneration, queue readers fence on an odd/even QueueSequence, terminal states are immutable, and only terminal records can be reaped. The Store owns mechanical publication; lifecycle legality is the versioned writer contract in `generic_job_schema.json` / `framework/job_abi.py`.
 
 Completion criteria:
 
@@ -226,7 +226,7 @@ Item 10 applies one reusable cut-at-every-boundary fault-injection method across
 
 Implemented:
 
-- `fault_injection.py` provides deterministic deep-copied restart injection after every prefix of an ordered mutation sequence;
+- `framework/fault_injection.py` provides deterministic deep-copied restart injection after every prefix of an ordered mutation sequence;
 - `tests/test_fault_injection.py` covers catalog migration, directory mutation/Store loss, processor replacement, ITEM quote/commit/action, LArRE held-item recovery, dependency cancellation and live-output invalidation, deterministic Job Gateway replay, POWER plan replacement, allocator reflash/reacquisition, final-write authority withdrawal for load/transformer executors, and cancellation from every nonterminal Generic Job state;
 - the campaign executes actual `ic10/power-grid/power_dispatch_plan_store_v1_0.ic10` COMMIT logic at dozens of instruction cut points;
 - `validation/validators/validate_fault_injection_contracts.py` statically checks critical destination-before-source-removal, persisted-origin-before-move, inactive-before-payload, deterministic replay-token, POWER recovery, and commit-before-authority ordering;

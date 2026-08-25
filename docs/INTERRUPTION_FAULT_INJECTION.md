@@ -4,7 +4,7 @@ Roadmap Item 10 applies one deterministic interruption philosophy across the com
 
 ## Reusable campaign helper
 
-`fault_injection.py` provides `inject_every_boundary()`. A test supplies an initial state, ordered mutation steps, subsystem-specific recovery, and a safety invariant. The helper deep-copies the initial state and injects a restart after every prefix, including before the first mutation and after the complete transaction.
+`framework/fault_injection.py` provides `inject_every_boundary()`. A test supplies an initial state, ordered mutation steps, subsystem-specific recovery, and a safety invariant. The helper deep-copies the initial state and injects a restart after every prefix, including before the first mutation and after the complete transaction.
 
 The common rule is:
 

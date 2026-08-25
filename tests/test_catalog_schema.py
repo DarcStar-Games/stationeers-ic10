@@ -4,9 +4,9 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 #!/usr/bin/env python3
 from pathlib import Path
-from ic10_harness import IC10,Device
+from framework.ic10_harness import IC10,Device
 import json,sys
-import catalog_schema as C
+import framework.catalog_schema as C
 R=_PROJECT_ROOT;fails=[]
 # Common ABI/runtime-placement contract.
 if (C.STORE_MAGIC,C.STORE_ABI,C.LOADER_MAGIC,C.LOADER_ABI,C.COORD_MAGIC,C.COORD_ABI)!=(31415968,5,31415969,4,31415970,3):fails.append('Catalog common ABI constants mismatch')

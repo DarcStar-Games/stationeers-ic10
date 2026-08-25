@@ -24,7 +24,7 @@ s=json.loads((R/'generic_job_schema.json').read_text())
 ck(s.get('banked_transaction_profile')=='SELECTOR_BANK','Job schema profile mismatch')
 compat=s.get('storage_compatibility',{})
 ck(compat.get('magic')==s.get('magic') and compat.get('abi')==s.get('abi'),'Job compatibility token must equal schema magic+ABI')
-for f in ('banked_transaction.py','tests/test_banked_transaction.py','tests/test_persistence_protocol.py'):
+for f in ('framework/banked_transaction.py','tests/test_banked_transaction.py','tests/test_persistence_protocol.py'):
     ck((R/f).exists(),f'missing shared transaction artifact {f}')
 if fails:
     print('Banked transaction contract validation: FAIL')

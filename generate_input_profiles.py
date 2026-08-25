@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import json
-from catalog_schema import *
+from framework.catalog_schema import *
 R=Path(__file__).resolve().parent;OUT=R/'ic10'/'input-profile-catalog';OUT.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R);D=json.loads((R/'input_profiles.json').read_text());P=D['profiles']
 SCHEMA='CatalogSchema.InputProfile';SCHEMA_VERSION=3;INSTANCE='Catalog.InputProfiles.Schema3';PROFILE_MAGIC=31415929;PROFILE_ABI=1
 for p in P:

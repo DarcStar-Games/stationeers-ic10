@@ -5,7 +5,7 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 #!/usr/bin/env python3
 from pathlib import Path
 import json,re,sys,tempfile
-from catalog_test_helpers import generate_recipe_fixture
+from framework.catalog_test_helpers import generate_recipe_fixture
 R=_PROJECT_ROOT; fails=[]
 def fail(x): fails.append(x)
 manifest_files=['resource_profile_catalog_manifest.json','input_profile_catalog_manifest.json','resource_transform_catalog_manifest.json']

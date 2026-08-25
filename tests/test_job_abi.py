@@ -5,8 +5,8 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 #!/usr/bin/env python3
 from pathlib import Path
 import json, math, sys
-from ic10_harness import IC10
-from job_abi import JobIntent,JobState,JobType,allowed_transition,can_reap,validate_intent
+from framework.ic10_harness import IC10
+from framework.job_abi import JobIntent,JobState,JobType,allowed_transition,can_reap,validate_intent
 R=_PROJECT_ROOT
 SRC=(R/'ic10/generic-jobs/generic_job_store_v1_0.ic10').read_text()
 SCHEMA=json.loads((R/'generic_job_schema.json').read_text())

@@ -159,6 +159,6 @@ Item 12 acceptance requires all of the following:
 - the session is not stale;
 - every discovered live-game mismatch is either fixed and rerun or explicitly removed from the supported production contract;
 - game-build/version notes are recorded in the session label or observations;
-- no live PASS is inferred solely from a Python model or `ic10_harness.py` result.
+- no live PASS is inferred solely from a Python model or `framework/ic10_harness.py` result.
 
 Until then, a release may be described as **commissioning-ready**, not **field-verified**.

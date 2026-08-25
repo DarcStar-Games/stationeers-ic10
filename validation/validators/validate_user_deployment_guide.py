@@ -6,7 +6,7 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 """Validate operator deployment-guide coverage against deployable source metadata."""
 from pathlib import Path
 import json,re,sys
-from source_metadata import load_manifest,family_inventory,deployable_scripts,VALID_CLASSES
+from framework.source_metadata import load_manifest,family_inventory,deployable_scripts,VALID_CLASSES
 ROOT=_PROJECT_ROOT
 GUIDE=ROOT/'USER_DEPLOYMENT_GUIDE.md'
 fails=[]
