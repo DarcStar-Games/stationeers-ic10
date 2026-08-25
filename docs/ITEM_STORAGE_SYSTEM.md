@@ -326,7 +326,7 @@ Physical movement remains provider-specific; direct readability does not imply a
 
 ### 10.3 Exact export slot — `ic10/material-grid/material_export_slot_endpoint_v1_0.ic10`
 
-`ic10/item-storage-common/material_export_slot_endpoint_v1_0.ic10` publishes one device slot 0 as an exact source-only ITEM Endpoint. The intended first use is a Chute Export Bin or equivalent single-item handoff point. This gives inbound LArRE storage placement a reservable external source rather than treating chute arrival as unowned state.
+`ic10/material-grid/material_export_slot_endpoint_v1_0.ic10` publishes one device slot 0 as an exact source-only ITEM Endpoint. The intended first use is a Chute Export Bin or equivalent single-item handoff point. This gives inbound LArRE storage placement a reservable external source rather than treating chute arrival as unowned state.
 
 ### 10.4 Dedicated SDB Silo — `ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10`
 

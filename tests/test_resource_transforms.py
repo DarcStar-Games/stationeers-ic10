@@ -4,18 +4,18 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 #!/usr/bin/env python3
 from pathlib import Path
-from ic10_harness import IC10
-from catalog_test_helpers import load_catalog_chain
+from framework.ic10_harness import IC10
+from framework.catalog_test_helpers import load_catalog_chain
 import hashlib,json,re,subprocess,sys
 R=_PROJECT_ROOT;fails=[]
 
 def files():
- M=json.loads((R/'resource_transform_catalog_manifest.json').read_text())
- return [R/M['generic_store_program'],R/M['coordinator_core_program'],R/M['loader_router_program'],*[R/f for f in M['loaders']],R/'ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10',R/'ic10/dependency-planning/item_producer_resolver_v1_0.ic10',R/'resource_transform_catalog_manifest.json']
+ M=json.loads((R/'data/resource_transform_catalog_manifest.json').read_text())
+ return [R/M['generic_store_program'],R/M['coordinator_core_program'],R/M['loader_router_program'],*[R/f for f in M['loaders']],R/'ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10',R/'ic10/dependency-planning/item_producer_resolver_v1_0.ic10',R/'data/resource_transform_catalog_manifest.json']
 def hs():return {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in files()}
-b=hs();subprocess.run([sys.executable,str(R/'generate_resource_transforms.py')],cwd=R,check=True,stdout=subprocess.DEVNULL);a=hs()
+b=hs();subprocess.run([sys.executable,str(R/'tools'/'generate'/'generate_resource_transforms.py')],cwd=R,check=True,stdout=subprocess.DEVNULL);a=hs()
 if a!=b:fails.append('generation is not deterministic')
-D=json.loads((R/'resource_transforms.json').read_text());T=D['transforms'];M=json.loads((R/'resource_transform_catalog_manifest.json').read_text())
+D=json.loads((R/'data/resource_transforms.json').read_text());T=D['transforms'];M=json.loads((R/'data/resource_transform_catalog_manifest.json').read_text())
 if len(T)!=17:fails.append(f'expected 17 transforms, got {len(T)}')
 if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_schema_version'),M.get('view_abi'))!=('RESOURCE_TRANSFORM_CATALOG_V6',5,4,4,4):fails.append('Transform runtime/schema ABI metadata mismatch')
 if M.get('runtime_min_store_count')!=1 or M.get('input_descriptor_count')!=32 or M.get('output_descriptor_count')!=17:fails.append('Transform runtime capacity/count mismatch')

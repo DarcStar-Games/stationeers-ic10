@@ -5,11 +5,11 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 #!/usr/bin/env python3
 from pathlib import Path
 import json,sys
-from job_abi import JobState,JobType,NORMAL_CHAIN,TERMINAL,WAIT_FROM,WAIT_STATES
+from framework.job_abi import JobState,JobType,NORMAL_CHAIN,TERMINAL,WAIT_FROM,WAIT_STATES
 R=_PROJECT_ROOT;fails=[]
 def ck(v,msg):
     if not v:fails.append(msg)
-s=json.loads((R/'generic_job_schema.json').read_text())
+s=json.loads((R/'data/generic_job_schema.json').read_text())
 ck(s.get('format')=='GENERIC_JOB_ABI_V1','schema format')
 ck(s.get('magic')==31415984 and s.get('abi')==1,'schema magic/ABI')
 ck(s.get('capacity')==32,'capacity must be 32')

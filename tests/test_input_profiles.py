@@ -4,18 +4,18 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 #!/usr/bin/env python3
 from pathlib import Path
-from ic10_harness import IC10
-from catalog_test_helpers import load_catalog_chain
+from framework.ic10_harness import IC10
+from framework.catalog_test_helpers import load_catalog_chain
 import hashlib,json,re,subprocess,sys
-R=_PROJECT_ROOT;D=json.loads((R/'input_profiles.json').read_text());P=D['profiles'];fails=[]
+R=_PROJECT_ROOT;D=json.loads((R/'data/input_profiles.json').read_text());P=D['profiles'];fails=[]
 
 def files():
- M=json.loads((R/'input_profile_catalog_manifest.json').read_text())
- return [R/M['generic_store_program'],R/M['coordinator_core_program'],R/M['loader_router_program'],*[R/f for f in M['loaders']],R/'ic10/input-profile-catalog/input_profile_view_v5_0.ic10',R/'input_profile_catalog_manifest.json',R/'input_profiles.json']
+ M=json.loads((R/'data/input_profile_catalog_manifest.json').read_text())
+ return [R/M['generic_store_program'],R/M['coordinator_core_program'],R/M['loader_router_program'],*[R/f for f in M['loaders']],R/'ic10/input-profile-catalog/input_profile_view_v5_0.ic10',R/'data/input_profile_catalog_manifest.json',R/'data/input_profiles.json']
 def hs():return {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in files()}
-b=hs();subprocess.run([sys.executable,str(R/'generate_input_profiles.py')],cwd=R,check=True,stdout=subprocess.DEVNULL);a=hs()
+b=hs();subprocess.run([sys.executable,str(R/'tools'/'generate'/'generate_input_profiles.py')],cwd=R,check=True,stdout=subprocess.DEVNULL);a=hs()
 if a!=b:fails.append('generation is not deterministic')
-M=json.loads((R/'input_profile_catalog_manifest.json').read_text())
+M=json.loads((R/'data/input_profile_catalog_manifest.json').read_text())
 if D.get('catalog_schema_version') not in (2,3): pass
 if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_schema_version'))!=('INPUT_PROFILE_CATALOG_V4',5,4,3):fails.append('Input Profile runtime schema metadata mismatch')
 if M.get('runtime_store_placement') is not True or M.get('runtime_min_store_count')!=1 or M.get('profile_count')!=6:fails.append('Input Profile runtime capacity/count mismatch')

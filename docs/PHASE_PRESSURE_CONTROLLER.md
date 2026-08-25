@@ -74,7 +74,7 @@ Policy: `ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10`,
 
 Optional commissioning Profile View: `ic10/input-profile-catalog/input_profile_view_v5_0.ic10`, connected to the shared Input Profile Catalog Store with `S2=HASH("ControllerPhasePressure")`, `S3=1`.
 
-The bundled `resource_profiles.json` contains Water, Pollutant, Silanol, Nitrous Oxide, Nitrogen, Methane, Carbon Dioxide, Oxygen, and Hydrogen phase-medium records. Select one with a Resource Profile View (`S2=1`, `S3=HASH(<medium>)`) instead of loading a different IC10 program per medium.
+The bundled `data/resource_profiles.json` contains Water, Pollutant, Silanol, Nitrous Oxide, Nitrogen, Methane, Carbon Dioxide, Oxygen, and Hydrogen phase-medium records. Select one with a Resource Profile View (`S2=1`, `S3=HASH(<medium>)`) instead of loading a different IC10 program per medium.
 
 ## Configuration schema
 

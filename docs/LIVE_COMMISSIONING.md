@@ -1,6 +1,6 @@
 # Live-Game Commissioning & Field Evidence
 
-Roadmap Item 12 closes the gap between automated protocol proof and actual Stationeers device/network behavior. Items 1–11 remain implemented and automatically validated; Item 12 is **ACTIVE** until every required live suite in `live_commissioning_cases.json` has current PASS evidence from the target game build.
+Roadmap Item 12 closes the gap between automated protocol proof and actual Stationeers device/network behavior. Items 1–11 remain implemented and automatically validated; Item 12 is **ACTIVE** until every required live suite in `data/live_commissioning_cases.json` has current PASS evidence from the target game build.
 
 Automated/model evidence is never promoted to live evidence. A safe modeled result can still differ from real device timing, writable LogicTypes, slot layouts, atmosphere behavior, chute timing, or machine-specific semantics.
 
@@ -9,7 +9,7 @@ Automated/model evidence is never promoted to live evidence. A safe modeled resu
 Three identities are deliberately separate:
 
 1. `validation/evidence/` proves deterministic source/model/harness checks for a release input fingerprint.
-2. `live_commissioning_cases.json` defines the required field suites and acceptance summaries.
+2. `data/live_commissioning_cases.json` defines the required field suites and acceptance summaries.
 3. A live session records human-observed physical results and is bound to the exact framework input fingerprint plus commissioning-catalog SHA-256.
 
 Changing framework inputs or the case catalog makes an older field session **STALE**. Re-run affected live suites rather than copying their old PASS state forward.
@@ -21,20 +21,20 @@ Do not hand-edit automated evidence to represent game observations.
 Create a session outside the framework tree or under an ignored local evidence directory:
 
 ```text
-python live_commission.py init --session ../field_evidence/base_a.json --label "Base A commissioning"
+python3 tools/live_commission.py init --session ../field_evidence/base_a.json --label "Base A commissioning"
 ```
 
 List or inspect the required suites:
 
 ```text
-python live_commission.py list
-python live_commission.py show LG-XDOMAIN-FURNACE
+python3 tools/live_commission.py list
+python3 tools/live_commission.py show LG-XDOMAIN-FURNACE
 ```
 
 Record an observation:
 
 ```text
-python live_commission.py record \
+python3 tools/live_commission.py record \
   --session ../field_evidence/base_a.json \
   --case LG-XDOMAIN-FURNACE \
   --status PASS \
@@ -49,8 +49,8 @@ python live_commission.py record \
 Verify closure and generate a report:
 
 ```text
-python live_commission.py verify --session ../field_evidence/base_a.json
-python live_commission.py report --session ../field_evidence/base_a.json --output ../field_evidence/base_a.md
+python3 tools/live_commission.py verify --session ../field_evidence/base_a.json
+python3 tools/live_commission.py report --session ../field_evidence/base_a.json --output ../field_evidence/base_a.md
 ```
 
 Item 12 closes only when `verify` reports every required suite PASS on a non-stale session.
@@ -109,7 +109,7 @@ IC10 currently supports register-addressed stack reads and device/LogicType indi
 
 ## 4. Required live suites
 
-`live_commissioning_cases.json` is canonical. The current required suites cover:
+`data/live_commissioning_cases.json` is canonical. The current required suites cover:
 
 - PressureGrid inventory, purity, reservation, routing, interruption, scale, and overflow;
 - persistent configuration and banked transactions;
@@ -159,6 +159,6 @@ Item 12 acceptance requires all of the following:
 - the session is not stale;
 - every discovered live-game mismatch is either fixed and rerun or explicitly removed from the supported production contract;
 - game-build/version notes are recorded in the session label or observations;
-- no live PASS is inferred solely from a Python model or `ic10_harness.py` result.
+- no live PASS is inferred solely from a Python model or `framework/ic10_harness.py` result.
 
 Until then, a release may be described as **commissioning-ready**, not **field-verified**.

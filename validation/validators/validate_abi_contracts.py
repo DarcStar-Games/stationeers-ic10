@@ -51,7 +51,7 @@ for p in loaders:
   if x not in t:fails.append(p.name+': missing '+x)
  if 'putd ' in t or 'put d0 ' in t or '\nyield' in t or '\nj ' in t:fails.append(p.name+': Loader ABI4 must be immutable one-shot producer')
 for name,count,ver in [('resource_profiles.json',39,2),('input_profiles.json',6,3),('resource_transforms.json',17,4)]:
- d=json.loads((R/name).read_text());rows=d.get('profiles',d.get('transforms',[]))
+ d=json.loads((R/'data'/name).read_text());rows=d.get('profiles',d.get('transforms',[]))
  if len(rows)!=count or d.get('catalog_schema_version')!=ver:fails.append(name+': cardinality/schema version mismatch')
 if fails:
  print('ABI contract validation: FAIL');[print(' -',x) for x in fails];sys.exit(1)

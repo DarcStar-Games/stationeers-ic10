@@ -6,14 +6,14 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 """Validate operator deployment-guide coverage against deployable source metadata."""
 from pathlib import Path
 import json,re,sys
-from source_metadata import load_manifest,family_inventory,deployable_scripts,VALID_CLASSES
+from framework.source_metadata import load_manifest,family_inventory,deployable_scripts,VALID_CLASSES
 ROOT=_PROJECT_ROOT
 GUIDE=ROOT/'USER_DEPLOYMENT_GUIDE.md'
 fails=[]
 if not GUIDE.exists():
     print('User deployment guide validation: FAIL\n - USER_DEPLOYMENT_GUIDE.md missing');sys.exit(1)
 text=GUIDE.read_text();manifest=load_manifest(ROOT);families=manifest['deployment_families'];inv=family_inventory(ROOT,manifest)
-case_data=json.loads((ROOT/'live_commissioning_cases.json').read_text());case_ids={c['id'] for c in case_data.get('cases',[])}
+case_data=json.loads((ROOT/'data/live_commissioning_cases.json').read_text());case_ids={c['id'] for c in case_data.get('cases',[])}
 required_headings=['Purpose','Use this when','Deployment class','Programs','Prerequisites','Wiring and configuration','Deployment procedure','Healthy state','Commissioning proof','Common failures','Reflash / replacement','What can be removed','Technical references']
 seen_programs={}
 for slug,meta in families.items():

@@ -1,6 +1,6 @@
 # Unified Resource Profiles
 
-`resource_profiles.json` is the canonical source for **39 Resource Profiles**: nine PHASE_MEDIUM pure-gas FLUID profiles, one prepared-mixture FLUID profile, 27 ITEM_STACK material profiles, one POWER service profile, and one ENERGY storage profile. `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` republishes the stable Resource Profile View ABI1.
+`data/resource_profiles.json` is the canonical source for **39 Resource Profiles**: nine PHASE_MEDIUM pure-gas FLUID profiles, one prepared-mixture FLUID profile, 27 ITEM_STACK material profiles, one POWER service profile, and one ENERGY storage profile. `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` republishes the stable Resource Profile View ABI1.
 
 ## Catalog schema
 

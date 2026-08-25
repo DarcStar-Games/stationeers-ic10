@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """Run the complete framework validation suite with fingerprint-guarded resumable evidence."""
+from pathlib import Path as _ProjectPath
+import sys as _project_sys
+_PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
+if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from pathlib import Path
 import argparse,hashlib,json,shutil,subprocess,sys
 
-ROOT=Path(__file__).resolve().parent
+ROOT=_PROJECT_ROOT
 EVIDENCE=ROOT/'validation'/'evidence'
 RUN_LOG=ROOT/'validation'/'FULL_VALIDATION_RUN.txt'
 SUMMARY=ROOT/'VALIDATION_SUMMARY.txt'
@@ -87,9 +91,9 @@ def finalize(results):
         f'Execution/protocol tests: {len(TESTS)-sum(s in failed for s in TESTS)}/{len(TESTS)} PASS',
         f'Production IC10 programs: {len(production)}',f'Maximum production line count: {max_lines}/120',
         f'Tight programs (>=117 lines): {len(tight)}','', 'Release hygiene','---------------',
-        '- docs/SCRIPT_INDEX.md is generated from deployable IC10 source plus source_manifest.json metadata.',
-        '- USER_DEPLOYMENT_GUIDE.md program inventories are machine-linked to source_manifest.json deployment-family/class metadata.',
-        '- Repetitive Resource Endpoint/Link/Reservation directory adapters are generated from directory_adapter_specs.json.',
+        '- docs/SCRIPT_INDEX.md is generated from deployable IC10 source plus data/source_manifest.json metadata.',
+        '- USER_DEPLOYMENT_GUIDE.md program inventories are machine-linked to data/source_manifest.json deployment-family/class metadata.',
+        '- Repetitive Resource Endpoint/Link/Reservation directory adapters are generated from data/directory_adapter_specs.json.',
         '- Recipe Catalog test fixtures are generated into temporary directories; no generated recipe fixture is shipped.',
         '- Per-script machine output is stored only under validation/evidence/.',
         '- Validation resume is accepted only when validation/VALIDATION_STATE.json matches the complete input-tree fingerprint.',

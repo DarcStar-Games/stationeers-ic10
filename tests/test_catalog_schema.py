@@ -4,15 +4,15 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 #!/usr/bin/env python3
 from pathlib import Path
-from ic10_harness import IC10,Device
+from framework.ic10_harness import IC10,Device
 import json,sys
-import catalog_schema as C
+import framework.catalog_schema as C
 R=_PROJECT_ROOT;fails=[]
 # Common ABI/runtime-placement contract.
 if (C.STORE_MAGIC,C.STORE_ABI,C.LOADER_MAGIC,C.LOADER_ABI,C.COORD_MAGIC,C.COORD_ABI)!=(31415968,5,31415969,4,31415970,3):fails.append('Catalog common ABI constants mismatch')
 if (C.STORE_HEADER_CELLS,C.STORE_DIR_WIDTH,C.STORE_TOTAL_CELLS)!=(32,2,512):fails.append('Store ABI5 item-directory geometry mismatch')
 for f in ('resource_profile_catalog_manifest.json','input_profile_catalog_manifest.json','resource_transform_catalog_manifest.json'):
- m=json.loads((R/f).read_text())
+ m=json.loads((R/'data'/f).read_text())
  if not m.get('runtime_store_placement') or m.get('store_model')!='generic_dynamic_item_heap' or m.get('catalog_store_abi')!=5 or m.get('catalog_loader_abi')!=4:fails.append(f+': not on runtime-placement ABI')
 # A Loader item is relocatable: producer leaves runtime assignment fields zero.
 for p in list(R.glob('*_loader_*_v4_0.ic10'))+list(R.glob('*_loader_*_v6_0.ic10')):

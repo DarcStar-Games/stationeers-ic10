@@ -11,7 +11,7 @@ def need(path,*tokens):
     t=(R/path).read_text()
     for tok in tokens:
         if tok not in t: fail(f'{path}: missing {tok!r}')
-D=json.loads((R/'directory_schemas.json').read_text())
+D=json.loads((R/'data/directory_schemas.json').read_text())
 if D.get('format')!='GENERIC_DIRECTORY_SCHEMAS_V10': fail('schema registry format mismatch')
 a=D.get('adapter_abi',{})
 for k,v in {'magic':31415983,'abi':2,'candidate_base':16,'entry_width_slot':4,'capacity_slot':5,'candidate_count_slot':6,'candidate_generation_slot':7,'sequence_slot':8,'overflow_slot':9,'mode_slot':10,'freeze_request_slot':11,'freeze_ack_slot':12}.items():
@@ -61,7 +61,7 @@ else:
     for k,v in {'bits_0_7':'capability tier','bit_8':'Power','bit_9':'Busy/Active','bit_10':'Error','bit_11':'On','bit_12':'Lock'}.items():
         if spec.get(k)!=v: fail('Printer ProcessorSpec '+k+' mismatch')
     fams={x.get('family_hash') for x in ps.get('families',[])}
-    recipe_src=(R/'generate_recipe_catalog.py').read_text()
+    recipe_src=(R/'tools'/'generate'/'generate_recipe_catalog.py').read_text()
     recipe_fams=set(re.findall(r"\('(?:[^']+)'\s*,\s*'([^']+)'\s*,",recipe_src.split('TIER_WORDS',1)[0]))
     if fams!=recipe_fams: fail('Printer FamilyHash set differs from Recipe Catalog FAMILIES')
 need('ic10/printer-directory/printer_directory_adapter_v1_0.ic10','poke 2 HASH("DirectorySchema.Printer")','poke 3 2','HASH("Printer.Autolathe")','HASH("Printer.SecurityPrinter")','HASH("Printer.RocketManufactory")','ld r4 r1 Power','ld r6 r1 Activate','ld r9 r1 Error')

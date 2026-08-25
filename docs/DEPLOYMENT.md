@@ -260,7 +260,7 @@ The Store API is a low-level single-writer interface used by the Manufacturing S
 
 Every reader captures even QueueSequence before reading an intent slot + its active A/B state triplet and requires the same even sequence afterward. The Job Store mechanically rejects stale generations, terminal reopening, non-terminal reaping, occupied PUBLISH_NEW slots, and slot ordinals outside `0..31`.
 
-The writer must additionally enforce the legal lifecycle table in `docs/GENERIC_JOB_ABI.md` / `generic_job_schema.json`. `ic10/manufacturing/manufacturing_scheduler_v1_0.ic10` is the first production writer and owns TRANSFORM/PRINT priority ordering, processor selection, reservation planning, and wait-state transitions. Do not bypass that lifecycle contract by using SET_STATE as an arbitrary state setter.
+The writer must additionally enforce the legal lifecycle table in `docs/GENERIC_JOB_ABI.md` / `data/generic_job_schema.json`. `ic10/manufacturing/manufacturing_scheduler_v1_0.ic10` is the first production writer and owns TRANSFORM/PRINT priority ordering, processor selection, reservation planning, and wait-state transitions. Do not bypass that lifecycle contract by using SET_STATE as an arbitrary state setter.
 
 ## Manufacturing Scheduler deployment
 
@@ -271,7 +271,7 @@ Roadmap item 6 composes Generic Jobs, Recipe/Transform catalogs, MaterialGrid, a
 3. Deploy one `ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10` instance with `d0 -> TransformLane Snapshot Host`; wire the Transform Job Driver `d0` to that selector and `d1 -> ic10/manufacturing/transform_candidate_executor_v2_0.ic10`.
 4. Keep Printer Directory v2 running. For scheduled printers, attach each eligible printer to one `184 Printer Execution Bank` pin (`d0..d5`, at most six printers per bank).
 5. Deploy `185 Printer Execution Directory Adapter -> 169 Bridge -> dedicated 166 Snapshot Host`. The resulting `DirectorySchema.PrinterExecution` v1 records preserve exact PrinterReferenceId and add local output-capacity state.
-6. Deploy a second `ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10` instance with `d0 -> PrinterExecution Snapshot Host`; wire the Print Job Driver `d0` to that selector, `d1 -> ic10/manufacturing/recipe_execution_profile_view_v1_0.ic10`, and `d2 -> ic10/manufacturing/print_candidate_executor_v2_0.ic10`.
+6. Deploy a second `ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10` instance with `d0 -> PrinterExecution Snapshot Host`; wire the Print Job Driver `d0` to that selector, `d1 -> ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10`, and `d2 -> ic10/manufacturing/print_candidate_executor_v2_0.ic10`.
 7. Wire `ic10/manufacturing/print_candidate_executor_v2_0.ic10`: `d0 -> Recipe Execution View`, `d1 -> Print Material Resolver`, `d2 -> Generic Print Runtime`, `d3 -> Printer Capacity Client`. Capacity Client discovers Execution Banks and revalidates exact PrinterReferenceId at reservation time.
 8. Wire `177 d0 -> Recipe Execution View`, `d1 -> ResourceLink Snapshot Directory`.
 9. Deploy a print-specific `ic10/material-transform/multi_material_reservation_stager_v1_0.ic10` and `ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10`. Wire both to the print resolver exactly as the transform lane wires them to its resolver; then wire Generic Print Runtime `d0 -> Print Material Resolver`, `d1 -> print Allocator`.
@@ -444,4 +444,4 @@ Do not configure an Electrolyzer to start recursively from the same GFG shortage
 
 ## Item-12 live commissioning tools
 
-After automated validation, deploy `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` only when a field case benefits from coherent read-only capture. It is an on-demand diagnostic, not a resident control-plane dependency. Configure its six descriptors, advance `S6 DescriptorGeneration`, then publish `S2 RequestToken` last. Record the resulting values/status together with the physical action in a `live_commission.py` session. Do not leave the probe wired as an actuator intermediary and do not treat its observations as reservation authority. See `docs/LIVE_COMMISSIONING.md`.
+After automated validation, deploy `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` only when a field case benefits from coherent read-only capture. It is an on-demand diagnostic, not a resident control-plane dependency. Configure its six descriptors, advance `S6 DescriptorGeneration`, then publish `S2 RequestToken` last. Record the resulting values/status together with the physical action in a `tools/live_commission.py` session. Do not leave the probe wired as an actuator intermediary and do not treat its observations as reservation authority. See `docs/LIVE_COMMISSIONING.md`.

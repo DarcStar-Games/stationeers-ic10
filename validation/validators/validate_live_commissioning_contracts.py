@@ -7,7 +7,7 @@ from pathlib import Path
 import json,re,sys
 R=_PROJECT_ROOT
 fails=[]
-try: data=json.loads((R/'live_commissioning_cases.json').read_text())
+try: data=json.loads((R/'data/live_commissioning_cases.json').read_text())
 except Exception as e: data={};fails.append(f'case catalog parse failed: {e}')
 cases=data.get('cases',[])
 if data.get('format')!='LIVE_COMMISSIONING_CASES_V1': fails.append('wrong live commissioning catalog format')
@@ -32,10 +32,10 @@ else:
 for name,needle in [('ROADMAP.md','## 12. Live-game commissioning and evidence closure — ACTIVE'),('README.md','docs/LIVE_COMMISSIONING.md'),('docs/FRAMEWORK_HARDENING_TESTS.md','Item 12 field-evidence workflow'),('docs/ABI_REFERENCE.md','Live Commission Snapshot Probe ABI1')]:
     p=R/name
     if not p.exists() or needle not in p.read_text(): fails.append(f'{name}: missing commissioning contract marker')
-rv=(R/'run_validation.py').read_text()
+rv=(R/'tools'/'run_validation.py').read_text()
 for n in ('validation/validators/validate_live_commissioning_contracts.py','tests/test_live_commissioning.py'):
     if n not in rv: fails.append(f'run_validation missing {n}')
-manifest=json.loads((R/'source_manifest.json').read_text()).get('scripts',{})
+manifest=json.loads((R/'data/source_manifest.json').read_text()).get('scripts',{})
 if 'ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10' not in manifest: fails.append('source_manifest missing live commissioning snapshot probe')
 if fails:
     print('Live commissioning contracts: FAIL');[print(' -',x) for x in fails];sys.exit(1)

@@ -6,13 +6,13 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 from pathlib import Path
 import json,math,subprocess,hashlib,sys
 R=_PROJECT_ROOT
-D=json.loads((R/'resource_profiles.json').read_text())
+D=json.loads((R/'data/resource_profiles.json').read_text())
 fails=[]
 phase=[p for p in D['profiles'] if p['profile_kind']==1]
 if len(phase)!=9: fails.append(f'expected 9 phase-medium resource profiles, got {len(phase)}')
 # Unified catalog generation must be reproducible.
 before={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [*R.glob('*_resource_profile_loader_*_v4_0.ic10'),R/'ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10',R/'ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10',R/'ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10',R/'ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10']}
-subprocess.run([sys.executable,str(R/'generate_resource_profiles.py')],check=True,cwd=R,stdout=subprocess.DEVNULL)
+subprocess.run([sys.executable,str(R/'tools'/'generate'/'generate_resource_profiles.py')],check=True,cwd=R,stdout=subprocess.DEVNULL)
 after={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [*R.glob('*_resource_profile_loader_*_v4_0.ic10'),R/'ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10',R/'ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10',R/'ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10',R/'ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10']}
 if before!=after: fails.append('resource profile catalog is not reproducible from resource_profiles.json')
 for p in phase:

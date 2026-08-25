@@ -41,7 +41,7 @@ Standardize the boundary between domain-specific discovery and generic directory
 
 A Directory Adapter publishes a coherent candidate snapshot on its own stack using `DIRECTORY_ADAPTER_ABI_V2`. Generic directory infrastructure consumes that snapshot and owns ordering, exact deduplication, overflow, stable generations, snapshot publication, and registry state.
 
-Directory schemas remain versioned data in `directory_schemas.json`. Controller, Pressure Grid Link, Resource Endpoint, Resource Link, and Catalog Store Node discovery all publish through generic Snapshot/Registry host ABIs; consumers identify record semantics by DirectorySchemaId/Version rather than domain-specific directory magic values.
+Directory schemas remain versioned data in `data/directory_schemas.json`. Controller, Pressure Grid Link, Resource Endpoint, Resource Link, and Catalog Store Node discovery all publish through generic Snapshot/Registry host ABIs; consumers identify record semantics by DirectorySchemaId/Version rather than domain-specific directory magic values.
 
 Completion criteria:
 
@@ -100,7 +100,7 @@ The ordinary lifecycle is:
 
 with explicit `WAIT_RESOURCE`, `WAIT_PROCESSOR`, `WAIT_CAPACITY`, `FAULT`, and `CANCELLED` states. WAIT states return to PLANNING so topology, resources, capacity, and processor choice are revalidated rather than resumed from a stale plan.
 
-`ic10/generic-jobs/generic_job_store_v1_0.ic10` provides 32 crash-safe physical slots. Immutable intent and per-slot A/B state banks fit in one 512-cell stack. JobId is Store-owned, state mutation uses expected JobGeneration, queue readers fence on an odd/even QueueSequence, terminal states are immutable, and only terminal records can be reaped. The Store owns mechanical publication; lifecycle legality is the versioned writer contract in `generic_job_schema.json` / `job_abi.py`.
+`ic10/generic-jobs/generic_job_store_v1_0.ic10` provides 32 crash-safe physical slots. Immutable intent and per-slot A/B state banks fit in one 512-cell stack. JobId is Store-owned, state mutation uses expected JobGeneration, queue readers fence on an odd/even QueueSequence, terminal states are immutable, and only terminal records can be reaped. The Store owns mechanical publication; lifecycle legality is the versioned writer contract in `data/generic_job_schema.json` / `framework/job_abi.py`.
 
 Completion criteria:
 
@@ -167,7 +167,7 @@ Implemented:
 - `ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10` requires paired source/destination reservations, matching owner identity, plan epochs, direction locks, ResourceType, and live Endpoint generations before moving a LArRE stack;
 - `ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10` revalidates exact item identity and quantity immediately before pickup and exposes explicit held-item recovery;
 - the reserved LArRE move client persists the physical origin before pickup so recovery remains possible after a same-housing client restart;
-- `ic10/item-storage-common/material_export_slot_endpoint_v1_0.ic10` makes chute/export handoff state reservable for inbound storage placement;
+- `ic10/material-grid/material_export_slot_endpoint_v1_0.ic10` makes chute/export handoff state reservable for inbound storage placement;
 - `ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10` supports bounded directly readable slot storage without LArRE;
 - `ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10` models dedicated SDB inventory as conservative lower-bound quantity/capacity rather than misinterpreting native occupied-stack count as exact item quantity;
 - `ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10` reuses Material Feeder ABI1 to export FIFO SDB stacks into a Stacker and meter the exact requested processor quantity.
@@ -203,7 +203,7 @@ The planner uses coherent Item-7 inventory quotes plus logical future-output cla
 
 ## 9. Power-management reuse — COMPLETE
 
-Item 9 proves the Directory/Profile/ResourceGrid/Reservation/Job abstractions against electrical power rather than materials. `resource_profiles.json` now carries POWER/WATT and ENERGY/JOULE semantics; live policy remains in endpoints rather than static catalog records.
+Item 9 proves the Directory/Profile/ResourceGrid/Reservation/Job abstractions against electrical power rather than materials. `data/resource_profiles.json` now carries POWER/WATT and ENERGY/JOULE semantics; live policy remains in endpoints rather than static catalog records.
 
 Implemented:
 
@@ -217,7 +217,7 @@ Implemented:
 
 Review fixes included the Generic Reservation `S6 ExportAvailable` / `S7 ImportCapacity` offset distinction, battery self-lock avoidance, foreign reservation ownership, partial-commit epoch cleanup, exact transformer source+sink authority, allocator reflash reacquisition, final-write authority re-fencing, Generic Job Selector reuse/cursor fairness, WAIT/FAULT termination, and corrected POWER job intent mapping.
 
-Acceptance evidence is in `validation/validators/validate_power_management_contracts.py` and `tests/test_power_management.py`; full framework release evidence is generated by `run_validation.py`. See `docs/POWER_MANAGEMENT.md`.
+Acceptance evidence is in `validation/validators/validate_power_management_contracts.py` and `tests/test_power_management.py`; full framework release evidence is generated by `tools/run_validation.py`. See `docs/POWER_MANAGEMENT.md`.
 
 
 ## 10. Broad interruption and fault-injection suite — COMPLETE
@@ -226,7 +226,7 @@ Item 10 applies one reusable cut-at-every-boundary fault-injection method across
 
 Implemented:
 
-- `fault_injection.py` provides deterministic deep-copied restart injection after every prefix of an ordered mutation sequence;
+- `framework/fault_injection.py` provides deterministic deep-copied restart injection after every prefix of an ordered mutation sequence;
 - `tests/test_fault_injection.py` covers catalog migration, directory mutation/Store loss, processor replacement, ITEM quote/commit/action, LArRE held-item recovery, dependency cancellation and live-output invalidation, deterministic Job Gateway replay, POWER plan replacement, allocator reflash/reacquisition, final-write authority withdrawal for load/transformer executors, and cancellation from every nonterminal Generic Job state;
 - the campaign executes actual `ic10/power-grid/power_dispatch_plan_store_v1_0.ic10` COMMIT logic at dozens of instruction cut points;
 - `validation/validators/validate_fault_injection_contracts.py` statically checks critical destination-before-source-removal, persisted-origin-before-move, inactive-before-payload, deterministic replay-token, POWER recovery, and commit-before-authority ordering;

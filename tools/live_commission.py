@@ -1,27 +1,31 @@
 #!/usr/bin/env python3
 """Create and maintain field commissioning evidence bound to one framework input fingerprint."""
 from __future__ import annotations
+from pathlib import Path as _ProjectPath
+import sys as _project_sys
+_PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
+if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from pathlib import Path
 import argparse, datetime as dt, hashlib, json, sys
 
-ROOT=Path(__file__).resolve().parent
-CATALOG=ROOT/'live_commissioning_cases.json'
+ROOT=_PROJECT_ROOT
+CATALOG=ROOT/'data/live_commissioning_cases.json'
 FORMAT='LIVE_COMMISSION_SESSION_V1'
 VALID={'PASS','FAIL','BLOCKED'}
 
 def sha_bytes(data:bytes)->str: return hashlib.sha256(data).hexdigest()
 def load_catalog(root=ROOT):
-    p=root/'live_commissioning_cases.json'; data=json.loads(p.read_text())
+    p=root/'data/live_commissioning_cases.json'; data=json.loads(p.read_text())
     if data.get('format')!='LIVE_COMMISSIONING_CASES_V1': raise ValueError('unsupported commissioning catalog')
     return data
 
 def framework_fingerprint(root=ROOT):
     # Reuse the release validator's immutable-input fingerprint. field_evidence is excluded there.
     import importlib.util
-    spec=importlib.util.spec_from_file_location('_rv',root/'run_validation.py'); mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+    spec=importlib.util.spec_from_file_location('_rv',root/'tools'/'run_validation.py'); mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
     return mod.input_fingerprint()
 
-def catalog_sha(root=ROOT): return sha_bytes((root/'live_commissioning_cases.json').read_bytes())
+def catalog_sha(root=ROOT): return sha_bytes((root/'data/live_commissioning_cases.json').read_bytes())
 def now(): return dt.datetime.now(dt.timezone.utc).isoformat()
 def case_map(root=ROOT): return {c['id']:c for c in load_catalog(root)['cases']}
 

@@ -12,7 +12,7 @@ families={
  'ControllerPhasePressure':('ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10','ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10',2,[255,1,0,0],9),
  'ControllerPressureDomain':('ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10','ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10',1,[255,0,0,0],8),
  'ControllerPressureTransfer':('ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10','ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10',1,[15,0,0,0],4)}
-profiles={p['profile_type']:p for p in json.loads((R/'input_profiles.json').read_text())['profiles']}
+profiles={p['profile_type']:p for p in json.loads((R/'data/input_profiles.json').read_text())['profiles']}
 def num(t,p):
  m=re.search(p,t,re.M);return int(m.group(1)) if m else None
 def hashtype(t):

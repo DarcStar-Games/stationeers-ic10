@@ -5,7 +5,7 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 #!/usr/bin/env python3
 from pathlib import Path
 import sys
-from ic10_harness import IC10,Device
+from framework.ic10_harness import IC10,Device
 R=_PROJECT_ROOT
 D=(R/'ic10/controller-discovery/controller_directory_adapter_v4_0.ic10').read_text();B=(R/'ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10').read_text();H=(R/'ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10').read_text();S=(R/'ic10/controller-discovery/controller_selector_v3_0.ic10').read_text();A=(R/'ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10').read_text();L=(R/'ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10').read_text();P=(R/'ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10').read_text();fails=[]
 for n in ('poke 0 31415983','poke 2 HASH("DirectorySchema.Controller")','poke 4 2','poke 5 64','poke 10 1'):

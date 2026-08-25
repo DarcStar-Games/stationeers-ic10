@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """Build a verified release archive in validation-before-manifest order."""
+from pathlib import Path as _ProjectPath
+import sys as _project_sys
+_PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
+if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from pathlib import Path
 import argparse, hashlib, shutil, subprocess, sys, zipfile
 
-ROOT=Path(__file__).resolve().parent
+ROOT=_PROJECT_ROOT
 # Local VCS/tooling state is not shippable framework content. Keep in sync with
 # run_validation.py.
 TOOLING_DIRS={'.git','.claude','.githooks'}
@@ -49,10 +53,10 @@ def main():
     # Remove/exclude the requested output before any manifest inventory is built.
     if out.exists(): out.unlink()
     clean_transients()
-    subprocess.run([sys.executable,str(ROOT/'generate_directory_adapters.py')],cwd=ROOT,check=True)
-    subprocess.run([sys.executable,str(ROOT/'update_user_deployment_inventory.py')],cwd=ROOT,check=True)
-    subprocess.run([sys.executable,str(ROOT/'generate_source_catalog.py')],cwd=ROOT,check=True)
-    subprocess.run([sys.executable,str(ROOT/'run_validation.py'),'--resume'],cwd=ROOT,check=True)
+    subprocess.run([sys.executable,str(ROOT/'tools'/'generate'/'generate_directory_adapters.py')],cwd=ROOT,check=True)
+    subprocess.run([sys.executable,str(ROOT/'tools'/'generate'/'update_user_deployment_inventory.py')],cwd=ROOT,check=True)
+    subprocess.run([sys.executable,str(ROOT/'tools'/'generate'/'generate_source_catalog.py')],cwd=ROOT,check=True)
+    subprocess.run([sys.executable,str(ROOT/'tools'/'run_validation.py'),'--resume'],cwd=ROOT,check=True)
     # No source/generated-doc mutation is allowed after validation except release evidence/manifests.
     write_deployment_baseline(); count=write_archive_manifest({out}); verify_manifest(ROOT/'ARCHIVE_MANIFEST.sha256')
     files=tracked_files({out})

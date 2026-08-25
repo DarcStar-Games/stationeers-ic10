@@ -25,7 +25,7 @@ new complete committed state
 
 A partially mixed state is never authoritative.
 
-`banked_transaction.py` is the executable reference model. `tests/test_banked_transaction.py` checks the shared invariants and executes the actual Config Host and Job Store recovery paths.
+`framework/banked_transaction.py` is the executable reference model. `tests/test_banked_transaction.py` checks the shared invariants and executes the actual Config Host and Job Store recovery paths.
 
 ## Profile 1 — REVISION_BANK
 

@@ -9,13 +9,35 @@ ROOT=_PROJECT_ROOT
 mds=[p for p in ROOT.rglob('*.md') if 'validation' not in p.parts]
 existing={p.name for p in ROOT.iterdir() if p.is_file()}
 fails=[]
+GLOB=set('*{}?[]')
+def referenced_paths(ref):
+    """Yield every concrete repo path inside one backtick span.
+
+    A span may chain programs ('A -> B -> C'), map a pin ('d1 -> A'), or carry a
+    prose prefix ('dedicated ic10/...'), so split on the arrow and keep the last
+    word of each segment. A wildcard family ('..._loader_*_v4_0.ic10') names a
+    set rather than a file and is left unchecked.
+    """
+    for seg in ref.split('->'):
+        seg=seg.strip()
+        if not seg: continue
+        seg=seg.split()[-1]
+        if seg.endswith(('.ic10','.md','.py','.json')) and '/' in seg and not GLOB&set(seg):
+            yield seg
+
 for p in mds:
     txt=p.read_text(errors='replace')
     for ref in sorted(set(re.findall(r'`([^`\n]+\.(?:ic10|md|py|json))`',txt))):
-        if '/' not in ref and ref not in existing:
-            fails.append(f'{p.name}: missing referenced file {ref}')
-        elif ref.startswith('tests/') and not (ROOT/ref).exists():
-            fails.append(f'{p.name}: missing referenced test artifact {ref}')
+        if '/' not in ref:
+            if ref not in existing: fails.append(f'{p.name}: missing referenced file {ref}')
+            continue
+        for seg in referenced_paths(ref):
+            if not (ROOT/seg).exists(): fails.append(f'{p.name}: missing referenced file {seg}')
+    # A documented command is a promise the operator can paste. Backtick checks
+    # above only see a span that *ends* in a path, so `python x.py --resume` and
+    # anything inside a fenced block would otherwise never be resolved.
+    for cmd in sorted(set(re.findall(r'\bpython3?\s+([\w./-]+\.py)\b',txt))):
+        if not (ROOT/cmd).exists(): fails.append(f'{p.name}: documented command names missing script {cmd}')
     for target in re.findall(r'\[[^\]]*\]\(([^)]+)\)',txt):
         target=target.strip()
         if target.startswith(('http://','https://','mailto:','#')):
@@ -123,8 +145,8 @@ required={
  'docs/CATALOG_SCHEMA.md':['CatalogSchemaVersion','CELL_BLOCK_WIDTH = 4','canonical zero padding','Resource Profile schema v2','Input Profile schema v3','Transform schema v4','Recipe schema v3'],
  'docs/DEPENDENCY_PLANNING.md':['199 Job Command Gateway ABI3','ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10','ic10/dependency-planning/dependency_plan_store_v2_0.ic10','QuoteFingerprintA','active','FutureQty','root job -> child -> grandchild','physical reservation authority'],
  'docs/ABI_REFERENCE.md':['Store ABI5','Loader ABI4','Coordinator ABI3','DIRECTORY_ADAPTER_ABI_V2','Generic Snapshot Directory Host','DirectorySchema.Controller','DirectorySchema.ResourceReservation','DirectorySchema.Printer','ProcessorSpec','DirectorySchema.PrinterExecution','Generic Job Store ABI v1','31415984','Transform Profile ABI4','RequiredCapabilityMask','Recipe schema v3','Manufacturing Scheduler','ABI2 exactly','Power Management ABIs — current','DirectorySchema.PowerReservation','S6','S7','ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10'],
- 'README.md':['ROADMAP.md','docs/PROCESS_UTILITY_ORCHESTRATION.md','docs/INTERRUPTION_FAULT_INJECTION.md','docs/LIVE_COMMISSIONING.md','complete validator/test inventory defined in `run_validation.py`','docs/DEPENDENCY_PLANNING.md','docs/COMPLETED_MILESTONES.md','docs/CATALOG_COORDINATION.md','docs/CATALOG_STORAGE.md','docs/DIRECTORY_STANDARD.md','docs/PRINTER_DIRECTORY.md','docs/GENERIC_JOB_ABI.md','docs/MANUFACTURING_SCHEDULER.md','docs/ASYNC_REQUEST_STANDARD.md','docs/BANKED_TRANSACTION_STANDARD.md','docs/SCRIPT_INDEX.md','run_validation.py','build_release.py','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/generic-jobs/generic_job_store_v1_0.ic10','ic10/manufacturing/manufacturing_scheduler_v1_0.ic10','docs/POWER_MANAGEMENT.md','ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10','ic10/power-jobs/power_job_scheduler_v1_0.ic10'],
- 'docs/DIRECTORY_STANDARD.md':['DIRECTORY_ADAPTER_ABI_V2','ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','ic10/directory-core/generic_registry_directory_host_v2_0.ic10','ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10','ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10','directory_schemas.json','DirectorySchema.Controller','DirectorySchema.ResourceReservation','DirectorySchema.Printer','DirectorySchema.TransformLane','DirectorySchema.PrinterExecution','DirectorySchema.CatalogStoreNode','DirectorySchema.PowerReservation','overflow'],
+ 'README.md':['ROADMAP.md','docs/PROCESS_UTILITY_ORCHESTRATION.md','docs/INTERRUPTION_FAULT_INJECTION.md','docs/LIVE_COMMISSIONING.md','complete validator/test inventory defined in `tools/run_validation.py`','docs/DEPENDENCY_PLANNING.md','docs/COMPLETED_MILESTONES.md','docs/CATALOG_COORDINATION.md','docs/CATALOG_STORAGE.md','docs/DIRECTORY_STANDARD.md','docs/PRINTER_DIRECTORY.md','docs/GENERIC_JOB_ABI.md','docs/MANUFACTURING_SCHEDULER.md','docs/ASYNC_REQUEST_STANDARD.md','docs/BANKED_TRANSACTION_STANDARD.md','docs/SCRIPT_INDEX.md','tools/run_validation.py','tools/build_release.py','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/generic-jobs/generic_job_store_v1_0.ic10','ic10/manufacturing/manufacturing_scheduler_v1_0.ic10','docs/POWER_MANAGEMENT.md','ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10','ic10/power-jobs/power_job_scheduler_v1_0.ic10'],
+ 'docs/DIRECTORY_STANDARD.md':['DIRECTORY_ADAPTER_ABI_V2','ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','ic10/directory-core/generic_registry_directory_host_v2_0.ic10','ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10','ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10','data/directory_schemas.json','DirectorySchema.Controller','DirectorySchema.ResourceReservation','DirectorySchema.Printer','DirectorySchema.TransformLane','DirectorySchema.PrinterExecution','DirectorySchema.CatalogStoreNode','DirectorySchema.PowerReservation','overflow'],
  'docs/PRINTER_DIRECTORY.md':['DirectorySchema.Printer','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ProcessorSpec','Printer.Autolathe','Printer.SecurityPrinter','Printer.RocketManufactory','StructureFabricator','Capacity remains 64','DirectorySchema.PrinterExecution','tests/test_printer_directory.py'],
  'docs/RESOURCE_PROFILES.md':['39 Resource Profiles','ProfileKind=5','Fuel.H2O2','physical width is 16 cells','26','FLUID','ITEM','POWER','ENERGY','ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10','ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10','ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10','Store ABI5'],
  'docs/RECIPE_CATALOG.md':['Recipe schema v3','Lookup ABI3','FamilyHash','PartitionKey','18','ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10','ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10','ManufacturingReagentHash','Store ABI5'],
@@ -162,7 +184,7 @@ if 'docs/SCRIPT_INDEX.md' not in line_doc or '117 lines or more' not in line_doc
 
 # Manifest-derived synchronization checks. These guard numeric prose that can drift
 # even when filenames/ABI markers remain valid.
-profile_manifest=json.loads((ROOT/'input_profile_catalog_manifest.json').read_text())
+profile_manifest=json.loads((ROOT/'data/input_profile_catalog_manifest.json').read_text())
 profile_count=profile_manifest['profile_count']
 production_controller_profiles=[n for n in profile_manifest['profiles'] if n != 'diagnostic']
 controller_family_count=len(production_controller_profiles)

@@ -5,11 +5,11 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 #!/usr/bin/env python3
 from pathlib import Path
 import json,re,sys,tempfile
-from catalog_test_helpers import generate_recipe_fixture
+from framework.catalog_test_helpers import generate_recipe_fixture
 R=_PROJECT_ROOT; fails=[]
 def fail(x): fails.append(x)
 manifest_files=['resource_profile_catalog_manifest.json','input_profile_catalog_manifest.json','resource_transform_catalog_manifest.json']
-manifests=[json.loads((R/f).read_text()) for f in manifest_files]
+manifests=[json.loads((R/'data'/f).read_text()) for f in manifest_files]
 loader_paths=[]
 for m in manifests: loader_paths += [R/f for f in m.get('loaders',[])]
 recipe_tmp=tempfile.TemporaryDirectory();recipe_root=Path(recipe_tmp.name);rc=generate_recipe_fixture(recipe_root)
@@ -64,12 +64,12 @@ expected_schema={
  'resource_transform_catalog_manifest.json':('CatalogSchema.ResourceTransform',4,17),
 }
 for name,(schema,version,count) in expected_schema.items():
-    m=json.loads((R/name).read_text())
+    m=json.loads((R/'data'/name).read_text())
     if (m.get('catalog_store_magic'),m.get('catalog_store_abi'),m.get('catalog_loader_magic'),m.get('catalog_loader_abi'),m.get('catalog_coordinator_magic'),m.get('catalog_coordinator_abi'))!=(31415968,5,31415969,4,31415970,3): fail(name+': common ABI mismatch')
     if m.get('catalog_schema_id')!=schema or m.get('catalog_schema_version')!=version or m.get('total_item_count')!=count: fail(name+': schema/count mismatch')
     if m.get('control_plane')!='catalog_coordinator_v3_runtime_placement_item_migration' or m.get('store_model')!='generic_dynamic_item_heap' or m.get('loader_model')!='one_shot_sparse_relocatable_whole_items': fail(name+': runtime placement model metadata missing')
     if not m.get('runtime_store_placement'): fail(name+': runtime placement flag missing')
-rp=json.loads((R/'resource_profile_catalog_manifest.json').read_text())
+rp=json.loads((R/'data/resource_profile_catalog_manifest.json').read_text())
 if rp.get('storage_partition')!='resource_class' or rp.get('runtime_min_store_count')!=5: fail('Resource Profile runtime partition/capacity estimate mismatch')
 if [p.get('item_count') for p in rp.get('partitions',[])]!=[10,27,1,1]: fail('Resource Profile partition item counts mismatch')
 if (rc.get('catalog_store_abi'),rc.get('catalog_loader_abi'),rc.get('catalog_coordinator_abi'),rc.get('catalog_schema_id'),rc.get('catalog_schema_version'))!=(5,4,3,'CatalogSchema.Recipe',3): fail('Recipe common ABI/schema mismatch')

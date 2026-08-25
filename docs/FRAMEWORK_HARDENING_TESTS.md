@@ -9,7 +9,7 @@ For a new deployment or major framework change, run the automated tests first. T
 Before live testing, run the complete release suite:
 
 ```text
-python run_validation.py
+python3 tools/run_validation.py
 ```
 
 For focused diagnosis, the component checks include:
@@ -44,7 +44,7 @@ A failing automated contract should be fixed before treating a live-game symptom
 
 ## Automated interruption campaign
 
-`fault_injection.py`, `validation/validators/validate_fault_injection_contracts.py`, and `tests/test_fault_injection.py` implement Roadmap Item 10. The campaign injects restart after every ordered transaction prefix for catalog migration and POWER replacement, exhaustively checks Generic Job cancellation states, and exercises actual Power Dispatch Plan Store IC10 at many instruction boundaries.
+`framework/fault_injection.py`, `validation/validators/validate_fault_injection_contracts.py`, and `tests/test_fault_injection.py` implement Roadmap Item 10. The campaign injects restart after every ordered transaction prefix for catalog migration and POWER replacement, exhaustively checks Generic Job cancellation states, and exercises actual Power Dispatch Plan Store IC10 at many instruction boundaries.
 
 The automated safety criterion is old-complete/new-complete/invalid only. A torn state may cause a safe outage, but it may not become mutation or actuation authority. Physical live-game cases below remain required for Stationeers-specific device/network behavior. See `docs/INTERRUPTION_FAULT_INJECTION.md`.
 
@@ -88,7 +88,7 @@ The automated safety criterion is old-complete/new-complete/invalid only. A torn
 
 ## Phase-pressure model tests
 
-`tests/test_phase_pressure_protocol.py` checks all nine PHASE_MEDIUM records in `resource_profiles.json`, deterministic Resource Profile Catalog generation, ratio LogicType, purity threshold, and finite in-range phase boundaries. `tests/test_ic10_execution.py` additionally executes the generated catalog and real Resource Profile View before exercising the Purity Guard and material inventory consumers.
+`tests/test_phase_pressure_protocol.py` checks all nine PHASE_MEDIUM records in `data/resource_profiles.json`, deterministic Resource Profile Catalog generation, ratio LogicType, purity threshold, and finite in-range phase boundaries. `tests/test_ic10_execution.py` additionally executes the generated catalog and real Resource Profile View before exercising the Purity Guard and material inventory consumers.
 
 ## Pressure-domain model tests
 
@@ -103,7 +103,7 @@ The automated safety criterion is old-complete/new-complete/invalid only. A torn
 
 ## Direct IC10 execution tests
 
-`tests/test_ic10_execution.py` uses `ic10_harness.py` to execute selected **actual IC10 source**, not a Python reimplementation. It currently checks generated profile publication, successful and failed purity checks, staged-next-epoch isolation, commit-only lease activation, one-shot lease expiration, and topology-mismatch epoch consumption without later reactivation.
+`tests/test_ic10_execution.py` uses `framework/ic10_harness.py` to execute selected **actual IC10 source**, not a Python reimplementation. It currently checks generated profile publication, successful and failed purity checks, staged-next-epoch isolation, commit-only lease activation, one-shot lease expiration, and topology-mismatch epoch consumption without later reactivation.
 
 ## Controller-directory scale model
 
@@ -268,9 +268,9 @@ Do not edit files under `validation/evidence/` by hand to record live results. T
 
 ## Item 12 field-evidence workflow
 
-Item 12 makes the recording rule above executable. `live_commissioning_cases.json` defines the required field suites; `live_commission.py` creates release-fingerprint-bound sessions and records append-only PASS/FAIL/BLOCKED observations; `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` can capture up to six read-only LogicType/stack observations during a live test. See `docs/LIVE_COMMISSIONING.md`.
+Item 12 makes the recording rule above executable. `data/live_commissioning_cases.json` defines the required field suites; `tools/live_commission.py` creates release-fingerprint-bound sessions and records append-only PASS/FAIL/BLOCKED observations; `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` can capture up to six read-only LogicType/stack observations during a live test. See `docs/LIVE_COMMISSIONING.md`.
 
-A live session becomes stale when the framework input fingerprint or commissioning catalog changes. Item 12 remains ACTIVE until every required suite has a current PASS. Automated validators and `ic10_harness.py` remain prerequisites and regression tools, not substitutes for those physical results.
+A live session becomes stale when the framework input fingerprint or commissioning catalog changes. Item 12 remains ACTIVE until every required suite has a current PASS. Automated validators and `framework/ic10_harness.py` remain prerequisites and regression tools, not substitutes for those physical results.
 
 
 ## Live multi-hop route hardening
@@ -301,7 +301,7 @@ Run these with pump actuation disabled or with a harmless test medium first:
 
 ## Executable IC10 protocol tests
 
-`ic10_harness.py` is a small deterministic interpreter for the instruction subset required by transaction-critical tests. `tests/test_ic10_execution.py` executes actual IC10 for the generated Resource Profile Catalog + Pollutant View, Purity Guard, Pressure Transfer Grant Guard, Generic Resource adapters, the complete committed MaterialGrid batch path, and the Arc Furnace Transform Admission/Runtime. This complements, rather than replaces, the broader model tests.
+`framework/ic10_harness.py` is a small deterministic interpreter for the instruction subset required by transaction-critical tests. `tests/test_ic10_execution.py` executes actual IC10 for the generated Resource Profile Catalog + Pollutant View, Purity Guard, Pressure Transfer Grant Guard, Generic Resource adapters, the complete committed MaterialGrid batch path, and the Arc Furnace Transform Admission/Runtime. This complements, rather than replaces, the broader model tests.
 
 Additional hardening models verify directory overflow, telemetry generation coherence, Medium Profile generation-last publication, purity gating, Allocator ABI3 quote/commit behavior, topology-bound grants, and reservation-aware route ranking.
 
@@ -371,7 +371,7 @@ Transform:
 
 ## Generic Job Store hardening
 
-`tests/test_job_abi.py` executes the real `ic10/generic-jobs/generic_job_store_v1_0.ic10` through `ic10_harness.py` and cross-checks lifecycle semantics against `generic_job_schema.json` / `job_abi.py`.
+`tests/test_job_abi.py` executes the real `ic10/generic-jobs/generic_job_store_v1_0.ic10` through `framework/ic10_harness.py` and cross-checks lifecycle semantics against `data/generic_job_schema.json` / `framework/job_abi.py`.
 
 Automated checks prove:
 
@@ -402,7 +402,7 @@ For the Item-6 Manufacturing Scheduler, perform these live-game Generic Job chec
 
 ## Manufacturing Scheduler hardening
 
-Automated Item-6 tests exercise the actual selector/router/scheduler and execution services through `ic10_harness.py`. They prove:
+Automated Item-6 tests exercise the actual selector/router/scheduler and execution services through `framework/ic10_harness.py`. They prove:
 
 - coherent queue scans choose highest Priority and lower JobId on ties;
 - a WAIT job receives bounded backoff so it cannot monopolize every scheduler cycle;

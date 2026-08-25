@@ -5,9 +5,9 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 #!/usr/bin/env python3
 from pathlib import Path
 import sys
-from fault_injection import Step,inject_every_boundary
-from ic10_harness import IC10
-from job_abi import JobState,WAIT_STATES,TERMINAL,allowed_transition
+from framework.fault_injection import Step,inject_every_boundary
+from framework.ic10_harness import IC10
+from framework.job_abi import JobState,WAIT_STATES,TERMINAL,allowed_transition
 
 R=_PROJECT_ROOT
 checks=0
@@ -133,7 +133,7 @@ ck(a.stack.get(4)==0 and a.stack.get(20)==0,'Power allocator reflash retained ac
 # 10. Allocator reflash is safe *and live*: the current unchanged plan is
 # revalidated, a fresh epoch is committed, the prior epoch is released, and
 # authority is republished only after that sequence completes.
-from ic10_harness import Device
+from framework.ic10_harness import Device
 plan=Device(3000,stack={3:5},props={'ReferenceId':3000})
 validator=Device(3001,stack={},props={'ReferenceId':3001})
 committer=Device(3002,stack={},props={'ReferenceId':3002})

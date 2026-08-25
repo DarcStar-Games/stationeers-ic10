@@ -5,7 +5,7 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 #!/usr/bin/env python3
 from pathlib import Path
 import sys
-from ic10_harness import Device,IC10
+from framework.ic10_harness import Device,IC10
 R=_PROJECT_ROOT
 A=(R/'ic10/printer-directory/printer_directory_adapter_v1_0.ic10').read_text()
 B=(R/'ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10').read_text()

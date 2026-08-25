@@ -20,7 +20,7 @@ The current Integrated Circuit reference also documents that IC10 registers and 
 
 ## Instruction set provenance
 
-The authoritative mnemonic/signature list is vendored as `ic10_instruction_set.json` and enforced by
+The authoritative mnemonic/signature list is vendored as `data/ic10_instruction_set.json` and enforced by
 `validation/validators/validate_ic10_opcodes.py`. It is extracted from Stationeers **game data**
 (Stationpedia command definitions) by the WikiExtractorMod BepInEx mod, not transcribed from wiki
 prose, and carries the source commit and extraction date. Refresh it by re-exporting against the
@@ -182,7 +182,7 @@ Relevant references:
 - `Ingot (Iron)`: https://stationeers-wiki.com/Ingot_%28Iron%29
 - `Ingot (Copper)`: https://stationeers-wiki.com/Ingot_%28Copper%29
 - `Ingot (Gold)`: https://stationeers-wiki.com/Ingot_%28Gold%29
-  - these pages provide the starter ItemHash and stack-size metadata used by the ITEM_STACK records in `resource_profiles.json`.
+  - these pages provide the starter ItemHash and stack-size metadata used by the ITEM_STACK records in `data/resource_profiles.json`.
 
 The current material profiles are intentionally generated from local versioned data rather than being hand-maintained independently of tests and documentation. Material transport and capability-based furnace transform behavior are covered by direct IC10 execution tests, but `docs/FRAMEWORK_HARDENING_TESTS.md` still requires in-game verification of chute timing, Stacker split behavior, sorter routing, jams, and Arc Furnace output timing.
 

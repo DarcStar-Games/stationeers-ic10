@@ -58,7 +58,7 @@ feeder=(R/'ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10').read_te
 need(feeder,'poke 0 31415961','SDB feeder ABI reuse'); need(feeder,'s d1 Setting r9','SDB exact Stacker metering')
 
 # Unified Resource Profile source contains the complete current material ITEM set.
-data=json.loads((R/'resource_profiles.json').read_text())
+data=json.loads((R/'data/resource_profiles.json').read_text())
 items=[x for x in data['profiles'] if x['profile_kind']==2]
 if len(items)!=27: fails.append('expected 27 current material profiles in unified resource source')
 for x in items:
@@ -70,7 +70,7 @@ view=(R/'ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10').read_te
 for n in ('poke 0 31415963','get r10 db 2','get r11 db 3','getd r0 r2 r8'):
     need(view,n,'resource profile view')
 # Transform ABI3 reads self-contained relocatable items and complete furnace material set.
-trs=json.loads((R/'resource_transforms.json').read_text())
+trs=json.loads((R/'data/resource_transforms.json').read_text())
 if len(trs['transforms'])!=17: fails.append('expected 17 furnace transforms')
 loaders=sorted((R/'ic10'/'transform-catalog').glob('resource_transform_catalog_loader_*_v6_0.ic10'))
 loader='\n'.join(p.read_text() for p in loaders)

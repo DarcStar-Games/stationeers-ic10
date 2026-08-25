@@ -26,7 +26,7 @@ PI, Test, and Sequencer telemetry remain ABI1 because current consumers do not r
 
 ## 2. Unified Resource Profiles and coherent publication
 
-`resource_profiles.json` is now the single source of truth for phase-medium and material-item profile metadata. `generate_resource_profiles.py` produces ResourceClass-partitioned active Stores plus one-shot sparse whole-profile Loader candidates; the Coordinator-selected Generic Store imports assigned candidate ranges transactionally while `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` resolves one typed record and publishes it with `S5` as the positive commit token. Dedicated per-medium and per-item profile programs were removed.
+`data/resource_profiles.json` is now the single source of truth for phase-medium and material-item profile metadata. `tools/generate/generate_resource_profiles.py` produces ResourceClass-partitioned active Stores plus one-shot sparse whole-profile Loader candidates; the Coordinator-selected Generic Store imports assigned candidate ranges transactionally while `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` resolves one typed record and publishes it with `S5` as the positive commit token. Dedicated per-medium and per-item profile programs were removed.
 
 `ControllerPhasePressure` captures and rechecks Resource Profile View `S5`; a catalog/view that is incomplete, being reflashed, or changes during the read cannot be consumed as a valid thermodynamic snapshot.
 
@@ -118,7 +118,7 @@ For very large bases, keep controller discovery on a dedicated data network so t
 
 The existing Python protocol models remain useful for exhaustive interruption/state cases, but they are independent reimplementations. A model and an IC10 script can theoretically share the same mistaken design assumption.
 
-`ic10_harness.py` is therefore a small deterministic interpreter for the instruction subset used by transaction-critical tests. It is not intended to emulate the whole game.
+`framework/ic10_harness.py` is therefore a small deterministic interpreter for the instruction subset used by transaction-critical tests. It is not intended to emulate the whole game.
 
 `tests/test_ic10_execution.py` currently executes the real IC10 source for:
 
@@ -214,7 +214,7 @@ The Job Store enforces these storage invariants:
 6. **Same-service reflash is old-or-new.** The Store journals the in-flight state-bank base and old active bank. A reboot before the bank flip retries the request; a reboot after the flip preserves and acknowledges the committed mutation without double-applying it.
 7. **There is one request-mailbox writer.** The Store does not arbitrate concurrent command producers. `ic10/manufacturing/manufacturing_scheduler_v1_0.ic10` owns TRANSFORM/PRINT lifecycle policy, but Gateway ABI3 serializes command lanes and `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` is the sole physical Job Store mailbox writer.
 
-Lifecycle-edge legality is a writer contract in `generic_job_schema.json` / `job_abi.py`: normal progress follows QUEUED -> PLANNING -> RESERVING -> READY -> RUNNING -> VERIFYING -> COMPLETE; planning/reservation/readiness may enter explicit wait states; FAULT/CANCELLED are terminal. Keeping that policy outside the 120-line Store prevents processor-specific scheduling behavior from leaking into the generic storage ABI.
+Lifecycle-edge legality is a writer contract in `data/generic_job_schema.json` / `framework/job_abi.py`: normal progress follows QUEUED -> PLANNING -> RESERVING -> READY -> RUNNING -> VERIFYING -> COMPLETE; planning/reservation/readiness may enter explicit wait states; FAULT/CANCELLED are terminal. Keeping that policy outside the 120-line Store prevents processor-specific scheduling behavior from leaking into the generic storage ABI.
 
 
 ## Manufacturing scheduler correctness boundary

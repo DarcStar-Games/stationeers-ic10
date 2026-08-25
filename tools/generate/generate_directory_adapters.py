@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
+from pathlib import Path as _ProjectPath
+import sys as _project_sys
+_PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
+if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from pathlib import Path
 import argparse,json,sys
-R=Path(__file__).resolve().parent
-SPECS=R/'directory_adapter_specs.json'
+R=_PROJECT_ROOT
+SPECS=R/'data/directory_adapter_specs.json'
 
 def render(s):
  fields=s['fields']; w=len(fields); g=s['generation_offset']

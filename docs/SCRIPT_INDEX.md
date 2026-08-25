@@ -1,6 +1,6 @@
 # IC10 Script Index
 
-Generated from the deployable `ic10/` inventory. Semantic paths plus version suffixes are the executable source identity; historical numeric source ordinals are intentionally not part of filenames. Deployment family/class metadata is resolved from `source_manifest.json`.
+Generated from the deployable `ic10/` inventory. Semantic paths plus version suffixes are the executable source identity; historical numeric source ordinals are intentionally not part of filenames. Deployment family/class metadata is resolved from `data/source_manifest.json`.
 
 Production IC10 programs: 172
 
@@ -237,7 +237,7 @@ Generic Job Store -> Generic Job Selector -> Manufacturing Scheduler -> TRANSFOR
 
 ## Deployment ownership
 
-Every deployable program resolves to exactly one `deployment_family` and one deployment class in `source_manifest.json` (directly or through a generated-file rule). See `USER_DEPLOYMENT_GUIDE.md` for operator procedures, prerequisites, wiring, health checks, commissioning proof, restart behavior, and reclaim guidance.
+Every deployable program resolves to exactly one `deployment_family` and one deployment class in `data/source_manifest.json` (directly or through a generated-file rule). See `USER_DEPLOYMENT_GUIDE.md` for operator procedures, prerequisites, wiring, health checks, commissioning proof, restart behavior, and reclaim guidance.
 
 ## Source of truth
 

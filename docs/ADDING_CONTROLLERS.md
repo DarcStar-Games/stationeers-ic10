@@ -4,7 +4,7 @@ A normal controller family requires only the pieces that contain **family-specif
 
 1. **Runtime** — controller algorithm + generic telemetry.
 2. **Config Policy** — type/schema/block masks/defaults/validation/normalization.
-3. **Input Profile catalog entry** — optional commissioning UX metadata stored in `input_profiles.json` and materialized through the shared Profile View.
+3. **Input Profile catalog entry** — optional commissioning UX metadata stored in `data/input_profiles.json` and materialized through the shared Profile View.
 
 Reuse `ic10/controller-config/generic_persistent_config_host_v1_1.ic10`, Generic Input Scanner, Generic Input Resolver, Config Input Bridge, Editor, Loader, Committer, discovery, selectors, and diagnostics unchanged.
 
@@ -57,7 +57,7 @@ Keep physical-slot constants synchronized with the Policy. The config contract v
 
 ## Step 4: optionally add an Input Profile catalog entry
 
-A Profile controls commissioning UX, not the durable schema. It can therefore be omitted when Logic Memory editing is sufficient. New families normally **do not add another Input Profile IC**. Add one record to `input_profiles.json`, regenerate the shared catalog/loaders, and select the family through `ic10/input-profile-catalog/input_profile_view_v5_0.ic10`.
+A Profile controls commissioning UX, not the durable schema. It can therefore be omitted when Logic Memory editing is sufficient. New families normally **do not add another Input Profile IC**. Add one record to `data/input_profiles.json`, regenerate the shared catalog/loaders, and select the family through `ic10/input-profile-catalog/input_profile_view_v5_0.ic10`.
 
 ### Input Profile checklist
 
@@ -66,7 +66,7 @@ A Profile controls commissioning UX, not the durable schema. It can therefore be
 - add one four-value descriptor per active field in **active ordinal order**;
 - Dial descriptors provide explicit step count in descriptor `+3`;
 - enum tables remain numeric/symbolic source entries that the generator compiles into sparse numeric target/value pairs;
-- run `generate_input_profiles.py`;
+- run `tools/generate/generate_input_profiles.py`;
 - verify all generated loaders still fit the 120-line soft target and the one catalog store remains below 512 cells;
 - configure View `S2=ControllerType`, `S3=schema` and verify it republishes Generic Input Profile magic `31415929`, ABI 1, with positive generation `S5`.
 
@@ -212,7 +212,7 @@ Use bitmasks for capabilities, valid-slot geometry, and fault/status flags. Keep
 
 Every new production-capable `.ic10` program must have exactly one operator-facing deployment home before it can pass release validation.
 
-For a hand-maintained program, add these fields to its exact semantic-path entry in `source_manifest.json`:
+For a hand-maintained program, add these fields to its exact semantic-path entry in `data/source_manifest.json`:
 
 ```json
 {
@@ -228,8 +228,8 @@ Allowed deployment classes are `resident`, `conditional-resident`, `commissionin
 Then run:
 
 ```text
-python update_user_deployment_inventory.py
-python generate_source_catalog.py
+python3 tools/generate/update_user_deployment_inventory.py
+python3 tools/generate/generate_source_catalog.py
 python validation/validators/validate_source_catalog.py
 python validation/validators/validate_user_deployment_guide.py
 ```

@@ -40,12 +40,12 @@ The milestone preserves domain ownership: `ProcessCondition` never reserves or m
 
 ## 12. Live-game commissioning and evidence closure — ACTIVE
 
-Turn the existing human hardening plan into release-bound, machine-readable field evidence. Item 12 does **not** claim that automated simulation is equivalent to Stationeers. It adds a read-only commissioning snapshot probe, a versioned live-suite catalog, and fingerprint-bound PASS/FAIL/BLOCKED sessions so physical observations cannot be silently reused after the framework or acceptance criteria change. It also adds `USER_DEPLOYMENT_GUIDE.md`, whose generated program inventories are bound to `source_manifest.json` so every production IC10 program has one operator-facing deployment family/class and a consistent install/health/reflash/reclaim procedure.
+Turn the existing human hardening plan into release-bound, machine-readable field evidence. Item 12 does **not** claim that automated simulation is equivalent to Stationeers. It adds a read-only commissioning snapshot probe, a versioned live-suite catalog, and fingerprint-bound PASS/FAIL/BLOCKED sessions so physical observations cannot be silently reused after the framework or acceptance criteria change. It also adds `USER_DEPLOYMENT_GUIDE.md`, whose generated program inventories are bound to `data/source_manifest.json` so every production IC10 program has one operator-facing deployment family/class and a consistent install/health/reflash/reclaim procedure.
 
 Acceptance requires:
 
 - all automated validators/tests green for the same framework input fingerprint;
-- all required suites in `live_commissioning_cases.json` have current live `PASS` evidence;
+- all required suites in `data/live_commissioning_cases.json` have current live `PASS` evidence;
 - real pressure, material/chute, job/manufacturing, storage/LArRE, POWER, and Item-11 cross-domain paths are exercised;
 - device/property/slot/timing discrepancies are fixed or removed from the supported production contract, then rerun;
 - live evidence remains separate from deterministic `validation/evidence/`;
