@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Shared deployable-source metadata resolution for indexes, deployment docs, and validators."""
 from pathlib import Path
 import json,re

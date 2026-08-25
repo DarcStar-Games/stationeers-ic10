@@ -1,9 +1,9 @@
+#!/usr/bin/env python3
+"""Small executable model for diagnostic input state and selector transaction invariants."""
 from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
-#!/usr/bin/env python3
-"""Small executable model for diagnostic input state and selector transaction invariants."""
 
 def update(state, control, value):
     if control != 7:

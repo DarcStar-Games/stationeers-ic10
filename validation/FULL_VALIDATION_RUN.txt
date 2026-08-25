@@ -15,6 +15,7 @@ PASS validation/validators/validate_power_management_contracts.py
 PASS validation/validators/validate_fault_injection_contracts.py
 PASS validation/validators/validate_release_tooling.py
 PASS validation/validators/validate_generated_directory_adapters.py
+PASS validation/validators/validate_script_headers.py
 PASS validation/validators/validate_source_catalog.py
 PASS validation/validators/validate_user_deployment_guide.py
 PASS validation/validators/validate_item_storage_contracts.py
@@ -53,4 +54,4 @@ PASS tests/test_power_management.py
 PASS tests/test_fault_injection.py
 PASS tests/test_process_utility.py
 PASS tests/test_live_commissioning.py
-FULL_SUITE: PASS (55/55 scripts)
+FULL_SUITE: PASS (56/56 scripts)

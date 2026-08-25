@@ -20,7 +20,7 @@ Two things follow from that, and they drive almost every convention in the repo:
 Run everything from the repository root (Python 3.10+; `python3` locally).
 
 ```bash
-python3 tools/run_validation.py                   # full suite: 22 validators + 33 protocol/execution tests
+python3 tools/run_validation.py                   # full suite: 23 validators + 33 protocol/execution tests
 python3 tools/run_validation.py --resume          # reuse prior PASSes, only if the input-tree fingerprint matches
 python3 tests/test_job_abi.py                     # run one test  (plain script, exit code = pass/fail)
 python3 validation/validators/validate_ic10.py    # run one validator
@@ -77,6 +77,12 @@ Five roles, one directory each. The repository root holds only documentation and
 Every script resolves paths against the repository root via the four-line `_ProjectPath` bootstrap,
 so the working directory never changes what a command reads or writes. A script under `tools/` uses
 `parents[1]`; one under `tools/generate/` or `validation/validators/` uses `parents[2]`.
+
+Headers are ordered **shebang, docstring, `__future__`, bootstrap** — the shebang has to reach byte 0
+or the kernel hands the file to `/bin/sh`, and a docstring below the bootstrap is a dead expression,
+not a docstring. `tools/`, `tests/` and `validation/validators/` hold entry points: shebang plus mode
+755 plus the bootstrap. `framework/` modules are imported, so they carry none of the three.
+`validation/validators/validate_script_headers.py` enforces all of it, including the `parents[N]` depth.
 
 ## Architecture
 
@@ -181,9 +187,10 @@ feature even if its tests pass. Full walkthrough: `docs/ADDING_CONTROLLERS.md`.
 ### A new test or validator
 
 Tests and validators are **plain executable scripts, not pytest**: they exit non-zero on failure and
-print a `... PASS` summary line. Each file starts with the four-line `_ProjectPath` bootstrap that puts
-the repo root on `sys.path` (needed because they run as scripts from `tools/run_validation.py` and import
-the top-level models). Copy that preamble verbatim into new files, and add the script to the
+print a `... PASS` summary line. Each file opens with the shebang, then any docstring, then the
+four-line `_ProjectPath` bootstrap that puts the repo root on `sys.path` (needed because they run as
+scripts from `tools/run_validation.py` and import the top-level models). Copy that preamble verbatim
+into new files and make the file executable, and add the script to the
 `VALIDATORS` or `TESTS` list in `tools/run_validation.py` — anything not listed there is not part of the
 release contract.
 

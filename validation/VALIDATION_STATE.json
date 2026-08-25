@@ -1,5 +1,5 @@
 {
-  "fingerprint": "0c1345496477c638df084faae8e61fcaacdd427b0cbb0319cc329dc9aa1c38d9",
+  "fingerprint": "c0c1afad5e724908c32c553dfeeac727172be0677a321e0e7f698acefe108d5e",
   "results": {
     "tests/test_async_request.py": 0,
     "tests/test_banked_transaction.py": 0,
@@ -54,6 +54,7 @@
     "validation/validators/validate_power_management_contracts.py": 0,
     "validation/validators/validate_process_utility_contracts.py": 0,
     "validation/validators/validate_release_tooling.py": 0,
+    "validation/validators/validate_script_headers.py": 0,
     "validation/validators/validate_source_catalog.py": 0,
     "validation/validators/validate_user_deployment_guide.py": 0
   },
@@ -75,6 +76,7 @@
     "validation/validators/validate_fault_injection_contracts.py",
     "validation/validators/validate_release_tooling.py",
     "validation/validators/validate_generated_directory_adapters.py",
+    "validation/validators/validate_script_headers.py",
     "validation/validators/validate_source_catalog.py",
     "validation/validators/validate_user_deployment_guide.py",
     "validation/validators/validate_item_storage_contracts.py",

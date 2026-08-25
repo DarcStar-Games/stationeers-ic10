@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Reference model for BANKED_TRANSACTION_V1.
 
 This module models the invariants shared by persistent IC10 services without
