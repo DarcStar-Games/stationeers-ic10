@@ -2,7 +2,7 @@
 
 This roadmap tracks the remaining major milestones after completion of the generic catalog/storage/discovery substrate, manufacturing scheduler, physical ITEM inventory/storage layer, bounded dependency planner, and power-management generalization. Detailed records for completed Items 1–11 live in `docs/COMPLETED_MILESTONES.md`.
 
-Items 1–11 are implemented and automatically validated. Item 12 is the active field-validation milestone: it closes the remaining gap between deterministic/model evidence and real Stationeers device, network, timing, and reflash behavior without changing the authority model merely to make commissioning easier.
+Items 1–11 are implemented and automatically validated. Item 12 is the active field-validation milestone: it closes the remaining gap between deterministic/model evidence and real Stationeers device, network, timing, and reflash behavior without changing the authority model merely to make commissioning easier. Item 13 is planned behind it and supplies the missing demand/ingress layer above manufacturing.
 
 ## Cross-cutting invariants
 
@@ -53,9 +53,37 @@ Acceptance requires:
 
 See `docs/LIVE_COMMISSIONING.md` and `docs/FRAMEWORK_HARDENING_TESTS.md`.
 
+## 13. Manufacturing demand and job ingress — PLANNED
+
+Nothing in the framework decides that a job is needed. `docs/MANUFACTURING_SCHEDULER.md` records the boundary: "The scheduler does not submit jobs. Job ingress may be manual or provided by a later UI/control service." Exactly one program issues Job Store `PUBLISH_NEW` today — `ic10/dependency-planning/dependency_child_creator_v2_0.ic10` on Gateway lane C — and it only creates children of a job that already exists. Item 8 answers "given that X is needed, what else must be made"; no component answers "X is needed".
+
+Root job intent therefore has to be staged into a free Job Store slot by hand. The three layers below close that gap in increasing order of cost, and each is independently deliverable.
+
+Item 13 adds no second job lifecycle, queue, or reservation ledger. Ingress publishes ordinary `GENERIC_JOB_ABI_V1` intent through the existing Gateway/Command Executor serialization, and `ic10/manufacturing/manufacturing_scheduler_v1_0.ic10` continues to own every lifecycle edge after publication.
+
+**Sequencing.** No layer starts before Item 12 closes. Ingress that publishes into an execution path with no field evidence produces live failures with more machinery standing in front of them.
+
+### 13.1 Stock-target ingress
+
+Maintain declared on-hand quantities: keep 50 steel sheets available. Reads coherent ITEM inventory from Generic Resource Endpoints, subtracts active future-output claims through `ic10/dependency-planning/dependency_claim_view_v1_0.ic10` so one shortfall is not ordered twice, and publishes a single root job when the deficit exceeds a configured hysteresis band. Coherent requirement quoting already exists in `ic10/dependency-planning/job_inventory_preflight_v1_0.ic10`.
+
+This is the cheapest layer and the one with the most operational value: a reader over surfaces that are already published, plus one lane-style writer. Targets are ordinary Config Policy schema, so the existing Host/Editor/Policy pipeline configures them without new UI.
+
+### 13.2 Operator order ingress
+
+Explicit one-shot requests: make ten of this now, at this priority. Selects a RecipeHash through the existing Recipe Catalog Lookup, sets quantity and priority, and publishes one root job. Commissioning-class, and a shared-input panel problem rather than a scheduling problem — the Generic Input Scanner/Resolver/Editor pipeline already solves that shape.
+
+Kept distinct from 13.1 because an operator order is satisfied once and then forgotten, while a stock target is continuously re-evaluated. The two must not share one requirement record.
+
+### 13.3 Consumption-rate demand
+
+Infer needs from observed drawdown so steady consumers do not need hand-tuned targets. This requires consumption history the framework deliberately does not keep, a sampling window that survives reflash, and a rule separating genuine demand from transient movement.
+
+Materially harder than the other two and the least certain to be worth building. It should not start until 13.1 has run in a live base long enough to show that static targets are genuinely insufficient.
+
 ## Current milestone status
 
-Items **1–11 are implemented and automatically validated**; detailed completion records are preserved in `docs/COMPLETED_MILESTONES.md`. Item **12 is ACTIVE** and is intentionally not complete until the required live-game evidence is recorded against the current release fingerprint.
+Items **1–11 are implemented and automatically validated**; detailed completion records are preserved in `docs/COMPLETED_MILESTONES.md`. Item **12 is ACTIVE** and is intentionally not complete until the required live-game evidence is recorded against the current release fingerprint. Item **13 is PLANNED** and is gated on Item 12: its three ingress layers publish into the manufacturing execution path, and building them before that path carries field evidence would only add machinery in front of untested behaviour.
 
 ## Transaction substrate note
 
