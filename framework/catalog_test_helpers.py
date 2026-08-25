@@ -6,7 +6,7 @@ R=Path(__file__).resolve().parents[1]
 def generate_recipe_fixture(output):
     """Generate the small deterministic Recipe Catalog fixture into a caller-owned temporary directory."""
     output=Path(output)
-    subprocess.run([sys.executable,str(R/'tools'/'generate'/'generate_recipe_catalog.py'),'--game-data',str(R/'recipe_fixture_data'),'--output',str(output),'--clean'],check=True,stdout=subprocess.DEVNULL)
+    subprocess.run([sys.executable,str(R/'tools'/'generate'/'generate_recipe_catalog.py'),'--game-data',str(R/'tests'/'fixtures'/'recipe_game_data'),'--output',str(output),'--clean'],check=True,stdout=subprocess.DEVNULL)
     return json.loads((output/'recipe_catalog_manifest.json').read_text())
 
 def _loader_device(src,ref):

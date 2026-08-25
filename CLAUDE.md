@@ -46,7 +46,7 @@ python3 tools/generate/generate_source_catalog.py               # regenerates do
 python3 tools/generate/generate_input_profiles.py               # from data/input_profiles.json
 python3 tools/generate/generate_resource_profiles.py            # from data/resource_profiles.json
 python3 tools/generate/generate_resource_transforms.py          # from data/resource_transforms.json
-python3 tools/generate/generate_recipe_catalog.py --game-data recipe_fixture_data --output <tmpdir> --clean
+python3 tools/generate/generate_recipe_catalog.py --game-data tests/fixtures/recipe_game_data --output <tmpdir> --clean
 ```
 
 Field evidence (Roadmap Item 12, the one active milestone):
@@ -72,7 +72,7 @@ Five roles, one directory each. The repository root holds only documentation and
 | `framework/` | executable protocol reference models | imported as `framework.<module>`; the semantic source of truth for the IC10 that implements them |
 | `data/` | JSON sources of truth | schemas, profiles, manifests, the extracted instruction set |
 | `tools/` | CLI entrypoints | `tools/generate/` holds the code generators |
-| `tests/`, `validation/validators/` | plain executable scripts | not pytest; see *Adding code* below |
+| `tests/`, `validation/validators/` | plain executable scripts | not pytest; see *Adding code* below. Fixture *input* sits beside the tests, never at root: `tests/ic10/` for test-only IC10, `tests/fixtures/recipe_game_data/` for the sample GameData XML the Recipe Catalog fixture is built from |
 
 Every script resolves paths against the repository root via the four-line `_ProjectPath` bootstrap,
 so the working directory never changes what a command reads or writes. A script under `tools/` uses
