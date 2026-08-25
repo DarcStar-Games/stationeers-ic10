@@ -68,10 +68,11 @@ def check_import_names(tree, shadowable, failures):
     """An in-tree module must be imported through its package, never by bare name.
 
     Naming the package is the whole rule here, but it is not the whole advice: outside
-    tools/, where check_no_import_time_work holds the line, an entry root does its work at
-    module level rather than behind `if __name__`. Importing tests/test_job_abi.py under
-    either name runs the whole test. Say so, so a corrected import does not become a
-    second mistake.
+    tools/, where check_no_import_time_work holds the line, most entry points work at
+    module level rather than behind `if __name__`, and importing tests/test_job_abi.py
+    under either name runs the whole test. A handful are guarded, which is why the
+    message says "usually" instead of asserting it. Say so, so a corrected import does
+    not become a second mistake.
     """
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
@@ -85,7 +86,7 @@ def check_import_names(tree, shadowable, failures):
             package = shadowable.get(name.split(".")[0])
             if package:
                 # Only tools/ is proven work-free; elsewhere the fixed import still runs the file.
-                runs = "" if package.startswith(WORK_FREE_ROOT + ".") else " -- and importing that file runs it"
+                runs = "" if package.startswith(WORK_FREE_ROOT + ".") else " -- and outside tools/ importing an entry point usually runs it"
                 failures.append(
                     f"line {node.lineno}: bare-name import of {name!r}; its only name is {package!r}{runs}"
                 )
