@@ -3,7 +3,7 @@ IC10 opcode validation
 Instruction set: 154 instructions from https://github.com/Stationeers-ic/assets
   path source/languages/EN/instructions.json @ ec6bd48a29 (updated 2026-08-15)
   extracted from game data by https://github.com/Stationeers-ic/WikiExtractorMod
-  target build: latest branch published 2026-08-12; minimum build 2026-07-02 (clamp was introduced by the 2026-07-02 update (with ror, rol, sgn))
+  target build: 0.2.6428.27798 (hotfix published 2026-08-13); minimum build 2026-07-02 (clamp was introduced by the 2026-07-02 update (with ror, rol, sgn))
 Checked 14772 instructions across 174 programs; 62 distinct mnemonics.
 ====================================================================================================
   - every mnemonic exists in the official instruction set

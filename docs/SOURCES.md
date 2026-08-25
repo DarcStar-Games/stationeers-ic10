@@ -33,8 +33,22 @@ useful for prose semantics; game data is authoritative for existence and operand
 
 The framework's minimum compatible game build is **2026-07-02**. `clamp` was introduced by that
 update alongside `ror`, `rol` and `sgn`; `bdnvl`, `bdnvs` and `lerp` require the 2025-09-15 update.
-Earlier builds cannot run this framework. The current target is the latest branch published
-2026-08-12.
+Earlier builds cannot run this framework. The current target is **0.2.6428.27798**, the hotfix
+published 2026-08-13.
+
+Target the 2026-08-13 hotfix rather than the 2026-08-12 Power Line Update it patches. That hotfix
+fixes saves failing to load in some cases. Item 12 exercises A/B bank recovery, reflash behaviour and
+interruption handling, all of which route through save/load, so a save-load defect in the base build
+would be indistinguishable from a framework persistence bug. Nothing warns about this: commissioning
+sessions are fingerprint-bound to framework source, not to a game version.
+
+No instruction changed after 2026-07-02. The Power Line Update's only IC10 entries correct
+Stationpedia text for `bapal`, `acos` and `bnaal`, none of which this framework uses. Its substantive
+changes sit under the framework rather than in it: cable networks now unify across Power Pylons, so a
+pylon link merges two device populations into one network and can push a Controller Directory into
+its 64-entry overflow path; `StructureNetwork` was reparented onto a new `ReferenceableNetwork` base
+class; and multiplayer now sends pipe/chute/cable values only when they change, so client-observed
+values may lag differently from server-side IC execution during live verification.
 
 Indirect addressing deserves live scrutiny rather than trust: the 2025-09-15 notes state that `dr`
 use "is not fully supported yet", 2025-09-23 fixed indirect addressing, and 2026-07-02 fixed
