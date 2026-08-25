@@ -228,8 +228,8 @@ Allowed deployment classes are `resident`, `conditional-resident`, `commissionin
 Then run:
 
 ```text
-python update_user_deployment_inventory.py
-python generate_source_catalog.py
+python3 tools/generate/update_user_deployment_inventory.py
+python3 tools/generate/generate_source_catalog.py
 python validation/validators/validate_source_catalog.py
 python validation/validators/validate_user_deployment_guide.py
 ```

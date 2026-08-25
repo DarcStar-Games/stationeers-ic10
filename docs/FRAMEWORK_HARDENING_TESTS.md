@@ -9,7 +9,7 @@ For a new deployment or major framework change, run the automated tests first. T
 Before live testing, run the complete release suite:
 
 ```text
-python run_validation.py
+python3 tools/run_validation.py
 ```
 
 For focused diagnosis, the component checks include:

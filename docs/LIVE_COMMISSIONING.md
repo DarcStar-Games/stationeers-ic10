@@ -21,20 +21,20 @@ Do not hand-edit automated evidence to represent game observations.
 Create a session outside the framework tree or under an ignored local evidence directory:
 
 ```text
-python live_commission.py init --session ../field_evidence/base_a.json --label "Base A commissioning"
+python3 tools/live_commission.py init --session ../field_evidence/base_a.json --label "Base A commissioning"
 ```
 
 List or inspect the required suites:
 
 ```text
-python live_commission.py list
-python live_commission.py show LG-XDOMAIN-FURNACE
+python3 tools/live_commission.py list
+python3 tools/live_commission.py show LG-XDOMAIN-FURNACE
 ```
 
 Record an observation:
 
 ```text
-python live_commission.py record \
+python3 tools/live_commission.py record \
   --session ../field_evidence/base_a.json \
   --case LG-XDOMAIN-FURNACE \
   --status PASS \
@@ -49,8 +49,8 @@ python live_commission.py record \
 Verify closure and generate a report:
 
 ```text
-python live_commission.py verify --session ../field_evidence/base_a.json
-python live_commission.py report --session ../field_evidence/base_a.json --output ../field_evidence/base_a.md
+python3 tools/live_commission.py verify --session ../field_evidence/base_a.json
+python3 tools/live_commission.py report --session ../field_evidence/base_a.json --output ../field_evidence/base_a.md
 ```
 
 Item 12 closes only when `verify` reports every required suite PASS on a non-stale session.

@@ -33,6 +33,11 @@ for p in mds:
             continue
         for seg in referenced_paths(ref):
             if not (ROOT/seg).exists(): fails.append(f'{p.name}: missing referenced file {seg}')
+    # A documented command is a promise the operator can paste. Backtick checks
+    # above only see a span that *ends* in a path, so `python x.py --resume` and
+    # anything inside a fenced block would otherwise never be resolved.
+    for cmd in sorted(set(re.findall(r'\bpython3?\s+([\w./-]+\.py)\b',txt))):
+        if not (ROOT/cmd).exists(): fails.append(f'{p.name}: documented command names missing script {cmd}')
     for target in re.findall(r'\[[^\]]*\]\(([^)]+)\)',txt):
         target=target.strip()
         if target.startswith(('http://','https://','mailto:','#')):
