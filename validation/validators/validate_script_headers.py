@@ -56,7 +56,14 @@ def shadowable_modules(paths):
 
 
 def check_import_names(tree, shadowable, failures):
-    """An in-tree module must be imported through its package, never by bare name."""
+    """An in-tree module must be imported through its package, never by bare name.
+
+    Naming the package is the whole rule here, but it is not the whole advice: everything
+    this guards lives under an entry root, and most of it does its work at module level
+    rather than behind `if __name__`. Importing tools/generate/generate_source_catalog.py
+    under either name rewrites docs/SCRIPT_INDEX.md. Say so, so a corrected import does not
+    become a second mistake.
+    """
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             names = [alias.name for alias in node.names]
@@ -68,7 +75,10 @@ def check_import_names(tree, shadowable, failures):
         for name in names:
             package = shadowable.get(name.split(".")[0])
             if package:
-                failures.append(f"line {node.lineno}: bare-name import of {name!r}; import it as {package!r}")
+                failures.append(
+                    f"line {node.lineno}: bare-name import of {name!r}; its only name is {package!r}"
+                    " -- and that file is an entry point, so check it does not run at import"
+                )
 
 
 def is_docstring(node) -> bool:
