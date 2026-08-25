@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Structural checks on Python source: the entry-point contract, bootstrap placement, one import name per module."""
+"""Structural checks on Python source: the entry-point contract, bootstrap placement, import names, import-time work."""
 from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
@@ -14,6 +14,13 @@ SHEBANG = "#!/usr/bin/env python3"
 # validation runner and by hand. Everything else -- framework/ reference models
 # and package markers -- is imported and must not advertise an entry point.
 ENTRY_ROOTS = {"tools", "tests", "validation"}
+# A tools/ entry point is a command: running it does the work, importing it must
+# not. Four generators once ran their entire body at module level, so
+# `import tools.generate.generate_source_catalog` rewrote docs/SCRIPT_INDEX.md --
+# invisible only because regeneration happens to be byte-stable. Tests and
+# validators under the other entry roots do run at import; CLAUDE.md defines them
+# as plain scripts, and they write nothing tracked.
+WORK_FREE_ROOT = "tools"
 SKIP_PARTS = {".git", ".claude", ".githooks", "__pycache__", "field_evidence"}
 # The kernel honours an interpreter line only at byte 0, so a shebang pushed
 # below the bootstrap hands Python source to /bin/sh, which hangs. The line-1
@@ -58,11 +65,11 @@ def shadowable_modules(paths):
 def check_import_names(tree, shadowable, failures):
     """An in-tree module must be imported through its package, never by bare name.
 
-    Naming the package is the whole rule here, but it is not the whole advice: everything
-    this guards lives under an entry root, and most of it does its work at module level
-    rather than behind `if __name__`. Importing tools/generate/generate_source_catalog.py
-    under either name rewrites docs/SCRIPT_INDEX.md. Say so, so a corrected import does not
-    become a second mistake.
+    Naming the package is the whole rule here, but it is not the whole advice: outside
+    tools/, where check_no_import_time_work holds the line, an entry root does its work at
+    module level rather than behind `if __name__`. Importing tests/test_job_abi.py under
+    either name runs the whole test. Say so, so a corrected import does not become a
+    second mistake.
     """
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
@@ -75,9 +82,10 @@ def check_import_names(tree, shadowable, failures):
         for name in names:
             package = shadowable.get(name.split(".")[0])
             if package:
+                # Only tools/ is proven work-free; elsewhere the fixed import still runs the file.
+                runs = "" if package.startswith(WORK_FREE_ROOT + ".") else " -- and importing that file runs it"
                 failures.append(
-                    f"line {node.lineno}: bare-name import of {name!r}; its only name is {package!r}"
-                    " -- and that file is an entry point, so check it does not run at import"
+                    f"line {node.lineno}: bare-name import of {name!r}; its only name is {package!r}{runs}"
                 )
 
 
@@ -89,14 +97,20 @@ def is_future(node) -> bool:
     return isinstance(node, ast.ImportFrom) and node.module == "__future__"
 
 
-def check_bootstrap(rel: Path, lines, tree, failures):
-    """The bootstrap must be the first executable statement and name the right depth."""
-    body = tree.body
+def header_end(body) -> int:
+    """Index of the first statement past the docstring and any __future__ imports."""
     at = 0
     if body and is_docstring(body[0]):
         at = 1
     while at < len(body) and is_future(body[at]):
         at += 1
+    return at
+
+
+def check_bootstrap(rel: Path, lines, tree, failures):
+    """The bootstrap must be the first executable statement and name the right depth."""
+    body = tree.body
+    at = header_end(body)
     if at >= len(body):
         failures.append("bootstrap missing")
         return
@@ -112,6 +126,31 @@ def check_bootstrap(rel: Path, lines, tree, failures):
                 failures.append(f"  want {want!r}")
                 failures.append(f"  got  {got!r}")
                 break
+
+
+def check_no_import_time_work(rel: Path, tree, has_bootstrap, failures):
+    """Under tools/, module level may import, define and name constants -- main() acts.
+
+    No static check can prove a call is pure, so this one allows none outside the
+    bootstrap: `COORD_PROGRAMS=ensure_coordination_programs(R)` reads like a constant
+    and writes eleven IC10 programs. A pure value that genuinely wants to be a module
+    constant can be written as a literal; anything else belongs in main().
+
+    This covers the package markers too, not only the entry points. Work in
+    tools/__init__.py would run on every `import tools.anything`, which is the worst
+    place in the tree for it, so the bootstrap is skipped by whether it is there.
+    """
+    if rel.parts[0] != WORK_FREE_ROOT:
+        return
+    for node in tree.body[header_end(tree.body) + (len(BOOTSTRAP) if has_bootstrap else 0):]:
+        if isinstance(node, (ast.Import, ast.ImportFrom, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            continue
+        if isinstance(node, ast.If) and any(isinstance(n, ast.Name) and n.id == "__name__" for n in ast.walk(node.test)):
+            continue
+        if isinstance(node, (ast.Assign, ast.AnnAssign, ast.AugAssign)) and not any(isinstance(n, ast.Call) for n in ast.walk(node)):
+            continue
+        source = ast.unparse(node).splitlines()[0]
+        failures.append(f"line {node.lineno}: {source[:60]!r} runs at import; under tools/ the work belongs in main()")
 
 
 def inspect(path: Path, shadowable):
@@ -155,6 +194,7 @@ def inspect(path: Path, shadowable):
     elif has_bootstrap:
         check_bootstrap(rel, lines, tree, failures)
     check_import_names(tree, shadowable, failures)
+    check_no_import_time_work(rel, tree, has_bootstrap, failures)
 
     return entry, executable, failures
 
@@ -180,6 +220,8 @@ def main():
     entries = sum(1 for row in rows if row[1])
     print(f"Checked {len(rows)} files: {entries} entry points, {len(rows)-entries} imported modules")
     print(f"Single import name enforced for {len(shadowable)} modules reachable from a script directory")
+    work_free = sum(1 for row in rows if row[0].startswith(WORK_FREE_ROOT + "/"))
+    print(f"Import-time work rejected for all {work_free} modules under {WORK_FREE_ROOT}/")
     print("Result:", "FAIL" if failed else "PASS")
     return 1 if failed else 0
 
