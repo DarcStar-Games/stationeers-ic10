@@ -108,4 +108,49 @@ If a future diagnostic feature needs a new physical control type, add it to the 
 - If Commit occurs while selectors are temporarily unavailable, Mapping Editor retains the unhandled generation and can complete after dependencies recover.
 - Renderer lag affects refresh timing, not mapping transaction correctness.
 
+## Console circuitboard mirrors
+
+Hash Display and Graph Display are **circuitboards installed in a Console**, not display devices. They
+read a value from a linked device rather than accepting one written to them, so the render path
+reaches them indirectly through a mirror sink.
+
+```text
+Controller telemetry -> Diagnostic Renderer -> Logic Memory (mirror sink)
+                                                     ^
+                                     Console + Hash/Graph circuitboard reads it
+```
+
+A mirror sink is any device carrying a readable and writable `Setting` without `Mode`/`Color`, tagged
+with the Console Registry enrollment NameHash. Console Registry v1.1 classifies rather than gates on
+capability: a device exposing `Setting`, `Mode`, `Color` and `On` enrols as an LED display, and one
+exposing only `Setting` enrols as a mirror sink. Both land in the same sorted registry, and because
+records sort by `PrefabHash` first, the two classes cluster naturally without a second directory.
+
+The Renderer needs no mirror-specific logic. It already probes each presentation property with
+`bdnvs` before writing, so it writes `Setting` to a mirror and skips `Mode`/`Color` without faulting.
+Mapping Editor is likewise unchanged; its committed `Mode`/`Color` fields are simply unused for a
+mirror record.
+
+The Console-to-circuitboard link is player-owned and established once during commissioning. It is not
+settable from logic, which is the reason the mirror exists rather than the framework addressing the
+Console directly.
+
+**Gas Display is deliberately excluded.** It reads pressure and temperature from a gas-containing
+device, which a Logic Memory cannot present. Link it to a PressureGrid-managed tank or pipe directly;
+no framework program participates.
+
+### Circuitboard Mode
+
+`ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10` sets Hash Display `Mode` — `HashType.Prefab`
+or `HashType.GasLiquid` — through the logic slot instructions, the mechanism the 2025-03-17 update
+added for exactly this. It reads the slot back with `ls` before writing with `ss`, publishes writes
+issued at `S3`, and counts unreadable records at `S4` instead of faulting. This is the framework's
+only use of `ss`.
+
+Two facts here are **not sourced from game data**: the circuitboard's slot index, and that `Mode` is
+the slot logic type accepted by `ls`/`ss`. They need one live observation, which is why this lives in
+a separate optional program rather than inside Renderer or Mapping Editor — if either assumption is
+wrong, only this program is affected and the mirror path above still works. Case `LG-DIAG-HASHMODE`
+records the observation; `LG-DIAG-MIRROR` covers the mirror render path.
+
 See `docs/FRAMEWORK_HARDENING_TESTS.md` for the corresponding live-game cases.

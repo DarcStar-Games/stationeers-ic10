@@ -275,8 +275,9 @@ This family contains the deployment classes shown in its generated program inven
 <!-- FAMILY_PROGRAMS:diagnostics START -->
 | Program | Deployment class | Purpose |
 |---|---|---|
-| `ic10/diagnostics/console_registry_v1_0.ic10` | `commissioning` | Discovers diagnostic consoles and publishes stable identities. |
+| `ic10/diagnostics/console_registry_v1_1.ic10` | `commissioning` | Discovers diagnostic consoles and mirror sinks and publishes stable identities. |
 | `ic10/diagnostics/console_selector_v1_1.ic10` | `commissioning` | Resolves console ordinals and post-commit advance. |
+| `ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10` | `commissioning` | Sets Console circuitboard Mode (HashType) from IC through logic slot set. |
 | `ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10` | `commissioning` | Owns diagnostic desired-state/change generations. |
 | `ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10` | `commissioning` | Commits resolved display/controller/channel mappings. |
 | `ic10/diagnostics/diagnostic_renderer_v1_1.ic10` | `commissioning` | Renders generic telemetry into committed displays; accepts compatible telemetry ABI revisions. |
@@ -284,10 +285,10 @@ This family contains the deployment classes shown in its generated program inven
 <!-- FAMILY_PROGRAMS:diagnostics END -->
 
 ### Prerequisites
-Controller Discovery, Shared Input if using the panel, compatible telemetry controllers, and display devices named/enrolled for Console Registry.
+Controller Discovery, Shared Input if using the panel, compatible telemetry controllers, and display devices named/enrolled for Console Registry. For circuitboard mirrors, one Logic Memory per mirrored value plus a Console holding the Hash Display or Graph Display circuitboard.
 
 ### Wiring and configuration
-`ic10/diagnostics/console_registry_v1_0.ic10` discovers consoles. `ic10/diagnostics/console_selector_v1_1.ic10` selects console ordinal. `ic10/diagnostics/diagnostic_renderer_v1_1.ic10` renders telemetry. `ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10` owns committed mapping. With the shared panel use `ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10` then `ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10` to atomically drive Controller/Console selectors.
+`ic10/diagnostics/console_registry_v1_1.ic10` discovers consoles and mirror sinks. `ic10/diagnostics/console_selector_v1_1.ic10` selects console ordinal. `ic10/diagnostics/diagnostic_renderer_v1_1.ic10` renders telemetry. `ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10` owns committed mapping. With the shared panel use `ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10` then `ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10` to atomically drive Controller/Console selectors.
 
 ### Deployment procedure
 Bring up controller and console discovery, then selectors, mapping editor, renderer, then shared-input bridges. Commit one mapping and verify the expected channel appears. Test console advance only after a successful commit.
@@ -296,7 +297,14 @@ Bring up controller and console discovery, then selectors, mapping editor, rende
 Renderer shows current generation-stamped telemetry for the selected exact controller/console; device replacement invalidates stale mapping instead of silently binding another device.
 
 ### Commissioning proof
-`LG-SHARED-INPUT`.
+`LG-SHARED-INPUT`, `LG-DIAG-MIRROR`, and `LG-DIAG-HASHMODE`.
+
+### Console circuitboard displays
+Hash Display and Graph Display circuitboards read a linked device rather than accepting a written value, so IC10 drives them indirectly. Name a Logic Memory with the Console Registry enrollment tag (`DiagAuto` by default); Registry v1.1 enrols it as a mirror sink because it accepts a written `Setting` without `Mode`/`Color`, and the Renderer writes telemetry into it while skipping presentation properties it cannot set. Link the Console's circuitboard to that Memory once, by hand, during commissioning: the link is player-owned and is not settable from logic. A Hash Display then renders the item thumbnail for a prefab hash written into the Memory, and a Graph Display plots the Memory's `Setting` over time using the Console colour.
+
+Gas Display is deliberately not mirrored. It reads pressure and temperature from a gas-containing device, which a Logic Memory cannot present, so link it directly to the tank or pipe the PressureGrid already manages. No framework program is involved.
+
+`ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10` optionally switches a Hash Display board between `HashType.Prefab` and `HashType.GasLiquid` through the logic slot instructions. Its `S3` counts writes issued and `S4` counts records it could not read; a non-zero `S4` across every record means the slot index or the board itself is wrong. Confirm the slot index in-game before trusting it — see `LG-DIAG-HASHMODE`.
 
 ### Common failures
 Blank display with healthy controller usually means console registration/mapping mismatch; wrong controller usually means stale directory/selection. Do not bypass exact ReferenceId checks.
@@ -305,7 +313,7 @@ Blank display with healthy controller usually means console registration/mapping
 After display/controller replacement, rediscover and recommit mapping. Reflash should not mutate mappings unless a new commit is requested.
 
 ### What can be removed
-Keep Registry/Renderer only for persistent diagnostics. Mapping UI and shared-input bridges may be reclaimed after setup.
+Keep Registry/Renderer only for persistent diagnostics. Mapping UI and shared-input bridges may be reclaimed after setup. Hash Console Mode writes durable device state, so reclaim its housing once every board reads correctly.
 
 ### Technical references
 `docs/DIAGNOSTIC_INPUTS.md`, `docs/COMMISSIONING_QUICKSTART.md`

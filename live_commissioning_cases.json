@@ -2,22 +2,195 @@
   "format": "LIVE_COMMISSIONING_CASES_V1",
   "milestone": 12,
   "cases": [
-    {"id":"LG-PRESSURE-CORE","category":"pressure","title":"PressureGrid core allocation and fail-closed behavior","required":true,"source_doc":"docs/FRAMEWORK_HARDENING_TESTS.md","section":"Live-game PressureGrid cases","acceptance":"Inventory/purity, direct/fallback allocation, lease staging/commit/expiry, interruption recovery, 64-provider latency, and overflow all match the documented invariants.","probe_recommended":true},
-    {"id":"LG-PERSISTENCE","category":"persistence","title":"Persistent config and banked-transaction interruption","required":true,"source_doc":"docs/FRAMEWORK_HARDENING_TESTS.md","section":"Live-game persistence cases","acceptance":"Power loss/reflash exposes only old-complete or new-complete durable state and replay never double-applies a committed request.","probe_recommended":true},
-    {"id":"LG-SHARED-INPUT","category":"commissioning","title":"Shared commissioning input and diagnostics behavior","required":true,"source_doc":"docs/FRAMEWORK_HARDENING_TESTS.md","section":"Live-game shared-input cases","acceptance":"Fallback/removal, snapshot coherence, commit retention/console advance, and shared-panel ownership behave as documented.","probe_recommended":true},
-    {"id":"LG-SEQUENCER","category":"controller","title":"Sequencer physical state-machine behavior","required":true,"source_doc":"docs/FRAMEWORK_HARDENING_TESTS.md","section":"Live-game Sequencer cases","acceptance":"FILL/SETTLE/DRAIN, repeat/complete, timeout, device loss, numeric fault, reflash, and config replacement all fail safe and recover correctly.","probe_recommended":true},
-    {"id":"LG-PHASE-PRESSURE","category":"controller","title":"PhasePressure live thermodynamic request behavior","required":true,"source_doc":"docs/FRAMEWORK_HARDENING_TESTS.md","section":"Live-game PhasePressure cases","acceptance":"Live phase boundaries, HOLD/EVAPORATE/CONDENSE requests, direct-write ownership, profile/device faults, and Host replacement match the documented contract.","probe_recommended":true},
-    {"id":"LG-PRESSURE-DOMAIN","category":"pressure","title":"PressureDomain arbitration and actuator ownership","required":true,"source_doc":"docs/FRAMEWORK_HARDENING_TESTS.md","section":"Live-game PressureDomain cases","acceptance":"Multi-producer arbitration, medium/mode filtering, generation restart, clamping, standby, write ownership, and 64-provider latency are physically verified.","probe_recommended":true},
-    {"id":"LG-PRESSURE-MULTIHOP","category":"pressure","title":"Multi-hop pressure routing","required":true,"source_doc":"docs/FRAMEWORK_HARDENING_TESTS.md","section":"Live multi-hop route hardening","acceptance":"Two/three-hop staging, bottleneck normalization, failed-hop invalidation, planner reflash, disjoint paths, and STORAGE-to-STORAGE restrictions hold in game.","probe_recommended":true},
-    {"id":"LG-PRESSURE-COST","category":"pressure","title":"Cost-aware pressure route ranking","required":true,"source_doc":"docs/FRAMEWORK_HARDENING_TESTS.md","section":"Live cost-aware route hardening","acceptance":"Hop/lift/flow weights and candidate budget select the expected route while downstream reservation safety remains authoritative.","probe_recommended":true},
-    {"id":"LG-MATERIAL","category":"material","title":"MaterialGrid and furnace physical execution","required":true,"source_doc":"docs/FRAMEWORK_HARDENING_TESTS.md","section":"Live-game MaterialGrid hardening still required","acceptance":"Vending slots/scans, exact Stacker batches, chute faults, topology changes, Arc Furnace transforms, output evidence, reflash, and timeout behavior match the modeled contracts.","probe_recommended":true},
-    {"id":"LG-JOB-STORE","category":"jobs","title":"Generic Job Store live persistence and lifecycle","required":true,"source_doc":"docs/FRAMEWORK_HARDENING_TESTS.md","section":"Live-game Generic Job checks","acceptance":"Capacity, atomic SET_STATE, stale-generation rejection, terminal immutability/reap, JobId reuse rules, coherent reads, and Gateway-only mutation are verified.","probe_recommended":true},
-    {"id":"LG-MANUFACTURING","category":"manufacturing","title":"Manufacturing scheduler live queue and execution behavior","required":true,"source_doc":"docs/FRAMEWORK_HARDENING_TESTS.md","section":"Live manufacturing checks","acceptance":"Priority/fairness, WAIT progression, furnace condition rejection, printer capacity/replacement, reflash, and resource removal remain fail closed.","probe_recommended":true},
-    {"id":"LG-ITEM-STORAGE","category":"storage","title":"ITEM storage, LArRE, SDB and reservation movement","required":true,"source_doc":"docs/ITEM_STORAGE_SYSTEM.md","section":"Commissioning requires","acceptance":"Slot semantics, reservation ownership/generation, LArRE pickup/recovery, destination obstruction, SDB lower-bound discovery, and exact feeder delivery are physically verified.","probe_recommended":true},
-    {"id":"LG-POWER","category":"power","title":"Power dispatch, batteries, transformers and break-before-make","required":true,"source_doc":"docs/POWER_MANAGEMENT.md","section":"Power-management evidence","acceptance":"Aggregate supply, managed demand, battery one-tick capacity, reserve/target policy, transformer overhead, load shedding, allocator reflash, and final authority fences are verified on real electrical networks.","probe_recommended":true},
-    {"id":"LG-XDOMAIN-FURNACE","category":"cross-domain","title":"Cross-domain furnace atmosphere preparation","required":true,"source_doc":"docs/FRAMEWORK_HARDENING_TESTS.md","section":"Item 11 cross-domain process utility hardening","acceptance":"Items 1-7: ProcessCondition P/T demand, chamber routing, embedded pumps, composition/thermal preparation, and independent Transform Admission are verified end to end.","probe_recommended":true},
-    {"id":"LG-XDOMAIN-GFG","category":"cross-domain","title":"Fuel-backed POWER generation","required":true,"source_doc":"docs/FRAMEWORK_HARDENING_TESTS.md","section":"Item 11 cross-domain process utility hardening","acceptance":"Items 8-9: GFG atmosphere/fuel/error shutdown behavior and measured watts versus live fuel moles/temperature/mixture are recorded without inventing a watt-to-pressure conversion.","probe_recommended":true},
-    {"id":"LG-XDOMAIN-RESTART","category":"cross-domain","title":"Cross-domain authority mutation and reflash","required":true,"source_doc":"docs/FRAMEWORK_HARDENING_TESTS.md","section":"Item 11 cross-domain process utility hardening","acceptance":"Items 10-11: reflashes and generation changes converge physical utilities to safe state before current authority is reacquired.","probe_recommended":true},
-    {"id":"LG-ELECTROLYZER-CYCLE","category":"cross-domain","title":"Time-separated electrolyzer fuel storage cycle","required":false,"source_doc":"docs/FRAMEWORK_HARDENING_TESTS.md","section":"Item 11 cross-domain process utility hardening","acceptance":"If implemented later, surplus-power charging and GFG discharge cannot recursively enable one another in the same planning epoch.","probe_recommended":false}
+    {
+      "id": "LG-PRESSURE-CORE",
+      "category": "pressure",
+      "title": "PressureGrid core allocation and fail-closed behavior",
+      "required": true,
+      "source_doc": "docs/FRAMEWORK_HARDENING_TESTS.md",
+      "section": "Live-game PressureGrid cases",
+      "acceptance": "Inventory/purity, direct/fallback allocation, lease staging/commit/expiry, interruption recovery, 64-provider latency, and overflow all match the documented invariants.",
+      "probe_recommended": true
+    },
+    {
+      "id": "LG-PERSISTENCE",
+      "category": "persistence",
+      "title": "Persistent config and banked-transaction interruption",
+      "required": true,
+      "source_doc": "docs/FRAMEWORK_HARDENING_TESTS.md",
+      "section": "Live-game persistence cases",
+      "acceptance": "Power loss/reflash exposes only old-complete or new-complete durable state and replay never double-applies a committed request.",
+      "probe_recommended": true
+    },
+    {
+      "id": "LG-SHARED-INPUT",
+      "category": "commissioning",
+      "title": "Shared commissioning input and diagnostics behavior",
+      "required": true,
+      "source_doc": "docs/FRAMEWORK_HARDENING_TESTS.md",
+      "section": "Live-game shared-input cases",
+      "acceptance": "Fallback/removal, snapshot coherence, commit retention/console advance, and shared-panel ownership behave as documented.",
+      "probe_recommended": true
+    },
+    {
+      "id": "LG-SEQUENCER",
+      "category": "controller",
+      "title": "Sequencer physical state-machine behavior",
+      "required": true,
+      "source_doc": "docs/FRAMEWORK_HARDENING_TESTS.md",
+      "section": "Live-game Sequencer cases",
+      "acceptance": "FILL/SETTLE/DRAIN, repeat/complete, timeout, device loss, numeric fault, reflash, and config replacement all fail safe and recover correctly.",
+      "probe_recommended": true
+    },
+    {
+      "id": "LG-PHASE-PRESSURE",
+      "category": "controller",
+      "title": "PhasePressure live thermodynamic request behavior",
+      "required": true,
+      "source_doc": "docs/FRAMEWORK_HARDENING_TESTS.md",
+      "section": "Live-game PhasePressure cases",
+      "acceptance": "Live phase boundaries, HOLD/EVAPORATE/CONDENSE requests, direct-write ownership, profile/device faults, and Host replacement match the documented contract.",
+      "probe_recommended": true
+    },
+    {
+      "id": "LG-PRESSURE-DOMAIN",
+      "category": "pressure",
+      "title": "PressureDomain arbitration and actuator ownership",
+      "required": true,
+      "source_doc": "docs/FRAMEWORK_HARDENING_TESTS.md",
+      "section": "Live-game PressureDomain cases",
+      "acceptance": "Multi-producer arbitration, medium/mode filtering, generation restart, clamping, standby, write ownership, and 64-provider latency are physically verified.",
+      "probe_recommended": true
+    },
+    {
+      "id": "LG-PRESSURE-MULTIHOP",
+      "category": "pressure",
+      "title": "Multi-hop pressure routing",
+      "required": true,
+      "source_doc": "docs/FRAMEWORK_HARDENING_TESTS.md",
+      "section": "Live multi-hop route hardening",
+      "acceptance": "Two/three-hop staging, bottleneck normalization, failed-hop invalidation, planner reflash, disjoint paths, and STORAGE-to-STORAGE restrictions hold in game.",
+      "probe_recommended": true
+    },
+    {
+      "id": "LG-PRESSURE-COST",
+      "category": "pressure",
+      "title": "Cost-aware pressure route ranking",
+      "required": true,
+      "source_doc": "docs/FRAMEWORK_HARDENING_TESTS.md",
+      "section": "Live cost-aware route hardening",
+      "acceptance": "Hop/lift/flow weights and candidate budget select the expected route while downstream reservation safety remains authoritative.",
+      "probe_recommended": true
+    },
+    {
+      "id": "LG-MATERIAL",
+      "category": "material",
+      "title": "MaterialGrid and furnace physical execution",
+      "required": true,
+      "source_doc": "docs/FRAMEWORK_HARDENING_TESTS.md",
+      "section": "Live-game MaterialGrid hardening still required",
+      "acceptance": "Vending slots/scans, exact Stacker batches, chute faults, topology changes, Arc Furnace transforms, output evidence, reflash, and timeout behavior match the modeled contracts.",
+      "probe_recommended": true
+    },
+    {
+      "id": "LG-JOB-STORE",
+      "category": "jobs",
+      "title": "Generic Job Store live persistence and lifecycle",
+      "required": true,
+      "source_doc": "docs/FRAMEWORK_HARDENING_TESTS.md",
+      "section": "Live-game Generic Job checks",
+      "acceptance": "Capacity, atomic SET_STATE, stale-generation rejection, terminal immutability/reap, JobId reuse rules, coherent reads, and Gateway-only mutation are verified.",
+      "probe_recommended": true
+    },
+    {
+      "id": "LG-MANUFACTURING",
+      "category": "manufacturing",
+      "title": "Manufacturing scheduler live queue and execution behavior",
+      "required": true,
+      "source_doc": "docs/FRAMEWORK_HARDENING_TESTS.md",
+      "section": "Live manufacturing checks",
+      "acceptance": "Priority/fairness, WAIT progression, furnace condition rejection, printer capacity/replacement, reflash, and resource removal remain fail closed.",
+      "probe_recommended": true
+    },
+    {
+      "id": "LG-ITEM-STORAGE",
+      "category": "storage",
+      "title": "ITEM storage, LArRE, SDB and reservation movement",
+      "required": true,
+      "source_doc": "docs/ITEM_STORAGE_SYSTEM.md",
+      "section": "Commissioning requires",
+      "acceptance": "Slot semantics, reservation ownership/generation, LArRE pickup/recovery, destination obstruction, SDB lower-bound discovery, and exact feeder delivery are physically verified.",
+      "probe_recommended": true
+    },
+    {
+      "id": "LG-POWER",
+      "category": "power",
+      "title": "Power dispatch, batteries, transformers and break-before-make",
+      "required": true,
+      "source_doc": "docs/POWER_MANAGEMENT.md",
+      "section": "Power-management evidence",
+      "acceptance": "Aggregate supply, managed demand, battery one-tick capacity, reserve/target policy, transformer overhead, load shedding, allocator reflash, and final authority fences are verified on real electrical networks.",
+      "probe_recommended": true
+    },
+    {
+      "id": "LG-XDOMAIN-FURNACE",
+      "category": "cross-domain",
+      "title": "Cross-domain furnace atmosphere preparation",
+      "required": true,
+      "source_doc": "docs/FRAMEWORK_HARDENING_TESTS.md",
+      "section": "Item 11 cross-domain process utility hardening",
+      "acceptance": "Items 1-7: ProcessCondition P/T demand, chamber routing, embedded pumps, composition/thermal preparation, and independent Transform Admission are verified end to end.",
+      "probe_recommended": true
+    },
+    {
+      "id": "LG-XDOMAIN-GFG",
+      "category": "cross-domain",
+      "title": "Fuel-backed POWER generation",
+      "required": true,
+      "source_doc": "docs/FRAMEWORK_HARDENING_TESTS.md",
+      "section": "Item 11 cross-domain process utility hardening",
+      "acceptance": "Items 8-9: GFG atmosphere/fuel/error shutdown behavior and measured watts versus live fuel moles/temperature/mixture are recorded without inventing a watt-to-pressure conversion.",
+      "probe_recommended": true
+    },
+    {
+      "id": "LG-XDOMAIN-RESTART",
+      "category": "cross-domain",
+      "title": "Cross-domain authority mutation and reflash",
+      "required": true,
+      "source_doc": "docs/FRAMEWORK_HARDENING_TESTS.md",
+      "section": "Item 11 cross-domain process utility hardening",
+      "acceptance": "Items 10-11: reflashes and generation changes converge physical utilities to safe state before current authority is reacquired.",
+      "probe_recommended": true
+    },
+    {
+      "id": "LG-ELECTROLYZER-CYCLE",
+      "category": "cross-domain",
+      "title": "Time-separated electrolyzer fuel storage cycle",
+      "required": false,
+      "source_doc": "docs/FRAMEWORK_HARDENING_TESTS.md",
+      "section": "Item 11 cross-domain process utility hardening",
+      "acceptance": "If implemented later, surplus-power charging and GFG discharge cannot recursively enable one another in the same planning epoch.",
+      "probe_recommended": false
+    },
+    {
+      "id": "LG-DIAG-MIRROR",
+      "category": "commissioning",
+      "title": "Console circuitboard mirror sinks render IC-written values",
+      "required": true,
+      "source_doc": "docs/DIAGNOSTIC_INPUTS.md",
+      "section": "Console circuitboard mirrors",
+      "acceptance": "A Logic Memory tagged DiagAuto is enrolled by Console Registry v1.1, Renderer writes its Setting, and Consoles running Hash Display and Graph Display circuitboards linked to that Memory render the value. Renderer skips Mode/Color on the mirror without fault.",
+      "probe_recommended": true
+    },
+    {
+      "id": "LG-DIAG-HASHMODE",
+      "category": "commissioning",
+      "title": "Hash Display circuitboard Mode is settable from IC",
+      "required": false,
+      "source_doc": "docs/DIAGNOSTIC_INPUTS.md",
+      "section": "Console circuitboard mirrors",
+      "acceptance": "Confirm the circuitboard slot index and that the Mode slot logic type is readable with ls and writable with ss. Hash Console Mode then switches a board between HashType.Prefab and HashType.GasLiquid, reports writes in S3, and counts unreadable records in S4 rather than faulting.",
+      "probe_recommended": true
+    }
   ]
 }

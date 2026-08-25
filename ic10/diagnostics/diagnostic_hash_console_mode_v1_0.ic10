@@ -1,0 +1,46 @@
+# Hash Console Mode v1.0: set Console circuitboard Mode from IC via slot set.
+# S2 record count (max 8),S3 writes issued,S4 records skipped as unreadable.
+# Records S16..S39 as [ConsoleReferenceId,circuitboard slot index,Mode].
+# HashType.Prefab=0,HashType.GasLiquid=1. Mode is durable device state, so this
+# is commissioning-class: reclaim the housing once every board reads correctly.
+# The slot index and the Mode slot logic type need one live observation before
+# this is trusted; see docs/DIAGNOSTIC_INPUTS.md and case LG-DIAG-HASHMODE.
+poke 0 17320513
+poke 1 1
+Loop:
+yield
+get r14 db 2
+clamp r14 r14 0 8
+poke 3 0
+poke 4 0
+beqz r14 Loop
+move r6 0
+move r8 0 # writes issued this pass
+move r9 0 # records skipped as absent/unsupported
+Each:
+mul r12 r6 3
+add r12 r12 16
+get r1 db r12 # Console ReferenceId
+add r12 r12 1
+get r2 db r12 # circuitboard slot index
+add r12 r12 1
+get r3 db r12 # desired HashType Mode
+add r6 r6 1
+blez r1 Skip
+bltz r2 Skip
+round r2 r2
+round r3 r3
+# Read back first: an unreadable slot means no board, or no Mode support.
+ls r0 r1 r2 Mode
+bnan r0 Skip
+beq r0 r3 Next
+ss r1 r2 Mode r3
+add r8 r8 1
+j Next
+Skip:
+add r9 r9 1
+Next:
+blt r6 r14 Each
+poke 3 r8
+poke 4 r9
+j Loop

@@ -253,15 +253,21 @@
       "deployment_family": "dependency-planning",
       "deployment_class": "conditional-resident"
     },
-    "ic10/diagnostics/console_registry_v1_0.ic10": {
+    "ic10/diagnostics/console_registry_v1_1.ic10": {
       "layer": "Discovery",
-      "purpose": "Discovers diagnostic consoles and publishes stable identities.",
+      "purpose": "Discovers diagnostic consoles and mirror sinks and publishes stable identities.",
       "deployment_family": "diagnostics",
       "deployment_class": "commissioning"
     },
     "ic10/diagnostics/console_selector_v1_1.ic10": {
       "layer": "Selection",
       "purpose": "Resolves console ordinals and post-commit advance.",
+      "deployment_family": "diagnostics",
+      "deployment_class": "commissioning"
+    },
+    "ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10": {
+      "layer": "Diagnostics",
+      "purpose": "Sets Console circuitboard Mode (HashType) from IC through logic slot set.",
       "deployment_family": "diagnostics",
       "deployment_class": "commissioning"
     },
@@ -1032,6 +1038,8 @@
         "docs/COMMISSIONING_QUICKSTART.md"
       ],
       "live_cases": [
+        "LG-DIAG-HASHMODE",
+        "LG-DIAG-MIRROR",
         "LG-SHARED-INPUT"
       ]
     },
