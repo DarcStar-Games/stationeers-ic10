@@ -1,5 +1,5 @@
 {
-  "fingerprint": "fd392049544bafd1d7234593b63deef669b90f56b5b4510044973e24c44ec5d8",
+  "fingerprint": "06c6359fc964e68a2d88e5ab2552ca177e41fba7b515ad497632843ca44315ca",
   "results": {
     "tests/test_async_request.py": 0,
     "tests/test_banked_transaction.py": 0,
@@ -45,6 +45,7 @@
     "validation/validators/validate_fault_injection_contracts.py": 0,
     "validation/validators/validate_generated_directory_adapters.py": 0,
     "validation/validators/validate_ic10.py": 0,
+    "validation/validators/validate_ic10_opcodes.py": 0,
     "validation/validators/validate_input_contracts.py": 0,
     "validation/validators/validate_item_storage_contracts.py": 0,
     "validation/validators/validate_job_contracts.py": 0,
@@ -66,6 +67,7 @@
     "validation/validators/validate_directory_contracts.py",
     "validation/validators/validate_documentation.py",
     "validation/validators/validate_ic10.py",
+    "validation/validators/validate_ic10_opcodes.py",
     "validation/validators/validate_input_contracts.py",
     "validation/validators/validate_job_contracts.py",
     "validation/validators/validate_manufacturing_contracts.py",
