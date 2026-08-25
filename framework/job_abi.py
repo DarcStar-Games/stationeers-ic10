@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Reference model for GENERIC_JOB_ABI_V1.
 
 This is the executable semantic source of truth for lifecycle validation. IC10

@@ -1,9 +1,9 @@
+#!/usr/bin/env python3
+"""Validate operator deployment-guide coverage against deployable source metadata."""
 from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
-#!/usr/bin/env python3
-"""Validate operator deployment-guide coverage against deployable source metadata."""
 from pathlib import Path
 import json,re,sys
 from framework.source_metadata import load_manifest,family_inventory,deployable_scripts,VALID_CLASSES

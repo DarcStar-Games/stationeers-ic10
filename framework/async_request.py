@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Reference semantics for ASYNC_REQUEST_V1."""
 from dataclasses import dataclass
 

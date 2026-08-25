@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Reusable deterministic interruption-campaign helper.
 
 Tests define ordered mutation steps plus recovery/invariant callbacks. The helper

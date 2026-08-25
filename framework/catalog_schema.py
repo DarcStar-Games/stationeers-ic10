@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Shared dynamic catalog storage/control-plane helpers.
 
 Architecture v5:

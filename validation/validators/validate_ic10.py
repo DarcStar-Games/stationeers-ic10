@@ -1,9 +1,9 @@
+#!/usr/bin/env python3
+"""Static size/style/label checks for the IC10 scripts in this directory."""
 from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
-#!/usr/bin/env python3
-"""Static size/style/label checks for the IC10 scripts in this directory."""
 from pathlib import Path
 import re
 import sys

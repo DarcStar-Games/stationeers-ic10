@@ -1,9 +1,9 @@
+#!/usr/bin/env python3
+"""Adversarial model checks for Item Storage / split reservation / LArRE / SDB semantics."""
 from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
-#!/usr/bin/env python3
-"""Adversarial model checks for Item Storage / split reservation / LArRE / SDB semantics."""
 from dataclasses import dataclass
 DO_NOT_CONSUME=1; NO_IMPORT=2; PREFERRED=4; QUARANTINE=8
 @dataclass

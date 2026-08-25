@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Tiny deterministic IC10 interpreter for transaction-critical regression tests.
 Not a Stationeers emulator. Supports only the instruction subset exercised by tests/test_ic10_execution.py.
 """
