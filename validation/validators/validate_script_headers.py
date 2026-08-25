@@ -71,8 +71,12 @@ def inspect(path: Path):
     entry = is_entry_point(rel)
     text = path.read_text()
     lines = text.split("\n")
-    mode = path.stat().st_mode & 0o777
-    executable = bool(mode & 0o100)
+    # Only the owner-execute bit is tracked by git and checked below. The rest of
+    # the mode is whatever umask happened to be in effect when git materialised
+    # the file, so it must not reach the printed row: this output is committed
+    # evidence, and a group-write bit would churn it between machines with no
+    # source change.
+    executable = bool(path.stat().st_mode & 0o100)
     failures = []
 
     if entry:
@@ -93,7 +97,7 @@ def inspect(path: Path):
         tree = ast.parse(text)
     except SyntaxError as exc:
         failures.append(f"does not parse: {exc}")
-        return entry, mode, failures
+        return entry, executable, failures
 
     if not ast.get_docstring(tree) and any(is_docstring(node) for node in tree.body):
         failures.append("module docstring is demoted to a dead expression by a statement above it")
@@ -103,7 +107,7 @@ def inspect(path: Path):
     elif has_bootstrap:
         check_bootstrap(rel, lines, tree, failures)
 
-    return entry, mode, failures
+    return entry, executable, failures
 
 
 def main():
@@ -116,10 +120,10 @@ def main():
 
     print("Python script header validation")
     print("=" * 100)
-    for name, entry, mode, failures in rows:
+    for name, entry, executable, failures in rows:
         state = "FAIL" if failures else "PASS"
         role = "entry" if entry else "module"
-        print(f"{state:4} {name:58} {role:6} mode={mode:03o}")
+        print(f"{state:4} {name:58} {role:6} {'+x' if executable else '-x'}")
         for failure in failures:
             print(f"     - {failure}")
     print("=" * 100)

@@ -38,6 +38,18 @@ for p in mds:
     # anything inside a fenced block would otherwise never be resolved.
     for cmd in sorted(set(re.findall(r'\bpython3?\s+([\w./-]+\.py)\b',txt))):
         if not (ROOT/cmd).exists(): fails.append(f'{p.name}: documented command names missing script {cmd}')
+    # A path *operand* is a promise too. --game-data names an in-tree fixture
+    # directory that a later move would silently invalidate, because the check
+    # above resolves only the script name. Other operands are placeholders
+    # (<tmpdir>) or deliberately out-of-tree (--session ../field_evidence/...),
+    # so this stays keyed to the one operand that must resolve in-tree. Pointing
+    # --game-data at an installed game ('/opt/Stationeers/...') is that flag's
+    # other legitimate use and is not this repository's to resolve: an absolute
+    # or escaping path would otherwise pass or fail by which machine ran the
+    # check, which is exactly the machine-dependence this file exists to prevent.
+    for operand in sorted(set(re.findall(r'--game-data\s+([\w./-]+)',txt))):
+        if operand.startswith('/') or '..' in Path(operand).parts: continue
+        if not (ROOT/operand).exists(): fails.append(f'{p.name}: documented --game-data path does not exist: {operand}')
     for target in re.findall(r'\[[^\]]*\]\(([^)]+)\)',txt):
         target=target.strip()
         if target.startswith(('http://','https://','mailto:','#')):
@@ -131,6 +143,7 @@ forbidden={
     '**38 Resource Profiles**':'39 Resource Profiles are current',
     'current 38-profile commissioning estimate':'39 Resource Profiles are current',
     'No numbered roadmap milestone remains active':'Item 12 live commissioning is active',
+    'recipe_fixture_data':'Recipe fixture GameData moved to tests/fixtures/recipe_game_data/',
 }
 for p in mds:
     txt=p.read_text(errors='replace')

@@ -46,7 +46,9 @@ ic10/<deployment-family>/     versioned production IC10 programs
 docs/                         engineering/reference documentation
 framework/                    executable protocol reference models
 data/                         JSON sources of truth: schemas, profiles, manifests
-tests/                        executable protocol/model tests + tests/ic10 fixtures
+tests/                        executable protocol/model tests
+tests/ic10/                   test-only IC10 fixtures (ControllerTest family)
+tests/fixtures/               non-IC10 fixture input consumed by tests
 validation/validators/        structural and release-contract validators
 validation/evidence/          generated per-check machine evidence
 tools/                        command-line entrypoints
