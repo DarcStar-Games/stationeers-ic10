@@ -7,13 +7,13 @@
   "source_path": "source/languages/EN/instructions.json",
   "source_commit": "ec6bd48a2900a0bdec768e9119a14cf363eaa1e3",
   "source_last_updated": "2026-08-15",
-  "target_game_build": "latest branch published 2026-08-12",
+  "target_game_build": "0.2.6428.27798 (hotfix published 2026-08-13)",
   "retrieved": "2026-08-24",
   "refresh": "Re-export with WikiExtractorMod against the running game, or re-pull the source_path above, then rerun validation/validators/validate_ic10_opcodes.py."
  },
  "minimum_build": {
   "date": "2026-07-02",
-  "reason": "clamp was introduced by the 2026-07-02 update (with ror, rol, sgn). bdnvl, bdnvs and lerp require the 2025-09-15 update. Earlier builds cannot run this framework."
+  "reason": "clamp was introduced by the 2026-07-02 update (with ror, rol, sgn). bdnvl, bdnvs and lerp require the 2025-09-15 update. Earlier builds cannot run this framework. Do not target the 2026-08-12 Power Line Update itself: hotfix 0.2.6428.27798 the next day fixes saves failing to load in some cases, which would be indistinguishable from a framework persistence defect during Item 12 A/B recovery and reflash testing."
  },
  "instructions": {
   "abs": {
