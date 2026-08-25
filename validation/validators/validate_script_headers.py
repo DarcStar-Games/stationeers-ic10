@@ -16,8 +16,10 @@ SHEBANG = "#!/usr/bin/env python3"
 ENTRY_ROOTS = {"tools", "tests", "validation"}
 SKIP_PARTS = {".git", ".claude", ".githooks", "__pycache__", "field_evidence"}
 # The kernel honours an interpreter line only at byte 0, so a shebang pushed
-# below the bootstrap hands Python source to /bin/sh, which hangs. Scan the
-# header window rather than the whole file: '#!' deeper in a module is prose.
+# below the bootstrap hands Python source to /bin/sh, which hangs. The line-1
+# checks below are the primary guard; scanning the rest of the header names the
+# stray copy too, which is the difference between "wrong first line" and a
+# diagnosis. Stop at the header: '#!' deeper in a module is prose, not a claim.
 HEADER_WINDOW = 10
 BOOTSTRAP = (
     "from pathlib import Path as _ProjectPath",
@@ -69,7 +71,8 @@ def inspect(path: Path):
     entry = is_entry_point(rel)
     text = path.read_text()
     lines = text.split("\n")
-    executable = bool(path.stat().st_mode & 0o100)
+    mode = path.stat().st_mode & 0o777
+    executable = bool(mode & 0o100)
     failures = []
 
     if entry:
@@ -90,7 +93,7 @@ def inspect(path: Path):
         tree = ast.parse(text)
     except SyntaxError as exc:
         failures.append(f"does not parse: {exc}")
-        return entry, executable, failures
+        return entry, mode, failures
 
     if not ast.get_docstring(tree) and any(is_docstring(node) for node in tree.body):
         failures.append("module docstring is demoted to a dead expression by a statement above it")
@@ -100,7 +103,7 @@ def inspect(path: Path):
     elif has_bootstrap:
         check_bootstrap(rel, lines, tree, failures)
 
-    return entry, executable, failures
+    return entry, mode, failures
 
 
 def main():
@@ -113,10 +116,10 @@ def main():
 
     print("Python script header validation")
     print("=" * 100)
-    for name, entry, executable, failures in rows:
+    for name, entry, mode, failures in rows:
         state = "FAIL" if failures else "PASS"
         role = "entry" if entry else "module"
-        print(f"{state:4} {name:58} {role:6} mode={'755' if executable else '644'}")
+        print(f"{state:4} {name:58} {role:6} mode={mode:03o}")
         for failure in failures:
             print(f"     - {failure}")
     print("=" * 100)

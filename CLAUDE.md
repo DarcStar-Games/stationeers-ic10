@@ -80,8 +80,9 @@ so the working directory never changes what a command reads or writes. A script 
 
 Headers are ordered **shebang, docstring, `__future__`, bootstrap** — the shebang has to reach byte 0
 or the kernel hands the file to `/bin/sh`, and a docstring below the bootstrap is a dead expression,
-not a docstring. `tools/`, `tests/` and `validation/validators/` hold entry points: shebang plus mode
-755 plus the bootstrap. `framework/` modules are imported, so they carry none of the three.
+not a docstring. Under `tools/`, `tests/` and `validation/validators/`, every module except a
+package marker like `tools/__init__.py` is an entry point: shebang plus mode 755 plus the bootstrap.
+Package markers and `framework/` reference models are imported, so they carry none of the three.
 `validation/validators/validate_script_headers.py` enforces all of it, including the `parents[N]` depth.
 
 ## Architecture
