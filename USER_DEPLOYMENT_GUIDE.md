@@ -492,7 +492,7 @@ This family contains the deployment classes shown in its generated program inven
 Controller Directory for request arbitration, medium Resource Profile View, analyzer/network instrumentation, and PressureGrid if routing externally.
 
 ### Wiring and configuration
-`ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10` reads the live Controller Directory and filters compatible PhasePressure requests. `ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10` is the domain runtime with its Config Host on `d5`; role-specific physical devices occupy the remaining screws per `docs/PRESSURE_DOMAIN_CONTROLLER.md`. `ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10` is its Policy. Attach `ic10/pressure-domain/pressure_domain_inventory_v1_1.ic10` and `ic10/pressure-domain/pressure_inventory_reservation_v1_1.ic10` when the domain participates in PressureGrid.
+`ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10` reads the live Controller Directory and filters compatible PhasePressure requests. `ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10` is the domain runtime with its Config Host on `d5`; role-specific physical devices occupy the remaining screws per `docs/PRESSURE_DOMAIN_CONTROLLER.md`. `ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10` is its Policy. Attach `ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10` and `ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10` when the domain participates in PressureGrid.
 
 ### Deployment procedure
 Commission role/medium/bounds first. Verify standby with no requests, then inject compatible and incompatible request producers. For STORAGE verify passive envelope semantics before enabling routes.
@@ -875,7 +875,7 @@ This family contains the deployment classes shown in its generated program inven
 Catalog control plane populated with generated Recipe schema-v3 items and live printer family identity where browsing by family.
 
 ### Wiring and configuration
-`ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10` performs family/ordinal Recipe lookup. `ic10/manufacturing/recipe_execution_profile_view_v1_0.ic10` resolves exact RecipeHash execution metadata including reagent requirements for the scheduler. Recipe Stores are ordinary Generic Catalog Stores; printer discovery is separate.
+`ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10` performs family/ordinal Recipe lookup. `ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10` resolves exact RecipeHash execution metadata including reagent requirements for the scheduler. Recipe Stores are ordinary Generic Catalog Stores; printer discovery is separate.
 
 ### Deployment procedure
 Import generated recipe data, verify family partitions/counts, then query at least one recipe per supported printer family. Confirm exact RecipeHash and reagent descriptors before enabling PRINT jobs.
@@ -928,7 +928,7 @@ This family contains the deployment classes shown in its generated program inven
 Resource Profile View for the ITEM, source Endpoint, sink Endpoint, Generic Resource Reservations, and commissioned physical route.
 
 ### Wiring and configuration
-`ic10/material-grid/material_import_slot_endpoint_v1_0.ic10` exposes processor import; `ic10/item-storage-common/material_export_slot_endpoint_v1_0.ic10` exposes export/chute handoff. `ic10/material-grid/material_resource_link_v1_0.ic10` publishes the physical Material Link. `ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10` prepares exact Vending/Stacker batches. `ic10/material-grid/material_transfer_grant_guard_v1_0.ic10` guards committed topology; `ic10/material-grid/material_transfer_executor_v1_0.ic10` is final execution and confirms destination ImportCount.
+`ic10/material-grid/material_import_slot_endpoint_v1_0.ic10` exposes processor import; `ic10/material-grid/material_export_slot_endpoint_v1_0.ic10` exposes export/chute handoff. `ic10/material-grid/material_resource_link_v1_0.ic10` publishes the physical Material Link. `ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10` prepares exact Vending/Stacker batches. `ic10/material-grid/material_transfer_grant_guard_v1_0.ic10` guards committed topology; `ic10/material-grid/material_transfer_executor_v1_0.ic10` is final execution and confirms destination ImportCount.
 
 ### Deployment procedure
 Commission source/sink endpoints first, then static route. Test one small exact batch. Verify reservation quote/commit, feeder ready, Guard authority, release, and destination evidence before scaling.

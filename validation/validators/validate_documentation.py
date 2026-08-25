@@ -9,13 +9,30 @@ ROOT=_PROJECT_ROOT
 mds=[p for p in ROOT.rglob('*.md') if 'validation' not in p.parts]
 existing={p.name for p in ROOT.iterdir() if p.is_file()}
 fails=[]
+GLOB=set('*{}?[]')
+def referenced_paths(ref):
+    """Yield every concrete repo path inside one backtick span.
+
+    A span may chain programs ('A -> B -> C'), map a pin ('d1 -> A'), or carry a
+    prose prefix ('dedicated ic10/...'), so split on the arrow and keep the last
+    word of each segment. A wildcard family ('..._loader_*_v4_0.ic10') names a
+    set rather than a file and is left unchecked.
+    """
+    for seg in ref.split('->'):
+        seg=seg.strip()
+        if not seg: continue
+        seg=seg.split()[-1]
+        if seg.endswith(('.ic10','.md','.py','.json')) and '/' in seg and not GLOB&set(seg):
+            yield seg
+
 for p in mds:
     txt=p.read_text(errors='replace')
     for ref in sorted(set(re.findall(r'`([^`\n]+\.(?:ic10|md|py|json))`',txt))):
-        if '/' not in ref and ref not in existing:
-            fails.append(f'{p.name}: missing referenced file {ref}')
-        elif ref.startswith('tests/') and not (ROOT/ref).exists():
-            fails.append(f'{p.name}: missing referenced test artifact {ref}')
+        if '/' not in ref:
+            if ref not in existing: fails.append(f'{p.name}: missing referenced file {ref}')
+            continue
+        for seg in referenced_paths(ref):
+            if not (ROOT/seg).exists(): fails.append(f'{p.name}: missing referenced file {seg}')
     for target in re.findall(r'\[[^\]]*\]\(([^)]+)\)',txt):
         target=target.strip()
         if target.startswith(('http://','https://','mailto:','#')):

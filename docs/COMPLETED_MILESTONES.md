@@ -167,7 +167,7 @@ Implemented:
 - `ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10` requires paired source/destination reservations, matching owner identity, plan epochs, direction locks, ResourceType, and live Endpoint generations before moving a LArRE stack;
 - `ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10` revalidates exact item identity and quantity immediately before pickup and exposes explicit held-item recovery;
 - the reserved LArRE move client persists the physical origin before pickup so recovery remains possible after a same-housing client restart;
-- `ic10/item-storage-common/material_export_slot_endpoint_v1_0.ic10` makes chute/export handoff state reservable for inbound storage placement;
+- `ic10/material-grid/material_export_slot_endpoint_v1_0.ic10` makes chute/export handoff state reservable for inbound storage placement;
 - `ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10` supports bounded directly readable slot storage without LArRE;
 - `ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10` models dedicated SDB inventory as conservative lower-bound quantity/capacity rather than misinterpreting native occupied-stack count as exact item quantity;
 - `ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10` reuses Material Feeder ABI1 to export FIFO SDB stacks into a Stacker and meter the exact requested processor quantity.
