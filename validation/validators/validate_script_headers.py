@@ -236,8 +236,9 @@ def main():
     entries = sum(1 for row in rows if row[1])
     print(f"Checked {len(rows)} files: {entries} entry points, {len(rows)-entries} imported modules")
     print(f"Single import name enforced for {len(shadowable)} modules reachable from a script directory")
-    work_free = sum(1 for row in rows if row[0].startswith(WORK_FREE_ROOT + "/"))
-    print(f"Work confined to a guarded main() for all {work_free} modules under {WORK_FREE_ROOT}/")
+    scoped = [row for row in rows if row[0].startswith(WORK_FREE_ROOT + "/")]
+    print(f"No work at import for all {len(scoped)} modules under {WORK_FREE_ROOT}/,"
+          f" and a guard reaches main() in each of the {sum(1 for row in scoped if row[1])} entry points")
     print("Result:", "FAIL" if failed else "PASS")
     return 1 if failed else 0
 
