@@ -13,7 +13,7 @@ fails=[]
 if not GUIDE.exists():
     print('User deployment guide validation: FAIL\n - USER_DEPLOYMENT_GUIDE.md missing');sys.exit(1)
 text=GUIDE.read_text();manifest=load_manifest(ROOT);families=manifest['deployment_families'];inv=family_inventory(ROOT,manifest)
-case_data=json.loads((ROOT/'live_commissioning_cases.json').read_text());case_ids={c['id'] for c in case_data.get('cases',[])}
+case_data=json.loads((ROOT/'data/live_commissioning_cases.json').read_text());case_ids={c['id'] for c in case_data.get('cases',[])}
 required_headings=['Purpose','Use this when','Deployment class','Programs','Prerequisites','Wiring and configuration','Deployment procedure','Healthy state','Commissioning proof','Common failures','Reflash / replacement','What can be removed','Technical references']
 seen_programs={}
 for slug,meta in families.items():

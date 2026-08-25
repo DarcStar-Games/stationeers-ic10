@@ -4,7 +4,7 @@ A normal controller family requires only the pieces that contain **family-specif
 
 1. **Runtime** — controller algorithm + generic telemetry.
 2. **Config Policy** — type/schema/block masks/defaults/validation/normalization.
-3. **Input Profile catalog entry** — optional commissioning UX metadata stored in `input_profiles.json` and materialized through the shared Profile View.
+3. **Input Profile catalog entry** — optional commissioning UX metadata stored in `data/input_profiles.json` and materialized through the shared Profile View.
 
 Reuse `ic10/controller-config/generic_persistent_config_host_v1_1.ic10`, Generic Input Scanner, Generic Input Resolver, Config Input Bridge, Editor, Loader, Committer, discovery, selectors, and diagnostics unchanged.
 
@@ -57,7 +57,7 @@ Keep physical-slot constants synchronized with the Policy. The config contract v
 
 ## Step 4: optionally add an Input Profile catalog entry
 
-A Profile controls commissioning UX, not the durable schema. It can therefore be omitted when Logic Memory editing is sufficient. New families normally **do not add another Input Profile IC**. Add one record to `input_profiles.json`, regenerate the shared catalog/loaders, and select the family through `ic10/input-profile-catalog/input_profile_view_v5_0.ic10`.
+A Profile controls commissioning UX, not the durable schema. It can therefore be omitted when Logic Memory editing is sufficient. New families normally **do not add another Input Profile IC**. Add one record to `data/input_profiles.json`, regenerate the shared catalog/loaders, and select the family through `ic10/input-profile-catalog/input_profile_view_v5_0.ic10`.
 
 ### Input Profile checklist
 
@@ -212,7 +212,7 @@ Use bitmasks for capabilities, valid-slot geometry, and fault/status flags. Keep
 
 Every new production-capable `.ic10` program must have exactly one operator-facing deployment home before it can pass release validation.
 
-For a hand-maintained program, add these fields to its exact semantic-path entry in `source_manifest.json`:
+For a hand-maintained program, add these fields to its exact semantic-path entry in `data/source_manifest.json`:
 
 ```json
 {

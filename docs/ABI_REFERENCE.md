@@ -191,7 +191,7 @@ S288..511  32 x 7 mutable state slots
 
 A free slot has active `State=0`. `PUBLISH_NEW` assigns a fresh JobId and atomically publishes `QUEUED/Generation=1/ErrorStatus=0`. `SET_STATE` requires the exact current JobGeneration and refuses to reopen terminal jobs. `REAP` requires exact generation and accepts only COMPLETE/FAULT/CANCELLED.
 
-Lifecycle-edge legality is the required writer contract in `docs/GENERIC_JOB_ABI.md`, `generic_job_schema.json`, and `framework/job_abi.py`. Queue readers capture even `S2`, read intent plus the active state bank, then require unchanged even `S2` before accepting the record. Same-service odd-sequence recovery distinguishes pre-flip rollback from post-flip commit using S25/S26.
+Lifecycle-edge legality is the required writer contract in `docs/GENERIC_JOB_ABI.md`, `data/generic_job_schema.json`, and `framework/job_abi.py`. Queue readers capture even `S2`, read intent plus the active state bank, then require unchanged even `S2` before accepting the record. Same-service odd-sequence recovery distinguishes pre-flip rollback from post-flip commit using S25/S26.
 
 ## Generic telemetry ABI v1 and v2
 
@@ -1171,7 +1171,7 @@ S14  expected SlotClass
 S15..S21 reserved
 ```
 
-The 27 current ITEM records (10 ores, 7 basic ingots, 5 alloys, and 5 superalloys) are generated into the ResourceClass-partitioned shared catalog from `resource_profiles.json`.
+The 27 current ITEM records (10 ores, 7 basic ingots, 5 alloys, and 5 superalloys) are generated into the ResourceClass-partitioned shared catalog from `data/resource_profiles.json`.
 
 ### Resource Transform Catalog Store / Profile View
 
@@ -1194,7 +1194,7 @@ Capability bits are `SMELT_BASIC=1`, `FURNACE_ALLOY=2`, `ADVANCED_ALLOY=4`. Arc 
 
 ### Generic Directory Hosts
 
-The reusable live-directory infrastructure is defined in `docs/DIRECTORY_STANDARD.md` and `directory_schemas.json`.
+The reusable live-directory infrastructure is defined in `docs/DIRECTORY_STANDARD.md` and `data/directory_schemas.json`.
 
 `DIRECTORY_ADAPTER_ABI_V2` uses magic `31415983`, ABI2. Candidate adapters publish:
 

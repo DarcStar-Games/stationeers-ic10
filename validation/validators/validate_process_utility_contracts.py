@@ -8,7 +8,7 @@ import json,sys
 R=_PROJECT_ROOT;fails=[]
 def need(t,s,m):
  if s not in t:fails.append(f'{m}: missing {s!r}')
-P=json.loads((R/'resource_profiles.json').read_text())['profiles']
+P=json.loads((R/'data/resource_profiles.json').read_text())['profiles']
 f=[p for p in P if p.get('resource_type')=='Fuel.H2O2']
 if len(f)!=1:fails.append('expected exactly one Fuel.H2O2 Resource Profile')
 else:

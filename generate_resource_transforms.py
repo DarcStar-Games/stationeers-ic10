@@ -2,7 +2,7 @@
 from pathlib import Path
 import json
 from framework.catalog_schema import *
-R=Path(__file__).resolve().parent;OUT=R/'ic10'/'transform-catalog';DEP=R/'ic10'/'dependency-planning';OUT.mkdir(parents=True,exist_ok=True);DEP.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R);D=json.loads((R/'resource_transforms.json').read_text());T=D['transforms']
+R=Path(__file__).resolve().parent;OUT=R/'ic10'/'transform-catalog';DEP=R/'ic10'/'dependency-planning';OUT.mkdir(parents=True,exist_ok=True);DEP.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R);D=json.loads((R/'data/resource_transforms.json').read_text());T=D['transforms']
 SCHEMA='CatalogSchema.ResourceTransform';SCHEMA_VERSION=4;INSTANCE='Catalog.ResourceTransforms.Schema4';VIEW_MAGIC=31415952;VIEW_ABI=4
 seen=set();items=[];input_total=output_total=0
 for t in T:
@@ -161,5 +161,5 @@ if len(producer_text.splitlines())>120: raise SystemExit('201 producer resolver 
 (DEP/'item_producer_resolver_v1_0.ic10').write_text(producer_text)
 counts=pack_store_counts([x.cells for x in items]);manifest=common_manifest(schema_name=SCHEMA,schema_version=SCHEMA_VERSION,instance_name=INSTANCE,store_count=len(counts),total_items=len(T),catalog_digest=digest)
 manifest.update({'format':'RESOURCE_TRANSFORM_CATALOG_V6','catalog_token':token,'transform_count':len(T),'input_descriptor_count':input_total,'output_descriptor_count':output_total,'runtime_store_placement':True,'runtime_min_store_count':len(counts),'runtime_store_item_counts':counts,'item_cell_lengths':[x.cells for x in items],'loader_segment_count':len(parts),'loaders':loaders,'loader_items':meta,'view_magic':VIEW_MAGIC,'view_abi':VIEW_ABI,'processor_capability_model':D.get('processor_capability_model',{}),'loader_item_atomicity':'transform_never_split','loader_sparse_zero_init':True,'generic_store_program':GENERIC_STORE_FILE,'coordinator_core_program':COORD_PROGRAMS[1],'loader_router_program':COORD_PROGRAMS[2]})
-(R/'resource_transform_catalog_manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');D.update({'schema':SCHEMA_VERSION,'catalog_schema_id':SCHEMA,'catalog_schema_version':SCHEMA_VERSION,'catalog_instance_id':INSTANCE,'cell_block_width':CELL_BLOCK_WIDTH});(R/'resource_transforms.json').write_text(json.dumps(D,indent=2)+'\n')
+(R/'data/resource_transform_catalog_manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');D.update({'schema':SCHEMA_VERSION,'catalog_schema_id':SCHEMA,'catalog_schema_version':SCHEMA_VERSION,'catalog_instance_id':INSTANCE,'cell_block_width':CELL_BLOCK_WIDTH});(R/'data/resource_transforms.json').write_text(json.dumps(D,indent=2)+'\n')
 print(f'Resource Transform generation: PASS - {len(T)} transforms / runtime min {len(counts)} stores / {len(parts)} relocatable loaders')

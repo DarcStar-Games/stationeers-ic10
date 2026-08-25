@@ -7,15 +7,15 @@ from pathlib import Path
 from framework.ic10_harness import IC10
 from framework.catalog_test_helpers import load_catalog_chain
 import hashlib,json,subprocess,sys,re
-R=_PROJECT_ROOT;D=json.loads((R/'resource_profiles.json').read_text());P=D['profiles'];fails=[]
+R=_PROJECT_ROOT;D=json.loads((R/'data/resource_profiles.json').read_text());P=D['profiles'];fails=[]
 
 def generated_files():
- M=json.loads((R/'resource_profile_catalog_manifest.json').read_text())
- return [R/M['generic_store_program'],R/M['coordinator_core_program'],R/M['loader_router_program'],*[R/f for p in M['partitions'] for f in p['loaders']],R/'ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10',R/'ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10',R/'resource_profile_catalog_manifest.json']
+ M=json.loads((R/'data/resource_profile_catalog_manifest.json').read_text())
+ return [R/M['generic_store_program'],R/M['coordinator_core_program'],R/M['loader_router_program'],*[R/f for p in M['partitions'] for f in p['loaders']],R/'ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10',R/'ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10',R/'data/resource_profile_catalog_manifest.json']
 def hashes():return {f.name:hashlib.sha256(f.read_bytes()).hexdigest() for f in generated_files()}
 b=hashes();subprocess.run([sys.executable,str(R/'generate_resource_profiles.py')],cwd=R,check=True,stdout=subprocess.DEVNULL);a=hashes()
 if a!=b:fails.append('generation is not deterministic')
-M=json.loads((R/'resource_profile_catalog_manifest.json').read_text())
+M=json.loads((R/'data/resource_profile_catalog_manifest.json').read_text())
 if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_coordinator_abi'))!=('RESOURCE_PROFILE_CATALOG_V6',5,4,3):fails.append('runtime-placement ABI metadata mismatch')
 if M.get('runtime_store_placement') is not True or M.get('runtime_min_store_count')!=5 or M.get('profile_count')!=39 or M.get('physical_item_width')!=16:fails.append('Resource Profile runtime geometry/count mismatch')
 if [(p['partition_key'],p['item_count']) for p in M['partitions']]!=[(1,10),(2,27),(4,1),(5,1)]:fails.append('ResourceClass partition/count mismatch')

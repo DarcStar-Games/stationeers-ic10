@@ -8,7 +8,7 @@ import json,sys
 from framework.ic10_harness import Device,IC10,run_round_robin
 R=_PROJECT_ROOT;fails=[]
 H=(R/'ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10').read_text();B=(R/'ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10').read_text()
-S=json.loads((R/'directory_schemas.json').read_text())
+S=json.loads((R/'data/directory_schemas.json').read_text())
 if S.get('format')!='GENERIC_DIRECTORY_SCHEMAS_V10' or S.get('adapter_abi',{}).get('magic')!=31415983 or S['adapter_abi'].get('abi')!=2:fails.append('Directory Adapter ABI registry metadata mismatch')
 
 def host(ref):

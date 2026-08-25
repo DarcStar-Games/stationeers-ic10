@@ -260,7 +260,7 @@ The Store API is a low-level single-writer interface used by the Manufacturing S
 
 Every reader captures even QueueSequence before reading an intent slot + its active A/B state triplet and requires the same even sequence afterward. The Job Store mechanically rejects stale generations, terminal reopening, non-terminal reaping, occupied PUBLISH_NEW slots, and slot ordinals outside `0..31`.
 
-The writer must additionally enforce the legal lifecycle table in `docs/GENERIC_JOB_ABI.md` / `generic_job_schema.json`. `ic10/manufacturing/manufacturing_scheduler_v1_0.ic10` is the first production writer and owns TRANSFORM/PRINT priority ordering, processor selection, reservation planning, and wait-state transitions. Do not bypass that lifecycle contract by using SET_STATE as an arbitrary state setter.
+The writer must additionally enforce the legal lifecycle table in `docs/GENERIC_JOB_ABI.md` / `data/generic_job_schema.json`. `ic10/manufacturing/manufacturing_scheduler_v1_0.ic10` is the first production writer and owns TRANSFORM/PRINT priority ordering, processor selection, reservation planning, and wait-state transitions. Do not bypass that lifecycle contract by using SET_STATE as an arbitrary state setter.
 
 ## Manufacturing Scheduler deployment
 

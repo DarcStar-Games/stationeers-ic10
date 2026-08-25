@@ -14,7 +14,7 @@ from pathlib import Path
 import json,re,sys
 
 ROOT=_PROJECT_ROOT
-SET=ROOT/'ic10_instruction_set.json'
+SET=ROOT/'data/ic10_instruction_set.json'
 LABEL=re.compile(r'[A-Za-z_][A-Za-z0-9_]*:')
 
 def load_instruction_set():

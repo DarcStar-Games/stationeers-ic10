@@ -88,7 +88,7 @@ The automated safety criterion is old-complete/new-complete/invalid only. A torn
 
 ## Phase-pressure model tests
 
-`tests/test_phase_pressure_protocol.py` checks all nine PHASE_MEDIUM records in `resource_profiles.json`, deterministic Resource Profile Catalog generation, ratio LogicType, purity threshold, and finite in-range phase boundaries. `tests/test_ic10_execution.py` additionally executes the generated catalog and real Resource Profile View before exercising the Purity Guard and material inventory consumers.
+`tests/test_phase_pressure_protocol.py` checks all nine PHASE_MEDIUM records in `data/resource_profiles.json`, deterministic Resource Profile Catalog generation, ratio LogicType, purity threshold, and finite in-range phase boundaries. `tests/test_ic10_execution.py` additionally executes the generated catalog and real Resource Profile View before exercising the Purity Guard and material inventory consumers.
 
 ## Pressure-domain model tests
 
@@ -268,7 +268,7 @@ Do not edit files under `validation/evidence/` by hand to record live results. T
 
 ## Item 12 field-evidence workflow
 
-Item 12 makes the recording rule above executable. `live_commissioning_cases.json` defines the required field suites; `live_commission.py` creates release-fingerprint-bound sessions and records append-only PASS/FAIL/BLOCKED observations; `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` can capture up to six read-only LogicType/stack observations during a live test. See `docs/LIVE_COMMISSIONING.md`.
+Item 12 makes the recording rule above executable. `data/live_commissioning_cases.json` defines the required field suites; `live_commission.py` creates release-fingerprint-bound sessions and records append-only PASS/FAIL/BLOCKED observations; `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` can capture up to six read-only LogicType/stack observations during a live test. See `docs/LIVE_COMMISSIONING.md`.
 
 A live session becomes stale when the framework input fingerprint or commissioning catalog changes. Item 12 remains ACTIVE until every required suite has a current PASS. Automated validators and `framework/ic10_harness.py` remain prerequisites and regression tools, not substitutes for those physical results.
 
@@ -371,7 +371,7 @@ Transform:
 
 ## Generic Job Store hardening
 
-`tests/test_job_abi.py` executes the real `ic10/generic-jobs/generic_job_store_v1_0.ic10` through `framework/ic10_harness.py` and cross-checks lifecycle semantics against `generic_job_schema.json` / `framework/job_abi.py`.
+`tests/test_job_abi.py` executes the real `ic10/generic-jobs/generic_job_store_v1_0.ic10` through `framework/ic10_harness.py` and cross-checks lifecycle semantics against `data/generic_job_schema.json` / `framework/job_abi.py`.
 
 Automated checks prove:
 

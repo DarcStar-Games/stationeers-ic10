@@ -2,7 +2,7 @@
 from pathlib import Path
 import argparse,json,sys
 R=Path(__file__).resolve().parent
-SPECS=R/'directory_adapter_specs.json'
+SPECS=R/'data/directory_adapter_specs.json'
 
 def render(s):
  fields=s['fields']; w=len(fields); g=s['generation_offset']

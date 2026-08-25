@@ -19,7 +19,7 @@ if rm.get('item_model')!='header5_plus_reagent_pairs_block_aligned' or rm.get('m
 need('ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10','bne r0 3 CatalogBad')
 need('ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10','poke 0 31415985','poke 1 1','bne r0 3 Bad','bgt r4 16 Bad','poke 41 r10')
 # Material semantic aliases reuse Resource Profiles.
-profiles=json.loads((R/'resource_profiles.json').read_text())['profiles']
+profiles=json.loads((R/'data/resource_profiles.json').read_text())['profiles']
 ingots=[p for p in profiles if p['resource_class']==2 and p.get('profile_schema')==2]
 if not ingots or any(p['parameter_names'][2]!='ManufacturingReagentHash' or not p['params'][2] for p in ingots): fail('ITEM schema2 ingot reagent aliases missing')
 need('ic10/material-grid/material_resource_link_v1_0.ic10','poke 27 r0','getd r0 r5 14','getd r0 r0 15')

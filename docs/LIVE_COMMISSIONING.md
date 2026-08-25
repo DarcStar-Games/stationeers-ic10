@@ -1,6 +1,6 @@
 # Live-Game Commissioning & Field Evidence
 
-Roadmap Item 12 closes the gap between automated protocol proof and actual Stationeers device/network behavior. Items 1–11 remain implemented and automatically validated; Item 12 is **ACTIVE** until every required live suite in `live_commissioning_cases.json` has current PASS evidence from the target game build.
+Roadmap Item 12 closes the gap between automated protocol proof and actual Stationeers device/network behavior. Items 1–11 remain implemented and automatically validated; Item 12 is **ACTIVE** until every required live suite in `data/live_commissioning_cases.json` has current PASS evidence from the target game build.
 
 Automated/model evidence is never promoted to live evidence. A safe modeled result can still differ from real device timing, writable LogicTypes, slot layouts, atmosphere behavior, chute timing, or machine-specific semantics.
 
@@ -9,7 +9,7 @@ Automated/model evidence is never promoted to live evidence. A safe modeled resu
 Three identities are deliberately separate:
 
 1. `validation/evidence/` proves deterministic source/model/harness checks for a release input fingerprint.
-2. `live_commissioning_cases.json` defines the required field suites and acceptance summaries.
+2. `data/live_commissioning_cases.json` defines the required field suites and acceptance summaries.
 3. A live session records human-observed physical results and is bound to the exact framework input fingerprint plus commissioning-catalog SHA-256.
 
 Changing framework inputs or the case catalog makes an older field session **STALE**. Re-run affected live suites rather than copying their old PASS state forward.
@@ -109,7 +109,7 @@ IC10 currently supports register-addressed stack reads and device/LogicType indi
 
 ## 4. Required live suites
 
-`live_commissioning_cases.json` is canonical. The current required suites cover:
+`data/live_commissioning_cases.json` is canonical. The current required suites cover:
 
 - PressureGrid inventory, purity, reservation, routing, interruption, scale, and overflow;
 - persistent configuration and banked transactions;

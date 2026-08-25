@@ -5,13 +5,13 @@ from pathlib import Path
 import argparse, datetime as dt, hashlib, json, sys
 
 ROOT=Path(__file__).resolve().parent
-CATALOG=ROOT/'live_commissioning_cases.json'
+CATALOG=ROOT/'data/live_commissioning_cases.json'
 FORMAT='LIVE_COMMISSION_SESSION_V1'
 VALID={'PASS','FAIL','BLOCKED'}
 
 def sha_bytes(data:bytes)->str: return hashlib.sha256(data).hexdigest()
 def load_catalog(root=ROOT):
-    p=root/'live_commissioning_cases.json'; data=json.loads(p.read_text())
+    p=root/'data/live_commissioning_cases.json'; data=json.loads(p.read_text())
     if data.get('format')!='LIVE_COMMISSIONING_CASES_V1': raise ValueError('unsupported commissioning catalog')
     return data
 
@@ -21,7 +21,7 @@ def framework_fingerprint(root=ROOT):
     spec=importlib.util.spec_from_file_location('_rv',root/'run_validation.py'); mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
     return mod.input_fingerprint()
 
-def catalog_sha(root=ROOT): return sha_bytes((root/'live_commissioning_cases.json').read_bytes())
+def catalog_sha(root=ROOT): return sha_bytes((root/'data/live_commissioning_cases.json').read_bytes())
 def now(): return dt.datetime.now(dt.timezone.utc).isoformat()
 def case_map(root=ROOT): return {c['id']:c for c in load_catalog(root)['cases']}
 

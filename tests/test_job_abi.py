@@ -9,7 +9,7 @@ from framework.ic10_harness import IC10
 from framework.job_abi import JobIntent,JobState,JobType,allowed_transition,can_reap,validate_intent
 R=_PROJECT_ROOT
 SRC=(R/'ic10/generic-jobs/generic_job_store_v1_0.ic10').read_text()
-SCHEMA=json.loads((R/'generic_job_schema.json').read_text())
+SCHEMA=json.loads((R/'data/generic_job_schema.json').read_text())
 fails=[]
 def ck(cond,msg):
     if not cond:fails.append(msg)

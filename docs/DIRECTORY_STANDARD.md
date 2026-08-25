@@ -27,7 +27,7 @@ Domain Adapter
 167 Generic Registry Directory Host
 ```
 
-Canonical schema metadata lives in `directory_schemas.json`. There are **no domain-specific directory magic compatibility facades** in the current baseline.
+Canonical schema metadata lives in `data/directory_schemas.json`. There are **no domain-specific directory magic compatibility facades** in the current baseline.
 
 ## Directory Adapter ABI2
 
@@ -137,7 +137,7 @@ The discovery adapter supplies six cells `[NodeId, ReferenceId, State, UsedCells
 
 ## Canonical schemas
 
-`directory_schemas.json` currently defines:
+`data/directory_schemas.json` currently defines:
 
 ### DirectorySchema.Controller
 

@@ -4,7 +4,7 @@ from collections import defaultdict
 import json
 from framework.catalog_schema import *
 R=Path(__file__).resolve().parent;OUT=R/'ic10'/'resource-profile-catalog';DEP=R/'ic10'/'dependency-planning';OUT.mkdir(parents=True,exist_ok=True);DEP.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R)
-D=json.loads((R/'resource_profiles.json').read_text());P=D['profiles']
+D=json.loads((R/'data/resource_profiles.json').read_text());P=D['profiles']
 SCHEMA='CatalogSchema.ResourceProfile';SCHEMA_VERSION=2;INSTANCE='Catalog.ResourceProfiles.Schema2'
 VIEW_MAGIC=31415963;VIEW_ABI=1;SEMANTIC_WIDTH=14;ITEM_CELLS=16
 CLASS_NAMES={1:'fluid',2:'item',4:'power',5:'energy'}
@@ -152,7 +152,7 @@ if len(reagent_text.splitlines())>120: raise SystemExit('215 reagent resolver ex
 minstores=sum(x['runtime_min_store_count'] for x in parts_meta)
 manifest=common_manifest(schema_name=SCHEMA,schema_version=SCHEMA_VERSION,instance_name=INSTANCE,store_count=minstores,total_items=len(P),catalog_digest=digest)
 manifest.update({'format':'RESOURCE_PROFILE_CATALOG_V6','catalog_token':token,'profile_count':len(P),'semantic_record_width':SEMANTIC_WIDTH,'physical_item_width':ITEM_CELLS,'storage_partition':'resource_class','runtime_store_placement':True,'runtime_min_store_count':minstores,'loader_segment_count':len(all_loaders),'loaders':all_loaders,'partitions':parts_meta,'loader_item_atomicity':'logical_item_never_split','loader_sparse_zero_init':True,'generic_store_program':GENERIC_STORE_FILE,'coordinator_core_program':COORD_PROGRAMS[1],'loader_router_program':COORD_PROGRAMS[2]})
-(R/'resource_profile_catalog_manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+(R/'data/resource_profile_catalog_manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 D.update({'format':'RESOURCE_PROFILE_CATALOG_V6','catalog_schema_id':SCHEMA,'catalog_schema_version':SCHEMA_VERSION,'catalog_instance_id':INSTANCE,'cell_block_width':CELL_BLOCK_WIDTH,'semantic_record_width':SEMANTIC_WIDTH,'physical_item_width':ITEM_CELLS,'storage_partition':'resource_class'})
-(R/'resource_profiles.json').write_text(json.dumps(D,indent=2)+'\n')
+(R/'data/resource_profiles.json').write_text(json.dumps(D,indent=2)+'\n')
 print(f'Resource Profile generation: PASS - {len(P)} profiles / runtime min {minstores} stores / {len(all_loaders)} relocatable loaders')

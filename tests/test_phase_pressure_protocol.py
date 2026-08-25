@@ -6,7 +6,7 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 from pathlib import Path
 import json,math,subprocess,hashlib,sys
 R=_PROJECT_ROOT
-D=json.loads((R/'resource_profiles.json').read_text())
+D=json.loads((R/'data/resource_profiles.json').read_text())
 fails=[]
 phase=[p for p in D['profiles'] if p['profile_kind']==1]
 if len(phase)!=9: fails.append(f'expected 9 phase-medium resource profiles, got {len(phase)}')

@@ -54,7 +54,7 @@ The normalized view exposes both requirements and promised output semantics so d
 
 ## Producer resolution
 
-`ic10/dependency-planning/item_producer_resolver_v1_0.ic10` is generated from `resource_transforms.json`. Known transform outputs resolve to `ProducerKind=TRANSFORM` plus exact `TransformType`. Unknown ITEM outputs fall back to PRINT with the requested ResourceType as the print-side producer identity.
+`ic10/dependency-planning/item_producer_resolver_v1_0.ic10` is generated from `data/resource_transforms.json`. Known transform outputs resolve to `ProducerKind=TRANSFORM` plus exact `TransformType`. Unknown ITEM outputs fall back to PRINT with the requested ResourceType as the print-side producer identity.
 
 The generator rejects duplicate transform producers for the same ITEM ResourceType rather than silently choosing one.
 

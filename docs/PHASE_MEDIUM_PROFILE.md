@@ -2,7 +2,7 @@
 
 Phase-medium data is now one `ProfileKind` inside the shared Resource Profile system rather than one IC10 program per working medium. `ControllerPhasePressure`, `ControllerPressureDomain`, the grid planner, and the Purity Guard consume `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10`.
 
-The canonical source is `resource_profiles.json`. `generate_resource_profiles.py` emits ResourceClass-partitioned relocatable Loader candidates. Runtime placement currently puts the nine FLUID phase media in one Store and the 27 ITEM material profiles across two Stores (26+1). Loaders self-clear only their own candidate stacks, keep each 16-cell profile whole, write only non-zero cells, publish Ready last, and terminate; the Loader Router assigns them and each Generic Store pulls its assigned candidates. See `docs/RESOURCE_PROFILES.md` for the Store/View ABIs, loader mechanics, publication checks, and extension rules.
+The canonical source is `data/resource_profiles.json`. `generate_resource_profiles.py` emits ResourceClass-partitioned relocatable Loader candidates. Runtime placement currently puts the nine FLUID phase media in one Store and the 27 ITEM material profiles across two Stores (26+1). Loaders self-clear only their own candidate stacks, keep each 16-cell profile whole, write only non-zero cells, publish Ready last, and terminate; the Loader Router assigns them and each Generic Store pulls its assigned candidates. See `docs/RESOURCE_PROFILES.md` for the Store/View ABIs, loader mechanics, publication checks, and extension rules.
 
 ## Phase-medium record layout
 
@@ -225,7 +225,7 @@ Changing a profile while a domain contains another medium therefore results in z
 
 ## Adding or changing a medium
 
-1. Update the phase-medium record in `resource_profiles.json`; do not hand-edit the generated Catalog Store/loaders.
+1. Update the phase-medium record in `data/resource_profiles.json`; do not hand-edit the generated Catalog Store/loaders.
 2. Provide the medium ResourceType, gas-ratio LogicType, A/B coefficients, triple/critical pressures, liquid temperature window, and purity policy.
 3. Keep `ResourceClass=FLUID`, `Unit=MOLE`, `ProfileKind=PHASE_MEDIUM`, and schema 2 unless the parameter contract itself changes.
 4. Run `generate_resource_profiles.py`.

@@ -2,7 +2,7 @@
 
 This is the operator-facing deployment manual for the Stationeers IC10 framework. It answers **what to install, in what order, what stays resident, what can be reclaimed, what healthy state looks like, and how to prove each family in game**. Exact stack-cell ABI layouts remain in `docs/ABI_REFERENCE.md`; architecture rationale remains in the domain documents. This guide is intentionally procedural.
 
-The program inventory under every family is machine-linked to `source_manifest.json`. `update_user_deployment_inventory.py` refreshes those blocks, and release validation fails if any deployable IC10 program has no deployment family or if a family disappears from this guide.
+The program inventory under every family is machine-linked to `data/source_manifest.json`. `update_user_deployment_inventory.py` refreshes those blocks, and release validation fails if any deployable IC10 program has no deployment family or if a family disappears from this guide.
 
 ## Before deploying anything
 
@@ -785,7 +785,7 @@ View echoes exact selected class/type and current catalog generation; consumers 
 Covered by `LG-PHASE-PRESSURE`, `LG-MATERIAL`, `LG-POWER`, and Item-11 cross-domain suites.
 
 ### Common failures
-Missing profile or wrong semantic alias. Fix generated `resource_profiles.json`/catalog, not consumer code.
+Missing profile or wrong semantic alias. Fix generated `data/resource_profiles.json`/catalog, not consumer code.
 
 ### Reflash / replacement
 Reflash View and wait for re-resolution before resuming dependent actuation.
@@ -823,7 +823,7 @@ This family contains the deployment classes shown in its generated program inven
 <!-- FAMILY_PROGRAMS:transform-catalog END -->
 
 ### Prerequisites
-Catalog control plane plus generated `resource_transforms.json` and current transform loaders.
+Catalog control plane plus generated `data/resource_transforms.json` and current transform loaders.
 
 ### Wiring and configuration
 Run the generated `ic10/transform-catalog/resource_transform_catalog_loader_*_v6_0.ic10` set. `ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` selects a TransformType and republishes ABI4 including typed inputs/output, capability and P/T bounds.
@@ -1761,7 +1761,7 @@ This family contains the deployment classes shown in its generated program inven
 <!-- FAMILY_PROGRAMS:live-commissioning END -->
 
 ### Prerequisites
-Current verified release, `live_commissioning_cases.json`, `live_commission.py`, and a real Stationeers installation under test.
+Current verified release, `data/live_commissioning_cases.json`, `live_commission.py`, and a real Stationeers installation under test.
 
 ### Wiring and configuration
 `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` is a read-only six-source snapshot probe. Each descriptor can read a dynamic LogicType or stack cell, with optional generation fencing for coherent stack capture. It must never sit in an actuator path.

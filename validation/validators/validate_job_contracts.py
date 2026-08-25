@@ -9,7 +9,7 @@ from framework.job_abi import JobState,JobType,NORMAL_CHAIN,TERMINAL,WAIT_FROM,W
 R=_PROJECT_ROOT;fails=[]
 def ck(v,msg):
     if not v:fails.append(msg)
-s=json.loads((R/'generic_job_schema.json').read_text())
+s=json.loads((R/'data/generic_job_schema.json').read_text())
 ck(s.get('format')=='GENERIC_JOB_ABI_V1','schema format')
 ck(s.get('magic')==31415984 and s.get('abi')==1,'schema magic/ABI')
 ck(s.get('capacity')==32,'capacity must be 32')

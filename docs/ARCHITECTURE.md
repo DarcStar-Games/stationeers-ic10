@@ -391,7 +391,7 @@ The Job Store deliberately does not select a printer, furnace, resource path, or
 
 The canonical lifecycle is `QUEUED -> PLANNING -> RESERVING -> READY -> RUNNING -> VERIFYING -> COMPLETE`. `WAIT_RESOURCE`, `WAIT_PROCESSOR`, and `WAIT_CAPACITY` return to PLANNING. `FAULT` and `CANCELLED` are terminal. Every mutation uses expected JobGeneration; terminal jobs cannot be reopened and can leave the Store only through REAP.
 
-`generic_job_schema.json` and `framework/job_abi.py` remain the lifecycle-law source. Roadmap Item 6 supplies manufacturing lifecycle policy through `ic10/manufacturing/manufacturing_scheduler_v1_0.ic10`; current physical Job Store mailbox mutation is serialized by Gateway ABI3 and `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10`. The Job Store still owns publication mechanics and does not absorb processor/resource policy. The current material-transform transaction remains unchanged below the Job layer rather than being replaced by a second reservation protocol. See `docs/GENERIC_JOB_ABI.md` and `docs/MANUFACTURING_SCHEDULER.md`.
+`data/generic_job_schema.json` and `framework/job_abi.py` remain the lifecycle-law source. Roadmap Item 6 supplies manufacturing lifecycle policy through `ic10/manufacturing/manufacturing_scheduler_v1_0.ic10`; current physical Job Store mailbox mutation is serialized by Gateway ABI3 and `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10`. The Job Store still owns publication mechanics and does not absorb processor/resource policy. The current material-transform transaction remains unchanged below the Job layer rather than being replaced by a second reservation protocol. See `docs/GENERIC_JOB_ABI.md` and `docs/MANUFACTURING_SCHEDULER.md`.
 
 ## Manufacturing scheduling layer
 
@@ -456,7 +456,7 @@ Item 12 adds no new control authority. `ic10/live-commissioning/live_commission_
 
 ## Operator deployment metadata
 
-Executable ownership and operator deployment ownership are deliberately connected but not conflated. `source_manifest.json` `SOURCE_MANIFEST_V3` records each hand-maintained deployable program's architecture layer/purpose plus one `deployment_family` and one deployment class. Generated-file rules provide the same metadata for catalog-generated IC10 programs whose concrete file count may change.
+Executable ownership and operator deployment ownership are deliberately connected but not conflated. `data/source_manifest.json` `SOURCE_MANIFEST_V3` records each hand-maintained deployable program's architecture layer/purpose plus one `deployment_family` and one deployment class. Generated-file rules provide the same metadata for catalog-generated IC10 programs whose concrete file count may change.
 
 `docs/SCRIPT_INDEX.md` is generated from that metadata for engineering navigation. `USER_DEPLOYMENT_GUIDE.md` is the operator-facing view: its generated program inventories are refreshed by `update_user_deployment_inventory.py`, while its procedures remain human-authored. `validation/validators/validate_user_deployment_guide.py` requires every deployable IC10 program to appear exactly once and requires every family to retain the standard install/health/commission/reflash/reclaim sections.
 

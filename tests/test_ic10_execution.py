@@ -10,7 +10,7 @@ import sys,json
 R=_PROJECT_ROOT
 fails=[]
 # Populate the linked ResourceClass-partitioned Resource Profile catalog, then resolve through the real View.
-rpm=json.loads((R/'resource_profile_catalog_manifest.json').read_text())
+rpm=json.loads((R/'data/resource_profile_catalog_manifest.json').read_text())
 generic=(R/rpm['generic_store_program']).read_text()
 resource_loader_groups=[[(R/f).read_text() for f in part['loaders']] for part in rpm['partitions']]
 resource_stores,resource_vms,_=load_catalog_chain([generic]*rpm['runtime_min_store_count'], resource_loader_groups, store_ref_base=180,loader_ref_base=1180)

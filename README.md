@@ -39,21 +39,22 @@ If you are new to the framework, read the documents in this order:
 
 ## Project layout
 
-The repository uses **semantic paths**, not historical source ordinals. Production filenames keep their explicit version suffixes (`_v<major>_<minor>`), while deployment family and class live in `source_manifest.json`. Generated catalog page indices such as `_00` remain because they identify meaningful generated partitions rather than source ordering.
+The repository uses **semantic paths**, not historical source ordinals. Production filenames keep their explicit version suffixes (`_v<major>_<minor>`), while deployment family and class live in `data/source_manifest.json`. Generated catalog page indices such as `_00` remain because they identify meaningful generated partitions rather than source ordering.
 
 ```text
 ic10/<deployment-family>/     versioned production IC10 programs
 docs/                         engineering/reference documentation
+framework/                    executable protocol reference models
+data/                         JSON sources of truth: schemas, profiles, manifests
 tests/                        executable protocol/model tests + tests/ic10 fixtures
 validation/validators/        structural and release-contract validators
 validation/evidence/          generated per-check machine evidence
-source_manifest.json           semantic source/deployment metadata
-build_release.py               canonical verified-release entrypoint
-run_validation.py              canonical automated validation entrypoint
-live_commission.py             release-bound field-evidence entrypoint
+build_release.py              canonical verified-release entrypoint
+run_validation.py             canonical automated validation entrypoint
+live_commission.py            release-bound field-evidence entrypoint
 ```
 
-Do not infer execution order, ABI identity, or deployment order from a filename. Use the semantic path, version suffix, `source_manifest.json`, `docs/SCRIPT_INDEX.md`, and `USER_DEPLOYMENT_GUIDE.md`.
+Do not infer execution order, ABI identity, or deployment order from a filename. Use the semantic path, version suffix, `data/source_manifest.json`, `docs/SCRIPT_INDEX.md`, and `USER_DEPLOYMENT_GUIDE.md`.
 
 ## Mental model
 
@@ -228,11 +229,11 @@ Family/profile files:
 - `ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10`
 - `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10`
 - `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10`
-- `resource_profile_catalog_manifest.json`
-- `resource_profiles.json`
+- `data/resource_profile_catalog_manifest.json`
+- `data/resource_profiles.json`
 - `generate_resource_profiles.py`
 
-Working-medium constants remain outside the controller runtime, but they no longer require one IC10 program per medium. The same unified catalog also owns material-item profile metadata. Configure a Resource Profile View with `S2=FLUID` and `S3=HASH(<medium>)`, connect its `d0` to any Store in the runtime Resource Profile topology after the Coordinator has placed the profile items, and connect the controller or purity service to the View. The current runtime topology derives one FLUID Store, two ITEM Stores, one POWER Store, and one ENERGY Store from capacity; loader filenames are authoritative in `resource_profile_catalog_manifest.json`. See `docs/RESOURCE_PROFILES.md` for the shared catalog/view ABI and `docs/PHASE_MEDIUM_PROFILE.md` for thermodynamic selection guidance.
+Working-medium constants remain outside the controller runtime, but they no longer require one IC10 program per medium. The same unified catalog also owns material-item profile metadata. Configure a Resource Profile View with `S2=FLUID` and `S3=HASH(<medium>)`, connect its `d0` to any Store in the runtime Resource Profile topology after the Coordinator has placed the profile items, and connect the controller or purity service to the View. The current runtime topology derives one FLUID Store, two ITEM Stores, one POWER Store, and one ENERGY Store from capacity; loader filenames are authoritative in `data/resource_profile_catalog_manifest.json`. See `docs/RESOURCE_PROFILES.md` for the shared catalog/view ABI and `docs/PHASE_MEDIUM_PROFILE.md` for thermodynamic selection guidance.
 
 The runtime always publishes `RequestedPressure`, phase mode, status, and medium identity. `DirectWrite=0` is a publish-only/alternate-actuation mode, but a normal grid deployment will usually keep `ControllerPhasePressure.DirectWrite=1` because the phase-change chamber still needs its own pressure setting. The grid manages the external LOW/HIGH pressure buses and transfer paths; it does not automatically replace the chamber-setpoint owner.
 

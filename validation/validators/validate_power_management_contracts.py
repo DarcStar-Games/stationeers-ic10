@@ -11,14 +11,14 @@ def need(path,*tokens):
  for tok in tokens:
   if tok not in t:fails.append(f'{path}: missing {tok!r}')
 # Catalog semantics.
-D=json.loads((R/'resource_profiles.json').read_text())
+D=json.loads((R/'data/resource_profiles.json').read_text())
 if D.get('resource_classes',{}).get('POWER')!=4:fails.append('ResourceClass.POWER != 4')
 if D.get('resource_classes',{}).get('ENERGY')!=5:fails.append('ResourceClass.ENERGY != 5')
 if D.get('units',{}).get('WATT')!=4:fails.append('Unit.WATT != 4')
 if D.get('units',{}).get('JOULE')!=5:fails.append('Unit.JOULE != 5')
 pp=[p for p in D['profiles'] if p['resource_class'] in (4,5)]
 if len(pp)!=2:fails.append('expected exactly POWER + ENERGY electrical profiles')
-M=json.loads((R/'resource_profile_catalog_manifest.json').read_text())
+M=json.loads((R/'data/resource_profile_catalog_manifest.json').read_text())
 parts={x['partition_key']:x for x in M['partitions']}
 for cls,name in [(4,'ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10'),(5,'ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10')]:
  if cls not in parts or name not in parts[cls]['loaders']:fails.append(f'missing generated ResourceClass {cls} loader')
@@ -53,7 +53,7 @@ need('ic10/power-jobs/power_job_prepare_v1_0.ic10','beq r4 1 ToPlanning','beq r4
 need('ic10/power-jobs/power_job_finalize_v1_0.ic10','beq r4 5 Resolve','beqz r0 Pending','move r12 11','move r10 -1','put d1 2 r8','put d2 3 r7','put d2 4 r6','move r12 6','move r12 7')
 need('ic10/power-jobs/power_job_scheduler_v1_0.ic10','put d0 18 4','put d0 2 r0','put d0 3 r15','poke 22 r0','seq r1 r7 5','seq r0 r7 6','select r9 r1 2 1')
 # Schema registry.
-S=json.loads((R/'directory_schemas.json').read_text())
+S=json.loads((R/'data/directory_schemas.json').read_text())
 ps=[s for s in S['schemas'] if s['schema_id']=='DirectorySchema.PowerReservation']
 if len(ps)!=1 or ps[0]['entry_width']!=3 or ps[0]['capacity']!=64:fails.append('PowerReservation directory schema mismatch')
 if fails:

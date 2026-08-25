@@ -8,7 +8,7 @@ VALID_CLASSES={'resident','conditional-resident','commissioning','one-shot','on-
 
 def load_manifest(root=ROOT):
     root=Path(root)
-    data=json.loads((root/'source_manifest.json').read_text())
+    data=json.loads((root/'data/source_manifest.json').read_text())
     if data.get('format')!='SOURCE_MANIFEST_V3':
         raise ValueError(f"unsupported source manifest format: {data.get('format')!r}")
     return data

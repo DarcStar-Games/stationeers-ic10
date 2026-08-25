@@ -43,9 +43,9 @@ Code generators (run when their JSON source changes; `build_release.py` runs the
 python3 generate_directory_adapters.py           # --check verifies no drift
 python3 update_user_deployment_inventory.py      # refreshes generated blocks in USER_DEPLOYMENT_GUIDE.md
 python3 generate_source_catalog.py               # regenerates docs/SCRIPT_INDEX.md
-python3 generate_input_profiles.py               # from input_profiles.json
-python3 generate_resource_profiles.py            # from resource_profiles.json
-python3 generate_resource_transforms.py          # from resource_transforms.json
+python3 generate_input_profiles.py               # from data/input_profiles.json
+python3 generate_resource_profiles.py            # from data/resource_profiles.json
+python3 generate_resource_transforms.py          # from data/resource_transforms.json
 python3 generate_recipe_catalog.py --game-data recipe_fixture_data --output <tmpdir> --clean
 ```
 
@@ -58,7 +58,7 @@ python3 live_commission.py record --session ... --case ... --status PASS --preco
 python3 live_commission.py verify --session ...
 ```
 
-Sessions are bound to the framework input fingerprint and `live_commissioning_cases.json` SHA; any
+Sessions are bound to the framework input fingerprint and `data/live_commissioning_cases.json` SHA; any
 source change makes an existing session STALE and it must be re-run. Never relabel automated evidence
 under `validation/evidence/` as a live-game PASS — that separation is a validated release rule.
 
@@ -118,7 +118,7 @@ revisions establish *durability*, reservation epochs/ownership tokens authorize 
 - no `db` as a direct operand to `add/sub/mul/div/min/max/pow/and/or/sll`
 
 `validation/validators/validate_ic10_opcodes.py` separately checks every mnemonic and operand count
-against `ic10_instruction_set.json`, which is extracted from game data rather than wiki prose. Treat
+against `data/ic10_instruction_set.json`, which is extracted from game data rather than wiki prose. Treat
 that file as authoritative for whether an instruction exists; the community wiki's list is lossy.
 Minimum compatible game build is 2026-07-02 (`clamp`); the target is 0.2.6428.27798 (2026-08-13),
 not the 2026-08-12 build it patches — see `docs/SOURCES.md` for why that matters to Item 12.
@@ -129,18 +129,18 @@ split boundaries exist to keep transactional ownership explicit and stay under t
 
 Filenames are *semantic name* + `_v<major>_<minor>` under `ic10/<deployment-family>/`. **Do not infer
 execution order, ABI number, or deployment order from a filename** — version suffixes are revisions,
-not ABIs. Use `source_manifest.json`, `docs/SCRIPT_INDEX.md`, and `USER_DEPLOYMENT_GUIDE.md`.
+not ABIs. Use `data/source_manifest.json`, `docs/SCRIPT_INDEX.md`, and `USER_DEPLOYMENT_GUIDE.md`.
 
 ## Generated files — never hand-edit
 
 | Output | Generator | Source of truth |
 |---|---|---|
-| `ic10/resource-grid-core/resource_{endpoint,link,reservation}_directory_adapter_*.ic10` | `generate_directory_adapters.py` | `directory_adapter_specs.json` |
-| `ic10/input-profile-catalog/*` | `generate_input_profiles.py` | `input_profiles.json` |
-| `ic10/resource-profile-catalog/*`, `ic10/dependency-planning/manufacturing_reagent_resolver_*` | `generate_resource_profiles.py` | `resource_profiles.json` |
-| `ic10/transform-catalog/*`, `ic10/dependency-planning/item_producer_resolver_*` | `generate_resource_transforms.py` | `resource_transforms.json` |
-| `docs/SCRIPT_INDEX.md` | `generate_source_catalog.py` | `ic10/` + `source_manifest.json` |
-| `<!-- FAMILY_PROGRAMS:… -->` blocks in `USER_DEPLOYMENT_GUIDE.md` | `update_user_deployment_inventory.py` | `source_manifest.json` |
+| `ic10/resource-grid-core/resource_{endpoint,link,reservation}_directory_adapter_*.ic10` | `generate_directory_adapters.py` | `data/directory_adapter_specs.json` |
+| `ic10/input-profile-catalog/*` | `generate_input_profiles.py` | `data/input_profiles.json` |
+| `ic10/resource-profile-catalog/*`, `ic10/dependency-planning/manufacturing_reagent_resolver_*` | `generate_resource_profiles.py` | `data/resource_profiles.json` |
+| `ic10/transform-catalog/*`, `ic10/dependency-planning/item_producer_resolver_*` | `generate_resource_transforms.py` | `data/resource_transforms.json` |
+| `docs/SCRIPT_INDEX.md` | `generate_source_catalog.py` | `ic10/` + `data/source_manifest.json` |
+| `<!-- FAMILY_PROGRAMS:… -->` blocks in `USER_DEPLOYMENT_GUIDE.md` | `update_user_deployment_inventory.py` | `data/source_manifest.json` |
 | `validation/evidence/`, `VALIDATION_SUMMARY.txt`, `validation/FULL_VALIDATION_RUN.txt`, `*.sha256` | `run_validation.py` / `build_release.py` | — |
 
 Recipe-catalog loaders are generated into a temp directory for fixtures only and are never shipped;
@@ -155,7 +155,7 @@ Tests assert regeneration is byte-stable (`tests/test_input_profiles.py`, `tests
 
 Every production `.ic10` must resolve to exactly one deployment family and one class
 (`resident`, `conditional-resident`, `commissioning`, `one-shot`, `on-demand`) before release
-validation passes. Add its exact semantic path to `source_manifest.json` (or extend
+validation passes. Add its exact semantic path to `data/source_manifest.json` (or extend
 `generated_deployment_rules` for a generated family), give the family a human-owned chapter in
 `USER_DEPLOYMENT_GUIDE.md`, then run `update_user_deployment_inventory.py`,
 `generate_source_catalog.py`, and the `validation/validators/validate_source_catalog.py` and
