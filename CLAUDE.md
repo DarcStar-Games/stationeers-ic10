@@ -86,7 +86,9 @@ module objects holding two copies of its constants, with nothing keeping them eq
 Under `tools/`, module level may only import, define, and name constants; the work happens in
 `main()` behind `if __name__ == "__main__"`. Running a generator regenerates its outputs — importing
 one must not. Tests and validators are the deliberate exception: running at import *is* their
-contract, and they write nothing tracked.
+contract, and several of them regenerate tracked catalog output by subprocess to assert that
+regeneration is byte-stable. Importing one is not side-effect free — which is another reason to
+run them rather than import them.
 
 Headers are ordered **shebang, docstring, `__future__`, bootstrap** — the shebang has to reach byte 0
 or the kernel hands the file to `/bin/sh`, and a docstring below the bootstrap is a dead expression,

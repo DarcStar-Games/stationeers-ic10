@@ -18,8 +18,10 @@ ENTRY_ROOTS = {"tools", "tests", "validation"}
 # not. Four generators once ran their entire body at module level, so
 # `import tools.generate.generate_source_catalog` rewrote docs/SCRIPT_INDEX.md --
 # invisible only because regeneration happens to be byte-stable. Tests and
-# validators under the other entry roots do run at import; CLAUDE.md defines them
-# as plain scripts, and they write nothing tracked.
+# validators under the other entry roots do run at import -- CLAUDE.md defines them
+# as plain scripts -- and several regenerate tracked output by subprocess to assert
+# byte-stability: `import tests.test_input_profiles` writes seventeen tracked files.
+# Their exemption is about their contract, not about being side-effect free.
 WORK_FREE_ROOT = "tools"
 SKIP_PARTS = {".git", ".claude", ".githooks", "__pycache__", "field_evidence"}
 # The kernel honours an interpreter line only at byte 0, so a shebang pushed
@@ -134,7 +136,9 @@ def check_no_import_time_work(rel: Path, tree, has_bootstrap, failures):
     No static check can prove a call is pure, so this one allows none outside the
     bootstrap: `COORD_PROGRAMS=ensure_coordination_programs(R)` reads like a constant
     and writes eleven IC10 programs. A pure value that genuinely wants to be a module
-    constant can be written as a literal; anything else belongs in main().
+    constant can be written as a literal; anything else belongs in main(). Decorator
+    calls are the one call this does not inspect, since every decorator worth having
+    here is pure and rejecting `@lru_cache()` would buy nothing.
 
     This covers the package markers too, not only the entry points. Work in
     tools/__init__.py would run on every `import tools.anything`, which is the worst
