@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Structural checks on Python headers: the entry-point contract and bootstrap placement."""
+"""Structural checks on Python source: the entry-point contract, bootstrap placement, one import name per module."""
 from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
@@ -31,6 +31,54 @@ BOOTSTRAP = (
 
 def is_entry_point(rel: Path) -> bool:
     return rel.parts[0] in ENTRY_ROOTS and rel.name != "__init__.py"
+
+
+def shadowable_modules(paths):
+    """Map each module a bare-name import can reach to the package name it must be imported by.
+
+    Python puts the running script's own directory on sys.path before the
+    bootstrap inserts the repository root, and leaves it there for the whole
+    run: `python3 tools/run_validation.py` keeps <root>/tools live on the path.
+    So every module beside an entry point answers to two names, and
+    `import tools.build_release` and `import build_release` return two distinct
+    module objects loaded from one file -- two copies of ROOT, TOOLING_DIRS,
+    SCRIPTS, with nothing keeping them equal. A divergence would be silent and
+    would land in release inventory or validation scope, so a module gets
+    exactly one name: the package form, rooted at the repository root.
+    """
+    dirs = {p.parent for p in paths if is_entry_point(p.relative_to(ROOT))}
+    return {
+        q.stem: ".".join(q.relative_to(ROOT).with_suffix("").parts)
+        for d in sorted(dirs)
+        for q in sorted(d.glob("*.py"))
+        if q.stem != "__init__"
+    }
+
+
+def check_import_names(tree, shadowable, failures):
+    """An in-tree module must be imported through its package, never by bare name.
+
+    Naming the package is the whole rule here, but it is not the whole advice: everything
+    this guards lives under an entry root, and most of it does its work at module level
+    rather than behind `if __name__`. Importing tools/generate/generate_source_catalog.py
+    under either name rewrites docs/SCRIPT_INDEX.md. Say so, so a corrected import does not
+    become a second mistake.
+    """
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            names = [alias.name for alias in node.names]
+        # A relative import already names its package, so only absolute ones can go bare.
+        elif isinstance(node, ast.ImportFrom) and not node.level and node.module:
+            names = [node.module]
+        else:
+            continue
+        for name in names:
+            package = shadowable.get(name.split(".")[0])
+            if package:
+                failures.append(
+                    f"line {node.lineno}: bare-name import of {name!r}; its only name is {package!r}"
+                    " -- and that file is an entry point, so check it does not run at import"
+                )
 
 
 def is_docstring(node) -> bool:
@@ -66,7 +114,7 @@ def check_bootstrap(rel: Path, lines, tree, failures):
                 break
 
 
-def inspect(path: Path):
+def inspect(path: Path, shadowable):
     rel = path.relative_to(ROOT)
     entry = is_entry_point(rel)
     text = path.read_text()
@@ -106,6 +154,7 @@ def inspect(path: Path):
         failures.append("entry point without the bootstrap" if entry else "imported module carries the bootstrap")
     elif has_bootstrap:
         check_bootstrap(rel, lines, tree, failures)
+    check_import_names(tree, shadowable, failures)
 
     return entry, executable, failures
 
@@ -115,7 +164,8 @@ def main():
         p for p in ROOT.rglob("*.py")
         if not SKIP_PARTS & set(p.relative_to(ROOT).parts)
     )
-    rows = [(p.relative_to(ROOT).as_posix(), *inspect(p)) for p in paths]
+    shadowable = shadowable_modules(paths)
+    rows = [(p.relative_to(ROOT).as_posix(), *inspect(p, shadowable)) for p in paths]
     failed = any(row[-1] for row in rows)
 
     print("Python script header validation")
@@ -129,6 +179,7 @@ def main():
     print("=" * 100)
     entries = sum(1 for row in rows if row[1])
     print(f"Checked {len(rows)} files: {entries} entry points, {len(rows)-entries} imported modules")
+    print(f"Single import name enforced for {len(shadowable)} modules reachable from a script directory")
     print("Result:", "FAIL" if failed else "PASS")
     return 1 if failed else 0
 

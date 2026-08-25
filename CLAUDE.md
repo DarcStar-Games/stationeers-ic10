@@ -78,12 +78,18 @@ Every script resolves paths against the repository root via the four-line `_Proj
 so the working directory never changes what a command reads or writes. A script under `tools/` uses
 `parents[1]`; one under `tools/generate/` or `validation/validators/` uses `parents[2]`.
 
+Python also leaves the running script's own directory on `sys.path` for the life of the run, so
+every module beside an entry point answers to a second, bare name. Import in-tree modules by
+package — `import tools.build_release`, never `import build_release` — or one file becomes two
+module objects holding two copies of its constants, with nothing keeping them equal.
+
 Headers are ordered **shebang, docstring, `__future__`, bootstrap** — the shebang has to reach byte 0
 or the kernel hands the file to `/bin/sh`, and a docstring below the bootstrap is a dead expression,
 not a docstring. Under `tools/`, `tests/` and `validation/validators/`, every module except a
 package marker like `tools/__init__.py` is an entry point: shebang plus mode 755 plus the bootstrap.
 Package markers and `framework/` reference models are imported, so they carry none of the three.
-`validation/validators/validate_script_headers.py` enforces all of it, including the `parents[N]` depth.
+`validation/validators/validate_script_headers.py` enforces all of it, including the `parents[N]`
+depth and the import form.
 
 ## Architecture
 
