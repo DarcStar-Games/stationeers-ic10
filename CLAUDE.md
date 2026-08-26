@@ -212,11 +212,12 @@ scripts from `tools/run_validation.py` and import the top-level models). Copy th
 into new files and make the file executable, and add the script to the
 `VALIDATORS` or `TESTS` list in `tools/run_validation.py` — anything not listed there is not part of the
 release contract. That list is also what makes the file an entry point, so the omission is caught:
-a new script that sits beside the registered ones under a test_ or validate_ name, or that carries a
-shebang, the executable bit, or the bootstrap, fails `validation/validators/validate_script_headers.py`
-until it is listed — and a listed path that no longer exists fails there too. Python fixture *input*
-goes under `tests/fixtures/` or `tests/ic10/` and is a plain imported module: no shebang, no
-bootstrap, not executable.
+a new script sitting beside the registered ones — carrying a shebang, the executable bit, the
+bootstrap, or merely a test_ or validate_ name — fails
+`validation/validators/validate_script_headers.py` until it is listed, and a listed path with no file
+behind it fails there too. Python fixture *input* goes under `tests/fixtures/` or `tests/ic10/`,
+where none of that is read: a fixture is a plain imported module, and nothing about it is inferred
+from what a script looks like.
 
 `framework/ic10_harness.py` is a tiny deterministic IC10 interpreter (not a Stationeers emulator) supporting only
 the instruction subset the tests exercise; extend it when a test needs a new opcode.

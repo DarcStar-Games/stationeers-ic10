@@ -27,15 +27,16 @@ SHEBANG = "#!/usr/bin/env python3"
 # failure: replacing the rule reclassified nothing, and the summary below prints the
 # two populations separately so a later divergence is visible rather than inferred.
 COMMAND_ROOT = "tools"
-REGISTERED_ROOTS = {"tests", "validation"}
 # Importing a command to read its list is safe here for one reason: nothing under
 # tools/ acts at import. That is check_work_in_main's rule, enforced by this file,
 # now also against this import -- run_validation.py does its work in main().
 REGISTERED = frozenset(run_validation.SCRIPTS)
-# Where the registered scripts live and what they are called: every one of them is a
-# test_*.py or validate_*.py in one of two directories, which is what lets an
-# unregistered file be read as a claim rather than merely as an odd name -- and
-# why the claim is not read anywhere else, least of all in a fixture subtree.
+# The directories the runner actually draws scripts from -- tests/ and
+# validation/validators/ as it stands. unregistered_script() reads a claim only here,
+# and nowhere below: a fixture subtree is where input lives, so nothing about a file
+# there may be inferred from the shape of a script. Registered names are all test_ or
+# validate_ today, and that convention is one of the marks; it only ever widens what
+# is caught, so a script registered under some other name costs nothing.
 REGISTERED_DIRS = frozenset(str(PurePosixPath(name).parent) for name in REGISTERED)
 SCRIPT_PREFIXES = ("test_", "validate_")
 SKIP_PARTS = {".git", ".claude", ".githooks", "__pycache__", "field_evidence"}
@@ -60,7 +61,7 @@ def is_entry_point(rel: Path) -> bool:
 
 
 def unregistered_script(rel: Path, lines, text, executable):
-    """A file under tests/ or validation/ that dresses as a script nothing runs.
+    """A file beside the registered scripts that dresses as one nothing runs.
 
     Registration is not paperwork here: tools/run_validation.py executes the paths in
     VALIDATORS and TESTS and nothing else, so a checker absent from those lists never
@@ -74,9 +75,20 @@ def unregistered_script(rel: Path, lines, text, executable):
     bootstrap -- and each invites stripping exactly what a real test needs, which
     silences the validator and leaves the test just as unrun. Stripping all three
     leaves the fourth mark below. A file wearing none of the four is checked as what
-    it is: fixture input, or a helper a test imports.
+    it is: a helper a test imports.
+
+    Read strictly beside the registered scripts, never below. Two of the marks are
+    textual -- a shebang, and the substring the bootstrap check already keys off --
+    and a fixture is free to contain either as data: tests/fixtures/ exists to hold a
+    malformed header a test reads as text, which would otherwise be convicted of
+    carrying a bootstrap it is only quoting. Judging fixture input by the shape of a
+    script is the whole of #18, and this check must not reintroduce it one level down.
     """
-    if rel.name == "__init__.py" or rel.parts[0] not in REGISTERED_ROOTS or rel.as_posix() in REGISTERED:
+    # An entry point is by definition not a file nothing runs, and it is the first
+    # test because REGISTERED_DIRS is derived: registering one tools/ command would
+    # otherwise make tools/ a script directory and accuse every command beside it,
+    # in rows that still read "entry".
+    if is_entry_point(rel) or rel.name == "__init__.py" or rel.parent.as_posix() not in REGISTERED_DIRS:
         return None
     marks = [name for name, worn in (
         ("a shebang", lines[0].startswith("#!")),
@@ -86,8 +98,7 @@ def unregistered_script(rel: Path, lines, text, executable):
         # from, which is the likely way one arrives unregistered. This one holds when
         # it was written from scratch and none of them were: a test_ or validate_ name
         # beside the registered scripts is the claim on its own.
-        ("a script's name beside the registered scripts",
-         rel.name.startswith(SCRIPT_PREFIXES) and rel.parent.as_posix() in REGISTERED_DIRS),
+        ("a script's name", rel.name.startswith(SCRIPT_PREFIXES)),
     ) if worn]
     if not marks:
         return None
@@ -311,9 +322,13 @@ def main():
     entries = sum(1 for row in rows if row[1])
     print(f"Checked {len(rows)} files: {entries} entry points, {len(rows)-entries} imported modules")
     print(f"Single import name enforced for {len(shadowable)} modules reachable from a script directory")
+    # Both counts come from the rows, so they partition `entries` by construction. Taking
+    # the second from len(REGISTERED) instead reads the same today and stops summing the
+    # moment a tools/ command is also registered -- committed evidence must not be able
+    # to contradict the line above it.
     commands = sum(1 for row in rows if row[1] and row[0].startswith(COMMAND_ROOT + "/"))
-    print(f"Entry points are the {commands} commands under {COMMAND_ROOT}/ plus the"
-          f" {len(REGISTERED)} scripts tools/run_validation.py runs; nothing is an entry point by location")
+    print(f"Entry points are the {commands} commands under {COMMAND_ROOT}/ plus the {entries - commands}"
+          f" scripts tools/run_validation.py runs elsewhere; nothing is an entry point by location")
     scoped = [row for row in rows if row[0].startswith(COMMAND_ROOT + "/")]
     print(f"No work at import for all {len(scoped)} modules under {COMMAND_ROOT}/,"
           f" and a guard reaches main() in each of the {sum(1 for row in scoped if row[1])} entry points")
