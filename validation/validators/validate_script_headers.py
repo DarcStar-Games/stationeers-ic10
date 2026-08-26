@@ -1,28 +1,43 @@
 #!/usr/bin/env python3
-"""Structural checks on Python source: the entry-point contract, bootstrap placement, import names, import-time work."""
+"""Structural checks on Python source: what counts as an entry point, the bootstrap, import names, import-time work."""
 from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import ast
 import sys
+import tools.run_validation as run_validation
 
 ROOT = _PROJECT_ROOT
 SHEBANG = "#!/usr/bin/env python3"
-# Modules under these roots are command-line entry points, run as scripts by the
-# validation runner and by hand. Everything else -- framework/ reference models
-# and package markers -- is imported and must not advertise an entry point.
-ENTRY_ROOTS = {"tools", "tests", "validation"}
-# A tools/ entry point is a command: running it does the work, importing it must
-# not. Four generators once ran their entire body at module level, so
-# `import tools.generate.generate_source_catalog` rewrote docs/SCRIPT_INDEX.md --
-# invisible only because regeneration happens to be byte-stable. Tests and
-# validators under the other entry roots do run at import -- CLAUDE.md defines them
-# as plain scripts -- and several regenerate tracked output by subprocess to assert
-# byte-stability: `import tests.test_input_profiles` writes seventeen tracked files.
-# Their exemption is about their contract, not about being side-effect free.
-WORK_FREE_ROOT = "tools"
+# An entry point is a file something runs, and the repository already says which
+# files those are in two places -- neither of them the shape of a path. tools/ is
+# the command directory: every module there is run by hand or by another command.
+# Under tests/ and validation/, tools/run_validation.py's VALIDATORS + TESTS lists
+# are the release contract for what runs, so appearing in them is what makes a file
+# there a script. Everything else -- framework/ reference models, package markers,
+# fixture input -- is imported or read, and must not advertise an entry point.
+#
+# Reading the first path component instead classified every .py beneath those roots
+# as a script, fixture subtrees included: tests/fixtures/ and tests/ic10/ hold input
+# a test consumes, and a .py added there would have been required to carry a
+# shebang, mode 755 and the bootstrap for a script nothing executes. Both hold no
+# Python today, so that was a trap set for whoever added the first one, not a live
+# failure: replacing the rule reclassified nothing, and the summary below prints the
+# two populations separately so a later divergence is visible rather than inferred.
+COMMAND_ROOT = "tools"
+REGISTERED_ROOTS = {"tests", "validation"}
+# Importing a command to read its list is safe here for one reason: nothing under
+# tools/ acts at import. That is check_work_in_main's rule, enforced by this file,
+# now also against this import -- run_validation.py does its work in main().
+REGISTERED = frozenset(run_validation.SCRIPTS)
+# Where the registered scripts live and what they are called: every one of them is a
+# test_*.py or validate_*.py in one of two directories, which is what lets an
+# unregistered file be read as a claim rather than merely as an odd name -- and
+# why the claim is not read anywhere else, least of all in a fixture subtree.
+REGISTERED_DIRS = frozenset(str(PurePosixPath(name).parent) for name in REGISTERED)
+SCRIPT_PREFIXES = ("test_", "validate_")
 SKIP_PARTS = {".git", ".claude", ".githooks", "__pycache__", "field_evidence"}
 # The kernel honours an interpreter line only at byte 0, so a shebang pushed
 # below the bootstrap hands Python source to /bin/sh, which hangs. The line-1
@@ -39,7 +54,45 @@ BOOTSTRAP = (
 
 
 def is_entry_point(rel: Path) -> bool:
-    return rel.parts[0] in ENTRY_ROOTS and rel.name != "__init__.py"
+    if rel.name == "__init__.py":
+        return False
+    return rel.parts[0] == COMMAND_ROOT or rel.as_posix() in REGISTERED
+
+
+def unregistered_script(rel: Path, lines, text, executable):
+    """A file under tests/ or validation/ that dresses as a script nothing runs.
+
+    Registration is not paperwork here: tools/run_validation.py executes the paths in
+    VALIDATORS and TESTS and nothing else, so a checker absent from those lists never
+    runs, and the suite reports PASS over the gap it left. CLAUDE.md says as much --
+    anything not listed there is not part of the release contract -- and this is the
+    check for it, which the old classification could not express because it read
+    every .py under these roots as a script whether or not anything ran it.
+
+    Say the cause, because the symptoms mislead. Sorted as an imported module, the
+    same unregistered test draws three complaints -- shebang, executable bit,
+    bootstrap -- and each invites stripping exactly what a real test needs, which
+    silences the validator and leaves the test just as unrun. Stripping all three
+    leaves the fourth mark below. A file wearing none of the four is checked as what
+    it is: fixture input, or a helper a test imports.
+    """
+    if rel.name == "__init__.py" or rel.parts[0] not in REGISTERED_ROOTS or rel.as_posix() in REGISTERED:
+        return None
+    marks = [name for name, worn in (
+        ("a shebang", lines[0].startswith("#!")),
+        ("the executable bit", executable),
+        ("the bootstrap", "_ProjectPath" in text),
+        # The other three are what a new test inherits from the file it was copied
+        # from, which is the likely way one arrives unregistered. This one holds when
+        # it was written from scratch and none of them were: a test_ or validate_ name
+        # beside the registered scripts is the claim on its own.
+        ("a script's name beside the registered scripts",
+         rel.name.startswith(SCRIPT_PREFIXES) and rel.parent.as_posix() in REGISTERED_DIRS),
+    ) if worn]
+    if not marks:
+        return None
+    return (f"nothing runs this: tools/run_validation.py lists no VALIDATORS/TESTS entry for it,"
+            f" yet it carries {', '.join(marks)}")
 
 
 def shadowable_modules(paths):
@@ -86,7 +139,7 @@ def check_import_names(tree, shadowable, failures):
             package = shadowable.get(name.split(".")[0])
             if package:
                 # Only tools/ is proven work-free; elsewhere the fixed import still runs the file.
-                runs = "" if package.startswith(WORK_FREE_ROOT + ".") else " -- and outside tools/ importing an entry point usually runs it"
+                runs = "" if package.startswith(COMMAND_ROOT + ".") else " -- and outside tools/ importing an entry point usually runs it"
                 failures.append(
                     f"line {node.lineno}: bare-name import of {name!r}; its only name is {package!r}{runs}"
                 )
@@ -134,6 +187,14 @@ def check_bootstrap(rel: Path, lines, tree, failures):
 def check_work_in_main(rel: Path, tree, entry, has_bootstrap, failures):
     """Under tools/, module level may import, define and name constants -- main() acts.
 
+    Only tools/ is held to this. Four generators once ran their whole body at module
+    level, so `import tools.generate.generate_source_catalog` rewrote
+    docs/SCRIPT_INDEX.md -- invisible only because regeneration happens to be
+    byte-stable. Tests and validators do run at import: CLAUDE.md defines them as
+    plain scripts, and several regenerate tracked output by subprocess to assert
+    byte-stability, so `import tests.test_input_profiles` writes seventeen tracked
+    files. Their exemption is about their contract, not about being side-effect free.
+
     Two halves, and the second is the one that fails open. Nothing may run at import:
     no static check can prove a call is pure, so this one allows none outside the
     bootstrap, because `COORD_PROGRAMS=ensure_coordination_programs(R)` reads like a
@@ -152,7 +213,7 @@ def check_work_in_main(rel: Path, tree, entry, has_bootstrap, failures):
     on every `import tools.anything`, which is the worst place in the tree for it, so
     the bootstrap is skipped by whether it is there rather than by role.
     """
-    if rel.parts[0] != WORK_FREE_ROOT:
+    if rel.parts[0] != COMMAND_ROOT:
         return
     guarded = False
     for node in tree.body[header_end(tree.body) + (len(BOOTSTRAP) if has_bootstrap else 0):]:
@@ -181,6 +242,12 @@ def inspect(path: Path, shadowable):
     # source change.
     executable = bool(path.stat().st_mode & 0o100)
     failures = []
+
+    # One cause, reported alone: every check below reads from a role this file is
+    # claiming and has not been given, so their verdicts would describe the wrong fix.
+    claim = unregistered_script(rel, lines, text, executable)
+    if claim:
+        return entry, executable, [claim]
 
     if entry:
         if lines[0] != SHEBANG:
@@ -222,7 +289,12 @@ def main():
     )
     shadowable = shadowable_modules(paths)
     rows = [(p.relative_to(ROOT).as_posix(), *inspect(p, shadowable)) for p in paths]
-    failed = any(row[-1] for row in rows)
+    # The list is load-bearing now, so read it in both directions. A path renamed or
+    # deleted out from under it still fails the run -- python3 on a missing file exits
+    # non-zero -- but it fails as a traceback inside one evidence file among the whole
+    # suite's, rather than as the one sentence that names it.
+    missing = sorted(name for name in REGISTERED if not (ROOT / name).is_file())
+    failed = any(row[-1] for row in rows) or bool(missing)
 
     print("Python script header validation")
     print("=" * 100)
@@ -232,12 +304,18 @@ def main():
         print(f"{state:4} {name:58} {role:6} {'+x' if executable else '-x'}")
         for failure in failures:
             print(f"     - {failure}")
+    for name in missing:
+        print(f"FAIL {name:58} {'listed':6} --")
+        print("     - tools/run_validation.py runs this path and no such file exists")
     print("=" * 100)
     entries = sum(1 for row in rows if row[1])
     print(f"Checked {len(rows)} files: {entries} entry points, {len(rows)-entries} imported modules")
     print(f"Single import name enforced for {len(shadowable)} modules reachable from a script directory")
-    scoped = [row for row in rows if row[0].startswith(WORK_FREE_ROOT + "/")]
-    print(f"No work at import for all {len(scoped)} modules under {WORK_FREE_ROOT}/,"
+    commands = sum(1 for row in rows if row[1] and row[0].startswith(COMMAND_ROOT + "/"))
+    print(f"Entry points are the {commands} commands under {COMMAND_ROOT}/ plus the"
+          f" {len(REGISTERED)} scripts tools/run_validation.py runs; nothing is an entry point by location")
+    scoped = [row for row in rows if row[0].startswith(COMMAND_ROOT + "/")]
+    print(f"No work at import for all {len(scoped)} modules under {COMMAND_ROOT}/,"
           f" and a guard reaches main() in each of the {sum(1 for row in scoped if row[1])} entry points")
     print("Result:", "FAIL" if failed else "PASS")
     return 1 if failed else 0

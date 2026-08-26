@@ -72,7 +72,7 @@ Five roles, one directory each. The repository root holds only documentation and
 | `framework/` | executable protocol reference models | imported as `framework.<module>`; the semantic source of truth for the IC10 that implements them |
 | `data/` | JSON sources of truth | schemas, profiles, manifests, the extracted instruction set |
 | `tools/` | CLI entrypoints | `tools/generate/` holds the code generators |
-| `tests/`, `validation/validators/` | plain executable scripts | not pytest; see *Adding code* below. Fixture *input* sits beside the tests, never at root: `tests/ic10/` for test-only IC10, `tests/fixtures/recipe_game_data/` for the sample GameData XML the Recipe Catalog fixture is built from |
+| `tests/`, `validation/validators/` | plain executable scripts | not pytest; see *Adding code* below. Fixture *input* sits beside the tests, never at root: `tests/ic10/` for test-only IC10, `tests/fixtures/recipe_game_data/` for the sample GameData XML the Recipe Catalog fixture is built from. A `.py` in either subtree is fixture input, not a script |
 
 Every script resolves paths against the repository root via the four-line `_ProjectPath` bootstrap,
 so the working directory never changes what a command reads or writes. A script under `tools/` uses
@@ -92,12 +92,16 @@ run them rather than import them.
 
 Headers are ordered **shebang, docstring, `__future__`, bootstrap** — the shebang has to reach byte 0
 or the kernel hands the file to `/bin/sh`, and a docstring below the bootstrap is a dead expression,
-not a docstring. Under `tools/`, `tests/` and `validation/validators/`, every module except a
-package marker like `tools/__init__.py` is an entry point: shebang plus mode 755 plus the bootstrap.
-Package markers and `framework/` reference models are imported, so they carry none of the three.
+not a docstring. Those three belong to entry points, and what makes a file one is that something
+runs it, not where it sits: every module under `tools/` except a package marker is a command, and
+under `tests/` and `validation/` the entry points are exactly the scripts `tools/run_validation.py`
+lists. Package markers, `framework/` reference models, and any Python fixture *input* under
+`tests/fixtures/` or `tests/ic10/` are imported or read rather than run, so they carry none of the
+three.
 `validation/validators/validate_script_headers.py` enforces all of it, including the `parents[N]`
-depth, the import form, and that work under `tools/` sits in a guarded `main()` — nothing running
-at import, and nothing left unreachable behind a missing guard.
+depth, the import form, that work under `tools/` sits in a guarded `main()` — nothing running
+at import, and nothing left unreachable behind a missing guard — and that a file under `tests/` or
+`validation/` dressed as a script is one the runner actually lists.
 
 ## Architecture
 
@@ -207,7 +211,12 @@ four-line `_ProjectPath` bootstrap that puts the repo root on `sys.path` (needed
 scripts from `tools/run_validation.py` and import the top-level models). Copy that preamble verbatim
 into new files and make the file executable, and add the script to the
 `VALIDATORS` or `TESTS` list in `tools/run_validation.py` — anything not listed there is not part of the
-release contract.
+release contract. That list is also what makes the file an entry point, so the omission is caught:
+a new script that sits beside the registered ones under a test_ or validate_ name, or that carries a
+shebang, the executable bit, or the bootstrap, fails `validation/validators/validate_script_headers.py`
+until it is listed — and a listed path that no longer exists fails there too. Python fixture *input*
+goes under `tests/fixtures/` or `tests/ic10/` and is a plain imported module: no shebang, no
+bootstrap, not executable.
 
 `framework/ic10_harness.py` is a tiny deterministic IC10 interpreter (not a Stationeers emulator) supporting only
 the instruction subset the tests exercise; extend it when a test needs a new opcode.
