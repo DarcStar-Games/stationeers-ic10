@@ -1,0 +1,4 @@
+Stationeers game export tests: PASS
+ - family/path/stem selection and target-build parsing
+ - game-compatible FILETIME, CRLF XML, metadata, and escaped source round trip
+ - collision refusal, explicit overwrite, and write-free dry run

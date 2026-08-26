@@ -24,6 +24,7 @@ python3 tools/run_validation.py                   # full suite: 23 validators + 
 python3 tools/run_validation.py --resume          # reuse prior PASSes, only if the input-tree fingerprint matches
 python3 tests/test_job_abi.py                     # run one test  (plain script, exit code = pass/fail)
 python3 validation/validators/validate_ic10.py    # run one validator
+python3 tools/export_to_game.py --output <scripts-dir> --family controller-pi
 python3 tools/build_release.py --output rel.zip   # regenerate, validate, hash, and package a release
 ```
 

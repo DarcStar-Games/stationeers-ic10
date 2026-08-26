@@ -8,11 +8,12 @@ The program inventory under every family is machine-linked to `data/source_manif
 
 1. Use one verified framework release. Do not mix IC10 programs from different archives unless you are deliberately developing the framework.
 2. Run `python3 tools/run_validation.py --resume` before field deployment. Automated PASS means the source/contracts are internally consistent; it does **not** replace Item-12 live evidence.
-3. Build from dependencies upward. A consumer should be powered only after its Host/View/Directory/Reservation dependencies publish the expected magic, ABI, schema, and positive generation.
-4. Treat all actuator paths as fail-closed. Pumps, transformers, managed loads, LArRE moves, feeders, mixers, furnaces, printers, and generators must remain safe/off until current authority is visible.
-5. Use the same semantic `ResourceType`/profile everywhere in a path. Never fix a mismatch by weakening a type or generation check.
-6. Set human-owned identities before starting a service when required: for example Catalog Store `NodeId` and commissioned physical topology identifiers.
-7. Record physical commissioning through `tools/live_commission.py`. Automated evidence lives under `validation/evidence/`; live evidence is deliberately separate.
+3. Export the programs needed for the deployment with `python3 tools/export_to_game.py --output <Stationeers-scripts-dir> --family <family>`. Use `--program <unique-stem>` for individual programs or `--all` for the complete framework. Exports appear in game as `family__program`; existing exports require an explicit `--overwrite`, and directories containing unrelated files are never reused.
+4. Build from dependencies upward. A consumer should be powered only after its Host/View/Directory/Reservation dependencies publish the expected magic, ABI, schema, and positive generation.
+5. Treat all actuator paths as fail-closed. Pumps, transformers, managed loads, LArRE moves, feeders, mixers, furnaces, printers, and generators must remain safe/off until current authority is visible.
+6. Use the same semantic `ResourceType`/profile everywhere in a path. Never fix a mismatch by weakening a type or generation check.
+7. Set human-owned identities before starting a service when required: for example Catalog Store `NodeId` and commissioned physical topology identifiers.
+8. Record physical commissioning through `tools/live_commission.py`. Automated evidence lives under `validation/evidence/`; live evidence is deliberately separate.
 
 ## Deployment classes
 

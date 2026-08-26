@@ -15,6 +15,7 @@ PASS tests/test_catalog_schema.py                               entry  +x
 PASS tests/test_controller_directory_scale.py                   entry  +x
 PASS tests/test_dependency_planning.py                          entry  +x
 PASS tests/test_fault_injection.py                              entry  +x
+PASS tests/test_game_export.py                                  entry  +x
 PASS tests/test_generic_directory.py                            entry  +x
 PASS tests/test_ic10_execution.py                               entry  +x
 PASS tests/test_input_profiles.py                               entry  +x
@@ -44,6 +45,7 @@ PASS tests/test_sequencer_protocol.py                           entry  +x
 PASS tests/test_shared_input_protocol.py                        entry  +x
 PASS tools/__init__.py                                          module -x
 PASS tools/build_release.py                                     entry  +x
+PASS tools/export_to_game.py                                    entry  +x
 PASS tools/generate/__init__.py                                 module -x
 PASS tools/generate/generate_directory_adapters.py              entry  +x
 PASS tools/generate/generate_input_profiles.py                  entry  +x
@@ -78,8 +80,8 @@ PASS validation/validators/validate_script_headers.py           entry  +x
 PASS validation/validators/validate_source_catalog.py           entry  +x
 PASS validation/validators/validate_user_deployment_guide.py    entry  +x
 ====================================================================================================
-Checked 77 files: 66 entry points, 11 imported modules
-Single import name enforced for 66 modules reachable from a script directory
-Entry points are the 10 commands under tools/ plus the 56 scripts tools/run_validation.py runs elsewhere; nothing is an entry point by location
-No work at import for all 12 modules under tools/, and a guard reaches main() in each of the 10 entry points
+Checked 79 files: 68 entry points, 11 imported modules
+Single import name enforced for 68 modules reachable from a script directory
+Entry points are the 11 commands under tools/ plus the 57 scripts tools/run_validation.py runs elsewhere; nothing is an entry point by location
+No work at import for all 13 modules under tools/, and a guard reaches main() in each of the 11 entry points
 Result: PASS

@@ -10,28 +10,29 @@ If you are new to the framework, read the documents in this order:
 
 1. **README.md** — mental model, major components, and terminology.
 2. **docs/ARCHITECTURE.md** — component ownership and end-to-end data flow.
-3. **docs/COMMISSIONING_QUICKSTART.md** — shortest path to a working PI deployment and diagnostics panel.
-4. **USER_DEPLOYMENT_GUIDE.md** — operator-facing per-family deployment manual covering all production IC10 programs, residency/reclaim rules, health checks, restart behavior, and live proof.
-5. **docs/DEPLOYMENT.md** — full fresh-install sequence and dependency order.
-6. **docs/SHARED_INPUT_SYSTEM.md** — physical commissioning inputs and catalog-backed logical values.
-7. **docs/CATALOG_COORDINATION.md**, **docs/CATALOG_STORAGE.md**, and **docs/CATALOG_SCHEMA.md** — generic catalog control/data plane.
-8. **docs/DIRECTORY_STANDARD.md** — reusable live-directory infrastructure and schemas.
-9. **docs/ASYNC_REQUEST_STANDARD.md** and **docs/BANKED_TRANSACTION_STANDARD.md** — request fencing and durable transaction semantics.
-10. **docs/GENERIC_JOB_ABI.md** — common job record, lifecycle, Job Store geometry, and generation fencing.
-11. **docs/MANUFACTURING_SCHEDULER.md** — TRANSFORM/PRINT queue policy and execution routing.
-12. **docs/ITEM_STORAGE_SYSTEM.md** — Generic ITEM inventory, split reservations, LArRE/direct/SDB storage, and chute handoff.
-13. **docs/DEPENDENCY_PLANNING.md** — bounded dependency expansion, shared future-output claims, cancellation, and Job Store command serialization.
-14. **docs/POWER_MANAGEMENT.md** — POWER/ENERGY profiles, dispatch, reservations, electrical actuation, and finite POWER jobs.
-15. **docs/PROCESS_UTILITY_ORCHESTRATION.md** — cross-domain ProcessCondition, furnace atmosphere preparation, gas mixing, and fuel-backed POWER.
-16. **docs/INTERRUPTION_FAULT_INJECTION.md** — reusable restart campaign and cross-subsystem fault matrix.
-17. **docs/LIVE_COMMISSIONING.md** — Item-12 field-evidence workflow, read-only snapshot probe, and release-bound commissioning sessions.
-18. **ROADMAP.md** and **docs/COMPLETED_MILESTONES.md** — Items 1–11 completion records plus the active Item-12 field milestone.
-19. **docs/RESOURCE_GRID_CORE.md**, **docs/MATERIAL_GRID_FOUNDATION.md**, **docs/MATERIAL_TRANSFER_SYSTEM.md**, and **docs/ORE_PROCESSING_TRANSFORMS.md** — resource/material execution model.
-20. **docs/RECIPE_CATALOG.md** and **docs/PRINTER_DIRECTORY.md** — printer recipe/discovery metadata.
-21. **docs/CONFIG_INPUTS.md**, **docs/CONFIG_BLOCKS.md**, **docs/CONFIG_POLICY.md**, and **docs/PERSISTENCE_STANDARD.md** — configuration system.
-22. **docs/DIAGNOSTIC_INPUTS.md** and **docs/ABI_REFERENCE.md** — diagnostics and exact wiring contracts.
-23. **docs/SEQUENCER_CONTROLLER.md**, **docs/PHASE_PRESSURE_CONTROLLER.md**, **docs/PHASE_MEDIUM_PROFILE.md**, **docs/PRESSURE_DOMAIN_CONTROLLER.md**, **docs/PRESSURE_INVENTORY_MODEL.md**, **docs/PRESSURE_GRID_CONTROLLER.md**, **docs/PRESSURE_RESERVATION_MODEL.md**, **docs/PRESSURE_MULTI_HOP_ROUTING.md**, and **docs/PRESSURE_ROUTE_COST_MODEL.md** — worked controller/resource specializations.
-24. **docs/CORRECTNESS_HARDENING.md**, **docs/ADDING_CONTROLLERS.md**, **docs/SCRIPT_INDEX.md**, **docs/SOURCES.md**, and **docs/TEST_CONTROLLER.md** — extension, audit, and provenance material.
+3. **docs/PI_CONTROLLER_GETTING_STARTED.md** — smallest creative-mode PI controller bench test using existing scripts.
+4. **docs/COMMISSIONING_QUICKSTART.md** — shortest path to a full PI deployment and diagnostics panel.
+5. **USER_DEPLOYMENT_GUIDE.md** — operator-facing per-family deployment manual covering all production IC10 programs, residency/reclaim rules, health checks, restart behavior, and live proof.
+6. **docs/DEPLOYMENT.md** — full fresh-install sequence and dependency order.
+7. **docs/SHARED_INPUT_SYSTEM.md** — physical commissioning inputs and catalog-backed logical values.
+8. **docs/CATALOG_COORDINATION.md**, **docs/CATALOG_STORAGE.md**, and **docs/CATALOG_SCHEMA.md** — generic catalog control/data plane.
+9. **docs/DIRECTORY_STANDARD.md** — reusable live-directory infrastructure and schemas.
+10. **docs/ASYNC_REQUEST_STANDARD.md** and **docs/BANKED_TRANSACTION_STANDARD.md** — request fencing and durable transaction semantics.
+11. **docs/GENERIC_JOB_ABI.md** — common job record, lifecycle, Job Store geometry, and generation fencing.
+12. **docs/MANUFACTURING_SCHEDULER.md** — TRANSFORM/PRINT queue policy and execution routing.
+13. **docs/ITEM_STORAGE_SYSTEM.md** — Generic ITEM inventory, split reservations, LArRE/direct/SDB storage, and chute handoff.
+14. **docs/DEPENDENCY_PLANNING.md** — bounded dependency expansion, shared future-output claims, cancellation, and Job Store command serialization.
+15. **docs/POWER_MANAGEMENT.md** — POWER/ENERGY profiles, dispatch, reservations, electrical actuation, and finite POWER jobs.
+16. **docs/PROCESS_UTILITY_ORCHESTRATION.md** — cross-domain ProcessCondition, furnace atmosphere preparation, gas mixing, and fuel-backed POWER.
+17. **docs/INTERRUPTION_FAULT_INJECTION.md** — reusable restart campaign and cross-subsystem fault matrix.
+18. **docs/LIVE_COMMISSIONING.md** — Item-12 field-evidence workflow, read-only snapshot probe, and release-bound commissioning sessions.
+19. **ROADMAP.md** and **docs/COMPLETED_MILESTONES.md** — Items 1–11 completion records plus the active Item-12 field milestone.
+20. **docs/RESOURCE_GRID_CORE.md**, **docs/MATERIAL_GRID_FOUNDATION.md**, **docs/MATERIAL_TRANSFER_SYSTEM.md**, and **docs/ORE_PROCESSING_TRANSFORMS.md** — resource/material execution model.
+21. **docs/RECIPE_CATALOG.md** and **docs/PRINTER_DIRECTORY.md** — printer recipe/discovery metadata.
+22. **docs/CONFIG_INPUTS.md**, **docs/CONFIG_BLOCKS.md**, **docs/CONFIG_POLICY.md**, and **docs/PERSISTENCE_STANDARD.md** — configuration system.
+23. **docs/DIAGNOSTIC_INPUTS.md** and **docs/ABI_REFERENCE.md** — diagnostics and exact wiring contracts.
+24. **docs/SEQUENCER_CONTROLLER.md**, **docs/PHASE_PRESSURE_CONTROLLER.md**, **docs/PHASE_MEDIUM_PROFILE.md**, **docs/PRESSURE_DOMAIN_CONTROLLER.md**, **docs/PRESSURE_INVENTORY_MODEL.md**, **docs/PRESSURE_GRID_CONTROLLER.md**, **docs/PRESSURE_RESERVATION_MODEL.md**, **docs/PRESSURE_MULTI_HOP_ROUTING.md**, and **docs/PRESSURE_ROUTE_COST_MODEL.md** — worked controller/resource specializations.
+25. **docs/CORRECTNESS_HARDENING.md**, **docs/ADDING_CONTROLLERS.md**, **docs/SCRIPT_INDEX.md**, **docs/SOURCES.md**, and **docs/TEST_CONTROLLER.md** — extension, audit, and provenance material.
 
 `VALIDATION_SUMMARY.txt` summarizes the latest clean release run; per-script machine evidence is generated under `validation/evidence/`. `docs/FRAMEWORK_HARDENING_TESTS.md` lists the live-game cases that still need physical verification; `docs/LIVE_COMMISSIONING.md` defines how those results are bound to a release and recorded without contaminating automated evidence.
 
