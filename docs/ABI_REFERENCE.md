@@ -1547,3 +1547,22 @@ Item 9 uses the existing Generic Resource Endpoint, Reservation, Link, Directory
 `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` is a read-only on-demand Item-12 field tool. Magic `31416051`, ABI1. `S2 RequestToken` is caller-published last and `S3 ResponseToken` is probe-published last. `S6 DescriptorGeneration` fences the six descriptors at `S32..S49`; `S7` echoes the captured descriptor generation. `S4` reports complete/error state, `S5` is the number of successful observations, and `S9` identifies the first failed ordinal.
 
 Each descriptor is `[Mode, FieldOrStackCell, FenceStackCell]`: mode 0 disabled, mode 1 dynamic LogicType read, mode 2 stack-cell read with optional positive before/after generation fence. Results at `S64..S93` are six `[ReferenceId, Mode, Status, Value, FenceGeneration]` records. The probe contains no external `s/sd/put/putd` mutation instruction; it is evidence collection only. See `docs/LIVE_COMMISSIONING.md`.
+
+## Stack Cell Monitor ABI1
+
+`ic10/live-commissioning/stack_cell_monitor_v1_0.ic10` is an on-demand,
+human-visible monitor for one stack cell on a standard or compact IC housing.
+Magic `31416052`, ABI1. `d0` is the target IC housing, `d1` is a Logic Memory
+whose `Setting` selects address `0..511`, and optional `d2` mirrors the sampled
+value to another writable `Setting` device. The monitor also writes the value to
+its own housing `Setting`; it never writes the target or selector.
+
+```text
+S2  status: 1 finite value, 2 captured NaN,
+            -1 target missing, -2 target is not an IC housing,
+            -3 selector missing/unsupported, -4 invalid address
+S3  selected stack address
+S4  sampled value
+S5  target ReferenceId
+S6  sample generation, published last
+```

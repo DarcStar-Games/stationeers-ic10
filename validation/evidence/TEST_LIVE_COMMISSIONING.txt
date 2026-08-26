@@ -5,3 +5,4 @@ Live commissioning tests: PASS
  - all required suites can close only through explicit PASS observations
  - real IC10 probe captures dynamic LogicType + generation-fenced stack values
  - nonpositive/torn stack generation fails closed
+ - real stack monitor covers reused state, both housing types, optional output, and invalid inputs

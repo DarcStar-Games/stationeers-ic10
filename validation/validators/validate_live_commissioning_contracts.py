@@ -29,7 +29,17 @@ else:
     for ln in s.splitlines():
         code=ln.split('#',1)[0].strip()
         if re.match(r'^(?:s|sd|put|putd|clr|clrd)\b',code): fails.append(f'probe is not read-only: {code}')
-for name,needle in [('ROADMAP.md','## 12. Live-game commissioning and evidence closure — ACTIVE'),('README.md','docs/LIVE_COMMISSIONING.md'),('docs/FRAMEWORK_HARDENING_TESTS.md','Item 12 field-evidence workflow'),('docs/ABI_REFERENCE.md','Live Commission Snapshot Probe ABI1')]:
+monitor=R/'ic10/live-commissioning/stack_cell_monitor_v1_0.ic10'
+if not monitor.exists(): fails.append('stack cell monitor missing')
+else:
+    s=monitor.read_text()
+    for token in ('poke 0 31416052','poke 1 1','poke 6 0','get r1 d0 r0','s db Setting r1','s d2 Setting r1'):
+        if token not in s: fails.append(f'stack monitor contract missing {token!r}')
+    for ln in s.splitlines():
+        code=ln.split('#',1)[0].strip()
+        if re.match(r'^(?:put|putd|clr|clrd|sd)\b',code) or re.match(r'^s\s+(?:d0|d1)\b',code):
+            fails.append(f'stack monitor mutates an observed device: {code}')
+for name,needle in [('ROADMAP.md','## 12. Live-game commissioning and evidence closure — ACTIVE'),('README.md','docs/LIVE_COMMISSIONING.md'),('docs/FRAMEWORK_HARDENING_TESTS.md','Item 12 field-evidence workflow'),('docs/ABI_REFERENCE.md','Live Commission Snapshot Probe ABI1'),('docs/ABI_REFERENCE.md','Stack Cell Monitor ABI1')]:
     p=R/name
     if not p.exists() or needle not in p.read_text(): fails.append(f'{name}: missing commissioning contract marker')
 rv=(R/'tools'/'run_validation.py').read_text()
@@ -37,9 +47,10 @@ for n in ('validation/validators/validate_live_commissioning_contracts.py','test
     if n not in rv: fails.append(f'run_validation missing {n}')
 manifest=json.loads((R/'data/source_manifest.json').read_text()).get('scripts',{})
 if 'ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10' not in manifest: fails.append('source_manifest missing live commissioning snapshot probe')
+if 'ic10/live-commissioning/stack_cell_monitor_v1_0.ic10' not in manifest: fails.append('source_manifest missing stack cell monitor')
 if fails:
     print('Live commissioning contracts: FAIL');[print(' -',x) for x in fails];sys.exit(1)
 print('Live commissioning contracts: PASS')
 print(f' - {len(required)} required suites + {len(cases)-len(required)} optional suite(s)')
-print(' - read-only 6-source commissioning snapshot probe is registered')
+print(' - read-only snapshot probe and visible stack-cell monitor are registered')
 print(' - evidence sessions are release-fingerprint bound and remain separate from automated evidence')

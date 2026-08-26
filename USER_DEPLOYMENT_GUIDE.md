@@ -106,7 +106,7 @@ Reflash the Bridge/Host with consumers able to tolerate no-current-directory. Co
 Keep directory infrastructure only while a live consumer needs discovery. Purely commissioned standalone controllers can reclaim controller-directory housings.
 
 ### Technical references
-`docs/DIRECTORY_STANDARD.md`, `docs/ARCHITECTURE.md`
+`docs/DIRECTORY_STANDARD.md`, `docs/ARCHITECTURE.md`, `docs/CONTROLLER_DIRECTORY_GETTING_STARTED.md`
 
 ---
 
@@ -155,7 +155,7 @@ After reflash/replacement, wait for a new directory generation and re-resolve th
 Reclaim `01/169/166/04` only if no live service (for example PressureDomain arbitration) needs controller discovery.
 
 ### Technical references
-`docs/DIRECTORY_STANDARD.md`, `docs/COMMISSIONING_QUICKSTART.md`
+`docs/DIRECTORY_STANDARD.md`, `docs/COMMISSIONING_QUICKSTART.md`, `docs/CONTROLLER_DIRECTORY_GETTING_STARTED.md`
 
 ---
 
@@ -1742,14 +1742,14 @@ Conditional-resident when fuel-backed automatic generation is enabled.
 
 ---
 
-## Live Commissioning Evidence Tools
+## Live Commissioning and Inspection Tools
 <!-- DEPLOYMENT_FAMILY:live-commissioning -->
 
 ### Purpose
-Use to capture release-bound, machine-readable physical observations for Item 12 without giving test code actuator authority.
+Use to inspect live stack-published service state and capture release-bound physical observations for Item 12 without giving commissioning tools actuator authority.
 
 ### Use this when
-Use to capture release-bound, machine-readable physical observations for Item 12 without giving test code actuator authority.
+Use the Stack Cell Monitor for one human-visible IC stack value. Use the Snapshot Probe when one evidence observation needs several values with optional generation fencing.
 
 ### Deployment class
 This family contains the deployment classes shown in its generated program inventory; reclaim rules are summarized below.
@@ -1759,34 +1759,35 @@ This family contains the deployment classes shown in its generated program inven
 | Program | Deployment class | Purpose |
 |---|---|---|
 | `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` | `on-demand` | Read-only six-source live commissioning snapshot probe with optional stack-generation fencing. |
+| `ic10/live-commissioning/stack_cell_monitor_v1_0.ic10` | `on-demand` | Read-only target IC stack-cell monitor with a Logic Memory address selector and visible value mirror. |
 <!-- FAMILY_PROGRAMS:live-commissioning END -->
 
 ### Prerequisites
-Current verified release, `data/live_commissioning_cases.json`, `tools/live_commission.py`, and a real Stationeers installation under test.
+The Stack Cell Monitor needs one target IC housing and one Logic Memory address selector. Formal Item-12 capture additionally requires a current verified release, `data/live_commissioning_cases.json`, `tools/live_commission.py`, and a real Stationeers installation under test.
 
 ### Wiring and configuration
-`ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` is a read-only six-source snapshot probe. Each descriptor can read a dynamic LogicType or stack cell, with optional generation fencing for coherent stack capture. It must never sit in an actuator path.
+`ic10/live-commissioning/stack_cell_monitor_v1_0.ic10` uses `d0` for a target IC housing, `d1` for a Logic Memory stack-address selector, and optional `d2` for a mirrored value Memory. `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` is a read-only six-source snapshot probe. Each descriptor can read a dynamic LogicType or stack cell, with optional generation fencing for coherent stack capture. Neither tool may sit in an actuator path.
 
 ### Deployment procedure
-Create a session with `tools/live_commission.py`, configure the probe only for cases that benefit from coherent capture, perform the physical action, record PASS/FAIL/BLOCKED plus notes/observations, and verify session fingerprint before accepting it.
+For visible inspection, select an exact `0..511` address and read the monitor housing or optional output Memory. For formal evidence, create a session with `tools/live_commission.py`, configure the Snapshot Probe only for cases that benefit from coherent capture, perform the physical action, record PASS/FAIL/BLOCKED plus notes/observations, and verify session fingerprint before accepting it.
 
 ### Healthy state
-Every accepted observation is bound to exact framework fingerprint and case-catalog hash. Framework/case changes make old evidence stale rather than reusable.
+The Stack Cell Monitor reports status `1` for a finite value or `2` for a captured NaN and never mutates its target. Every accepted formal observation is bound to exact framework fingerprint and case-catalog hash. Framework/case changes make old evidence stale rather than reusable.
 
 ### Commissioning proof
 This family is the evidence mechanism for all `LG-*` suites; Item 12 closes only when all required current cases PASS.
 
 ### Common failures
-Fingerprint mismatch, missing required case, ambiguous physical action or probe used as authority. Mark BLOCKED/FAIL; never edit evidence to manufacture PASS.
+Monitor NaN caused by a missing target/selector or invalid address, fingerprint mismatch, missing required case, ambiguous physical action, or a probe used as authority. Check the monitor status contract; for evidence failures mark BLOCKED/FAIL and never edit evidence to manufacture PASS.
 
 ### Reflash / replacement
-Reflash probe freely; it owns no actuation state. A new framework release requires a new/current session fingerprint.
+Reflash either tool freely; neither owns actuation state. A new framework release requires a new/current session fingerprint.
 
 ### What can be removed
 Always on-demand. Reclaim after the field session.
 
 ### Technical references
-`docs/LIVE_COMMISSIONING.md`, `docs/FRAMEWORK_HARDENING_TESTS.md`
+`docs/LIVE_COMMISSIONING.md`, `docs/FRAMEWORK_HARDENING_TESTS.md`, `docs/STACK_CELL_MONITOR_GETTING_STARTED.md`
 
 ---
 

@@ -1,0 +1,53 @@
+# Stack Cell Monitor ABI1: d0 target IC,d1 address Memory,d2 optional output Memory.
+# Read-only toward d0/d1; mirrors the selected value to this housing and d2.
+poke 0 31416052
+poke 1 1
+poke 6 0
+Loop:
+yield
+move r0 -1
+move r1 nan
+move r2 0
+bdnvl d0 ReferenceId NoTarget
+l r2 d0 ReferenceId
+l r3 d0 PrefabHash
+beq r3 HASH("StructureCircuitHousing") TargetReady
+beq r3 HASH("StructureCircuitHousingCompact") TargetReady
+move r4 -2
+j Publish
+TargetReady:
+bdnvl d1 Setting NoSelector
+l r0 d1 Setting
+bnan r0 BadAddress
+round r3 r0
+bne r0 r3 BadAddress
+move r0 r3
+bltz r0 BadAddress
+bgt r0 511 BadAddress
+get r1 d0 r0
+move r4 1
+bnan r1 CapturedNaN
+j Publish
+CapturedNaN:
+move r4 2
+j Publish
+NoTarget:
+move r4 -1
+j Publish
+NoSelector:
+move r4 -3
+j Publish
+BadAddress:
+move r4 -4
+Publish:
+poke 3 r0
+poke 4 r1
+poke 5 r2
+poke 2 r4
+get r3 db 6
+add r3 r3 1
+poke 6 r3 # complete sample generation publishes LAST
+s db Setting r1
+bdnvs d2 Setting Loop
+s d2 Setting r1
+j Loop

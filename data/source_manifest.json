@@ -421,6 +421,12 @@
       "deployment_family": "live-commissioning",
       "deployment_class": "on-demand"
     },
+    "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10": {
+      "layer": "On-demand commissioning",
+      "purpose": "Read-only target IC stack-cell monitor with a Logic Memory address selector and visible value mirror.",
+      "deployment_family": "live-commissioning",
+      "deployment_class": "on-demand"
+    },
     "ic10/manufacturing/generic_print_runtime_v2_0.ic10": {
       "layer": "Manufacturing runtime",
       "purpose": "Runs a bounded printer batch through native ExecuteRecipe and verifies coherent ExportCount completion.",
@@ -992,7 +998,8 @@
       "title": "Generic Directory Infrastructure",
       "docs": [
         "docs/DIRECTORY_STANDARD.md",
-        "docs/ARCHITECTURE.md"
+        "docs/ARCHITECTURE.md",
+        "docs/CONTROLLER_DIRECTORY_GETTING_STARTED.md"
       ],
       "live_cases": [
         "LG-SHARED-INPUT"
@@ -1002,7 +1009,8 @@
       "title": "Controller Discovery and Selection",
       "docs": [
         "docs/DIRECTORY_STANDARD.md",
-        "docs/COMMISSIONING_QUICKSTART.md"
+        "docs/COMMISSIONING_QUICKSTART.md",
+        "docs/CONTROLLER_DIRECTORY_GETTING_STARTED.md"
       ],
       "live_cases": [
         "LG-SHARED-INPUT"
@@ -1327,10 +1335,11 @@
       ]
     },
     "live-commissioning": {
-      "title": "Live Commissioning Evidence Tools",
+      "title": "Live Commissioning and Inspection Tools",
       "docs": [
         "docs/LIVE_COMMISSIONING.md",
-        "docs/FRAMEWORK_HARDENING_TESTS.md"
+        "docs/FRAMEWORK_HARDENING_TESTS.md",
+        "docs/STACK_CELL_MONITOR_GETTING_STARTED.md"
       ],
       "live_cases": []
     }
