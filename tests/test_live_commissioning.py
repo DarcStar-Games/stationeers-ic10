@@ -80,8 +80,8 @@ if compact_monitor.stack.get(2)!=1 or compact_monitor.stack.get(4)!=42:
 no_target=IC10((R/'ic10/live-commissioning/stack_cell_monitor_v1_0.ic10').read_text(),
                {'d1':compact_selector},self_ref=2543)
 no_target.run(2)
-if no_target.stack.get(2)!=-1:
-    fails.append('stack monitor did not report a missing target')
+if no_target.stack.get(2)!=-1 or no_target.stack.get(4)!=0:
+    fails.append('stack monitor did not report a missing target with a neutral value')
 no_selector=IC10((R/'ic10/live-commissioning/stack_cell_monitor_v1_0.ic10').read_text(),
                  {'d0':compact},self_ref=2544)
 no_selector.run(2)

@@ -6,7 +6,7 @@ poke 6 0
 Loop:
 yield
 move r0 -1
-move r1 nan
+move r1 0
 move r2 0
 bdnvl d0 ReferenceId NoTarget
 l r2 d0 ReferenceId

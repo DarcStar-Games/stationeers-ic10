@@ -79,13 +79,19 @@ For example, setting `Stack Address` to `6` reads `S6` from the housing connecte
 to `d0`. A captured NaN is displayed as NaN rather than being replaced with a
 plausible number.
 
+Do not assume that every target publishes its ABI header at `S0`. Select
+addresses from that target program's ABI documentation. Controller runtimes use
+the shared Generic Telemetry region beginning at `S96`; for example, the PI
+Runtime publishes telemetry magic `27182818` at `S96`, its ABI at `S97`, and its
+live channels beginning at `S100`.
+
 The monitor publishes this diagnostic state in its own stack:
 
 | Cell | Meaning |
 | ---: | --- |
 | `S2` | Status |
 | `S3` | Selected stack address |
-| `S4` | Sampled value |
+| `S4` | Sampled value for status `1`/`2`; otherwise `0` |
 | `S5` | Target housing ReferenceId |
 | `S6` | Sample generation, published last |
 

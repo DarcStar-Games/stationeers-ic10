@@ -1562,7 +1562,7 @@ S2  status: 1 finite value, 2 captured NaN,
             -1 target missing, -2 target is not an IC housing,
             -3 selector missing/unsupported, -4 invalid address
 S3  selected stack address
-S4  sampled value
+S4  sampled value for status 1/2; 0 for pre-capture errors
 S5  target ReferenceId
 S6  sample generation, published last
 ```
