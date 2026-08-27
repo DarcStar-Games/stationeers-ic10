@@ -11,7 +11,7 @@ ROOT=_PROJECT_ROOT
 # Local VCS/tooling state is not shippable framework content. run_validation.py
 # excludes the same set from the input fingerprint, and
 # validation/validators/validate_release_tooling.py fails if the two diverge.
-TOOLING_DIRS={'.git','.claude','.githooks'}
+TOOLING_DIRS={'.git','.github','.claude','.githooks'}
 
 def sha(path):
     h=hashlib.sha256()
