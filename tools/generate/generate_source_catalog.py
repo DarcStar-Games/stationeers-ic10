@@ -7,6 +7,7 @@ from pathlib import Path
 import re
 from framework.source_metadata import load_manifest,resolve_script_metadata,deployable_scripts
 ROOT=_PROJECT_ROOT
+OUTPUT_FILE='docs/SCRIPT_INDEX.md';FIXED_OUTPUTS=(OUTPUT_FILE,)
 
 def human_name(filename):
     stem=Path(filename).stem
@@ -33,7 +34,7 @@ def main():
     'Every deployable program resolves to exactly one `deployment_family` and one deployment class in `data/source_manifest.json` (directly or through a generated-file rule). See `USER_DEPLOYMENT_GUIDE.md` for operator procedures, prerequisites, wiring, health checks, commissioning proof, restart behavior, and reclaim guidance.','',
     '## Source of truth','',
     'The deployable programs under `ic10/<deployment-family>/` are canonical. Use this index for navigation and line-pressure review; inspect the source file directly for exact code.','']
-    out=ROOT/'docs'/'SCRIPT_INDEX.md';out.write_text('\n'.join(lines)+'\n')
+    out=ROOT/OUTPUT_FILE;out.write_text('\n'.join(lines)+'\n')
     print(f'Generated docs/SCRIPT_INDEX.md for {len(files)} IC10 files')
 
 

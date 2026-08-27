@@ -6,11 +6,13 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 from pathlib import Path
 import json
 from framework.catalog_schema import *
-R=_PROJECT_ROOT;OUT=R/'ic10'/'input-profile-catalog'
+SOURCE_FILE='data/input_profiles.json';MANIFEST_FILE='data/input_profile_catalog_manifest.json';VIEW_FILE='ic10/input-profile-catalog/input_profile_view_v5_0.ic10'
+FIXED_OUTPUTS=COORDINATION_PROGRAM_FILES+(VIEW_FILE,MANIFEST_FILE,SOURCE_FILE)
+R=_PROJECT_ROOT;OUT=(R/VIEW_FILE).parent
 SCHEMA='CatalogSchema.InputProfile';SCHEMA_VERSION=3;INSTANCE='Catalog.InputProfiles.Schema3';PROFILE_MAGIC=31415929;PROFILE_ABI=1
 
 def main():
- OUT.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R);D=json.loads((R/'data/input_profiles.json').read_text());P=D['profiles']
+ OUT.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R);D=json.loads((R/SOURCE_FILE).read_text());P=D['profiles']
  for p in P:
   if p['field_count']!=len(p['descriptors']):raise SystemExit(p['slug']+': field count mismatch')
  def ev(v):
@@ -142,10 +144,10 @@ bne r0 r15 Loop
 poke 5 0
 j Loop
 '''
- (OUT/'input_profile_view_v5_0.ic10').write_text(view)
+ (R/VIEW_FILE).write_text(view)
  counts=pack_store_counts([x.cells for x in items]);manifest=common_manifest(schema_name=SCHEMA,schema_version=SCHEMA_VERSION,instance_name=INSTANCE,store_count=len(counts),total_items=len(P),catalog_digest=digest)
  manifest.update({'format':'INPUT_PROFILE_CATALOG_V4','catalog_token':token,'profile_count':len(P),'runtime_store_placement':True,'runtime_min_store_count':len(counts),'runtime_store_item_counts':counts,'item_cell_lengths':[x.cells for x in items],'loader_segment_count':len(parts),'loaders':loaders,'loader_items':meta,'profiles':[p['slug'] for p in P],'loader_item_atomicity':'profile_never_split','loader_sparse_zero_init':True,'generic_store_program':GENERIC_STORE_FILE,'coordinator_core_program':COORD_PROGRAMS[1],'loader_router_program':COORD_PROGRAMS[2]})
- (R/'data/input_profile_catalog_manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');D.update({'format':'INPUT_PROFILE_CATALOG_V4','catalog_schema_id':SCHEMA,'catalog_schema_version':SCHEMA_VERSION,'catalog_instance_id':INSTANCE,'cell_block_width':CELL_BLOCK_WIDTH});(R/'data/input_profiles.json').write_text(json.dumps(D,indent=2)+'\n')
+ (R/MANIFEST_FILE).write_text(json.dumps(manifest,indent=2)+'\n');D.update({'format':'INPUT_PROFILE_CATALOG_V4','catalog_schema_id':SCHEMA,'catalog_schema_version':SCHEMA_VERSION,'catalog_instance_id':INSTANCE,'cell_block_width':CELL_BLOCK_WIDTH});(R/SOURCE_FILE).write_text(json.dumps(D,indent=2)+'\n')
  print(f'Input Profile generation: PASS - {len(P)} profiles / runtime min {len(counts)} stores / {len(parts)} relocatable loaders')
 
 if __name__=='__main__':main()

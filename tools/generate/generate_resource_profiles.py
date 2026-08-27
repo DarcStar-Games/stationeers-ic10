@@ -7,14 +7,16 @@ from pathlib import Path
 from collections import defaultdict
 import json
 from framework.catalog_schema import *
-R=_PROJECT_ROOT;OUT=R/'ic10'/'resource-profile-catalog';DEP=R/'ic10'/'dependency-planning'
+SOURCE_FILE='data/resource_profiles.json';MANIFEST_FILE='data/resource_profile_catalog_manifest.json';VIEW_FILE='ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10';RESOLVER_FILE='ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10'
+FIXED_OUTPUTS=COORDINATION_PROGRAM_FILES+(VIEW_FILE,RESOLVER_FILE,MANIFEST_FILE,SOURCE_FILE)
+R=_PROJECT_ROOT;OUT=(R/VIEW_FILE).parent;DEP=(R/RESOLVER_FILE).parent
 SCHEMA='CatalogSchema.ResourceProfile';SCHEMA_VERSION=2;INSTANCE='Catalog.ResourceProfiles.Schema2'
 VIEW_MAGIC=31415963;VIEW_ABI=1;SEMANTIC_WIDTH=14;ITEM_CELLS=16
 CLASS_NAMES={1:'fluid',2:'item',4:'power',5:'energy'}
 
 def main():
  OUT.mkdir(parents=True,exist_ok=True);DEP.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R)
- D=json.loads((R/'data/resource_profiles.json').read_text());P=D['profiles']
+ D=json.loads((R/SOURCE_FILE).read_text());P=D['profiles']
  seen=set()
  for p in P:
   k=(p['resource_class'],str(p['resource_type_kind']),str(p['resource_type']))
@@ -24,7 +26,7 @@ def main():
  cat_obj={'schema':SCHEMA,'schema_version':SCHEMA_VERSION,'profiles':P};digest,token=stable_hash_token('RP6',cat_obj)
  for pat in ('resource_profile_loader_*_v*.ic10','resource_profile_view_v*.ic10'):
   for f in OUT.glob(pat):f.unlink()
- (DEP/'manufacturing_reagent_resolver_v1_0.ic10').unlink(missing_ok=True)
+ (R/RESOLVER_FILE).unlink(missing_ok=True)
  groups=defaultdict(list)
  for p in P:groups[p['resource_class']].append(p)
  all_loaders=[];parts_meta=[]
@@ -136,7 +138,7 @@ poke 5 0
 poke 4 -3
 j Loop
 '''
- (OUT/'resource_profile_view_v4_0.ic10').write_text(view)
+ (R/VIEW_FILE).write_text(view)
  # Item 8 manufacturing reagent aliases are derived from ITEM Resource Profiles.
  reagents=[]; reagent_seen={}
  for p in P:
@@ -155,13 +157,13 @@ j Loop
  for i,(_,rt) in enumerate(reagents): rl += [f'R{i}:',f'poke 6 {rt}','poke 5 1','poke 4 r15','j Loop']
  reagent_text='\n'.join(rl)+'\n'
  if len(reagent_text.splitlines())>120: raise SystemExit('215 reagent resolver exceeds 120-line IC10 ceiling')
- (DEP/'manufacturing_reagent_resolver_v1_0.ic10').write_text(reagent_text)
+ (R/RESOLVER_FILE).write_text(reagent_text)
  minstores=sum(x['runtime_min_store_count'] for x in parts_meta)
  manifest=common_manifest(schema_name=SCHEMA,schema_version=SCHEMA_VERSION,instance_name=INSTANCE,store_count=minstores,total_items=len(P),catalog_digest=digest)
  manifest.update({'format':'RESOURCE_PROFILE_CATALOG_V6','catalog_token':token,'profile_count':len(P),'semantic_record_width':SEMANTIC_WIDTH,'physical_item_width':ITEM_CELLS,'storage_partition':'resource_class','runtime_store_placement':True,'runtime_min_store_count':minstores,'loader_segment_count':len(all_loaders),'loaders':all_loaders,'partitions':parts_meta,'loader_item_atomicity':'logical_item_never_split','loader_sparse_zero_init':True,'generic_store_program':GENERIC_STORE_FILE,'coordinator_core_program':COORD_PROGRAMS[1],'loader_router_program':COORD_PROGRAMS[2]})
- (R/'data/resource_profile_catalog_manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+ (R/MANIFEST_FILE).write_text(json.dumps(manifest,indent=2)+'\n')
  D.update({'format':'RESOURCE_PROFILE_CATALOG_V6','catalog_schema_id':SCHEMA,'catalog_schema_version':SCHEMA_VERSION,'catalog_instance_id':INSTANCE,'cell_block_width':CELL_BLOCK_WIDTH,'semantic_record_width':SEMANTIC_WIDTH,'physical_item_width':ITEM_CELLS,'storage_partition':'resource_class'})
- (R/'data/resource_profiles.json').write_text(json.dumps(D,indent=2)+'\n')
+ (R/SOURCE_FILE).write_text(json.dumps(D,indent=2)+'\n')
  print(f'Resource Profile generation: PASS - {len(P)} profiles / runtime min {minstores} stores / {len(all_loaders)} relocatable loaders')
 
 if __name__=='__main__':main()

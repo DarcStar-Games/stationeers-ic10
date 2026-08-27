@@ -6,6 +6,7 @@ PASS framework/banked_transaction.py                            module -x
 PASS framework/catalog_schema.py                                module -x
 PASS framework/catalog_test_helpers.py                          module -x
 PASS framework/fault_injection.py                               module -x
+PASS framework/generator_productivity.py                        module -x
 PASS framework/ic10_harness.py                                  module -x
 PASS framework/job_abi.py                                       module -x
 PASS framework/json_schema.py                                   module -x
@@ -18,6 +19,7 @@ PASS tests/test_controller_directory_scale.py                   entry  +x
 PASS tests/test_dependency_planning.py                          entry  +x
 PASS tests/test_fault_injection.py                              entry  +x
 PASS tests/test_game_export.py                                  entry  +x
+PASS tests/test_generator_productivity.py                       entry  +x
 PASS tests/test_generic_directory.py                            entry  +x
 PASS tests/test_ic10_execution.py                               entry  +x
 PASS tests/test_input_profiles.py                               entry  +x
@@ -85,8 +87,8 @@ PASS validation/validators/validate_script_headers.py           entry  +x
 PASS validation/validators/validate_source_catalog.py           entry  +x
 PASS validation/validators/validate_user_deployment_guide.py    entry  +x
 ====================================================================================================
-Checked 84 files: 71 entry points, 13 imported modules
-Single import name enforced for 71 modules reachable from a script directory
-Entry points are the 12 commands under tools/ plus the 59 scripts tools/run_validation.py runs elsewhere; nothing is an entry point by location
+Checked 86 files: 72 entry points, 14 imported modules
+Single import name enforced for 72 modules reachable from a script directory
+Entry points are the 12 commands under tools/ plus the 60 scripts tools/run_validation.py runs elsewhere; nothing is an entry point by location
 No work at import for all 14 modules under tools/, and a guard reaches main() in each of the 12 entry points
 Result: PASS

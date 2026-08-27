@@ -8,6 +8,14 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 from framework.script_contracts import build_all, generated_artifact_paths, json_text
 
 ROOT = _PROJECT_ROOT
+INDEX_FILE = "contracts/index.json"
+REGISTRY_FILE = "contracts/protocol_registry.json"
+FIXED_OUTPUTS = (INDEX_FILE, REGISTRY_FILE)
+
+
+def declared_outputs(root=ROOT):
+    contracts, _, _, protocol_definitions = build_all(root)
+    return tuple(sorted(set(FIXED_OUTPUTS) | set(contracts) | set(protocol_definitions)))
 
 
 def main() -> None:
@@ -24,8 +32,8 @@ def main() -> None:
         target = ROOT / rel
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(json_text(contract), encoding="utf-8")
-    (ROOT / "contracts" / "index.json").write_text(json_text(index), encoding="utf-8")
-    (ROOT / "contracts" / "protocol_registry.json").write_text(json_text(protocols), encoding="utf-8")
+    (ROOT / INDEX_FILE).write_text(json_text(index), encoding="utf-8")
+    (ROOT / REGISTRY_FILE).write_text(json_text(protocols), encoding="utf-8")
     for rel, definition in protocol_definitions.items():
         target = ROOT / rel
         target.parent.mkdir(parents=True, exist_ok=True)

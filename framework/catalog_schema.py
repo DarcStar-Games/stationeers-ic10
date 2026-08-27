@@ -20,7 +20,8 @@ LOADER_MAGIC=31415969; LOADER_ABI=4
 COORD_MAGIC=31415970; COORD_ABI=3
 STORE_HEADER_CELLS=32; STORE_DIR_WIDTH=2; STORE_TOTAL_CELLS=512
 LOADER_HEADER_CELLS=16; LOADER_DIR_WIDTH=2
-GENERIC_STORE_FILE='ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10'
+COORDINATION_PROGRAM_FILES=('ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10','ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10','ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10','ic10/directory-core/generic_registry_directory_host_v2_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10','ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10','ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10','ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10','ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10')
+GENERIC_STORE_FILE=COORDINATION_PROGRAM_FILES[0]
 MAX_LOGICAL_STORES=64
 STORE_UNCLAIMED=1;STORE_ACTIVE=2;STORE_DRAINING=3;STORE_FAULT=4;STORE_RETIRED=5;STORE_MIGRATING=6;STORE_MISSING=7;STORE_DUPLICATE=8
 
@@ -838,7 +839,7 @@ poke 28 -1
 j Loop
 '''
 def ensure_coordination_programs(root:Path):
-    names=('ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10','ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10','ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10','ic10/directory-core/generic_registry_directory_host_v2_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10','ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10','ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10','ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10','ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10')
+    names=COORDINATION_PROGRAM_FILES
     texts=(make_generic_store_program(),make_coordinator_core_program(),make_loader_router_program(),make_coordinator_directory_host_program(),make_coordinator_directory_scanner_program(),make_coordinator_directory_telemetry_program(),make_coordinator_directory_view_program(),make_recovery_manager_program(),make_migration_manager_program(),make_migration_worker_program(),make_retirement_manager_program())
     for n,t in zip(names,texts):
         p=root/n;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(t)
