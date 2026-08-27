@@ -1,0 +1,277 @@
+{
+  "$schema": "../../schemas/script_contract.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "source": "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10",
+  "source_sha256": "f4cc85f69ed75ad3a65a660cf28baaa47d6c3fc8ceb0115aa4faf6ceba8c0af3",
+  "identity": {
+    "service_id": "ic10.script.diagnostic.mapping.editor",
+    "implementation_revision": "1.2",
+    "deployment_family": "diagnostics",
+    "deployment_class": "commissioning",
+    "layer": "Diagnostics",
+    "purpose": "Commits resolved display/controller/channel mappings."
+  },
+  "device_ports": [],
+  "network_dependencies": [
+    {
+      "transport": "reference-id",
+      "reference": "consoleSelector",
+      "literal_reads": [
+        4,
+        5,
+        10,
+        11,
+        14
+      ],
+      "literal_writes": [
+        10
+      ],
+      "dynamic_read": false,
+      "dynamic_write": false,
+      "constraints": [
+        {
+          "address": 5,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "controllerSelector",
+      "literal_reads": [
+        5,
+        8,
+        13
+      ],
+      "literal_writes": [],
+      "dynamic_read": false,
+      "dynamic_write": false,
+      "constraints": [
+        {
+          "address": 8,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "input",
+      "literal_reads": [
+        0,
+        1,
+        7,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25
+      ],
+      "literal_writes": [],
+      "dynamic_read": false,
+      "dynamic_write": false,
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 17320511
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 1
+        },
+        {
+          "address": 7,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "renderer",
+      "literal_reads": [
+        2
+      ],
+      "literal_writes": [
+        2
+      ],
+      "dynamic_read": true,
+      "dynamic_write": true,
+      "constraints": [],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "rr7",
+      "literal_reads": [
+        0,
+        1
+      ],
+      "literal_writes": [],
+      "dynamic_read": false,
+      "dynamic_write": false,
+      "constraints": [],
+      "accepted": []
+    }
+  ],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [
+      2,
+      3,
+      4,
+      5,
+      7
+    ],
+    "literal_writes": [
+      0,
+      1,
+      5,
+      6
+    ],
+    "dynamic_read": false,
+    "dynamic_write": false,
+    "dynamic_read_ranges": [],
+    "dynamic_write_ranges": [],
+    "dynamic_range_source": "none",
+    "clears_all": false,
+    "external_readable_ranges": [],
+    "external_writable_ranges": [],
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 17320510
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 3,
+        "name": "S3",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 4,
+        "name": "S4",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 5,
+        "name": "S5",
+        "value_type": "number",
+        "semantic_source": "source",
+        "access": [
+          "self-read",
+          "self-write"
+        ],
+        "description": "consume commit only after mapping + advance request are complete"
+      },
+      {
+        "address": 6,
+        "name": "S6",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 7,
+        "name": "S7",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "magic": 17320510,
+        "abi": 1
+      }
+    ]
+  },
+  "behavior": {
+    "publication_rules": [],
+    "restart": {
+      "mode": "preserved-unless-overwritten",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 17320510,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
+  },
+  "contracts": {
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.17320510.abi1",
+        "base": 0,
+        "magic": 17320510,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      }
+    ],
+    "consumes": []
+  },
+  "extraction": {
+    "mode": "static-v1",
+    "limitations": [
+      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
+      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

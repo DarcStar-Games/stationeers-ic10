@@ -1,0 +1,185 @@
+{
+  "$schema": "../../schemas/protocol_definition.schema.json",
+  "format": "IC10_PROTOCOL_DEFINITION_V1",
+  "protocol_id": "ic10.stack.31416006.abi2",
+  "name": "Dependency Child Creator ABI2",
+  "transport": "ic-housing-stack",
+  "magic": 31416006,
+  "abi": 2,
+  "header_bases": [
+    0
+  ],
+  "canonical_refs": [],
+  "provider_interfaces": [
+    {
+      "source": "ic10/dependency-planning/dependency_child_creator_v2_0.ic10",
+      "header_base": 0,
+      "readable_ranges": [],
+      "writable_ranges": [],
+      "fields": [
+        {
+          "address": 0,
+          "name": "Header@S0.Magic",
+          "value_type": "hash",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ],
+          "const": 31416006
+        },
+        {
+          "address": 1,
+          "name": "Header@S0.ABI",
+          "value_type": "integer",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ],
+          "const": 2
+        },
+        {
+          "address": 2,
+          "name": "S2",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 3,
+          "name": "S3",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 4,
+          "name": "S4",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 5,
+          "name": "S5",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 6,
+          "name": "S6",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 7,
+          "name": "S7",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 8,
+          "name": "S8",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 9,
+          "name": "S9",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 10,
+          "name": "S10",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 11,
+          "name": "S11",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 12,
+          "name": "S12",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 13,
+          "name": "S13",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        }
+      ],
+      "behavior": {
+        "publication_rules": [],
+        "restart": {
+          "mode": "preserved-unless-overwritten",
+          "source": "static-entry-path-analysis"
+        },
+        "invariants": [
+          {
+            "id": "header.s0.magic",
+            "kind": "cell-equals",
+            "address": 0,
+            "equals": 31416006,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s0.abi",
+            "kind": "cell-equals",
+            "address": 1,
+            "equals": 2,
+            "source": "generated-protocol-header"
+          }
+        ]
+      }
+    }
+  ],
+  "consumer_interfaces": []
+}

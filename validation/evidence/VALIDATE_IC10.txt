@@ -50,7 +50,7 @@ PASS ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10 lines=120 headroom= 8 
 PASS ic10/diagnostics/diagnostic_renderer_v1_1.ic10 lines= 66 headroom=62 max=76 CRLF=1727 comments=15
 PASS ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10 lines= 46 headroom=82 max=79 CRLF=1174 comments= 4
 PASS ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10 lines=109 headroom=19 max=79 CRLF=1521 comments= 1
-PASS ic10/directory-core/generic_registry_directory_host_v2_0.ic10 lines=120 headroom= 8 max=77 CRLF=1696 comments= 1
+PASS ic10/directory-core/generic_registry_directory_host_v2_0.ic10 lines=120 headroom= 8 max=83 CRLF=1701 comments= 1
 PASS ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10 lines=120 headroom= 8 max=20 CRLF=1570 comments= 0
 PASS ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10 lines=120 headroom= 8 max=20 CRLF=1484 comments= 0
 PASS ic10/generic-jobs/generic_job_selector_v3_0.ic10 lines=120 headroom= 8 max=19 CRLF=1558 comments= 0
@@ -156,7 +156,7 @@ PASS ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10 lines
 PASS ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10 lines= 57 headroom=71 max=72 CRLF= 825 comments= 1
 PASS ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10 lines= 64 headroom=64 max=75 CRLF= 926 comments= 1
 PASS ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10 lines= 46 headroom=82 max=79 CRLF= 660 comments= 1
-PASS ic10/resource-grid-core/resource_reservation_v1_0.ic10 lines=117 headroom=11 max=71 CRLF=2106 comments=17
+PASS ic10/resource-grid-core/resource_reservation_v1_0.ic10 lines=117 headroom=11 max=71 CRLF=2184 comments=19
 PASS ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10 lines= 22 headroom=106 max=88 CRLF= 548 comments= 3
 PASS ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10 lines=111 headroom=17 max=87 CRLF=2093 comments= 8
 PASS ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10 lines= 79 headroom=49 max=87 CRLF=1571 comments= 6

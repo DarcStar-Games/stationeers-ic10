@@ -1,0 +1,322 @@
+{
+  "$schema": "../../schemas/script_contract.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "source": "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10",
+  "source_sha256": "4988d6c81583a5a9268f64a958cccd4b45fc0435bafa181c26bffa1ecb484c72",
+  "identity": {
+    "service_id": "ic10.script.catalog.loader.router",
+    "implementation_revision": "3.0",
+    "deployment_family": "catalog-control-plane",
+    "deployment_class": "on-demand",
+    "layer": "Catalog control plane",
+    "purpose": "Loader Router ABI3; places whole Loader ABI4 items into live unreserved Store capacity."
+  },
+  "device_ports": [
+    {
+      "port": "d0",
+      "role": "d0",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [
+          "ReferenceId"
+        ],
+        "writes": [],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [
+          6
+        ],
+        "literal_writes": [
+          6
+        ],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": []
+      },
+      "target": {
+        "kind": "stack-interface",
+        "verification": "access-only",
+        "interface_id": "ic10.interface.access.46275bdee4d5a020",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.46275bdee4d5a020",
+        "provider_resolution": "deployment-supplied",
+        "assumptions": {
+          "properties_read": [
+            "ReferenceId"
+          ],
+          "properties_written": [],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
+    }
+  ],
+  "network_dependencies": [
+    {
+      "transport": "device-index",
+      "reference": "db:0",
+      "literal_reads": [],
+      "literal_writes": [],
+      "dynamic_read": true,
+      "dynamic_write": false,
+      "constraints": [],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "r1",
+      "literal_reads": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        12,
+        13,
+        15
+      ],
+      "literal_writes": [
+        13,
+        14
+      ],
+      "dynamic_read": true,
+      "dynamic_write": false,
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31415969
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 4
+        },
+        {
+          "address": 12,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "r15",
+      "literal_reads": [
+        0,
+        1,
+        25
+      ],
+      "literal_writes": [
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "dynamic_read": false,
+      "dynamic_write": false,
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31415970
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 3
+        }
+      ],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "r2",
+      "literal_reads": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        8,
+        11,
+        16,
+        23,
+        27,
+        29
+      ],
+      "literal_writes": [],
+      "dynamic_read": false,
+      "dynamic_write": false,
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31415968
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 5
+        },
+        {
+          "address": 16,
+          "operator": "equals",
+          "value": 2
+        }
+      ],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "ra",
+      "literal_reads": [],
+      "literal_writes": [
+        27
+      ],
+      "dynamic_read": false,
+      "dynamic_write": false,
+      "constraints": [],
+      "accepted": []
+    }
+  ],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [
+      2,
+      3,
+      4
+    ],
+    "literal_writes": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "dynamic_read": false,
+    "dynamic_write": false,
+    "dynamic_read_ranges": [],
+    "dynamic_write_ranges": [],
+    "dynamic_range_source": "none",
+    "clears_all": false,
+    "external_readable_ranges": [],
+    "external_writable_ranges": [],
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 31415971
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 3
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 3,
+        "name": "S3",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 4,
+        "name": "S4",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "magic": 31415971,
+        "abi": 3
+      }
+    ]
+  },
+  "behavior": {
+    "publication_rules": [],
+    "restart": {
+      "mode": "preserved-unless-overwritten",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 31415971,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 3,
+        "source": "generated-protocol-header"
+      }
+    ]
+  },
+  "contracts": {
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.31415971.abi3",
+        "base": 0,
+        "magic": 31415971,
+        "abi": 3,
+        "source": "literal-own-stack-header"
+      }
+    ],
+    "consumes": []
+  },
+  "extraction": {
+    "mode": "static-v1",
+    "limitations": [
+      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
+      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

@@ -1,0 +1,817 @@
+{
+  "$schema": "../../schemas/script_contract.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "source": "ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10",
+  "source_sha256": "f6562362c4c117acc00d24f0b2c5d094cab3399a96b79f8bd37f963761649548",
+  "identity": {
+    "service_id": "ic10.script.resource.profile.loader.item.02",
+    "implementation_revision": "4.0",
+    "deployment_family": "resource-profile-catalog",
+    "deployment_class": "one-shot",
+    "layer": "Resource metadata",
+    "purpose": "One-shot relocatable Resource Profile Loader ABI4 candidate; whole records only, own-stack zero-init."
+  },
+  "device_ports": [],
+  "network_dependencies": [],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [],
+    "literal_writes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      416,
+      417,
+      418,
+      419,
+      420,
+      421,
+      422,
+      423,
+      432,
+      433,
+      434,
+      435,
+      436,
+      437,
+      438,
+      439,
+      448,
+      449,
+      450,
+      451,
+      452,
+      453,
+      454,
+      455,
+      464,
+      465,
+      466,
+      467,
+      468,
+      469,
+      470,
+      471,
+      480,
+      481,
+      482,
+      483,
+      484,
+      485,
+      486,
+      487,
+      496,
+      497,
+      498,
+      499,
+      500,
+      501,
+      502,
+      503
+    ],
+    "dynamic_read": false,
+    "dynamic_write": true,
+    "dynamic_read_ranges": [],
+    "dynamic_write_ranges": [
+      {
+        "start": 0,
+        "end": 511
+      }
+    ],
+    "dynamic_range_source": "conservative-full-stack",
+    "clears_all": true,
+    "external_readable_ranges": [],
+    "external_writable_ranges": [],
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 3,
+        "name": "S3",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 4,
+        "name": "S4",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 5,
+        "name": "S5",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 6,
+        "name": "S6",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 7,
+        "name": "S7",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 8,
+        "name": "S8",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 9,
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 10,
+        "name": "S10",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 11,
+        "name": "S11",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 12,
+        "name": "S12",
+        "value_type": "number",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "description": "immutable candidate publication LAST"
+      },
+      {
+        "address": 16,
+        "name": "S16",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 17,
+        "name": "S17",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 18,
+        "name": "S18",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 19,
+        "name": "S19",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 20,
+        "name": "S20",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 21,
+        "name": "S21",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 22,
+        "name": "S22",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 23,
+        "name": "S23",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 24,
+        "name": "S24",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 25,
+        "name": "S25",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 26,
+        "name": "S26",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 27,
+        "name": "S27",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 416,
+        "name": "S416",
+        "value_type": "number",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "description": "Ingot (Waspaloy)"
+      },
+      {
+        "address": 417,
+        "name": "S417",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 418,
+        "name": "S418",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 419,
+        "name": "S419",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 420,
+        "name": "S420",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 421,
+        "name": "S421",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 422,
+        "name": "S422",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 423,
+        "name": "S423",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 432,
+        "name": "S432",
+        "value_type": "number",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "description": "Ingot (Stellite)"
+      },
+      {
+        "address": 433,
+        "name": "S433",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 434,
+        "name": "S434",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 435,
+        "name": "S435",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 436,
+        "name": "S436",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 437,
+        "name": "S437",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 438,
+        "name": "S438",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 439,
+        "name": "S439",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 448,
+        "name": "S448",
+        "value_type": "number",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "description": "Ingot (Inconel)"
+      },
+      {
+        "address": 449,
+        "name": "S449",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 450,
+        "name": "S450",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 451,
+        "name": "S451",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 452,
+        "name": "S452",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 453,
+        "name": "S453",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 454,
+        "name": "S454",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 455,
+        "name": "S455",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 464,
+        "name": "S464",
+        "value_type": "number",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "description": "Ingot (Hastelloy)"
+      },
+      {
+        "address": 465,
+        "name": "S465",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 466,
+        "name": "S466",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 467,
+        "name": "S467",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 468,
+        "name": "S468",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 469,
+        "name": "S469",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 470,
+        "name": "S470",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 471,
+        "name": "S471",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 480,
+        "name": "S480",
+        "value_type": "number",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "description": "Ingot (Astroloy)"
+      },
+      {
+        "address": 481,
+        "name": "S481",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 482,
+        "name": "S482",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 483,
+        "name": "S483",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 484,
+        "name": "S484",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 485,
+        "name": "S485",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 486,
+        "name": "S486",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 487,
+        "name": "S487",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 496,
+        "name": "S496",
+        "value_type": "number",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "description": "Ingot (Steel)"
+      },
+      {
+        "address": 497,
+        "name": "S497",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 498,
+        "name": "S498",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 499,
+        "name": "S499",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 500,
+        "name": "S500",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 501,
+        "name": "S501",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 502,
+        "name": "S502",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 503,
+        "name": "S503",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "magic": 31415969,
+        "abi": 4
+      }
+    ]
+  },
+  "behavior": {
+    "publication_rules": [
+      {
+        "kind": "commit-last",
+        "address": 12,
+        "description": "immutable candidate publication LAST",
+        "source": "verified-inline-order"
+      }
+    ],
+    "restart": {
+      "mode": "cleared-on-init",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": []
+  },
+  "contracts": {
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.31415969.abi4",
+        "base": 0,
+        "magic": 31415969,
+        "abi": 4,
+        "source": "literal-own-stack-header"
+      }
+    ],
+    "consumes": []
+  },
+  "extraction": {
+    "mode": "static-v1",
+    "limitations": [
+      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
+      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

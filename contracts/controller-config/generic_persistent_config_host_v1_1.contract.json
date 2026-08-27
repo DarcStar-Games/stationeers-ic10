@@ -1,0 +1,280 @@
+{
+  "$schema": "../../schemas/script_contract.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "source": "ic10/controller-config/generic_persistent_config_host_v1_1.ic10",
+  "source_sha256": "de990858a08a2d6fb69bd3ae85342495a0c95084783e408530bc615dfdedc221",
+  "identity": {
+    "service_id": "ic10.script.generic.persistent.config.host",
+    "implementation_revision": "1.1",
+    "deployment_family": "controller-config",
+    "deployment_class": "resident",
+    "layer": "Persistence",
+    "purpose": "BANKED_TRANSACTION REVISION_BANK host: owns candidate/effective config, A/B persistence, recovery, and post-commit replay acknowledgement."
+  },
+  "device_ports": [],
+  "network_dependencies": [],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [
+      5,
+      6,
+      7,
+      9,
+      10,
+      12,
+      13,
+      20,
+      21,
+      24,
+      25,
+      26
+    ],
+    "literal_writes": [
+      0,
+      1,
+      5,
+      7,
+      8,
+      9,
+      11,
+      24,
+      25,
+      26
+    ],
+    "dynamic_read": true,
+    "dynamic_write": true,
+    "dynamic_read_ranges": [
+      {
+        "start": 0,
+        "end": 511
+      }
+    ],
+    "dynamic_write_ranges": [
+      {
+        "start": 0,
+        "end": 511
+      }
+    ],
+    "dynamic_range_source": "conservative-full-stack",
+    "clears_all": false,
+    "external_readable_ranges": [
+      {
+        "start": 0,
+        "end": 159
+      }
+    ],
+    "external_writable_ranges": [
+      {
+        "start": 2,
+        "end": 4
+      },
+      {
+        "start": 6,
+        "end": 6
+      },
+      {
+        "start": 10,
+        "end": 21
+      },
+      {
+        "start": 32,
+        "end": 47
+      },
+      {
+        "start": 128,
+        "end": 159
+      }
+    ],
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 5,
+        "name": "S5",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 6,
+        "name": "S6",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 7,
+        "name": "S7",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 8,
+        "name": "S8",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 9,
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 10,
+        "name": "S10",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 11,
+        "name": "S11",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 12,
+        "name": "PersistenceSchemaSignature",
+        "value_type": "hash",
+        "semantic_source": "source",
+        "access": [
+          "self-read"
+        ],
+        "description": "persistence schema signature supplied by Policy"
+      },
+      {
+        "address": 13,
+        "name": "PolicyGeneration",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "self-read"
+        ],
+        "description": "Policy generation; Policy publishes metadata/defaults first"
+      },
+      {
+        "address": 20,
+        "name": "PolicyResponseGeneration",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "self-read"
+        ],
+        "description": "Policy response generation; normalized candidate precedes it"
+      },
+      {
+        "address": 21,
+        "name": "S21",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 24,
+        "name": "S24",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 25,
+        "name": "S25",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 26,
+        "name": "S26",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "magic": 31415928,
+        "abi": 1
+      }
+    ]
+  },
+  "behavior": {
+    "publication_rules": [],
+    "restart": {
+      "mode": "preserved-unless-overwritten",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": []
+  },
+  "contracts": {
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.31415928.abi1",
+        "base": 0,
+        "magic": 31415928,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      }
+    ],
+    "consumes": []
+  },
+  "extraction": {
+    "mode": "static-v1",
+    "limitations": [
+      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
+      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

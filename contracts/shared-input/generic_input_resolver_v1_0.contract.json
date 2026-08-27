@@ -1,0 +1,251 @@
+{
+  "$schema": "../../schemas/script_contract.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "source": "ic10/shared-input/generic_input_resolver_v1_0.ic10",
+  "source_sha256": "6970aa0e8fe1f781e3b8693eb840a1d991dd8bac49b7a3c3350d61015566949d",
+  "identity": {
+    "service_id": "ic10.script.generic.input.resolver",
+    "implementation_revision": "1.0",
+    "deployment_family": "shared-input",
+    "deployment_class": "commissioning",
+    "layer": "Shared input",
+    "purpose": "Resolves logical commissioning controls from Scanner + Profile metadata."
+  },
+  "device_ports": [],
+  "network_dependencies": [
+    {
+      "transport": "reference-id",
+      "reference": "profile",
+      "literal_reads": [
+        0,
+        1,
+        4,
+        5
+      ],
+      "literal_writes": [],
+      "dynamic_read": true,
+      "dynamic_write": false,
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31415929
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "scanner",
+      "literal_reads": [
+        0,
+        1,
+        2,
+        10
+      ],
+      "literal_writes": [
+        9
+      ],
+      "dynamic_read": true,
+      "dynamic_write": false,
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31415930
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "accepted": []
+    }
+  ],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [
+      2,
+      3,
+      4,
+      12
+    ],
+    "literal_writes": [
+      0,
+      1,
+      5,
+      6,
+      7,
+      11,
+      12
+    ],
+    "dynamic_read": false,
+    "dynamic_write": false,
+    "dynamic_read_ranges": [],
+    "dynamic_write_ranges": [],
+    "dynamic_range_source": "none",
+    "clears_all": false,
+    "external_readable_ranges": [],
+    "external_writable_ranges": [],
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 31415931
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 3,
+        "name": "S3",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 4,
+        "name": "S4",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 5,
+        "name": "S5",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 6,
+        "name": "S6",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 7,
+        "name": "S7",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 11,
+        "name": "S11",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 12,
+        "name": "S12",
+        "value_type": "number",
+        "semantic_source": "source",
+        "access": [
+          "self-read",
+          "self-write"
+        ],
+        "description": "coherent resolved snapshot publishes LAST"
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "magic": 31415931,
+        "abi": 1
+      }
+    ]
+  },
+  "behavior": {
+    "publication_rules": [
+      {
+        "kind": "commit-last",
+        "address": 12,
+        "description": "coherent resolved snapshot publishes LAST",
+        "source": "verified-inline-order"
+      }
+    ],
+    "restart": {
+      "mode": "preserved-unless-overwritten",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 31415931,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
+  },
+  "contracts": {
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.31415931.abi1",
+        "base": 0,
+        "magic": 31415931,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      }
+    ],
+    "consumes": []
+  },
+  "extraction": {
+    "mode": "static-v1",
+    "limitations": [
+      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
+      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "$schema": "../../schemas/script_contract.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "source": "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10",
+  "source_sha256": "6e1f8f7f4145d72ab45e0ea719948c4f5f50152cd6ab33b83db371cc1badbc6e",
+  "identity": {
+    "service_id": "ic10.script.catalog.item.migration.worker",
+    "implementation_revision": "1.0",
+    "deployment_family": "catalog-control-plane",
+    "deployment_class": "on-demand",
+    "layer": "Catalog migration",
+    "purpose": "Copies and commits one whole item to reserved destination capacity, then reclaims the source tail."
+  },
+  "device_ports": [
+    {
+      "port": "d0",
+      "role": "d0",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [],
+        "writes": [],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [
+          0,
+          6,
+          7,
+          40,
+          41
+        ],
+        "literal_writes": [
+          6,
+          7,
+          40,
+          41
+        ],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 31415970
+          }
+        ]
+      },
+      "target": {
+        "kind": "stack-interface",
+        "verification": "access-only",
+        "interface_id": "ic10.interface.access.5f09c1ab6d948b7f",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.5f09c1ab6d948b7f",
+        "provider_resolution": "deployment-supplied",
+        "assumptions": {
+          "properties_read": [],
+          "properties_written": [],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
+    }
+  ],
+  "network_dependencies": [
+    {
+      "transport": "reference-id",
+      "reference": "r1",
+      "literal_reads": [
+        9,
+        15,
+        19,
+        20,
+        22
+      ],
+      "literal_writes": [
+        9,
+        15,
+        19,
+        20,
+        22,
+        29
+      ],
+      "dynamic_read": true,
+      "dynamic_write": false,
+      "constraints": [],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "r2",
+      "literal_reads": [
+        9,
+        15,
+        19,
+        20,
+        22,
+        29
+      ],
+      "literal_writes": [
+        9,
+        15,
+        19,
+        20,
+        22,
+        27,
+        29
+      ],
+      "dynamic_read": false,
+      "dynamic_write": true,
+      "constraints": [],
+      "accepted": []
+    }
+  ],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [],
+    "literal_writes": [],
+    "dynamic_read": false,
+    "dynamic_write": false,
+    "dynamic_read_ranges": [],
+    "dynamic_write_ranges": [],
+    "dynamic_range_source": "none",
+    "clears_all": false,
+    "external_readable_ranges": [],
+    "external_writable_ranges": [],
+    "fields": [],
+    "headers": []
+  },
+  "behavior": {
+    "publication_rules": [],
+    "restart": {
+      "mode": "preserved-unless-overwritten",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": []
+  },
+  "contracts": {
+    "provides": [],
+    "consumes": []
+  },
+  "extraction": {
+    "mode": "static-v1",
+    "limitations": [
+      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
+      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

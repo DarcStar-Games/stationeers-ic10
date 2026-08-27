@@ -1,0 +1,160 @@
+{
+  "$schema": "../../schemas/script_contract.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "source": "ic10/pressure-grid/pressure_grid_cost_profile_v1_0.ic10",
+  "source_sha256": "5ffd846bff6737e4c372c2cc4858f2f0dd5cf433c3cc3beecea13cb29a356516",
+  "identity": {
+    "service_id": "ic10.script.pressure.grid.cost.profile",
+    "implementation_revision": "1.0",
+    "deployment_family": "pressure-grid",
+    "deployment_class": "conditional-resident",
+    "layer": "Pressure-grid policy",
+    "purpose": "Publishes dimensionless route-ranking weights and candidate budget."
+  },
+  "device_ports": [],
+  "network_dependencies": [],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [],
+    "literal_writes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "dynamic_read": false,
+    "dynamic_write": false,
+    "dynamic_read_ranges": [],
+    "dynamic_write_ranges": [],
+    "dynamic_range_source": "none",
+    "clears_all": false,
+    "external_readable_ranges": [],
+    "external_writable_ranges": [],
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 31415945
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 100
+      },
+      {
+        "address": 3,
+        "name": "S3",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 25
+      },
+      {
+        "address": 4,
+        "name": "S4",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 0.01
+      },
+      {
+        "address": 5,
+        "name": "S5",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 100
+      },
+      {
+        "address": 6,
+        "name": "S6",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 32
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "magic": 31415945,
+        "abi": 1
+      }
+    ]
+  },
+  "behavior": {
+    "publication_rules": [],
+    "restart": {
+      "mode": "preserved-unless-overwritten",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 31415945,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
+  },
+  "contracts": {
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.31415945.abi1",
+        "base": 0,
+        "magic": 31415945,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      }
+    ],
+    "consumes": []
+  },
+  "extraction": {
+    "mode": "static-v1",
+    "limitations": [
+      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
+      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

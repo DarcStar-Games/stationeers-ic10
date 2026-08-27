@@ -1,0 +1,423 @@
+{
+  "$schema": "../../schemas/script_contract.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "source": "ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10",
+  "source_sha256": "4125ed9b63787f6b4148844b515d3657a917671dd78f530c20e24db7eadc7e0a",
+  "identity": {
+    "service_id": "ic10.script.sdb.silo.item.endpoint",
+    "implementation_revision": "1.0",
+    "deployment_family": "item-storage-sdb",
+    "deployment_class": "conditional-resident",
+    "layer": "Item storage",
+    "purpose": "Publishes a dedicated SDB Silo as conservative lower-bound ITEM availability/capacity without pretending stack count is exact quantity."
+  },
+  "device_ports": [
+    {
+      "port": "d0",
+      "role": "d0",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [
+          "Error",
+          "ExportCount",
+          "ImportCount",
+          "Power",
+          "Quantity",
+          "ReferenceId"
+        ],
+        "writes": [
+          "Lock"
+        ],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": []
+      },
+      "target": {
+        "kind": "physical-device",
+        "verification": "device-properties",
+        "assumptions": {
+          "properties_read": [
+            "Error",
+            "ExportCount",
+            "ImportCount",
+            "Power",
+            "Quantity",
+            "ReferenceId"
+          ],
+          "properties_written": [
+            "Lock"
+          ],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
+    },
+    {
+      "port": "d1",
+      "role": "d1",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [
+          "ReferenceId"
+        ],
+        "writes": [],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [
+          0,
+          5,
+          8,
+          9,
+          13
+        ],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 31415963
+          },
+          {
+            "address": 8,
+            "equals": 2
+          }
+        ]
+      },
+      "target": {
+        "kind": "stack-interface",
+        "verification": "access-only",
+        "interface_id": "ic10.interface.access.fa334cd122f66175",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.fa334cd122f66175",
+        "provider_resolution": "deployment-supplied",
+        "assumptions": {
+          "properties_read": [
+            "ReferenceId"
+          ],
+          "properties_written": [],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
+    }
+  ],
+  "network_dependencies": [],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [
+      11,
+      20,
+      21,
+      36,
+      37
+    ],
+    "literal_writes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      35,
+      38,
+      39,
+      40
+    ],
+    "dynamic_read": false,
+    "dynamic_write": false,
+    "dynamic_read_ranges": [],
+    "dynamic_write_ranges": [],
+    "dynamic_range_source": "none",
+    "clears_all": false,
+    "external_readable_ranges": [],
+    "external_writable_ranges": [],
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 31415949
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 2
+      },
+      {
+        "address": 3,
+        "name": "S3",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 4,
+        "name": "S4",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 7
+      },
+      {
+        "address": 5,
+        "name": "S5",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 6,
+        "name": "S6",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 8,
+        "name": "S8",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 9,
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 10,
+        "name": "S10",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 11,
+        "name": "S11",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 12,
+        "name": "S12",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 2
+      },
+      {
+        "address": 13,
+        "name": "S13",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 24
+      },
+      {
+        "address": 14,
+        "name": "S14",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 20,
+        "name": "S20",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 21,
+        "name": "S21",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 35,
+        "name": "S35",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": "HASH(\"StorageAccess.SDB\")"
+      },
+      {
+        "address": 36,
+        "name": "S36",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 37,
+        "name": "S37",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 38,
+        "name": "S38",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": -1
+      },
+      {
+        "address": 39,
+        "name": "S39",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 0
+      },
+      {
+        "address": 40,
+        "name": "S40",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": -1
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "magic": 31415949,
+        "abi": 1
+      }
+    ]
+  },
+  "behavior": {
+    "publication_rules": [],
+    "restart": {
+      "mode": "preserved-unless-overwritten",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 31415949,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
+  },
+  "contracts": {
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.31415949.abi1",
+        "base": 0,
+        "magic": 31415949,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      }
+    ],
+    "consumes": []
+  },
+  "extraction": {
+    "mode": "static-v1",
+    "limitations": [
+      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
+      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

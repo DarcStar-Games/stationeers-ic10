@@ -63,6 +63,7 @@ def main():
     subprocess.run([sys.executable,str(ROOT/'tools'/'generate'/'generate_directory_adapters.py')],cwd=ROOT,check=True)
     subprocess.run([sys.executable,str(ROOT/'tools'/'generate'/'update_user_deployment_inventory.py')],cwd=ROOT,check=True)
     subprocess.run([sys.executable,str(ROOT/'tools'/'generate'/'generate_source_catalog.py')],cwd=ROOT,check=True)
+    subprocess.run([sys.executable,str(ROOT/'tools'/'generate'/'generate_script_contracts.py')],cwd=ROOT,check=True)
     subprocess.run([sys.executable,str(ROOT/'tools'/'run_validation.py'),'--resume'],cwd=ROOT,check=True)
     # No source/generated-doc mutation is allowed after validation except release evidence/manifests.
     write_deployment_baseline(); count=write_archive_manifest({out}); verify_manifest(ROOT/'ARCHIVE_MANIFEST.sha256')

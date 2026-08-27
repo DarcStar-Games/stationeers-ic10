@@ -2,6 +2,8 @@
 
 Most controller/configuration services remain on **ABI 1**, while hardened transaction services use higher service-local ABIs where their contracts require them. Live directories now share canonical Generic Snapshot Directory ABI1 or Generic Registry Directory ABI3 and are distinguished by `DirectorySchemaId`/version rather than domain-specific magic values. The unified Resource Profile Catalog/View owns phase/material metadata; PressureDomain Inventory and the safety-critical controller telemetry families use ABI2 for coherent publication; the Pressure Reservation Allocator uses ABI3 for quote/exact-commit operation. Consumers require the exact ABI of each dependency; implementation filenames are revisions, not ABI numbers.
 
+`contracts/index.json`, `contracts/protocol_registry.json`, and `contracts/protocols/*.protocol.json` provide the generated machine-readable inventory and typed access schemas behind this human reference. See `docs/SCRIPT_CONTRACTS.md` for regeneration, authority, and compatibility rules.
+
 ## Magic values
 
 | Service | Magic | Version cell | ABI |

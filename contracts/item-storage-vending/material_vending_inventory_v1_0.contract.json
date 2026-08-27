@@ -1,0 +1,472 @@
+{
+  "$schema": "../../schemas/script_contract.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "source": "ic10/item-storage-vending/material_vending_inventory_v1_0.ic10",
+  "source_sha256": "d7d5c4684b0ad447331b8ae1b003f4a36619e8434dd4efba0738a70019fa0349",
+  "identity": {
+    "service_id": "ic10.script.material.vending.inventory",
+    "implementation_revision": "1.0",
+    "deployment_family": "item-storage-vending",
+    "deployment_class": "conditional-resident",
+    "layer": "Material inventory",
+    "purpose": "Incrementally scans a Vending Machine for one ItemHash and publishes Generic Resource Endpoint ABI1."
+  },
+  "device_ports": [
+    {
+      "port": "d0",
+      "role": "d0",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [
+          "Error",
+          "ExportCount",
+          "ImportCount",
+          "Power",
+          "ReferenceId"
+        ],
+        "writes": [],
+        "slot_reads": [
+          {
+            "slot": "dynamic",
+            "property": "MaxQuantity"
+          },
+          {
+            "slot": "dynamic",
+            "property": "OccupantHash"
+          },
+          {
+            "slot": "dynamic",
+            "property": "Occupied"
+          },
+          {
+            "slot": "dynamic",
+            "property": "Quantity"
+          }
+        ],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": []
+      },
+      "target": {
+        "kind": "physical-device",
+        "verification": "device-properties",
+        "assumptions": {
+          "properties_read": [
+            "Error",
+            "ExportCount",
+            "ImportCount",
+            "Power",
+            "ReferenceId"
+          ],
+          "properties_written": [],
+          "slot_properties_read": [
+            {
+              "slot": "dynamic",
+              "property": "MaxQuantity"
+            },
+            {
+              "slot": "dynamic",
+              "property": "OccupantHash"
+            },
+            {
+              "slot": "dynamic",
+              "property": "Occupied"
+            },
+            {
+              "slot": "dynamic",
+              "property": "Quantity"
+            }
+          ],
+          "slot_properties_written": []
+        }
+      }
+    },
+    {
+      "port": "d1",
+      "role": "d1",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [
+          "ReferenceId"
+        ],
+        "writes": [],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [
+          0,
+          1,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11,
+          13
+        ],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 31415963
+          },
+          {
+            "address": 1,
+            "equals": 1
+          },
+          {
+            "address": 8,
+            "equals": 2
+          },
+          {
+            "address": 10,
+            "equals": 2
+          },
+          {
+            "address": 11,
+            "equals": 2
+          }
+        ]
+      },
+      "target": {
+        "kind": "stack-protocol",
+        "verification": "literal-header",
+        "protocol_ids": [
+          "ic10.stack.31415963.abi1"
+        ]
+      }
+    }
+  ],
+  "network_dependencies": [],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [
+      11,
+      36,
+      37
+    ],
+    "literal_writes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      35,
+      38,
+      39,
+      40
+    ],
+    "dynamic_read": false,
+    "dynamic_write": false,
+    "dynamic_read_ranges": [],
+    "dynamic_write_ranges": [],
+    "dynamic_range_source": "none",
+    "clears_all": false,
+    "external_readable_ranges": [],
+    "external_writable_ranges": [],
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 31415949
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "enum",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "const": 2,
+        "description": "ResourceClass ITEM"
+      },
+      {
+        "address": 3,
+        "name": "S3",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 4,
+        "name": "S4",
+        "value_type": "number",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "const": 7,
+        "description": "export + import + storage"
+      },
+      {
+        "address": 5,
+        "name": "S5",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 6,
+        "name": "S6",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 7,
+        "name": "S7",
+        "value_type": "number",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "const": 0,
+        "description": "chute throughput unknown here"
+      },
+      {
+        "address": 8,
+        "name": "S8",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 9,
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 10,
+        "name": "S10",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 11,
+        "name": "S11",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 12,
+        "name": "UnitITEMQUANTITY",
+        "value_type": "enum",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "const": 2,
+        "description": "Unit ITEM_QUANTITY",
+        "enum_values": [
+          {
+            "value": 2,
+            "name": "ITEM_QUANTITY"
+          }
+        ]
+      },
+      {
+        "address": 13,
+        "name": "S13",
+        "value_type": "number",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "const": 3,
+        "description": "exact export + exact import"
+      },
+      {
+        "address": 14,
+        "name": "S14",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 35,
+        "name": "S35",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": "HASH(\"StorageAccess.Vending\")"
+      },
+      {
+        "address": 36,
+        "name": "S36",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 37,
+        "name": "S37",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 38,
+        "name": "S38",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 39,
+        "name": "S39",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 40,
+        "name": "S40",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "magic": 31415949,
+        "abi": 1
+      }
+    ]
+  },
+  "behavior": {
+    "publication_rules": [],
+    "restart": {
+      "mode": "preserved-unless-overwritten",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 31415949,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
+  },
+  "contracts": {
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.31415949.abi1",
+        "base": 0,
+        "magic": 31415949,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      }
+    ],
+    "consumes": [
+      {
+        "port": "d1",
+        "accepted": [
+          {
+            "protocol_id": "ic10.stack.31415963.abi1",
+            "header_base": 0,
+            "magic": 31415963,
+            "abi": 1,
+            "publication_requirements": []
+          }
+        ],
+        "source": "authoritative-literal-header-check"
+      }
+    ]
+  },
+  "extraction": {
+    "mode": "static-v1",
+    "limitations": [
+      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
+      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

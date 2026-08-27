@@ -1,0 +1,152 @@
+{
+  "$schema": "../../schemas/script_contract.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "source": "ic10/controller-pi/pi_config_policy_v1_0.ic10",
+  "source_sha256": "1531b8990c76dda5f9fa470054ec92d24bbed1e73e6e0c5d6be1b9fc87d2cb4a",
+  "identity": {
+    "service_id": "ic10.script.pi.config.policy",
+    "implementation_revision": "1.0",
+    "deployment_family": "controller-pi",
+    "deployment_class": "resident",
+    "layer": "Family semantics",
+    "purpose": "PI defaults, masks, validation, normalization, signature."
+  },
+  "device_ports": [
+    {
+      "port": "d0",
+      "role": "Host",
+      "aliases": [
+        "Host"
+      ],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [],
+        "writes": [],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [
+          0,
+          1,
+          6,
+          7,
+          13,
+          20
+        ],
+        "literal_writes": [
+          2,
+          4,
+          10,
+          12,
+          13,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          33,
+          34,
+          36,
+          37,
+          38,
+          41,
+          43,
+          44,
+          45,
+          142,
+          143
+        ],
+        "dynamic_read": true,
+        "dynamic_write": true,
+        "dynamic_read_ranges": [
+          {
+            "start": 128,
+            "end": 141
+          }
+        ],
+        "dynamic_write_ranges": [
+          {
+            "start": 32,
+            "end": 47
+          },
+          {
+            "start": 128,
+            "end": 141
+          }
+        ],
+        "dynamic_read_range_source": "source-derived",
+        "dynamic_write_range_source": "source-derived",
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 31415928
+          },
+          {
+            "address": 1,
+            "equals": 1
+          }
+        ]
+      },
+      "target": {
+        "kind": "stack-protocol",
+        "verification": "literal-header",
+        "protocol_ids": [
+          "ic10.stack.31415928.abi1"
+        ]
+      }
+    }
+  ],
+  "network_dependencies": [],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [],
+    "literal_writes": [],
+    "dynamic_read": false,
+    "dynamic_write": false,
+    "dynamic_read_ranges": [],
+    "dynamic_write_ranges": [],
+    "dynamic_range_source": "none",
+    "clears_all": false,
+    "external_readable_ranges": [],
+    "external_writable_ranges": [],
+    "fields": [],
+    "headers": []
+  },
+  "behavior": {
+    "publication_rules": [],
+    "restart": {
+      "mode": "preserved-unless-overwritten",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": []
+  },
+  "contracts": {
+    "provides": [],
+    "consumes": [
+      {
+        "port": "d0",
+        "accepted": [
+          {
+            "protocol_id": "ic10.stack.31415928.abi1",
+            "header_base": 0,
+            "magic": 31415928,
+            "abi": 1,
+            "publication_requirements": []
+          }
+        ],
+        "source": "authoritative-literal-header-check"
+      }
+    ]
+  },
+  "extraction": {
+    "mode": "static-v1",
+    "limitations": [
+      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
+      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

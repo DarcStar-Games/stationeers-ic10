@@ -1,5 +1,5 @@
 {
-  "fingerprint": "0131540c0cb0e20efb46a98c86c35614d889a549e920cc871baebb6e88d23f18",
+  "fingerprint": "3045842c77257b14592e8a50c8baa27af195bd3c578e18ff406198400f0187ff",
   "results": {
     "tests/test_async_request.py": 0,
     "tests/test_banked_transaction.py": 0,
@@ -33,6 +33,7 @@
     "tests/test_resource_generalization.py": 0,
     "tests/test_resource_profiles.py": 0,
     "tests/test_resource_transforms.py": 0,
+    "tests/test_script_contracts.py": 0,
     "tests/test_sequencer_protocol.py": 0,
     "tests/test_shared_input_protocol.py": 0,
     "validation/validators/validate_abi_contracts.py": 0,
@@ -55,6 +56,7 @@
     "validation/validators/validate_power_management_contracts.py": 0,
     "validation/validators/validate_process_utility_contracts.py": 0,
     "validation/validators/validate_release_tooling.py": 0,
+    "validation/validators/validate_script_contracts.py": 0,
     "validation/validators/validate_script_headers.py": 0,
     "validation/validators/validate_source_catalog.py": 0,
     "validation/validators/validate_user_deployment_guide.py": 0
@@ -79,6 +81,7 @@
     "validation/validators/validate_generated_directory_adapters.py",
     "validation/validators/validate_script_headers.py",
     "validation/validators/validate_source_catalog.py",
+    "validation/validators/validate_script_contracts.py",
     "validation/validators/validate_user_deployment_guide.py",
     "validation/validators/validate_item_storage_contracts.py",
     "validation/validators/validate_process_utility_contracts.py",
@@ -95,6 +98,7 @@
     "tests/test_manufacturing_execution.py",
     "tests/test_manufacturing_scheduler.py",
     "tests/test_material_grid_protocol.py",
+    "tests/test_script_contracts.py",
     "tests/test_material_transform_protocol.py",
     "tests/test_persistence_protocol.py",
     "tests/test_phase_pressure_protocol.py",

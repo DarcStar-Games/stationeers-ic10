@@ -1,0 +1,256 @@
+{
+  "$schema": "../../schemas/script_contract.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "source": "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10",
+  "source_sha256": "6bc70a98229d35831bde0c925b19c02c2c257ab41eecfb483a376fce872b3336",
+  "identity": {
+    "service_id": "ic10.script.power.dispatch.plan.store",
+    "implementation_revision": "1.0",
+    "deployment_family": "power-grid",
+    "deployment_class": "conditional-resident",
+    "layer": "Power planning",
+    "purpose": "Owns one coherent bounded eight-flow power dispatch plan with odd/even publication fencing."
+  },
+  "device_ports": [],
+  "network_dependencies": [],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [
+      0,
+      2,
+      3,
+      10,
+      11,
+      12,
+      14,
+      15,
+      24
+    ],
+    "literal_writes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      11,
+      13,
+      24,
+      25,
+      26
+    ],
+    "dynamic_read": true,
+    "dynamic_write": true,
+    "dynamic_read_ranges": [
+      {
+        "start": 0,
+        "end": 511
+      }
+    ],
+    "dynamic_write_ranges": [
+      {
+        "start": 0,
+        "end": 511
+      }
+    ],
+    "dynamic_range_source": "conservative-full-stack",
+    "clears_all": true,
+    "external_readable_ranges": [],
+    "external_writable_ranges": [],
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 3,
+        "name": "S3",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 4,
+        "name": "S4",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 5,
+        "name": "S5",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 6,
+        "name": "S6",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 10,
+        "name": "S10",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 11,
+        "name": "S11",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 12,
+        "name": "S12",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 13,
+        "name": "S13",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 14,
+        "name": "S14",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 15,
+        "name": "S15",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 24,
+        "name": "S24",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 25,
+        "name": "S25",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 26,
+        "name": "S26",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "magic": 31416028,
+        "abi": 1
+      }
+    ]
+  },
+  "behavior": {
+    "publication_rules": [
+      {
+        "kind": "seqlock",
+        "address": 2,
+        "description": "Plan publication sequence is odd while mutating and even when stable.",
+        "source": "source-fingerprinted-paired-sequence"
+      }
+    ],
+    "restart": {
+      "mode": "conditional-reset",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": []
+  },
+  "contracts": {
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.31416028.abi1",
+        "base": 0,
+        "magic": 31416028,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      }
+    ],
+    "consumes": []
+  },
+  "extraction": {
+    "mode": "static-v1",
+    "limitations": [
+      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
+      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

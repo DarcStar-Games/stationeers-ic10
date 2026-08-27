@@ -1,0 +1,339 @@
+{
+  "$schema": "../../schemas/script_contract.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "source": "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10",
+  "source_sha256": "911377b66a22c665a292104a2232c97148bf176ee459397be4dfb30425c4a12d",
+  "identity": {
+    "service_id": "ic10.script.generic.catalog.store",
+    "implementation_revision": "3.0",
+    "deployment_family": "catalog-control-plane",
+    "deployment_class": "conditional-resident",
+    "layer": "Catalog storage",
+    "purpose": "Generic Store ABI5 node with item directory + payload heap; imports runtime-routed relocatable items."
+  },
+  "device_ports": [],
+  "network_dependencies": [
+    {
+      "transport": "device-index",
+      "reference": "db:0",
+      "literal_reads": [],
+      "literal_writes": [],
+      "dynamic_read": true,
+      "dynamic_write": false,
+      "constraints": [],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "r1",
+      "literal_reads": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        12,
+        13,
+        15
+      ],
+      "literal_writes": [
+        13,
+        15
+      ],
+      "dynamic_read": true,
+      "dynamic_write": false,
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31415969
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 4
+        },
+        {
+          "address": 12,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "accepted": []
+    }
+  ],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      9,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      22,
+      23,
+      29
+    ],
+    "literal_writes": [
+      0,
+      1,
+      9,
+      10,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      22,
+      27,
+      28,
+      29
+    ],
+    "dynamic_read": false,
+    "dynamic_write": true,
+    "dynamic_read_ranges": [],
+    "dynamic_write_ranges": [
+      {
+        "start": 0,
+        "end": 511
+      }
+    ],
+    "dynamic_range_source": "conservative-full-stack",
+    "clears_all": true,
+    "external_readable_ranges": [
+      {
+        "start": 0,
+        "end": 511
+      }
+    ],
+    "external_writable_ranges": [],
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 3,
+        "name": "S3",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 4,
+        "name": "S4",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 9,
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 10,
+        "name": "S10",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 15,
+        "name": "S15",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 16,
+        "name": "S16",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 17,
+        "name": "S17",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 18,
+        "name": "S18",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 19,
+        "name": "S19",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 20,
+        "name": "S20",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 22,
+        "name": "S22",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 23,
+        "name": "S23",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 27,
+        "name": "S27",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 28,
+        "name": "S28",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 29,
+        "name": "S29",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "magic": 31415968,
+        "abi": 5
+      }
+    ]
+  },
+  "behavior": {
+    "publication_rules": [
+      {
+        "kind": "seqlock",
+        "address": 17,
+        "description": "Store data sequence is odd while mutating and even when stable.",
+        "source": "source-fingerprinted-paired-sequence"
+      }
+    ],
+    "restart": {
+      "mode": "conditional-reset",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": []
+  },
+  "contracts": {
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.31415968.abi5",
+        "base": 0,
+        "magic": 31415968,
+        "abi": 5,
+        "source": "literal-own-stack-header"
+      }
+    ],
+    "consumes": []
+  },
+  "extraction": {
+    "mode": "static-v1",
+    "limitations": [
+      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
+      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

@@ -1,0 +1,406 @@
+{
+  "$schema": "../../schemas/script_contract.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "source": "ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10",
+  "source_sha256": "a979a8c31664ef3fe993b17775266898019b2c1fd7dee86d31e9fe069f169e4e",
+  "identity": {
+    "service_id": "ic10.script.larre.storage.reserved.move.client",
+    "implementation_revision": "1.0",
+    "deployment_family": "item-storage-larre",
+    "deployment_class": "conditional-resident",
+    "layer": "Item storage movement",
+    "purpose": "Validates paired source/destination reservations and drives serialized LArRE outbound, inbound, or held-item recovery movement."
+  },
+  "device_ports": [
+    {
+      "port": "d0",
+      "role": "d0",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [
+          "ReferenceId"
+        ],
+        "writes": [],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [
+          20,
+          32,
+          33,
+          34,
+          35
+        ],
+        "literal_writes": [
+          24,
+          25,
+          26,
+          27,
+          28,
+          30,
+          31
+        ],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 35,
+            "equals": "HASH(\"StorageAccess.LArRE\")"
+          }
+        ]
+      },
+      "target": {
+        "kind": "stack-interface",
+        "verification": "access-only",
+        "interface_id": "ic10.interface.access.4cacbec7b5d5acaa",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.4cacbec7b5d5acaa",
+        "provider_resolution": "deployment-supplied",
+        "assumptions": {
+          "properties_read": [
+            "ReferenceId"
+          ],
+          "properties_written": [],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
+    },
+    {
+      "port": "d1",
+      "role": "d1",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [],
+        "writes": [],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [
+          2,
+          4,
+          12,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          25,
+          26,
+          27
+        ],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 16,
+            "equals": 1
+          },
+          {
+            "address": 16,
+            "equals": 2
+          }
+        ]
+      },
+      "target": {
+        "kind": "stack-interface",
+        "verification": "access-only",
+        "interface_id": "ic10.interface.access.14d0a5fa932d06a1",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.14d0a5fa932d06a1",
+        "provider_resolution": "deployment-supplied",
+        "assumptions": {
+          "properties_read": [],
+          "properties_written": [],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
+    },
+    {
+      "port": "d2",
+      "role": "d2",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [],
+        "writes": [],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [
+          4,
+          12,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 16,
+            "equals": 1
+          },
+          {
+            "address": 16,
+            "equals": 2
+          }
+        ]
+      },
+      "target": {
+        "kind": "stack-interface",
+        "verification": "access-only",
+        "interface_id": "ic10.interface.access.c4e8cc76f2dd730f",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.c4e8cc76f2dd730f",
+        "provider_resolution": "deployment-supplied",
+        "assumptions": {
+          "properties_read": [],
+          "properties_written": [],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
+    }
+  ],
+  "network_dependencies": [],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [
+      2,
+      3,
+      4,
+      5,
+      8,
+      11,
+      12,
+      13,
+      15,
+      16
+    ],
+    "literal_writes": [
+      0,
+      1,
+      6,
+      7,
+      8,
+      11,
+      12,
+      13
+    ],
+    "dynamic_read": false,
+    "dynamic_write": false,
+    "dynamic_read_ranges": [],
+    "dynamic_write_ranges": [],
+    "dynamic_range_source": "none",
+    "clears_all": false,
+    "external_readable_ranges": [],
+    "external_writable_ranges": [],
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 31415991
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 3,
+        "name": "S3",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 4,
+        "name": "S4",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 5,
+        "name": "S5",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 6,
+        "name": "S6",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 7,
+        "name": "S7",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 8,
+        "name": "S8",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 11,
+        "name": "S11",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 12,
+        "name": "S12",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 13,
+        "name": "S13",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 15,
+        "name": "S15",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 16,
+        "name": "S16",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "magic": 31415991,
+        "abi": 1
+      }
+    ]
+  },
+  "behavior": {
+    "publication_rules": [],
+    "restart": {
+      "mode": "preserved-unless-overwritten",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 31415991,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
+  },
+  "contracts": {
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.31415991.abi1",
+        "base": 0,
+        "magic": 31415991,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      }
+    ],
+    "consumes": []
+  },
+  "extraction": {
+    "mode": "static-v1",
+    "limitations": [
+      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
+      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

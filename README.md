@@ -32,7 +32,7 @@ If you are new to the framework, read the documents in this order:
 22. **docs/RESOURCE_GRID_CORE.md**, **docs/MATERIAL_GRID_FOUNDATION.md**, **docs/MATERIAL_TRANSFER_SYSTEM.md**, and **docs/ORE_PROCESSING_TRANSFORMS.md** — resource/material execution model.
 23. **docs/RECIPE_CATALOG.md** and **docs/PRINTER_DIRECTORY.md** — printer recipe/discovery metadata.
 24. **docs/CONFIG_INPUTS.md**, **docs/CONFIG_BLOCKS.md**, **docs/CONFIG_POLICY.md**, and **docs/PERSISTENCE_STANDARD.md** — configuration system.
-25. **docs/DIAGNOSTIC_INPUTS.md** and **docs/ABI_REFERENCE.md** — diagnostics and exact wiring contracts.
+25. **docs/SCRIPT_CONTRACTS.md**, **docs/DIAGNOSTIC_INPUTS.md**, and **docs/ABI_REFERENCE.md** — machine-readable contracts, diagnostics, and exact wiring contracts.
 26. **docs/SEQUENCER_CONTROLLER.md**, **docs/PHASE_PRESSURE_CONTROLLER.md**, **docs/PHASE_MEDIUM_PROFILE.md**, **docs/PRESSURE_DOMAIN_CONTROLLER.md**, **docs/PRESSURE_INVENTORY_MODEL.md**, **docs/PRESSURE_GRID_CONTROLLER.md**, **docs/PRESSURE_RESERVATION_MODEL.md**, **docs/PRESSURE_MULTI_HOP_ROUTING.md**, and **docs/PRESSURE_ROUTE_COST_MODEL.md** — worked controller/resource specializations.
 27. **docs/CORRECTNESS_HARDENING.md**, **docs/ADDING_CONTROLLERS.md**, **docs/SCRIPT_INDEX.md**, **docs/SOURCES.md**, and **docs/TEST_CONTROLLER.md** — extension, audit, and provenance material.
 
@@ -46,6 +46,8 @@ The repository uses **semantic paths**, not historical source ordinals. Producti
 
 ```text
 ic10/<deployment-family>/     versioned production IC10 programs
+contracts/                    generated per-script contracts, registry, and protocol definitions
+schemas/                      JSON Schema definitions for generated contract documents
 docs/                         engineering/reference documentation
 framework/                    executable protocol reference models
 data/                         JSON sources of truth: schemas, profiles, manifests
@@ -58,7 +60,7 @@ tools/                        command-line entrypoints
 tools/generate/               code generators driven by data/
 ```
 
-Do not infer execution order, ABI identity, or deployment order from a filename. Use the semantic path, version suffix, `data/source_manifest.json`, `docs/SCRIPT_INDEX.md`, and `USER_DEPLOYMENT_GUIDE.md`.
+Do not infer execution order, ABI identity, or deployment order from a filename. Use the semantic path, version suffix, `data/source_manifest.json`, `contracts/index.json`, `docs/SCRIPT_INDEX.md`, and `USER_DEPLOYMENT_GUIDE.md`.
 
 ## Mental model
 

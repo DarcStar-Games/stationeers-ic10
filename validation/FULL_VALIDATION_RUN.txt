@@ -17,6 +17,7 @@ PASS validation/validators/validate_release_tooling.py
 PASS validation/validators/validate_generated_directory_adapters.py
 PASS validation/validators/validate_script_headers.py
 PASS validation/validators/validate_source_catalog.py
+PASS validation/validators/validate_script_contracts.py
 PASS validation/validators/validate_user_deployment_guide.py
 PASS validation/validators/validate_item_storage_contracts.py
 PASS validation/validators/validate_process_utility_contracts.py
@@ -33,6 +34,7 @@ PASS tests/test_job_abi.py
 PASS tests/test_manufacturing_execution.py
 PASS tests/test_manufacturing_scheduler.py
 PASS tests/test_material_grid_protocol.py
+PASS tests/test_script_contracts.py
 PASS tests/test_material_transform_protocol.py
 PASS tests/test_persistence_protocol.py
 PASS tests/test_phase_pressure_protocol.py
@@ -55,4 +57,4 @@ PASS tests/test_fault_injection.py
 PASS tests/test_process_utility.py
 PASS tests/test_live_commissioning.py
 PASS tests/test_game_export.py
-FULL_SUITE: PASS (57/57 scripts)
+FULL_SUITE: PASS (59/59 scripts)

@@ -19,7 +19,8 @@ for t,label in ((p,'pressure adapter'),(m,'material inventory')):
 # Resource reservation depends only on Generic Resource Endpoint, not pressure magic.
 r=(R/'ic10/resource-grid-core/resource_reservation_v1_0.ic10').read_text()
 need(r,'bne r0 31415949 Bad','generic reservation')
-need(r,'poke 12 0 # semantic mirror generation LAST','generic reservation')
+need(r,'poke 12 0 # semantic mirror generation initialization','generic reservation')
+need(r,'poke 12 r0 # semantic mirror generation LAST','generic reservation')
 if '31415935' in r or 'Pressure' in r.split('\n',1)[1]: fails.append('generic reservation leaked pressure-specific dependency')
 # Generic Resource Link view binds pressure topology to the corresponding generic endpoint providers.
 l=(R/'ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10').read_text()

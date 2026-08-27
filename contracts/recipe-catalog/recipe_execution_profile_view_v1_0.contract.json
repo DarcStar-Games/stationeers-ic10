@@ -1,0 +1,278 @@
+{
+  "$schema": "../../schemas/script_contract.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "source": "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10",
+  "source_sha256": "00a35d98cb50505c7b6fc2c479a002251bda0cce061d8c4193ce43ed494c2b02",
+  "identity": {
+    "service_id": "ic10.script.recipe.execution.profile.view",
+    "implementation_revision": "1.0",
+    "deployment_family": "recipe-catalog",
+    "deployment_class": "conditional-resident",
+    "layer": "Manufacturing metadata",
+    "purpose": "Resolves exact RecipeHash execution metadata from Recipe schema-v3 stores, including bounded reagent requirements and stale-response echo."
+  },
+  "device_ports": [
+    {
+      "port": "d0",
+      "role": "d0",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [
+          "ReferenceId"
+        ],
+        "writes": [],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [
+          11
+        ],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": []
+      },
+      "target": {
+        "kind": "stack-interface",
+        "verification": "access-only",
+        "interface_id": "ic10.interface.access.6b7053b889cf8ef2",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.6b7053b889cf8ef2",
+        "provider_resolution": "deployment-supplied",
+        "assumptions": {
+          "properties_read": [
+            "ReferenceId"
+          ],
+          "properties_written": [],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
+    }
+  ],
+  "network_dependencies": [
+    {
+      "transport": "reference-id",
+      "reference": "r12",
+      "literal_reads": [
+        0,
+        6,
+        7
+      ],
+      "literal_writes": [],
+      "dynamic_read": false,
+      "dynamic_write": false,
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31415970
+        }
+      ],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "r2",
+      "literal_reads": [
+        0,
+        1,
+        2,
+        3,
+        6,
+        7,
+        9,
+        17
+      ],
+      "literal_writes": [],
+      "dynamic_read": true,
+      "dynamic_write": false,
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31415968
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 5
+        },
+        {
+          "address": 2,
+          "operator": "equals",
+          "value": "HASH(\"CatalogSchema.Recipe\")"
+        },
+        {
+          "address": 3,
+          "operator": "equals",
+          "value": 3
+        }
+      ],
+      "accepted": []
+    }
+  ],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [
+      2
+    ],
+    "literal_writes": [
+      0,
+      1,
+      3,
+      4,
+      5,
+      6,
+      7,
+      40,
+      41
+    ],
+    "dynamic_read": false,
+    "dynamic_write": true,
+    "dynamic_read_ranges": [],
+    "dynamic_write_ranges": [
+      {
+        "start": 0,
+        "end": 511
+      }
+    ],
+    "dynamic_range_source": "conservative-full-stack",
+    "clears_all": false,
+    "external_readable_ranges": [],
+    "external_writable_ranges": [],
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 3,
+        "name": "S3",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 4,
+        "name": "S4",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 5,
+        "name": "S5",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 6,
+        "name": "S6",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 7,
+        "name": "S7",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 40,
+        "name": "S40",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 41,
+        "name": "S41",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "magic": 31415985,
+        "abi": 1
+      }
+    ]
+  },
+  "behavior": {
+    "publication_rules": [],
+    "restart": {
+      "mode": "preserved-unless-overwritten",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": []
+  },
+  "contracts": {
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.31415985.abi1",
+        "base": 0,
+        "magic": 31415985,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      }
+    ],
+    "consumes": []
+  },
+  "extraction": {
+    "mode": "static-v1",
+    "limitations": [
+      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
+      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

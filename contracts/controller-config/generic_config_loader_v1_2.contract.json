@@ -1,0 +1,222 @@
+{
+  "$schema": "../../schemas/script_contract.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "source": "ic10/controller-config/generic_config_loader_v1_2.ic10",
+  "source_sha256": "35fb7810f66659d59ea814ea345e0605ae8d8f6e9b58418c82efedc0927267a9",
+  "identity": {
+    "service_id": "ic10.script.generic.config.loader",
+    "implementation_revision": "1.2",
+    "deployment_family": "controller-config",
+    "deployment_class": "commissioning",
+    "layer": "Configuration UI",
+    "purpose": "Loads selected Host/Profile state and builds active-ordinal mapping."
+  },
+  "device_ports": [],
+  "network_dependencies": [
+    {
+      "transport": "reference-id",
+      "reference": "controller",
+      "literal_reads": [
+        96,
+        97,
+        99,
+        116
+      ],
+      "literal_writes": [],
+      "dynamic_read": false,
+      "dynamic_write": false,
+      "constraints": [
+        {
+          "address": 96,
+          "operator": "equals",
+          "value": 27182818
+        },
+        {
+          "address": 97,
+          "operator": "maximum",
+          "value": 2
+        },
+        {
+          "address": 97,
+          "operator": "minimum",
+          "value": 1
+        }
+      ],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "editor",
+      "literal_reads": [
+        0,
+        1,
+        11,
+        12,
+        15,
+        16
+      ],
+      "literal_writes": [
+        5,
+        10,
+        11,
+        15,
+        16,
+        17,
+        18,
+        19,
+        27,
+        28,
+        29,
+        30
+      ],
+      "dynamic_read": false,
+      "dynamic_write": true,
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 22360680
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "host",
+      "literal_reads": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+      ],
+      "literal_writes": [],
+      "dynamic_read": true,
+      "dynamic_write": false,
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31415928
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 1
+        },
+        {
+          "address": 10,
+          "operator": "maximum",
+          "value": 4
+        },
+        {
+          "address": 10,
+          "operator": "minimum",
+          "value": 1
+        }
+      ],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "r8",
+      "literal_reads": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        11
+      ],
+      "literal_writes": [],
+      "dynamic_read": false,
+      "dynamic_write": false,
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31415929
+        },
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31415930
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "accepted": []
+    }
+  ],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [
+      2,
+      3
+    ],
+    "literal_writes": [],
+    "dynamic_read": false,
+    "dynamic_write": false,
+    "dynamic_read_ranges": [],
+    "dynamic_write_ranges": [],
+    "dynamic_range_source": "none",
+    "clears_all": false,
+    "external_readable_ranges": [],
+    "external_writable_ranges": [],
+    "fields": [
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 3,
+        "name": "S3",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      }
+    ],
+    "headers": []
+  },
+  "behavior": {
+    "publication_rules": [],
+    "restart": {
+      "mode": "preserved-unless-overwritten",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": []
+  },
+  "contracts": {
+    "provides": [],
+    "consumes": []
+  },
+  "extraction": {
+    "mode": "static-v1",
+    "limitations": [
+      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
+      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

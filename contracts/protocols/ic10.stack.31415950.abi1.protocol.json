@@ -1,0 +1,592 @@
+{
+  "$schema": "../../schemas/protocol_definition.schema.json",
+  "format": "IC10_PROTOCOL_DEFINITION_V1",
+  "protocol_id": "ic10.stack.31415950.abi1",
+  "name": "Resource Reservation ABI1",
+  "transport": "ic-housing-stack",
+  "magic": 31415950,
+  "abi": 1,
+  "header_bases": [
+    0
+  ],
+  "canonical_refs": [],
+  "provider_interfaces": [
+    {
+      "source": "ic10/resource-grid-core/resource_reservation_v1_0.ic10",
+      "header_base": 0,
+      "readable_ranges": [],
+      "writable_ranges": [],
+      "fields": [
+        {
+          "address": 0,
+          "name": "Header@S0.Magic",
+          "value_type": "hash",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 1,
+          "name": "Header@S0.ABI",
+          "value_type": "integer",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 2,
+          "name": "S2",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 3,
+          "name": "S3",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 4,
+          "name": "S4",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 5,
+          "name": "S5",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 6,
+          "name": "S6",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 7,
+          "name": "S7",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 8,
+          "name": "S8",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 9,
+          "name": "S9",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 10,
+          "name": "S10",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 11,
+          "name": "S11",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 12,
+          "name": "SemanticMirrorGenerationInitialization",
+          "value_type": "integer",
+          "semantic_source": "source",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "description": "semantic mirror generation initialization | semantic mirror generation LAST"
+        },
+        {
+          "address": 13,
+          "name": "BuildEpoch",
+          "value_type": "integer",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "build epoch; allocator-owned"
+        },
+        {
+          "address": 14,
+          "name": "ReservedExport",
+          "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "reserved export",
+          "reserved": true
+        },
+        {
+          "address": 15,
+          "name": "ReservedImport",
+          "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "reserved import",
+          "reserved": true
+        },
+        {
+          "address": 16,
+          "name": "S16",
+          "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "direction lock"
+        },
+        {
+          "address": 17,
+          "name": "OwnerReferenceId",
+          "value_type": "reference-id",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "owner ReferenceId"
+        },
+        {
+          "address": 18,
+          "name": "OwnerEpoch",
+          "value_type": "integer",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "owner epoch"
+        },
+        {
+          "address": 19,
+          "name": "ReservedSemanticMirrorGeneration",
+          "value_type": "integer",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "reserved semantic mirror generation",
+          "reserved": true
+        },
+        {
+          "address": 20,
+          "name": "S20",
+          "value_type": "integer",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "represented Endpoint PublicationGeneration"
+        },
+        {
+          "address": 21,
+          "name": "S21",
+          "value_type": "enum",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "opaque Endpoint AccessKind extension"
+        },
+        {
+          "address": 22,
+          "name": "S22",
+          "value_type": "integer",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "opaque action hint 0 / FirstSourceSlot"
+        },
+        {
+          "address": 23,
+          "name": "S23",
+          "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "opaque action hint 1 / FirstSourceQuantity"
+        },
+        {
+          "address": 24,
+          "name": "S24",
+          "value_type": "integer",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "opaque action hint 2 / FirstEmptySlot"
+        },
+        {
+          "address": 25,
+          "name": "S25",
+          "value_type": "integer",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "committed action source slot"
+        },
+        {
+          "address": 26,
+          "name": "ActionQuantity",
+          "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "committed action quantity"
+        },
+        {
+          "address": 27,
+          "name": "S27",
+          "value_type": "integer",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "committed action destination slot"
+        },
+        {
+          "address": 28,
+          "name": "S28",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 29,
+          "name": "S29",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 30,
+          "name": "S30",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 31,
+          "name": "S31",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        }
+      ],
+      "behavior": {
+        "publication_rules": [
+          {
+            "kind": "commit-last",
+            "address": 12,
+            "description": "semantic mirror generation LAST",
+            "source": "verified-inline-order"
+          }
+        ],
+        "restart": {
+          "mode": "preserved-unless-overwritten",
+          "source": "static-entry-path-analysis"
+        },
+        "invariants": []
+      }
+    }
+  ],
+  "consumer_interfaces": [
+    {
+      "source": "ic10/material-grid/material_resource_link_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        10,
+        12
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "none",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31415950
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 1
+        },
+        {
+          "address": 3,
+          "operator": "equals",
+          "value": 2
+        },
+        {
+          "address": 10,
+          "operator": "equals",
+          "value": 2
+        }
+      ],
+      "publication_requirements": [
+        {
+          "kind": "commit-last",
+          "address": 12
+        }
+      ]
+    },
+    {
+      "source": "ic10/material-grid/material_resource_link_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d1"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        10,
+        12
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "none",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31415950
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 1
+        },
+        {
+          "address": 3,
+          "operator": "equals",
+          "value": 2
+        },
+        {
+          "address": 10,
+          "operator": "equals",
+          "value": 2
+        }
+      ],
+      "publication_requirements": [
+        {
+          "kind": "commit-last",
+          "address": 12
+        }
+      ]
+    },
+    {
+      "source": "ic10/material-transform/material_transform_admission_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d2"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        1,
+        3,
+        4,
+        7,
+        9,
+        10,
+        12
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "none",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31415950
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 1
+        },
+        {
+          "address": 3,
+          "operator": "equals",
+          "value": 2
+        }
+      ],
+      "publication_requirements": [
+        {
+          "kind": "commit-last",
+          "address": 12
+        }
+      ]
+    },
+    {
+      "source": "ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d1"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        12
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "none",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31415950
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 1
+        },
+        {
+          "address": 3,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "publication_requirements": [
+        {
+          "kind": "commit-last",
+          "address": 12
+        }
+      ]
+    },
+    {
+      "source": "ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d2"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        12
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "none",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31415950
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 1
+        },
+        {
+          "address": 3,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "publication_requirements": [
+        {
+          "kind": "commit-last",
+          "address": 12
+        }
+      ]
+    }
+  ]
+}
