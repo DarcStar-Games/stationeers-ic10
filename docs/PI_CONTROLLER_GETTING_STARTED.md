@@ -118,7 +118,28 @@ For this test the existing PI policy supplies these defaults:
    invalid numeric value while its input is unavailable. Reconnect `d0` and
    confirm that normal control resumes.
 
-## 6. Interpret the result
+## 6. Optionally inspect runtime telemetry
+
+If the Stack Cell Monitor from
+`docs/STACK_CELL_MONITOR_GETTING_STARTED.md` is available, connect its `d0` to
+the PI Runtime housing. PI telemetry uses the shared controller region beginning
+at `S96`; it does not publish a service magic at `S0`.
+
+| Address | Expected value | Meaning |
+| ---: | ---: | --- |
+| `96` | `27182818` | Generic Telemetry magic |
+| `97` | `1` | PI telemetry ABI |
+| `98` | `2046` | Available PI channel mask |
+| `100` | current `PI Input.Setting` | Process value |
+| `101` | current `PI Output.Setting` | Actual output |
+| `104` | `0` after recovery | Runtime status |
+| `105` | `0` | Default setpoint |
+| `117` | positive | Loaded Config Host generation |
+
+Change the monitor's address Logic Memory and wait at least one game tick before
+reading the monitor housing or optional value Memory.
+
+## 7. Interpret the result
 
 Passing all four checks confirms:
 

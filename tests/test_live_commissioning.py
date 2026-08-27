@@ -7,7 +7,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from framework.ic10_harness import IC10,Device
 import tools.live_commission as lc
-import sys
+import math,sys
 R=_PROJECT_ROOT
 fails=[]
 # Session lifecycle and required-suite closure.
@@ -40,6 +40,53 @@ if vm.stack.get(69)!=102 or vm.stack.get(71)!=1 or vm.stack.get(72)!=99 or vm.st
 # A nonpositive stack fence fails closed, without preventing a response token.
 stack.stack[10]=0;vm.stack[2]=2;vm.run(2)
 if vm.stack.get(3)!=2 or vm.stack.get(4)!=-2 or vm.stack.get(71)!=-3: fails.append('probe torn/nonpositive generation did not fail closed')
+# Execute the actual stack monitor against an IC housing and optional output Memory.
+target=Device(201,stack={6:1,8:4,9:0},props={
+    'ReferenceId':201,'PrefabHash':'HASH:StructureCircuitHousing'})
+selector=Device(202,props={'ReferenceId':202,'Setting':6})
+output=Device(203,props={'ReferenceId':203,'Setting':0})
+monitor=IC10((R/'ic10/live-commissioning/stack_cell_monitor_v1_0.ic10').read_text(),
+             {'d0':target,'d1':selector,'d2':output},self_ref=2541)
+monitor.stack[6]=math.nan
+monitor.run(2)
+if monitor.stack.get(2)!=1 or monitor.stack.get(3)!=6 or monitor.stack.get(4)!=1:
+    fails.append('stack monitor finite capture mismatch')
+if monitor.stack.get(5)!=201 or output.props.get('Setting')!=1:
+    fails.append('stack monitor target identity/output mirror mismatch')
+if monitor.stack.get(6)!=1:
+    fails.append('stack monitor did not initialize generation on a reused housing')
+target.stack[9]=math.nan;selector.props['Setting']=9;monitor.run(1)
+if monitor.stack.get(2)!=2 or not math.isnan(output.props.get('Setting')):
+    fails.append('stack monitor did not distinguish captured NaN')
+selector.props['Setting']=512;monitor.run(1)
+if monitor.stack.get(2)!=-4 or monitor.stack.get(3)!=512:
+    fails.append('stack monitor accepted an out-of-range address')
+selector.props['Setting']=6.25;monitor.run(1)
+if monitor.stack.get(2)!=-4:
+    fails.append('stack monitor accepted a fractional address')
+target.props['PrefabHash']='HASH:StructureLogicMemory';selector.props['Setting']=6;monitor.run(1)
+if monitor.stack.get(2)!=-2:
+    fails.append('stack monitor accepted a non-IC target')
+# Compact IC housings work without the optional d2 output.
+compact=Device(204,stack={17:42},props={
+    'ReferenceId':204,'PrefabHash':'HASH:StructureCircuitHousingCompact'})
+compact_selector=Device(205,props={'ReferenceId':205,'Setting':17})
+compact_monitor=IC10((R/'ic10/live-commissioning/stack_cell_monitor_v1_0.ic10').read_text(),
+                     {'d0':compact,'d1':compact_selector},self_ref=2542)
+compact_monitor.run(2)
+if compact_monitor.stack.get(2)!=1 or compact_monitor.stack.get(4)!=42:
+    fails.append('stack monitor failed compact housing capture without optional output')
+# Missing required inputs publish their distinct status instead of faulting.
+no_target=IC10((R/'ic10/live-commissioning/stack_cell_monitor_v1_0.ic10').read_text(),
+               {'d1':compact_selector},self_ref=2543)
+no_target.run(2)
+if no_target.stack.get(2)!=-1 or no_target.stack.get(4)!=0:
+    fails.append('stack monitor did not report a missing target with a neutral value')
+no_selector=IC10((R/'ic10/live-commissioning/stack_cell_monitor_v1_0.ic10').read_text(),
+                 {'d0':compact},self_ref=2544)
+no_selector.run(2)
+if no_selector.stack.get(2)!=-3:
+    fails.append('stack monitor did not report a missing selector')
 if fails:
     print('Live commissioning tests: FAIL');[print(' -',x) for x in fails];sys.exit(1)
 print('Live commissioning tests: PASS')
@@ -47,3 +94,4 @@ print(' - release-bound session freshness and append-only rerun history')
 print(' - all required suites can close only through explicit PASS observations')
 print(' - real IC10 probe captures dynamic LogicType + generation-fenced stack values')
 print(' - nonpositive/torn stack generation fails closed')
+print(' - real stack monitor covers reused state, both housing types, optional output, and invalid inputs')

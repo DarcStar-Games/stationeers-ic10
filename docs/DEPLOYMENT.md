@@ -218,7 +218,7 @@ A source being production-capable does not imply it must remain powered. After c
 - Catalog Inspector, Catalog Directory Telemetry/View, Catalog Coordinator Recovery, Item Migration Planner/Worker, and Store Retirement Manager are optional/on-demand unless the operator explicitly wants continuous observability or is performing lifecycle work;
 - `ic10/generic-jobs/generic_job_store_v1_0.ic10` is resident only when the installation accepts/retains Generic Jobs. It is not needed by controller-only deployments that do not use manufacturing/direct-transfer scheduling.
 
-The production source inventory is **171 IC10 programs**; a normal steady-state installation uses only the subset required by its active controller/resource domains. Test-only ControllerTest programs live under `tests/ic10/` and are not counted here.
+The production source inventory is **173 IC10 programs**; a normal steady-state installation uses only the subset required by its active controller/resource domains. Test-only ControllerTest programs live under `tests/ic10/` and are not counted here.
 
 ## Printer Directory / manufacturing discovery
 

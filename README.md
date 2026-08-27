@@ -11,28 +11,30 @@ If you are new to the framework, read the documents in this order:
 1. **README.md** — mental model, major components, and terminology.
 2. **docs/ARCHITECTURE.md** — component ownership and end-to-end data flow.
 3. **docs/PI_CONTROLLER_GETTING_STARTED.md** — smallest creative-mode PI controller bench test using existing scripts.
-4. **docs/COMMISSIONING_QUICKSTART.md** — shortest path to a full PI deployment and diagnostics panel.
-5. **USER_DEPLOYMENT_GUIDE.md** — operator-facing per-family deployment manual covering all production IC10 programs, residency/reclaim rules, health checks, restart behavior, and live proof.
-6. **docs/DEPLOYMENT.md** — full fresh-install sequence and dependency order.
-7. **docs/SHARED_INPUT_SYSTEM.md** — physical commissioning inputs and catalog-backed logical values.
-8. **docs/CATALOG_COORDINATION.md**, **docs/CATALOG_STORAGE.md**, and **docs/CATALOG_SCHEMA.md** — generic catalog control/data plane.
-9. **docs/DIRECTORY_STANDARD.md** — reusable live-directory infrastructure and schemas.
-10. **docs/ASYNC_REQUEST_STANDARD.md** and **docs/BANKED_TRANSACTION_STANDARD.md** — request fencing and durable transaction semantics.
-11. **docs/GENERIC_JOB_ABI.md** — common job record, lifecycle, Job Store geometry, and generation fencing.
-12. **docs/MANUFACTURING_SCHEDULER.md** — TRANSFORM/PRINT queue policy and execution routing.
-13. **docs/ITEM_STORAGE_SYSTEM.md** — Generic ITEM inventory, split reservations, LArRE/direct/SDB storage, and chute handoff.
-14. **docs/DEPENDENCY_PLANNING.md** — bounded dependency expansion, shared future-output claims, cancellation, and Job Store command serialization.
-15. **docs/POWER_MANAGEMENT.md** — POWER/ENERGY profiles, dispatch, reservations, electrical actuation, and finite POWER jobs.
-16. **docs/PROCESS_UTILITY_ORCHESTRATION.md** — cross-domain ProcessCondition, furnace atmosphere preparation, gas mixing, and fuel-backed POWER.
-17. **docs/INTERRUPTION_FAULT_INJECTION.md** — reusable restart campaign and cross-subsystem fault matrix.
-18. **docs/LIVE_COMMISSIONING.md** — Item-12 field-evidence workflow, read-only snapshot probe, and release-bound commissioning sessions.
-19. **ROADMAP.md** and **docs/COMPLETED_MILESTONES.md** — Items 1–11 completion records plus the active Item-12 field milestone.
-20. **docs/RESOURCE_GRID_CORE.md**, **docs/MATERIAL_GRID_FOUNDATION.md**, **docs/MATERIAL_TRANSFER_SYSTEM.md**, and **docs/ORE_PROCESSING_TRANSFORMS.md** — resource/material execution model.
-21. **docs/RECIPE_CATALOG.md** and **docs/PRINTER_DIRECTORY.md** — printer recipe/discovery metadata.
-22. **docs/CONFIG_INPUTS.md**, **docs/CONFIG_BLOCKS.md**, **docs/CONFIG_POLICY.md**, and **docs/PERSISTENCE_STANDARD.md** — configuration system.
-23. **docs/DIAGNOSTIC_INPUTS.md** and **docs/ABI_REFERENCE.md** — diagnostics and exact wiring contracts.
-24. **docs/SEQUENCER_CONTROLLER.md**, **docs/PHASE_PRESSURE_CONTROLLER.md**, **docs/PHASE_MEDIUM_PROFILE.md**, **docs/PRESSURE_DOMAIN_CONTROLLER.md**, **docs/PRESSURE_INVENTORY_MODEL.md**, **docs/PRESSURE_GRID_CONTROLLER.md**, **docs/PRESSURE_RESERVATION_MODEL.md**, **docs/PRESSURE_MULTI_HOP_ROUTING.md**, and **docs/PRESSURE_ROUTE_COST_MODEL.md** — worked controller/resource specializations.
-25. **docs/CORRECTNESS_HARDENING.md**, **docs/ADDING_CONTROLLERS.md**, **docs/SCRIPT_INDEX.md**, **docs/SOURCES.md**, and **docs/TEST_CONTROLLER.md** — extension, audit, and provenance material.
+4. **docs/STACK_CELL_MONITOR_GETTING_STARTED.md** — reusable visible inspection of production IC stack cells.
+5. **docs/CONTROLLER_DIRECTORY_GETTING_STARTED.md** — isolated Controller Directory discovery, publication, removal, and recovery test.
+6. **docs/COMMISSIONING_QUICKSTART.md** — shortest path to a full PI deployment and diagnostics panel.
+7. **USER_DEPLOYMENT_GUIDE.md** — operator-facing per-family deployment manual covering all production IC10 programs, residency/reclaim rules, health checks, restart behavior, and live proof.
+8. **docs/DEPLOYMENT.md** — full fresh-install sequence and dependency order.
+9. **docs/SHARED_INPUT_SYSTEM.md** — physical commissioning inputs and catalog-backed logical values.
+10. **docs/CATALOG_COORDINATION.md**, **docs/CATALOG_STORAGE.md**, and **docs/CATALOG_SCHEMA.md** — generic catalog control/data plane.
+11. **docs/DIRECTORY_STANDARD.md** — reusable live-directory infrastructure and schemas.
+12. **docs/ASYNC_REQUEST_STANDARD.md** and **docs/BANKED_TRANSACTION_STANDARD.md** — request fencing and durable transaction semantics.
+13. **docs/GENERIC_JOB_ABI.md** — common job record, lifecycle, Job Store geometry, and generation fencing.
+14. **docs/MANUFACTURING_SCHEDULER.md** — TRANSFORM/PRINT queue policy and execution routing.
+15. **docs/ITEM_STORAGE_SYSTEM.md** — Generic ITEM inventory, split reservations, LArRE/direct/SDB storage, and chute handoff.
+16. **docs/DEPENDENCY_PLANNING.md** — bounded dependency expansion, shared future-output claims, cancellation, and Job Store command serialization.
+17. **docs/POWER_MANAGEMENT.md** — POWER/ENERGY profiles, dispatch, reservations, electrical actuation, and finite POWER jobs.
+18. **docs/PROCESS_UTILITY_ORCHESTRATION.md** — cross-domain ProcessCondition, furnace atmosphere preparation, gas mixing, and fuel-backed POWER.
+19. **docs/INTERRUPTION_FAULT_INJECTION.md** — reusable restart campaign and cross-subsystem fault matrix.
+20. **docs/LIVE_COMMISSIONING.md** — Item-12 field-evidence workflow, read-only snapshot probe, stack-cell monitor, and release-bound commissioning sessions.
+21. **ROADMAP.md** and **docs/COMPLETED_MILESTONES.md** — Items 1–11 completion records plus the active Item-12 field milestone.
+22. **docs/RESOURCE_GRID_CORE.md**, **docs/MATERIAL_GRID_FOUNDATION.md**, **docs/MATERIAL_TRANSFER_SYSTEM.md**, and **docs/ORE_PROCESSING_TRANSFORMS.md** — resource/material execution model.
+23. **docs/RECIPE_CATALOG.md** and **docs/PRINTER_DIRECTORY.md** — printer recipe/discovery metadata.
+24. **docs/CONFIG_INPUTS.md**, **docs/CONFIG_BLOCKS.md**, **docs/CONFIG_POLICY.md**, and **docs/PERSISTENCE_STANDARD.md** — configuration system.
+25. **docs/DIAGNOSTIC_INPUTS.md** and **docs/ABI_REFERENCE.md** — diagnostics and exact wiring contracts.
+26. **docs/SEQUENCER_CONTROLLER.md**, **docs/PHASE_PRESSURE_CONTROLLER.md**, **docs/PHASE_MEDIUM_PROFILE.md**, **docs/PRESSURE_DOMAIN_CONTROLLER.md**, **docs/PRESSURE_INVENTORY_MODEL.md**, **docs/PRESSURE_GRID_CONTROLLER.md**, **docs/PRESSURE_RESERVATION_MODEL.md**, **docs/PRESSURE_MULTI_HOP_ROUTING.md**, and **docs/PRESSURE_ROUTE_COST_MODEL.md** — worked controller/resource specializations.
+27. **docs/CORRECTNESS_HARDENING.md**, **docs/ADDING_CONTROLLERS.md**, **docs/SCRIPT_INDEX.md**, **docs/SOURCES.md**, and **docs/TEST_CONTROLLER.md** — extension, audit, and provenance material.
 
 `VALIDATION_SUMMARY.txt` summarizes the latest clean release run; per-script machine evidence is generated under `validation/evidence/`. `docs/FRAMEWORK_HARDENING_TESTS.md` lists the live-game cases that still need physical verification; `docs/LIVE_COMMISSIONING.md` defines how those results are bound to a release and recorded without contaminating automated evidence.
 
@@ -126,13 +128,13 @@ This distinction matters: configuration *values* live in a Host instance, while 
 
 ### Deployment classes
 
-The source bundle contains **171 production-capable IC10 programs**, but they are not all resident services. `USER_DEPLOYMENT_GUIDE.md` maps every one to exactly one operational family and deployment class; release validation rejects undocumented programs. Treat them as five deployment classes:
+The source bundle contains **173 production-capable IC10 programs**, but they are not all resident services. `USER_DEPLOYMENT_GUIDE.md` maps every one to exactly one operational family and deployment class; release validation rejects undocumented programs. Treat them as five deployment classes:
 
 - **resident runtime/control-plane** — controller Runtime/Host/Policy that normally stays powered whenever its family is installed;
 - **conditional resident** — resource, directory, scheduler, and domain services that stay powered only while their optional subsystem/live consumer is enabled;
 - **commissioning** — discovery selectors, configuration UI/input services, and diagnostic mapping services; power/reprogram them after commissioning when no live consumer needs them;
 - **one-shot catalog producers** — Loader ABI4 programs; reclaim those housings after all intended items are durably imported. Loader Router is on-demand during import/rebuild rather than a one-shot data producer;
-- **on-demand diagnostics/lifecycle** — Catalog Inspector, Directory Telemetry, Directory View, Recovery, Item Migration Planner + Worker, Store Retirement Manager, and the read-only Live Commission Snapshot Probe.
+- **on-demand diagnostics/lifecycle** — Catalog Inspector, Directory Telemetry, Directory View, Recovery, Item Migration Planner + Worker, Store Retirement Manager, the read-only Live Commission Snapshot Probe, and the visible Stack Cell Monitor.
 
 `ControllerTest` is no longer a production family/profile. Its Runtime, Policy, and standalone test Input Profile live under `tests/ic10/` and are deployed only for framework isolation testing.
 

@@ -26,7 +26,7 @@ This file is the shortest human-oriented path from an empty deployment to a work
 1. **Program Generic Persistent Config Host.** This is the durable configuration endpoint paired with the PI controller.
 2. **Program PI Config Policy; connect Policy `d0` to Host.** Wait for Policy metadata/default publication so the Host knows type, schema, block masks, and signature.
 3. **Program PI Runtime.** Connect Runtime `d2` to Host, `d0` to the process-input device, and `d1` to the actuator.
-4. **Deploy discovery/selection.** Controller Directory publishes sorted telemetry controllers; Controller Selector derives type/member groups directly and resolves the PI instance you want to edit.
+4. **Deploy discovery/selection.** Controller Directory publishes sorted telemetry controllers; Controller Selector derives type/member groups directly and resolves the PI instance you want to edit. Use `docs/CONTROLLER_DIRECTORY_GETTING_STARTED.md` to prove the directory publication path independently first.
 5. **Program Generic Config Editor, Loader, and Committer.** Point their documented selector/editor dependencies at the shared services.
 6. **Program Generic Input Scanner.** Attach Field Dial, Value Dial, optional Logic Memory, optional Switch, and optional PI Input Profile to its six screws.
 7. **Program Generic Input Resolver and set Resolver `S2` to Scanner ReferenceId.**
@@ -384,4 +384,3 @@ Capability smoke checks:
 - a basic `Smelt*` transform should admit on Arc Furnace, Furnace, and Advanced Furnace only while its declared pressure/temperature bounds are satisfied;
 - a two-input base alloy should reject Arc Furnace and admit Furnace/Advanced Furnace;
 - a three-input advanced alloy should admit only Advanced Furnace.
-
