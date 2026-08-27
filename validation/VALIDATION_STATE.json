@@ -1,5 +1,5 @@
 {
-  "fingerprint": "dad0e70976e68944bcfa45a1276e8f1dd247b5060d517ce1124b5f37da407951",
+  "fingerprint": "f67c34c69e3d9f30580ad8aa40e1a0ad3078bae2e6211515de59629c12c93339",
   "results": {
     "tests/test_async_request.py": 0,
     "tests/test_banked_transaction.py": 0,
@@ -8,6 +8,7 @@
     "tests/test_dependency_planning.py": 0,
     "tests/test_fault_injection.py": 0,
     "tests/test_game_export.py": 0,
+    "tests/test_generator_productivity.py": 0,
     "tests/test_generic_directory.py": 0,
     "tests/test_ic10_execution.py": 0,
     "tests/test_input_profiles.py": 0,
@@ -110,6 +111,7 @@
     "tests/test_printer_directory.py",
     "tests/test_printer_execution_capacity.py",
     "tests/test_recipe_catalog.py",
+    "tests/test_generator_productivity.py",
     "tests/test_resource_generalization.py",
     "tests/test_resource_profiles.py",
     "tests/test_resource_transforms.py",

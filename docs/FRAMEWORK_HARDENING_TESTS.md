@@ -84,7 +84,11 @@ The automated safety criterion is old-complete/new-complete/invalid only. A torn
 
 ## Unified resource-profile tests
 
-`tests/test_resource_profiles.py` regenerates the unified catalog deterministically, executes every generated linked store and loader fragment and the actual Resource Profile View, resolves all 36 current records exactly, verifies incomplete-catalog and not-found invalidation, retains phase latent heat, and rejects any surviving pre-consolidation phase/material profile sources or dedicated profile ICs.
+`tests/test_resource_profiles.py` perturbs every declared output in an isolated checkout, requires the generator to restore the complete checkout byte-for-byte without extra files, executes every generated linked store and loader fragment and the actual Resource Profile View, resolves all 36 current records exactly, verifies incomplete-catalog and not-found invalidation, retains phase latent heat, and rejects any surviving pre-consolidation phase/material profile sources or dedicated profile ICs. The generator owns the fixed-output declaration and the generated manifest owns the dynamic Loader list. The Input Profile and Resource Transform catalog tests apply the same isolated perturb-and-restore check to their complete output sets.
+
+## Generator productivity tests
+
+`tests/test_generator_productivity.py` perturbs every spec- or generator-owned output from each directory-adapter, source-index, and script-contract output set in isolated checkouts, then requires its generator to reconstruct the complete baseline byte-for-byte without undeclared writes. `tests/test_recipe_catalog.py` generates its fixture into a newly empty temporary directory, requires every generator-declared fixed output, perturbs the entire generated tree, regenerates it byte-for-byte, and executes the generated lookup. Together with the three catalog tests and the directory-adapter validator's required `CHECK PASS` summary, the suite proves all seven generator entry points perform their declared work rather than merely exit successfully.
 
 ## Phase-pressure model tests
 

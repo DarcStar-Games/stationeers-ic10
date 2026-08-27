@@ -10,6 +10,7 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 from framework.catalog_schema import *
 SCHEMA='CatalogSchema.Recipe';SCHEMA_VERSION=3;INSTANCE='Catalog.Recipes.Printers.Schema3';MAX_INPUTS=16
+MANIFEST_FILE='recipe_catalog_manifest.json';LOOKUP_FILE='ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10';FIXED_OUTPUTS=COORDINATION_PROGRAM_FILES+(MANIFEST_FILE,LOOKUP_FILE)
 FAMILIES=(('autolathe','Printer.Autolathe','autolathe.xml','AutolatheRecipes'),('electronics','Printer.ElectronicsPrinter','electronics.xml','ElectronicsPrinterRecipes'),('pipe_bender','Printer.HydraulicPipeBender','PipeBender.xml','HydraulicPipeBenderRecipes'),('tool_manufactory','Printer.ToolManufactory','toolmanufacturer.xml','ToolManufactoryRecipes'),('security','Printer.SecurityPrinter','security.xml','SecurityPrinterRecipes'),('rocket_manufactory','Printer.RocketManufactory','rocketmanufactory.xml','RocketManufactoryRecipes'))
 TIER_WORDS={'TierOne':1,'Tier1':1,'One':1,'TierTwo':2,'Tier2':2,'Two':2,'TierThree':3,'Tier3':3,'Three':3,'TierFour':4,'Tier4':4,'Four':4,'TierFive':5,'Tier5':5,'Five':5}
 @dataclass(frozen=True)
@@ -101,8 +102,8 @@ def main():
   counts=pack_store_counts([x.cells for x in items]);total_min+=len(counts)
   manifest['families'].append({'key':key,'family_hash_name':fhash,'source_file':fn,'source_section':section,'recipe_count':len(fam),'max_capability':max(r.required_capability for r in fam),'max_material_inputs':max(len(r.inputs) for r in fam),'runtime_min_store_count':len(counts),'runtime_store_item_counts':counts,'loader_count':len(parts),'loaders':lfiles,'recipes':[{'prefab_name':r.prefab_name,'required_capability':r.required_capability,'family_ordinal':r.family_ordinal,'inputs':[{'reagent':n,'quantity':q} for n,q in r.inputs]} for r in fam]})
  manifest['store_count']=total_min;manifest['runtime_min_store_count']=total_min
- (out/'recipe_catalog_manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
- (prod/'recipe_catalog_lookup_v8_0.ic10').write_text(lookup_program())
+ (out/MANIFEST_FILE).write_text(json.dumps(manifest,indent=2)+'\n')
+ (out/LOOKUP_FILE).write_text(lookup_program())
  print(f'Recipe Catalog generation: PASS - {len(allr)} recipes / runtime min {total_min} stores / {len(manifest["loaders"])} relocatable loaders')
 if __name__=='__main__':
  try:main()

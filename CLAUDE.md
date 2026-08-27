@@ -20,7 +20,7 @@ Two things follow from that, and they drive almost every convention in the repo:
 Run everything from the repository root (Python 3.10+; `python3` locally).
 
 ```bash
-python3 tools/run_validation.py                   # full suite: 23 validators + 33 protocol/execution tests
+python3 tools/run_validation.py                   # full suite: 24 validators + 36 protocol/execution tests
 python3 tools/run_validation.py --resume          # reuse prior PASSes, only if the input-tree fingerprint matches
 python3 tests/test_job_abi.py                     # run one test  (plain script, exit code = pass/fail)
 python3 validation/validators/validate_ic10.py    # run one validator
@@ -38,7 +38,7 @@ with `git config core.hooksPath .githooks`. It **refuses to run against a tree w
 untracked files** — validation hashes the working tree, not the index, so a dirty tree would record
 evidence describing a tree that never enters history. Stage everything, or pass `--no-verify`.
 
-Code generators (run when their JSON source changes; `tools/build_release.py` runs the first three itself):
+Code generators (run when their source changes; `tools/build_release.py` refreshes its required generated outputs itself):
 
 ```bash
 python3 tools/generate/generate_directory_adapters.py           # --check verifies no drift
@@ -48,6 +48,7 @@ python3 tools/generate/generate_input_profiles.py               # from data/inpu
 python3 tools/generate/generate_resource_profiles.py            # from data/resource_profiles.json
 python3 tools/generate/generate_resource_transforms.py          # from data/resource_transforms.json
 python3 tools/generate/generate_recipe_catalog.py --game-data tests/fixtures/recipe_game_data --output <tmpdir> --clean
+python3 tools/generate/generate_script_contracts.py              # from deployable IC10 source and contract metadata
 ```
 
 Field evidence (Roadmap Item 12, the one active milestone):

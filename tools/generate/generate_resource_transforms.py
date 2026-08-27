@@ -6,11 +6,13 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 from pathlib import Path
 import json
 from framework.catalog_schema import *
-R=_PROJECT_ROOT;OUT=R/'ic10'/'transform-catalog';DEP=R/'ic10'/'dependency-planning'
+SOURCE_FILE='data/resource_transforms.json';MANIFEST_FILE='data/resource_transform_catalog_manifest.json';VIEW_FILE='ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10';RESOLVER_FILE='ic10/dependency-planning/item_producer_resolver_v1_0.ic10'
+FIXED_OUTPUTS=COORDINATION_PROGRAM_FILES+(VIEW_FILE,RESOLVER_FILE,MANIFEST_FILE,SOURCE_FILE)
+R=_PROJECT_ROOT;OUT=(R/VIEW_FILE).parent;DEP=(R/RESOLVER_FILE).parent
 SCHEMA='CatalogSchema.ResourceTransform';SCHEMA_VERSION=4;INSTANCE='Catalog.ResourceTransforms.Schema4';VIEW_MAGIC=31415952;VIEW_ABI=4
 
 def main():
- OUT.mkdir(parents=True,exist_ok=True);DEP.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R);D=json.loads((R/'data/resource_transforms.json').read_text());T=D['transforms']
+ OUT.mkdir(parents=True,exist_ok=True);DEP.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R);D=json.loads((R/SOURCE_FILE).read_text());T=D['transforms']
  seen=set();items=[];input_total=output_total=0
  for t in T:
   if t['name'] in seen:raise SystemExit('duplicate '+t['name'])
@@ -24,7 +26,7 @@ def main():
  cat_obj={'schema':SCHEMA,'schema_version':SCHEMA_VERSION,'transforms':T};digest,token=stable_hash_token('RT5',cat_obj)
  for pat in ('resource_transform_catalog_loader_*.ic10','resource_transform_profile_view_v*.ic10'):
   for f in OUT.glob(pat):f.unlink()
- (DEP/'item_producer_resolver_v1_0.ic10').unlink(missing_ok=True)
+ (R/RESOLVER_FILE).unlink(missing_ok=True)
  parts=split_catalog_items(label='GENERATED Resource Transform loader',schema_name=SCHEMA,schema_version=SCHEMA_VERSION,instance_name=INSTANCE,partition_key_expr='0',items=items)
  loaders=[];meta=[]
  for i,(subset,text) in enumerate(parts):
@@ -150,7 +152,7 @@ j CPItem
 CPDone:
 j ra
 '''
- (OUT/'resource_transform_profile_view_v8_0.ic10').write_text(view)
+ (R/VIEW_FILE).write_text(view)
  # Item 8 reverse producer index. Unknown ITEM outputs deliberately fall back to PRINT;
  # known transform outputs must be unique so dependency planning never chooses ambiguously.
  producer=[]; producer_seen={}
@@ -165,10 +167,10 @@ j ra
  pl += ['Loop:','yield','get r15 db 3','get r0 db 4','beq r15 r0 Loop','get r2 db 2','beqz r2 Bad','move r6 0','move r7 32','Find:',f'bge r6 {len(producer)} Print','get r0 db r7','beq r0 r2 Found','add r7 r7 2','add r6 r6 1','j Find','Found:','add r7 r7 1','get r0 db r7','poke 6 1','poke 7 r0','j Good','Print:','poke 6 2','poke 7 r2','Good:','poke 5 1','poke 4 r15','j Loop','Bad:','poke 5 -1','poke 6 0','poke 7 0','poke 4 r15','j Loop']
  producer_text='\n'.join(pl)+'\n'
  if len(producer_text.splitlines())>120: raise SystemExit('201 producer resolver exceeds 120-line IC10 ceiling')
- (DEP/'item_producer_resolver_v1_0.ic10').write_text(producer_text)
+ (R/RESOLVER_FILE).write_text(producer_text)
  counts=pack_store_counts([x.cells for x in items]);manifest=common_manifest(schema_name=SCHEMA,schema_version=SCHEMA_VERSION,instance_name=INSTANCE,store_count=len(counts),total_items=len(T),catalog_digest=digest)
  manifest.update({'format':'RESOURCE_TRANSFORM_CATALOG_V6','catalog_token':token,'transform_count':len(T),'input_descriptor_count':input_total,'output_descriptor_count':output_total,'runtime_store_placement':True,'runtime_min_store_count':len(counts),'runtime_store_item_counts':counts,'item_cell_lengths':[x.cells for x in items],'loader_segment_count':len(parts),'loaders':loaders,'loader_items':meta,'view_magic':VIEW_MAGIC,'view_abi':VIEW_ABI,'processor_capability_model':D.get('processor_capability_model',{}),'loader_item_atomicity':'transform_never_split','loader_sparse_zero_init':True,'generic_store_program':GENERIC_STORE_FILE,'coordinator_core_program':COORD_PROGRAMS[1],'loader_router_program':COORD_PROGRAMS[2]})
- (R/'data/resource_transform_catalog_manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');D.update({'schema':SCHEMA_VERSION,'catalog_schema_id':SCHEMA,'catalog_schema_version':SCHEMA_VERSION,'catalog_instance_id':INSTANCE,'cell_block_width':CELL_BLOCK_WIDTH});(R/'data/resource_transforms.json').write_text(json.dumps(D,indent=2)+'\n')
+ (R/MANIFEST_FILE).write_text(json.dumps(manifest,indent=2)+'\n');D.update({'schema':SCHEMA_VERSION,'catalog_schema_id':SCHEMA,'catalog_schema_version':SCHEMA_VERSION,'catalog_instance_id':INSTANCE,'cell_block_width':CELL_BLOCK_WIDTH});(R/SOURCE_FILE).write_text(json.dumps(D,indent=2)+'\n')
  print(f'Resource Transform generation: PASS - {len(T)} transforms / runtime min {len(counts)} stores / {len(parts)} relocatable loaders')
 
 if __name__=='__main__':main()

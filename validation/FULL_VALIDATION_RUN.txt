@@ -46,6 +46,7 @@ PASS tests/test_pressure_route_cost.py
 PASS tests/test_printer_directory.py
 PASS tests/test_printer_execution_capacity.py
 PASS tests/test_recipe_catalog.py
+PASS tests/test_generator_productivity.py
 PASS tests/test_resource_generalization.py
 PASS tests/test_resource_profiles.py
 PASS tests/test_resource_transforms.py
@@ -57,4 +58,4 @@ PASS tests/test_fault_injection.py
 PASS tests/test_process_utility.py
 PASS tests/test_live_commissioning.py
 PASS tests/test_game_export.py
-FULL_SUITE: PASS (59/59 scripts)
+FULL_SUITE: PASS (60/60 scripts)
