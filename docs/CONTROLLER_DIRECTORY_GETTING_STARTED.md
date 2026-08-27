@@ -35,9 +35,9 @@ python3 tools/export_to_game.py \
 Add `--overwrite` when refreshing existing exports. They appear in the in-game
 script library as:
 
-- `controller-discovery__controller_directory_adapter_v4_0`
-- `directory-core__generic_directory_adapter_bridge_v1_0`
-- `directory-core__generic_snapshot_directory_host_v1_0`
+- `Directory Adapter`
+- `Directory Adapter Bridge`
+- `Snapshot Directory Host`
 
 ## 3. Build the directory
 

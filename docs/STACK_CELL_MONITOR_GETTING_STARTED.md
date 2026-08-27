@@ -23,7 +23,7 @@ Add `--overwrite` when refreshing an existing export. The program appears in the
 Stationeers script library as:
 
 ```text
-live-commissioning__stack_cell_monitor_v1_0
+Stack Cell Monitor
 ```
 
 ## 2. Build the monitor
@@ -47,9 +47,8 @@ thing spawn ItemKitLogicMemory
 thing spawn ItemKitLogicMemory
 ```
 
-The second `ItemKitLogicMemory` is optional. Write
-`live-commissioning__stack_cell_monitor_v1_0` to the blank chip and install it in
-the new housing.
+The second `ItemKitLogicMemory` is optional. Write `Stack Cell Monitor` to the
+blank chip and install it in the new housing.
 
 Label the first Logic Memory `Stack Address`. If present, label the second one
 `Stack Value`.
