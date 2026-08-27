@@ -19,6 +19,8 @@ XSD_NAMESPACE="http://www.w3.org/2001/XMLSchema"
 XSI_NAMESPACE="http://www.w3.org/2001/XMLSchema-instance"
 WINDOWS_EPOCH_YEAR=1601
 TICKS_PER_SECOND=10_000_000
+VERSION_SUFFIX_PATTERN=r"_v(\d+)_(\d+)$"
+TITLE_ACRONYMS={"abi":"ABI","gfg":"GFG","ic10":"IC10","larre":"LArRE","pi":"PI","sdb":"SDB"}
 
 
 class ExportError(ValueError):
@@ -34,7 +36,27 @@ class Program:
 
     @property
     def title(self):
+        base=re.sub(VERSION_SUFFIX_PATTERN,"",self.stem)
+        words=base.split("_")
+        while words and words[0] in {"controller","generic"}:
+            words.pop(0)
+        return " ".join(TITLE_ACRONYMS.get(word,word.capitalize()) for word in words)
+
+    @property
+    def revision(self):
+        match=re.search(VERSION_SUFFIX_PATTERN,self.stem)
+        if not match:
+            raise ExportError(f"program filename has no revision suffix: {self.relative.as_posix()}")
+        return f"{match.group(1)}.{match.group(2)}"
+
+    @property
+    def export_key(self):
         return f"{self.family}__{self.stem}"
+
+    @property
+    def description(self):
+        return (f"Family: {self.family} | Revision: {self.revision} | "
+                f"Source: {self.relative.as_posix()}")
 
 
 def discover_programs(root=ROOT):
@@ -51,7 +73,7 @@ def discover_programs(root=ROOT):
         raise ExportError(f"no production IC10 programs found under {source_root}")
     titles=[program.title for program in programs]
     if len(titles)!=len(set(titles)):
-        raise ExportError("family/program titles are not unique")
+        raise ExportError("compact in-game program titles are not unique")
     return programs
 
 
@@ -121,7 +143,7 @@ def render_instruction_xml(program,game_version,author,timestamp):
         ("DateTime",str(windows_filetime(timestamp))),
         ("GameVersion",game_version),
         ("Title",program.title),
-        ("Description",f"Source: {program.relative.as_posix()}"),
+        ("Description",program.description),
         ("Author",author),
         ("WorkshopFileHandle","0"),
         ("Instructions",source),
@@ -145,7 +167,7 @@ def export_programs(programs,output,game_version,author="stationeers-ic10",overw
     when=timestamp or dt.datetime.now(dt.timezone.utc)
     rendered=[]
     for program in programs:
-        directory=output/program.title
+        directory=output/program.export_key
         target=directory/"instruction.xml"
         if directory.exists():
             if not directory.is_dir():

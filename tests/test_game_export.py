@@ -18,6 +18,15 @@ def ck(condition,message):
     if not condition:fails.append(message)
 
 
+production=exporter.discover_programs()
+ck(len({program.title for program in production})==len(production),
+   "production compact export titles are not unique")
+ck(max(len(program.title) for program in production)<=40,
+   "production compact export title exceeds 40 characters")
+ck(all("__" not in program.title and "_v" not in program.title for program in production),
+   "production title leaks source naming syntax")
+
+
 with TemporaryDirectory() as td:
     root=Path(td)/"repo"
     (root/"ic10/family-a").mkdir(parents=True)
@@ -31,6 +40,13 @@ with TemporaryDirectory() as td:
         "provenance":{"target_game_build":"0.2.6428.27798 (test build)"}}),encoding="utf-8")
     programs=exporter.discover_programs(root)
     ck(len(programs)==2,"production program discovery mismatch")
+    ck(exporter.Program(first,first.relative_to(root),"family-a",first.stem).title=="Alpha",
+       "compact title generation mismatch")
+    ck(exporter.Program(first,first.relative_to(root),"family-a",first.stem).revision=="1.0",
+       "source revision parsing mismatch")
+    pi_path=root/"ic10/family-a/controller_pi_runtime_v1_1.ic10"
+    ck(exporter.Program(pi_path,pi_path.relative_to(root),"family-a",pi_path.stem).title=="PI Runtime",
+       "operator-facing acronym/title generation mismatch")
     ck(exporter.target_game_version(root)=="0.2.6428.27798","target build parsing mismatch")
     ck([p.stem for p in exporter.select_programs(programs,families=["family-b"])]==["beta_v2_0"],
        "family selection mismatch")
@@ -48,7 +64,10 @@ with TemporaryDirectory() as td:
     xml=ET.parse(output/"family-a__alpha_v1_0/instruction.xml").getroot()
     ck(xml.findtext("DateTime")=="116444736000000000","export DateTime mismatch")
     ck(xml.findtext("GameVersion")=="0.2.6428.27798","export GameVersion mismatch")
-    ck(xml.findtext("Title")=="family-a__alpha_v1_0","export title mismatch")
+    ck(xml.findtext("Title")=="Alpha","compact export title mismatch")
+    ck(xml.findtext("Description")==
+       "Family: family-a | Revision: 1.0 | Source: ic10/family-a/alpha_v1_0.ic10",
+       "export description metadata mismatch")
     ck(xml.findtext("Author")=="tester","export author mismatch")
     ck(xml.findtext("Instructions")=="move r0 1 # <&>","XML escaping changed source")
     raw=targets[0].read_bytes()
@@ -74,6 +93,6 @@ if fails:
     [print(" -",failure) for failure in fails]
     sys.exit(1)
 print("Stationeers game export tests: PASS")
-print(" - family/path/stem selection and target-build parsing")
+print(" - family/path/stem selection, compact titles, and target-build parsing")
 print(" - game-compatible FILETIME, CRLF XML, metadata, and escaped source round trip")
 print(" - collision refusal, explicit overwrite, and write-free dry run")

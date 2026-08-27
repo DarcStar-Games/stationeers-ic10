@@ -25,9 +25,9 @@ python3 tools/export_to_game.py \
 If these exporter-owned entries already exist and need to be refreshed, add
 `--overwrite`. The programs appear in the in-game script library as:
 
-- `controller-config__generic_persistent_config_host_v1_1`
-- `controller-pi__pi_config_policy_v1_0`
-- `controller-pi__controller_pi_runtime_v1_1`
+- `Persistent Config Host`
+- `PI Config Policy`
+- `PI Runtime`
 
 No new test scripts or edits to these programs are required.
 
