@@ -1,0 +1,2668 @@
+{
+  "format": "IC10_STACK_PROTOCOL_REGISTRY_V1",
+  "protocols": [
+    {
+      "protocol_id": "ic10.stack.14142136.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 14142136,
+      "abi": 1,
+      "name": "Console Registry ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.14142136.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/diagnostics/console_registry_v1_1.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.16180339.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 16180339,
+      "abi": 1,
+      "name": "Diagnostic Renderer ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.16180339.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/diagnostics/diagnostic_renderer_v1_1.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.17320508.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 17320508,
+      "abi": 2,
+      "name": "Controller Selector ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.17320508.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/controller-discovery/controller_selector_v3_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.17320509.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 17320509,
+      "abi": 1,
+      "name": "Console Selector ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.17320509.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/diagnostics/console_selector_v1_1.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.17320510.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 17320510,
+      "abi": 1,
+      "name": "Diagnostic Mapping Editor ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.17320510.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.17320511.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 17320511,
+      "abi": 1,
+      "name": "Diagnostic Input Bridge ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.17320511.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.17320512.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 17320512,
+      "abi": 1,
+      "name": "Diagnostic Selector Bridge ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.17320512.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.17320513.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 17320513,
+      "abi": 1,
+      "name": "Diagnostic Hash Console Mode ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.17320513.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.22360680.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 22360680,
+      "abi": 1,
+      "name": "Generic Config Editor ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.22360680.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/controller-config/generic_config_editor_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.22360681.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 22360681,
+      "abi": 1,
+      "name": "Config Input Bridge ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.22360681.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/controller-config/config_input_bridge_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.27182818.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 27182818,
+      "abi": 1,
+      "name": "Generic Controller Telemetry ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.27182818.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/controller-pi/controller_pi_runtime_v1_1.ic10",
+          "header_base": 96
+        },
+        {
+          "source": "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10",
+          "header_base": 96
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10",
+          "endpoint": {
+            "kind": "network-reference",
+            "value": "r1"
+          },
+          "header_base": 96
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.27182818.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 27182818,
+      "abi": 2,
+      "name": "Generic Controller Telemetry ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.27182818.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10",
+          "header_base": 96
+        },
+        {
+          "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
+          "header_base": 96
+        },
+        {
+          "source": "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10",
+          "header_base": 96
+        },
+        {
+          "source": "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10",
+          "header_base": 96
+        },
+        {
+          "source": "ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10",
+          "header_base": 96
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10",
+          "endpoint": {
+            "kind": "network-reference",
+            "value": "r1"
+          },
+          "header_base": 96
+        },
+        {
+          "source": "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 96
+        },
+        {
+          "source": "ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 96
+        },
+        {
+          "source": "ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 96
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415928.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415928,
+      "abi": 1,
+      "name": "Generic Persistent Config Host ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415928.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/controller-config/generic_persistent_config_host_v1_1.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/controller-pi/controller_pi_runtime_v1_1.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d2"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/controller-pi/pi_config_policy_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415929.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415929,
+      "abi": 1,
+      "name": "Input Profile View ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415929.abi1.protocol.json",
+      "canonical_refs": [
+        "data/input_profiles.json#"
+      ],
+      "providers": [
+        {
+          "source": "ic10/input-profile-catalog/input_profile_view_v5_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415930.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415930,
+      "abi": 1,
+      "name": "Generic Input Scanner ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415930.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/shared-input/generic_input_scanner_v1_1.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415931.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415931,
+      "abi": 1,
+      "name": "Generic Input Resolver ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415931.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/shared-input/generic_input_resolver_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415933.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415933,
+      "abi": 1,
+      "name": "Phase Pressure Request Arbiter ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415933.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415935.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415935,
+      "abi": 2,
+      "name": "Pressure Domain Inventory ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415935.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415936.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415936,
+      "abi": 1,
+      "name": "Pressure Inventory Reservation ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415936.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415937.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415937,
+      "abi": 2,
+      "name": "Pressure Grid Reservation Planner ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415937.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415938.abi3",
+      "transport": "ic-housing-stack",
+      "magic": 31415938,
+      "abi": 3,
+      "name": "Pressure Reservation Allocator ABI3",
+      "definition_ref": "contracts/protocols/ic10.stack.31415938.abi3.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415940.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415940,
+      "abi": 2,
+      "name": "Pressure Grid Path Enumerator ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415940.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415941.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415941,
+      "abi": 1,
+      "name": "Pressure Grid Path Allocator ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415941.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415942.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415942,
+      "abi": 1,
+      "name": "Pressure Grid Singlehop Builder ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415942.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415943.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415943,
+      "abi": 1,
+      "name": "Pressure Grid Plan Builder ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415943.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d2"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415944.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415944,
+      "abi": 2,
+      "name": "Pressure Grid Route Selector ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415944.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415945.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415945,
+      "abi": 1,
+      "name": "Pressure Grid Cost Profile ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415945.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-grid/pressure_grid_cost_profile_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415946.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415946,
+      "abi": 2,
+      "name": "Pressure Grid Route Ranker ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415946.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415947.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415947,
+      "abi": 1,
+      "name": "Pressure Medium Purity Guard ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415947.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415948.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415948,
+      "abi": 1,
+      "name": "Pressure Transfer Grant Guard ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415948.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d3"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415949.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415949,
+      "abi": 1,
+      "name": "Direct Item Storage Endpoint ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415949.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/item-storage-vending/material_vending_inventory_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/material-grid/material_export_slot_endpoint_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/material-grid/material_import_slot_endpoint_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/power-grid/power_battery_endpoint_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/power-grid/power_consumer_endpoint_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/power-grid/power_producer_endpoint_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/resource-grid-core/resource_reservation_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415950.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415950,
+      "abi": 1,
+      "name": "Resource Reservation ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415950.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/resource-grid-core/resource_reservation_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/material-grid/material_resource_link_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/material-grid/material_resource_link_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/material-transform/material_transform_admission_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d2"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d2"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415952.abi4",
+      "transport": "ic-housing-stack",
+      "magic": 31415952,
+      "abi": 4,
+      "name": "Resource Transform Profile View ABI4",
+      "definition_ref": "contracts/protocols/ic10.stack.31415952.abi4.protocol.json",
+      "canonical_refs": [
+        "data/resource_transforms.json#"
+      ],
+      "providers": [
+        {
+          "source": "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/material-transform/material_transform_admission_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/material-transform/material_transform_link_resolver_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415953.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415953,
+      "abi": 1,
+      "name": "Material Resource Link ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415953.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/material-grid/material_resource_link_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/power-grid/power_static_link_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/power-grid/power_transformer_link_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415954.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415954,
+      "abi": 2,
+      "name": "Multi Material Reservation Allocator ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415954.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415958.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415958,
+      "abi": 1,
+      "name": "Material Transfer Executor ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415958.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/material-grid/material_transfer_executor_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/material-grid/material_resource_link_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d4"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415960.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415960,
+      "abi": 1,
+      "name": "Material Transfer Grant Guard ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415960.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/material-grid/material_resource_link_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d3"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/material-grid/material_transfer_executor_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d2"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415961.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415961,
+      "abi": 1,
+      "name": "Material Sdb Stacker Feeder ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415961.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/material-grid/material_resource_link_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d2"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415963.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415963,
+      "abi": 1,
+      "name": "Resource Profile View ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415963.abi1.protocol.json",
+      "canonical_refs": [
+        "data/resource_profiles.json#"
+      ],
+      "providers": [
+        {
+          "source": "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/item-storage-vending/material_vending_inventory_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/material-grid/material_import_slot_endpoint_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415967.abi3",
+      "transport": "ic-housing-stack",
+      "magic": 31415967,
+      "abi": 3,
+      "name": "Recipe Catalog Lookup ABI3",
+      "definition_ref": "contracts/protocols/ic10.stack.31415967.abi3.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415968.abi5",
+      "transport": "ic-housing-stack",
+      "magic": 31415968,
+      "abi": 5,
+      "name": "Generic Catalog Store ABI5",
+      "definition_ref": "contracts/protocols/ic10.stack.31415968.abi5.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/catalog-control-plane/catalog_inspector_v4_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415969.abi4",
+      "transport": "ic-housing-stack",
+      "magic": 31415969,
+      "abi": 4,
+      "name": "Input Profile Catalog Loader 00 ABI4",
+      "definition_ref": "contracts/protocols/ic10.stack.31415969.abi4.protocol.json",
+      "canonical_refs": [
+        "data/input_profiles.json#",
+        "data/resource_profiles.json#",
+        "data/resource_transforms.json#"
+      ],
+      "providers": [
+        {
+          "source": "ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/transform-catalog/resource_transform_catalog_loader_01_v6_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415970.abi3",
+      "transport": "ic-housing-stack",
+      "magic": 31415970,
+      "abi": 3,
+      "name": "Catalog Coordinator Core ABI3",
+      "definition_ref": "contracts/protocols/ic10.stack.31415970.abi3.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415971.abi3",
+      "transport": "ic-housing-stack",
+      "magic": 31415971,
+      "abi": 3,
+      "name": "Catalog Loader Router ABI3",
+      "definition_ref": "contracts/protocols/ic10.stack.31415971.abi3.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415972.abi4",
+      "transport": "ic-housing-stack",
+      "magic": 31415972,
+      "abi": 4,
+      "name": "Catalog Inspector ABI4",
+      "definition_ref": "contracts/protocols/ic10.stack.31415972.abi4.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/catalog-control-plane/catalog_inspector_v4_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415975.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415975,
+      "abi": 2,
+      "name": "Catalog Coordinator Directory View ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415975.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415976.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415976,
+      "abi": 2,
+      "name": "Catalog Coordinator Recovery ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415976.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415977.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415977,
+      "abi": 1,
+      "name": "Material Transform Admission ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415977.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/material-transform/material_transform_admission_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/material-transform/material_transform_link_resolver_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415978.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415978,
+      "abi": 1,
+      "name": "Material Transform Link Resolver ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415978.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/material-transform/material_transform_link_resolver_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415979.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415979,
+      "abi": 1,
+      "name": "Multi Material Reservation Stager ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415979.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415980.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415980,
+      "abi": 2,
+      "name": "Generic Material Transform Runtime ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415980.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415981.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415981,
+      "abi": 1,
+      "name": "Generic Snapshot Directory Host ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415981.abi1.protocol.json",
+      "canonical_refs": [
+        "data/directory_schemas.json#/snapshot_host"
+      ],
+      "providers": [
+        {
+          "source": "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/material-transform/material_transform_link_resolver_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d2"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415982.abi3",
+      "transport": "ic-housing-stack",
+      "magic": 31415982,
+      "abi": 3,
+      "name": "Generic Registry Directory Host ABI3",
+      "definition_ref": "contracts/protocols/ic10.stack.31415982.abi3.protocol.json",
+      "canonical_refs": [
+        "data/directory_schemas.json#/registry_host"
+      ],
+      "providers": [
+        {
+          "source": "ic10/directory-core/generic_registry_directory_host_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415983.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415983,
+      "abi": 2,
+      "name": "Generic Directory Adapter ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415983.abi2.protocol.json",
+      "canonical_refs": [
+        "data/directory_schemas.json#/adapter_abi"
+      ],
+      "providers": [
+        {
+          "source": "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/printer-directory/printer_directory_adapter_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/directory-core/generic_registry_directory_host_v2_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415984.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415984,
+      "abi": 1,
+      "name": "Generic Job Store ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415984.abi1.protocol.json",
+      "canonical_refs": [
+        "data/generic_job_schema.json#"
+      ],
+      "providers": [
+        {
+          "source": "ic10/generic-jobs/generic_job_store_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/dependency-planning/generic_job_monitor_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/generic-jobs/generic_job_selector_v3_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415985.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415985,
+      "abi": 1,
+      "name": "Recipe Execution Profile View ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415985.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415986.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415986,
+      "abi": 1,
+      "name": "Larre Cargo Storage Service ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415986.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415986.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415986,
+      "abi": 2,
+      "name": "Manufacturing Candidate Selector ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415986.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415987.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415987,
+      "abi": 1,
+      "name": "Item Resource Reservation Selector ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415987.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31415987.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415987,
+      "abi": 2,
+      "name": "Transform Candidate Executor ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415987.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing/transform_candidate_executor_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415988.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415988,
+      "abi": 1,
+      "name": "Item Resource Reservation Allocator ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415988.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415988.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415988,
+      "abi": 2,
+      "name": "Print Candidate Executor ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415988.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing/print_candidate_executor_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415989.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415989,
+      "abi": 1,
+      "name": "Print Material Resolver ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415989.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing/print_material_resolver_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415990.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415990,
+      "abi": 1,
+      "name": "Resource Reservation Releaser ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415990.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415990.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415990,
+      "abi": 2,
+      "name": "Generic Print Runtime ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415990.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing/generic_print_runtime_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415991.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415991,
+      "abi": 1,
+      "name": "Larre Storage Reserved Move Client ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415991.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415991.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415991,
+      "abi": 2,
+      "name": "Transform Job Driver ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415991.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing/transform_job_driver_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415992.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415992,
+      "abi": 2,
+      "name": "Print Job Driver ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415992.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing/print_job_driver_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415993.abi3",
+      "transport": "ic-housing-stack",
+      "magic": 31415993,
+      "abi": 3,
+      "name": "Generic Job Selector ABI3",
+      "definition_ref": "contracts/protocols/ic10.stack.31415993.abi3.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/generic-jobs/generic_job_selector_v3_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415994.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415994,
+      "abi": 2,
+      "name": "Manufacturing Driver Router ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415994.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415995.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415995,
+      "abi": 1,
+      "name": "Manufacturing Scheduler ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415995.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415996.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415996,
+      "abi": 2,
+      "name": "Printer Execution Bank ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415996.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/printer-directory/printer_execution_bank_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415997.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31415997,
+      "abi": 2,
+      "name": "Printer Capacity Client ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31415997.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/printer-directory/printer_capacity_client_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31415998.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31415998,
+      "abi": 1,
+      "name": "Transform Candidate Readiness ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31415998.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416001.abi3",
+      "transport": "ic-housing-stack",
+      "magic": 31416001,
+      "abi": 3,
+      "name": "Generic Job Command Gateway ABI3",
+      "definition_ref": "contracts/protocols/ic10.stack.31416001.abi3.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416002.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416002,
+      "abi": 1,
+      "name": "Job Requirement View ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416002.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416003.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416003,
+      "abi": 1,
+      "name": "Item Producer Resolver ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416003.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/item_producer_resolver_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416004.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416004,
+      "abi": 1,
+      "name": "Generic Job Monitor ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416004.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/generic_job_monitor_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416005.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416005,
+      "abi": 1,
+      "name": "Job Inventory Preflight ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416005.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416006.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31416006,
+      "abi": 2,
+      "name": "Dependency Child Creator ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31416006.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/dependency_child_creator_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416007.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31416007,
+      "abi": 2,
+      "name": "Dependency Plan Store ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31416007.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/dependency_plan_store_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/dependency-planning/dependency_claim_view_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31416008.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31416008,
+      "abi": 2,
+      "name": "Dependency Plan Evaluator ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31416008.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416009.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416009,
+      "abi": 1,
+      "name": "Dependency Ancestry Guard ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416009.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416010.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416010,
+      "abi": 1,
+      "name": "Manufacturing Dependency Planner ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416010.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416011.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31416011,
+      "abi": 2,
+      "name": "Dependency Plan Builder ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31416011.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416012.abi2",
+      "transport": "ic-housing-stack",
+      "magic": 31416012,
+      "abi": 2,
+      "name": "Manufacturing Dependency Gate ABI2",
+      "definition_ref": "contracts/protocols/ic10.stack.31416012.abi2.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416013.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416013,
+      "abi": 1,
+      "name": "Dependency Cancellation Guard ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416013.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416014.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416014,
+      "abi": 1,
+      "name": "Dependency Child Validity ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416014.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/dependency_child_validity_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416015.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416015,
+      "abi": 1,
+      "name": "Generic Job Store Command Executor ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416015.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416016.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416016,
+      "abi": 1,
+      "name": "Dependency Claim View ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416016.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/dependency_claim_view_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416017.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416017,
+      "abi": 1,
+      "name": "Manufacturing Reagent Resolver ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416017.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416018.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416018,
+      "abi": 1,
+      "name": "Dependency Plan Release Advisor ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416018.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416019.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416019,
+      "abi": 1,
+      "name": "Existing Dependency Plan Controller ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416019.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416020.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416020,
+      "abi": 1,
+      "name": "New Dependency Plan Controller ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416020.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416028.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416028,
+      "abi": 1,
+      "name": "Power Dispatch Plan Store ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416028.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31416029.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416029,
+      "abi": 1,
+      "name": "Power Source Selector ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416029.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-grid/power_source_selector_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416030.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416030,
+      "abi": 1,
+      "name": "Power Link Selector ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416030.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-grid/power_link_selector_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416031.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416031,
+      "abi": 1,
+      "name": "Power Sink Selector ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416031.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-grid/power_sink_selector_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416032.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416032,
+      "abi": 1,
+      "name": "Power Sink Flow Builder ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416032.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-grid/power_sink_flow_builder_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416033.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416033,
+      "abi": 1,
+      "name": "Power Dispatch Sweep ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416033.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-grid/power_dispatch_sweep_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416034.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416034,
+      "abi": 1,
+      "name": "Power Dispatch Cycle ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416034.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-grid/power_dispatch_cycle_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416035.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416035,
+      "abi": 1,
+      "name": "Power Plan Validator ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416035.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-grid/power_plan_validator_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416036.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416036,
+      "abi": 1,
+      "name": "Power Reservation Committer ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416036.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-grid/power_reservation_committer_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416037.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416037,
+      "abi": 1,
+      "name": "Power Reservation Allocator ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416037.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-grid/power_reservation_allocator_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416038.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416038,
+      "abi": 1,
+      "name": "Power Load Executor ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416038.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-grid/power_load_executor_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416039.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416039,
+      "abi": 1,
+      "name": "Power Link Executor ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416039.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-grid/power_link_executor_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416041.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416041,
+      "abi": 1,
+      "name": "Power Policy Target Resolver ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416041.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416042.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416042,
+      "abi": 1,
+      "name": "Power Job Policy Apply ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416042.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-jobs/power_job_policy_apply_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416043.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416043,
+      "abi": 1,
+      "name": "Power Job Policy Verify ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416043.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-jobs/power_job_policy_verify_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416044.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416044,
+      "abi": 1,
+      "name": "Power Job Lifecycle Client ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416044.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416045.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416045,
+      "abi": 1,
+      "name": "Power Job Prepare ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416045.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-jobs/power_job_prepare_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416046.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416046,
+      "abi": 1,
+      "name": "Power Job Finalize ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416046.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-jobs/power_job_finalize_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416047.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416047,
+      "abi": 1,
+      "name": "Power Job Scheduler ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416047.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/power-jobs/power_job_scheduler_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416048.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416048,
+      "abi": 1,
+      "name": "Furnace Process Condition Request ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416048.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10",
+          "header_base": 0
+        },
+        {
+          "source": "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.31416049.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416049,
+      "abi": 1,
+      "name": "Gas Mixer Utility Controller ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416049.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416050.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416050,
+      "abi": 1,
+      "name": "Thermal Gas Mixer Controller ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416050.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416051.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416051,
+      "abi": 1,
+      "name": "Live Commission Snapshot Probe ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416051.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416052.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416052,
+      "abi": 1,
+      "name": "Stack Cell Monitor ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416052.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    }
+  ]
+}

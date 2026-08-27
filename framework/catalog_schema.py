@@ -121,8 +121,7 @@ def make_generic_store_program():
     return '\n'.join(L)+'\n' 
 
 def make_coordinator_directory_host_program():
-    return '''# Generic Registry Directory Host ABI3: CatalogStoreNode persistent registry.
-Boot:
+    return '''Boot: # Generic Registry Directory Host ABI3: CatalogStoreNode persistent registry.
 yield
 get r0 db 0
 bne r0 31415982 Init
@@ -216,6 +215,15 @@ poke r5 7
 SweepNext:
 add r7 r7 1
 j SweepNode
+Overflow:
+poke 16 -3
+j Release
+SourceBad:
+poke 16 -4
+j Release
+Bad:
+poke 16 -1
+j Close
 Publish:
 get r0 d0 2
 poke 2 r0
@@ -227,17 +235,9 @@ get r0 d0 3
 poke 19 r0
 poke 20 6
 poke 21 64
+Close:
 add r10 r10 1
 poke 23 r10
-j Release
-Overflow:
-poke 16 -3
-j Release
-SourceBad:
-poke 16 -4
-j Release
-Bad:
-poke 16 -1
 Release:
 put d0 11 0
 j Loop

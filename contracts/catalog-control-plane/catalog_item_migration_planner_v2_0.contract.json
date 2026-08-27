@@ -1,0 +1,251 @@
+{
+  "$schema": "../../schemas/script_contract.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "source": "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10",
+  "source_sha256": "f35e322aaf4b4df61d9c33d0aaedf738b7666c2c7b67f31e133ce9eab96c32c2",
+  "identity": {
+    "service_id": "ic10.script.catalog.item.migration.planner",
+    "implementation_revision": "2.0",
+    "deployment_family": "catalog-control-plane",
+    "deployment_class": "on-demand",
+    "layer": "Catalog migration",
+    "purpose": "Plans whole-item compaction from DRAINING Stores into compatible live Store capacity."
+  },
+  "device_ports": [
+    {
+      "port": "d0",
+      "role": "d0",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [],
+        "writes": [],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [
+          0,
+          25,
+          40,
+          42
+        ],
+        "literal_writes": [
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          40,
+          41,
+          42
+        ],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 31415970
+          }
+        ]
+      },
+      "target": {
+        "kind": "stack-interface",
+        "verification": "access-only",
+        "interface_id": "ic10.interface.access.b5657c3a7cff795d",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.b5657c3a7cff795d",
+        "provider_resolution": "deployment-supplied",
+        "assumptions": {
+          "properties_read": [],
+          "properties_written": [],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
+    },
+    {
+      "port": "d1",
+      "role": "d1",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [],
+        "writes": [],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [
+          0,
+          1,
+          2,
+          19,
+          23
+        ],
+        "literal_writes": [],
+        "dynamic_read": true,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [
+          {
+            "start": 64,
+            "end": 447
+          }
+        ],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "source-fingerprinted-exception",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 31415982
+          },
+          {
+            "address": 1,
+            "equals": 3
+          },
+          {
+            "address": 2,
+            "equals": "HASH(\"DirectorySchema.CatalogStoreNode\")"
+          },
+          {
+            "address": 19,
+            "equals": 1
+          }
+        ]
+      },
+      "target": {
+        "kind": "stack-protocol",
+        "verification": "literal-header",
+        "protocol_ids": [
+          "ic10.stack.31415982.abi3"
+        ]
+      }
+    }
+  ],
+  "network_dependencies": [
+    {
+      "transport": "reference-id",
+      "reference": "r1",
+      "literal_reads": [
+        9,
+        16
+      ],
+      "literal_writes": [],
+      "dynamic_read": true,
+      "dynamic_write": false,
+      "constraints": [
+        {
+          "address": 16,
+          "operator": "equals",
+          "value": 3
+        }
+      ],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "r13",
+      "literal_reads": [
+        2,
+        3,
+        4,
+        7,
+        8,
+        23
+      ],
+      "literal_writes": [],
+      "dynamic_read": false,
+      "dynamic_write": false,
+      "constraints": [],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "r2",
+      "literal_reads": [
+        2,
+        3,
+        4,
+        16,
+        23,
+        27,
+        29
+      ],
+      "literal_writes": [
+        27
+      ],
+      "dynamic_read": false,
+      "dynamic_write": false,
+      "constraints": [
+        {
+          "address": 16,
+          "operator": "equals",
+          "value": 2
+        }
+      ],
+      "accepted": []
+    }
+  ],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [],
+    "literal_writes": [],
+    "dynamic_read": false,
+    "dynamic_write": false,
+    "dynamic_read_ranges": [],
+    "dynamic_write_ranges": [],
+    "dynamic_range_source": "none",
+    "clears_all": false,
+    "external_readable_ranges": [],
+    "external_writable_ranges": [],
+    "fields": [],
+    "headers": []
+  },
+  "behavior": {
+    "publication_rules": [],
+    "restart": {
+      "mode": "preserved-unless-overwritten",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": []
+  },
+  "contracts": {
+    "provides": [],
+    "consumes": [
+      {
+        "port": "d1",
+        "accepted": [
+          {
+            "protocol_id": "ic10.stack.31415982.abi3",
+            "header_base": 0,
+            "magic": 31415982,
+            "abi": 3,
+            "publication_requirements": [
+              {
+                "kind": "seqlock",
+                "address": 23
+              }
+            ]
+          }
+        ],
+        "source": "authoritative-literal-header-check"
+      }
+    ]
+  },
+  "extraction": {
+    "mode": "static-v1",
+    "limitations": [
+      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
+      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

@@ -1,0 +1,226 @@
+{
+  "$schema": "../../schemas/script_contract.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "source": "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10",
+  "source_sha256": "ec92f0c629eb6212beb78d6a7654e00e5e3c2c7f8d2d3e6e19d6eb4066490613",
+  "identity": {
+    "service_id": "ic10.script.catalog.store.retirement.manager",
+    "implementation_revision": "2.0",
+    "deployment_family": "catalog-control-plane",
+    "deployment_class": "on-demand",
+    "layer": "Catalog lifecycle",
+    "purpose": "Safely retires an empty Store and repairs neighboring topology."
+  },
+  "device_ports": [
+    {
+      "port": "d0",
+      "role": "d0",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [],
+        "writes": [],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [
+          0,
+          6,
+          7
+        ],
+        "literal_writes": [
+          6,
+          7
+        ],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 31415970
+          }
+        ]
+      },
+      "target": {
+        "kind": "stack-interface",
+        "verification": "access-only",
+        "interface_id": "ic10.interface.access.f65c8366907662d8",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.f65c8366907662d8",
+        "provider_resolution": "deployment-supplied",
+        "assumptions": {
+          "properties_read": [],
+          "properties_written": [],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
+    },
+    {
+      "port": "d1",
+      "role": "d1",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [],
+        "writes": [],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [
+          0,
+          1,
+          2,
+          19,
+          23
+        ],
+        "literal_writes": [],
+        "dynamic_read": true,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [
+          {
+            "start": 64,
+            "end": 447
+          }
+        ],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "source-fingerprinted-exception",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 31415982
+          },
+          {
+            "address": 1,
+            "equals": 3
+          },
+          {
+            "address": 2,
+            "equals": "HASH(\"DirectorySchema.CatalogStoreNode\")"
+          },
+          {
+            "address": 19,
+            "equals": 1
+          }
+        ]
+      },
+      "target": {
+        "kind": "stack-protocol",
+        "verification": "literal-header",
+        "protocol_ids": [
+          "ic10.stack.31415982.abi3"
+        ]
+      }
+    }
+  ],
+  "network_dependencies": [
+    {
+      "transport": "reference-id",
+      "reference": "r1",
+      "literal_reads": [
+        6,
+        7,
+        9,
+        16
+      ],
+      "literal_writes": [
+        16
+      ],
+      "dynamic_read": false,
+      "dynamic_write": false,
+      "constraints": [
+        {
+          "address": 16,
+          "operator": "equals",
+          "value": 3
+        }
+      ],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "r2",
+      "literal_reads": [],
+      "literal_writes": [
+        7
+      ],
+      "dynamic_read": false,
+      "dynamic_write": false,
+      "constraints": [],
+      "accepted": []
+    },
+    {
+      "transport": "reference-id",
+      "reference": "r3",
+      "literal_reads": [],
+      "literal_writes": [
+        6
+      ],
+      "dynamic_read": false,
+      "dynamic_write": false,
+      "constraints": [],
+      "accepted": []
+    }
+  ],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [],
+    "literal_writes": [],
+    "dynamic_read": false,
+    "dynamic_write": false,
+    "dynamic_read_ranges": [],
+    "dynamic_write_ranges": [],
+    "dynamic_range_source": "none",
+    "clears_all": false,
+    "external_readable_ranges": [],
+    "external_writable_ranges": [],
+    "fields": [],
+    "headers": []
+  },
+  "behavior": {
+    "publication_rules": [],
+    "restart": {
+      "mode": "preserved-unless-overwritten",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": []
+  },
+  "contracts": {
+    "provides": [],
+    "consumes": [
+      {
+        "port": "d1",
+        "accepted": [
+          {
+            "protocol_id": "ic10.stack.31415982.abi3",
+            "header_base": 0,
+            "magic": 31415982,
+            "abi": 3,
+            "publication_requirements": [
+              {
+                "kind": "seqlock",
+                "address": 23
+              }
+            ]
+          }
+        ],
+        "source": "authoritative-literal-header-check"
+      }
+    ]
+  },
+  "extraction": {
+    "mode": "static-v1",
+    "limitations": [
+      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
+      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "format": "IC10_PROTOCOL_DEFINITIONS_V1",
+  "protocols": {
+    "ic10.stack.31415981.abi1": {
+      "name": "Generic Snapshot Directory Host ABI1",
+      "definition_refs": ["data/directory_schemas.json#/snapshot_host"]
+    },
+    "ic10.stack.31415982.abi3": {
+      "name": "Generic Registry Directory Host ABI3",
+      "definition_refs": ["data/directory_schemas.json#/registry_host"]
+    },
+    "ic10.stack.31415983.abi2": {
+      "name": "Generic Directory Adapter ABI2",
+      "definition_refs": ["data/directory_schemas.json#/adapter_abi"]
+    },
+    "ic10.stack.31415984.abi1": {
+      "name": "Generic Job Store ABI1",
+      "definition_refs": ["data/generic_job_schema.json#"]
+    }
+  }
+}

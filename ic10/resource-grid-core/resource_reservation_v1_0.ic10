@@ -1,7 +1,7 @@
 # Generic Resource Reservation ABI1. d0 Generic Resource Endpoint ABI1.
 poke 0 31415950
 poke 1 1
-poke 12 0 # semantic mirror generation LAST
+poke 12 0 # semantic mirror generation initialization
 poke 13 0 # build epoch; allocator-owned
 poke 14 0 # reserved export
 poke 15 0 # reserved import
@@ -101,7 +101,7 @@ ble sp 24 CopyHints
 poke 20 r14
 get r0 db 12
 add r0 r0 1
-poke 12 r0
+poke 12 r0 # semantic mirror generation LAST
 move r15 r14
 j Loop
 Bad:
@@ -112,6 +112,6 @@ poke 8 0
 poke 9 -1
 get r0 db 12
 add r0 r0 1
-poke 12 r0
+poke 12 r0 # semantic mirror generation LAST
 move r15 -1
 j Loop

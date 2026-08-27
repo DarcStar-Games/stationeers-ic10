@@ -1,0 +1,236 @@
+{
+  "$schema": "../../schemas/protocol_definition.schema.json",
+  "format": "IC10_PROTOCOL_DEFINITION_V1",
+  "protocol_id": "ic10.stack.22360680.abi1",
+  "name": "Generic Config Editor ABI1",
+  "transport": "ic-housing-stack",
+  "magic": 22360680,
+  "abi": 1,
+  "header_bases": [
+    0
+  ],
+  "canonical_refs": [],
+  "provider_interfaces": [
+    {
+      "source": "ic10/controller-config/generic_config_editor_v1_0.ic10",
+      "header_base": 0,
+      "readable_ranges": [],
+      "writable_ranges": [],
+      "fields": [
+        {
+          "address": 0,
+          "name": "Header@S0.Magic",
+          "value_type": "hash",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 1,
+          "name": "Header@S0.ABI",
+          "value_type": "integer",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 2,
+          "name": "S2",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 5,
+          "name": "S5",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 6,
+          "name": "S6",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 7,
+          "name": "S7",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 8,
+          "name": "S8",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 10,
+          "name": "S10",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 11,
+          "name": "S11",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 12,
+          "name": "S12",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 13,
+          "name": "CaptureStagingRevision",
+          "value_type": "integer",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "capture staging revision"
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "capture physical controller RefId"
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 16,
+          "name": "S16",
+          "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "description": "LOADING | MODIFIED | APPLY PENDING publishes request last",
+          "enum_values": [
+            {
+              "value": 1,
+              "name": "LOADING"
+            },
+            {
+              "value": 3,
+              "name": "MODIFIED"
+            }
+          ]
+        },
+        {
+          "address": 18,
+          "name": "S18",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 20,
+          "name": "S20",
+          "value_type": "integer",
+          "semantic_source": "source",
+          "access": [
+            "self-read"
+          ],
+          "description": "physical config-image slot 0..31 from Config Bridge"
+        },
+        {
+          "address": 21,
+          "name": "S21",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 25,
+          "name": "S25",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 26,
+          "name": "S26",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        }
+      ],
+      "behavior": {
+        "publication_rules": [
+          {
+            "kind": "commit-last",
+            "address": 16,
+            "description": "APPLY PENDING publishes request last",
+            "source": "verified-inline-order"
+          }
+        ],
+        "restart": {
+          "mode": "conditional-reset",
+          "source": "static-entry-path-analysis"
+        },
+        "invariants": []
+      }
+    }
+  ],
+  "consumer_interfaces": []
+}

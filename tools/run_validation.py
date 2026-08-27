@@ -23,11 +23,11 @@ VALIDATORS=[
 'validation/validators/validate_catalog_storage.py','validation/validators/validate_config_contracts.py','validation/validators/validate_dependency_planning_contracts.py','validation/validators/validate_directory_contracts.py',
 'validation/validators/validate_documentation.py','validation/validators/validate_ic10.py','validation/validators/validate_ic10_opcodes.py','validation/validators/validate_input_contracts.py','validation/validators/validate_job_contracts.py',
 'validation/validators/validate_manufacturing_contracts.py','validation/validators/validate_power_management_contracts.py','validation/validators/validate_fault_injection_contracts.py',
-'validation/validators/validate_release_tooling.py','validation/validators/validate_generated_directory_adapters.py','validation/validators/validate_script_headers.py','validation/validators/validate_source_catalog.py','validation/validators/validate_user_deployment_guide.py','validation/validators/validate_item_storage_contracts.py','validation/validators/validate_process_utility_contracts.py','validation/validators/validate_live_commissioning_contracts.py']
+'validation/validators/validate_release_tooling.py','validation/validators/validate_generated_directory_adapters.py','validation/validators/validate_script_headers.py','validation/validators/validate_source_catalog.py','validation/validators/validate_script_contracts.py','validation/validators/validate_user_deployment_guide.py','validation/validators/validate_item_storage_contracts.py','validation/validators/validate_process_utility_contracts.py','validation/validators/validate_live_commissioning_contracts.py']
 TESTS=[
 'tests/test_async_request.py','tests/test_banked_transaction.py','tests/test_catalog_schema.py','tests/test_controller_directory_scale.py',
 'tests/test_dependency_planning.py','tests/test_generic_directory.py','tests/test_ic10_execution.py','tests/test_input_profiles.py','tests/test_job_abi.py',
-'tests/test_manufacturing_execution.py','tests/test_manufacturing_scheduler.py','tests/test_material_grid_protocol.py',
+'tests/test_manufacturing_execution.py','tests/test_manufacturing_scheduler.py','tests/test_material_grid_protocol.py','tests/test_script_contracts.py',
 'tests/test_material_transform_protocol.py','tests/test_persistence_protocol.py','tests/test_phase_pressure_protocol.py',
 'tests/test_pressure_domain_protocol.py','tests/test_pressure_grid_protocol.py','tests/test_pressure_inventory_protocol.py',
 'tests/test_pressure_reservation_protocol.py','tests/test_pressure_route_cost.py','tests/test_printer_directory.py',
@@ -104,6 +104,7 @@ def finalize(results):
         f'Production IC10 programs: {len(production)}',f'Maximum production line count: {max_lines}/120',
         f'Tight programs (>=117 lines): {len(tight)}','', 'Release hygiene','---------------',
         '- docs/SCRIPT_INDEX.md is generated from deployable IC10 source plus data/source_manifest.json metadata.',
+        '- contracts/ contains one schema-validated, source-fingerprinted contract per deployable IC10 program plus a provider/consumer protocol registry.',
         '- USER_DEPLOYMENT_GUIDE.md program inventories are machine-linked to data/source_manifest.json deployment-family/class metadata.',
         '- Repetitive Resource Endpoint/Link/Reservation directory adapters are generated from data/directory_adapter_specs.json.',
         '- Recipe Catalog test fixtures are generated into temporary directories; no generated recipe fixture is shipped.',

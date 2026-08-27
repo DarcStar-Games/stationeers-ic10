@@ -26,8 +26,9 @@ try:
  unlink=s.index('if out.exists(): out.unlink()')
  guide=s.index("update_user_deployment_inventory.py")
  gen=s.index("generate_source_catalog.py")
+ contracts=s.index("generate_script_contracts.py")
  manifest=s.index('write_archive_manifest({out})')
- ck(unlink<guide<gen<manifest,'release output / deployment guide / source index ordering is invalid')
+ ck(unlink<guide<gen<contracts<manifest,'release output / deployment guide / source index / script contract ordering is invalid')
 except ValueError: fails.append('release build ordering markers missing')
 ck('tracked_files({out})' in s,'ZIP creation does not exclude requested output')
 # Both sweeps carry their own copy of the same exclusion set: build_release keeps
@@ -56,6 +57,6 @@ if fails:
  print('Release tooling validation: FAIL');[print(' -',x) for x in fails];sys.exit(1)
 print('Release tooling validation: PASS')
 print(' - in-tree output archive is excluded before manifest and ZIP inventory')
-print(' - build ordering removes stale output, refreshes deployment inventory, then source index before validation/manifest generation')
+print(' - build ordering removes stale output, refreshes deployment inventory, source index, and script contracts before validation/manifests')
 print(f' - release inventory and validation fingerprint exclude the same tooling dirs: {sorted(br.TOOLING_DIRS)}')
 print(' - exclusion matches inside the repository only, and a sweep that finds nothing fails closed')

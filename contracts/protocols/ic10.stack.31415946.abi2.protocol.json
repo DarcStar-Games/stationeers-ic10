@@ -1,0 +1,245 @@
+{
+  "$schema": "../../schemas/protocol_definition.schema.json",
+  "format": "IC10_PROTOCOL_DEFINITION_V1",
+  "protocol_id": "ic10.stack.31415946.abi2",
+  "name": "Pressure Grid Route Ranker ABI2",
+  "transport": "ic-housing-stack",
+  "magic": 31415946,
+  "abi": 2,
+  "header_bases": [
+    0
+  ],
+  "canonical_refs": [],
+  "provider_interfaces": [
+    {
+      "source": "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10",
+      "header_base": 0,
+      "readable_ranges": [
+        {
+          "start": 0,
+          "end": 31
+        }
+      ],
+      "writable_ranges": [
+        {
+          "start": 5,
+          "end": 7
+        }
+      ],
+      "fields": [
+        {
+          "address": 0,
+          "name": "Header@S0.Magic",
+          "value_type": "hash",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 1,
+          "name": "Header@S0.ABI",
+          "value_type": "integer",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 2,
+          "name": "S2",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 3,
+          "name": "S3",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 4,
+          "name": "S4",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 8,
+          "name": "S8",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 9,
+          "name": "S9",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 10,
+          "name": "S10",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 11,
+          "name": "S11",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 19,
+          "name": "S19",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 20,
+          "name": "S20",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 21,
+          "name": "S21",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 22,
+          "name": "S22",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 23,
+          "name": "S23",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 24,
+          "name": "S24",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 25,
+          "name": "S25",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        }
+      ],
+      "behavior": {
+        "publication_rules": [],
+        "restart": {
+          "mode": "preserved-unless-overwritten",
+          "source": "static-entry-path-analysis"
+        },
+        "invariants": []
+      }
+    }
+  ],
+  "consumer_interfaces": [
+    {
+      "source": "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d1"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        1,
+        9,
+        10,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+      ],
+      "literal_writes": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11
+      ],
+      "dynamic_read_ranges": [
+        {
+          "start": 16,
+          "end": 31
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31415946
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 2
+        }
+      ],
+      "publication_requirements": []
+    }
+  ]
+}

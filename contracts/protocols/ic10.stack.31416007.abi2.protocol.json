@@ -1,0 +1,248 @@
+{
+  "$schema": "../../schemas/protocol_definition.schema.json",
+  "format": "IC10_PROTOCOL_DEFINITION_V1",
+  "protocol_id": "ic10.stack.31416007.abi2",
+  "name": "Dependency Plan Store ABI2",
+  "transport": "ic-housing-stack",
+  "magic": 31416007,
+  "abi": 2,
+  "header_bases": [
+    0
+  ],
+  "canonical_refs": [],
+  "provider_interfaces": [
+    {
+      "source": "ic10/dependency-planning/dependency_plan_store_v2_0.ic10",
+      "header_base": 0,
+      "readable_ranges": [
+        {
+          "start": 0,
+          "end": 40
+        },
+        {
+          "start": 128,
+          "end": 383
+        }
+      ],
+      "writable_ranges": [],
+      "fields": [
+        {
+          "address": 0,
+          "name": "Header@S0.Magic",
+          "value_type": "hash",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 1,
+          "name": "Header@S0.ABI",
+          "value_type": "integer",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 9,
+          "name": "S9",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 10,
+          "name": "S10",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 11,
+          "name": "S11",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 12,
+          "name": "S12",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 13,
+          "name": "S13",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 40,
+          "name": "S40",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        }
+      ],
+      "behavior": {
+        "publication_rules": [
+          {
+            "kind": "seqlock",
+            "address": 40,
+            "description": "Plan sequence is odd while mutating and even when stable.",
+            "source": "source-fingerprinted-declaration"
+          }
+        ],
+        "restart": {
+          "mode": "conditional-reset",
+          "source": "static-entry-path-analysis"
+        },
+        "invariants": []
+      }
+    }
+  ],
+  "consumer_interfaces": [
+    {
+      "source": "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        1,
+        40
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [
+        {
+          "start": 128,
+          "end": 383
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31416007
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 2
+        }
+      ],
+      "publication_requirements": [
+        {
+          "kind": "seqlock",
+          "address": 40
+        }
+      ]
+    },
+    {
+      "source": "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        1,
+        40
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [
+        {
+          "start": 128,
+          "end": 383
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31416007
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 2
+        }
+      ],
+      "publication_requirements": [
+        {
+          "kind": "seqlock",
+          "address": 40
+        }
+      ]
+    },
+    {
+      "source": "ic10/dependency-planning/dependency_claim_view_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        1,
+        40
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [
+        {
+          "start": 128,
+          "end": 383
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 31416007
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 2
+        }
+      ],
+      "publication_requirements": [
+        {
+          "kind": "seqlock",
+          "address": 40
+        }
+      ]
+    }
+  ]
+}
