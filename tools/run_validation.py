@@ -16,7 +16,7 @@ STATE=ROOT/'validation'/'VALIDATION_STATE.json'
 # fingerprint: doing so marks live commissioning evidence STALE with no source
 # change. build_release.py excludes the same set from the release inventory, and
 # validation/validators/validate_release_tooling.py fails if the two diverge.
-TOOLING_DIRS={'.git','.claude','.githooks'}
+TOOLING_DIRS={'.git','.github','.claude','.githooks'}
 
 VALIDATORS=[
 'validation/validators/validate_abi_contracts.py','validation/validators/validate_async_request_contracts.py','validation/validators/validate_banked_transaction_contracts.py',

@@ -35,6 +35,7 @@ If you are new to the framework, read the documents in this order:
 25. **docs/SCRIPT_CONTRACTS.md**, **docs/DIAGNOSTIC_INPUTS.md**, and **docs/ABI_REFERENCE.md** — machine-readable contracts, diagnostics, and exact wiring contracts.
 26. **docs/SEQUENCER_CONTROLLER.md**, **docs/PHASE_PRESSURE_CONTROLLER.md**, **docs/PHASE_MEDIUM_PROFILE.md**, **docs/PRESSURE_DOMAIN_CONTROLLER.md**, **docs/PRESSURE_INVENTORY_MODEL.md**, **docs/PRESSURE_GRID_CONTROLLER.md**, **docs/PRESSURE_RESERVATION_MODEL.md**, **docs/PRESSURE_MULTI_HOP_ROUTING.md**, and **docs/PRESSURE_ROUTE_COST_MODEL.md** — worked controller/resource specializations.
 27. **docs/CORRECTNESS_HARDENING.md**, **docs/ADDING_CONTROLLERS.md**, **docs/SCRIPT_INDEX.md**, **docs/SOURCES.md**, and **docs/TEST_CONTROLLER.md** — extension, audit, and provenance material.
+28. **docs/CI.md** — required GitHub validation check, clean-tree policy, failure evidence, and branch-protection setup.
 
 `VALIDATION_SUMMARY.txt` summarizes the latest clean release run; per-script machine evidence is generated under `validation/evidence/`. `docs/FRAMEWORK_HARDENING_TESTS.md` lists the live-game cases that still need physical verification; `docs/LIVE_COMMISSIONING.md` defines how those results are bound to a release and recorded without contaminating automated evidence.
 
@@ -358,6 +359,8 @@ python3 tools/run_validation.py
 
 This runs the complete validator/test inventory defined in `tools/run_validation.py`, writes per-script machine evidence under `validation/evidence/`, writes the pass/fail inventory to `validation/FULL_VALIDATION_RUN.txt`, and regenerates `VALIDATION_SUMMARY.txt`.
 
+GitHub Actions runs the same command without `--resume` for every pull request and push to `main`, then requires the checkout to remain clean. Protect `main` with the **Clean validation** status check described in `docs/CI.md`.
+
 To produce a verified release archive in the required ordering—generated index, validation, evidence, deployment hashes, archive manifest, ZIP integrity—run:
 
 ```text
@@ -372,7 +375,7 @@ When working from a git clone, enable the evidence-sync pre-commit hook once per
 git config core.hooksPath .githooks
 ```
 
-It runs the suite before each commit and stages the refreshed evidence, so committed evidence always matches the source it attests to. Validation hashes the working tree rather than the index, so the hook refuses to run against a tree with unstaged or untracked files; bypass it with `git commit --no-verify`. Local VCS/tooling state (`.git`, `.claude`, `.githooks`) is excluded from the validation input fingerprint and from release archives, so hook or editor configuration never invalidates recorded live commissioning evidence.
+It runs the suite before each commit and stages the refreshed evidence, so committed evidence always matches the source it attests to. Validation hashes the working tree rather than the index, so the hook refuses to run against a tree with unstaged or untracked files; bypass it with `git commit --no-verify`. VCS and automation tooling (`.git`, `.github`, `.claude`, `.githooks`) is excluded from the validation input fingerprint and from release archives, so workflow, hook, or editor configuration never invalidates recorded live commissioning evidence.
 
 
 ## Catalog Coordinator v3

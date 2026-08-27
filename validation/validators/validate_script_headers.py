@@ -39,7 +39,7 @@ REGISTERED = frozenset(run_validation.SCRIPTS)
 # is caught, so a script registered under some other name costs nothing.
 REGISTERED_DIRS = frozenset(str(PurePosixPath(name).parent) for name in REGISTERED)
 SCRIPT_PREFIXES = ("test_", "validate_")
-SKIP_PARTS = {".git", ".claude", ".githooks", "__pycache__", "field_evidence"}
+SKIP_PARTS = {".git", ".github", ".claude", ".githooks", "__pycache__", "field_evidence"}
 # The kernel honours an interpreter line only at byte 0, so a shebang pushed
 # below the bootstrap hands Python source to /bin/sh, which hangs. The line-1
 # checks below are the primary guard; scanning the rest of the header names the
