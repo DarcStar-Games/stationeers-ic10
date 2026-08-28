@@ -63,6 +63,13 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 | Generic Config Editor | `22360680` | `S1` | 1 |
 | Config Input Bridge | `22360681` | `S1` | 1 |
 | Stack Cell Monitor | `31416052` | `S1` | 1 |
+| Controller PhasePressure Runtime | `31416060` | `S1` | 1 |
+| Controller PI Runtime | `31416061` | `S1` | 1 |
+| Controller Sequencer Runtime | `31416062` | `S1` | 1 |
+| Controller PressureDomain Runtime | `31416063` | `S1` | 1 |
+| Controller PressureTransfer Runtime | `31416064` | `S1` | 1 |
+| Embedded PressureTransfer Runtime | `31416065` | `S1` | 1 |
+| Process PressureDomain Runtime | `31416066` | `S1` | 1 |
 | Stack header extension | `31416054` | `E+1` | 1 |
 
 ## Catalog Store ABI v5
@@ -1574,6 +1581,13 @@ S10 sampled value for status 1/2, or the discovered magic for status 3
 S11 target ReferenceId
 S12 sample generation, published last
 ```
+
+## Controller runtime identities
+
+The seven Generic Telemetry runtimes each publish their own service magic in the
+common header at `S0`, and point `S7` at the telemetry block that stays at `S96`.
+The telemetry magic `27182818` continues to identify that block, not the service:
+its consumers read `S96` exactly as before.
 
 ## Common Stack Header v1
 

@@ -43,10 +43,10 @@ ck(inventory["envelope"]["base"] == 0 and inventory["envelope"]["length"] == 8,
    "the common header is no longer the first eight stack cells")
 ck(inventory["totals"] == {
     "deployable_programs": 173,
-    "migrated_v1": 1,
-    "legacy_exempt": 172,
+    "migrated_v1": 8,
+    "legacy_exempt": 165,
     "backlog_reserved_cell_users": 148,
-    "backlog_dynamic_range_users": 62,
+    "backlog_dynamic_range_users": 61,
 }, "generated coverage/backlog totals changed without review")
 by_source = {item["source"]: item for item in inventory["services"]}
 ck(by_source[MONITOR]["envelope"]["magic"] == 31416052,
@@ -101,6 +101,25 @@ contract = next(document for document in contracts.values() if document["source"
 ck([header for header in contract["own_stack"]["headers"]
     if header["base"] == 0 and header["magic"] == 31416052 and header["abi"] == 1],
    "the monitor's S0/S1 identity is not a verified contract header")
+
+# The Generic Telemetry family migrated additively: the S96 block never moved.
+telemetry = [item for item in inventory["services"]
+             if item.get("envelope", {}).get("pilot_family") == "generic-telemetry"]
+ck(len(telemetry) == 7, "the Generic Telemetry family is not fully migrated")
+for item in telemetry:
+    envelope = item["envelope"]
+    ck(envelope["telemetry_base"] == 96 and envelope["capability_mask"] == 8,
+       f"{item['source']}: does not advertise its telemetry block through S7")
+    runtime = IC10((ROOT / item["source"]).read_text())
+    runtime.run(1)
+    ck(runtime.stack.get(96) == 27182818,
+       f"{item['source']}: the established telemetry magic moved")
+    ck(runtime.stack.get(0) == envelope["magic"] and runtime.stack.get(1) == 1,
+       f"{item['source']}: does not publish its identity at S0/S1")
+    ck(runtime.stack.get(5) == 8 and runtime.stack.get(7) == 96,
+       f"{item['source']}: does not publish the telemetry pointer it declares")
+    ck(sorted(header["base"] for header in item["current_layout"]["headers"]) == [0, 96],
+       f"{item['source']}: contract does not carry both the header and the telemetry block")
 
 # Discovery reads S0..S7 and trusts only the cells the mask declares.
 target = Device(201, stack={0: 27182818, 1: 2, 5: 0},

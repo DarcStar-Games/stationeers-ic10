@@ -1,4 +1,4 @@
 Stack envelope validation: PASS
  - all 173 deployable programs are migrated or in the immutable pre-v1 baseline
- - migrated families: stack-monitor; backlog: 172 programs, 148 using reserved cells
+ - migrated families: generic-telemetry, stack-monitor; backlog: 165 programs, 148 using reserved cells
  - S0..S7 writes, derived capability mask, schema binding, and extension bounds are enforced

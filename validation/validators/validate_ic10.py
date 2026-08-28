@@ -18,6 +18,16 @@ SOFT_LIMIT_EXEMPTIONS = {
     "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10":
         "reference reader for the eight-cell common header: bit-gated schema, state,"
         " telemetry, and extension validation in one on-demand program",
+    "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10":
+        "publishes the common S0 header; its Generic Telemetry block stays at S96",
+    "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10":
+        "publishes the common S0 header; its Generic Telemetry block stays at S96",
+    "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10":
+        "publishes the common S0 header; its Generic Telemetry block stays at S96",
+    "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10":
+        "publishes the common S0 header; its Generic Telemetry block stays at S96",
+    "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10":
+        "publishes the common S0 header; its Generic Telemetry block stays at S96",
 }
 
 

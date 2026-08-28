@@ -183,7 +183,28 @@ version and is rejected by v1 readers; it may not silently repurpose a v1 cell.
 | Header reservation | 8 | — | costs 3 more programs than reserving 5; deferring costs a second break of ~146 |
 | Mandatory writes | 3 | 3 | `S0`/`S1` already published by 154 programs |
 | Monitor (migrated pilot) | 8 | 123 | reviewed spend of the 120..128 margin; it is the reference reader |
-| Backlog | — | — | 172 programs, 148 of which use `S2..S7` today |
+| Generic Telemetry family | 8 | +4 each | 7 runtimes migrated; 5 spend reviewed margin, 0 consumers changed |
+| Backlog | — | — | 165 programs, 148 of which use `S2..S7` today |
+
+## Worked migration: Generic Telemetry
+
+The seven Generic Telemetry runtimes were the first family to migrate, and they
+show why `TelemetryBase` earns its cell. Each runtime added four lines —
+`ServiceMagic`, `ServiceABI`, `CapabilityMask` = `HAS_TELEMETRY`, and
+`TelemetryBase` = `96` — and moved nothing. The block at `S96` keeps its magic
+`27182818`, its ABI, and every cell it published, so all five consumers that
+read `getd r0 ref 96` were untouched.
+
+Each runtime also gained its own registered magic, because the header identifies
+a service and `27182818` identifies a telemetry block that seven different
+services publish. An operator reading `S0` now learns which runtime is in the
+housing, and `S7` tells the reader where its telemetry lives — the exact question
+that opened this design.
+
+Five of the seven were at or near the soft ceiling, so they carry reviewed
+soft-limit exemptions in `validation/validators/validate_ic10.py`. That validator
+is the single owner of the 120-line ceiling; the 128-line hard limit still binds
+everywhere.
 
 ## Machine-readable authority
 

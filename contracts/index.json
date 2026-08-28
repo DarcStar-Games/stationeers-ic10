@@ -9965,6 +9965,7 @@
       "contract": "contracts/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.contract.json",
       "service_id": "ic10.script.controller.phase.pressure.runtime",
       "provides": [
+        "ic10.stack.31416060.abi1",
         "ic10.stack.27182818.abi2"
       ],
       "consumes": []
@@ -9983,6 +9984,7 @@
       "contract": "contracts/controller-pi/controller_pi_runtime_v1_1.contract.json",
       "service_id": "ic10.script.controller.pi.runtime",
       "provides": [
+        "ic10.stack.31416061.abi1",
         "ic10.stack.27182818.abi1"
       ],
       "consumes": [
@@ -10003,6 +10005,7 @@
       "contract": "contracts/controller-sequencer/controller_sequencer_runtime_v1_0.contract.json",
       "service_id": "ic10.script.controller.sequencer.runtime",
       "provides": [
+        "ic10.stack.31416062.abi1",
         "ic10.stack.27182818.abi1"
       ],
       "consumes": []
@@ -10903,6 +10906,7 @@
       "contract": "contracts/pressure-domain/controller_pressure_domain_runtime_v1_2.contract.json",
       "service_id": "ic10.script.controller.pressure.domain.runtime",
       "provides": [
+        "ic10.stack.31416063.abi1",
         "ic10.stack.27182818.abi2"
       ],
       "consumes": []
@@ -10932,6 +10936,7 @@
       "contract": "contracts/pressure-grid/controller_pressure_transfer_runtime_v2_0.contract.json",
       "service_id": "ic10.script.controller.pressure.transfer.runtime",
       "provides": [
+        "ic10.stack.31416064.abi1",
         "ic10.stack.27182818.abi2"
       ],
       "consumes": [
@@ -11146,6 +11151,7 @@
       "contract": "contracts/process-furnace/embedded_pressure_transfer_runtime_v1_0.contract.json",
       "service_id": "ic10.script.embedded.pressure.transfer.runtime",
       "provides": [
+        "ic10.stack.31416065.abi1",
         "ic10.stack.27182818.abi2"
       ],
       "consumes": []
@@ -11166,6 +11172,7 @@
       "contract": "contracts/process-furnace/process_pressure_domain_runtime_v1_0.contract.json",
       "service_id": "ic10.script.process.pressure.domain.runtime",
       "provides": [
+        "ic10.stack.31416066.abi1",
         "ic10.stack.27182818.abi2"
       ],
       "consumes": [

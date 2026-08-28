@@ -20,14 +20,19 @@ class IC10:
         self.self_ref = self_ref
         self.labels={}
         self.code=[]
+        self.names={}   # alias/define directives: name -> device port or literal token
         for raw in source.splitlines():
             raw=raw.split('#',1)[0].strip()
             if not raw: continue
             if raw.endswith(':'):
                 self.labels[raw[:-1]]=len(self.code); continue
+            parts=raw.replace(',',' ').split()
+            if parts[0] in ('alias','define') and len(parts)>=3:
+                self.names[parts[1]]=parts[2]; continue
             self.code.append(raw)
         self.pc=0; self.yields=0
     def val(self,t):
+        t=self.names.get(t,t)
         if t in self.reg: return self.reg[t]
         if re.fullmatch(r'rr(?:[0-9]|1[0-5])',t):
             return self.reg['r'+str(int(self.reg['r'+t[2:]]))]
@@ -45,12 +50,14 @@ class IC10:
             return crc-(1<<32) if crc>=(1<<31) else crc
         return v
     def setreg(self,r,v):
+        r=self.names.get(r,r)
         if re.fullmatch(r'rr(?:[0-9]|1[0-5])',r):
             r='r'+str(int(self.reg['r'+r[2:]]))
         self.reg[r]=v
     def stack_get(self,idx): return self.stack.get(int(self.val(idx)),0.0)
     def stack_put(self,idx,v): self.stack[int(self.val(idx))]=v
     def device(self,t):
+        t=self.names.get(t,t)
         if t=='db': return Device(self.self_ref,self.stack,{'ReferenceId':self.self_ref})
         if t.startswith('dr') and t[2:].isdigit():
             key='d'+str(int(self.reg['r'+t[2:]]))

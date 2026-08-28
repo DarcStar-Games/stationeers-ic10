@@ -1,0 +1,197 @@
+{
+  "$schema": "../../schemas/protocol_definition.schema.json",
+  "format": "IC10_PROTOCOL_DEFINITION_V1",
+  "protocol_id": "ic10.stack.31416063.abi1",
+  "name": "Controller Pressure Domain Runtime ABI1",
+  "transport": "ic-housing-stack",
+  "magic": 31416063,
+  "abi": 1,
+  "header_bases": [
+    0
+  ],
+  "canonical_refs": [],
+  "provider_interfaces": [
+    {
+      "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
+      "header_base": 0,
+      "readable_ranges": [],
+      "writable_ranges": [],
+      "fields": [
+        {
+          "address": 0,
+          "name": "Header@S0.Magic",
+          "value_type": "hash",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 1,
+          "name": "Header@S0.ABI",
+          "value_type": "integer",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 5,
+          "name": "S5",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 7,
+          "name": "S7",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 96,
+          "name": "Header@S96.Magic",
+          "value_type": "hash",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 97,
+          "name": "Header@S96.ABI",
+          "value_type": "integer",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 98,
+          "name": "S98",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 99,
+          "name": "S99",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 100,
+          "name": "S100",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 101,
+          "name": "S101",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 102,
+          "name": "S102",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 103,
+          "name": "S103",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 104,
+          "name": "S104",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 105,
+          "name": "S105",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 115,
+          "name": "S115",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 116,
+          "name": "S116",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 117,
+          "name": "S117",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 119,
+          "name": "S119",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        }
+      ],
+      "behavior": {
+        "publication_rules": [],
+        "restart": {
+          "mode": "cleared-on-init",
+          "source": "static-entry-path-analysis"
+        },
+        "invariants": []
+      }
+    }
+  ],
+  "consumer_interfaces": []
+}

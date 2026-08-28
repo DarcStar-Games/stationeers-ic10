@@ -1,4 +1,8 @@
 # PressureTransfer v2.0: d0 source,d1 sink,d2 pump,d3 GrantGuard,d4 Host.
+poke 0 31416064
+poke 1 1
+poke 5 8
+poke 7 96
 poke 96 27182818
 poke 97 2
 poke 98 30

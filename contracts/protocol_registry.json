@@ -2663,6 +2663,118 @@
         }
       ],
       "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416060.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416060,
+      "abi": 1,
+      "name": "Controller Phase Pressure Runtime ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416060.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416061.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416061,
+      "abi": 1,
+      "name": "Controller Pi Runtime ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416061.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/controller-pi/controller_pi_runtime_v1_1.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416062.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416062,
+      "abi": 1,
+      "name": "Controller Sequencer Runtime ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416062.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416063.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416063,
+      "abi": 1,
+      "name": "Controller Pressure Domain Runtime ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416063.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416064.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416064,
+      "abi": 1,
+      "name": "Controller Pressure Transfer Runtime ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416064.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416065.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416065,
+      "abi": 1,
+      "name": "Embedded Pressure Transfer Runtime ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416065.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416066.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416066,
+      "abi": 1,
+      "name": "Process Pressure Domain Runtime ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416066.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
     }
   ]
 }

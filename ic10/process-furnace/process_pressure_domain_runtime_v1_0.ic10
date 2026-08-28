@@ -1,4 +1,8 @@
 # Process PressureDomain ABI2. d0 condition,d1 target.
+poke 0 31416066
+poke 1 1
+poke 5 8
+poke 7 96
 poke 96 27182818
 poke 97 2
 poke 98 126

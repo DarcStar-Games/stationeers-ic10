@@ -18,6 +18,85 @@
   ]
  },
  "migrated": {
+  "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10": {
+   "service_id": "ic10.script.controller.phase.pressure.runtime",
+   "magic": 31416060,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 96,
+   "publishes_state": false,
+   "source_sha256": "f1d34b539b46766e47faaeb032dfdd40805befbca6db3f528db1e53ea101c8b6",
+   "legacy_owned_ranges": [
+    [
+     96,
+     106
+    ],
+    [
+     115,
+     117
+    ],
+    [
+     119,
+     119
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "generic-telemetry"
+  },
+  "ic10/controller-pi/controller_pi_runtime_v1_1.ic10": {
+   "service_id": "ic10.script.controller.pi.runtime",
+   "magic": 31416061,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 96,
+   "publishes_state": false,
+   "source_sha256": "14c31bead6e3ba0fccc4ff8ba1bdeb62f6def04558373028a780684d461be803",
+   "legacy_owned_ranges": [
+    [
+     96,
+     109
+    ],
+    [
+     116,
+     118
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "generic-telemetry"
+  },
+  "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10": {
+   "service_id": "ic10.script.controller.sequencer.runtime",
+   "magic": 31416062,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 96,
+   "publishes_state": false,
+   "source_sha256": "39852f6765f206aa54369c97ee410ad8b27b76ca432ac9d136b77c7eb328019e",
+   "legacy_owned_ranges": [
+    [
+     96,
+     104
+    ],
+    [
+     116,
+     116
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "generic-telemetry"
+  },
   "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10": {
    "service_id": "ic10.script.stack.cell.monitor",
    "magic": 31416052,
@@ -38,6 +117,134 @@
    "pilot_family": "stack-monitor",
    "telemetry_base": 0,
    "publishes_state": true
+  },
+  "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": {
+   "service_id": "ic10.script.controller.pressure.domain.runtime",
+   "magic": 31416063,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 96,
+   "publishes_state": false,
+   "source_sha256": "67d56f8c2a392525ab8ea33a86570b5607d2a5de593680567ee82520e826a720",
+   "legacy_owned_ranges": [
+    [
+     96,
+     105
+    ],
+    [
+     115,
+     117
+    ],
+    [
+     119,
+     119
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "generic-telemetry"
+  },
+  "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10": {
+   "service_id": "ic10.script.controller.pressure.transfer.runtime",
+   "magic": 31416064,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 96,
+   "publishes_state": false,
+   "source_sha256": "5eebd139e135dc6c32492a3b2628a62acb503ae7089beefe788443491711b7da",
+   "legacy_owned_ranges": [
+    [
+     96,
+     103
+    ],
+    [
+     106,
+     107
+    ],
+    [
+     115,
+     116
+    ],
+    [
+     121,
+     121
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "generic-telemetry"
+  },
+  "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10": {
+   "service_id": "ic10.script.embedded.pressure.transfer.runtime",
+   "magic": 31416065,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 96,
+   "publishes_state": false,
+   "source_sha256": "4d9ce47dd38574f9201a0d4be6f91f9f6b76c644fd9ffdbe07f4d6711a412598",
+   "legacy_owned_ranges": [
+    [
+     16,
+     20
+    ],
+    [
+     96,
+     103
+    ],
+    [
+     106,
+     107
+    ],
+    [
+     115,
+     115
+    ],
+    [
+     121,
+     121
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "generic-telemetry"
+  },
+  "ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10": {
+   "service_id": "ic10.script.process.pressure.domain.runtime",
+   "magic": 31416066,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 96,
+   "publishes_state": false,
+   "source_sha256": "76753538b746e37422aa3a496a3136b682ebb6b0b543e7eabfd5b22bad58cc38",
+   "legacy_owned_ranges": [
+    [
+     96,
+     105
+    ],
+    [
+     115,
+     115
+    ],
+    [
+     119,
+     119
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "generic-telemetry"
   }
  },
  "legacy_exemption": {

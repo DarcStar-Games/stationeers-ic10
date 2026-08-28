@@ -18,11 +18,11 @@ PASS ic10/controller-config/generic_config_loader_v1_2.ic10 lines=119 headroom= 
 PASS ic10/controller-config/generic_persistent_config_host_v1_1.ic10 lines=120 headroom= 8 max=75 CRLF=2052 comments=10
 PASS ic10/controller-discovery/controller_directory_adapter_v4_0.ic10 lines= 58 headroom=70 max=79 CRLF= 837 comments= 1
 PASS ic10/controller-discovery/controller_selector_v3_0.ic10 lines=109 headroom=19 max=84 CRLF=1939 comments= 4
-PASS ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10 lines=120 headroom= 8 max=67 CRLF=1853 comments= 0
+PASS ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10 lines=124 headroom= 4 max=67 CRLF=1901 comments= 0
 PASS ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10 lines= 94 headroom=34 max=75 CRLF=1488 comments= 1
-PASS ic10/controller-pi/controller_pi_runtime_v1_1.ic10 lines=115 headroom=13 max=80 CRLF=2285 comments= 9
+PASS ic10/controller-pi/controller_pi_runtime_v1_1.ic10 lines=119 headroom= 9 max=80 CRLF=2333 comments= 9
 PASS ic10/controller-pi/pi_config_policy_v1_0.ic10 lines= 86 headroom=42 max=78 CRLF=1566 comments= 4
-PASS ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10 lines=119 headroom= 9 max=64 CRLF=1963 comments= 5
+PASS ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10 lines=123 headroom= 5 max=64 CRLF=2011 comments= 5
 PASS ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10 lines= 97 headroom=31 max=74 CRLF=1574 comments= 2
 PASS ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10 lines= 80 headroom=48 max=58 CRLF=1089 comments= 1
 PASS ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10 lines= 52 headroom=76 max=71 CRLF= 744 comments= 1
@@ -118,10 +118,10 @@ PASS ic10/power-jobs/power_job_policy_verify_v1_0.ic10 lines= 61 headroom=67 max
 PASS ic10/power-jobs/power_job_prepare_v1_0.ic10 lines=104 headroom=24 max=64 CRLF=1403 comments= 1
 PASS ic10/power-jobs/power_job_scheduler_v1_0.ic10 lines= 74 headroom=54 max=58 CRLF=1002 comments= 1
 PASS ic10/power-jobs/power_policy_target_resolver_v1_0.ic10 lines= 74 headroom=54 max=53 CRLF= 996 comments= 1
-PASS ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10 lines=120 headroom= 8 max=68 CRLF=1850 comments= 0
+PASS ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10 lines=124 headroom= 4 max=68 CRLF=1898 comments= 0
 PASS ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10 lines=119 headroom= 9 max=54 CRLF=1813 comments= 0
 PASS ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10 lines= 78 headroom=50 max=68 CRLF=1267 comments= 1
-PASS ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10 lines=120 headroom= 8 max=73 CRLF=1854 comments= 1
+PASS ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10 lines=124 headroom= 4 max=73 CRLF=1902 comments= 1
 PASS ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10 lines=120 headroom= 8 max=49 CRLF=1917 comments= 0
 PASS ic10/pressure-grid/pressure_grid_cost_profile_v1_0.ic10 lines= 11 headroom=117 max=70 CRLF= 180 comments= 1
 PASS ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10 lines= 88 headroom=40 max=83 CRLF=1350 comments= 1
@@ -141,9 +141,9 @@ PASS ic10/printer-directory/printer_capacity_client_v2_0.ic10 lines=120 headroom
 PASS ic10/printer-directory/printer_directory_adapter_v1_0.ic10 lines=117 headroom=11 max=88 CRLF=2203 comments= 1
 PASS ic10/printer-directory/printer_execution_bank_v2_0.ic10 lines=120 headroom= 8 max=21 CRLF=1666 comments= 0
 PASS ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10 lines=120 headroom= 8 max=47 CRLF=1673 comments= 0
-PASS ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10 lines=119 headroom= 9 max=69 CRLF=1967 comments= 2
+PASS ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10 lines=123 headroom= 5 max=69 CRLF=2015 comments= 2
 PASS ic10/process-furnace/furnace_process_condition_request_v1_0.ic10 lines= 95 headroom=33 max=63 CRLF=1316 comments= 1
-PASS ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10 lines= 61 headroom=67 max=54 CRLF= 901 comments= 1
+PASS ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10 lines= 65 headroom=63 max=54 CRLF= 949 comments= 1
 PASS ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10 lines=111 headroom=17 max=79 CRLF=1676 comments= 1
 PASS ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10 lines= 76 headroom=52 max=60 CRLF=1198 comments= 1
 PASS ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10 lines= 82 headroom=46 max=70 CRLF=1209 comments= 1

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10",
-  "source_sha256": "9aec5d25708442dab5aab7bbf343ffa7105409665e6083f4cc0252d9e5e7d30f",
+  "source_sha256": "f1d34b539b46766e47faaeb032dfdd40805befbca6db3f528db1e53ea101c8b6",
   "identity": {
     "service_id": "ic10.script.controller.phase.pressure.runtime",
     "implementation_revision": "1.1",
@@ -187,6 +187,10 @@
       119
     ],
     "literal_writes": [
+      0,
+      1,
+      5,
+      7,
       96,
       97,
       98,
@@ -215,6 +219,46 @@
     "external_readable_ranges": [],
     "external_writable_ranges": [],
     "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 31416060
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 5,
+        "name": "S5",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 8
+      },
+      {
+        "address": 7,
+        "name": "S7",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 96
+      },
       {
         "address": 96,
         "name": "Header@S96.Magic",
@@ -360,6 +404,11 @@
     ],
     "headers": [
       {
+        "base": 0,
+        "magic": 31416060,
+        "abi": 1
+      },
+      {
         "base": 96,
         "magic": 27182818,
         "abi": 2
@@ -374,10 +423,24 @@
     },
     "invariants": [
       {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 31416060,
+        "source": "generated-protocol-header"
+      },
+      {
         "id": "header.s96.magic",
         "kind": "cell-equals",
         "address": 96,
         "equals": 27182818,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
         "source": "generated-protocol-header"
       },
       {
@@ -391,6 +454,13 @@
   },
   "contracts": {
     "provides": [
+      {
+        "protocol_id": "ic10.stack.31416060.abi1",
+        "base": 0,
+        "magic": 31416060,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      },
       {
         "protocol_id": "ic10.stack.27182818.abi2",
         "base": 96,
