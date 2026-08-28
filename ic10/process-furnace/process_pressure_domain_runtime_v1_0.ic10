@@ -4,6 +4,14 @@ poke 97 2
 poke 98 126
 poke 99 HASH("ControllerPressureDomain")
 poke 115 0
+poke 320 31416053
+poke 321 1
+poke 322 HASH("ic10.script.process.pressure.domain.runtime")
+poke 323 2
+poke 324 0
+poke 325 0
+poke 326 96
+poke 327 0
 Loop:
 yield
 poke 115 0

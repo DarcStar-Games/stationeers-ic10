@@ -3,7 +3,7 @@ Not a Stationeers emulator. Supports only the instruction subset exercised by te
 """
 from __future__ import annotations
 from dataclasses import dataclass, field
-import math, re, shlex
+import math, re, shlex, zlib
 
 @dataclass
 class Device:
@@ -37,6 +37,13 @@ class IC10:
         if t.startswith('HASH('): return 'HASH:'+t[5:-1].strip('"')
         try: return float(t) if any(c in t for c in '.eE') else int(t)
         except ValueError: return t  # LogicType symbolic value
+    def num(self,t):
+        """Hashes are int32 in game, so arithmetic sees a number, never the 'HASH:' token."""
+        v=self.val(t)
+        if isinstance(v,str) and v.startswith('HASH:'):
+            crc=zlib.crc32(v[5:].encode())
+            return crc-(1<<32) if crc>=(1<<31) else crc
+        return v
     def setreg(self,r,v):
         if re.fullmatch(r'rr(?:[0-9]|1[0-5])',r):
             r='r'+str(int(self.reg['r'+r[2:]]))
@@ -118,15 +125,19 @@ class IC10:
                 dev=self.device(a[1]); idx=int(self.val(a[2])); key=self.propkey(a[3])
                 self.setreg(a[0],dev.slots.get(idx,{}).get(key,0.0))
             elif op in ('add','sub','mul','div','min','max','pow','mod'):
-                x,y=self.val(a[1]),self.val(a[2]);
+                x,y=self.num(a[1]),self.num(a[2])
                 f={'add':lambda:x+y,'sub':lambda:x-y,'mul':lambda:x*y,'div':lambda:x/y,'min':lambda:min(x,y),'max':lambda:max(x,y),'pow':lambda:x**y,'mod':lambda:x%y}[op]
                 self.setreg(a[0],f())
             elif op in ('and','or','sll'):
-                x,y=int(self.val(a[1])),int(self.val(a[2]))
+                x,y=int(self.num(a[1])),int(self.num(a[2]))
                 v={'and':x & y,'or':x | y,'sll':x << y}[op]; self.setreg(a[0],v)
             elif op=='clamp': self.setreg(a[0],max(self.val(a[2]),min(self.val(a[1]),self.val(a[3]))))
             elif op in ('seq','sne','slt','sgt'):
-                x,y=self.val(a[1]),self.val(a[2]); f={'seq':x==y,'sne':x!=y,'slt':x<y,'sgt':x>y}[op]; self.setreg(a[0],1 if f else 0)
+                x,y=self.val(a[1]),self.val(a[2])
+                v=(x==y) if op=='seq' else (x!=y) if op=='sne' else (x<y) if op=='slt' else (x>y)
+                self.setreg(a[0],1 if v else 0)
+            elif op=='snan':
+                v=self.val(a[1]); self.setreg(a[0],1 if isinstance(v,float) and math.isnan(v) else 0)
             elif op=='select': self.setreg(a[0],self.val(a[2]) if self.val(a[1])!=0 else self.val(a[3]))
             elif op=='j': self.branch(a[0])
             elif op=='jal': self.reg['ra']=self.pc; self.branch(a[0])

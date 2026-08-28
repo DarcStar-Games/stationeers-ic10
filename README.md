@@ -11,7 +11,7 @@ If you are new to the framework, read the documents in this order:
 1. **README.md** — mental model, major components, and terminology.
 2. **docs/ARCHITECTURE.md** — component ownership and end-to-end data flow.
 3. **docs/PI_CONTROLLER_GETTING_STARTED.md** — smallest creative-mode PI controller bench test using existing scripts.
-4. **docs/STACK_CELL_MONITOR_GETTING_STARTED.md** — reusable visible inspection of production IC stack cells.
+4. **docs/STACK_ABI_ENVELOPE.md** and **docs/STACK_CELL_MONITOR_GETTING_STARTED.md** — common service discovery contract and reusable visible inspection of production IC stack cells.
 5. **docs/CONTROLLER_DIRECTORY_GETTING_STARTED.md** — isolated Controller Directory discovery, publication, removal, and recovery test.
 6. **docs/COMMISSIONING_QUICKSTART.md** — shortest path to a full PI deployment and diagnostics panel.
 7. **USER_DEPLOYMENT_GUIDE.md** — operator-facing per-family deployment manual covering all production IC10 programs, residency/reclaim rules, health checks, restart behavior, and live proof.
@@ -48,7 +48,7 @@ The repository uses **semantic paths**, not historical source ordinals. Producti
 
 ```text
 ic10/<deployment-family>/     versioned production IC10 programs
-contracts/                    generated per-script contracts, registry, and protocol definitions
+contracts/                    generated per-script contracts, protocol/envelope registries, and definitions
 schemas/                      JSON Schema definitions for generated contract documents
 docs/                         engineering/reference documentation
 framework/                    executable protocol reference models
@@ -62,7 +62,7 @@ tools/                        command-line entrypoints
 tools/generate/               code generators driven by data/
 ```
 
-Do not infer execution order, ABI identity, or deployment order from a filename. Use the semantic path, version suffix, `data/source_manifest.json`, `contracts/index.json`, `docs/SCRIPT_INDEX.md`, and `USER_DEPLOYMENT_GUIDE.md`.
+Do not infer execution order, ABI identity, or deployment order from a filename. Use the semantic path, version suffix, `data/source_manifest.json`, `contracts/index.json`, `contracts/stack_envelope_inventory.json`, `docs/SCRIPT_INDEX.md`, and `USER_DEPLOYMENT_GUIDE.md`.
 
 ## Mental model
 

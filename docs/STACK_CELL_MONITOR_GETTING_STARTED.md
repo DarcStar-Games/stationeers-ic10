@@ -1,9 +1,10 @@
 # Stack Cell Monitor Getting Started
 
-The Stack Cell Monitor is an on-demand commissioning tool for reading one stack
-cell from another IC housing without modifying that target. A Logic Memory
-selects the address, and the monitor mirrors the sampled value to its own housing
-`Setting` and, optionally, to a second Logic Memory.
+The Stack Cell Monitor is an on-demand commissioning tool for discovering a
+Stack Envelope v1 service or reading one stack cell from another IC housing
+without modifying that target. A Logic Memory selects discovery mode or an
+address, and the monitor mirrors the result to its own housing `Setting` and,
+optionally, to a second Logic Memory.
 
 Use this tool when a production service publishes useful state in its IC stack
 but has no human-facing display. Remove or repurpose the monitor after testing;
@@ -66,7 +67,22 @@ Use the screwdriver to make these connections:
 Power the monitor and both memories. The target must be an IC housing; ordinary
 devices are rejected even if they expose other logic properties.
 
-## 4. Read a stack cell
+## 4. Discover an envelope
+
+1. Set `Stack Address.Setting` to `-1`.
+2. Wait for monitor status `3` in its own `S2`.
+3. Read the target's semantic `ServiceId` hash from monitor `S4` (and the optional
+   `Stack Value` Memory).
+4. Read the target's `PrimaryPayloadBase` from monitor `S3`.
+5. Set `Stack Address.Setting` to that payload base to inspect the established
+   magic without prior knowledge of the target family.
+
+Discovery reads only the common `S320..S327` envelope. It validates envelope
+magic/version, a positive service ABI, schema zero pairing, payload bounds, and
+any length-prefixed extension before reporting success. See
+`docs/STACK_ABI_ENVELOPE.md` for the complete contract and pilot inventory.
+
+## 5. Read a stack cell
 
 1. Set `Stack Address.Setting` to the integer stack address, from `0` through
    `511`.
@@ -78,11 +94,9 @@ For example, setting `Stack Address` to `6` reads `S6` from the housing connecte
 to `d0`. A captured NaN is displayed as NaN rather than being replaced with a
 plausible number.
 
-Do not assume that every target publishes its ABI header at `S0`. Select
-addresses from that target program's ABI documentation. Controller runtimes use
-the shared Generic Telemetry region beginning at `S96`; for example, the PI
-Runtime publishes telemetry magic `27182818` at `S96`, its ABI at `S97`, and its
-live channels beginning at `S100`.
+Legacy-exempt targets still require their ABI documentation. For migrated
+targets, discovery reports whether the primary payload is at `S0`, `S96`, or
+another address. Controller runtimes commonly use Generic Telemetry at `S96`.
 
 The monitor publishes this diagnostic state in its own stack:
 
@@ -94,18 +108,27 @@ The monitor publishes this diagnostic state in its own stack:
 | `S5` | Target housing ReferenceId |
 | `S6` | Sample generation, published last |
 
+For status `3`, `S3` is the discovered primary payload base and `S4` is the
+semantic ServiceId hash. For status `1`/`2`, they retain the selected-address and
+sampled-value meanings above. A failed discovery reports the selected `-1` in
+`S3`, so no address there is ever mistaken for a payload base the monitor did
+not read.
+
 Status values are:
 
 | Status | Meaning |
 | ---: | --- |
 | `1` | Finite value captured |
 | `2` | NaN captured from the target cell |
+| `3` | Valid Stack Envelope v1 discovered |
 | `-1` | Target missing |
 | `-2` | Target is not a standard or compact IC housing |
 | `-3` | Address selector missing or does not expose `Setting` |
 | `-4` | Address is NaN, fractional, negative, or greater than `511` |
+| `-5` | Target does not publish Stack Envelope v1 |
+| `-6` | Envelope fields or extension bounds are invalid |
 
-## 5. Safety and limitations
+## 6. Safety and limitations
 
 The monitor never writes to `d0` or `d1`. Its only external write is the optional
 `Setting` mirror on `d2`. It samples one cell at a time and does not claim that

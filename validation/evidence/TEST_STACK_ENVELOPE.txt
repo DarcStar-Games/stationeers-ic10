@@ -1,0 +1,4 @@
+Stack envelope tests: PASS
+ - all five pilots preserve their established payload headers while publishing v1
+ - monitor discovers semantic ServiceId and payload base from only S320..S327
+ - schema zero pairing, extension bounds, and the legacy source-set gate fail closed

@@ -5,6 +5,14 @@ poke 12 0
 poke 13 0
 poke 14 -1
 poke 15 0
+poke 320 31416053
+poke 321 1
+poke 322 HASH("ic10.script.pressure.inventory.reservation")
+poke 323 1
+poke 324 0
+poke 325 0
+poke 326 0
+poke 327 0
 move r15 -1
 Loop:
 yield

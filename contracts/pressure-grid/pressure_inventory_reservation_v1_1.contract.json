@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10",
-  "source_sha256": "ed3e52a17daecbc98ab81abaa7dfd0022266ed81ddb19480ef12734dd63ed308",
+  "source_sha256": "d09f28281130db903fbf050c0858facd6d386dac63b8c56b5feaf2f29010776f",
   "identity": {
     "service_id": "ic10.script.pressure.inventory.reservation",
     "implementation_revision": "1.1",
@@ -88,7 +88,15 @@
       12,
       13,
       14,
-      15
+      15,
+      320,
+      321,
+      322,
+      323,
+      324,
+      325,
+      326,
+      327
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -99,7 +107,12 @@
     "dynamic_read_range_source": "none",
     "dynamic_write_range_source": "none",
     "clears_all": false,
-    "external_readable_ranges": [],
+    "external_readable_ranges": [
+      {
+        "start": 320,
+        "end": 327
+      }
+    ],
     "external_writable_ranges": [],
     "fields": [
       {
@@ -249,6 +262,94 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
+          "self-write"
+        ],
+        "const": 0
+      },
+      {
+        "address": 320,
+        "name": "StackEnvelope.Magic",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 31416053
+      },
+      {
+        "address": 321,
+        "name": "StackEnvelope.Version",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 322,
+        "name": "StackEnvelope.ServiceId",
+        "value_type": "hash",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": "HASH(\"ic10.script.pressure.inventory.reservation\")"
+      },
+      {
+        "address": 323,
+        "name": "StackEnvelope.ServiceABI",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 324,
+        "name": "StackEnvelope.SchemaId",
+        "value_type": "hash",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 0
+      },
+      {
+        "address": 325,
+        "name": "StackEnvelope.SchemaVersion",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 0
+      },
+      {
+        "address": 326,
+        "name": "StackEnvelope.PrimaryPayloadBase",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 0
+      },
+      {
+        "address": 327,
+        "name": "StackEnvelope.ExtensionBase",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
           "self-write"
         ],
         "const": 0

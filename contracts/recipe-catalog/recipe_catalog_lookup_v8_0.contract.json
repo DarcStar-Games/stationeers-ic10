@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10",
-  "source_sha256": "5fc4c51f6760899eebacd02071b5cd8ea8971fce91a478bc8b2b981b7b3dadec",
+  "source_sha256": "0fce68e5d10797aa808e1c51ec3d95dfd7917388f5bb8fcf0b5c51427cf77156",
   "identity": {
     "service_id": "ic10.script.recipe.catalog.lookup",
     "implementation_revision": "8.0",
@@ -133,7 +133,15 @@
       8,
       9,
       10,
-      11
+      11,
+      320,
+      321,
+      322,
+      323,
+      324,
+      325,
+      326,
+      327
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -144,7 +152,12 @@
     "dynamic_read_range_source": "none",
     "dynamic_write_range_source": "none",
     "clears_all": false,
-    "external_readable_ranges": [],
+    "external_readable_ranges": [
+      {
+        "start": 320,
+        "end": 327
+      }
+    ],
     "external_writable_ranges": [],
     "fields": [
       {
@@ -248,6 +261,94 @@
         "access": [
           "self-write"
         ]
+      },
+      {
+        "address": 320,
+        "name": "StackEnvelope.Magic",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 31416053
+      },
+      {
+        "address": 321,
+        "name": "StackEnvelope.Version",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 322,
+        "name": "StackEnvelope.ServiceId",
+        "value_type": "hash",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": "HASH(\"ic10.script.recipe.catalog.lookup\")"
+      },
+      {
+        "address": 323,
+        "name": "StackEnvelope.ServiceABI",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 3
+      },
+      {
+        "address": 324,
+        "name": "StackEnvelope.SchemaId",
+        "value_type": "hash",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": "HASH(\"CatalogSchema.Recipe\")"
+      },
+      {
+        "address": 325,
+        "name": "StackEnvelope.SchemaVersion",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 3
+      },
+      {
+        "address": 326,
+        "name": "StackEnvelope.PrimaryPayloadBase",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 0
+      },
+      {
+        "address": 327,
+        "name": "StackEnvelope.ExtensionBase",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 0
       }
     ],
     "headers": [

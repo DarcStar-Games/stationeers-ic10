@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10",
-  "source_sha256": "832890cb774573c90499789f1f79c2a6cd1174e80d6a89e8afe7ed4dff446cbc",
+  "source_sha256": "38eaa07b92a9bd2b373d386db23e95e40adbff40c8df36a9108ec755cefd41ad",
   "identity": {
     "service_id": "ic10.script.process.pressure.domain.runtime",
     "implementation_revision": "1.0",
@@ -119,7 +119,15 @@
       104,
       105,
       115,
-      119
+      119,
+      320,
+      321,
+      322,
+      323,
+      324,
+      325,
+      326,
+      327
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -130,7 +138,12 @@
     "dynamic_read_range_source": "none",
     "dynamic_write_range_source": "none",
     "clears_all": false,
-    "external_readable_ranges": [],
+    "external_readable_ranges": [
+      {
+        "start": 320,
+        "end": 327
+      }
+    ],
     "external_writable_ranges": [],
     "fields": [
       {
@@ -246,6 +259,94 @@
           "self-read",
           "self-write"
         ]
+      },
+      {
+        "address": 320,
+        "name": "StackEnvelope.Magic",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 31416053
+      },
+      {
+        "address": 321,
+        "name": "StackEnvelope.Version",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 322,
+        "name": "StackEnvelope.ServiceId",
+        "value_type": "hash",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": "HASH(\"ic10.script.process.pressure.domain.runtime\")"
+      },
+      {
+        "address": 323,
+        "name": "StackEnvelope.ServiceABI",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 2
+      },
+      {
+        "address": 324,
+        "name": "StackEnvelope.SchemaId",
+        "value_type": "hash",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 0
+      },
+      {
+        "address": 325,
+        "name": "StackEnvelope.SchemaVersion",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 0
+      },
+      {
+        "address": 326,
+        "name": "StackEnvelope.PrimaryPayloadBase",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 96
+      },
+      {
+        "address": 327,
+        "name": "StackEnvelope.ExtensionBase",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ],
+        "const": 0
       }
     ],
     "headers": [

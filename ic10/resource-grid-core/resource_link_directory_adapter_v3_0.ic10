@@ -8,6 +8,14 @@ poke 3 1
 poke 4 1
 poke 5 64
 poke 10 1
+poke 320 31416053
+poke 321 1
+poke 322 HASH("ic10.script.resource.link.directory.adapter")
+poke 323 2
+poke 324 HASH("DirectorySchema.ResourceLink")
+poke 325 1
+poke 326 0
+poke 327 0
 Loop:
 yield
 get r0 db 11

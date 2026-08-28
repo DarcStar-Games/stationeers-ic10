@@ -797,10 +797,10 @@ def _resolve_dynamic_ranges(
     return [], "source-fingerprinted-exception"
 
 
-def _stable_header_cells(
-    source: str, integer_aliases: dict[str, int], headers: list[dict[str, int]]
+def _stable_cells(
+    source: str, integer_aliases: dict[str, int], expected: dict[int, Any]
 ) -> set[int]:
-    """Find header cells initialized before every observable control-flow boundary."""
+    """Find cells initialized to an expected value before every observable control-flow boundary."""
     program = _program(source)
     if not program:
         return set()
@@ -891,11 +891,6 @@ def _stable_header_cells(
     if not observations:
         return set()
 
-    expected = {
-        header["base"]: header["magic"] for header in headers
-    } | {
-        header["base"] + 1: header["abi"] for header in headers
-    }
     stable: set[int] = set()
     for address, value in expected.items():
         matching_writes = {
@@ -1492,7 +1487,30 @@ def _own_stack(source: str, rows: list[list[str]], integer_aliases: dict[str, in
     dynamic_write_cells = {
         address for item in dynamic_write_ranges for address in range(item["start"], item["end"] + 1)
     }
-    stable_header_cells = _stable_header_cells(source, integer_aliases, headers)
+    envelope_names = (
+        (320, "StackEnvelope.Magic", "integer"),
+        (321, "StackEnvelope.Version", "integer"),
+        (322, "StackEnvelope.ServiceId", "hash"),
+        (323, "StackEnvelope.ServiceABI", "integer"),
+        (324, "StackEnvelope.SchemaId", "hash"),
+        (325, "StackEnvelope.SchemaVersion", "integer"),
+        (326, "StackEnvelope.PrimaryPayloadBase", "integer"),
+        (327, "StackEnvelope.ExtensionBase", "integer"),
+    )
+    has_envelope = (
+        write_values[320] == {31416053}
+        and write_values[321] == {1}
+        and all(address in writes for address, _, _ in envelope_names)
+    )
+    stable_expected: dict[int, Any] = {header["base"]: header["magic"] for header in headers}
+    stable_expected.update({header["base"] + 1: header["abi"] for header in headers})
+    if has_envelope:
+        stable_expected.update({
+            address: next(iter(write_values[address]))
+            for address, _, _ in envelope_names
+            if address not in unknown_values and len(write_values[address]) == 1
+        })
+    stable_cells = _stable_cells(source, integer_aliases, stable_expected)
     fields: dict[int, dict[str, Any]] = {}
     for address in sorted(reads | writes):
         access = []
@@ -1531,7 +1549,7 @@ def _own_stack(source: str, rows: list[list[str]], integer_aliases: dict[str, in
             header["base"] not in dynamic_write_cells
             and header["base"] not in unknown_values
             and write_values[header["base"]] == {header["magic"]}
-            and header["base"] in stable_header_cells
+            and header["base"] in stable_cells
         ):
             fields[header["base"]]["const"] = header["magic"]
         else:
@@ -1543,7 +1561,7 @@ def _own_stack(source: str, rows: list[list[str]], integer_aliases: dict[str, in
             header["base"] + 1 not in dynamic_write_cells
             and header["base"] + 1 not in unknown_values
             and write_values[header["base"] + 1] == {header["abi"]}
-            and header["base"] + 1 in stable_header_cells
+            and header["base"] + 1 in stable_cells
         ):
             fields[header["base"] + 1]["const"] = header["abi"]
         else:
@@ -1560,6 +1578,47 @@ def _own_stack(source: str, rows: list[list[str]], integer_aliases: dict[str, in
         for key in ("default", "enum_values", "reserved"):
             if key in declared:
                 current[key] = declared[key]
+    if has_envelope:
+        for address, name, value_type in envelope_names:
+            field = fields[address]
+            field["name"] = name
+            field["value_type"] = value_type
+            field["semantic_source"] = "source"
+            field["access"] = sorted(set(field["access"]) | {"external-read"})
+            if (
+                address not in dynamic_write_cells
+                and address not in unknown_values
+                and len(write_values[address]) == 1
+                and address in stable_cells
+            ):
+                field["const"] = next(iter(write_values[address]))
+            else:
+                field.pop("const", None)
+    external_readable_ranges = _ranges(overrides.get("external_readable_ranges"))
+    if has_envelope:
+        external_readable_ranges = _merge_ranges(
+            external_readable_ranges + [{"start": 320, "end": 327}]
+        )
+        extension_bases = write_values[327]
+        if len(extension_bases) == 1:
+            extension_base = next(iter(extension_bases))
+            if isinstance(extension_base, int) and extension_base != 0:
+                extension_lengths = write_values[extension_base + 2]
+                if (
+                    write_values[extension_base] == {31416054}
+                    and write_values[extension_base + 1] == {1}
+                    and len(extension_lengths) == 1
+                ):
+                    extension_length = next(iter(extension_lengths))
+                    if (
+                        isinstance(extension_length, int)
+                        and 4 <= extension_length <= 192
+                        and extension_base + extension_length <= 512
+                    ):
+                        external_readable_ranges = _merge_ranges(external_readable_ranges + [{
+                            "start": extension_base,
+                            "end": extension_base + extension_length - 1,
+                        }])
     return {
         "size": 512,
         "literal_reads": sorted(reads),
@@ -1573,7 +1632,7 @@ def _own_stack(source: str, rows: list[list[str]], integer_aliases: dict[str, in
         "dynamic_read_range_source": dynamic_read_range_source,
         "dynamic_write_range_source": dynamic_write_range_source,
         "clears_all": clears_all,
-        "external_readable_ranges": _ranges(overrides.get("external_readable_ranges")),
+        "external_readable_ranges": external_readable_ranges,
         "external_writable_ranges": _ranges(overrides.get("external_writable_ranges")),
         "fields": [fields[address] for address in sorted(fields)],
     }, sorted(publication_rules, key=lambda item: (item["address"], item["kind"], item["description"]))

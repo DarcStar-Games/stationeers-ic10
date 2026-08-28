@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10",
-  "source_sha256": "d10ca64db22b2a48b990ee2b47a77f678e1332aa52761806fb0e31a09204148b",
+  "source_sha256": "37688b3d5a314021552cca9ef6b56bcfe7c2a27c4b66d0dbb04b71c2cf4e9859",
   "identity": {
     "service_id": "ic10.script.resource.link.directory.adapter",
     "implementation_revision": "3.0",
@@ -68,7 +68,15 @@
       8,
       9,
       10,
-      12
+      12,
+      320,
+      321,
+      322,
+      323,
+      324,
+      325,
+      326,
+      327
     ],
     "dynamic_read": false,
     "dynamic_write": true,
@@ -97,6 +105,10 @@
       {
         "start": 16,
         "end": 79
+      },
+      {
+        "start": 320,
+        "end": 327
       }
     ],
     "external_writable_ranges": [],
@@ -217,6 +229,86 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 320,
+        "name": "StackEnvelope.Magic",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 321,
+        "name": "StackEnvelope.Version",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 322,
+        "name": "StackEnvelope.ServiceId",
+        "value_type": "hash",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 323,
+        "name": "StackEnvelope.ServiceABI",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 324,
+        "name": "StackEnvelope.SchemaId",
+        "value_type": "hash",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 325,
+        "name": "StackEnvelope.SchemaVersion",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 326,
+        "name": "StackEnvelope.PrimaryPayloadBase",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 327,
+        "name": "StackEnvelope.ExtensionBase",
+        "value_type": "integer",
+        "semantic_source": "source",
+        "access": [
+          "external-read",
           "self-write"
         ]
       }

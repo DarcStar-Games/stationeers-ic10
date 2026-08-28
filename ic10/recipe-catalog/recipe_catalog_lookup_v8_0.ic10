@@ -3,6 +3,14 @@
 poke 0 31415967
 poke 1 3
 poke 7 0
+poke 320 31416053
+poke 321 1
+poke 322 HASH("ic10.script.recipe.catalog.lookup")
+poke 323 3
+poke 324 HASH("CatalogSchema.Recipe")
+poke 325 3
+poke 326 0
+poke 327 0
 Loop:
 yield
 get r15 db 6

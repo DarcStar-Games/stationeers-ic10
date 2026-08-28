@@ -62,6 +62,9 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 | Hash Console Mode | `17320513` | `S1` | 1 |
 | Generic Config Editor | `22360680` | `S1` | 1 |
 | Config Input Bridge | `22360681` | `S1` | 1 |
+| Stack Cell Monitor | `31416052` | `S1` | 1 |
+| Common Stack Envelope | `31416053` | `S321` | 1 |
+| Stack Envelope extension | `31416054` | `E+1` | 1 |
 
 ## Catalog Store ABI v5
 
@@ -1555,16 +1558,39 @@ Each descriptor is `[Mode, FieldOrStackCell, FenceStackCell]`: mode 0 disabled, 
 `ic10/live-commissioning/stack_cell_monitor_v1_0.ic10` is an on-demand,
 human-visible monitor for one stack cell on a standard or compact IC housing.
 Magic `31416052`, ABI1. `d0` is the target IC housing, `d1` is a Logic Memory
-whose `Setting` selects address `0..511`, and optional `d2` mirrors the sampled
-value to another writable `Setting` device. The monitor also writes the value to
-its own housing `Setting`; it never writes the target or selector.
+whose `Setting` selects discovery mode `-1` or address `0..511`, and optional
+`d2` mirrors the result to another writable `Setting` device. Discovery reads
+only Stack Envelope v1 at `S320..S327`; it returns the primary payload base and
+semantic ServiceId. The monitor also writes the result to its own housing
+`Setting`; it never writes the target or selector.
 
 ```text
-S2  status: 1 finite value, 2 captured NaN,
+S2  status: 1 finite value, 2 captured NaN, 3 valid v1 envelope,
             -1 target missing, -2 target is not an IC housing,
-            -3 selector missing/unsupported, -4 invalid address
-S3  selected stack address
-S4  sampled value for status 1/2; 0 for pre-capture errors
+            -3 selector missing/unsupported, -4 invalid address,
+            -5 no v1 envelope, -6 invalid envelope/extension
+S3  selected address, or discovered PrimaryPayloadBase for status 3
+S4  sampled value for status 1/2, or semantic ServiceId for status 3
 S5  target ReferenceId
 S6  sample generation, published last
 ```
+
+## Common Stack ABI Envelope v1
+
+Migrated services publish the fixed eight-cell window `S320..S327`:
+
+```text
+S320 EnvelopeMagic = 31416053
+S321 EnvelopeVersion = 1
+S322 semantic ServiceId hash
+S323 primary service ABI
+S324/S325 schema ID/version, or 0/0
+S326 primary payload base
+S327 extension base, or 0
+```
+
+Extensions use magic `31416054`, version 1, an inclusive length in `4..192`, and
+must remain inside `S0..S511` without overlapping the fixed window. Established
+payload headers remain at their old addresses. See
+`docs/STACK_ABI_ENVELOPE.md` for identity, zero/unknown, compatibility, upgrade,
+inventory, and migration rules.

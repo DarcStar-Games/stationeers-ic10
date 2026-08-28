@@ -18,6 +18,7 @@ PASS validation/validators/validate_generated_directory_adapters.py
 PASS validation/validators/validate_script_headers.py
 PASS validation/validators/validate_source_catalog.py
 PASS validation/validators/validate_script_contracts.py
+PASS validation/validators/validate_stack_envelopes.py
 PASS validation/validators/validate_user_deployment_guide.py
 PASS validation/validators/validate_item_storage_contracts.py
 PASS validation/validators/validate_process_utility_contracts.py
@@ -45,6 +46,7 @@ PASS tests/test_commission_wiring.py
 PASS tests/test_pressure_reservation_protocol.py
 PASS tests/test_pressure_route_cost.py
 PASS tests/test_printer_directory.py
+PASS tests/test_stack_envelope.py
 PASS tests/test_printer_execution_capacity.py
 PASS tests/test_recipe_catalog.py
 PASS tests/test_generator_productivity.py
@@ -59,4 +61,4 @@ PASS tests/test_fault_injection.py
 PASS tests/test_process_utility.py
 PASS tests/test_live_commissioning.py
 PASS tests/test_game_export.py
-FULL_SUITE: PASS (61/61 scripts)
+FULL_SUITE: PASS (63/63 scripts)
