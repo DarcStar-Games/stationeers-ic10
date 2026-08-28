@@ -24,8 +24,7 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ],
-          "const": 31415976
+          ]
         },
         {
           "address": 1,
@@ -34,8 +33,7 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ],
-          "const": 2
+          ]
         },
         {
           "address": 2,
@@ -54,22 +52,7 @@
           "mode": "preserved-unless-overwritten",
           "source": "static-entry-path-analysis"
         },
-        "invariants": [
-          {
-            "id": "header.s0.magic",
-            "kind": "cell-equals",
-            "address": 0,
-            "equals": 31415976,
-            "source": "generated-protocol-header"
-          },
-          {
-            "id": "header.s0.abi",
-            "kind": "cell-equals",
-            "address": 1,
-            "equals": 2,
-            "source": "generated-protocol-header"
-          }
-        ]
+        "invariants": []
       }
     }
   ],

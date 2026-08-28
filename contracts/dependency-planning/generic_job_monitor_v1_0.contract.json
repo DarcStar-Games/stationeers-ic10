@@ -1,6 +1,6 @@
 {
-  "$schema": "../../schemas/script_contract.schema.json",
-  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "$schema": "../../schemas/script_contract_v2.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/generic_job_monitor_v1_0.ic10",
   "source_sha256": "745304c8c5d77066005cf188b4f3658d34cf4d7f1416558d9b20af9d391aba84",
   "identity": {
@@ -86,7 +86,10 @@
     "dynamic_write": false,
     "dynamic_read_ranges": [],
     "dynamic_write_ranges": [],
-    "dynamic_range_source": "none",
+    "dynamic_read_proven_ranges": [],
+    "dynamic_write_proven_ranges": [],
+    "dynamic_read_range_source": "none",
+    "dynamic_write_range_source": "none",
     "clears_all": false,
     "external_readable_ranges": [],
     "external_writable_ranges": [],
@@ -275,10 +278,10 @@
     ]
   },
   "extraction": {
-    "mode": "static-v1",
+    "mode": "static-v2",
     "limitations": [
-      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
-      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Unproved dynamic own-stack addresses fail closed to the full 512-cell stack.",
+      "Strict literal-seeded linear loops are source-derived; other reviewed bounds are source-fingerprinted overrides.",
       "Provided and consumed protocols require authoritative declarations verified against source literals.",
       "Field semantics not represented by source comments or literals remain in supplemental canonical data."
     ]

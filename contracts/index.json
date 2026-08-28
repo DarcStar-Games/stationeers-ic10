@@ -1,6 +1,1558 @@
 {
   "format": "IC10_SCRIPT_CONTRACT_INDEX_V1",
   "contract_count": 173,
+  "own_stack_range_inventory": {
+    "dynamic_script_count": 62,
+    "source_proven_surface_count": 43,
+    "unresolved_fallback_count": 59,
+    "scripts": [
+      {
+        "source": "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/catalog-control-plane/catalog_inspector_v4_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/controller-config/generic_config_editor_v1_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/controller-config/generic_persistent_config_host_v1_1.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/dependency-planning/dependency_plan_store_v2_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/dependency-planning/item_producer_resolver_v1_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        }
+      },
+      {
+        "source": "ic10/diagnostics/console_registry_v1_1.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        }
+      },
+      {
+        "source": "ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/diagnostics/diagnostic_renderer_v1_1.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        }
+      },
+      {
+        "source": "ic10/directory-core/generic_registry_directory_host_v2_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 56,
+              "end": 62
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/generic-jobs/generic_job_store_v1_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/input-profile-catalog/input_profile_view_v5_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/manufacturing/print_material_resolver_v1_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/material-transform/material_transform_link_resolver_v1_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/printer-directory/printer_directory_adapter_v1_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/printer-directory/printer_execution_bank_v2_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/resource-grid-core/resource_reservation_v1_0.ic10",
+        "read": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 28,
+              "end": 31
+            }
+          ],
+          "provenance": "conservative-full-stack"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      },
+      {
+        "source": "ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/transform-catalog/resource_transform_catalog_loader_01_v6_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
+        }
+      }
+    ]
+  },
   "interfaces": {
     "ic10.interface.access.014c437b230d22e4": {
       "stack": {

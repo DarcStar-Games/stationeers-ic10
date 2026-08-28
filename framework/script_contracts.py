@@ -11,7 +11,7 @@ from typing import Any
 
 from framework.source_metadata import deployable_scripts, load_manifest, resolve_script_metadata
 
-FORMAT = "IC10_SCRIPT_CONTRACT_V1"
+FORMAT = "IC10_SCRIPT_CONTRACT_V2"
 INDEX_FORMAT = "IC10_SCRIPT_CONTRACT_INDEX_V1"
 PROTOCOL_FORMAT = "IC10_STACK_PROTOCOL_REGISTRY_V1"
 PROTOCOL_DEFINITION_FORMAT = "IC10_PROTOCOL_DEFINITION_V1"
@@ -219,11 +219,13 @@ def _merge_ranges(ranges: list[dict[str, int]]) -> list[dict[str, int]]:
 
 
 def _writes_register(row: list[str], register: str) -> bool:
+    if row and register == "sp" and row[0] in {"push", "pop"}:
+        return True
     if len(row) < 2 or row[1] != register:
         return False
     return row[0] not in {
         "b", "beq", "bne", "beqz", "bnez", "bdns", "bdse", "j", "jal", "jr",
-        "put", "putd", "s", "sb", "sbn", "sr", "ss",
+        "poke", "push", "put", "putd", "s", "sb", "sbn", "sr", "ss",
     } and not row[0].startswith("bdn")
 
 
@@ -575,7 +577,7 @@ def _linear_dynamic_range(
     program: list[dict[str, Any]], access_index: int, address_register: str, integer_aliases: dict[str, int],
     dominators: dict[int, set[int]], predecessors: dict[int, set[int]], successors: dict[int, set[int]],
     control_flow_complete: bool,
-) -> dict[str, int] | None:
+) -> list[dict[str, int]] | None:
     """Prove a singleton or a simple literal-seeded linear loop address range."""
     seed_index = None
     start = None
@@ -601,7 +603,7 @@ def _linear_dynamic_range(
             loop_label = program[index]["label"]
             label_index = index
     if loop_label is None:
-        return {"start": start, "end": start}
+        return [{"start": start, "end": start}]
 
     branch_index = None
     branch = None
@@ -618,7 +620,7 @@ def _linear_dynamic_range(
     if branch_index is None or branch is None or label_index is None:
         if _can_reach(access_index, access_index, successors):
             return None
-        return {"start": start, "end": start}
+        return [{"start": start, "end": start}]
 
     if label_index not in successors.get(branch_index, set()):
         return None
@@ -674,6 +676,11 @@ def _linear_dynamic_range(
     counter_update_index, counter_step = counter_updates[0]
     if address_step is None or counter_step is None or counter_step <= 0:
         return None
+    if (
+        address_update_index not in dominators.get(branch_index, set())
+        or counter_update_index not in dominators.get(branch_index, set())
+    ):
+        return None
     counter_seed_index = next(
         (
             index for index in range(label_index - 1, max(-1, seed_index - 40), -1)
@@ -704,25 +711,43 @@ def _linear_dynamic_range(
         count += 1
     else:
         return None
-    end = start + (count - 1) * address_step
-    if not 0 <= end <= 511:
+    addresses = [start + iteration * address_step for iteration in range(count)]
+    if any(not 0 <= address <= 511 for address in addresses):
         return None
-    return {"start": min(start, end), "end": max(start, end)}
+    return _merge_ranges([{"start": address, "end": address} for address in set(addresses)])
+
+
+def _dynamic_range_proofs(
+    source: str, integer_aliases: dict[str, int], accesses: list[tuple[int, Any, str]]
+) -> dict[Any, dict[str, Any]]:
+    """Apply the shared strict linear-loop proof to classified dynamic accesses."""
+    program = _program(source)
+    dominators, predecessors, successors, control_flow_complete = _control_flow_dominators(program)
+    proofs: dict[Any, dict[str, Any]] = defaultdict(
+        lambda: {"total": 0, "proved_accesses": 0, "ranges": []}
+    )
+    for index, key, address_token in accesses:
+        proof = proofs[key]
+        proof["total"] += 1
+        inferred = _linear_dynamic_range(
+            program, index, address_token, integer_aliases, dominators, predecessors, successors,
+            control_flow_complete
+        )
+        if inferred is not None:
+            proof["proved_accesses"] += 1
+            proof["ranges"].extend(inferred)
+    for proof in proofs.values():
+        proof["ranges"] = _merge_ranges(proof["ranges"])
+    return proofs
 
 
 def _dynamic_port_proofs(
     source: str, aliases: dict[str, str], integer_aliases: dict[str, int]
 ) -> dict[tuple[str, str], dict[str, Any]]:
-    program = _program(source)
-    dominators, predecessors, successors, control_flow_complete = _control_flow_dominators(program)
-    proofs: dict[tuple[str, str], dict[str, Any]] = defaultdict(
-        lambda: {"total": 0, "proved_accesses": 0, "ranges": []}
-    )
-    for index, entry in enumerate(program):
+    accesses: list[tuple[int, tuple[str, str], str]] = []
+    for index, entry in enumerate(_program(source)):
         row = entry["row"]
-        port = None
-        direction = None
-        address_token = None
+        port = direction = address_token = None
         if row and row[0] == "get" and len(row) >= 4:
             port = _port(row[2], aliases)
             direction = "read"
@@ -733,18 +758,171 @@ def _dynamic_port_proofs(
             address_token = row[2]
         if port is None or direction is None or address_token is None or _integer(address_token, integer_aliases) is not None:
             continue
-        proof = proofs[(port, direction)]
-        proof["total"] += 1
-        inferred = _linear_dynamic_range(
-            program, index, address_token, integer_aliases, dominators, predecessors, successors,
-            control_flow_complete
+        accesses.append((index, (port, direction), address_token))
+    return _dynamic_range_proofs(source, integer_aliases, accesses)
+
+
+def _resolve_dynamic_ranges(
+    dynamic: bool, proof: dict[str, Any], declared_ranges: list[dict[str, int]], context: str,
+    fallback_full_stack: bool = False,
+) -> tuple[list[dict[str, int]], str]:
+    if not dynamic:
+        if declared_ranges:
+            raise ValueError(f"{context} declares ranges without a dynamic access")
+        return [], "none"
+    inferred_ranges = proof["ranges"]
+    inferred_cells = {
+        address for value in inferred_ranges for address in range(value["start"], value["end"] + 1)
+    }
+    declared_cells = {
+        address for value in declared_ranges for address in range(value["start"], value["end"] + 1)
+    }
+    all_proven = proof["total"] > 0 and proof["proved_accesses"] == proof["total"]
+    if all_proven:
+        if declared_ranges and declared_cells != inferred_cells:
+            raise ValueError(
+                f"{context} range {declared_ranges} disagrees with source-derived {inferred_ranges}"
+            )
+        return inferred_ranges, "source-derived"
+    if declared_ranges:
+        if not inferred_cells <= declared_cells:
+            raise ValueError(
+                f"{context} range {declared_ranges} omits source-proven cells "
+                f"{sorted(inferred_cells-declared_cells)}"
+            )
+        return declared_ranges, "source-fingerprinted-exception"
+    if fallback_full_stack:
+        return [{"start": 0, "end": 511}], "conservative-full-stack"
+    return [], "source-fingerprinted-exception"
+
+
+def _stable_header_cells(
+    source: str, integer_aliases: dict[str, int], headers: list[dict[str, int]]
+) -> set[int]:
+    """Find header cells initialized before every observable control-flow boundary."""
+    program = _program(source)
+    if not program:
+        return set()
+
+    labels = {entry["label"]: index for index, entry in enumerate(program) if entry["label"]}
+    entry = (0, ())
+    reachable: set[tuple[int, tuple[int, ...]]] = set()
+    successors: dict[tuple[int, tuple[int, ...]], set[tuple[int, tuple[int, ...]]]] = defaultdict(set)
+    terminal_states: set[tuple[int, tuple[int, ...]]] = set()
+    pending = [entry]
+    control_flow_complete = True
+    while pending:
+        state = pending.pop()
+        if state in reachable:
+            continue
+        if len(reachable) >= 8192:
+            control_flow_complete = False
+            break
+        reachable.add(state)
+        index, return_stack = state
+        row = program[index]["row"]
+        fallthrough = index + 1 if index + 1 < len(program) else None
+        outgoing: set[tuple[int, tuple[int, ...]]] = set()
+        if return_stack and row and row[0] != "jal" and _writes_register(row, "ra"):
+            control_flow_complete = False
+            successors[state] = outgoing
+            continue
+        if not row:
+            if fallthrough is not None:
+                outgoing.add((fallthrough, return_stack))
+        elif row[0] == "jal":
+            target = labels.get(row[-1])
+            if target is None or fallthrough is None or return_stack:
+                control_flow_complete = False
+            else:
+                outgoing.add((target, return_stack + (fallthrough,)))
+        elif row[0] in {"j", "jr"}:
+            if row[-1] == "ra":
+                if return_stack:
+                    outgoing.add((return_stack[-1], return_stack[:-1]))
+            else:
+                target = labels.get(row[-1])
+                if target is None:
+                    control_flow_complete = False
+                else:
+                    outgoing.add((target, return_stack))
+        elif row[0].endswith("al"):
+            control_flow_complete = False
+        elif row[0] == "hcf":
+            pass
+        elif row[0].startswith("b"):
+            if row[-1] == "ra":
+                if return_stack:
+                    outgoing.add((return_stack[-1], return_stack[:-1]))
+                else:
+                    terminal_states.add(state)
+            else:
+                target = labels.get(row[-1])
+                if target is None:
+                    control_flow_complete = False
+                else:
+                    outgoing.add((target, return_stack))
+            if fallthrough is not None:
+                outgoing.add((fallthrough, return_stack))
+        elif fallthrough is not None:
+            outgoing.add((fallthrough, return_stack))
+        successors[state] = outgoing
+        pending.extend(outgoing - reachable)
+    if not control_flow_complete:
+        return set()
+
+    predecessors: dict[tuple[int, tuple[int, ...]], set[tuple[int, tuple[int, ...]]]] = defaultdict(set)
+    for state, outgoing in successors.items():
+        for target in outgoing:
+            predecessors[target].add(state)
+    observations = {
+        state for state in reachable
+        if (
+            (program[state[0]]["row"] and program[state[0]]["row"][0] in {"yield", "hcf"})
+            or state in terminal_states
+            or not successors.get(state, set())
+            or any(
+                target[0] <= state[0] and target[1] == state[1]
+                for target in successors.get(state, set())
+            )
         )
-        if inferred is not None:
-            proof["proved_accesses"] += 1
-            proof["ranges"].append(inferred)
-    for proof in proofs.values():
-        proof["ranges"] = _merge_ranges(proof["ranges"])
-    return proofs
+    }
+    if not observations:
+        return set()
+
+    expected = {
+        header["base"]: header["magic"] for header in headers
+    } | {
+        header["base"] + 1: header["abi"] for header in headers
+    }
+    stable: set[int] = set()
+    for address, value in expected.items():
+        matching_writes = {
+            state for state in reachable
+            if (
+                program[state[0]]["row"]
+                and program[state[0]]["row"][0] == "poke"
+                and len(program[state[0]]["row"]) >= 3
+                and _integer(program[state[0]]["row"][1], integer_aliases) == address
+                and _literal_value(program[state[0]]["row"][2], integer_aliases) == value
+            )
+        }
+        initialized_after = {state: True for state in reachable}
+        changed = True
+        while changed:
+            changed = False
+            for state in sorted(reachable):
+                incoming = predecessors.get(state, set()) & reachable
+                initialized_before = False if state == entry else bool(incoming) and all(
+                    initialized_after[parent] for parent in incoming
+                )
+                updated = initialized_before or state in matching_writes
+                if updated != initialized_after[state]:
+                    initialized_after[state] = updated
+                    changed = True
+        if all(initialized_after[state] for state in observations):
+            stable.add(address)
+    return stable
 
 
 def _semantic_name(comment: str) -> str | None:
@@ -1218,32 +1396,9 @@ def _device_ports(source: str, rows: list[list[str]], aliases: dict[str, str], i
             source_key = f"dynamic_{direction}_range_source"
             declared_ranges = stack[ranges_key]
             proof = proofs.get((port, direction), {"total": 0, "proved_accesses": 0, "ranges": []})
-            if not stack[dynamic_key]:
-                if declared_ranges:
-                    raise ValueError(f"{port} declares {direction} ranges without a dynamic {direction} access")
-                stack[source_key] = "none"
-                continue
-            inferred_ranges = proof["ranges"]
-            inferred_cells = {
-                address for value in inferred_ranges for address in range(value["start"], value["end"] + 1)
-            }
-            declared_cells = {
-                address for value in declared_ranges for address in range(value["start"], value["end"] + 1)
-            }
-            all_proven = proof["total"] > 0 and proof["proved_accesses"] == proof["total"]
-            if all_proven:
-                if declared_ranges and declared_cells != inferred_cells:
-                    raise ValueError(
-                        f"{port} {direction} range {declared_ranges} disagrees with source-derived {inferred_ranges}"
-                    )
-                stack[ranges_key] = inferred_ranges
-                stack[source_key] = "source-derived"
-            else:
-                if not inferred_cells <= declared_cells:
-                    raise ValueError(
-                        f"{port} {direction} range {declared_ranges} omits source-proven cells {sorted(inferred_cells-declared_cells)}"
-                    )
-                stack[source_key] = "source-fingerprinted-exception"
+            stack[ranges_key], stack[source_key] = _resolve_dynamic_ranges(
+                stack[dynamic_key], proof, declared_ranges, f"{port} {direction}"
+            )
     return [state[port] for port in sorted(state)]
 
 
@@ -1276,6 +1431,43 @@ def _own_stack(source: str, rows: list[list[str]], integer_aliases: dict[str, in
             dynamic_write = True
     annotations, publication_rules = _source_semantics(source, integer_aliases)
     publication_rules.extend(_verified_publication_overrides(source, rows, integer_aliases, overrides))
+    accesses: list[tuple[int, str, str]] = []
+    unproved = {"read": 0, "write": 0}
+    clears = 0
+    for index, entry in enumerate(_program(source)):
+        row = entry["row"]
+        if row and row[0] == "get" and len(row) >= 4 and row[2] == "db" and _integer(row[3], integer_aliases) is None:
+            accesses.append((index, "read", row[3]))
+        elif row and row[0] == "poke" and len(row) >= 3 and _integer(row[1], integer_aliases) is None:
+            accesses.append((index, "write", row[1]))
+        elif row and row[0] == "peek":
+            unproved["read"] += 1
+        elif row and row[0] in {"push", "pop"}:
+            unproved["read"] += 1
+            unproved["write"] += 1
+        elif row and row[0] == "clr" and len(row) >= 2 and row[1] == "db":
+            clears += 1
+    proofs = _dynamic_range_proofs(source, integer_aliases, accesses)
+    for direction in ("read", "write"):
+        proof = proofs.setdefault(direction, {"total": 0, "proved_accesses": 0, "ranges": []})
+        proof["total"] += unproved[direction]
+    write_proof = proofs["write"]
+    write_proof["total"] += clears
+    write_proof["proved_accesses"] += clears
+    if clears:
+        write_proof["ranges"] = _merge_ranges(write_proof["ranges"] + [{"start": 0, "end": 511}])
+    dynamic_read_ranges, dynamic_read_range_source = _resolve_dynamic_ranges(
+        dynamic_read, proofs["read"], _ranges(overrides.get("dynamic_read_ranges")),
+        "own-stack read", fallback_full_stack=True,
+    )
+    dynamic_write_ranges, dynamic_write_range_source = _resolve_dynamic_ranges(
+        dynamic_write, proofs["write"], _ranges(overrides.get("dynamic_write_ranges")),
+        "own-stack write", fallback_full_stack=True,
+    )
+    dynamic_write_cells = {
+        address for item in dynamic_write_ranges for address in range(item["start"], item["end"] + 1)
+    }
+    stable_header_cells = _stable_header_cells(source, integer_aliases, headers)
     fields: dict[int, dict[str, Any]] = {}
     for address in sorted(reads | writes):
         access = []
@@ -1290,7 +1482,7 @@ def _own_stack(source: str, rows: list[list[str]], integer_aliases: dict[str, in
             "semantic_source": "unresolved",
             "access": access,
         }
-        if not dynamic_write and address not in unknown_values and len(write_values[address]) == 1:
+        if address not in dynamic_write_cells and address not in unknown_values and len(write_values[address]) == 1:
             fields[address]["const"] = next(iter(write_values[address]))
         annotation = annotations.get(address, {})
         if any(annotation.get(key) for key in ("name", "descriptions", "enums", "reserved")):
@@ -1310,13 +1502,27 @@ def _own_stack(source: str, rows: list[list[str]], integer_aliases: dict[str, in
         fields[header["base"]]["name"] = f"Header@S{header['base']}.Magic"
         fields[header["base"]]["value_type"] = "hash"
         fields[header["base"]]["semantic_source"] = "protocol-header"
-        if not dynamic_write:
+        if (
+            header["base"] not in dynamic_write_cells
+            and header["base"] not in unknown_values
+            and write_values[header["base"]] == {header["magic"]}
+            and header["base"] in stable_header_cells
+        ):
             fields[header["base"]]["const"] = header["magic"]
+        else:
+            fields[header["base"]].pop("const", None)
         fields[header["base"] + 1]["name"] = f"Header@S{header['base']}.ABI"
         fields[header["base"] + 1]["value_type"] = "integer"
         fields[header["base"] + 1]["semantic_source"] = "protocol-header"
-        if not dynamic_write:
+        if (
+            header["base"] + 1 not in dynamic_write_cells
+            and header["base"] + 1 not in unknown_values
+            and write_values[header["base"] + 1] == {header["abi"]}
+            and header["base"] + 1 in stable_header_cells
+        ):
             fields[header["base"] + 1]["const"] = header["abi"]
+        else:
+            fields[header["base"] + 1].pop("const", None)
     for declared in overrides.get("stack_fields", []):
         address = declared["address"]
         current = fields.setdefault(address, {"address": address, "name": f"S{address}", "value_type": "number", "semantic_source": "override", "access": []})
@@ -1335,9 +1541,12 @@ def _own_stack(source: str, rows: list[list[str]], integer_aliases: dict[str, in
         "literal_writes": sorted(writes),
         "dynamic_read": dynamic_read,
         "dynamic_write": dynamic_write,
-        "dynamic_read_ranges": [{"start": 0, "end": 511}] if dynamic_read else [],
-        "dynamic_write_ranges": [{"start": 0, "end": 511}] if dynamic_write else [],
-        "dynamic_range_source": "conservative-full-stack" if dynamic_read or dynamic_write else "none",
+        "dynamic_read_ranges": dynamic_read_ranges,
+        "dynamic_write_ranges": dynamic_write_ranges,
+        "dynamic_read_proven_ranges": proofs["read"]["ranges"] if dynamic_read else [],
+        "dynamic_write_proven_ranges": proofs["write"]["ranges"] if dynamic_write else [],
+        "dynamic_read_range_source": dynamic_read_range_source,
+        "dynamic_write_range_source": dynamic_write_range_source,
         "clears_all": clears_all,
         "external_readable_ranges": _ranges(overrides.get("external_readable_ranges")),
         "external_writable_ranges": _ranges(overrides.get("external_writable_ranges")),
@@ -1357,6 +1566,36 @@ def _restart_behavior(rows: list[list[str]], clears_all: bool) -> dict[str, str]
         if row[0] in {"j", "jal", "jr", "yield"} or row[0].startswith("b"):
             break
     return {"mode": "conditional-reset", "source": "static-entry-path-analysis"}
+
+
+def _header_invariants(headers: list[dict[str, int]], own_stack: dict[str, Any]) -> list[dict[str, Any]]:
+    constants = {
+        field["address"]: field["const"] for field in own_stack["fields"] if "const" in field
+    }
+    stable_headers = [
+        header for header in headers
+        if constants.get(header["base"]) == header["magic"]
+        and constants.get(header["base"] + 1) == header["abi"]
+    ]
+    return [
+        {
+            "id": f"header.s{header['base']}.magic",
+            "kind": "cell-equals",
+            "address": header["base"],
+            "equals": header["magic"],
+            "source": "generated-protocol-header",
+        }
+        for header in stable_headers
+    ] + [
+        {
+            "id": f"header.s{header['base']}.abi",
+            "kind": "cell-equals",
+            "address": header["base"] + 1,
+            "equals": header["abi"],
+            "source": "generated-protocol-header",
+        }
+        for header in stable_headers
+    ]
 
 
 def _verify_declared_consumers(source: str, rows: list[list[str]], aliases: dict[str, str], integer_aliases: dict[str, int], declared: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -1588,28 +1827,9 @@ def build_contract(path: Path, root: Path, manifest: dict[str, Any], declared_he
         **header,
         "source": "literal-own-stack-header",
     } for header in headers]
-    stable_headers = [] if own_stack["dynamic_write"] else headers
-    invariants = [
-        {
-            "id": f"header.s{header['base']}.magic",
-            "kind": "cell-equals",
-            "address": header["base"],
-            "equals": header["magic"],
-            "source": "generated-protocol-header",
-        }
-        for header in stable_headers
-    ] + [
-        {
-            "id": f"header.s{header['base']}.abi",
-            "kind": "cell-equals",
-            "address": header["base"] + 1,
-            "equals": header["abi"],
-            "source": "generated-protocol-header",
-        }
-        for header in stable_headers
-    ] + overrides.get("invariants", [])
+    invariants = _header_invariants(headers, own_stack) + overrides.get("invariants", [])
     return {
-        "$schema": "../../schemas/script_contract.schema.json",
+        "$schema": "../../schemas/script_contract_v2.schema.json",
         "format": FORMAT,
         "source": rel,
         "source_sha256": hashlib.sha256(source.encode()).hexdigest(),
@@ -1631,10 +1851,10 @@ def build_contract(path: Path, root: Path, manifest: dict[str, Any], declared_he
         },
         "contracts": {"provides": provides, "consumes": consumes},
         "extraction": {
-            "mode": "static-v1",
+            "mode": "static-v2",
             "limitations": [
-                "Dynamic addresses are flagged but cannot be assigned literal ranges.",
-                "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+                "Unproved dynamic own-stack addresses fail closed to the full 512-cell stack.",
+                "Strict literal-seeded linear loops are source-derived; other reviewed bounds are source-fingerprinted overrides.",
                 "Provided and consumed protocols require authoritative declarations verified against source literals.",
                 "Field semantics not represented by source comments or literals remain in supplemental canonical data.",
             ],
@@ -1802,9 +2022,41 @@ def build_all(root: Path) -> tuple[dict[str, dict[str, Any]], dict[str, Any], di
             definition["consumers"].append({"source": contract["source"], "port": port["port"]})
     for definition in interface_definitions.values():
         definition["consumers"].sort(key=lambda item: (item["source"], item["port"]))
+    own_stack_range_inventory = []
+    for contract in sorted(contracts.values(), key=lambda item: item["source"]):
+        own = contract["own_stack"]
+        if not own["dynamic_read"] and not own["dynamic_write"]:
+            continue
+        own_stack_range_inventory.append({
+            "source": contract["source"],
+            "read": {
+                "dynamic": own["dynamic_read"],
+                "ranges": own["dynamic_read_ranges"],
+                "proven_ranges": own["dynamic_read_proven_ranges"],
+                "provenance": own["dynamic_read_range_source"],
+            },
+            "write": {
+                "dynamic": own["dynamic_write"],
+                "ranges": own["dynamic_write_ranges"],
+                "proven_ranges": own["dynamic_write_proven_ranges"],
+                "provenance": own["dynamic_write_range_source"],
+            },
+        })
     index = {
         "format": INDEX_FORMAT,
         "contract_count": len(contracts),
+        "own_stack_range_inventory": {
+            "dynamic_script_count": len(own_stack_range_inventory),
+            "source_proven_surface_count": sum(
+                bool(item[direction]["proven_ranges"])
+                for item in own_stack_range_inventory for direction in ("read", "write")
+            ),
+            "unresolved_fallback_count": sum(
+                item[direction]["provenance"] == "conservative-full-stack"
+                for item in own_stack_range_inventory for direction in ("read", "write")
+            ),
+            "scripts": own_stack_range_inventory,
+        },
         "interfaces": {key: interface_definitions[key] for key in sorted(interface_definitions)},
         "contracts": [{
             "source": contract["source"],

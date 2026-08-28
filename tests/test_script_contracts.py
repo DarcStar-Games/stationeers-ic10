@@ -13,6 +13,7 @@ from framework.json_schema import SchemaValidationError, validate
 from framework.script_contracts import (
     _aliases,
     _device_ports,
+    _header_invariants,
     _instructions,
     _network_dependencies,
     _own_stack,
@@ -45,12 +46,24 @@ def ck(condition, message):
 
 contracts, index, protocols, protocol_definitions = build_all(ROOT)
 documents = list(contracts.values())
-schema = json.loads((ROOT / "schemas/script_contract.schema.json").read_text())
+schema = json.loads((ROOT / "schemas/script_contract_v2.schema.json").read_text())
+legacy_schema = json.loads((ROOT / "schemas/script_contract.schema.json").read_text())
 try:
     for document in documents:
         validate(document, schema)
 except SchemaValidationError as error:
     fails.append(f"valid generated document rejected: {error}")
+ck(all(document["format"] == "IC10_SCRIPT_CONTRACT_V2" and
+       document["extraction"]["mode"] == "static-v2" and
+       document["$schema"] == "../../schemas/script_contract_v2.schema.json"
+       for document in documents),
+   "generated contracts did not advertise the breaking V2 schema")
+ck(schema["$id"].endswith("/script_contract_v2.schema.json") and
+   schema["properties"]["$schema"]["const"] == "../../schemas/script_contract_v2.schema.json",
+   "V2 schema does not have a distinct canonical identity")
+ck(legacy_schema["properties"]["format"]["const"] == "IC10_SCRIPT_CONTRACT_V1" and
+   legacy_schema["properties"]["extraction"]["properties"]["mode"]["const"] == "static-v1",
+   "unversioned V1 schema was not preserved")
 
 bad_port = deepcopy(documents[0])
 bad_port["device_ports"] = [{
@@ -200,6 +213,25 @@ ck(all((not document["own_stack"]["dynamic_read"] or document["own_stack"]["dyna
        (not document["own_stack"]["dynamic_write"] or document["own_stack"]["dynamic_write_ranges"])
        for document in documents),
    "a dynamic own-stack access lacks a conservative occupied range")
+own_inventory = index["own_stack_range_inventory"]
+ck(own_inventory["dynamic_script_count"] == sum(
+       document["own_stack"]["dynamic_read"] or document["own_stack"]["dynamic_write"]
+       for document in documents
+   ), "own-stack range inventory does not cover every dynamic script")
+ck(own_inventory["unresolved_fallback_count"] == sum(
+       document["own_stack"][f"dynamic_{direction}_range_source"] == "conservative-full-stack"
+       for document in documents for direction in ("read", "write")
+   ) > 0, "own-stack range inventory does not explicitly report unresolved fallbacks")
+proven_own_reads = {
+    item["source"]: item["read"]["proven_ranges"]
+    for item in own_inventory["scripts"] if item["read"]["proven_ranges"]
+}
+ck(proven_own_reads.get("ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10") ==
+   [{"start": 56, "end": 62}],
+   "bounded Generic Job gateway own-stack loop is absent from proven occupancy")
+ck(proven_own_reads.get("ic10/resource-grid-core/resource_reservation_v1_0.ic10") ==
+   [{"start": 28, "end": 31}],
+   "bounded Resource Reservation own-stack loop is absent from proven occupancy")
 ck(sum(len(document["behavior"]["invariants"]) for document in documents) > 0 and
    not any(invariant_errors(document) for document in documents),
    "generated machine-readable invariants are absent or false")
@@ -287,8 +319,236 @@ dynamic_header, _ = _own_stack(
     dynamic_header_source, dynamic_header_rows, dynamic_header_aliases,
     [{"base": 0, "magic": 31415999, "abi": 1}], {},
 )
-ck(not any("const" in field for field in dynamic_header["fields"] if field["address"] in {0, 1}),
-   "a protocol header covered by a dynamic write was presented as constant")
+dynamic_header_fields = {field["address"]: field for field in dynamic_header["fields"]}
+ck("const" not in dynamic_header_fields[0] and dynamic_header_fields[1].get("const") == 1,
+   "dynamic write coverage did not suppress only the affected header constant")
+
+bounded_own_source = (
+    "poke 0 31415999\npoke 1 1\nmove ra 96\nmove rc 0\nLoop:\n"
+    "get r0 db ra\npoke ra r0\nadd ra ra 1\nadd rc rc 1\nble rc 3 Loop\n"
+)
+bounded_own_rows = _instructions(bounded_own_source)
+_, bounded_own_aliases = _aliases(bounded_own_rows)
+bounded_own, _ = _own_stack(
+    bounded_own_source, bounded_own_rows, bounded_own_aliases,
+    [{"base": 0, "magic": 31415999, "abi": 1}], {},
+)
+ck(bounded_own["dynamic_read_ranges"] == [{"start": 96, "end": 99}] and
+   bounded_own["dynamic_write_ranges"] == [{"start": 96, "end": 99}] and
+   bounded_own["dynamic_read_proven_ranges"] == [{"start": 96, "end": 99}] and
+   bounded_own["dynamic_write_proven_ranges"] == [{"start": 96, "end": 99}] and
+   bounded_own["dynamic_read_range_source"] == "source-derived" and
+   bounded_own["dynamic_write_range_source"] == "source-derived",
+   "bounded own-stack table reads/writes were not derived from the shared strict loop proof")
+ck({item["address"] for item in _header_invariants(
+       [{"base": 0, "magic": 31415999, "abi": 1}], bounded_own
+   )} == {0, 1}, "non-overlapping bounded writes did not restore header invariants")
+ck(all("const" in field for field in bounded_own["fields"] if field["address"] in {0, 1}),
+   "non-overlapping bounded writes suppressed header constants")
+
+conflicting_header_source = bounded_own_source.replace(
+    "poke 1 1\n", "poke 1 1\npoke 0 0\n"
+)
+conflicting_header_rows = _instructions(conflicting_header_source)
+_, conflicting_header_aliases = _aliases(conflicting_header_rows)
+conflicting_header, _ = _own_stack(
+    conflicting_header_source, conflicting_header_rows, conflicting_header_aliases,
+    [{"base": 0, "magic": 31415999, "abi": 1}], {},
+)
+conflicting_header_fields = {field["address"]: field for field in conflicting_header["fields"]}
+ck("const" not in conflicting_header_fields[0] and not _header_invariants(
+       [{"base": 0, "magic": 31415999, "abi": 1}], conflicting_header
+   ), "conflicting literal header write produced a false constant or invariant")
+
+conditional_header_source = (
+    "beqz r5 Ready\npoke 0 31415999\npoke 1 1\nReady:\nyield\n"
+)
+conditional_header_rows = _instructions(conditional_header_source)
+_, conditional_header_aliases = _aliases(conditional_header_rows)
+conditional_header, _ = _own_stack(
+    conditional_header_source, conditional_header_rows, conditional_header_aliases,
+    [{"base": 0, "magic": 31415999, "abi": 1}], {},
+)
+ck(not _header_invariants(
+       [{"base": 0, "magic": 31415999, "abi": 1}], conditional_header
+   ), "conditionally skipped header initialization produced a false invariant")
+
+delayed_header_source = "yield\npoke 0 31415999\npoke 1 1\n"
+delayed_header_rows = _instructions(delayed_header_source)
+_, delayed_header_aliases = _aliases(delayed_header_rows)
+delayed_header, _ = _own_stack(
+    delayed_header_source, delayed_header_rows, delayed_header_aliases,
+    [{"base": 0, "magic": 31415999, "abi": 1}], {},
+)
+ck(not _header_invariants(
+       [{"base": 0, "magic": 31415999, "abi": 1}], delayed_header
+   ), "header initialization after the first yield produced a false invariant")
+
+both_branches_header_source = (
+    "beqz r5 Alternate\npoke 0 31415999\npoke 1 1\nj Ready\n"
+    "Alternate:\npoke 0 31415999\npoke 1 1\nReady:\nyield\n"
+)
+both_branches_header_rows = _instructions(both_branches_header_source)
+_, both_branches_header_aliases = _aliases(both_branches_header_rows)
+both_branches_header, _ = _own_stack(
+    both_branches_header_source, both_branches_header_rows, both_branches_header_aliases,
+    [{"base": 0, "magic": 31415999, "abi": 1}], {},
+)
+ck({item["address"] for item in _header_invariants(
+       [{"base": 0, "magic": 31415999, "abi": 1}], both_branches_header
+   )} == {0, 1}, "same-value initialization on every branch was not proven")
+
+called_header_source = (
+    "poke 0 31415999\npoke 1 1\njal Helper\nyield\nHelper:\nj ra\n"
+)
+called_header_rows = _instructions(called_header_source)
+_, called_header_aliases = _aliases(called_header_rows)
+called_header, _ = _own_stack(
+    called_header_source, called_header_rows, called_header_aliases,
+    [{"base": 0, "magic": 31415999, "abi": 1}], {},
+)
+ck({item["address"] for item in _header_invariants(
+       [{"base": 0, "magic": 31415999, "abi": 1}], called_header
+   )} == {0, 1}, "local subroutine call suppressed guaranteed header initialization")
+
+header_after_call_source = (
+    "jal Helper\npoke 0 31415999\npoke 1 1\nyield\nHelper:\nj ra\n"
+)
+header_after_call_rows = _instructions(header_after_call_source)
+_, header_after_call_aliases = _aliases(header_after_call_rows)
+header_after_call, _ = _own_stack(
+    header_after_call_source, header_after_call_rows, header_after_call_aliases,
+    [{"base": 0, "magic": 31415999, "abi": 1}], {},
+)
+ck({item["address"] for item in _header_invariants(
+       [{"base": 0, "magic": 31415999, "abi": 1}], header_after_call
+   )} == {0, 1}, "a non-observable subroutine call was mistaken for a loop boundary")
+
+yielding_call_source = (
+    "jal Helper\npoke 0 31415999\npoke 1 1\nyield\nHelper:\nyield\nj ra\n"
+)
+yielding_call_rows = _instructions(yielding_call_source)
+_, yielding_call_aliases = _aliases(yielding_call_rows)
+yielding_call, _ = _own_stack(
+    yielding_call_source, yielding_call_rows, yielding_call_aliases,
+    [{"base": 0, "magic": 31415999, "abi": 1}], {},
+)
+ck(not _header_invariants(
+       [{"base": 0, "magic": 31415999, "abi": 1}], yielding_call
+   ), "a callee yield before header initialization produced a false invariant")
+
+conditional_return_source = (
+    "beqz r5 ra\npoke 0 31415999\npoke 1 1\nyield\n"
+)
+conditional_return_rows = _instructions(conditional_return_source)
+_, conditional_return_aliases = _aliases(conditional_return_rows)
+conditional_return, _ = _own_stack(
+    conditional_return_source, conditional_return_rows, conditional_return_aliases,
+    [{"base": 0, "magic": 31415999, "abi": 1}], {},
+)
+ck(not _header_invariants(
+       [{"base": 0, "magic": 31415999, "abi": 1}], conditional_return
+   ), "a conditional termination before header initialization produced a false invariant")
+
+unsafe_call_sources = {
+    "nested call": (
+        "jal Outer\npoke 0 31415999\npoke 1 1\nyield\n"
+        "Outer:\njal Inner\nj ra\nInner:\nj ra\n"
+    ),
+    "clobbered return address": (
+        "jal Helper\npoke 0 31415999\npoke 1 1\nyield\n"
+        "Helper:\nmove ra 0\nj ra\n"
+    ),
+}
+for case, unsafe_call_source in unsafe_call_sources.items():
+    unsafe_call_rows = _instructions(unsafe_call_source)
+    _, unsafe_call_aliases = _aliases(unsafe_call_rows)
+    unsafe_call, _ = _own_stack(
+        unsafe_call_source, unsafe_call_rows, unsafe_call_aliases,
+        [{"base": 0, "magic": 31415999, "abi": 1}], {},
+    )
+    ck(not _header_invariants(
+           [{"base": 0, "magic": 31415999, "abi": 1}], unsafe_call
+       ), f"{case} used an unsound abstract return stack for header initialization")
+
+stack_pointer_sources = {
+    "push": "move sp 96\npush 0\nget r0 db sp\n",
+    "pop": "move sp 97\npop r0\nget r1 db sp\n",
+}
+for operation, stack_pointer_source in stack_pointer_sources.items():
+    stack_pointer_rows = _instructions(stack_pointer_source)
+    _, stack_pointer_aliases = _aliases(stack_pointer_rows)
+    stack_pointer_access, _ = _own_stack(
+        stack_pointer_source, stack_pointer_rows, stack_pointer_aliases, [], {},
+    )
+    ck(stack_pointer_access["dynamic_read_proven_ranges"] == [],
+       f"implicit {operation} mutation of sp produced a false source-proven range")
+
+strided_source = (
+    "move ra 96\nmove rc 0\nLoop:\npoke ra 1\n"
+    "add ra ra 2\nadd rc rc 1\nble rc 3 Loop\n"
+)
+strided_rows = _instructions(strided_source)
+_, strided_aliases = _aliases(strided_rows)
+strided, _ = _own_stack(strided_source, strided_rows, strided_aliases, [], {})
+ck(strided["dynamic_write_ranges"] == [
+       {"start": 96, "end": 96}, {"start": 98, "end": 98},
+       {"start": 100, "end": 100}, {"start": 102, "end": 102},
+   ] and strided["dynamic_write_proven_ranges"] == strided["dynamic_write_ranges"],
+   "non-unit stride was not represented as exact source-proven cells")
+
+own_negative_sources = {
+    "branch bypass": "beqz r5 Seed\nj Access\nSeed:\nmove ra 96\nAccess:\npoke ra 1\n",
+    "multiple mutations": (
+        "move ra 96\nmove rc 0\nLoop:\npoke ra 1\nadd ra ra 1\nadd ra ra 1\n"
+        "add rc rc 1\nble rc 3 Loop\n"
+    ),
+    "branch-dependent update": (
+        "move ra 96\nmove rc 0\nLoop:\npoke ra 1\nbeqz r5 SkipCounter\nadd rc rc 1\n"
+        "SkipCounter:\nadd ra ra 1\nble rc 3 Loop\n"
+    ),
+    "non-dominating counter seed": (
+        "move ra 96\nj Loop\nmove rc 0\nLoop:\npoke ra 1\nadd ra ra 1\n"
+        "add rc rc 1\nble rc 3 Loop\n"
+    ),
+    "unbounded loop": "move ra 96\nLoop:\npoke ra 1\nadd ra ra 1\nj Loop\n",
+}
+for case, own_source in own_negative_sources.items():
+    own_rows = _instructions(own_source)
+    _, own_aliases = _aliases(own_rows)
+    unresolved, _ = _own_stack(own_source, own_rows, own_aliases, [], {})
+    ck(unresolved["dynamic_write_ranges"] == [{"start": 0, "end": 511}] and
+       unresolved["dynamic_write_range_source"] == "conservative-full-stack",
+       f"{case} own-stack address did not fail closed")
+
+exception_source = "move ra 96\nLoop:\npoke ra 1\nadd ra ra 1\nj Loop\n"
+exception_rows = _instructions(exception_source)
+_, exception_aliases = _aliases(exception_rows)
+exception, _ = _own_stack(
+    exception_source, exception_rows, exception_aliases, [], {"dynamic_write_ranges": [[96, 111]]},
+)
+ck(exception["dynamic_write_range_source"] == "source-fingerprinted-exception" and
+   exception["dynamic_write_ranges"] == [{"start": 96, "end": 111}],
+   "reviewed own-stack range exception was not distinguished from source proof and fallback")
+try:
+    _own_stack(
+        bounded_own_source, bounded_own_rows, bounded_own_aliases, [],
+        {"dynamic_write_ranges": [[96, 98]]},
+    )
+    fails.append("own-stack override omitted a statically reachable cell")
+except ValueError:
+    pass
+partially_proven_source = bounded_own_source + "poke r5 1\n"
+partially_proven_rows = _instructions(partially_proven_source)
+_, partially_proven_aliases = _aliases(partially_proven_rows)
+try:
+    _own_stack(
+        partially_proven_source, partially_proven_rows, partially_proven_aliases, [],
+        {"dynamic_write_ranges": [[96, 98]]},
+    )
+    fails.append("own-stack exception omitted a cell from its source-proven subset")
+except ValueError:
+    pass
 
 try:
     _source_semantics("poke 12 1 # publication LAST\npoke 10 2\n", {})

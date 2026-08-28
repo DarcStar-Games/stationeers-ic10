@@ -41,7 +41,7 @@ def check_reference(reference: str) -> None:
 
 
 try:
-    schema = json.loads((ROOT / "schemas/script_contract.schema.json").read_text())
+    schema = json.loads((ROOT / "schemas/script_contract_v2.schema.json").read_text())
     protocol_schema = json.loads((ROOT / "schemas/protocol_definition.schema.json").read_text())
     expected, expected_index, expected_protocols, expected_definitions = build_all(ROOT)
 except Exception as error:
@@ -131,12 +131,28 @@ for rel, generated in sorted(expected.items()):
         fails.append(f"{actual['source']}: own dynamic read range does not match dynamic access")
     if own["dynamic_write"] != bool(own["dynamic_write_ranges"]):
         fails.append(f"{actual['source']}: own dynamic write range does not match dynamic access")
-    expected_own_source = "conservative-full-stack" if own["dynamic_read"] or own["dynamic_write"] else "none"
-    if own["dynamic_range_source"] != expected_own_source:
-        fails.append(f"{actual['source']}: own dynamic range provenance is inconsistent")
+    for direction in ("read", "write"):
+        dynamic = own[f"dynamic_{direction}"]
+        ranges = own[f"dynamic_{direction}_ranges"]
+        proven_ranges = own[f"dynamic_{direction}_proven_ranges"]
+        provenance = own[f"dynamic_{direction}_range_source"]
+        if not dynamic and (ranges or proven_ranges or provenance != "none"):
+            fails.append(f"{actual['source']}: non-dynamic own {direction} has range metadata")
+        if dynamic and provenance == "none":
+            fails.append(f"{actual['source']}: dynamic own {direction} lacks range provenance")
+        if provenance == "conservative-full-stack" and ranges != [{"start": 0, "end": 511}]:
+            fails.append(f"{actual['source']}: own {direction} fallback is not the full stack")
+        effective_cells = {cell for item in ranges for cell in range(item["start"], item["end"] + 1)}
+        proven_cells = {cell for item in proven_ranges for cell in range(item["start"], item["end"] + 1)}
+        if not proven_cells <= effective_cells:
+            fails.append(f"{actual['source']}: own {direction} range omits source-proven cells")
+        if provenance == "source-derived" and proven_cells != effective_cells:
+            fails.append(f"{actual['source']}: own {direction} source-derived range exceeds its proof")
     for access in (
         "dynamic_read_ranges",
         "dynamic_write_ranges",
+        "dynamic_read_proven_ranges",
+        "dynamic_write_proven_ranges",
         "external_readable_ranges",
         "external_writable_ranges",
     ):
