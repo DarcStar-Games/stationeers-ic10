@@ -1,15 +1,10 @@
-# Stack Cell Monitor ABI1: d0 target,d1 address (-1 discovers v1),d2 optional output.
+# Stack Cell Monitor ABI1: d0 target,d1 address (-1 reads S0 header),d2 optional out.
 poke 0 31416052
 poke 1 1
-poke 6 0
-poke 320 31416053
-poke 321 1
-poke 322 HASH("ic10.script.stack.cell.monitor")
-poke 323 1
-poke 324 0
-poke 325 0
-poke 326 0
-poke 327 0
+poke 2 0
+poke 3 0
+poke 4 0
+poke 9 0
 Loop:
 yield
 move r0 -1
@@ -39,51 +34,43 @@ add r4 r4 1
 j Publish
 Discover:
 move r4 -5
-get r3 d0 320
-bne r3 31416053 Publish
+get r3 d0 0
+mod r12 r3 1
+bnez r12 Publish
+beqz r3 Publish
 move r4 -6
-get r5 d0 321
-bne r5 1 Publish
-get r6 d0 322
+get r5 d0 1
+mod r12 r5 1
+bnez r12 Publish
+blez r5 Publish
+get r6 d0 2
+get r7 d0 3
 mod r12 r6 1
 bnez r12 Publish
-get r7 d0 323
 mod r12 r7 1
 bnez r12 Publish
-blez r7 Publish
-get r8 d0 324
-get r9 d0 325
+seq r12 r6 0
+seq r13 r7 0
+bne r12 r13 Publish
+bltz r7 Publish
+get r8 d0 4
 mod r12 r8 1
 bnez r12 Publish
-mod r12 r9 1
-bnez r12 Publish
-seq r12 r8 0
-seq r13 r9 0
-bne r12 r13 Publish
-bltz r9 Publish
-get r10 d0 326
-mod r12 r10 1
-bnez r12 Publish
-bltz r10 Publish
-bgt r10 511 Publish
-get r11 d0 327
-mod r12 r11 1
-bnez r12 Publish
-beqz r11 EnvelopeReady
-bltz r11 Publish
-bgt r11 508 Publish
-get r12 d0 r11
+beqz r8 HeaderReady
+blt r8 5 Publish
+bgt r8 508 Publish
+get r12 d0 r8
 bne r12 31416054 Publish
-add r13 r11 1
+add r13 r8 1
 get r12 d0 r13
 bne r12 1 Publish
-add r13 r11 2
+add r13 r8 2
 get r12 d0 r13
 mod r14 r12 1
 bnez r14 Publish
 blt r12 4 Publish
 bgt r12 192 Publish
-add r13 r11 3
+add r13 r8 3
 get r15 d0 r13
 beqz r15 ExtensionBound
 bne r15 1 Publish
@@ -94,23 +81,19 @@ beqz r14 Publish
 mod r14 r14 1
 bnez r14 Publish
 ExtensionBound:
-add r13 r11 r12
+add r13 r8 r12
 bgt r13 512 Publish
-bge r11 328 EnvelopeReady
-ble r13 320 EnvelopeReady
-j Publish
-EnvelopeReady:
-move r0 r10
-move r1 r6
+HeaderReady:
+move r1 r3
 move r4 3
 Publish:
-poke 3 r0
-poke 4 r1
-poke 5 r2
-poke 2 r4
-get r3 db 6
+poke 6 r0
+poke 7 r1
+poke 8 r2
+poke 5 r4
+get r3 db 9
 add r3 r3 1
-poke 6 r3 # complete sample generation publishes LAST
+poke 9 r3 # complete sample generation publishes LAST
 s db Setting r1
 bdnvs d2 Setting Loop
 s d2 Setting r1

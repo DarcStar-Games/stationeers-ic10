@@ -33,7 +33,7 @@ monitor=R/'ic10/live-commissioning/stack_cell_monitor_v1_0.ic10'
 if not monitor.exists(): fails.append('stack cell monitor missing')
 else:
     s=monitor.read_text()
-    for token in ('poke 0 31416052','poke 1 1','poke 6 0','move r1 0','get r1 d0 r0','s db Setting r1','s d2 Setting r1'):
+    for token in ('poke 0 31416052','poke 1 1','poke 9 0','move r1 0','get r1 d0 r0','s db Setting r1','s d2 Setting r1'):
         if token not in s: fails.append(f'stack monitor contract missing {token!r}')
     if re.search(r'\b(?:move|poke)\s+\S+\s+nan\b',s):
         fails.append('stack monitor uses a game-editor-incompatible NaN immediate')

@@ -1,7 +1,7 @@
 # Stack Cell Monitor Getting Started
 
 The Stack Cell Monitor is an on-demand commissioning tool for discovering a
-Stack Envelope v1 service or reading one stack cell from another IC housing
+common header of a service or reading one stack cell from another IC housing
 without modifying that target. A Logic Memory selects discovery mode or an
 address, and the monitor mirrors the result to its own housing `Setting` and,
 optionally, to a second Logic Memory.
@@ -67,20 +67,21 @@ Use the screwdriver to make these connections:
 Power the monitor and both memories. The target must be an IC housing; ordinary
 devices are rejected even if they expose other logic properties.
 
-## 4. Discover an envelope
+## 4. Identify a target
 
 1. Set `Stack Address.Setting` to `-1`.
-2. Wait for monitor status `3` in its own `S2`.
-3. Read the target's semantic `ServiceId` hash from monitor `S4` (and the optional
-   `Stack Value` Memory).
-4. Read the target's `PrimaryPayloadBase` from monitor `S3`.
-5. Set `Stack Address.Setting` to that payload base to inspect the established
-   magic without prior knowledge of the target family.
+2. Wait for monitor status `3` in its own `S5`.
+3. Read the target's `ServiceMagic` from monitor `S7` (and the optional
+   `Stack Value` Memory), then look it up in the registry table in
+   `docs/ABI_REFERENCE.md`.
+4. Set `Stack Address.Setting` to `1`, `2`, `3`, or `4` to read the rest of the
+   header: ABI, SchemaId, SchemaVersion, and ExtensionBase.
 
-Discovery reads only the common `S320..S327` envelope. It validates envelope
-magic/version, a positive service ABI, schema zero pairing, payload bounds, and
-any length-prefixed extension before reporting success. See
-`docs/STACK_ABI_ENVELOPE.md` for the complete contract and pilot inventory.
+Discovery reads only `S0..S4`. It validates a usable magic, a positive ABI,
+schema zero pairing, and any length-prefixed extension before reporting success.
+Because the header is the payload header, there is no separate payload address
+to chase. See `docs/STACK_ABI_ENVELOPE.md` for the complete contract and the
+migration backlog.
 
 ## 5. Read a stack cell
 
@@ -102,17 +103,15 @@ The monitor publishes this diagnostic state in its own stack:
 
 | Cell | Meaning |
 | ---: | --- |
-| `S2` | Status |
-| `S3` | Selected stack address |
-| `S4` | Sampled value for status `1`/`2`; otherwise `0` |
-| `S5` | Target housing ReferenceId |
-| `S6` | Sample generation, published last |
+| `S5` | Status |
+| `S6` | Selected stack address |
+| `S7` | Sampled value for status `1`/`2`; otherwise `0` |
+| `S8` | Target housing ReferenceId |
+| `S9` | Sample generation, published last |
 
-For status `3`, `S3` is the discovered primary payload base and `S4` is the
-semantic ServiceId hash. For status `1`/`2`, they retain the selected-address and
-sampled-value meanings above. A failed discovery reports the selected `-1` in
-`S3`, so no address there is ever mistaken for a payload base the monitor did
-not read.
+For status `3`, `S7` is the discovered `ServiceMagic`. For status `1`/`2` it is
+the sampled value. `S6` always holds the selected address, so a failed discovery
+reports `-1` there rather than an address the monitor probed on its own.
 
 Status values are:
 
@@ -120,13 +119,13 @@ Status values are:
 | ---: | --- |
 | `1` | Finite value captured |
 | `2` | NaN captured from the target cell |
-| `3` | Valid Stack Envelope v1 discovered |
+| `3` | Valid common header discovered |
 | `-1` | Target missing |
 | `-2` | Target is not a standard or compact IC housing |
 | `-3` | Address selector missing or does not expose `Setting` |
 | `-4` | Address is NaN, fractional, negative, or greater than `511` |
-| `-5` | Target does not publish Stack Envelope v1 |
-| `-6` | Envelope fields or extension bounds are invalid |
+| `-5` | `S0` holds no usable magic |
+| `-6` | Header fields or extension bounds are invalid |
 
 ## 6. Safety and limitations
 

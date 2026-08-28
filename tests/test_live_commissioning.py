@@ -47,25 +47,25 @@ selector=Device(202,props={'ReferenceId':202,'Setting':6})
 output=Device(203,props={'ReferenceId':203,'Setting':0})
 monitor=IC10((R/'ic10/live-commissioning/stack_cell_monitor_v1_0.ic10').read_text(),
              {'d0':target,'d1':selector,'d2':output},self_ref=2541)
-monitor.stack[6]=math.nan
+monitor.stack[9]=math.nan
 monitor.run(2)
-if monitor.stack.get(2)!=1 or monitor.stack.get(3)!=6 or monitor.stack.get(4)!=1:
+if monitor.stack.get(5)!=1 or monitor.stack.get(6)!=6 or monitor.stack.get(7)!=1:
     fails.append('stack monitor finite capture mismatch')
-if monitor.stack.get(5)!=201 or output.props.get('Setting')!=1:
+if monitor.stack.get(8)!=201 or output.props.get('Setting')!=1:
     fails.append('stack monitor target identity/output mirror mismatch')
-if monitor.stack.get(6)!=1:
+if monitor.stack.get(9)!=1:
     fails.append('stack monitor did not initialize generation on a reused housing')
 target.stack[9]=math.nan;selector.props['Setting']=9;monitor.run(1)
-if monitor.stack.get(2)!=2 or not math.isnan(output.props.get('Setting')):
+if monitor.stack.get(5)!=2 or not math.isnan(output.props.get('Setting')):
     fails.append('stack monitor did not distinguish captured NaN')
 selector.props['Setting']=512;monitor.run(1)
-if monitor.stack.get(2)!=-4 or monitor.stack.get(3)!=512:
+if monitor.stack.get(5)!=-4 or monitor.stack.get(6)!=512:
     fails.append('stack monitor accepted an out-of-range address')
 selector.props['Setting']=6.25;monitor.run(1)
-if monitor.stack.get(2)!=-4:
+if monitor.stack.get(5)!=-4:
     fails.append('stack monitor accepted a fractional address')
 target.props['PrefabHash']='HASH:StructureLogicMemory';selector.props['Setting']=6;monitor.run(1)
-if monitor.stack.get(2)!=-2:
+if monitor.stack.get(5)!=-2:
     fails.append('stack monitor accepted a non-IC target')
 # Compact IC housings work without the optional d2 output.
 compact=Device(204,stack={17:42},props={
@@ -74,18 +74,18 @@ compact_selector=Device(205,props={'ReferenceId':205,'Setting':17})
 compact_monitor=IC10((R/'ic10/live-commissioning/stack_cell_monitor_v1_0.ic10').read_text(),
                      {'d0':compact,'d1':compact_selector},self_ref=2542)
 compact_monitor.run(2)
-if compact_monitor.stack.get(2)!=1 or compact_monitor.stack.get(4)!=42:
+if compact_monitor.stack.get(5)!=1 or compact_monitor.stack.get(7)!=42:
     fails.append('stack monitor failed compact housing capture without optional output')
 # Missing required inputs publish their distinct status instead of faulting.
 no_target=IC10((R/'ic10/live-commissioning/stack_cell_monitor_v1_0.ic10').read_text(),
                {'d1':compact_selector},self_ref=2543)
 no_target.run(2)
-if no_target.stack.get(2)!=-1 or no_target.stack.get(4)!=0:
+if no_target.stack.get(5)!=-1 or no_target.stack.get(7)!=0:
     fails.append('stack monitor did not report a missing target with a neutral value')
 no_selector=IC10((R/'ic10/live-commissioning/stack_cell_monitor_v1_0.ic10').read_text(),
                  {'d0':compact},self_ref=2544)
 no_selector.run(2)
-if no_selector.stack.get(2)!=-3:
+if no_selector.stack.get(5)!=-3:
     fails.append('stack monitor did not report a missing selector')
 if fails:
     print('Live commissioning tests: FAIL');[print(' -',x) for x in fails];sys.exit(1)

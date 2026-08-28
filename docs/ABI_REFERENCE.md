@@ -63,8 +63,7 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 | Generic Config Editor | `22360680` | `S1` | 1 |
 | Config Input Bridge | `22360681` | `S1` | 1 |
 | Stack Cell Monitor | `31416052` | `S1` | 1 |
-| Common Stack Envelope | `31416053` | `S321` | 1 |
-| Stack Envelope extension | `31416054` | `E+1` | 1 |
+| Stack header extension | `31416054` | `E+1` | 1 |
 
 ## Catalog Store ABI v5
 
@@ -1557,40 +1556,37 @@ Each descriptor is `[Mode, FieldOrStackCell, FenceStackCell]`: mode 0 disabled, 
 
 `ic10/live-commissioning/stack_cell_monitor_v1_0.ic10` is an on-demand,
 human-visible monitor for one stack cell on a standard or compact IC housing.
-Magic `31416052`, ABI1. `d0` is the target IC housing, `d1` is a Logic Memory
-whose `Setting` selects discovery mode `-1` or address `0..511`, and optional
-`d2` mirrors the result to another writable `Setting` device. Discovery reads
-only Stack Envelope v1 at `S320..S327`; it returns the primary payload base and
-semantic ServiceId. The monitor also writes the result to its own housing
-`Setting`; it never writes the target or selector.
+Magic `31416052`, ABI1, and it publishes the common header at `S0..S4`. `d0` is
+the target IC housing, `d1` is a Logic Memory whose `Setting` selects header
+discovery `-1` or address `0..511`, and optional `d2` mirrors the result to
+another writable `Setting` device. Discovery reads only `S0..S4`. The monitor
+also writes the result to its own housing `Setting`; it never writes the target
+or selector.
 
 ```text
-S2  status: 1 finite value, 2 captured NaN, 3 valid v1 envelope,
+S5  status: 1 finite value, 2 captured NaN, 3 valid v1 header,
             -1 target missing, -2 target is not an IC housing,
             -3 selector missing/unsupported, -4 invalid address,
-            -5 no v1 envelope, -6 invalid envelope/extension
-S3  selected address, or discovered PrimaryPayloadBase for status 3
-S4  sampled value for status 1/2, or semantic ServiceId for status 3
-S5  target ReferenceId
-S6  sample generation, published last
+            -5 S0 holds no usable magic, -6 invalid header/extension
+S6  selected address; stays -1 for a discovery attempt
+S7  sampled value for status 1/2, or the discovered magic for status 3
+S8  target ReferenceId
+S9  sample generation, published last
 ```
 
-## Common Stack ABI Envelope v1
+## Common Stack Header v1
 
-Migrated services publish the fixed eight-cell window `S320..S327`:
+Every service identifies itself in the first five cells:
 
 ```text
-S320 EnvelopeMagic = 31416053
-S321 EnvelopeVersion = 1
-S322 semantic ServiceId hash
-S323 primary service ABI
-S324/S325 schema ID/version, or 0/0
-S326 primary payload base
-S327 extension base, or 0
+S0 ServiceMagic — the registered magic below; identity
+S1 ServiceABI
+S2 SchemaId, or 0
+S3 SchemaVersion, or 0
+S4 ExtensionBase, or 0
 ```
 
-Extensions use magic `31416054`, version 1, an inclusive length in `4..192`, and
-must remain inside `S0..S511` without overlapping the fixed window. Established
-payload headers remain at their old addresses. See
-`docs/STACK_ABI_ENVELOPE.md` for identity, zero/unknown, compatibility, upgrade,
-inventory, and migration rules.
+Extensions use magic `31416054`, version 1, an inclusive length in `4..192`,
+begin at `S5` or later, and must end inside `S0..S511`. Family payload begins
+after the header. See `docs/STACK_ABI_ENVELOPE.md` for identity, zero/unknown,
+compatibility, upgrade, inventory, and migration rules.

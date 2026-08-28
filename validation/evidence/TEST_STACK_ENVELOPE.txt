@@ -1,4 +1,4 @@
-Stack envelope tests: PASS
- - all five pilots preserve their established payload headers while publishing v1
- - monitor discovers semantic ServiceId and payload base from only S320..S327
- - schema zero pairing, extension bounds, and the legacy source-set gate fail closed
+Stack header tests: PASS
+ - the monitor publishes S0..S4 and reads a target's identity from those cells alone
+ - schema binding, extension bounds, and the pre-v1 baseline gate fail closed
+ - migration backlog: 172 programs, 156 using S0..S4

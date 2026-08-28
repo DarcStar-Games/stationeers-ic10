@@ -1487,29 +1487,8 @@ def _own_stack(source: str, rows: list[list[str]], integer_aliases: dict[str, in
     dynamic_write_cells = {
         address for item in dynamic_write_ranges for address in range(item["start"], item["end"] + 1)
     }
-    envelope_names = (
-        (320, "StackEnvelope.Magic", "integer"),
-        (321, "StackEnvelope.Version", "integer"),
-        (322, "StackEnvelope.ServiceId", "hash"),
-        (323, "StackEnvelope.ServiceABI", "integer"),
-        (324, "StackEnvelope.SchemaId", "hash"),
-        (325, "StackEnvelope.SchemaVersion", "integer"),
-        (326, "StackEnvelope.PrimaryPayloadBase", "integer"),
-        (327, "StackEnvelope.ExtensionBase", "integer"),
-    )
-    has_envelope = (
-        write_values[320] == {31416053}
-        and write_values[321] == {1}
-        and all(address in writes for address, _, _ in envelope_names)
-    )
     stable_expected: dict[int, Any] = {header["base"]: header["magic"] for header in headers}
     stable_expected.update({header["base"] + 1: header["abi"] for header in headers})
-    if has_envelope:
-        stable_expected.update({
-            address: next(iter(write_values[address]))
-            for address, _, _ in envelope_names
-            if address not in unknown_values and len(write_values[address]) == 1
-        })
     stable_cells = _stable_cells(source, integer_aliases, stable_expected)
     fields: dict[int, dict[str, Any]] = {}
     for address in sorted(reads | writes):
@@ -1578,31 +1557,12 @@ def _own_stack(source: str, rows: list[list[str]], integer_aliases: dict[str, in
         for key in ("default", "enum_values", "reserved"):
             if key in declared:
                 current[key] = declared[key]
-    if has_envelope:
-        for address, name, value_type in envelope_names:
-            field = fields[address]
-            field["name"] = name
-            field["value_type"] = value_type
-            field["semantic_source"] = "source"
-            field["access"] = sorted(set(field["access"]) | {"external-read"})
-            if (
-                address not in dynamic_write_cells
-                and address not in unknown_values
-                and len(write_values[address]) == 1
-                and address in stable_cells
-            ):
-                field["const"] = next(iter(write_values[address]))
-            else:
-                field.pop("const", None)
     external_readable_ranges = _ranges(overrides.get("external_readable_ranges"))
-    if has_envelope:
-        external_readable_ranges = _merge_ranges(
-            external_readable_ranges + [{"start": 320, "end": 327}]
-        )
-        extension_bases = write_values[327]
+    if any(header["base"] == 0 for header in headers):
+        extension_bases = write_values[4]
         if len(extension_bases) == 1:
             extension_base = next(iter(extension_bases))
-            if isinstance(extension_base, int) and extension_base != 0:
+            if isinstance(extension_base, int) and extension_base >= 5:
                 extension_lengths = write_values[extension_base + 2]
                 if (
                     write_values[extension_base] == {31416054}

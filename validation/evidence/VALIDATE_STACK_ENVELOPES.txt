@@ -1,4 +1,4 @@
 Stack envelope validation: PASS
  - all 173 deployable programs are migrated or in the immutable pre-v1 baseline
- - five pilots cover monitor, Generic Telemetry, directory, catalog, and transaction families
- - fixed cells, semantic identities, payload bases, schema pairing, and extension bounds are enforced
+ - migrated families: stack-monitor; backlog: 172 programs
+ - S0..S4 writes, canonical schema binding, and extension bounds are enforced

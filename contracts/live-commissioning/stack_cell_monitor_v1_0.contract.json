@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10",
-  "source_sha256": "7effbc6c8eabea47b81bc97455fb7bc22d70d7b40359382c7076758b7e0e7231",
+  "source_sha256": "06ae352cbf5ec092883b0a219aa49e7f5d20ec91c6eff9e5249fe9b2ee20bf2e",
   "identity": {
     "service_id": "ic10.script.stack.cell.monitor",
     "implementation_revision": "1.0",
@@ -28,14 +28,11 @@
       },
       "stack": {
         "literal_reads": [
-          320,
-          321,
-          322,
-          323,
-          324,
-          325,
-          326,
-          327
+          0,
+          1,
+          2,
+          3,
+          4
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -49,22 +46,13 @@
         "dynamic_write_ranges": [],
         "dynamic_read_range_source": "source-fingerprinted-exception",
         "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 320,
-            "equals": 31416053
-          },
-          {
-            "address": 321,
-            "equals": 1
-          }
-        ]
+        "constraints": []
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.d6cbecb2a02cf7b7",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.d6cbecb2a02cf7b7",
+        "interface_id": "ic10.interface.access.0858f5acf42964ab",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.0858f5acf42964ab",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -156,7 +144,7 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      6
+      9
     ],
     "literal_writes": [
       0,
@@ -166,14 +154,9 @@
       4,
       5,
       6,
-      320,
-      321,
-      322,
-      323,
-      324,
-      325,
-      326,
-      327
+      7,
+      8,
+      9
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -184,12 +167,7 @@
     "dynamic_read_range_source": "none",
     "dynamic_write_range_source": "none",
     "clears_all": false,
-    "external_readable_ranges": [
-      {
-        "start": 320,
-        "end": 327
-      }
-    ],
+    "external_readable_ranges": [],
     "external_writable_ranges": [],
     "fields": [
       {
@@ -219,7 +197,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
         "address": 3,
@@ -228,7 +207,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
         "address": 4,
@@ -237,7 +217,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
         "address": 5,
@@ -250,6 +231,33 @@
       },
       {
         "address": 6,
+        "name": "S6",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 7,
+        "name": "S7",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 8,
+        "name": "S8",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 9,
         "name": "CompleteSampleGenerationPublishes",
         "value_type": "integer",
         "semantic_source": "source",
@@ -258,94 +266,6 @@
           "self-write"
         ],
         "description": "complete sample generation publishes LAST"
-      },
-      {
-        "address": 320,
-        "name": "StackEnvelope.Magic",
-        "value_type": "integer",
-        "semantic_source": "source",
-        "access": [
-          "external-read",
-          "self-write"
-        ],
-        "const": 31416053
-      },
-      {
-        "address": 321,
-        "name": "StackEnvelope.Version",
-        "value_type": "integer",
-        "semantic_source": "source",
-        "access": [
-          "external-read",
-          "self-write"
-        ],
-        "const": 1
-      },
-      {
-        "address": 322,
-        "name": "StackEnvelope.ServiceId",
-        "value_type": "hash",
-        "semantic_source": "source",
-        "access": [
-          "external-read",
-          "self-write"
-        ],
-        "const": "HASH(\"ic10.script.stack.cell.monitor\")"
-      },
-      {
-        "address": 323,
-        "name": "StackEnvelope.ServiceABI",
-        "value_type": "integer",
-        "semantic_source": "source",
-        "access": [
-          "external-read",
-          "self-write"
-        ],
-        "const": 1
-      },
-      {
-        "address": 324,
-        "name": "StackEnvelope.SchemaId",
-        "value_type": "hash",
-        "semantic_source": "source",
-        "access": [
-          "external-read",
-          "self-write"
-        ],
-        "const": 0
-      },
-      {
-        "address": 325,
-        "name": "StackEnvelope.SchemaVersion",
-        "value_type": "integer",
-        "semantic_source": "source",
-        "access": [
-          "external-read",
-          "self-write"
-        ],
-        "const": 0
-      },
-      {
-        "address": 326,
-        "name": "StackEnvelope.PrimaryPayloadBase",
-        "value_type": "integer",
-        "semantic_source": "source",
-        "access": [
-          "external-read",
-          "self-write"
-        ],
-        "const": 0
-      },
-      {
-        "address": 327,
-        "name": "StackEnvelope.ExtensionBase",
-        "value_type": "integer",
-        "semantic_source": "source",
-        "access": [
-          "external-read",
-          "self-write"
-        ],
-        "const": 0
       }
     ],
     "headers": [
@@ -360,7 +280,7 @@
     "publication_rules": [
       {
         "kind": "commit-last",
-        "address": 6,
+        "address": 9,
         "description": "complete sample generation publishes LAST",
         "source": "verified-inline-order"
       }

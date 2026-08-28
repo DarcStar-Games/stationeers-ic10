@@ -17,15 +17,7 @@
       "provider_magic": 31415953,
       "provider_abi": 1,
       "generation_offset": 12,
-      "fields": ["ref"],
-      "stack_envelope": {
-        "service_id": "ic10.script.resource.link.directory.adapter",
-        "service_abi": 2,
-        "schema_id": "DirectorySchema.ResourceLink",
-        "schema_version": 1,
-        "primary_payload_base": 0,
-        "extension_base": 0
-      }
+      "fields": ["ref"]
     },
     {
       "file": "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10",

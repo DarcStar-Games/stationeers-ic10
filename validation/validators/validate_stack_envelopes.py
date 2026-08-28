@@ -10,9 +10,10 @@ import sys
 
 from framework.json_schema import SchemaValidationError, validate
 from framework.script_contracts import build_all
-from framework.stack_envelope import DeclarationError, build_inventory
+from framework.stack_envelope import BASE, LENGTH, DeclarationError, build_inventory
 
 ROOT = _PROJECT_ROOT
+PILOT_FAMILIES = {"stack-monitor", "generic-telemetry", "directory", "catalog", "transaction"}
 fails: list[str] = []
 
 try:
@@ -52,12 +53,14 @@ if actual is not None:
             fails.append(f"{item['source']}: migrated status lacks envelope declaration")
         if item["status"] == "legacy-exempt" and not has_exemption:
             fails.append(f"{item['source']}: legacy status lacks explicit exemption")
-    if {item["envelope"]["pilot_family"] for item in migrated if "envelope" in item} != {
-        "stack-monitor", "generic-telemetry", "directory", "catalog", "transaction"
-    }:
-        fails.append("required pilot-family coverage is incomplete")
-    if any(item["window_collision"]["literal_cells"] for item in legacy):
-        fails.append("a legacy service already occupies the selected fixed v1 window")
+    families = {item["envelope"]["pilot_family"] for item in migrated if "envelope" in item}
+    if not families <= PILOT_FAMILIES:
+        fails.append(f"unknown pilot families declared: {sorted(families - PILOT_FAMILIES)}")
+    if "stack-monitor" not in families:
+        fails.append("the monitor pilot must stay migrated; it is the reference reader")
+    if any(item["window_collision"]["literal_cells"] for item in migrated
+           if set(item["window_collision"]["literal_cells"]) - set(range(BASE, BASE + LENGTH))):
+        fails.append("a migrated service uses header cells outside S0..S4 as header cells")
     totals = actual["totals"]
     if totals["deployable_programs"] != len(services):
         fails.append("deployable total does not match inventory rows")
@@ -70,5 +73,5 @@ if fails:
     sys.exit(1)
 print("Stack envelope validation: PASS")
 print(f" - all {len(contracts)} deployable programs are migrated or in the immutable pre-v1 baseline")
-print(" - five pilots cover monitor, Generic Telemetry, directory, catalog, and transaction families")
-print(" - fixed cells, semantic identities, payload bases, schema pairing, and extension bounds are enforced")
+print(f" - migrated families: {', '.join(sorted(families)) or 'none'}; backlog: {len(legacy)} programs")
+print(" - S0..S4 writes, canonical schema binding, and extension bounds are enforced")

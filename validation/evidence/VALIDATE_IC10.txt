@@ -70,7 +70,7 @@ PASS ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10 lines=120 headr
 PASS ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10 lines= 82 headroom=46 max=79 CRLF=1212 comments= 1
 PASS ic10/item-storage-vending/material_vending_inventory_v1_0.ic10 lines=112 headroom=16 max=83 CRLF=1880 comments=11
 PASS ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10 lines=108 headroom=20 max=87 CRLF=1430 comments= 1
-PASS ic10/live-commissioning/stack_cell_monitor_v1_0.ic10 lines=117 headroom=11 max=85 CRLF=2070 comments= 2
+PASS ic10/live-commissioning/stack_cell_monitor_v1_0.ic10 lines=100 headroom=28 max=85 CRLF=1715 comments= 2
 PASS ic10/manufacturing/generic_print_runtime_v2_0.ic10 lines=112 headroom=16 max=21 CRLF=1452 comments= 0
 PASS ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10 lines=108 headroom=20 max=89 CRLF=1520 comments= 1
 PASS ic10/manufacturing/manufacturing_driver_router_v2_0.ic10 lines= 75 headroom=53 max=64 CRLF= 999 comments= 1
@@ -132,7 +132,7 @@ PASS ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10 lines= 89 he
 PASS ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10 lines=120 headroom= 8 max=19 CRLF=1582 comments= 0
 PASS ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10 lines=117 headroom=11 max=83 CRLF=1543 comments= 1
 PASS ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10 lines=120 headroom= 8 max=54 CRLF=1641 comments= 0
-PASS ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10 lines= 59 headroom=69 max=66 CRLF= 842 comments= 1
+PASS ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10 lines= 51 headroom=77 max=66 CRLF= 690 comments= 1
 PASS ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10 lines= 66 headroom=62 max=79 CRLF=1047 comments= 1
 PASS ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10 lines=120 headroom= 8 max=48 CRLF=1711 comments= 0
 PASS ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10 lines= 69 headroom=59 max=64 CRLF=1076 comments= 1
@@ -143,17 +143,17 @@ PASS ic10/printer-directory/printer_execution_bank_v2_0.ic10 lines=120 headroom=
 PASS ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10 lines=120 headroom= 8 max=47 CRLF=1673 comments= 0
 PASS ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10 lines=119 headroom= 9 max=69 CRLF=1967 comments= 2
 PASS ic10/process-furnace/furnace_process_condition_request_v1_0.ic10 lines= 95 headroom=33 max=63 CRLF=1316 comments= 1
-PASS ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10 lines= 69 headroom=59 max=60 CRLF=1055 comments= 1
+PASS ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10 lines= 61 headroom=67 max=54 CRLF= 901 comments= 1
 PASS ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10 lines=111 headroom=17 max=79 CRLF=1676 comments= 1
 PASS ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10 lines= 76 headroom=52 max=60 CRLF=1198 comments= 1
 PASS ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10 lines= 82 headroom=46 max=70 CRLF=1209 comments= 1
 PASS ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10 lines=114 headroom=14 max=83 CRLF=1686 comments= 2
-PASS ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10 lines=114 headroom=14 max=78 CRLF=1794 comments= 2
+PASS ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10 lines=106 headroom=22 max=78 CRLF=1624 comments= 2
 PASS ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10 lines=118 headroom=10 max=81 CRLF=1629 comments= 1
 PASS ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10 lines= 63 headroom=65 max=79 CRLF= 984 comments=10
 PASS ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10 lines= 82 headroom=46 max=90 CRLF=1323 comments= 4
 PASS ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10 lines= 64 headroom=64 max=76 CRLF= 924 comments= 1
-PASS ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10 lines= 65 headroom=63 max=72 CRLF=1013 comments= 1
+PASS ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10 lines= 57 headroom=71 max=72 CRLF= 825 comments= 1
 PASS ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10 lines= 64 headroom=64 max=75 CRLF= 926 comments= 1
 PASS ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10 lines= 46 headroom=82 max=79 CRLF= 660 comments= 1
 PASS ic10/resource-grid-core/resource_reservation_v1_0.ic10 lines=117 headroom=11 max=71 CRLF=2184 comments=19

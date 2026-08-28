@@ -144,6 +144,9 @@ forbidden={
     'current 38-profile commissioning estimate':'39 Resource Profiles are current',
     'No numbered roadmap milestone remains active':'Item 12 live commissioning is active',
     'recipe_fixture_data':'Recipe fixture GameData moved to tests/fixtures/recipe_game_data/',
+ 'S320':'the common header is S0..S4; no fixed window at S320 exists',
+ '31416053':'the envelope magic was removed with the S320 window; identity is the service magic at S0',
+ 'PrimaryPayloadBase':'the payload header is the common header, so there is no separate payload base',
 }
 for p in mds:
     txt=p.read_text(errors='replace')

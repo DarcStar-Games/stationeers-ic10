@@ -14,12 +14,7 @@
     {
       "source": "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10",
       "header_base": 0,
-      "readable_ranges": [
-        {
-          "start": 320,
-          "end": 327
-        }
-      ],
+      "readable_ranges": [],
       "writable_ranges": [],
       "fields": [
         {
@@ -169,94 +164,6 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-write"
-          ],
-          "const": 0
-        },
-        {
-          "address": 320,
-          "name": "StackEnvelope.Magic",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ],
-          "const": 31416053
-        },
-        {
-          "address": 321,
-          "name": "StackEnvelope.Version",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ],
-          "const": 1
-        },
-        {
-          "address": 322,
-          "name": "StackEnvelope.ServiceId",
-          "value_type": "hash",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ],
-          "const": "HASH(\"ic10.script.pressure.inventory.reservation\")"
-        },
-        {
-          "address": 323,
-          "name": "StackEnvelope.ServiceABI",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ],
-          "const": 1
-        },
-        {
-          "address": 324,
-          "name": "StackEnvelope.SchemaId",
-          "value_type": "hash",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ],
-          "const": 0
-        },
-        {
-          "address": 325,
-          "name": "StackEnvelope.SchemaVersion",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ],
-          "const": 0
-        },
-        {
-          "address": 326,
-          "name": "StackEnvelope.PrimaryPayloadBase",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ],
-          "const": 0
-        },
-        {
-          "address": 327,
-          "name": "StackEnvelope.ExtensionBase",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
             "self-write"
           ],
           "const": 0

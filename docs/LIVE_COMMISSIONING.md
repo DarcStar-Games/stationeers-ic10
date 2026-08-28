@@ -115,8 +115,8 @@ IC10 currently supports register-addressed stack reads and device/LogicType indi
 interactive commissioning. It reads one selected `S0..S511` cell from a standard
 or compact IC housing and mirrors the result to its own housing `Setting` and an
 optional Logic Memory. Selector value `-1` instead reads and validates only the
-common `S320..S327` Stack Envelope v1, publishing semantic ServiceId and primary
-payload base without prior family knowledge. It never writes the target or
+common `S0..S4` header, publishing the target's registered magic without prior
+family knowledge. It never writes the target or
 selector. Separate samples are not a coherent multi-cell snapshot. Use the
 Snapshot Probe above when generation fencing matters. See
 `docs/STACK_CELL_MONITOR_GETTING_STARTED.md` for the in-world setup and

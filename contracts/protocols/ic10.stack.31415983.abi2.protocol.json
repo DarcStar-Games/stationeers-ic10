@@ -1185,10 +1185,6 @@
         {
           "start": 16,
           "end": 79
-        },
-        {
-          "start": 320,
-          "end": 327
         }
       ],
       "writable_ranges": [],
@@ -1309,86 +1305,6 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 320,
-          "name": "StackEnvelope.Magic",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 321,
-          "name": "StackEnvelope.Version",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 322,
-          "name": "StackEnvelope.ServiceId",
-          "value_type": "hash",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 323,
-          "name": "StackEnvelope.ServiceABI",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 324,
-          "name": "StackEnvelope.SchemaId",
-          "value_type": "hash",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 325,
-          "name": "StackEnvelope.SchemaVersion",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 326,
-          "name": "StackEnvelope.PrimaryPayloadBase",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 327,
-          "name": "StackEnvelope.ExtensionBase",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
             "self-write"
           ]
         }

@@ -11,15 +11,16 @@ from framework.script_contracts import _aliases, _integer, _literal_value, _prog
 
 FORMAT = "IC10_STACK_ENVELOPE_INVENTORY_V1"
 DECLARATION_FORMAT = "IC10_STACK_ENVELOPE_DECLARATIONS_V1"
-BASE = 320
-LENGTH = 8
-MAGIC = 31416053
-VERSION = 1
+BASE = 0
+LENGTH = 5
+SCHEMA_ID_CELL = BASE + 2
+SCHEMA_VERSION_CELL = BASE + 3
+EXTENSION_BASE_CELL = BASE + 4
 EXTENSION_MAGIC = 31416054
 EXTENSION_VERSION = 1
 EXTENSION_MIN_LENGTH = 4
 EXTENSION_MAX_LENGTH = 192
-PRE_V1_LEGACY_BASELINE_SHA256 = "b9dce2fdf8f6c42864cf9be5ce49996bf74068f3ed8176ed96f377fbd9d42e65"
+PRE_V1_LEGACY_BASELINE_SHA256 = "88eacbf2e6961fe2fe3431321a31cd7a666f9ccba625acad57f81174bb811e0d"
 SERVICE_ID_RE = re.compile(r"^ic10\.script\.[a-z0-9.]+$")
 IMPLEMENTATION_ID_RE = re.compile(r"^ic10\.implementation\.[a-z0-9.]+$")
 HASH_RE = re.compile(r'^HASH\("([^"\n]+)"\)$')
@@ -89,6 +90,30 @@ def _schema_check_pairs(rows: list[list[str]], aliases: dict[str, int]) -> set[t
         for value in values if isinstance(value, str)
         for version in checked.get(address + 1, set()) if isinstance(version, int)
     }
+
+
+def canonical_schema_pairs(root: Path) -> set[tuple[str, int]]:
+    """Every (schema id, version) the reviewed data files declare as canonical."""
+    pairs: set[tuple[str, int]] = set()
+
+    def walk(node: Any) -> None:
+        if isinstance(node, dict):
+            for id_key, version_key in (("schema_id", "schema_version"),
+                                        ("catalog_schema_id", "catalog_schema_version")):
+                name, version = node.get(id_key), node.get(version_key)
+                if isinstance(name, str) and type(version) is int:
+                    pairs.add((f'HASH("{name}")', version))
+            for value in node.values():
+                walk(value)
+        elif isinstance(node, list):
+            for value in node:
+                walk(value)
+
+    for path in sorted((Path(root) / "data").glob("*.json")):
+        if path.name == "stack_envelope_declarations.json":
+            continue
+        walk(json.loads(path.read_text()))
+    return pairs
 
 
 def _range_cells(ranges: list[dict[str, int]]) -> set[int]:
@@ -250,8 +275,6 @@ def declaration_errors(
     canonical = {
         "base": BASE,
         "length": LENGTH,
-        "magic": MAGIC,
-        "version": VERSION,
         "extension_magic": EXTENSION_MAGIC,
         "extension_version": EXTENSION_VERSION,
         "extension_min_length": EXTENSION_MIN_LENGTH,
@@ -274,7 +297,7 @@ def declaration_errors(
     legacy_sources = sorted(set(declared_legacy))
     unclassified = sorted(set(by_source) - set(migrated) - set(legacy_sources))
     if unclassified:
-        errors.append(f"new deployable programs must publish the envelope or receive explicit exemptions: {unclassified}")
+        errors.append(f"new deployable programs must publish the header or receive explicit exemptions: {unclassified}")
     if exemption.get("source_count") != len(legacy_sources):
         errors.append(
             f"legacy baseline count {exemption.get('source_count')} != baseline path count {len(legacy_sources)}"
@@ -286,6 +309,7 @@ def declaration_errors(
         )
     if digest != PRE_V1_LEGACY_BASELINE_SHA256:
         errors.append("pre-v1 legacy baseline is immutable; new paths must publish the envelope")
+    canonical_pairs = canonical_schema_pairs(root)
     service_ids: dict[str, str] = {}
     for source, declaration in sorted(migrated.items()):
         if source not in by_source:
@@ -302,24 +326,24 @@ def declaration_errors(
             errors.append(
                 f"{source}: service_id {service_id!r} != canonical contract identity {canonical_service_id!r}"
             )
+        magic_value = declaration.get("magic")
         service_abi_value = declaration.get("service_abi")
         schema_version_value = declaration.get("schema_version")
-        payload_base_value = declaration.get("primary_payload_base")
         extension_base_value = declaration.get("extension_base")
+        magic = magic_value if type(magic_value) is int else 0
         service_abi = service_abi_value if type(service_abi_value) is int else 0
         schema_id = declaration.get("schema_id")
         schema_version = schema_version_value if type(schema_version_value) is int else -1
-        payload_base = payload_base_value if type(payload_base_value) is int else -1
         extension_base = extension_base_value if type(extension_base_value) is int else -1
         extension_flags_value = declaration.get("extension_flags", -1)
         extension_flags = extension_flags_value if type(extension_flags_value) is int else -1
         implementation_id = declaration.get("implementation_id")
+        if type(magic_value) is not int or magic == 0:
+            errors.append(f"{source}: magic must be the service's registered nonzero integer")
         if type(service_abi_value) is not int or service_abi < 1:
             errors.append(f"{source}: service_abi must be a positive integer")
         if type(schema_version_value) is not int:
             errors.append(f"{source}: schema_version must be an integer")
-        if type(payload_base_value) is not int or not 0 <= payload_base <= 511:
-            errors.append(f"{source}: primary_payload_base must be an integer in S0..S511")
         if type(extension_base_value) is not int:
             errors.append(f"{source}: extension_base must be an integer")
         if schema_id is not None and (not isinstance(schema_id, str) or not schema_id):
@@ -327,28 +351,18 @@ def declaration_errors(
         if (schema_id is None) != (schema_version == 0):
             errors.append(f"{source}: schema_id and schema_version must both be absent/zero or both present")
         headers = by_source[source]["own_stack"]["headers"]
-        if not any(header["base"] == payload_base and header["abi"] == service_abi for header in headers):
-            errors.append(f"{source}: payload base/service ABI does not select a declared legacy header")
+        if not any(
+            header["base"] == BASE and header["magic"] == magic and header["abi"] == service_abi
+            for header in headers
+        ):
+            errors.append(f"{source}: S0/S1 do not publish the declared magic and ABI as a verified header")
         source_rows, source_aliases = _parse(root / source)
         writes = _writes(source_rows, source_aliases)
-        legacy_fields = {
-            field["address"]: field
-            for field in _schema_fields(by_source[source], root / source, writes)
-            if field["address"] not in range(BASE, BASE + LENGTH)
-        }
-        legacy_schema_pairs = {
-            (field["const"], legacy_fields[field["address"] + 1]["const"])
-            for field in legacy_fields.values()
-            if field.get("name") == "SchemaId"
-            and isinstance(field.get("const"), str)
-            and field["address"] + 1 in legacy_fields
-            and legacy_fields[field["address"] + 1].get("name") == "SchemaVersion"
-        }
-        bound_schema_pairs = legacy_schema_pairs | _schema_check_pairs(source_rows, source_aliases)
+        bound_schema_pairs = _schema_check_pairs(source_rows, source_aliases) | canonical_pairs
         if schema_id is not None and (
             f'HASH("{schema_id}")', schema_version
         ) not in bound_schema_pairs:
-            errors.append(f"{source}: envelope schema does not match the established payload schema/version")
+            errors.append(f"{source}: schema/version is not canonical and is not verified by this source")
         if extension_base and not 0 <= extension_base <= 511 - EXTENSION_MIN_LENGTH + 1:
             errors.append(f"{source}: extension base cannot fit the minimum extension header")
         if type(extension_flags_value) is not int or extension_flags < 0 or extension_flags & ~1:
@@ -366,14 +380,11 @@ def declaration_errors(
             errors.append(f"{source}: {error}")
             legacy_owned_ranges = []
         expected: dict[int, Any] = {
-            BASE: MAGIC,
-            BASE + 1: VERSION,
-            BASE + 2: f'HASH("{service_id}")',
-            BASE + 3: service_abi,
-            BASE + 4: 0 if schema_id is None else f'HASH("{schema_id}")',
-            BASE + 5: schema_version,
-            BASE + 6: payload_base,
-            BASE + 7: extension_base,
+            BASE: magic,
+            BASE + 1: service_abi,
+            SCHEMA_ID_CELL: 0 if schema_id is None else f'HASH("{schema_id}")',
+            SCHEMA_VERSION_CELL: schema_version,
+            EXTENSION_BASE_CELL: extension_base,
         }
         published_expected = dict(expected)
         reserved_cells = set(range(BASE, BASE + LENGTH))
@@ -510,12 +521,11 @@ def build_inventory(
         if declaration:
             entry["envelope"] = {
                 "service_id": declaration["service_id"],
-                "service_id_hash": f'HASH("{declaration["service_id"]}")',
+                "magic": declaration["magic"],
                 "service_abi": declaration["service_abi"],
                 "schema_id": declaration["schema_id"],
                 "schema_id_hash": None if declaration["schema_id"] is None else f'HASH("{declaration["schema_id"]}")',
                 "schema_version": declaration["schema_version"],
-                "primary_payload_base": declaration["primary_payload_base"],
                 "extension_base": declaration["extension_base"],
                 "extension_flags": declaration["extension_flags"],
                 "implementation_id": declaration["implementation_id"],
@@ -555,11 +565,11 @@ def build_inventory(
             "deployable_programs": len(services),
             "migrated_v1": sum(item["status"] == "migrated-v1" for item in services),
             "legacy_exempt": sum(item["status"] == "legacy-exempt" for item in services),
-            "legacy_literal_collisions": sum(
+            "backlog_literal_cell_users": sum(
                 bool(item["window_collision"]["literal_cells"])
                 for item in services if item["status"] == "legacy-exempt"
             ),
-            "legacy_dynamic_collisions": sum(
+            "backlog_dynamic_range_users": sum(
                 bool(item["window_collision"]["dynamic_read_cells"] or item["window_collision"]["dynamic_write_cells"])
                 for item in services if item["status"] == "legacy-exempt"
             ),

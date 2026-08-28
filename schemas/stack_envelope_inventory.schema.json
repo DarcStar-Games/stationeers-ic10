@@ -22,13 +22,13 @@
     "totals": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["deployable_programs", "migrated_v1", "legacy_exempt", "legacy_literal_collisions", "legacy_dynamic_collisions"],
+      "required": ["deployable_programs", "migrated_v1", "legacy_exempt", "backlog_literal_cell_users", "backlog_dynamic_range_users"],
       "properties": {
         "deployable_programs": {"type": "integer", "minimum": 1},
         "migrated_v1": {"type": "integer", "minimum": 1},
         "legacy_exempt": {"type": "integer", "minimum": 0},
-        "legacy_literal_collisions": {"type": "integer", "minimum": 0},
-        "legacy_dynamic_collisions": {"type": "integer", "minimum": 0}
+        "backlog_literal_cell_users": {"type": "integer", "minimum": 0},
+        "backlog_dynamic_range_users": {"type": "integer", "minimum": 0}
       }
     },
     "services": {
@@ -41,12 +41,10 @@
     "envelope": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["base", "length", "magic", "version", "extension_magic", "extension_version", "extension_min_length", "extension_max_length"],
+      "required": ["base", "length", "extension_magic", "extension_version", "extension_min_length", "extension_max_length"],
       "properties": {
-        "base": {"const": 320},
-        "length": {"const": 8},
-        "magic": {"const": 31416053},
-        "version": {"const": 1},
+        "base": {"const": 0},
+        "length": {"const": 5},
         "extension_magic": {"const": 31416054},
         "extension_version": {"const": 1},
         "extension_min_length": {"const": 4},
@@ -73,8 +71,8 @@
         "dynamic_write_ranges": {"type": "array", "items": {"$ref": "#/$defs/range"}},
         "line_count": {"type": "integer", "minimum": 1, "maximum": 120},
         "line_headroom_120": {"type": "integer", "minimum": 0},
-        "measured_v1_publication_cost_lines": {"const": 8},
-        "measured_v1_stack_cost_cells": {"const": 8}
+        "measured_v1_publication_cost_lines": {"const": 5},
+        "measured_v1_stack_cost_cells": {"const": 5}
       }
     },
     "collision": {
@@ -82,9 +80,9 @@
       "additionalProperties": false,
       "required": ["literal_cells", "dynamic_read_cells", "dynamic_write_cells", "dynamic_read_provenance", "dynamic_write_provenance"],
       "properties": {
-        "literal_cells": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 320, "maximum": 327}},
-        "dynamic_read_cells": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 320, "maximum": 327}},
-        "dynamic_write_cells": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 320, "maximum": 327}},
+        "literal_cells": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 4}},
+        "dynamic_read_cells": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 4}},
+        "dynamic_write_cells": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 4}},
         "dynamic_read_provenance": {"type": "string"},
         "dynamic_write_provenance": {"type": "string"}
       }
@@ -123,15 +121,14 @@
     "migrated": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["service_id", "service_id_hash", "service_abi", "schema_id", "schema_id_hash", "schema_version", "primary_payload_base", "extension_base", "extension_flags", "implementation_id", "implementation_id_hash", "publication_validation", "pilot_family"],
+      "required": ["service_id", "magic", "service_abi", "schema_id", "schema_id_hash", "schema_version", "extension_base", "extension_flags", "implementation_id", "implementation_id_hash", "publication_validation", "pilot_family"],
       "properties": {
         "service_id": {"type": "string", "pattern": "^ic10\\.script\\.[a-z0-9.]+$"},
-        "service_id_hash": {"type": "string", "pattern": "^HASH\\(\"ic10\\.script\\.[a-z0-9.]+\"\\)$"},
+        "magic": {"type": "integer"},
         "service_abi": {"type": "integer", "minimum": 1},
         "schema_id": {"type": ["string", "null"]},
         "schema_id_hash": {"type": ["string", "null"]},
         "schema_version": {"type": "integer", "minimum": 0},
-        "primary_payload_base": {"type": "integer", "minimum": 0, "maximum": 511},
         "extension_base": {"type": "integer", "minimum": 0, "maximum": 508},
         "extension_flags": {"type": "integer", "minimum": 0, "maximum": 1},
         "implementation_id": {"type": ["string", "null"]},

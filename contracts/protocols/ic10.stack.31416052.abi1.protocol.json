@@ -14,12 +14,7 @@
     {
       "source": "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10",
       "header_base": 0,
-      "readable_ranges": [
-        {
-          "start": 320,
-          "end": 327
-        }
-      ],
+      "readable_ranges": [],
       "writable_ranges": [],
       "fields": [
         {
@@ -49,7 +44,8 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 0
         },
         {
           "address": 3,
@@ -58,7 +54,8 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 0
         },
         {
           "address": 4,
@@ -67,7 +64,8 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 0
         },
         {
           "address": 5,
@@ -80,6 +78,33 @@
         },
         {
           "address": 6,
+          "name": "S6",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 7,
+          "name": "S7",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 8,
+          "name": "S8",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 9,
           "name": "CompleteSampleGenerationPublishes",
           "value_type": "integer",
           "semantic_source": "source",
@@ -88,101 +113,13 @@
             "self-write"
           ],
           "description": "complete sample generation publishes LAST"
-        },
-        {
-          "address": 320,
-          "name": "StackEnvelope.Magic",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ],
-          "const": 31416053
-        },
-        {
-          "address": 321,
-          "name": "StackEnvelope.Version",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ],
-          "const": 1
-        },
-        {
-          "address": 322,
-          "name": "StackEnvelope.ServiceId",
-          "value_type": "hash",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ],
-          "const": "HASH(\"ic10.script.stack.cell.monitor\")"
-        },
-        {
-          "address": 323,
-          "name": "StackEnvelope.ServiceABI",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ],
-          "const": 1
-        },
-        {
-          "address": 324,
-          "name": "StackEnvelope.SchemaId",
-          "value_type": "hash",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ],
-          "const": 0
-        },
-        {
-          "address": 325,
-          "name": "StackEnvelope.SchemaVersion",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ],
-          "const": 0
-        },
-        {
-          "address": 326,
-          "name": "StackEnvelope.PrimaryPayloadBase",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ],
-          "const": 0
-        },
-        {
-          "address": 327,
-          "name": "StackEnvelope.ExtensionBase",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "external-read",
-            "self-write"
-          ],
-          "const": 0
         }
       ],
       "behavior": {
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 6,
+            "address": 9,
             "description": "complete sample generation publishes LAST",
             "source": "verified-inline-order"
           }
