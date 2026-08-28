@@ -1,0 +1,547 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DarcStar-Games/stationeers-ic10/schemas/script_contract_v2.schema.json",
+  "title": "Stationeers IC10 deployable script contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "format",
+    "source",
+    "source_sha256",
+    "identity",
+    "device_ports",
+    "network_dependencies",
+    "own_stack",
+    "behavior",
+    "contracts",
+    "extraction"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../../schemas/script_contract_v2.schema.json"
+    },
+    "format": {
+      "const": "IC10_SCRIPT_CONTRACT_V2"
+    },
+    "source": {
+      "type": "string",
+      "pattern": "^ic10/.+_v[0-9]+_[0-9]+\\.ic10$"
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "identity": {
+      "$ref": "#/$defs/identity"
+    },
+    "device_ports": {
+      "type": "array",
+      "maxItems": 6,
+      "items": {
+        "$ref": "#/$defs/devicePort"
+      }
+    },
+    "network_dependencies": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/networkDependency"}
+    },
+    "own_stack": {
+      "$ref": "#/$defs/stackAccess"
+    },
+    "behavior": {
+      "$ref": "#/$defs/behavior"
+    },
+    "contracts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provides", "consumes"],
+      "properties": {
+        "provides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/providedProtocol"
+          }
+        },
+        "consumes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/consumedProtocol"
+          }
+        }
+      }
+    },
+    "extraction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "limitations"],
+      "properties": {
+        "mode": {
+          "const": "static-v2"
+        },
+        "limitations": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "service_id",
+        "implementation_revision",
+        "deployment_family",
+        "deployment_class",
+        "layer",
+        "purpose"
+      ],
+      "properties": {
+        "service_id": {
+          "type": "string",
+          "pattern": "^ic10\\.script\\.[a-z0-9.]+$"
+        },
+        "implementation_revision": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+$"
+        },
+        "deployment_family": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "deployment_class": {
+          "enum": [
+            "resident",
+            "conditional-resident",
+            "commissioning",
+            "one-shot",
+            "on-demand"
+          ]
+        },
+        "layer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "devicePort": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "port",
+        "role",
+        "aliases",
+        "requirement",
+        "device_properties",
+        "stack",
+        "target"
+      ],
+      "properties": {
+        "port": {
+          "enum": ["d0", "d1", "d2", "d3", "d4", "d5"]
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aliases": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "requirement": {
+          "enum": ["required", "optional"]
+        },
+        "device_properties": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["reads", "writes", "slot_reads", "slot_writes"],
+          "properties": {
+            "reads": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {"type": "string", "minLength": 1}
+            },
+            "writes": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {"type": "string", "minLength": 1}
+            },
+            "slot_reads": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/slotAccess"}},
+            "slot_writes": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/slotAccess"}}
+          }
+        },
+        "stack": {
+          "$ref": "#/$defs/externalStackAccess"
+        },
+        "target": {
+          "$ref": "#/$defs/portTarget"
+        }
+      }
+    },
+    "deviceAssumptions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["properties_read", "properties_written", "slot_properties_read", "slot_properties_written"],
+      "properties": {
+        "properties_read": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "properties_written": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "slot_properties_read": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/slotAccess"}},
+        "slot_properties_written": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/slotAccess"}}
+      }
+    },
+    "slotAccess": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slot", "property"],
+      "properties": {
+        "slot": {"anyOf": [
+          {"type": "integer", "minimum": 0},
+          {"const": "dynamic"}
+        ]},
+        "property": {"type": "string", "minLength": 1}
+      }
+    },
+    "portTarget": {
+      "type": "object",
+      "required": ["kind", "verification"],
+      "anyOf": [
+        {
+          "required": ["kind", "verification", "protocol_ids"],
+          "properties": {"kind": {"const": "stack-protocol"}, "verification": {"const": "literal-header"}}
+        },
+        {
+          "required": ["kind", "verification", "interface_id", "definition_ref", "provider_resolution", "assumptions"],
+          "properties": {"kind": {"const": "stack-interface"}, "verification": {"const": "access-only"}}
+        },
+        {
+          "required": ["kind", "verification", "assumptions"],
+          "properties": {"kind": {"const": "physical-device"}, "verification": {"const": "device-properties"}}
+        }
+      ],
+      "properties": {
+        "kind": {"enum": ["stack-protocol", "stack-interface", "physical-device"]},
+        "verification": {"enum": ["literal-header", "access-only", "device-properties"]},
+        "protocol_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^ic10\\.stack\\.[0-9]+\\.abi[0-9]+$"}},
+        "interface_id": {"type": "string", "pattern": "^ic10\\.interface\\.[a-z0-9.]+$"},
+        "definition_ref": {"type": "string", "pattern": "^contracts/index\\.json#/interfaces/ic10\\.interface\\.access\\.[a-f0-9]{16}$"},
+        "provider_resolution": {"const": "deployment-supplied"},
+        "assumptions": {"$ref": "#/$defs/deviceAssumptions"}
+      },
+      "additionalProperties": false
+    },
+    "cellArray": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 511
+      }
+    },
+    "externalStackAccess": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["literal_reads", "literal_writes", "dynamic_read", "dynamic_write", "dynamic_read_ranges", "dynamic_write_ranges", "dynamic_read_range_source", "dynamic_write_range_source", "constraints"],
+      "properties": {
+        "literal_reads": {"$ref": "#/$defs/cellArray"},
+        "literal_writes": {"$ref": "#/$defs/cellArray"},
+        "dynamic_read": {"type": "boolean"},
+        "dynamic_write": {"type": "boolean"},
+        "dynamic_read_ranges": {"$ref": "#/$defs/cellRanges"},
+        "dynamic_write_ranges": {"$ref": "#/$defs/cellRanges"},
+        "dynamic_read_range_source": {"enum": ["none", "source-derived", "source-fingerprinted-exception"]},
+        "dynamic_write_range_source": {"enum": ["none", "source-derived", "source-fingerprinted-exception"]},
+        "constraints": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/cellConstraint"}
+        }
+      }
+    },
+    "cellConstraint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["address", "equals"],
+      "properties": {
+        "address": {"type": "integer", "minimum": 0, "maximum": 511},
+        "equals": {"type": ["integer", "number", "string"]}
+      }
+    },
+    "networkConstraint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["address", "operator", "value"],
+      "properties": {
+        "address": {"type": "integer", "minimum": 0, "maximum": 511},
+        "operator": {"enum": ["equals", "minimum", "maximum"]},
+        "value": {"type": ["integer", "number", "string"]}
+      }
+    },
+    "networkDependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["transport", "reference", "literal_reads", "literal_writes", "dynamic_read", "dynamic_write", "constraints", "accepted"],
+      "properties": {
+        "transport": {"enum": ["reference-id", "device-index"]},
+        "reference": {"type": "string", "minLength": 1},
+        "literal_reads": {"$ref": "#/$defs/cellArray"},
+        "literal_writes": {"$ref": "#/$defs/cellArray"},
+        "dynamic_read": {"type": "boolean"},
+        "dynamic_write": {"type": "boolean"},
+        "constraints": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/networkConstraint"}
+        },
+        "accepted": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/acceptedProtocol"}
+        }
+      }
+    },
+    "cellRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end"],
+      "properties": {
+        "start": {"type": "integer", "minimum": 0, "maximum": 511},
+        "end": {"type": "integer", "minimum": 0, "maximum": 511}
+      }
+    },
+    "cellRanges": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/cellRange"}
+    },
+    "stackAccess": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "size",
+        "literal_reads",
+        "literal_writes",
+        "dynamic_read",
+        "dynamic_write",
+        "dynamic_read_ranges",
+        "dynamic_write_ranges",
+        "dynamic_read_proven_ranges",
+        "dynamic_write_proven_ranges",
+        "dynamic_read_range_source",
+        "dynamic_write_range_source",
+        "clears_all",
+        "external_readable_ranges",
+        "external_writable_ranges",
+        "fields",
+        "headers"
+      ],
+      "properties": {
+        "size": {"const": 512},
+        "literal_reads": {"$ref": "#/$defs/cellArray"},
+        "literal_writes": {"$ref": "#/$defs/cellArray"},
+        "dynamic_read": {"type": "boolean"},
+        "dynamic_write": {"type": "boolean"},
+        "dynamic_read_ranges": {"$ref": "#/$defs/cellRanges"},
+        "dynamic_write_ranges": {"$ref": "#/$defs/cellRanges"},
+        "dynamic_read_proven_ranges": {"$ref": "#/$defs/cellRanges"},
+        "dynamic_write_proven_ranges": {"$ref": "#/$defs/cellRanges"},
+        "dynamic_read_range_source": {
+          "enum": ["none", "source-derived", "source-fingerprinted-exception", "conservative-full-stack"]
+        },
+        "dynamic_write_range_source": {
+          "enum": ["none", "source-derived", "source-fingerprinted-exception", "conservative-full-stack"]
+        },
+        "clears_all": {"type": "boolean"},
+        "external_readable_ranges": {"$ref": "#/$defs/cellRanges"},
+        "external_writable_ranges": {"$ref": "#/$defs/cellRanges"},
+        "fields": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/stackField"}
+        },
+        "headers": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/stackHeader"}
+        }
+      }
+    },
+    "stackHeader": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["base", "magic", "abi"],
+      "properties": {
+        "base": {"type": "integer", "minimum": 0, "maximum": 510},
+        "magic": {"type": "integer", "minimum": 10000000, "maximum": 99999999},
+        "abi": {"type": "integer", "minimum": 1, "maximum": 99}
+      }
+    },
+    "stackField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["address", "name", "value_type", "semantic_source", "access"],
+      "properties": {
+        "address": {"type": "integer", "minimum": 0, "maximum": 511},
+        "name": {"type": "string", "minLength": 1},
+        "value_type": {"enum": ["number", "integer", "enum", "hash", "reference-id", "boolean"]},
+        "semantic_source": {"enum": ["unresolved", "source", "override", "protocol-header"]},
+        "access": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["self-read", "self-write", "external-read", "external-write"]
+          }
+        },
+        "const": {"type": ["integer", "number", "string"]},
+        "default": {"type": ["integer", "number", "string"]},
+        "enum_values": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/enumValue"}
+        },
+        "reserved": {"type": "boolean"},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "enumValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "name"],
+      "properties": {
+        "value": {"type": ["integer", "number", "string"]},
+        "name": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"}
+      }
+    },
+    "publicationRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "address", "description", "source"],
+      "properties": {
+        "kind": {"enum": ["commit-last", "seqlock"]},
+        "address": {"type": "integer", "minimum": 0, "maximum": 511},
+        "description": {"type": "string", "minLength": 1},
+        "source": {"enum": ["verified-inline-order", "source-fingerprinted-paired-sequence", "source-fingerprinted-declaration"]}
+      }
+    },
+    "invariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "address", "equals", "source"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9.-]+$"},
+        "kind": {"const": "cell-equals"},
+        "address": {"type": "integer", "minimum": 0, "maximum": 511},
+        "equals": {"type": ["integer", "number", "string"]},
+        "source": {"enum": ["generated-protocol-header", "override"]},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "behavior": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["publication_rules", "restart", "invariants"],
+      "properties": {
+        "publication_rules": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/publicationRule"}},
+        "restart": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "source"],
+          "properties": {
+            "mode": {"enum": ["cleared-on-init", "conditional-reset", "preserved-unless-overwritten"]},
+            "source": {"const": "static-entry-path-analysis"}
+          }
+        },
+        "invariants": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/invariant"}}
+      }
+    },
+    "protocolIdentity": {
+      "type": "object",
+      "required": ["protocol_id", "header_base", "magic", "abi"],
+      "properties": {
+        "protocol_id": {
+          "type": "string",
+          "pattern": "^ic10\\.stack\\.[0-9]+\\.abi[0-9]+$"
+        },
+        "header_base": {"type": "integer", "minimum": 0, "maximum": 510},
+        "magic": {"type": "integer", "minimum": 1},
+        "abi": {"type": "integer", "minimum": 1}
+      }
+    },
+    "publicationRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "address"],
+      "properties": {
+        "kind": {"enum": ["commit-last", "seqlock"]},
+        "address": {"type": "integer", "minimum": 0, "maximum": 511}
+      }
+    },
+    "providedProtocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocol_id", "base", "magic", "abi", "source"],
+      "properties": {
+        "protocol_id": {
+          "type": "string",
+          "pattern": "^ic10\\.stack\\.[0-9]+\\.abi[0-9]+$"
+        },
+        "base": {"type": "integer", "minimum": 0, "maximum": 510},
+        "magic": {"type": "integer", "minimum": 1},
+        "abi": {"type": "integer", "minimum": 1},
+        "source": {"const": "literal-own-stack-header"}
+      }
+    },
+    "acceptedProtocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocol_id", "header_base", "magic", "abi", "publication_requirements"],
+      "properties": {
+        "protocol_id": {
+          "type": "string",
+          "pattern": "^ic10\\.stack\\.[0-9]+\\.abi[0-9]+$"
+        },
+        "header_base": {"type": "integer", "minimum": 0, "maximum": 510},
+        "magic": {"type": "integer", "minimum": 1},
+        "abi": {"type": "integer", "minimum": 1},
+        "publication_requirements": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/publicationRequirement"}
+        }
+      }
+    },
+    "consumedProtocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["port", "accepted", "source"],
+      "properties": {
+        "port": {"enum": ["d0", "d1", "d2", "d3", "d4", "d5"]},
+        "accepted": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/acceptedProtocol"}
+        },
+        "source": {"const": "authoritative-literal-header-check"}
+      }
+    }
+  }
+}

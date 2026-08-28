@@ -1,6 +1,6 @@
 {
-  "$schema": "../../schemas/script_contract.schema.json",
-  "format": "IC10_SCRIPT_CONTRACT_V1",
+  "$schema": "../../schemas/script_contract_v2.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10",
   "source_sha256": "2df37f922287a46830ddf5b6cf0ad39310e23c63cfbc88bd941581c84ac7c142",
   "identity": {
@@ -162,7 +162,10 @@
     "dynamic_write": false,
     "dynamic_read_ranges": [],
     "dynamic_write_ranges": [],
-    "dynamic_range_source": "none",
+    "dynamic_read_proven_ranges": [],
+    "dynamic_write_proven_ranges": [],
+    "dynamic_read_range_source": "none",
+    "dynamic_write_range_source": "none",
     "clears_all": false,
     "external_readable_ranges": [],
     "external_writable_ranges": [],
@@ -174,8 +177,7 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ],
-        "const": 31415976
+        ]
       },
       {
         "address": 1,
@@ -184,8 +186,7 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ],
-        "const": 2
+        ]
       },
       {
         "address": 2,
@@ -212,22 +213,7 @@
       "mode": "preserved-unless-overwritten",
       "source": "static-entry-path-analysis"
     },
-    "invariants": [
-      {
-        "id": "header.s0.magic",
-        "kind": "cell-equals",
-        "address": 0,
-        "equals": 31415976,
-        "source": "generated-protocol-header"
-      },
-      {
-        "id": "header.s0.abi",
-        "kind": "cell-equals",
-        "address": 1,
-        "equals": 2,
-        "source": "generated-protocol-header"
-      }
-    ]
+    "invariants": []
   },
   "contracts": {
     "provides": [
@@ -261,10 +247,10 @@
     ]
   },
   "extraction": {
-    "mode": "static-v1",
+    "mode": "static-v2",
     "limitations": [
-      "Dynamic addresses are flagged but cannot be assigned literal ranges.",
-      "Dynamic bounds that require control-flow reasoning are source-fingerprinted overrides.",
+      "Unproved dynamic own-stack addresses fail closed to the full 512-cell stack.",
+      "Strict literal-seeded linear loops are source-derived; other reviewed bounds are source-fingerprinted overrides.",
       "Provided and consumed protocols require authoritative declarations verified against source literals.",
       "Field semantics not represented by source comments or literals remain in supplemental canonical data."
     ]

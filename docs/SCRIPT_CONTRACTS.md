@@ -5,6 +5,12 @@ Every deployable program under `ic10/` has one generated JSON contract under
 the statically provable portion of component wiring available to validators and
 external tools without scraping Markdown ABI tables.
 
+Current documents use `IC10_SCRIPT_CONTRACT_V2` and extraction mode `static-v2`.
+V2 replaces the aggregate V1 `dynamic_range_source` field with independent
+read/write provenance and exact source-proven range subsets. The original V1
+schema remains at `schemas/script_contract.schema.json`; V2 documents use the
+distinct `schemas/script_contract_v2.schema.json` identity.
+
 ## Authority
 
 The generated contract files are not edited directly. Contract facts have this
@@ -18,15 +24,16 @@ authority order:
    for their extra domain semantics and are linked as supplemental references.
 4. `data/script_contract_overrides.json` owns semantics that cannot be bounded
    from one program in isolation, including public provider ranges, complex
-   consumer dynamic-address ranges, paired-sequence or explicitly declared
+   consumer or own-stack dynamic-address ranges, paired-sequence or explicitly declared
    seqlocks, and
    allocator-owned cells in another
    housing. Every such override is bound to the source SHA-256 so source
    arithmetic cannot change without an explicit re-review. Literal-seeded
    linear address loops are derived directly only when address and counter seeds
    dominate a strict single-backedge loop with exactly one update to each
-   register. They must exactly match any retained override; partially provable
-   exceptions must contain every cell established by the source proof.
+   register. The same proof is used for wired-device and own-stack accesses.
+   Source-derived ranges must exactly match any retained override; partially
+   provable exceptions must contain every cell established by the source proof.
 5. `data/script_contract_protocol_definitions.json` gives shared protocol IDs a
    name and links them to supplemental domain definitions.
 6. `contracts/` is deterministic generated output from those inputs.
@@ -39,7 +46,7 @@ path becomes stale.
 ## Contract contents
 
 Each generated per-script contract document is validated by
-`schemas/script_contract.schema.json` and records:
+`schemas/script_contract_v2.schema.json` and records:
 
 - stable versionless `service_id`, implementation revision, deployment family,
   deployment class, layer, and purpose;
@@ -55,9 +62,13 @@ Each generated per-script contract document is validated by
   slot selection;
 - `getd`/`putd` ReferenceId dependencies and `db:n` device-index discovery,
   including literal stack cells and accepted network-discovered protocols;
-- literal and dynamic access to the housing's own 512-cell stack. Dynamic own
-  access is conservatively recorded as `S0..S511` until a narrower proof model
-  is available, so occupied regions are never silently omitted;
+- literal and dynamic access to the housing's own 512-cell stack. Literal-seeded
+  strict linear loops emit exact source-derived ranges, including disjoint
+  singleton ranges for non-unit address strides. Reviewed bounds that
+  cannot be expressed by that proof are source-fingerprinted exceptions, and
+  every remaining unresolved access fails closed to `S0..S511`. Exact proven
+  subsets are retained even when another access forces the aggregate range to
+  fall back, so analysis never loses known occupancy;
 - source-comment-backed field names, descriptions, semantic value types,
   explicit defaults, enums, reserved markers, explicit cross-program ownership,
   and literal protocol headers at any base address. Unnamed cells are labeled
@@ -66,12 +77,18 @@ Each generated per-script contract document is validated by
   preservation; source-order-verified commit-last publication rules;
   source-fingerprinted seqlocks classified as structurally paired sequences or
   explicit declarations for non-linear publication protocols;
-  and executable cell-equality invariants emitted only for cells not covered by
-  dynamic writes;
+  and executable header cell-equality invariants emitted only when the matching
+  literal initialization is guaranteed before every observable yield,
+  termination, or loop backedge and dynamic writes do not overlap either header
+  cell. One-level local calls are followed through `ra`; nested calls, return
+  address mutation, and unresolved transfers fail closed;
 - provided stack protocols and consumed literal magic/ABI requirements.
 
 `contracts/index.json` is the complete source-to-contract report and canonical
-registry of access-only stack interfaces and their consumers.
+registry of access-only stack interfaces and their consumers. Its
+`own_stack_range_inventory` reports every dynamic script, exact source-proven
+subsets, effective ranges and provenance, and a count of unresolved full-stack
+fallback surfaces for stack-envelope and migration planning.
 `contracts/protocol_registry.json` groups stable protocol identities, provider
 locations, consumer locations, and one generated definition path per protocol.
 Each document under `contracts/protocols/` carries typed provider fields,
@@ -100,6 +117,9 @@ ABI; header base is tracked separately, so the Generic Telemetry header at
 - a dynamic wired access lacks an explicit range;
 - a source-derived dynamic range disagrees with its literal-seeded address loop,
   or an exception omits a statically proven cell;
+- an own-stack proven subset falls outside its effective range, a claimed
+  source-derived range exceeds its proof, or a conservative fallback is not
+  exactly `S0..S511`;
 - stack ranges overlap within one access class;
 - a required publication rule is absent from every compatible provider;
 - a commit-last consumer neither checks nor double-reads its publication cell;
@@ -128,6 +148,14 @@ observable marker check or coherent double-read. Network protocols that use ABI
 ranges are declared explicitly and verified against their source checks.
 Access-only stack targets remain explicitly labeled as such and are not
 presented as ABI-verified wiring.
+
+Dynamic own-stack addresses use the same strict loop proof. Address and counter
+seeds must dominate a single-backedge loop, each register must have exactly one
+literal update, and the loop must have no bypass, re-entry, unmodeled transfer,
+or additional mutation. Unknown, branch-dependent, multiply-mutated, and
+unbounded cases remain explicit `conservative-full-stack` fallbacks unless a
+source-fingerprinted override supplies a reviewed range. `clr db` is a
+source-derived full-stack write rather than an unresolved fallback.
 
 `data/script_protocol_headers.json` is the authoritative provider and consumer
 header catalog. The generator verifies every declaration against literal source
