@@ -39,13 +39,13 @@ def ck(condition, message):
 contracts, _, protocols, _ = build_all(ROOT)
 inventory = build_inventory(ROOT, contracts, protocols)
 validate(inventory, json.loads((ROOT / "schemas" / "stack_envelope_inventory.schema.json").read_text()))
-ck(inventory["envelope"]["base"] == 0 and inventory["envelope"]["length"] == 5,
-   "the common header is no longer the first five stack cells")
+ck(inventory["envelope"]["base"] == 0 and inventory["envelope"]["length"] == 8,
+   "the common header is no longer the first eight stack cells")
 ck(inventory["totals"] == {
     "deployable_programs": 173,
     "migrated_v1": 1,
     "legacy_exempt": 172,
-    "backlog_literal_cell_users": 156,
+    "backlog_reserved_cell_users": 148,
     "backlog_dynamic_range_users": 62,
 }, "generated coverage/backlog totals changed without review")
 by_source = {item["source"]: item for item in inventory["services"]}
@@ -58,8 +58,9 @@ ck(all(item["current_layout"]["payload_inventory_status"] ==
 
 # Every backlog row records what the migration must move, per program.
 backlog = [item for item in inventory["services"] if item["status"] == "legacy-exempt"]
-ck(sum(bool(item["window_collision"]["literal_cells"]) for item in backlog) == 156,
-   "backlog rows no longer report which programs occupy S0..S4")
+ck(sum(bool(set(item["window_collision"]["literal_cells"]) & set(range(2, 8)))
+       for item in backlog) == 148,
+   "backlog rows no longer report which programs occupy the reserved cells")
 ck(all("legacy_exemption" in item for item in backlog),
    "a backlog row lost its explicit exemption record")
 
@@ -88,80 +89,109 @@ extension_contract, _ = _own_stack(
 ck({"start": 400, "end": 404} in extension_contract["external_readable_ranges"],
    "script contract does not advertise a declared extension as externally readable")
 
-# The monitor publishes the common header and owns only its diagnostic cells.
+# The monitor publishes the mandatory header cells and its declared state.
 vm = IC10((ROOT / MONITOR).read_text())
 vm.run(1)
-ck([vm.stack.get(cell) for cell in range(BASE, BASE + LENGTH)] == [31416052, 1, 0, 0, 0],
-   "monitor does not publish the common header at S0..S4")
-ck(vm.stack.get(9) == 0, "monitor does not explicitly initialize its generation cell")
+ck(vm.stack.get(0) == 31416052 and vm.stack.get(1) == 1,
+   "monitor does not publish its identity at S0/S1")
+ck(vm.stack.get(5) == 4, "monitor does not publish the derived capability mask at S5")
+ck(vm.stack.get(6) in (1, 2), "monitor does not publish a declared state value at S6")
+ck(vm.stack.get(12) == 0, "monitor does not explicitly initialize its generation cell")
 contract = next(document for document in contracts.values() if document["source"] == MONITOR)
 ck([header for header in contract["own_stack"]["headers"]
     if header["base"] == 0 and header["magic"] == 31416052 and header["abi"] == 1],
    "the monitor's S0/S1 identity is not a verified contract header")
 
-# Discovery reads only S0..S4 and reports the target's identity.
-target = Device(201, stack={0: 27182818, 1: 2, 2: 0, 3: 0, 4: 0},
+# Discovery reads S0..S7 and trusts only the cells the mask declares.
+target = Device(201, stack={0: 27182818, 1: 2, 5: 0},
                 props={"ReferenceId": 201, "PrefabHash": "HASH:StructureCircuitHousing"})
 selector = Device(202, props={"ReferenceId": 202, "Setting": -1})
 output = Device(203, props={"ReferenceId": 203, "Setting": 0})
 monitor = IC10((ROOT / MONITOR).read_text(), {"d0": target, "d1": selector, "d2": output})
 monitor.run(2)
-ck(monitor.stack.get(5) == 3, "monitor rejected a valid common header")
-ck(monitor.stack.get(7) == 27182818, "monitor did not report the discovered service magic")
-ck(output.props.get("Setting") == monitor.stack.get(7),
+ck(monitor.stack.get(8) == 3, "monitor rejected a valid header that declares no optional field")
+ck(monitor.stack.get(10) == 27182818, "monitor did not report the discovered service magic")
+ck(output.props.get("Setting") == monitor.stack.get(10),
    "discovered identity was not mirrored to the optional output")
 
-# Extension headers are validated before any family-specific cells are trusted.
-target.stack.update({4: 508, 508: 31416054, 509: 1, 510: 4, 511: 0})
+# Cells outside the mask are never read, so stale values cannot fail a valid header.
+target.stack.update({2: float("nan"), 3: -7, 4: 1.5, 6: 99, 7: 4})
 monitor.run(1)
-ck(monitor.stack.get(5) == 3, "monitor rejected an in-bounds four-cell extension")
+ck(monitor.stack.get(8) == 3, "monitor read cells the capability mask does not declare")
+target.stack.update({5: 16})
+monitor.run(1)
+ck(monitor.stack.get(8) == -6, "monitor accepted a reserved capability bit")
+
+# HAS_SCHEMA: the declared pair must be a real schema at a positive version.
+target.stack.update({5: 1, 2: "HASH:DirectorySchema.ResourceLink", 3: 1})
+monitor.run(1)
+ck(monitor.stack.get(8) == 3, "monitor rejected a declared schema pair")
+for bad_pair in ((0, 1), ("HASH:Schema", 0), ("HASH:Schema", 1.5), ("HASH:Schema", float("nan"))):
+    target.stack.update({2: bad_pair[0], 3: bad_pair[1]})
+    monitor.run(1)
+    ck(monitor.stack.get(8) == -6, f"monitor accepted declared schema pair {bad_pair!r}")
+
+# HAS_STATE: the state cell must hold one of the v1 values.
+target.stack.update({5: 4, 6: 2})
+monitor.run(1)
+ck(monitor.stack.get(8) == 3, "monitor rejected a declared state")
+for bad_state in (-1, 6, 2.5, float("nan")):
+    target.stack.update({6: bad_state})
+    monitor.run(1)
+    ck(monitor.stack.get(8) == -6, f"monitor accepted state value {bad_state!r}")
+
+# HAS_TELEMETRY: the pointer must address a cell outside the header.
+target.stack.update({5: 8, 7: 96})
+monitor.run(1)
+ck(monitor.stack.get(8) == 3, "monitor rejected a declared telemetry base")
+for bad_base in (7, 512, 96.5, float("nan")):
+    target.stack.update({7: bad_base})
+    monitor.run(1)
+    ck(monitor.stack.get(8) == -6, f"monitor accepted telemetry base {bad_base!r}")
+
+# HAS_EXTENSION: bounds are checked before any family cell is trusted.
+target.stack.update({5: 2, 4: 508, 508: 31416054, 509: 1, 510: 4, 511: 0})
+monitor.run(1)
+ck(monitor.stack.get(8) == 3, "monitor rejected an in-bounds four-cell extension")
 target.stack.update({4: 509, 509: 31416054, 510: 1, 511: 4})
 monitor.run(1)
-ck(monitor.stack.get(5) == -6, "monitor accepted an extension that exceeds S511")
-target.stack.update({4: 4})
+ck(monitor.stack.get(8) == -6, "monitor accepted an extension that exceeds S511")
+target.stack.update({4: 7})
 monitor.run(1)
-ck(monitor.stack.get(5) == -6, "monitor accepted an extension overlapping the common header")
+ck(monitor.stack.get(8) == -6, "monitor accepted an extension overlapping the common header")
 target.stack.update({4: 100, 100: 31416054, 101: 1, 102: 193, 103: 0})
 monitor.run(1)
-ck(monitor.stack.get(5) == -6, "monitor accepted an extension above the v1 length limit")
+ck(monitor.stack.get(8) == -6, "monitor accepted an extension above the v1 length limit")
 target.stack.update({4: 508, 508: 31416054, 509: 1, 510: 4, 511: 1})
 monitor.run(1)
-ck(monitor.stack.get(5) == -6,
+ck(monitor.stack.get(8) == -6,
    "monitor accepted HAS_IMPLEMENTATION_ID without an in-bounds ImplementationId cell")
 target.stack.update({4: 508, 508: 31416054, 509: 1, 510: 4, 511: 2})
 monitor.run(1)
-ck(monitor.stack.get(5) == -6, "monitor accepted reserved extension flag bits")
+ck(monitor.stack.get(8) == -6, "monitor accepted reserved extension flag bits")
 target.stack.update({
     4: 507, 507: 31416054, 508: 1, 509: 5, 510: 1,
     511: "HASH:ic10.implementation.example",
 })
 monitor.run(1)
-ck(monitor.stack.get(5) == 3, "monitor rejected a valid ImplementationId extension")
+ck(monitor.stack.get(8) == 3, "monitor rejected a valid ImplementationId extension")
 for invalid_identity in (0, 1.5, float("nan")):
     target.stack.update({511: invalid_identity})
     monitor.run(1)
-    ck(monitor.stack.get(5) == -6,
+    ck(monitor.stack.get(8) == -6,
        f"monitor accepted invalid ImplementationId {invalid_identity!r}")
 
-# Header shape is validated cell by cell, and a failure never invents an address.
-target.stack.update({4: 0, 2: "HASH:Schema", 3: 0})
+# The identity cells themselves are validated, and a failure invents no address.
+target.stack.update({5: 0, 1: 1.5})
 monitor.run(1)
-ck(monitor.stack.get(5) == -6, "monitor accepted mismatched schema zero/unknown semantics")
-target.stack.update({2: 0, 3: 0, 1: 1.5})
-monitor.run(1)
-ck(monitor.stack.get(5) == -6, "monitor accepted a fractional ABI")
+ck(monitor.stack.get(8) == -6, "monitor accepted a fractional ABI")
 target.stack.update({1: float("nan")})
 monitor.run(1)
-ck(monitor.stack.get(5) == -6, "monitor accepted a NaN ABI")
-for invalid_version in (-1, 1.5, float("nan")):
-    target.stack.update({1: 2, 2: "HASH:Schema", 3: invalid_version})
-    monitor.run(1)
-    ck(monitor.stack.get(5) == -6,
-       f"monitor accepted invalid SchemaVersion {invalid_version!r}")
+ck(monitor.stack.get(8) == -6, "monitor accepted a NaN ABI")
 for invalid_magic in (0, 1.5, float("nan")):
-    target.stack.update({2: 0, 3: 0, 0: invalid_magic})
+    target.stack.update({1: 2, 0: invalid_magic})
     monitor.run(1)
-    ck(monitor.stack.get(5) == -5 and monitor.stack.get(6) == -1,
+    ck(monitor.stack.get(8) == -5 and monitor.stack.get(9) == -1,
        f"monitor mis-reported an unusable magic {invalid_magic!r}")
 
 # Declared schemas bind to a canonical registry entry or to the source's own check.
@@ -175,6 +205,41 @@ bad["migrated"][MONITOR].update({"schema_id": "DirectorySchema.ResourceLink", "s
 ck(any("not canonical and is not verified" in error
        for error in declaration_errors(ROOT, contracts, bad)),
    "validator accepted a schema/version no registry or source backs")
+
+# The capability mask is derived from the declaration, never hand-written.
+ck(by_source[MONITOR]["envelope"]["capability_mask"] == 4,
+   "the generated inventory does not derive the monitor's capability mask")
+bad = deepcopy(load_declarations(ROOT))
+bad["migrated"][MONITOR]["telemetry_base"] = 96
+ck(any("S7 must be written exactly as 96" in error
+       for error in declaration_errors(ROOT, contracts, bad)),
+   "a declared telemetry base did not require the source to publish it")
+bad = deepcopy(load_declarations(ROOT))
+bad["migrated"][MONITOR]["telemetry_base"] = 4
+ck(any("cannot point inside the common header" in error
+       for error in declaration_errors(ROOT, contracts, bad)),
+   "validator accepted a telemetry base inside the reserved header")
+bad = deepcopy(load_declarations(ROOT))
+bad["migrated"][MONITOR]["publishes_state"] = False
+ck(any("reserved unless the service declares HAS_STATE" in error
+       for error in declaration_errors(ROOT, contracts, bad)),
+   "a source writing S6 passed without declaring HAS_STATE")
+
+declaration = load_declarations(ROOT)["migrated"][MONITOR]
+mask_expected = {0: 31416052, 1: 1, 5: 4}
+
+# The state cell is the one header cell publication may change afterwards.
+ck(not any("post-init write can change" in error
+           for error in publication_errors(
+               ROOT / MONITOR, mask_expected, declaration,
+               set(range(BASE, BASE + LENGTH)), frozenset({6}),
+           )),
+   "the declared state cell was treated as immutable after publication")
+ck(any("post-init write can change reserved S6" in error
+       for error in publication_errors(
+           ROOT / MONITOR, mask_expected, declaration, set(range(BASE, BASE + LENGTH))
+       )),
+   "an undeclared mutable header cell escaped the publication gate")
 
 # The reviewed source-set digest is the enforcement gate for every future program.
 bad = deepcopy(load_declarations(ROOT))
@@ -268,6 +333,6 @@ if fails:
     [print(" -", failure) for failure in fails]
     sys.exit(1)
 print("Stack header tests: PASS")
-print(" - the monitor publishes S0..S4 and reads a target's identity from those cells alone")
+print(" - the monitor publishes its header and reads a target's identity from S0..S7 alone")
 print(" - schema binding, extension bounds, and the pre-v1 baseline gate fail closed")
-print(f" - migration backlog: {len(backlog)} programs, {inventory['totals']['backlog_literal_cell_users']} using S0..S4")
+print(f" - migration backlog: {len(backlog)} programs, {inventory['totals']['backlog_reserved_cell_users']} using S2..S7")

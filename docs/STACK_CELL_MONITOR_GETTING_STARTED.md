@@ -70,15 +70,16 @@ devices are rejected even if they expose other logic properties.
 ## 4. Identify a target
 
 1. Set `Stack Address.Setting` to `-1`.
-2. Wait for monitor status `3` in its own `S5`.
-3. Read the target's `ServiceMagic` from monitor `S7` (and the optional
+2. Wait for monitor status `3` in its own `S8`.
+3. Read the target's `ServiceMagic` from monitor `S10` (and the optional
    `Stack Value` Memory), then look it up in the registry table in
    `docs/ABI_REFERENCE.md`.
-4. Set `Stack Address.Setting` to `1`, `2`, `3`, or `4` to read the rest of the
-   header: ABI, SchemaId, SchemaVersion, and ExtensionBase.
+4. Set `Stack Address.Setting` to `1` through `7` to read the rest of the header:
+   ABI, SchemaId, SchemaVersion, ExtensionBase, CapabilityMask, State, and
+   TelemetryBase. The mask at `S5` says which of those the target maintains.
 
-Discovery reads only `S0..S4`. It validates a usable magic, a positive ABI,
-schema zero pairing, and any length-prefixed extension before reporting success.
+Discovery reads only `S0..S7`. It validates a usable magic, a positive ABI, a
+mask with no reserved bit set, and then only the fields that mask declares.
 Because the header is the payload header, there is no separate payload address
 to chase. See `docs/STACK_ABI_ENVELOPE.md` for the complete contract and the
 migration backlog.
@@ -103,14 +104,14 @@ The monitor publishes this diagnostic state in its own stack:
 
 | Cell | Meaning |
 | ---: | --- |
-| `S5` | Status |
-| `S6` | Selected stack address |
-| `S7` | Sampled value for status `1`/`2`; otherwise `0` |
-| `S8` | Target housing ReferenceId |
-| `S9` | Sample generation, published last |
+| `S8` | Status |
+| `S9` | Selected stack address |
+| `S10` | Sampled value for status `1`/`2`; otherwise `0` |
+| `S11` | Target housing ReferenceId |
+| `S12` | Sample generation, published last |
 
-For status `3`, `S7` is the discovered `ServiceMagic`. For status `1`/`2` it is
-the sampled value. `S6` always holds the selected address, so a failed discovery
+For status `3`, `S10` is the discovered `ServiceMagic`. For status `1`/`2` it is
+the sampled value. `S9` always holds the selected address, so a failed discovery
 reports `-1` there rather than an address the monitor probed on its own.
 
 Status values are:

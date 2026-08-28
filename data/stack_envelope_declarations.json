@@ -2,11 +2,20 @@
  "format": "IC10_STACK_ENVELOPE_DECLARATIONS_V1",
  "envelope": {
   "base": 0,
-  "length": 5,
+  "length": 8,
   "extension_magic": 31416054,
   "extension_version": 1,
   "extension_min_length": 4,
-  "extension_max_length": 192
+  "extension_max_length": 192,
+  "capability_bits_v1": 15,
+  "state_values": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5
+  ]
  },
  "migrated": {
   "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10": {
@@ -18,15 +27,17 @@
    "extension_base": 0,
    "extension_flags": 0,
    "implementation_id": null,
-   "source_sha256": "06ae352cbf5ec092883b0a219aa49e7f5d20ec91c6eff9e5249fe9b2ee20bf2e",
+   "source_sha256": "cf932562608d339d44fc59b1a7c2c91d0ac7e60be8e092e4668f9fcda21a385f",
    "legacy_owned_ranges": [
     [
-     5,
-     9
+     8,
+     12
     ]
    ],
    "post_init_dynamic_write_ranges": [],
-   "pilot_family": "stack-monitor"
+   "pilot_family": "stack-monitor",
+   "telemetry_base": 0,
+   "publishes_state": true
   }
  },
  "legacy_exemption": {

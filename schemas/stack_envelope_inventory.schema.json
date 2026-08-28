@@ -22,12 +22,12 @@
     "totals": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["deployable_programs", "migrated_v1", "legacy_exempt", "backlog_literal_cell_users", "backlog_dynamic_range_users"],
+      "required": ["deployable_programs", "migrated_v1", "legacy_exempt", "backlog_reserved_cell_users", "backlog_dynamic_range_users"],
       "properties": {
         "deployable_programs": {"type": "integer", "minimum": 1},
         "migrated_v1": {"type": "integer", "minimum": 1},
         "legacy_exempt": {"type": "integer", "minimum": 0},
-        "backlog_literal_cell_users": {"type": "integer", "minimum": 0},
+        "backlog_reserved_cell_users": {"type": "integer", "minimum": 0},
         "backlog_dynamic_range_users": {"type": "integer", "minimum": 0}
       }
     },
@@ -41,10 +41,12 @@
     "envelope": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["base", "length", "extension_magic", "extension_version", "extension_min_length", "extension_max_length"],
+      "required": ["base", "length", "capability_bits_v1", "state_values", "extension_magic", "extension_version", "extension_min_length", "extension_max_length"],
       "properties": {
         "base": {"const": 0},
-        "length": {"const": 5},
+        "length": {"const": 8},
+        "capability_bits_v1": {"const": 15},
+        "state_values": {"type": "array", "items": {"type": "integer", "minimum": 0, "maximum": 5}},
         "extension_magic": {"const": 31416054},
         "extension_version": {"const": 1},
         "extension_min_length": {"const": 4},
@@ -69,10 +71,10 @@
         "highest_literal_cell": {"type": ["integer", "null"], "minimum": 0, "maximum": 511},
         "dynamic_read_ranges": {"type": "array", "items": {"$ref": "#/$defs/range"}},
         "dynamic_write_ranges": {"type": "array", "items": {"$ref": "#/$defs/range"}},
-        "line_count": {"type": "integer", "minimum": 1, "maximum": 120},
-        "line_headroom_120": {"type": "integer", "minimum": 0},
-        "measured_v1_publication_cost_lines": {"const": 5},
-        "measured_v1_stack_cost_cells": {"const": 5}
+        "line_count": {"type": "integer", "minimum": 1, "maximum": 128},
+        "line_headroom_120": {"type": "integer", "minimum": -8},
+        "measured_v1_publication_cost_lines": {"const": 8},
+        "measured_v1_stack_cost_cells": {"const": 8}
       }
     },
     "collision": {
@@ -80,9 +82,9 @@
       "additionalProperties": false,
       "required": ["literal_cells", "dynamic_read_cells", "dynamic_write_cells", "dynamic_read_provenance", "dynamic_write_provenance"],
       "properties": {
-        "literal_cells": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 4}},
-        "dynamic_read_cells": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 4}},
-        "dynamic_write_cells": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 4}},
+        "literal_cells": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 7}},
+        "dynamic_read_cells": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 7}},
+        "dynamic_write_cells": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 7}},
         "dynamic_read_provenance": {"type": "string"},
         "dynamic_write_provenance": {"type": "string"}
       }
@@ -121,7 +123,7 @@
     "migrated": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["service_id", "magic", "service_abi", "schema_id", "schema_id_hash", "schema_version", "extension_base", "extension_flags", "implementation_id", "implementation_id_hash", "publication_validation", "pilot_family"],
+      "required": ["service_id", "magic", "service_abi", "schema_id", "schema_id_hash", "schema_version", "extension_base", "telemetry_base", "publishes_state", "capability_mask", "extension_flags", "implementation_id", "implementation_id_hash", "publication_validation", "pilot_family"],
       "properties": {
         "service_id": {"type": "string", "pattern": "^ic10\\.script\\.[a-z0-9.]+$"},
         "magic": {"type": "integer"},
@@ -130,6 +132,9 @@
         "schema_id_hash": {"type": ["string", "null"]},
         "schema_version": {"type": "integer", "minimum": 0},
         "extension_base": {"type": "integer", "minimum": 0, "maximum": 508},
+        "telemetry_base": {"type": "integer", "minimum": 0, "maximum": 511},
+        "publishes_state": {"type": "boolean"},
+        "capability_mask": {"type": "integer", "minimum": 0, "maximum": 15},
         "extension_flags": {"type": "integer", "minimum": 0, "maximum": 1},
         "implementation_id": {"type": ["string", "null"]},
         "implementation_id_hash": {"type": ["string", "null"]},

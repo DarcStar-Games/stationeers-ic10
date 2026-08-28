@@ -38,56 +38,18 @@
           "const": 1
         },
         {
-          "address": 2,
-          "name": "S2",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ],
-          "const": 0
-        },
-        {
-          "address": 3,
-          "name": "S3",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ],
-          "const": 0
-        },
-        {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ],
-          "const": 0
-        },
-        {
           "address": 5,
           "name": "S5",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 4
         },
         {
           "address": 6,
           "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -105,6 +67,33 @@
         },
         {
           "address": 9,
+          "name": "S9",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 10,
+          "name": "S10",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 11,
+          "name": "S11",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 12,
           "name": "CompleteSampleGenerationPublishes",
           "value_type": "integer",
           "semantic_source": "source",
@@ -119,7 +108,7 @@
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 9,
+            "address": 12,
             "description": "complete sample generation publishes LAST",
             "source": "verified-inline-order"
           }

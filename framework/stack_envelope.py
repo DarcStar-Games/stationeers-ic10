@@ -12,10 +12,19 @@ from framework.script_contracts import _aliases, _integer, _literal_value, _prog
 FORMAT = "IC10_STACK_ENVELOPE_INVENTORY_V1"
 DECLARATION_FORMAT = "IC10_STACK_ENVELOPE_DECLARATIONS_V1"
 BASE = 0
-LENGTH = 5
+LENGTH = 8
 SCHEMA_ID_CELL = BASE + 2
 SCHEMA_VERSION_CELL = BASE + 3
 EXTENSION_BASE_CELL = BASE + 4
+CAPABILITY_MASK_CELL = BASE + 5
+STATE_CELL = BASE + 6
+TELEMETRY_BASE_CELL = BASE + 7
+HAS_SCHEMA = 1
+HAS_EXTENSION = 2
+HAS_STATE = 4
+HAS_TELEMETRY = 8
+CAPABILITY_BITS_V1 = HAS_SCHEMA | HAS_EXTENSION | HAS_STATE | HAS_TELEMETRY
+STATE_VALUES = (0, 1, 2, 3, 4, 5)
 EXTENSION_MAGIC = 31416054
 EXTENSION_VERSION = 1
 EXTENSION_MIN_LENGTH = 4
@@ -180,6 +189,7 @@ def publication_errors(
     expected: dict[int, Any],
     declaration: dict[str, Any],
     reserved_cells: set[int] | None = None,
+    mutable_cells: frozenset[int] = frozenset(),
 ) -> list[str]:
     """Prove the fixed envelope is on the straight-line entry path and remains reserved."""
     path = Path(path)
@@ -237,10 +247,12 @@ def publication_errors(
                 address = _integer(row[1], aliases)
                 if address is None:
                     dynamic_after = True
+                elif address in mutable_cells:
+                    continue
                 elif address in expected and _literal_value(row[2], aliases) != expected[address]:
                     errors.append(f"post-init write can change envelope S{address}")
                 elif address in reserved and address not in expected:
-                    errors.append(f"post-init write can change reserved extension S{address}")
+                    errors.append(f"post-init write can change reserved S{address}")
             elif op in {"push", "pop"}:
                 dynamic_after = True
     if dynamic_after and not reviewed_ranges:
@@ -275,6 +287,8 @@ def declaration_errors(
     canonical = {
         "base": BASE,
         "length": LENGTH,
+        "capability_bits_v1": CAPABILITY_BITS_V1,
+        "state_values": list(STATE_VALUES),
         "extension_magic": EXTENSION_MAGIC,
         "extension_version": EXTENSION_VERSION,
         "extension_min_length": EXTENSION_MIN_LENGTH,
@@ -338,6 +352,9 @@ def declaration_errors(
         extension_flags_value = declaration.get("extension_flags", -1)
         extension_flags = extension_flags_value if type(extension_flags_value) is int else -1
         implementation_id = declaration.get("implementation_id")
+        telemetry_base_value = declaration.get("telemetry_base")
+        telemetry_base = telemetry_base_value if type(telemetry_base_value) is int else -1
+        publishes_state = declaration.get("publishes_state")
         if type(magic_value) is not int or magic == 0:
             errors.append(f"{source}: magic must be the service's registered nonzero integer")
         if type(service_abi_value) is not int or service_abi < 1:
@@ -346,6 +363,12 @@ def declaration_errors(
             errors.append(f"{source}: schema_version must be an integer")
         if type(extension_base_value) is not int:
             errors.append(f"{source}: extension_base must be an integer")
+        if type(telemetry_base_value) is not int or not 0 <= telemetry_base <= 511:
+            errors.append(f"{source}: telemetry_base must be an integer in S0..S511")
+        if type(publishes_state) is not bool:
+            errors.append(f"{source}: publishes_state must be a boolean")
+        if telemetry_base and telemetry_base < BASE + LENGTH:
+            errors.append(f"{source}: telemetry_base cannot point inside the common header")
         if schema_id is not None and (not isinstance(schema_id, str) or not schema_id):
             errors.append(f"{source}: schema_id must be null or a nonempty semantic hash name")
         if (schema_id is None) != (schema_version == 0):
@@ -379,13 +402,35 @@ def declaration_errors(
         except ValueError as error:
             errors.append(f"{source}: {error}")
             legacy_owned_ranges = []
+        capability_mask = (
+            (HAS_SCHEMA if schema_id is not None else 0)
+            | (HAS_EXTENSION if extension_base else 0)
+            | (HAS_STATE if publishes_state is True else 0)
+            | (HAS_TELEMETRY if telemetry_base else 0)
+        )
         expected: dict[int, Any] = {
             BASE: magic,
             BASE + 1: service_abi,
-            SCHEMA_ID_CELL: 0 if schema_id is None else f'HASH("{schema_id}")',
-            SCHEMA_VERSION_CELL: schema_version,
-            EXTENSION_BASE_CELL: extension_base,
+            CAPABILITY_MASK_CELL: capability_mask,
         }
+        if capability_mask & HAS_SCHEMA:
+            expected[SCHEMA_ID_CELL] = f'HASH("{schema_id}")'
+            expected[SCHEMA_VERSION_CELL] = schema_version
+        if capability_mask & HAS_EXTENSION:
+            expected[EXTENSION_BASE_CELL] = extension_base
+        if capability_mask & HAS_TELEMETRY:
+            expected[TELEMETRY_BASE_CELL] = telemetry_base
+        state_writes = writes.get(STATE_CELL, set())
+        if capability_mask & HAS_STATE:
+            if not state_writes:
+                errors.append(f"{source}: HAS_STATE requires the source to publish S{STATE_CELL}")
+            if any(value not in STATE_VALUES for value in state_writes):
+                errors.append(f"{source}: S{STATE_CELL} may only hold the declared v1 state values")
+        elif state_writes:
+            errors.append(f"{source}: S{STATE_CELL} is reserved unless the service declares HAS_STATE")
+        for cell in range(BASE, BASE + LENGTH):
+            if cell not in expected and cell != STATE_CELL and writes.get(cell):
+                errors.append(f"{source}: S{cell} is reserved and must not be written undeclared")
         published_expected = dict(expected)
         reserved_cells = set(range(BASE, BASE + LENGTH))
         extension_cells: set[int] = set()
@@ -425,8 +470,8 @@ def declaration_errors(
                     errors.append(f"{source}: extension length is outside v1 bounds")
                 if extension_end > 512:
                     errors.append(f"{source}: extension exceeds the 512-cell stack")
-                if extension_base < BASE + LENGTH and extension_end > BASE:
-                    errors.append(f"{source}: extension overlaps the fixed envelope")
+                if extension_base < BASE + LENGTH:
+                    errors.append(f"{source}: extension overlaps the fixed header")
                 if extension_flags & 1:
                     if extension_length < 5:
                         errors.append(f"{source}: HAS_IMPLEMENTATION_ID extension is shorter than five cells")
@@ -452,12 +497,14 @@ def declaration_errors(
         errors.extend(
             f"{source}: {error}"
             for error in publication_errors(
-                root / source, published_expected, declaration, reserved_cells
+                root / source, published_expected, declaration, reserved_cells,
+                frozenset({STATE_CELL}) if capability_mask & HAS_STATE else frozenset(),
             )
         )
+        # validate_ic10.py owns the 120-line soft ceiling and its reviewed exemptions.
         line_count = len((root / source).read_text().splitlines())
-        if line_count > 120:
-            errors.append(f"{source}: migrated pilot is {line_count} lines, above the 120-line ceiling")
+        if line_count > 128:
+            errors.append(f"{source}: migrated pilot is {line_count} lines, above the 128-line hard limit")
     return errors
 
 
@@ -474,6 +521,7 @@ def build_inventory(
     migrated = declarations["migrated"]
     exemption = declarations["legacy_exemption"]
     window = set(range(BASE, BASE + LENGTH))
+    reservable = set(range(BASE + 2, BASE + LENGTH))
     services = []
     for contract in sorted(contracts.values(), key=lambda item: item["source"]):
         source = contract["source"]
@@ -527,6 +575,14 @@ def build_inventory(
                 "schema_id_hash": None if declaration["schema_id"] is None else f'HASH("{declaration["schema_id"]}")',
                 "schema_version": declaration["schema_version"],
                 "extension_base": declaration["extension_base"],
+                "telemetry_base": declaration["telemetry_base"],
+                "publishes_state": declaration["publishes_state"],
+                "capability_mask": (
+                    (HAS_SCHEMA if declaration["schema_id"] is not None else 0)
+                    | (HAS_EXTENSION if declaration["extension_base"] else 0)
+                    | (HAS_STATE if declaration["publishes_state"] else 0)
+                    | (HAS_TELEMETRY if declaration["telemetry_base"] else 0)
+                ),
                 "extension_flags": declaration["extension_flags"],
                 "implementation_id": declaration["implementation_id"],
                 "implementation_id_hash": (
@@ -565,8 +621,8 @@ def build_inventory(
             "deployable_programs": len(services),
             "migrated_v1": sum(item["status"] == "migrated-v1" for item in services),
             "legacy_exempt": sum(item["status"] == "legacy-exempt" for item in services),
-            "backlog_literal_cell_users": sum(
-                bool(item["window_collision"]["literal_cells"])
+            "backlog_reserved_cell_users": sum(
+                bool(set(item["window_collision"]["literal_cells"]) & reservable)
                 for item in services if item["status"] == "legacy-exempt"
             ),
             "backlog_dynamic_range_users": sum(

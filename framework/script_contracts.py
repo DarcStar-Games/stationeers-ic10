@@ -1562,7 +1562,7 @@ def _own_stack(source: str, rows: list[list[str]], integer_aliases: dict[str, in
         extension_bases = write_values[4]
         if len(extension_bases) == 1:
             extension_base = next(iter(extension_bases))
-            if isinstance(extension_base, int) and extension_base >= 5:
+            if isinstance(extension_base, int) and extension_base >= 8:
                 extension_lengths = write_values[extension_base + 2]
                 if (
                     write_values[extension_base] == {31416054}

@@ -73,5 +73,5 @@ if fails:
     sys.exit(1)
 print("Stack envelope validation: PASS")
 print(f" - all {len(contracts)} deployable programs are migrated or in the immutable pre-v1 baseline")
-print(f" - migrated families: {', '.join(sorted(families)) or 'none'}; backlog: {len(legacy)} programs")
-print(" - S0..S4 writes, canonical schema binding, and extension bounds are enforced")
+print(f" - migrated families: {', '.join(sorted(families)) or 'none'}; backlog: {len(legacy)} programs, {actual["totals"]["backlog_reserved_cell_users"]} using reserved cells")
+print(" - S0..S7 writes, derived capability mask, schema binding, and extension bounds are enforced")

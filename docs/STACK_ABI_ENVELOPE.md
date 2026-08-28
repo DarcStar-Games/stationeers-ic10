@@ -1,6 +1,6 @@
 # Common Stack Header v1
 
-Every deployable IC10 service identifies itself in the same five cells, `S0..S4`.
+Every deployable IC10 service identifies itself in the same eight cells, `S0..S7`.
 A generic tool reads those cells and learns what the program is, which ABI it
 speaks, which schema it carries, and where to find any extended metadata —
 without knowing the family beforehand.
@@ -18,8 +18,11 @@ The generated inventory evaluated every one of the 173 deployable programs:
 - the 12 programs with no declared header have `S0/S1` free, and 10 of them use
   no own-stack cell whatsoever.
 
-So the header costs nothing to adopt at `S0/S1`. What it costs is `S2..S4`,
-which 139, 137, and 131 programs respectively use for family payload today.
+So the header costs nothing to adopt at `S0/S1`. What it costs is `S2..S7`, which
+148 programs use for family payload today. Reserving eight rather than five adds
+only three programs to that backlog — nearly every program that uses `S5..S7`
+already uses `S2..S4` — while adding cells later would break the same ~146
+programs a second time.
 Those programs are the migration backlog, and each is listed individually in
 `contracts/stack_envelope_inventory.json` with the cells it must move.
 
@@ -30,25 +33,83 @@ program to say what four of its own cells already said.
 
 ## Fixed v1 cells
 
-| Cell | Name | Rule |
-| ---: | --- | --- |
-| `S0` | `ServiceMagic` | the service's registered nonzero magic; identity |
-| `S1` | `ServiceABI` | positive exact ABI of this service contract |
-| `S2` | `SchemaId` | canonical schema hash, or `0` when the service has no schema |
-| `S3` | `SchemaVersion` | positive when `SchemaId` is nonzero; otherwise `0` |
-| `S4` | `ExtensionBase` | integer base of a v1 extension, or `0` when absent |
+| Cell | Name | Written | Rule |
+| ---: | --- | --- | --- |
+| `S0` | `ServiceMagic` | always | the service's registered nonzero magic; identity |
+| `S1` | `ServiceABI` | always | positive exact ABI of this service contract |
+| `S2` | `SchemaId` | bit 0 | canonical schema hash |
+| `S3` | `SchemaVersion` | bit 0 | positive schema version |
+| `S4` | `ExtensionBase` | bit 1 | base of a v1 extension, `S8` or later |
+| `S5` | `CapabilityMask` | always | which cells and standards this service declares |
+| `S6` | `State` | bit 2 | the one cell publication may change afterwards |
+| `S7` | `TelemetryBase` | bit 3 | base of a telemetry block outside the header |
+
+Three cells are mandatory: identity at `S0`/`S1`, which 154 of 173 programs
+already publish, and the mask at `S5`. Every other cell is written only when the
+mask declares it, and a reader never reads an undeclared cell. That is what makes
+the header safe on hardware where the stack survives reflash: a cell nobody wrote
+holds whatever the previous script left, so v1 reads it only when a service that
+provably writes it says to.
 
 The magic is the on-stack identity. It is registered in `docs/ABI_REFERENCE.md`,
 stable across implementation revisions, and unrelated to a filename — moving a
 source file or bumping a `_v<major>_<minor>` suffix changes neither the magic nor
-the service contract. The semantic `ic10.script.*` contract id remains the
-registry-side identity in `contracts/`; it is not published on the stack.
+the service contract. It identifies a *contract*, not a program: the three
+generated directory adapters share one magic because they publish one contract.
+The semantic `ic10.script.*` id remains the registry-side identity in
+`contracts/`; it is not published on the stack.
 
 v1 validates the **shape** of a header, not membership in a registry: a reader
-proves the five cells are well formed and self-consistent, then resolves the
-magic through the generated contract index. There is no common marker cell,
-because a common marker at `S0` would displace the identity that 154 programs
-already publish there.
+proves the cells are well formed and self-consistent, then resolves the magic
+through the generated contract index.
+
+### CapabilityMask
+
+| Bit | Value | Meaning |
+| ---: | ---: | --- |
+| 0 | 1 | `HAS_SCHEMA` — `S2`/`S3` carry a schema and version |
+| 1 | 2 | `HAS_EXTENSION` — `S4` addresses a v1 extension |
+| 2 | 4 | `HAS_STATE` — `S6` carries a v1 state value |
+| 3 | 8 | `HAS_TELEMETRY` — `S7` addresses a telemetry block |
+| 4+ | — | reserved for cross-cutting protocol capabilities; must be zero |
+
+The mask is **derived, never hand-written**: the generator computes it from the
+reviewed declaration and the validator requires the source to publish exactly
+that value. A bit cannot be set for a field the program does not publish, and a
+field cannot be published without its bit.
+
+Bits 4 and up are reserved for the framework's cross-cutting standards —
+`ASYNC_REQUEST_V1`, `BANKED_TRANSACTION_V1`, `GENERIC_JOB_ABI_V1`, directory
+provider. They stay unallocated until each has a derivable source of truth;
+today those participant lists live as literals inside their validators, and a
+hand-maintained capability bit is exactly the kind of metadata that rots.
+
+### State
+
+`S6` holds one of six values, and it is the only header cell a service may write
+after publication:
+
+| Value | Meaning |
+| ---: | --- |
+| 0 | not reported |
+| 1 | booting |
+| 2 | ready |
+| 3 | working |
+| 4 | blocked on a dependency |
+| 5 | fault — fail-closed stop |
+
+A service that halts on a violated invariant publishes `5`, so one cell answers
+"is anything red?" across every migrated program. Declaring `HAS_STATE` costs a
+line per published transition, so a program with no line budget leaves the bit
+clear rather than publishing a value it cannot maintain.
+
+### TelemetryBase
+
+`S7` points at a telemetry block that lives outside the header — for the Generic
+Telemetry runtimes, the block already at `S96`. This is not a payload pointer:
+the payload header *is* the common header. It exists so a family with a large
+published block can advertise it without moving it, which turns those
+migrations from breaking changes into additive ones.
 
 ## Extension v1
 
@@ -73,12 +134,13 @@ A reader accepts an extension only when all of these are true:
 2. Magic and version match exactly.
 3. Length is an integer in `4..192`.
 4. `ExtensionBase + ExtensionLength <= 512`.
-5. The extension begins at `S5` or later, so it cannot overlap the header.
+5. The extension begins at `S8` or later, so it cannot overlap the header.
 6. Any common flag-implied cell is inside the declared length.
 
 Failure rejects the header; it never falls back to interpreting extension cells
-as a family payload. Mutable status, request tokens, publication generations,
-bank selectors, and transaction state stay in the service payload from `S5` up.
+as a family payload. Request tokens, publication generations, bank selectors,
+and transaction state stay in the service payload from `S8` up; only the `S6`
+state value is common.
 
 ## Unknown and invalid values
 
@@ -97,8 +159,8 @@ bank selectors, and transaction state stay in the service payload from `S5` up.
 The rollout is per family, not per program, because renumbering a payload cell
 changes every consumer that reads it by literal address:
 
-- a program migrates when it publishes `S0..S4` exactly, on the straight-line
-  entry path, before its first `yield`;
+- a program migrates when it publishes its declared header cells exactly, on the
+  straight-line entry path, before its first `yield`;
 - its family's consumers move in the same change, since `S2..S4` reads shift;
 - every other program stays a named, generated baseline exemption until then;
 - `S0`/`S1` never move for the 154 programs that already publish them there.
@@ -118,9 +180,10 @@ version and is rejected by v1 readers; it may not silently repurpose a v1 cell.
 
 | | cells | lines | notes |
 | --- | ---: | ---: | --- |
-| Header per program | 5 | 5 | 2 of them already published by 154 programs |
-| Monitor (migrated pilot) | 5 | 100 | was 117 with a high fixed window and its 8-cell reader |
-| Backlog | — | — | 172 programs, 156 of which use `S0..S4` today |
+| Header reservation | 8 | — | costs 3 more programs than reserving 5; deferring costs a second break of ~146 |
+| Mandatory writes | 3 | 3 | `S0`/`S1` already published by 154 programs |
+| Monitor (migrated pilot) | 8 | 123 | reviewed spend of the 120..128 margin; it is the reference reader |
+| Backlog | — | — | 172 programs, 148 of which use `S2..S7` today |
 
 ## Machine-readable authority
 
@@ -134,7 +197,7 @@ per-script contracts and writes `contracts/stack_envelope_inventory.json`.
 Each generated row records current identity/header cells, every directly
 published schema hash, whether a primary stack protocol was declared, payload
 bases, existing consumer checks, literal/dynamic stack pressure, line headroom,
-which of `S0..S4` the program occupies today, and either the v1 header or its
+which of `S0..S7` the program occupies today, and either the v1 header or its
 explicit baseline exemption. Migrated rows also record the reviewed source
 fingerprint, straight-line publication rule, immutable stack ownership outside
 the header, and source-fingerprinted post-initialization dynamic-write bounds.

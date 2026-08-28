@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10",
-  "source_sha256": "06ae352cbf5ec092883b0a219aa49e7f5d20ec91c6eff9e5249fe9b2ee20bf2e",
+  "source_sha256": "cf932562608d339d44fc59b1a7c2c91d0ac7e60be8e092e4668f9fcda21a385f",
   "identity": {
     "service_id": "ic10.script.stack.cell.monitor",
     "implementation_revision": "1.0",
@@ -32,7 +32,10 @@
           1,
           2,
           3,
-          4
+          4,
+          5,
+          6,
+          7
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -51,8 +54,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.0858f5acf42964ab",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.0858f5acf42964ab",
+        "interface_id": "ic10.interface.access.60ead7ce90ab1fca",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.60ead7ce90ab1fca",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -144,19 +147,18 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      9
+      12
     ],
     "literal_writes": [
       0,
       1,
-      2,
-      3,
-      4,
       5,
       6,
-      7,
       8,
-      9
+      9,
+      10,
+      11,
+      12
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -191,56 +193,18 @@
         "const": 1
       },
       {
-        "address": 2,
-        "name": "S2",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 0
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 0
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 0
-      },
-      {
         "address": 5,
         "name": "S5",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 4
       },
       {
         "address": 6,
         "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -258,6 +222,33 @@
       },
       {
         "address": 9,
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 10,
+        "name": "S10",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 11,
+        "name": "S11",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 12,
         "name": "CompleteSampleGenerationPublishes",
         "value_type": "integer",
         "semantic_source": "source",
@@ -280,7 +271,7 @@
     "publication_rules": [
       {
         "kind": "commit-last",
-        "address": 9,
+        "address": 12,
         "description": "complete sample generation publishes LAST",
         "source": "verified-inline-order"
       }

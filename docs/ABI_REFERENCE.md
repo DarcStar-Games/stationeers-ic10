@@ -1556,22 +1556,23 @@ Each descriptor is `[Mode, FieldOrStackCell, FenceStackCell]`: mode 0 disabled, 
 
 `ic10/live-commissioning/stack_cell_monitor_v1_0.ic10` is an on-demand,
 human-visible monitor for one stack cell on a standard or compact IC housing.
-Magic `31416052`, ABI1, and it publishes the common header at `S0..S4`. `d0` is
+Magic `31416052`, ABI1. It publishes the common header and declares `HAS_STATE`,
+so its own `S6` reports boot then ready. `d0` is
 the target IC housing, `d1` is a Logic Memory whose `Setting` selects header
 discovery `-1` or address `0..511`, and optional `d2` mirrors the result to
-another writable `Setting` device. Discovery reads only `S0..S4`. The monitor
+another writable `Setting` device. Discovery reads only `S0..S7`. The monitor
 also writes the result to its own housing `Setting`; it never writes the target
 or selector.
 
 ```text
-S5  status: 1 finite value, 2 captured NaN, 3 valid v1 header,
+S8  status: 1 finite value, 2 captured NaN, 3 valid v1 header,
             -1 target missing, -2 target is not an IC housing,
             -3 selector missing/unsupported, -4 invalid address,
             -5 S0 holds no usable magic, -6 invalid header/extension
-S6  selected address; stays -1 for a discovery attempt
-S7  sampled value for status 1/2, or the discovered magic for status 3
-S8  target ReferenceId
-S9  sample generation, published last
+S9  selected address; stays -1 for a discovery attempt
+S10 sampled value for status 1/2, or the discovered magic for status 3
+S11 target ReferenceId
+S12 sample generation, published last
 ```
 
 ## Common Stack Header v1
@@ -1579,14 +1580,19 @@ S9  sample generation, published last
 Every service identifies itself in the first five cells:
 
 ```text
-S0 ServiceMagic — the registered magic below; identity
-S1 ServiceABI
-S2 SchemaId, or 0
-S3 SchemaVersion, or 0
-S4 ExtensionBase, or 0
+S0 ServiceMagic — the registered magic below; identity   (always)
+S1 ServiceABI                                            (always)
+S2 SchemaId                                    (mask bit 0)
+S3 SchemaVersion                               (mask bit 0)
+S4 ExtensionBase                               (mask bit 1)
+S5 CapabilityMask — bits 0..3, 4+ reserved zero          (always)
+S6 State: 0 unreported,1 boot,2 ready,3 working,4 blocked,5 fault (mask bit 2)
+S7 TelemetryBase                               (mask bit 3)
 ```
 
-Extensions use magic `31416054`, version 1, an inclusive length in `4..192`,
-begin at `S5` or later, and must end inside `S0..S511`. Family payload begins
+A cell is read only when its mask bit is set. `S6` is the one header cell a
+service may change after publication. Extensions use magic `31416054`, version 1,
+an inclusive length in `4..192`, begin at `S8` or later, and must end inside
+`S0..S511`. Family payload begins
 after the header. See `docs/STACK_ABI_ENVELOPE.md` for identity, zero/unknown,
 compatibility, upgrade, inventory, and migration rules.
