@@ -1,7 +1,7 @@
 # Stack Cell Monitor Getting Started
 
 The Stack Cell Monitor is an on-demand commissioning tool for discovering a
-common header of a service or reading one stack cell from another IC housing
+one stack cell from another IC housing
 without modifying that target. A Logic Memory selects discovery mode or an
 address, and the monitor mirrors the result to its own housing `Setting` and,
 optionally, to a second Logic Memory.
@@ -67,22 +67,22 @@ Use the screwdriver to make these connections:
 Power the monitor and both memories. The target must be an IC housing; ordinary
 devices are rejected even if they expose other logic properties.
 
-## 4. Identify a target
+## 4. Identify a target with the Stack Header Reader
 
-1. Set `Stack Address.Setting` to `-1`.
-2. Wait for monitor status `3` in its own `S8`.
-3. Read the target's `ServiceMagic` from monitor `S10` (and the optional
-   `Stack Value` Memory), then look it up in the registry table in
-   `docs/ABI_REFERENCE.md`.
-4. Set `Stack Address.Setting` to `1` through `7` to read the rest of the header:
-   ABI, CapabilityMask, SchemaId, ExtensionBase, State, TelemetryBase, and
-   Generation. The mask at `S2` says which of those the target maintains.
+Flash `ic10/live-commissioning/stack_header_reader_v1_0.ic10` into a second IC
+housing and screw `d0` to the target. No address selector is needed.
 
-Discovery reads only `S0..S7`. It validates a usable magic, a positive ABI, a
+1. Wait for status `3` in the reader's `S8`.
+2. Read the target's `ServiceMagic` from `S9` and look it up in the registry
+   table in `docs/ABI_REFERENCE.md`; the optional `d1` Memory mirrors it.
+3. `S10` is the target's ABI and `S11` its capability mask. `S12..S16` carry the
+   SchemaId, ExtensionBase, State, TelemetryBase, and Generation — each `0`
+   unless the mask declares it.
+
+The reader reads only `S0..S7`. It validates a usable magic, a positive ABI, a
 mask with no reserved bit set, and then only the fields that mask declares.
 Because the header is the payload header, there is no separate payload address
-to chase. See `docs/STACK_ABI_ENVELOPE.md` for the complete contract and the
-migration backlog.
+to chase; use the monitor below to read any cell the reader points you at.
 
 ## 5. Read a stack cell
 

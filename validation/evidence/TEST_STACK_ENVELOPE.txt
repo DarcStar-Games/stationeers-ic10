@@ -1,4 +1,4 @@
 Stack header tests: PASS
- - the monitor publishes its header and reads a target's identity from S0..S7 alone
+ - the reader validates a target from S0..S7 alone and republishes only declared fields
  - schema binding, extension bounds, and the pre-v1 baseline gate fail closed
  - migration backlog: 165 programs, 148 using S2..S7

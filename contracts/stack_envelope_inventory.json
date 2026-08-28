@@ -24,8 +24,8 @@
     "implementation_id": "optional extension field; never derived from a versioned filename"
   },
   "totals": {
-    "deployable_programs": 173,
-    "migrated_v1": 8,
+    "deployable_programs": 174,
+    "migrated_v1": 9,
     "legacy_exempt": 165,
     "backlog_reserved_cell_users": 148,
     "backlog_dynamic_range_users": 61
@@ -5002,8 +5002,8 @@
         "highest_literal_cell": 11,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 121,
-        "line_headroom_120": -1,
+        "line_count": 45,
+        "line_headroom_120": 75,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -5036,12 +5036,92 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "6a9b931def27c710fe28cb48bdfbd55348876eb01f396392007ec5dd299adf40",
+          "source_sha256": "e8af3f2b5751f93fa098e9323c5e035b0145f153f8156c3723334cd8a7a30561",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
               "start": 8,
               "end": 11
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "stack-monitor"
+      }
+    },
+    {
+      "source": "ic10/live-commissioning/stack_header_reader_v1_0.ic10",
+      "service_contract_id": "ic10.script.stack.header.reader",
+      "deployment_family": "live-commissioning",
+      "status": "migrated-v1",
+      "current_layout": {
+        "headers": [
+          {
+            "base": 0,
+            "magic": 31416067,
+            "abi": 1
+          }
+        ],
+        "schema_fields": [],
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.31416067.abi1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": []
+          }
+        ]
+      },
+      "stack_pressure": {
+        "literal_cell_count": 15,
+        "highest_literal_cell": 17,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "line_count": 117,
+        "line_headroom_120": 3,
+        "measured_v1_publication_cost_lines": 8,
+        "measured_v1_stack_cost_cells": 8
+      },
+      "window_collision": {
+        "literal_cells": [
+          0,
+          1,
+          2,
+          5,
+          7
+        ],
+        "dynamic_read_cells": [],
+        "dynamic_write_cells": [],
+        "dynamic_read_provenance": "none",
+        "dynamic_write_provenance": "none"
+      },
+      "envelope": {
+        "service_id": "ic10.script.stack.header.reader",
+        "magic": 31416067,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": true,
+        "publishes_generation": true,
+        "capability_mask": 20,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "959f95d2ce14cc4bf604e29d2f36841d828521cd70dfa1290757def46abbe958",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 17
             }
           ],
           "post_init_dynamic_write_ranges": []

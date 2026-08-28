@@ -1,6 +1,6 @@
 {
   "format": "IC10_SCRIPT_CONTRACT_INDEX_V1",
-  "contract_count": 173,
+  "contract_count": 174,
   "own_stack_range_inventory": {
     "dynamic_script_count": 62,
     "source_proven_surface_count": 43,
@@ -5016,66 +5016,6 @@
         }
       ]
     },
-    "ic10.interface.access.60ead7ce90ab1fca": {
-      "stack": {
-        "literal_reads": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
-        "literal_writes": [],
-        "dynamic_read": true,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-fingerprinted-exception",
-        "dynamic_write_range_source": "none",
-        "constraints": []
-      },
-      "assumptions": {
-        "properties_read": [
-          "PrefabHash",
-          "ReferenceId"
-        ],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
-        "stack_writable_ranges": [],
-        "constraints": [],
-        "properties_readable": [
-          "PrefabHash",
-          "ReferenceId"
-        ],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10",
-          "port": "d0"
-        }
-      ]
-    },
     "ic10.interface.access.65e4aaff15106f55": {
       "stack": {
         "literal_reads": [
@@ -5271,6 +5211,57 @@
         },
         {
           "source": "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10",
+          "port": "d0"
+        }
+      ]
+    },
+    "ic10.interface.access.6cc2b046c4ebd492": {
+      "stack": {
+        "literal_reads": [],
+        "literal_writes": [],
+        "dynamic_read": true,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [
+          {
+            "start": 0,
+            "end": 511
+          }
+        ],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "source-fingerprinted-exception",
+        "dynamic_write_range_source": "none",
+        "constraints": []
+      },
+      "assumptions": {
+        "properties_read": [
+          "PrefabHash",
+          "ReferenceId"
+        ],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 0,
+            "end": 511
+          }
+        ],
+        "stack_writable_ranges": [],
+        "constraints": [],
+        "properties_readable": [
+          "PrefabHash",
+          "ReferenceId"
+        ],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10",
           "port": "d0"
         }
       ]
@@ -7032,6 +7023,66 @@
         {
           "source": "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10",
           "port": "d1"
+        }
+      ]
+    },
+    "ic10.interface.access.a9b76e1e4abcfe4d": {
+      "stack": {
+        "literal_reads": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "literal_writes": [],
+        "dynamic_read": true,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [
+          {
+            "start": 8,
+            "end": 511
+          }
+        ],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "source-fingerprinted-exception",
+        "dynamic_write_range_source": "none",
+        "constraints": []
+      },
+      "assumptions": {
+        "properties_read": [
+          "PrefabHash",
+          "ReferenceId"
+        ],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 0,
+            "end": 511
+          }
+        ],
+        "stack_writable_ranges": [],
+        "constraints": [],
+        "properties_readable": [
+          "PrefabHash",
+          "ReferenceId"
+        ],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/live-commissioning/stack_header_reader_v1_0.ic10",
+          "port": "d0"
         }
       ]
     },
@@ -10456,6 +10507,15 @@
       "service_id": "ic10.script.stack.cell.monitor",
       "provides": [
         "ic10.stack.31416052.abi1"
+      ],
+      "consumes": []
+    },
+    {
+      "source": "ic10/live-commissioning/stack_header_reader_v1_0.ic10",
+      "contract": "contracts/live-commissioning/stack_header_reader_v1_0.contract.json",
+      "service_id": "ic10.script.stack.header.reader",
+      "provides": [
+        "ic10.stack.31416067.abi1"
       ],
       "consumes": []
     },

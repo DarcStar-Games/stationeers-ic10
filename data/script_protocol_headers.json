@@ -453,6 +453,13 @@
     "abi": 1
    }
   ],
+  "ic10/live-commissioning/stack_header_reader_v1_0.ic10": [
+   {
+    "base": 0,
+    "magic": 31416067,
+    "abi": 1
+   }
+  ],
   "ic10/manufacturing/generic_print_runtime_v2_0.ic10": [
    {
     "base": 0,
@@ -1538,6 +1545,7 @@
   ],
   "ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10": [],
   "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10": [],
+  "ic10/live-commissioning/stack_header_reader_v1_0.ic10": [],
   "ic10/manufacturing/generic_print_runtime_v2_0.ic10": [],
   "ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10": [],
   "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10": [],

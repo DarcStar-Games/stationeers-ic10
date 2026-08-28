@@ -2775,6 +2775,22 @@
         }
       ],
       "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416067.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416067,
+      "abi": 1,
+      "name": "Stack Header Reader ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416067.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/live-commissioning/stack_header_reader_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
     }
   ]
 }

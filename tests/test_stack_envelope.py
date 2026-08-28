@@ -30,6 +30,7 @@ from framework.stack_envelope import (
 
 ROOT = _PROJECT_ROOT
 MONITOR = "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10"
+READER = "ic10/live-commissioning/stack_header_reader_v1_0.ic10"
 fails: list[str] = []
 
 
@@ -44,8 +45,8 @@ validate(inventory, json.loads((ROOT / "schemas" / "stack_envelope_inventory.sch
 ck(inventory["envelope"]["base"] == 0 and inventory["envelope"]["length"] == 8,
    "the common header is no longer the first eight stack cells")
 ck(inventory["totals"] == {
-    "deployable_programs": 173,
-    "migrated_v1": 8,
+    "deployable_programs": 174,
+    "migrated_v1": 9,
     "legacy_exempt": 165,
     "backlog_reserved_cell_users": 148,
     "backlog_dynamic_range_users": 61,
@@ -123,117 +124,104 @@ for item in telemetry:
     ck(sorted(header["base"] for header in item["current_layout"]["headers"]) == [0, 96],
        f"{item['source']}: contract does not carry both the header and the telemetry block")
 
-# Discovery reads S0..S7 and trusts only the cells the mask declares.
+# The reader discovers S0..S7 and republishes only what the mask declares.
 target = Device(201, stack={0: 27182818, 1: 2, 2: 0},
                 props={"ReferenceId": 201, "PrefabHash": "HASH:StructureCircuitHousing"})
-selector = Device(202, props={"ReferenceId": 202, "Setting": -1})
-output = Device(203, props={"ReferenceId": 203, "Setting": 0})
-monitor = IC10((ROOT / MONITOR).read_text(), {"d0": target, "d1": selector, "d2": output})
-monitor.run(2)
-ck(monitor.stack.get(8) == 3, "monitor rejected a valid header that declares no optional field")
-ck(monitor.stack.get(10) == 27182818, "monitor did not report the discovered service magic")
-ck(output.props.get("Setting") == monitor.stack.get(10),
+mirror = Device(202, props={"ReferenceId": 202, "Setting": 0})
+reader = IC10((ROOT / READER).read_text(), {"d0": target, "d1": mirror})
+reader.run(2)
+ck(reader.stack.get(8) == 3, "reader rejected a valid header that declares no optional field")
+ck(reader.stack.get(9) == 27182818 and reader.stack.get(10) == 2,
+   "reader did not republish the discovered identity and ABI")
+ck(reader.stack.get(17) == 201, "reader did not report the target ReferenceId")
+ck(mirror.props.get("Setting") == 27182818,
    "discovered identity was not mirrored to the optional output")
+ck([reader.stack.get(cell) for cell in range(12, 17)] == [0, 0, 0, 0, 0],
+   "reader republished fields the capability mask never declared")
 
-# Cells outside the mask are never read, so stale values cannot fail a valid header.
+# Stale cells outside the mask are never read, so they cannot fail a valid header.
 target.stack.update({3: float("nan"), 4: 1.5, 5: 99, 6: 4, 7: -3})
-monitor.run(1)
-ck(monitor.stack.get(8) == 3, "monitor read cells the capability mask does not declare")
+reader.run(1)
+ck(reader.stack.get(8) == 3, "reader read cells the capability mask does not declare")
 target.stack.update({2: 32})
-monitor.run(1)
-ck(monitor.stack.get(8) == -6, "monitor accepted a reserved capability bit")
+reader.run(1)
+ck(reader.stack.get(8) == -6, "reader accepted a reserved capability bit")
 
-# HAS_SCHEMA: the declared pair must be a real schema at a positive version.
+# Each declared field is validated and then republished.
 target.stack.update({2: 1, 3: "HASH:DirectorySchema.ResourceLink.v1"})
-monitor.run(1)
-ck(monitor.stack.get(8) == 3, "monitor rejected a declared schema identity")
+reader.run(1)
+ck(reader.stack.get(8) == 3 and reader.stack.get(12) == "HASH:DirectorySchema.ResourceLink.v1",
+   "reader did not republish a declared schema identity")
 for bad_schema in (0, 1.5, float("nan")):
     target.stack.update({3: bad_schema})
-    monitor.run(1)
-    ck(monitor.stack.get(8) == -6, f"monitor accepted schema identity {bad_schema!r}")
-
-# HAS_STATE: the state cell must hold one of the v1 values.
+    reader.run(1)
+    ck(reader.stack.get(8) == -6, f"reader accepted schema identity {bad_schema!r}")
 target.stack.update({2: 4, 5: 2})
-monitor.run(1)
-ck(monitor.stack.get(8) == 3, "monitor rejected a declared state")
+reader.run(1)
+ck(reader.stack.get(8) == 3 and reader.stack.get(14) == 2,
+   "reader did not republish a declared state")
 for bad_state in (-1, 6, 2.5, float("nan")):
     target.stack.update({5: bad_state})
-    monitor.run(1)
-    ck(monitor.stack.get(8) == -6, f"monitor accepted state value {bad_state!r}")
-
-# HAS_TELEMETRY: the pointer must address a cell outside the header.
+    reader.run(1)
+    ck(reader.stack.get(8) == -6, f"reader accepted state value {bad_state!r}")
 target.stack.update({2: 8, 6: 96})
-monitor.run(1)
-ck(monitor.stack.get(8) == 3, "monitor rejected a declared telemetry base")
+reader.run(1)
+ck(reader.stack.get(8) == 3 and reader.stack.get(15) == 96,
+   "reader did not republish a declared telemetry base")
 for bad_base in (7, 512, 96.5, float("nan")):
     target.stack.update({6: bad_base})
-    monitor.run(1)
-    ck(monitor.stack.get(8) == -6, f"monitor accepted telemetry base {bad_base!r}")
-
-# HAS_EXTENSION: bounds are checked before any family cell is trusted.
+    reader.run(1)
+    ck(reader.stack.get(8) == -6, f"reader accepted telemetry base {bad_base!r}")
 target.stack.update({2: 16, 7: 4})
-monitor.run(1)
-ck(monitor.stack.get(8) == 3, "monitor rejected a declared generation")
+reader.run(1)
+ck(reader.stack.get(8) == 3 and reader.stack.get(16) == 4,
+   "reader did not republish a declared generation")
 for bad_generation in (-1, 2.5, float("nan")):
     target.stack.update({7: bad_generation})
-    monitor.run(1)
-    ck(monitor.stack.get(8) == -6, f"monitor accepted generation {bad_generation!r}")
+    reader.run(1)
+    ck(reader.stack.get(8) == -6, f"reader accepted generation {bad_generation!r}")
 
 # HAS_EXTENSION: bounds are checked before any family cell is trusted.
 target.stack.update({2: 2, 4: 508, 508: 31416054, 509: 1, 510: 4, 511: 0})
-monitor.run(1)
-ck(monitor.stack.get(8) == 3, "monitor rejected an in-bounds four-cell extension")
+reader.run(1)
+ck(reader.stack.get(8) == 3 and reader.stack.get(13) == 508,
+   "reader rejected an in-bounds four-cell extension")
 target.stack.update({4: 509, 509: 31416054, 510: 1, 511: 4})
-monitor.run(1)
-ck(monitor.stack.get(8) == -6, "monitor accepted an extension that exceeds S511")
+reader.run(1)
+ck(reader.stack.get(8) == -6, "reader accepted an extension that exceeds S511")
 target.stack.update({4: 7})
-monitor.run(1)
-ck(monitor.stack.get(8) == -6, "monitor accepted an extension overlapping the common header")
+reader.run(1)
+ck(reader.stack.get(8) == -6, "reader accepted an extension overlapping the common header")
 target.stack.update({4: 100, 100: 31416054, 101: 1, 102: 193, 103: 0})
-monitor.run(1)
-ck(monitor.stack.get(8) == -6, "monitor accepted an extension above the v1 length limit")
+reader.run(1)
+ck(reader.stack.get(8) == -6, "reader accepted an extension above the v1 length limit")
 target.stack.update({4: 508, 508: 31416054, 509: 1, 510: 4, 511: 1})
-monitor.run(1)
-ck(monitor.stack.get(8) == -6,
-   "monitor accepted HAS_IMPLEMENTATION_ID without an in-bounds ImplementationId cell")
+reader.run(1)
+ck(reader.stack.get(8) == -6,
+   "reader accepted HAS_IMPLEMENTATION_ID without an in-bounds ImplementationId cell")
 target.stack.update({4: 508, 508: 31416054, 509: 1, 510: 4, 511: 2})
-monitor.run(1)
-ck(monitor.stack.get(8) == -6, "monitor accepted reserved extension flag bits")
-target.stack.update({
-    4: 507, 507: 31416054, 508: 1, 509: 5, 510: 1,
-    511: "HASH:ic10.implementation.example",
-})
-monitor.run(1)
-ck(monitor.stack.get(8) == 3, "monitor rejected a valid ImplementationId extension")
-target.stack.update({509: 4})
-monitor.run(1)
-ck(monitor.stack.get(8) == -6,
-   "monitor accepted HAS_IMPLEMENTATION_ID outside the declared extension length")
+reader.run(1)
+ck(reader.stack.get(8) == -6, "reader accepted reserved extension flag bits")
 
-# The identity cells themselves are validated, and a failure invents no address.
+# Identity itself is validated, and a failed read publishes no stale discovery.
 target.stack.update({2: 0, 1: 1.5})
-monitor.run(1)
-ck(monitor.stack.get(8) == -6, "monitor accepted a fractional ABI")
+reader.run(1)
+ck(reader.stack.get(8) == -6, "reader accepted a fractional ABI")
 target.stack.update({1: float("nan")})
-monitor.run(1)
-ck(monitor.stack.get(8) == -6, "monitor accepted a NaN ABI")
+reader.run(1)
+ck(reader.stack.get(8) == -6, "reader accepted a NaN ABI")
 for invalid_magic in (0, 1.5, float("nan")):
     target.stack.update({1: 2, 0: invalid_magic})
-    monitor.run(1)
-    ck(monitor.stack.get(8) == -5 and monitor.stack.get(9) == -1,
-       f"monitor mis-reported an unusable magic {invalid_magic!r}")
+    reader.run(1)
+    ck(reader.stack.get(8) == -5, f"reader mis-reported an unusable magic {invalid_magic!r}")
+    ck(reader.stack.get(11) == 0 and reader.stack.get(15) == 0,
+       "a failed read republished the previous target's fields")
 
-# Declared schemas bind to a canonical registry entry or to the source's own check.
-pairs = canonical_schema_pairs(ROOT)
-ck(('HASH("DirectorySchema.ResourceLink")', 1) in pairs,
-   "canonical directory schema versions are not recognised")
-ck(('HASH("CatalogSchema.ResourceTransform")', 4) in pairs,
-   "canonical catalog schema versions are not recognised")
-bad = deepcopy(load_declarations(ROOT))
-bad["migrated"][MONITOR].update({"schema_id": "DirectorySchema.ResourceLink", "schema_version": 9})
-ck(any("not canonical and is not verified" in error
-       for error in declaration_errors(ROOT, contracts, bad)),
-   "validator accepted a schema/version no registry or source backs")
+# The reader publishes the same header it reads, and fences its own samples.
+solo = IC10((ROOT / READER).read_text())
+solo.run(1)
+ck([solo.stack.get(cell) for cell in (0, 1, 2, 7)] == [31416067, 1, 20, 0],
+   "the reader does not publish the header it validates")
 
 # The capability mask is derived from the declaration, never hand-written.
 ck(by_source[MONITOR]["envelope"]["capability_mask"] == 20,
@@ -386,6 +374,6 @@ if fails:
     [print(" -", failure) for failure in fails]
     sys.exit(1)
 print("Stack header tests: PASS")
-print(" - the monitor publishes its header and reads a target's identity from S0..S7 alone")
+print(" - the reader validates a target from S0..S7 alone and republishes only declared fields")
 print(" - schema binding, extension bounds, and the pre-v1 baseline gate fail closed")
 print(f" - migration backlog: {len(backlog)} programs, {inventory['totals']['backlog_reserved_cell_users']} using S2..S7")

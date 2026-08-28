@@ -1,15 +1,15 @@
 {
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
-  "source": "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10",
-  "source_sha256": "e8af3f2b5751f93fa098e9323c5e035b0145f153f8156c3723334cd8a7a30561",
+  "source": "ic10/live-commissioning/stack_header_reader_v1_0.ic10",
+  "source_sha256": "959f95d2ce14cc4bf604e29d2f36841d828521cd70dfa1290757def46abbe958",
   "identity": {
-    "service_id": "ic10.script.stack.cell.monitor",
+    "service_id": "ic10.script.stack.header.reader",
     "implementation_revision": "1.0",
     "deployment_family": "live-commissioning",
     "deployment_class": "on-demand",
     "layer": "On-demand commissioning",
-    "purpose": "Read-only target IC stack-cell probe with a Logic Memory address selector and visible value mirror."
+    "purpose": "Read-only common stack header reader: reports a target's identity, ABI, capabilities, and declared fields."
   },
   "device_ports": [
     {
@@ -27,13 +27,22 @@
         "slot_writes": []
       },
       "stack": {
-        "literal_reads": [],
+        "literal_reads": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
         "literal_writes": [],
         "dynamic_read": true,
         "dynamic_write": false,
         "dynamic_read_ranges": [
           {
-            "start": 0,
+            "start": 8,
             "end": 511
           }
         ],
@@ -45,8 +54,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.6cc2b046c4ebd492",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.6cc2b046c4ebd492",
+        "interface_id": "ic10.interface.access.a9b76e1e4abcfe4d",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.a9b76e1e4abcfe4d",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -62,43 +71,6 @@
     {
       "port": "d1",
       "role": "d1",
-      "aliases": [],
-      "requirement": "required",
-      "device_properties": {
-        "reads": [
-          "Setting"
-        ],
-        "writes": [],
-        "slot_reads": [],
-        "slot_writes": []
-      },
-      "stack": {
-        "literal_reads": [],
-        "literal_writes": [],
-        "dynamic_read": false,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "none",
-        "dynamic_write_range_source": "none",
-        "constraints": []
-      },
-      "target": {
-        "kind": "physical-device",
-        "verification": "device-properties",
-        "assumptions": {
-          "properties_read": [
-            "Setting"
-          ],
-          "properties_written": [],
-          "slot_properties_read": [],
-          "slot_properties_written": []
-        }
-      }
-    },
-    {
-      "port": "d2",
-      "role": "d2",
       "aliases": [],
       "requirement": "optional",
       "device_properties": {
@@ -149,7 +121,13 @@
       8,
       9,
       10,
-      11
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -171,7 +149,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416052
+        "const": 31416067
       },
       {
         "address": 1,
@@ -204,14 +182,14 @@
       },
       {
         "address": 7,
-        "name": "CompleteSampleGenerationPublishes",
-        "value_type": "integer",
+        "name": "S7",
+        "value_type": "number",
         "semantic_source": "source",
         "access": [
           "self-read",
           "self-write"
         ],
-        "description": "complete sample generation publishes LAST"
+        "description": "complete header sample publishes LAST"
       },
       {
         "address": 8,
@@ -248,12 +226,66 @@
         "access": [
           "self-write"
         ]
+      },
+      {
+        "address": 12,
+        "name": "S12",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 13,
+        "name": "S13",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 14,
+        "name": "S14",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 15,
+        "name": "S15",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 16,
+        "name": "S16",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 17,
+        "name": "S17",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
       }
     ],
     "headers": [
       {
         "base": 0,
-        "magic": 31416052,
+        "magic": 31416067,
         "abi": 1
       }
     ]
@@ -263,7 +295,7 @@
       {
         "kind": "commit-last",
         "address": 7,
-        "description": "complete sample generation publishes LAST",
+        "description": "complete header sample publishes LAST",
         "source": "verified-inline-order"
       }
     ],
@@ -276,7 +308,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416052,
+        "equals": 31416067,
         "source": "generated-protocol-header"
       },
       {
@@ -291,9 +323,9 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416052.abi1",
+        "protocol_id": "ic10.stack.31416067.abi1",
         "base": 0,
-        "magic": 31416052,
+        "magic": 31416067,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

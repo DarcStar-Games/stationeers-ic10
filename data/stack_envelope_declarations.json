@@ -109,7 +109,7 @@
    "extension_base": 0,
    "extension_flags": 0,
    "implementation_id": null,
-   "source_sha256": "6a9b931def27c710fe28cb48bdfbd55348876eb01f396392007ec5dd299adf40",
+   "source_sha256": "e8af3f2b5751f93fa098e9323c5e035b0145f153f8156c3723334cd8a7a30561",
    "legacy_owned_ranges": [
     [
      8,
@@ -121,6 +121,28 @@
    "telemetry_base": 0,
    "publishes_state": true,
    "publishes_generation": true
+  },
+  "ic10/live-commissioning/stack_header_reader_v1_0.ic10": {
+   "service_id": "ic10.script.stack.header.reader",
+   "magic": 31416067,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": true,
+   "publishes_generation": true,
+   "source_sha256": "959f95d2ce14cc4bf604e29d2f36841d828521cd70dfa1290757def46abbe958",
+   "legacy_owned_ranges": [
+    [
+     8,
+     17
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "stack-monitor"
   },
   "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": {
    "service_id": "ic10.script.controller.pressure.domain.runtime",

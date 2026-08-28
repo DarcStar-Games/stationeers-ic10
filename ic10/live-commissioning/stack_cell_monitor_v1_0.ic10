@@ -1,4 +1,4 @@
-# Stack Cell Monitor ABI1: d0 target,d1 address (-1 reads S0 header),d2 optional out.
+# Stack Cell Monitor ABI1: d0 target IC housing,d1 address 0..511,d2 optional out.
 poke 0 31416052
 poke 1 1
 poke 2 20
@@ -22,7 +22,6 @@ TargetReady:
 move r4 -3
 bdnvl d1 Setting Publish
 l r0 d1 Setting
-beq r0 -1 Discover
 move r4 -4
 mod r3 r0 1
 bnez r3 Publish
@@ -32,81 +31,6 @@ get r1 d0 r0
 snan r4 r1
 add r4 r4 1
 j Publish
-Discover:
-move r4 -5
-get r3 d0 0
-mod r12 r3 1
-bnez r12 Publish
-beqz r3 Publish
-move r4 -6
-get r5 d0 1
-mod r12 r5 1
-bnez r12 Publish
-blez r5 Publish
-get r9 d0 2
-mod r12 r9 1
-bnez r12 Publish
-bltz r9 Publish
-bgt r9 31 Publish
-and r12 r9 1
-beqz r12 SchemaDone
-get r6 d0 3
-mod r10 r6 1
-bnez r10 Publish
-beqz r6 Publish
-SchemaDone:
-and r12 r9 4
-beqz r12 StateDone
-get r10 d0 5
-mod r11 r10 1
-bnez r11 Publish
-bltz r10 Publish
-bgt r10 5 Publish
-StateDone:
-and r12 r9 8
-beqz r12 TelemetryDone
-get r10 d0 6
-mod r11 r10 1
-bnez r11 Publish
-blt r10 8 Publish
-bgt r10 511 Publish
-TelemetryDone:
-and r12 r9 16
-beqz r12 GenerationDone
-get r10 d0 7
-mod r11 r10 1
-bnez r11 Publish
-bltz r10 Publish
-GenerationDone:
-and r12 r9 2
-beqz r12 HeaderReady
-get r8 d0 4
-mod r12 r8 1
-bnez r12 Publish
-blt r8 8 Publish
-bgt r8 508 Publish
-get r12 d0 r8
-bne r12 31416054 Publish
-add r13 r8 1
-get r12 d0 r13
-bne r12 1 Publish
-add r13 r8 2
-get r12 d0 r13
-mod r14 r12 1
-bnez r14 Publish
-blt r12 4 Publish
-bgt r12 192 Publish
-add r13 r8 3
-get r15 d0 r13
-beqz r15 ExtensionBound
-bne r15 1 Publish
-blt r12 5 Publish
-ExtensionBound:
-add r13 r8 r12
-bgt r13 512 Publish
-HeaderReady:
-move r1 r3
-move r4 3
 Publish:
 poke 9 r0
 poke 10 r1

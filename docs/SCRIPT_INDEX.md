@@ -2,7 +2,7 @@
 
 Generated from the deployable `ic10/` inventory. Semantic paths plus version suffixes are the executable source identity; historical numeric source ordinals are intentionally not part of filenames. Deployment family/class metadata is resolved from `data/source_manifest.json`.
 
-Production IC10 programs: 173
+Production IC10 programs: 174
 
 ## Script index
 
@@ -78,7 +78,8 @@ Production IC10 programs: 173
 | `ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10` | 82 | Item storage | `item-storage-sdb` | `conditional-resident` | Publishes a dedicated SDB Silo as conservative lower-bound ITEM availability/capacity without pretending stack count is exact quantity. |
 | `ic10/item-storage-vending/material_vending_inventory_v1_0.ic10` | 112 | Material inventory | `item-storage-vending` | `conditional-resident` | Incrementally scans a Vending Machine for one ItemHash and publishes Generic Resource Endpoint ABI1. |
 | `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` | 108 | On-demand commissioning | `live-commissioning` | `on-demand` | Read-only six-source live commissioning snapshot probe with optional stack-generation fencing. |
-| `ic10/live-commissioning/stack_cell_monitor_v1_0.ic10` | 121 | On-demand commissioning | `live-commissioning` | `on-demand` | Read-only target IC stack-cell monitor with a Logic Memory address selector and visible value mirror. |
+| `ic10/live-commissioning/stack_cell_monitor_v1_0.ic10` | 45 | On-demand commissioning | `live-commissioning` | `on-demand` | Read-only target IC stack-cell probe with a Logic Memory address selector and visible value mirror. |
+| `ic10/live-commissioning/stack_header_reader_v1_0.ic10` | 117 | On-demand commissioning | `live-commissioning` | `on-demand` | Read-only common stack header reader: reports a target's identity, ABI, capabilities, and declared fields. |
 | `ic10/manufacturing/generic_print_runtime_v2_0.ic10` | 112 | Manufacturing runtime | `manufacturing` | `conditional-resident` | Runs a bounded printer batch through native ExecuteRecipe and verifies coherent ExportCount completion. |
 | `ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10` | 108 | Manufacturing selection | `manufacturing` | `conditional-resident` | Generic schema/version-qualified candidate selector for TransformLane or PrinterExecution snapshots; supports tier or bitmask capability matching. |
 | `ic10/manufacturing/manufacturing_driver_router_v2_0.ic10` | 75 | Manufacturing scheduling | `manufacturing` | `conditional-resident` | Normalizes TRANSFORM and PRINT domain drivers behind one scheduler-facing result ABI. |

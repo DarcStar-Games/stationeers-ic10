@@ -63,6 +63,7 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 | Generic Config Editor | `22360680` | `S1` | 1 |
 | Config Input Bridge | `22360681` | `S1` | 1 |
 | Stack Cell Monitor | `31416052` | `S1` | 1 |
+| Stack Header Reader | `31416067` | `S1` | 1 |
 | Controller PhasePressure Runtime | `31416060` | `S1` | 1 |
 | Controller PI Runtime | `31416061` | `S1` | 1 |
 | Controller Sequencer Runtime | `31416062` | `S1` | 1 |
@@ -1562,24 +1563,43 @@ Each descriptor is `[Mode, FieldOrStackCell, FenceStackCell]`: mode 0 disabled, 
 ## Stack Cell Monitor ABI1
 
 `ic10/live-commissioning/stack_cell_monitor_v1_0.ic10` is an on-demand,
-human-visible monitor for one stack cell on a standard or compact IC housing.
-Magic `31416052`, ABI1. It publishes the common header and declares `HAS_STATE`,
-so its own `S5` reports boot then ready and its `S7` fences each sample. `d0` is
-the target IC housing, `d1` is a Logic Memory whose `Setting` selects header
-discovery `-1` or address `0..511`, and optional `d2` mirrors the result to
-another writable `Setting` device. Discovery reads only `S0..S7`. The monitor
-also writes the result to its own housing `Setting`; it never writes the target
-or selector.
+human-visible probe for one stack cell on a standard or compact IC housing.
+Magic `31416052`, ABI1, and it publishes the common header with `HAS_STATE` and
+`HAS_GENERATION`. `d0` is the target IC housing, `d1` is a Logic Memory whose
+`Setting` selects address `0..511`, and optional `d2` mirrors the sampled value.
+It never writes the target or selector.
 
 ```text
-S8  status: 1 finite value, 2 captured NaN, 3 valid v1 header,
-            -1 target missing, -2 target is not an IC housing,
-            -3 selector missing/unsupported, -4 invalid address,
-            -5 S0 holds no usable magic, -6 invalid header/extension
-S9  selected address; stays -1 for a discovery attempt
-S10 sampled value for status 1/2, or the discovered magic for status 3
+S5  own state: 1 booting, 2 ready
+S7  own sample generation, published last
+S8  status: 1 finite value, 2 captured NaN, -1 target missing,
+            -2 target is not an IC housing, -3 selector missing/unsupported,
+            -4 address is NaN, fractional, negative, or above 511
+S9  selected address
+S10 sampled value; 0 for pre-capture errors
 S11 target ReferenceId
-S7  sample generation, published last (the common header cell)
+```
+
+## Stack Header Reader ABI1
+
+`ic10/live-commissioning/stack_header_reader_v1_0.ic10` is the generic reader for
+the common header. Magic `31416067`, ABI1. `d0` is the target IC housing and
+optional `d1` mirrors the discovered magic to a `Setting` device. It reads only
+`S0..S7` of the target, validates the shape, and republishes every field the
+target's mask declares. Undeclared fields publish `0`.
+
+```text
+S5  own state: 1 booting, 2 ready
+S7  own sample generation, published last
+S8  status: 3 valid header, -1 target missing,
+            -2 target is not an IC housing,
+            -5 S0 holds no usable magic,
+            -6 header fields or extension bounds are invalid
+S9  discovered ServiceMagic      S13 discovered ExtensionBase
+S10 discovered ServiceABI        S14 discovered State
+S11 discovered CapabilityMask    S15 discovered TelemetryBase
+S12 discovered SchemaId          S16 discovered Generation
+S17 target ReferenceId
 ```
 
 ## Controller runtime identities

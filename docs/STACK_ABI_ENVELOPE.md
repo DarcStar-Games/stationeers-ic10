@@ -224,7 +224,8 @@ version and is rejected by v1 readers; it may not silently repurpose a v1 cell.
 | --- | ---: | ---: | --- |
 | Header reservation | 8 | — | costs 3 more programs than reserving 5; deferring costs a second break of ~146 |
 | Mandatory writes | 3 | 3 | `S0`/`S1` already published by 154 programs |
-| Monitor (migrated pilot) | 8 | 123 | reviewed spend of the 120..128 margin; it is the reference reader |
+| Stack Header Reader | 8 | 117 | the reference reader; validates every declared field |
+| Stack Cell Monitor | 8 | 45 | the probe: one cell at a chosen address |
 | Generic Telemetry family | 8 | +4 each | 7 runtimes migrated; 5 spend reviewed margin, 0 consumers changed |
 | Backlog | — | — | 165 programs, 148 of which use `S2..S7` today |
 
@@ -274,12 +275,14 @@ itself; a declaration nothing backs is rejected rather than assumed.
 
 ## Live-game discovery
 
-Connect the Stack Cell Monitor to a target housing and set its address Logic
-Memory to `-1`. Status `3` means a valid header was read; the monitor publishes
-the discovered magic in its `S7` and mirrors it to the optional output Memory.
-Because the payload always begins at `S0`, an operator reads the rest of the
-header by setting the address Memory to `1`, `2`, `3`, or `4`.
+Connect `ic10/live-commissioning/stack_header_reader_v1_0.ic10` to a target
+housing. Status `3` in its `S8` means a valid header was read; `S9..S16` then
+carry the target's magic, ABI, capability mask, and every field that mask
+declares, with `0` for anything undeclared. Status `-5` means `S0` holds no
+usable magic; `-6` means a declared field or an extension bound was invalid.
 
-Status `-5` means `S0` holds no usable magic. Status `-6` means the magic was
-present but the ABI, schema pairing, or extension bounds were invalid. See
-`docs/STACK_CELL_MONITOR_GETTING_STARTED.md` for the physical setup.
+The Stack Cell Monitor stays the probe for reading one chosen cell at an address,
+which is what an operator uses next to inspect a payload the reader identified.
+Splitting them keeps each program small: the reader is 117 lines and the probe
+is 45, where one combined program had reached 121 with 7 lines of hard-limit
+margin left.
