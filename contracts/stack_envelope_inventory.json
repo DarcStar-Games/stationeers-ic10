@@ -16,7 +16,11 @@
       3,
       4,
       5
-    ]
+    ],
+    "state_field_mask": 15,
+    "state_reserved_mask": 240,
+    "custom_state_shift": 8,
+    "value_bits": 53
   },
   "hash_namespace": {
     "service_id": "HASH(canonical semantic service contract id)",
@@ -1306,6 +1310,7 @@
         "extension_base": 0,
         "telemetry_base": 96,
         "publishes_state": false,
+        "custom_state_bits": 0,
         "publishes_generation": false,
         "capability_mask": 8,
         "extension_flags": 0,
@@ -1450,6 +1455,7 @@
         "extension_base": 0,
         "telemetry_base": 96,
         "publishes_state": false,
+        "custom_state_bits": 0,
         "publishes_generation": false,
         "capability_mask": 8,
         "extension_flags": 0,
@@ -1590,6 +1596,7 @@
         "extension_base": 0,
         "telemetry_base": 96,
         "publishes_state": false,
+        "custom_state_bits": 0,
         "publishes_generation": false,
         "capability_mask": 8,
         "extension_flags": 0,
@@ -5002,8 +5009,8 @@
         "highest_literal_cell": 11,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 45,
-        "line_headroom_120": 75,
+        "line_count": 46,
+        "line_headroom_120": 74,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -5030,13 +5037,14 @@
         "extension_base": 0,
         "telemetry_base": 0,
         "publishes_state": true,
+        "custom_state_bits": 0,
         "publishes_generation": true,
         "capability_mask": 20,
         "extension_flags": 0,
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "e8af3f2b5751f93fa098e9323c5e035b0145f153f8156c3723334cd8a7a30561",
+          "source_sha256": "7e13bc7de04f0f1e86280788d42bb1a64da4ba9ac9665e507992da2c335127f6",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -5082,8 +5090,8 @@
         "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 117,
-        "line_headroom_120": 3,
+        "line_count": 118,
+        "line_headroom_120": 2,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -5110,13 +5118,14 @@
         "extension_base": 0,
         "telemetry_base": 0,
         "publishes_state": true,
+        "custom_state_bits": 0,
         "publishes_generation": true,
         "capability_mask": 20,
         "extension_flags": 0,
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "959f95d2ce14cc4bf604e29d2f36841d828521cd70dfa1290757def46abbe958",
+          "source_sha256": "8718d7fd3c9877d3117d482e669a0b8a063a9dfc5af69f2b108ac428a6c25981",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -8362,6 +8371,7 @@
         "extension_base": 0,
         "telemetry_base": 96,
         "publishes_state": false,
+        "custom_state_bits": 0,
         "publishes_generation": false,
         "capability_mask": 8,
         "extension_flags": 0,
@@ -8588,6 +8598,7 @@
         "extension_base": 0,
         "telemetry_base": 96,
         "publishes_state": false,
+        "custom_state_bits": 0,
         "publishes_generation": false,
         "capability_mask": 8,
         "extension_flags": 0,
@@ -10174,6 +10185,7 @@
         "extension_base": 0,
         "telemetry_base": 96,
         "publishes_state": false,
+        "custom_state_bits": 0,
         "publishes_generation": false,
         "capability_mask": 8,
         "extension_flags": 0,
@@ -10384,6 +10396,7 @@
         "extension_base": 0,
         "telemetry_base": 96,
         "publishes_state": false,
+        "custom_state_bits": 0,
         "publishes_generation": false,
         "capability_mask": 8,
         "extension_flags": 0,

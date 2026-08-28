@@ -1570,7 +1570,7 @@ Magic `31416052`, ABI1, and it publishes the common header with `HAS_STATE` and
 It never writes the target or selector.
 
 ```text
-S5  own state: 1 booting, 2 ready
+S5  own state: 1 booting, 4 target/selector missing, 2 ready
 S7  own sample generation, published last
 S8  status: 1 finite value, 2 captured NaN, -1 target missing,
             -2 target is not an IC housing, -3 selector missing/unsupported,
@@ -1589,7 +1589,7 @@ optional `d1` mirrors the discovered magic to a `Setting` device. It reads only
 target's mask declares. Undeclared fields publish `0`.
 
 ```text
-S5  own state: 1 booting, 2 ready
+S5  own state: 1 booting, 4 target missing or not a housing, 2 ready
 S7  own sample generation, published last
 S8  status: 3 valid header, -1 target missing,
             -2 target is not an IC housing,
@@ -1619,13 +1619,16 @@ S1 ServiceABI                                            (always)
 S2 CapabilityMask — bits 0..4, 5+ reserved zero          (always)
 S3 SchemaId — HASH("<schema>.v<version>")      (mask bit 0)
 S4 ExtensionBase                               (mask bit 1)
-S5 State: 0 unreported,1 boot,2 ready,3 working,4 blocked,5 fault (mask bit 2)
+S5 State: bits 0..3 field (0 unreported,1 boot,2 ready,3 working,
+          4 blocked,5 fault), bits 4..7 reserved zero,
+          bits 8..52 service-specific                 (mask bit 2)
 S6 TelemetryBase                               (mask bit 3)
 S7 Generation — initialized 0, advanced, published last (mask bit 4)
 ```
 
 A cell is read only when its mask bit is set. `S5` and `S7` are the header cells a
-service may change after publication. Extensions use magic `31416054`, version 1,
+service may change after publication. A stack cell is a double, so its exact
+integer width is 53 bits; the game caps `ext`/`ins` bit fields at the same 53. Extensions use magic `31416054`, version 1,
 an inclusive length in `4..192`, begin at `S8` or later, and must end inside
 `S0..S511`. Family payload begins
 after the header. See `docs/STACK_ABI_ENVELOPE.md` for identity, zero/unknown,

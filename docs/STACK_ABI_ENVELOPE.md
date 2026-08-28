@@ -128,10 +128,19 @@ order among all writes.
 
 ### State
 
-`S5` holds one of six values, and it is one of the two header cells a service may
-write after publication:
+`S5` is a packed word, and it is one of the two header cells a service may write
+after publication. A stack cell is a double, so its exact integer width is 53
+bits — the game's own `ext`/`ins` documentation caps a bit field at "53 bits in
+final length", and bit 53 and above cannot survive a round trip through a cell.
 
-| Value | Meaning |
+```text
+bits 0..3    State field: one value at a time
+bits 4..7    reserved for future universal flags; must be zero
+bits 8..52   service-specific, opaque to a generic reader
+bit 53+      unusable
+```
+
+| Field value | Meaning |
 | ---: | --- |
 | 0 | not reported |
 | 1 | booting |
@@ -140,10 +149,26 @@ write after publication:
 | 4 | blocked on a dependency |
 | 5 | fault — fail-closed stop |
 
-A service that halts on a violated invariant publishes `5`, so one cell answers
-"is anything red?" across every migrated program. Declaring `HAS_STATE` costs a
-line per published transition, so a program with no line budget leaves the bit
-clear rather than publishing a value it cannot maintain.
+The low bits are a **field, not flags**. The six states are mutually exclusive:
+as independent bits, `boot | ready` would be representable and meaningless, and
+every generic scanner would have to invent its own priority rule. Conditions that
+genuinely co-occur belong in the service-specific range, where a family can
+express "config stale" or "operating degraded" alongside whatever the field says.
+`ext r0 r_state 0 4` recovers the field in one instruction; `RequiredCapabilityMask`
+already establishes the `(actual & required) == required` idiom for the rest.
+
+A service declares the custom bits it may set in `custom_state_bits`, and the
+validator rejects a published value that sets an undeclared bit, a reserved bit,
+a state field outside 0..5, or anything beyond the 53-bit width. Writes must be
+literal, so every state a program can publish is provable from its source.
+
+What does **not** belong here is the result of observing another device. The
+Stack Header Reader publishes `-5` when its target has no usable magic; that
+describes the target, not the reader, and folding it into State would light up a
+base-wide health scan for a perfectly healthy tool. State answers "how am I";
+the service's own payload answers "what did I find". Both commissioning tools
+now report `4` while their required devices are missing and `2` once the wiring
+proves out, rather than hardcoding `2` forever.
 
 ### TelemetryBase
 

@@ -23,6 +23,7 @@ from framework.stack_envelope import (
     declaration_errors,
     extension_ownership_errors,
     generation_errors,
+    state_errors,
     legacy_source_digest,
     load_declarations,
     publication_errors,
@@ -98,7 +99,7 @@ vm.run(1)
 ck(vm.stack.get(0) == 31416052 and vm.stack.get(1) == 1,
    "monitor does not publish its identity at S0/S1")
 ck(vm.stack.get(2) == 20, "monitor does not publish the derived capability mask at S2")
-ck(vm.stack.get(5) in (1, 2), "monitor does not publish a declared state value at S5")
+ck(vm.stack.get(5) == 1, "monitor does not publish its booting state at S5")
 ck(vm.stack.get(7) == 0, "monitor does not initialize its generation cell to zero")
 contract = next(document for document in contracts.values() if document["source"] == MONITOR)
 ck([header for header in contract["own_stack"]["headers"]
@@ -134,6 +135,7 @@ ck(reader.stack.get(8) == 3, "reader rejected a valid header that declares no op
 ck(reader.stack.get(9) == 27182818 and reader.stack.get(10) == 2,
    "reader did not republish the discovered identity and ABI")
 ck(reader.stack.get(17) == 201, "reader did not report the target ReferenceId")
+ck(reader.stack.get(5) == 2, "reader does not report ready state once its target is wired")
 ck(mirror.props.get("Setting") == 27182818,
    "discovered identity was not mirrored to the optional output")
 ck([reader.stack.get(cell) for cell in range(12, 17)] == [0, 0, 0, 0, 0],
@@ -219,9 +221,38 @@ for invalid_magic in (0, 1.5, float("nan")):
 
 # The reader publishes the same header it reads, and fences its own samples.
 solo = IC10((ROOT / READER).read_text())
+solo.run(2)
+ck(solo.stack.get(5) == 4 and solo.stack.get(8) == -1,
+   "an unwired reader does not report blocked state alongside its missing target")
+solo = IC10((ROOT / READER).read_text())
 solo.run(1)
 ck([solo.stack.get(cell) for cell in (0, 1, 2, 7)] == [31416067, 1, 20, 0],
    "the reader does not publish the header it validates")
+
+# State packs a v1 field, reserved zeros, and declared service-specific bits.
+ck(not state_errors({2, 4}, 0), "a plain v1 state value was rejected")
+ck(not state_errors({2 | (5 << 8)}, 5), "a declared custom state bit was rejected")
+ck(any("undefined v1 state field" in error for error in state_errors({7}, 0)),
+   "an undefined state field passed validation")
+ck(any("reserved bit" in error for error in state_errors({2 | 0x10}, 0)),
+   "a reserved state bit passed validation")
+ck(any("never declared" in error for error in state_errors({2 | (1 << 8)}, 0)),
+   "an undeclared custom state bit passed validation")
+ck(any("53-bit cell width" in error for error in state_errors({2 ** 53}, 0)),
+   "a state value beyond the cell's exact integer width passed validation")
+ck(any("53-bit cell width" in error for error in state_errors({-1, 2.5}, 0)),
+   "a negative or fractional state passed validation")
+bad = deepcopy(load_declarations(ROOT))
+bad["migrated"][MONITOR]["custom_state_bits"] = 2 ** 60
+ck(any("custom_state_bits must fit" in error
+       for error in declaration_errors(ROOT, contracts, bad)),
+   "custom state bits outside the usable cell width were accepted")
+bad = deepcopy(load_declarations(ROOT))
+bad["migrated"][MONITOR]["publishes_state"] = False
+bad["migrated"][MONITOR]["custom_state_bits"] = 1
+ck(any("custom state bits require HAS_STATE" in error
+       for error in declaration_errors(ROOT, contracts, bad)),
+   "custom state bits were accepted without a declared state cell")
 
 # The capability mask is derived from the declaration, never hand-written.
 ck(by_source[MONITOR]["envelope"]["capability_mask"] == 20,

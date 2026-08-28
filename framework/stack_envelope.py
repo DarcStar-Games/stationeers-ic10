@@ -28,6 +28,27 @@ CAPABILITY_BITS_V1 = (
     HAS_SCHEMA | HAS_EXTENSION | HAS_STATE | HAS_TELEMETRY | HAS_GENERATION
 )
 STATE_VALUES = (0, 1, 2, 3, 4, 5)
+STATE_FIELD_MASK = 0xF          # bits 0..3 carry the state, one value at a time
+STATE_RESERVED_MASK = 0xF0      # bits 4..7 are reserved for future universal flags
+CUSTOM_STATE_SHIFT = 8          # bits 8.. are service-specific and opaque to readers
+VALUE_BITS = 53                 # a stack cell is a double: exact integers to 2**53
+
+
+def state_errors(values: set[Any], custom_state_bits: int) -> list[str]:
+    """A published state packs a v1 state field, zero reserved bits, and declared custom bits."""
+    errors: list[str] = []
+    for value in sorted(values, key=repr):
+        if type(value) is not int or value < 0 or value >= 2 ** VALUE_BITS:
+            errors.append(f"state {value!r} is not an integer inside the {VALUE_BITS}-bit cell width")
+            continue
+        if value & STATE_FIELD_MASK not in STATE_VALUES:
+            errors.append(f"state {value} carries an undefined v1 state field")
+        if value & STATE_RESERVED_MASK:
+            errors.append(f"state {value} sets a reserved bit")
+        custom = value >> CUSTOM_STATE_SHIFT
+        if custom & ~custom_state_bits:
+            errors.append(f"state {value} sets custom bits the service never declared")
+    return errors
 EXTENSION_MAGIC = 31416054
 EXTENSION_VERSION = 1
 EXTENSION_MIN_LENGTH = 4
@@ -329,6 +350,10 @@ def declaration_errors(
         "length": LENGTH,
         "capability_bits_v1": CAPABILITY_BITS_V1,
         "state_values": list(STATE_VALUES),
+        "state_field_mask": STATE_FIELD_MASK,
+        "state_reserved_mask": STATE_RESERVED_MASK,
+        "custom_state_shift": CUSTOM_STATE_SHIFT,
+        "value_bits": VALUE_BITS,
         "extension_magic": EXTENSION_MAGIC,
         "extension_version": EXTENSION_VERSION,
         "extension_min_length": EXTENSION_MIN_LENGTH,
@@ -472,11 +497,20 @@ def declaration_errors(
             )
         )
         state_writes = writes.get(STATE_CELL, set())
+        custom_state_bits = declaration.get("custom_state_bits", 0)
+        if type(custom_state_bits) is not int or not 0 <= custom_state_bits < 2 ** (
+            VALUE_BITS - CUSTOM_STATE_SHIFT
+        ):
+            errors.append(f"{source}: custom_state_bits must fit the service-specific state range")
+            custom_state_bits = 0
         if capability_mask & HAS_STATE:
             if not state_writes:
                 errors.append(f"{source}: HAS_STATE requires the source to publish S{STATE_CELL}")
-            if any(value not in STATE_VALUES for value in state_writes):
-                errors.append(f"{source}: S{STATE_CELL} may only hold the declared v1 state values")
+            errors.extend(
+                f"{source}: {error}" for error in state_errors(state_writes, custom_state_bits)
+            )
+        elif custom_state_bits:
+            errors.append(f"{source}: custom state bits require HAS_STATE")
         elif state_writes:
             errors.append(f"{source}: S{STATE_CELL} is reserved unless the service declares HAS_STATE")
         for cell in range(BASE, BASE + LENGTH):
@@ -641,6 +675,7 @@ def build_inventory(
                 "extension_base": declaration["extension_base"],
                 "telemetry_base": declaration["telemetry_base"],
                 "publishes_state": declaration["publishes_state"],
+                "custom_state_bits": declaration.get("custom_state_bits", 0),
                 "publishes_generation": declaration["publishes_generation"],
                 "capability_mask": (
                     (HAS_SCHEMA if declaration["schema_id"] is not None else 0)

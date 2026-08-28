@@ -15,7 +15,11 @@
    3,
    4,
    5
-  ]
+  ],
+  "state_field_mask": 15,
+  "state_reserved_mask": 240,
+  "custom_state_shift": 8,
+  "value_bits": 53
  },
  "migrated": {
   "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10": {
@@ -46,7 +50,8 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "generic-telemetry",
-   "publishes_generation": false
+   "publishes_generation": false,
+   "custom_state_bits": 0
   },
   "ic10/controller-pi/controller_pi_runtime_v1_1.ic10": {
    "service_id": "ic10.script.controller.pi.runtime",
@@ -72,7 +77,8 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "generic-telemetry",
-   "publishes_generation": false
+   "publishes_generation": false,
+   "custom_state_bits": 0
   },
   "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10": {
    "service_id": "ic10.script.controller.sequencer.runtime",
@@ -98,7 +104,8 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "generic-telemetry",
-   "publishes_generation": false
+   "publishes_generation": false,
+   "custom_state_bits": 0
   },
   "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10": {
    "service_id": "ic10.script.stack.cell.monitor",
@@ -109,7 +116,7 @@
    "extension_base": 0,
    "extension_flags": 0,
    "implementation_id": null,
-   "source_sha256": "e8af3f2b5751f93fa098e9323c5e035b0145f153f8156c3723334cd8a7a30561",
+   "source_sha256": "7e13bc7de04f0f1e86280788d42bb1a64da4ba9ac9665e507992da2c335127f6",
    "legacy_owned_ranges": [
     [
      8,
@@ -120,7 +127,8 @@
    "pilot_family": "stack-monitor",
    "telemetry_base": 0,
    "publishes_state": true,
-   "publishes_generation": true
+   "publishes_generation": true,
+   "custom_state_bits": 0
   },
   "ic10/live-commissioning/stack_header_reader_v1_0.ic10": {
    "service_id": "ic10.script.stack.header.reader",
@@ -134,7 +142,7 @@
    "telemetry_base": 0,
    "publishes_state": true,
    "publishes_generation": true,
-   "source_sha256": "959f95d2ce14cc4bf604e29d2f36841d828521cd70dfa1290757def46abbe958",
+   "source_sha256": "8718d7fd3c9877d3117d482e669a0b8a063a9dfc5af69f2b108ac428a6c25981",
    "legacy_owned_ranges": [
     [
      8,
@@ -142,7 +150,8 @@
     ]
    ],
    "post_init_dynamic_write_ranges": [],
-   "pilot_family": "stack-monitor"
+   "pilot_family": "stack-monitor",
+   "custom_state_bits": 0
   },
   "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": {
    "service_id": "ic10.script.controller.pressure.domain.runtime",
@@ -172,7 +181,8 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "generic-telemetry",
-   "publishes_generation": false
+   "publishes_generation": false,
+   "custom_state_bits": 0
   },
   "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10": {
    "service_id": "ic10.script.controller.pressure.transfer.runtime",
@@ -206,7 +216,8 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "generic-telemetry",
-   "publishes_generation": false
+   "publishes_generation": false,
+   "custom_state_bits": 0
   },
   "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10": {
    "service_id": "ic10.script.embedded.pressure.transfer.runtime",
@@ -244,7 +255,8 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "generic-telemetry",
-   "publishes_generation": false
+   "publishes_generation": false,
+   "custom_state_bits": 0
   },
   "ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10": {
    "service_id": "ic10.script.process.pressure.domain.runtime",
@@ -274,7 +286,8 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "generic-telemetry",
-   "publishes_generation": false
+   "publishes_generation": false,
+   "custom_state_bits": 0
   }
  },
  "legacy_exemption": {

@@ -6,7 +6,7 @@ poke 5 1
 poke 7 0
 Loop:
 yield
-poke 5 2
+poke 5 4
 move r0 -1
 move r1 0
 move r2 0
@@ -22,6 +22,7 @@ TargetReady:
 move r4 -3
 bdnvl d1 Setting Publish
 l r0 d1 Setting
+poke 5 2
 move r4 -4
 mod r3 r0 1
 bnez r3 Publish
