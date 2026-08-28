@@ -17,10 +17,12 @@ from framework.script_contracts import _own_stack, build_all
 from framework.stack_envelope import (
     BASE,
     LENGTH,
+    schema_hash,
     build_inventory,
     canonical_schema_pairs,
     declaration_errors,
     extension_ownership_errors,
+    generation_errors,
     legacy_source_digest,
     load_declarations,
     publication_errors,
@@ -94,9 +96,9 @@ vm = IC10((ROOT / MONITOR).read_text())
 vm.run(1)
 ck(vm.stack.get(0) == 31416052 and vm.stack.get(1) == 1,
    "monitor does not publish its identity at S0/S1")
-ck(vm.stack.get(5) == 4, "monitor does not publish the derived capability mask at S5")
-ck(vm.stack.get(6) in (1, 2), "monitor does not publish a declared state value at S6")
-ck(vm.stack.get(12) == 0, "monitor does not explicitly initialize its generation cell")
+ck(vm.stack.get(2) == 20, "monitor does not publish the derived capability mask at S2")
+ck(vm.stack.get(5) in (1, 2), "monitor does not publish a declared state value at S5")
+ck(vm.stack.get(7) == 0, "monitor does not initialize its generation cell to zero")
 contract = next(document for document in contracts.values() if document["source"] == MONITOR)
 ck([header for header in contract["own_stack"]["headers"]
     if header["base"] == 0 and header["magic"] == 31416052 and header["abi"] == 1],
@@ -116,13 +118,13 @@ for item in telemetry:
        f"{item['source']}: the established telemetry magic moved")
     ck(runtime.stack.get(0) == envelope["magic"] and runtime.stack.get(1) == 1,
        f"{item['source']}: does not publish its identity at S0/S1")
-    ck(runtime.stack.get(5) == 8 and runtime.stack.get(7) == 96,
+    ck(runtime.stack.get(2) == 8 and runtime.stack.get(6) == 96,
        f"{item['source']}: does not publish the telemetry pointer it declares")
     ck(sorted(header["base"] for header in item["current_layout"]["headers"]) == [0, 96],
        f"{item['source']}: contract does not carry both the header and the telemetry block")
 
 # Discovery reads S0..S7 and trusts only the cells the mask declares.
-target = Device(201, stack={0: 27182818, 1: 2, 5: 0},
+target = Device(201, stack={0: 27182818, 1: 2, 2: 0},
                 props={"ReferenceId": 201, "PrefabHash": "HASH:StructureCircuitHousing"})
 selector = Device(202, props={"ReferenceId": 202, "Setting": -1})
 output = Device(203, props={"ReferenceId": 203, "Setting": 0})
@@ -134,42 +136,51 @@ ck(output.props.get("Setting") == monitor.stack.get(10),
    "discovered identity was not mirrored to the optional output")
 
 # Cells outside the mask are never read, so stale values cannot fail a valid header.
-target.stack.update({2: float("nan"), 3: -7, 4: 1.5, 6: 99, 7: 4})
+target.stack.update({3: float("nan"), 4: 1.5, 5: 99, 6: 4, 7: -3})
 monitor.run(1)
 ck(monitor.stack.get(8) == 3, "monitor read cells the capability mask does not declare")
-target.stack.update({5: 16})
+target.stack.update({2: 32})
 monitor.run(1)
 ck(monitor.stack.get(8) == -6, "monitor accepted a reserved capability bit")
 
 # HAS_SCHEMA: the declared pair must be a real schema at a positive version.
-target.stack.update({5: 1, 2: "HASH:DirectorySchema.ResourceLink", 3: 1})
+target.stack.update({2: 1, 3: "HASH:DirectorySchema.ResourceLink.v1"})
 monitor.run(1)
-ck(monitor.stack.get(8) == 3, "monitor rejected a declared schema pair")
-for bad_pair in ((0, 1), ("HASH:Schema", 0), ("HASH:Schema", 1.5), ("HASH:Schema", float("nan"))):
-    target.stack.update({2: bad_pair[0], 3: bad_pair[1]})
+ck(monitor.stack.get(8) == 3, "monitor rejected a declared schema identity")
+for bad_schema in (0, 1.5, float("nan")):
+    target.stack.update({3: bad_schema})
     monitor.run(1)
-    ck(monitor.stack.get(8) == -6, f"monitor accepted declared schema pair {bad_pair!r}")
+    ck(monitor.stack.get(8) == -6, f"monitor accepted schema identity {bad_schema!r}")
 
 # HAS_STATE: the state cell must hold one of the v1 values.
-target.stack.update({5: 4, 6: 2})
+target.stack.update({2: 4, 5: 2})
 monitor.run(1)
 ck(monitor.stack.get(8) == 3, "monitor rejected a declared state")
 for bad_state in (-1, 6, 2.5, float("nan")):
-    target.stack.update({6: bad_state})
+    target.stack.update({5: bad_state})
     monitor.run(1)
     ck(monitor.stack.get(8) == -6, f"monitor accepted state value {bad_state!r}")
 
 # HAS_TELEMETRY: the pointer must address a cell outside the header.
-target.stack.update({5: 8, 7: 96})
+target.stack.update({2: 8, 6: 96})
 monitor.run(1)
 ck(monitor.stack.get(8) == 3, "monitor rejected a declared telemetry base")
 for bad_base in (7, 512, 96.5, float("nan")):
-    target.stack.update({7: bad_base})
+    target.stack.update({6: bad_base})
     monitor.run(1)
     ck(monitor.stack.get(8) == -6, f"monitor accepted telemetry base {bad_base!r}")
 
 # HAS_EXTENSION: bounds are checked before any family cell is trusted.
-target.stack.update({5: 2, 4: 508, 508: 31416054, 509: 1, 510: 4, 511: 0})
+target.stack.update({2: 16, 7: 4})
+monitor.run(1)
+ck(monitor.stack.get(8) == 3, "monitor rejected a declared generation")
+for bad_generation in (-1, 2.5, float("nan")):
+    target.stack.update({7: bad_generation})
+    monitor.run(1)
+    ck(monitor.stack.get(8) == -6, f"monitor accepted generation {bad_generation!r}")
+
+# HAS_EXTENSION: bounds are checked before any family cell is trusted.
+target.stack.update({2: 2, 4: 508, 508: 31416054, 509: 1, 510: 4, 511: 0})
 monitor.run(1)
 ck(monitor.stack.get(8) == 3, "monitor rejected an in-bounds four-cell extension")
 target.stack.update({4: 509, 509: 31416054, 510: 1, 511: 4})
@@ -194,14 +205,13 @@ target.stack.update({
 })
 monitor.run(1)
 ck(monitor.stack.get(8) == 3, "monitor rejected a valid ImplementationId extension")
-for invalid_identity in (0, 1.5, float("nan")):
-    target.stack.update({511: invalid_identity})
-    monitor.run(1)
-    ck(monitor.stack.get(8) == -6,
-       f"monitor accepted invalid ImplementationId {invalid_identity!r}")
+target.stack.update({509: 4})
+monitor.run(1)
+ck(monitor.stack.get(8) == -6,
+   "monitor accepted HAS_IMPLEMENTATION_ID outside the declared extension length")
 
 # The identity cells themselves are validated, and a failure invents no address.
-target.stack.update({5: 0, 1: 1.5})
+target.stack.update({2: 0, 1: 1.5})
 monitor.run(1)
 ck(monitor.stack.get(8) == -6, "monitor accepted a fractional ABI")
 target.stack.update({1: float("nan")})
@@ -226,11 +236,11 @@ ck(any("not canonical and is not verified" in error
    "validator accepted a schema/version no registry or source backs")
 
 # The capability mask is derived from the declaration, never hand-written.
-ck(by_source[MONITOR]["envelope"]["capability_mask"] == 4,
+ck(by_source[MONITOR]["envelope"]["capability_mask"] == 20,
    "the generated inventory does not derive the monitor's capability mask")
 bad = deepcopy(load_declarations(ROOT))
 bad["migrated"][MONITOR]["telemetry_base"] = 96
-ck(any("S7 must be written exactly as 96" in error
+ck(any("S6 must be written exactly as 96" in error
        for error in declaration_errors(ROOT, contracts, bad)),
    "a declared telemetry base did not require the source to publish it")
 bad = deepcopy(load_declarations(ROOT))
@@ -245,20 +255,44 @@ ck(any("reserved unless the service declares HAS_STATE" in error
    "a source writing S6 passed without declaring HAS_STATE")
 
 declaration = load_declarations(ROOT)["migrated"][MONITOR]
-mask_expected = {0: 31416052, 1: 1, 5: 4}
+mask_expected = {0: 31416052, 1: 1, 2: 20, 7: 0}
 
 # The state cell is the one header cell publication may change afterwards.
 ck(not any("post-init write can change" in error
            for error in publication_errors(
                ROOT / MONITOR, mask_expected, declaration,
-               set(range(BASE, BASE + LENGTH)), frozenset({6}),
+               set(range(BASE, BASE + LENGTH)), frozenset({5, 7}),
            )),
    "the declared state cell was treated as immutable after publication")
-ck(any("post-init write can change reserved S6" in error
+ck(any("post-init write can change reserved S5" in error
        for error in publication_errors(
            ROOT / MONITOR, mask_expected, declaration, set(range(BASE, BASE + LENGTH))
        )),
    "an undeclared mutable header cell escaped the publication gate")
+
+# One cell carries the schema and the version it is at.
+ck(schema_hash("DirectorySchema.ResourceLink", 1)
+   == 'HASH("DirectorySchema.ResourceLink.v1")',
+   "the published schema identity does not carry its version")
+bad = deepcopy(load_declarations(ROOT))
+bad["migrated"][MONITOR].update(
+    {"schema_id": "DirectorySchema.ResourceLink", "schema_version": 1})
+ck(any('S3 must be written exactly as HASH("DirectorySchema.ResourceLink.v1")' in error
+       for error in declaration_errors(ROOT, contracts, bad)),
+   "a declared schema did not require the folded identity at S3")
+
+# The generation is initialized, advanced, and published last.
+published_last = [["poke", "7", "0"], ["yield"], ["poke", "9", "r0"], ["poke", "7", "r3"]]
+ck(not generation_errors(published_last, {}, True),
+   "a correctly ordered generation was rejected")
+ck(any("last cell published" in error for error in generation_errors(
+    published_last[:-1] + [["poke", "7", "r3"], ["poke", "9", "r0"]], {}, True)),
+   "a generation published before other cells passed the ordering rule")
+ck(any("initialized and then advanced" in error for error in generation_errors(
+    [["poke", "7", "0"], ["yield"]], {}, True)),
+   "a generation that never advances passed as a publication fence")
+ck(any("reserved unless" in error for error in generation_errors(published_last, {}, False)),
+   "an undeclared generation cell was accepted")
 
 # The reviewed source-set digest is the enforcement gate for every future program.
 bad = deepcopy(load_declarations(ROOT))
@@ -310,7 +344,7 @@ for field in ("magic", "service_abi", "extension_base"):
 
 # Text in an unreachable branch or erased after publication is not publication.
 declaration = load_declarations(ROOT)["migrated"][MONITOR]
-expected = {0: 31416052, 1: 1, 2: 0, 3: 0, 4: 0}
+expected = {0: 31416052, 1: 1, 2: 20, 7: 0}
 source = (ROOT / MONITOR).read_text()
 with TemporaryDirectory() as temporary:
     unreachable = _ProjectPath(temporary) / "unreachable.ic10"
@@ -336,7 +370,7 @@ with TemporaryDirectory() as temporary:
     extension_expected.update({400: 31416054, 401: 1, 402: 4, 403: 0})
     delayed = _ProjectPath(temporary) / "delayed-extension.ic10"
     delayed.write_text(
-        source.replace("poke 4 0", "poke 4 400", 1).replace(
+        source.replace("poke 2 20", "poke 2 22\npoke 4 400", 1).replace(
             "Loop:\nyield",
             "Loop:\nyield\npoke 400 31416054\npoke 401 1\npoke 402 4\npoke 403 0",
             1,

@@ -75,8 +75,8 @@ devices are rejected even if they expose other logic properties.
    `Stack Value` Memory), then look it up in the registry table in
    `docs/ABI_REFERENCE.md`.
 4. Set `Stack Address.Setting` to `1` through `7` to read the rest of the header:
-   ABI, SchemaId, SchemaVersion, ExtensionBase, CapabilityMask, State, and
-   TelemetryBase. The mask at `S5` says which of those the target maintains.
+   ABI, CapabilityMask, SchemaId, ExtensionBase, State, TelemetryBase, and
+   Generation. The mask at `S2` says which of those the target maintains.
 
 Discovery reads only `S0..S7`. It validates a usable magic, a positive ABI, a
 mask with no reserved bit set, and then only the fields that mask declares.
@@ -108,7 +108,7 @@ The monitor publishes this diagnostic state in its own stack:
 | `S9` | Selected stack address |
 | `S10` | Sampled value for status `1`/`2`; otherwise `0` |
 | `S11` | Target housing ReferenceId |
-| `S12` | Sample generation, published last |
+| `S7` | Sample generation, published last (the common header cell) |
 
 For status `3`, `S10` is the discovered `ServiceMagic`. For status `1`/`2` it is
 the sampled value. `S9` always holds the selected address, so a failed discovery

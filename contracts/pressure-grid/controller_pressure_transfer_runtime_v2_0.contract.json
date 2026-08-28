@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10",
-  "source_sha256": "5eebd139e135dc6c32492a3b2628a62acb503ae7089beefe788443491711b7da",
+  "source_sha256": "cfe73dff9c3a4bbe564b297bd65bca5c4088e3cff3384c94c910dca357103abf",
   "identity": {
     "service_id": "ic10.script.controller.pressure.transfer.runtime",
     "implementation_revision": "2.0",
@@ -271,8 +271,8 @@
     "literal_writes": [
       0,
       1,
-      5,
-      7,
+      2,
+      6,
       96,
       97,
       98,
@@ -320,8 +320,8 @@
         "const": 1
       },
       {
-        "address": 5,
-        "name": "S5",
+        "address": 2,
+        "name": "S2",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -330,8 +330,8 @@
         "const": 8
       },
       {
-        "address": 7,
-        "name": "S7",
+        "address": 6,
+        "name": "S6",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

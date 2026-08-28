@@ -13,17 +13,20 @@ FORMAT = "IC10_STACK_ENVELOPE_INVENTORY_V1"
 DECLARATION_FORMAT = "IC10_STACK_ENVELOPE_DECLARATIONS_V1"
 BASE = 0
 LENGTH = 8
-SCHEMA_ID_CELL = BASE + 2
-SCHEMA_VERSION_CELL = BASE + 3
+CAPABILITY_MASK_CELL = BASE + 2
+SCHEMA_ID_CELL = BASE + 3
 EXTENSION_BASE_CELL = BASE + 4
-CAPABILITY_MASK_CELL = BASE + 5
-STATE_CELL = BASE + 6
-TELEMETRY_BASE_CELL = BASE + 7
+STATE_CELL = BASE + 5
+TELEMETRY_BASE_CELL = BASE + 6
+GENERATION_CELL = BASE + 7
 HAS_SCHEMA = 1
 HAS_EXTENSION = 2
 HAS_STATE = 4
 HAS_TELEMETRY = 8
-CAPABILITY_BITS_V1 = HAS_SCHEMA | HAS_EXTENSION | HAS_STATE | HAS_TELEMETRY
+HAS_GENERATION = 16
+CAPABILITY_BITS_V1 = (
+    HAS_SCHEMA | HAS_EXTENSION | HAS_STATE | HAS_TELEMETRY | HAS_GENERATION
+)
 STATE_VALUES = (0, 1, 2, 3, 4, 5)
 EXTENSION_MAGIC = 31416054
 EXTENSION_VERSION = 1
@@ -93,12 +96,21 @@ def _schema_check_pairs(rows: list[list[str]], aliases: dict[str, int]) -> set[t
                 break
             if len(later) >= 2 and later[1] == register:
                 break
-    return {
+    pairs = {
         (value, version)
         for address, values in checked.items()
         for value in values if isinstance(value, str)
         for version in checked.get(address + 1, set()) if isinstance(version, int)
     }
+    for values in checked.values():
+        for value in values:
+            match = HASH_RE.fullmatch(value) if isinstance(value, str) else None
+            if match is None:
+                continue
+            name, _, version = match.group(1).rpartition(".v")
+            if name and version.isdigit():
+                pairs.add(('HASH("' + name + '")', int(version)))
+    return pairs
 
 
 def canonical_schema_pairs(root: Path) -> set[tuple[str, int]]:
@@ -123,6 +135,11 @@ def canonical_schema_pairs(root: Path) -> set[tuple[str, int]]:
             continue
         walk(json.loads(path.read_text()))
     return pairs
+
+
+def schema_hash(schema_id: str, schema_version: int) -> str:
+    """The published schema identity carries its version: one cell, one exact match."""
+    return 'HASH("' + f"{schema_id}.v{schema_version}" + '")'
 
 
 def _range_cells(ranges: list[dict[str, int]]) -> set[int]:
@@ -262,6 +279,29 @@ def publication_errors(
     return errors
 
 
+def generation_errors(
+    rows: list[list[str]], aliases: dict[str, int], declares_generation: bool
+) -> list[str]:
+    """A declared generation starts at zero, advances, and is the last cell published."""
+    generation_rows = [
+        index for index, row in enumerate(rows)
+        if row[0] == "poke" and len(row) >= 3
+        and _integer(row[1], aliases) == GENERATION_CELL
+    ]
+    poke_rows = [index for index, row in enumerate(rows) if row[0] == "poke"]
+    if not declares_generation:
+        return [
+            f"S{GENERATION_CELL} is reserved unless the service declares HAS_GENERATION"
+        ] if generation_rows else []
+    if len(generation_rows) < 2:
+        return [
+            f"HAS_GENERATION requires S{GENERATION_CELL} initialized and then advanced"
+        ]
+    if generation_rows[-1] != poke_rows[-1]:
+        return [f"the generation at S{GENERATION_CELL} must be the last cell published"]
+    return []
+
+
 def _consumer_checks(source: str, protocol_registry: dict[str, Any]) -> list[dict[str, Any]]:
     checks = []
     for protocol in protocol_registry["protocols"]:
@@ -355,6 +395,7 @@ def declaration_errors(
         telemetry_base_value = declaration.get("telemetry_base")
         telemetry_base = telemetry_base_value if type(telemetry_base_value) is int else -1
         publishes_state = declaration.get("publishes_state")
+        publishes_generation = declaration.get("publishes_generation")
         if type(magic_value) is not int or magic == 0:
             errors.append(f"{source}: magic must be the service's registered nonzero integer")
         if type(service_abi_value) is not int or service_abi < 1:
@@ -367,6 +408,8 @@ def declaration_errors(
             errors.append(f"{source}: telemetry_base must be an integer in S0..S511")
         if type(publishes_state) is not bool:
             errors.append(f"{source}: publishes_state must be a boolean")
+        if type(publishes_generation) is not bool:
+            errors.append(f"{source}: publishes_generation must be a boolean")
         if telemetry_base and telemetry_base < BASE + LENGTH:
             errors.append(f"{source}: telemetry_base cannot point inside the common header")
         if schema_id is not None and (not isinstance(schema_id, str) or not schema_id):
@@ -407,6 +450,7 @@ def declaration_errors(
             | (HAS_EXTENSION if extension_base else 0)
             | (HAS_STATE if publishes_state is True else 0)
             | (HAS_TELEMETRY if telemetry_base else 0)
+            | (HAS_GENERATION if publishes_generation is True else 0)
         )
         expected: dict[int, Any] = {
             BASE: magic,
@@ -414,12 +458,19 @@ def declaration_errors(
             CAPABILITY_MASK_CELL: capability_mask,
         }
         if capability_mask & HAS_SCHEMA:
-            expected[SCHEMA_ID_CELL] = f'HASH("{schema_id}")'
-            expected[SCHEMA_VERSION_CELL] = schema_version
+            expected[SCHEMA_ID_CELL] = schema_hash(schema_id, schema_version)
         if capability_mask & HAS_EXTENSION:
             expected[EXTENSION_BASE_CELL] = extension_base
         if capability_mask & HAS_TELEMETRY:
             expected[TELEMETRY_BASE_CELL] = telemetry_base
+        if capability_mask & HAS_GENERATION:
+            expected[GENERATION_CELL] = 0
+        errors.extend(
+            f"{source}: {error}"
+            for error in generation_errors(
+                source_rows, source_aliases, bool(capability_mask & HAS_GENERATION)
+            )
+        )
         state_writes = writes.get(STATE_CELL, set())
         if capability_mask & HAS_STATE:
             if not state_writes:
@@ -429,13 +480,20 @@ def declaration_errors(
         elif state_writes:
             errors.append(f"{source}: S{STATE_CELL} is reserved unless the service declares HAS_STATE")
         for cell in range(BASE, BASE + LENGTH):
-            if cell not in expected and cell != STATE_CELL and writes.get(cell):
+            if cell not in expected and cell not in (STATE_CELL, GENERATION_CELL) and writes.get(cell):
                 errors.append(f"{source}: S{cell} is reserved and must not be written undeclared")
         published_expected = dict(expected)
         reserved_cells = set(range(BASE, BASE + LENGTH))
         extension_cells: set[int] = set()
         for address, value in expected.items():
-            if writes.get(address) != {value}:
+            written = writes.get(address, set())
+            if address == GENERATION_CELL:
+                # a generation is initialized to its literal start and advanced dynamically
+                if value not in written or any(other is not None for other in written - {value}):
+                    errors.append(
+                        f"{source}: S{address} must be initialized to {value} and only advanced dynamically"
+                    )
+            elif written != {value}:
                 errors.append(f"{source}: S{address} must be written exactly as {value}")
         if extension_base:
             for address, value in {
@@ -498,7 +556,10 @@ def declaration_errors(
             f"{source}: {error}"
             for error in publication_errors(
                 root / source, published_expected, declaration, reserved_cells,
-                frozenset({STATE_CELL}) if capability_mask & HAS_STATE else frozenset(),
+                frozenset(
+                    ({STATE_CELL} if capability_mask & HAS_STATE else set())
+                    | ({GENERATION_CELL} if capability_mask & HAS_GENERATION else set())
+                ),
             )
         )
         # validate_ic10.py owns the 120-line soft ceiling and its reviewed exemptions.
@@ -572,16 +633,21 @@ def build_inventory(
                 "magic": declaration["magic"],
                 "service_abi": declaration["service_abi"],
                 "schema_id": declaration["schema_id"],
-                "schema_id_hash": None if declaration["schema_id"] is None else f'HASH("{declaration["schema_id"]}")',
+                "schema_id_hash": (
+                    None if declaration["schema_id"] is None
+                    else schema_hash(declaration["schema_id"], declaration["schema_version"])
+                ),
                 "schema_version": declaration["schema_version"],
                 "extension_base": declaration["extension_base"],
                 "telemetry_base": declaration["telemetry_base"],
                 "publishes_state": declaration["publishes_state"],
+                "publishes_generation": declaration["publishes_generation"],
                 "capability_mask": (
                     (HAS_SCHEMA if declaration["schema_id"] is not None else 0)
                     | (HAS_EXTENSION if declaration["extension_base"] else 0)
                     | (HAS_STATE if declaration["publishes_state"] else 0)
                     | (HAS_TELEMETRY if declaration["telemetry_base"] else 0)
+                    | (HAS_GENERATION if declaration["publishes_generation"] else 0)
                 ),
                 "extension_flags": declaration["extension_flags"],
                 "implementation_id": declaration["implementation_id"],

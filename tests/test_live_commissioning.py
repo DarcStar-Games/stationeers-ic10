@@ -47,13 +47,13 @@ selector=Device(202,props={'ReferenceId':202,'Setting':6})
 output=Device(203,props={'ReferenceId':203,'Setting':0})
 monitor=IC10((R/'ic10/live-commissioning/stack_cell_monitor_v1_0.ic10').read_text(),
              {'d0':target,'d1':selector,'d2':output},self_ref=2541)
-monitor.stack[12]=math.nan
+monitor.stack[7]=math.nan
 monitor.run(2)
 if monitor.stack.get(8)!=1 or monitor.stack.get(9)!=6 or monitor.stack.get(10)!=1:
     fails.append('stack monitor finite capture mismatch')
 if monitor.stack.get(11)!=201 or output.props.get('Setting')!=1:
     fails.append('stack monitor target identity/output mirror mismatch')
-if monitor.stack.get(12)!=1:
+if monitor.stack.get(7)!=1:
     fails.append('stack monitor did not initialize generation on a reused housing')
 target.stack[9]=math.nan;selector.props['Setting']=9;monitor.run(1)
 if monitor.stack.get(8)!=2 or not math.isnan(output.props.get('Setting')):

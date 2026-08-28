@@ -37,15 +37,16 @@ program to say what four of its own cells already said.
 | ---: | --- | --- | --- |
 | `S0` | `ServiceMagic` | always | the service's registered nonzero magic; identity |
 | `S1` | `ServiceABI` | always | positive exact ABI of this service contract |
-| `S2` | `SchemaId` | bit 0 | canonical schema hash |
-| `S3` | `SchemaVersion` | bit 0 | positive schema version |
+| `S2` | `CapabilityMask` | always | which of `S3..S7` this service declares |
+| `S3` | `SchemaId` | bit 0 | schema identity **and version**, one exact match |
 | `S4` | `ExtensionBase` | bit 1 | base of a v1 extension, `S8` or later |
-| `S5` | `CapabilityMask` | always | which cells and standards this service declares |
-| `S6` | `State` | bit 2 | the one cell publication may change afterwards |
-| `S7` | `TelemetryBase` | bit 3 | base of a telemetry block outside the header |
+| `S5` | `State` | bit 2 | v1 state value; mutable |
+| `S6` | `TelemetryBase` | bit 3 | base of a telemetry block outside the header |
+| `S7` | `Generation` | bit 4 | publication fence; initialized to 0, advanced, published last |
 
-Three cells are mandatory: identity at `S0`/`S1`, which 154 of 173 programs
-already publish, and the mask at `S5`. Every other cell is written only when the
+Three cells are mandatory and contiguous: identity at `S0`/`S1`, which 154 of
+173 programs already publish, and the mask at `S2`. A reader takes that prefix
+and immediately knows which of the rest to read. Every other cell is written only when the
 mask declares it, and a reader never reads an undeclared cell. That is what makes
 the header safe on hardware where the stack survives reflash: a cell nobody wrote
 holds whatever the previous script left, so v1 reads it only when a service that
@@ -67,27 +68,68 @@ through the generated contract index.
 
 | Bit | Value | Meaning |
 | ---: | ---: | --- |
-| 0 | 1 | `HAS_SCHEMA` — `S2`/`S3` carry a schema and version |
+| 0 | 1 | `HAS_SCHEMA` — `S3` carries a schema identity |
 | 1 | 2 | `HAS_EXTENSION` — `S4` addresses a v1 extension |
-| 2 | 4 | `HAS_STATE` — `S6` carries a v1 state value |
-| 3 | 8 | `HAS_TELEMETRY` — `S7` addresses a telemetry block |
-| 4+ | — | reserved for cross-cutting protocol capabilities; must be zero |
+| 2 | 4 | `HAS_STATE` — `S5` carries a v1 state value |
+| 3 | 8 | `HAS_TELEMETRY` — `S6` addresses a telemetry block |
+| 4 | 16 | `HAS_GENERATION` — `S7` is a publication fence |
+| 5+ | — | reserved for cross-cutting protocol capabilities; must be zero |
 
 The mask is **derived, never hand-written**: the generator computes it from the
 reviewed declaration and the validator requires the source to publish exactly
 that value. A bit cannot be set for a field the program does not publish, and a
 field cannot be published without its bit.
 
-Bits 4 and up are reserved for the framework's cross-cutting standards —
+Bits 5 and up are reserved for the framework's cross-cutting standards —
 `ASYNC_REQUEST_V1`, `BANKED_TRANSACTION_V1`, `GENERIC_JOB_ABI_V1`, directory
 provider. They stay unallocated until each has a derivable source of truth;
 today those participant lists live as literals inside their validators, and a
 hand-maintained capability bit is exactly the kind of metadata that rots.
 
+### SchemaId carries its version
+
+`S3` publishes `HASH("<schema id>.v<version>")`, not a bare schema name, and
+there is no separate version cell. The framework already requires exact
+matching — *magic, schema id, and schema version must all match before a
+directory or catalog is consumed* — so two exact comparisons of two cells
+collapse into one exact comparison of one cell with nothing lost. It is measured
+work saved, not only a cell: 25 publishers each spent a cell and a line on a
+separate version, and 20 consumer sites spent two lines checking it.
+
+The reviewed declaration keeps `schema_id` and `schema_version` as separate
+structured fields, so the canonical-registry binding still checks a real schema
+at a real version; only the on-stack encoding folds. A consumer whose schema
+moved on sees an unknown identity rather than a known one at the wrong version,
+so its diagnostic is coarser — the registry maps the hash back for anyone
+debugging.
+
+`S1 ServiceABI` deliberately stays a separate numeric cell. The principle would
+fold it too; the arithmetic says otherwise. Magic-plus-ABI is established across
+154 programs and the whole `ABI_REFERENCE` registry, while the schema pair was
+newly standardized with 25 publishers already in the backlog.
+
+### Generation
+
+`S7` is a publication fence: initialized to `0` before the first `yield`,
+advanced by the service, and **the last cell it publishes**. A reader snapshots
+it, reads what it needs, and re-checks the same positive value — the framework's
+first invariant, at a fixed address for the first time.
+
+Every publisher in the framework already implements that discipline, each at its
+own address: the final `poke` lands on cell 12 in 25 programs, cell 11 in 16,
+cell 8 in 15, cell 4 in 14, and so on down a long tail. Standardizing the
+address is what lets a generic reader fence a service it has never seen — the
+coherent multi-cell snapshot the Stack Cell Monitor documents it cannot take
+today.
+
+The validator proves the shape it can prove statically: a literal zero
+initializer, at least one later write, and the generation `poke` last in source
+order among all writes.
+
 ### State
 
-`S6` holds one of six values, and it is the only header cell a service may write
-after publication:
+`S5` holds one of six values, and it is one of the two header cells a service may
+write after publication:
 
 | Value | Meaning |
 | ---: | --- |
@@ -105,7 +147,7 @@ clear rather than publishing a value it cannot maintain.
 
 ### TelemetryBase
 
-`S7` points at a telemetry block that lives outside the header — for the Generic
+`S6` points at a telemetry block that lives outside the header — for the Generic
 Telemetry runtimes, the block already at `S96`. This is not a payload pointer:
 the payload header *is* the common header. It exists so a family with a large
 published block can advertise it without moving it, which turns those
@@ -139,8 +181,8 @@ A reader accepts an extension only when all of these are true:
 
 Failure rejects the header; it never falls back to interpreting extension cells
 as a family payload. Request tokens, publication generations, bank selectors,
-and transaction state stay in the service payload from `S8` up; only the `S6`
-state value is common.
+and transaction state stay in the service payload from `S8` up; only the `S5`
+state value and the `S7` generation are common.
 
 ## Unknown and invalid values
 

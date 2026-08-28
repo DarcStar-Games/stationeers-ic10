@@ -8,7 +8,7 @@
     "extension_version": 1,
     "extension_min_length": 4,
     "extension_max_length": 192,
-    "capability_bits_v1": 15,
+    "capability_bits_v1": 31,
     "state_values": [
       0,
       1,
@@ -1288,8 +1288,8 @@
         "literal_cells": [
           0,
           1,
-          5,
-          7
+          2,
+          6
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
@@ -1306,12 +1306,13 @@
         "extension_base": 0,
         "telemetry_base": 96,
         "publishes_state": false,
+        "publishes_generation": false,
         "capability_mask": 8,
         "extension_flags": 0,
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "f1d34b539b46766e47faaeb032dfdd40805befbca6db3f528db1e53ea101c8b6",
+          "source_sha256": "ba5a1bf7e5a6d1f9902fc43d504e3edf16cd541f9362b364b00d109854bbdf82",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -1431,8 +1432,8 @@
         "literal_cells": [
           0,
           1,
-          5,
-          7
+          2,
+          6
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
@@ -1449,12 +1450,13 @@
         "extension_base": 0,
         "telemetry_base": 96,
         "publishes_state": false,
+        "publishes_generation": false,
         "capability_mask": 8,
         "extension_flags": 0,
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "14c31bead6e3ba0fccc4ff8ba1bdeb62f6def04558373028a780684d461be803",
+          "source_sha256": "b812ea0a25adedc38a7e8fb0b938542ce867c3db70d5223a4ee0cdf10398d848",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -1570,8 +1572,8 @@
         "literal_cells": [
           0,
           1,
-          5,
-          7
+          2,
+          6
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
@@ -1588,12 +1590,13 @@
         "extension_base": 0,
         "telemetry_base": 96,
         "publishes_state": false,
+        "publishes_generation": false,
         "capability_mask": 8,
         "extension_flags": 0,
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "39852f6765f206aa54369c97ee410ad8b27b76ca432ac9d136b77c7eb328019e",
+          "source_sha256": "3159745690c8b8563036da5bab87a7d781e2c85f420a5016feae3575ea400279",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -4996,11 +4999,11 @@
       },
       "stack_pressure": {
         "literal_cell_count": 9,
-        "highest_literal_cell": 12,
+        "highest_literal_cell": 11,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 123,
-        "line_headroom_120": -3,
+        "line_count": 121,
+        "line_headroom_120": -1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -5008,8 +5011,9 @@
         "literal_cells": [
           0,
           1,
+          2,
           5,
-          6
+          7
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
@@ -5026,17 +5030,18 @@
         "extension_base": 0,
         "telemetry_base": 0,
         "publishes_state": true,
-        "capability_mask": 4,
+        "publishes_generation": true,
+        "capability_mask": 20,
         "extension_flags": 0,
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "cf932562608d339d44fc59b1a7c2c91d0ac7e60be8e092e4668f9fcda21a385f",
+          "source_sha256": "6a9b931def27c710fe28cb48bdfbd55348876eb01f396392007ec5dd299adf40",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
               "start": 8,
-              "end": 12
+              "end": 11
             }
           ],
           "post_init_dynamic_write_ranges": []
@@ -8250,8 +8255,8 @@
         "literal_cells": [
           0,
           1,
-          5,
-          7
+          2,
+          6
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -8277,12 +8282,13 @@
         "extension_base": 0,
         "telemetry_base": 96,
         "publishes_state": false,
+        "publishes_generation": false,
         "capability_mask": 8,
         "extension_flags": 0,
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "67d56f8c2a392525ab8ea33a86570b5607d2a5de593680567ee82520e826a720",
+          "source_sha256": "7e56cdd8ba5f916fe24f43061d7b03eec5f4cf27a2e75c988b19e338d3aeedde",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -8484,8 +8490,8 @@
         "literal_cells": [
           0,
           1,
-          5,
-          7
+          2,
+          6
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
@@ -8502,12 +8508,13 @@
         "extension_base": 0,
         "telemetry_base": 96,
         "publishes_state": false,
+        "publishes_generation": false,
         "capability_mask": 8,
         "extension_flags": 0,
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "5eebd139e135dc6c32492a3b2628a62acb503ae7089beefe788443491711b7da",
+          "source_sha256": "cfe73dff9c3a4bbe564b297bd65bca5c4088e3cff3384c94c910dca357103abf",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -10069,8 +10076,8 @@
         "literal_cells": [
           0,
           1,
-          5,
-          7
+          2,
+          6
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
@@ -10087,12 +10094,13 @@
         "extension_base": 0,
         "telemetry_base": 96,
         "publishes_state": false,
+        "publishes_generation": false,
         "capability_mask": 8,
         "extension_flags": 0,
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "4d9ce47dd38574f9201a0d4be6f91f9f6b76c644fd9ffdbe07f4d6711a412598",
+          "source_sha256": "a69486ae5e9bc2a294b236a86d102a7892c9bfe45f2f7f7c12e4431a682dc118",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -10278,8 +10286,8 @@
         "literal_cells": [
           0,
           1,
-          5,
-          7
+          2,
+          6
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
@@ -10296,12 +10304,13 @@
         "extension_base": 0,
         "telemetry_base": 96,
         "publishes_state": false,
+        "publishes_generation": false,
         "capability_mask": 8,
         "extension_flags": 0,
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "76753538b746e37422aa3a496a3136b682ebb6b0b543e7eabfd5b22bad58cc38",
+          "source_sha256": "d7f7e2e52e1510a4193f5bcef4e71f5502e94991e6d1562b2ef3915dd456299d",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {

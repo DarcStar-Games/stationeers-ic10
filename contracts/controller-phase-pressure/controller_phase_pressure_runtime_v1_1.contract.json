@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10",
-  "source_sha256": "f1d34b539b46766e47faaeb032dfdd40805befbca6db3f528db1e53ea101c8b6",
+  "source_sha256": "ba5a1bf7e5a6d1f9902fc43d504e3edf16cd541f9362b364b00d109854bbdf82",
   "identity": {
     "service_id": "ic10.script.controller.phase.pressure.runtime",
     "implementation_revision": "1.1",
@@ -189,8 +189,8 @@
     "literal_writes": [
       0,
       1,
-      5,
-      7,
+      2,
+      6,
       96,
       97,
       98,
@@ -240,8 +240,8 @@
         "const": 1
       },
       {
-        "address": 5,
-        "name": "S5",
+        "address": 2,
+        "name": "S2",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -250,8 +250,8 @@
         "const": 8
       },
       {
-        "address": 7,
-        "name": "S7",
+        "address": 6,
+        "name": "S6",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

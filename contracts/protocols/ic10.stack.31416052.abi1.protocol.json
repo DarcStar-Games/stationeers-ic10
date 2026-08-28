@@ -38,23 +38,34 @@
           "const": 1
         },
         {
+          "address": 2,
+          "name": "S2",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 20
+        },
+        {
           "address": 5,
           "name": "S5",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "const": 4
+          ]
         },
         {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "address": 7,
+          "name": "CompleteSampleGenerationPublishes",
+          "value_type": "integer",
+          "semantic_source": "source",
           "access": [
+            "self-read",
             "self-write"
-          ]
+          ],
+          "description": "complete sample generation publishes LAST"
         },
         {
           "address": 8,
@@ -91,24 +102,13 @@
           "access": [
             "self-write"
           ]
-        },
-        {
-          "address": 12,
-          "name": "CompleteSampleGenerationPublishes",
-          "value_type": "integer",
-          "semantic_source": "source",
-          "access": [
-            "self-read",
-            "self-write"
-          ],
-          "description": "complete sample generation publishes LAST"
         }
       ],
       "behavior": {
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 12,
+            "address": 7,
             "description": "complete sample generation publishes LAST",
             "source": "verified-inline-order"
           }

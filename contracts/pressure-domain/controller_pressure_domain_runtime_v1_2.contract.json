@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
-  "source_sha256": "67d56f8c2a392525ab8ea33a86570b5607d2a5de593680567ee82520e826a720",
+  "source_sha256": "7e56cdd8ba5f916fe24f43061d7b03eec5f4cf27a2e75c988b19e338d3aeedde",
   "identity": {
     "service_id": "ic10.script.controller.pressure.domain.runtime",
     "implementation_revision": "1.2",
@@ -317,8 +317,8 @@
     "literal_writes": [
       0,
       1,
-      5,
-      7,
+      2,
+      6,
       96,
       97,
       98,
@@ -375,8 +375,8 @@
         ]
       },
       {
-        "address": 5,
-        "name": "S5",
+        "address": 2,
+        "name": "S2",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -384,8 +384,8 @@
         ]
       },
       {
-        "address": 7,
-        "name": "S7",
+        "address": 6,
+        "name": "S6",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

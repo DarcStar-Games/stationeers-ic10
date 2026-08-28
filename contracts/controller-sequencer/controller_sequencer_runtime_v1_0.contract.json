@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10",
-  "source_sha256": "39852f6765f206aa54369c97ee410ad8b27b76ca432ac9d136b77c7eb328019e",
+  "source_sha256": "3159745690c8b8563036da5bab87a7d781e2c85f420a5016feae3575ea400279",
   "identity": {
     "service_id": "ic10.script.controller.sequencer.runtime",
     "implementation_revision": "1.0",
@@ -225,8 +225,8 @@
     "literal_writes": [
       0,
       1,
-      5,
-      7,
+      2,
+      6,
       96,
       97,
       98,
@@ -271,8 +271,8 @@
         "const": 1
       },
       {
-        "address": 5,
-        "name": "S5",
+        "address": 2,
+        "name": "S2",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -281,8 +281,8 @@
         "const": 8
       },
       {
-        "address": 7,
-        "name": "S7",
+        "address": 6,
+        "name": "S6",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

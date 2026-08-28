@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10",
-  "source_sha256": "4d9ce47dd38574f9201a0d4be6f91f9f6b76c644fd9ffdbe07f4d6711a412598",
+  "source_sha256": "a69486ae5e9bc2a294b236a86d102a7892c9bfe45f2f7f7c12e4431a682dc118",
   "identity": {
     "service_id": "ic10.script.embedded.pressure.transfer.runtime",
     "implementation_revision": "1.0",
@@ -231,8 +231,8 @@
     "literal_writes": [
       0,
       1,
-      5,
-      7,
+      2,
+      6,
       96,
       97,
       98,
@@ -279,8 +279,8 @@
         "const": 1
       },
       {
-        "address": 5,
-        "name": "S5",
+        "address": 2,
+        "name": "S2",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -289,8 +289,8 @@
         "const": 8
       },
       {
-        "address": 7,
-        "name": "S7",
+        "address": 6,
+        "name": "S6",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
