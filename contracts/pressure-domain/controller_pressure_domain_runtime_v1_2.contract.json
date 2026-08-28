@@ -159,9 +159,7 @@
       "aliases": [],
       "requirement": "required",
       "device_properties": {
-        "reads": [
-          "r6"
-        ],
+        "reads": [],
         "writes": [
           "r6"
         ],
@@ -179,13 +177,23 @@
         "dynamic_write_range_source": "none",
         "constraints": []
       },
+      "dynamic_property_sources": [
+        {
+          "operand": "r6",
+          "source_port": "d5",
+          "address": 101,
+          "fence": {
+            "address": 5,
+            "kind": "generation",
+            "description": "Config Host generation must be positive and unchanged around the LogicType read."
+          }
+        }
+      ],
       "target": {
         "kind": "physical-device",
         "verification": "device-properties",
         "assumptions": {
-          "properties_read": [
-            "r6"
-          ],
+          "properties_read": [],
           "properties_written": [
             "r6"
           ],
@@ -200,9 +208,7 @@
       "aliases": [],
       "requirement": "required",
       "device_properties": {
-        "reads": [
-          "r7"
-        ],
+        "reads": [],
         "writes": [
           "r7"
         ],
@@ -220,13 +226,23 @@
         "dynamic_write_range_source": "none",
         "constraints": []
       },
+      "dynamic_property_sources": [
+        {
+          "operand": "r7",
+          "source_port": "d5",
+          "address": 102,
+          "fence": {
+            "address": 5,
+            "kind": "generation",
+            "description": "Config Host generation must be positive and unchanged around the LogicType read."
+          }
+        }
+      ],
       "target": {
         "kind": "physical-device",
         "verification": "device-properties",
         "assumptions": {
-          "properties_read": [
-            "r7"
-          ],
+          "properties_read": [],
           "properties_written": [
             "r7"
           ],

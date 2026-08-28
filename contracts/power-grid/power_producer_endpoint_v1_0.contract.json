@@ -39,6 +39,13 @@
         "dynamic_write_range_source": "none",
         "constraints": []
       },
+      "dynamic_property_sources": [
+        {
+          "operand": "r2",
+          "source_port": "self",
+          "address": 16
+        }
+      ],
       "target": {
         "kind": "physical-device",
         "verification": "device-properties",

@@ -5,6 +5,7 @@ PASS framework/async_request.py                                 module -x
 PASS framework/banked_transaction.py                            module -x
 PASS framework/catalog_schema.py                                module -x
 PASS framework/catalog_test_helpers.py                          module -x
+PASS framework/commissioning.py                                 module -x
 PASS framework/fault_injection.py                               module -x
 PASS framework/generator_productivity.py                        module -x
 PASS framework/ic10_harness.py                                  module -x
@@ -15,6 +16,7 @@ PASS framework/source_metadata.py                               module -x
 PASS tests/test_async_request.py                                entry  +x
 PASS tests/test_banked_transaction.py                           entry  +x
 PASS tests/test_catalog_schema.py                               entry  +x
+PASS tests/test_commission_wiring.py                            entry  +x
 PASS tests/test_controller_directory_scale.py                   entry  +x
 PASS tests/test_dependency_planning.py                          entry  +x
 PASS tests/test_fault_injection.py                              entry  +x
@@ -50,6 +52,7 @@ PASS tests/test_sequencer_protocol.py                           entry  +x
 PASS tests/test_shared_input_protocol.py                        entry  +x
 PASS tools/__init__.py                                          module -x
 PASS tools/build_release.py                                     entry  +x
+PASS tools/commission_wiring.py                                 entry  +x
 PASS tools/export_to_game.py                                    entry  +x
 PASS tools/generate/__init__.py                                 module -x
 PASS tools/generate/generate_directory_adapters.py              entry  +x
@@ -87,8 +90,8 @@ PASS validation/validators/validate_script_headers.py           entry  +x
 PASS validation/validators/validate_source_catalog.py           entry  +x
 PASS validation/validators/validate_user_deployment_guide.py    entry  +x
 ====================================================================================================
-Checked 86 files: 72 entry points, 14 imported modules
-Single import name enforced for 72 modules reachable from a script directory
-Entry points are the 12 commands under tools/ plus the 60 scripts tools/run_validation.py runs elsewhere; nothing is an entry point by location
-No work at import for all 14 modules under tools/, and a guard reaches main() in each of the 12 entry points
+Checked 89 files: 74 entry points, 15 imported modules
+Single import name enforced for 74 modules reachable from a script directory
+Entry points are the 13 commands under tools/ plus the 61 scripts tools/run_validation.py runs elsewhere; nothing is an entry point by location
+No work at import for all 15 modules under tools/, and a guard reaches main() in each of the 13 entry points
 Result: PASS

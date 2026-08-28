@@ -30,6 +30,7 @@ TESTS=[
 'tests/test_manufacturing_execution.py','tests/test_manufacturing_scheduler.py','tests/test_material_grid_protocol.py','tests/test_script_contracts.py',
 'tests/test_material_transform_protocol.py','tests/test_persistence_protocol.py','tests/test_phase_pressure_protocol.py',
 'tests/test_pressure_domain_protocol.py','tests/test_pressure_grid_protocol.py','tests/test_pressure_inventory_protocol.py',
+'tests/test_commission_wiring.py',
 'tests/test_pressure_reservation_protocol.py','tests/test_pressure_route_cost.py','tests/test_printer_directory.py',
 'tests/test_printer_execution_capacity.py','tests/test_recipe_catalog.py','tests/test_generator_productivity.py','tests/test_resource_generalization.py',
 'tests/test_resource_profiles.py','tests/test_resource_transforms.py','tests/test_sequencer_protocol.py','tests/test_shared_input_protocol.py','tests/test_item_storage_protocol.py','tests/test_power_management.py','tests/test_fault_injection.py','tests/test_process_utility.py','tests/test_live_commissioning.py','tests/test_game_export.py']

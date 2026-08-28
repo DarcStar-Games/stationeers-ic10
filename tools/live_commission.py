@@ -31,7 +31,7 @@ def now(): return dt.datetime.now(dt.timezone.utc).isoformat()
 def case_map(root=ROOT): return {c['id']:c for c in load_catalog(root)['cases']}
 
 def new_session(root=ROOT,label=''):
-    return {'format':FORMAT,'framework_fingerprint':framework_fingerprint(root),'catalog_sha256':catalog_sha(root),'created_at':now(),'label':label,'results':{}}
+    return {'format':FORMAT,'framework_fingerprint':framework_fingerprint(root),'catalog_sha256':catalog_sha(root),'created_at':now(),'label':label,'results':{},'wiring_results':{}}
 
 def read_session(path):
     s=json.loads(Path(path).read_text())
@@ -65,6 +65,14 @@ def render_report(s,root=ROOT):
     for c in cases:
         runs=s.get('results',{}).get(c['id'],{}).get('runs',[]); st=runs[-1]['status'] if runs else 'UNRUN';obs=(runs[-1].get('observed','') if runs else '').replace('|','\\|')
         lines.append(f"| `{c['id']}` | {'yes' if c.get('required',True) else 'no'} | {st} | {obs} |")
+    wiring=s.get('wiring_results',{})
+    if wiring:
+        lines += ['','## Contract wiring evidence','', '| Plan | Consumer | Latest obligations |','|---|---|---|']
+        for plan_id,entry in sorted(wiring.items()):
+            binding=entry.get('binding',{});consumer=binding.get('consumer_contract',{}).get('source','?');statuses=[]
+            for obligation,runs in sorted(entry.get('runs',{}).items()):
+                if runs: statuses.append(f"`{obligation}` {runs[-1]['status']}")
+            lines.append(f"| `{plan_id}` | `{consumer}` | {', '.join(statuses) or 'UNRUN'} |")
     lines += ['','Automated release evidence under `validation/evidence/` is intentionally separate from these live observations.']
     return '\n'.join(lines)+'\n'
 

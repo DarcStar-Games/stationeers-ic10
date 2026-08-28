@@ -252,7 +252,12 @@
     {
       "source": "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10",
       "header_base": 0,
-      "readable_ranges": [],
+      "readable_ranges": [
+        {
+          "start": 20,
+          "end": 20
+        }
+      ],
       "writable_ranges": [],
       "fields": [
         {

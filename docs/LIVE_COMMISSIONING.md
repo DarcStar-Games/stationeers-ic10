@@ -16,6 +16,8 @@ Changing framework inputs or the case catalog makes an older field session **STA
 
 Do not hand-edit automated evidence to represent game observations.
 
+Contract-aware wiring checks use the same field session and fingerprint. See `docs/CONTRACT_COMMISSIONING.md` for validating explicit `d0..d5` mappings and recording per-port runtime obligations.
+
 ## 2. Field session CLI
 
 Create a session outside the framework tree or under an ignored local evidence directory:

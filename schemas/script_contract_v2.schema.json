@@ -186,12 +186,39 @@
             "slot_writes": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/slotAccess"}}
           }
         },
+        "dynamic_property_sources": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/dynamicPropertySource"}
+        },
         "stack": {
           "$ref": "#/$defs/externalStackAccess"
         },
         "target": {
           "$ref": "#/$defs/portTarget"
         }
+      }
+    },
+    "dynamicPropertySource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operand", "source_port", "address"],
+      "properties": {
+        "operand": {"type": "string", "pattern": "^(r(?:1[0-7]|[0-9])|ra|sp)$"},
+        "source_port": {"enum": ["self", "d0", "d1", "d2", "d3", "d4", "d5"]},
+        "address": {"type": "integer", "minimum": 0, "maximum": 511},
+        "fence": {"$ref": "#/$defs/dynamicPropertyFence"}
+      }
+    },
+    "dynamicPropertyFence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["address", "kind", "description"],
+      "properties": {
+        "address": {"type": "integer", "minimum": 0, "maximum": 511},
+        "kind": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1}
       }
     },
     "deviceAssumptions": {

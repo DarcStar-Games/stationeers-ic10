@@ -138,6 +138,20 @@
     "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10": {
       "source_sha256": "9aec5d25708442dab5aab7bbf343ffa7105409665e6083f4cc0252d9e5e7d30f",
       "ports": {
+        "d0": {
+          "dynamic_property_sources": [
+            {
+              "operand": "r8",
+              "source_port": "d2",
+              "address": 103,
+              "fence": {
+                "address": 5,
+                "kind": "generation",
+                "description": "Config Host generation must be positive and unchanged around the LogicType read."
+              }
+            }
+          ]
+        },
         "d2": {
           "dynamic_read_ranges": [
             [
@@ -196,6 +210,34 @@
     "ic10/controller-pi/controller_pi_runtime_v1_1.ic10": {
       "source_sha256": "198abec84055612c926a357f5c85b04a4796c4f05eddbbc1d0d7f0276678cc0b",
       "ports": {
+        "d0": {
+          "dynamic_property_sources": [
+            {
+              "operand": "r12",
+              "source_port": "d2",
+              "address": 107,
+              "fence": {
+                "address": 5,
+                "kind": "generation",
+                "description": "Config Host generation must be positive and unchanged around the LogicType read."
+              }
+            }
+          ]
+        },
+        "d1": {
+          "dynamic_property_sources": [
+            {
+              "operand": "r13",
+              "source_port": "d2",
+              "address": 108,
+              "fence": {
+                "address": 5,
+                "kind": "generation",
+                "description": "Config Host generation must be positive and unchanged around the LogicType read."
+              }
+            }
+          ]
+        },
         "d2": {
           "dynamic_read_ranges": [
             [
@@ -232,6 +274,48 @@
     "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10": {
       "source_sha256": "278ee798021509d184ee06d1d5e9c1a7d785fa91c2dd54a18196aa9568582d00",
       "ports": {
+        "d0": {
+          "dynamic_property_sources": [
+            {
+              "operand": "r2",
+              "source_port": "d3",
+              "address": 97,
+              "fence": {
+                "address": 5,
+                "kind": "generation",
+                "description": "Config Host generation must be positive and unchanged around the LogicType read."
+              }
+            }
+          ]
+        },
+        "d1": {
+          "dynamic_property_sources": [
+            {
+              "operand": "r5",
+              "source_port": "d3",
+              "address": 100,
+              "fence": {
+                "address": 5,
+                "kind": "generation",
+                "description": "Config Host generation must be positive and unchanged around the LogicType read."
+              }
+            }
+          ]
+        },
+        "d2": {
+          "dynamic_property_sources": [
+            {
+              "operand": "r6",
+              "source_port": "d3",
+              "address": 101,
+              "fence": {
+                "address": 5,
+                "kind": "generation",
+                "description": "Config Host generation must be positive and unchanged around the LogicType read."
+              }
+            }
+          ]
+        },
         "d3": {
           "dynamic_read_ranges": [
             [
@@ -586,6 +670,15 @@
         }
       }
     },
+    "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10": {
+      "source_sha256": "f7a5dfb214e49255911afdb022b09bfa319fca384654ad83be6ceba70a6601f3",
+      "external_readable_ranges": [
+        [
+          20,
+          20
+        ]
+      ]
+    },
     "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10": {
       "source_sha256": "b771adc664d7fa3c41de1ce851163581756766a3402368c5e055f0fe3ad3d93d",
       "ports": {
@@ -782,6 +875,34 @@
         }
       }
     },
+    "ic10/power-grid/power_consumer_endpoint_v1_0.ic10": {
+      "source_sha256": "f312d7f2a0dcbf7c6420ff9f97405d7698b276786203c50f8e4af235ceff9205",
+      "ports": {
+        "d0": {
+          "dynamic_property_sources": [
+            {
+              "operand": "r2",
+              "source_port": "self",
+              "address": 16
+            }
+          ]
+        }
+      }
+    },
+    "ic10/power-grid/power_producer_endpoint_v1_0.ic10": {
+      "source_sha256": "d286c95a0594c9e1f3c4fc7d601d743e8877c3e4ff92fbc088a6482e842c9aec",
+      "ports": {
+        "d0": {
+          "dynamic_property_sources": [
+            {
+              "operand": "r2",
+              "source_port": "self",
+              "address": 16
+            }
+          ]
+        }
+      }
+    },
     "ic10/power-grid/power_sink_selector_v1_0.ic10": {
       "source_sha256": "fd99def1476531a6bccacacb56f9ff454eabb84736fbacc8496f325986ac9722",
       "ports": {
@@ -845,6 +966,34 @@
     "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": {
       "source_sha256": "f992c27fb0a57684d8ab9652b5e764a4cc93fd8330955d653ca5df027ff10f90",
       "ports": {
+        "d3": {
+          "dynamic_property_sources": [
+            {
+              "operand": "r6",
+              "source_port": "d5",
+              "address": 101,
+              "fence": {
+                "address": 5,
+                "kind": "generation",
+                "description": "Config Host generation must be positive and unchanged around the LogicType read."
+              }
+            }
+          ]
+        },
+        "d4": {
+          "dynamic_property_sources": [
+            {
+              "operand": "r7",
+              "source_port": "d5",
+              "address": 102,
+              "fence": {
+                "address": 5,
+                "kind": "generation",
+                "description": "Config Host generation must be positive and unchanged around the LogicType read."
+              }
+            }
+          ]
+        },
         "d5": {
           "dynamic_read_ranges": [
             [
@@ -971,6 +1120,25 @@
           ]
         }
       ]
+    },
+    "ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10": {
+      "source_sha256": "060cd44bb928c4212c49040478d96771fe3c589de31e362380baa6348026b2f1",
+      "ports": {
+        "d0": {
+          "dynamic_property_sources": [
+            {
+              "operand": "r2",
+              "source_port": "d1",
+              "address": 19,
+              "fence": {
+                "address": 5,
+                "kind": "generation",
+                "description": "Profile View generation must be positive and unchanged around the LogicType read."
+              }
+            }
+          ]
+        }
+      }
     },
     "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10": {
       "source_sha256": "8349b28ddb20f8a6dd8a29dc367355b9c83ddab85e04cc810be966913bd36616",
@@ -1139,6 +1307,92 @@
           207
         ]
       ]
+    },
+    "ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10": {
+      "source_sha256": "130ffbe007fed877239f042ecf20ba6c91fe66739cc605468f26d0ea1de25b12",
+      "ports": {
+        "d0": {
+          "dynamic_property_sources": [
+            {
+              "operand": "r2",
+              "source_port": "d4",
+              "address": 13,
+              "fence": {
+                "address": 5,
+                "kind": "generation",
+                "description": "Profile View generation must be positive and unchanged around the LogicType read."
+              }
+            }
+          ]
+        },
+        "d1": {
+          "dynamic_property_sources": [
+            {
+              "operand": "r4",
+              "source_port": "d4",
+              "address": 15,
+              "fence": {
+                "address": 5,
+                "kind": "generation",
+                "description": "Profile View generation must be positive and unchanged around the LogicType read."
+              }
+            }
+          ]
+        },
+        "d2": {
+          "dynamic_property_sources": [
+            {
+              "operand": "r2",
+              "source_port": "d4",
+              "address": 13,
+              "fence": {
+                "address": 5,
+                "kind": "generation",
+                "description": "Profile View generation must be positive and unchanged around the LogicType read."
+              }
+            },
+            {
+              "operand": "r4",
+              "source_port": "d4",
+              "address": 15,
+              "fence": {
+                "address": 5,
+                "kind": "generation",
+                "description": "Profile View generation must be positive and unchanged around the LogicType read."
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10": {
+      "source_sha256": "e21389e28921e55e78ea07877259a143d40fe57370af82b4dd7662029cee9c81",
+      "ports": {
+        "d0": {
+          "dynamic_property_sources": [
+            {
+              "operand": "r2",
+              "source_port": "d1",
+              "address": 13,
+              "fence": {
+                "address": 5,
+                "kind": "generation",
+                "description": "Profile View generation must be positive and unchanged around the LogicType read."
+              }
+            },
+            {
+              "operand": "r4",
+              "source_port": "d1",
+              "address": 15,
+              "fence": {
+                "address": 5,
+                "kind": "generation",
+                "description": "Profile View generation must be positive and unchanged around the LogicType read."
+              }
+            }
+          ]
+        }
+      }
     },
     "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10": {
       "source_sha256": "e66aff17ae0d3696f87e922d03bfb5592d307e81c37c5549b30724b76228d72b",

@@ -131,9 +131,7 @@
       "aliases": [],
       "requirement": "required",
       "device_properties": {
-        "reads": [
-          "On"
-        ],
+        "reads": [],
         "writes": [
           "On",
           "Setting"
@@ -156,9 +154,7 @@
         "kind": "physical-device",
         "verification": "device-properties",
         "assumptions": {
-          "properties_read": [
-            "On"
-          ],
+          "properties_read": [],
           "properties_written": [
             "On",
             "Setting"

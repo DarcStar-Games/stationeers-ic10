@@ -18,6 +18,7 @@ PROTOCOL_DEFINITION_FORMAT = "IC10_PROTOCOL_DEFINITION_V1"
 PORTS = tuple(f"d{i}" for i in range(6))
 VERSION_RE = re.compile(r"_v(\d+)_(\d+)\.ic10$")
 INTEGER_RE = re.compile(r"^-?\d+$")
+DYNAMIC_PROPERTY_RE = re.compile(r"^(?:r(?:1[0-7]|[0-9])|ra|sp)$")
 SEMANTIC_WORDS = re.compile(
     r"(?i)\b(generation|token|status|state|reference\s*id|schema|count|capacity|width|epoch|revision|sequence|"
     r"reserved|owner|unit|class|kind|mode|identity|pressure|temperature|quantity|rate|cost|signature|command)\b"
@@ -1352,10 +1353,14 @@ def _device_ports(source: str, rows: list[list[str]], aliases: dict[str, str], i
             if port:
                 slot = _integer(row[2], integer_aliases)
                 ensure(port)["device_properties"]["slot_writes"].add((slot if slot is not None else "dynamic", row[3]))
-        elif op.startswith("bdnv") and len(row) >= 3:
+        elif op == "bdnvl" and len(row) >= 3:
             port = _port(row[1], aliases)
             if port:
                 ensure(port)["device_properties"]["reads"].add(row[2])
+        elif op == "bdnvs" and len(row) >= 3:
+            port = _port(row[1], aliases)
+            if port:
+                ensure(port)["device_properties"]["writes"].add(row[2])
 
     for port, cells in _external_equality_checks(source, rows, aliases, integer_aliases).items():
         target = ensure(port)["stack"]["constraints"]
@@ -1387,6 +1392,26 @@ def _device_ports(source: str, rows: list[list[str]], aliases: dict[str, str], i
                 for slot, prop in sorted(properties["slot_writes"], key=lambda value: (str(value[0]), value[1]))
             ],
         }
+        dynamic_operands = {
+            value for direction in ("reads", "writes")
+            for value in item["device_properties"][direction]
+            if DYNAMIC_PROPERTY_RE.fullmatch(value)
+        } | {
+            value["property"] for direction in ("slot_reads", "slot_writes")
+            for value in item["device_properties"][direction]
+            if DYNAMIC_PROPERTY_RE.fullmatch(value["property"])
+        }
+        declared_sources = overrides.get("ports", {}).get(port, {}).get("dynamic_property_sources", [])
+        source_operands = [value["operand"] for value in declared_sources]
+        if len(source_operands) != len(set(source_operands)) or set(source_operands) != dynamic_operands:
+            raise ValueError(
+                f"{port} dynamic LogicType provenance mismatch: "
+                f"operands={sorted(dynamic_operands)}, declared={sorted(source_operands)}"
+            )
+        if declared_sources:
+            item["dynamic_property_sources"] = sorted(
+                declared_sources, key=lambda value: (value["operand"], value["source_port"], value["address"])
+            )
         stack = item["stack"]
         stack["literal_reads"] = sorted(stack["literal_reads"])
         stack["literal_writes"] = sorted(stack["literal_writes"])
