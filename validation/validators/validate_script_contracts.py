@@ -14,6 +14,7 @@ from framework.script_contracts import (
     access_provider_obligations,
     build_all,
     compatibility_errors,
+    DYNAMIC_PROPERTY_RE,
     generated_artifact_paths,
     invariant_errors,
     ranges_overlap,
@@ -73,14 +74,49 @@ for rel, generated in sorted(expected.items()):
     if service_id in service_ids:
         fails.append(f"duplicate service_id {service_id}: {service_ids[service_id]} and {actual['source']}")
     service_ids[service_id] = actual["source"]
-    ports = [item["port"] for item in actual["device_ports"]]
-    if len(ports) != len(set(ports)):
+    port_contracts = {item["port"]: item for item in actual["device_ports"]}
+    if len(port_contracts) != len(actual["device_ports"]):
         fails.append(f"{actual['source']}: duplicate device port")
     fields = [item["address"] for item in actual["own_stack"]["fields"]]
     if len(fields) != len(set(fields)):
         fails.append(f"{actual['source']}: duplicate own-stack field address")
     for port_index, port in enumerate(actual["device_ports"]):
         stack = port["stack"]
+        dynamic_operands = {
+            value for direction in ("reads", "writes")
+            for value in port["device_properties"][direction]
+            if DYNAMIC_PROPERTY_RE.fullmatch(value)
+        } | {
+            value["property"] for direction in ("slot_reads", "slot_writes")
+            for value in port["device_properties"][direction]
+            if DYNAMIC_PROPERTY_RE.fullmatch(value["property"])
+        }
+        dynamic_sources = port.get("dynamic_property_sources", [])
+        if {item["operand"] for item in dynamic_sources} != dynamic_operands:
+            fails.append(f"{actual['source']} {port['port']}: dynamic LogicType provenance is incomplete")
+        for source in dynamic_sources:
+            source_port = source["source_port"]
+            if source_port == "self":
+                source_stack = actual["own_stack"]
+            elif source_port in port_contracts:
+                source_stack = port_contracts[source_port]["stack"]
+            else:
+                fails.append(
+                    f"{actual['source']} {port['port']}: dynamic LogicType source {source_port} is not a used port"
+                )
+                continue
+            readable = set(source_stack["literal_reads"]) | {
+                cell for item in source_stack["dynamic_read_ranges"]
+                for cell in range(item["start"], item["end"] + 1)
+            }
+            required_cells = {source["address"]}
+            if "fence" in source:
+                required_cells.add(source["fence"]["address"])
+            if not required_cells <= readable:
+                fails.append(
+                    f"{actual['source']} {port['port']}: dynamic LogicType provenance reads "
+                    f"unavailable {source_port} cells {sorted(required_cells - readable)}"
+                )
         if stack["dynamic_read"] and not stack["dynamic_read_ranges"]:
             fails.append(f"{actual['source']} {port['port']}: dynamic read has no declared range")
         if stack["dynamic_write"] and not stack["dynamic_write_ranges"]:

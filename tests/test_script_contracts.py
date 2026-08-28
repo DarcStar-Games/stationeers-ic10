@@ -203,6 +203,18 @@ pi_config = next(item for item in pi_runtime["device_ports"] if item["port"] == 
 ck(pi_config["dynamic_read_ranges"] == [{"start": 96, "end": 109}] and
    pi_config["dynamic_read_range_source"] == "source-derived",
    "PI config range was not derived from its literal-seeded source loop")
+pi_input = next(item for item in pi_runtime["device_ports"] if item["port"] == "d0")
+pi_output = next(item for item in pi_runtime["device_ports"] if item["port"] == "d1")
+ck(pi_input["dynamic_property_sources"] == [{
+       "operand": "r12", "source_port": "d2", "address": 107,
+       "fence": {
+           "address": 5, "kind": "generation",
+           "description": "Config Host generation must be positive and unchanged around the LogicType read.",
+       },
+   }], "PI input LogicType lacks its fenced Config Host provenance")
+ck(pi_output["device_properties"]["reads"] == [] and
+   pi_output["device_properties"]["writes"] == ["r13"],
+   "bdnvs was not classified as a writable-property requirement")
 for persistent_store_name in ("power_dispatch_plan_store_v1_0.ic10", "generic_job_store_v1_0.ic10"):
     persistent_store = next(item for item in documents if item["source"].endswith(persistent_store_name))
     ck(persistent_store["behavior"]["restart"]["mode"] == "conditional-reset",

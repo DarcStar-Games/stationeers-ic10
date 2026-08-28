@@ -37,6 +37,18 @@
         "dynamic_write_range_source": "none",
         "constraints": []
       },
+      "dynamic_property_sources": [
+        {
+          "operand": "r2",
+          "source_port": "d1",
+          "address": 19,
+          "fence": {
+            "address": 5,
+            "kind": "generation",
+            "description": "Profile View generation must be positive and unchanged around the LogicType read."
+          }
+        }
+      ],
       "target": {
         "kind": "physical-device",
         "verification": "device-properties",

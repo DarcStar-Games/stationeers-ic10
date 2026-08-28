@@ -28,14 +28,15 @@ If you are new to the framework, read the documents in this order:
 18. **docs/PROCESS_UTILITY_ORCHESTRATION.md** — cross-domain ProcessCondition, furnace atmosphere preparation, gas mixing, and fuel-backed POWER.
 19. **docs/INTERRUPTION_FAULT_INJECTION.md** — reusable restart campaign and cross-subsystem fault matrix.
 20. **docs/LIVE_COMMISSIONING.md** — Item-12 field-evidence workflow, read-only snapshot probe, stack-cell monitor, and release-bound commissioning sessions.
-21. **ROADMAP.md** and **docs/COMPLETED_MILESTONES.md** — Items 1–11 completion records plus the active Item-12 field milestone.
-22. **docs/RESOURCE_GRID_CORE.md**, **docs/MATERIAL_GRID_FOUNDATION.md**, **docs/MATERIAL_TRANSFER_SYSTEM.md**, and **docs/ORE_PROCESSING_TRANSFORMS.md** — resource/material execution model.
-23. **docs/RECIPE_CATALOG.md** and **docs/PRINTER_DIRECTORY.md** — printer recipe/discovery metadata.
-24. **docs/CONFIG_INPUTS.md**, **docs/CONFIG_BLOCKS.md**, **docs/CONFIG_POLICY.md**, and **docs/PERSISTENCE_STANDARD.md** — configuration system.
-25. **docs/SCRIPT_CONTRACTS.md**, **docs/DIAGNOSTIC_INPUTS.md**, and **docs/ABI_REFERENCE.md** — machine-readable contracts, diagnostics, and exact wiring contracts.
-26. **docs/SEQUENCER_CONTROLLER.md**, **docs/PHASE_PRESSURE_CONTROLLER.md**, **docs/PHASE_MEDIUM_PROFILE.md**, **docs/PRESSURE_DOMAIN_CONTROLLER.md**, **docs/PRESSURE_INVENTORY_MODEL.md**, **docs/PRESSURE_GRID_CONTROLLER.md**, **docs/PRESSURE_RESERVATION_MODEL.md**, **docs/PRESSURE_MULTI_HOP_ROUTING.md**, and **docs/PRESSURE_ROUTE_COST_MODEL.md** — worked controller/resource specializations.
-27. **docs/CORRECTNESS_HARDENING.md**, **docs/ADDING_CONTROLLERS.md**, **docs/SCRIPT_INDEX.md**, **docs/SOURCES.md**, and **docs/TEST_CONTROLLER.md** — extension, audit, and provenance material.
-28. **docs/CI.md** — required GitHub validation check, clean-tree policy, failure evidence, and branch-protection setup.
+21. **docs/CONTRACT_COMMISSIONING.md** — contract-aware validation and field evidence for explicit in-world screw-terminal wiring.
+22. **ROADMAP.md** and **docs/COMPLETED_MILESTONES.md** — Items 1–11 completion records plus the active Item-12 field milestone.
+23. **docs/RESOURCE_GRID_CORE.md**, **docs/MATERIAL_GRID_FOUNDATION.md**, **docs/MATERIAL_TRANSFER_SYSTEM.md**, and **docs/ORE_PROCESSING_TRANSFORMS.md** — resource/material execution model.
+24. **docs/RECIPE_CATALOG.md** and **docs/PRINTER_DIRECTORY.md** — printer recipe/discovery metadata.
+25. **docs/CONFIG_INPUTS.md**, **docs/CONFIG_BLOCKS.md**, **docs/CONFIG_POLICY.md**, and **docs/PERSISTENCE_STANDARD.md** — configuration system.
+26. **docs/SCRIPT_CONTRACTS.md**, **docs/DIAGNOSTIC_INPUTS.md**, and **docs/ABI_REFERENCE.md** — machine-readable contracts, diagnostics, and exact wiring contracts.
+27. **docs/SEQUENCER_CONTROLLER.md**, **docs/PHASE_PRESSURE_CONTROLLER.md**, **docs/PHASE_MEDIUM_PROFILE.md**, **docs/PRESSURE_DOMAIN_CONTROLLER.md**, **docs/PRESSURE_INVENTORY_MODEL.md**, **docs/PRESSURE_GRID_CONTROLLER.md**, **docs/PRESSURE_RESERVATION_MODEL.md**, **docs/PRESSURE_MULTI_HOP_ROUTING.md**, and **docs/PRESSURE_ROUTE_COST_MODEL.md** — worked controller/resource specializations.
+28. **docs/CORRECTNESS_HARDENING.md**, **docs/ADDING_CONTROLLERS.md**, **docs/SCRIPT_INDEX.md**, **docs/SOURCES.md**, and **docs/TEST_CONTROLLER.md** — extension, audit, and provenance material.
+29. **docs/CI.md** — required GitHub validation check, clean-tree policy, failure evidence, and branch-protection setup.
 
 `VALIDATION_SUMMARY.txt` summarizes the latest clean release run; per-script machine evidence is generated under `validation/evidence/`. `docs/FRAMEWORK_HARDENING_TESTS.md` lists the live-game cases that still need physical verification; `docs/LIVE_COMMISSIONING.md` defines how those results are bound to a release and recorded without contaminating automated evidence.
 

@@ -41,6 +41,7 @@ PASS tests/test_phase_pressure_protocol.py
 PASS tests/test_pressure_domain_protocol.py
 PASS tests/test_pressure_grid_protocol.py
 PASS tests/test_pressure_inventory_protocol.py
+PASS tests/test_commission_wiring.py
 PASS tests/test_pressure_reservation_protocol.py
 PASS tests/test_pressure_route_cost.py
 PASS tests/test_printer_directory.py
@@ -58,4 +59,4 @@ PASS tests/test_fault_injection.py
 PASS tests/test_process_utility.py
 PASS tests/test_live_commissioning.py
 PASS tests/test_game_export.py
-FULL_SUITE: PASS (60/60 scripts)
+FULL_SUITE: PASS (61/61 scripts)

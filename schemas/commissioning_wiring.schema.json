@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DarcStar-Games/stationeers-ic10/schemas/commissioning_wiring.schema.json",
+  "title": "Stationeers IC10 deployment wiring map",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "format", "consumer", "ports"],
+  "properties": {
+    "$schema": {"const": "https://github.com/DarcStar-Games/stationeers-ic10/schemas/commissioning_wiring.schema.json"},
+    "format": {"const": "IC10_COMMISSIONING_WIRING_V1"},
+    "consumer": {"type": "string", "minLength": 1},
+    "label": {"type": "string"},
+    "ports": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "d0": {"$ref": "#/$defs/mapping"},
+        "d1": {"$ref": "#/$defs/mapping"},
+        "d2": {"$ref": "#/$defs/mapping"},
+        "d3": {"$ref": "#/$defs/mapping"},
+        "d4": {"$ref": "#/$defs/mapping"},
+        "d5": {"$ref": "#/$defs/mapping"}
+      }
+    }
+  },
+  "$defs": {
+    "mapping": {
+      "anyOf": [
+        {"$ref": "#/$defs/scriptMapping"},
+        {"$ref": "#/$defs/deviceMapping"}
+      ]
+    },
+    "scriptMapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "provider", "reference", "capabilities"],
+      "properties": {
+        "kind": {"const": "script"},
+        "provider": {"type": "string", "minLength": 1},
+        "reference": {"type": "string", "minLength": 1},
+        "capabilities": {"$ref": "#/$defs/capabilities"}
+      }
+    },
+    "deviceMapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "device_type", "reference", "capabilities"],
+      "properties": {
+        "kind": {"const": "physical-device"},
+        "device_type": {"type": "string", "minLength": 1},
+        "reference": {"type": "string", "minLength": 1},
+        "capabilities": {"$ref": "#/$defs/capabilities"}
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["properties_readable", "properties_writable", "slot_properties_readable", "slot_properties_writable", "property_bindings"],
+      "properties": {
+        "properties_readable": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "properties_writable": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "slot_properties_readable": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/slotAccess"}},
+        "slot_properties_writable": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/slotAccess"}},
+        "property_bindings": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/propertyBinding"}
+        }
+      }
+    },
+    "propertyBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operand", "property"],
+      "properties": {
+        "operand": {"type": "string", "pattern": "^(r(?:1[0-7]|[0-9])|ra|sp)$"},
+        "property": {"type": "string", "minLength": 1}
+      }
+    },
+    "slotAccess": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slot", "property"],
+      "properties": {
+        "slot": {"anyOf": [{"type": "integer", "minimum": 0}, {"const": "dynamic"}]},
+        "property": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

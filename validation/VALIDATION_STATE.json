@@ -1,9 +1,10 @@
 {
-  "fingerprint": "372242ca8658b2c0aa4de3784c25da2a9d8830e4a6d03097983d0ababbb7a883",
+  "fingerprint": "f29e445566ab5a01c5d04e7c8aaaf054bfbaf69ec60091f95fb4dc730238a9bd",
   "results": {
     "tests/test_async_request.py": 0,
     "tests/test_banked_transaction.py": 0,
     "tests/test_catalog_schema.py": 0,
+    "tests/test_commission_wiring.py": 0,
     "tests/test_controller_directory_scale.py": 0,
     "tests/test_dependency_planning.py": 0,
     "tests/test_fault_injection.py": 0,
@@ -106,6 +107,7 @@
     "tests/test_pressure_domain_protocol.py",
     "tests/test_pressure_grid_protocol.py",
     "tests/test_pressure_inventory_protocol.py",
+    "tests/test_commission_wiring.py",
     "tests/test_pressure_reservation_protocol.py",
     "tests/test_pressure_route_cost.py",
     "tests/test_printer_directory.py",
