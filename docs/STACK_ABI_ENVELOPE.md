@@ -294,6 +294,16 @@ explicit baseline exemption. Migrated rows also record the reviewed source
 fingerprint, straight-line publication rule, immutable stack ownership outside
 the header, and source-fingerprinted post-initialization dynamic-write bounds.
 
+`tools/plan_header_migration.py` plans a family's move from those contracts. It
+takes free cells from the analysed footprint rather than the literal one — a
+program that clears a table through a computed address owns those cells even
+though no literal write names them — refuses to guess when the contract cannot
+bound a program's dynamic writes, reports where computed writes appear to be
+based so a reviewer can bound them, and lists the port and reference accesses to
+`S2..S7` that carry no magic for the contracts to key on. Those unattributed
+port edges are the ones that break a migration: a sibling writing
+`put d1 2 r5` is invisible to every automated check until a test fails.
+
 `validation/validators/validate_stack_envelopes.py` enforces coverage,
 publication before the first yield, post-publication stability, exact source
 writes, schema binding, extension-flag and bounds rules, header/ABI agreement
