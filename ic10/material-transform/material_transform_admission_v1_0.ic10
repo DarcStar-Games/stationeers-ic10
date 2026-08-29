@@ -10,19 +10,19 @@ yield
 bdns d0 Bad
 bdns d1 Bad
 bdns d2 Bad
-get r14 d0 6
+get r14 d0 74
 blez r14 Bad
 get r0 d0 0
 bne r0 31415952 Bad
 get r0 d0 1
 bne r0 4 Bad
-get r4 d0 4
+get r4 d0 72
 blt r4 1 Bad
 bgt r4 3 Bad
-get r0 d0 5
+get r0 d0 73
 bne r0 1 Bad
-get r2 d0 2
-get r3 d0 3
+get r2 d0 70
+get r3 d0 71
 l r15 d1 ReferenceId
 l r0 d1 PrefabHash
 seq r6 r0 HASH("StructureArcFurnace")
@@ -94,7 +94,7 @@ get r0 d2 7
 blt r0 r13 Bad
 get r0 d2 12
 bne r0 r6 Loop
-get r0 d0 6
+get r0 d0 74
 bne r0 r14 Loop
 poke 14 r2
 poke 15 r15

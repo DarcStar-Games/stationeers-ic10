@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10",
-  "source_sha256": "32054c0e2fac7891b43c382bca7de02684b5807fa77bb9fb3d0673366e9cf93a",
+  "source_sha256": "71ead86dfe59d02adb22f70721ff168b91d9304d5848536f528a0c8156403783",
   "identity": {
     "service_id": "ic10.script.furnace.process.condition.request",
     "implementation_revision": "1.0",
@@ -27,13 +27,13 @@
         "literal_reads": [
           0,
           1,
-          6,
           64,
           65,
           66,
           67,
           68,
-          69
+          69,
+          74
         ],
         "literal_writes": [],
         "dynamic_read": false,

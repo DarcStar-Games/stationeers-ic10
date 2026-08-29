@@ -8,7 +8,7 @@ get r0 db 17
 beqz r0 Inactive
 bdns d0 Bad
 bdns d1 Bad
-get r14 d0 6
+get r14 d0 74
 blez r14 Bad
 get r0 d0 0
 bne r0 31415952 Bad
@@ -17,7 +17,7 @@ bne r0 4 Bad
 get r15 d0 68
 get r0 d0 69
 bne r0 1 Bad
-get r0 d0 6
+get r0 d0 74
 bne r0 r14 Loop
 l r2 d1 PrefabHash
 seq r0 r2 HASH("StructureFurnace")

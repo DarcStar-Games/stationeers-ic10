@@ -12,7 +12,7 @@ def ck(c,m):
 def close(a,b,t=1e-5):return abs(a-b)<=t
 H=lambda s:'HASH:'+s
 # Furnace transform conditions become a coherent cross-domain utility request.
-view=Device(100,stack={0:31415952,1:4,6:7,64:23500,65:24000,66:600,67:100000,68:H('AlloyInconel'),69:1},props={'ReferenceId':100})
+view=Device(100,stack={0:31415952,1:4,74:7,64:23500,65:24000,66:600,67:100000,68:H('AlloyInconel'),69:1},props={'ReferenceId':100})
 furnace=Device(101,props={'ReferenceId':101,'PrefabHash':H('StructureAdvancedFurnace'),'Pressure':20000,'Temperature':500,'Power':1,'Error':0,'Maximum':100,'SettingInput':0,'SettingOutput':0})
 freq=IC10((R/'ic10/process-furnace/furnace_process_condition_request_v1_0.ic10').read_text(),{'d0':view,'d1':furnace},self_ref=247)
 freq.stack.update({16:H('Fuel.H2O2'),17:1,18:1});freq.run(2)

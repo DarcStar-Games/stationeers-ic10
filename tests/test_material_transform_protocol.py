@@ -36,7 +36,7 @@ for tok in ('put d3 21 r15','s d0 Activate 1','sub r0 r0 r1','put d3 23 r0'):
 # Capability matrix: basic smelts run on all furnace classes; 2-input alloys on Furnace/Advanced; superalloys on Advanced only.
 def cap_admit(prefab,required,input_count=2,pressure=2000,temperature=1500):
     pp=Device(970,props={'ReferenceId':970,'PrefabHash':'HASH:'+prefab,'Power':1,'Error':0,'Pressure':pressure,'Temperature':temperature})
-    vv=Device(971,stack={0:31415952,1:4,2:321,3:required,4:input_count,5:1,6:7,8:2,9:101,10:2,11:1,12:2,13:102,14:2,15:1,16:2,17:103,18:2,19:1,32:2,33:444,34:2,35:1,64:100,65:100000,66:300,67:100000,68:321,69:1})
+    vv=Device(971,stack={0:31415952,1:4,70:321,71:required,72:input_count,73:1,74:7,8:2,9:101,10:2,11:1,12:2,13:102,14:2,15:1,16:2,17:103,18:2,19:1,32:2,33:444,34:2,35:1,64:100,65:100000,66:300,67:100000,68:321,69:1})
     oo=Device(972,stack={0:31415950,1:1,3:2,4:444,6:0,7:100,9:1,10:2,12:1})
     vm=IC10(a,{'d0':vv,'d1':pp,'d2':oo},self_ref=973);vm.run(2);return vm.stack.get(8)
 for prefab in ('StructureArcFurnace','StructureFurnace','StructureAdvancedFurnace'):
@@ -55,7 +55,7 @@ for prefab in ('StructureArcFurnace','StructureFurnace','StructureAdvancedFurnac
 # Synthetic 3-input transform path.
 proc=Device(900,props={'ReferenceId':900,'PrefabHash':'HASH:StructureAdvancedFurnace','Power':1,'Error':0,'Pressure':2000,'Temperature':1500,'Activate':0})
 out=Device(901,stack={0:31415950,1:1,3:2,4:444,6:0,7:100,9:1,10:2,12:1},props={'ReferenceId':901})
-view=Device(902,stack={0:31415952,1:4,2:123,3:4,4:3,5:1,6:5,7:0,
+view=Device(902,stack={0:31415952,1:4,70:123,71:4,72:3,73:1,74:5,75:0,
     8:2,9:101,10:2,11:1,12:2,13:102,14:2,15:1,16:2,17:103,18:2,19:2,
     32:2,33:444,34:2,35:1,64:1000,65:3000,66:1200,67:1800,68:123,69:1},props={'ReferenceId':902})
 adm_vm=IC10(a,{'d0':view,'d1':proc,'d2':out},self_ref=903); adm_dev=Device(903,adm_vm.stack,{'ReferenceId':903})

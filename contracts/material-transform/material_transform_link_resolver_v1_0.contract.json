@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-transform/material_transform_link_resolver_v1_0.ic10",
-  "source_sha256": "39d4098f3b60c3b9f4c60a224a16713aac98b504a97f5dc426533093a7b8df11",
+  "source_sha256": "18454a812c8d822b6fdac304279408e9f0778ca60a3952d1af4b0304241ff133",
   "identity": {
     "service_id": "ic10.script.material.transform.link.resolver",
     "implementation_revision": "1.0",
@@ -79,7 +79,7 @@
         "literal_reads": [
           0,
           1,
-          6
+          74
         ],
         "literal_writes": [],
         "dynamic_read": true,

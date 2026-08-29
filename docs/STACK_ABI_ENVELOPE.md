@@ -275,6 +275,27 @@ cell the owner ignores is invisible to the contract layer, survives no migration
 and belongs on the writer's own stack -- where, in this case, the JobId and the
 Runtime reference were both already published.
 
+### Sweeping for consumers a migration left behind
+
+Renumbering a payload cell strands every consumer that still reads the old address,
+and the contract layer cannot see it: a migrated peer *does* publish something at
+`S2`, so a stale read of `S2` looks like a satisfied read of the CapabilityMask.
+Five such edges survived earlier migrations and were found only by sweeping.
+
+The one mechanical handle is the magic check. A consumer that reads a peer's `S0`
+and compares it to a literal has named that peer exactly, and
+`validation/validators/validate_stack_envelopes.py` now fails any such consumer that touches `S2..S7` of a
+migrated peer. Four reviewed exceptions are declared, all of them reading header
+fields on purpose: the SchemaId at `S3` and the Generation at `S7`. Ports without a
+magic check stay unattributable and must be read.
+
+Two signals said where to look. A migration commit that touched only its own family
+had no chance to fix outside consumers -- comparing each commit's touched families
+against the family it migrated found the diagnostics and power-jobs migrations, and
+those two turned out to be internally consistent, while the broad ones were not. And
+of the 69 migrated programs only 25 vacated a payload cell at all; the rest merely
+added a mask and can strand nobody.
+
 A service ABI changes only when its semantic contract changes; a schema version
 only when that schema changes. A future incompatible header uses a new exact
 version and is rejected by v1 readers; it may not silently repurpose a v1 cell.

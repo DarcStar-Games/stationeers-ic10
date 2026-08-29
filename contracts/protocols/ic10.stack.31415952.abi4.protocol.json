@@ -19,7 +19,7 @@
       "readable_ranges": [
         {
           "start": 0,
-          "end": 69
+          "end": 75
         }
       ],
       "writable_ranges": [],
@@ -145,11 +145,6 @@
       "literal_reads": [
         0,
         1,
-        2,
-        3,
-        4,
-        5,
-        6,
         32,
         33,
         34,
@@ -157,7 +152,12 @@
         64,
         65,
         66,
-        67
+        67,
+        70,
+        71,
+        72,
+        73,
+        74
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
@@ -181,11 +181,6 @@
           "value": 4
         },
         {
-          "address": 5,
-          "operator": "equals",
-          "value": 1
-        },
-        {
           "address": 32,
           "operator": "equals",
           "value": 2
@@ -194,6 +189,11 @@
           "address": 34,
           "operator": "equals",
           "value": 2
+        },
+        {
+          "address": 73,
+          "operator": "equals",
+          "value": 1
         }
       ],
       "publication_requirements": []
@@ -208,7 +208,7 @@
       "literal_reads": [
         0,
         1,
-        6
+        74
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
@@ -244,13 +244,13 @@
       "literal_reads": [
         0,
         1,
-        6,
         64,
         65,
         66,
         67,
         68,
-        69
+        69,
+        74
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [],

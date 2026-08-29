@@ -27,7 +27,7 @@ getd r0 r2 9
 bne r0 1 Invalid
 getd r0 r2 10
 bne r0 7 Invalid
-getd r14 r2 5 # capture Profile generation before resolution
+getd r14 r2 11 # capture Profile generation before resolution
 blez r14 Invalid
 get resolver db 8
 blez resolver Invalid
