@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10",
-  "source_sha256": "74487ec6495ca5a508458e767f087b9065f8b6311cd7dc12bc6b32f928b4c801",
+  "source_sha256": "305aab7cab34af85accdf32ce5b91e18cacc13fca11721ecd390aad3814cacd5",
   "identity": {
     "service_id": "ic10.script.catalog.coordinator.directory.telemetry",
     "implementation_revision": "2.0",
@@ -33,7 +33,6 @@
           14,
           15,
           18,
-          19,
           23
         ],
         "literal_writes": [
@@ -74,11 +73,7 @@
           },
           {
             "address": 2,
-            "equals": "HASH(\"DirectorySchema.CatalogStoreNode\")"
-          },
-          {
-            "address": 19,
-            "equals": 1
+            "equals": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
           }
         ]
       },

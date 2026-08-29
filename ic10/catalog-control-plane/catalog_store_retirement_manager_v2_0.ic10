@@ -14,9 +14,7 @@ bne r0 31415982 Loop
 get r0 d1 1
 bne r0 3 Loop
 get r0 d1 2
-bne r0 HASH("DirectorySchema.CatalogStoreNode") Loop
-get r0 d1 19
-bne r0 1 Loop
+bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 get r11 d1 23
 mod r0 r11 2
 bnez r0 Loop

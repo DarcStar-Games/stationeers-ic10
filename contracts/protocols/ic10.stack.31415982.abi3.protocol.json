@@ -96,15 +96,6 @@
           ]
         },
         {
-          "address": 19,
-          "name": "S19",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
           "address": 20,
           "name": "S20",
           "value_type": "number",
@@ -177,8 +168,7 @@
         8,
         9,
         11,
-        14,
-        19
+        14
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [],
@@ -199,12 +189,7 @@
         {
           "address": 2,
           "operator": "equals",
-          "value": "HASH(\"DirectorySchema.CatalogStoreNode\")"
-        },
-        {
-          "address": 19,
-          "operator": "equals",
-          "value": 1
+          "value": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
         }
       ],
       "publication_requirements": []
@@ -225,7 +210,6 @@
         14,
         15,
         18,
-        19,
         23
       ],
       "literal_writes": [
@@ -267,12 +251,7 @@
         {
           "address": 2,
           "operator": "equals",
-          "value": "HASH(\"DirectorySchema.CatalogStoreNode\")"
-        },
-        {
-          "address": 19,
-          "operator": "equals",
-          "value": 1
+          "value": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
         }
       ],
       "publication_requirements": [
@@ -294,7 +273,6 @@
         1,
         2,
         18,
-        19,
         23
       ],
       "literal_writes": [],
@@ -321,12 +299,7 @@
         {
           "address": 2,
           "operator": "equals",
-          "value": "HASH(\"DirectorySchema.CatalogStoreNode\")"
-        },
-        {
-          "address": 19,
-          "operator": "equals",
-          "value": 1
+          "value": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
         }
       ],
       "publication_requirements": [
@@ -347,7 +320,6 @@
         0,
         1,
         2,
-        19,
         23
       ],
       "literal_writes": [],
@@ -369,12 +341,7 @@
         {
           "address": 2,
           "operator": "equals",
-          "value": "HASH(\"DirectorySchema.CatalogStoreNode\")"
-        },
-        {
-          "address": 19,
-          "operator": "equals",
-          "value": 1
+          "value": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
         }
       ],
       "publication_requirements": [
@@ -395,7 +362,6 @@
         0,
         1,
         2,
-        19,
         23
       ],
       "literal_writes": [],
@@ -422,12 +388,7 @@
         {
           "address": 2,
           "operator": "equals",
-          "value": "HASH(\"DirectorySchema.CatalogStoreNode\")"
-        },
-        {
-          "address": 19,
-          "operator": "equals",
-          "value": 1
+          "value": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
         }
       ],
       "publication_requirements": [
@@ -448,7 +409,6 @@
         0,
         1,
         2,
-        19,
         23
       ],
       "literal_writes": [],
@@ -475,12 +435,7 @@
         {
           "address": 2,
           "operator": "equals",
-          "value": "HASH(\"DirectorySchema.CatalogStoreNode\")"
-        },
-        {
-          "address": 19,
-          "operator": "equals",
-          "value": 1
+          "value": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
         }
       ],
       "publication_requirements": [

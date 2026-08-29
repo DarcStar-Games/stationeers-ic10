@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10",
-  "source_sha256": "b599f53e96a3ff967b66b6f60bc6482cdaa46530f3773a7a2cf1d6751d219a57",
+  "source_sha256": "8f152dddb603e2703f38e0b9d85d868051e2a2e7f6870166b099a809f3f973b3",
   "identity": {
     "service_id": "ic10.script.pressure.grid.link.directory.adapter",
     "implementation_revision": "3.0",
@@ -29,7 +29,6 @@
           1,
           2,
           9,
-          10,
           11
         ],
         "literal_writes": [],
@@ -55,11 +54,7 @@
           },
           {
             "address": 9,
-            "equals": "HASH(\"DirectorySchema.Controller\")"
-          },
-          {
-            "address": 10,
-            "equals": 1
+            "equals": "HASH(\"DirectorySchema.Controller.v1\")"
           },
           {
             "address": 11,
@@ -112,8 +107,6 @@
       2,
       3,
       7,
-      8,
-      9,
       10,
       11,
       12,
@@ -192,24 +185,6 @@
         "semantic_source": "unresolved",
         "access": [
           "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
           "self-write"
         ]
       },

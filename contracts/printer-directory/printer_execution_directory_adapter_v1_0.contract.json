@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10",
-  "source_sha256": "e8d66b2349d50499b1203c380eb3704214396fdeca8cfe4d42adb8ce9186c05a",
+  "source_sha256": "b08a73df55c517ec2670a2424fa70c91aa3c92ef6ac1377349103c8db93d3f63",
   "identity": {
     "service_id": "ic10.script.printer.execution.directory.adapter",
     "implementation_revision": "1.0",
@@ -29,7 +29,6 @@
           1,
           2,
           9,
-          10,
           11
         ],
         "literal_writes": [],
@@ -55,11 +54,7 @@
           },
           {
             "address": 9,
-            "equals": "HASH(\"DirectorySchema.Printer\")"
-          },
-          {
-            "address": 10,
-            "equals": 2
+            "equals": "HASH(\"DirectorySchema.Printer.v2\")"
           },
           {
             "address": 11,
@@ -126,8 +121,6 @@
       2,
       3,
       7,
-      8,
-      9,
       10,
       11,
       12,
@@ -206,24 +199,6 @@
         "semantic_source": "unresolved",
         "access": [
           "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
           "self-write"
         ]
       },

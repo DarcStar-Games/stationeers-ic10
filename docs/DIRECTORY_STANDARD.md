@@ -42,8 +42,6 @@ and candidate records at `S18`.
 | S2 | CapabilityMask = `17` (`HAS_SCHEMA` + `HAS_GENERATION`) |
 | S3 | SchemaId = `HASH("<DirectorySchema.X>.v<version>")` |
 | S7 | CandidateGeneration, the common publication fence |
-| S8 | DirectorySchemaId |
-| S9 | DirectorySchemaVersion |
 | S10 | EntryWidth |
 | S11 | Capacity |
 | S12 | CandidateCount |
@@ -54,10 +52,8 @@ and candidate records at `S18`.
 | S17 | freeze acknowledgement token; stable while frozen |
 | S18.. | packed complete candidate records |
 
-`S8`/`S9` keep the unfolded schema id and version because Snapshot Host ABI1 and
-Registry Host ABI3 still publish them as separate slots. They are transitional:
-when those host contracts fold their schema slots, the pair disappears and `S3`
-becomes the only schema identity an adapter publishes.
+`S3` is the only schema identity an adapter publishes. Both hosts fold too, so a
+schema and its version are one exact comparison everywhere in the framework.
 
 Publication lifecycle:
 
@@ -91,8 +87,7 @@ S2      active bank: 0=A, 1=B
 S3/S4   generation A/B
 S5/S6   record count A/B
 S7/S8   overflow A/B
-S9      DirectorySchemaId
-S10     DirectorySchemaVersion
+S9      DirectorySchemaId, HASH("<schema>.v<version>")
 S11     EntryWidth
 S12     Capacity
 S14     bridge request generation
@@ -116,8 +111,7 @@ A snapshot consumer validates at minimum:
 ```text
 S0  GenericSnapshotDirectoryMagic
 S1  ABI
-S9  expected DirectorySchemaId
-S10 expected DirectorySchemaVersion
+S9  expected DirectorySchemaId, version included
 ```
 
 Consumers then use the schema-defined width/capacity and the ordinary active-bank/count/generation/overflow fields. A schema mismatch is a hard failure, not a fallback to a previous domain ABI.
@@ -133,7 +127,6 @@ S2   DirectorySchemaId
 S3   last accepted candidate generation
 S4   registry publication generation
 S16  status/error
-S19  DirectorySchemaVersion
 S20  published record width
 S21  registry capacity
 S23  publication sequence; odd while mutating, even when stable

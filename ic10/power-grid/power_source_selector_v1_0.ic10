@@ -12,9 +12,7 @@ bdns d1 Bad
 get r0 d0 0
 bne r0 31415981 Bad
 get r0 d0 9
-bne r0 HASH("DirectorySchema.PowerReservation") Bad
-get r0 d0 10
-bne r0 1 Bad
+bne r0 HASH("DirectorySchema.PowerReservation.v1") Bad
 get r5 d0 2
 add r0 r5 7
 get r0 d0 r0

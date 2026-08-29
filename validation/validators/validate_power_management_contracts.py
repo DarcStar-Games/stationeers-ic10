@@ -32,9 +32,9 @@ need('ic10/power-grid/power_sink_selector_v1_0.ic10','getd r11 r10 7','slt r12 r
 # Generic links + transformer overhead.
 need('ic10/power-grid/power_static_link_v1_0.ic10','poke 0 31415953','poke 4 4','poke 6 1')
 need('ic10/power-grid/power_transformer_link_v1_0.ic10','poke 6 2','bdnvl d0 RequiredPower ReqReady','poke 14 r5')
-need('ic10/power-grid/power_link_selector_v1_0.ic10','HASH("DirectorySchema.ResourceLink")','getd r13 r1 14','add r13 r13 r4')
+need('ic10/power-grid/power_link_selector_v1_0.ic10','HASH("DirectorySchema.ResourceLink.v1")','getd r13 r1 14','add r13 r13 r4')
 # Directory and bounded coherent plan.
-need('ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10','HASH("DirectorySchema.PowerReservation")','poke 10 3','poke 11 64','getd r0 r1 17','get r13 db 14','1000000','5000000')
+need('ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10','HASH("DirectorySchema.PowerReservation.v1")','poke 10 3','poke 11 64','getd r0 r1 17','get r13 db 14','1000000','5000000')
 need('ic10/power-grid/power_dispatch_plan_store_v1_0.ic10','poke 0 31416028','bge r2 8 Full','add r3 r3 1','poke 3 r0','poke 2 r3')
 need('ic10/power-grid/power_plan_validator_v1_0.ic10','bgt r3 8 Bad','getd r0 r7 12','getd r0 r8 12','getd r0 r6 12','getd r0 r6 14')
 need('ic10/power-grid/power_reservation_committer_v1_0.ic10','getd r0 r7 17','bne r0 r12 Bad','add sp sp r5','putd r7 14 sp','putd r8 15 ra','putd r7 17 r12')
@@ -45,7 +45,7 @@ need('ic10/power-grid/power_link_executor_v1_0.ic10','Set:','get r0 d1 4','get r
 need('ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10','poke 1 3','get r15 db 64','move r6 4','move r7 64','move r8 68')
 need('ic10/generic-jobs/generic_job_selector_v3_0.ic10','poke 1 3','get r10 db 18','bne r5 r10 Next','beq r2 7 Next','bge r2 11 Next')
 if (R/'239_power_job_selector_v1_0.ic10').exists():fails.append('duplicate POWER Job selector must not exist')
-need('ic10/power-jobs/power_policy_target_resolver_v1_0.ic10','HASH("DirectorySchema.PowerReservation")','getd r5 r7 28')
+need('ic10/power-jobs/power_policy_target_resolver_v1_0.ic10','HASH("DirectorySchema.PowerReservation.v1")','getd r5 r7 28')
 need('ic10/power-jobs/power_job_policy_apply_v1_0.ic10','bne r10 4 Bad','bne r11 r6 Bad','putd r13 50 r4','putd r13 51 r7')
 need('ic10/power-jobs/power_job_policy_verify_v1_0.ic10','getd r0 r6 50','getd r0 r6 51','NeedExportZero:','NeedImportZero:')
 need('ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10','put d0 68 2','put d0 64 r15','add r3 r3 1','poke 9 r3')

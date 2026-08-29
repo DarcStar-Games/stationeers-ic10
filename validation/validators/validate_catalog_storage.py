@@ -48,7 +48,7 @@ checks={
  'ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10':['poke 0 31415970','poke 1 4','poke 2 0','bgt r7 64 ClaimFail','getd r6 r1 16','bne r6 1 Next','getd r0 r1 29','putd r1 16 2'],
  'ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10':['poke 0 31415971','poke 1 3','getd r0 r1 1','bne r0 5 Scan','getd r0 r2 29','putd ra 27 r11','putd r1 19 ra'],
  'ic10/directory-core/generic_registry_directory_host_v2_0.ic10':['poke 0 31415982','poke 1 3','bne r0 31415983 Loop','poke 23 r10'],
- 'ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10':['poke 1 3','poke 3 HASH("DirectorySchema.CatalogStoreNode.v1")','poke 8 HASH("DirectorySchema.CatalogStoreNode")','poke 10 6','poke 11 64','poke 15 2'],
+ 'ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10':['poke 1 3','poke 3 HASH("DirectorySchema.CatalogStoreNode.v1")','poke 10 6','poke 11 64','poke 15 2'],
  'ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10':['get r14 d0 15','putd r1 12 r14'],
  'ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10':['getd r0 r1 16','bne r0 3 NextSrc','putd r2 27 r11','put d0 40 r13'],
  'ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10':['# Catalog Item Migration Worker','putd r2 r12 r10','putd r1 9 r0','putd r2 27 0'],

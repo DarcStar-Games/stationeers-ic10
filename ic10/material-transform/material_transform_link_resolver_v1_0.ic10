@@ -28,9 +28,7 @@ bne r0 31415981 Bad
 get r0 d2 1
 bne r0 1 Bad
 get r0 d2 9
-bne r0 HASH("DirectorySchema.ResourceLink") Bad
-get r0 d2 10
-bne r0 1 Bad
+bne r0 HASH("DirectorySchema.ResourceLink.v1") Bad
 get r12 d2 2
 add r0 r12 3
 get r11 d2 r0

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-discovery/controller_selector_v3_0.ic10",
-  "source_sha256": "080914a75ee0e0edc86665c4b89ae4bb4e80866491376470b76b8b7d4edc3420",
+  "source_sha256": "696e84794d4c0bc5bd67dd7a799871b88b1bb1ff233f0061674ce926a70797e5",
   "identity": {
     "service_id": "ic10.script.controller.selector",
     "implementation_revision": "3.0",
@@ -21,7 +21,6 @@
         1,
         2,
         9,
-        10,
         11
       ],
       "literal_writes": [],
@@ -41,12 +40,7 @@
         {
           "address": 9,
           "operator": "equals",
-          "value": "HASH(\"DirectorySchema.Controller\")"
-        },
-        {
-          "address": 10,
-          "operator": "equals",
-          "value": 1
+          "value": "HASH(\"DirectorySchema.Controller.v1\")"
         },
         {
           "address": 11,

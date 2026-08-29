@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10",
-  "source_sha256": "0f3bbc2793f5da12d9445110269562e0bbdc2be050beea68805e7e2d01a04914",
+  "source_sha256": "04afee075ea6fb0511298cd8e2211565a1412d28ebdf30911a2d3245fc8266d9",
   "identity": {
     "service_id": "ic10.script.controller.directory.adapter",
     "implementation_revision": "4.0",
@@ -82,8 +82,6 @@
       2,
       3,
       7,
-      8,
-      9,
       10,
       11,
       12,
@@ -162,24 +160,6 @@
         "semantic_source": "unresolved",
         "access": [
           "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
           "self-write"
         ]
       },

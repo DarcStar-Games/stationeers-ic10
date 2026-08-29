@@ -10,18 +10,18 @@ R=_PROJECT_ROOT
 D=(R/'ic10/controller-discovery/controller_directory_adapter_v4_0.ic10').read_text();B=(R/'ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10').read_text();H=(R/'ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10').read_text();S=(R/'ic10/controller-discovery/controller_selector_v3_0.ic10').read_text();A=(R/'ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10').read_text();L=(R/'ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10').read_text();P=(R/'ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10').read_text();fails=[]
 for n in ('poke 0 31415983','poke 3 HASH("DirectorySchema.Controller.v1")','poke 10 2','poke 11 64','poke 15 1'):
  if n not in D:fails.append('Controller adapter missing '+n)
-for n in ('put d1 9 r0','put d1 10 r0','put d1 11 r2','put d1 12 r3','move r6 2'):
+for n in ('put d1 9 r0','put d1 11 r2','put d1 12 r3','move r6 2'):
  if n not in B:fails.append('Directory bridge missing '+n)
 for n in ('poke 0 31415981','poke 1 1','bgt r3 64 Error','add r10 r6 7','poke r10 r9','mul r4 r2 r3'):
  if n not in H:fails.append('Generic Directory Host missing '+n)
-for n in ('poke 1 2','HASH("DirectorySchema.Controller")','bgtz r0 Overflow','Scan:','SameType:','getd r0 directory 2','bne r0 r10 Updating'):
+for n in ('poke 1 2','HASH("DirectorySchema.Controller.v1")','bgtz r0 Overflow','Scan:','SameType:','getd r0 directory 2','bne r0 r10 Updating'):
  if n not in S:fails.append('Direct Controller Selector missing '+n)
-if not all(x in A for x in ('bne r0 31415981 BadDirectory','HASH("DirectorySchema.Controller")','bgtz r0 BadDirectory')):fails.append('Arbiter does not validate generic schema/refuse overflow')
-if not all(x in L for x in ('bne r0 31415981 Publish','HASH("DirectorySchema.Controller")','bgtz r0 SourceOverflow')):fails.append('Pressure Link adapter does not validate/refuse source snapshot')
+if not all(x in A for x in ('bne r0 31415981 BadDirectory','HASH("DirectorySchema.Controller.v1")','bgtz r0 BadDirectory')):fails.append('Arbiter does not validate generic schema/refuse overflow')
+if not all(x in L for x in ('bne r0 31415981 Publish','HASH("DirectorySchema.Controller.v1")','bgtz r0 SourceOverflow')):fails.append('Pressure Link adapter does not validate/refuse source snapshot')
 if not all(x in P for x in ('mul r13 r0 4','add r13 r13 16','max r13 r13 64')):fails.append('adaptive lease missing')
 if max(64,4*64+16)!=272:fails.append('64-link lease !=272')
 # Execute the direct Selector against a sorted 64-capable snapshot. It must derive groups without 02.
-dir=Device(700,stack={0:31415981,1:1,2:0,3:9,5:5,7:0,9:'HASH:DirectorySchema.Controller',10:1,11:2,12:64})
+dir=Device(700,stack={0:31415981,1:1,2:0,3:9,5:5,7:0,9:'HASH:DirectorySchema.Controller.v1',11:2,12:64})
 records=[('HASH:ControllerA',101),('HASH:ControllerA',102),('HASH:ControllerB',201),('HASH:ControllerB',202),('HASH:ControllerC',301)]
 for i,(typ,ref) in enumerate(records):dir.stack[32+2*i]=typ;dir.stack[33+2*i]=ref
 import re

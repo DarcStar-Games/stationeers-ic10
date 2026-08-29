@@ -41,9 +41,7 @@ bne r0 31415981 LinkBad
 get r0 d0 1
 bne r0 1 LinkBad
 get r0 d0 9
-bne r0 HASH("DirectorySchema.PressureGridLink") LinkBad
-get r0 d0 10
-bne r0 1 LinkBad
+bne r0 HASH("DirectorySchema.PressureGridLink.v1") LinkBad
 get r0 d0 11
 bne r0 3 LinkBad
 bdns d2 BuildBad

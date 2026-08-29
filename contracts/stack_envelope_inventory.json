@@ -73,8 +73,8 @@
             "end": 511
           }
         ],
-        "line_count": 116,
-        "line_headroom_120": 4,
+        "line_count": 114,
+        "line_headroom_120": 6,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -122,16 +122,6 @@
             "address": 3,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
-          },
-          {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"DirectorySchema.CatalogStoreNode\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 1
           }
         ],
         "payload_bases": [
@@ -166,7 +156,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
+        "literal_cell_count": 13,
         "highest_literal_cell": 17,
         "dynamic_read_ranges": [
           {
@@ -180,8 +170,8 @@
             "end": 511
           }
         ],
-        "line_count": 91,
-        "line_headroom_120": 29,
+        "line_count": 89,
+        "line_headroom_120": 31,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -233,11 +223,11 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "31bea61e8eaf5b187268c0cb7a7c983e8c5934f115080a55fe6e6215814898e1",
+          "source_sha256": "af89e8c88a667ce592e3df6e8495c41ed68dc89797fd60e9b52c0d14099b28a5",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
-              "start": 8,
+              "start": 10,
               "end": 401
             }
           ],
@@ -284,8 +274,8 @@
         "highest_literal_cell": 2,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 101,
-        "line_headroom_120": 19,
+        "line_count": 99,
+        "line_headroom_120": 21,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -317,7 +307,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "74487ec6495ca5a508458e767f087b9065f8b6311cd7dc12bc6b32f928b4c801",
+          "source_sha256": "305aab7cab34af85accdf32ce5b91e18cacc13fca11721ecd390aad3814cacd5",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [],
           "post_init_dynamic_write_ranges": []
@@ -363,8 +353,8 @@
             "end": 511
           }
         ],
-        "line_count": 47,
-        "line_headroom_120": 73,
+        "line_count": 45,
+        "line_headroom_120": 75,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -427,8 +417,8 @@
         "highest_literal_cell": 2,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 56,
-        "line_headroom_120": 64,
+        "line_count": 54,
+        "line_headroom_120": 66,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -487,8 +477,8 @@
             "end": 511
           }
         ],
-        "line_count": 116,
-        "line_headroom_120": 4,
+        "line_count": 114,
+        "line_headroom_120": 6,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -555,8 +545,8 @@
         "highest_literal_cell": 2,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 110,
-        "line_headroom_120": 10,
+        "line_count": 108,
+        "line_headroom_120": 12,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -588,7 +578,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "455448ab3a179307babee2a4739d495a0e9659c5dcb4d10ba9d641885dba72c4",
+          "source_sha256": "504b6bf644f69d0a18260b9e1460afd4fe359b28b0bf025372a5ee9d3c6b0d18",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [],
           "post_init_dynamic_write_ranges": []
@@ -760,8 +750,8 @@
         "highest_literal_cell": 2,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 57,
-        "line_headroom_120": 63,
+        "line_count": 55,
+        "line_headroom_120": 65,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -793,7 +783,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "23c8870864d81c279d1b9ca918fd11b91bb5d9f5fbcf9860aa6473b3d6a3b114",
+          "source_sha256": "12f09e5191f86547c43a0992756bc2573359770d750fdd0eeaf236a90eee5dad",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [],
           "post_init_dynamic_write_ranges": []
@@ -1240,16 +1230,6 @@
             "address": 3,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.Controller.v1\")"
-          },
-          {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"DirectorySchema.Controller\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 1
           }
         ],
         "payload_bases": [
@@ -1284,7 +1264,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
+        "literal_cell_count": 13,
         "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -1293,8 +1273,8 @@
             "end": 511
           }
         ],
-        "line_count": 60,
-        "line_headroom_120": 60,
+        "line_count": 58,
+        "line_headroom_120": 62,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -1337,11 +1317,11 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "0f3bbc2793f5da12d9445110269562e0bbdc2be050beea68805e7e2d01a04914",
+          "source_sha256": "04afee075ea6fb0511298cd8e2211565a1412d28ebdf30911a2d3245fc8266d9",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
-              "start": 8,
+              "start": 10,
               "end": 145
             }
           ],
@@ -1388,8 +1368,8 @@
         "highest_literal_cell": 13,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 109,
-        "line_headroom_120": 11,
+        "line_count": 107,
+        "line_headroom_120": 13,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -3517,8 +3497,8 @@
         "highest_literal_cell": 3,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 109,
-        "line_headroom_120": 11,
+        "line_count": 107,
+        "line_headroom_120": 13,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -3616,7 +3596,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 11,
+        "literal_cell_count": 10,
         "highest_literal_cell": 24,
         "dynamic_read_ranges": [
           {
@@ -3630,8 +3610,8 @@
             "end": 511
           }
         ],
-        "line_count": 120,
-        "line_headroom_120": 0,
+        "line_count": 116,
+        "line_headroom_120": 4,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -4577,8 +4557,8 @@
             "end": 511
           }
         ],
-        "line_count": 117,
-        "line_headroom_120": 3,
+        "line_count": 115,
+        "line_headroom_120": 5,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -5414,12 +5394,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 17,
+        "literal_cell_count": 16,
         "highest_literal_cell": 16,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 108,
-        "line_headroom_120": 12,
+        "line_count": 105,
+        "line_headroom_120": 15,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -5657,8 +5637,8 @@
         "highest_literal_cell": 30,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 120,
-        "line_headroom_120": 0,
+        "line_count": 119,
+        "line_headroom_120": 1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -5721,8 +5701,8 @@
             "end": 511
           }
         ],
-        "line_count": 119,
-        "line_headroom_120": 1,
+        "line_count": 117,
+        "line_headroom_120": 3,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -5908,8 +5888,8 @@
         "highest_literal_cell": 30,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 114,
-        "line_headroom_120": 6,
+        "line_count": 113,
+        "line_headroom_120": 7,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -5953,16 +5933,6 @@
             "address": 3,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.TransformLane.v1\")"
-          },
-          {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"DirectorySchema.TransformLane\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 1
           }
         ],
         "payload_bases": [
@@ -5997,7 +5967,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
+        "literal_cell_count": 13,
         "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -6006,8 +5976,8 @@
             "end": 511
           }
         ],
-        "line_count": 80,
-        "line_headroom_120": 40,
+        "line_count": 78,
+        "line_headroom_120": 42,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -6050,11 +6020,11 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "1ab71791f61406ec8727589f5b0622f71770b307fa20d9875456c2e5e7594154",
+          "source_sha256": "9b1c66acff9ce2d4d296f5c51575a1f287961e1dd3c3d145285aeb95605943b1",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
-              "start": 8,
+              "start": 10,
               "end": 209
             }
           ],
@@ -6670,8 +6640,8 @@
             "end": 511
           }
         ],
-        "line_count": 118,
-        "line_headroom_120": 2,
+        "line_count": 116,
+        "line_headroom_120": 4,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -7312,8 +7282,8 @@
         "highest_literal_cell": 11,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 76,
-        "line_headroom_120": 44,
+        "line_count": 74,
+        "line_headroom_120": 46,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -7654,16 +7624,6 @@
             "address": 3,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.PowerReservation.v1\")"
-          },
-          {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"DirectorySchema.PowerReservation\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 1
           }
         ],
         "payload_bases": [
@@ -7698,7 +7658,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
+        "literal_cell_count": 13,
         "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -7707,8 +7667,8 @@
             "end": 511
           }
         ],
-        "line_count": 105,
-        "line_headroom_120": 15,
+        "line_count": 103,
+        "line_headroom_120": 17,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -7751,11 +7711,11 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "8354c0386b934421c506d1a4a995dee515488a217cf9c09a830b53eb9746d11d",
+          "source_sha256": "1ac2f83f18077488a2a91c7a01e544ff787dcfc242702dd9a3730477accdf9ca",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
-              "start": 8,
+              "start": 10,
               "end": 209
             }
           ],
@@ -7862,8 +7822,8 @@
         "highest_literal_cell": 11,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 70,
-        "line_headroom_120": 50,
+        "line_count": 68,
+        "line_headroom_120": 52,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -7922,8 +7882,8 @@
         "highest_literal_cell": 10,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 93,
-        "line_headroom_120": 27,
+        "line_count": 91,
+        "line_headroom_120": 29,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -8473,8 +8433,8 @@
         "highest_literal_cell": 9,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 74,
-        "line_headroom_120": 46,
+        "line_count": 72,
+        "line_headroom_120": 48,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -8681,8 +8641,8 @@
         "highest_literal_cell": 14,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 119,
-        "line_headroom_120": 1,
+        "line_count": 117,
+        "line_headroom_120": 3,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -9042,16 +9002,6 @@
             "address": 3,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.PressureGridLink.v1\")"
-          },
-          {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"DirectorySchema.PressureGridLink\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 1
           }
         ],
         "payload_bases": [
@@ -9086,7 +9036,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
+        "literal_cell_count": 13,
         "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -9095,8 +9045,8 @@
             "end": 511
           }
         ],
-        "line_count": 90,
-        "line_headroom_120": 30,
+        "line_count": 86,
+        "line_headroom_120": 34,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -9139,11 +9089,11 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "b599f53e96a3ff967b66b6f60bc6482cdaa46530f3773a7a2cf1d6751d219a57",
+          "source_sha256": "8f152dddb603e2703f38e0b9d85d868051e2a2e7f6870166b099a809f3f973b3",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
-              "start": 8,
+              "start": 10,
               "end": 209
             }
           ],
@@ -9278,8 +9228,8 @@
             "end": 511
           }
         ],
-        "line_count": 120,
-        "line_headroom_120": 0,
+        "line_count": 118,
+        "line_headroom_120": 2,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -9434,8 +9384,8 @@
         "highest_literal_cell": 15,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 89,
-        "line_headroom_120": 31,
+        "line_count": 87,
+        "line_headroom_120": 33,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -9666,8 +9616,8 @@
         "highest_literal_cell": 13,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 120,
-        "line_headroom_120": 0,
+        "line_count": 118,
+        "line_headroom_120": 2,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -10088,16 +10038,6 @@
             "address": 3,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.Printer.v2\")"
-          },
-          {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"DirectorySchema.Printer\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 2
           }
         ],
         "payload_bases": [
@@ -10132,7 +10072,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
+        "literal_cell_count": 13,
         "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -10141,8 +10081,8 @@
             "end": 511
           }
         ],
-        "line_count": 119,
-        "line_headroom_120": 1,
+        "line_count": 117,
+        "line_headroom_120": 3,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -10185,11 +10125,11 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "5ef497b364cfb112f90ab605c3c81d7ffa6313c4c257e52d0c7a77dd6cfda567",
+          "source_sha256": "65b76e50515d273fcd9e39c8e8f1891defab4c78c21ccb75a58c2691327378f2",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
-              "start": 8,
+              "start": 10,
               "end": 209
             }
           ],
@@ -10306,16 +10246,6 @@
             "address": 3,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.PrinterExecution.v1\")"
-          },
-          {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"DirectorySchema.PrinterExecution\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 1
           }
         ],
         "payload_bases": [
@@ -10350,7 +10280,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
+        "literal_cell_count": 13,
         "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -10359,8 +10289,8 @@
             "end": 511
           }
         ],
-        "line_count": 122,
-        "line_headroom_120": -2,
+        "line_count": 118,
+        "line_headroom_120": 2,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -10403,11 +10333,11 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "e8d66b2349d50499b1203c380eb3704214396fdeca8cfe4d42adb8ce9186c05a",
+          "source_sha256": "b08a73df55c517ec2670a2424fa70c91aa3c92ef6ac1377349103c8db93d3f63",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
-              "start": 8,
+              "start": 10,
               "end": 209
             }
           ],
@@ -11299,16 +11229,6 @@
             "address": 3,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.ResourceEndpoint.v1\")"
-          },
-          {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"DirectorySchema.ResourceEndpoint\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 1
           }
         ],
         "payload_bases": [
@@ -11343,7 +11263,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
+        "literal_cell_count": 13,
         "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -11352,8 +11272,8 @@
             "end": 511
           }
         ],
-        "line_count": 66,
-        "line_headroom_120": 54,
+        "line_count": 64,
+        "line_headroom_120": 56,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11396,11 +11316,11 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "06c710d8808af3970bd7810b6b7ce24316062eaf0ae7674ab92022ce770e7def",
+          "source_sha256": "0948ee9c69a48fb3a2007f331f95f990d284283b9e1c3e45df5cf990576181a7",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
-              "start": 8,
+              "start": 10,
               "end": 209
             }
           ],
@@ -11432,16 +11352,6 @@
             "address": 3,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.ResourceLink.v1\")"
-          },
-          {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"DirectorySchema.ResourceLink\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 1
           }
         ],
         "payload_bases": [
@@ -11476,7 +11386,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
+        "literal_cell_count": 13,
         "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -11485,8 +11395,8 @@
             "end": 511
           }
         ],
-        "line_count": 59,
-        "line_headroom_120": 61,
+        "line_count": 57,
+        "line_headroom_120": 63,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11529,11 +11439,11 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "657c0e74147e17dc88e9962c8862c58a1da13957e28150a9cd0a04368c9b2655",
+          "source_sha256": "55c80d96f35687c2b155d36d9ab2a1aa3bb0de8a3f5a17c785e3dc02fde49823",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
-              "start": 8,
+              "start": 10,
               "end": 81
             }
           ],
@@ -11565,16 +11475,6 @@
             "address": 3,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.ResourceReservation.v1\")"
-          },
-          {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"DirectorySchema.ResourceReservation\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 1
           }
         ],
         "payload_bases": [
@@ -11609,7 +11509,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
+        "literal_cell_count": 13,
         "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -11618,8 +11518,8 @@
             "end": 511
           }
         ],
-        "line_count": 66,
-        "line_headroom_120": 54,
+        "line_count": 64,
+        "line_headroom_120": 56,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11662,11 +11562,11 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "33b7f4a2f57e295bb13486a5e903fed4b330ba6fda43fc7bc29984ef42dc804c",
+          "source_sha256": "acfb44deea89941a540de6b00a1700e6e6df40e2e42e37657a30fce75b78c2d6",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
-              "start": 8,
+              "start": 10,
               "end": 209
             }
           ],

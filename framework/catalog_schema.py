@@ -150,10 +150,8 @@ put d0 16 r11
 yield
 get r0 d0 17
 bne r0 r11 Freeze
-get r0 d0 8
-bne r0 HASH("DirectorySchema.CatalogStoreNode") SourceBad
-get r0 d0 9
-bne r0 1 SourceBad
+get r0 d0 3
+bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") SourceBad
 get r0 d0 10
 bne r0 6 SourceBad
 get r0 d0 11
@@ -227,14 +225,12 @@ Bad:
 poke 16 -1
 j Close
 Publish:
-get r0 d0 8
+get r0 d0 3
 poke 2 r0
 poke 3 r14
 get r0 db 4
 add r0 r0 1
 poke 4 r0
-get r0 d0 9
-poke 19 r0
 poke 20 6
 poke 21 64
 Close:
@@ -270,9 +266,7 @@ bne r0 31415982 Loop
 get r0 d0 1
 bne r0 3 Loop
 get r0 d0 2
-bne r0 HASH("DirectorySchema.CatalogStoreNode") Loop
-get r0 d0 19
-bne r0 1 Loop
+bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 l r12 d0 ReferenceId
 poke 23 r12
 get r0 d0 6
@@ -382,9 +376,7 @@ bne r0 31415982 Loop
 get r0 d1 1
 bne r0 3 Loop
 get r0 d1 2
-bne r0 HASH("DirectorySchema.CatalogStoreNode") Loop
-get r0 d1 19
-bne r0 1 Loop
+bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 get r11 d1 23
 mod r0 r11 2
 bnez r0 Loop
@@ -446,9 +438,7 @@ bne r0 31415982 Loop
 get r0 d1 1
 bne r0 3 Loop
 get r0 d1 2
-bne r0 HASH("DirectorySchema.CatalogStoreNode") Loop
-get r0 d1 19
-bne r0 1 Loop
+bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 get r12 d1 23
 mod r0 r12 2
 bnez r0 Loop
@@ -560,9 +550,7 @@ bne r0 31415982 Loop
 get r0 d1 1
 bne r0 3 Loop
 get r0 d1 2
-bne r0 HASH("DirectorySchema.CatalogStoreNode") Loop
-get r0 d1 19
-bne r0 1 Loop
+bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 get r11 d1 23
 mod r0 r11 2
 bnez r0 Loop
@@ -610,8 +598,6 @@ poke 0 31415983
 poke 1 3
 poke 2 17
 poke 3 HASH("DirectorySchema.CatalogStoreNode.v1")
-poke 8 HASH("DirectorySchema.CatalogStoreNode")
-poke 9 1
 poke 10 6
 poke 11 64
 poke 15 2
@@ -709,9 +695,7 @@ bne r0 31415982 Loop
 get r0 d0 1
 bne r0 3 Loop
 get r0 d0 2
-bne r0 HASH("DirectorySchema.CatalogStoreNode") Loop
-get r0 d0 19
-bne r0 1 Loop
+bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 get r14 d0 23
 mod r0 r14 2
 bnez r0 Loop
@@ -811,9 +795,7 @@ bne r0 31415982 Bad
 get r0 d0 1
 bne r0 3 Bad
 get r0 d0 2
-bne r0 HASH("DirectorySchema.CatalogStoreNode") Bad
-get r0 d0 19
-bne r0 1 Bad
+bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Bad
 get r15 d0 23
 mod r0 r15 2
 bnez r0 Bad

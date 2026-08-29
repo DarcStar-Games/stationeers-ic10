@@ -25,10 +25,8 @@ put d0 16 r11
 yield
 get r0 d0 17
 bne r0 r11 Freeze
-get r0 d0 8
-bne r0 HASH("DirectorySchema.CatalogStoreNode") SourceBad
-get r0 d0 9
-bne r0 1 SourceBad
+get r0 d0 3
+bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") SourceBad
 get r0 d0 10
 bne r0 6 SourceBad
 get r0 d0 11
@@ -102,14 +100,12 @@ Bad:
 poke 16 -1
 j Close
 Publish:
-get r0 d0 8
+get r0 d0 3
 poke 2 r0
 poke 3 r14
 get r0 db 4
 add r0 r0 1
 poke 4 r0
-get r0 d0 9
-poke 19 r0
 poke 20 6
 poke 21 64
 Close:

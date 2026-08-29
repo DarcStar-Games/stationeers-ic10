@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10",
-  "source_sha256": "8930eb1aebbc6d2ca83ad88bf09689fea6233107c3ab5e5ad97879cc1b683711",
+  "source_sha256": "2b24f6d5237390e7b2c8c7d48158d98d039b0117e473fd7aa3abacb707a4a02e",
   "identity": {
     "service_id": "ic10.script.pressure.grid.reservation.planner",
     "implementation_revision": "2.1",
@@ -29,7 +29,6 @@
           1,
           2,
           9,
-          10,
           11
         ],
         "literal_writes": [],
@@ -55,11 +54,7 @@
           },
           {
             "address": 9,
-            "equals": "HASH(\"DirectorySchema.PressureGridLink\")"
-          },
-          {
-            "address": 10,
-            "equals": 1
+            "equals": "HASH(\"DirectorySchema.PressureGridLink.v1\")"
           },
           {
             "address": 11,

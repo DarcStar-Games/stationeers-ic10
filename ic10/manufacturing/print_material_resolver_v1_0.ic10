@@ -20,9 +20,7 @@ get r8 d0 5
 blt r8 1 Bad
 bgt r8 16 Bad
 get r0 d1 9
-bne r0 HASH("DirectorySchema.ResourceLink") Bad
-get r0 d1 10
-bne r0 1 Bad
+bne r0 HASH("DirectorySchema.ResourceLink.v1") Bad
 get r0 d1 2
 beqz r0 BankA
 get r10 d1 4

@@ -38,8 +38,7 @@ poke 30 r0
 poke 21 r0
 l r1 d3 ReferenceId
 put d0 16 r1
-put d0 2 HASH("DirectorySchema.PrinterExecution")
-put d0 15 1
+put d0 2 HASH("DirectorySchema.PrinterExecution.v1")
 get r1 db 4
 put d0 4 r1
 put d0 5 2

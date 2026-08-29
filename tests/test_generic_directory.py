@@ -30,7 +30,7 @@ def adapter_ok(a,mode=1):return a.stack.get(0)==31415983 and a.stack.get(1)==3 a
 cs=[]
 for ref,typ in ((201,'HASH:Z'),(202,'HASH:A'),(203,'HASH:A')):cs.append(Device(ref,stack={96:27182818,97:2,99:typ},props={'ReferenceId':ref,'PrefabHash':-128473777}))
 a,b,h,hd=snapshot((R/'ic10/controller-discovery/controller_directory_adapter_v4_0.ic10').read_text(),{f'c{i}':d for i,d in enumerate(cs)},100)
-if not adapter_ok(a) or hd.stack.get(0)!=31415981 or hd.stack.get(1)!=1 or hd.stack.get(9)!='HASH:DirectorySchema.Controller' or hd.stack.get(10)!=1 or records(h)!=[['HASH:A',202],['HASH:A',203],['HASH:Z',201]]:fails.append('Controller Adapter ABI/snapshot mismatch')
+if not adapter_ok(a) or hd.stack.get(0)!=31415981 or hd.stack.get(1)!=1 or hd.stack.get(9)!='HASH:DirectorySchema.Controller.v1' or records(h)!=[['HASH:A',202],['HASH:A',203],['HASH:Z',201]]:fails.append('Controller Adapter ABI/snapshot mismatch')
 # Endpoint snapshot.
 eps=[Device(301,stack={0:31415949,1:1,2:2,3:9,11:1},props={'ReferenceId':301,'PrefabHash':2037291645}),Device(302,stack={0:31415949,1:1,2:1,3:7,11:1},props={'ReferenceId':302,'PrefabHash':-128473777})]
 a,b,h,hd=snapshot((R/'ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10').read_text(),{'e0':eps[0],'e1':eps[1]},110)
@@ -59,11 +59,11 @@ expected_pr=[
  [455,'HASH:Printer.SecurityPrinter',3329],
  [456,'HASH:Printer.RocketManufactory',2305],
 ]
-if not adapter_ok(a) or hd.stack.get(9)!='HASH:DirectorySchema.Printer' or hd.stack.get(10)!=2 or pr!=expected_pr:fails.append('Printer Adapter ABI/status snapshot mismatch')
+if not adapter_ok(a) or hd.stack.get(9)!='HASH:DirectorySchema.Printer.v2' or pr!=expected_pr:fails.append('Printer Adapter ABI/status snapshot mismatch')
 
 # Pressure adapter consumes Controller Directory but publishes generic candidates; generic Bridge suppresses unchanged commits.
 p1=Device(501,stack={97:2,106:601,107:602,115:4},props={'ReferenceId':501});p2=Device(502,stack={97:2,106:603,107:604,115:5},props={'ReferenceId':502})
-cd=Device(131,stack={0:31415981,1:1,2:0,3:1,5:2,9:'HASH:DirectorySchema.Controller',10:1,11:2,12:64,32:'HASH:ControllerPressureTransfer',33:501,34:'HASH:ControllerPressureTransfer',35:502},props={'ReferenceId':131})
+cd=Device(131,stack={0:31415981,1:1,2:0,3:1,5:2,9:'HASH:DirectorySchema.Controller.v1',11:2,12:64,32:'HASH:ControllerPressureTransfer',33:501,34:'HASH:ControllerPressureTransfer',35:502},props={'ReferenceId':131})
 a,b,h,hd=snapshot((R/'ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10').read_text(),{'d1':cd,'p1':p1,'p2':p2},130)
 if records(h)!=[[501,601,602],[502,603,604]]:fails.append('Pressure Link Adapter ABI/snapshot mismatch')
 g0=max(hd.stack.get(3,0),hd.stack.get(4,0))
@@ -71,7 +71,7 @@ for _ in range(80):a.run(1);b.run(1,max_steps=50000);h.run(1,max_steps=50000)
 g1=max(hd.stack.get(3,0),hd.stack.get(4,0))
 if g1!=g0:fails.append('generic Adapter Bridge advanced generation for unchanged snapshot')
 # Direct Host overflow keeps whole records.
-hv,hd=host(140);hd.stack.update({9:'HASH:DirectorySchema.Test',10:1,11:1,12:64});req=0
+hv,hd=host(140);hd.stack.update({9:'HASH:DirectorySchema.Test.v1',11:1,12:64});req=0
 def hcmd(command,candidate=None):
  global req;req+=1
  if candidate is not None:hd.stack[17]=candidate
@@ -91,7 +91,7 @@ store1=Device(701,stack={0:31415968,1:6,16:2,18:7,22:100,26:3,13:'HASH:CatA'},pr
 store2=Device(702,stack={0:31415968,1:6,16:1,18:9,22:32,26:0,13:0},props={'ReferenceId':702,'PrefabHash':2037291645})
 av=IC10((R/'ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10').read_text(),{'s1':store1,'s2':store2},self_ref=710);ad=Device(710,av.stack,{'ReferenceId':710});rv=IC10((R/'ic10/directory-core/generic_registry_directory_host_v2_0.ic10').read_text(),{'d0':ad},self_ref=711)
 for _ in range(40):av.run(1,max_steps=50000);rv.run(1,max_steps=50000)
-if not adapter_ok(av,2) or rv.stack.get(0)!=31415982 or rv.stack.get(1)!=3 or rv.stack.get(2)!='HASH:DirectorySchema.CatalogStoreNode' or rv.stack.get(19)!=1:fails.append('Registry Adapter ABI/header mismatch')
+if not adapter_ok(av,2) or rv.stack.get(0)!=31415982 or rv.stack.get(1)!=3 or rv.stack.get(2)!='HASH:DirectorySchema.CatalogStoreNode.v1':fails.append('Registry Adapter ABI/header mismatch')
 base7=64+(7-1)*6;base9=64+(9-1)*6
 if rv.stack.get(base7)!=701 or rv.stack.get(base7+1)!=2 or rv.stack.get(base9)!=702:fails.append('Registry Host NodeId indexing mismatch')
 # Removing Node9 from adapter discovery marks its persistent record MISSING on a later adapter generation.
@@ -99,7 +99,7 @@ del av.screws['s2']
 for _ in range(20):av.run(1,max_steps=50000);rv.run(1,max_steps=50000)
 if rv.stack.get(base9+1)!=7:fails.append('Registry Host did not mark missing node')
 # Full-capacity exact duplicate must not create a false overflow.
-hv2,hd2=host(141);hd2.stack.update({9:'HASH:DirectorySchema.Test',10:1,11:1,12:64});req2=0
+hv2,hd2=host(141);hd2.stack.update({9:'HASH:DirectorySchema.Test.v1',11:1,12:64});req2=0
 def hcmd2(command,candidate=None):
  global req2;req2+=1
  if candidate is not None:hd2.stack[17]=candidate

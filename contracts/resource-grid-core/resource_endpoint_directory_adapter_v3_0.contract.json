@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10",
-  "source_sha256": "06c710d8808af3970bd7810b6b7ce24316062eaf0ae7674ab92022ce770e7def",
+  "source_sha256": "0948ee9c69a48fb3a2007f331f95f990d284283b9e1c3e45df5cf990576181a7",
   "identity": {
     "service_id": "ic10.script.resource.endpoint.directory.adapter",
     "implementation_revision": "3.0",
@@ -64,8 +64,6 @@
       2,
       3,
       7,
-      8,
-      9,
       10,
       11,
       12,
@@ -144,24 +142,6 @@
         "semantic_source": "unresolved",
         "access": [
           "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
           "self-write"
         ]
       },

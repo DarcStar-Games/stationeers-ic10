@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10",
-  "source_sha256": "31bea61e8eaf5b187268c0cb7a7c983e8c5934f115080a55fe6e6215814898e1",
+  "source_sha256": "af89e8c88a667ce592e3df6e8495c41ed68dc89797fd60e9b52c0d14099b28a5",
   "identity": {
     "service_id": "ic10.script.catalog.coordinator.directory.adapter",
     "implementation_revision": "2.0",
@@ -80,8 +80,6 @@
       2,
       3,
       7,
-      8,
-      9,
       10,
       11,
       12,
@@ -165,24 +163,6 @@
         "semantic_source": "unresolved",
         "access": [
           "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
           "self-write"
         ]
       },

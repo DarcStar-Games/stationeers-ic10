@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_sink_selector_v1_0.ic10",
-  "source_sha256": "fd99def1476531a6bccacacb56f9ff454eabb84736fbacc8496f325986ac9722",
+  "source_sha256": "16204350f7b6f50e0512f4a4a39ee07b57321446cd57ba35d0da133027b2ec5f",
   "identity": {
     "service_id": "ic10.script.power.sink.selector",
     "implementation_revision": "1.0",
@@ -27,8 +27,7 @@
         "literal_reads": [
           0,
           2,
-          9,
-          10
+          9
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -49,19 +48,15 @@
           },
           {
             "address": 9,
-            "equals": "HASH(\"DirectorySchema.PowerReservation\")"
-          },
-          {
-            "address": 10,
-            "equals": 1
+            "equals": "HASH(\"DirectorySchema.PowerReservation.v1\")"
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.4bd4eac57ceb0913",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.4bd4eac57ceb0913",
+        "interface_id": "ic10.interface.access.f7201e4c50726101",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.f7201e4c50726101",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

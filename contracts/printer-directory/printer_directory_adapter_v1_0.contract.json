@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/printer-directory/printer_directory_adapter_v1_0.ic10",
-  "source_sha256": "5ef497b364cfb112f90ab605c3c81d7ffa6313c4c257e52d0c7a77dd6cfda567",
+  "source_sha256": "65b76e50515d273fcd9e39c8e8f1891defab4c78c21ccb75a58c2691327378f2",
   "identity": {
     "service_id": "ic10.script.printer.directory.adapter",
     "implementation_revision": "1.0",
@@ -37,8 +37,6 @@
       2,
       3,
       7,
-      8,
-      9,
       10,
       11,
       12,
@@ -117,24 +115,6 @@
         "semantic_source": "unresolved",
         "access": [
           "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
           "self-write"
         ]
       },

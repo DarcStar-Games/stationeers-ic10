@@ -24,9 +24,6 @@ getd r0 r9 1
 bne r0 1 Bad
 getd r0 r9 9
 bne r0 r2 Bad
-getd r0 r9 10
-get r1 db 15
-bne r0 r1 Bad
 getd r0 r9 11
 bne r0 3 Bad
 getd r8 r9 2
@@ -69,7 +66,7 @@ and r0 r14 512
 bnez r0 Scan
 and r0 r14 1024
 bnez r0 Scan
-bne r2 HASH("DirectorySchema.PrinterExecution") Stable
+bne r2 HASH("DirectorySchema.PrinterExecution.v1") Stable
 and r0 r14 16384
 beqz r0 Scan
 and r0 r14 12288

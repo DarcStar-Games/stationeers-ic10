@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/transform_job_driver_v2_0.ic10",
-  "source_sha256": "f8d14bdf36194c9bcdbccc767261a9f47c70034069540c4e2ab497683273b779",
+  "source_sha256": "0253601cc2cdb8913b0b27d53e16c4c485957bca60542264779cb710afcbe830",
   "identity": {
     "service_id": "ic10.script.transform.job.driver",
     "implementation_revision": "2.0",
@@ -37,7 +37,6 @@
           5,
           6,
           7,
-          15,
           16
         ],
         "dynamic_read": false,
@@ -51,8 +50,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.3d18cc880554eab5",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.3d18cc880554eab5",
+        "interface_id": "ic10.interface.access.5cfe3a9a654ed416",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.5cfe3a9a654ed416",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

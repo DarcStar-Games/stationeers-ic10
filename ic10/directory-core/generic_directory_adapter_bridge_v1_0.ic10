@@ -29,10 +29,8 @@ get r14 db 2
 beq r10 r14 Release
 get r2 d0 10
 get r3 d0 11
-get r0 d0 8
+get r0 d0 3
 put d1 9 r0
-get r0 d0 9
-put d1 10 r0
 put d1 11 r2
 put d1 12 r3
 move r6 1

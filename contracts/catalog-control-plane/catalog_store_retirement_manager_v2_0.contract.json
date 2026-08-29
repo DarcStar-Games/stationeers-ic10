@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10",
-  "source_sha256": "23c8870864d81c279d1b9ca918fd11b91bb5d9f5fbcf9860aa6473b3d6a3b114",
+  "source_sha256": "12f09e5191f86547c43a0992756bc2573359770d750fdd0eeaf236a90eee5dad",
   "identity": {
     "service_id": "ic10.script.catalog.store.retirement.manager",
     "implementation_revision": "2.0",
@@ -76,7 +76,6 @@
           0,
           1,
           2,
-          19,
           23
         ],
         "literal_writes": [],
@@ -102,11 +101,7 @@
           },
           {
             "address": 2,
-            "equals": "HASH(\"DirectorySchema.CatalogStoreNode\")"
-          },
-          {
-            "address": 19,
-            "equals": 1
+            "equals": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
           }
         ]
       },

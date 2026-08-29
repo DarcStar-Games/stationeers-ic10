@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10",
-  "source_sha256": "1ab71791f61406ec8727589f5b0622f71770b307fa20d9875456c2e5e7594154",
+  "source_sha256": "9b1c66acff9ce2d4d296f5c51575a1f287961e1dd3c3d145285aeb95605943b1",
   "identity": {
     "service_id": "ic10.script.transform.lane.directory.adapter",
     "implementation_revision": "1.0",
@@ -64,8 +64,6 @@
       2,
       3,
       7,
-      8,
-      9,
       10,
       11,
       12,
@@ -144,24 +142,6 @@
         "semantic_source": "unresolved",
         "access": [
           "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
           "self-write"
         ]
       },

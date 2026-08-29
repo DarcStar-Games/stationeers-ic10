@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10",
-  "source_sha256": "455448ab3a179307babee2a4739d495a0e9659c5dcb4d10ba9d641885dba72c4",
+  "source_sha256": "504b6bf644f69d0a18260b9e1460afd4fe359b28b0bf025372a5ee9d3c6b0d18",
   "identity": {
     "service_id": "ic10.script.catalog.item.migration.planner",
     "implementation_revision": "2.0",
@@ -85,7 +85,6 @@
           0,
           1,
           2,
-          19,
           23
         ],
         "literal_writes": [],
@@ -111,11 +110,7 @@
           },
           {
             "address": 2,
-            "equals": "HASH(\"DirectorySchema.CatalogStoreNode\")"
-          },
-          {
-            "address": 19,
-            "equals": 1
+            "equals": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
           }
         ]
       },

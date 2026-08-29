@@ -23,8 +23,7 @@ poke 30 r0
 poke 21 r0
 l r1 d2 ReferenceId
 put d0 16 r1
-put d0 2 HASH("DirectorySchema.TransformLane")
-put d0 15 1
+put d0 2 HASH("DirectorySchema.TransformLane.v1")
 put d0 3 0
 get r1 db 4
 put d0 4 r1

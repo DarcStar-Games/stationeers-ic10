@@ -28,7 +28,7 @@ ordered(x,'poke 13 r3','put d1 19 r1','material executor delivery snapshot')
 # One canonical transform transaction path: Admission -> Resolver -> Stager -> Allocator2 -> Runtime.
 a=text('ic10/material-transform/material_transform_admission_v1_0.ic10');r=text('ic10/material-transform/material_transform_link_resolver_v1_0.ic10');s=text('ic10/material-transform/multi_material_reservation_stager_v1_0.ic10');m=text('ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10');rt=text('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10')
 for tok in ('bgt r4 3 Bad','HASH("StructureArcFurnace")','HASH("StructureFurnace")','HASH("StructureAdvancedFurnace")','poke 8 1'):need(a,tok,'transform admission')
-for tok in ('bne r0 31415981 Bad','HASH("DirectorySchema.ResourceLink")','getd r0 r1 22','poke r0 r1'):need(r,tok,'transform link resolver')
+for tok in ('bne r0 31415981 Bad','HASH("DirectorySchema.ResourceLink.v1")','getd r0 r1 22','poke r0 r1'):need(r,tok,'transform link resolver')
 for tok in ('putd r2 14 r10','putd r3 15 r10','putd r4 17 r1','poke 6 1'):need(s,tok,'reservation stager')
 for tok in ('poke 0 31415954','poke 1 2','poke 14 r1','poke 14 0','put d1 2 2'):need(m,tok,'multi allocator')
 ordered(m,'put d1 2 1','poke 14 r1','allocator stages before common epoch')

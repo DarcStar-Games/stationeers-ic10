@@ -5,8 +5,6 @@ poke 0 31415983
 poke 1 3
 poke 2 17
 poke 3 HASH("DirectorySchema.PressureGridLink.v1")
-poke 8 HASH("DirectorySchema.PressureGridLink")
-poke 9 1
 poke 10 3
 poke 11 64
 poke 15 1
@@ -29,9 +27,7 @@ bne r0 31415981 Publish
 get r0 d1 1
 bne r0 1 Publish
 get r0 d1 9
-bne r0 HASH("DirectorySchema.Controller") Publish
-get r0 d1 10
-bne r0 1 Publish
+bne r0 HASH("DirectorySchema.Controller.v1") Publish
 get r0 d1 11
 bne r0 2 Publish
 get r6 d1 2

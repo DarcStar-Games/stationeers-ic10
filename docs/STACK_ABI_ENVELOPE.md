@@ -98,7 +98,10 @@ separate version, and 20 consumer sites spent two lines checking it.
 
 The reviewed declaration keeps `schema_id` and `schema_version` as separate
 structured fields, so the canonical-registry binding still checks a real schema
-at a real version; only the on-stack encoding folds. A consumer whose schema
+at a real version; only the on-stack encoding folds. Every schema-bearing
+contract in the framework now publishes one folded identity — adapters, hosts,
+stores, loaders and their readers — so a schema and its version are a single
+exact comparison anywhere they are checked. A consumer whose schema
 moved on sees an unknown identity rather than a known one at the wrong version,
 so its diagnostic is coarser — the registry maps the hash back for anyone
 debugging.

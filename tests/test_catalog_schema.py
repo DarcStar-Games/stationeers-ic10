@@ -38,7 +38,7 @@ def mkstore(ref,node,state,items):
 src=mkstore(src_ref,1,3,[(101,1,0,0),(202,2,0,0)]);dst=mkstore(dst_ref,2,2,[(303,3,0,0)])
 src.stack[24]=dst_ref;dst.stack[21]=src_ref
 # Registry records only need RefIds for planner traversal.
-dir_stack={0:31415982,1:3,2:'HASH:DirectorySchema.CatalogStoreNode',19:1,20:6,21:64,23:0,64:src_ref,65:3,66:src.stack[22],70:dst_ref,71:2,72:dst.stack[22]};directory=Device(dir_ref,dir_stack,{'ReferenceId':dir_ref})
+dir_stack={0:31415982,1:3,2:'HASH:DirectorySchema.CatalogStoreNode.v1',20:6,21:64,23:0,64:src_ref,65:3,66:src.stack[22],70:dst_ref,71:2,72:dst.stack[22]};directory=Device(dir_ref,dir_stack,{'ReferenceId':dir_ref})
 planner=IC10((R/'ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10').read_text(),{'d0':core,'d1':directory,'src':src,'dst':dst},self_ref=504)
 worker=IC10((R/'ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10').read_text(),{'d0':core,'src':src,'dst':dst},self_ref=505)
 def move_one():

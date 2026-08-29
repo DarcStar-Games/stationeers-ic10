@@ -4,8 +4,6 @@ poke 0 31415983
 poke 1 3
 poke 2 17
 poke 3 HASH("DirectorySchema.PrinterExecution.v1")
-poke 8 HASH("DirectorySchema.PrinterExecution")
-poke 9 1
 poke 10 3
 poke 11 64
 poke 15 1
@@ -22,9 +20,7 @@ bne r0 31415981 Loop
 get r0 d0 1
 bne r0 1 Loop
 get r0 d0 9
-bne r0 HASH("DirectorySchema.Printer") Loop
-get r0 d0 10
-bne r0 2 Loop
+bne r0 HASH("DirectorySchema.Printer.v2") Loop
 get r0 d0 11
 bne r0 3 Loop
 get r11 d0 2

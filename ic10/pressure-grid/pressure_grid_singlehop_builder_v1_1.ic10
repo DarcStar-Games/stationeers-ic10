@@ -74,9 +74,7 @@ bne r0 31415981 Reject
 get r0 d0 1
 bne r0 1 Reject
 get r0 d0 9
-bne r0 HASH("DirectorySchema.PressureGridLink") Reject
-get r0 d0 10
-bne r0 1 Reject
+bne r0 HASH("DirectorySchema.PressureGridLink.v1") Reject
 get r0 d0 11
 bne r0 3 Reject
 bdns d1 Reject

@@ -72,7 +72,7 @@ for i,(typ,qty) in enumerate(((101,1),(102,1),(103,2))):
     link=Device(915+i*10,stack={0:31415953,1:1,2:sr.ref,3:dr.ref,4:2,5:typ,9:1,12:1,14:guard.ref,15:exe.ref,16:feed.ref,21:700+i,22:proc.ref,23:0},props={'ReferenceId':915+i*10})
     links.append((link,sr,dr,guard,exe,feed,qty))
     for d in (link,sr,dr,guard,exe,feed): dyn[f'x{d.ref}']=d
-ld=Device(950,stack={0:31415981,1:1,2:0,3:1,5:3,9:'HASH:DirectorySchema.ResourceLink',10:1,11:1,12:64,32:links[0][0].ref,33:links[1][0].ref,34:links[2][0].ref},props={'ReferenceId':950})
+ld=Device(950,stack={0:31415981,1:1,2:0,3:1,5:3,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:64,32:links[0][0].ref,33:links[1][0].ref,34:links[2][0].ref},props={'ReferenceId':950})
 res_vm=IC10(r,{'d0':adm_dev,'d1':view,'d2':ld,**dyn},self_ref=951); res_dev=Device(951,res_vm.stack,{'ReferenceId':951})
 res_vm.run(2)
 if res_vm.stack.get(6)!=1 or [res_vm.stack.get(16+i*4) for i in range(3)] != [z[0].ref for z in links]:

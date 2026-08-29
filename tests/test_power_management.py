@@ -34,7 +34,7 @@ ck(rrvm.stack.get(6)==321 and rrvm.stack.get(7)==123 and rrvm.stack.get(5)==3,'R
 # Source/Sink selectors must read S6/S7, not role/cross-direction cells.
 src=Device(1201,stack={0:31415950,1:1,2:1100,3:4,4:'HASH:Power.Electrical',5:1,6:100,7:0,9:1,12:5,17:0,28:1,30:101,31:16},props={'ReferenceId':1201})
 sink=Device(1202,stack={0:31415950,1:1,2:1101,3:4,4:'HASH:Power.Electrical',5:2,6:0,7:80,9:1,12:6,17:0,28:2,30:201,31:14410},props={'ReferenceId':1202})
-pdir=Device(1300,stack={0:31415981,1:1,2:0,5:2,7:0,9:'HASH:DirectorySchema.PowerReservation',10:1,11:3,12:64,32:1000001,33:101,34:1201,35:3000099,36:201,37:1202},props={'ReferenceId':1300})
+pdir=Device(1300,stack={0:31415981,1:1,2:0,5:2,7:0,9:'HASH:DirectorySchema.PowerReservation.v1',11:3,12:64,32:1000001,33:101,34:1201,35:3000099,36:201,37:1202},props={'ReferenceId':1300})
 plan=Device(1301,stack={24:0},props={'ReferenceId':1301})
 sv=IC10((R/'ic10/power-grid/power_source_selector_v1_0.ic10').read_text(),{'d0':pdir,'d1':plan,'x0':src,'x1':sink},self_ref=228)
 sv.stack.update({2:0,3:1});sv.run(3);ck(sv.stack.get(5)==1 and sv.stack.get(7)==100,'source selector did not use Reservation S6 export')
@@ -42,7 +42,7 @@ kv=IC10((R/'ic10/power-grid/power_sink_selector_v1_0.ic10').read_text(),{'d0':pd
 kv.stack.update({2:0,3:1});kv.run(3);ck(kv.stack.get(5)==1 and kv.stack.get(7)==80,'sink selector did not use Reservation S7 import')
 # Transformer overhead link selector.
 link=Device(1401,stack={0:31415953,1:1,2:1201,3:1202,4:4,5:'HASH:Power.Electrical',6:2,7:100,8:0,9:1,10:1500,11:0,12:9,13:3,14:5},props={'ReferenceId':1401})
-ldir=Device(1400,stack={0:31415981,1:1,2:0,5:1,7:0,9:'HASH:DirectorySchema.ResourceLink',10:1,11:1,12:64,32:1401},props={'ReferenceId':1400})
+ldir=Device(1400,stack={0:31415981,1:1,2:0,5:1,7:0,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:64,32:1401},props={'ReferenceId':1400})
 lv=IC10((R/'ic10/power-grid/power_link_selector_v1_0.ic10').read_text(),{'d0':ldir,'x0':link},self_ref=229)
 lv.stack.update({2:1201,3:1202,4:80,5:1});lv.run(3);ck(lv.stack.get(7)==1 and lv.stack.get(9)==85,'transformer overhead not charged source-side')
 # Live coherent PlanStore BEGIN/ADD/COMMIT.
