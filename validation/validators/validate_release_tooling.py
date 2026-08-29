@@ -37,10 +37,19 @@ try:
  guide=s.index("update_user_deployment_inventory.py")
  gen=s.index("generate_source_catalog.py")
  contracts=s.index("generate_script_contracts.py")
- manifest=s.index('write_archive_manifest({out})')
+ manifest=s.index('manifest=archive_manifest(files)')
  ck(unlink<guide<gen<contracts<manifest,'release output / deployment guide / source index / script contract ordering is invalid')
 except ValueError: fails.append('release build ordering markers missing')
 ck('tracked_files({out})' in s,'ZIP creation does not exclude requested output')
+ck("z.writestr('ARCHIVE_MANIFEST.sha256',manifest)" in s,'release manifest is not written inside the ZIP')
+ck("(ROOT/'ARCHIVE_MANIFEST.sha256').write_text" not in s,'release build writes a stale-prone repository manifest')
+ck(not (R/'ARCHIVE_MANIFEST.sha256').exists(),'ARCHIVE_MANIFEST.sha256 must be a release artifact, not a repository file')
+manifest=br.archive_manifest(files)
+ck(len(manifest.splitlines())==len(files),'release manifest entry count differs from release inventory')
+try: br.verify_manifest(manifest)
+except RuntimeError as e: fails.append(f'generated in-memory archive manifest does not verify: {e}')
+readme=(R/'README.md').read_text()
+ck('`ARCHIVE_MANIFEST.sha256` exists only inside the resulting ZIP' in readme,'README does not document the release-only manifest location')
 # Both sweeps carry their own copy of the same exclusion set: build_release keeps
 # local tooling out of the release inventory, run_validation keeps it out of the
 # input fingerprint. Each copy says "keep in sync with" the other, which is a
@@ -120,7 +129,7 @@ with tempfile.TemporaryDirectory() as td:
 if fails:
  print('Release tooling validation: FAIL');[print(' -',x) for x in fails];sys.exit(1)
 print('Release tooling validation: PASS')
-print(' - in-tree output archive is excluded before manifest and ZIP inventory')
+print(' - in-tree output archive is excluded before manifest and ZIP inventory; the manifest exists only inside the ZIP')
 print(' - build ordering removes stale output, refreshes deployment inventory, source index, and script contracts before validation/manifests')
 print(f' - release inventory and validation fingerprint exclude the same tooling dirs: {sorted(br.TOOLING_DIRS)}')
 print(' - CI runs clean validation with read-only permissions, pinned dependencies, clean-tree enforcement, and failure evidence')

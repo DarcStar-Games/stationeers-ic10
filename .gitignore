@@ -7,3 +7,6 @@ __pycache__/
 # its own requested output from the manifest, but any earlier archive left in the
 # tree would otherwise be packaged into the next one.
 *.zip
+
+# Generated and embedded inside release archives; never maintained in a checkout.
+ARCHIVE_MANIFEST.sha256

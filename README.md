@@ -368,6 +368,10 @@ To produce a verified release archive in the required ordering—generated index
 python3 tools/build_release.py --output <release.zip>
 ```
 
+`ARCHIVE_MANIFEST.sha256` exists only inside the resulting ZIP. It records the
+SHA-256 digest of every packaged repository file and is generated and verified
+during that build; no checkout-level copy is maintained.
+
 These checks validate static contracts, model the important transaction/persistence protocols, and execute selected transaction-critical IC10 source directly through `framework/ic10_harness.py`. They do not replace live-game commissioning tests; see `docs/FRAMEWORK_HARDENING_TESTS.md`.
 
 When working from a git clone, enable the evidence-sync pre-commit hook once per clone:
