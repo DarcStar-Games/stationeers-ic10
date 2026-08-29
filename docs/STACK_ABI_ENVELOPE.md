@@ -242,6 +242,27 @@ migrate, the digest records the pre-v1 set rather than migration progress, and a
 newly added source is unclassified — failing validation until it publishes the
 header.
 
+### Peer-written mailboxes move as a block
+
+Six of the nine manufacturing programs read their request from `S2..S7` — cells a
+peer writes through a device port, not cells they own. Relocating only the cells a
+program reads would leave its writer still writing `S2..S7`, which after migration
+is the header: the writer would overwrite `CapabilityMask` and `SchemaId` on every
+request. So the whole mailbox moves as one contiguous block, and the writer's `put`
+addresses move with it in the same change.
+
+`tools/plan_header_migration.py` lists a family's port and reference accesses to
+`S2..S7` for exactly this reason. It cannot resolve which program a port points at
+— that wiring lives in the deployment chapters, not in data — so each edge is
+attributed by hand against `docs/DEPLOYMENT.md` and the family's own chapter before
+its addresses are moved.
+
+A reference-addressed write (`putd`/`getd` through a `ReferenceId`) is not a port
+and does not appear in that list at all. Those must be found by reading the
+program: a launcher that writes `putd ref 2` is writing some other service's header
+once that service migrates, and nothing in the contract layer records which service
+it holds a reference to.
+
 A service ABI changes only when its semantic contract changes; a schema version
 only when that schema changes. A future incompatible header uses a new exact
 version and is rejected by v1 readers; it may not silently repurpose a v1 cell.
@@ -255,7 +276,8 @@ version and is rejected by v1 readers; it may not silently repurpose a v1 cell.
 | Stack Header Reader | 8 | 117 | the reference reader; validates every declared field |
 | Stack Cell Monitor | 8 | 45 | the probe: one cell at a chosen address |
 | Generic Telemetry family | 8 | +4 each | 7 runtimes migrated; 5 spend reviewed margin, 0 consumers changed |
-| Backlog | — | — | 165 programs, 148 of which use `S2..S7` today |
+| Manufacturing family | 8 | +1 each | 9 migrated; six move a whole peer-written mailbox, 1 spends reviewed margin |
+| Backlog | — | — | 105 programs, 95 of which use `S2..S7` today |
 
 ## Worked migration: Generic Telemetry
 

@@ -19,7 +19,7 @@ rpv=Device(506,stack={},props={'ReferenceId':506});ep=Device(505,stack={14:506},
 out=Device(504,stack={2:505,7:100},props={'ReferenceId':504})
 runtime=Device(500,stack={17:502,18:503,15:504},props={'ReferenceId':500})
 ready=IC10(src('ic10/manufacturing/transform_candidate_readiness_v1_0.ic10'),{'p':profile,'a':adm,'r':res,'o':out,'e':ep,'rp':rpv},self_ref=507)
-ready.stack.update({2:500,3:222,4:2,5:2,6:1,7:1,8:44})
+ready.stack.update({11:500,12:222,13:2,14:2,15:1,16:1,8:44})
 # expose all refs for getd through screws
 ready.screws.update({'rt':runtime,'profile':profile,'adm':adm,'res':res,'out':out,'ep':ep,'rpv':rpv})
 ready.run(30)
@@ -32,7 +32,7 @@ res.stack.update({7:10,6:1,2:222});ready.run(2)
 ck(ready.stack.get(10)==44 and ready.stack.get(9)==1,'generation-qualified transform readiness did not complete')
 
 # Admission and resolver failures map to processor/resource rather than timing out ambiguously.
-ready.stack.update({3:333,8:45});profile.stack.update({2:333,6:7,68:333,69:1});ready.run(2);adm.stack.update({9:9,8:-1,2:333});ready.run(2)
+ready.stack.update({12:333,8:45});profile.stack.update({2:333,6:7,68:333,69:1});ready.run(2);adm.stack.update({9:9,8:-1,2:333});ready.run(2)
 ck(ready.stack.get(10)==45 and ready.stack.get(9)==-2,'Admission rejection was not classified WAIT_PROCESSOR')
 
 # LIVE_CURRENT invalid requests must still publish their accepted identity, or callers hang forever.

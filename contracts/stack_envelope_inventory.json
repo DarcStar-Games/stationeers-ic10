@@ -29,10 +29,10 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 60,
-    "legacy_exempt": 114,
-    "backlog_reserved_cell_users": 102,
-    "backlog_dynamic_range_users": 25
+    "migrated_v1": 69,
+    "legacy_exempt": 105,
+    "backlog_reserved_cell_users": 95,
+    "backlog_dynamic_range_users": 24
   },
   "services": [
     {
@@ -5810,7 +5810,7 @@
       "source": "ic10/manufacturing/generic_print_runtime_v2_0.ic10",
       "service_contract_id": "ic10.script.generic.print.runtime",
       "deployment_family": "manufacturing",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -5835,12 +5835,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
+        "literal_cell_count": 16,
         "highest_literal_cell": 25,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 112,
-        "line_headroom_120": 8,
+        "line_count": 113,
+        "line_headroom_120": 7,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -5848,29 +5848,56 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.generic.print.runtime",
+        "magic": 31415990,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "f045cbc987280069aa01bf8a68413d3871da24628c67aa60f9bf75da240e8d38",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 15
+            },
+            {
+              "start": 20,
+              "end": 20
+            },
+            {
+              "start": 22,
+              "end": 25
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing"
       }
     },
     {
       "source": "ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10",
       "service_contract_id": "ic10.script.manufacturing.candidate.selector",
       "deployment_family": "manufacturing",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -5895,12 +5922,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 16,
-        "highest_literal_cell": 16,
+        "literal_cell_count": 17,
+        "highest_literal_cell": 22,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 105,
-        "line_headroom_120": 15,
+        "line_count": 106,
+        "line_headroom_120": 14,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -5908,29 +5935,52 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.manufacturing.candidate.selector",
+        "magic": 31415986,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "f78b3610ddec97e383e6b68b829e2ff9d453b2acda44e2c09c0b68eeb3c62d8e",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 14
+            },
+            {
+              "start": 16,
+              "end": 22
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing"
       }
     },
     {
       "source": "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10",
       "service_contract_id": "ic10.script.manufacturing.driver.router",
       "deployment_family": "manufacturing",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -5955,36 +6005,61 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 8,
+        "literal_cell_count": 9,
         "highest_literal_cell": 14,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 75,
-        "line_headroom_120": 45,
+        "line_count": 76,
+        "line_headroom_120": 44,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
       "window_collision": {
         "literal_cells": [
           0,
-          1
+          1,
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.manufacturing.driver.router",
+        "magic": 31415994,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "58bbb691b29067ad2f38a3a7b4c0ce1d587baf91fd0fad531ca40676090e8dca",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 9,
+              "end": 14
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing"
       }
     },
     {
       "source": "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10",
       "service_contract_id": "ic10.script.manufacturing.scheduler",
       "deployment_family": "manufacturing",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -6009,7 +6084,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 12,
+        "literal_cell_count": 13,
         "highest_literal_cell": 31,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -6018,15 +6093,16 @@
             "end": 511
           }
         ],
-        "line_count": 119,
-        "line_headroom_120": 1,
+        "line_count": 120,
+        "line_headroom_120": 0,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
       "window_collision": {
         "literal_cells": [
           0,
-          1
+          1,
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -6042,17 +6118,49 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.manufacturing.scheduler",
+        "magic": 31415995,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "6bf0f703e33ae1d02c1b28d8ec6641e382d01d80028ba9d6796fc8f13f43ddc2",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 20,
+              "end": 21
+            },
+            {
+              "start": 23,
+              "end": 23
+            },
+            {
+              "start": 25,
+              "end": 31
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing"
       }
     },
     {
       "source": "ic10/manufacturing/print_candidate_executor_v2_0.ic10",
       "service_contract_id": "ic10.script.print.candidate.executor",
       "deployment_family": "manufacturing",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -6077,12 +6185,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 14,
+        "literal_cell_count": 15,
         "highest_literal_cell": 33,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 120,
-        "line_headroom_120": 0,
+        "line_count": 121,
+        "line_headroom_120": -1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -6090,26 +6198,60 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.print.candidate.executor",
+        "magic": 31415988,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "dcad90d7daa6d97ec2635ce0f9937c32c52c975a25ce3fc6685edeac749709f3",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 15
+            },
+            {
+              "start": 19,
+              "end": 20
+            },
+            {
+              "start": 30,
+              "end": 30
+            },
+            {
+              "start": 33,
+              "end": 33
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing"
       }
     },
     {
       "source": "ic10/manufacturing/print_job_driver_v2_0.ic10",
       "service_contract_id": "ic10.script.print.job.driver",
       "deployment_family": "manufacturing",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -6134,12 +6276,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 17,
+        "literal_cell_count": 18,
         "highest_literal_cell": 30,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 119,
-        "line_headroom_120": 1,
+        "line_count": 120,
+        "line_headroom_120": 0,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -6147,21 +6289,53 @@
         "literal_cells": [
           0,
           1,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.print.job.driver",
+        "magic": 31415992,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "126cdf6aafe9fa702ecb8366066b38052f8df98ad83e04c44eaa5dfcc48a9e21",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 11
+            },
+            {
+              "start": 13,
+              "end": 17
+            },
+            {
+              "start": 20,
+              "end": 24
+            },
+            {
+              "start": 30,
+              "end": 30
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing"
       }
     },
     {
@@ -6240,7 +6414,7 @@
       "source": "ic10/manufacturing/transform_candidate_executor_v2_0.ic10",
       "service_contract_id": "ic10.script.transform.candidate.executor",
       "deployment_family": "manufacturing",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -6265,12 +6439,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
-        "highest_literal_cell": 20,
+        "literal_cell_count": 16,
+        "highest_literal_cell": 26,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 82,
-        "line_headroom_120": 38,
+        "line_count": 83,
+        "line_headroom_120": 37,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -6278,29 +6452,56 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.transform.candidate.executor",
+        "magic": 31415987,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "6d01bbb864c941845a373ca6236dfb7213af2bd1bbaad12895dd43652c60c397",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 12
+            },
+            {
+              "start": 14,
+              "end": 14
+            },
+            {
+              "start": 20,
+              "end": 26
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing"
       }
     },
     {
       "source": "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10",
       "service_contract_id": "ic10.script.transform.candidate.readiness",
       "deployment_family": "manufacturing",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -6325,12 +6526,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 14,
+        "literal_cell_count": 15,
         "highest_literal_cell": 31,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 108,
-        "line_headroom_120": 12,
+        "line_count": 109,
+        "line_headroom_120": 11,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -6338,29 +6539,56 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.transform.candidate.readiness",
+        "magic": 31415998,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "ab9f207187961dd4914d5a0a7946026a8eac2a59d6e3ca4d627a4f2dbaa6585d",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 16
+            },
+            {
+              "start": 20,
+              "end": 20
+            },
+            {
+              "start": 30,
+              "end": 31
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing"
       }
     },
     {
       "source": "ic10/manufacturing/transform_job_driver_v2_0.ic10",
       "service_contract_id": "ic10.script.transform.job.driver",
       "deployment_family": "manufacturing",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -6385,12 +6613,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 18,
+        "literal_cell_count": 19,
         "highest_literal_cell": 30,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 113,
-        "line_headroom_120": 7,
+        "line_count": 114,
+        "line_headroom_120": 6,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -6398,22 +6626,49 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.transform.job.driver",
+        "magic": 31415991,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "ee14bef9f92eaf28cbe009607b57423c34292067e06ef94898d26bbc9423bb5a",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 17
+            },
+            {
+              "start": 20,
+              "end": 24
+            },
+            {
+              "start": 30,
+              "end": 30
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing"
       }
     },
     {

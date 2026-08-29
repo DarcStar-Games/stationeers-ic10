@@ -72,16 +72,16 @@ PASS ic10/item-storage-vending/material_vending_inventory_v1_0.ic10 lines=112 he
 PASS ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10 lines=108 headroom=20 max=87 CRLF=1430 comments= 1
 PASS ic10/live-commissioning/stack_cell_monitor_v1_0.ic10 lines= 46 headroom=82 max=82 CRLF= 827 comments= 2
 PASS ic10/live-commissioning/stack_header_reader_v1_0.ic10 lines=118 headroom=10 max=77 CRLF=1969 comments= 2
-PASS ic10/manufacturing/generic_print_runtime_v2_0.ic10 lines=112 headroom=16 max=21 CRLF=1452 comments= 0
-PASS ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10 lines=105 headroom=23 max=89 CRLF=1479 comments= 1
-PASS ic10/manufacturing/manufacturing_driver_router_v2_0.ic10 lines= 75 headroom=53 max=64 CRLF= 999 comments= 1
-PASS ic10/manufacturing/manufacturing_scheduler_v1_0.ic10 lines=119 headroom= 9 max=82 CRLF=1637 comments= 1
-PASS ic10/manufacturing/print_candidate_executor_v2_0.ic10 lines=120 headroom= 8 max=22 CRLF=1545 comments= 0
-PASS ic10/manufacturing/print_job_driver_v2_0.ic10 lines=119 headroom= 9 max=52 CRLF=1577 comments= 0
+PASS ic10/manufacturing/generic_print_runtime_v2_0.ic10 lines=113 headroom=15 max=21 CRLF=1473 comments= 0
+PASS ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10 lines=106 headroom=22 max=89 CRLF=1495 comments= 1
+PASS ic10/manufacturing/manufacturing_driver_router_v2_0.ic10 lines= 76 headroom=52 max=64 CRLF=1021 comments= 1
+PASS ic10/manufacturing/manufacturing_scheduler_v1_0.ic10 lines=120 headroom= 8 max=82 CRLF=1647 comments= 1
+PASS ic10/manufacturing/print_candidate_executor_v2_0.ic10 lines=121 headroom= 7 max=22 CRLF=1567 comments= 0
+PASS ic10/manufacturing/print_job_driver_v2_0.ic10 lines=120 headroom= 8 max=53 CRLF=1609 comments= 0
 PASS ic10/manufacturing/print_material_resolver_v1_0.ic10 lines=117 headroom=11 max=50 CRLF=1497 comments= 0
-PASS ic10/manufacturing/transform_candidate_executor_v2_0.ic10 lines= 82 headroom=46 max=79 CRLF=1075 comments= 1
-PASS ic10/manufacturing/transform_candidate_readiness_v1_0.ic10 lines=108 headroom=20 max=71 CRLF=1529 comments= 1
-PASS ic10/manufacturing/transform_job_driver_v2_0.ic10 lines=113 headroom=15 max=83 CRLF=1519 comments= 1
+PASS ic10/manufacturing/transform_candidate_executor_v2_0.ic10 lines= 83 headroom=45 max=79 CRLF=1100 comments= 1
+PASS ic10/manufacturing/transform_candidate_readiness_v1_0.ic10 lines=109 headroom=19 max=71 CRLF=1551 comments= 1
+PASS ic10/manufacturing/transform_job_driver_v2_0.ic10 lines=114 headroom=14 max=83 CRLF=1548 comments= 1
 PASS ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10 lines= 78 headroom=50 max=87 CRLF=1211 comments= 1
 PASS ic10/material-grid/material_export_slot_endpoint_v1_0.ic10 lines= 52 headroom=76 max=83 CRLF= 794 comments= 1
 PASS ic10/material-grid/material_import_slot_endpoint_v1_0.ic10 lines= 62 headroom=66 max=76 CRLF= 861 comments= 1

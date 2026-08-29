@@ -287,9 +287,7 @@ def publication_errors(
             op = row[0]
             if op == "clr" and len(row) >= 2 and row[1] == "db":
                 errors.append("clr db after publication can erase the fixed envelope")
-            elif op == "clrd":
-                errors.append("reference-addressed clear after publication can erase the fixed envelope")
-            elif op == "putd" or (op == "put" and len(row) >= 2 and row[1] == "db"):
+            elif op == "clrd" or op == "putd" or (op == "put" and len(row) >= 2 and row[1] == "db"):
                 # a reference-addressed write only touches this stack when it can name self,
                 # which the generated contract resolves far more precisely than a source scan
                 dynamic_after = dynamic_after or reference_writes_own_stack

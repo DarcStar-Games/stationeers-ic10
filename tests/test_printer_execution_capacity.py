@@ -46,9 +46,9 @@ spec=ad.stack.get(20,0);ck((spec&16384)==16384 and (spec&8192)==0,'execution Pro
 # Dynamic generic selector accepts exact execution directory ref and rejects occupied output.
 execdir=Device(710,stack={0:31415981,1:1,2:0,3:5,5:1,7:0,9:'HASH:DirectorySchema.PrinterExecution.v1',11:3,12:64,32:501,33:'HASH:Printer.Autolathe',34:spec},props={'ReferenceId':710})
 sel=IC10(src('ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10'),{'d0':execdir});sel.run(1)
-sel.stack.update({2:'HASH:DirectorySchema.PrinterExecution.v1',3:'HASH:Printer.Autolathe',4:1,5:2,6:0,7:1,15:1,16:710});sel.run(1)
+sel.stack.update({17:'HASH:DirectorySchema.PrinterExecution.v1',18:'HASH:Printer.Autolathe',19:1,20:2,21:0,22:1,15:1,16:710});sel.run(1)
 ck(sel.stack.get(9)==1 and sel.stack.get(10)==501,'dynamic selector rejected free managed printer')
-execdir.stack[34]=spec|8192;execdir.stack[3]=6;sel.stack.update({6:0,7:2});sel.run(1)
+execdir.stack[34]=spec|8192;execdir.stack[3]=6;sel.stack.update({21:0,22:2});sel.run(1)
 ck(sel.stack.get(9)==-2,'selector accepted occupied printer output')
 execdir.stack[34]=spec;execdir.stack[3]=7
 

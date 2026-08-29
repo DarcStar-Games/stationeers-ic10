@@ -1,6 +1,7 @@
 # Driver Router ABI2: mirrors only the selected current request.
 poke 0 31415994
 poke 1 2
+poke 2 0
 poke 11 2
 Loop:
 yield
@@ -28,22 +29,22 @@ bltz r6 Bad
 bltz r7 Bad
 blez r8 Bad
 beq r2 1 Transform
-put d1 2 r3
-put d1 3 r5
-put d1 4 r4
-put d1 5 r6
-put d1 6 r7
-put d1 7 r8
+put d1 12 r3
+put d1 13 r5
+put d1 14 r4
+put d1 15 r6
+put d1 16 r7
+put d1 17 r8
 put d1 8 r15
 poke 13 2
 j Sent
 Transform:
-put d0 2 r3
-put d0 3 r5
-put d0 4 r4
-put d0 5 r6
-put d0 6 r7
-put d0 7 r8
+put d0 12 r3
+put d0 13 r5
+put d0 14 r4
+put d0 15 r6
+put d0 16 r7
+put d0 17 r8
 put d0 8 r15
 poke 13 1
 Sent:

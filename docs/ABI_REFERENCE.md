@@ -444,7 +444,7 @@ Roadmap item 6 plus its hardening pass uses ordinals 172..187. Services whose re
 
 ### Manufacturing Candidate Selector ABI2
 
-Magic `31415986`. `ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10` accepts a **dynamic Snapshot Directory ReferenceId in S16**. Request cells are S2 schema ID, S3 optional key/FamilyHash, S4 capability, S5 comparison mode (`1 mask`, `2 tier`), S6 start ordinal, S7 request generation, and S15 expected schema version. It captures active bank + generation, scans, then requires the same active bank + generation before publishing status S9, candidate S10..S12, next ordinal S13, directory generation S14, and response token S8. One physical selector can therefore serve Transform and Print serially.
+Magic `31415986`. `ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10` accepts a **dynamic Snapshot Directory ReferenceId in S16**. Request cells are S17 schema ID, S18 optional key/FamilyHash, S19 capability, S20 comparison mode (`1 mask`, `2 tier`), S21 start ordinal, S22 request generation, and S15 expected schema version, its request mailbox having moved above the common S0..S7 header. It captures active bank + generation, scans, then requires the same active bank + generation before publishing status S9, candidate S10..S12, next ordinal S13, directory generation S14, and response token S8. One physical selector can therefore serve Transform and Print serially.
 
 ### Transform Candidate Readiness ABI1
 
@@ -464,7 +464,7 @@ Magic `31415989`. `ic10/manufacturing/print_material_resolver_v1_0.ic10` consume
 
 ### Generic Print Runtime ABI2
 
-Magic `31415990`. `ic10/manufacturing/generic_print_runtime_v2_0.ic10` consumes Print Material Resolver d0 and Multi Material Allocator ABI2 d1. S2 PrinterRef, S3 RecipeHash, S4 RequestedQuantity, S5 JobId, S6 request token; S7 is the **current accepted request token**, S8 target Job state, S9 ErrorStatus. It publishes initial request state/error before S7, issues native printer stack instructions only after material commit, and verifies ExportCount.
+Magic `31415990`. `ic10/manufacturing/generic_print_runtime_v2_0.ic10` consumes Print Material Resolver d0 and Multi Material Allocator ABI2 d1. S10 PrinterRef, S11 RecipeHash, S12 RequestedQuantity, S13 JobId, S14 request token; S15 is the **current accepted request token**, S8 target Job state, S9 ErrorStatus. It publishes initial request state/error before S15, issues native printer stack instructions only after material commit, and verifies ExportCount.
 
 ### Manufacturing drivers/router/scheduler
 

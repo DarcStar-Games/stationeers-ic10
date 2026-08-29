@@ -1,16 +1,17 @@
 # Generic Manufacturing Candidate Selector ABI2: dynamic Snapshot Directory RefId in S16.
 poke 0 31415986
 poke 1 2
+poke 2 0
 Loop:
 yield
-get r15 db 7
+get r15 db 22
 get r0 db 8
 beq r15 r0 Loop
-get r2 db 2
-get r3 db 3
-get r4 db 4
-get r5 db 5
-get r6 db 6
+get r2 db 17
+get r3 db 18
+get r4 db 19
+get r5 db 20
+get r6 db 21
 get r9 db 16
 beqz r2 Bad
 blez r4 Bad

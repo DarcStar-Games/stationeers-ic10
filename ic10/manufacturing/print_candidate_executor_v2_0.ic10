@@ -1,5 +1,6 @@
 poke 0 31415988
 poke 1 2
+poke 2 0
 poke 11 2
 Loop:
 yield
@@ -15,9 +16,9 @@ poke 9 0
 poke 11 2
 poke 12 0
 poke 10 r15
-get r1 db 2
-get r2 db 3
-get r6 db 7
+get r1 db 14
+get r2 db 15
+get r6 db 19
 blez r6 Bad
 floor r0 r6
 bne r0 r6 Bad
@@ -42,7 +43,7 @@ get r1 d3 8
 blez r1 Bad
 poke 33 r1
 put d1 2 r1
-get r1 db 7
+get r1 db 19
 put d1 11 r1
 put d1 12 r15
 poke 20 2
@@ -58,20 +59,20 @@ beq r0 -4 Capacity
 j Bad
 Launch:
 get r1 db 33
-put d2 2 r1
-get r1 db 3
-put d2 3 r1
-get r1 db 7
-put d2 4 r1
+put d2 10 r1
+get r1 db 15
+put d2 11 r1
+get r1 db 19
+put d2 12 r1
 get r1 db 8
-put d2 5 r1
-put d2 6 r15
+put d2 13 r1
+put d2 14 r15
 poke 11 3
 poke 20 3
 j Loop
 Run:
 get r15 db 8
-get r1 d2 7
+get r1 d2 15
 bne r1 r15 Loop
 get r0 d2 8
 poke 11 r0

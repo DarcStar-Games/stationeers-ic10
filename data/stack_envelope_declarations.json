@@ -2106,6 +2106,281 @@
     ]
    ],
    "pilot_family": "transform-catalog"
+  },
+  "ic10/manufacturing/generic_print_runtime_v2_0.ic10": {
+   "service_id": "ic10.script.generic.print.runtime",
+   "magic": 31415990,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "f045cbc987280069aa01bf8a68413d3871da24628c67aa60f9bf75da240e8d38",
+   "legacy_owned_ranges": [
+    [
+     8,
+     15
+    ],
+    [
+     20,
+     20
+    ],
+    [
+     22,
+     25
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing"
+  },
+  "ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10": {
+   "service_id": "ic10.script.manufacturing.candidate.selector",
+   "magic": 31415986,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "f78b3610ddec97e383e6b68b829e2ff9d453b2acda44e2c09c0b68eeb3c62d8e",
+   "legacy_owned_ranges": [
+    [
+     8,
+     14
+    ],
+    [
+     16,
+     22
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing"
+  },
+  "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10": {
+   "service_id": "ic10.script.manufacturing.driver.router",
+   "magic": 31415994,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "58bbb691b29067ad2f38a3a7b4c0ce1d587baf91fd0fad531ca40676090e8dca",
+   "legacy_owned_ranges": [
+    [
+     9,
+     14
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing"
+  },
+  "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10": {
+   "service_id": "ic10.script.manufacturing.scheduler",
+   "magic": 31415995,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "6bf0f703e33ae1d02c1b28d8ec6641e382d01d80028ba9d6796fc8f13f43ddc2",
+   "legacy_owned_ranges": [
+    [
+     20,
+     21
+    ],
+    [
+     23,
+     23
+    ],
+    [
+     25,
+     31
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing"
+  },
+  "ic10/manufacturing/print_candidate_executor_v2_0.ic10": {
+   "service_id": "ic10.script.print.candidate.executor",
+   "magic": 31415988,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "dcad90d7daa6d97ec2635ce0f9937c32c52c975a25ce3fc6685edeac749709f3",
+   "legacy_owned_ranges": [
+    [
+     8,
+     15
+    ],
+    [
+     19,
+     20
+    ],
+    [
+     30,
+     30
+    ],
+    [
+     33,
+     33
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing"
+  },
+  "ic10/manufacturing/print_job_driver_v2_0.ic10": {
+   "service_id": "ic10.script.print.job.driver",
+   "magic": 31415992,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "126cdf6aafe9fa702ecb8366066b38052f8df98ad83e04c44eaa5dfcc48a9e21",
+   "legacy_owned_ranges": [
+    [
+     8,
+     11
+    ],
+    [
+     13,
+     17
+    ],
+    [
+     20,
+     24
+    ],
+    [
+     30,
+     30
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing"
+  },
+  "ic10/manufacturing/transform_candidate_executor_v2_0.ic10": {
+   "service_id": "ic10.script.transform.candidate.executor",
+   "magic": 31415987,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "6d01bbb864c941845a373ca6236dfb7213af2bd1bbaad12895dd43652c60c397",
+   "legacy_owned_ranges": [
+    [
+     8,
+     12
+    ],
+    [
+     14,
+     14
+    ],
+    [
+     20,
+     26
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing"
+  },
+  "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10": {
+   "service_id": "ic10.script.transform.candidate.readiness",
+   "magic": 31415998,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "ab9f207187961dd4914d5a0a7946026a8eac2a59d6e3ca4d627a4f2dbaa6585d",
+   "legacy_owned_ranges": [
+    [
+     8,
+     16
+    ],
+    [
+     20,
+     20
+    ],
+    [
+     30,
+     31
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing"
+  },
+  "ic10/manufacturing/transform_job_driver_v2_0.ic10": {
+   "service_id": "ic10.script.transform.job.driver",
+   "magic": 31415991,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "ee14bef9f92eaf28cbe009607b57423c34292067e06ef94898d26bbc9423bb5a",
+   "legacy_owned_ranges": [
+    [
+     8,
+     17
+    ],
+    [
+     20,
+     24
+    ],
+    [
+     30,
+     30
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing"
   }
  },
  "legacy_exemption": {

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10",
-  "source_sha256": "09d43132ec3f9afb784fad660797bf1baf970419587787aed259ff693351306e",
+  "source_sha256": "6bf0f703e33ae1d02c1b28d8ec6641e382d01d80028ba9d6796fc8f13f43ddc2",
   "identity": {
     "service_id": "ic10.script.manufacturing.scheduler",
     "implementation_revision": "1.0",
@@ -171,6 +171,7 @@
     "literal_writes": [
       0,
       1,
+      2,
       20,
       21,
       23,
@@ -219,6 +220,15 @@
         "name": "Header@S0.ABI",
         "value_type": "integer",
         "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
         ]

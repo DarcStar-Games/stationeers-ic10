@@ -18,6 +18,9 @@ SOFT_LIMIT_EXEMPTIONS = {
     "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10":
         "capability-fenced transform view publishing the common header above a 60-cell"
         " resolved-request table",
+    "ic10/manufacturing/print_candidate_executor_v2_0.ic10":
+        "four-phase print launch fencing four devices; publishes the common header with its"
+        " request mailbox relocated above it",
     "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10":
         "operator-facing editor wiring six diagnostic devices; publishes the common header"
         " with its payload relocated above it",

@@ -27,7 +27,7 @@ for f,state,token in [
  ('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','poke 20 2','poke 21 r15'),
  ('ic10/manufacturing/transform_candidate_executor_v2_0.ic10','poke 11 2','poke 10 r15'),
  ('ic10/manufacturing/print_candidate_executor_v2_0.ic10','poke 11 2','poke 10 r15'),
- ('ic10/manufacturing/generic_print_runtime_v2_0.ic10','poke 8 2','poke 7 r15'),
+ ('ic10/manufacturing/generic_print_runtime_v2_0.ic10','poke 8 2','poke 15 r15'),
  ('ic10/manufacturing/transform_job_driver_v2_0.ic10','poke 10 2','poke 9 r15'),
  ('ic10/manufacturing/print_job_driver_v2_0.ic10','poke 10 2','poke 9 r15')]:
  need(f,state,token);before(f,state,token)
