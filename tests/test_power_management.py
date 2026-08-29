@@ -94,27 +94,27 @@ ck(gsel.stack.get(7)!=print_id,'generic selector exact POWER mode leaked PRINT j
 def prep_transition(resolver_status):
  life=Device(1710,stack={},props={'ReferenceId':1710});resolver=Device(1711,stack={},props={'ReferenceId':1711});apply=Device(1712,stack={},props={'ReferenceId':1712})
  vm=IC10((R/'ic10/power-jobs/power_job_prepare_v1_0.ic10').read_text(),{'d0':life,'d1':resolver,'d2':apply},self_ref=2440);vm.run(1)
- vm.stack.update({2:0,3:77,4:4,5:3,6:100,7:1,8:900,9:11});vm.run(1)
- resolver.stack.update({4:11,5:resolver_status});vm.run(1)
+ vm.stack.update({14:0,15:77,16:4,17:3,18:100,19:1,8:900,9:11});vm.run(1)
+ resolver.stack.update({12:11,13:resolver_status});vm.run(1)
  return vm,life
 pv,pl=prep_transition(-2)
-ck(pl.stack.get(4)==8 and pl.stack.get(5)==1,'missing POWER target did not request WAIT_RESOURCE')
+ck(pl.stack.get(12)==8 and pl.stack.get(13)==1,'missing POWER target did not request WAIT_RESOURCE')
 pv,pl=prep_transition(-3)
-ck(pl.stack.get(4)==11 and pl.stack.get(5)==-1,'ambiguous POWER target did not request FAULT')
+ck(pl.stack.get(12)==11 and pl.stack.get(13)==-1,'ambiguous POWER target did not request FAULT')
 
 # Verification wait returns control to scheduler instead of monopolizing one
 # worker indefinitely; cursor fairness can then service another POWER job.
 life=Device(1720,stack={},props={'ReferenceId':1720});resolver=Device(1721,stack={},props={'ReferenceId':1721});verify=Device(1722,stack={},props={'ReferenceId':1722})
 fv=IC10((R/'ic10/power-jobs/power_job_finalize_v1_0.ic10').read_text(),{'d0':life,'d1':resolver,'d2':verify},self_ref=2450);fv.run(1)
-fv.stack.update({2:1,3:88,4:5,5:4,6:100,7:1,8:901,9:12});fv.run(1)
-resolver.stack.update({4:12,5:1,6:999});fv.run(1)
-verify.stack.update({7:12,8:0});fv.run(1)
+fv.stack.update({14:1,15:88,16:5,17:4,18:100,19:1,8:901,9:12});fv.run(1)
+resolver.stack.update({12:12,13:1,14:999});fv.run(1)
+verify.stack.update({13:12,8:0});fv.run(1)
 ck(fv.stack.get(10)==12 and fv.stack.get(11)==0,'POWER finalize wait did not yield pending result to scheduler')
 
 # Lane-D lifecycle client contract with fake successful Gateway response.
 gw=Device(1600,stack={65:0,66:0},props={'ReferenceId':1600})
 lc=IC10((R/'ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10').read_text(),{'d0':gw},self_ref=243)
-lc.stack.update({2:3,3:7,4:5,5:0,6:11});lc.run(2)
+lc.stack.update({10:3,11:7,12:5,13:0,14:11});lc.run(2)
 # emulate Gateway completion after request publication
 ck(gw.stack.get(64)==11 and gw.stack.get(68)==2 and gw.stack.get(70)==7,'lane D request framing')
 gw.stack[65]=11;gw.stack[66]=1;lc.run(3)

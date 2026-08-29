@@ -120,13 +120,13 @@ Production IC10 programs: 174
 | `ic10/power-grid/power_source_selector_v1_0.ic10` | 91 | Power planning | `power-grid` | `conditional-resident` | Selects available POWER sources by preference while accounting for staged use and battery direction. |
 | `ic10/power-grid/power_static_link_v1_0.ic10` | 51 | Power topology | `power-grid` | `conditional-resident` | Publishes a commissioned passive electrical path as a Generic POWER Resource Link. |
 | `ic10/power-grid/power_transformer_link_v1_0.ic10` | 68 | Power topology | `power-grid` | `conditional-resident` | Publishes a transformer POWER Resource Link with safe delivered ceiling and source-side self-power overhead. |
-| `ic10/power-jobs/power_job_finalize_v1_0.ic10` | 90 | Power jobs | `power-jobs` | `conditional-resident` | Verifies applied POWER policy and advances RUNNING -> VERIFYING -> COMPLETE. |
-| `ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10` | 36 | Power jobs | `power-jobs` | `conditional-resident` | Gateway-lane-D lifecycle client returning ExpectedGeneration+1 after successful SET_STATE. |
-| `ic10/power-jobs/power_job_policy_apply_v1_0.ic10` | 79 | Power jobs | `power-jobs` | `conditional-resident` | Revalidates a READY POWER job and applies the endpoint policy override/watt cap. |
-| `ic10/power-jobs/power_job_policy_verify_v1_0.ic10` | 61 | Power jobs | `power-jobs` | `conditional-resident` | Verifies Generic Resource Reservation coherently reflects the requested POWER policy semantics. |
-| `ic10/power-jobs/power_job_prepare_v1_0.ic10` | 104 | Power jobs | `power-jobs` | `conditional-resident` | Prepares POWER jobs through READY, applies policy, and advances to RUNNING. |
-| `ic10/power-jobs/power_job_scheduler_v1_0.ic10` | 74 | Power jobs | `power-jobs` | `conditional-resident` | Coordinates selection, prepare/apply, and verify/finalize for finite POWER policy jobs. |
-| `ic10/power-jobs/power_policy_target_resolver_v1_0.ic10` | 72 | Power jobs | `power-jobs` | `conditional-resident` | Resolves one PolicyId to exactly one current managed POWER Reservation/Endpoint. |
+| `ic10/power-jobs/power_job_finalize_v1_0.ic10` | 91 | Power jobs | `power-jobs` | `conditional-resident` | Verifies applied POWER policy and advances RUNNING -> VERIFYING -> COMPLETE. |
+| `ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10` | 37 | Power jobs | `power-jobs` | `conditional-resident` | Gateway-lane-D lifecycle client returning ExpectedGeneration+1 after successful SET_STATE. |
+| `ic10/power-jobs/power_job_policy_apply_v1_0.ic10` | 80 | Power jobs | `power-jobs` | `conditional-resident` | Revalidates a READY POWER job and applies the endpoint policy override/watt cap. |
+| `ic10/power-jobs/power_job_policy_verify_v1_0.ic10` | 62 | Power jobs | `power-jobs` | `conditional-resident` | Verifies Generic Resource Reservation coherently reflects the requested POWER policy semantics. |
+| `ic10/power-jobs/power_job_prepare_v1_0.ic10` | 105 | Power jobs | `power-jobs` | `conditional-resident` | Prepares POWER jobs through READY, applies policy, and advances to RUNNING. |
+| `ic10/power-jobs/power_job_scheduler_v1_0.ic10` | 75 | Power jobs | `power-jobs` | `conditional-resident` | Coordinates selection, prepare/apply, and verify/finalize for finite POWER policy jobs. |
+| `ic10/power-jobs/power_policy_target_resolver_v1_0.ic10` | 73 | Power jobs | `power-jobs` | `conditional-resident` | Resolves one PolicyId to exactly one current managed POWER Reservation/Endpoint. |
 | `ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10` | 124 | Runtime / pressure grid | `pressure-domain` | `resident` | Owns LOW/HIGH target or passive STORAGE envelope; telemetry ABI2. |
 | `ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10` | 117 | Pressure-grid service | `pressure-domain` | `conditional-resident` | Reduces coherent PhasePressure ABI2 requests for one LOW/HIGH domain; rejects directory overflow. |
 | `ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10` | 78 | Family semantics | `pressure-domain` | `resident` | PressureDomain role/bounds validation and signature. |

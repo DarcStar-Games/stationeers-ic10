@@ -1,15 +1,16 @@
 # Lane-D POWER lifecycle client; generation advances by one.
 poke 0 31416044
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 6
-get r0 db 7
+get r15 db 14
+get r0 db 15
 beq r15 r0 Loop
-get r2 db 2
-get r3 db 3
-get r4 db 4
-get r5 db 5
+get r2 db 10
+get r3 db 11
+get r4 db 12
+get r5 db 13
 blt r2 0 Bad
 blez r3 Bad
 put d0 68 2
@@ -32,5 +33,5 @@ Bad:
 poke 8 -1
 poke 9 r3
 Reply:
-poke 7 r15
+poke 15 r15
 j Loop

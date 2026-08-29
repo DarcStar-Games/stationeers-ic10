@@ -520,6 +520,171 @@
    ],
    "pilot_family": "directory"
   },
+  "ic10/power-jobs/power_job_finalize_v1_0.ic10": {
+   "service_id": "ic10.script.power.job.finalize",
+   "magic": 31416046,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "353abee218120adee88c2b01649fd6c61300a3734bea95cbdcb869ae6924e073",
+   "legacy_owned_ranges": [
+    [
+     8,
+     20
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-jobs"
+  },
+  "ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10": {
+   "service_id": "ic10.script.power.job.lifecycle.client",
+   "magic": 31416044,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "601cf2d70d77395dad612223fb1d4d1d30947050aebf11566736c362f0b08358",
+   "legacy_owned_ranges": [
+    [
+     8,
+     15
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-jobs"
+  },
+  "ic10/power-jobs/power_job_policy_apply_v1_0.ic10": {
+   "service_id": "ic10.script.power.job.policy.apply",
+   "magic": 31416042,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "5f536911e4ed151726bcfbda8d2a40d1eb00c1c1358efc8dee2d5c438f92143c",
+   "legacy_owned_ranges": [
+    [
+     8,
+     19
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-jobs"
+  },
+  "ic10/power-jobs/power_job_policy_verify_v1_0.ic10": {
+   "service_id": "ic10.script.power.job.policy.verify",
+   "magic": 31416043,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "ae81e70790f6193d758f2fbacd9f788ae07936f98b839402391608048051af20",
+   "legacy_owned_ranges": [
+    [
+     8,
+     13
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-jobs"
+  },
+  "ic10/power-jobs/power_job_prepare_v1_0.ic10": {
+   "service_id": "ic10.script.power.job.prepare",
+   "magic": 31416045,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "c05491989467d4cf12ca68011043e4942ee6496002c40108ae098180be422894",
+   "legacy_owned_ranges": [
+    [
+     8,
+     20
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-jobs"
+  },
+  "ic10/power-jobs/power_job_scheduler_v1_0.ic10": {
+   "service_id": "ic10.script.power.job.scheduler",
+   "magic": 31416047,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "59815bb3c63a41a33cea9487a8721da664a6e2d4c217f8d97a4014edd15d04fb",
+   "legacy_owned_ranges": [
+    [
+     20,
+     23
+    ],
+    [
+     30,
+     33
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-jobs"
+  },
+  "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": {
+   "service_id": "ic10.script.power.policy.target.resolver",
+   "magic": 31416041,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "1d38dbce477ecb873339027aafedc73fb8bad41adaaf709d3138fe3ab95b353d",
+   "legacy_owned_ranges": [
+    [
+     8,
+     15
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-jobs"
+  },
   "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": {
    "service_id": "ic10.script.controller.pressure.domain.runtime",
    "magic": 31416063,

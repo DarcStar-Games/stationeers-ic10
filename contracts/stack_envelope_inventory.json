@@ -29,9 +29,9 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 30,
-    "legacy_exempt": 144,
-    "backlog_reserved_cell_users": 131,
+    "migrated_v1": 37,
+    "legacy_exempt": 137,
+    "backlog_reserved_cell_users": 125,
     "backlog_dynamic_range_users": 47
   },
   "services": [
@@ -8222,7 +8222,7 @@
       "source": "ic10/power-jobs/power_job_finalize_v1_0.ic10",
       "service_contract_id": "ic10.script.power.job.finalize",
       "deployment_family": "power-jobs",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -8247,12 +8247,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
+        "literal_cell_count": 16,
         "highest_literal_cell": 20,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 90,
-        "line_headroom_120": 30,
+        "line_count": 91,
+        "line_headroom_120": 29,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -8260,29 +8260,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.job.finalize",
+        "magic": 31416046,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "353abee218120adee88c2b01649fd6c61300a3734bea95cbdcb869ae6924e073",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 20
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-jobs"
       }
     },
     {
       "source": "ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10",
       "service_contract_id": "ic10.script.power.job.lifecycle.client",
       "deployment_family": "power-jobs",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -8307,12 +8326,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 10,
-        "highest_literal_cell": 9,
+        "literal_cell_count": 11,
+        "highest_literal_cell": 15,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 36,
-        "line_headroom_120": 84,
+        "line_count": 37,
+        "line_headroom_120": 83,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -8320,29 +8339,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.job.lifecycle.client",
+        "magic": 31416044,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "601cf2d70d77395dad612223fb1d4d1d30947050aebf11566736c362f0b08358",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 15
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-jobs"
       }
     },
     {
       "source": "ic10/power-jobs/power_job_policy_apply_v1_0.ic10",
       "service_contract_id": "ic10.script.power.job.policy.apply",
       "deployment_family": "power-jobs",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -8367,12 +8405,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 14,
-        "highest_literal_cell": 13,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 19,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 79,
-        "line_headroom_120": 41,
+        "line_count": 80,
+        "line_headroom_120": 40,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -8380,29 +8418,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.job.policy.apply",
+        "magic": 31416042,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "5f536911e4ed151726bcfbda8d2a40d1eb00c1c1358efc8dee2d5c438f92143c",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 19
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-jobs"
       }
     },
     {
       "source": "ic10/power-jobs/power_job_policy_verify_v1_0.ic10",
       "service_contract_id": "ic10.script.power.job.policy.verify",
       "deployment_family": "power-jobs",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -8427,12 +8484,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 8,
-        "highest_literal_cell": 8,
+        "literal_cell_count": 9,
+        "highest_literal_cell": 13,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 61,
-        "line_headroom_120": 59,
+        "line_count": 62,
+        "line_headroom_120": 58,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -8440,28 +8497,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.job.policy.verify",
+        "magic": 31416043,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "ae81e70790f6193d758f2fbacd9f788ae07936f98b839402391608048051af20",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 13
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-jobs"
       }
     },
     {
       "source": "ic10/power-jobs/power_job_prepare_v1_0.ic10",
       "service_contract_id": "ic10.script.power.job.prepare",
       "deployment_family": "power-jobs",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -8486,12 +8563,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
+        "literal_cell_count": 16,
         "highest_literal_cell": 20,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 104,
-        "line_headroom_120": 16,
+        "line_count": 105,
+        "line_headroom_120": 15,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -8499,29 +8576,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.job.prepare",
+        "magic": 31416045,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "c05491989467d4cf12ca68011043e4942ee6496002c40108ae098180be422894",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 20
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-jobs"
       }
     },
     {
       "source": "ic10/power-jobs/power_job_scheduler_v1_0.ic10",
       "service_contract_id": "ic10.script.power.job.scheduler",
       "deployment_family": "power-jobs",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -8546,36 +8642,65 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 10,
+        "literal_cell_count": 11,
         "highest_literal_cell": 33,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 74,
-        "line_headroom_120": 46,
+        "line_count": 75,
+        "line_headroom_120": 45,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
       "window_collision": {
         "literal_cells": [
           0,
-          1
+          1,
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.job.scheduler",
+        "magic": 31416047,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "59815bb3c63a41a33cea9487a8721da664a6e2d4c217f8d97a4014edd15d04fb",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 20,
+              "end": 23
+            },
+            {
+              "start": 30,
+              "end": 33
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-jobs"
       }
     },
     {
       "source": "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10",
       "service_contract_id": "ic10.script.power.policy.target.resolver",
       "deployment_family": "power-jobs",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -8600,12 +8725,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 10,
-        "highest_literal_cell": 9,
+        "literal_cell_count": 11,
+        "highest_literal_cell": 15,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 72,
-        "line_headroom_120": 48,
+        "line_count": 73,
+        "line_headroom_120": 47,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -8613,22 +8738,41 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.policy.target.resolver",
+        "magic": 31416041,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "1d38dbce477ecb873339027aafedc73fb8bad41adaaf709d3138fe3ab95b353d",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 15
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-jobs"
       }
     },
     {

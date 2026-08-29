@@ -1,6 +1,7 @@
 # Finalize one POWER job step. d0 lifecycle,d1 resolver,d2 verify.
 poke 0 31416046
 poke 1 1
+poke 2 0
 poke 20 0
 Loop:
 yield
@@ -11,38 +12,38 @@ beq r0 3 WaitLife
 get r15 db 9
 get r0 db 10
 beq r15 r0 Loop
-get r2 db 2
-get r3 db 3
-get r4 db 4
-get r5 db 5
-get r6 db 6
-get r7 db 7
+get r2 db 14
+get r3 db 15
+get r4 db 16
+get r5 db 17
+get r6 db 18
+get r7 db 19
 get r8 db 8
 move r10 0
 beq r4 5 Resolve
 beq r4 6 Complete
 j Bad
 Resolve:
-put d1 2 r8
-put d1 3 r15
+put d1 10 r8
+put d1 11 r15
 poke 20 1
 j Loop
 WaitResolve:
 get r15 db 9
-get r0 d1 4
+get r0 d1 12
 bne r0 r15 Loop
-get r0 d1 5
+get r0 d1 13
 bne r0 1 FaultState
-get r11 d1 6
-put d2 2 r11
-put d2 3 r7
-put d2 4 r6
-put d2 6 r15
+get r11 d1 14
+put d2 9 r11
+put d2 10 r7
+put d2 11 r6
+put d2 12 r15
 poke 20 2
 j Loop
 WaitVerify:
 get r15 db 9
-get r0 d2 7
+get r0 d2 13
 bne r0 r15 Loop
 get r0 d2 8
 beqz r0 Pending
@@ -52,16 +53,16 @@ j Life
 Complete:
 move r12 7
 Life:
-put d0 2 r2
-put d0 3 r5
-put d0 4 r12
-put d0 5 r10
-put d0 6 r15
+put d0 10 r2
+put d0 11 r5
+put d0 12 r12
+put d0 13 r10
+put d0 14 r15
 poke 20 3
 j Loop
 WaitLife:
 get r15 db 9
-get r0 d0 7
+get r0 d0 15
 bne r0 r15 Loop
 get r0 d0 8
 bne r0 1 ReplyBad

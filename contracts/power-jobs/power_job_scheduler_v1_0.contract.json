@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-jobs/power_job_scheduler_v1_0.ic10",
-  "source_sha256": "709e0d19e8bd4ac10c2b7408cec2bd6ed3cc9bd7cccc54e52e133189c1f4eb4c",
+  "source_sha256": "59815bb3c63a41a33cea9487a8721da664a6e2d4c217f8d97a4014edd15d04fb",
   "identity": {
     "service_id": "ic10.script.power.job.scheduler",
     "implementation_revision": "1.0",
@@ -81,6 +81,7 @@
     "literal_writes": [
       0,
       1,
+      2,
       20,
       21,
       22,
@@ -121,6 +122,16 @@
           "self-write"
         ],
         "const": 1
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 0
       },
       {
         "address": 20,

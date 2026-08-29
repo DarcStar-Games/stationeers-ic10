@@ -49,8 +49,8 @@ need('ic10/power-jobs/power_policy_target_resolver_v1_0.ic10','HASH("DirectorySc
 need('ic10/power-jobs/power_job_policy_apply_v1_0.ic10','bne r10 4 Bad','bne r11 r6 Bad','putd r13 50 r4','putd r13 51 r7')
 need('ic10/power-jobs/power_job_policy_verify_v1_0.ic10','getd r0 r6 50','getd r0 r6 51','NeedExportZero:','NeedImportZero:')
 need('ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10','put d0 68 2','put d0 64 r15','add r3 r3 1','poke 9 r3')
-need('ic10/power-jobs/power_job_prepare_v1_0.ic10','beq r4 1 ToPlanning','beq r4 4 Resolve','beq r0 -2 WaitResource','move r11 8','move r11 11','move r10 -1','put d1 2 r8','put d2 4 r7','move r11 5')
-need('ic10/power-jobs/power_job_finalize_v1_0.ic10','beq r4 5 Resolve','beqz r0 Pending','move r12 11','move r10 -1','put d1 2 r8','put d2 3 r7','put d2 4 r6','move r12 6','move r12 7')
+need('ic10/power-jobs/power_job_prepare_v1_0.ic10','beq r4 1 ToPlanning','beq r4 4 Resolve','beq r0 -2 WaitResource','move r11 8','move r11 11','move r10 -1','put d1 10 r8','put d2 16 r7','move r11 5')
+need('ic10/power-jobs/power_job_finalize_v1_0.ic10','beq r4 5 Resolve','beqz r0 Pending','move r12 11','move r10 -1','put d1 10 r8','put d2 10 r7','put d2 11 r6','move r12 6','move r12 7')
 need('ic10/power-jobs/power_job_scheduler_v1_0.ic10','put d0 18 4','put d0 2 r0','put d0 3 r15','poke 22 r0','seq r1 r7 5','seq r0 r7 6','select r9 r1 2 1')
 # Schema registry.
 S=json.loads((R/'data/directory_schemas.json').read_text())

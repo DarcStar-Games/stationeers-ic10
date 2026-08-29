@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-jobs/power_job_finalize_v1_0.ic10",
-  "source_sha256": "c10a4e96bed9e5241f69c460769271b24b48d4484f5c0f09db1e4a66b8022351",
+  "source_sha256": "353abee218120adee88c2b01649fd6c61300a3734bea95cbdcb869ae6924e073",
   "identity": {
     "service_id": "ic10.script.power.job.finalize",
     "implementation_revision": "1.0",
@@ -25,16 +25,16 @@
       },
       "stack": {
         "literal_reads": [
-          7,
           8,
-          9
+          9,
+          15
         ],
         "literal_writes": [
-          2,
-          3,
-          4,
-          5,
-          6
+          10,
+          11,
+          12,
+          13,
+          14
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -52,8 +52,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.05ab9af4ab5ee249",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.05ab9af4ab5ee249",
+        "interface_id": "ic10.interface.access.8074ddbaecbe2731",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.8074ddbaecbe2731",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -76,13 +76,13 @@
       },
       "stack": {
         "literal_reads": [
-          4,
-          5,
-          6
+          12,
+          13,
+          14
         ],
         "literal_writes": [
-          2,
-          3
+          10,
+          11
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -92,7 +92,7 @@
         "dynamic_write_range_source": "none",
         "constraints": [
           {
-            "address": 5,
+            "address": 13,
             "equals": 1
           }
         ]
@@ -100,8 +100,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.f0e0fc67d3010346",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.f0e0fc67d3010346",
+        "interface_id": "ic10.interface.access.009cc1cb218b0894",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.009cc1cb218b0894",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -124,14 +124,14 @@
       },
       "stack": {
         "literal_reads": [
-          7,
-          8
+          8,
+          13
         ],
         "literal_writes": [
-          2,
-          3,
-          4,
-          6
+          9,
+          10,
+          11,
+          12
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -144,8 +144,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.54e923bfdc5d5151",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.54e923bfdc5d5151",
+        "interface_id": "ic10.interface.access.d70dab6fe8cb2ac9",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.d70dab6fe8cb2ac9",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -160,20 +160,21 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
       8,
       9,
       10,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
       20
     ],
     "literal_writes": [
       0,
       1,
+      2,
       10,
       11,
       12,
@@ -218,53 +219,9 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
+          "self-write"
+        ],
+        "const": 0
       },
       {
         "address": 8,
@@ -319,6 +276,60 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
+        ]
+      },
+      {
+        "address": 14,
+        "name": "S14",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 15,
+        "name": "S15",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 16,
+        "name": "S16",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 17,
+        "name": "S17",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 18,
+        "name": "S18",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 19,
+        "name": "S19",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
         ]
       },
       {

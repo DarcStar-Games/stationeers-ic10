@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10",
-  "source_sha256": "917fbc329de7ed75ed584089e13d17e691c2ee8d4996a8be837f69109cbc112a",
+  "source_sha256": "601cf2d70d77395dad612223fb1d4d1d30947050aebf11566736c362f0b08358",
   "identity": {
     "service_id": "ic10.script.power.job.lifecycle.client",
     "implementation_revision": "1.0",
@@ -68,19 +68,20 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3,
-      4,
-      5,
-      6,
-      7
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
     ],
     "literal_writes": [
       0,
       1,
-      7,
+      2,
       8,
-      9
+      9,
+      15
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -120,54 +121,9 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
           "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
         "address": 8,
@@ -184,6 +140,61 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 10,
+        "name": "S10",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 11,
+        "name": "S11",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 12,
+        "name": "S12",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 13,
+        "name": "S13",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 14,
+        "name": "S14",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 15,
+        "name": "S15",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
           "self-write"
         ]
       }

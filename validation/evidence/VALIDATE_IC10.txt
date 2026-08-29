@@ -112,13 +112,13 @@ PASS ic10/power-grid/power_sink_selector_v1_0.ic10 lines= 68 headroom=60 max=85 
 PASS ic10/power-grid/power_source_selector_v1_0.ic10 lines= 91 headroom=37 max=68 CRLF=1305 comments= 1
 PASS ic10/power-grid/power_static_link_v1_0.ic10 lines= 51 headroom=77 max=54 CRLF= 722 comments= 1
 PASS ic10/power-grid/power_transformer_link_v1_0.ic10 lines= 68 headroom=60 max=75 CRLF=1012 comments= 1
-PASS ic10/power-jobs/power_job_finalize_v1_0.ic10 lines= 90 headroom=38 max=66 CRLF=1206 comments= 1
-PASS ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10 lines= 36 headroom=92 max=60 CRLF= 482 comments= 1
-PASS ic10/power-jobs/power_job_policy_apply_v1_0.ic10 lines= 79 headroom=49 max=84 CRLF=1111 comments= 1
-PASS ic10/power-jobs/power_job_policy_verify_v1_0.ic10 lines= 61 headroom=67 max=63 CRLF= 882 comments= 1
-PASS ic10/power-jobs/power_job_prepare_v1_0.ic10 lines=104 headroom=24 max=64 CRLF=1403 comments= 1
-PASS ic10/power-jobs/power_job_scheduler_v1_0.ic10 lines= 74 headroom=54 max=58 CRLF=1002 comments= 1
-PASS ic10/power-jobs/power_policy_target_resolver_v1_0.ic10 lines= 72 headroom=56 max=54 CRLF= 971 comments= 1
+PASS ic10/power-jobs/power_job_finalize_v1_0.ic10 lines= 91 headroom=37 max=66 CRLF=1237 comments= 1
+PASS ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10 lines= 37 headroom=91 max=60 CRLF= 499 comments= 1
+PASS ic10/power-jobs/power_job_policy_apply_v1_0.ic10 lines= 80 headroom=48 max=84 CRLF=1133 comments= 1
+PASS ic10/power-jobs/power_job_policy_verify_v1_0.ic10 lines= 62 headroom=66 max=63 CRLF= 897 comments= 1
+PASS ic10/power-jobs/power_job_prepare_v1_0.ic10 lines=105 headroom=23 max=64 CRLF=1435 comments= 1
+PASS ic10/power-jobs/power_job_scheduler_v1_0.ic10 lines= 75 headroom=53 max=58 CRLF=1012 comments= 1
+PASS ic10/power-jobs/power_policy_target_resolver_v1_0.ic10 lines= 73 headroom=55 max=54 CRLF= 991 comments= 1
 PASS ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10 lines=124 headroom= 4 max=68 CRLF=1898 comments= 0
 PASS ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10 lines=117 headroom=11 max=57 CRLF=1779 comments= 0
 PASS ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10 lines= 78 headroom=50 max=68 CRLF=1267 comments= 1
