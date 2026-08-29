@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
-  "source_sha256": "7e56cdd8ba5f916fe24f43061d7b03eec5f4cf27a2e75c988b19e338d3aeedde",
+  "source_sha256": "76ce80204804aee5797e958619a7cd92dd00509f782a7a90e9a91823760827a9",
   "identity": {
     "service_id": "ic10.script.controller.pressure.domain.runtime",
     "implementation_revision": "1.2",
@@ -63,9 +63,9 @@
       "stack": {
         "literal_reads": [
           0,
-          5,
           8,
-          9
+          9,
+          29
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -88,8 +88,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.734379015ead8ad4",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.734379015ead8ad4",
+        "interface_id": "ic10.interface.access.8fd7464ff497e01d",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.8fd7464ff497e01d",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

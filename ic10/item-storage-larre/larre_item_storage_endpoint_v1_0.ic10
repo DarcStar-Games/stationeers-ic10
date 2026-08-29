@@ -13,7 +13,7 @@ bdns d0 Bad
 bdns d1 Bad
 get r0 d0 0
 bne r0 31415986 Bad
-get r14 d1 5
+get r14 d1 29
 blez r14 Bad
 get r0 d1 0
 bne r0 31415963 Bad
@@ -21,7 +21,7 @@ get r0 d1 8
 bne r0 2 Bad
 get r2 d1 9
 get r3 d1 13
-get r0 d1 5
+get r0 d1 29
 bne r0 r14 Loop
 get r4 db 20
 get r5 db 21
@@ -51,7 +51,7 @@ get r9 d0 11
 get r10 d0 12
 get r11 d0 13
 get r12 d0 16
-get r0 d1 5
+get r0 d1 29
 bne r0 r14 Loop
 get r13 db 37
 sub r8 r8 r13

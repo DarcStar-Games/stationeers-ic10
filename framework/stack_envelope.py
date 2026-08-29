@@ -266,7 +266,8 @@ def publication_errors(
                 errors.append("dynamic own-stack write occurs before the first envelope-bearing yield")
             elif address in expected:
                 state[address] = _literal_value(row[2], aliases)
-    if first_yield is None and not branch_proved:
+    one_shot = not any(row[0] == "yield" for row in rows)
+    if first_yield is None and not branch_proved and not one_shot:
         errors.append("no reachable straight-line yield follows envelope initialization")
     if not branch_proved:
         for address, value in expected.items():

@@ -14,13 +14,13 @@ Loop:
 yield
 bdns d0 Bad
 bdns d1 Bad
-get r14 d1 5
+get r14 d1 29
 blez r14 Bad
 get r0 d1 0
 bne r0 31415963 Bad
 get r0 d1 1
 bne r0 1 Bad
-get r0 d1 4
+get r0 d1 28
 blez r0 Bad
 get r0 d1 8
 bne r0 2 Bad
@@ -31,7 +31,7 @@ bne r0 2 Bad
 get r2 d1 9
 get r3 d1 13
 blez r3 Bad
-get r0 d1 5
+get r0 d1 29
 bne r0 r14 Loop
 ls r4 d0 0 Occupied
 move r5 0

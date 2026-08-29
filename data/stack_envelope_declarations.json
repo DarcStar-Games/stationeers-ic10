@@ -161,7 +161,7 @@
    "implementation_id": null,
    "telemetry_base": 96,
    "publishes_state": false,
-   "source_sha256": "ba5a1bf7e5a6d1f9902fc43d504e3edf16cd541f9362b364b00d109854bbdf82",
+   "source_sha256": "7d3f3882ee0f93c7669fbda75cad412bf487d446af4a1c929851c5a13f33b204",
    "legacy_owned_ranges": [
     [
      96,
@@ -330,7 +330,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "ff43b73ca689665ff47e2122fc3133da30fa0c02a373a52177f42e5ae4e814a2",
+   "source_sha256": "c7794a37decd5d1df491f8886a8c88ebdf406706f0eae097a2de0590bca66767",
    "legacy_owned_ranges": [
     [
      8,
@@ -417,6 +417,335 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "diagnostics"
+  },
+  "ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10": {
+   "service_id": "ic10.script.input.profile.catalog.loader.00",
+   "magic": 31415969,
+   "service_abi": 5,
+   "schema_id": "CatalogSchema.InputProfile",
+   "schema_version": 3,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "8e3bc6130347ba4509470ff964e34108032f7f3b5587cf3a1fb077a7c5bd921f",
+   "legacy_owned_ranges": [
+    [
+     10,
+     10
+    ],
+    [
+     12,
+     18
+    ],
+    [
+     24,
+     27
+    ],
+    [
+     380,
+     382
+    ],
+    [
+     384,
+     400
+    ],
+    [
+     402,
+     404
+    ],
+    [
+     406,
+     408
+    ],
+    [
+     410,
+     410
+    ],
+    [
+     412,
+     415
+    ],
+    [
+     420,
+     420
+    ],
+    [
+     422,
+     424
+    ],
+    [
+     426,
+     427
+    ],
+    [
+     448,
+     448
+    ],
+    [
+     450,
+     452
+    ],
+    [
+     454,
+     454
+    ],
+    [
+     460,
+     462
+    ],
+    [
+     464,
+     466
+    ],
+    [
+     468,
+     470
+    ],
+    [
+     472,
+     511
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-loader"
+  },
+  "ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10": {
+   "service_id": "ic10.script.input.profile.catalog.loader.01",
+   "magic": 31415969,
+   "service_abi": 5,
+   "schema_id": "CatalogSchema.InputProfile",
+   "schema_version": 3,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "a140abc261534a2099071c4fb4e5dbde18f01dc0379b65c15f588a9275ba6767",
+   "legacy_owned_ranges": [
+    [
+     10,
+     10
+    ],
+    [
+     12,
+     18
+    ],
+    [
+     24,
+     25
+    ],
+    [
+     428,
+     432
+    ],
+    [
+     434,
+     434
+    ],
+    [
+     436,
+     438
+    ],
+    [
+     448,
+     450
+    ],
+    [
+     452,
+     454
+    ],
+    [
+     456,
+     456
+    ],
+    [
+     458,
+     464
+    ],
+    [
+     466,
+     466
+    ],
+    [
+     468,
+     509
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-loader"
+  },
+  "ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10": {
+   "service_id": "ic10.script.input.profile.catalog.loader.02",
+   "magic": 31415969,
+   "service_abi": 5,
+   "schema_id": "CatalogSchema.InputProfile",
+   "schema_version": 3,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "fb1c5142250f5d92692f4fc7658893db27631a9d5ebffaba4a22702f0751f07b",
+   "legacy_owned_ranges": [
+    [
+     10,
+     10
+    ],
+    [
+     12,
+     18
+    ],
+    [
+     24,
+     29
+    ],
+    [
+     392,
+     394
+    ],
+    [
+     396,
+     396
+    ],
+    [
+     398,
+     398
+    ],
+    [
+     400,
+     400
+    ],
+    [
+     402,
+     416
+    ],
+    [
+     418,
+     418
+    ],
+    [
+     420,
+     422
+    ],
+    [
+     424,
+     424
+    ],
+    [
+     426,
+     428
+    ],
+    [
+     430,
+     432
+    ],
+    [
+     434,
+     438
+    ],
+    [
+     440,
+     442
+    ],
+    [
+     444,
+     444
+    ],
+    [
+     446,
+     446
+    ],
+    [
+     448,
+     457
+    ],
+    [
+     460,
+     464
+    ],
+    [
+     466,
+     466
+    ],
+    [
+     468,
+     470
+    ],
+    [
+     472,
+     480
+    ],
+    [
+     482,
+     484
+    ],
+    [
+     486,
+     488
+    ],
+    [
+     490,
+     494
+    ],
+    [
+     496,
+     496
+    ],
+    [
+     498,
+     498
+    ],
+    [
+     500,
+     500
+    ],
+    [
+     502,
+     509
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-loader"
+  },
+  "ic10/input-profile-catalog/input_profile_view_v5_0.ic10": {
+   "service_id": "ic10.script.input.profile.view",
+   "magic": 31415929,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "25f95c4735d077c40a0f88efaedd9c47e37df3d9ab6473299b07965c6d0d0434",
+   "legacy_owned_ranges": [
+    [
+     8,
+     11
+    ],
+    [
+     32,
+     255
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     32,
+     255
+    ]
+   ],
+   "pilot_family": "input-profile-catalog"
   },
   "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10": {
    "service_id": "ic10.script.stack.cell.monitor",
@@ -837,7 +1166,7 @@
    "implementation_id": null,
    "telemetry_base": 96,
    "publishes_state": false,
-   "source_sha256": "7e56cdd8ba5f916fe24f43061d7b03eec5f4cf27a2e75c988b19e338d3aeedde",
+   "source_sha256": "76ce80204804aee5797e958619a7cd92dd00509f782a7a90e9a91823760827a9",
    "legacy_owned_ranges": [
     [
      96,
@@ -1129,6 +1458,654 @@
     ]
    ],
    "pilot_family": "directory"
+  },
+  "ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10": {
+   "service_id": "ic10.script.resource.profile.loader.energy.00",
+   "magic": 31415969,
+   "service_abi": 5,
+   "schema_id": "CatalogSchema.ResourceProfile",
+   "schema_version": 2,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "4939548c8e596ec9124ed32cd4b9041d6fad82bdaf859f7d8bda09320890baf2",
+   "legacy_owned_ranges": [
+    [
+     10,
+     18
+    ],
+    [
+     24,
+     25
+    ],
+    [
+     496,
+     500
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-loader"
+  },
+  "ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10": {
+   "service_id": "ic10.script.resource.profile.loader.fluid.00",
+   "magic": 31415969,
+   "service_abi": 5,
+   "schema_id": "CatalogSchema.ResourceProfile",
+   "schema_version": 2,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "934f20c7ea2d2618f582fceccab18602e969c1d6d57da65842bbc9e92b2ce14f",
+   "legacy_owned_ranges": [
+    [
+     10,
+     18
+    ],
+    [
+     24,
+     35
+    ],
+    [
+     416,
+     429
+    ],
+    [
+     432,
+     445
+    ],
+    [
+     448,
+     461
+    ],
+    [
+     464,
+     477
+    ],
+    [
+     480,
+     493
+    ],
+    [
+     496,
+     509
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-loader"
+  },
+  "ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10": {
+   "service_id": "ic10.script.resource.profile.loader.fluid.01",
+   "magic": 31415969,
+   "service_abi": 5,
+   "schema_id": "CatalogSchema.ResourceProfile",
+   "schema_version": 2,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "437546a20564ae0d8572744ac6a1f3514a5f5063727f11b160af825f232a9064",
+   "legacy_owned_ranges": [
+    [
+     10,
+     18
+    ],
+    [
+     24,
+     31
+    ],
+    [
+     448,
+     461
+    ],
+    [
+     464,
+     477
+    ],
+    [
+     480,
+     493
+    ],
+    [
+     496,
+     509
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-loader"
+  },
+  "ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10": {
+   "service_id": "ic10.script.resource.profile.loader.item.00",
+   "magic": 31415969,
+   "service_abi": 5,
+   "schema_id": "CatalogSchema.ResourceProfile",
+   "schema_version": 2,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "ef2cea056fc69736d96272b09cacddfd48a29fc1b3e096a552e6ac92fb50bb9a",
+   "legacy_owned_ranges": [
+    [
+     10,
+     18
+    ],
+    [
+     24,
+     45
+    ],
+    [
+     336,
+     343
+    ],
+    [
+     352,
+     358
+    ],
+    [
+     368,
+     374
+    ],
+    [
+     384,
+     390
+    ],
+    [
+     400,
+     406
+    ],
+    [
+     416,
+     422
+    ],
+    [
+     432,
+     438
+    ],
+    [
+     448,
+     454
+    ],
+    [
+     464,
+     470
+    ],
+    [
+     480,
+     486
+    ],
+    [
+     496,
+     502
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-loader"
+  },
+  "ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10": {
+   "service_id": "ic10.script.resource.profile.loader.item.01",
+   "magic": 31415969,
+   "service_abi": 5,
+   "schema_id": "CatalogSchema.ResourceProfile",
+   "schema_version": 2,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "0134f143649b3f509dcc6effc24c2bd5822f48e35625aeb75e50e7aaa96ea7b0",
+   "legacy_owned_ranges": [
+    [
+     10,
+     18
+    ],
+    [
+     24,
+     43
+    ],
+    [
+     352,
+     359
+    ],
+    [
+     368,
+     375
+    ],
+    [
+     384,
+     391
+    ],
+    [
+     400,
+     407
+    ],
+    [
+     416,
+     423
+    ],
+    [
+     432,
+     439
+    ],
+    [
+     448,
+     455
+    ],
+    [
+     464,
+     471
+    ],
+    [
+     480,
+     487
+    ],
+    [
+     496,
+     503
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-loader"
+  },
+  "ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10": {
+   "service_id": "ic10.script.resource.profile.loader.item.02",
+   "magic": 31415969,
+   "service_abi": 5,
+   "schema_id": "CatalogSchema.ResourceProfile",
+   "schema_version": 2,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "c3248b98553988497a63fb018315cdc0a4fa5ff0da83876f4fa48ed7dcbc5882",
+   "legacy_owned_ranges": [
+    [
+     10,
+     18
+    ],
+    [
+     24,
+     35
+    ],
+    [
+     416,
+     423
+    ],
+    [
+     432,
+     439
+    ],
+    [
+     448,
+     455
+    ],
+    [
+     464,
+     471
+    ],
+    [
+     480,
+     487
+    ],
+    [
+     496,
+     503
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-loader"
+  },
+  "ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10": {
+   "service_id": "ic10.script.resource.profile.loader.power.00",
+   "magic": 31415969,
+   "service_abi": 5,
+   "schema_id": "CatalogSchema.ResourceProfile",
+   "schema_version": 2,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "9d3a2a7e9196199732e053e4410ccbd1dfb1291a6bea03a28089644ace93de35",
+   "legacy_owned_ranges": [
+    [
+     10,
+     18
+    ],
+    [
+     24,
+     25
+    ],
+    [
+     496,
+     500
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-loader"
+  },
+  "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10": {
+   "service_id": "ic10.script.resource.profile.view",
+   "magic": 31415963,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "f57209498d5bddc7e1ace82324db7c206fc32937e829f1de4d2c89149bb688e8",
+   "legacy_owned_ranges": [
+    [
+     8,
+     23
+    ],
+    [
+     26,
+     29
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     8,
+     21
+    ]
+   ],
+   "pilot_family": "resource-profile-catalog"
+  },
+  "ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10": {
+   "service_id": "ic10.script.resource.transform.catalog.loader.00",
+   "magic": 31415969,
+   "service_abi": 5,
+   "schema_id": "CatalogSchema.ResourceTransform",
+   "schema_version": 4,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "ca9b524cb660cc93eb26f890649fea93e7b39b267f956514dbf7d3d6ec626c0a",
+   "legacy_owned_ranges": [
+    [
+     10,
+     10
+    ],
+    [
+     12,
+     18
+    ],
+    [
+     24,
+     33
+    ],
+    [
+     412,
+     420
+    ],
+    [
+     424,
+     440
+    ],
+    [
+     444,
+     460
+    ],
+    [
+     464,
+     480
+    ],
+    [
+     484,
+     500
+    ],
+    [
+     504,
+     511
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-loader"
+  },
+  "ic10/transform-catalog/resource_transform_catalog_loader_01_v6_0.ic10": {
+   "service_id": "ic10.script.resource.transform.catalog.loader.01",
+   "magic": 31415969,
+   "service_abi": 5,
+   "schema_id": "CatalogSchema.ResourceTransform",
+   "schema_version": 4,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "b823a77703b0650e58cc0a5e75c0adac7cbbfd34a1c90a44dbf561ab2cd8e2a9",
+   "legacy_owned_ranges": [
+    [
+     10,
+     10
+    ],
+    [
+     12,
+     18
+    ],
+    [
+     24,
+     31
+    ],
+    [
+     424,
+     432
+    ],
+    [
+     436,
+     456
+    ],
+    [
+     460,
+     480
+    ],
+    [
+     484,
+     500
+    ],
+    [
+     504,
+     511
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-loader"
+  },
+  "ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10": {
+   "service_id": "ic10.script.resource.transform.catalog.loader.02",
+   "magic": 31415969,
+   "service_abi": 5,
+   "schema_id": "CatalogSchema.ResourceTransform",
+   "schema_version": 4,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "f04a702493ba464f51db915d6e7252eed78b6d3a595cbbf1eda35e42b41c26a2",
+   "legacy_owned_ranges": [
+    [
+     10,
+     10
+    ],
+    [
+     12,
+     18
+    ],
+    [
+     24,
+     31
+    ],
+    [
+     412,
+     420
+    ],
+    [
+     424,
+     448
+    ],
+    [
+     452,
+     472
+    ],
+    [
+     476,
+     496
+    ],
+    [
+     500,
+     511
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-loader"
+  },
+  "ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10": {
+   "service_id": "ic10.script.resource.transform.catalog.loader.03",
+   "magic": 31415969,
+   "service_abi": 5,
+   "schema_id": "CatalogSchema.ResourceTransform",
+   "schema_version": 4,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "c66e791a6d77d85bcd1e820ba9bfc4f9628ae3ae9affe34feaf5facdbfe7e530",
+   "legacy_owned_ranges": [
+    [
+     10,
+     10
+    ],
+    [
+     12,
+     18
+    ],
+    [
+     24,
+     29
+    ],
+    [
+     428,
+     436
+    ],
+    [
+     440,
+     464
+    ],
+    [
+     468,
+     492
+    ],
+    [
+     496,
+     511
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-loader"
+  },
+  "ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10": {
+   "service_id": "ic10.script.resource.transform.catalog.loader.04",
+   "magic": 31415969,
+   "service_abi": 5,
+   "schema_id": "CatalogSchema.ResourceTransform",
+   "schema_version": 4,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "6d49c002d0f18d1c8369d8135722eecb203a725217693410f011938c6ca21167",
+   "legacy_owned_ranges": [
+    [
+     10,
+     10
+    ],
+    [
+     12,
+     18
+    ],
+    [
+     24,
+     25
+    ],
+    [
+     484,
+     492
+    ],
+    [
+     496,
+     511
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-loader"
+  },
+  "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": {
+   "service_id": "ic10.script.resource.transform.profile.view",
+   "magic": 31415952,
+   "service_abi": 4,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "49d27fd438c041cf93ee14480a67f600c1c4afd5570e26c117b38bb799c8b8b5",
+   "legacy_owned_ranges": [
+    [
+     8,
+     75
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     8,
+     67
+    ]
+   ],
+   "pilot_family": "transform-catalog"
   }
  },
  "legacy_exemption": {

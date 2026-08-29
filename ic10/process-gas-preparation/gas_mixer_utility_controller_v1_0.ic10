@@ -5,7 +5,7 @@ Loop:
 yield
 bdns d4 Bad
 bdns d5 Bad
-get r15 d4 5
+get r15 d4 29
 blez r15 Bad
 get r0 d4 0
 bne r0 31415963 Bad
@@ -21,7 +21,7 @@ get r3 d4 14
 get r4 d4 15
 get r5 d4 16
 get r6 d4 17
-get r0 d4 5
+get r0 d4 29
 bne r0 r15 Loop
 get sp d5 11
 blez sp Bad
@@ -61,7 +61,7 @@ blt r9 r13 Bad
 blt r10 r13 Bad
 bdnvl d3 Setting Bad
 bdnvl d3 On Bad
-get r0 d4 5
+get r0 d4 29
 bne r0 r15 Loop
 get r0 d5 11
 bne r0 sp Loop

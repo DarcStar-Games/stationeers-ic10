@@ -67,7 +67,7 @@ Production IC10 programs: 174
 | `ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10` | 109 | Input metadata | `input-profile-catalog` | `one-shot` | One-shot relocatable Loader ABI5 candidate containing whole self-contained Input Profile items. |
 | `ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10` | 82 | Input metadata | `input-profile-catalog` | `one-shot` | One-shot relocatable Loader ABI5 candidate containing whole self-contained Input Profile items. |
 | `ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10` | 112 | Input metadata | `input-profile-catalog` | `one-shot` | One-shot relocatable Loader ABI5 candidate containing whole self-contained Input Profile items. |
-| `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` | 110 | Input metadata | `input-profile-catalog` | `conditional-resident` | Selects one Input schema-v3 Store ABI6 catalog context and republishes Generic Input Profile ABI1. |
+| `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` | 111 | Input metadata | `input-profile-catalog` | `conditional-resident` | Selects one Input schema-v3 Store ABI6 catalog context and republishes Generic Input Profile ABI1. |
 | `ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10` | 101 | Item storage allocation | `item-storage-common` | `conditional-resident` | Commits one coherent ITEM reservation quote with allocator identity, epoch, direction, and mirror-generation fencing. |
 | `ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10` | 115 | Item storage planning | `item-storage-common` | `conditional-resident` | Read-only bounded ITEM reservation selector; aggregates up to six physical source/destination reservations without mutation. |
 | `ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10` | 90 | Item storage | `item-storage-direct` | `conditional-resident` | Publishes bounded directly readable slot storage as a policy-aware Generic ITEM Resource Endpoint. |
@@ -173,7 +173,7 @@ Production IC10 programs: 174
 | `ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10` | 115 | Resource metadata | `resource-profile-catalog` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
 | `ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10` | 75 | Resource metadata | `resource-profile-catalog` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
 | `ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10` | 22 | Resource metadata | `resource-profile-catalog` | `one-shot` | One-shot relocatable POWER Resource Profile Loader ABI5 candidate. |
-| `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` | 92 | Resource metadata | `resource-profile-catalog` | `conditional-resident` | Resolves one Resource Profile across runtime-placed Store ABI6 items and republishes View ABI1. |
+| `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` | 93 | Resource metadata | `resource-profile-catalog` | `conditional-resident` | Resolves one Resource Profile across runtime-placed Store ABI6 items and republishes View ABI1. |
 | `ic10/shared-input/generic_input_resolver_v1_0.ic10` | 113 | Shared input | `shared-input` | `commissioning` | Resolves logical commissioning controls from Scanner + Profile metadata. |
 | `ic10/shared-input/generic_input_scanner_v1_1.ic10` | 84 | Shared input | `shared-input` | `commissioning` | Discovers/classifies physical commissioning controls. |
 | `ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10` | 109 | Transformation metadata | `transform-catalog` | `one-shot` | One-shot relocatable Transform Loader ABI5 candidate; each transform is a whole self-contained item. |
@@ -181,7 +181,7 @@ Production IC10 programs: 174
 | `ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10` | 110 | Transformation metadata | `transform-catalog` | `one-shot` | One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item. |
 | `ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10` | 95 | Transformation metadata | `transform-catalog` | `one-shot` | One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item. |
 | `ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10` | 41 | Transformation metadata | `transform-catalog` | `one-shot` | One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item. |
-| `ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` | 120 | Transformation metadata | `transform-catalog` | `conditional-resident` | Selects a Store ABI6 schema-v4 transform and publishes capability-based variable-input Transform Profile ABI4. |
+| `ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` | 121 | Transformation metadata | `transform-catalog` | `conditional-resident` | Selects a Store ABI6 schema-v4 transform and publishes capability-based variable-input Transform Profile ABI4. |
 
 ## Pressure-grid dependency map
 

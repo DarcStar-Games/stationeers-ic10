@@ -29,10 +29,10 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 42,
-    "legacy_exempt": 132,
-    "backlog_reserved_cell_users": 120,
-    "backlog_dynamic_range_users": 43
+    "migrated_v1": 60,
+    "legacy_exempt": 114,
+    "backlog_reserved_cell_users": 102,
+    "backlog_dynamic_range_users": 25
   },
   "services": [
     {
@@ -1508,7 +1508,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "ba5a1bf7e5a6d1f9902fc43d504e3edf16cd541f9362b364b00d109854bbdf82",
+          "source_sha256": "7d3f3882ee0f93c7669fbda75cad412bf487d446af4a1c929851c5a13f33b204",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -3378,7 +3378,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "ff43b73ca689665ff47e2122fc3133da30fa0c02a373a52177f42e5ae4e814a2",
+          "source_sha256": "c7794a37decd5d1df491f8886a8c88ebdf406706f0eae097a2de0590bca66767",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -4311,7 +4311,7 @@
       "source": "ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10",
       "service_contract_id": "ic10.script.input.profile.catalog.loader.00",
       "deployment_family": "input-profile-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -4382,17 +4382,113 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.input.profile.catalog.loader.00",
+        "magic": 31415969,
+        "service_abi": 5,
+        "schema_id": "CatalogSchema.InputProfile",
+        "schema_id_hash": "HASH(\"CatalogSchema.InputProfile.v3\")",
+        "schema_version": 3,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 1,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "8e3bc6130347ba4509470ff964e34108032f7f3b5587cf3a1fb077a7c5bd921f",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 10
+            },
+            {
+              "start": 12,
+              "end": 18
+            },
+            {
+              "start": 24,
+              "end": 27
+            },
+            {
+              "start": 380,
+              "end": 382
+            },
+            {
+              "start": 384,
+              "end": 400
+            },
+            {
+              "start": 402,
+              "end": 404
+            },
+            {
+              "start": 406,
+              "end": 408
+            },
+            {
+              "start": 410,
+              "end": 410
+            },
+            {
+              "start": 412,
+              "end": 415
+            },
+            {
+              "start": 420,
+              "end": 420
+            },
+            {
+              "start": 422,
+              "end": 424
+            },
+            {
+              "start": 426,
+              "end": 427
+            },
+            {
+              "start": 448,
+              "end": 448
+            },
+            {
+              "start": 450,
+              "end": 452
+            },
+            {
+              "start": 454,
+              "end": 454
+            },
+            {
+              "start": 460,
+              "end": 462
+            },
+            {
+              "start": 464,
+              "end": 466
+            },
+            {
+              "start": 468,
+              "end": 470
+            },
+            {
+              "start": 472,
+              "end": 511
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-loader"
       }
     },
     {
       "source": "ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10",
       "service_contract_id": "ic10.script.input.profile.catalog.loader.01",
       "deployment_family": "input-profile-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -4463,17 +4559,85 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.input.profile.catalog.loader.01",
+        "magic": 31415969,
+        "service_abi": 5,
+        "schema_id": "CatalogSchema.InputProfile",
+        "schema_id_hash": "HASH(\"CatalogSchema.InputProfile.v3\")",
+        "schema_version": 3,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 1,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "a140abc261534a2099071c4fb4e5dbde18f01dc0379b65c15f588a9275ba6767",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 10
+            },
+            {
+              "start": 12,
+              "end": 18
+            },
+            {
+              "start": 24,
+              "end": 25
+            },
+            {
+              "start": 428,
+              "end": 432
+            },
+            {
+              "start": 434,
+              "end": 434
+            },
+            {
+              "start": 436,
+              "end": 438
+            },
+            {
+              "start": 448,
+              "end": 450
+            },
+            {
+              "start": 452,
+              "end": 454
+            },
+            {
+              "start": 456,
+              "end": 456
+            },
+            {
+              "start": 458,
+              "end": 464
+            },
+            {
+              "start": 466,
+              "end": 466
+            },
+            {
+              "start": 468,
+              "end": 509
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-loader"
       }
     },
     {
       "source": "ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10",
       "service_contract_id": "ic10.script.input.profile.catalog.loader.02",
       "deployment_family": "input-profile-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -4544,17 +4708,153 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.input.profile.catalog.loader.02",
+        "magic": 31415969,
+        "service_abi": 5,
+        "schema_id": "CatalogSchema.InputProfile",
+        "schema_id_hash": "HASH(\"CatalogSchema.InputProfile.v3\")",
+        "schema_version": 3,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 1,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "fb1c5142250f5d92692f4fc7658893db27631a9d5ebffaba4a22702f0751f07b",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 10
+            },
+            {
+              "start": 12,
+              "end": 18
+            },
+            {
+              "start": 24,
+              "end": 29
+            },
+            {
+              "start": 392,
+              "end": 394
+            },
+            {
+              "start": 396,
+              "end": 396
+            },
+            {
+              "start": 398,
+              "end": 398
+            },
+            {
+              "start": 400,
+              "end": 400
+            },
+            {
+              "start": 402,
+              "end": 416
+            },
+            {
+              "start": 418,
+              "end": 418
+            },
+            {
+              "start": 420,
+              "end": 422
+            },
+            {
+              "start": 424,
+              "end": 424
+            },
+            {
+              "start": 426,
+              "end": 428
+            },
+            {
+              "start": 430,
+              "end": 432
+            },
+            {
+              "start": 434,
+              "end": 438
+            },
+            {
+              "start": 440,
+              "end": 442
+            },
+            {
+              "start": 444,
+              "end": 444
+            },
+            {
+              "start": 446,
+              "end": 446
+            },
+            {
+              "start": 448,
+              "end": 457
+            },
+            {
+              "start": 460,
+              "end": 464
+            },
+            {
+              "start": 466,
+              "end": 466
+            },
+            {
+              "start": 468,
+              "end": 470
+            },
+            {
+              "start": 472,
+              "end": 480
+            },
+            {
+              "start": 482,
+              "end": 484
+            },
+            {
+              "start": 486,
+              "end": 488
+            },
+            {
+              "start": 490,
+              "end": 494
+            },
+            {
+              "start": 496,
+              "end": 496
+            },
+            {
+              "start": 498,
+              "end": 498
+            },
+            {
+              "start": 500,
+              "end": 500
+            },
+            {
+              "start": 502,
+              "end": 509
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-loader"
       }
     },
     {
       "source": "ic10/input-profile-catalog/input_profile_view_v5_0.ic10",
       "service_contract_id": "ic10.script.input.profile.view",
       "deployment_family": "input-profile-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -4579,8 +4879,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 6,
-        "highest_literal_cell": 5,
+        "literal_cell_count": 7,
+        "highest_literal_cell": 11,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
@@ -4588,8 +4888,8 @@
             "end": 511
           }
         ],
-        "line_count": 110,
-        "line_headroom_120": 10,
+        "line_count": 111,
+        "line_headroom_120": 9,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -4597,10 +4897,7 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -4616,10 +4913,43 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.input.profile.view",
+        "magic": 31415929,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "25f95c4735d077c40a0f88efaedd9c47e37df3d9ab6473299b07965c6d0d0434",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 11
+            },
+            {
+              "start": 32,
+              "end": 255
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 32,
+              "end": 255
+            }
+          ]
+        },
+        "pilot_family": "input-profile-catalog"
       }
     },
     {
@@ -9024,7 +9354,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "7e56cdd8ba5f916fe24f43061d7b03eec5f4cf27a2e75c988b19e338d3aeedde",
+          "source_sha256": "76ce80204804aee5797e958619a7cd92dd00509f782a7a90e9a91823760827a9",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -12209,7 +12539,7 @@
       "source": "ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10",
       "service_contract_id": "ic10.script.resource.profile.loader.energy.00",
       "deployment_family": "resource-profile-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -12280,17 +12610,49 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.resource.profile.loader.energy.00",
+        "magic": 31415969,
+        "service_abi": 5,
+        "schema_id": "CatalogSchema.ResourceProfile",
+        "schema_id_hash": "HASH(\"CatalogSchema.ResourceProfile.v2\")",
+        "schema_version": 2,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 1,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "4939548c8e596ec9124ed32cd4b9041d6fad82bdaf859f7d8bda09320890baf2",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 18
+            },
+            {
+              "start": 24,
+              "end": 25
+            },
+            {
+              "start": 496,
+              "end": 500
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-loader"
       }
     },
     {
       "source": "ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10",
       "service_contract_id": "ic10.script.resource.profile.loader.fluid.00",
       "deployment_family": "resource-profile-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -12361,17 +12723,69 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.resource.profile.loader.fluid.00",
+        "magic": 31415969,
+        "service_abi": 5,
+        "schema_id": "CatalogSchema.ResourceProfile",
+        "schema_id_hash": "HASH(\"CatalogSchema.ResourceProfile.v2\")",
+        "schema_version": 2,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 1,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "934f20c7ea2d2618f582fceccab18602e969c1d6d57da65842bbc9e92b2ce14f",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 18
+            },
+            {
+              "start": 24,
+              "end": 35
+            },
+            {
+              "start": 416,
+              "end": 429
+            },
+            {
+              "start": 432,
+              "end": 445
+            },
+            {
+              "start": 448,
+              "end": 461
+            },
+            {
+              "start": 464,
+              "end": 477
+            },
+            {
+              "start": 480,
+              "end": 493
+            },
+            {
+              "start": 496,
+              "end": 509
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-loader"
       }
     },
     {
       "source": "ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10",
       "service_contract_id": "ic10.script.resource.profile.loader.fluid.01",
       "deployment_family": "resource-profile-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -12442,17 +12856,61 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.resource.profile.loader.fluid.01",
+        "magic": 31415969,
+        "service_abi": 5,
+        "schema_id": "CatalogSchema.ResourceProfile",
+        "schema_id_hash": "HASH(\"CatalogSchema.ResourceProfile.v2\")",
+        "schema_version": 2,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 1,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "437546a20564ae0d8572744ac6a1f3514a5f5063727f11b160af825f232a9064",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 18
+            },
+            {
+              "start": 24,
+              "end": 31
+            },
+            {
+              "start": 448,
+              "end": 461
+            },
+            {
+              "start": 464,
+              "end": 477
+            },
+            {
+              "start": 480,
+              "end": 493
+            },
+            {
+              "start": 496,
+              "end": 509
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-loader"
       }
     },
     {
       "source": "ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10",
       "service_contract_id": "ic10.script.resource.profile.loader.item.00",
       "deployment_family": "resource-profile-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -12523,17 +12981,89 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.resource.profile.loader.item.00",
+        "magic": 31415969,
+        "service_abi": 5,
+        "schema_id": "CatalogSchema.ResourceProfile",
+        "schema_id_hash": "HASH(\"CatalogSchema.ResourceProfile.v2\")",
+        "schema_version": 2,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 1,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "ef2cea056fc69736d96272b09cacddfd48a29fc1b3e096a552e6ac92fb50bb9a",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 18
+            },
+            {
+              "start": 24,
+              "end": 45
+            },
+            {
+              "start": 336,
+              "end": 343
+            },
+            {
+              "start": 352,
+              "end": 358
+            },
+            {
+              "start": 368,
+              "end": 374
+            },
+            {
+              "start": 384,
+              "end": 390
+            },
+            {
+              "start": 400,
+              "end": 406
+            },
+            {
+              "start": 416,
+              "end": 422
+            },
+            {
+              "start": 432,
+              "end": 438
+            },
+            {
+              "start": 448,
+              "end": 454
+            },
+            {
+              "start": 464,
+              "end": 470
+            },
+            {
+              "start": 480,
+              "end": 486
+            },
+            {
+              "start": 496,
+              "end": 502
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-loader"
       }
     },
     {
       "source": "ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10",
       "service_contract_id": "ic10.script.resource.profile.loader.item.01",
       "deployment_family": "resource-profile-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -12604,17 +13134,85 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.resource.profile.loader.item.01",
+        "magic": 31415969,
+        "service_abi": 5,
+        "schema_id": "CatalogSchema.ResourceProfile",
+        "schema_id_hash": "HASH(\"CatalogSchema.ResourceProfile.v2\")",
+        "schema_version": 2,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 1,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "0134f143649b3f509dcc6effc24c2bd5822f48e35625aeb75e50e7aaa96ea7b0",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 18
+            },
+            {
+              "start": 24,
+              "end": 43
+            },
+            {
+              "start": 352,
+              "end": 359
+            },
+            {
+              "start": 368,
+              "end": 375
+            },
+            {
+              "start": 384,
+              "end": 391
+            },
+            {
+              "start": 400,
+              "end": 407
+            },
+            {
+              "start": 416,
+              "end": 423
+            },
+            {
+              "start": 432,
+              "end": 439
+            },
+            {
+              "start": 448,
+              "end": 455
+            },
+            {
+              "start": 464,
+              "end": 471
+            },
+            {
+              "start": 480,
+              "end": 487
+            },
+            {
+              "start": 496,
+              "end": 503
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-loader"
       }
     },
     {
       "source": "ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10",
       "service_contract_id": "ic10.script.resource.profile.loader.item.02",
       "deployment_family": "resource-profile-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -12685,17 +13283,69 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.resource.profile.loader.item.02",
+        "magic": 31415969,
+        "service_abi": 5,
+        "schema_id": "CatalogSchema.ResourceProfile",
+        "schema_id_hash": "HASH(\"CatalogSchema.ResourceProfile.v2\")",
+        "schema_version": 2,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 1,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "c3248b98553988497a63fb018315cdc0a4fa5ff0da83876f4fa48ed7dcbc5882",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 18
+            },
+            {
+              "start": 24,
+              "end": 35
+            },
+            {
+              "start": 416,
+              "end": 423
+            },
+            {
+              "start": 432,
+              "end": 439
+            },
+            {
+              "start": 448,
+              "end": 455
+            },
+            {
+              "start": 464,
+              "end": 471
+            },
+            {
+              "start": 480,
+              "end": 487
+            },
+            {
+              "start": 496,
+              "end": 503
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-loader"
       }
     },
     {
       "source": "ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10",
       "service_contract_id": "ic10.script.resource.profile.loader.power.00",
       "deployment_family": "resource-profile-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -12766,17 +13416,49 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.resource.profile.loader.power.00",
+        "magic": 31415969,
+        "service_abi": 5,
+        "schema_id": "CatalogSchema.ResourceProfile",
+        "schema_id_hash": "HASH(\"CatalogSchema.ResourceProfile.v2\")",
+        "schema_version": 2,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 1,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "9d3a2a7e9196199732e053e4410ccbd1dfb1291a6bea03a28089644ace93de35",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 18
+            },
+            {
+              "start": 24,
+              "end": 25
+            },
+            {
+              "start": 496,
+              "end": 500
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-loader"
       }
     },
     {
       "source": "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10",
       "service_contract_id": "ic10.script.resource.profile.view",
       "deployment_family": "resource-profile-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -12826,8 +13508,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 10,
-        "highest_literal_cell": 23,
+        "literal_cell_count": 11,
+        "highest_literal_cell": 29,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
@@ -12835,8 +13517,8 @@
             "end": 511
           }
         ],
-        "line_count": 92,
-        "line_headroom_120": 28,
+        "line_count": 93,
+        "line_headroom_120": 27,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12844,10 +13526,7 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -12863,10 +13542,43 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.resource.profile.view",
+        "magic": 31415963,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "f57209498d5bddc7e1ace82324db7c206fc32937e829f1de4d2c89149bb688e8",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 23
+            },
+            {
+              "start": 26,
+              "end": 29
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 8,
+              "end": 21
+            }
+          ]
+        },
+        "pilot_family": "resource-profile-catalog"
       }
     },
     {
@@ -12993,7 +13705,7 @@
       "source": "ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10",
       "service_contract_id": "ic10.script.resource.transform.catalog.loader.00",
       "deployment_family": "transform-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -13064,17 +13776,73 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.resource.transform.catalog.loader.00",
+        "magic": 31415969,
+        "service_abi": 5,
+        "schema_id": "CatalogSchema.ResourceTransform",
+        "schema_id_hash": "HASH(\"CatalogSchema.ResourceTransform.v4\")",
+        "schema_version": 4,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 1,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "ca9b524cb660cc93eb26f890649fea93e7b39b267f956514dbf7d3d6ec626c0a",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 10
+            },
+            {
+              "start": 12,
+              "end": 18
+            },
+            {
+              "start": 24,
+              "end": 33
+            },
+            {
+              "start": 412,
+              "end": 420
+            },
+            {
+              "start": 424,
+              "end": 440
+            },
+            {
+              "start": 444,
+              "end": 460
+            },
+            {
+              "start": 464,
+              "end": 480
+            },
+            {
+              "start": 484,
+              "end": 500
+            },
+            {
+              "start": 504,
+              "end": 511
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-loader"
       }
     },
     {
       "source": "ic10/transform-catalog/resource_transform_catalog_loader_01_v6_0.ic10",
       "service_contract_id": "ic10.script.resource.transform.catalog.loader.01",
       "deployment_family": "transform-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -13145,17 +13913,69 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.resource.transform.catalog.loader.01",
+        "magic": 31415969,
+        "service_abi": 5,
+        "schema_id": "CatalogSchema.ResourceTransform",
+        "schema_id_hash": "HASH(\"CatalogSchema.ResourceTransform.v4\")",
+        "schema_version": 4,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 1,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "b823a77703b0650e58cc0a5e75c0adac7cbbfd34a1c90a44dbf561ab2cd8e2a9",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 10
+            },
+            {
+              "start": 12,
+              "end": 18
+            },
+            {
+              "start": 24,
+              "end": 31
+            },
+            {
+              "start": 424,
+              "end": 432
+            },
+            {
+              "start": 436,
+              "end": 456
+            },
+            {
+              "start": 460,
+              "end": 480
+            },
+            {
+              "start": 484,
+              "end": 500
+            },
+            {
+              "start": 504,
+              "end": 511
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-loader"
       }
     },
     {
       "source": "ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10",
       "service_contract_id": "ic10.script.resource.transform.catalog.loader.02",
       "deployment_family": "transform-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -13226,17 +14046,69 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.resource.transform.catalog.loader.02",
+        "magic": 31415969,
+        "service_abi": 5,
+        "schema_id": "CatalogSchema.ResourceTransform",
+        "schema_id_hash": "HASH(\"CatalogSchema.ResourceTransform.v4\")",
+        "schema_version": 4,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 1,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "f04a702493ba464f51db915d6e7252eed78b6d3a595cbbf1eda35e42b41c26a2",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 10
+            },
+            {
+              "start": 12,
+              "end": 18
+            },
+            {
+              "start": 24,
+              "end": 31
+            },
+            {
+              "start": 412,
+              "end": 420
+            },
+            {
+              "start": 424,
+              "end": 448
+            },
+            {
+              "start": 452,
+              "end": 472
+            },
+            {
+              "start": 476,
+              "end": 496
+            },
+            {
+              "start": 500,
+              "end": 511
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-loader"
       }
     },
     {
       "source": "ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10",
       "service_contract_id": "ic10.script.resource.transform.catalog.loader.03",
       "deployment_family": "transform-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -13307,17 +14179,65 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.resource.transform.catalog.loader.03",
+        "magic": 31415969,
+        "service_abi": 5,
+        "schema_id": "CatalogSchema.ResourceTransform",
+        "schema_id_hash": "HASH(\"CatalogSchema.ResourceTransform.v4\")",
+        "schema_version": 4,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 1,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "c66e791a6d77d85bcd1e820ba9bfc4f9628ae3ae9affe34feaf5facdbfe7e530",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 10
+            },
+            {
+              "start": 12,
+              "end": 18
+            },
+            {
+              "start": 24,
+              "end": 29
+            },
+            {
+              "start": 428,
+              "end": 436
+            },
+            {
+              "start": 440,
+              "end": 464
+            },
+            {
+              "start": 468,
+              "end": 492
+            },
+            {
+              "start": 496,
+              "end": 511
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-loader"
       }
     },
     {
       "source": "ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10",
       "service_contract_id": "ic10.script.resource.transform.catalog.loader.04",
       "deployment_family": "transform-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -13388,17 +14308,57 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.resource.transform.catalog.loader.04",
+        "magic": 31415969,
+        "service_abi": 5,
+        "schema_id": "CatalogSchema.ResourceTransform",
+        "schema_id_hash": "HASH(\"CatalogSchema.ResourceTransform.v4\")",
+        "schema_version": 4,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 1,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "6d49c002d0f18d1c8369d8135722eecb203a725217693410f011938c6ca21167",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 10
+            },
+            {
+              "start": 12,
+              "end": 18
+            },
+            {
+              "start": 24,
+              "end": 25
+            },
+            {
+              "start": 484,
+              "end": 492
+            },
+            {
+              "start": 496,
+              "end": 511
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-loader"
       }
     },
     {
       "source": "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10",
       "service_contract_id": "ic10.script.resource.transform.profile.view",
       "deployment_family": "transform-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -13448,8 +14408,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 10,
-        "highest_literal_cell": 69,
+        "literal_cell_count": 11,
+        "highest_literal_cell": 75,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
@@ -13457,8 +14417,8 @@
             "end": 511
           }
         ],
-        "line_count": 120,
-        "line_headroom_120": 0,
+        "line_count": 121,
+        "line_headroom_120": -1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -13466,12 +14426,7 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -13487,10 +14442,39 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.resource.transform.profile.view",
+        "magic": 31415952,
+        "service_abi": 4,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "49d27fd438c041cf93ee14480a67f600c1c4afd5570e26c117b38bb799c8b8b5",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 75
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 8,
+              "end": 67
+            }
+          ]
+        },
+        "pilot_family": "transform-catalog"
       }
     }
   ]

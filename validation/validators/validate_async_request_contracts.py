@@ -117,7 +117,7 @@ before('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','put d0 7
 need('ic10/manufacturing/manufacturing_driver_router_v2_0.ic10','get r0 d0 9','get r0 d1 9','poke 10 r15')
 need('ic10/manufacturing/manufacturing_scheduler_v1_0.ic10','get r0 d2 10','get r1 db 27','bne r0 r1 Loop')
 # Snapshot identity fencing used by Transform readiness remains separate from async request identity.
-need('ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10','poke 68 r10','poke 69 1','poke 69 -2','poke 69 -3')
+need('ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10','poke 68 r10','poke 69 1','poke 71 -2','poke 71 -3')
 
 if fails:
  print('Async request contracts: FAIL');[print(' -',x) for x in fails];sys.exit(1)

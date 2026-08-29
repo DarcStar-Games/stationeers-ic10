@@ -12,7 +12,7 @@ Loop:
 yield
 bdns d0 Bad
 bdns d1 Bad
-get r14 d1 5
+get r14 d1 29
 blez r14 Bad
 get r0 d1 0
 bne r0 31415963 Bad
@@ -21,7 +21,7 @@ bne r0 2 Bad
 get r2 d1 9
 get r3 d1 13
 blez r3 Bad
-get r0 d1 5
+get r0 d1 29
 bne r0 r14 Loop
 get r4 db 20
 get r5 db 21
@@ -56,7 +56,7 @@ move r12 r4
 Next:
 add r4 r4 1
 blt r4 r6 Scan
-get r0 d1 5
+get r0 d1 29
 bne r0 r14 Loop
 get r0 db 37
 sub r8 r8 r0

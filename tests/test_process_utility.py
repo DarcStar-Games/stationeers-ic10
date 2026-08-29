@@ -36,7 +36,7 @@ ck(tr.stack.get(99)==H('ControllerPressureTransfer') and tr.stack.get(103)==1,'e
 ck(furnace.props.get('SettingInput',0)>0,'Grant-authorized furnace inlet pump did not actuate')
 guard.stack[4]=0;tr.run(1);ck(furnace.props.get('SettingInput')==0,'withdrawn PressureGrid grant did not safe-off embedded furnace pump')
 # Mixture profile purity checks two components under the existing PurityGuard ABI.
-prof=Device(301,stack={0:31415963,1:1,4:1,5:3,8:1,9:H('Fuel.H2O2'),10:1,11:5,12:1,13:'RatioVolatiles',14:2/3,15:'RatioOxygen',16:1/3,17:.005,18:1,19:5000,20:12805,21:1},props={'ReferenceId':301})
+prof=Device(301,stack={0:31415963,1:1,28:1,29:3,8:1,9:H('Fuel.H2O2'),10:1,11:5,12:1,13:'RatioVolatiles',14:2/3,15:'RatioOxygen',16:1/3,17:.005,18:1,19:5000,20:12805,21:1},props={'ReferenceId':301})
 mix=Device(302,props={'ReferenceId':302,'TotalMoles':10,'Temperature':300,'RatioVolatiles':2/3,'RatioOxygen':1/3})
 pg=IC10((R/'ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10').read_text(),{'d0':mix,'d1':prof},self_ref=250);pg.run(2)
 ck(pg.stack.get(0)==31415947 and pg.stack.get(5)==1 and pg.stack.get(2)==H('Fuel.H2O2'),'two-component mixture did not reuse PurityGuard ABI1')

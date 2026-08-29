@@ -50,9 +50,9 @@ screws={f's{i}':s for i,s in enumerate(stores)};screws['coord']=coord;screws['d0
 viewsrc=(R/'ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10').read_text()
 for i,p in enumerate(P):
  typ='HASH:'+p['resource_type'] if p['resource_type_kind']=='hash_name' else p['resource_type']
- v=IC10(viewsrc,screws,self_ref=900+i);v.stack[2]=p['resource_class'];v.stack[3]=typ;v.run(3,max_steps=50000)
+ v=IC10(viewsrc,screws,self_ref=900+i);v.stack[26]=p['resource_class'];v.stack[27]=typ;v.run(3,max_steps=50000)
  exp=[p['resource_class'],typ,p['unit'],p['profile_kind'],p['profile_schema'],*p['params']]
- if v.stack.get(4)!=1 or [v.stack.get(x) for x in range(8,22)]!=exp:fails.append(p['slug']+': View mismatch')
+ if v.stack.get(28)!=1 or [v.stack.get(x) for x in range(8,22)]!=exp:fails.append(p['slug']+': View mismatch')
 by_slug={p['slug']:p for p in P};expected_groups={'ORE':10,'BASIC_INGOT':7,'ALLOY':5,'SUPERALLOY':5}
 for g,n in expected_groups.items():
  if sum(p.get('material_group')==g for p in P)!=n:fails.append(f'{g}: expected {n} profiles')

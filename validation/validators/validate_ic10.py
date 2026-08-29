@@ -15,6 +15,9 @@ LIMIT_BYTES = 4096
 MAINTAINABILITY_LINES = 120
 # Reviewed spends of the deliberate 120..128 margin. The hard limit still applies.
 SOFT_LIMIT_EXEMPTIONS = {
+    "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10":
+        "capability-fenced transform view publishing the common header above a 60-cell"
+        " resolved-request table",
     "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10":
         "operator-facing editor wiring six diagnostic devices; publishes the common header"
         " with its payload relocated above it",

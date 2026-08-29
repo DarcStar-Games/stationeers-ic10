@@ -34,11 +34,12 @@ def main():
  view=f'''# Input Profile View v5: dynamic Store ABI5 self-contained profile items.
 poke 0 {PROFILE_MAGIC}
 poke 1 {PROFILE_ABI}
-poke 5 0
+poke 2 0
+poke 11 0
 Loop:
 yield
-get r10 db 2
-get r11 db 3
+get r10 db 8
+get r11 db 9
 bdns d0 Bad
 l r2 d0 ReferenceId
 get r12 d0 11
@@ -84,7 +85,7 @@ blt r4 1 Bad
 bgt r4 32 Bad
 add r9 r8 3
 getd r6 r2 r9
-poke 5 0
+poke 11 0
 move r9 0
 Zero:
 add r1 r9 32
@@ -122,8 +123,8 @@ getd r0 r2 17
 bne r0 r14 Loop
 getd r0 r12 22
 bne r0 r15 Loop
-poke 4 r4
-poke 5 r14
+poke 10 r4
+poke 11 r14
 j Loop
 Next:
 add r5 r5 1
@@ -134,14 +135,13 @@ blez r1 Missing
 move r2 r1
 j Store
 Bad:
-poke 5 0
+poke 11 0
 j Loop
 Missing:
 getd r0 r12 22
 bne r0 r15 Loop
-poke 5 0
-j Loop
-'''
+poke 11 0
+j Loop'''
  (R/VIEW_FILE).write_text(view)
  counts=pack_store_counts([x.cells for x in items]);manifest=common_manifest(schema_name=SCHEMA,schema_version=SCHEMA_VERSION,instance_name=INSTANCE,store_count=len(counts),total_items=len(P),catalog_digest=digest)
  manifest.update({'format':'INPUT_PROFILE_CATALOG_V4','catalog_token':token,'profile_count':len(P),'runtime_store_placement':True,'runtime_min_store_count':len(counts),'runtime_store_item_counts':counts,'item_cell_lengths':[x.cells for x in items],'loader_segment_count':len(parts),'loaders':loaders,'loader_items':meta,'profiles':[p['slug'] for p in P],'loader_item_atomicity':'profile_never_split','loader_sparse_zero_init':True,'generic_store_program':GENERIC_STORE_FILE,'coordinator_core_program':COORD_PROGRAMS[1],'loader_router_program':COORD_PROGRAMS[2]})

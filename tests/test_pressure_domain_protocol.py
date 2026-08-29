@@ -10,7 +10,7 @@ fails=[]
 a=(R/'ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10').read_text(); d=(R/'ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10').read_text(); pol=(R/'ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10').read_text()
 for n in ('getd r12 ra 115','getd r0 ra 115','bne r0 r12 Next','add sp r6 7','bgtz r0 BadDirectory'):
  if n not in a: fails.append('Arbiter missing '+n)
-for n in ('poke 97 2','poke 115 0','poke 115 r0','get r15 d1 5','bne r0 r15 Loop'):
+for n in ('poke 97 2','poke 115 0','poke 115 r0','get r15 d1 29','bne r0 r15 Loop'):
  if n not in d: fails.append('PressureDomain missing '+n)
 if 'bgt r2 3 Reject' not in pol: fails.append('STORAGE role not represented in policy')
 req=[1700,2100,1900]

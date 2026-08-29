@@ -40,9 +40,9 @@ for i,p in enumerate(P):
 # Legacy View ABI remains identical.
 screws={'d0':store,'coord':coord,'s0':store};src=(R/'ic10/input-profile-catalog/input_profile_view_v5_0.ic10').read_text()
 for p in P:
- v=IC10(src,screws);v.stack[2]='HASH:'+p['profile_type'];v.stack[3]=p['schema'];v.run(3,max_steps=50000)
+ v=IC10(src,screws);v.stack[8]='HASH:'+p['profile_type'];v.stack[9]=p['schema'];v.run(3,max_steps=50000)
  flat=[x for row in p['descriptors'] for x in row]
- if v.stack.get(4)!=p['field_count'] or v.stack.get(5,0)<=0 or [v.stack.get(32+i) for i in range(len(flat))]!=flat:fails.append(p['slug']+': descriptor View mismatch')
+ if v.stack.get(10)!=p['field_count'] or v.stack.get(11,0)<=0 or [v.stack.get(32+i) for i in range(len(flat))]!=flat:fails.append(p['slug']+': descriptor View mismatch')
  for slot,val in p['enum_pairs']:
   if v.stack.get(slot)!=val:fails.append(p['slug']+f': enum slot {slot} mismatch')
 text='\n'.join(p.read_text() for p in loaders)

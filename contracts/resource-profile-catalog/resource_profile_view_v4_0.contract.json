@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10",
-  "source_sha256": "b04f89bb8a78ff922e467010d62a564149973b04d736b16b1e58034e35952929",
+  "source_sha256": "f57209498d5bddc7e1ace82324db7c206fc32937e829f1de4d2c89149bb688e8",
   "identity": {
     "service_id": "ic10.script.resource.profile.view",
     "implementation_revision": "4.0",
@@ -116,18 +116,19 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3
+      26,
+      27
     ],
     "literal_writes": [
       0,
       1,
-      4,
-      5,
+      2,
       8,
       9,
       22,
-      23
+      23,
+      28,
+      29
     ],
     "dynamic_read": false,
     "dynamic_write": true,
@@ -175,33 +176,6 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
           "self-write"
         ]
       },
@@ -235,6 +209,42 @@
       {
         "address": 23,
         "name": "S23",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 26,
+        "name": "S26",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 27,
+        "name": "S27",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 28,
+        "name": "S28",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 29,
+        "name": "S29",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

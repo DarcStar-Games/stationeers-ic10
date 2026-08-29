@@ -161,7 +161,7 @@
             }
           }
         },
-        "pilot_family": {"enum": ["stack-monitor", "generic-telemetry", "directory", "catalog", "catalog-control-plane", "diagnostics", "power-jobs", "material-transform", "transaction"]}
+        "pilot_family": {"enum": ["stack-monitor", "generic-telemetry", "directory", "catalog", "catalog-control-plane", "diagnostics", "power-jobs", "material-transform", "catalog-loader", "input-profile-catalog", "resource-profile-catalog", "transform-catalog", "transaction"]}
       }
     },
     "exemption": {

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10",
-  "source_sha256": "060cd44bb928c4212c49040478d96771fe3c589de31e362380baa6348026b2f1",
+  "source_sha256": "d466e37bb92533c445c974a80a06d7e2d6acee5b3ef1e85bf98b1159f7bdabe7",
   "identity": {
     "service_id": "ic10.script.pressure.medium.purity.guard",
     "implementation_revision": "1.0",
@@ -43,7 +43,7 @@
           "source_port": "d1",
           "address": 19,
           "fence": {
-            "address": 5,
+            "address": 29,
             "kind": "generation",
             "description": "Profile View generation must be positive and unchanged around the LogicType read."
           }
@@ -78,14 +78,14 @@
         "literal_reads": [
           0,
           1,
-          4,
-          5,
           8,
           9,
           11,
           12,
           19,
-          20
+          20,
+          28,
+          29
         ],
         "literal_writes": [],
         "dynamic_read": false,

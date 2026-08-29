@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10",
-  "source_sha256": "ba5a1bf7e5a6d1f9902fc43d504e3edf16cd541f9362b364b00d109854bbdf82",
+  "source_sha256": "7d3f3882ee0f93c7669fbda75cad412bf487d446af4a1c929851c5a13f33b204",
   "identity": {
     "service_id": "ic10.script.controller.phase.pressure.runtime",
     "implementation_revision": "1.1",
@@ -81,7 +81,6 @@
       "stack": {
         "literal_reads": [
           0,
-          5,
           9,
           11,
           13,
@@ -89,7 +88,8 @@
           15,
           16,
           17,
-          18
+          18,
+          29
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -112,8 +112,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.8745c8c0bf8ca9ff",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.8745c8c0bf8ca9ff",
+        "interface_id": "ic10.interface.access.2f9fdfc3845daab5",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.2f9fdfc3845daab5",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

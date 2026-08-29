@@ -30,9 +30,9 @@ getd r0 profile 0
 bne r0 31415929 Invalid
 getd r0 profile 1
 bne r0 1 Invalid
-getd r0 profile 4
+getd r0 profile 10
 bne r0 r6 Invalid
-getd r14 profile 5
+getd r14 profile 11
 blez r14 Invalid
 sub r0 r9 1
 mul r0 r0 4
@@ -93,7 +93,7 @@ bnan r0 Invalid
 getd sp scanner 2
 bne sp r15 Loop
 blez profile Snapshot
-getd sp profile 5
+getd sp profile 11
 bne sp r14 Loop
 Snapshot:
 s db Setting r0

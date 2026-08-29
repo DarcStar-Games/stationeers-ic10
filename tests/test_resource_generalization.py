@@ -68,7 +68,7 @@ for x in items:
     if x['params'][0] <= 0: fails.append(x['slug']+': invalid MaxStack')
     if expected_schema==2 and x['params'][2]==0: fails.append(x['slug']+': missing ManufacturingReagentHash')
 view=(R/'ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10').read_text()
-for n in ('poke 0 31415963','get r10 db 2','get r11 db 3','getd r0 r2 r8'):
+for n in ('poke 0 31415963','get r10 db 26','get r11 db 27','getd r0 r2 r8'):
     need(view,n,'resource profile view')
 # Transform ABI3 reads self-contained relocatable items and complete furnace material set.
 trs=json.loads((R/'data/resource_transforms.json').read_text())

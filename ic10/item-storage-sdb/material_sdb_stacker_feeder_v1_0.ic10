@@ -39,7 +39,7 @@ blez r6 Publish
 get r8 db 16
 get r9 db 17
 blez r9 Fail
-get r14 d2 5
+get r14 d2 29
 blez r14 Fail
 get r0 d2 0
 bne r0 31415963 Fail
@@ -47,7 +47,7 @@ get r0 d2 8
 bne r0 2 Fail
 get r0 d2 9
 bne r0 r8 Fail
-get r0 d2 5
+get r0 d2 29
 bne r0 r14 Publish
 beqz r3 Start
 bne r4 r8 Fail

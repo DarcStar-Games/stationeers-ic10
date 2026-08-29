@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-config/generic_config_loader_v1_2.ic10",
-  "source_sha256": "35fb7810f66659d59ea814ea345e0605ae8d8f6e9b58418c82efedc0927267a9",
+  "source_sha256": "2d4c7e3a2c11dbccbe2ce1f483c74aa4b053a3f15f171fe64dfdde3b2a295458",
   "identity": {
     "service_id": "ic10.script.generic.config.loader",
     "implementation_revision": "1.2",
@@ -132,10 +132,9 @@
       "literal_reads": [
         0,
         1,
-        2,
-        3,
-        4,
-        5,
+        8,
+        9,
+        10,
         11
       ],
       "literal_writes": [],

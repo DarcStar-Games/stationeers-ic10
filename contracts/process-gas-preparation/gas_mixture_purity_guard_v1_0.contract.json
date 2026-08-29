@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10",
-  "source_sha256": "e21389e28921e55e78ea07877259a143d40fe57370af82b4dd7662029cee9c81",
+  "source_sha256": "b63eb21d5cfc8243fe0fd4c607669055647292c79a1fa5c7d494aa4cf88a1341",
   "identity": {
     "service_id": "ic10.script.gas.mixture.purity.guard",
     "implementation_revision": "1.0",
@@ -45,7 +45,7 @@
           "source_port": "d1",
           "address": 13,
           "fence": {
-            "address": 5,
+            "address": 29,
             "kind": "generation",
             "description": "Profile View generation must be positive and unchanged around the LogicType read."
           }
@@ -55,7 +55,7 @@
           "source_port": "d1",
           "address": 15,
           "fence": {
-            "address": 5,
+            "address": 29,
             "kind": "generation",
             "description": "Profile View generation must be positive and unchanged around the LogicType read."
           }
@@ -91,7 +91,6 @@
       "stack": {
         "literal_reads": [
           0,
-          5,
           8,
           9,
           11,
@@ -102,7 +101,8 @@
           16,
           17,
           18,
-          19
+          19,
+          29
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -133,8 +133,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.4d687318f871b38c",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.4d687318f871b38c",
+        "interface_id": "ic10.interface.access.eabb8ec60a068e1b",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.eabb8ec60a068e1b",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
