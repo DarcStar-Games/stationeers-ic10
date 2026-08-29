@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/print_candidate_executor_v2_0.ic10",
-  "source_sha256": "dcad90d7daa6d97ec2635ce0f9937c32c52c975a25ce3fc6685edeac749709f3",
+  "source_sha256": "64387a07d9d49899a74f48cce9960ed9a9135ea5c76b024089d059ff44211def",
   "identity": {
     "service_id": "ic10.script.print.candidate.executor",
     "implementation_revision": "2.0",
@@ -198,7 +198,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415988
+        "const": 31416074
       },
       {
         "address": 1,
@@ -336,7 +336,7 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415988,
+        "magic": 31416074,
         "abi": 2
       }
     ]
@@ -352,7 +352,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415988,
+        "equals": 31416074,
         "source": "generated-protocol-header"
       },
       {
@@ -367,9 +367,9 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415988.abi2",
+        "protocol_id": "ic10.stack.31416074.abi2",
         "base": 0,
-        "magic": 31415988,
+        "magic": 31416074,
         "abi": 2,
         "source": "literal-own-stack-header"
       }

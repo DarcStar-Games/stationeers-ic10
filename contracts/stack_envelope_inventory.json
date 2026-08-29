@@ -5815,7 +5815,7 @@
         "headers": [
           {
             "base": 0,
-            "magic": 31415990,
+            "magic": 31416075,
             "abi": 2
           }
         ],
@@ -5826,7 +5826,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415990.abi2",
+            "protocol_id": "ic10.stack.31416075.abi2",
             "provider_header_bases": [
               0
             ],
@@ -5857,7 +5857,7 @@
       },
       "envelope": {
         "service_id": "ic10.script.generic.print.runtime",
-        "magic": 31415990,
+        "magic": 31416075,
         "service_abi": 2,
         "schema_id": null,
         "schema_id_hash": null,
@@ -5872,7 +5872,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "f045cbc987280069aa01bf8a68413d3871da24628c67aa60f9bf75da240e8d38",
+          "source_sha256": "b4e2bbf06b335f4d59603f9321a5c74358c796cd9dc07e9a9154fc734d650834",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -5902,7 +5902,7 @@
         "headers": [
           {
             "base": 0,
-            "magic": 31415986,
+            "magic": 31416072,
             "abi": 2
           }
         ],
@@ -5913,7 +5913,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415986.abi2",
+            "protocol_id": "ic10.stack.31416072.abi2",
             "provider_header_bases": [
               0
             ],
@@ -5944,7 +5944,7 @@
       },
       "envelope": {
         "service_id": "ic10.script.manufacturing.candidate.selector",
-        "magic": 31415986,
+        "magic": 31416072,
         "service_abi": 2,
         "schema_id": null,
         "schema_id_hash": null,
@@ -5959,7 +5959,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "f78b3610ddec97e383e6b68b829e2ff9d453b2acda44e2c09c0b68eeb3c62d8e",
+          "source_sha256": "43423165bc41cdb75b109129342938afbadec04b237443ae78ef9e414f884be9",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -6165,7 +6165,7 @@
         "headers": [
           {
             "base": 0,
-            "magic": 31415988,
+            "magic": 31416074,
             "abi": 2
           }
         ],
@@ -6176,7 +6176,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415988.abi2",
+            "protocol_id": "ic10.stack.31416074.abi2",
             "provider_header_bases": [
               0
             ],
@@ -6207,7 +6207,7 @@
       },
       "envelope": {
         "service_id": "ic10.script.print.candidate.executor",
-        "magic": 31415988,
+        "magic": 31416074,
         "service_abi": 2,
         "schema_id": null,
         "schema_id_hash": null,
@@ -6222,7 +6222,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "dcad90d7daa6d97ec2635ce0f9937c32c52c975a25ce3fc6685edeac749709f3",
+          "source_sha256": "64387a07d9d49899a74f48cce9960ed9a9135ea5c76b024089d059ff44211def",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -6419,7 +6419,7 @@
         "headers": [
           {
             "base": 0,
-            "magic": 31415987,
+            "magic": 31416073,
             "abi": 2
           }
         ],
@@ -6430,7 +6430,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415987.abi2",
+            "protocol_id": "ic10.stack.31416073.abi2",
             "provider_header_bases": [
               0
             ],
@@ -6461,7 +6461,7 @@
       },
       "envelope": {
         "service_id": "ic10.script.transform.candidate.executor",
-        "magic": 31415987,
+        "magic": 31416073,
         "service_abi": 2,
         "schema_id": null,
         "schema_id_hash": null,
@@ -6476,7 +6476,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "6d01bbb864c941845a373ca6236dfb7213af2bd1bbaad12895dd43652c60c397",
+          "source_sha256": "a83e0c08a646e39c83bd495552866547f54838db3529821b6f302e64d2f2d0e1",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -6593,7 +6593,7 @@
         "headers": [
           {
             "base": 0,
-            "magic": 31415991,
+            "magic": 31416076,
             "abi": 2
           }
         ],
@@ -6604,7 +6604,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415991.abi2",
+            "protocol_id": "ic10.stack.31416076.abi2",
             "provider_header_bases": [
               0
             ],
@@ -6635,7 +6635,7 @@
       },
       "envelope": {
         "service_id": "ic10.script.transform.job.driver",
-        "magic": 31415991,
+        "magic": 31416076,
         "service_abi": 2,
         "schema_id": null,
         "schema_id_hash": null,
@@ -6650,7 +6650,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "ee14bef9f92eaf28cbe009607b57423c34292067e06ef94898d26bbc9423bb5a",
+          "source_sha256": "9690ea70e79629b3fdf1fc5c58a982ee2a550e8505b0a860dd5603e7b299ce9b",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {

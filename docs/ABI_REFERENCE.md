@@ -444,7 +444,7 @@ Roadmap item 6 plus its hardening pass uses ordinals 172..187. Services whose re
 
 ### Manufacturing Candidate Selector ABI2
 
-Magic `31415986`. `ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10` accepts a **dynamic Snapshot Directory ReferenceId in S16**. Request cells are S17 schema ID, S18 optional key/FamilyHash, S19 capability, S20 comparison mode (`1 mask`, `2 tier`), S21 start ordinal, S22 request generation, and S15 expected schema version, its request mailbox having moved above the common S0..S7 header. It captures active bank + generation, scans, then requires the same active bank + generation before publishing status S9, candidate S10..S12, next ordinal S13, directory generation S14, and response token S8. One physical selector can therefore serve Transform and Print serially.
+Magic `31416072`. `ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10` accepts a **dynamic Snapshot Directory ReferenceId in S16**. Request cells are S17 schema ID, S18 optional key/FamilyHash, S19 capability, S20 comparison mode (`1 mask`, `2 tier`), S21 start ordinal, S22 request generation, and S15 expected schema version, its request mailbox having moved above the common S0..S7 header. It captures active bank + generation, scans, then requires the same active bank + generation before publishing status S9, candidate S10..S12, next ordinal S13, directory generation S14, and response token S8. One physical selector can therefore serve Transform and Print serially.
 
 ### Transform Candidate Readiness ABI1
 
@@ -452,11 +452,15 @@ Magic `31415998`. `ic10/manufacturing/transform_candidate_readiness_v1_0.ic10` o
 
 ### Transform Candidate Executor ABI2
 
-Magic `31415987`. `ic10/manufacturing/transform_candidate_executor_v2_0.ic10` delegates planning to Readiness on d0, launches the exact Runtime only after readiness succeeds, and consumes Runtime state only when Runtime ABI2 current request token S6 matches its request. S11 is target Job state, S12 ErrorStatus, S10 current request token.
+Magic `31416073`. `ic10/manufacturing/transform_candidate_executor_v2_0.ic10` delegates planning to Readiness on d0, launches the exact Runtime only after readiness succeeds, and consumes Runtime state only when Runtime ABI2 current request token S6 matches its request. S11 is target Job state, S12 ErrorStatus, S10 current request token.
 
 ### Print Candidate Executor ABI2
 
-Magic `31415988`. `ic10/manufacturing/print_candidate_executor_v2_0.ic10` binds one exact PrinterRef to Recipe Execution View, Capacity Client ABI2, Print Material Resolver, and Generic Print Runtime ABI2. It publishes current request token S10 before exposing request-specific state, waits for exact runtime token matches, and waits for acknowledged capacity release before publishing terminal/wait/fault completion.
+Magic `31416074`. `ic10/manufacturing/print_candidate_executor_v2_0.ic10` binds one exact PrinterRef to Recipe Execution View, Capacity Client ABI2, Print Material Resolver, and Generic Print Runtime ABI2. It publishes current request token S10 before exposing request-specific state, waits for exact runtime token matches, and waits for acknowledged capacity release before publishing terminal/wait/fault completion.
+
+### Transform Job Driver ABI2
+
+Magic `31416076`. `ic10/manufacturing/transform_job_driver_v2_0.ic10` iterates TransformLane candidates for the Driver Router. It requests candidates from the shared Candidate Selector on d0, writing the directory ReferenceId to S16 and the request to S17..S22, and mirrors the selected candidate to Transform Candidate Executor S21..S26 on d1. Its own request mailbox is S12..S17, written by the Router.
 
 ### Print Material Resolver ABI1
 
@@ -464,7 +468,7 @@ Magic `31415989`. `ic10/manufacturing/print_material_resolver_v1_0.ic10` consume
 
 ### Generic Print Runtime ABI2
 
-Magic `31415990`. `ic10/manufacturing/generic_print_runtime_v2_0.ic10` consumes Print Material Resolver d0 and Multi Material Allocator ABI2 d1. S10 PrinterRef, S11 RecipeHash, S12 RequestedQuantity, S13 JobId, S14 request token; S15 is the **current accepted request token**, S8 target Job state, S9 ErrorStatus. It publishes initial request state/error before S15, issues native printer stack instructions only after material commit, and verifies ExportCount.
+Magic `31416075`. `ic10/manufacturing/generic_print_runtime_v2_0.ic10` consumes Print Material Resolver d0 and Multi Material Allocator ABI2 d1. S10 PrinterRef, S11 RecipeHash, S12 RequestedQuantity, S13 JobId, S14 request token; S15 is the **current accepted request token**, S8 target Job state, S9 ErrorStatus. It publishes initial request state/error before S15, issues native printer stack instructions only after material commit, and verifies ExportCount.
 
 ### Manufacturing drivers/router/scheduler
 

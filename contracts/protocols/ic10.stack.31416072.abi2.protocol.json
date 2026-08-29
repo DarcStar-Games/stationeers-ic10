@@ -1,10 +1,10 @@
 {
   "$schema": "../../schemas/protocol_definition.schema.json",
   "format": "IC10_PROTOCOL_DEFINITION_V1",
-  "protocol_id": "ic10.stack.31415991.abi2",
-  "name": "Transform Job Driver ABI2",
+  "protocol_id": "ic10.stack.31416072.abi2",
+  "name": "Manufacturing Candidate Selector ABI2",
   "transport": "ic-housing-stack",
-  "magic": 31415991,
+  "magic": 31416072,
   "abi": 2,
   "header_bases": [
     0
@@ -12,7 +12,7 @@
   "canonical_refs": [],
   "provider_interfaces": [
     {
-      "source": "ic10/manufacturing/transform_job_driver_v2_0.ic10",
+      "source": "ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10",
       "header_base": 0,
       "readable_ranges": [],
       "writable_ranges": [],
@@ -25,7 +25,7 @@
           "access": [
             "self-write"
           ],
-          "const": 31415991
+          "const": 31416072
         },
         {
           "address": 1,
@@ -53,7 +53,8 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read"
+            "self-read",
+            "self-write"
           ]
         },
         {
@@ -62,7 +63,6 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read",
             "self-write"
           ]
         },
@@ -90,7 +90,7 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read"
+            "self-write"
           ]
         },
         {
@@ -99,7 +99,7 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read"
+            "self-write"
           ]
         },
         {
@@ -108,16 +108,7 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
+            "self-write"
           ]
         },
         {
@@ -139,13 +130,30 @@
           ]
         },
         {
+          "address": 18,
+          "name": "S18",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 19,
+          "name": "S19",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
           "address": 20,
           "name": "S20",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read",
-            "self-write"
+            "self-read"
           ]
         },
         {
@@ -154,8 +162,7 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read",
-            "self-write"
+            "self-read"
           ]
         },
         {
@@ -164,38 +171,7 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 23,
-          "name": "S23",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 30,
-          "name": "S30",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
+            "self-read"
           ]
         }
       ],
@@ -210,7 +186,7 @@
             "id": "header.s0.magic",
             "kind": "cell-equals",
             "address": 0,
-            "equals": 31415991,
+            "equals": 31416072,
             "source": "generated-protocol-header"
           },
           {

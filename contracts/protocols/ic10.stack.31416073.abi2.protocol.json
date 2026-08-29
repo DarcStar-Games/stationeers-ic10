@@ -1,10 +1,10 @@
 {
   "$schema": "../../schemas/protocol_definition.schema.json",
   "format": "IC10_PROTOCOL_DEFINITION_V1",
-  "protocol_id": "ic10.stack.31415987.abi2",
+  "protocol_id": "ic10.stack.31416073.abi2",
   "name": "Transform Candidate Executor ABI2",
   "transport": "ic-housing-stack",
-  "magic": 31415987,
+  "magic": 31416073,
   "abi": 2,
   "header_bases": [
     0
@@ -25,7 +25,7 @@
           "access": [
             "self-write"
           ],
-          "const": 31415987
+          "const": 31416073
         },
         {
           "address": 1,
@@ -178,7 +178,7 @@
             "id": "header.s0.magic",
             "kind": "cell-equals",
             "address": 0,
-            "equals": 31415987,
+            "equals": 31416073,
             "source": "generated-protocol-header"
           },
           {
