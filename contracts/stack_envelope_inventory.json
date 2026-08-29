@@ -29,10 +29,10 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 37,
-    "legacy_exempt": 137,
-    "backlog_reserved_cell_users": 125,
-    "backlog_dynamic_range_users": 47
+    "migrated_v1": 42,
+    "legacy_exempt": 132,
+    "backlog_reserved_cell_users": 120,
+    "backlog_dynamic_range_users": 43
   },
   "services": [
     {
@@ -6191,7 +6191,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "9b1c66acff9ce2d4d296f5c51575a1f287961e1dd3c3d145285aeb95605943b1",
+          "source_sha256": "691b59cb24b41fe00e94641bc0d3ff898c928f2f9daab10f21f1ab6d2eb62088",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -6634,7 +6634,7 @@
       "source": "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10",
       "service_contract_id": "ic10.script.generic.material.transform.runtime",
       "deployment_family": "material-transform",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -6659,7 +6659,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 18,
+        "literal_cell_count": 19,
         "highest_literal_cell": 31,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -6668,8 +6668,8 @@
             "end": 511
           }
         ],
-        "line_count": 119,
-        "line_headroom_120": 1,
+        "line_count": 120,
+        "line_headroom_120": 0,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -6677,12 +6677,7 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -6698,17 +6693,45 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.generic.material.transform.runtime",
+        "magic": 31415980,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "08494a06290676e2c2bdc788f3e6ed0651a3f62030186e92f0da84a32f02ab88",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 22
+            },
+            {
+              "start": 31,
+              "end": 31
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "material-transform"
       }
     },
     {
       "source": "ic10/material-transform/material_transform_admission_v1_0.ic10",
       "service_contract_id": "ic10.script.material.transform.admission",
       "deployment_family": "material-transform",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -6742,12 +6765,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 14,
-        "highest_literal_cell": 13,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 19,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 118,
-        "line_headroom_120": 2,
+        "line_count": 119,
+        "line_headroom_120": 1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -6755,29 +6778,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.material.transform.admission",
+        "magic": 31415977,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "306cd84fd7ad683624bc7601e7377e723b196ac7ef9e5aa8ddff24ee1362a29e",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 19
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "material-transform"
       }
     },
     {
       "source": "ic10/material-transform/material_transform_link_resolver_v1_0.ic10",
       "service_contract_id": "ic10.script.material.transform.link.resolver",
       "deployment_family": "material-transform",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -6802,8 +6844,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 8,
-        "highest_literal_cell": 7,
+        "literal_cell_count": 9,
+        "highest_literal_cell": 13,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
@@ -6811,8 +6853,8 @@
             "end": 511
           }
         ],
-        "line_count": 116,
-        "line_headroom_120": 4,
+        "line_count": 117,
+        "line_headroom_120": 3,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -6820,12 +6862,7 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -6841,17 +6878,50 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.material.transform.link.resolver",
+        "magic": 31415978,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "39d4098f3b60c3b9f4c60a224a16713aac98b504a97f5dc426533093a7b8df11",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 13
+            },
+            {
+              "start": 16,
+              "end": 511
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 16,
+              "end": 511
+            }
+          ]
+        },
+        "pilot_family": "material-transform"
       }
     },
     {
       "source": "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10",
       "service_contract_id": "ic10.script.multi.material.reservation.allocator",
       "deployment_family": "material-transform",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -6885,7 +6955,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 19,
+        "literal_cell_count": 20,
         "highest_literal_cell": 31,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -6894,8 +6964,8 @@
             "end": 511
           }
         ],
-        "line_count": 114,
-        "line_headroom_120": 6,
+        "line_count": 115,
+        "line_headroom_120": 5,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -6903,11 +6973,7 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -6923,17 +6989,45 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.multi.material.reservation.allocator",
+        "magic": 31415954,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "a304e3bcbb672da69e5eaba299d45348109d13ca6ce3da362b477bbafe6a7583",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 23
+            },
+            {
+              "start": 31,
+              "end": 31
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "material-transform"
       }
     },
     {
       "source": "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10",
       "service_contract_id": "ic10.script.multi.material.reservation.stager",
       "deployment_family": "material-transform",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -6958,8 +7052,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 9,
-        "highest_literal_cell": 8,
+        "literal_cell_count": 10,
+        "highest_literal_cell": 14,
         "dynamic_read_ranges": [
           {
             "start": 0,
@@ -6972,8 +7066,8 @@
             "end": 511
           }
         ],
-        "line_count": 118,
-        "line_headroom_120": 2,
+        "line_count": 119,
+        "line_headroom_120": 1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -6981,12 +7075,7 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [
           0,
@@ -7011,10 +7100,43 @@
         "dynamic_read_provenance": "conservative-full-stack",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.multi.material.reservation.stager",
+        "magic": 31415979,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "1c763b7ab03b9edca93367b871dcf6f3e6802ed00d62737826bd409f3a4a821c",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 14
+            },
+            {
+              "start": 32,
+              "end": 511
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 32,
+              "end": 511
+            }
+          ]
+        },
+        "pilot_family": "material-transform"
       }
     },
     {

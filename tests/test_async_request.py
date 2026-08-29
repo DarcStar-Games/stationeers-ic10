@@ -40,8 +40,8 @@ proc=Device(601,props={'ReferenceId':601,'Activate':0})
 adm2=Device(602,props={'ReferenceId':602});res2=Device(603,props={'ReferenceId':603})
 alloc=Device(604,stack={},props={'ReferenceId':604});out2=Device(605,props={'ReferenceId':605})
 tr=IC10(src('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10'),{'d0':proc,'d1':adm2,'d2':res2,'d3':alloc,'d4':out2},self_ref=606)
-tr.run(1);tr.stack.update({2:0,3:71});tr.run(1)
-ck(tr.stack.get(6)==71 and tr.stack.get(5)==-1,'invalid Transform Runtime request did not publish matching current token + fault')
+tr.run(1);tr.stack.update({8:0,16:71});tr.run(1)
+ck(tr.stack.get(21)==71 and tr.stack.get(20)==-1,'invalid Transform Runtime request did not publish matching current token + fault')
 
 
 # Diagnostic Mapping Editor must not commit an old selector result after a newer UI request.

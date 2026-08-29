@@ -47,10 +47,10 @@ ck(inventory["envelope"]["base"] == 0 and inventory["envelope"]["length"] == 8,
    "the common header is no longer the first eight stack cells")
 ck(inventory["totals"] == {
     "deployable_programs": 174,
-    "migrated_v1": 37,
-    "legacy_exempt": 137,
-    "backlog_reserved_cell_users": 125,
-    "backlog_dynamic_range_users": 47,
+    "migrated_v1": 42,
+    "legacy_exempt": 132,
+    "backlog_reserved_cell_users": 120,
+    "backlog_dynamic_range_users": 43,
 }, "generated coverage/backlog totals changed without review")
 by_source = {item["source"]: item for item in inventory["services"]}
 ck(by_source[MONITOR]["envelope"]["magic"] == 31416052,
@@ -63,7 +63,7 @@ ck(all(item["current_layout"]["payload_inventory_status"] ==
 # Every backlog row records what the migration must move, per program.
 backlog = [item for item in inventory["services"] if item["status"] == "legacy-exempt"]
 ck(sum(bool(set(item["window_collision"]["literal_cells"]) & set(range(2, 8)))
-       for item in backlog) == 125,
+       for item in backlog) == 120,
    "backlog rows no longer report which programs occupy the reserved cells")
 ck(all("legacy_exemption" in item for item in backlog),
    "a backlog row lost its explicit exemption record")
@@ -382,6 +382,13 @@ with TemporaryDirectory() as temporary:
     ck(any("control transfer occurs before" in error
            for error in publication_errors(unreachable, expected, mutated)),
        "publication validator accepted unreachable header initialization")
+    guarded = _ProjectPath(temporary) / "guarded.ic10"
+    guarded.write_text(source.replace("poke 0 31416052",
+        "get r0 db 31\nbeq r0 31416052 Init\nclr db\npoke 31 31416052\nInit:\npoke 0 31416052", 1))
+    mutated["source_sha256"] = hashlib.sha256(guarded.read_bytes()).hexdigest()
+    ck(not [error for error in publication_errors(guarded, expected, mutated)
+            if "control transfer" in error or "does not retain" in error],
+       "publication validator rejected a reflash guard that provably publishes on both paths")
     erased = _ProjectPath(temporary) / "erased.ic10"
     erased.write_text(source.replace("Loop:\nyield", "Loop:\nyield\nclr db", 1))
     mutated["source_sha256"] = hashlib.sha256(erased.read_bytes()).hexdigest()

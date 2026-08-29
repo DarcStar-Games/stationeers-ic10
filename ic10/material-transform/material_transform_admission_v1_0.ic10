@@ -1,6 +1,7 @@
 # Material Transform Admission ABI1. View ABI4 requires processor capability mask.
 poke 0 31415977
 poke 1 1
+poke 2 0
 l r0 d0 ReferenceId
 poke 13 r0
 poke 8 0
@@ -95,13 +96,13 @@ get r0 d2 12
 bne r0 r6 Loop
 get r0 d0 6
 bne r0 r14 Loop
-poke 2 r2
-poke 3 r15
-poke 4 r4
-poke 5 r13
+poke 14 r2
+poke 15 r15
+poke 16 r4
+poke 17 r13
 l r0 d2 ReferenceId
-poke 6 r0
-poke 7 r14
+poke 18 r0
+poke 19 r14
 poke 10 r11
 poke 11 r12
 poke 12 r3

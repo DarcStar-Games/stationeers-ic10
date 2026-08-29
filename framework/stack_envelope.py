@@ -7,7 +7,7 @@ import json
 import re
 from typing import Any
 
-from framework.script_contracts import _aliases, _integer, _literal_value, _program
+from framework.script_contracts import _aliases, _integer, _literal_value, _program, _stable_cells
 
 FORMAT = "IC10_STACK_ENVELOPE_INVENTORY_V1"
 DECLARATION_FORMAT = "IC10_STACK_ENVELOPE_DECLARATIONS_V1"
@@ -239,13 +239,20 @@ def publication_errors(
     rows, aliases = _parse(path)
     state: dict[int, Any] = {}
     first_yield = None
+    branch_proved = False
     for index, row in enumerate(rows):
         op = row[0]
         if op == "yield":
             first_yield = index
             break
         if op in {"j", "jal", "jr"} or op.startswith("b"):
-            errors.append("control transfer occurs before the first envelope-bearing yield")
+            # a reflash-marker guard branches before publishing; the contract layer proves
+            # whether every expected cell still holds its value at every observation point
+            stable = _stable_cells(path.read_text(), aliases, expected)
+            missing = sorted(set(expected) - stable)
+            if missing:
+                errors.append("control transfer occurs before the first envelope-bearing yield")
+            branch_proved = not missing
             break
         if op == "clr" and len(row) >= 2 and row[1] == "db":
             state = {address: 0 for address in expected}   # clr db zeroes every cell
@@ -259,11 +266,12 @@ def publication_errors(
                 errors.append("dynamic own-stack write occurs before the first envelope-bearing yield")
             elif address in expected:
                 state[address] = _literal_value(row[2], aliases)
-    if first_yield is None:
+    if first_yield is None and not branch_proved:
         errors.append("no reachable straight-line yield follows envelope initialization")
-    for address, value in expected.items():
-        if state.get(address) != value:
-            errors.append(f"entry path does not retain S{address} = {value} at the first yield")
+    if not branch_proved:
+        for address, value in expected.items():
+            if state.get(address) != value:
+                errors.append(f"entry path does not retain S{address} = {value} at the first yield")
     try:
         reviewed_ranges = _declared_ranges(declaration.get("post_init_dynamic_write_ranges", []))
     except ValueError as error:

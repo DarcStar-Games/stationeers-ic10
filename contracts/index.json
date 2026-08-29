@@ -2146,77 +2146,6 @@
         }
       ]
     },
-    "ic10.interface.access.0efcf0207e25ca6f": {
-      "stack": {
-        "literal_reads": [
-          6,
-          7
-        ],
-        "literal_writes": [
-          2,
-          3,
-          4,
-          5
-        ],
-        "dynamic_read": false,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "none",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 6,
-            "equals": 1
-          },
-          {
-            "address": 6,
-            "equals": 2
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 6,
-            "end": 7
-          }
-        ],
-        "stack_writable_ranges": [
-          {
-            "start": 2,
-            "end": 5
-          }
-        ],
-        "constraints": [
-          {
-            "address": 6,
-            "equals": 1
-          },
-          {
-            "address": 6,
-            "equals": 2
-          }
-        ],
-        "properties_readable": [],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10",
-          "port": "d1"
-        }
-      ]
-    },
     "ic10.interface.access.0ff2cf312d0e0b07": {
       "stack": {
         "literal_reads": [
@@ -2271,6 +2200,77 @@
         {
           "source": "ic10/manufacturing/generic_print_runtime_v2_0.ic10",
           "port": "d0"
+        }
+      ]
+    },
+    "ic10.interface.access.105769856935c9da": {
+      "stack": {
+        "literal_reads": [
+          13,
+          14
+        ],
+        "literal_writes": [
+          9,
+          10,
+          11,
+          12
+        ],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 13,
+            "equals": 1
+          },
+          {
+            "address": 13,
+            "equals": 2
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 13,
+            "end": 14
+          }
+        ],
+        "stack_writable_ranges": [
+          {
+            "start": 9,
+            "end": 12
+          }
+        ],
+        "constraints": [
+          {
+            "address": 13,
+            "equals": 1
+          },
+          {
+            "address": 13,
+            "equals": 2
+          }
+        ],
+        "properties_readable": [],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10",
+          "port": "d1"
         }
       ]
     },
@@ -2706,31 +2706,29 @@
         }
       ]
     },
-    "ic10.interface.access.1aaa27071611c2ea": {
+    "ic10.interface.access.1f71c95351d8afaa": {
       "stack": {
         "literal_reads": [
-          5,
-          7,
-          8
+          14,
+          16,
+          22
         ],
-        "literal_writes": [],
+        "literal_writes": [
+          8,
+          20,
+          21,
+          23
+        ],
         "dynamic_read": false,
         "dynamic_write": false,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
         "dynamic_read_range_source": "none",
         "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 8,
-            "equals": 1
-          }
-        ]
+        "constraints": []
       },
       "assumptions": {
-        "properties_read": [
-          "ReferenceId"
-        ],
+        "properties_read": [],
         "properties_written": [],
         "slot_properties_read": [],
         "slot_properties_written": []
@@ -2739,24 +2737,34 @@
         "verification": "commissioning-required",
         "stack_readable_ranges": [
           {
-            "start": 5,
-            "end": 5
+            "start": 14,
+            "end": 14
           },
           {
-            "start": 7,
-            "end": 8
-          }
-        ],
-        "stack_writable_ranges": [],
-        "constraints": [
+            "start": 16,
+            "end": 16
+          },
           {
-            "address": 8,
-            "equals": 1
+            "start": 22,
+            "end": 22
           }
         ],
-        "properties_readable": [
-          "ReferenceId"
+        "stack_writable_ranges": [
+          {
+            "start": 8,
+            "end": 8
+          },
+          {
+            "start": 20,
+            "end": 21
+          },
+          {
+            "start": 23,
+            "end": 23
+          }
         ],
+        "constraints": [],
+        "properties_readable": [],
         "properties_writable": [],
         "slot_properties_readable": [],
         "slot_properties_writable": []
@@ -2764,7 +2772,7 @@
       "consumers": [
         {
           "source": "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10",
-          "port": "d1"
+          "port": "d3"
         }
       ]
     },
@@ -4317,6 +4325,72 @@
         }
       ]
     },
+    "ic10.interface.access.54276d225b3d7112": {
+      "stack": {
+        "literal_reads": [
+          8,
+          17,
+          19
+        ],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 8,
+            "equals": 1
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [
+          "ReferenceId"
+        ],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 8,
+            "end": 8
+          },
+          {
+            "start": 17,
+            "end": 17
+          },
+          {
+            "start": 19,
+            "end": 19
+          }
+        ],
+        "stack_writable_ranges": [],
+        "constraints": [
+          {
+            "address": 8,
+            "equals": 1
+          }
+        ],
+        "properties_readable": [
+          "ReferenceId"
+        ],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10",
+          "port": "d1"
+        }
+      ]
+    },
     "ic10.interface.access.5a2fb57c9ed68784": {
       "stack": {
         "literal_reads": [
@@ -5277,72 +5351,6 @@
         }
       ]
     },
-    "ic10.interface.access.79099b1647a77412": {
-      "stack": {
-        "literal_reads": [
-          5,
-          14,
-          16
-        ],
-        "literal_writes": [
-          2,
-          3,
-          4,
-          6
-        ],
-        "dynamic_read": false,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "none",
-        "dynamic_write_range_source": "none",
-        "constraints": []
-      },
-      "assumptions": {
-        "properties_read": [],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 5,
-            "end": 5
-          },
-          {
-            "start": 14,
-            "end": 14
-          },
-          {
-            "start": 16,
-            "end": 16
-          }
-        ],
-        "stack_writable_ranges": [
-          {
-            "start": 2,
-            "end": 4
-          },
-          {
-            "start": 6,
-            "end": 6
-          }
-        ],
-        "constraints": [],
-        "properties_readable": [],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10",
-          "port": "d3"
-        }
-      ]
-    },
     "ic10.interface.access.7b180a9f2a8dd2a2": {
       "stack": {
         "literal_reads": [
@@ -5926,63 +5934,6 @@
         }
       ]
     },
-    "ic10.interface.access.8c6c81a4e66c2da4": {
-      "stack": {
-        "literal_reads": [
-          5,
-          6
-        ],
-        "literal_writes": [],
-        "dynamic_read": false,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "none",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 6,
-            "equals": 1
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [
-          "ReferenceId"
-        ],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 5,
-            "end": 6
-          }
-        ],
-        "stack_writable_ranges": [],
-        "constraints": [
-          {
-            "address": 6,
-            "equals": 1
-          }
-        ],
-        "properties_readable": [
-          "ReferenceId"
-        ],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10",
-          "port": "d2"
-        }
-      ]
-    },
     "ic10.interface.access.90381b3b48b32c7d": {
       "stack": {
         "literal_reads": [
@@ -6040,6 +5991,77 @@
       "consumers": [
         {
           "source": "ic10/material-grid/material_transfer_executor_v1_0.ic10",
+          "port": "d0"
+        }
+      ]
+    },
+    "ic10.interface.access.929b22f42685fc2a": {
+      "stack": {
+        "literal_reads": [
+          9,
+          11,
+          12
+        ],
+        "literal_writes": [],
+        "dynamic_read": true,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [
+          {
+            "start": 16,
+            "end": 79
+          }
+        ],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "source-fingerprinted-exception",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 12,
+            "equals": 1
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 9,
+            "end": 9
+          },
+          {
+            "start": 11,
+            "end": 12
+          },
+          {
+            "start": 16,
+            "end": 79
+          }
+        ],
+        "stack_writable_ranges": [],
+        "constraints": [
+          {
+            "address": 12,
+            "equals": 1
+          }
+        ],
+        "properties_readable": [],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10",
+          "port": "d0"
+        },
+        {
+          "source": "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10",
           "port": "d0"
         }
       ]
@@ -7193,6 +7215,63 @@
         {
           "source": "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10",
           "port": "d1"
+        }
+      ]
+    },
+    "ic10.interface.access.b80f48739e69a9da": {
+      "stack": {
+        "literal_reads": [
+          11,
+          12
+        ],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 12,
+            "equals": 1
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [
+          "ReferenceId"
+        ],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 11,
+            "end": 12
+          }
+        ],
+        "stack_writable_ranges": [],
+        "constraints": [
+          {
+            "address": 12,
+            "equals": 1
+          }
+        ],
+        "properties_readable": [
+          "ReferenceId"
+        ],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10",
+          "port": "d2"
         }
       ]
     },
@@ -9724,77 +9803,6 @@
       "consumers": [
         {
           "source": "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10",
-          "port": "d0"
-        }
-      ]
-    },
-    "ic10.interface.access.fd393dfadbd51ffe": {
-      "stack": {
-        "literal_reads": [
-          3,
-          5,
-          6
-        ],
-        "literal_writes": [],
-        "dynamic_read": true,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [
-          {
-            "start": 16,
-            "end": 79
-          }
-        ],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-fingerprinted-exception",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 6,
-            "equals": 1
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 3,
-            "end": 3
-          },
-          {
-            "start": 5,
-            "end": 6
-          },
-          {
-            "start": 16,
-            "end": 79
-          }
-        ],
-        "stack_writable_ranges": [],
-        "constraints": [
-          {
-            "address": 6,
-            "equals": 1
-          }
-        ],
-        "properties_readable": [],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10",
-          "port": "d0"
-        },
-        {
-          "source": "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10",
           "port": "d0"
         }
       ]

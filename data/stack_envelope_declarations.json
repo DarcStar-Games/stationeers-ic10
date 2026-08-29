@@ -477,7 +477,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "9b1c66acff9ce2d4d296f5c51575a1f287961e1dd3c3d145285aeb95605943b1",
+   "source_sha256": "691b59cb24b41fe00e94641bc0d3ff898c928f2f9daab10f21f1ab6d2eb62088",
    "legacy_owned_ranges": [
     [
      10,
@@ -491,6 +491,147 @@
     ]
    ],
    "pilot_family": "directory"
+  },
+  "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10": {
+   "service_id": "ic10.script.generic.material.transform.runtime",
+   "magic": 31415980,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "08494a06290676e2c2bdc788f3e6ed0651a3f62030186e92f0da84a32f02ab88",
+   "legacy_owned_ranges": [
+    [
+     8,
+     22
+    ],
+    [
+     31,
+     31
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "material-transform"
+  },
+  "ic10/material-transform/material_transform_admission_v1_0.ic10": {
+   "service_id": "ic10.script.material.transform.admission",
+   "magic": 31415977,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "306cd84fd7ad683624bc7601e7377e723b196ac7ef9e5aa8ddff24ee1362a29e",
+   "legacy_owned_ranges": [
+    [
+     8,
+     19
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "material-transform"
+  },
+  "ic10/material-transform/material_transform_link_resolver_v1_0.ic10": {
+   "service_id": "ic10.script.material.transform.link.resolver",
+   "magic": 31415978,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "39d4098f3b60c3b9f4c60a224a16713aac98b504a97f5dc426533093a7b8df11",
+   "legacy_owned_ranges": [
+    [
+     8,
+     13
+    ],
+    [
+     16,
+     511
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     16,
+     511
+    ]
+   ],
+   "pilot_family": "material-transform"
+  },
+  "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10": {
+   "service_id": "ic10.script.multi.material.reservation.allocator",
+   "magic": 31415954,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "a304e3bcbb672da69e5eaba299d45348109d13ca6ce3da362b477bbafe6a7583",
+   "legacy_owned_ranges": [
+    [
+     8,
+     23
+    ],
+    [
+     31,
+     31
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "material-transform"
+  },
+  "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10": {
+   "service_id": "ic10.script.multi.material.reservation.stager",
+   "magic": 31415979,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "1c763b7ab03b9edca93367b871dcf6f3e6802ed00d62737826bd409f3a4a821c",
+   "legacy_owned_ranges": [
+    [
+     8,
+     14
+    ],
+    [
+     32,
+     511
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     32,
+     511
+    ]
+   ],
+   "pilot_family": "material-transform"
   },
   "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10": {
    "service_id": "ic10.script.power.reservation.directory.adapter",

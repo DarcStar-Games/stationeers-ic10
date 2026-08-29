@@ -22,14 +22,14 @@ for tok in ('bgt r4 3 Bad','and r0 r6 r3','HASH("StructureAdvancedFurnace")','l 
     need(a,tok,'generic admission')
 for tok in ('get r10 d2 r0','getd r0 r1 22','getd r0 r15 6','poke r0 r1'):
     need(r,tok,'link resolver')
-for tok in ('putd r2 14 r10','putd r3 15 r10','putd r4 17 r1','poke 6 1'):
+for tok in ('putd r2 14 r10','putd r3 15 r10','putd r4 17 r1','poke 13 1'):
     need(s,tok,'reservation stager')
-for tok in ('poke 14 r1','poke 14 0','getd r0 r9 23','put d1 2 2'):
+for tok in ('poke 14 r1','poke 14 0','getd r0 r9 23','put d1 9 2'):
     need(m,tok,'multi allocator')
 if s.index('putd r4 17 r1') >= m.index('poke 14 r1'):
     pass # separate programs: semantic ordering checked dynamically below
 need(g,'bne r0 2 Bad','grant guard ABI2-only contract')
-for tok in ('put d3 4 r15','s d0 Activate 1','sub r0 r0 r1','put d3 6 r0'):
+for tok in ('put d3 21 r15','s d0 Activate 1','sub r0 r0 r1','put d3 23 r0'):
     need(x,tok,'generic runtime')
 
 
@@ -60,7 +60,7 @@ view=Device(902,stack={0:31415952,1:4,2:123,3:4,4:3,5:1,6:5,7:0,
     32:2,33:444,34:2,35:1,64:1000,65:3000,66:1200,67:1800,68:123,69:1},props={'ReferenceId':902})
 adm_vm=IC10(a,{'d0':view,'d1':proc,'d2':out},self_ref=903); adm_dev=Device(903,adm_vm.stack,{'ReferenceId':903})
 adm_vm.run(2)
-if adm_vm.stack.get(8)!=1 or adm_vm.stack.get(4)!=3: fails.append('generic admission rejected valid 3-input transform')
+if adm_vm.stack.get(8)!=1 or adm_vm.stack.get(16)!=3: fails.append('generic admission rejected valid 3-input transform')
 
 links=[]; dyn={}
 for i,(typ,qty) in enumerate(((101,1),(102,1),(103,2))):
@@ -75,7 +75,7 @@ for i,(typ,qty) in enumerate(((101,1),(102,1),(103,2))):
 ld=Device(950,stack={0:31415981,1:1,2:0,3:1,5:3,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:64,32:links[0][0].ref,33:links[1][0].ref,34:links[2][0].ref},props={'ReferenceId':950})
 res_vm=IC10(r,{'d0':adm_dev,'d1':view,'d2':ld,**dyn},self_ref=951); res_dev=Device(951,res_vm.stack,{'ReferenceId':951})
 res_vm.run(2)
-if res_vm.stack.get(6)!=1 or [res_vm.stack.get(16+i*4) for i in range(3)] != [z[0].ref for z in links]:
+if res_vm.stack.get(12)!=1 or [res_vm.stack.get(16+i*4) for i in range(3)] != [z[0].ref for z in links]:
     fails.append('link resolver failed to publish all three input routes')
 
 stager_dev=Device(952,{}, {'ReferenceId':952})
@@ -83,12 +83,12 @@ alloc_dev=Device(953,{}, {'ReferenceId':953})
 stager_vm=IC10(s,{'d0':res_dev,'d1':alloc_dev,**dyn},self_ref=952); stager_dev.stack=stager_vm.stack
 alloc_vm=IC10(m,{'d0':res_dev,'d1':stager_dev,**dyn},self_ref=953); alloc_dev.stack=alloc_vm.stack
 stager_vm.run(1); alloc_vm.run(1)
-alloc_vm.stack[2]=2; alloc_vm.stack[3]=999; alloc_vm.stack[4]=1
+alloc_vm.stack[8]=2; alloc_vm.stack[20]=999; alloc_vm.stack[21]=1
 for _ in range(8):
     alloc_vm.run(1); stager_vm.run(1)
-    if alloc_vm.stack.get(5)==1: break
+    if alloc_vm.stack.get(22)==1: break
 epoch=alloc_vm.stack.get(14,0)
-if epoch<=0 or alloc_vm.stack.get(5)!=1: fails.append('multi allocator failed atomic common-epoch commit')
+if epoch<=0 or alloc_vm.stack.get(22)!=1: fails.append('multi allocator failed atomic common-epoch commit')
 for link,sr,dr,guard,exe,feed,qty in links:
     if sr.stack.get(14)!=qty*2 or dr.stack.get(15)!=qty*2 or guard.stack.get(17)!=epoch or guard.stack.get(18)!=alloc_dev.ref:
         fails.append(f'multi allocator staged incorrect reservation/grant for type {link.stack[5]}')
@@ -100,25 +100,25 @@ for i,(link,sr,dr,guard,exe,feed,qty) in enumerate(links):
 for link,*_ in links: link.stack[23]=epoch
 for _ in range(8):
     alloc_vm.run(1); stager_vm.run(1)
-    if alloc_vm.stack.get(5)==2: break
-if alloc_vm.stack.get(5)!=2: fails.append('multi allocator did not publish completion after all links completed')
+    if alloc_vm.stack.get(22)==2: break
+if alloc_vm.stack.get(22)!=2: fails.append('multi allocator did not publish completion after all links completed')
 for link,sr,dr,*_ in links:
     if sr.stack.get(14)!=0 or sr.stack.get(16)!=0 or dr.stack.get(15)!=0 or dr.stack.get(16)!=0:
         fails.append('multi allocator did not clear completed reservations')
 # Rejection on the third input must roll back earlier staging without publishing S14.
 links[2][1].stack[6]=1
-alloc_vm.stack[2]=2; alloc_vm.stack[3]=999; alloc_vm.stack[4]=2
+alloc_vm.stack[8]=2; alloc_vm.stack[20]=999; alloc_vm.stack[21]=2
 for _ in range(12):
     alloc_vm.run(1); stager_vm.run(1)
-    if alloc_vm.stack.get(16)==2 and alloc_vm.stack.get(5)<0: break
-if alloc_vm.stack.get(14)!=0 or alloc_vm.stack.get(5)>=0: fails.append('failed multi-input request published a commit epoch')
+    if alloc_vm.stack.get(16)==2 and alloc_vm.stack.get(22)<0: break
+if alloc_vm.stack.get(14)!=0 or alloc_vm.stack.get(22)>=0: fails.append('failed multi-input request published a commit epoch')
 for link,sr,dr,*_ in links:
     if sr.stack.get(14)!=0 or dr.stack.get(15)!=0: fails.append('failed multi-input request leaked partial reservation')
 links[2][1].stack[6]=20
 
 # Runtime hand-off: use a fresh request and simulate committed input/output completion.
 rt_vm=IC10(x,{'d0':proc,'d1':adm_dev,'d2':res_dev,'d3':alloc_dev,'d4':out},self_ref=960)
-rt_vm.run(1); rt_vm.stack[2]=2; rt_vm.stack[3]=3
+rt_vm.run(1); rt_vm.stack[8]=2; rt_vm.stack[16]=3
 output_done=False
 for _ in range(40):
     adm_vm.run(1); res_vm.run(1); rt_vm.run(1); alloc_vm.run(1); stager_vm.run(1)
@@ -127,8 +127,8 @@ for _ in range(40):
         for link,*_ in links: link.stack[23]=ep
     if proc.props.get('Activate')==1 and not output_done:
         out.stack[6]+=2; out.stack[12]+=1; output_done=True
-    if rt_vm.stack.get(6)==3 and rt_vm.stack.get(5)==1: break
-if rt_vm.stack.get(6)!=3 or rt_vm.stack.get(5)!=1 or proc.props.get('Activate')!=0:
+    if rt_vm.stack.get(21)==3 and rt_vm.stack.get(20)==1: break
+if rt_vm.stack.get(21)!=3 or rt_vm.stack.get(20)!=1 or proc.props.get('Activate')!=0:
     fails.append('generic transform runtime failed 3-input transaction/output confirmation')
 
 if fails:

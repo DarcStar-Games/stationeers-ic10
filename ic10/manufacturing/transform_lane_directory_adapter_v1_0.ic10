@@ -44,8 +44,8 @@ blez r3 Scan
 ld r4 r2 Power
 ld r5 r2 Error
 ld r6 r2 Activate
-getd r9 r1 3
-getd r10 r1 6
+getd r9 r1 16
+getd r10 r1 21
 sne r9 r9 r10
 or r6 r6 r9
 mul r4 r4 256

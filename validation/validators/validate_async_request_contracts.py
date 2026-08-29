@@ -23,8 +23,8 @@ def fence(f,token_read,cmp_read,state_read):
 for f,state,token in [
  ('ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10','poke 6 0','poke 7 r6'),
  ('ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10','poke 6 0','poke 7 r6'),
- ('ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10','poke 5 1','poke 16 r15'),
- ('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','poke 5 2','poke 6 r15'),
+ ('ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10','poke 22 1','poke 16 r15'),
+ ('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','poke 20 2','poke 21 r15'),
  ('ic10/manufacturing/transform_candidate_executor_v2_0.ic10','poke 11 2','poke 10 r15'),
  ('ic10/manufacturing/print_candidate_executor_v2_0.ic10','poke 11 2','poke 10 r15'),
  ('ic10/manufacturing/generic_print_runtime_v2_0.ic10','poke 8 2','poke 7 r15'),
@@ -33,7 +33,7 @@ for f,state,token in [
  need(f,state,token);before(f,state,token)
 need('ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10','poke 6 -1','poke 7 r0 # accepted fault publishes current identity LAST')
 before('ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10','poke 6 -1','poke 7 r0 # accepted fault publishes current identity LAST')
-need('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','poke 6 r15','blez r6 Fault');before('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','poke 6 r15','blez r6 Fault')
+need('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','poke 21 r15','blez r6 Fault');before('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','poke 21 r15','blez r6 Fault')
 
 # Feeder caller publishes all payload, including emit reset, before RequestToken S18.
 need('ic10/material-grid/material_transfer_executor_v1_0.ic10','put d1 16 r4','put d1 17 r2','put d1 19 0','put d1 18 r3 # RequestToken LAST after complete Feeder payload')
@@ -95,7 +95,7 @@ for f,result,token in [
  ('ic10/manufacturing/transform_candidate_readiness_v1_0.ic10','poke 9 r0','poke 10 r0')]:
  need(f,result,token);before(f,result,token)
 # Multi-material Stager publishes terminal status immediately before each response token.
-need('ic10/material-transform/multi_material_reservation_stager_v1_0.ic10','poke 6 1\npoke 7 r15','poke 6 2\npoke 7 r15','poke 6 -1\npoke 7 r15')
+need('ic10/material-transform/multi_material_reservation_stager_v1_0.ic10','poke 13 1\npoke 14 r15','poke 13 2\npoke 14 r15','poke 13 -1\npoke 14 r15')
 # Printer Execution Bank has six independent per-pin terminal streams: status before handled request token.
 need('ic10/printer-directory/printer_execution_bank_v2_0.ic10','poke r0 r14\nadd r0 r7 56\npoke r0 r5')
 
