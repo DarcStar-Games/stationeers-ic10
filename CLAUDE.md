@@ -44,6 +44,7 @@ Code generators (run when their source changes; `tools/build_release.py` refresh
 python3 tools/generate/generate_directory_adapters.py           # --check verifies no drift
 python3 tools/generate/update_user_deployment_inventory.py      # refreshes generated blocks in USER_DEPLOYMENT_GUIDE.md
 python3 tools/generate/generate_source_catalog.py               # regenerates docs/SCRIPT_INDEX.md
+python3 tools/generate/update_magic_registry.py                  # refreshes the published-header block in docs/ABI_REFERENCE.md
 python3 tools/generate/generate_input_profiles.py               # from data/input_profiles.json
 python3 tools/generate/generate_resource_profiles.py            # from data/resource_profiles.json
 python3 tools/generate/generate_resource_transforms.py          # from data/resource_transforms.json
@@ -184,6 +185,7 @@ not ABIs. Use `data/source_manifest.json`, `docs/SCRIPT_INDEX.md`, and `USER_DEP
 | `ic10/transform-catalog/*`, `ic10/dependency-planning/item_producer_resolver_*` | `tools/generate/generate_resource_transforms.py` | `data/resource_transforms.json` |
 | `docs/SCRIPT_INDEX.md` | `tools/generate/generate_source_catalog.py` | `ic10/` + `data/source_manifest.json` |
 | `<!-- FAMILY_PROGRAMS:… -->` blocks in `USER_DEPLOYMENT_GUIDE.md` | `tools/generate/update_user_deployment_inventory.py` | `data/source_manifest.json` |
+| `<!-- PUBLISHED_HEADERS -->` block in `docs/ABI_REFERENCE.md` | `tools/generate/update_magic_registry.py` | `data/script_protocol_headers.json` |
 | `validation/evidence/`, `VALIDATION_SUMMARY.txt`, `validation/FULL_VALIDATION_RUN.txt`, `*.sha256` | `tools/run_validation.py` / `tools/build_release.py` | — |
 
 Recipe-catalog loaders are generated into a temp directory for fixtures only and are never shipped;
@@ -232,7 +234,8 @@ production family.
 ## Documentation discipline
 
 `validation/validators/validate_documentation.py` fails the build on broken local markdown links,
-backticked references to nonexistent files, and a maintained blocklist of **stale terminology**
+backticked references to nonexistent files, an unregistered or stale published-header block, and a
+maintained blocklist of **stale terminology**
 (superseded ABI numbers, removed script names, retired magic values). When you bump an ABI or delete a
 program, update the prose everywhere and add the old phrasing to that blocklist. `docs/ABI_REFERENCE.md`
 is the magic-value/ABI registry; keep it in sync with any new service.

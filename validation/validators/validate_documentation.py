@@ -5,6 +5,7 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from pathlib import Path
 import json,re,sys
+import tools.generate.update_magic_registry as magic_registry
 ROOT=_PROJECT_ROOT
 mds=[p for p in ROOT.rglob('*.md') if 'validation' not in p.parts]
 existing={p.name for p in ROOT.iterdir() if p.is_file()}
@@ -258,6 +259,19 @@ cat=(ROOT/'docs/SCRIPT_INDEX.md').read_text()
 if str(count) not in cat:fails.append(f'docs/SCRIPT_INDEX.md: does not visibly reflect current {count}-script count')
 for name in ('ic10/controller-discovery/controller_directory_adapter_v4_0.ic10','ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/generic-jobs/generic_job_store_v1_0.ic10','ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10','ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10','ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10','ic10/manufacturing/transform_candidate_executor_v2_0.ic10','ic10/manufacturing/print_candidate_executor_v2_0.ic10','ic10/manufacturing/print_material_resolver_v1_0.ic10','ic10/manufacturing/generic_print_runtime_v2_0.ic10','ic10/manufacturing/transform_job_driver_v2_0.ic10','ic10/manufacturing/print_job_driver_v2_0.ic10','ic10/generic-jobs/generic_job_selector_v3_0.ic10','ic10/manufacturing/manufacturing_driver_router_v2_0.ic10','ic10/manufacturing/manufacturing_scheduler_v1_0.ic10','ic10/printer-directory/printer_execution_bank_v2_0.ic10','ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10','ic10/printer-directory/printer_capacity_client_v2_0.ic10'):
     if name not in cat:fails.append(f'docs/SCRIPT_INDEX.md: missing {name}')
+# Every magic a program publishes must be registered. The block is generated, so a
+# new service cannot reach release with its header undocumented.
+reference=(ROOT/'docs'/'ABI_REFERENCE.md').read_text()
+block=re.search(re.escape(magic_registry.START)+r'.*?'+re.escape(magic_registry.END),reference,re.S)
+if not block:
+ fails.append('docs/ABI_REFERENCE.md: generated published-header block is missing')
+elif block.group(0)!=magic_registry.render(magic_registry.rows()):
+ fails.append('docs/ABI_REFERENCE.md: published-header block is stale; run tools/generate/update_magic_registry.py')
+registered=set(re.findall(r'`(\d{8})`',reference))
+for source in sorted(ROOT.glob('ic10/*/*.ic10')):
+ found=re.search(r'^poke 0 (\d+)$',source.read_text(),re.M)
+ if found and found.group(1) not in registered:
+  fails.append(f'docs/ABI_REFERENCE.md: {source.relative_to(ROOT).as_posix()} publishes unregistered magic {found.group(1)}')
 if fails:
     print('Documentation synchronization validation: FAIL')
     for f in fails:print(' -',f)
