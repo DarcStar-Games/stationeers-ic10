@@ -18,7 +18,7 @@ get r12 d0 11
 blez r12 CatalogBad
 getd r0 r12 0
 bne r0 31415970 CatalogBad
-getd r14 r12 7
+getd r14 r12 22
 mod r0 r14 2
 bnez r0 CatalogBad
 First:
@@ -77,7 +77,7 @@ blez r10 Finish
 move r1 r10
 j Store
 Finish:
-getd r0 r12 7
+getd r0 r12 22
 bne r0 r14 Loop
 beqz r8 NotFound
 bge r5 r8 NotFound

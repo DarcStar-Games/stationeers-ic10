@@ -2,11 +2,11 @@
  "format": "IC10_SCRIPT_CONTRACT_OVERRIDES_V1",
  "scripts": {
   "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10": {
-   "source_sha256": "a9932a9bf34fc4a807650398001e4ae937fba7f7e19607bd936c6ad7d0acaf7c",
+   "source_sha256": "f39ec57038a2e35e9bd0576fb2e97d11b275b050e056703d5d9c5bc847cf536d",
    "publication_rules": [
     {
      "kind": "seqlock",
-     "address": 7,
+     "address": 22,
      "verification": "paired-sequence",
      "description": "Topology sequence is odd while mutating and even when stable."
     }
@@ -71,7 +71,7 @@
    }
   },
   "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10": {
-   "source_sha256": "6d0fa7efc43fca1048f6f5f380bddf857e328657342e3581acf780b5a044193b",
+   "source_sha256": "23c8870864d81c279d1b9ca918fd11b91bb5d9f5fbcf9860aa6473b3d6a3b114",
    "ports": {
     "d1": {
      "dynamic_read_ranges": [
@@ -1476,7 +1476,7 @@
    ]
   },
   "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10": {
-   "source_sha256": "7de3c982ab9237a550c842cf1af93ea4e8d10e8268fd7178124305c73a72d837",
+   "source_sha256": "b04f89bb8a78ff922e467010d62a564149973b04d736b16b1e58034e35952929",
    "external_readable_ranges": [
     [
      0,
@@ -1485,7 +1485,7 @@
    ]
   },
   "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": {
-   "source_sha256": "181c8aab30f61bc32ba59195630a251a681f0f0211168c450cbe0014464ae38d",
+   "source_sha256": "11a1151257cd97ba6efcf560586c5d9d5a61f909130459ed92ff22552091502a",
    "external_readable_ranges": [
     [
      0,

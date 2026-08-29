@@ -17,7 +17,7 @@ The current common protocols are:
 
 - Catalog Store magic `31415968`, **Store ABI6**;
 - Catalog Loader magic `31415969`, **Loader ABI5**;
-- Catalog Coordinator magic `31415970`, **Coordinator ABI3**;
+- Catalog Coordinator magic `31415970`, **Coordinator ABI4**;
 - 4-cell payload alignment;
 - canonical zero padding;
 - whole logical items only;

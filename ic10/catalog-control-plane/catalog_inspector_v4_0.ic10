@@ -14,8 +14,8 @@ blez r12 Bad
 getd r0 r12 0
 bne r0 31415970 Bad
 getd r0 r12 1
-bne r0 3 Bad
-getd r15 r12 7
+bne r0 4 Bad
+getd r15 r12 22
 mod r0 r15 2
 bnez r0 Bad
 getd r14 r12 23
@@ -53,9 +53,9 @@ get r0 d0 9
 poke 12 r0
 get r0 d0 17
 poke 13 r0
-get r0 d0 6
+get r0 d0 21
 poke 14 r0
-get r0 d0 7
+get r0 d0 24
 poke 15 r0
 get r0 d0 22
 poke 16 r0
@@ -72,10 +72,10 @@ add r3 r2 12
 poke r3 r0
 add r2 r2 1
 ble r2 13 CoreTel
-getd r0 r12 6
+getd r0 r12 21
 poke 26 r0
 poke 27 r15
-getd r0 r12 3
+getd r0 r12 15
 poke 28 r0
 poke 29 r14
 mul r1 r1 6
@@ -107,7 +107,7 @@ getd r0 r14 23
 bne r0 r10 Loop
 getd r0 r14 18
 bne r0 r11 Loop
-getd r0 r12 7
+getd r0 r12 22
 bne r0 r15 Loop
 poke 2 1
 j Loop

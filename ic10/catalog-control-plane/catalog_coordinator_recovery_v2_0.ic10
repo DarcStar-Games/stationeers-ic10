@@ -18,8 +18,8 @@ mod r0 r11 2
 bnez r0 Loop
 l r12 d1 ReferenceId
 l r15 d0 ReferenceId
-get r13 d0 2
-get r14 d0 3
+get r13 d0 14
+get r14 d0 15
 move r7 1
 Scan:
 bgt r7 64 Done

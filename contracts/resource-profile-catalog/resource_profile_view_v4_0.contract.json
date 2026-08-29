@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10",
-  "source_sha256": "7de3c982ab9237a550c842cf1af93ea4e8d10e8268fd7178124305c73a72d837",
+  "source_sha256": "b04f89bb8a78ff922e467010d62a564149973b04d736b16b1e58034e35952929",
   "identity": {
     "service_id": "ic10.script.resource.profile.view",
     "implementation_revision": "4.0",
@@ -62,8 +62,8 @@
       "reference": "r12",
       "literal_reads": [
         0,
-        6,
-        7
+        21,
+        22
       ],
       "literal_writes": [],
       "dynamic_read": false,

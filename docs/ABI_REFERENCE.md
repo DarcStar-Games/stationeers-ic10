@@ -36,7 +36,7 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 | Resource Transform Profile | `31415952` | `S1` | 4 |
 | Catalog Store (all static catalogs) | `31415968` | `S1` | 6 |
 | Catalog Loader metadata | `31415969` | `S1` | 5 |
-| Catalog Coordinator Core | `31415970` | `S1` | 3 |
+| Catalog Coordinator Core | `31415970` | `S1` | 4 |
 | Catalog Loader Router | `31415971` | `S1` | 3 |
 | Catalog Inspector | `31415972` | `S1` | 4 |
 | Catalog Coordinator Directory View | `31415975` | `S1` | 2 |
@@ -79,7 +79,7 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 
 ## Catalog Store ABI v6
 
-Magic `31415968`, ABI `6`. It publishes the common header at `S0..S3`: the coordinator assigns the folded `SchemaId` at `S3`, and the instance, coordinator identity, and store-chain pointers moved to `S13`, `S14`, `S21` and `S24`. `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` is the only physical Store program. Human commissioning sets only `S18 NodeId` (1..64); Coordinator ABI3 assigns schema/version/instance, partition, StoreOrdinal, topology, Coordinator identity, and AssignmentEpoch.
+Magic `31415968`, ABI `6`. It publishes the common header at `S0..S3`: the coordinator assigns the folded `SchemaId` at `S3`, and the instance, coordinator identity, and store-chain pointers moved to `S13`, `S14`, `S21` and `S24`. `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` is the only physical Store program. Human commissioning sets only `S18 NodeId` (1..64); Coordinator ABI4 assigns schema/version/instance, partition, StoreOrdinal, topology, Coordinator identity, and AssignmentEpoch.
 
 Store ABI6 uses a generic item heap rather than schema-specific fixed regions:
 
@@ -114,13 +114,13 @@ S24..   item directory
 
 The Router writes `S19`/`S20` after runtime placement. `S8`/`S9` disappear when Store ABI6 folds its own schema slots.
 
-## Catalog Coordinator ABI v3
+## Catalog Coordinator ABI v4
 
-`ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` publishes magic `31415970`, ABI3. It owns CoordinatorId/Epoch, Store claims, AssignmentEpoch, topology seqlock, and runtime capacity requests. `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10` publishes magic `31415971`, ABI3 and places each pending Loader ABI5 item into compatible ACTIVE Store capacity or asks Core to claim another Generic Store.
+`ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` publishes magic `31415970`, ABI4 with an empty capability mask at `S2`. Its identity and fencing cells moved out of the header: `S14` CoordinatorId, `S15` Epoch, `S16` publication generation, `S21` AssignmentEpoch, and `S22` the topology seqlock that every catalog view fences on. It owns CoordinatorId/Epoch, Store claims, AssignmentEpoch, topology seqlock, and runtime capacity requests. `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10` publishes magic `31415971`, ABI3 and places each pending Loader ABI5 item into compatible ACTIVE Store capacity or asks Core to claim another Generic Store.
 
 The Store registry is `ic10/directory-core/generic_registry_directory_host_v2_0.ic10`, generic magic `31415982`, Host ABI3, publishing `DirectorySchema.CatalogStoreNode` schema version 1. Directory View `31415975` is ABI2 and Recovery `31415976` is ABI2.
 
-Coordinator ABI3 supports 64 NodeIds, missing/duplicate health, higher-epoch recovery, runtime Store placement, item-level drain/compaction, and empty Store retirement. See `docs/CATALOG_COORDINATION.md`.
+Coordinator ABI4 supports 64 NodeIds, missing/duplicate health, higher-epoch recovery, runtime Store placement, item-level drain/compaction, and empty Store retirement. See `docs/CATALOG_COORDINATION.md`.
 
 ## Catalog Inspector
 

@@ -656,7 +656,7 @@ This family contains the deployment classes shown in its generated program inven
 | `ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10` | `on-demand` | Aggregates Store lifecycle counts and used/free/capacity telemetry; marks missing nodes. |
 | `ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10` | `on-demand` | Selectable Store-directory view plus Coordinator aggregate health telemetry. |
 | `ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10` | `on-demand` | Rebinds persisted Stores to a replacement Coordinator with a higher CoordinatorEpoch. |
-| `ic10/catalog-control-plane/catalog_inspector_v4_0.ic10` | `on-demand` | Generic Store ABI6 / Coordinator ABI3 inspector for node identity, item capacity, topology, and telemetry. |
+| `ic10/catalog-control-plane/catalog_inspector_v4_0.ic10` | `on-demand` | Generic Store ABI6 / Coordinator ABI4 inspector for node identity, item capacity, topology, and telemetry. |
 | `ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10` | `on-demand` | Plans whole-item compaction from DRAINING Stores into compatible live Store capacity. |
 | `ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10` | `on-demand` | Copies and commits one whole item to reserved destination capacity, then reclaims the source tail. |
 | `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10` | `on-demand` | Loader Router ABI3; places whole Loader ABI5 items into live unreserved Store capacity. |

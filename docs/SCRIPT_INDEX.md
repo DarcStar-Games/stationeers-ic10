@@ -8,12 +8,12 @@ Production IC10 programs: 174
 
 | Current file | Lines | Layer | Deployment family | Class | Human purpose |
 |---|---:|---|---|---|---|
-| `ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` | 115 | Catalog control plane | `catalog-control-plane` | `conditional-resident` | Coordinator Core ABI3; claims Stores, assigns runtime ordinals, and owns topology/capacity epochs. |
+| `ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` | 116 | Catalog control plane | `catalog-control-plane` | `conditional-resident` | Coordinator Core ABI3; claims Stores, assigns runtime ordinals, and owns topology/capacity epochs. |
 | `ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10` | 91 | Catalog control plane | `catalog-control-plane` | `conditional-resident` | Publishes Generic Store membership as Directory Adapter ABI3 registry candidates. |
 | `ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10` | 101 | Catalog telemetry | `catalog-control-plane` | `on-demand` | Aggregates Store lifecycle counts and used/free/capacity telemetry; marks missing nodes. |
 | `ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10` | 47 | Catalog diagnostics | `catalog-control-plane` | `on-demand` | Selectable Store-directory view plus Coordinator aggregate health telemetry. |
 | `ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10` | 56 | Catalog recovery | `catalog-control-plane` | `on-demand` | Rebinds persisted Stores to a replacement Coordinator with a higher CoordinatorEpoch. |
-| `ic10/catalog-control-plane/catalog_inspector_v4_0.ic10` | 116 | Catalog diagnostics | `catalog-control-plane` | `on-demand` | Generic Store ABI6 / Coordinator ABI3 inspector for node identity, item capacity, topology, and telemetry. |
+| `ic10/catalog-control-plane/catalog_inspector_v4_0.ic10` | 116 | Catalog diagnostics | `catalog-control-plane` | `on-demand` | Generic Store ABI6 / Coordinator ABI4 inspector for node identity, item capacity, topology, and telemetry. |
 | `ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10` | 110 | Catalog migration | `catalog-control-plane` | `on-demand` | Plans whole-item compaction from DRAINING Stores into compatible live Store capacity. |
 | `ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10` | 89 | Catalog migration | `catalog-control-plane` | `on-demand` | Copies and commits one whole item to reserved destination capacity, then reclaims the source tail. |
 | `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10` | 108 | Catalog control plane | `catalog-control-plane` | `on-demand` | Loader Router ABI3; places whole Loader ABI5 items into live unreserved Store capacity. |

@@ -24,7 +24,7 @@ for p in phase:
     T=(minT+maxT)/2; P=A*(T**B)
     if not math.isfinite(P): fails.append(p['slug']+': non-finite in-range phase boundary')
 view=(R/'ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10').read_text()
-for n in ('poke 0 31415963','get r10 db 2','get r11 db 3','get r12 d0 11','getd r15 r12 7','getd r14 r2 17','getd r1 r2 24','poke 5 0','poke 4 1'):
+for n in ('poke 0 31415963','get r10 db 2','get r11 db 3','get r12 d0 11','getd r15 r12 22','getd r14 r2 17','getd r1 r2 24','poke 5 0','poke 4 1'):
     if n not in view: fails.append('Resource Profile View missing '+n)
 r=(R/'ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10').read_text()
 for n in ('poke 97 2','get r9 d1 5','bne r0 31415963 ProfileBad','get r0 d1 11','bne r0 1 ProfileBad','get r10 d1 13','get r15 d1 18','get r0 d1 5','bne r0 r9 Loop','poke 115 0','poke 115 r0'):

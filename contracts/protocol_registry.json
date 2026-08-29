@@ -1192,12 +1192,12 @@
       "consumers": []
     },
     {
-      "protocol_id": "ic10.stack.31415970.abi3",
+      "protocol_id": "ic10.stack.31415970.abi4",
       "transport": "ic-housing-stack",
       "magic": 31415970,
-      "abi": 3,
-      "name": "Catalog Coordinator Core ABI3",
-      "definition_ref": "contracts/protocols/ic10.stack.31415970.abi3.protocol.json",
+      "abi": 4,
+      "name": "Catalog Coordinator Core ABI4",
+      "definition_ref": "contracts/protocols/ic10.stack.31415970.abi4.protocol.json",
       "canonical_refs": [],
       "providers": [
         {

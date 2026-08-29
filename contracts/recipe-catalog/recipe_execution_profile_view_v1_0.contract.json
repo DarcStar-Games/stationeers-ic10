@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10",
-  "source_sha256": "832dfd4182fa7054617316b218cc17f1f954b4eb634343e5749da1bf09dbe239",
+  "source_sha256": "6caf4d9cc36e80f4e5b7fb3e10002becad882104bb2ea13e5f441d6a30d711e2",
   "identity": {
     "service_id": "ic10.script.recipe.execution.profile.view",
     "implementation_revision": "1.0",
@@ -61,8 +61,8 @@
       "reference": "r12",
       "literal_reads": [
         0,
-        6,
-        7
+        21,
+        22
       ],
       "literal_writes": [],
       "dynamic_read": false,

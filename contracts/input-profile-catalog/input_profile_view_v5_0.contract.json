@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/input-profile-catalog/input_profile_view_v5_0.ic10",
-  "source_sha256": "d93b7488a52197342d8b2d3bd0a963a34278259d3c7f5a6e7a27f8f287536319",
+  "source_sha256": "9459c2b3504d3137ae278c621d48642f685b74a4ab9b2ea802aa5669333a8ab6",
   "identity": {
     "service_id": "ic10.script.input.profile.view",
     "implementation_revision": "5.0",
@@ -62,7 +62,7 @@
       "reference": "r12",
       "literal_reads": [
         0,
-        7
+        22
       ],
       "literal_writes": [],
       "dynamic_read": false,

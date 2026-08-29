@@ -13,10 +13,10 @@ get r12 d0 11
 blez r12 Bad
 getd r0 r12 0
 bne r0 31415970 Bad
-getd r15 r12 7
+getd r15 r12 22
 mod r0 r15 2
 bnez r0 Loop
-getd r11 r12 6
+getd r11 r12 21
 First:
 getd r1 r2 21
 blez r1 Store
@@ -87,7 +87,7 @@ j Inputs
 Publish:
 getd r0 r2 17
 bne r0 r14 Loop
-getd r0 r12 7
+getd r0 r12 22
 bne r0 r15 Loop
 poke 40 r11
 poke 41 r10
@@ -109,7 +109,7 @@ poke 6 0
 j Loop
 Missing:
 poke 41 r10
-getd r0 r12 7
+getd r0 r12 22
 bne r0 r15 Loop
 poke 7 -3
 poke 6 0

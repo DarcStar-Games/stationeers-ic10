@@ -45,7 +45,7 @@
           {
             "base": 0,
             "magic": 31415970,
-            "abi": 3
+            "abi": 4
           }
         ],
         "schema_fields": [],
@@ -55,7 +55,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415970.abi3",
+            "protocol_id": "ic10.stack.31415970.abi4",
             "provider_header_bases": [
               0
             ],
@@ -64,7 +64,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 25,
+        "literal_cell_count": 26,
         "highest_literal_cell": 32,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -73,8 +73,8 @@
             "end": 511
           }
         ],
-        "line_count": 115,
-        "line_headroom_120": 5,
+        "line_count": 116,
+        "line_headroom_120": 4,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -82,12 +82,7 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -667,7 +662,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "139c93e2de890178ba4e469dcd571220ca10c884795b1066d335ee95dc584122",
+          "source_sha256": "985da50e453b643b00fe908763b9373b75a00d3ab6ad7192dbb9f170485178ba",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [],
           "post_init_dynamic_write_ranges": []
@@ -798,7 +793,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "6d0fa7efc43fca1048f6f5f380bddf857e328657342e3581acf780b5a044193b",
+          "source_sha256": "23c8870864d81c279d1b9ca918fd11b91bb5d9f5fbcf9860aa6473b3d6a3b114",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [],
           "post_init_dynamic_write_ranges": []

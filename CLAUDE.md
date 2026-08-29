@@ -129,7 +129,7 @@ is the executable semantic source of truth — read the model before changing IC
 | `ASYNC_REQUEST_V1` — request-identity fencing | `docs/ASYNC_REQUEST_STANDARD.md` | `framework/async_request.py` |
 | `BANKED_TRANSACTION_V1` — durable old-or-new commit | `docs/BANKED_TRANSACTION_STANDARD.md` | `framework/banked_transaction.py` |
 | `GENERIC_JOB_ABI_V1` — job record + lifecycle | `docs/GENERIC_JOB_ABI.md` | `framework/job_abi.py` |
-| Catalog Store ABI6 / Loader ABI5 / Coordinator ABI3 | `docs/CATALOG_SCHEMA.md`, `docs/CATALOG_COORDINATION.md` | `framework/catalog_schema.py` |
+| Catalog Store ABI6 / Loader ABI5 / Coordinator ABI4 | `docs/CATALOG_SCHEMA.md`, `docs/CATALOG_COORDINATION.md` | `framework/catalog_schema.py` |
 
 These are separate authorities and must stay separate: async tokens fence *observation*, banked
 revisions establish *durability*, reservation epochs/ownership tokens authorize *mutation*, and

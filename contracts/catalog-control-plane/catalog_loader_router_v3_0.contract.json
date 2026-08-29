@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10",
-  "source_sha256": "fe87721516bf4d272eec5bedfc0cf8ccdce7a9d1fd8d065353cdd9bef18cdce0",
+  "source_sha256": "fcf349a3cb70e05db007b8b2a84c3e8d091ebd4bde50a84e3919b8d29743d76a",
   "identity": {
     "service_id": "ic10.script.catalog.loader.router",
     "implementation_revision": "3.0",
@@ -27,10 +27,10 @@
       },
       "stack": {
         "literal_reads": [
-          6
+          21
         ],
         "literal_writes": [
-          6
+          21
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -43,8 +43,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.46275bdee4d5a020",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.46275bdee4d5a020",
+        "interface_id": "ic10.interface.access.b338a09140555e03",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.b338a09140555e03",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -135,7 +135,7 @@
         {
           "address": 1,
           "operator": "equals",
-          "value": 3
+          "value": 4
         }
       ],
       "accepted": []

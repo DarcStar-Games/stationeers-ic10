@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10",
-  "source_sha256": "139c93e2de890178ba4e469dcd571220ca10c884795b1066d335ee95dc584122",
+  "source_sha256": "985da50e453b643b00fe908763b9373b75a00d3ab6ad7192dbb9f170485178ba",
   "identity": {
     "service_id": "ic10.script.catalog.item.migration.worker",
     "implementation_revision": "1.0",
@@ -26,14 +26,14 @@
       "stack": {
         "literal_reads": [
           0,
-          6,
-          7,
+          21,
+          22,
           40,
           41
         ],
         "literal_writes": [
-          6,
-          7,
+          21,
+          22,
           40,
           41
         ],
@@ -53,8 +53,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.5f09c1ab6d948b7f",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.5f09c1ab6d948b7f",
+        "interface_id": "ic10.interface.access.50caee72197b36d0",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.50caee72197b36d0",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

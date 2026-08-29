@@ -1,11 +1,11 @@
 {
   "$schema": "../../schemas/protocol_definition.schema.json",
   "format": "IC10_PROTOCOL_DEFINITION_V1",
-  "protocol_id": "ic10.stack.31415970.abi3",
-  "name": "Catalog Coordinator Core ABI3",
+  "protocol_id": "ic10.stack.31415970.abi4",
+  "name": "Catalog Coordinator Core ABI4",
   "transport": "ic-housing-stack",
   "magic": 31415970,
-  "abi": 3,
+  "abi": 4,
   "header_bases": [
     0
   ],
@@ -42,56 +42,6 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 3,
-          "name": "S3",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
             "self-write"
           ]
         },
@@ -150,8 +100,47 @@
           ]
         },
         {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 16,
+          "name": "S16",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
           "address": 17,
           "name": "S17",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 18,
+          "name": "S18",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -170,6 +159,26 @@
         {
           "address": 20,
           "name": "S20",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 21,
+          "name": "S21",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 22,
+          "name": "S22",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -255,7 +264,7 @@
         "publication_rules": [
           {
             "kind": "seqlock",
-            "address": 7,
+            "address": 22,
             "description": "Topology sequence is odd while mutating and even when stable.",
             "source": "source-fingerprinted-paired-sequence"
           }

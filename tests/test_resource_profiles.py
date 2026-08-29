@@ -17,7 +17,7 @@ def generated_files():
 M=json.loads((R/MANIFEST_FILE).read_text())
 fails += prove_restoration(R,generated_files(),[sys.executable,str(R/'tools'/'generate'/'generate_resource_profiles.py')],preserve_inputs=[R/SOURCE_FILE])
 M=json.loads((R/MANIFEST_FILE).read_text())
-if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_coordinator_abi'))!=('RESOURCE_PROFILE_CATALOG_V6',6,5,3):fails.append('runtime-placement ABI metadata mismatch')
+if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_coordinator_abi'))!=('RESOURCE_PROFILE_CATALOG_V6',6,5,4):fails.append('runtime-placement ABI metadata mismatch')
 if M.get('runtime_store_placement') is not True or M.get('runtime_min_store_count')!=5 or M.get('profile_count')!=39 or M.get('physical_item_width')!=16:fails.append('Resource Profile runtime geometry/count mismatch')
 if [(p['partition_key'],p['item_count']) for p in M['partitions']]!=[(1,10),(2,27),(4,1),(5,1)]:fails.append('ResourceClass partition/count mismatch')
 loader_sources=[[(R/f).read_text() for f in p['loaders']] for p in M['partitions']]

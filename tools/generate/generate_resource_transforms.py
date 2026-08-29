@@ -43,7 +43,7 @@ get r12 d0 11
 blez r12 Bad
 getd r0 r12 0
 bne r0 {COORD_MAGIC} Bad
-getd r15 r12 7
+getd r15 r12 22
 mod r0 r15 2
 bnez r0 Bad
 First:
@@ -110,7 +110,7 @@ move r11 r5
 jal CopyPool
 getd r0 r2 17
 bne r0 r14 Loop
-getd r0 r12 7
+getd r0 r12 22
 bne r0 r15 Loop
 poke 68 r10
 poke 69 1
@@ -126,7 +126,7 @@ poke 68 r10
 poke 69 -2
 j Loop
 Missing:
-getd r0 r12 7
+getd r0 r12 22
 bne r0 r15 Loop
 poke 68 r10
 poke 69 -3

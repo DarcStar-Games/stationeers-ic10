@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10",
-  "source_sha256": "2df37f922287a46830ddf5b6cf0ad39310e23c63cfbc88bd941581c84ac7c142",
+  "source_sha256": "825830e42c373d589d9bdd03e75587c6050e4a6ef78fe2db757dc0e9ebf2d608",
   "identity": {
     "service_id": "ic10.script.catalog.coordinator.recovery",
     "implementation_revision": "2.0",
@@ -28,8 +28,8 @@
       "stack": {
         "literal_reads": [
           0,
-          2,
-          3,
+          14,
+          15,
           22
         ],
         "literal_writes": [
@@ -51,8 +51,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.43c8ddcea0440ed4",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.43c8ddcea0440ed4",
+        "interface_id": "ic10.interface.access.01a1cf45c2243dcd",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.01a1cf45c2243dcd",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [

@@ -45,7 +45,7 @@ get r12 d0 11
 blez r12 Bad
 getd r0 r12 0
 bne r0 {COORD_MAGIC} Bad
-getd r15 r12 7
+getd r15 r12 22
 mod r0 r15 2
 bnez r0 Bad
 get r13 d0 13
@@ -120,7 +120,7 @@ j Enum
 Done:
 getd r0 r2 17
 bne r0 r14 Loop
-getd r0 r12 7
+getd r0 r12 22
 bne r0 r15 Loop
 poke 4 r4
 poke 5 r14
@@ -137,7 +137,7 @@ Bad:
 poke 5 0
 j Loop
 Missing:
-getd r0 r12 7
+getd r0 r12 22
 bne r0 r15 Loop
 poke 5 0
 j Loop

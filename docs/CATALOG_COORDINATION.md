@@ -6,7 +6,7 @@ The Catalog Coordinator is the control plane for generic catalog storage. It own
 
 Current services:
 
-- `ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` — **Coordinator ABI3**, claims Generic Stores and commits topology/assignment epochs;
+- `ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` — **Coordinator ABI4**, claims Generic Stores and commits topology/assignment epochs;
 - `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10` — **on-demand import service**; Router ABI3 assigns each pending Loader item to live capacity;
 - `ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10` — Directory Adapter ABI3 for Generic Store discovery;
 - `ic10/directory-core/generic_registry_directory_host_v2_0.ic10` — persistent 64-node Store registry;
@@ -60,7 +60,7 @@ Store membership uses the Generic Directory infrastructure described in `docs/DI
 
 The Adapter detects duplicate NodeIds, faults both live Store instances, and publishes one DUPLICATE-state candidate; the Registry marks previously known but absent nodes MISSING. `ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10` aggregates active/unclaimed/draining/fault/missing/duplicate counts and total used/free/capacity cells.
 
-## Coordinator ABI3
+## Coordinator ABI4
 
 Key Coordinator fields used by the current control plane include:
 
