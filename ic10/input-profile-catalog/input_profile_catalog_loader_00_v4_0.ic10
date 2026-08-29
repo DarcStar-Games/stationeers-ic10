@@ -1,18 +1,20 @@
-# GENERATED Input Profile loader; relocatable sparse Loader ABI4; whole items.
+# GENERATED Input Profile loader; relocatable sparse Loader ABI5; whole items.
 clr db
 poke 0 31415969
-poke 1 4
-poke 2 HASH("CatalogSchema.InputProfile")
-poke 3 3
-poke 4 HASH("Catalog.InputProfiles.Schema3")
-poke 6 HASH("LoaderId:20dbd0106c39194f")
-poke 7 1
-poke 8 2
-poke 9 16
-poke 10 132
-poke 11 HASH("LD4:2c694ff12f2dea6a")
-poke 16 412
-poke 17 100
+poke 1 5
+poke 2 1
+poke 3 HASH("CatalogSchema.InputProfile.v3")
+poke 8 HASH("CatalogSchema.InputProfile")
+poke 9 3
+poke 10 HASH("Catalog.InputProfiles.Schema3")
+poke 12 HASH("LoaderId:20dbd0106c39194f")
+poke 13 1
+poke 14 2
+poke 15 24
+poke 16 132
+poke 17 HASH("LD4:2c694ff12f2dea6a")
+poke 24 412
+poke 25 100
 poke 412 HASH("ControllerPI") # PI Config
 poke 413 1
 poke 414 14
@@ -77,8 +79,8 @@ poke 508 162
 poke 509 LogicType.TemperatureSetting
 poke 510 163
 poke 511 LogicType.Maximum
-poke 18 380
-poke 19 32
+poke 26 380
+poke 27 32
 poke 380 HASH("DiagnosticMapping") # Diagnostic Mapping
 poke 381 1
 poke 382 7
@@ -106,4 +108,4 @@ poke 406 11
 poke 407 11
 poke 408 3
 poke 410 1
-poke 12 1 # immutable candidate publication LAST
+poke 18 1 # immutable candidate publication LAST

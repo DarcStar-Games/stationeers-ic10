@@ -23,7 +23,7 @@ loaders=sorted((R/'ic10'/'input-profile-catalog').glob('input_profile_catalog_lo
 if len(loaders)!=3:fails.append(f'Input Profile expected 3 relocatable sparse loaders, found {len(loaders)}')
 for p in loaders:
  t=p.read_text()
- if 'clr db' not in t or 'poke 1 4' not in t or 'poke 12 1' not in t or 'putd ' in t or '\nyield' in t:fails.append(p.name+': Loader ABI4 contract invalid')
+ if 'clr db' not in t or 'poke 1 5' not in t or 'poke 18 1' not in t or 'putd ' in t or '\nyield' in t:fails.append(p.name+': Loader ABI5 contract invalid')
 for name in ('ic10/controller-discovery/controller_selector_v3_0.ic10','ic10/diagnostics/console_selector_v1_1.ic10','ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10'):
  if re.search(r'\bd[0-5]\b',text(name)):fails.append(name+': still owns physical screw')
 if fails:

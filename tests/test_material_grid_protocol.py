@@ -37,7 +37,7 @@ for tok in ('s d0 Activate 1','sub r0 r0 r1','s d0 Activate 0','put d3 6 r0'):ne
 tv=text('ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10')
 for tok in ('poke 1 4','move r1 8','move r1 32','jal CopyPool'):need(tv,tok,'transform profile view')
 tl=text('ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10')
-for tok in ('clr db','poke 0 31415969','poke 1 4','poke 12 1 # immutable candidate publication LAST'):need(tl,tok,'transform catalog loader')
+for tok in ('clr db','poke 0 31415969','poke 1 5','poke 18 1 # immutable candidate publication LAST'):need(tl,tok,'transform catalog loader')
 if 'putd ' in tl or 'put d0 ' in tl or 'yield' in tl:fails.append('transform catalog loader must publish only its own one-shot stack')
 # Deleted predecessor path must stay deleted.
 for stale in ('78_material_reservation_allocator_v1_0.ic10','79_arc_furnace_transform_admission_v1_0.ic10','80_arc_furnace_transform_runtime_v1_0.ic10'):

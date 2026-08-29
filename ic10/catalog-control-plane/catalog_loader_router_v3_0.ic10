@@ -20,16 +20,16 @@ add r7 r7 1
 getd r0 r1 0
 bne r0 31415969 Scan
 getd r0 r1 1
-bne r0 4 Scan
-getd r0 r1 12
+bne r0 5 Scan
+getd r0 r1 18
 bne r0 1 Scan
-getd r3 r1 15
-getd r4 r1 8
+getd r3 r1 21
+getd r4 r1 14
 bge r3 r4 Scan
-getd r0 r1 13
+getd r0 r1 19
 bgtz r0 Scan
 mul r0 r3 2
-add r0 r0 17
+add r0 r0 25
 getd r11 r1 r0
 add r11 r11 2
 get r0 db 2
@@ -41,10 +41,10 @@ poke 3 r6
 get r6 db 4
 add r6 r6 r11
 poke 4 r6
-getd r12 r1 5
-getd r13 r1 4
-getd r14 r1 2
-getd sp r1 3
+getd r12 r1 11
+getd r13 r1 10
+getd r14 r1 8
+getd sp r1 9
 move r8 0
 move r9 0
 move r10 -1
@@ -104,8 +104,8 @@ get r0 d0 6
 add r0 r0 1
 put d0 6 r0
 putd ra 27 r11
-putd r1 13 ra
-putd r1 14 r0
+putd r1 19 ra
+putd r1 20 r0
 j Scan
 Reset:
 move r7 0

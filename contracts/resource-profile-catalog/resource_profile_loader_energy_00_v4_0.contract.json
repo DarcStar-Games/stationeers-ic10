@@ -2,14 +2,14 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10",
-  "source_sha256": "a4930e1a742138bf5df1ad502f8bf11981b9cf269a0727465ed62b5bb87b6d14",
+  "source_sha256": "d48c5a532234476f24e64a6f5a90aad0d1a921d81422c2b034fbbb37628b5afa",
   "identity": {
     "service_id": "ic10.script.resource.profile.loader.energy.00",
     "implementation_revision": "4.0",
     "deployment_family": "resource-profile-catalog",
     "deployment_class": "one-shot",
     "layer": "Resource metadata",
-    "purpose": "One-shot relocatable ENERGY Resource Profile Loader ABI4 candidate."
+    "purpose": "One-shot relocatable ENERGY Resource Profile Loader ABI5 candidate."
   },
   "device_ports": [],
   "network_dependencies": [],
@@ -21,17 +21,19 @@
       1,
       2,
       3,
-      4,
-      5,
-      6,
-      7,
       8,
       9,
       10,
       11,
       12,
+      13,
+      14,
+      15,
       16,
       17,
+      18,
+      24,
+      25,
       496,
       497,
       498,
@@ -97,42 +99,6 @@
         ]
       },
       {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
         "address": 8,
         "name": "S8",
         "value_type": "number",
@@ -172,11 +138,37 @@
         "address": 12,
         "name": "S12",
         "value_type": "number",
-        "semantic_source": "source",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "description": "immutable candidate publication LAST"
+        ]
+      },
+      {
+        "address": 13,
+        "name": "S13",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 14,
+        "name": "S14",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 15,
+        "name": "S15",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
       },
       {
         "address": 16,
@@ -190,6 +182,34 @@
       {
         "address": 17,
         "name": "S17",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 18,
+        "name": "S18",
+        "value_type": "number",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "description": "immutable candidate publication LAST"
+      },
+      {
+        "address": 24,
+        "name": "S24",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 25,
+        "name": "S25",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -247,7 +267,7 @@
       {
         "base": 0,
         "magic": 31415969,
-        "abi": 4
+        "abi": 5
       }
     ]
   },
@@ -255,7 +275,7 @@
     "publication_rules": [
       {
         "kind": "commit-last",
-        "address": 12,
+        "address": 18,
         "description": "immutable candidate publication LAST",
         "source": "verified-inline-order"
       }
@@ -269,10 +289,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415969.abi4",
+        "protocol_id": "ic10.stack.31415969.abi5",
         "base": 0,
         "magic": 31415969,
-        "abi": 4,
+        "abi": 5,
         "source": "literal-own-stack-header"
       }
     ],

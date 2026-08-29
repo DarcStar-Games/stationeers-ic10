@@ -74,12 +74,13 @@ forbidden={
     'CATALOG_STORE_ABI_V3':'Store ABI5 is current',
     'CATALOG_STORE_ABI_V2':'Store ABI5 is current',
     'CATALOG_STORE_ABI_V1':'Store ABI5 is current',
-    'CATALOG_LOADER_ABI_V3':'Loader ABI4 is current',
-    'CATALOG_LOADER_ABI_V2':'Loader ABI4 is current',
-    'CATALOG_LOADER_ABI_V1':'Loader ABI4 is current',
+    'CATALOG_LOADER_ABI_V3':'Loader ABI5 is current',
+    'CATALOG_LOADER_ABI_V2':'Loader ABI5 is current',
+    'CATALOG_LOADER_ABI_V1':'Loader ABI5 is current',
     'Coordinator ABI2':'Coordinator ABI3 is current',
     'Store ABI4':'Store ABI5 is current',
-    'Loader ABI3':'Loader ABI4 is current',
+    'Loader ABI3':'Loader ABI5 is current',
+    'Loader ABI4':'Loader ABI5 is current since the common header migration',
     '167_generic_registry_directory_host_v1_0.ic10':'Registry Host v2 is current',
     '116_recipe_catalog_lookup_v6_0.ic10':'Recipe Lookup v8 is current',
     '116_recipe_catalog_lookup_v7_0.ic10':'Recipe Lookup v8 is current',
@@ -159,10 +160,10 @@ required={
  'ROADMAP.md':['9. Power-management reuse — COMPLETE','10. Broad interruption and fault-injection suite — COMPLETE','11. Cross-domain process & utility orchestration — COMPLETE','12. Live-game commissioning and evidence closure — ACTIVE','Items **1–11 are implemented and automatically validated**','Item **12 is ACTIVE**','docs/LIVE_COMMISSIONING.md','docs/COMPLETED_MILESTONES.md'],
  'docs/COMPLETED_MILESTONES.md':['1. Runtime Store placement','2. Item-level migration and compaction','3. Generic Directory Adapter ABI','4. Printer Directory — COMPLETE','5. Generic Job ABI — COMPLETE','6. Manufacturing scheduler — COMPLETE','Item 7 — Generic Item Inventory & Storage Discovery — COMPLETE','Item 8 — Simple Dependency Planning — COMPLETE','9. Power-management reuse — COMPLETE','10. Broad interruption and fault-injection suite — COMPLETE','11. Cross-domain process & utility orchestration — COMPLETE'],
  'docs/CATALOG_COORDINATION.md':['Coordinator ABI3','64-node directory','runtime capacity','S27','DRAINING','whole-item','recovery','migration'],
- 'docs/CATALOG_STORAGE.md':['Store ABI5','Loader ABI4','item directory','payload heap','runtime Store placement','Whole-item invariant','S27','ItemCellCount + 2'],
+ 'docs/CATALOG_STORAGE.md':['Store ABI5','Loader ABI5','item directory','payload heap','runtime Store placement','Whole-item invariant','S27','ItemCellCount + 2'],
  'docs/CATALOG_SCHEMA.md':['CatalogSchemaVersion','CELL_BLOCK_WIDTH = 4','canonical zero padding','Resource Profile schema v2','Input Profile schema v3','Transform schema v4','Recipe schema v3'],
  'docs/DEPENDENCY_PLANNING.md':['199 Job Command Gateway ABI3','ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10','ic10/dependency-planning/dependency_plan_store_v2_0.ic10','QuoteFingerprintA','active','FutureQty','root job -> child -> grandchild','physical reservation authority'],
- 'docs/ABI_REFERENCE.md':['Store ABI5','Loader ABI4','Coordinator ABI3','DIRECTORY_ADAPTER_ABI_V3','Generic Snapshot Directory Host','DirectorySchema.Controller','DirectorySchema.ResourceReservation','DirectorySchema.Printer','ProcessorSpec','DirectorySchema.PrinterExecution','Generic Job Store ABI v1','31415984','Transform Profile ABI4','RequiredCapabilityMask','Recipe schema v3','Manufacturing Scheduler','ABI2 exactly','Power Management ABIs — current','DirectorySchema.PowerReservation','S6','S7','ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10'],
+ 'docs/ABI_REFERENCE.md':['Store ABI5','Loader ABI5','Coordinator ABI3','DIRECTORY_ADAPTER_ABI_V3','Generic Snapshot Directory Host','DirectorySchema.Controller','DirectorySchema.ResourceReservation','DirectorySchema.Printer','ProcessorSpec','DirectorySchema.PrinterExecution','Generic Job Store ABI v1','31415984','Transform Profile ABI4','RequiredCapabilityMask','Recipe schema v3','Manufacturing Scheduler','ABI2 exactly','Power Management ABIs — current','DirectorySchema.PowerReservation','S6','S7','ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10'],
  'README.md':['ROADMAP.md','docs/PROCESS_UTILITY_ORCHESTRATION.md','docs/INTERRUPTION_FAULT_INJECTION.md','docs/LIVE_COMMISSIONING.md','complete validator/test inventory defined in `tools/run_validation.py`','docs/DEPENDENCY_PLANNING.md','docs/COMPLETED_MILESTONES.md','docs/CATALOG_COORDINATION.md','docs/CATALOG_STORAGE.md','docs/DIRECTORY_STANDARD.md','docs/PRINTER_DIRECTORY.md','docs/GENERIC_JOB_ABI.md','docs/MANUFACTURING_SCHEDULER.md','docs/ASYNC_REQUEST_STANDARD.md','docs/BANKED_TRANSACTION_STANDARD.md','docs/SCRIPT_INDEX.md','tools/run_validation.py','tools/build_release.py','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/generic-jobs/generic_job_store_v1_0.ic10','ic10/manufacturing/manufacturing_scheduler_v1_0.ic10','docs/POWER_MANAGEMENT.md','ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10','ic10/power-jobs/power_job_scheduler_v1_0.ic10'],
  'docs/DIRECTORY_STANDARD.md':['DIRECTORY_ADAPTER_ABI_V3','ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','ic10/directory-core/generic_registry_directory_host_v2_0.ic10','ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10','ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10','data/directory_schemas.json','DirectorySchema.Controller','DirectorySchema.ResourceReservation','DirectorySchema.Printer','DirectorySchema.TransformLane','DirectorySchema.PrinterExecution','DirectorySchema.CatalogStoreNode','DirectorySchema.PowerReservation','overflow'],
  'docs/PRINTER_DIRECTORY.md':['DirectorySchema.Printer','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ProcessorSpec','Printer.Autolathe','Printer.SecurityPrinter','Printer.RocketManufactory','StructureFabricator','Capacity remains 64','DirectorySchema.PrinterExecution','tests/test_printer_directory.py'],
@@ -263,6 +264,6 @@ print('Documentation synchronization validation: PASS')
 print(' - local artifact/test references and local Markdown links resolve')
 print(f' - Input Profile prose matches manifest profile_count={profile_count}; production controller-family proof covers {controller_family_count} families')
 print(' - generated script index carries current line counts and README invariants are contiguous')
-print(' - Store ABI5 / Loader ABI4 / Coordinator ABI3 and Material Allocator ABI2 are documented consistently')
+print(' - Store ABI5 / Loader ABI5 / Coordinator ABI3 and Material Allocator ABI2 are documented consistently')
 print(' - runtime placement, item migration, Adapter ABI3 freeze, and Registry ABI3 fencing are documented')
 print(f' - script index reflects {count} deployable IC10 programs')

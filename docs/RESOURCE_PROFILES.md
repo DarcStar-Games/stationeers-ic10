@@ -31,7 +31,7 @@ PartitionKey is ResourceClass:
 
 ## Runtime placement
 
-Resource Profile Loaders are **Loader ABI4** relocatable candidates:
+Resource Profile Loaders are **Loader ABI5** relocatable candidates:
 
 - `ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10`
 - `ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10`

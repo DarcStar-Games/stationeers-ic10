@@ -14,7 +14,7 @@ for rel in FIXED_OUTPUTS:
  if not (fixture/rel).is_file():fails.append(f'Recipe generator did not produce {rel}')
 fails += prove_generated_tree_restoration(
  fixture,[sys.executable,str(R/'tools'/'generate'/'generate_recipe_catalog.py'),'--game-data',str(R/'tests'/'fixtures'/'recipe_game_data'),'--output',str(fixture),'--clean'],R)
-if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_coordinator_abi'),M.get('catalog_schema_version'))!=('RECIPE_CATALOG_V6',5,4,3,3):fails.append('Recipe runtime/schema ABI mismatch')
+if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_coordinator_abi'),M.get('catalog_schema_version'))!=('RECIPE_CATALOG_V6',5,5,3,3):fails.append('Recipe runtime/schema ABI mismatch')
 if M.get('storage_partition')!='printer_family' or M.get('runtime_min_store_count')!=6 or M.get('recipe_count')!=11:fails.append('fixture family partition/capacity mismatch')
 if any(f['runtime_min_store_count']!=1 for f in M['families']):fails.append('fixture should require one runtime Store per family')
 
@@ -26,7 +26,7 @@ def loader_invariants(root,m):
    if '# '+name not in text:fails.append(name+': missing human-readable inline comment')
  for n in m['loaders']:
   src=(root/n).read_text();code=[z.split('#',1)[0].strip() for z in src.splitlines() if z.split('#',1)[0].strip()]
-  if code[0]!='clr db' or code[-1]!='poke 12 1' or any(z.startswith(('put ','putd ','yield','j ')) for z in code):fails.append(n+': not one-shot sparse own-stack loader')
+  if code[0]!='clr db' or code[-1]!='poke 18 1' or any(z.startswith(('put ','putd ','yield','j ')) for z in code):fails.append(n+': not one-shot sparse own-stack loader')
   if re.search(r'^poke\s+\d+\s+0(?:\s|$)',src,re.M):fails.append(n+': explicit zero payload poke')
 
 def load(root,m,base,lb):

@@ -4173,22 +4173,27 @@
           {
             "base": 0,
             "magic": 31415969,
-            "abi": 4
+            "abi": 5
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"CatalogSchema.InputProfile.v3\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"CatalogSchema.InputProfile\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 3
           },
           {
-            "address": 4,
+            "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.InputProfiles.Schema3\")"
           }
@@ -4199,7 +4204,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415969.abi4",
+            "protocol_id": "ic10.stack.31415969.abi5",
             "provider_header_bases": [
               0
             ],
@@ -4208,7 +4213,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 107,
+        "literal_cell_count": 109,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -4217,8 +4222,8 @@
             "end": 511
           }
         ],
-        "line_count": 109,
-        "line_headroom_120": 11,
+        "line_count": 111,
+        "line_headroom_120": 9,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -4227,10 +4232,7 @@
           0,
           1,
           2,
-          3,
-          4,
-          6,
-          7
+          3
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -4262,22 +4264,27 @@
           {
             "base": 0,
             "magic": 31415969,
-            "abi": 4
+            "abi": 5
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"CatalogSchema.InputProfile.v3\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"CatalogSchema.InputProfile\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 3
           },
           {
-            "address": 4,
+            "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.InputProfiles.Schema3\")"
           }
@@ -4288,7 +4295,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415969.abi4",
+            "protocol_id": "ic10.stack.31415969.abi5",
             "provider_header_bases": [
               0
             ],
@@ -4297,7 +4304,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 80,
+        "literal_cell_count": 82,
         "highest_literal_cell": 509,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -4306,8 +4313,8 @@
             "end": 511
           }
         ],
-        "line_count": 82,
-        "line_headroom_120": 38,
+        "line_count": 84,
+        "line_headroom_120": 36,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -4316,10 +4323,7 @@
           0,
           1,
           2,
-          3,
-          4,
-          6,
-          7
+          3
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -4351,22 +4355,27 @@
           {
             "base": 0,
             "magic": 31415969,
-            "abi": 4
+            "abi": 5
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"CatalogSchema.InputProfile.v3\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"CatalogSchema.InputProfile\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 3
           },
           {
-            "address": 4,
+            "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.InputProfiles.Schema3\")"
           }
@@ -4377,7 +4386,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415969.abi4",
+            "protocol_id": "ic10.stack.31415969.abi5",
             "provider_header_bases": [
               0
             ],
@@ -4386,7 +4395,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 110,
+        "literal_cell_count": 112,
         "highest_literal_cell": 509,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -4395,8 +4404,8 @@
             "end": 511
           }
         ],
-        "line_count": 112,
-        "line_headroom_120": 8,
+        "line_count": 114,
+        "line_headroom_120": 6,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -4405,10 +4414,7 @@
           0,
           1,
           2,
-          3,
-          4,
-          6,
-          7
+          3
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -11909,22 +11915,27 @@
           {
             "base": 0,
             "magic": 31415969,
-            "abi": 4
+            "abi": 5
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"CatalogSchema.ResourceProfile.v2\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"CatalogSchema.ResourceProfile\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 2
           },
           {
-            "address": 4,
+            "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
           }
@@ -11935,7 +11946,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415969.abi4",
+            "protocol_id": "ic10.stack.31415969.abi5",
             "provider_header_bases": [
               0
             ],
@@ -11944,7 +11955,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 20,
+        "literal_cell_count": 22,
         "highest_literal_cell": 500,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -11953,8 +11964,8 @@
             "end": 511
           }
         ],
-        "line_count": 22,
-        "line_headroom_120": 98,
+        "line_count": 24,
+        "line_headroom_120": 96,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11963,11 +11974,7 @@
           0,
           1,
           2,
-          3,
-          4,
-          5,
-          6,
-          7
+          3
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -11999,22 +12006,27 @@
           {
             "base": 0,
             "magic": 31415969,
-            "abi": 4
+            "abi": 5
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"CatalogSchema.ResourceProfile.v2\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"CatalogSchema.ResourceProfile\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 2
           },
           {
-            "address": 4,
+            "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
           }
@@ -12025,7 +12037,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415969.abi4",
+            "protocol_id": "ic10.stack.31415969.abi5",
             "provider_header_bases": [
               0
             ],
@@ -12034,7 +12046,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 109,
+        "literal_cell_count": 111,
         "highest_literal_cell": 509,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -12043,8 +12055,8 @@
             "end": 511
           }
         ],
-        "line_count": 111,
-        "line_headroom_120": 9,
+        "line_count": 113,
+        "line_headroom_120": 7,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12053,11 +12065,7 @@
           0,
           1,
           2,
-          3,
-          4,
-          5,
-          6,
-          7
+          3
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -12089,22 +12097,27 @@
           {
             "base": 0,
             "magic": 31415969,
-            "abi": 4
+            "abi": 5
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"CatalogSchema.ResourceProfile.v2\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"CatalogSchema.ResourceProfile\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 2
           },
           {
-            "address": 4,
+            "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
           }
@@ -12115,7 +12128,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415969.abi4",
+            "protocol_id": "ic10.stack.31415969.abi5",
             "provider_header_bases": [
               0
             ],
@@ -12124,7 +12137,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 77,
+        "literal_cell_count": 79,
         "highest_literal_cell": 509,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -12133,8 +12146,8 @@
             "end": 511
           }
         ],
-        "line_count": 79,
-        "line_headroom_120": 41,
+        "line_count": 81,
+        "line_headroom_120": 39,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12143,11 +12156,7 @@
           0,
           1,
           2,
-          3,
-          4,
-          5,
-          6,
-          7
+          3
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -12179,22 +12188,27 @@
           {
             "base": 0,
             "magic": 31415969,
-            "abi": 4
+            "abi": 5
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"CatalogSchema.ResourceProfile.v2\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"CatalogSchema.ResourceProfile\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 2
           },
           {
-            "address": 4,
+            "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
           }
@@ -12205,7 +12219,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415969.abi4",
+            "protocol_id": "ic10.stack.31415969.abi5",
             "provider_header_bases": [
               0
             ],
@@ -12214,7 +12228,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 113,
+        "literal_cell_count": 115,
         "highest_literal_cell": 502,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -12223,8 +12237,8 @@
             "end": 511
           }
         ],
-        "line_count": 115,
-        "line_headroom_120": 5,
+        "line_count": 117,
+        "line_headroom_120": 3,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12233,11 +12247,7 @@
           0,
           1,
           2,
-          3,
-          4,
-          5,
-          6,
-          7
+          3
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -12269,22 +12279,27 @@
           {
             "base": 0,
             "magic": 31415969,
-            "abi": 4
+            "abi": 5
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"CatalogSchema.ResourceProfile.v2\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"CatalogSchema.ResourceProfile\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 2
           },
           {
-            "address": 4,
+            "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
           }
@@ -12295,7 +12310,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415969.abi4",
+            "protocol_id": "ic10.stack.31415969.abi5",
             "provider_header_bases": [
               0
             ],
@@ -12304,7 +12319,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 113,
+        "literal_cell_count": 115,
         "highest_literal_cell": 503,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -12313,8 +12328,8 @@
             "end": 511
           }
         ],
-        "line_count": 115,
-        "line_headroom_120": 5,
+        "line_count": 117,
+        "line_headroom_120": 3,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12323,11 +12338,7 @@
           0,
           1,
           2,
-          3,
-          4,
-          5,
-          6,
-          7
+          3
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -12359,22 +12370,27 @@
           {
             "base": 0,
             "magic": 31415969,
-            "abi": 4
+            "abi": 5
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"CatalogSchema.ResourceProfile.v2\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"CatalogSchema.ResourceProfile\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 2
           },
           {
-            "address": 4,
+            "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
           }
@@ -12385,7 +12401,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415969.abi4",
+            "protocol_id": "ic10.stack.31415969.abi5",
             "provider_header_bases": [
               0
             ],
@@ -12394,7 +12410,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 73,
+        "literal_cell_count": 75,
         "highest_literal_cell": 503,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -12403,8 +12419,8 @@
             "end": 511
           }
         ],
-        "line_count": 75,
-        "line_headroom_120": 45,
+        "line_count": 77,
+        "line_headroom_120": 43,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12413,11 +12429,7 @@
           0,
           1,
           2,
-          3,
-          4,
-          5,
-          6,
-          7
+          3
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -12449,22 +12461,27 @@
           {
             "base": 0,
             "magic": 31415969,
-            "abi": 4
+            "abi": 5
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"CatalogSchema.ResourceProfile.v2\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"CatalogSchema.ResourceProfile\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 2
           },
           {
-            "address": 4,
+            "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
           }
@@ -12475,7 +12492,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415969.abi4",
+            "protocol_id": "ic10.stack.31415969.abi5",
             "provider_header_bases": [
               0
             ],
@@ -12484,7 +12501,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 20,
+        "literal_cell_count": 22,
         "highest_literal_cell": 500,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -12493,8 +12510,8 @@
             "end": 511
           }
         ],
-        "line_count": 22,
-        "line_headroom_120": 98,
+        "line_count": 24,
+        "line_headroom_120": 96,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12503,11 +12520,7 @@
           0,
           1,
           2,
-          3,
-          4,
-          5,
-          6,
-          7
+          3
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -12756,22 +12769,27 @@
           {
             "base": 0,
             "magic": 31415969,
-            "abi": 4
+            "abi": 5
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"CatalogSchema.ResourceTransform.v4\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"CatalogSchema.ResourceTransform\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 4
           },
           {
-            "address": 4,
+            "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceTransforms.Schema4\")"
           }
@@ -12782,7 +12800,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415969.abi4",
+            "protocol_id": "ic10.stack.31415969.abi5",
             "provider_header_bases": [
               0
             ],
@@ -12791,7 +12809,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 107,
+        "literal_cell_count": 109,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -12800,8 +12818,8 @@
             "end": 511
           }
         ],
-        "line_count": 109,
-        "line_headroom_120": 11,
+        "line_count": 111,
+        "line_headroom_120": 9,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12810,10 +12828,7 @@
           0,
           1,
           2,
-          3,
-          4,
-          6,
-          7
+          3
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -12845,22 +12860,27 @@
           {
             "base": 0,
             "magic": 31415969,
-            "abi": 4
+            "abi": 5
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"CatalogSchema.ResourceTransform.v4\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"CatalogSchema.ResourceTransform\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 4
           },
           {
-            "address": 4,
+            "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceTransforms.Schema4\")"
           }
@@ -12871,7 +12891,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415969.abi4",
+            "protocol_id": "ic10.stack.31415969.abi5",
             "provider_header_bases": [
               0
             ],
@@ -12880,7 +12900,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 96,
+        "literal_cell_count": 98,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -12889,8 +12909,8 @@
             "end": 511
           }
         ],
-        "line_count": 98,
-        "line_headroom_120": 22,
+        "line_count": 100,
+        "line_headroom_120": 20,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12899,10 +12919,7 @@
           0,
           1,
           2,
-          3,
-          4,
-          6,
-          7
+          3
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -12934,22 +12951,27 @@
           {
             "base": 0,
             "magic": 31415969,
-            "abi": 4
+            "abi": 5
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"CatalogSchema.ResourceTransform.v4\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"CatalogSchema.ResourceTransform\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 4
           },
           {
-            "address": 4,
+            "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceTransforms.Schema4\")"
           }
@@ -12960,7 +12982,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415969.abi4",
+            "protocol_id": "ic10.stack.31415969.abi5",
             "provider_header_bases": [
               0
             ],
@@ -12969,7 +12991,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 108,
+        "literal_cell_count": 110,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -12978,8 +13000,8 @@
             "end": 511
           }
         ],
-        "line_count": 110,
-        "line_headroom_120": 10,
+        "line_count": 112,
+        "line_headroom_120": 8,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12988,10 +13010,7 @@
           0,
           1,
           2,
-          3,
-          4,
-          6,
-          7
+          3
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -13023,22 +13042,27 @@
           {
             "base": 0,
             "magic": 31415969,
-            "abi": 4
+            "abi": 5
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"CatalogSchema.ResourceTransform.v4\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"CatalogSchema.ResourceTransform\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 4
           },
           {
-            "address": 4,
+            "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceTransforms.Schema4\")"
           }
@@ -13049,7 +13073,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415969.abi4",
+            "protocol_id": "ic10.stack.31415969.abi5",
             "provider_header_bases": [
               0
             ],
@@ -13058,7 +13082,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 93,
+        "literal_cell_count": 95,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -13067,8 +13091,8 @@
             "end": 511
           }
         ],
-        "line_count": 95,
-        "line_headroom_120": 25,
+        "line_count": 97,
+        "line_headroom_120": 23,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -13077,10 +13101,7 @@
           0,
           1,
           2,
-          3,
-          4,
-          6,
-          7
+          3
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -13112,22 +13133,27 @@
           {
             "base": 0,
             "magic": 31415969,
-            "abi": 4
+            "abi": 5
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"CatalogSchema.ResourceTransform.v4\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"CatalogSchema.ResourceTransform\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 4
           },
           {
-            "address": 4,
+            "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceTransforms.Schema4\")"
           }
@@ -13138,7 +13164,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415969.abi4",
+            "protocol_id": "ic10.stack.31415969.abi5",
             "provider_header_bases": [
               0
             ],
@@ -13147,7 +13173,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 39,
+        "literal_cell_count": 41,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -13156,8 +13182,8 @@
             "end": 511
           }
         ],
-        "line_count": 41,
-        "line_headroom_120": 79,
+        "line_count": 43,
+        "line_headroom_120": 77,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -13166,10 +13192,7 @@
           0,
           1,
           2,
-          3,
-          4,
-          6,
-          7
+          3
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [

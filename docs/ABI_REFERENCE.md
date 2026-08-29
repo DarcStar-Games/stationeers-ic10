@@ -35,7 +35,7 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 | Generic Resource Reservation | `31415950` | `S1` | 1 |
 | Resource Transform Profile | `31415952` | `S1` | 4 |
 | Catalog Store (all static catalogs) | `31415968` | `S1` | 5 |
-| Catalog Loader metadata | `31415969` | `S1` | 4 |
+| Catalog Loader metadata | `31415969` | `S1` | 5 |
 | Catalog Coordinator Core | `31415970` | `S1` | 3 |
 | Catalog Loader Router | `31415971` | `S1` | 3 |
 | Catalog Inspector | `31415972` | `S1` | 4 |
@@ -99,13 +99,24 @@ S32.. item directory [ItemBase, ItemCellCount]
 
 Each item consumes its payload size plus two directory cells. See `docs/CATALOG_STORAGE.md`.
 
-## Catalog Loader metadata ABI v4
+## Catalog Loader metadata ABI v5
 
-Magic `31415969`, ABI `4`. A generated Loader is one-shot, self-clearing, sparse, and **relocatable**. It publishes schema/version/instance/partition, LoaderId, item count, total payload cells, signature, and an item directory from S16. Generated S13 TargetStoreRef and S14 AssignmentToken begin zero; the live Router writes them after runtime placement. S15 is the next Loader item index already imported. Ready S12 is written last.
+Magic `31415969`, ABI `5`. A generated Loader is one-shot, self-clearing, sparse, and **relocatable**. It publishes the common header at `S0..S3` — `CapabilityMask` `1` and `SchemaId` `HASH("<schema>.v<version>")` — then its payload from `S8`:
+
+```text
+S8/S9   schema id and version, unfolded for Store ABI5 matching (transitional)
+S10     instance      S14 item count        S18 Ready, written LAST
+S11     partition     S15 header cells      S19 TargetStoreRef, begins zero
+S12     LoaderId      S16 total payload     S20 AssignmentToken, begins zero
+S13     kind          S17 signature         S21 next imported item index
+S24..   item directory
+```
+
+The Router writes `S19`/`S20` after runtime placement. `S8`/`S9` disappear when Store ABI5 folds its own schema slots.
 
 ## Catalog Coordinator ABI v3
 
-`ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` publishes magic `31415970`, ABI3. It owns CoordinatorId/Epoch, Store claims, AssignmentEpoch, topology seqlock, and runtime capacity requests. `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10` publishes magic `31415971`, ABI3 and places each pending Loader ABI4 item into compatible ACTIVE Store capacity or asks Core to claim another Generic Store.
+`ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` publishes magic `31415970`, ABI3. It owns CoordinatorId/Epoch, Store claims, AssignmentEpoch, topology seqlock, and runtime capacity requests. `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10` publishes magic `31415971`, ABI3 and places each pending Loader ABI5 item into compatible ACTIVE Store capacity or asks Core to claim another Generic Store.
 
 The Store registry is `ic10/directory-core/generic_registry_directory_host_v2_0.ic10`, generic magic `31415982`, Host ABI3, publishing `DirectorySchema.CatalogStoreNode` schema version 1. Directory View `31415975` is ABI2 and Recovery `31415976` is ABI2.
 
@@ -386,7 +397,7 @@ The Bridge configures Resolver count/Profile from the Loader-validated Editor st
 
 Resource Profiles use Store ABI5, `CatalogSchemaId=HASH("CatalogSchema.ResourceProfile")`, **schema version 2**, and instance `HASH("Catalog.ResourceProfiles.Schema2")`. Every profile is a fixed 16-cell item: 14 semantic cells plus two zero padding cells (`SchemaCellMask=0x3fff`). PartitionKey is ResourceClass.
 
-With the 2-cell Store item-directory overhead, a Store holds 26 such items. The current 39 records derive at runtime as one FLUID Store (10), two ITEM Stores (26+1), one POWER Store (1), and one ENERGY Store (1). Seven Loader ABI4 candidates provide the records; none contains a Store ordinal or physical target.
+With the 2-cell Store item-directory overhead, a Store holds 26 such items. The current 39 records derive at runtime as one FLUID Store (10), two ITEM Stores (26+1), one POWER Store (1), and one ENERGY Store (1). Seven Loader ABI5 candidates provide the records; none contains a Store ordinal or physical target.
 
 `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` accepts any Store in the catalog, follows runtime topology under a stable Coordinator sequence, scans `[ItemBase,ItemCellCount]` entries, and republishes Resource Profile View ABI1 with its existing S8..S21 semantic surface.
 

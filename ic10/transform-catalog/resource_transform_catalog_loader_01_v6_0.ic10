@@ -1,18 +1,20 @@
-# GENERATED Resource Transform loader; relocatable sparse Loader ABI4; whole items.
+# GENERATED Resource Transform loader; relocatable sparse Loader ABI5; whole items.
 clr db
 poke 0 31415969
-poke 1 4
-poke 2 HASH("CatalogSchema.ResourceTransform")
-poke 3 4
-poke 4 HASH("Catalog.ResourceTransforms.Schema4")
-poke 6 HASH("LoaderId:c36e37e09eb1153a")
-poke 7 1
-poke 8 4
-poke 9 16
-poke 10 88
-poke 11 HASH("LD4:1df4a6366e9234cc")
-poke 16 492
-poke 17 20
+poke 1 5
+poke 2 1
+poke 3 HASH("CatalogSchema.ResourceTransform.v4")
+poke 8 HASH("CatalogSchema.ResourceTransform")
+poke 9 4
+poke 10 HASH("Catalog.ResourceTransforms.Schema4")
+poke 12 HASH("LoaderId:c36e37e09eb1153a")
+poke 13 1
+poke 14 4
+poke 15 24
+poke 16 88
+poke 17 HASH("LD4:1df4a6366e9234cc")
+poke 24 492
+poke 25 20
 poke 492 HASH("SmeltSilicon") # Smelt Silicon Ore -> Silicon Ingot
 poke 493 1
 poke 494 1
@@ -30,8 +32,8 @@ poke 508 2
 poke 509 -290196476
 poke 510 2
 poke 511 1
-poke 18 472
-poke 19 20
+poke 26 472
+poke 27 20
 poke 472 HASH("SmeltSilver") # Smelt Silver Ore -> Silver Ingot
 poke 473 1
 poke 474 1
@@ -49,8 +51,8 @@ poke 488 2
 poke 489 -929742000
 poke 490 2
 poke 491 1
-poke 20 448
-poke 21 24
+poke 28 448
+poke 29 24
 poke 448 HASH("AlloySteel") # Alloy Steel
 poke 449 2
 poke 450 2
@@ -72,8 +74,8 @@ poke 468 2
 poke 469 -654790771
 poke 470 2
 poke 471 4
-poke 22 424
-poke 23 24
+poke 30 424
+poke 31 24
 poke 424 HASH("AlloyElectrum") # Alloy Electrum
 poke 425 2
 poke 426 2
@@ -95,4 +97,4 @@ poke 444 2
 poke 445 502280180
 poke 446 2
 poke 447 2
-poke 12 1 # immutable candidate publication LAST
+poke 18 1 # immutable candidate publication LAST

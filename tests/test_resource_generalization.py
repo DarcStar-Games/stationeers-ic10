@@ -76,7 +76,7 @@ if len(trs['transforms'])!=17: fails.append('expected 17 furnace transforms')
 loaders=sorted((R/'ic10'/'transform-catalog').glob('resource_transform_catalog_loader_*_v6_0.ic10'))
 loader='\n'.join(p.read_text() for p in loaders)
 viewt=(R/'ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10').read_text()
-for n in ('clr db','poke 0 31415969','poke 1 4','poke 2 HASH("CatalogSchema.ResourceTransform")','poke 12 1 # immutable candidate publication LAST'):
+for n in ('clr db','poke 0 31415969','poke 1 5','poke 3 HASH("CatalogSchema.ResourceTransform.v4")','poke 18 1 # immutable candidate publication LAST'):
     need(loader,n,'transform catalog loader')
 if 'putd ' in loader or 'put d0 ' in loader or 'yield' in loader: fails.append('transform catalog loader leaked push/poll behavior')
 for n in ('poke 0 31415952','poke 1 4','add r6 r8 12','mul r0 r4 4','jal CopyPool'):

@@ -63,9 +63,9 @@ The 780-recipe stress fixture contains 130 synthetic recipes per family. Under s
 
 No Store mixes FamilyHash partitions.
 
-## Loader ABI4
+## Loader ABI5
 
-Generated Recipe Loaders are one-shot relocatable Loader ABI4 candidates. Every Loader:
+Generated Recipe Loaders are one-shot relocatable Loader ABI5 candidates. Every Loader:
 
 1. clears only its own stack;
 2. publishes Loader magic/ABI, Recipe schema v3, CatalogInstanceId, and FamilyHash PartitionKey;
@@ -166,7 +166,7 @@ rather than attempting to discover the recipe universe by mutating a live printe
 
 - deterministic generation;
 - Recipe schema v3 and `RECIPE_CATALOG_V6` manifest identity;
-- Loader ABI4 sparse/whole-item behavior;
+- Loader ABI5 sparse/whole-item behavior;
 - family partition purity;
 - runtime capacity placement;
 - capability-filtered ordinal Lookup ABI3;

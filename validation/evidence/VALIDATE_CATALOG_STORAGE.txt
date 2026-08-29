@@ -1,5 +1,5 @@
 Catalog coordination/storage invariant validation: PASS
- - 21 sparse relocatable Loader ABI4 producers are immutable after Ready publication
+ - 21 sparse relocatable Loader ABI5 producers are immutable after Ready publication
  - Coordinator ABI3 performs runtime Store placement with in-flight capacity reservations
  - Generic Store ABI5 owns a 2-cell item directory plus downward payload heap
  - item-level migration/compaction moves whole items before empty Store retirement

@@ -1,4 +1,4 @@
-# Catalog Storage Standard — Store ABI5 / Loader ABI4
+# Catalog Storage Standard — Store ABI5 / Loader ABI5
 
 ## Core invariant
 
@@ -16,7 +16,7 @@ The ownership rule is strict:
 The current common protocols are:
 
 - Catalog Store magic `31415968`, **Store ABI5**;
-- Catalog Loader magic `31415969`, **Loader ABI4**;
+- Catalog Loader magic `31415969`, **Loader ABI5**;
 - Catalog Coordinator magic `31415970`, **Coordinator ABI3**;
 - 4-cell payload alignment;
 - canonical zero padding;
@@ -85,7 +85,7 @@ All payload item sizes are multiples of the 4-cell framework block width. The ex
 
 The Store publishes the destination payload first, then the directory entry, then updates LocalItemCount/geometry and finishes the even Store revision. Readers only accept stable even revisions.
 
-## Loader ABI4
+## Loader ABI5
 
 A Loader is a one-shot immutable candidate image. It does **not** know a physical Store or Store ordinal when generated.
 

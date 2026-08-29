@@ -1,11 +1,11 @@
 {
   "$schema": "../../schemas/protocol_definition.schema.json",
   "format": "IC10_PROTOCOL_DEFINITION_V1",
-  "protocol_id": "ic10.stack.31415969.abi4",
-  "name": "Input Profile Catalog Loader 00 ABI4",
+  "protocol_id": "ic10.stack.31415969.abi5",
+  "name": "Input Profile Catalog Loader 00 ABI5",
   "transport": "ic-housing-stack",
   "magic": 31415969,
-  "abi": 4,
+  "abi": 5,
   "header_bases": [
     0
   ],
@@ -58,33 +58,6 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
           "address": 8,
           "name": "S8",
           "value_type": "number",
@@ -112,8 +85,8 @@
           ]
         },
         {
-          "address": 11,
-          "name": "S11",
+          "address": 12,
+          "name": "S12",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -121,14 +94,31 @@
           ]
         },
         {
-          "address": 12,
-          "name": "S12",
+          "address": 13,
+          "name": "S13",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "description": "immutable candidate publication LAST"
+          ]
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         },
         {
           "address": 16,
@@ -152,14 +142,42 @@
           "address": 18,
           "name": "S18",
           "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "immutable candidate publication LAST"
+        },
+        {
+          "address": 24,
+          "name": "S24",
+          "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
             "self-write"
           ]
         },
         {
-          "address": 19,
-          "name": "S19",
+          "address": 25,
+          "name": "S25",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 26,
+          "name": "S26",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 27,
+          "name": "S27",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -992,7 +1010,7 @@
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 12,
+            "address": 18,
             "description": "immutable candidate publication LAST",
             "source": "verified-inline-order"
           }
@@ -1047,33 +1065,6 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
           "address": 8,
           "name": "S8",
           "value_type": "number",
@@ -1101,8 +1092,8 @@
           ]
         },
         {
-          "address": 11,
-          "name": "S11",
+          "address": 12,
+          "name": "S12",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -1110,14 +1101,31 @@
           ]
         },
         {
-          "address": 12,
-          "name": "S12",
+          "address": 13,
+          "name": "S13",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "description": "immutable candidate publication LAST"
+          ]
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         },
         {
           "address": 16,
@@ -1131,6 +1139,34 @@
         {
           "address": 17,
           "name": "S17",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 18,
+          "name": "S18",
+          "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "immutable candidate publication LAST"
+        },
+        {
+          "address": 24,
+          "name": "S24",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 25,
+          "name": "S25",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -1737,7 +1773,7 @@
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 12,
+            "address": 18,
             "description": "immutable candidate publication LAST",
             "source": "verified-inline-order"
           }
@@ -1792,33 +1828,6 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
           "address": 8,
           "name": "S8",
           "value_type": "number",
@@ -1846,8 +1855,8 @@
           ]
         },
         {
-          "address": 11,
-          "name": "S11",
+          "address": 12,
+          "name": "S12",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -1855,14 +1864,31 @@
           ]
         },
         {
-          "address": 12,
-          "name": "S12",
+          "address": 13,
+          "name": "S13",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "description": "immutable candidate publication LAST"
+          ]
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         },
         {
           "address": 16,
@@ -1886,14 +1912,15 @@
           "address": 18,
           "name": "S18",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "source",
           "access": [
             "self-write"
-          ]
+          ],
+          "description": "immutable candidate publication LAST"
         },
         {
-          "address": 19,
-          "name": "S19",
+          "address": 24,
+          "name": "S24",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -1901,8 +1928,8 @@
           ]
         },
         {
-          "address": 20,
-          "name": "S20",
+          "address": 25,
+          "name": "S25",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -1910,8 +1937,35 @@
           ]
         },
         {
-          "address": 21,
-          "name": "S21",
+          "address": 26,
+          "name": "S26",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 27,
+          "name": "S27",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 28,
+          "name": "S28",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 29,
+          "name": "S29",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -2754,7 +2808,7 @@
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 12,
+            "address": 18,
             "description": "immutable candidate publication LAST",
             "source": "verified-inline-order"
           }
@@ -2809,42 +2863,6 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
           "address": 8,
           "name": "S8",
           "value_type": "number",
@@ -2884,11 +2902,37 @@
           "address": 12,
           "name": "S12",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "description": "immutable candidate publication LAST"
+          ]
+        },
+        {
+          "address": 13,
+          "name": "S13",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         },
         {
           "address": 16,
@@ -2902,6 +2946,34 @@
         {
           "address": 17,
           "name": "S17",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 18,
+          "name": "S18",
+          "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "immutable candidate publication LAST"
+        },
+        {
+          "address": 24,
+          "name": "S24",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 25,
+          "name": "S25",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -2959,7 +3031,7 @@
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 12,
+            "address": 18,
             "description": "immutable candidate publication LAST",
             "source": "verified-inline-order"
           }
@@ -3014,42 +3086,6 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
           "address": 8,
           "name": "S8",
           "value_type": "number",
@@ -3089,11 +3125,37 @@
           "address": 12,
           "name": "S12",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "description": "immutable candidate publication LAST"
+          ]
+        },
+        {
+          "address": 13,
+          "name": "S13",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         },
         {
           "address": 16,
@@ -3117,55 +3179,11 @@
           "address": 18,
           "name": "S18",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "source",
           "access": [
             "self-write"
-          ]
-        },
-        {
-          "address": 19,
-          "name": "S19",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 22,
-          "name": "S22",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 23,
-          "name": "S23",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
+          ],
+          "description": "immutable candidate publication LAST"
         },
         {
           "address": 24,
@@ -3197,6 +3215,78 @@
         {
           "address": 27,
           "name": "S27",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 28,
+          "name": "S28",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 29,
+          "name": "S29",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 30,
+          "name": "S30",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 31,
+          "name": "S31",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 32,
+          "name": "S32",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 33,
+          "name": "S33",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 34,
+          "name": "S34",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 35,
+          "name": "S35",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -3970,7 +4060,7 @@
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 12,
+            "address": 18,
             "description": "immutable candidate publication LAST",
             "source": "verified-inline-order"
           }
@@ -4025,42 +4115,6 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
           "address": 8,
           "name": "S8",
           "value_type": "number",
@@ -4100,11 +4154,37 @@
           "address": 12,
           "name": "S12",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "description": "immutable candidate publication LAST"
+          ]
+        },
+        {
+          "address": 13,
+          "name": "S13",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         },
         {
           "address": 16,
@@ -4128,14 +4208,15 @@
           "address": 18,
           "name": "S18",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "source",
           "access": [
             "self-write"
-          ]
+          ],
+          "description": "immutable candidate publication LAST"
         },
         {
-          "address": 19,
-          "name": "S19",
+          "address": 24,
+          "name": "S24",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -4143,8 +4224,8 @@
           ]
         },
         {
-          "address": 20,
-          "name": "S20",
+          "address": 25,
+          "name": "S25",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -4152,8 +4233,8 @@
           ]
         },
         {
-          "address": 21,
-          "name": "S21",
+          "address": 26,
+          "name": "S26",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -4161,8 +4242,8 @@
           ]
         },
         {
-          "address": 22,
-          "name": "S22",
+          "address": 27,
+          "name": "S27",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -4170,8 +4251,35 @@
           ]
         },
         {
-          "address": 23,
-          "name": "S23",
+          "address": 28,
+          "name": "S28",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 29,
+          "name": "S29",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 30,
+          "name": "S30",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 31,
+          "name": "S31",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -4691,7 +4799,7 @@
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 12,
+            "address": 18,
             "description": "immutable candidate publication LAST",
             "source": "verified-inline-order"
           }
@@ -4746,42 +4854,6 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
           "address": 8,
           "name": "S8",
           "value_type": "number",
@@ -4821,11 +4893,37 @@
           "address": 12,
           "name": "S12",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "description": "immutable candidate publication LAST"
+          ]
+        },
+        {
+          "address": 13,
+          "name": "S13",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         },
         {
           "address": 16,
@@ -4849,55 +4947,11 @@
           "address": 18,
           "name": "S18",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "source",
           "access": [
             "self-write"
-          ]
-        },
-        {
-          "address": 19,
-          "name": "S19",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 22,
-          "name": "S22",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 23,
-          "name": "S23",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
+          ],
+          "description": "immutable candidate publication LAST"
         },
         {
           "address": 24,
@@ -5019,6 +5073,78 @@
         {
           "address": 37,
           "name": "S37",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 38,
+          "name": "S38",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 39,
+          "name": "S39",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 40,
+          "name": "S40",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 41,
+          "name": "S41",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 42,
+          "name": "S42",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 43,
+          "name": "S43",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 44,
+          "name": "S44",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 45,
+          "name": "S45",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -5743,7 +5869,7 @@
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 12,
+            "address": 18,
             "description": "immutable candidate publication LAST",
             "source": "verified-inline-order"
           }
@@ -5798,42 +5924,6 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
           "address": 8,
           "name": "S8",
           "value_type": "number",
@@ -5873,11 +5963,37 @@
           "address": 12,
           "name": "S12",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "description": "immutable candidate publication LAST"
+          ]
+        },
+        {
+          "address": 13,
+          "name": "S13",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         },
         {
           "address": 16,
@@ -5901,55 +6017,11 @@
           "address": 18,
           "name": "S18",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "source",
           "access": [
             "self-write"
-          ]
-        },
-        {
-          "address": 19,
-          "name": "S19",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 22,
-          "name": "S22",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 23,
-          "name": "S23",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
+          ],
+          "description": "immutable candidate publication LAST"
         },
         {
           "address": 24,
@@ -6053,6 +6125,78 @@
         {
           "address": 35,
           "name": "S35",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 36,
+          "name": "S36",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 37,
+          "name": "S37",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 38,
+          "name": "S38",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 39,
+          "name": "S39",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 40,
+          "name": "S40",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 41,
+          "name": "S41",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 42,
+          "name": "S42",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 43,
+          "name": "S43",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -6794,7 +6938,7 @@
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 12,
+            "address": 18,
             "description": "immutable candidate publication LAST",
             "source": "verified-inline-order"
           }
@@ -6849,42 +6993,6 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
           "address": 8,
           "name": "S8",
           "value_type": "number",
@@ -6924,11 +7032,37 @@
           "address": 12,
           "name": "S12",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "description": "immutable candidate publication LAST"
+          ]
+        },
+        {
+          "address": 13,
+          "name": "S13",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         },
         {
           "address": 16,
@@ -6952,55 +7086,11 @@
           "address": 18,
           "name": "S18",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "source",
           "access": [
             "self-write"
-          ]
-        },
-        {
-          "address": 19,
-          "name": "S19",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 22,
-          "name": "S22",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 23,
-          "name": "S23",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
+          ],
+          "description": "immutable candidate publication LAST"
         },
         {
           "address": 24,
@@ -7032,6 +7122,78 @@
         {
           "address": 27,
           "name": "S27",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 28,
+          "name": "S28",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 29,
+          "name": "S29",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 30,
+          "name": "S30",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 31,
+          "name": "S31",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 32,
+          "name": "S32",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 33,
+          "name": "S33",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 34,
+          "name": "S34",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 35,
+          "name": "S35",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -7481,7 +7643,7 @@
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 12,
+            "address": 18,
             "description": "immutable candidate publication LAST",
             "source": "verified-inline-order"
           }
@@ -7536,42 +7698,6 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
           "address": 8,
           "name": "S8",
           "value_type": "number",
@@ -7611,11 +7737,37 @@
           "address": 12,
           "name": "S12",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "description": "immutable candidate publication LAST"
+          ]
+        },
+        {
+          "address": 13,
+          "name": "S13",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         },
         {
           "address": 16,
@@ -7629,6 +7781,34 @@
         {
           "address": 17,
           "name": "S17",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 18,
+          "name": "S18",
+          "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "immutable candidate publication LAST"
+        },
+        {
+          "address": 24,
+          "name": "S24",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 25,
+          "name": "S25",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -7686,7 +7866,7 @@
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 12,
+            "address": 18,
             "description": "immutable candidate publication LAST",
             "source": "verified-inline-order"
           }
@@ -7741,33 +7921,6 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
           "address": 8,
           "name": "S8",
           "value_type": "number",
@@ -7795,8 +7948,8 @@
           ]
         },
         {
-          "address": 11,
-          "name": "S11",
+          "address": 12,
+          "name": "S12",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -7804,14 +7957,31 @@
           ]
         },
         {
-          "address": 12,
-          "name": "S12",
+          "address": 13,
+          "name": "S13",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "description": "immutable candidate publication LAST"
+          ]
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         },
         {
           "address": 16,
@@ -7835,55 +8005,11 @@
           "address": 18,
           "name": "S18",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "source",
           "access": [
             "self-write"
-          ]
-        },
-        {
-          "address": 19,
-          "name": "S19",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 22,
-          "name": "S22",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 23,
-          "name": "S23",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
+          ],
+          "description": "immutable candidate publication LAST"
         },
         {
           "address": 24,
@@ -7897,6 +8023,78 @@
         {
           "address": 25,
           "name": "S25",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 26,
+          "name": "S26",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 27,
+          "name": "S27",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 28,
+          "name": "S28",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 29,
+          "name": "S29",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 30,
+          "name": "S30",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 31,
+          "name": "S31",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 32,
+          "name": "S32",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 33,
+          "name": "S33",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -8678,7 +8876,7 @@
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 12,
+            "address": 18,
             "description": "immutable candidate publication LAST",
             "source": "verified-inline-order"
           }
@@ -8733,33 +8931,6 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
           "address": 8,
           "name": "S8",
           "value_type": "number",
@@ -8787,8 +8958,8 @@
           ]
         },
         {
-          "address": 11,
-          "name": "S11",
+          "address": 12,
+          "name": "S12",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -8796,14 +8967,31 @@
           ]
         },
         {
-          "address": 12,
-          "name": "S12",
+          "address": 13,
+          "name": "S13",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "description": "immutable candidate publication LAST"
+          ]
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         },
         {
           "address": 16,
@@ -8827,14 +9015,15 @@
           "address": 18,
           "name": "S18",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "source",
           "access": [
             "self-write"
-          ]
+          ],
+          "description": "immutable candidate publication LAST"
         },
         {
-          "address": 19,
-          "name": "S19",
+          "address": 24,
+          "name": "S24",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -8842,8 +9031,8 @@
           ]
         },
         {
-          "address": 20,
-          "name": "S20",
+          "address": 25,
+          "name": "S25",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -8851,8 +9040,8 @@
           ]
         },
         {
-          "address": 21,
-          "name": "S21",
+          "address": 26,
+          "name": "S26",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -8860,8 +9049,8 @@
           ]
         },
         {
-          "address": 22,
-          "name": "S22",
+          "address": 27,
+          "name": "S27",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -8869,8 +9058,35 @@
           ]
         },
         {
-          "address": 23,
-          "name": "S23",
+          "address": 28,
+          "name": "S28",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 29,
+          "name": "S29",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 30,
+          "name": "S30",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 31,
+          "name": "S31",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -9570,7 +9786,7 @@
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 12,
+            "address": 18,
             "description": "immutable candidate publication LAST",
             "source": "verified-inline-order"
           }
@@ -9625,33 +9841,6 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
           "address": 8,
           "name": "S8",
           "value_type": "number",
@@ -9679,8 +9868,8 @@
           ]
         },
         {
-          "address": 11,
-          "name": "S11",
+          "address": 12,
+          "name": "S12",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -9688,14 +9877,31 @@
           ]
         },
         {
-          "address": 12,
-          "name": "S12",
+          "address": 13,
+          "name": "S13",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "description": "immutable candidate publication LAST"
+          ]
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         },
         {
           "address": 16,
@@ -9719,14 +9925,15 @@
           "address": 18,
           "name": "S18",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "source",
           "access": [
             "self-write"
-          ]
+          ],
+          "description": "immutable candidate publication LAST"
         },
         {
-          "address": 19,
-          "name": "S19",
+          "address": 24,
+          "name": "S24",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -9734,8 +9941,8 @@
           ]
         },
         {
-          "address": 20,
-          "name": "S20",
+          "address": 25,
+          "name": "S25",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -9743,8 +9950,8 @@
           ]
         },
         {
-          "address": 21,
-          "name": "S21",
+          "address": 26,
+          "name": "S26",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -9752,8 +9959,8 @@
           ]
         },
         {
-          "address": 22,
-          "name": "S22",
+          "address": 27,
+          "name": "S27",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -9761,8 +9968,35 @@
           ]
         },
         {
-          "address": 23,
-          "name": "S23",
+          "address": 28,
+          "name": "S28",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 29,
+          "name": "S29",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 30,
+          "name": "S30",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 31,
+          "name": "S31",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -10570,7 +10804,7 @@
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 12,
+            "address": 18,
             "description": "immutable candidate publication LAST",
             "source": "verified-inline-order"
           }
@@ -10625,33 +10859,6 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
           "address": 8,
           "name": "S8",
           "value_type": "number",
@@ -10679,8 +10886,8 @@
           ]
         },
         {
-          "address": 11,
-          "name": "S11",
+          "address": 12,
+          "name": "S12",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -10688,14 +10895,31 @@
           ]
         },
         {
-          "address": 12,
-          "name": "S12",
+          "address": 13,
+          "name": "S13",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "description": "immutable candidate publication LAST"
+          ]
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         },
         {
           "address": 16,
@@ -10719,14 +10943,15 @@
           "address": 18,
           "name": "S18",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "source",
           "access": [
             "self-write"
-          ]
+          ],
+          "description": "immutable candidate publication LAST"
         },
         {
-          "address": 19,
-          "name": "S19",
+          "address": 24,
+          "name": "S24",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -10734,8 +10959,8 @@
           ]
         },
         {
-          "address": 20,
-          "name": "S20",
+          "address": 25,
+          "name": "S25",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -10743,8 +10968,35 @@
           ]
         },
         {
-          "address": 21,
-          "name": "S21",
+          "address": 26,
+          "name": "S26",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 27,
+          "name": "S27",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 28,
+          "name": "S28",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 29,
+          "name": "S29",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -11434,7 +11686,7 @@
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 12,
+            "address": 18,
             "description": "immutable candidate publication LAST",
             "source": "verified-inline-order"
           }
@@ -11489,33 +11741,6 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
           "address": 8,
           "name": "S8",
           "value_type": "number",
@@ -11543,8 +11768,8 @@
           ]
         },
         {
-          "address": 11,
-          "name": "S11",
+          "address": 12,
+          "name": "S12",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -11552,14 +11777,31 @@
           ]
         },
         {
-          "address": 12,
-          "name": "S12",
+          "address": 13,
+          "name": "S13",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "description": "immutable candidate publication LAST"
+          ]
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         },
         {
           "address": 16,
@@ -11573,6 +11815,34 @@
         {
           "address": 17,
           "name": "S17",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 18,
+          "name": "S18",
+          "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "description": "immutable candidate publication LAST"
+        },
+        {
+          "address": 24,
+          "name": "S24",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 25,
+          "name": "S25",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -11810,7 +12080,7 @@
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 12,
+            "address": 18,
             "description": "immutable candidate publication LAST",
             "source": "verified-inline-order"
           }

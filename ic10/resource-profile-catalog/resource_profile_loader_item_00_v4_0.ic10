@@ -1,19 +1,21 @@
-# GENERATED Resource Profile ITEM loader; relocatable sparse Loader ABI4; whole items.
+# GENERATED Resource Profile ITEM loader; relocatable sparse Loader ABI5; whole items.
 clr db
 poke 0 31415969
-poke 1 4
-poke 2 HASH("CatalogSchema.ResourceProfile")
-poke 3 2
-poke 4 HASH("Catalog.ResourceProfiles.Schema2")
-poke 5 2
-poke 6 HASH("LoaderId:3c8102beb97117e0")
-poke 7 1
-poke 8 11
-poke 9 16
-poke 10 176
-poke 11 HASH("LD4:d907f1558a912c74")
-poke 16 496
-poke 17 16
+poke 1 5
+poke 2 1
+poke 3 HASH("CatalogSchema.ResourceProfile.v2")
+poke 8 HASH("CatalogSchema.ResourceProfile")
+poke 9 2
+poke 10 HASH("Catalog.ResourceProfiles.Schema2")
+poke 11 2
+poke 12 HASH("LoaderId:3c8102beb97117e0")
+poke 13 1
+poke 14 11
+poke 15 24
+poke 16 176
+poke 17 HASH("LD4:d907f1558a912c74")
+poke 24 496
+poke 25 16
 poke 496 1724793494 # Ore (Coal)
 poke 497 2
 poke 498 2
@@ -21,8 +23,8 @@ poke 499 2
 poke 500 1
 poke 501 50
 poke 502 10
-poke 18 480
-poke 19 16
+poke 26 480
+poke 27 16
 poke 480 -983091249 # Ore (Cobalt)
 poke 481 2
 poke 482 2
@@ -30,8 +32,8 @@ poke 483 2
 poke 484 1
 poke 485 50
 poke 486 10
-poke 20 464
-poke 21 16
+poke 28 464
+poke 29 16
 poke 464 -707307845 # Ore (Copper)
 poke 465 2
 poke 466 2
@@ -39,8 +41,8 @@ poke 467 2
 poke 468 1
 poke 469 50
 poke 470 10
-poke 22 448
-poke 23 16
+poke 30 448
+poke 31 16
 poke 448 -1348105509 # Ore (Gold)
 poke 449 2
 poke 450 2
@@ -48,8 +50,8 @@ poke 451 2
 poke 452 1
 poke 453 50
 poke 454 10
-poke 24 432
-poke 25 16
+poke 32 432
+poke 33 16
 poke 432 1758427767 # Ore (Iron)
 poke 433 2
 poke 434 2
@@ -57,8 +59,8 @@ poke 435 2
 poke 436 1
 poke 437 50
 poke 438 10
-poke 26 416
-poke 27 16
+poke 34 416
+poke 35 16
 poke 416 -190236170 # Ore (Lead)
 poke 417 2
 poke 418 2
@@ -66,8 +68,8 @@ poke 419 2
 poke 420 1
 poke 421 50
 poke 422 10
-poke 28 400
-poke 29 16
+poke 36 400
+poke 37 16
 poke 400 1830218956 # Ore (Nickel)
 poke 401 2
 poke 402 2
@@ -75,8 +77,8 @@ poke 403 2
 poke 404 1
 poke 405 50
 poke 406 10
-poke 30 384
-poke 31 16
+poke 38 384
+poke 39 16
 poke 384 1103972403 # Ore (Silicon)
 poke 385 2
 poke 386 2
@@ -84,8 +86,8 @@ poke 387 2
 poke 388 1
 poke 389 50
 poke 390 10
-poke 32 368
-poke 33 16
+poke 40 368
+poke 41 16
 poke 368 -916518678 # Ore (Silver)
 poke 369 2
 poke 370 2
@@ -93,8 +95,8 @@ poke 371 2
 poke 372 1
 poke 373 50
 poke 374 10
-poke 34 352
-poke 35 16
+poke 42 352
+poke 43 16
 poke 352 -1516581844 # Ore (Uranium)
 poke 353 2
 poke 354 2
@@ -102,8 +104,8 @@ poke 355 2
 poke 356 1
 poke 357 50
 poke 358 10
-poke 36 336
-poke 37 16
+poke 44 336
+poke 45 16
 poke 336 -404336834 # Ingot (Copper)
 poke 337 2
 poke 338 2
@@ -112,4 +114,4 @@ poke 340 2
 poke 341 500
 poke 342 19
 poke 343 -1172078909
-poke 12 1 # immutable candidate publication LAST
+poke 18 1 # immutable candidate publication LAST

@@ -17,16 +17,16 @@ def generated_files():
 M=json.loads((R/MANIFEST_FILE).read_text())
 fails += prove_restoration(R,generated_files(),[sys.executable,str(R/'tools'/'generate'/'generate_resource_profiles.py')],preserve_inputs=[R/SOURCE_FILE])
 M=json.loads((R/MANIFEST_FILE).read_text())
-if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_coordinator_abi'))!=('RESOURCE_PROFILE_CATALOG_V6',5,4,3):fails.append('runtime-placement ABI metadata mismatch')
+if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_coordinator_abi'))!=('RESOURCE_PROFILE_CATALOG_V6',5,5,3):fails.append('runtime-placement ABI metadata mismatch')
 if M.get('runtime_store_placement') is not True or M.get('runtime_min_store_count')!=5 or M.get('profile_count')!=39 or M.get('physical_item_width')!=16:fails.append('Resource Profile runtime geometry/count mismatch')
 if [(p['partition_key'],p['item_count']) for p in M['partitions']]!=[(1,10),(2,27),(4,1),(5,1)]:fails.append('ResourceClass partition/count mismatch')
 loader_sources=[[(R/f).read_text() for f in p['loaders']] for p in M['partitions']]
 for src in (x for g in loader_sources for x in g):
  code=[z.split('#',1)[0].strip() for z in src.splitlines() if z.split('#',1)[0].strip()]
- if code[0]!='clr db' or code[-1]!='poke 12 1' or any(z.startswith(('put ','putd ','yield','j ')) for z in code):fails.append('loader is not one-shot sparse own-stack producer')
+ if code[0]!='clr db' or code[-1]!='poke 18 1' or any(z.startswith(('put ','putd ','yield','j ')) for z in code):fails.append('loader is not one-shot sparse own-stack producer')
  if re.search(r'^poke\s+\d+\s+0(?:\s|$)',src,re.M):fails.append('loader emits explicit zero payload write')
- # Loader ABI4 has no physical Store or StoreOrdinal assignment; S13/S14 are runtime handoff fields left zero by one-shot producer.
- if re.search(r'^poke\s+13\s+[^0]',src,re.M) or re.search(r'^poke\s+14\s+[^0]',src,re.M):fails.append('loader preassigns physical Store')
+ # Loader ABI5 has no physical Store or StoreOrdinal assignment; S19/S20 are runtime handoff fields left zero by one-shot producer.
+ if re.search(r'^poke\s+19\s+[^0]',src,re.M) or re.search(r'^poke\s+20\s+[^0]',src,re.M):fails.append('loader preassigns physical Store')
 store_src=(R/M['generic_store_program']).read_text();stores,vms,loader_groups=load_catalog_chain([store_src]*M['runtime_min_store_count'],loader_sources,store_ref_base=830,loader_ref_base=1200)
 coord=vms[0].coord;active=[s for s in stores if s.stack.get(16)==2]
 if len(active)!=5:fails.append(f'runtime placement expected 5 ACTIVE Stores, got {len(active)}')
@@ -44,7 +44,7 @@ for s in active:
   if n!=16 or int(base)%4:fails.append('Resource Profile item geometry is not complete/aligned');break
   if s.stack.get(int(base)+14,0)!=0 or s.stack.get(int(base)+15,0)!=0:fails.append('Resource Profile canonical padding is not zero');break
 all_loaders=[d for g in loader_groups for d in g]
-if any(int(d.stack.get(15,0))!=int(d.stack.get(8,0)) or d.stack.get(13,0)!=0 for d in all_loaders):fails.append('not all Loader items were imported/assignment-cleared')
+if any(int(d.stack.get(21,0))!=int(d.stack.get(14,0)) or d.stack.get(19,0)!=0 for d in all_loaders):fails.append('not all Loader items were imported/assignment-cleared')
 # View must resolve every profile from an arbitrary runtime Store anchor.
 screws={f's{i}':s for i,s in enumerate(stores)};screws['coord']=coord;screws['d0']=stores[-1]
 viewsrc=(R/'ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10').read_text()

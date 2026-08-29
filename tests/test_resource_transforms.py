@@ -18,12 +18,12 @@ M=json.loads((R/MANIFEST_FILE).read_text())
 fails += prove_restoration(R,files(),[sys.executable,str(R/'tools'/'generate'/'generate_resource_transforms.py')],preserve_inputs=[R/SOURCE_FILE])
 D=json.loads((R/SOURCE_FILE).read_text());T=D['transforms'];M=json.loads((R/MANIFEST_FILE).read_text())
 if len(T)!=17:fails.append(f'expected 17 transforms, got {len(T)}')
-if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_schema_version'),M.get('view_abi'))!=('RESOURCE_TRANSFORM_CATALOG_V6',5,4,4,4):fails.append('Transform runtime/schema ABI metadata mismatch')
+if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_schema_version'),M.get('view_abi'))!=('RESOURCE_TRANSFORM_CATALOG_V6',5,5,4,4):fails.append('Transform runtime/schema ABI metadata mismatch')
 if M.get('runtime_min_store_count')!=1 or M.get('input_descriptor_count')!=32 or M.get('output_descriptor_count')!=17:fails.append('Transform runtime capacity/count mismatch')
 loaders=[R/f for f in M['loaders']]
 for src in (p.read_text() for p in loaders):
  code=[z.split('#',1)[0].strip() for z in src.splitlines() if z.split('#',1)[0].strip()]
- if code[0]!='clr db' or code[-1]!='poke 12 1' or any(z.startswith(('put ','putd ','yield','j ')) for z in code):fails.append('Transform loader is not one-shot sparse own-stack producer')
+ if code[0]!='clr db' or code[-1]!='poke 18 1' or any(z.startswith(('put ','putd ','yield','j ')) for z in code):fails.append('Transform loader is not one-shot sparse own-stack producer')
  if re.search(r'^poke\s+\d+\s+0(?:\s|$)',src,re.M):fails.append('Transform loader emits explicit zero poke')
 store_src=(R/M['generic_store_program']).read_text();stores,vms,groups=load_catalog_chain([store_src],[[p.read_text() for p in loaders]],store_ref_base=1030,loader_ref_base=1040);store=stores[0];coord=vms[0].coord
 if store.stack.get(16)!=2 or int(store.stack.get(9,0))!=17 or store.stack.get(27,0)!=0:fails.append('Transform runtime Store publication invalid')

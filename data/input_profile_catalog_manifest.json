@@ -1,7 +1,7 @@
 {
   "catalog_store_abi": 5,
   "catalog_store_magic": 31415968,
-  "catalog_loader_abi": 4,
+  "catalog_loader_abi": 5,
   "catalog_loader_magic": 31415969,
   "catalog_coordinator_abi": 3,
   "catalog_coordinator_magic": 31415970,
@@ -43,15 +43,15 @@
   "loader_items": [
     {
       "item_count": 2,
-      "line_count": 109
+      "line_count": 111
     },
     {
       "item_count": 1,
-      "line_count": 82
+      "line_count": 84
     },
     {
       "item_count": 3,
-      "line_count": 112
+      "line_count": 114
     }
   ],
   "profiles": [

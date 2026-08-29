@@ -2,14 +2,14 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10",
-  "source_sha256": "4988d6c81583a5a9268f64a958cccd4b45fc0435bafa181c26bffa1ecb484c72",
+  "source_sha256": "b234cef7ca4ee4bf1e79d54a7e453dea2558e09b3e97918f488e242a6108361b",
   "identity": {
     "service_id": "ic10.script.catalog.loader.router",
     "implementation_revision": "3.0",
     "deployment_family": "catalog-control-plane",
     "deployment_class": "on-demand",
     "layer": "Catalog control plane",
-    "purpose": "Loader Router ABI3; places whole Loader ABI4 items into live unreserved Store capacity."
+    "purpose": "Loader Router ABI3; places whole Loader ABI5 items into live unreserved Store capacity."
   },
   "device_ports": [
     {
@@ -74,18 +74,18 @@
       "literal_reads": [
         0,
         1,
-        2,
-        3,
-        4,
-        5,
         8,
-        12,
-        13,
-        15
+        9,
+        10,
+        11,
+        14,
+        18,
+        19,
+        21
       ],
       "literal_writes": [
-        13,
-        14
+        19,
+        20
       ],
       "dynamic_read": true,
       "dynamic_write": false,
@@ -98,10 +98,10 @@
         {
           "address": 1,
           "operator": "equals",
-          "value": 4
+          "value": 5
         },
         {
-          "address": 12,
+          "address": 18,
           "operator": "equals",
           "value": 1
         }

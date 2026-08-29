@@ -61,7 +61,7 @@ One Scanner/Resolver pair should serve one active commissioning context at a tim
 
 ## Catalog-backed profile selection
 
-The Scanner still recognizes the stable Generic Input Profile ABI (`31415929`, ABI 1), but current profile definitions no longer each require a dedicated IC stack. All six production/diagnostic definitions fit one runtime-placed Coordinator-managed Store today. The physical node runs `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` and is claimed from the UNCLAIMED pool. Three one-shot sparse Loader ABI4 candidates publish whole-profile data on their own zero-initialized stacks; the Router assigns them and the Store pulls/imports them. `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` selects one `[ContextType, schema]` entry and materializes its descriptors/enum cells into the stable Generic Input Profile ABI.
+The Scanner still recognizes the stable Generic Input Profile ABI (`31415929`, ABI 1), but current profile definitions no longer each require a dedicated IC stack. All six production/diagnostic definitions fit one runtime-placed Coordinator-managed Store today. The physical node runs `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` and is claimed from the UNCLAIMED pool. Three one-shot sparse Loader ABI5 candidates publish whole-profile data on their own zero-initialized stacks; the Router assigns them and the Store pulls/imports them. `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` selects one `[ContextType, schema]` entry and materializes its descriptors/enum cells into the stable Generic Input Profile ABI.
 
 Typical View requests are:
 

@@ -51,7 +51,7 @@
   },
   "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10": {
    "layer": "Catalog control plane",
-   "purpose": "Loader Router ABI3; places whole Loader ABI4 items into live unreserved Store capacity.",
+   "purpose": "Loader Router ABI3; places whole Loader ABI5 items into live unreserved Store capacity.",
    "deployment_family": "catalog-control-plane",
    "deployment_class": "on-demand"
   },
@@ -339,19 +339,19 @@
   },
   "ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10": {
    "layer": "Input metadata",
-   "purpose": "One-shot relocatable Loader ABI4 candidate containing whole self-contained Input Profile items.",
+   "purpose": "One-shot relocatable Loader ABI5 candidate containing whole self-contained Input Profile items.",
    "deployment_family": "input-profile-catalog",
    "deployment_class": "one-shot"
   },
   "ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10": {
    "layer": "Input metadata",
-   "purpose": "One-shot relocatable Loader ABI4 candidate containing whole self-contained Input Profile items.",
+   "purpose": "One-shot relocatable Loader ABI5 candidate containing whole self-contained Input Profile items.",
    "deployment_family": "input-profile-catalog",
    "deployment_class": "one-shot"
   },
   "ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10": {
    "layer": "Input metadata",
-   "purpose": "One-shot relocatable Loader ABI4 candidate containing whole self-contained Input Profile items.",
+   "purpose": "One-shot relocatable Loader ABI5 candidate containing whole self-contained Input Profile items.",
    "deployment_family": "input-profile-catalog",
    "deployment_class": "one-shot"
   },
@@ -951,13 +951,13 @@
   },
   "ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10": {
    "layer": "Resource metadata",
-   "purpose": "One-shot relocatable ENERGY Resource Profile Loader ABI4 candidate.",
+   "purpose": "One-shot relocatable ENERGY Resource Profile Loader ABI5 candidate.",
    "deployment_family": "resource-profile-catalog",
    "deployment_class": "one-shot"
   },
   "ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10": {
    "layer": "Resource metadata",
-   "purpose": "One-shot relocatable POWER Resource Profile Loader ABI4 candidate.",
+   "purpose": "One-shot relocatable POWER Resource Profile Loader ABI5 candidate.",
    "deployment_family": "resource-profile-catalog",
    "deployment_class": "one-shot"
   },
@@ -981,7 +981,7 @@
   },
   "ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10": {
    "layer": "Transformation metadata",
-   "purpose": "One-shot relocatable Transform Loader ABI4 candidate; each transform is a whole self-contained item.",
+   "purpose": "One-shot relocatable Transform Loader ABI5 candidate; each transform is a whole self-contained item.",
    "deployment_family": "transform-catalog",
    "deployment_class": "one-shot"
   },
@@ -1356,21 +1356,21 @@
    "deployment_family": "input-profile-catalog",
    "deployment_class": "one-shot",
    "layer": "Input metadata",
-   "purpose": "One-shot relocatable Loader ABI4 candidate; whole self-contained Input Profile items only."
+   "purpose": "One-shot relocatable Loader ABI5 candidate; whole self-contained Input Profile items only."
   },
   {
    "pattern": "^(?:.*/)?resource_transform_catalog_loader_.*\\.ic10$",
    "deployment_family": "transform-catalog",
    "deployment_class": "one-shot",
    "layer": "Transformation metadata",
-   "purpose": "One-shot relocatable Loader ABI4 candidate; each Transform and all descriptors remain one atomic item."
+   "purpose": "One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item."
   },
   {
    "pattern": "^(?:.*/)?resource_profile_loader_.*\\.ic10$",
    "deployment_family": "resource-profile-catalog",
    "deployment_class": "one-shot",
    "layer": "Resource metadata",
-   "purpose": "One-shot relocatable Resource Profile Loader ABI4 candidate; whole records only, own-stack zero-init."
+   "purpose": "One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init."
   },
   {
    "pattern": "^(?:.*/)?resource_profile_fluid_store_.*\\.ic10$",

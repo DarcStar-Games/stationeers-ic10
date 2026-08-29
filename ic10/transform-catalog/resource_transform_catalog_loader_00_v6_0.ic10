@@ -1,18 +1,20 @@
-# GENERATED Resource Transform loader; relocatable sparse Loader ABI4; whole items.
+# GENERATED Resource Transform loader; relocatable sparse Loader ABI5; whole items.
 clr db
 poke 0 31415969
-poke 1 4
-poke 2 HASH("CatalogSchema.ResourceTransform")
-poke 3 4
-poke 4 HASH("Catalog.ResourceTransforms.Schema4")
-poke 6 HASH("LoaderId:5c99657cc6d73744")
-poke 7 1
-poke 8 5
-poke 9 16
-poke 10 100
-poke 11 HASH("LD4:35ff2ef38bba0ddd")
-poke 16 492
-poke 17 20
+poke 1 5
+poke 2 1
+poke 3 HASH("CatalogSchema.ResourceTransform.v4")
+poke 8 HASH("CatalogSchema.ResourceTransform")
+poke 9 4
+poke 10 HASH("Catalog.ResourceTransforms.Schema4")
+poke 12 HASH("LoaderId:5c99657cc6d73744")
+poke 13 1
+poke 14 5
+poke 15 24
+poke 16 100
+poke 17 HASH("LD4:35ff2ef38bba0ddd")
+poke 24 492
+poke 25 20
 poke 492 HASH("SmeltIron") # Smelt Iron Ore -> Iron Ingot
 poke 493 1
 poke 494 1
@@ -30,8 +32,8 @@ poke 508 2
 poke 509 -1301215609
 poke 510 2
 poke 511 1
-poke 18 472
-poke 19 20
+poke 26 472
+poke 27 20
 poke 472 HASH("SmeltCopper") # Smelt Copper Ore -> Copper Ingot
 poke 473 1
 poke 474 1
@@ -49,8 +51,8 @@ poke 488 2
 poke 489 -404336834
 poke 490 2
 poke 491 1
-poke 20 452
-poke 21 20
+poke 28 452
+poke 29 20
 poke 452 HASH("SmeltGold") # Smelt Gold Ore -> Gold Ingot
 poke 453 1
 poke 454 1
@@ -68,8 +70,8 @@ poke 468 2
 poke 469 226410516
 poke 470 2
 poke 471 1
-poke 22 432
-poke 23 20
+poke 30 432
+poke 31 20
 poke 432 HASH("SmeltLead") # Smelt Lead Ore -> Lead Ingot
 poke 433 1
 poke 434 1
@@ -87,8 +89,8 @@ poke 448 2
 poke 449 2134647745
 poke 450 2
 poke 451 1
-poke 24 412
-poke 25 20
+poke 32 412
+poke 33 20
 poke 412 HASH("SmeltNickel") # Smelt Nickel Ore -> Nickel Ingot
 poke 413 1
 poke 414 1
@@ -106,4 +108,4 @@ poke 428 2
 poke 429 -1406385572
 poke 430 2
 poke 431 1
-poke 12 1 # immutable candidate publication LAST
+poke 18 1 # immutable candidate publication LAST

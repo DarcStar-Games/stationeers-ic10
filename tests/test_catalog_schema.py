@@ -9,11 +9,11 @@ import json,sys
 import framework.catalog_schema as C
 R=_PROJECT_ROOT;fails=[]
 # Common ABI/runtime-placement contract.
-if (C.STORE_MAGIC,C.STORE_ABI,C.LOADER_MAGIC,C.LOADER_ABI,C.COORD_MAGIC,C.COORD_ABI)!=(31415968,5,31415969,4,31415970,3):fails.append('Catalog common ABI constants mismatch')
+if (C.STORE_MAGIC,C.STORE_ABI,C.LOADER_MAGIC,C.LOADER_ABI,C.COORD_MAGIC,C.COORD_ABI)!=(31415968,5,31415969,5,31415970,3):fails.append('Catalog common ABI constants mismatch')
 if (C.STORE_HEADER_CELLS,C.STORE_DIR_WIDTH,C.STORE_TOTAL_CELLS)!=(32,2,512):fails.append('Store ABI5 item-directory geometry mismatch')
 for f in ('resource_profile_catalog_manifest.json','input_profile_catalog_manifest.json','resource_transform_catalog_manifest.json'):
  m=json.loads((R/'data'/f).read_text())
- if not m.get('runtime_store_placement') or m.get('store_model')!='generic_dynamic_item_heap' or m.get('catalog_store_abi')!=5 or m.get('catalog_loader_abi')!=4:fails.append(f+': not on runtime-placement ABI')
+ if not m.get('runtime_store_placement') or m.get('store_model')!='generic_dynamic_item_heap' or m.get('catalog_store_abi')!=5 or m.get('catalog_loader_abi')!=5:fails.append(f+': not on runtime-placement ABI')
 # A Loader item is relocatable: producer leaves runtime assignment fields zero.
 for p in list(R.glob('*_loader_*_v4_0.ic10'))+list(R.glob('*_loader_*_v6_0.ic10')):
  txt=p.read_text()
@@ -66,6 +66,6 @@ if core.stack.get(7,0)%2:fails.append('catalog topology seqlock left odd after m
 if fails:
  print('Catalog runtime placement / item migration: FAIL');[print(' -',x) for x in fails];sys.exit(1)
 print('Catalog runtime placement / item migration: PASS')
-print(' - Store ABI5 uses a runtime item directory + downward payload heap; Loader ABI4 carries relocatable whole items')
+print(' - Store ABI5 uses a runtime item directory + downward payload heap; Loader ABI5 carries relocatable whole items')
 print(' - migration reserves destination capacity, publishes whole items, pops source heap safely, then permits empty Store retirement')
 print(' - compaction test moves two complete items from a DRAINING Store into compatible free capacity without data loss')

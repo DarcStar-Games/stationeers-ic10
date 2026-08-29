@@ -1,18 +1,20 @@
-# GENERATED Resource Transform loader; relocatable sparse Loader ABI4; whole items.
+# GENERATED Resource Transform loader; relocatable sparse Loader ABI5; whole items.
 clr db
 poke 0 31415969
-poke 1 4
-poke 2 HASH("CatalogSchema.ResourceTransform")
-poke 3 4
-poke 4 HASH("Catalog.ResourceTransforms.Schema4")
-poke 6 HASH("LoaderId:08860f32630b6b38")
-poke 7 1
-poke 8 1
-poke 9 16
-poke 10 28
-poke 11 HASH("LD4:8b2fc4efc3f68cfb")
-poke 16 484
-poke 17 28
+poke 1 5
+poke 2 1
+poke 3 HASH("CatalogSchema.ResourceTransform.v4")
+poke 8 HASH("CatalogSchema.ResourceTransform")
+poke 9 4
+poke 10 HASH("Catalog.ResourceTransforms.Schema4")
+poke 12 HASH("LoaderId:08860f32630b6b38")
+poke 13 1
+poke 14 1
+poke 15 24
+poke 16 28
+poke 17 HASH("LD4:8b2fc4efc3f68cfb")
+poke 24 484
+poke 25 28
 poke 484 HASH("AlloyWaspaloy") # Alloy Waspaloy
 poke 485 4
 poke 486 3
@@ -38,4 +40,4 @@ poke 508 2
 poke 509 156348098
 poke 510 2
 poke 511 1
-poke 12 1 # immutable candidate publication LAST
+poke 18 1 # immutable candidate publication LAST

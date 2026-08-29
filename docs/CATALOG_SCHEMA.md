@@ -140,7 +140,7 @@ Recipe storage remains partitioned by printer family. Runtime capacity may add a
 
 `ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10` resolves exact RecipeHash execution metadata. `ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10` remains the compact family/capability/ordinal Lookup ABI3 surface.
 
-## Loader ABI4 item directory
+## Loader ABI5 item directory
 
 A Loader has its own item directory beginning at S16:
 

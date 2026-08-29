@@ -32,7 +32,7 @@ Current services:
                   Generic Store ABI5 nodes
                              ^
                              |
-                 relocatable Loader ABI4 items
+                 relocatable Loader ABI5 items
 ```
 
 ## One global claimant
@@ -98,7 +98,7 @@ The request contains no generator-defined physical ReferenceId.
 
 ## Loader Router ABI3
 
-The Router discovers Ready Loader ABI4 producers. For the Loader's current `S15` item index it reads that item's size from the Loader item directory and computes:
+The Router discovers Ready Loader ABI5 producers. For the Loader's current `S15` item index it reads that item's size from the Loader item directory and computes:
 
 ```text
 required cells = ItemCellCount + 2

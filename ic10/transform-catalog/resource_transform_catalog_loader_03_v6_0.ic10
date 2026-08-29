@@ -1,18 +1,20 @@
-# GENERATED Resource Transform loader; relocatable sparse Loader ABI4; whole items.
+# GENERATED Resource Transform loader; relocatable sparse Loader ABI5; whole items.
 clr db
 poke 0 31415969
-poke 1 4
-poke 2 HASH("CatalogSchema.ResourceTransform")
-poke 3 4
-poke 4 HASH("Catalog.ResourceTransforms.Schema4")
-poke 6 HASH("LoaderId:426e6b6d46223a54")
-poke 7 1
-poke 8 3
-poke 9 16
-poke 10 84
-poke 11 HASH("LD4:db1bed9b5a0cbe0c")
-poke 16 484
-poke 17 28
+poke 1 5
+poke 2 1
+poke 3 HASH("CatalogSchema.ResourceTransform.v4")
+poke 8 HASH("CatalogSchema.ResourceTransform")
+poke 9 4
+poke 10 HASH("Catalog.ResourceTransforms.Schema4")
+poke 12 HASH("LoaderId:426e6b6d46223a54")
+poke 13 1
+poke 14 3
+poke 15 24
+poke 16 84
+poke 17 HASH("LD4:db1bed9b5a0cbe0c")
+poke 24 484
+poke 25 28
 poke 484 HASH("AlloyHastelloy") # Alloy Hastelloy
 poke 485 4
 poke 486 3
@@ -38,8 +40,8 @@ poke 508 2
 poke 509 1579842814
 poke 510 2
 poke 511 1
-poke 18 456
-poke 19 28
+poke 26 456
+poke 27 28
 poke 456 HASH("AlloyInconel") # Alloy Inconel
 poke 457 4
 poke 458 3
@@ -65,8 +67,8 @@ poke 480 2
 poke 481 -787796599
 poke 482 2
 poke 483 1
-poke 20 428
-poke 21 28
+poke 28 428
+poke 29 28
 poke 428 HASH("AlloyStellite") # Alloy Stellite
 poke 429 4
 poke 430 3
@@ -92,4 +94,4 @@ poke 452 2
 poke 453 -1897868623
 poke 454 2
 poke 455 1
-poke 12 1 # immutable candidate publication LAST
+poke 18 1 # immutable candidate publication LAST

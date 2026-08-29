@@ -1,18 +1,20 @@
-# GENERATED Input Profile loader; relocatable sparse Loader ABI4; whole items.
+# GENERATED Input Profile loader; relocatable sparse Loader ABI5; whole items.
 clr db
 poke 0 31415969
-poke 1 4
-poke 2 HASH("CatalogSchema.InputProfile")
-poke 3 3
-poke 4 HASH("Catalog.InputProfiles.Schema3")
-poke 6 HASH("LoaderId:1e9fe4e4e5f472a5")
-poke 7 1
-poke 8 3
-poke 9 16
-poke 10 120
-poke 11 HASH("LD4:c4ebb794940cc567")
-poke 16 460
-poke 17 52
+poke 1 5
+poke 2 1
+poke 3 HASH("CatalogSchema.InputProfile.v3")
+poke 8 HASH("CatalogSchema.InputProfile")
+poke 9 3
+poke 10 HASH("Catalog.InputProfiles.Schema3")
+poke 12 HASH("LoaderId:1e9fe4e4e5f472a5")
+poke 13 1
+poke 14 3
+poke 15 24
+poke 16 120
+poke 17 HASH("LD4:c4ebb794940cc567")
+poke 24 460
+poke 25 52
 poke 460 HASH("ControllerPhasePressure") # Phase Pressure Config
 poke 461 1
 poke 462 9
@@ -53,8 +55,8 @@ poke 506 160
 poke 507 LogicType.Setting
 poke 508 161
 poke 509 LogicType.PressureSetting
-poke 18 412
-poke 19 48
+poke 26 412
+poke 27 48
 poke 412 HASH("ControllerPressureDomain") # Pressure Domain Config
 poke 413 1
 poke 414 8
@@ -91,8 +93,8 @@ poke 454 160
 poke 455 LogicType.Setting
 poke 456 161
 poke 457 LogicType.PressureSetting
-poke 20 392
-poke 21 20
+poke 28 392
+poke 29 20
 poke 392 HASH("ControllerPressureTransfer") # Pressure Transfer Config
 poke 393 1
 poke 394 4
@@ -109,4 +111,4 @@ poke 408 1
 poke 409 0.1
 poke 410 100
 poke 411 999
-poke 12 1 # immutable candidate publication LAST
+poke 18 1 # immutable candidate publication LAST
