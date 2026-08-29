@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10",
-  "source_sha256": "ab9f207187961dd4914d5a0a7946026a8eac2a59d6e3ca4d627a4f2dbaa6585d",
+  "source_sha256": "fd14ae4743785762c25f6120e2360a5885368c11013c2ff7619cb58e5fa801ef",
   "identity": {
     "service_id": "ic10.script.transform.candidate.readiness",
     "implementation_revision": "1.0",
@@ -46,16 +46,16 @@
       "transport": "reference-id",
       "reference": "r10",
       "literal_reads": [
-        2,
-        6,
-        7
+        8,
+        12,
+        13
       ],
       "literal_writes": [],
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [
         {
-          "address": 6,
+          "address": 12,
           "operator": "equals",
           "value": 1
         }
@@ -79,17 +79,17 @@
       "transport": "reference-id",
       "reference": "r12",
       "literal_reads": [
-        3,
-        4,
-        5,
-        6,
         33,
         35,
         68,
-        69
+        69,
+        71,
+        72,
+        73,
+        74
       ],
       "literal_writes": [
-        2
+        70
       ],
       "dynamic_read": false,
       "dynamic_write": false,

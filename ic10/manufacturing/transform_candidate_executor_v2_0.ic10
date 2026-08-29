@@ -46,20 +46,18 @@ poke 20 0
 j Loop
 Launch:
 get r1 db 21
-get r14 db 14
-putd r1 8 r14
 get r6 db 26
-putd r1 2 r6
-putd r1 3 r15
+putd r1 8 r6
+putd r1 16 r15
 poke 11 3
 poke 20 2
 j Loop
 Run:
 get r1 db 21
 get r15 db 8
-getd r0 r1 6
+getd r0 r1 21
 bne r0 r15 Loop
-getd r0 r1 5
+getd r0 r1 20
 bltz r0 Fault
 beq r0 1 Complete
 beq r0 4 Running

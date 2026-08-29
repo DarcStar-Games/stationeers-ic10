@@ -28,7 +28,7 @@ need('ic10/material-transform/material_transform_admission_v1_0.ic10','l r0 d1 P
 # Transform Profile View ABI4 publishes resolved request identity/status.
 need('ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10','poke 1 4','poke 68 r10','poke 69 1','poke 71 -2','poke 71 -3')
 # Generation-driven readiness replaces the old arbitrary 16-tick executor wait.
-need('ic10/manufacturing/transform_candidate_readiness_v1_0.ic10','poke 0 31415998','poke 1 1','getd r0 r12 68','bne r0 r2 Loop','getd r7 r9 9','beq r7 r0 Loop','getd r7 r10 7','beq r7 r0 Loop','move r0 -2','move r0 -3','move r0 -4')
+need('ic10/manufacturing/transform_candidate_readiness_v1_0.ic10','poke 0 31415998','poke 1 1','getd r0 r12 68','bne r0 r2 Loop','getd r7 r9 9','beq r7 r0 Loop','getd r7 r10 13','beq r7 r0 Loop','move r0 -2','move r0 -3','move r0 -4')
 if 'blt r' in (R/'ic10/manufacturing/transform_candidate_executor_v2_0.ic10').read_text() and ' 16 ' in (R/'ic10/manufacturing/transform_candidate_executor_v2_0.ic10').read_text(): fail('Transform executor retains fixed 16-tick timeout')
 need('ic10/manufacturing/transform_candidate_executor_v2_0.ic10','poke 1 2','put d0 8 r15','get r0 d0 10','bne r0 r15 Loop')
 # Dynamic generic candidate selector: one physical instance can serve either schema.

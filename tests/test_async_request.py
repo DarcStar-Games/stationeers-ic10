@@ -12,9 +12,9 @@ def ck(x,m):
 def src(n):return (R/n).read_text()
 
 # Transform readiness must ignore an old profile/admission/resolver publication indefinitely.
-profile=Device(501,stack={2:111,3:2,4:2,5:1,6:5,33:9001,35:2,68:111,69:1},props={'ReferenceId':501})
-adm=Device(502,stack={13:501,9:7,8:1,2:111},props={'ReferenceId':502})
-res=Device(503,stack={7:9,6:1,2:111},props={'ReferenceId':503})
+profile=Device(501,stack={70:111,71:2,72:2,73:1,74:5,33:9001,35:2,68:111,69:1},props={'ReferenceId':501})
+adm=Device(502,stack={13:501,9:7,8:1,14:111},props={'ReferenceId':502})
+res=Device(503,stack={13:9,12:1,8:111},props={'ReferenceId':503})
 rpv=Device(506,stack={},props={'ReferenceId':506});ep=Device(505,stack={14:506},props={'ReferenceId':505})
 out=Device(504,stack={2:505,7:100},props={'ReferenceId':504})
 runtime=Device(500,stack={17:502,18:503,15:504},props={'ReferenceId':500})
@@ -24,15 +24,15 @@ ready.stack.update({11:500,12:222,13:2,14:2,15:1,16:1,8:44})
 ready.screws.update({'rt':runtime,'profile':profile,'adm':adm,'res':res,'out':out,'ep':ep,'rpv':rpv})
 ready.run(30)
 ck(ready.stack.get(10)!=44,'stale transform profile completed a new readiness request')
-profile.stack.update({2:222,3:2,4:2,5:1,6:6,33:9001,35:2,68:222,69:1})
-ready.run(2);adm.stack.update({9:8,8:1,2:222});ready.run(2)
+profile.stack.update({70:222,71:2,72:2,73:1,74:6,33:9001,35:2,68:222,69:1})
+ready.run(2);adm.stack.update({9:8,8:1,14:222});ready.run(2)
 # Delay resolver beyond the old 16-tick timeout; request must remain pending, not fail.
 ready.run(24);ck(ready.stack.get(10)!=44,'transform readiness retained a fixed timeout')
-res.stack.update({7:10,6:1,2:222});ready.run(2)
+res.stack.update({13:10,12:1,8:222});ready.run(2)
 ck(ready.stack.get(10)==44 and ready.stack.get(9)==1,'generation-qualified transform readiness did not complete')
 
 # Admission and resolver failures map to processor/resource rather than timing out ambiguously.
-ready.stack.update({12:333,8:45});profile.stack.update({2:333,6:7,68:333,69:1});ready.run(2);adm.stack.update({9:9,8:-1,2:333});ready.run(2)
+ready.stack.update({12:333,8:45});profile.stack.update({70:333,74:7,68:333,69:1});ready.run(2);adm.stack.update({9:9,8:-1,14:333});ready.run(2)
 ck(ready.stack.get(10)==45 and ready.stack.get(9)==-2,'Admission rejection was not classified WAIT_PROCESSOR')
 
 # LIVE_CURRENT invalid requests must still publish their accepted identity, or callers hang forever.

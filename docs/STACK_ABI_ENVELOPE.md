@@ -261,7 +261,19 @@ A reference-addressed write (`putd`/`getd` through a `ReferenceId`) is not a por
 and does not appear in that list at all. Those must be found by reading the
 program: a launcher that writes `putd ref 2` is writing some other service's header
 once that service migrates, and nothing in the contract layer records which service
-it holds a reference to.
+it holds a reference to. Resolving one means naming what each reference register
+holds -- the manufacturing launchers reach the Transform Runtime, and through the
+Runtime's published reference cells the Admission, Link Resolver, and Transform
+Profile View behind it -- and then applying each migrated peer's own cell mapping.
+
+One of those writes had no reader at all: the Transform Candidate Executor stamped
+the owning JobId into a Runtime cell the Runtime never read. That was harmless
+while the cell was unused and became a corrupt request the moment the migration
+moved the Runtime's TransformType onto it. **A service's stack belongs to that
+service.** A peer may write cells the owner declares and reads; an annotation on a
+cell the owner ignores is invisible to the contract layer, survives no migration,
+and belongs on the writer's own stack -- where, in this case, the JobId and the
+Runtime reference were both already published.
 
 A service ABI changes only when its semantic contract changes; a schema version
 only when that schema changes. A future incompatible header uses a new exact
