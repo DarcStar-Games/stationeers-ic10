@@ -44,13 +44,11 @@ def tracked_files(exclude=()):
     if not files: raise RuntimeError('release inventory swept to empty')
     return sorted(files,key=lambda p:p.relative_to(ROOT).as_posix())
 
-def write_archive_manifest(exclude=()):
-    files=tracked_files(exclude)
-    (ROOT/'ARCHIVE_MANIFEST.sha256').write_text(''.join(f'{sha(p)}  {p.relative_to(ROOT).as_posix()}\n' for p in files))
-    return len(files)
+def archive_manifest(files):
+    return ''.join(f'{sha(p)}  {p.relative_to(ROOT).as_posix()}\n' for p in files)
 
 def verify_manifest(manifest):
-    for line in manifest.read_text().splitlines():
+    for line in manifest.splitlines():
         digest,rel=line.split('  ',1); p=ROOT/rel
         if not p.exists() or sha(p)!=digest: raise RuntimeError(f'manifest mismatch: {rel}')
 
@@ -67,16 +65,16 @@ def main():
     subprocess.run([sys.executable,str(ROOT/'tools'/'generate'/'generate_script_contracts.py')],cwd=ROOT,check=True)
     subprocess.run([sys.executable,str(ROOT/'tools'/'run_validation.py'),'--resume'],cwd=ROOT,check=True)
     # No source/generated-doc mutation is allowed after validation except release evidence/manifests.
-    write_deployment_baseline(); count=write_archive_manifest({out}); verify_manifest(ROOT/'ARCHIVE_MANIFEST.sha256')
-    files=tracked_files({out})
+    write_deployment_baseline(); files=tracked_files({out}); manifest=archive_manifest(files); verify_manifest(manifest)
     with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED) as z:
-        for p in files+[ROOT/'ARCHIVE_MANIFEST.sha256']:
+        for p in files:
             z.write(p,p.relative_to(ROOT).as_posix())
+        z.writestr('ARCHIVE_MANIFEST.sha256',manifest)
     with zipfile.ZipFile(out) as z:
         bad=z.testzip()
         if bad: raise RuntimeError(f'ZIP integrity failure: {bad}')
     print(f'Built {out}')
-    print(f'Tracked files: {count}')
+    print(f'Tracked files: {len(files)}')
     print(f'Archive SHA-256: {sha(out)}')
 
 if __name__=='__main__': main()

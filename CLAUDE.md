@@ -186,7 +186,8 @@ not ABIs. Use `data/source_manifest.json`, `docs/SCRIPT_INDEX.md`, and `USER_DEP
 | `docs/SCRIPT_INDEX.md` | `tools/generate/generate_source_catalog.py` | `ic10/` + `data/source_manifest.json` |
 | `<!-- FAMILY_PROGRAMS:… -->` blocks in `USER_DEPLOYMENT_GUIDE.md` | `tools/generate/update_user_deployment_inventory.py` | `data/source_manifest.json` |
 | `<!-- PUBLISHED_HEADERS -->` block in `docs/ABI_REFERENCE.md` | `tools/generate/update_magic_registry.py` | `data/script_protocol_headers.json` |
-| `validation/evidence/`, `VALIDATION_SUMMARY.txt`, `validation/FULL_VALIDATION_RUN.txt`, `*.sha256` | `tools/run_validation.py` / `tools/build_release.py` | — |
+| `validation/evidence/`, `VALIDATION_SUMMARY.txt`, `validation/FULL_VALIDATION_RUN.txt`, `DEPLOYMENT_BASELINE.sha256` | `tools/run_validation.py` / `tools/build_release.py` | — |
+| `ARCHIVE_MANIFEST.sha256` (inside the release ZIP only) | `tools/build_release.py` | — |
 
 Recipe-catalog loaders are generated into a temp directory for fixtures only and are never shipped;
 `ic10/recipe-catalog/` holds only the hand-maintained Lookup and Execution Profile View.
