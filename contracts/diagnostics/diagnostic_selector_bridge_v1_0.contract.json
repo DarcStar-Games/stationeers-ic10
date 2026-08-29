@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10",
-  "source_sha256": "7750f5c0915b7a05c8eb0905456db4bce4ec5a3b45466b298244b9233f52c692",
+  "source_sha256": "14157a63be53a679a4002dc08d31a1b64234e544f967517c3667852688b1b55e",
   "identity": {
     "service_id": "ic10.script.diagnostic.selector.bridge",
     "implementation_revision": "1.0",
@@ -74,7 +74,7 @@
       "literal_reads": [
         0,
         1,
-        7,
+        10,
         16,
         17,
         18,
@@ -96,7 +96,7 @@
           "value": 1
         },
         {
-          "address": 7,
+          "address": 10,
           "operator": "equals",
           "value": 1
         }
@@ -107,14 +107,15 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3,
-      4
+      8,
+      9,
+      10
     ],
     "literal_writes": [
       0,
       1,
-      5
+      2,
+      11
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -154,12 +155,13 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
-        ]
+          "self-write"
+        ],
+        "const": 0
       },
       {
-        "address": 3,
-        "name": "S3",
+        "address": 8,
+        "name": "S8",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -167,8 +169,8 @@
         ]
       },
       {
-        "address": 4,
-        "name": "S4",
+        "address": 9,
+        "name": "S9",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -176,8 +178,17 @@
         ]
       },
       {
-        "address": 5,
-        "name": "S5",
+        "address": 10,
+        "name": "S10",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 11,
+        "name": "S11",
         "value_type": "integer",
         "semantic_source": "source",
         "access": [
@@ -198,7 +209,7 @@
     "publication_rules": [
       {
         "kind": "commit-last",
-        "address": 5,
+        "address": 11,
         "description": "last observed console-request generation",
         "source": "verified-inline-order"
       }

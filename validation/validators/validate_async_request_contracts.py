@@ -50,12 +50,12 @@ need('ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10','putd controllerSel
 
 # Diagnostic selectors are TERMINAL_RESPONSE producers. Result/status precedes handled token(s).
 need('ic10/controller-discovery/controller_selector_v3_0.ic10','poke 8 1','poke 13 r4 # TERMINAL_RESPONSE token LAST');before('ic10/controller-discovery/controller_selector_v3_0.ic10','poke 8 1','poke 13 r4 # TERMINAL_RESPONSE token LAST')
-need('ic10/diagnostics/console_selector_v1_1.ic10','poke 5 1','poke 14 r15 # handled desired token after complete result/status','poke 11 r4 # handled advance token after complete result/status')
-before('ic10/diagnostics/console_selector_v1_1.ic10','poke 5 1','poke 14 r15 # handled desired token after complete result/status');before('ic10/diagnostics/console_selector_v1_1.ic10','poke 5 1','poke 11 r4 # handled advance token after complete result/status')
+need('ic10/diagnostics/console_selector_v1_1.ic10','poke 17 1','poke 14 r15 # handled desired token after complete result/status','poke 11 r4 # handled advance token after complete result/status')
+before('ic10/diagnostics/console_selector_v1_1.ic10','poke 17 1','poke 14 r15 # handled desired token after complete result/status');before('ic10/diagnostics/console_selector_v1_1.ic10','poke 17 1','poke 11 r4 # handled advance token after complete result/status')
 # Mapping Editor must prove controller desired, console desired, and console auto-advance requests are settled before status/result reads.
-need('ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10','getd r8 input 24','getd r0 controllerSelector 13','getd r8 input 25','getd r0 consoleSelector 14','getd r8 consoleSelector 10','getd r0 consoleSelector 11','getd r0 consoleSelector 5','getd r0 controllerSelector 8')
+need('ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10','getd r8 input 24','getd r0 controllerSelector 13','getd r8 input 25','getd r0 consoleSelector 14','getd r8 consoleSelector 10','getd r0 consoleSelector 11','getd r0 consoleSelector 17','getd r0 controllerSelector 8')
 s=text('ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10')
-for a,b in [('getd r0 controllerSelector 13','getd r0 controllerSelector 8'),('getd r0 consoleSelector 14','getd r0 consoleSelector 5'),('getd r0 consoleSelector 11','getd display consoleSelector 4')]:
+for a,b in [('getd r0 controllerSelector 13','getd r0 controllerSelector 8'),('getd r0 consoleSelector 14','getd r0 consoleSelector 17'),('getd r0 consoleSelector 11','getd display consoleSelector 16')]:
  if s.find(a)>=s.find(b):fails.append('ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10: stale selector result can be consumed before '+a)
 
 # Existing pressure request/response services are formally TERMINAL_RESPONSE.

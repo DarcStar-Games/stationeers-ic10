@@ -12,9 +12,10 @@ poke 24 1 # initial Controller Selector request generation
 poke 25 1 # initial Console desired-request generation
 poke 0 17320511
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r2 db 3
+get r2 db 9
 blez r2 Invalid
 getd r0 r2 0
 bne r0 31415929 Invalid
@@ -28,7 +29,7 @@ getd r0 r2 4
 bne r0 7 Invalid
 getd r14 r2 5 # capture Profile generation before resolution
 blez r14 Invalid
-get resolver db 2
+get resolver db 8
 blez resolver Invalid
 getd r0 resolver 0
 bne r0 31415931 Invalid
@@ -47,6 +48,7 @@ getd r0 r2 5
 bne r0 r14 Loop
 bnan r9 Invalid
 round r9 r9 # diagnostic controls are discrete even through Memory fallback
+blt r8 1 Invalid # a control id below 1 would address state under S16
 beq r8 7 Dispatch
 poke 22 0
 Dispatch:
@@ -102,11 +104,11 @@ add r0 r0 1
 poke 24 r0
 j ra
 Ready:
-poke 7 1
+poke 10 1
 s db Setting r9
 j Loop
 Invalid:
-poke 7 -1
+poke 10 -1
 move r0 nan
 s db Setting r0
 j Loop

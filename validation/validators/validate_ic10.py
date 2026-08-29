@@ -15,6 +15,9 @@ LIMIT_BYTES = 4096
 MAINTAINABILITY_LINES = 120
 # Reviewed spends of the deliberate 120..128 margin. The hard limit still applies.
 SOFT_LIMIT_EXEMPTIONS = {
+    "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10":
+        "operator-facing editor wiring six diagnostic devices; publishes the common header"
+        " with its payload relocated above it",
     "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10":
         "publishes the common S0 header; its Generic Telemetry block stays at S96",
     "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10":

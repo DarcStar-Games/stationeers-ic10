@@ -3,22 +3,23 @@
 alias registry r1
 poke 0 17320509
 poke 1 1
+poke 2 0
 Loop:
 yield
-get registry db 2
+get registry db 9
 blez registry NoRegistry
 getd r0 registry 0
 bne r0 14142136 NoRegistry
 getd r0 registry 1
 bne r0 1 NoRegistry
-getd r8 registry 2
+getd r8 registry 8
 add r12 r8 3
 getd r9 registry r12
 add r12 r8 5
 getd r10 registry r12
 blez r10 NoConsole
 # Start from persistent selection, then apply any new desired request and advance.
-get r13 db 3
+get r13 db 15
 select r13 r13 r13 1
 get r15 db 13
 get r6 db 14
@@ -42,7 +43,7 @@ add r12 r12 r0
 add r12 r12 1
 getd r14 registry r12
 # Reject concurrent Registry or request changes before identity publication.
-getd r0 registry 2
+getd r0 registry 8
 bne r0 r8 Updating
 add r12 r8 3
 getd r0 registry r12
@@ -60,15 +61,15 @@ sd r0 On 1
 Blink:
 poke 8 r14
 bdnvs r14 On Publish
-get r0 db 6
+get r0 db 18
 seq r0 r0 0
-poke 6 r0
+poke 18 r0
 sd r14 On r0
 Publish:
-poke 3 r13
-poke 4 r14
-poke 7 r9
-poke 5 1
+poke 15 r13
+poke 16 r14
+poke 19 r9
+poke 17 1
 poke 14 r15 # handled desired token after complete result/status
 poke 11 r4 # handled advance token after complete result/status
 s db Setting r13
@@ -87,6 +88,6 @@ blez r12 PublishStatus
 bdnvs r12 On PublishStatus
 sd r12 On 1
 PublishStatus:
-poke 5 r0
+poke 17 r0
 s db Setting r0
 j Loop

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10",
-  "source_sha256": "418bcda53b357f515a0b3e7c1f267aaf35c6ebdcd31e6a1b3310dba740266c9c",
+  "source_sha256": "ff43b73ca689665ff47e2122fc3133da30fa0c02a373a52177f42e5ae4e814a2",
   "identity": {
     "service_id": "ic10.script.diagnostic.input.bridge",
     "implementation_revision": "1.0",
@@ -96,8 +96,8 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3,
+      8,
+      9,
       18,
       22,
       23,
@@ -107,7 +107,8 @@
     "literal_writes": [
       0,
       1,
-      7,
+      2,
+      10,
       16,
       17,
       18,
@@ -165,12 +166,12 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
+          "self-write"
         ]
       },
       {
-        "address": 3,
-        "name": "S3",
+        "address": 8,
+        "name": "S8",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -178,8 +179,17 @@
         ]
       },
       {
-        "address": 7,
-        "name": "S7",
+        "address": 9,
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 10,
+        "name": "S10",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

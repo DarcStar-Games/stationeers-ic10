@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/diagnostic_renderer_v1_1.ic10",
-  "source_sha256": "4869a522be90c15079e3f68ee6fe0b07158fa6b39d5978b9052024682335f705",
+  "source_sha256": "dd598915617cef3821b9ede3c2374851c1a292a47dfbebe2604d507f1755dcc0",
   "identity": {
     "service_id": "ic10.script.diagnostic.renderer",
     "implementation_revision": "1.1",
@@ -47,12 +47,13 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3
+      8,
+      9
     ],
     "literal_writes": [
       0,
-      1
+      1,
+      2
     ],
     "dynamic_read": true,
     "dynamic_write": false,
@@ -97,12 +98,22 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
+          "self-write"
+        ],
+        "const": 0
+      },
+      {
+        "address": 8,
+        "name": "S8",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
           "self-read"
         ]
       },
       {
-        "address": 3,
-        "name": "S3",
+        "address": 9,
+        "name": "S9",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

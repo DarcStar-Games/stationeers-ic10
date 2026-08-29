@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10",
-  "source_sha256": "f4cc85f69ed75ad3a65a660cf28baaa47d6c3fc8ceb0115aa4faf6ceba8c0af3",
+  "source_sha256": "1652f664ceab7fa5361985059067f89dfc595dbea56f148b03e4afa5cfcfc7af",
   "identity": {
     "service_id": "ic10.script.diagnostic.mapping.editor",
     "implementation_revision": "1.2",
@@ -17,11 +17,11 @@
       "transport": "reference-id",
       "reference": "consoleSelector",
       "literal_reads": [
-        4,
-        5,
         10,
         11,
-        14
+        14,
+        16,
+        17
       ],
       "literal_writes": [
         10
@@ -30,7 +30,7 @@
       "dynamic_write": false,
       "constraints": [
         {
-          "address": 5,
+          "address": 17,
           "operator": "equals",
           "value": 1
         }
@@ -63,7 +63,7 @@
       "literal_reads": [
         0,
         1,
-        7,
+        10,
         19,
         20,
         21,
@@ -86,7 +86,7 @@
           "value": 1
         },
         {
-          "address": 7,
+          "address": 10,
           "operator": "equals",
           "value": 1
         }
@@ -100,7 +100,7 @@
         2
       ],
       "literal_writes": [
-        2
+        8
       ],
       "dynamic_read": true,
       "dynamic_write": true,
@@ -124,17 +124,18 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3,
-      4,
-      5,
-      7
+      8,
+      9,
+      10,
+      11,
+      13
     ],
     "literal_writes": [
       0,
       1,
-      5,
-      6
+      2,
+      11,
+      12
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -174,12 +175,13 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
-        ]
+          "self-write"
+        ],
+        "const": 0
       },
       {
-        "address": 3,
-        "name": "S3",
+        "address": 8,
+        "name": "S8",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -187,8 +189,8 @@
         ]
       },
       {
-        "address": 4,
-        "name": "S4",
+        "address": 9,
+        "name": "S9",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -196,8 +198,17 @@
         ]
       },
       {
-        "address": 5,
-        "name": "S5",
+        "address": 10,
+        "name": "S10",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 11,
+        "name": "S11",
         "value_type": "number",
         "semantic_source": "source",
         "access": [
@@ -207,8 +218,8 @@
         "description": "consume commit only after mapping + advance request are complete"
       },
       {
-        "address": 6,
-        "name": "S6",
+        "address": 12,
+        "name": "S12",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -216,8 +227,8 @@
         ]
       },
       {
-        "address": 7,
-        "name": "S7",
+        "address": 13,
+        "name": "S13",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

@@ -42,13 +42,13 @@ PASS ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10 lines= 96 
 PASS ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10 lines=120 headroom= 8 max=23 CRLF=1594 comments= 0
 PASS ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10 lines=115 headroom=13 max=70 CRLF=1517 comments= 1
 PASS ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10 lines= 91 headroom=37 max=59 CRLF=1210 comments= 1
-PASS ic10/diagnostics/console_registry_v1_1.ic10 lines= 84 headroom=44 max=82 CRLF=1866 comments=12
-PASS ic10/diagnostics/console_selector_v1_1.ic10 lines= 92 headroom=36 max=86 CRLF=1939 comments= 8
-PASS ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10 lines= 46 headroom=82 max=79 CRLF=1245 comments=13
-PASS ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10 lines=112 headroom=16 max=75 CRLF=2180 comments=10
-PASS ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10 lines=120 headroom= 8 max=88 CRLF=2422 comments= 4
-PASS ic10/diagnostics/diagnostic_renderer_v1_1.ic10 lines= 66 headroom=62 max=76 CRLF=1727 comments=15
-PASS ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10 lines= 46 headroom=82 max=79 CRLF=1174 comments= 4
+PASS ic10/diagnostics/console_registry_v1_1.ic10 lines= 85 headroom=43 max=82 CRLF=1883 comments=12
+PASS ic10/diagnostics/console_selector_v1_1.ic10 lines= 93 headroom=35 max=86 CRLF=1957 comments= 8
+PASS ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10 lines= 47 headroom=81 max=79 CRLF=1257 comments=13
+PASS ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10 lines=114 headroom=14 max=75 CRLF=2263 comments=11
+PASS ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10 lines=121 headroom= 7 max=87 CRLF=2436 comments= 4
+PASS ic10/diagnostics/diagnostic_renderer_v1_1.ic10 lines= 67 headroom=61 max=76 CRLF=1737 comments=15
+PASS ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10 lines= 47 headroom=81 max=79 CRLF=1187 comments= 4
 PASS ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10 lines=107 headroom=21 max=79 CRLF=1500 comments= 1
 PASS ic10/directory-core/generic_registry_directory_host_v2_0.ic10 lines=116 headroom=12 max=83 CRLF=1651 comments= 1
 PASS ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10 lines=120 headroom= 8 max=20 CRLF=1570 comments= 0
