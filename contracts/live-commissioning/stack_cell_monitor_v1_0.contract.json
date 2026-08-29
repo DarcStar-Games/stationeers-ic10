@@ -2,14 +2,14 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10",
-  "source_sha256": "b771adc664d7fa3c41de1ce851163581756766a3402368c5e055f0fe3ad3d93d",
+  "source_sha256": "7e13bc7de04f0f1e86280788d42bb1a64da4ba9ac9665e507992da2c335127f6",
   "identity": {
     "service_id": "ic10.script.stack.cell.monitor",
     "implementation_revision": "1.0",
     "deployment_family": "live-commissioning",
     "deployment_class": "on-demand",
     "layer": "On-demand commissioning",
-    "purpose": "Read-only target IC stack-cell monitor with a Logic Memory address selector and visible value mirror."
+    "purpose": "Read-only target IC stack-cell probe with a Logic Memory address selector and visible value mirror."
   },
   "device_ports": [
     {
@@ -138,16 +138,18 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      6
+      7
     ],
     "literal_writes": [
       0,
       1,
       2,
-      3,
-      4,
       5,
-      6
+      7,
+      8,
+      9,
+      10,
+      11
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -188,25 +190,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
+        ],
+        "const": 20
       },
       {
         "address": 5,
@@ -218,7 +203,7 @@
         ]
       },
       {
-        "address": 6,
+        "address": 7,
         "name": "CompleteSampleGenerationPublishes",
         "value_type": "integer",
         "semantic_source": "source",
@@ -227,6 +212,42 @@
           "self-write"
         ],
         "description": "complete sample generation publishes LAST"
+      },
+      {
+        "address": 8,
+        "name": "S8",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 9,
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 10,
+        "name": "S10",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 11,
+        "name": "S11",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
       }
     ],
     "headers": [
@@ -241,7 +262,7 @@
     "publication_rules": [
       {
         "kind": "commit-last",
-        "address": 6,
+        "address": 7,
         "description": "complete sample generation publishes LAST",
         "source": "verified-inline-order"
       }

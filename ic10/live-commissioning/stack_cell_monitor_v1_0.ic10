@@ -1,14 +1,17 @@
-# Stack Cell Monitor ABI1: d0 target IC,d1 address Memory,d2 optional output Memory.
-# Read-only toward d0/d1; mirrors the selected value to this housing and d2.
+# Stack Cell Monitor ABI1: d0 target IC housing,d1 address 0..511,d2 optional out.
 poke 0 31416052
 poke 1 1
-poke 6 0
+poke 2 20
+poke 5 1
+poke 7 0
 Loop:
 yield
+poke 5 4
 move r0 -1
 move r1 0
 move r2 0
-bdnvl d0 ReferenceId NoTarget
+move r4 -1
+bdnvl d0 ReferenceId Publish
 l r2 d0 ReferenceId
 l r3 d0 PrefabHash
 beq r3 HASH("StructureCircuitHousing") TargetReady
@@ -16,37 +19,27 @@ beq r3 HASH("StructureCircuitHousingCompact") TargetReady
 move r4 -2
 j Publish
 TargetReady:
-bdnvl d1 Setting NoSelector
-l r0 d1 Setting
-bnan r0 BadAddress
-round r3 r0
-bne r0 r3 BadAddress
-move r0 r3
-bltz r0 BadAddress
-bgt r0 511 BadAddress
-get r1 d0 r0
-move r4 1
-bnan r1 CapturedNaN
-j Publish
-CapturedNaN:
-move r4 2
-j Publish
-NoTarget:
-move r4 -1
-j Publish
-NoSelector:
 move r4 -3
-j Publish
-BadAddress:
+bdnvl d1 Setting Publish
+l r0 d1 Setting
+poke 5 2
 move r4 -4
+mod r3 r0 1
+bnez r3 Publish
+bltz r0 Publish
+bgt r0 511 Publish
+get r1 d0 r0
+snan r4 r1
+add r4 r4 1
+j Publish
 Publish:
-poke 3 r0
-poke 4 r1
-poke 5 r2
-poke 2 r4
-get r3 db 6
+poke 9 r0
+poke 10 r1
+poke 11 r2
+poke 8 r4
+get r3 db 7
 add r3 r3 1
-poke 6 r3 # complete sample generation publishes LAST
+poke 7 r3 # complete sample generation publishes LAST
 s db Setting r1
 bdnvs d2 Setting Loop
 s d2 Setting r1

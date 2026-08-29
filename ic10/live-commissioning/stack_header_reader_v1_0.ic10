@@ -1,0 +1,118 @@
+# Stack Header Reader ABI1: d0 target IC housing, d1 optional Setting mirror.
+poke 0 31416067
+poke 1 1
+poke 2 20
+poke 5 1
+poke 7 0
+Loop:
+yield
+poke 5 4
+move r0 0
+move r1 0
+move r2 0
+move r3 0
+move r4 0
+move r5 0
+move r6 0
+move r8 0
+move r9 0
+move r14 -1
+bdnvl d0 ReferenceId Publish
+l r2 d0 ReferenceId
+l r7 d0 PrefabHash
+beq r7 HASH("StructureCircuitHousing") TargetReady
+beq r7 HASH("StructureCircuitHousingCompact") TargetReady
+move r14 -2
+j Publish
+TargetReady:
+poke 5 2
+move r14 -5
+get r0 d0 0
+mod r13 r0 1
+bnez r13 Publish
+beqz r0 Publish
+move r14 -6
+get r1 d0 1
+mod r13 r1 1
+bnez r13 Publish
+blez r1 Publish
+get r8 d0 2
+mod r13 r8 1
+bnez r13 Publish
+bltz r8 Publish
+bgt r8 31 Publish
+and r13 r8 1
+beqz r13 SchemaDone
+get r3 d0 3
+mod r12 r3 1
+bnez r12 Publish
+beqz r3 Publish
+SchemaDone:
+and r13 r8 4
+beqz r13 StateDone
+get r5 d0 5
+mod r12 r5 1
+bnez r12 Publish
+bltz r5 Publish
+bgt r5 5 Publish
+StateDone:
+and r13 r8 8
+beqz r13 TelemetryDone
+get r6 d0 6
+mod r12 r6 1
+bnez r12 Publish
+blt r6 8 Publish
+bgt r6 511 Publish
+TelemetryDone:
+and r13 r8 16
+beqz r13 GenerationDone
+get r9 d0 7
+mod r12 r9 1
+bnez r12 Publish
+bltz r9 Publish
+GenerationDone:
+and r13 r8 2
+beqz r13 HeaderReady
+get r4 d0 4
+mod r12 r4 1
+bnez r12 Publish
+blt r4 8 Publish
+bgt r4 508 Publish
+get r12 d0 r4
+bne r12 31416054 Publish
+add r10 r4 1
+get r12 d0 r10
+bne r12 1 Publish
+add r10 r4 2
+get r12 d0 r10
+mod r11 r12 1
+bnez r11 Publish
+blt r12 4 Publish
+bgt r12 192 Publish
+add r10 r4 3
+get r11 d0 r10
+beqz r11 ExtensionBound
+bne r11 1 Publish
+blt r12 5 Publish
+ExtensionBound:
+add r10 r4 r12
+bgt r10 512 Publish
+HeaderReady:
+move r14 3
+Publish:
+poke 9 r0
+poke 10 r1
+poke 11 r8
+poke 12 r3
+poke 13 r4
+poke 14 r5
+poke 15 r6
+poke 16 r9
+poke 17 r2
+poke 8 r14
+get r13 db 7
+add r13 r13 1
+poke 7 r13 # complete header sample publishes LAST
+bdnvs d1 Setting Loop
+s d1 Setting r0
+j Loop

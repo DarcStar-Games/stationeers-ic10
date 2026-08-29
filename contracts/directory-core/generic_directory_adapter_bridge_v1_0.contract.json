@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
-  "source_sha256": "a0aa7830b85a0991640b8a99ea43c8fd599e8ebaedb3f14e227d29525cf4c358",
+  "source_sha256": "6c9cf34f82f0090bcf844e368576c7de9119c89e117c34d950466c8011fcb1c8",
   "identity": {
     "service_id": "ic10.script.generic.directory.adapter.bridge",
     "implementation_revision": "1.0",
@@ -27,26 +27,25 @@
         "literal_reads": [
           0,
           1,
-          2,
           3,
-          4,
-          5,
-          6,
           7,
-          8,
-          9,
           10,
-          12
+          11,
+          12,
+          13,
+          14,
+          15,
+          17
         ],
         "literal_writes": [
-          11
+          16
         ],
         "dynamic_read": true,
         "dynamic_write": false,
         "dynamic_read_ranges": [
           {
-            "start": 16,
-            "end": 207
+            "start": 18,
+            "end": 209
           }
         ],
         "dynamic_write_ranges": [],
@@ -59,10 +58,10 @@
           },
           {
             "address": 1,
-            "equals": 2
+            "equals": 3
           },
           {
-            "address": 10,
+            "address": 15,
             "equals": 1
           }
         ]
@@ -71,7 +70,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415983.abi2"
+          "ic10.stack.31415983.abi3"
         ]
       }
     },
@@ -99,7 +98,6 @@
         ],
         "literal_writes": [
           9,
-          10,
           11,
           12,
           14,
@@ -203,10 +201,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415983.abi2",
+            "protocol_id": "ic10.stack.31415983.abi3",
             "header_base": 0,
             "magic": 31415983,
-            "abi": 2,
+            "abi": 3,
             "publication_requirements": []
           }
         ],

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10",
-  "source_sha256": "ec92f0c629eb6212beb78d6a7654e00e5e3c2c7f8d2d3e6e19d6eb4066490613",
+  "source_sha256": "12f09e5191f86547c43a0992756bc2573359770d750fdd0eeaf236a90eee5dad",
   "identity": {
     "service_id": "ic10.script.catalog.store.retirement.manager",
     "implementation_revision": "2.0",
@@ -26,12 +26,12 @@
       "stack": {
         "literal_reads": [
           0,
-          6,
-          7
+          21,
+          22
         ],
         "literal_writes": [
-          6,
-          7
+          21,
+          22
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -49,8 +49,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.f65c8366907662d8",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.f65c8366907662d8",
+        "interface_id": "ic10.interface.access.18705cc13057a9fe",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.18705cc13057a9fe",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -76,7 +76,6 @@
           0,
           1,
           2,
-          19,
           23
         ],
         "literal_writes": [],
@@ -102,11 +101,7 @@
           },
           {
             "address": 2,
-            "equals": "HASH(\"DirectorySchema.CatalogStoreNode\")"
-          },
-          {
-            "address": 19,
-            "equals": 1
+            "equals": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
           }
         ]
       },
@@ -124,10 +119,10 @@
       "transport": "reference-id",
       "reference": "r1",
       "literal_reads": [
-        6,
-        7,
         9,
-        16
+        16,
+        21,
+        24
       ],
       "literal_writes": [
         16
@@ -148,7 +143,7 @@
       "reference": "r2",
       "literal_reads": [],
       "literal_writes": [
-        7
+        24
       ],
       "dynamic_read": false,
       "dynamic_write": false,
@@ -160,7 +155,7 @@
       "reference": "r3",
       "literal_reads": [],
       "literal_writes": [
-        6
+        21
       ],
       "dynamic_read": false,
       "dynamic_write": false,
@@ -171,7 +166,11 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [],
-    "literal_writes": [],
+    "literal_writes": [
+      0,
+      1,
+      2
+    ],
     "dynamic_read": false,
     "dynamic_write": false,
     "dynamic_read_ranges": [],
@@ -183,8 +182,45 @@
     "clears_all": false,
     "external_readable_ranges": [],
     "external_writable_ranges": [],
-    "fields": [],
-    "headers": []
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 31416070
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 0
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "magic": 31416070,
+        "abi": 1
+      }
+    ]
   },
   "behavior": {
     "publication_rules": [],
@@ -192,10 +228,33 @@
       "mode": "preserved-unless-overwritten",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 31416070,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
-    "provides": [],
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.31416070.abi1",
+        "base": 0,
+        "magic": 31416070,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      }
+    ],
     "consumes": [
       {
         "port": "d1",

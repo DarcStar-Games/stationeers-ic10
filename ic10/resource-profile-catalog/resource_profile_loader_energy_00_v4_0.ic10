@@ -1,22 +1,22 @@
-# GENERATED Resource Profile ENERGY loader; relocatable sparse Loader ABI4; whole items.
+# GENERATED Resource Profile ENERGY loader; relocatable sparse Loader ABI5; whole items.
 clr db
 poke 0 31415969
-poke 1 4
-poke 2 HASH("CatalogSchema.ResourceProfile")
-poke 3 2
-poke 4 HASH("Catalog.ResourceProfiles.Schema2")
-poke 5 5
-poke 6 HASH("LoaderId:d6ab3904e7160278")
-poke 7 1
-poke 8 1
-poke 9 16
-poke 10 16
-poke 11 HASH("LD4:cb4665bb3d4d1433")
-poke 16 496
-poke 17 16
+poke 1 5
+poke 2 1
+poke 3 HASH("CatalogSchema.ResourceProfile.v2")
+poke 10 HASH("Catalog.ResourceProfiles.Schema2")
+poke 11 5
+poke 12 HASH("LoaderId:d6ab3904e7160278")
+poke 13 1
+poke 14 1
+poke 15 24
+poke 16 16
+poke 17 HASH("LD4:cb4665bb3d4d1433")
+poke 24 496
+poke 25 16
 poke 496 HASH("Power.Electrical") # Stored electrical energy
 poke 497 5
 poke 498 5
 poke 499 4
 poke 500 1
-poke 12 1 # immutable candidate publication LAST
+poke 18 1 # immutable candidate publication LAST

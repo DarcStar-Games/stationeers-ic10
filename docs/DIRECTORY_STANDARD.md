@@ -9,7 +9,7 @@ The current directory architecture has one discovery boundary and two generic pu
 ```text
 Domain Adapter
    |
-   | DIRECTORY_ADAPTER_ABI_V2
+   | DIRECTORY_ADAPTER_ABI_V3
    v
 169 Generic Directory Adapter Bridge
    |
@@ -22,47 +22,57 @@ or, for persistent identity-indexed membership:
 ```text
 Domain Adapter
    |
-   | DIRECTORY_ADAPTER_ABI_V2
+   | DIRECTORY_ADAPTER_ABI_V3
    v
 167 Generic Registry Directory Host
 ```
 
 Canonical schema metadata lives in `data/directory_schemas.json`. There are **no domain-specific directory magic compatibility facades** in the current baseline.
 
-## Directory Adapter ABI2
+## Directory Adapter ABI3
 
 Adapters own their candidate stack and never write directly into Host storage.
+ABI3 publishes the common stack header at `S0..S7`, so the payload starts at `S8`
+and candidate records at `S18`.
 
 | Cell | Meaning |
 |---:|---|
 | S0 | AdapterMagic = `31415983` |
-| S1 | AdapterABI = `2` |
-| S2 | DirectorySchemaId |
-| S3 | DirectorySchemaVersion |
-| S4 | EntryWidth |
-| S5 | Capacity |
-| S6 | CandidateCount |
-| S7 | CandidateGeneration |
-| S8 | sequence; odd while rebuilding, even when stable |
-| S9 | overflow; nonzero means the candidate set is incomplete |
-| S10 | mode: `1 SNAPSHOT`, `2 REGISTRY` |
-| S11 | freeze request token; `0` releases |
-| S12 | freeze acknowledgement token; stable while frozen |
-| S16.. | packed complete candidate records |
+| S1 | AdapterABI = `3` |
+| S2 | CapabilityMask = `17` (`HAS_SCHEMA` + `HAS_GENERATION`) |
+| S3 | SchemaId = `HASH("<DirectorySchema.X>.v<version>")` |
+| S7 | CandidateGeneration, the common publication fence |
+| S10 | EntryWidth |
+| S11 | Capacity |
+| S12 | CandidateCount |
+| S13 | sequence; odd while rebuilding, even when stable |
+| S14 | overflow; nonzero means the candidate set is incomplete |
+| S15 | mode: `1 SNAPSHOT`, `2 REGISTRY` |
+| S16 | freeze request token; `0` releases |
+| S17 | freeze acknowledgement token; stable while frozen |
+| S18.. | packed complete candidate records |
+
+`S3` is the only schema identity an adapter publishes. Both hosts fold too, so a
+schema and its version are one exact comparison everywhere in the framework.
 
 Publication lifecycle:
 
 ```text
-S8 -> odd
-S9 -> 0
+S13 -> odd
+S14 -> 0
 scan domain devices
 write complete records only
-S6 -> candidate count
-S7 -> next candidate generation
-S8 -> even LAST
+S12 -> candidate count
+S13 -> even
+S7  -> next candidate generation LAST
 ```
 
-A consumer that spans yields writes a nonzero token to S11 and waits until S12 matches. The Adapter acknowledges only after its current rebuild is complete, then stops rebuilding until S11 returns to zero. This guarantees one coherent candidate generation across multi-tick Bridge/Registry reads.
+The generation moved to last because `S7` is the common header fence: a generic
+reader that knows nothing about directories can snapshot it, read, and re-check
+it. The `S13` sequence still marks a rebuild in progress, and the freeze
+handshake below still provides multi-tick coherence.
+
+A consumer that spans yields writes a nonzero token to S16 and waits until S17 matches. The Adapter acknowledges only after its current rebuild is complete, then stops rebuilding until S11 returns to zero. This guarantees one coherent candidate generation across multi-tick Bridge/Registry reads.
 
 Adapters may reject a source snapshot rather than publish derived records when that source is incomplete or incoherent. In particular, Pressure Grid Link discovery refuses an overflowed Controller directory and snapshots PressureTransfer telemetry generation around topology reads.
 
@@ -77,8 +87,7 @@ S2      active bank: 0=A, 1=B
 S3/S4   generation A/B
 S5/S6   record count A/B
 S7/S8   overflow A/B
-S9      DirectorySchemaId
-S10     DirectorySchemaVersion
+S9      DirectorySchemaId, HASH("<schema>.v<version>")
 S11     EntryWidth
 S12     Capacity
 S14     bridge request generation
@@ -102,8 +111,7 @@ A snapshot consumer validates at minimum:
 ```text
 S0  GenericSnapshotDirectoryMagic
 S1  ABI
-S9  expected DirectorySchemaId
-S10 expected DirectorySchemaVersion
+S9  expected DirectorySchemaId, version included
 ```
 
 Consumers then use the schema-defined width/capacity and the ordinary active-bank/count/generation/overflow fields. A schema mismatch is a hard failure, not a fallback to a previous domain ABI.
@@ -119,7 +127,6 @@ S2   DirectorySchemaId
 S3   last accepted candidate generation
 S4   registry publication generation
 S16  status/error
-S19  DirectorySchemaVersion
 S20  published record width
 S21  registry capacity
 S23  publication sequence; odd while mutating, even when stable

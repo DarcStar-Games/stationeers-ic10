@@ -205,7 +205,6 @@
       ],
       "literal_writes": [
         9,
-        10,
         11,
         12,
         14,
@@ -251,8 +250,7 @@
         0,
         1,
         2,
-        9,
-        10
+        9
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
@@ -278,12 +276,7 @@
         {
           "address": 9,
           "operator": "equals",
-          "value": "HASH(\"DirectorySchema.ResourceLink\")"
-        },
-        {
-          "address": 10,
-          "operator": "equals",
-          "value": 1
+          "value": "HASH(\"DirectorySchema.ResourceLink.v1\")"
         }
       ],
       "publication_requirements": []
@@ -299,8 +292,7 @@
         0,
         1,
         2,
-        9,
-        10
+        9
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
@@ -326,12 +318,7 @@
         {
           "address": 9,
           "operator": "equals",
-          "value": "HASH(\"DirectorySchema.Controller\")"
-        },
-        {
-          "address": 10,
-          "operator": "equals",
-          "value": 1
+          "value": "HASH(\"DirectorySchema.Controller.v1\")"
         }
       ],
       "publication_requirements": []
@@ -348,7 +335,6 @@
         1,
         2,
         9,
-        10,
         11
       ],
       "literal_writes": [],
@@ -375,12 +361,7 @@
         {
           "address": 9,
           "operator": "equals",
-          "value": "HASH(\"DirectorySchema.Controller\")"
-        },
-        {
-          "address": 10,
-          "operator": "equals",
-          "value": 1
+          "value": "HASH(\"DirectorySchema.Controller.v1\")"
         },
         {
           "address": 11,
@@ -401,8 +382,7 @@
         0,
         1,
         2,
-        9,
-        10
+        9
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
@@ -428,12 +408,7 @@
         {
           "address": 9,
           "operator": "equals",
-          "value": "HASH(\"DirectorySchema.PressureGridLink\")"
-        },
-        {
-          "address": 10,
-          "operator": "equals",
-          "value": 1
+          "value": "HASH(\"DirectorySchema.PressureGridLink.v1\")"
         }
       ],
       "publication_requirements": []
@@ -450,7 +425,6 @@
         1,
         2,
         9,
-        10,
         11
       ],
       "literal_writes": [],
@@ -477,12 +451,7 @@
         {
           "address": 9,
           "operator": "equals",
-          "value": "HASH(\"DirectorySchema.PressureGridLink\")"
-        },
-        {
-          "address": 10,
-          "operator": "equals",
-          "value": 1
+          "value": "HASH(\"DirectorySchema.PressureGridLink.v1\")"
         },
         {
           "address": 11,
@@ -504,7 +473,6 @@
         1,
         2,
         9,
-        10,
         11
       ],
       "literal_writes": [],
@@ -531,12 +499,7 @@
         {
           "address": 9,
           "operator": "equals",
-          "value": "HASH(\"DirectorySchema.PressureGridLink\")"
-        },
-        {
-          "address": 10,
-          "operator": "equals",
-          "value": 1
+          "value": "HASH(\"DirectorySchema.PressureGridLink.v1\")"
         },
         {
           "address": 11,
@@ -558,7 +521,6 @@
         1,
         2,
         9,
-        10,
         11
       ],
       "literal_writes": [],
@@ -585,12 +547,7 @@
         {
           "address": 9,
           "operator": "equals",
-          "value": "HASH(\"DirectorySchema.Printer\")"
-        },
-        {
-          "address": 10,
-          "operator": "equals",
-          "value": 2
+          "value": "HASH(\"DirectorySchema.Printer.v2\")"
         },
         {
           "address": 11,

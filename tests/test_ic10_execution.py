@@ -19,10 +19,10 @@ resource_coord=resource_vms[0].screws['coord']
 def make_view(resource_class,resource_type,ref):
     screws={'d0':resource_store,'coord':resource_coord}|{f'x{i}':d for i,d in enumerate(resource_stores[1:])}
     vm=IC10((R/'ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10').read_text(),screws,self_ref=ref)
-    vm.stack[2]=resource_class; vm.stack[3]=resource_type; vm.run(2)
+    vm.stack[26]=resource_class; vm.stack[27]=resource_type; vm.run(2)
     return Device(ref,stack=dict(vm.stack),props={'ReferenceId':ref})
 profile=make_view(1,'HASH:Pollutant',200)
-if profile.stack.get(0)!=31415963 or profile.stack.get(4)!=1 or profile.stack.get(5,0)<=0 or profile.stack.get(8)!=1 or profile.stack.get(9)!='HASH:Pollutant' or profile.stack.get(11)!=1 or profile.stack.get(12)!=2 or profile.stack.get(19)!='RatioPollutant' or profile.stack.get(20)!=.995:
+if profile.stack.get(0)!=31415963 or profile.stack.get(28)!=1 or profile.stack.get(29,0)<=0 or profile.stack.get(8)!=1 or profile.stack.get(9)!='HASH:Pollutant' or profile.stack.get(11)!=1 or profile.stack.get(12)!=2 or profile.stack.get(19)!='RatioPollutant' or profile.stack.get(20)!=.995:
     fails.append('Pollutant Resource Profile View publication mismatch')
 # Purity Guard good and contaminated cases.
 for ratio,expect in [(.999,1),(.90,-4)]:
@@ -65,7 +65,7 @@ inv=Device(610,stack={0:31415935,1:2,3:3,4:'HASH:Pollutant',5:120,6:80,11:1,12:4
 ep=IC10((R/'ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10').read_text(),{'d0':inv},self_ref=600); ep.run(2)
 if ep.stack.get(0)!=31415949 or ep.stack.get(2)!=1 or ep.stack.get(4)!=7 or ep.stack.get(5)!=120 or ep.stack.get(6)!=80: fails.append('Pressure Resource Endpoint adapter publication mismatch')
 profile_item=make_view(2,1758427767,620)
-if profile_item.stack.get(4)!=1 or profile_item.stack.get(8)!=2 or profile_item.stack.get(9)!=1758427767 or profile_item.stack.get(10)!=2 or profile_item.stack.get(11)!=2 or profile_item.stack.get(13)!=50 or profile_item.stack.get(14)!=10:
+if profile_item.stack.get(28)!=1 or profile_item.stack.get(8)!=2 or profile_item.stack.get(9)!=1758427767 or profile_item.stack.get(10)!=2 or profile_item.stack.get(11)!=2 or profile_item.stack.get(13)!=50 or profile_item.stack.get(14)!=10:
     fails.append('Iron Ore Resource Profile View publication mismatch')
 slots={2:{'Occupied':1,'OccupantHash':1758427767,'Quantity':20,'MaxQuantity':50},3:{'Occupied':1,'OccupantHash':-707307845,'Quantity':10,'MaxQuantity':50},4:{'Occupied':1,'OccupantHash':1758427767,'Quantity':50,'MaxQuantity':50}}
 vending=Device(621,props={'ReferenceId':621,'Error':0,'Power':1,'ImportCount':7,'ExportCount':3},slots=slots)

@@ -34,20 +34,21 @@ def main():
  view=f'''# Resource Transform View v8: Store ABI5 items; ABI4 resolved-request fencing.
 poke 0 {VIEW_MAGIC}
 poke 1 {VIEW_ABI}
+poke 2 0
 Loop:
 yield
-get r10 db 2
+get r10 db 70
 bdns d0 Bad
 l r2 d0 ReferenceId
 get r12 d0 11
 blez r12 Bad
 getd r0 r12 0
 bne r0 {COORD_MAGIC} Bad
-getd r15 r12 7
+getd r15 r12 22
 mod r0 r15 2
 bnez r0 Bad
 First:
-getd r1 r2 6
+getd r1 r2 21
 blez r1 Store
 move r2 r1
 j First
@@ -78,18 +79,18 @@ add r9 r9 1
 blt r9 68 Clear
 add r0 r8 1
 getd r0 r2 r0
-poke 3 r0
+poke 71 r0
 add r0 r8 2
 getd r4 r2 r0
 bgt r4 6 Bad
-poke 4 r4
+poke 72 r4
 add r0 r8 3
 getd r5 r2 r0
 bgt r5 8 Bad
-poke 5 r5
+poke 73 r5
 add r0 r8 8
 getd r0 r2 r0
-poke 7 r0
+poke 75 r0
 move r9 0
 Bounds:
 add r0 r8 r9
@@ -110,26 +111,26 @@ move r11 r5
 jal CopyPool
 getd r0 r2 17
 bne r0 r14 Loop
-getd r0 r12 7
+getd r0 r12 22
 bne r0 r15 Loop
 poke 68 r10
 poke 69 1
-poke 6 r14
+poke 74 r14
 j Loop
 StoreDone:
-getd r1 r2 7
+getd r1 r2 24
 blez r1 Missing
 move r2 r1
 j Store
 Bad:
 poke 68 r10
-poke 69 -2
+poke 71 -2
 j Loop
 Missing:
-getd r0 r12 7
+getd r0 r12 22
 bne r0 r15 Loop
 poke 68 r10
-poke 69 -3
+poke 71 -3
 j Loop
 CopyPool:
 move r9 0
@@ -150,8 +151,7 @@ blt r7 4 CPCell
 add r9 r9 1
 j CPItem
 CPDone:
-j ra
-'''
+j ra'''
  (R/VIEW_FILE).write_text(view)
  # Item 8 reverse producer index. Unknown ITEM outputs deliberately fall back to PRINT;
  # known transform outputs must be unique so dependency planning never chooses ambiguously.

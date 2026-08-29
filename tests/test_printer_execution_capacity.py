@@ -36,19 +36,19 @@ ck(printer.props.get('Lock')==1,'fresh execution bank cleared an externally owne
 printer.props['Lock']=0
 
 # Execution overlay joins local capacity to Item4 Printer Directory.
-raw=Device(700,stack={0:31415981,1:1,2:0,3:11,5:1,7:0,9:'HASH:DirectorySchema.Printer',10:2,11:3,12:64,32:501,33:'HASH:Printer.Autolathe',34:257},props={'ReferenceId':700})
+raw=Device(700,stack={0:31415981,1:1,2:0,3:11,5:1,7:0,9:'HASH:DirectorySchema.Printer.v2',11:3,12:64,32:501,33:'HASH:Printer.Autolathe',34:257},props={'ReferenceId':700})
 bankdev=Device(601,stack=bank.stack,props={'ReferenceId':601})
 ad=IC10(src('ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10'),{'d0':raw,'bank':bankdev},self_ref=602);ad.run(2)
-ck(ad.stack.get(2)=='HASH:DirectorySchema.PrinterExecution' and ad.stack.get(6)==1,'execution adapter header/count mismatch')
-ck(ad.stack.get(16)==501 and ad.stack.get(17)=='HASH:Printer.Autolathe','execution adapter lost exact printer identity')
-spec=ad.stack.get(18,0);ck((spec&16384)==16384 and (spec&8192)==0,'execution ProcessorSpec capacity bits mismatch')
+ck(ad.stack.get(3)=='HASH:DirectorySchema.PrinterExecution.v1' and ad.stack.get(12)==1,'execution adapter header/count mismatch')
+ck(ad.stack.get(18)==501 and ad.stack.get(19)=='HASH:Printer.Autolathe','execution adapter lost exact printer identity')
+spec=ad.stack.get(20,0);ck((spec&16384)==16384 and (spec&8192)==0,'execution ProcessorSpec capacity bits mismatch')
 
 # Dynamic generic selector accepts exact execution directory ref and rejects occupied output.
-execdir=Device(710,stack={0:31415981,1:1,2:0,3:5,5:1,7:0,9:'HASH:DirectorySchema.PrinterExecution',10:1,11:3,12:64,32:501,33:'HASH:Printer.Autolathe',34:spec},props={'ReferenceId':710})
+execdir=Device(710,stack={0:31415981,1:1,2:0,3:5,5:1,7:0,9:'HASH:DirectorySchema.PrinterExecution.v1',11:3,12:64,32:501,33:'HASH:Printer.Autolathe',34:spec},props={'ReferenceId':710})
 sel=IC10(src('ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10'),{'d0':execdir});sel.run(1)
-sel.stack.update({2:'HASH:DirectorySchema.PrinterExecution',3:'HASH:Printer.Autolathe',4:1,5:2,6:0,7:1,15:1,16:710});sel.run(1)
+sel.stack.update({17:'HASH:DirectorySchema.PrinterExecution.v1',18:'HASH:Printer.Autolathe',19:1,20:2,21:0,22:1,15:1,16:710});sel.run(1)
 ck(sel.stack.get(9)==1 and sel.stack.get(10)==501,'dynamic selector rejected free managed printer')
-execdir.stack[34]=spec|8192;execdir.stack[3]=6;sel.stack.update({6:0,7:2});sel.run(1)
+execdir.stack[34]=spec|8192;execdir.stack[3]=6;sel.stack.update({21:0,22:2});sel.run(1)
 ck(sel.stack.get(9)==-2,'selector accepted occupied printer output')
 execdir.stack[34]=spec;execdir.stack[3]=7
 

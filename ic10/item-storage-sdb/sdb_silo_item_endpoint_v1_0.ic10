@@ -17,7 +17,7 @@ bdns d0 Bad
 bdns d1 Bad
 get r0 db 20
 bne r0 1 Bad
-get r14 d1 5
+get r14 d1 29
 blez r14 Bad
 get r0 d1 0
 bne r0 31415963 Bad
@@ -29,7 +29,7 @@ blez r3 Bad
 get r7 db 21
 blt r7 1 Bad
 bgt r7 r3 Bad
-get r0 d1 5
+get r0 d1 29
 bne r0 r14 Loop
 l r0 d0 Power
 blez r0 Bad
@@ -58,7 +58,7 @@ l r0 d0 ExportCount
 bne r0 r6 Loop
 l r0 d0 Quantity
 bne r0 r4 Loop
-get r0 d1 5
+get r0 d1 29
 bne r0 r14 Loop
 l r1 d0 ReferenceId
 poke 3 r2

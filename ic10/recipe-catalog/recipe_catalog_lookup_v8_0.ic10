@@ -18,11 +18,11 @@ get r12 d0 11
 blez r12 CatalogBad
 getd r0 r12 0
 bne r0 31415970 CatalogBad
-getd r14 r12 7
+getd r14 r12 22
 mod r0 r14 2
 bnez r0 CatalogBad
 First:
-getd r0 r1 6
+getd r0 r1 21
 blez r0 Start
 move r1 r0
 j First
@@ -34,11 +34,9 @@ Store:
 getd r0 r1 0
 bne r0 31415968 CatalogBad
 getd r0 r1 1
-bne r0 5 CatalogBad
-getd r0 r1 2
-bne r0 HASH("CatalogSchema.Recipe") CatalogBad
+bne r0 6 CatalogBad
 getd r0 r1 3
-bne r0 3 CatalogBad
+bne r0 HASH("CatalogSchema.Recipe.v3") CatalogBad
 getd ra r1 17
 mod r0 ra 2
 bnez r0 Loop
@@ -74,12 +72,12 @@ j Records
 StoreDone:
 getd r0 r1 17
 bne r0 ra Loop
-getd r10 r1 7
+getd r10 r1 24
 blez r10 Finish
 move r1 r10
 j Store
 Finish:
-getd r0 r12 7
+getd r0 r12 22
 bne r0 r14 Loop
 beqz r8 NotFound
 bge r5 r8 NotFound

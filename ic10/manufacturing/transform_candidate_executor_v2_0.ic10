@@ -1,6 +1,7 @@
 # Transform Candidate Executor ABI2: d0 Readiness; exact request-token fencing.
-poke 0 31415987
+poke 0 31416073
 poke 1 2
+poke 2 0
 poke 11 2
 Loop:
 yield
@@ -10,9 +11,9 @@ beq r0 2 Run
 get r15 db 8
 get r0 db 10
 beq r15 r0 Loop
-get r1 db 2
-get r2 db 3
-get r6 db 7
+get r1 db 21
+get r2 db 22
+get r6 db 26
 get r14 db 14
 blez r1 Bad
 blez r2 Bad
@@ -22,15 +23,15 @@ poke 9 0
 poke 11 2
 poke 12 0
 poke 10 r15
-put d0 2 r1
-put d0 3 r2
-get r0 db 4
-put d0 4 r0
-get r0 db 5
-put d0 5 r0
-get r0 db 6
-put d0 6 r0
-put d0 7 r6
+put d0 11 r1
+put d0 12 r2
+get r0 db 23
+put d0 13 r0
+get r0 db 24
+put d0 14 r0
+get r0 db 25
+put d0 15 r0
+put d0 16 r6
 put d0 8 r15
 poke 20 1
 j Loop
@@ -44,21 +45,19 @@ poke 9 r0
 poke 20 0
 j Loop
 Launch:
-get r1 db 2
-get r14 db 14
-putd r1 8 r14
-get r6 db 7
-putd r1 2 r6
-putd r1 3 r15
+get r1 db 21
+get r6 db 26
+putd r1 8 r6
+putd r1 16 r15
 poke 11 3
 poke 20 2
 j Loop
 Run:
-get r1 db 2
+get r1 db 21
 get r15 db 8
-getd r0 r1 6
+getd r0 r1 21
 bne r0 r15 Loop
-getd r0 r1 5
+getd r0 r1 20
 bltz r0 Fault
 beq r0 1 Complete
 beq r0 4 Running

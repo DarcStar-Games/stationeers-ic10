@@ -14,9 +14,7 @@ bne r0 31415981 Bad
 get r0 d0 1
 bne r0 1 Bad
 get r0 d0 9
-bne r0 HASH("DirectorySchema.PressureGridLink") Bad
-get r0 d0 10
-bne r0 1 Bad
+bne r0 HASH("DirectorySchema.PressureGridLink.v1") Bad
 get r0 db 5
 get sp db 11
 beq r0 sp Search

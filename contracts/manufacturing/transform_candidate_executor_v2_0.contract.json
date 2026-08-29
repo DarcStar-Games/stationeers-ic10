@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/transform_candidate_executor_v2_0.ic10",
-  "source_sha256": "33e84c290d10145793fac6cd56b405a4e5156d1d50bf162fe00208feb09d5859",
+  "source_sha256": "94b8d2e1f173692ad3be2155a5c25ca9cf23da29fd71c05763f774f47f4eacb7",
   "identity": {
     "service_id": "ic10.script.transform.candidate.executor",
     "implementation_revision": "2.0",
@@ -29,13 +29,13 @@
           10
         ],
         "literal_writes": [
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8
+          8,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -48,8 +48,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.94f6244c4fd1d468",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.94f6244c4fd1d468",
+        "interface_id": "ic10.interface.access.f4b158f2c1eff8d7",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.f4b158f2c1eff8d7",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -65,13 +65,12 @@
       "transport": "reference-id",
       "reference": "r1",
       "literal_reads": [
-        5,
-        6
+        20,
+        21
       ],
       "literal_writes": [
-        2,
-        3,
-        8
+        8,
+        16
       ],
       "dynamic_read": false,
       "dynamic_write": false,
@@ -82,20 +81,21 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
       8,
       10,
       14,
-      20
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26
     ],
     "literal_writes": [
       0,
       1,
+      2,
       9,
       10,
       11,
@@ -122,7 +122,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415987
+        "const": 31416073
       },
       {
         "address": 1,
@@ -140,53 +140,9 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
+          "self-write"
+        ],
+        "const": 0
       },
       {
         "address": 8,
@@ -252,12 +208,66 @@
           "self-read",
           "self-write"
         ]
+      },
+      {
+        "address": 21,
+        "name": "S21",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 22,
+        "name": "S22",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 23,
+        "name": "S23",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 24,
+        "name": "S24",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 25,
+        "name": "S25",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 26,
+        "name": "S26",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
       }
     ],
     "headers": [
       {
         "base": 0,
-        "magic": 31415987,
+        "magic": 31416073,
         "abi": 2
       }
     ]
@@ -273,7 +283,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415987,
+        "equals": 31416073,
         "source": "generated-protocol-header"
       },
       {
@@ -288,9 +298,9 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415987.abi2",
+        "protocol_id": "ic10.stack.31416073.abi2",
         "base": 0,
-        "magic": 31415987,
+        "magic": 31416073,
         "abi": 2,
         "source": "literal-own-stack-header"
       }

@@ -52,9 +52,7 @@ bne r0 31415981 BadDirectory
 get r0 d0 1
 bne r0 1 BadDirectory
 get r0 d0 9
-bne r0 HASH("DirectorySchema.Controller") BadDirectory
-get r0 d0 10
-bne r0 1 BadDirectory
+bne r0 HASH("DirectorySchema.Controller.v1") BadDirectory
 get r1 db 3
 get r2 db 4
 get r3 db 5

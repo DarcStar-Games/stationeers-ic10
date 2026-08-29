@@ -15,7 +15,7 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 | Generic Input Resolver | `31415931` | `S1` | 1 |
 | Generic Snapshot Directory Host | `31415981` | `S1` | 1 |
 | Generic Registry Directory Host | `31415982` | `S1` | 3 |
-| Directory Adapter | `31415983` | `S1` | 2 |
+| Directory Adapter | `31415983` | `S1` | 3 |
 | Generic Job Store | `31415984` | `S1` | 1 |
 | PhasePressure Request Arbiter | `31415933` | `S1` | 1 |
 | PressureDomain Inventory | `31415935` | `S1` | 2 |
@@ -34,9 +34,9 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 | Generic Resource Endpoint | `31415949` | `S1` | 1 |
 | Generic Resource Reservation | `31415950` | `S1` | 1 |
 | Resource Transform Profile | `31415952` | `S1` | 4 |
-| Catalog Store (all static catalogs) | `31415968` | `S1` | 5 |
-| Catalog Loader metadata | `31415969` | `S1` | 4 |
-| Catalog Coordinator Core | `31415970` | `S1` | 3 |
+| Catalog Store (all static catalogs) | `31415968` | `S1` | 6 |
+| Catalog Loader metadata | `31415969` | `S1` | 5 |
+| Catalog Coordinator Core | `31415970` | `S1` | 4 |
 | Catalog Loader Router | `31415971` | `S1` | 3 |
 | Catalog Inspector | `31415972` | `S1` | 4 |
 | Catalog Coordinator Directory View | `31415975` | `S1` | 2 |
@@ -62,12 +62,217 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 | Hash Console Mode | `17320513` | `S1` | 1 |
 | Generic Config Editor | `22360680` | `S1` | 1 |
 | Config Input Bridge | `22360681` | `S1` | 1 |
+| Stack Cell Monitor | `31416052` | `S1` | 1 |
+| Stack Header Reader | `31416067` | `S1` | 1 |
+| Catalog Directory Telemetry | `31416068` | `S1` | 1 |
+| Catalog Item Migration Planner | `31416069` | `S1` | 1 |
+| Catalog Store Retirement Manager | `31416070` | `S1` | 1 |
+| Catalog Item Migration Worker | `31416071` | `S1` | 1 |
+| Controller PhasePressure Runtime | `31416060` | `S1` | 1 |
+| Controller PI Runtime | `31416061` | `S1` | 1 |
+| Controller Sequencer Runtime | `31416062` | `S1` | 1 |
+| Controller PressureDomain Runtime | `31416063` | `S1` | 1 |
+| Controller PressureTransfer Runtime | `31416064` | `S1` | 1 |
+| Embedded PressureTransfer Runtime | `31416065` | `S1` | 1 |
+| Process PressureDomain Runtime | `31416066` | `S1` | 1 |
+| Stack header extension | `31416054` | `E+1` | 1 |
 
-## Catalog Store ABI v5
+## Every published header
 
-Magic `31415968`, ABI `5`. `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` is the only physical Store program. Human commissioning sets only `S18 NodeId` (1..64); Coordinator ABI3 assigns schema/version/instance, partition, StoreOrdinal, topology, Coordinator identity, and AssignmentEpoch.
+The table above names the service contracts consumers code against. This block is
+generated from `data/script_protocol_headers.json` by
+`tools/generate/update_magic_registry.py` and lists **every** header any deployable
+program publishes, so a magic cannot exist without being registered here. A program
+appears twice when it publishes both a service header at `S0` and a Generic
+Telemetry block at `S96`; a magic appears on several rows when one service contract
+has several implementations, which is the generic-instance pattern and requires them
+all to publish the same ABI. Eight programs publish no header at all — the config
+policies, the config committer and loader, and the directory adapter bridge — and so
+appear nowhere below.
 
-Store ABI5 uses a generic item heap rather than schema-specific fixed regions:
+<!-- PUBLISHED_HEADERS START -->
+| Magic | ABI | Cell | Program | Purpose |
+|---:|---:|---:|---|---|
+| `14142136` | 1 | `S0` | `ic10/diagnostics/console_registry_v1_1.ic10` | Discovers diagnostic consoles and mirror sinks and publishes stable identities. |
+| `16180339` | 1 | `S0` | `ic10/diagnostics/diagnostic_renderer_v1_1.ic10` | Renders generic telemetry into committed displays; accepts compatible telemetry ABI revisions. |
+| `17320508` | 2 | `S0` | `ic10/controller-discovery/controller_selector_v3_0.ic10` | Directly derives type/member groups from the sorted Generic Controller Directory and resolves one ReferenceId; rejects overflowed discovery. |
+| `17320509` | 1 | `S0` | `ic10/diagnostics/console_selector_v1_1.ic10` | Resolves console ordinals and post-commit advance. |
+| `17320510` | 1 | `S0` | `ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10` | Commits resolved display/controller/channel mappings. |
+| `17320511` | 1 | `S0` | `ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10` | Owns diagnostic desired-state/change generations. |
+| `17320512` | 1 | `S0` | `ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10` | Publishes atomic desired controller/console selection. |
+| `17320513` | 1 | `S0` | `ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10` | Sets Console circuitboard Mode (HashType) from IC through logic slot set. |
+| `22360680` | 1 | `S0` | `ic10/controller-config/generic_config_editor_v1_0.ic10` | Owns staged config image and Save/Reload/Apply UI state. |
+| `22360681` | 1 | `S0` | `ic10/controller-config/config_input_bridge_v1_0.ic10` | Maps Resolver active ordinal/value into Editor physical slots. |
+| `27182818` | 2 | `S96` | `ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10` | Derives pressure requirements from a coherently committed medium profile; telemetry ABI2. |
+| `27182818` | 1 | `S96` | `ic10/controller-pi/controller_pi_runtime_v1_1.ic10` | Continuous PI controller consuming Generic Host effective config. |
+| `27182818` | 1 | `S96` | `ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10` | Fill/settle/drain discrete state-machine controller. |
+| `27182818` | 2 | `S96` | `ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10` | Owns LOW/HIGH target or passive STORAGE envelope; telemetry ABI2. |
+| `27182818` | 2 | `S96` | `ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10` | One physical pump edge; publishes coherent candidate topology and executes only Guard-authorized leases. |
+| `27182818` | 2 | `S96` | `ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10` | Projects an Advanced Furnace embedded inlet/outlet pump as ControllerPressureTransfer ABI2 and actuates only under PressureGrid GrantGuard authority. |
+| `27182818` | 2 | `S96` | `ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10` | Projects one active ProcessCondition target as standard ControllerPressureDomain ABI2 for ordinary PressureGrid planning. |
+| `31415928` | 1 | `S0` | `ic10/controller-config/generic_persistent_config_host_v1_1.ic10` | BANKED_TRANSACTION REVISION_BANK host: owns candidate/effective config, A/B persistence, recovery, and post-commit replay acknowledgement. |
+| `31415929` | 1 | `S0` | `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` | Selects one Input schema-v3 Store ABI6 catalog context and republishes Generic Input Profile ABI1. |
+| `31415930` | 1 | `S0` | `ic10/shared-input/generic_input_scanner_v1_1.ic10` | Discovers/classifies physical commissioning controls. |
+| `31415931` | 1 | `S0` | `ic10/shared-input/generic_input_resolver_v1_0.ic10` | Resolves logical commissioning controls from Scanner + Profile metadata. |
+| `31415933` | 1 | `S0` | `ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10` | Reduces coherent PhasePressure ABI2 requests for one LOW/HIGH domain; rejects directory overflow. |
+| `31415935` | 2 | `S0` | `ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10` | Purity-gated gas inventory; converts P/T/V/n into molar export/import capacity. |
+| `31415936` | 1 | `S0` | `ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10` | Mirrors one Inventory ABI2 and owns mutable per-build endpoint reservation counters. |
+| `31415937` | 2 | `S0` | `ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10` | Medium-specific commit authority; publishes plan epoch only after successful construction. |
+| `31415938` | 3 | `S0` | `ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10` | Allocator ABI3: non-mutating quote, exact commit, topology-bound staged grants. |
+| `31415940` | 2 | `S0` | `ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10` | Incrementally enumerates available 2/3-hop LOW-to-HIGH candidates through STORAGE. |
+| `31415941` | 1 | `S0` | `ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10` | Quotes every selected path hop, then exact-commits one common mol/tick rate. |
+| `31415942` | 1 | `S0` | `ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10` | Stages direct reuse or storage fallback while preserving fallback anti-circulation. |
+| `31415943` | 1 | `S0` | `ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10` | Orchestrates direct reuse -> ranked routed reuse -> fallback before Planner commit. |
+| `31415944` | 2 | `S0` | `ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10` | Route Selector ABI2: bounded reservation-aware candidate comparison. |
+| `31415945` | 1 | `S0` | `ic10/pressure-grid/pressure_grid_cost_profile_v1_0.ic10` | Publishes dimensionless route-ranking weights and candidate budget. |
+| `31415946` | 2 | `S0` | `ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10` | Route Ranker ABI2: scores using remaining endpoint capacity, lift, hops, storage and throughput. |
+| `31415947` | 1 | `S0` | `ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10` | Verifies actual analyzer gas ratio against the selected medium profile purity threshold. |
+| `31415947` | 1 | `S0` | `ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10` | Validates a two-component prepared gas mixture through the existing PurityGuard ABI using Resource Profile kind 5. |
+| `31415948` | 1 | `S0` | `ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10` | Topology-binds staged grants to Planner commit and consumes each committed epoch at most once. |
+| `31415949` | 1 | `S0` | `ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10` | Publishes bounded directly readable slot storage as a policy-aware Generic ITEM Resource Endpoint. |
+| `31415949` | 1 | `S0` | `ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10` | Publishes LArRE-accessible slot storage as Generic ITEM Resource Endpoint and serializes all LArRE movement requests. |
+| `31415949` | 1 | `S0` | `ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10` | Publishes a dedicated SDB Silo as conservative lower-bound ITEM availability/capacity without pretending stack count is exact quantity. |
+| `31415949` | 1 | `S0` | `ic10/item-storage-vending/material_vending_inventory_v1_0.ic10` | Incrementally scans a Vending Machine for one ItemHash and publishes Generic Resource Endpoint ABI1. |
+| `31415949` | 1 | `S0` | `ic10/material-grid/material_export_slot_endpoint_v1_0.ic10` | Publishes one exact export slot, such as a Chute Export Bin, as a source-only ITEM Resource Endpoint. |
+| `31415949` | 1 | `S0` | `ic10/material-grid/material_import_slot_endpoint_v1_0.ic10` | Publishes one processor import slot as a typed ITEM sink endpoint. |
+| `31415949` | 1 | `S0` | `ic10/power-grid/power_battery_endpoint_v1_0.ic10` | Publishes bidirectional battery POWER capacity with reserve, target, rate, and policy-override semantics. |
+| `31415949` | 1 | `S0` | `ic10/power-grid/power_consumer_endpoint_v1_0.ic10` | Publishes one managed POWER consumer demand and priority/shedding policy as a Generic Resource Endpoint. |
+| `31415949` | 1 | `S0` | `ic10/power-grid/power_producer_endpoint_v1_0.ic10` | Publishes one exact POWER producer/aggregate supply as a Generic Resource Endpoint. |
+| `31415949` | 1 | `S0` | `ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10` | Normalizes PressureDomain Inventory ABI2 into Generic Resource Endpoint ABI1. |
+| `31415950` | 1 | `S0` | `ic10/resource-grid-core/resource_reservation_v1_0.ic10` | Mirrors any Generic Resource Endpoint into a domain-neutral reservation surface. |
+| `31415952` | 4 | `S0` | `ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` | Selects a Store ABI6 schema-v4 transform and publishes capability-based variable-input Transform Profile ABI4. |
+| `31415953` | 1 | `S0` | `ic10/material-grid/material_resource_link_v1_0.ic10` | Publishes a Vending/Stacker/Sorter route as Generic Resource Link ABI1 with native topology identity. |
+| `31415953` | 1 | `S0` | `ic10/power-grid/power_static_link_v1_0.ic10` | Publishes a commissioned passive electrical path as a Generic POWER Resource Link. |
+| `31415953` | 1 | `S0` | `ic10/power-grid/power_transformer_link_v1_0.ic10` | Publishes a transformer POWER Resource Link with safe delivered ceiling and source-side self-power overhead. |
+| `31415953` | 1 | `S0` | `ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10` | Projects a topology-bound PressureTransfer into Generic Resource Link ABI1. |
+| `31415954` | 2 | `S0` | `ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10` | Allocator ABI2 atomically commits one common epoch after every input is staged. |
+| `31415958` | 1 | `S0` | `ic10/material-grid/material_transfer_executor_v1_0.ic10` | Executes one Guard-authorized exact material batch and confirms destination import. |
+| `31415960` | 1 | `S0` | `ic10/material-grid/material_transfer_grant_guard_v1_0.ic10` | Topology-binds committed material grants and consumes invalid epochs. |
+| `31415961` | 1 | `S0` | `ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10` | Adapts a dedicated SDB Silo plus Stacker to Material Feeder ABI1 and meters exact requested quantities after FIFO stack export. |
+| `31415961` | 1 | `S0` | `ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10` | Uses Vending + Stacker + Logic Sorter to prepare and release an exact routed item quantity. |
+| `31415963` | 1 | `S0` | `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` | Resolves one Resource Profile across runtime-placed Store ABI6 items and republishes View ABI1. |
+| `31415967` | 3 | `S0` | `ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10` | Recipe Lookup v8 ABI3 across runtime-placed Recipe schema-v3 Store ABI6 printer-family partitions. |
+| `31415968` | 6 | `S0` | `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` | Generic Store ABI6 node with item directory + payload heap; imports runtime-routed relocatable items. |
+| `31415969` | 5 | `S0` | `ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10` | One-shot relocatable Loader ABI5 candidate containing whole self-contained Input Profile items. |
+| `31415969` | 5 | `S0` | `ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10` | One-shot relocatable Loader ABI5 candidate containing whole self-contained Input Profile items. |
+| `31415969` | 5 | `S0` | `ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10` | One-shot relocatable Loader ABI5 candidate containing whole self-contained Input Profile items. |
+| `31415969` | 5 | `S0` | `ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10` | One-shot relocatable ENERGY Resource Profile Loader ABI5 candidate. |
+| `31415969` | 5 | `S0` | `ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
+| `31415969` | 5 | `S0` | `ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
+| `31415969` | 5 | `S0` | `ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
+| `31415969` | 5 | `S0` | `ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
+| `31415969` | 5 | `S0` | `ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
+| `31415969` | 5 | `S0` | `ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10` | One-shot relocatable POWER Resource Profile Loader ABI5 candidate. |
+| `31415969` | 5 | `S0` | `ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10` | One-shot relocatable Transform Loader ABI5 candidate; each transform is a whole self-contained item. |
+| `31415969` | 5 | `S0` | `ic10/transform-catalog/resource_transform_catalog_loader_01_v6_0.ic10` | One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item. |
+| `31415969` | 5 | `S0` | `ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10` | One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item. |
+| `31415969` | 5 | `S0` | `ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10` | One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item. |
+| `31415969` | 5 | `S0` | `ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10` | One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item. |
+| `31415970` | 4 | `S0` | `ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` | Coordinator Core ABI3; claims Stores, assigns runtime ordinals, and owns topology/capacity epochs. |
+| `31415971` | 3 | `S0` | `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10` | Loader Router ABI3; places whole Loader ABI5 items into live unreserved Store capacity. |
+| `31415972` | 4 | `S0` | `ic10/catalog-control-plane/catalog_inspector_v4_0.ic10` | Generic Store ABI6 / Coordinator ABI4 inspector for node identity, item capacity, topology, and telemetry. |
+| `31415975` | 2 | `S0` | `ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10` | Selectable Store-directory view plus Coordinator aggregate health telemetry. |
+| `31415976` | 2 | `S0` | `ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10` | Rebinds persisted Stores to a replacement Coordinator with a higher CoordinatorEpoch. |
+| `31415977` | 1 | `S0` | `ic10/material-transform/material_transform_admission_v1_0.ic10` | Generic 1..3-input capability-based transform admission: processor conditions and output capacity. |
+| `31415978` | 1 | `S0` | `ic10/material-transform/material_transform_link_resolver_v1_0.ic10` | Resolves typed Material Links for every transform input against the exact processor. |
+| `31415979` | 1 | `S0` | `ic10/material-transform/multi_material_reservation_stager_v1_0.ic10` | Stages 1..3 input reservations and Guard payloads without publishing the commit epoch. |
+| `31415980` | 2 | `S0` | `ic10/material-transform/generic_material_transform_runtime_v2_0.ic10` | Runs generic catalog-defined transforms and confirms coherent output growth. |
+| `31415981` | 1 | `S0` | `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10` | Generic sorted A/B Snapshot Directory Host: width 1..3, capacity 64, dedupe/overflow/generation. |
+| `31415982` | 3 | `S0` | `ic10/directory-core/generic_registry_directory_host_v2_0.ic10` | Generic Registry Directory Host ABI3; consumes Adapter ABI2 and persists NodeId-indexed membership. |
+| `31415983` | 3 | `S0` | `ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10` | Publishes Generic Store membership as Directory Adapter ABI3 registry candidates. |
+| `31415983` | 3 | `S0` | `ic10/controller-discovery/controller_directory_adapter_v4_0.ic10` | Publishes Controller Directory Adapter ABI3 candidates; Generic Adapter Bridge + Snapshot Host own publication. |
+| `31415983` | 3 | `S0` | `ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10` | Publishes schema-qualified TransformLane Adapter ABI2 candidates with processor identity and common ProcessorSpec. |
+| `31415983` | 3 | `S0` | `ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10` | Publishes priority-ordered PowerReservation candidates through Generic Directory Adapter ABI3. |
+| `31415983` | 3 | `S0` | `ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10` | Publishes coherent Pressure Link Adapter ABI2 candidates from the schema-qualified Generic Snapshot Controller directory and Transfer telemetry. |
+| `31415983` | 3 | `S0` | `ic10/printer-directory/printer_directory_adapter_v1_0.ic10` | Publishes six supported printer families as DirectorySchema.Printer v2 Adapter ABI2 candidates with common ProcessorSpec. |
+| `31415983` | 3 | `S0` | `ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10` | Joins Item-4 Printer Directory metadata with local Execution Bank capacity and publishes exact-Printer PrinterExecution Adapter ABI2 records. |
+| `31415983` | 3 | `S0` | `ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10` | Publishes typed Resource Endpoint Adapter ABI2 candidates on its own stack. |
+| `31415983` | 3 | `S0` | `ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10` | Publishes Resource Link Adapter ABI2 candidates on its own stack. |
+| `31415983` | 3 | `S0` | `ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10` | Publishes Generic Resource Reservation mirrors as DirectorySchema.ResourceReservation snapshot candidates. |
+| `31415984` | 1 | `S0` | `ic10/generic-jobs/generic_job_store_v1_0.ic10` | BANKED_TRANSACTION SELECTOR_BANK store: 32 Generic Job ABI1 records with Store-owned JobIds, optimistic generation, ABI-gated recovery, and crash-safe publication. |
+| `31415985` | 1 | `S0` | `ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10` | Resolves exact RecipeHash execution metadata from Recipe schema-v3 stores, including bounded reagent requirements and stale-response echo. |
+| `31415986` | 1 | `S0` | `ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10` | Serialized Cargo LArRE owner for proxy-slot SCAN and whole-stack MOVE_STACK operations. |
+| `31415987` | 1 | `S0` | `ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10` | Read-only bounded ITEM reservation selector; aggregates up to six physical source/destination reservations without mutation. |
+| `31415988` | 1 | `S0` | `ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10` | Commits one coherent ITEM reservation quote with allocator identity, epoch, direction, and mirror-generation fencing. |
+| `31415989` | 1 | `S0` | `ic10/manufacturing/print_material_resolver_v1_0.ic10` | Maps Recipe reagent semantics onto reachable MaterialGrid ResourceTypes and publishes transform-compatible multi-input records. |
+| `31415990` | 1 | `S0` | `ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10` | Clears Generic Resource Reservation ownership only for an exact owner ReferenceId and plan epoch. |
+| `31415991` | 1 | `S0` | `ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10` | Validates paired source/destination reservations and drives serialized LArRE outbound, inbound, or held-item recovery movement. |
+| `31415992` | 2 | `S0` | `ic10/manufacturing/print_job_driver_v2_0.ic10` | Resolves Recipe execution shape, iterates PrinterExecution candidates, and normalizes print planning/execution progress for the scheduler. |
+| `31415993` | 3 | `S0` | `ic10/generic-jobs/generic_job_selector_v3_0.ic10` | Read-only coherent Job Store selector: default TRANSFORM/PRINT mode or exact JobType mode, Priority descending, JobId cursor fairness. |
+| `31415994` | 2 | `S0` | `ic10/manufacturing/manufacturing_driver_router_v2_0.ic10` | Normalizes TRANSFORM and PRINT domain drivers behind one scheduler-facing result ABI. |
+| `31415995` | 1 | `S0` | `ic10/manufacturing/manufacturing_scheduler_v1_0.ic10` | Sole production Generic Job lifecycle writer; applies one legal generation-checked edge at a time. |
+| `31415996` | 2 | `S0` | `ic10/printer-directory/printer_execution_bank_v2_0.ic10` | Locally manages up to six pinned printers so output-slot occupancy can be read safely and Lock can guard one reservation. |
+| `31415997` | 2 | `S0` | `ic10/printer-directory/printer_capacity_client_v2_0.ic10` | Reserves/releases exact selected printers by ReferenceId and advertised execution-bank pin; fails closed on pin swaps. |
+| `31415998` | 1 | `S0` | `ic10/manufacturing/transform_candidate_readiness_v1_0.ic10` | Fences Transform Profile/Admission/Link-Resolver completion to one exact transform candidate request before execution. |
+| `31416001` | 3 | `S0` | `ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10` | Four-lane Job command arbiter for manufacturing lifecycle, dependency cancellation/creation, and POWER lifecycle requests. |
+| `31416002` | 1 | `S0` | `ic10/dependency-planning/job_requirement_view_v1_0.ic10` | Normalizes TRANSFORM and PRINT job requirements into one bounded ITEM requirement/output view. |
+| `31416003` | 1 | `S0` | `ic10/dependency-planning/item_producer_resolver_v1_0.ic10` | Generated reverse producer index from ITEM output ResourceType to transform or print producer identity. |
+| `31416004` | 1 | `S0` | `ic10/dependency-planning/generic_job_monitor_v1_0.ic10` | Coherently resolves one exact JobId and its current state/generation from Generic Job Store. |
+| `31416005` | 1 | `S0` | `ic10/dependency-planning/job_inventory_preflight_v1_0.ic10` | Quotes current ITEM inventory across Resource Reservations and publishes exact/lower-bound deficit plus rolling quote fingerprints. |
+| `31416006` | 2 | `S0` | `ic10/dependency-planning/dependency_child_creator_v2_0.ic10` | Builds one bounded child Job request after producer, ancestry, output, quantity, and parent-generation checks. |
+| `31416007` | 2 | `S0` | `ic10/dependency-planning/dependency_plan_store_v2_0.ic10` | Owns 32 committed eight-cell parent/child dependency plan records with ParentJobId commit markers. |
+| `31416008` | 2 | `S0` | `ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10` | Revalidates child identity/state and parent inventory; child completion alone never releases the parent. |
+| `31416009` | 1 | `S0` | `ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10` | Bounds dependency depth to two edges and rejects self/immediate-ancestor producer cycles. |
+| `31416010` | 1 | `S0` | `ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10` | Sole Dependency Plan Store mutation coordinator; applies plan upsert/clear and cancellation sequencing. |
+| `31416011` | 2 | `S0` | `ic10/dependency-planning/dependency_plan_builder_v2_0.ic10` | Builds new dependency plans using coherent inventory, active future-output claims, and bounded child creation. |
+| `31416012` | 2 | `S0` | `ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10` | Dependency Gate ABI2; only dependency-ready jobs reach the existing Transform/Print Driver Router. |
+| `31416013` | 1 | `S0` | `ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10` | Detects terminal/reaped parents and requests reference-aware dependency cleanup through the Planner. |
+| `31416014` | 1 | `S0` | `ic10/dependency-planning/dependency_child_validity_v1_0.ic10` | Validates one child Job against live Job Store state and current producer/catalog output semantics. |
+| `31416015` | 1 | `S0` | `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` | Sole Item-8 Job Store mailbox writer; atomically allocates child slots and checks parent JobId/generation/state. |
+| `31416016` | 1 | `S0` | `ic10/dependency-planning/dependency_claim_view_v1_0.ic10` | Read-only active future-output claim view with per-parent claim aggregation and unclaimed-surplus accounting. |
+| `31416017` | 1 | `S0` | `ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10` | Resolves Recipe manufacturing-reagent aliases into canonical ITEM ResourceTypes for dependency planning. |
+| `31416018` | 1 | `S0` | `ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10` | Read-only release advisor deciding whether a child is still shared/active and therefore cancellable. |
+| `31416019` | 1 | `S0` | `ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10` | Existing-plan controller: evaluate, replan, clear-ready, or reference-aware cancel without owning Plan Store mutation. |
+| `31416020` | 1 | `S0` | `ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10` | New-plan controller: orchestrates bounded plan construction and returns mutation intent to the sole Planner. |
+| `31416028` | 1 | `S0` | `ic10/power-grid/power_dispatch_plan_store_v1_0.ic10` | Owns one coherent bounded eight-flow power dispatch plan with odd/even publication fencing. |
+| `31416029` | 1 | `S0` | `ic10/power-grid/power_source_selector_v1_0.ic10` | Selects available POWER sources by preference while accounting for staged use and battery direction. |
+| `31416030` | 1 | `S0` | `ic10/power-grid/power_link_selector_v1_0.ic10` | Resolves a live source-to-sink POWER Resource Link and computes transformer source-side overhead. |
+| `31416031` | 1 | `S0` | `ic10/power-grid/power_sink_selector_v1_0.ic10` | Selects managed POWER sinks in critical/sheddable/charge dispatch order. |
+| `31416032` | 1 | `S0` | `ic10/power-grid/power_sink_flow_builder_v1_0.ic10` | Builds one sink flow, retrying later sources until a compatible physical path is found. |
+| `31416033` | 1 | `S0` | `ic10/power-grid/power_dispatch_sweep_v1_0.ic10` | Sweeps priority-ordered sinks, stages flows, and records shed/critical-shortage state. |
+| `31416034` | 1 | `S0` | `ic10/power-grid/power_dispatch_cycle_v1_0.ic10` | Owns Power PlanStore BEGIN -> sweep -> COMMIT transaction boundaries. |
+| `31416035` | 1 | `S0` | `ic10/power-grid/power_plan_validator_v1_0.ic10` | Revalidates a complete power plan against exact Reservation and Link generations before mutation. |
+| `31416036` | 1 | `S0` | `ic10/power-grid/power_reservation_committer_v1_0.ic10` | Commits one common POWER reservation epoch with shared-source aggregation and foreign-owner protection. |
+| `31416037` | 1 | `S0` | `ic10/power-grid/power_reservation_allocator_v1_0.ic10` | Validates, commits, cleans old/orphan epochs, and publishes the active power allocator authority. |
+| `31416038` | 1 | `S0` | `ic10/power-grid/power_load_executor_v1_0.ic10` | Break-before-make actuator for managed consumer and battery On state under committed plan authority. |
+| `31416039` | 1 | `S0` | `ic10/power-grid/power_link_executor_v1_0.ic10` | Sole transformer Setting/On actuator with exact plan, source/sink Reservation, epoch, and Link fencing. |
+| `31416041` | 1 | `S0` | `ic10/power-jobs/power_policy_target_resolver_v1_0.ic10` | Resolves one PolicyId to exactly one current managed POWER Reservation/Endpoint. |
+| `31416042` | 1 | `S0` | `ic10/power-jobs/power_job_policy_apply_v1_0.ic10` | Revalidates a READY POWER job and applies the endpoint policy override/watt cap. |
+| `31416043` | 1 | `S0` | `ic10/power-jobs/power_job_policy_verify_v1_0.ic10` | Verifies Generic Resource Reservation coherently reflects the requested POWER policy semantics. |
+| `31416044` | 1 | `S0` | `ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10` | Gateway-lane-D lifecycle client returning ExpectedGeneration+1 after successful SET_STATE. |
+| `31416045` | 1 | `S0` | `ic10/power-jobs/power_job_prepare_v1_0.ic10` | Prepares POWER jobs through READY, applies policy, and advances to RUNNING. |
+| `31416046` | 1 | `S0` | `ic10/power-jobs/power_job_finalize_v1_0.ic10` | Verifies applied POWER policy and advances RUNNING -> VERIFYING -> COMPLETE. |
+| `31416047` | 1 | `S0` | `ic10/power-jobs/power_job_scheduler_v1_0.ic10` | Coordinates selection, prepare/apply, and verify/finalize for finite POWER policy jobs. |
+| `31416048` | 1 | `S0` | `ic10/process-furnace/furnace_process_condition_request_v1_0.ic10` | Publishes Transform-backed ProcessCondition ABI1 pressure/temperature demand for a selected Furnace or Advanced Furnace. |
+| `31416048` | 1 | `S0` | `ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10` | Converts coherent PowerPlan shortage into a fuel ProcessCondition/PressureDomain demand and safely starts/stops a Gas Fuel Generator after fuel and ambient verification. |
+| `31416049` | 1 | `S0` | `ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10` | Controls a Gas Mixer with temperature-corrected component ratios from a prepared-mixture Resource Profile. |
+| `31416050` | 1 | `S0` | `ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10` | Controls a hot/cold Gas Mixer to satisfy a ProcessCondition temperature window without owning pressure-routing authority. |
+| `31416051` | 1 | `S0` | `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` | Read-only six-source live commissioning snapshot probe with optional stack-generation fencing. |
+| `31416052` | 1 | `S0` | `ic10/live-commissioning/stack_cell_monitor_v1_0.ic10` | Read-only target IC stack-cell probe with a Logic Memory address selector and visible value mirror. |
+| `31416060` | 1 | `S0` | `ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10` | Derives pressure requirements from a coherently committed medium profile; telemetry ABI2. |
+| `31416061` | 1 | `S0` | `ic10/controller-pi/controller_pi_runtime_v1_1.ic10` | Continuous PI controller consuming Generic Host effective config. |
+| `31416062` | 1 | `S0` | `ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10` | Fill/settle/drain discrete state-machine controller. |
+| `31416063` | 1 | `S0` | `ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10` | Owns LOW/HIGH target or passive STORAGE envelope; telemetry ABI2. |
+| `31416064` | 1 | `S0` | `ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10` | One physical pump edge; publishes coherent candidate topology and executes only Guard-authorized leases. |
+| `31416065` | 1 | `S0` | `ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10` | Projects an Advanced Furnace embedded inlet/outlet pump as ControllerPressureTransfer ABI2 and actuates only under PressureGrid GrantGuard authority. |
+| `31416066` | 1 | `S0` | `ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10` | Projects one active ProcessCondition target as standard ControllerPressureDomain ABI2 for ordinary PressureGrid planning. |
+| `31416067` | 1 | `S0` | `ic10/live-commissioning/stack_header_reader_v1_0.ic10` | Read-only common stack header reader: reports a target's identity, ABI, capabilities, and declared fields. |
+| `31416068` | 1 | `S0` | `ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10` | Aggregates Store lifecycle counts and used/free/capacity telemetry; marks missing nodes. |
+| `31416069` | 1 | `S0` | `ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10` | Plans whole-item compaction from DRAINING Stores into compatible live Store capacity. |
+| `31416070` | 1 | `S0` | `ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10` | Safely retires an empty Store and repairs neighboring topology. |
+| `31416071` | 1 | `S0` | `ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10` | Copies and commits one whole item to reserved destination capacity, then reclaims the source tail. |
+| `31416072` | 2 | `S0` | `ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10` | Generic schema/version-qualified candidate selector for TransformLane or PrinterExecution snapshots; supports tier or bitmask capability matching. |
+| `31416073` | 2 | `S0` | `ic10/manufacturing/transform_candidate_executor_v2_0.ic10` | Evaluates and launches one transform candidate through the existing Admission/Resolver/Stager/Allocator/Runtime transaction. |
+| `31416074` | 2 | `S0` | `ic10/manufacturing/print_candidate_executor_v2_0.ic10` | Evaluates one print candidate, reserves output capacity, resolves/material-allocates reagents, and launches the generic print runtime. |
+| `31416075` | 2 | `S0` | `ic10/manufacturing/generic_print_runtime_v2_0.ic10` | Runs a bounded printer batch through native ExecuteRecipe and verifies coherent ExportCount completion. |
+| `31416076` | 2 | `S0` | `ic10/manufacturing/transform_job_driver_v2_0.ic10` | Iterates TransformLane candidates and normalizes transform planning/execution progress for the scheduler. |
+<!-- PUBLISHED_HEADERS END -->
+
+## Catalog Store ABI v6
+
+Magic `31415968`, ABI `6`. It publishes the common header at `S0..S3`: the coordinator assigns the folded `SchemaId` at `S3`, and the instance, coordinator identity, and store-chain pointers moved to `S13`, `S14`, `S21` and `S24`. `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` is the only physical Store program. Human commissioning sets only `S18 NodeId` (1..64); Coordinator ABI4 assigns schema/version/instance, partition, StoreOrdinal, topology, Coordinator identity, and AssignmentEpoch.
+
+Store ABI6 uses a generic item heap rather than schema-specific fixed regions:
 
 ```text
 S9   LocalItemCount
@@ -85,17 +290,28 @@ S32.. item directory [ItemBase, ItemCellCount]
 
 Each item consumes its payload size plus two directory cells. See `docs/CATALOG_STORAGE.md`.
 
-## Catalog Loader metadata ABI v4
+## Catalog Loader metadata ABI v5
 
-Magic `31415969`, ABI `4`. A generated Loader is one-shot, self-clearing, sparse, and **relocatable**. It publishes schema/version/instance/partition, LoaderId, item count, total payload cells, signature, and an item directory from S16. Generated S13 TargetStoreRef and S14 AssignmentToken begin zero; the live Router writes them after runtime placement. S15 is the next Loader item index already imported. Ready S12 is written last.
+Magic `31415969`, ABI `5`. A generated Loader is one-shot, self-clearing, sparse, and **relocatable**. It publishes the common header at `S0..S3` — `CapabilityMask` `1` and `SchemaId` `HASH("<schema>.v<version>")` — then its payload from `S8`:
 
-## Catalog Coordinator ABI v3
+```text
+S8/S9   schema id and version, unfolded for Store ABI6 matching (transitional)
+S10     instance      S14 item count        S18 Ready, written LAST
+S11     partition     S15 header cells      S19 TargetStoreRef, begins zero
+S12     LoaderId      S16 total payload     S20 AssignmentToken, begins zero
+S13     kind          S17 signature         S21 next imported item index
+S24..   item directory
+```
 
-`ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` publishes magic `31415970`, ABI3. It owns CoordinatorId/Epoch, Store claims, AssignmentEpoch, topology seqlock, and runtime capacity requests. `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10` publishes magic `31415971`, ABI3 and places each pending Loader ABI4 item into compatible ACTIVE Store capacity or asks Core to claim another Generic Store.
+The Router writes `S19`/`S20` after runtime placement. `S8`/`S9` disappear when Store ABI6 folds its own schema slots.
+
+## Catalog Coordinator ABI v4
+
+`ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` publishes magic `31415970`, ABI4 with an empty capability mask at `S2`. Its identity and fencing cells moved out of the header: `S14` CoordinatorId, `S15` Epoch, `S16` publication generation, `S21` AssignmentEpoch, and `S22` the topology seqlock that every catalog view fences on. It owns CoordinatorId/Epoch, Store claims, AssignmentEpoch, topology seqlock, and runtime capacity requests. `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10` publishes magic `31415971`, ABI3 and places each pending Loader ABI5 item into compatible ACTIVE Store capacity or asks Core to claim another Generic Store.
 
 The Store registry is `ic10/directory-core/generic_registry_directory_host_v2_0.ic10`, generic magic `31415982`, Host ABI3, publishing `DirectorySchema.CatalogStoreNode` schema version 1. Directory View `31415975` is ABI2 and Recovery `31415976` is ABI2.
 
-Coordinator ABI3 supports 64 NodeIds, missing/duplicate health, higher-epoch recovery, runtime Store placement, item-level drain/compaction, and empty Store retirement. See `docs/CATALOG_COORDINATION.md`.
+Coordinator ABI4 supports 64 NodeIds, missing/duplicate health, higher-epoch recovery, runtime Store placement, item-level drain/compaction, and empty Store retirement. See `docs/CATALOG_COORDINATION.md`.
 
 ## Catalog Inspector
 
@@ -103,7 +319,7 @@ Coordinator ABI3 supports 64 NodeIds, missing/duplicate health, higher-epoch rec
 
 ## Controller discovery through Generic Snapshot Directory ABI v1
 
-The shared discovery path supports **64 telemetry controllers**. `ic10/controller-discovery/controller_directory_adapter_v4_0.ic10` publishes `DIRECTORY_ADAPTER_ABI_V2` candidates with schema `DirectorySchema.Controller`; `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` commits them into `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10`.
+The shared discovery path supports **64 telemetry controllers**. `ic10/controller-discovery/controller_directory_adapter_v4_0.ic10` publishes `DIRECTORY_ADAPTER_ABI_V3` candidates with schema `DirectorySchema.Controller`; `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` commits them into `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10`.
 
 ```text
 Controller Directory (Generic Snapshot Host)
@@ -125,7 +341,7 @@ A snapshot with overflow set is **known incomplete**. Controller Selector report
 
 ## Printer Directory schema v2
 
-`ic10/printer-directory/printer_directory_adapter_v1_0.ic10` publishes Adapter ABI2 candidates for `DirectorySchema.Printer` v2. Generic Bridge/Host publish:
+`ic10/printer-directory/printer_directory_adapter_v1_0.ic10` publishes Adapter ABI3 candidates for `DirectorySchema.Printer` v2. Generic Bridge/Host publish:
 
 ```text
 [ReferenceId, FamilyHash, ProcessorSpec]
@@ -272,7 +488,7 @@ For Dial kinds, `+3` must provide the intended Dial Mode/step count (`1..999`). 
 
 ### Input Profile Catalog Store / View
 
-Input Profiles use Store ABI5 with `CatalogSchemaId=HASH("CatalogSchema.InputProfile")`, **CatalogSchemaVersion=3**, and stable `CatalogInstanceId=HASH("Catalog.InputProfiles.Schema3")`. Six self-contained variable-length production/diagnostic profiles fit one Store at runtime and are supplied by the generated `ic10/input-profile-catalog/input_profile_catalog_loader_*_v4_0.ic10` candidates.
+Input Profiles use Store ABI6 with `CatalogSchemaId=HASH("CatalogSchema.InputProfile")`, **CatalogSchemaVersion=3**, and stable `CatalogInstanceId=HASH("Catalog.InputProfiles.Schema3")`. Six self-contained variable-length production/diagnostic profiles fit one Store at runtime and are supplied by the generated `ic10/input-profile-catalog/input_profile_catalog_loader_*_v4_0.ic10` candidates.
 
 Each schema-v3 item is:
 
@@ -370,15 +586,15 @@ The Bridge configures Resolver count/Profile from the Loader-validated Editor st
 
 ## Unified Resource Profile Catalog / View
 
-Resource Profiles use Store ABI5, `CatalogSchemaId=HASH("CatalogSchema.ResourceProfile")`, **schema version 2**, and instance `HASH("Catalog.ResourceProfiles.Schema2")`. Every profile is a fixed 16-cell item: 14 semantic cells plus two zero padding cells (`SchemaCellMask=0x3fff`). PartitionKey is ResourceClass.
+Resource Profiles use Store ABI6, `CatalogSchemaId=HASH("CatalogSchema.ResourceProfile")`, **schema version 2**, and instance `HASH("Catalog.ResourceProfiles.Schema2")`. Every profile is a fixed 16-cell item: 14 semantic cells plus two zero padding cells (`SchemaCellMask=0x3fff`). PartitionKey is ResourceClass.
 
-With the 2-cell Store item-directory overhead, a Store holds 26 such items. The current 39 records derive at runtime as one FLUID Store (10), two ITEM Stores (26+1), one POWER Store (1), and one ENERGY Store (1). Seven Loader ABI4 candidates provide the records; none contains a Store ordinal or physical target.
+With the 2-cell Store item-directory overhead, a Store holds 26 such items. The current 39 records derive at runtime as one FLUID Store (10), two ITEM Stores (26+1), one POWER Store (1), and one ENERGY Store (1). Seven Loader ABI5 candidates provide the records; none contains a Store ordinal or physical target.
 
 `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` accepts any Store in the catalog, follows runtime topology under a stable Coordinator sequence, scans `[ItemBase,ItemCellCount]` entries, and republishes Resource Profile View ABI1 with its existing S8..S21 semantic surface.
 
 ## Recipe Catalog / Lookup ABI v3
 
-Recipes use `CatalogSchema.Recipe`, **schema version 3**, through Store ABI5. Each recipe is one variable-width 4-cell-aligned item:
+Recipes use `CatalogSchema.Recipe`, **schema version 3**, through Store ABI6. Each recipe is one variable-width 4-cell-aligned item:
 
 ```text
 [RecipeHash, FamilyHash, RequiredCapability, FamilyOrdinal, InputCount,
@@ -415,11 +631,11 @@ Roadmap item 6 plus its hardening pass uses ordinals 172..187. Services whose re
 [RuntimeReferenceId, ProcessorReferenceId, ProcessorSpec]
 ```
 
-`ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10` publishes Adapter ABI2 candidates and accepts Transform Runtime ABI2. ProcessorSpec bits 0..7 are the capability mask; bits 8/9/10 are Power/Busy/Error.
+`ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10` publishes Adapter ABI3 candidates and accepts Transform Runtime ABI2. ProcessorSpec bits 0..7 are the capability mask; bits 8/9/10 are Power/Busy/Error.
 
 ### Manufacturing Candidate Selector ABI2
 
-Magic `31415986`. `ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10` accepts a **dynamic Snapshot Directory ReferenceId in S16**. Request cells are S2 schema ID, S3 optional key/FamilyHash, S4 capability, S5 comparison mode (`1 mask`, `2 tier`), S6 start ordinal, S7 request generation, and S15 expected schema version. It captures active bank + generation, scans, then requires the same active bank + generation before publishing status S9, candidate S10..S12, next ordinal S13, directory generation S14, and response token S8. One physical selector can therefore serve Transform and Print serially.
+Magic `31416072`. `ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10` accepts a **dynamic Snapshot Directory ReferenceId in S16**. Request cells are S17 schema ID, S18 optional key/FamilyHash, S19 capability, S20 comparison mode (`1 mask`, `2 tier`), S21 start ordinal, S22 request generation, and S15 expected schema version, its request mailbox having moved above the common S0..S7 header. It captures active bank + generation, scans, then requires the same active bank + generation before publishing status S9, candidate S10..S12, next ordinal S13, directory generation S14, and response token S8. One physical selector can therefore serve Transform and Print serially.
 
 ### Transform Candidate Readiness ABI1
 
@@ -427,11 +643,15 @@ Magic `31415998`. `ic10/manufacturing/transform_candidate_readiness_v1_0.ic10` o
 
 ### Transform Candidate Executor ABI2
 
-Magic `31415987`. `ic10/manufacturing/transform_candidate_executor_v2_0.ic10` delegates planning to Readiness on d0, launches the exact Runtime only after readiness succeeds, and consumes Runtime state only when Runtime ABI2 current request token S6 matches its request. S11 is target Job state, S12 ErrorStatus, S10 current request token.
+Magic `31416073`. `ic10/manufacturing/transform_candidate_executor_v2_0.ic10` delegates planning to Readiness on d0, launches the exact Runtime only after readiness succeeds, and consumes Runtime state only when Runtime ABI2 current request token S21 matches its request. It writes the TransformType to Runtime S8 and the request token to Runtime S16 last, and reads Runtime status at S20 -- the cells the material-transform migration moved those fields to. S11 is target Job state, S12 ErrorStatus, S10 current request token.
 
 ### Print Candidate Executor ABI2
 
-Magic `31415988`. `ic10/manufacturing/print_candidate_executor_v2_0.ic10` binds one exact PrinterRef to Recipe Execution View, Capacity Client ABI2, Print Material Resolver, and Generic Print Runtime ABI2. It publishes current request token S10 before exposing request-specific state, waits for exact runtime token matches, and waits for acknowledged capacity release before publishing terminal/wait/fault completion.
+Magic `31416074`. `ic10/manufacturing/print_candidate_executor_v2_0.ic10` binds one exact PrinterRef to Recipe Execution View, Capacity Client ABI2, Print Material Resolver, and Generic Print Runtime ABI2. It publishes current request token S10 before exposing request-specific state, waits for exact runtime token matches, and waits for acknowledged capacity release before publishing terminal/wait/fault completion.
+
+### Transform Job Driver ABI2
+
+Magic `31416076`. `ic10/manufacturing/transform_job_driver_v2_0.ic10` iterates TransformLane candidates for the Driver Router. It requests candidates from the shared Candidate Selector on d0, writing the directory ReferenceId to S16 and the request to S17..S22, and mirrors the selected candidate to Transform Candidate Executor S21..S26 on d1. Its own request mailbox is S12..S17, written by the Router.
 
 ### Print Material Resolver ABI1
 
@@ -439,7 +659,7 @@ Magic `31415989`. `ic10/manufacturing/print_material_resolver_v1_0.ic10` consume
 
 ### Generic Print Runtime ABI2
 
-Magic `31415990`. `ic10/manufacturing/generic_print_runtime_v2_0.ic10` consumes Print Material Resolver d0 and Multi Material Allocator ABI2 d1. S2 PrinterRef, S3 RecipeHash, S4 RequestedQuantity, S5 JobId, S6 request token; S7 is the **current accepted request token**, S8 target Job state, S9 ErrorStatus. It publishes initial request state/error before S7, issues native printer stack instructions only after material commit, and verifies ExportCount.
+Magic `31416075`. `ic10/manufacturing/generic_print_runtime_v2_0.ic10` consumes Print Material Resolver d0 and Multi Material Allocator ABI2 d1. S10 PrinterRef, S11 RecipeHash, S12 RequestedQuantity, S13 JobId, S14 request token; S15 is the **current accepted request token**, S8 target Job state, S9 ErrorStatus. It publishes initial request state/error before S15, issues native printer stack instructions only after material commit, and verifies ExportCount.
 
 ### Manufacturing drivers/router/scheduler
 
@@ -459,7 +679,7 @@ Magic `31415996`. `ic10/printer-directory/printer_execution_bank_v2_0.ic10` loca
 
 ### DirectorySchema.PrinterExecution v1
 
-`ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10` joins Printer Directory v2 with live Execution Banks ABI2 and publishes Adapter ABI2 records:
+`ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10` joins Printer Directory v2 with live Execution Banks ABI2 and publishes Adapter ABI3 records:
 
 ```text
 [PrinterReferenceId, FamilyHash, ProcessorSpec]
@@ -1177,7 +1397,7 @@ The 27 current ITEM records (10 ores, 7 basic ingots, 5 alloys, and 5 superalloy
 
 ### Resource Transform Catalog Store / Profile View
 
-Resource Transforms use Store ABI5 with `CatalogSchemaId=HASH("CatalogSchema.ResourceTransform")`, **payload schema version 4**. All 17 current transforms fit one Store at 466/512 cells including Store header and item-directory overhead; five generated `ic10/transform-catalog/resource_transform_catalog_loader_*_v6_0.ic10` candidates exist only because of IC10 source limits.
+Resource Transforms use Store ABI6 with `CatalogSchemaId=HASH("CatalogSchema.ResourceTransform")`, **payload schema version 4**. All 17 current transforms fit one Store at 466/512 cells including Store header and item-directory overhead; five generated `ic10/transform-catalog/resource_transform_catalog_loader_*_v6_0.ic10` candidates exist only because of IC10 source limits.
 
 Every transform is one self-contained item:
 
@@ -1198,7 +1418,7 @@ Capability bits are `SMELT_BASIC=1`, `FURNACE_ALLOY=2`, `ADVANCED_ALLOY=4`. Arc 
 
 The reusable live-directory infrastructure is defined in `docs/DIRECTORY_STANDARD.md` and `data/directory_schemas.json`.
 
-`DIRECTORY_ADAPTER_ABI_V2` uses magic `31415983`, ABI2. Candidate adapters publish:
+`DIRECTORY_ADAPTER_ABI_V3` uses magic `31415983`, ABI2. Candidate adapters publish:
 
 ```text
 S2 schema id             S3 schema version
@@ -1215,7 +1435,7 @@ There are no consumer-facing domain magic/ABI fields in the Adapter contract.
 
 `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` consumes Snapshot-mode adapters and drives `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10` (magic `31415981`, ABI1). The Host owns sorting, exact dedupe, overflow, A/B publication, stable generation, and publishes schema ID/version/width/capacity in S9..S12.
 
-`ic10/directory-core/generic_registry_directory_host_v2_0.ic10` (magic `31415982`, ABI3) consumes Registry-mode Adapter ABI2 directly. It accepts only `DirectorySchema.CatalogStoreNode` v1 with width 6/capacity 64, publishes schema ID at S2, schema version at S19, width at S20, capacity at S21, and an odd/even publication sequence at S23. It freezes the Adapter during a rebuild; readers require S23 even and unchanged around registry reads.
+`ic10/directory-core/generic_registry_directory_host_v2_0.ic10` (magic `31415982`, ABI3) consumes Registry-mode Adapter ABI3 directly. It accepts only `DirectorySchema.CatalogStoreNode` v1 with width 6/capacity 64, publishes schema ID at S2, schema version at S19, width at S20, capacity at S21, and an odd/even publication sequence at S23. It freezes the Adapter during a rebuild; readers require S23 even and unchanged around registry reads.
 
 Consumers identify a directory by **generic Host magic + Host ABI + DirectorySchemaId + DirectorySchemaVersion**. This is the canonical current directory contract; domain-specific compatibility facades are not retained.
 
@@ -1553,18 +1773,73 @@ Each descriptor is `[Mode, FieldOrStackCell, FenceStackCell]`: mode 0 disabled, 
 ## Stack Cell Monitor ABI1
 
 `ic10/live-commissioning/stack_cell_monitor_v1_0.ic10` is an on-demand,
-human-visible monitor for one stack cell on a standard or compact IC housing.
-Magic `31416052`, ABI1. `d0` is the target IC housing, `d1` is a Logic Memory
-whose `Setting` selects address `0..511`, and optional `d2` mirrors the sampled
-value to another writable `Setting` device. The monitor also writes the value to
-its own housing `Setting`; it never writes the target or selector.
+human-visible probe for one stack cell on a standard or compact IC housing.
+Magic `31416052`, ABI1, and it publishes the common header with `HAS_STATE` and
+`HAS_GENERATION`. `d0` is the target IC housing, `d1` is a Logic Memory whose
+`Setting` selects address `0..511`, and optional `d2` mirrors the sampled value.
+It never writes the target or selector.
 
 ```text
-S2  status: 1 finite value, 2 captured NaN,
-            -1 target missing, -2 target is not an IC housing,
-            -3 selector missing/unsupported, -4 invalid address
-S3  selected stack address
-S4  sampled value for status 1/2; 0 for pre-capture errors
-S5  target ReferenceId
-S6  sample generation, published last
+S5  own state: 1 booting, 4 target/selector missing, 2 ready
+S7  own sample generation, published last
+S8  status: 1 finite value, 2 captured NaN, -1 target missing,
+            -2 target is not an IC housing, -3 selector missing/unsupported,
+            -4 address is NaN, fractional, negative, or above 511
+S9  selected address
+S10 sampled value; 0 for pre-capture errors
+S11 target ReferenceId
 ```
+
+## Stack Header Reader ABI1
+
+`ic10/live-commissioning/stack_header_reader_v1_0.ic10` is the generic reader for
+the common header. Magic `31416067`, ABI1. `d0` is the target IC housing and
+optional `d1` mirrors the discovered magic to a `Setting` device. It reads only
+`S0..S7` of the target, validates the shape, and republishes every field the
+target's mask declares. Undeclared fields publish `0`.
+
+```text
+S5  own state: 1 booting, 4 target missing or not a housing, 2 ready
+S7  own sample generation, published last
+S8  status: 3 valid header, -1 target missing,
+            -2 target is not an IC housing,
+            -5 S0 holds no usable magic,
+            -6 header fields or extension bounds are invalid
+S9  discovered ServiceMagic      S13 discovered ExtensionBase
+S10 discovered ServiceABI        S14 discovered State
+S11 discovered CapabilityMask    S15 discovered TelemetryBase
+S12 discovered SchemaId          S16 discovered Generation
+S17 target ReferenceId
+```
+
+## Controller runtime identities
+
+The seven Generic Telemetry runtimes each publish their own service magic in the
+common header at `S0`, and point `S7` at the telemetry block that stays at `S96`.
+The telemetry magic `27182818` continues to identify that block, not the service:
+its consumers read `S96` exactly as before.
+
+## Common Stack Header v1
+
+Every service identifies itself in the first five cells:
+
+```text
+S0 ServiceMagic — the registered magic below; identity   (always)
+S1 ServiceABI                                            (always)
+S2 CapabilityMask — bits 0..4, 5+ reserved zero          (always)
+S3 SchemaId — HASH("<schema>.v<version>")      (mask bit 0)
+S4 ExtensionBase                               (mask bit 1)
+S5 State: bits 0..3 field (0 unreported,1 boot,2 ready,3 working,
+          4 blocked,5 fault), bits 4..7 reserved zero,
+          bits 8..52 service-specific                 (mask bit 2)
+S6 TelemetryBase                               (mask bit 3)
+S7 Generation — initialized 0, advanced, published last (mask bit 4)
+```
+
+A cell is read only when its mask bit is set. `S5` and `S7` are the header cells a
+service may change after publication. A stack cell is a double, so its exact
+integer width is 53 bits; the game caps `ext`/`ins` bit fields at the same 53. Extensions use magic `31416054`, version 1,
+an inclusive length in `4..192`, begin at `S8` or later, and must end inside
+`S0..S511`. Family payload begins
+after the header. See `docs/STACK_ABI_ENVELOPE.md` for identity, zero/unknown,
+compatibility, upgrade, inventory, and migration rules.

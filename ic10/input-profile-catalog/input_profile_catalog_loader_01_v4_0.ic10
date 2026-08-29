@@ -1,18 +1,18 @@
-# GENERATED Input Profile loader; relocatable sparse Loader ABI4; whole items.
+# GENERATED Input Profile loader; relocatable sparse Loader ABI5; whole items.
 clr db
 poke 0 31415969
-poke 1 4
-poke 2 HASH("CatalogSchema.InputProfile")
-poke 3 3
-poke 4 HASH("Catalog.InputProfiles.Schema3")
-poke 6 HASH("LoaderId:3f0185f14607e0e5")
-poke 7 1
-poke 8 1
-poke 9 16
-poke 10 84
-poke 11 HASH("LD4:25c16893ca091fd5")
-poke 16 428
-poke 17 84
+poke 1 5
+poke 2 1
+poke 3 HASH("CatalogSchema.InputProfile.v3")
+poke 10 HASH("Catalog.InputProfiles.Schema3")
+poke 12 HASH("LoaderId:3f0185f14607e0e5")
+poke 13 1
+poke 14 1
+poke 15 24
+poke 16 84
+poke 17 HASH("LD4:25c16893ca091fd5")
+poke 24 428
+poke 25 84
 poke 428 HASH("ControllerSequencer") # Sequencer Config
 poke 429 1
 poke 430 9
@@ -79,4 +79,4 @@ poke 506 163
 poke 507 LogicType.Setting
 poke 508 164
 poke 509 LogicType.Mode
-poke 12 1 # immutable candidate publication LAST
+poke 18 1 # immutable candidate publication LAST

@@ -28,7 +28,8 @@ for fn,toks in checks.items():
  p=R/fn
  if not p.exists():fails.append(fn+': missing');continue
  t=p.read_text()
- if len(t.splitlines())>120:fails.append(fn+': exceeds 120-line ceiling')
+ # validate_ic10.py owns the 120-line soft ceiling and its reviewed exemptions.
+ if len(t.splitlines())>128:fails.append(fn+': exceeds the 128-line hard limit')
  for s in toks:need(t,s,fn)
 # Planning must be compositional: new furnace/GFG services do not mutate Job Store or Power Plan Store.
 doc=(R/'docs/PROCESS_UTILITY_ORCHESTRATION.md').read_text()

@@ -1,1524 +1,1497 @@
 {
-  "format": "IC10_SCRIPT_CONTRACT_OVERRIDES_V1",
-  "scripts": {
-    "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10": {
-      "source_sha256": "c155b927ba9c8e10c90390067bdf3b3ec851ab60ad5acb95a3c52ace3c84b18f",
-      "publication_rules": [
-        {
-          "kind": "seqlock",
-          "address": 7,
-          "verification": "paired-sequence",
-          "description": "Topology sequence is odd while mutating and even when stable."
-        }
-      ]
-    },
-    "ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10": {
-      "source_sha256": "ec15af6eba44a6e05f0ef6e05dc9e86ce08524c0cdb029309a07127f28930c1b",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              5,
-              15
-            ],
-            [
-              64,
-              447
-            ]
-          ],
-          "dynamic_write_ranges": [
-            [
-              5,
-              15
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10": {
-      "source_sha256": "cfb6fab4f35c15f5a6001febbd6e23fac146a70f0d17665336be86a37b7e4403",
-      "external_readable_ranges": [
-        [
-          0,
-          12
-        ],
-        [
-          16,
-          399
-        ]
-      ]
-    },
-    "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10": {
-      "source_sha256": "f7eda97b48c6c8c8fba5d8d35e3b7180dfea52964604848a8a35f74a83f54f5e",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              64,
-              447
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10": {
-      "source_sha256": "f35e322aaf4b4df61d9c33d0aaedf738b7666c2c7b67f31e133ce9eab96c32c2",
-      "ports": {
-        "d1": {
-          "dynamic_read_ranges": [
-            [
-              64,
-              447
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10": {
-      "source_sha256": "ec92f0c629eb6212beb78d6a7654e00e5e3c2c7f8d2d3e6e19d6eb4066490613",
-      "ports": {
-        "d1": {
-          "dynamic_read_ranges": [
-            [
-              64,
-              447
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10": {
-      "source_sha256": "911377b66a22c665a292104a2232c97148bf176ee459397be4dfb30425c4a12d",
-      "publication_rules": [
-        {
-          "kind": "seqlock",
-          "address": 17,
-          "verification": "paired-sequence",
-          "description": "Store data sequence is odd while mutating and even when stable."
-        }
-      ],
-      "external_readable_ranges": [
-        [
-          0,
-          511
-        ]
-      ]
-    },
-    "ic10/controller-config/generic_persistent_config_host_v1_1.ic10": {
-      "source_sha256": "de990858a08a2d6fb69bd3ae85342495a0c95084783e408530bc615dfdedc221",
-      "external_readable_ranges": [
-        [
-          0,
-          159
-        ]
-      ],
-      "external_writable_ranges": [
-        [
-          2,
-          4
-        ],
-        [
-          6,
-          6
-        ],
-        [
-          10,
-          21
-        ],
-        [
-          32,
-          47
-        ],
-        [
-          128,
-          159
-        ]
-      ]
-    },
-    "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10": {
-      "source_sha256": "9aec5d25708442dab5aab7bbf343ffa7105409665e6083f4cc0252d9e5e7d30f",
-      "ports": {
-        "d0": {
-          "dynamic_property_sources": [
-            {
-              "operand": "r8",
-              "source_port": "d2",
-              "address": 103,
-              "fence": {
-                "address": 5,
-                "kind": "generation",
-                "description": "Config Host generation must be positive and unchanged around the LogicType read."
-              }
-            }
-          ]
-        },
-        "d2": {
-          "dynamic_read_ranges": [
-            [
-              96,
-              104
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10": {
-      "source_sha256": "823ecbd97efe9964ef8f43cccb15ff1ba6dd756dffdeecb8990b8dcc8c2b4627",
-      "external_readable_ranges": [
-        [
-          0,
-          12
-        ],
-        [
-          16,
-          143
-        ]
-      ],
-      "network_protocols": [
-        {
-          "reference": "r1",
-          "header_base": 96,
-          "magic": 27182818,
-          "abi_min": 1,
-          "abi_max": 2
-        }
-      ]
-    },
-    "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10": {
-      "source_sha256": "db06d8d0ba2cb733500adcfac452099600e8dacad887bc4bbd65ed1e734757da",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              128,
-              136
-            ]
-          ],
-          "dynamic_write_ranges": [
-            [
-              32,
-              47
-            ],
-            [
-              128,
-              143
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/controller-pi/controller_pi_runtime_v1_1.ic10": {
-      "source_sha256": "198abec84055612c926a357f5c85b04a4796c4f05eddbbc1d0d7f0276678cc0b",
-      "ports": {
-        "d0": {
-          "dynamic_property_sources": [
-            {
-              "operand": "r12",
-              "source_port": "d2",
-              "address": 107,
-              "fence": {
-                "address": 5,
-                "kind": "generation",
-                "description": "Config Host generation must be positive and unchanged around the LogicType read."
-              }
-            }
-          ]
-        },
-        "d1": {
-          "dynamic_property_sources": [
-            {
-              "operand": "r13",
-              "source_port": "d2",
-              "address": 108,
-              "fence": {
-                "address": 5,
-                "kind": "generation",
-                "description": "Config Host generation must be positive and unchanged around the LogicType read."
-              }
-            }
-          ]
-        },
-        "d2": {
-          "dynamic_read_ranges": [
-            [
-              96,
-              109
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/controller-pi/pi_config_policy_v1_0.ic10": {
-      "source_sha256": "1531b8990c76dda5f9fa470054ec92d24bbed1e73e6e0c5d6be1b9fc87d2cb4a",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              128,
-              141
-            ]
-          ],
-          "dynamic_write_ranges": [
-            [
-              32,
-              47
-            ],
-            [
-              128,
-              141
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10": {
-      "source_sha256": "278ee798021509d184ee06d1d5e9c1a7d785fa91c2dd54a18196aa9568582d00",
-      "ports": {
-        "d0": {
-          "dynamic_property_sources": [
-            {
-              "operand": "r2",
-              "source_port": "d3",
-              "address": 97,
-              "fence": {
-                "address": 5,
-                "kind": "generation",
-                "description": "Config Host generation must be positive and unchanged around the LogicType read."
-              }
-            }
-          ]
-        },
-        "d1": {
-          "dynamic_property_sources": [
-            {
-              "operand": "r5",
-              "source_port": "d3",
-              "address": 100,
-              "fence": {
-                "address": 5,
-                "kind": "generation",
-                "description": "Config Host generation must be positive and unchanged around the LogicType read."
-              }
-            }
-          ]
-        },
-        "d2": {
-          "dynamic_property_sources": [
-            {
-              "operand": "r6",
-              "source_port": "d3",
-              "address": 101,
-              "fence": {
-                "address": 5,
-                "kind": "generation",
-                "description": "Config Host generation must be positive and unchanged around the LogicType read."
-              }
-            }
-          ]
-        },
-        "d3": {
-          "dynamic_read_ranges": [
-            [
-              96,
-              104
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10": {
-      "source_sha256": "cad7a6c6895152acdfda4116c6fa812df14b5bc725686819efed15120a053d75",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              128,
-              136
-            ]
-          ],
-          "dynamic_write_ranges": [
-            [
-              32,
-              47
-            ],
-            [
-              128,
-              143
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10": {
-      "source_sha256": "dc5e2fe55a4fea390b06aea630030bb011b47bef2b8851fd6576e9aae46e999a",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              128,
-              383
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10": {
-      "source_sha256": "b7761e6f0c675c9c60094a9b10f32dd024f03dd7d4c386b153805d37c11e463a",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              128,
-              383
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/dependency-planning/dependency_claim_view_v1_0.ic10": {
-      "source_sha256": "da078738fccd3a2ccf97491b3eb06bec78b9ffc9ae514b3f677fc84119130929",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              128,
-              383
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/dependency-planning/dependency_plan_store_v2_0.ic10": {
-      "source_sha256": "ab2f8377f4856ac052f04a203df80d5639cba6c29fb70d778db56f293f5ba01b",
-      "publication_rules": [
-        {
-          "kind": "seqlock",
-          "address": 40,
-          "verification": "source-declaration",
-          "description": "Plan sequence is odd while mutating and even when stable."
-        }
-      ],
-      "external_readable_ranges": [
-        [
-          0,
-          40
-        ],
-        [
-          128,
-          383
-        ]
-      ]
-    },
-    "ic10/dependency-planning/generic_job_monitor_v1_0.ic10": {
-      "source_sha256": "745304c8c5d77066005cf188b4f3658d34cf4d7f1416558d9b20af9d391aba84",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              511
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10": {
-      "source_sha256": "0c8db8066ee8107113f4fc576083ed51aef649df3859bcd1d3c237064912d04b",
-      "ports": {
-        "d1": {
-          "dynamic_read_ranges": [
-            [
-              16,
-              31
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/dependency-planning/job_requirement_view_v1_0.ic10": {
-      "source_sha256": "c326dcc0c0df82b75478ace80569d6f29f60353fb472774056e95e47a50487e4",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              8,
-              71
-            ]
-          ]
-        },
-        "d1": {
-          "dynamic_read_ranges": [
-            [
-              8,
-              71
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10": {
-      "source_sha256": "750d5e6b0f140540b03a2fa8c950bcb7ada4acfa2019524d29f5ed665aad9280",
-      "ports": {
-        "d1": {
-          "dynamic_write_ranges": [
-            [
-              3,
-              8
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10": {
-      "source_sha256": "a0aa7830b85a0991640b8a99ea43c8fd599e8ebaedb3f14e227d29525cf4c358",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              16,
-              207
-            ]
-          ]
-        },
-        "d1": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              415
-            ]
-          ],
-          "dynamic_write_ranges": [
-            [
-              17,
-              19
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/directory-core/generic_registry_directory_host_v2_0.ic10": {
-      "source_sha256": "f2909112300ac1a0427377cef87d213311fb8e09bb064e78bf4fe1f2f64bd939",
-      "publication_rules": [
-        {
-          "kind": "seqlock",
-          "address": 23,
-          "verification": "paired-sequence",
-          "description": "Registry publication sequence is odd while mutating and even when stable."
-        }
-      ],
-      "external_readable_ranges": [
-        [
-          0,
-          24
-        ],
-        [
-          64,
-          447
-        ]
-      ],
-      "external_writable_ranges": [
-        [
-          5,
-          15
-        ],
-        [
-          18,
-          18
-        ]
-      ],
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              16,
-              399
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10": {
-      "source_sha256": "08c9c24721a7f35122d4254e83c22f0f1702a57d89281486b0c7e0b150a3c949",
-      "external_readable_ranges": [
-        [
-          0,
-          23
-        ],
-        [
-          32,
-          415
-        ]
-      ],
-      "external_writable_ranges": [
-        [
-          9,
-          22
-        ]
-      ]
-    },
-    "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10": {
-      "source_sha256": "856346080dfd53b917ad6e3868b9c65aed834eb936c397ec21a077b3c172115b",
-      "ports": {
-        "d0": {
-          "dynamic_write_ranges": [
-            [
-              7,
-              11
-            ],
-            [
-              14,
-              20
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/generic-jobs/generic_job_selector_v3_0.ic10": {
-      "source_sha256": "ac54ce211a7c3b0dfbcbc963d8c49c994461f932600c67c614c5be163f7d0024",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              511
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10": {
-      "source_sha256": "d203e28f5f3f11773a513c84b21cfe342b8c40cc6e480b015a655aad5e446a2a",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              14,
-              22
-            ],
-            [
-              32,
-              511
-            ]
-          ],
-          "dynamic_write_ranges": [
-            [
-              14,
-              22
-            ],
-            [
-              32,
-              511
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/generic-jobs/generic_job_store_v1_0.ic10": {
-      "source_sha256": "bc89caf461029cc3c754d8f5580fa010f6be1bbece3b02358072c72abb1d2cd9",
-      "publication_rules": [
-        {
-          "kind": "seqlock",
-          "address": 2,
-          "verification": "paired-sequence",
-          "description": "Queue sequence is odd while mutating and even when stable."
-        }
-      ],
-      "external_readable_ranges": [
-        [
-          0,
-          26
-        ],
-        [
-          32,
-          511
-        ]
-      ]
-    },
-    "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10": {
-      "source_sha256": "a9b652f1070089f263a862684500cd2bd67d9954d9582aaf0be0620037e81b71",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              37
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10": {
-      "source_sha256": "0007caaf99dc4d22dbd2f1fd49b5e815df28a1aa7a0d92651f6e6b7200d39171",
-      "external_readable_ranges": [
-        [
-          0,
-          10
-        ],
-        [
-          32,
-          37
-        ]
-      ],
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              415
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10": {
-      "source_sha256": "f7a5dfb214e49255911afdb022b09bfa319fca384654ad83be6ceba70a6601f3",
-      "external_readable_ranges": [
-        [
-          20,
-          20
-        ]
-      ]
-    },
-    "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10": {
-      "source_sha256": "b771adc664d7fa3c41de1ce851163581756766a3402368c5e055f0fe3ad3d93d",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              0,
-              511
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/manufacturing/print_material_resolver_v1_0.ic10": {
-      "source_sha256": "7b2a651d90ae832a9b730776c41ba11a71ce2c2be56a04afbe053adc90526a35",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              16,
-              79
-            ]
-          ]
-        },
-        "d1": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              159
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10": {
-      "source_sha256": "dfe01ba4c0db2e5f2c88a41a572ccf5c5037537459f1ec508722c910ee2166f2",
-      "external_readable_ranges": [
-        [
-          0,
-          12
-        ],
-        [
-          16,
-          207
-        ]
-      ]
-    },
-    "ic10/material-transform/material_transform_admission_v1_0.ic10": {
-      "source_sha256": "4db3eb2ee6b54d57b309ee07a2e08ffae0f4d54cf5177e2e8153cd74b4c0e97e",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              8,
-              19
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/material-transform/material_transform_link_resolver_v1_0.ic10": {
-      "source_sha256": "59a674ca91eb937e39ce982291d8110316f5e04512636b93fcee67b907ccb841",
-      "ports": {
-        "d1": {
-          "dynamic_read_ranges": [
-            [
-              9,
-              20
-            ]
-          ]
-        },
-        "d2": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              159
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10": {
-      "source_sha256": "01569e23cad823075032d40e240a000fd1b6c0ceefecb33aa70e5f682a01d5f1",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              16,
-              79
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10": {
-      "source_sha256": "6dc25d8e713766103d8d30891ad16afd3d5882324724896d87dbd3e0b3bf01e8",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              16,
-              79
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10": {
-      "source_sha256": "6bc70a98229d35831bde0c925b19c02c2c257ab41eecfb483a376fce872b3336",
-      "publication_rules": [
-        {
-          "kind": "seqlock",
-          "address": 2,
-          "verification": "paired-sequence",
-          "description": "Plan publication sequence is odd while mutating and even when stable."
-        }
-      ]
-    },
-    "ic10/power-grid/power_link_executor_v1_0.ic10": {
-      "source_sha256": "8e3557b8fef6e67d49b8658087781918477c4d293cb017848563cb6c0b9f3243",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              16,
-              79
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10": {
-      "source_sha256": "aaa963711fcae254173ff5a704f6c70d283ba0bd5bf677513672f769ddc398de",
-      "external_readable_ranges": [
-        [
-          0,
-          12
-        ],
-        [
-          16,
-          207
-        ]
-      ]
-    },
-    "ic10/power-grid/power_link_selector_v1_0.ic10": {
-      "source_sha256": "a6a176345b148cbb08bd3af6e7b8cff616c50c1f6bba98f729f3674d768ad46b",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              159
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/power-grid/power_load_executor_v1_0.ic10": {
-      "source_sha256": "2f053e2b71a19f4159f8d7c0d20d81ac1d2974bb81c37d20240fb763c79d68dc",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              16,
-              79
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/power-grid/power_plan_validator_v1_0.ic10": {
-      "source_sha256": "6cc578ddff4cf5e7a96ab5e59e7c0812e3f2725163c0d6a0d6bd4fe153dc0926",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              16,
-              79
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/power-grid/power_reservation_committer_v1_0.ic10": {
-      "source_sha256": "8a8e3743b928026668f1d407b6d711f46811ac04945a51d2a6d83e1d385adbb0",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              16,
-              79
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/power-grid/power_consumer_endpoint_v1_0.ic10": {
-      "source_sha256": "f312d7f2a0dcbf7c6420ff9f97405d7698b276786203c50f8e4af235ceff9205",
-      "ports": {
-        "d0": {
-          "dynamic_property_sources": [
-            {
-              "operand": "r2",
-              "source_port": "self",
-              "address": 16
-            }
-          ]
-        }
-      }
-    },
-    "ic10/power-grid/power_producer_endpoint_v1_0.ic10": {
-      "source_sha256": "d286c95a0594c9e1f3c4fc7d601d743e8877c3e4ff92fbc088a6482e842c9aec",
-      "ports": {
-        "d0": {
-          "dynamic_property_sources": [
-            {
-              "operand": "r2",
-              "source_port": "self",
-              "address": 16
-            }
-          ]
-        }
-      }
-    },
-    "ic10/power-grid/power_sink_selector_v1_0.ic10": {
-      "source_sha256": "fd99def1476531a6bccacacb56f9ff454eabb84736fbacc8496f325986ac9722",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              415
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/power-grid/power_source_selector_v1_0.ic10": {
-      "source_sha256": "8e6118ac0b18e2a0ba8e32d6d66e1b67c161a923a85297a90902e2f0a7c69fa9",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              415
-            ]
-          ]
-        },
-        "d1": {
-          "dynamic_read_ranges": [
-            [
-              16,
-              79
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/power-jobs/power_job_policy_apply_v1_0.ic10": {
-      "source_sha256": "2edae2d450a2e8ebc6b324cf51fd159bdabb14d6f4b845b2a702ac53d907db88",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              511
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": {
-      "source_sha256": "742b4a77e75c95a83069e4144da4d9734c68b877b5df7609a21bf81baebe6d48",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              415
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": {
-      "source_sha256": "f992c27fb0a57684d8ab9652b5e764a4cc93fd8330955d653ca5df027ff10f90",
-      "ports": {
-        "d3": {
-          "dynamic_property_sources": [
-            {
-              "operand": "r6",
-              "source_port": "d5",
-              "address": 101,
-              "fence": {
-                "address": 5,
-                "kind": "generation",
-                "description": "Config Host generation must be positive and unchanged around the LogicType read."
-              }
-            }
-          ]
-        },
-        "d4": {
-          "dynamic_property_sources": [
-            {
-              "operand": "r7",
-              "source_port": "d5",
-              "address": 102,
-              "fence": {
-                "address": 5,
-                "kind": "generation",
-                "description": "Config Host generation must be positive and unchanged around the LogicType read."
-              }
-            }
-          ]
-        },
-        "d5": {
-          "dynamic_read_ranges": [
-            [
-              96,
-              103
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10": {
-      "source_sha256": "3221eabd3c62934833381300ed13970a7d068e3c95c07e9dfa443a66fb29969d",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              287
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10": {
-      "source_sha256": "673468fbddde0eecc02d387fe36a6bc7cded03146838dbf0d9ffc8fdc943e99b",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              128,
-              135
-            ]
-          ],
-          "dynamic_write_ranges": [
-            [
-              32,
-              39
-            ],
-            [
-              128,
-              135
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10": {
-      "source_sha256": "62834690ed63a830f1193f7fb9c0851037dc7bf9520c6abea8dcf210508df2c1",
-      "ports": {
-        "d4": {
-          "dynamic_read_ranges": [
-            [
-              96,
-              99
-            ]
-          ]
-        }
-      },
-      "stack_fields": [
-        {
-          "address": 108,
-          "name": "StagedGrantMolesPerTick",
-          "access": [
-            "external-read",
-            "external-write"
-          ],
-          "description": "Allocator-owned staged grant consumed by the paired Grant Guard."
-        },
-        {
-          "address": 109,
-          "name": "StagedEpoch",
-          "access": [
-            "external-read",
-            "external-write"
-          ],
-          "description": "Allocator commit marker written after the staged payload."
-        },
-        {
-          "address": 110,
-          "name": "StagedPlannerReferenceId",
-          "access": [
-            "external-read",
-            "external-write"
-          ]
-        },
-        {
-          "address": 111,
-          "name": "StagedLeaseTicks",
-          "access": [
-            "external-read",
-            "external-write"
-          ]
-        },
-        {
-          "address": 117,
-          "name": "StagedSourceReservationReferenceId",
-          "access": [
-            "external-read",
-            "external-write"
-          ]
-        },
-        {
-          "address": 118,
-          "name": "StagedSinkReservationReferenceId",
-          "access": [
-            "external-read",
-            "external-write"
-          ]
-        },
-        {
-          "address": 119,
-          "name": "StagedMediumType",
-          "access": [
-            "external-read",
-            "external-write"
-          ]
-        },
-        {
-          "address": 120,
-          "name": "StagedRouteKind",
-          "access": [
-            "external-read",
-            "external-write"
-          ]
-        }
-      ]
-    },
-    "ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10": {
-      "source_sha256": "060cd44bb928c4212c49040478d96771fe3c589de31e362380baa6348026b2f1",
-      "ports": {
-        "d0": {
-          "dynamic_property_sources": [
-            {
-              "operand": "r2",
-              "source_port": "d1",
-              "address": 19,
-              "fence": {
-                "address": 5,
-                "kind": "generation",
-                "description": "Profile View generation must be positive and unchanged around the LogicType read."
-              }
-            }
-          ]
-        }
-      }
-    },
-    "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10": {
-      "source_sha256": "8349b28ddb20f8a6dd8a29dc367355b9c83ddab85e04cc810be966913bd36616",
-      "external_readable_ranges": [
-        [
-          0,
-          12
-        ],
-        [
-          16,
-          207
-        ]
-      ],
-      "ports": {
-        "d1": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              287
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10": {
-      "source_sha256": "1f00618374807d1ec2db90cac2e869a04bbb4b22f4d14cab87002d76d3d862d9",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              16,
-              31
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10": {
-      "source_sha256": "88412b6f21bc40738e9ff9671fc9ac4f51d08e0ad1f6d2b84e20de749729c107",
-      "external_readable_ranges": [
-        [
-          0,
-          31
-        ]
-      ],
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              415
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10": {
-      "source_sha256": "8930eb1aebbc6d2ca83ad88bf09689fea6233107c3ab5e5ad97879cc1b683711",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              415
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10": {
-      "source_sha256": "4871bb3d0afc335cc5a02142801df10108ad827f5857632285cb0f2fed620749",
-      "external_readable_ranges": [
-        [
-          0,
-          31
-        ]
-      ],
-      "external_writable_ranges": [
-        [
-          5,
-          7
-        ]
-      ]
-    },
-    "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10": {
-      "source_sha256": "65354efe88fcc1bbd1745b68797ee3b1c1fca980a30aa8c8a53f4f5b514fb8ba",
-      "ports": {
-        "d1": {
-          "dynamic_read_ranges": [
-            [
-              16,
-              31
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10": {
-      "source_sha256": "de63641dd2e95af9ce8a98a13364dc4b762f4c0a84fefeb8cf8635c73825adc7",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              415
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10": {
-      "source_sha256": "d717b3c80a3f71d7c708e66a0f46930c47c1f7a67a8fe4e45971eef54dcd726e",
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              128,
-              131
-            ]
-          ],
-          "dynamic_write_ranges": [
-            [
-              32,
-              35
-            ],
-            [
-              128,
-              131
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10": {
-      "source_sha256": "e8ca1cb91c472dbe854bd9f3b254ac820b0eccebb6248569cce62c7919000fbd",
-      "external_readable_ranges": [
-        [
-          0,
-          12
-        ],
-        [
-          16,
-          207
-        ]
-      ],
-      "ports": {
-        "d0": {
-          "dynamic_read_ranges": [
-            [
-              32,
-              415
-            ]
-          ]
-        }
-      }
-    },
-    "ic10/printer-directory/printer_directory_adapter_v1_0.ic10": {
-      "source_sha256": "f943f68445767a9d49562f53f94b851d5be1fed57b14d678c97d7814bae1e9a9",
-      "external_readable_ranges": [
-        [
-          0,
-          12
-        ],
-        [
-          16,
-          207
-        ]
-      ]
-    },
-    "ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10": {
-      "source_sha256": "130ffbe007fed877239f042ecf20ba6c91fe66739cc605468f26d0ea1de25b12",
-      "ports": {
-        "d0": {
-          "dynamic_property_sources": [
-            {
-              "operand": "r2",
-              "source_port": "d4",
-              "address": 13,
-              "fence": {
-                "address": 5,
-                "kind": "generation",
-                "description": "Profile View generation must be positive and unchanged around the LogicType read."
-              }
-            }
-          ]
-        },
-        "d1": {
-          "dynamic_property_sources": [
-            {
-              "operand": "r4",
-              "source_port": "d4",
-              "address": 15,
-              "fence": {
-                "address": 5,
-                "kind": "generation",
-                "description": "Profile View generation must be positive and unchanged around the LogicType read."
-              }
-            }
-          ]
-        },
-        "d2": {
-          "dynamic_property_sources": [
-            {
-              "operand": "r2",
-              "source_port": "d4",
-              "address": 13,
-              "fence": {
-                "address": 5,
-                "kind": "generation",
-                "description": "Profile View generation must be positive and unchanged around the LogicType read."
-              }
-            },
-            {
-              "operand": "r4",
-              "source_port": "d4",
-              "address": 15,
-              "fence": {
-                "address": 5,
-                "kind": "generation",
-                "description": "Profile View generation must be positive and unchanged around the LogicType read."
-              }
-            }
-          ]
-        }
-      }
-    },
-    "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10": {
-      "source_sha256": "e21389e28921e55e78ea07877259a143d40fe57370af82b4dd7662029cee9c81",
-      "ports": {
-        "d0": {
-          "dynamic_property_sources": [
-            {
-              "operand": "r2",
-              "source_port": "d1",
-              "address": 13,
-              "fence": {
-                "address": 5,
-                "kind": "generation",
-                "description": "Profile View generation must be positive and unchanged around the LogicType read."
-              }
-            },
-            {
-              "operand": "r4",
-              "source_port": "d1",
-              "address": 15,
-              "fence": {
-                "address": 5,
-                "kind": "generation",
-                "description": "Profile View generation must be positive and unchanged around the LogicType read."
-              }
-            }
-          ]
-        }
-      }
-    },
-    "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10": {
-      "source_sha256": "e66aff17ae0d3696f87e922d03bfb5592d307e81c37c5549b30724b76228d72b",
-      "stack_fields": [
-        {
-          "address": 108,
-          "name": "StagedGrantMolesPerTick",
-          "access": [
-            "external-read",
-            "external-write"
-          ]
-        },
-        {
-          "address": 109,
-          "name": "StagedEpoch",
-          "access": [
-            "external-read",
-            "external-write"
-          ]
-        },
-        {
-          "address": 110,
-          "name": "StagedPlannerReferenceId",
-          "access": [
-            "external-read",
-            "external-write"
-          ]
-        },
-        {
-          "address": 111,
-          "name": "StagedLeaseTicks",
-          "access": [
-            "external-read",
-            "external-write"
-          ]
-        },
-        {
-          "address": 117,
-          "name": "StagedSourceReservationReferenceId",
-          "access": [
-            "external-read",
-            "external-write"
-          ]
-        },
-        {
-          "address": 118,
-          "name": "StagedSinkReservationReferenceId",
-          "access": [
-            "external-read",
-            "external-write"
-          ]
-        },
-        {
-          "address": 119,
-          "name": "StagedMediumType",
-          "access": [
-            "external-read",
-            "external-write"
-          ]
-        },
-        {
-          "address": 120,
-          "name": "StagedRouteKind",
-          "access": [
-            "external-read",
-            "external-write"
-          ]
-        }
-      ]
-    },
-    "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10": {
-      "source_sha256": "149ea4c71df8a27e1f3229f1952559202834c1d2044992bd3bae042e0a124b60",
-      "external_readable_ranges": [
-        [
-          0,
-          23
-        ]
-      ]
-    },
-    "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10": {
-      "source_sha256": "dd238e7430026441e2cacbe5e5b12d0e9d4490887300e59d06c8a7586fcfc644",
-      "external_readable_ranges": [
-        [
-          0,
-          12
-        ],
-        [
-          16,
-          207
-        ]
-      ]
-    },
-    "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10": {
-      "source_sha256": "d10ca64db22b2a48b990ee2b47a77f678e1332aa52761806fb0e31a09204148b",
-      "external_readable_ranges": [
-        [
-          0,
-          12
-        ],
-        [
-          16,
-          79
-        ]
-      ]
-    },
-    "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10": {
-      "source_sha256": "97b610918a51fc74704a6e9b2b353d074d771d98517b272030560fa27509f31f",
-      "external_readable_ranges": [
-        [
-          0,
-          12
-        ],
-        [
-          16,
-          207
-        ]
-      ]
-    },
-    "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": {
-      "source_sha256": "29ceb963bbd5eab87bad41541f26be5dca7623a251ebbd7048ec57883e447d1b",
-      "external_readable_ranges": [
-        [
-          0,
-          69
-        ]
-      ]
+ "format": "IC10_SCRIPT_CONTRACT_OVERRIDES_V1",
+ "scripts": {
+  "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10": {
+   "source_sha256": "9908b2e5bc8087035f29efb60a772a8914ceb2582bbbba5c1a0711262484dab6",
+   "publication_rules": [
+    {
+     "kind": "seqlock",
+     "address": 22,
+     "verification": "paired-sequence",
+     "description": "Topology sequence is odd while mutating and even when stable."
     }
+   ]
+  },
+  "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10": {
+   "source_sha256": "af89e8c88a667ce592e3df6e8495c41ed68dc89797fd60e9b52c0d14099b28a5",
+   "external_readable_ranges": [
+    [
+     0,
+     401
+    ]
+   ]
+  },
+  "ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10": {
+   "source_sha256": "305aab7cab34af85accdf32ce5b91e18cacc13fca11721ecd390aad3814cacd5",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       5,
+       15
+      ],
+      [
+       64,
+       447
+      ]
+     ],
+     "dynamic_write_ranges": [
+      [
+       5,
+       15
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10": {
+   "source_sha256": "54c3e275af040474cf1da192e5be37aef6b5ce990d9528e8ffee2a63f8a14131",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       64,
+       447
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10": {
+   "source_sha256": "504b6bf644f69d0a18260b9e1460afd4fe359b28b0bf025372a5ee9d3c6b0d18",
+   "ports": {
+    "d1": {
+     "dynamic_read_ranges": [
+      [
+       64,
+       447
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10": {
+   "source_sha256": "12f09e5191f86547c43a0992756bc2573359770d750fdd0eeaf236a90eee5dad",
+   "ports": {
+    "d1": {
+     "dynamic_read_ranges": [
+      [
+       64,
+       447
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10": {
+   "source_sha256": "ef29932abe1845fe0da2d6aad4c1db686e924eebf10ac3aac7c620bdb488c3bc",
+   "publication_rules": [
+    {
+     "kind": "seqlock",
+     "address": 17,
+     "verification": "paired-sequence",
+     "description": "Store data sequence is odd while mutating and even when stable."
+    }
+   ],
+   "external_readable_ranges": [
+    [
+     0,
+     511
+    ]
+   ]
+  },
+  "ic10/controller-config/generic_persistent_config_host_v1_1.ic10": {
+   "source_sha256": "de990858a08a2d6fb69bd3ae85342495a0c95084783e408530bc615dfdedc221",
+   "external_readable_ranges": [
+    [
+     0,
+     159
+    ]
+   ],
+   "external_writable_ranges": [
+    [
+     2,
+     4
+    ],
+    [
+     6,
+     6
+    ],
+    [
+     10,
+     21
+    ],
+    [
+     32,
+     47
+    ],
+    [
+     128,
+     159
+    ]
+   ]
+  },
+  "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10": {
+   "source_sha256": "04afee075ea6fb0511298cd8e2211565a1412d28ebdf30911a2d3245fc8266d9",
+   "external_readable_ranges": [
+    [
+     0,
+     145
+    ]
+   ],
+   "network_protocols": [
+    {
+     "reference": "r1",
+     "header_base": 96,
+     "magic": 27182818,
+     "abi_min": 1,
+     "abi_max": 2
+    }
+   ]
+  },
+  "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10": {
+   "source_sha256": "7d3f3882ee0f93c7669fbda75cad412bf487d446af4a1c929851c5a13f33b204",
+   "ports": {
+    "d0": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r8",
+       "source_port": "d2",
+       "address": 103,
+       "fence": {
+        "address": 5,
+        "kind": "generation",
+        "description": "Config Host generation must be positive and unchanged around the LogicType read."
+       }
+      }
+     ]
+    },
+    "d2": {
+     "dynamic_read_ranges": [
+      [
+       96,
+       104
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10": {
+   "source_sha256": "db06d8d0ba2cb733500adcfac452099600e8dacad887bc4bbd65ed1e734757da",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       128,
+       136
+      ]
+     ],
+     "dynamic_write_ranges": [
+      [
+       32,
+       47
+      ],
+      [
+       128,
+       143
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/controller-pi/controller_pi_runtime_v1_1.ic10": {
+   "source_sha256": "b812ea0a25adedc38a7e8fb0b938542ce867c3db70d5223a4ee0cdf10398d848",
+   "ports": {
+    "d0": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r12",
+       "source_port": "d2",
+       "address": 107,
+       "fence": {
+        "address": 5,
+        "kind": "generation",
+        "description": "Config Host generation must be positive and unchanged around the LogicType read."
+       }
+      }
+     ]
+    },
+    "d1": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r13",
+       "source_port": "d2",
+       "address": 108,
+       "fence": {
+        "address": 5,
+        "kind": "generation",
+        "description": "Config Host generation must be positive and unchanged around the LogicType read."
+       }
+      }
+     ]
+    },
+    "d2": {
+     "dynamic_read_ranges": [
+      [
+       96,
+       109
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/controller-pi/pi_config_policy_v1_0.ic10": {
+   "source_sha256": "1531b8990c76dda5f9fa470054ec92d24bbed1e73e6e0c5d6be1b9fc87d2cb4a",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       128,
+       141
+      ]
+     ],
+     "dynamic_write_ranges": [
+      [
+       32,
+       47
+      ],
+      [
+       128,
+       141
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10": {
+   "source_sha256": "3159745690c8b8563036da5bab87a7d781e2c85f420a5016feae3575ea400279",
+   "ports": {
+    "d0": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r2",
+       "source_port": "d3",
+       "address": 97,
+       "fence": {
+        "address": 5,
+        "kind": "generation",
+        "description": "Config Host generation must be positive and unchanged around the LogicType read."
+       }
+      }
+     ]
+    },
+    "d1": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r5",
+       "source_port": "d3",
+       "address": 100,
+       "fence": {
+        "address": 5,
+        "kind": "generation",
+        "description": "Config Host generation must be positive and unchanged around the LogicType read."
+       }
+      }
+     ]
+    },
+    "d2": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r6",
+       "source_port": "d3",
+       "address": 101,
+       "fence": {
+        "address": 5,
+        "kind": "generation",
+        "description": "Config Host generation must be positive and unchanged around the LogicType read."
+       }
+      }
+     ]
+    },
+    "d3": {
+     "dynamic_read_ranges": [
+      [
+       96,
+       104
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10": {
+   "source_sha256": "cad7a6c6895152acdfda4116c6fa812df14b5bc725686819efed15120a053d75",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       128,
+       136
+      ]
+     ],
+     "dynamic_write_ranges": [
+      [
+       32,
+       47
+      ],
+      [
+       128,
+       143
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10": {
+   "source_sha256": "dc5e2fe55a4fea390b06aea630030bb011b47bef2b8851fd6576e9aae46e999a",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       128,
+       383
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10": {
+   "source_sha256": "b7761e6f0c675c9c60094a9b10f32dd024f03dd7d4c386b153805d37c11e463a",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       128,
+       383
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/dependency-planning/dependency_claim_view_v1_0.ic10": {
+   "source_sha256": "da078738fccd3a2ccf97491b3eb06bec78b9ffc9ae514b3f677fc84119130929",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       128,
+       383
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/dependency-planning/dependency_plan_store_v2_0.ic10": {
+   "source_sha256": "ab2f8377f4856ac052f04a203df80d5639cba6c29fb70d778db56f293f5ba01b",
+   "publication_rules": [
+    {
+     "kind": "seqlock",
+     "address": 40,
+     "verification": "source-declaration",
+     "description": "Plan sequence is odd while mutating and even when stable."
+    }
+   ],
+   "external_readable_ranges": [
+    [
+     0,
+     40
+    ],
+    [
+     128,
+     383
+    ]
+   ]
+  },
+  "ic10/dependency-planning/generic_job_monitor_v1_0.ic10": {
+   "source_sha256": "745304c8c5d77066005cf188b4f3658d34cf4d7f1416558d9b20af9d391aba84",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       511
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10": {
+   "source_sha256": "0c8db8066ee8107113f4fc576083ed51aef649df3859bcd1d3c237064912d04b",
+   "ports": {
+    "d1": {
+     "dynamic_read_ranges": [
+      [
+       16,
+       31
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/dependency-planning/job_requirement_view_v1_0.ic10": {
+   "source_sha256": "c326dcc0c0df82b75478ace80569d6f29f60353fb472774056e95e47a50487e4",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       8,
+       71
+      ]
+     ]
+    },
+    "d1": {
+     "dynamic_read_ranges": [
+      [
+       8,
+       71
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10": {
+   "source_sha256": "750d5e6b0f140540b03a2fa8c950bcb7ada4acfa2019524d29f5ed665aad9280",
+   "ports": {
+    "d1": {
+     "dynamic_write_ranges": [
+      [
+       3,
+       8
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10": {
+   "source_sha256": "6c9cf34f82f0090bcf844e368576c7de9119c89e117c34d950466c8011fcb1c8",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       18,
+       209
+      ]
+     ]
+    },
+    "d1": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       415
+      ]
+     ],
+     "dynamic_write_ranges": [
+      [
+       17,
+       19
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/directory-core/generic_registry_directory_host_v2_0.ic10": {
+   "source_sha256": "7a01d1b3749b00c6e3968a6bc2d4129eb4197b92a0f54407a887daa3eafdf3f1",
+   "publication_rules": [
+    {
+     "kind": "seqlock",
+     "address": 23,
+     "verification": "paired-sequence",
+     "description": "Registry publication sequence is odd while mutating and even when stable."
+    }
+   ],
+   "external_readable_ranges": [
+    [
+     0,
+     24
+    ],
+    [
+     64,
+     447
+    ]
+   ],
+   "external_writable_ranges": [
+    [
+     5,
+     15
+    ],
+    [
+     18,
+     18
+    ]
+   ],
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       16,
+       399
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10": {
+   "source_sha256": "08c9c24721a7f35122d4254e83c22f0f1702a57d89281486b0c7e0b150a3c949",
+   "external_readable_ranges": [
+    [
+     0,
+     23
+    ],
+    [
+     32,
+     415
+    ]
+   ],
+   "external_writable_ranges": [
+    [
+     9,
+     22
+    ]
+   ]
+  },
+  "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10": {
+   "source_sha256": "856346080dfd53b917ad6e3868b9c65aed834eb936c397ec21a077b3c172115b",
+   "ports": {
+    "d0": {
+     "dynamic_write_ranges": [
+      [
+       7,
+       11
+      ],
+      [
+       14,
+       20
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/generic-jobs/generic_job_selector_v3_0.ic10": {
+   "source_sha256": "ac54ce211a7c3b0dfbcbc963d8c49c994461f932600c67c614c5be163f7d0024",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       511
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10": {
+   "source_sha256": "d203e28f5f3f11773a513c84b21cfe342b8c40cc6e480b015a655aad5e446a2a",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       14,
+       22
+      ],
+      [
+       32,
+       511
+      ]
+     ],
+     "dynamic_write_ranges": [
+      [
+       14,
+       22
+      ],
+      [
+       32,
+       511
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/generic-jobs/generic_job_store_v1_0.ic10": {
+   "source_sha256": "bc89caf461029cc3c754d8f5580fa010f6be1bbece3b02358072c72abb1d2cd9",
+   "publication_rules": [
+    {
+     "kind": "seqlock",
+     "address": 2,
+     "verification": "paired-sequence",
+     "description": "Queue sequence is odd while mutating and even when stable."
+    }
+   ],
+   "external_readable_ranges": [
+    [
+     0,
+     26
+    ],
+    [
+     32,
+     511
+    ]
+   ]
+  },
+  "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10": {
+   "source_sha256": "a9b652f1070089f263a862684500cd2bd67d9954d9582aaf0be0620037e81b71",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       37
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10": {
+   "source_sha256": "a008bf95096fc5c7f7670b0fb793d3b567e1e575cd5faa4db67261313d52d407",
+   "external_readable_ranges": [
+    [
+     0,
+     10
+    ],
+    [
+     32,
+     37
+    ]
+   ],
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       415
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10": {
+   "source_sha256": "a00e0a86ba01765750901c900077d950ce991c94e3d2fc87813df5651342c416",
+   "external_readable_ranges": [
+    [
+     20,
+     20
+    ]
+   ]
+  },
+  "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10": {
+   "source_sha256": "7e13bc7de04f0f1e86280788d42bb1a64da4ba9ac9665e507992da2c335127f6",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       0,
+       511
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/live-commissioning/stack_header_reader_v1_0.ic10": {
+   "source_sha256": "8718d7fd3c9877d3117d482e669a0b8a063a9dfc5af69f2b108ac428a6c25981",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       8,
+       511
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/manufacturing/print_material_resolver_v1_0.ic10": {
+   "source_sha256": "a519a445cab6127959b657ca65069c9d1ce5c77862eb0c4a54497ac518674aeb",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       16,
+       79
+      ]
+     ]
+    },
+    "d1": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       159
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10": {
+   "source_sha256": "691b59cb24b41fe00e94641bc0d3ff898c928f2f9daab10f21f1ab6d2eb62088",
+   "external_readable_ranges": [
+    [
+     0,
+     209
+    ]
+   ]
+  },
+  "ic10/material-transform/material_transform_admission_v1_0.ic10": {
+   "source_sha256": "6bfa5cc9223abacbdfcf7fc35034e7893e5b945d58cad3f48e0db97c9c985aeb",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       8,
+       19
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/material-transform/material_transform_link_resolver_v1_0.ic10": {
+   "source_sha256": "18454a812c8d822b6fdac304279408e9f0778ca60a3952d1af4b0304241ff133",
+   "ports": {
+    "d1": {
+     "dynamic_read_ranges": [
+      [
+       9,
+       20
+      ]
+     ]
+    },
+    "d2": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       159
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10": {
+   "source_sha256": "a304e3bcbb672da69e5eaba299d45348109d13ca6ce3da362b477bbafe6a7583",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       16,
+       79
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10": {
+   "source_sha256": "1c763b7ab03b9edca93367b871dcf6f3e6802ed00d62737826bd409f3a4a821c",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       16,
+       79
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/power-grid/power_consumer_endpoint_v1_0.ic10": {
+   "source_sha256": "f312d7f2a0dcbf7c6420ff9f97405d7698b276786203c50f8e4af235ceff9205",
+   "ports": {
+    "d0": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r2",
+       "source_port": "self",
+       "address": 16
+      }
+     ]
+    }
+   }
+  },
+  "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10": {
+   "source_sha256": "6bc70a98229d35831bde0c925b19c02c2c257ab41eecfb483a376fce872b3336",
+   "publication_rules": [
+    {
+     "kind": "seqlock",
+     "address": 2,
+     "verification": "paired-sequence",
+     "description": "Plan publication sequence is odd while mutating and even when stable."
+    }
+   ]
+  },
+  "ic10/power-grid/power_link_executor_v1_0.ic10": {
+   "source_sha256": "8e3557b8fef6e67d49b8658087781918477c4d293cb017848563cb6c0b9f3243",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       16,
+       79
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/power-grid/power_link_selector_v1_0.ic10": {
+   "source_sha256": "9484f6b27335557e6b99c3fb433fadaec585877657420c44110a8ba480acffd2",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       159
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/power-grid/power_load_executor_v1_0.ic10": {
+   "source_sha256": "2f053e2b71a19f4159f8d7c0d20d81ac1d2974bb81c37d20240fb763c79d68dc",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       16,
+       79
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/power-grid/power_plan_validator_v1_0.ic10": {
+   "source_sha256": "6cc578ddff4cf5e7a96ab5e59e7c0812e3f2725163c0d6a0d6bd4fe153dc0926",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       16,
+       79
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/power-grid/power_producer_endpoint_v1_0.ic10": {
+   "source_sha256": "d286c95a0594c9e1f3c4fc7d601d743e8877c3e4ff92fbc088a6482e842c9aec",
+   "ports": {
+    "d0": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r2",
+       "source_port": "self",
+       "address": 16
+      }
+     ]
+    }
+   }
+  },
+  "ic10/power-grid/power_reservation_committer_v1_0.ic10": {
+   "source_sha256": "8a8e3743b928026668f1d407b6d711f46811ac04945a51d2a6d83e1d385adbb0",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       16,
+       79
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10": {
+   "source_sha256": "1ac2f83f18077488a2a91c7a01e544ff787dcfc242702dd9a3730477accdf9ca",
+   "external_readable_ranges": [
+    [
+     0,
+     209
+    ]
+   ]
+  },
+  "ic10/power-grid/power_sink_selector_v1_0.ic10": {
+   "source_sha256": "16204350f7b6f50e0512f4a4a39ee07b57321446cd57ba35d0da133027b2ec5f",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       415
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/power-grid/power_source_selector_v1_0.ic10": {
+   "source_sha256": "ac1f7b35372d07e53ec01f6b83ed36b7bddb4085500486623f44cbcc83ab90d7",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       415
+      ]
+     ]
+    },
+    "d1": {
+     "dynamic_read_ranges": [
+      [
+       16,
+       79
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/power-jobs/power_job_policy_apply_v1_0.ic10": {
+   "source_sha256": "5f536911e4ed151726bcfbda8d2a40d1eb00c1c1358efc8dee2d5c438f92143c",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       511
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": {
+   "source_sha256": "1d38dbce477ecb873339027aafedc73fb8bad41adaaf709d3138fe3ab95b353d",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       415
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": {
+   "source_sha256": "76ce80204804aee5797e958619a7cd92dd00509f782a7a90e9a91823760827a9",
+   "ports": {
+    "d3": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r6",
+       "source_port": "d5",
+       "address": 101,
+       "fence": {
+        "address": 5,
+        "kind": "generation",
+        "description": "Config Host generation must be positive and unchanged around the LogicType read."
+       }
+      }
+     ]
+    },
+    "d4": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r7",
+       "source_port": "d5",
+       "address": 102,
+       "fence": {
+        "address": 5,
+        "kind": "generation",
+        "description": "Config Host generation must be positive and unchanged around the LogicType read."
+       }
+      }
+     ]
+    },
+    "d5": {
+     "dynamic_read_ranges": [
+      [
+       96,
+       103
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10": {
+   "source_sha256": "34ddcd40902a4e08538461b43b12c01a2790fd2adac62706b4307543101881f3",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       287
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10": {
+   "source_sha256": "673468fbddde0eecc02d387fe36a6bc7cded03146838dbf0d9ffc8fdc943e99b",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       128,
+       135
+      ]
+     ],
+     "dynamic_write_ranges": [
+      [
+       32,
+       39
+      ],
+      [
+       128,
+       135
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10": {
+   "source_sha256": "cfe73dff9c3a4bbe564b297bd65bca5c4088e3cff3384c94c910dca357103abf",
+   "ports": {
+    "d4": {
+     "dynamic_read_ranges": [
+      [
+       96,
+       99
+      ]
+     ]
+    }
+   },
+   "stack_fields": [
+    {
+     "address": 108,
+     "name": "StagedGrantMolesPerTick",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Allocator-owned staged grant consumed by the paired Grant Guard."
+    },
+    {
+     "address": 109,
+     "name": "StagedEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Allocator commit marker written after the staged payload."
+    },
+    {
+     "address": 110,
+     "name": "StagedPlannerReferenceId",
+     "access": [
+      "external-read",
+      "external-write"
+     ]
+    },
+    {
+     "address": 111,
+     "name": "StagedLeaseTicks",
+     "access": [
+      "external-read",
+      "external-write"
+     ]
+    },
+    {
+     "address": 117,
+     "name": "StagedSourceReservationReferenceId",
+     "access": [
+      "external-read",
+      "external-write"
+     ]
+    },
+    {
+     "address": 118,
+     "name": "StagedSinkReservationReferenceId",
+     "access": [
+      "external-read",
+      "external-write"
+     ]
+    },
+    {
+     "address": 119,
+     "name": "StagedMediumType",
+     "access": [
+      "external-read",
+      "external-write"
+     ]
+    },
+    {
+     "address": 120,
+     "name": "StagedRouteKind",
+     "access": [
+      "external-read",
+      "external-write"
+     ]
+    }
+   ]
+  },
+  "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10": {
+   "source_sha256": "8f152dddb603e2703f38e0b9d85d868051e2a2e7f6870166b099a809f3f973b3",
+   "external_readable_ranges": [
+    [
+     0,
+     209
+    ]
+   ],
+   "ports": {
+    "d1": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       287
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10": {
+   "source_sha256": "1f00618374807d1ec2db90cac2e869a04bbb4b22f4d14cab87002d76d3d862d9",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       16,
+       31
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10": {
+   "source_sha256": "83e60e121498037c19975e9737d6d2bcfd6b963bcb3f66e92ec7d88f657911a1",
+   "external_readable_ranges": [
+    [
+     0,
+     31
+    ]
+   ],
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       415
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10": {
+   "source_sha256": "41baaecde855705463d9cf92014479bb8755705638d30643493a0a11f6956ccf",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       415
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10": {
+   "source_sha256": "4871bb3d0afc335cc5a02142801df10108ad827f5857632285cb0f2fed620749",
+   "external_readable_ranges": [
+    [
+     0,
+     31
+    ]
+   ],
+   "external_writable_ranges": [
+    [
+     5,
+     7
+    ]
+   ]
+  },
+  "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10": {
+   "source_sha256": "65354efe88fcc1bbd1745b68797ee3b1c1fca980a30aa8c8a53f4f5b514fb8ba",
+   "ports": {
+    "d1": {
+     "dynamic_read_ranges": [
+      [
+       16,
+       31
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10": {
+   "source_sha256": "d60e74a186b636321831f74ad867a6a8e3152e7cc767dfeac2ec307428cbaa80",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       415
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10": {
+   "source_sha256": "d466e37bb92533c445c974a80a06d7e2d6acee5b3ef1e85bf98b1159f7bdabe7",
+   "ports": {
+    "d0": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r2",
+       "source_port": "d1",
+       "address": 19,
+       "fence": {
+        "address": 29,
+        "kind": "generation",
+        "description": "Profile View generation must be positive and unchanged around the LogicType read."
+       }
+      }
+     ]
+    }
+   }
+  },
+  "ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10": {
+   "source_sha256": "d717b3c80a3f71d7c708e66a0f46930c47c1f7a67a8fe4e45971eef54dcd726e",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       128,
+       131
+      ]
+     ],
+     "dynamic_write_ranges": [
+      [
+       32,
+       35
+      ],
+      [
+       128,
+       131
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/printer-directory/printer_directory_adapter_v1_0.ic10": {
+   "source_sha256": "65b76e50515d273fcd9e39c8e8f1891defab4c78c21ccb75a58c2691327378f2",
+   "external_readable_ranges": [
+    [
+     0,
+     209
+    ]
+   ]
+  },
+  "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10": {
+   "source_sha256": "b08a73df55c517ec2670a2424fa70c91aa3c92ef6ac1377349103c8db93d3f63",
+   "external_readable_ranges": [
+    [
+     0,
+     209
+    ]
+   ],
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       32,
+       415
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10": {
+   "source_sha256": "a69486ae5e9bc2a294b236a86d102a7892c9bfe45f2f7f7c12e4431a682dc118",
+   "stack_fields": [
+    {
+     "address": 108,
+     "name": "StagedGrantMolesPerTick",
+     "access": [
+      "external-read",
+      "external-write"
+     ]
+    },
+    {
+     "address": 109,
+     "name": "StagedEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ]
+    },
+    {
+     "address": 110,
+     "name": "StagedPlannerReferenceId",
+     "access": [
+      "external-read",
+      "external-write"
+     ]
+    },
+    {
+     "address": 111,
+     "name": "StagedLeaseTicks",
+     "access": [
+      "external-read",
+      "external-write"
+     ]
+    },
+    {
+     "address": 117,
+     "name": "StagedSourceReservationReferenceId",
+     "access": [
+      "external-read",
+      "external-write"
+     ]
+    },
+    {
+     "address": 118,
+     "name": "StagedSinkReservationReferenceId",
+     "access": [
+      "external-read",
+      "external-write"
+     ]
+    },
+    {
+     "address": 119,
+     "name": "StagedMediumType",
+     "access": [
+      "external-read",
+      "external-write"
+     ]
+    },
+    {
+     "address": 120,
+     "name": "StagedRouteKind",
+     "access": [
+      "external-read",
+      "external-write"
+     ]
+    }
+   ]
+  },
+  "ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10": {
+   "source_sha256": "711535cdc7d0d51b3fa850dbf305c134992dbf0d39760de40a3102977a155893",
+   "ports": {
+    "d0": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r2",
+       "source_port": "d4",
+       "address": 13,
+       "fence": {
+        "address": 29,
+        "kind": "generation",
+        "description": "Profile View generation must be positive and unchanged around the LogicType read."
+       }
+      }
+     ]
+    },
+    "d1": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r4",
+       "source_port": "d4",
+       "address": 15,
+       "fence": {
+        "address": 29,
+        "kind": "generation",
+        "description": "Profile View generation must be positive and unchanged around the LogicType read."
+       }
+      }
+     ]
+    },
+    "d2": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r2",
+       "source_port": "d4",
+       "address": 13,
+       "fence": {
+        "address": 29,
+        "kind": "generation",
+        "description": "Profile View generation must be positive and unchanged around the LogicType read."
+       }
+      },
+      {
+       "operand": "r4",
+       "source_port": "d4",
+       "address": 15,
+       "fence": {
+        "address": 29,
+        "kind": "generation",
+        "description": "Profile View generation must be positive and unchanged around the LogicType read."
+       }
+      }
+     ]
+    }
+   }
+  },
+  "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10": {
+   "source_sha256": "b63eb21d5cfc8243fe0fd4c607669055647292c79a1fa5c7d494aa4cf88a1341",
+   "ports": {
+    "d0": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r2",
+       "source_port": "d1",
+       "address": 13,
+       "fence": {
+        "address": 29,
+        "kind": "generation",
+        "description": "Profile View generation must be positive and unchanged around the LogicType read."
+       }
+      },
+      {
+       "operand": "r4",
+       "source_port": "d1",
+       "address": 15,
+       "fence": {
+        "address": 29,
+        "kind": "generation",
+        "description": "Profile View generation must be positive and unchanged around the LogicType read."
+       }
+      }
+     ]
+    }
+   }
+  },
+  "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10": {
+   "source_sha256": "0948ee9c69a48fb3a2007f331f95f990d284283b9e1c3e45df5cf990576181a7",
+   "external_readable_ranges": [
+    [
+     0,
+     209
+    ]
+   ]
+  },
+  "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10": {
+   "source_sha256": "55c80d96f35687c2b155d36d9ab2a1aa3bb0de8a3f5a17c785e3dc02fde49823",
+   "external_readable_ranges": [
+    [
+     0,
+     81
+    ]
+   ]
+  },
+  "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10": {
+   "source_sha256": "acfb44deea89941a540de6b00a1700e6e6df40e2e42e37657a30fce75b78c2d6",
+   "external_readable_ranges": [
+    [
+     0,
+     209
+    ]
+   ]
+  },
+  "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10": {
+   "source_sha256": "f57209498d5bddc7e1ace82324db7c206fc32937e829f1de4d2c89149bb688e8",
+   "external_readable_ranges": [
+    [
+     0,
+     23
+    ]
+   ]
+  },
+  "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": {
+   "source_sha256": "49d27fd438c041cf93ee14480a67f600c1c4afd5570e26c117b38bb799c8b8b5",
+   "external_readable_ranges": [
+    [
+     0,
+     75
+    ]
+   ]
   }
+ }
 }

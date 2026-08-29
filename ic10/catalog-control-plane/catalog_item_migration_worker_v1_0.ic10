@@ -1,4 +1,8 @@
 # Catalog Item Migration Worker v1.0: d0 Core; copies newest whole item then pops source.
+Boot:
+poke 0 31416071
+poke 1 1
+poke 2 0
 Loop:
 yield
 bdns d0 Loop
@@ -19,9 +23,9 @@ getd r9 r1 r4
 add r11 r9 2
 getd r0 r2 29
 blt r0 r11 Clear
-get r0 d0 7
+get r0 d0 22
 add r0 r0 1
-put d0 7 r0
+put d0 22 r0
 getd r10 r2 20
 sub r10 r10 r9
 getd r12 r2 19
@@ -70,12 +74,12 @@ putd r1 29 r0
 getd r0 r1 15
 add r0 r0 1
 putd r1 15 r0
-get r0 d0 6
+get r0 d0 21
 add r0 r0 1
-put d0 6 r0
-get r0 d0 7
+put d0 21 r0
+get r0 d0 22
 add r0 r0 1
-put d0 7 r0
+put d0 22 r0
 Clear:
 blez r2 NoReserve
 putd r2 27 0

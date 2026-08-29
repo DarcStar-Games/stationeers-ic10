@@ -1,5 +1,5 @@
 {
-  "fingerprint": "f29e445566ab5a01c5d04e7c8aaaf054bfbaf69ec60091f95fb4dc730238a9bd",
+  "fingerprint": "af3f559f2e24b8bc9d940fcad23e28518b2cf87355c52ea474be94e43044408e",
   "results": {
     "tests/test_async_request.py": 0,
     "tests/test_banked_transaction.py": 0,
@@ -38,6 +38,7 @@
     "tests/test_script_contracts.py": 0,
     "tests/test_sequencer_protocol.py": 0,
     "tests/test_shared_input_protocol.py": 0,
+    "tests/test_stack_envelope.py": 0,
     "validation/validators/validate_abi_contracts.py": 0,
     "validation/validators/validate_async_request_contracts.py": 0,
     "validation/validators/validate_banked_transaction_contracts.py": 0,
@@ -61,6 +62,7 @@
     "validation/validators/validate_script_contracts.py": 0,
     "validation/validators/validate_script_headers.py": 0,
     "validation/validators/validate_source_catalog.py": 0,
+    "validation/validators/validate_stack_envelopes.py": 0,
     "validation/validators/validate_user_deployment_guide.py": 0
   },
   "scripts": [
@@ -84,6 +86,7 @@
     "validation/validators/validate_script_headers.py",
     "validation/validators/validate_source_catalog.py",
     "validation/validators/validate_script_contracts.py",
+    "validation/validators/validate_stack_envelopes.py",
     "validation/validators/validate_user_deployment_guide.py",
     "validation/validators/validate_item_storage_contracts.py",
     "validation/validators/validate_process_utility_contracts.py",
@@ -111,6 +114,7 @@
     "tests/test_pressure_reservation_protocol.py",
     "tests/test_pressure_route_cost.py",
     "tests/test_printer_directory.py",
+    "tests/test_stack_envelope.py",
     "tests/test_printer_execution_capacity.py",
     "tests/test_recipe_catalog.py",
     "tests/test_generator_productivity.py",

@@ -13,9 +13,7 @@ bne r0 31415981 NoDirectory
 getd r0 directory 1
 bne r0 1 NoDirectory
 getd r0 directory 9
-bne r0 HASH("DirectorySchema.Controller") NoDirectory
-getd r0 directory 10
-bne r0 1 NoDirectory
+bne r0 HASH("DirectorySchema.Controller.v1") NoDirectory
 getd r0 directory 11
 bne r0 2 NoDirectory
 getd r10 directory 2

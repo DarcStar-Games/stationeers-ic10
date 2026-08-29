@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/console_registry_v1_1.ic10",
-  "source_sha256": "6c59b961dcd4c86c087678ae240f639ddd7d8f1b15296f149df6ebf3e31b82fd",
+  "source_sha256": "7b936142c949946d481c40a569ed1f98a29b9028d7c7c4c9629a4d5fed734d6b",
   "identity": {
     "service_id": "ic10.script.console.registry",
     "implementation_revision": "1.1",
@@ -27,13 +27,14 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      7
+      8,
+      9
     ],
     "literal_writes": [
       0,
       1,
-      2
+      2,
+      8
     ],
     "dynamic_read": true,
     "dynamic_write": true,
@@ -81,13 +82,22 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 8,
+        "name": "S8",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
           "self-read",
           "self-write"
         ]
       },
       {
-        "address": 7,
-        "name": "S7",
+        "address": 9,
+        "name": "S9",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

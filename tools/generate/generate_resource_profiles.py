@@ -46,24 +46,25 @@ def main():
  view=f'''# Resource Profile View v4: dynamic Store ABI5 item directory; d0=any Store.
 poke 0 {VIEW_MAGIC}
 poke 1 {VIEW_ABI}
-poke 4 0
-poke 5 0
+poke 2 0
+poke 28 0
+poke 29 0
 Loop:
 yield
-get r10 db 2
-get r11 db 3
+get r10 db 26
+get r11 db 27
 bdns d0 Bad
 l r2 d0 ReferenceId
 get r12 d0 11
 blez r12 Bad
 getd r0 r12 0
 bne r0 {COORD_MAGIC} Bad
-getd r15 r12 7
+getd r15 r12 22
 mod r0 r15 2
 bnez r0 Bad
-get r13 d0 4
+get r13 d0 13
 First:
-getd r1 r2 6
+getd r1 r2 21
 blez r1 Store
 move r2 r1
 j First
@@ -72,11 +73,9 @@ getd r0 r2 0
 bne r0 {STORE_MAGIC} Bad
 getd r0 r2 1
 bne r0 {STORE_ABI} Bad
-getd r0 r2 2
-bne r0 HASH("{SCHEMA}") Bad
 getd r0 r2 3
-bne r0 {SCHEMA_VERSION} Bad
-getd r0 r2 4
+bne r0 HASH("{SCHEMA}.v{SCHEMA_VERSION}") Bad
+getd r0 r2 13
 bne r0 r13 Bad
 getd r14 r2 17
 mod r0 r14 2
@@ -93,7 +92,7 @@ getd r0 r2 r0
 bne r0 r10 Next
 getd r0 r2 r8
 bne r0 r11 Next
-poke 5 0
+poke 29 0
 add r0 r8 1
 getd r0 r2 r0
 poke 8 r0
@@ -111,33 +110,32 @@ j Copy
 Done:
 getd r0 r2 17
 bne r0 r14 Loop
-getd r0 r12 7
+getd r0 r12 22
 bne r0 r15 Loop
 poke 22 r13
-getd r0 r12 6
+getd r0 r12 21
 poke 23 r0
-poke 4 1
-poke 5 r14
+poke 28 1
+poke 29 r14
 j Loop
 Next:
 add r5 r5 1
 j Scan
 StoreDone:
-getd r1 r2 7
+getd r1 r2 24
 blez r1 Missing
 move r2 r1
 j Store
 Bad:
-poke 5 0
-poke 4 -2
+poke 29 0
+poke 28 -2
 j Loop
 Missing:
-getd r0 r12 7
+getd r0 r12 22
 bne r0 r15 Loop
-poke 5 0
-poke 4 -3
-j Loop
-'''
+poke 29 0
+poke 28 -3
+j Loop'''
  (R/VIEW_FILE).write_text(view)
  # Item 8 manufacturing reagent aliases are derived from ITEM Resource Profiles.
  reagents=[]; reagent_seen={}

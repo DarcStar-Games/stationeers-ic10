@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
-  "source_sha256": "f992c27fb0a57684d8ab9652b5e764a4cc93fd8330955d653ca5df027ff10f90",
+  "source_sha256": "76ce80204804aee5797e958619a7cd92dd00509f782a7a90e9a91823760827a9",
   "identity": {
     "service_id": "ic10.script.controller.pressure.domain.runtime",
     "implementation_revision": "1.2",
@@ -63,9 +63,9 @@
       "stack": {
         "literal_reads": [
           0,
-          5,
           8,
-          9
+          9,
+          29
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -88,8 +88,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.734379015ead8ad4",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.734379015ead8ad4",
+        "interface_id": "ic10.interface.access.8fd7464ff497e01d",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.8fd7464ff497e01d",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -315,6 +315,10 @@
       119
     ],
     "literal_writes": [
+      0,
+      1,
+      2,
+      6,
       96,
       97,
       98,
@@ -352,6 +356,42 @@
     "external_readable_ranges": [],
     "external_writable_ranges": [],
     "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 6,
+        "name": "S6",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
       {
         "address": 96,
         "name": "Header@S96.Magic",
@@ -484,6 +524,11 @@
     ],
     "headers": [
       {
+        "base": 0,
+        "magic": 31416063,
+        "abi": 1
+      },
+      {
         "base": 96,
         "magic": 27182818,
         "abi": 2
@@ -500,6 +545,13 @@
   },
   "contracts": {
     "provides": [
+      {
+        "protocol_id": "ic10.stack.31416063.abi1",
+        "base": 0,
+        "magic": 31416063,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      },
       {
         "protocol_id": "ic10.stack.27182818.abi2",
         "base": 96,

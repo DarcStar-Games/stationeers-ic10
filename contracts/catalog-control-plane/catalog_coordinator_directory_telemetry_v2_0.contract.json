@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10",
-  "source_sha256": "ec15af6eba44a6e05f0ef6e05dc9e86ce08524c0cdb029309a07127f28930c1b",
+  "source_sha256": "305aab7cab34af85accdf32ce5b91e18cacc13fca11721ecd390aad3814cacd5",
   "identity": {
     "service_id": "ic10.script.catalog.coordinator.directory.telemetry",
     "implementation_revision": "2.0",
@@ -33,7 +33,6 @@
           14,
           15,
           18,
-          19,
           23
         ],
         "literal_writes": [
@@ -74,11 +73,7 @@
           },
           {
             "address": 2,
-            "equals": "HASH(\"DirectorySchema.CatalogStoreNode\")"
-          },
-          {
-            "address": 19,
-            "equals": 1
+            "equals": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
           }
         ]
       },
@@ -95,7 +90,11 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [],
-    "literal_writes": [],
+    "literal_writes": [
+      0,
+      1,
+      2
+    ],
     "dynamic_read": false,
     "dynamic_write": false,
     "dynamic_read_ranges": [],
@@ -107,8 +106,45 @@
     "clears_all": false,
     "external_readable_ranges": [],
     "external_writable_ranges": [],
-    "fields": [],
-    "headers": []
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 31416068
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 0
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "magic": 31416068,
+        "abi": 1
+      }
+    ]
   },
   "behavior": {
     "publication_rules": [],
@@ -116,10 +152,33 @@
       "mode": "preserved-unless-overwritten",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 31416068,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
-    "provides": [],
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.31416068.abi1",
+        "base": 0,
+        "magic": 31416068,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      }
+    ],
     "consumes": [
       {
         "port": "d0",

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10",
-  "source_sha256": "6e1f8f7f4145d72ab45e0ea719948c4f5f50152cd6ab33b83db371cc1badbc6e",
+  "source_sha256": "985da50e453b643b00fe908763b9373b75a00d3ab6ad7192dbb9f170485178ba",
   "identity": {
     "service_id": "ic10.script.catalog.item.migration.worker",
     "implementation_revision": "1.0",
@@ -26,14 +26,14 @@
       "stack": {
         "literal_reads": [
           0,
-          6,
-          7,
+          21,
+          22,
           40,
           41
         ],
         "literal_writes": [
-          6,
-          7,
+          21,
+          22,
           40,
           41
         ],
@@ -53,8 +53,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.5f09c1ab6d948b7f",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.5f09c1ab6d948b7f",
+        "interface_id": "ic10.interface.access.50caee72197b36d0",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.50caee72197b36d0",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -118,7 +118,11 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [],
-    "literal_writes": [],
+    "literal_writes": [
+      0,
+      1,
+      2
+    ],
     "dynamic_read": false,
     "dynamic_write": false,
     "dynamic_read_ranges": [],
@@ -130,8 +134,45 @@
     "clears_all": false,
     "external_readable_ranges": [],
     "external_writable_ranges": [],
-    "fields": [],
-    "headers": []
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 31416071
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 0
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "magic": 31416071,
+        "abi": 1
+      }
+    ]
   },
   "behavior": {
     "publication_rules": [],
@@ -139,10 +180,33 @@
       "mode": "preserved-unless-overwritten",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 31416071,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
-    "provides": [],
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.31416071.abi1",
+        "base": 0,
+        "magic": 31416071,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      }
+    ],
     "consumes": []
   },
   "extraction": {

@@ -2,14 +2,14 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10",
-  "source_sha256": "f6562362c4c117acc00d24f0b2c5d094cab3399a96b79f8bd37f963761649548",
+  "source_sha256": "c3248b98553988497a63fb018315cdc0a4fa5ff0da83876f4fa48ed7dcbc5882",
   "identity": {
     "service_id": "ic10.script.resource.profile.loader.item.02",
     "implementation_revision": "4.0",
     "deployment_family": "resource-profile-catalog",
     "deployment_class": "one-shot",
     "layer": "Resource metadata",
-    "purpose": "One-shot relocatable Resource Profile Loader ABI4 candidate; whole records only, own-stack zero-init."
+    "purpose": "One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init."
   },
   "device_ports": [],
   "network_dependencies": [],
@@ -21,27 +21,27 @@
       1,
       2,
       3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9,
       10,
       11,
       12,
+      13,
+      14,
+      15,
       16,
       17,
       18,
-      19,
-      20,
-      21,
-      22,
-      23,
       24,
       25,
       26,
       27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
       416,
       417,
       418,
@@ -150,60 +150,6 @@
         ]
       },
       {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
         "address": 10,
         "name": "S10",
         "value_type": "number",
@@ -225,11 +171,37 @@
         "address": 12,
         "name": "S12",
         "value_type": "number",
-        "semantic_source": "source",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "description": "immutable candidate publication LAST"
+        ]
+      },
+      {
+        "address": 13,
+        "name": "S13",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 14,
+        "name": "S14",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 15,
+        "name": "S15",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
       },
       {
         "address": 16,
@@ -253,55 +225,11 @@
         "address": 18,
         "name": "S18",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "source",
         "access": [
           "self-write"
-        ]
-      },
-      {
-        "address": 19,
-        "name": "S19",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 20,
-        "name": "S20",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 21,
-        "name": "S21",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 22,
-        "name": "S22",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 23,
-        "name": "S23",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
+        ],
+        "description": "immutable candidate publication LAST"
       },
       {
         "address": 24,
@@ -333,6 +261,78 @@
       {
         "address": 27,
         "name": "S27",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 28,
+        "name": "S28",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 29,
+        "name": "S29",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 30,
+        "name": "S30",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 31,
+        "name": "S31",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 32,
+        "name": "S32",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 33,
+        "name": "S33",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 34,
+        "name": "S34",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 35,
+        "name": "S35",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -782,7 +782,7 @@
       {
         "base": 0,
         "magic": 31415969,
-        "abi": 4
+        "abi": 5
       }
     ]
   },
@@ -790,7 +790,7 @@
     "publication_rules": [
       {
         "kind": "commit-last",
-        "address": 12,
+        "address": 18,
         "description": "immutable candidate publication LAST",
         "source": "verified-inline-order"
       }
@@ -804,10 +804,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415969.abi4",
+        "protocol_id": "ic10.stack.31415969.abi5",
         "base": 0,
         "magic": 31415969,
-        "abi": 4,
+        "abi": 5,
         "source": "literal-own-stack-header"
       }
     ],

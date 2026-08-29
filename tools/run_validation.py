@@ -23,7 +23,7 @@ VALIDATORS=[
 'validation/validators/validate_catalog_storage.py','validation/validators/validate_config_contracts.py','validation/validators/validate_dependency_planning_contracts.py','validation/validators/validate_directory_contracts.py',
 'validation/validators/validate_documentation.py','validation/validators/validate_ic10.py','validation/validators/validate_ic10_opcodes.py','validation/validators/validate_input_contracts.py','validation/validators/validate_job_contracts.py',
 'validation/validators/validate_manufacturing_contracts.py','validation/validators/validate_power_management_contracts.py','validation/validators/validate_fault_injection_contracts.py',
-'validation/validators/validate_release_tooling.py','validation/validators/validate_generated_directory_adapters.py','validation/validators/validate_script_headers.py','validation/validators/validate_source_catalog.py','validation/validators/validate_script_contracts.py','validation/validators/validate_user_deployment_guide.py','validation/validators/validate_item_storage_contracts.py','validation/validators/validate_process_utility_contracts.py','validation/validators/validate_live_commissioning_contracts.py']
+'validation/validators/validate_release_tooling.py','validation/validators/validate_generated_directory_adapters.py','validation/validators/validate_script_headers.py','validation/validators/validate_source_catalog.py','validation/validators/validate_script_contracts.py','validation/validators/validate_stack_envelopes.py','validation/validators/validate_user_deployment_guide.py','validation/validators/validate_item_storage_contracts.py','validation/validators/validate_process_utility_contracts.py','validation/validators/validate_live_commissioning_contracts.py']
 TESTS=[
 'tests/test_async_request.py','tests/test_banked_transaction.py','tests/test_catalog_schema.py','tests/test_controller_directory_scale.py',
 'tests/test_dependency_planning.py','tests/test_generic_directory.py','tests/test_ic10_execution.py','tests/test_input_profiles.py','tests/test_job_abi.py',
@@ -31,7 +31,7 @@ TESTS=[
 'tests/test_material_transform_protocol.py','tests/test_persistence_protocol.py','tests/test_phase_pressure_protocol.py',
 'tests/test_pressure_domain_protocol.py','tests/test_pressure_grid_protocol.py','tests/test_pressure_inventory_protocol.py',
 'tests/test_commission_wiring.py',
-'tests/test_pressure_reservation_protocol.py','tests/test_pressure_route_cost.py','tests/test_printer_directory.py',
+'tests/test_pressure_reservation_protocol.py','tests/test_pressure_route_cost.py','tests/test_printer_directory.py','tests/test_stack_envelope.py',
 'tests/test_printer_execution_capacity.py','tests/test_recipe_catalog.py','tests/test_generator_productivity.py','tests/test_resource_generalization.py',
 'tests/test_resource_profiles.py','tests/test_resource_transforms.py','tests/test_sequencer_protocol.py','tests/test_shared_input_protocol.py','tests/test_item_storage_protocol.py','tests/test_power_management.py','tests/test_fault_injection.py','tests/test_process_utility.py','tests/test_live_commissioning.py','tests/test_game_export.py']
 SCRIPTS=VALIDATORS+TESTS

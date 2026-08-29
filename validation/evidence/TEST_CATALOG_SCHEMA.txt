@@ -1,4 +1,4 @@
 Catalog runtime placement / item migration: PASS
- - Store ABI5 uses a runtime item directory + downward payload heap; Loader ABI4 carries relocatable whole items
+ - Store ABI6 uses a runtime item directory + downward payload heap; Loader ABI5 carries relocatable whole items
  - migration reserves destination capacity, publishes whole items, pops source heap safely, then permits empty Store retirement
  - compaction test moves two complete items from a DRAINING Store into compatible free capacity without data loss

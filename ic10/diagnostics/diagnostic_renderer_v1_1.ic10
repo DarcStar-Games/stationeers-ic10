@@ -7,14 +7,15 @@ alias controller r2
 move r6 0 # round-robin record cursor
 poke 0 16180339
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r14 db 2
+get r14 db 8
 clamp r14 r14 0 64
 beqz r14 Loop
 mod r6 r6 r14
 # Limit work per game tick; higher values update panels faster but cost CPU.
-get ra db 3
+get ra db 9
 select ra ra ra 2
 round ra ra
 clamp ra ra 1 4

@@ -1,4 +1,8 @@
 clr db
+poke 0 31416063
+poke 1 1
+poke 2 8
+poke 6 96
 poke 96 27182818
 poke 97 2
 poke 98 126
@@ -38,14 +42,14 @@ l r0 d0 Pressure
 Sensor:
 poke 100 r0
 bdns d1 ProfileBad
-get r15 d1 5
+get r15 d1 29
 blez r15 ProfileBad
 get r0 d1 0
 bne r0 31415963 ProfileBad
 get r0 d1 8
 bne r0 1 ProfileBad
 get r9 d1 9
-get r0 d1 5
+get r0 d1 29
 bne r0 r15 Loop
 beq r2 3 Storage
 bdns d2 ArbiterBad

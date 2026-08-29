@@ -18,6 +18,46 @@
       "writable_ranges": [],
       "fields": [
         {
+          "address": 0,
+          "name": "Header@S0.Magic",
+          "value_type": "hash",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ],
+          "const": 31416061
+        },
+        {
+          "address": 1,
+          "name": "Header@S0.ABI",
+          "value_type": "integer",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 2,
+          "name": "S2",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 8
+        },
+        {
+          "address": 6,
+          "name": "S6",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 96
+        },
+        {
           "address": 96,
           "name": "Header@S96.Magic",
           "value_type": "hash",
@@ -189,10 +229,24 @@
         },
         "invariants": [
           {
+            "id": "header.s0.magic",
+            "kind": "cell-equals",
+            "address": 0,
+            "equals": 31416061,
+            "source": "generated-protocol-header"
+          },
+          {
             "id": "header.s96.magic",
             "kind": "cell-equals",
             "address": 96,
             "equals": 27182818,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s0.abi",
+            "kind": "cell-equals",
+            "address": 1,
+            "equals": 1,
             "source": "generated-protocol-header"
           },
           {
@@ -211,6 +265,46 @@
       "readable_ranges": [],
       "writable_ranges": [],
       "fields": [
+        {
+          "address": 0,
+          "name": "Header@S0.Magic",
+          "value_type": "hash",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ],
+          "const": 31416062
+        },
+        {
+          "address": 1,
+          "name": "Header@S0.ABI",
+          "value_type": "integer",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 2,
+          "name": "S2",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 8
+        },
+        {
+          "address": 6,
+          "name": "S6",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 96
+        },
         {
           "address": 96,
           "name": "Header@S96.Magic",
@@ -315,10 +409,24 @@
         },
         "invariants": [
           {
+            "id": "header.s0.magic",
+            "kind": "cell-equals",
+            "address": 0,
+            "equals": 31416062,
+            "source": "generated-protocol-header"
+          },
+          {
             "id": "header.s96.magic",
             "kind": "cell-equals",
             "address": 96,
             "equals": 27182818,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s0.abi",
+            "kind": "cell-equals",
+            "address": 1,
+            "equals": 1,
             "source": "generated-protocol-header"
           },
           {

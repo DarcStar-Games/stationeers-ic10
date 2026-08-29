@@ -1,9 +1,10 @@
 # Stack Cell Monitor Getting Started
 
-The Stack Cell Monitor is an on-demand commissioning tool for reading one stack
-cell from another IC housing without modifying that target. A Logic Memory
-selects the address, and the monitor mirrors the sampled value to its own housing
-`Setting` and, optionally, to a second Logic Memory.
+The Stack Cell Monitor is an on-demand commissioning tool for discovering a
+one stack cell from another IC housing
+without modifying that target. A Logic Memory selects discovery mode or an
+address, and the monitor mirrors the result to its own housing `Setting` and,
+optionally, to a second Logic Memory.
 
 Use this tool when a production service publishes useful state in its IC stack
 but has no human-facing display. Remove or repurpose the monitor after testing;
@@ -66,7 +67,24 @@ Use the screwdriver to make these connections:
 Power the monitor and both memories. The target must be an IC housing; ordinary
 devices are rejected even if they expose other logic properties.
 
-## 4. Read a stack cell
+## 4. Identify a target with the Stack Header Reader
+
+Flash `ic10/live-commissioning/stack_header_reader_v1_0.ic10` into a second IC
+housing and screw `d0` to the target. No address selector is needed.
+
+1. Wait for status `3` in the reader's `S8`.
+2. Read the target's `ServiceMagic` from `S9` and look it up in the registry
+   table in `docs/ABI_REFERENCE.md`; the optional `d1` Memory mirrors it.
+3. `S10` is the target's ABI and `S11` its capability mask. `S12..S16` carry the
+   SchemaId, ExtensionBase, State, TelemetryBase, and Generation — each `0`
+   unless the mask declares it.
+
+The reader reads only `S0..S7`. It validates a usable magic, a positive ABI, a
+mask with no reserved bit set, and then only the fields that mask declares.
+Because the header is the payload header, there is no separate payload address
+to chase; use the monitor below to read any cell the reader points you at.
+
+## 5. Read a stack cell
 
 1. Set `Stack Address.Setting` to the integer stack address, from `0` through
    `511`.
@@ -78,21 +96,23 @@ For example, setting `Stack Address` to `6` reads `S6` from the housing connecte
 to `d0`. A captured NaN is displayed as NaN rather than being replaced with a
 plausible number.
 
-Do not assume that every target publishes its ABI header at `S0`. Select
-addresses from that target program's ABI documentation. Controller runtimes use
-the shared Generic Telemetry region beginning at `S96`; for example, the PI
-Runtime publishes telemetry magic `27182818` at `S96`, its ABI at `S97`, and its
-live channels beginning at `S100`.
+Legacy-exempt targets still require their ABI documentation. For migrated
+targets, discovery reports whether the primary payload is at `S0`, `S96`, or
+another address. Controller runtimes commonly use Generic Telemetry at `S96`.
 
 The monitor publishes this diagnostic state in its own stack:
 
 | Cell | Meaning |
 | ---: | --- |
-| `S2` | Status |
-| `S3` | Selected stack address |
-| `S4` | Sampled value for status `1`/`2`; otherwise `0` |
-| `S5` | Target housing ReferenceId |
-| `S6` | Sample generation, published last |
+| `S8` | Status |
+| `S9` | Selected stack address |
+| `S10` | Sampled value for status `1`/`2`; otherwise `0` |
+| `S11` | Target housing ReferenceId |
+| `S7` | Sample generation, published last (the common header cell) |
+
+For status `3`, `S10` is the discovered `ServiceMagic`. For status `1`/`2` it is
+the sampled value. `S9` always holds the selected address, so a failed discovery
+reports `-1` there rather than an address the monitor probed on its own.
 
 Status values are:
 
@@ -100,12 +120,15 @@ Status values are:
 | ---: | --- |
 | `1` | Finite value captured |
 | `2` | NaN captured from the target cell |
+| `3` | Valid common header discovered |
 | `-1` | Target missing |
 | `-2` | Target is not a standard or compact IC housing |
 | `-3` | Address selector missing or does not expose `Setting` |
 | `-4` | Address is NaN, fractional, negative, or greater than `511` |
+| `-5` | `S0` holds no usable magic |
+| `-6` | Header fields or extension bounds are invalid |
 
-## 5. Safety and limitations
+## 6. Safety and limitations
 
 The monitor never writes to `d0` or `d1`. Its only external write is the optional
 `Setting` mirror on `d2`. It samples one cell at a time and does not claim that

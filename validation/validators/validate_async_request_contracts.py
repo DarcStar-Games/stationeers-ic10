@@ -23,17 +23,17 @@ def fence(f,token_read,cmp_read,state_read):
 for f,state,token in [
  ('ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10','poke 6 0','poke 7 r6'),
  ('ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10','poke 6 0','poke 7 r6'),
- ('ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10','poke 5 1','poke 16 r15'),
- ('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','poke 5 2','poke 6 r15'),
+ ('ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10','poke 22 1','poke 16 r15'),
+ ('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','poke 20 2','poke 21 r15'),
  ('ic10/manufacturing/transform_candidate_executor_v2_0.ic10','poke 11 2','poke 10 r15'),
  ('ic10/manufacturing/print_candidate_executor_v2_0.ic10','poke 11 2','poke 10 r15'),
- ('ic10/manufacturing/generic_print_runtime_v2_0.ic10','poke 8 2','poke 7 r15'),
+ ('ic10/manufacturing/generic_print_runtime_v2_0.ic10','poke 8 2','poke 15 r15'),
  ('ic10/manufacturing/transform_job_driver_v2_0.ic10','poke 10 2','poke 9 r15'),
  ('ic10/manufacturing/print_job_driver_v2_0.ic10','poke 10 2','poke 9 r15')]:
  need(f,state,token);before(f,state,token)
 need('ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10','poke 6 -1','poke 7 r0 # accepted fault publishes current identity LAST')
 before('ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10','poke 6 -1','poke 7 r0 # accepted fault publishes current identity LAST')
-need('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','poke 6 r15','blez r6 Fault');before('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','poke 6 r15','blez r6 Fault')
+need('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','poke 21 r15','blez r6 Fault');before('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','poke 21 r15','blez r6 Fault')
 
 # Feeder caller publishes all payload, including emit reset, before RequestToken S18.
 need('ic10/material-grid/material_transfer_executor_v1_0.ic10','put d1 16 r4','put d1 17 r2','put d1 19 0','put d1 18 r3 # RequestToken LAST after complete Feeder payload')
@@ -50,12 +50,12 @@ need('ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10','putd controllerSel
 
 # Diagnostic selectors are TERMINAL_RESPONSE producers. Result/status precedes handled token(s).
 need('ic10/controller-discovery/controller_selector_v3_0.ic10','poke 8 1','poke 13 r4 # TERMINAL_RESPONSE token LAST');before('ic10/controller-discovery/controller_selector_v3_0.ic10','poke 8 1','poke 13 r4 # TERMINAL_RESPONSE token LAST')
-need('ic10/diagnostics/console_selector_v1_1.ic10','poke 5 1','poke 14 r15 # handled desired token after complete result/status','poke 11 r4 # handled advance token after complete result/status')
-before('ic10/diagnostics/console_selector_v1_1.ic10','poke 5 1','poke 14 r15 # handled desired token after complete result/status');before('ic10/diagnostics/console_selector_v1_1.ic10','poke 5 1','poke 11 r4 # handled advance token after complete result/status')
+need('ic10/diagnostics/console_selector_v1_1.ic10','poke 17 1','poke 14 r15 # handled desired token after complete result/status','poke 11 r4 # handled advance token after complete result/status')
+before('ic10/diagnostics/console_selector_v1_1.ic10','poke 17 1','poke 14 r15 # handled desired token after complete result/status');before('ic10/diagnostics/console_selector_v1_1.ic10','poke 17 1','poke 11 r4 # handled advance token after complete result/status')
 # Mapping Editor must prove controller desired, console desired, and console auto-advance requests are settled before status/result reads.
-need('ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10','getd r8 input 24','getd r0 controllerSelector 13','getd r8 input 25','getd r0 consoleSelector 14','getd r8 consoleSelector 10','getd r0 consoleSelector 11','getd r0 consoleSelector 5','getd r0 controllerSelector 8')
+need('ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10','getd r8 input 24','getd r0 controllerSelector 13','getd r8 input 25','getd r0 consoleSelector 14','getd r8 consoleSelector 10','getd r0 consoleSelector 11','getd r0 consoleSelector 17','getd r0 controllerSelector 8')
 s=text('ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10')
-for a,b in [('getd r0 controllerSelector 13','getd r0 controllerSelector 8'),('getd r0 consoleSelector 14','getd r0 consoleSelector 5'),('getd r0 consoleSelector 11','getd display consoleSelector 4')]:
+for a,b in [('getd r0 controllerSelector 13','getd r0 controllerSelector 8'),('getd r0 consoleSelector 14','getd r0 consoleSelector 17'),('getd r0 consoleSelector 11','getd display consoleSelector 16')]:
  if s.find(a)>=s.find(b):fails.append('ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10: stale selector result can be consumed before '+a)
 
 # Existing pressure request/response services are formally TERMINAL_RESPONSE.
@@ -95,7 +95,7 @@ for f,result,token in [
  ('ic10/manufacturing/transform_candidate_readiness_v1_0.ic10','poke 9 r0','poke 10 r0')]:
  need(f,result,token);before(f,result,token)
 # Multi-material Stager publishes terminal status immediately before each response token.
-need('ic10/material-transform/multi_material_reservation_stager_v1_0.ic10','poke 6 1\npoke 7 r15','poke 6 2\npoke 7 r15','poke 6 -1\npoke 7 r15')
+need('ic10/material-transform/multi_material_reservation_stager_v1_0.ic10','poke 13 1\npoke 14 r15','poke 13 2\npoke 14 r15','poke 13 -1\npoke 14 r15')
 # Printer Execution Bank has six independent per-pin terminal streams: status before handled request token.
 need('ic10/printer-directory/printer_execution_bank_v2_0.ic10','poke r0 r14\nadd r0 r7 56\npoke r0 r5')
 
@@ -103,9 +103,9 @@ need('ic10/printer-directory/printer_execution_bank_v2_0.ic10','poke r0 r14\nadd
 need('ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','get r15 db 14','poke 23 -1','poke 15 r15');before('ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','poke 23 -1','poke 15 r15')
 # Adapter freeze request S11 / ack S12 is the same terminal-ack profile.
 for f in ('ic10/controller-discovery/controller_directory_adapter_v4_0.ic10','ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10','ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10'):
- need(f,'get r0 db 11','poke 12 r0')
+ need(f,'get r0 db 16','poke 17 r0')
 for f in ('ic10/directory-core/generic_registry_directory_host_v2_0.ic10','ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10'):
- need(f,'put d0 11 r11','get r0 d0 12','bne r0 r11 Freeze')
+ need(f,'put d0 16 r11','get r0 d0 17','bne r0 r11 Freeze')
 
 
 # Cargo LArRE storage service is TERMINAL_RESPONSE; endpoint client publishes payload before token and fences response.
@@ -117,7 +117,7 @@ before('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','put d0 7
 need('ic10/manufacturing/manufacturing_driver_router_v2_0.ic10','get r0 d0 9','get r0 d1 9','poke 10 r15')
 need('ic10/manufacturing/manufacturing_scheduler_v1_0.ic10','get r0 d2 10','get r1 db 27','bne r0 r1 Loop')
 # Snapshot identity fencing used by Transform readiness remains separate from async request identity.
-need('ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10','poke 68 r10','poke 69 1','poke 69 -2','poke 69 -3')
+need('ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10','poke 68 r10','poke 69 1','poke 71 -2','poke 71 -3')
 
 if fails:
  print('Async request contracts: FAIL');[print(' -',x) for x in fails];sys.exit(1)

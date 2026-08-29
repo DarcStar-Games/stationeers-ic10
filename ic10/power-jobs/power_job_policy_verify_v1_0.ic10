@@ -1,14 +1,15 @@
 # Verify POWER policy through Reservation + Endpoint semantics.
 poke 0 31416043
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 6
-get r0 db 7
+get r15 db 12
+get r0 db 13
 beq r15 r0 Loop
-get r2 db 2
-get r3 db 3
-get r4 db 4
+get r2 db 9
+get r3 db 10
+get r4 db 11
 blez r2 Bad
 getd r14 r2 12
 blez r14 Wait
@@ -57,5 +58,5 @@ j Reply
 Bad:
 poke 8 -1
 Reply:
-poke 7 r15
+poke 13 r15
 j Loop

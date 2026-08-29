@@ -13,12 +13,12 @@ get r12 d0 11
 blez r12 Bad
 getd r0 r12 0
 bne r0 31415970 Bad
-getd r15 r12 7
+getd r15 r12 22
 mod r0 r15 2
 bnez r0 Loop
-getd r11 r12 6
+getd r11 r12 21
 First:
-getd r1 r2 6
+getd r1 r2 21
 blez r1 Store
 move r2 r1
 j First
@@ -26,11 +26,9 @@ Store:
 getd r0 r2 0
 bne r0 31415968 Bad
 getd r0 r2 1
-bne r0 5 Bad
-getd r0 r2 2
-bne r0 HASH("CatalogSchema.Recipe") Bad
+bne r0 6 Bad
 getd r0 r2 3
-bne r0 3 Bad
+bne r0 HASH("CatalogSchema.Recipe.v3") Bad
 getd r14 r2 17
 mod r0 r14 2
 bnez r0 Loop
@@ -89,7 +87,7 @@ j Inputs
 Publish:
 getd r0 r2 17
 bne r0 r14 Loop
-getd r0 r12 7
+getd r0 r12 22
 bne r0 r15 Loop
 poke 40 r11
 poke 41 r10
@@ -100,7 +98,7 @@ Next:
 add r5 r5 1
 j Scan
 StoreDone:
-getd r1 r2 7
+getd r1 r2 24
 blez r1 Missing
 move r2 r1
 j Store
@@ -111,7 +109,7 @@ poke 6 0
 j Loop
 Missing:
 poke 41 r10
-getd r0 r12 7
+getd r0 r12 22
 bne r0 r15 Loop
 poke 7 -3
 poke 6 0

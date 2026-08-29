@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10",
-  "source_sha256": "c155b927ba9c8e10c90390067bdf3b3ec851ab60ad5acb95a3c52ace3c84b18f",
+  "source_sha256": "9908b2e5bc8087035f29efb60a772a8914ceb2582bbbba5c1a0711262484dab6",
   "identity": {
     "service_id": "ic10.script.catalog.coordinator.core",
     "implementation_revision": "3.0",
@@ -35,8 +35,7 @@
           8,
           9,
           11,
-          14,
-          19
+          14
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -56,11 +55,7 @@
           },
           {
             "address": 2,
-            "equals": "HASH(\"DirectorySchema.CatalogStoreNode\")"
-          },
-          {
-            "address": 19,
-            "equals": 1
+            "equals": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
           }
         ]
       },
@@ -82,15 +77,14 @@
         29
       ],
       "literal_writes": [
-        2,
         3,
-        4,
-        5,
-        6,
         8,
         11,
         12,
+        13,
+        14,
         16,
+        21,
         23,
         26,
         31
@@ -123,7 +117,7 @@
       "reference": "r2",
       "literal_reads": [],
       "literal_writes": [
-        7
+        24
       ],
       "dynamic_read": false,
       "dynamic_write": false,
@@ -135,16 +129,15 @@
     "size": 512,
     "literal_reads": [
       0,
-      2,
-      3,
-      4,
-      6,
-      7,
+      14,
+      15,
+      16,
       20,
+      21,
+      22,
       25,
       26,
       27,
-      28,
       29,
       30,
       31,
@@ -154,20 +147,21 @@
       0,
       1,
       2,
-      3,
-      4,
-      5,
-      6,
-      7,
       8,
       9,
       10,
       11,
       12,
       13,
+      14,
+      15,
+      16,
       17,
+      18,
       19,
       20,
+      21,
+      22,
       23,
       25
     ],
@@ -218,56 +212,6 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
           "self-write"
         ]
       },
@@ -326,8 +270,47 @@
         ]
       },
       {
+        "address": 14,
+        "name": "S14",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 15,
+        "name": "S15",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 16,
+        "name": "S16",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
         "address": 17,
         "name": "S17",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 18,
+        "name": "S18",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -346,6 +329,26 @@
       {
         "address": 20,
         "name": "S20",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 21,
+        "name": "S21",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 22,
+        "name": "S22",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -384,15 +387,6 @@
       {
         "address": 27,
         "name": "S27",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 28,
-        "name": "S28",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -440,7 +434,7 @@
       {
         "base": 0,
         "magic": 31415970,
-        "abi": 3
+        "abi": 4
       }
     ]
   },
@@ -448,7 +442,7 @@
     "publication_rules": [
       {
         "kind": "seqlock",
-        "address": 7,
+        "address": 22,
         "description": "Topology sequence is odd while mutating and even when stable.",
         "source": "source-fingerprinted-paired-sequence"
       }
@@ -462,10 +456,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415970.abi3",
+        "protocol_id": "ic10.stack.31415970.abi4",
         "base": 0,
         "magic": 31415970,
-        "abi": 3,
+        "abi": 4,
         "source": "literal-own-stack-header"
       }
     ],

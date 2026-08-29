@@ -7,12 +7,13 @@
 # this is trusted; see docs/DIAGNOSTIC_INPUTS.md and case LG-DIAG-HASHMODE.
 poke 0 17320513
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r14 db 2
+get r14 db 8
 clamp r14 r14 0 8
-poke 3 0
-poke 4 0
+poke 9 0
+poke 10 0
 beqz r14 Loop
 move r6 0
 move r8 0 # writes issued this pass
@@ -41,6 +42,6 @@ Skip:
 add r9 r9 1
 Next:
 blt r6 r14 Each
-poke 3 r8
-poke 4 r9
+poke 9 r8
+poke 10 r9
 j Loop

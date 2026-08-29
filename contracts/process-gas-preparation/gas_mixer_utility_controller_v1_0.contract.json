@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10",
-  "source_sha256": "130ffbe007fed877239f042ecf20ba6c91fe66739cc605468f26d0ea1de25b12",
+  "source_sha256": "711535cdc7d0d51b3fa850dbf305c134992dbf0d39760de40a3102977a155893",
   "identity": {
     "service_id": "ic10.script.gas.mixer.utility.controller",
     "implementation_revision": "1.0",
@@ -43,7 +43,7 @@
           "source_port": "d4",
           "address": 13,
           "fence": {
-            "address": 5,
+            "address": 29,
             "kind": "generation",
             "description": "Profile View generation must be positive and unchanged around the LogicType read."
           }
@@ -94,7 +94,7 @@
           "source_port": "d4",
           "address": 15,
           "fence": {
-            "address": 5,
+            "address": 29,
             "kind": "generation",
             "description": "Profile View generation must be positive and unchanged around the LogicType read."
           }
@@ -147,7 +147,7 @@
           "source_port": "d4",
           "address": 13,
           "fence": {
-            "address": 5,
+            "address": 29,
             "kind": "generation",
             "description": "Profile View generation must be positive and unchanged around the LogicType read."
           }
@@ -157,7 +157,7 @@
           "source_port": "d4",
           "address": 15,
           "fence": {
-            "address": 5,
+            "address": 29,
             "kind": "generation",
             "description": "Profile View generation must be positive and unchanged around the LogicType read."
           }
@@ -238,7 +238,6 @@
       "stack": {
         "literal_reads": [
           0,
-          5,
           8,
           9,
           11,
@@ -247,7 +246,8 @@
           14,
           15,
           16,
-          17
+          17,
+          29
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -278,8 +278,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.2f374e42cf3705e3",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.2f374e42cf3705e3",
+        "interface_id": "ic10.interface.access.3b51862819ab610a",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.3b51862819ab610a",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

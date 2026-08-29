@@ -2,14 +2,14 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10",
-  "source_sha256": "29ceb963bbd5eab87bad41541f26be5dca7623a251ebbd7048ec57883e447d1b",
+  "source_sha256": "49d27fd438c041cf93ee14480a67f600c1c4afd5570e26c117b38bb799c8b8b5",
   "identity": {
     "service_id": "ic10.script.resource.transform.profile.view",
     "implementation_revision": "8.0",
     "deployment_family": "transform-catalog",
     "deployment_class": "conditional-resident",
     "layer": "Transformation metadata",
-    "purpose": "Selects a Store ABI5 schema-v4 transform and publishes capability-based variable-input Transform Profile ABI4."
+    "purpose": "Selects a Store ABI6 schema-v4 transform and publishes capability-based variable-input Transform Profile ABI4."
   },
   "device_ports": [
     {
@@ -61,7 +61,7 @@
       "reference": "r12",
       "literal_reads": [
         0,
-        7
+        22
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -81,10 +81,10 @@
       "literal_reads": [
         0,
         1,
-        6,
-        7,
         9,
-        17
+        17,
+        21,
+        24
       ],
       "literal_writes": [],
       "dynamic_read": true,
@@ -98,7 +98,7 @@
         {
           "address": 1,
           "operator": "equals",
-          "value": 5
+          "value": 6
         }
       ],
       "accepted": []
@@ -107,18 +107,19 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2
+      70
     ],
     "literal_writes": [
       0,
       1,
-      3,
-      4,
-      5,
-      6,
-      7,
+      2,
       68,
-      69
+      69,
+      71,
+      72,
+      73,
+      74,
+      75
     ],
     "dynamic_read": false,
     "dynamic_write": true,
@@ -137,7 +138,7 @@
     "external_readable_ranges": [
       {
         "start": 0,
-        "end": 69
+        "end": 75
       }
     ],
     "external_writable_ranges": [],
@@ -166,51 +167,6 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
           "self-write"
         ]
       },
@@ -226,6 +182,60 @@
       {
         "address": 69,
         "name": "S69",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 70,
+        "name": "S70",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 71,
+        "name": "S71",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 72,
+        "name": "S72",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 73,
+        "name": "S73",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 74,
+        "name": "S74",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 75,
+        "name": "S75",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

@@ -8,7 +8,7 @@ Printer discovery is a native Generic Directory domain. It does not define a pri
 network printers
       |
 ic10/printer-directory/printer_directory_adapter_v1_0.ic10
-      | DIRECTORY_ADAPTER_ABI_V2
+      | DIRECTORY_ADAPTER_ABI_V3
       v
 ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10
       v
@@ -88,7 +88,7 @@ Fabricator semantics are deliberately excluded. In particular, `StructureFabrica
 
 ## Publication
 
-Adapter ABI2 publishes:
+Adapter ABI3 publishes:
 
 ```text
 S0  31415983

@@ -1,5 +1,9 @@
 # Embedded PressureTransfer ABI2. d0 src,d1 sink,d2 furnace,d3 Guard.
 # S16 on,S17 1=in 2=out,S18 min delta,S19 gain,S20 max.
+poke 0 31416065
+poke 1 1
+poke 2 8
+poke 6 96
 poke 96 27182818
 poke 97 2
 poke 98 30

@@ -1,4 +1,8 @@
 # Catalog Item Migration Planner v2.0: d0 Core,d1 Directory.
+Boot:
+poke 0 31416069
+poke 1 1
+poke 2 0
 Loop:
 yield
 bdns d0 Loop
@@ -12,9 +16,7 @@ bne r0 31415982 Loop
 get r0 d1 1
 bne r0 3 Loop
 get r0 d1 2
-bne r0 HASH("DirectorySchema.CatalogStoreNode") Loop
-get r0 d1 19
-bne r0 1 Loop
+bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 get r12 d1 23
 mod r0 r12 2
 bnez r0 Loop
@@ -46,14 +48,11 @@ blez r2 DNext
 beq r2 r13 DNext
 getd r0 r2 16
 bne r0 2 DNext
-getd r0 r2 2
-getd r5 r13 2
-bne r0 r5 DNext
 getd r0 r2 3
 getd r5 r13 3
 bne r0 r5 DNext
-getd r0 r2 4
-getd r5 r13 4
+getd r0 r2 13
+getd r5 r13 13
 bne r0 r5 DNext
 getd r0 r2 23
 getd r5 r13 23
@@ -85,13 +84,11 @@ get r0 d0 25
 bgtz r0 Loop
 getd r0 r13 23
 put d0 26 r0
-getd r0 r13 2
-put d0 27 r0
 getd r0 r13 3
-put d0 28 r0
-getd r0 r13 4
+put d0 27 r0
+getd r0 r13 13
 put d0 29 r0
-getd r0 r13 7
+getd r0 r13 24
 put d0 30 r0
 getd r0 r13 8
 add r0 r0 1

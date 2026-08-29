@@ -1,4 +1,4 @@
-# Catalog Storage Standard — Store ABI5 / Loader ABI4
+# Catalog Storage Standard — Store ABI6 / Loader ABI5
 
 ## Core invariant
 
@@ -15,9 +15,9 @@ The ownership rule is strict:
 
 The current common protocols are:
 
-- Catalog Store magic `31415968`, **Store ABI5**;
-- Catalog Loader magic `31415969`, **Loader ABI4**;
-- Catalog Coordinator magic `31415970`, **Coordinator ABI3**;
+- Catalog Store magic `31415968`, **Store ABI6**;
+- Catalog Loader magic `31415969`, **Loader ABI5**;
+- Catalog Coordinator magic `31415970`, **Coordinator ABI4**;
 - 4-cell payload alignment;
 - canonical zero padding;
 - whole logical items only;
@@ -26,7 +26,7 @@ The current common protocols are:
 
 See `docs/CATALOG_COORDINATION.md`, `docs/CATALOG_SCHEMA.md`, and `ROADMAP.md`.
 
-## Generic Store ABI5
+## Generic Store ABI6
 
 Every physical catalog data node runs `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10`. There are no Resource/Input/Transform/Recipe-specific Store programs.
 
@@ -69,7 +69,7 @@ A newly programmed Store requires only a unique positive `S18 NodeId`. It advert
 
 ## Runtime item geometry
 
-Store ABI5 does not contain schema-specific fixed regions. Each committed item has a 2-cell directory entry:
+Store ABI6 does not contain schema-specific fixed regions. Each committed item has a 2-cell directory entry:
 
 ```text
 [ItemBase, ItemCellCount]
@@ -85,7 +85,7 @@ All payload item sizes are multiples of the 4-cell framework block width. The ex
 
 The Store publishes the destination payload first, then the directory entry, then updates LocalItemCount/geometry and finishes the even Store revision. Readers only accept stable even revisions.
 
-## Loader ABI4
+## Loader ABI5
 
 A Loader is a one-shot immutable candidate image. It does **not** know a physical Store or Store ordinal when generated.
 

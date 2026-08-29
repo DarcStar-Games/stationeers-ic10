@@ -40,7 +40,7 @@ Each logical recipe remains atomic: header, every reagent pair, and alignment pa
 
 ## Runtime Store capacity
 
-Store ABI5 has a common 32-cell header, a 2-cell item-directory entry per item, and a downward-growing payload heap. Because schema-v3 recipe payload width depends on InputCount, **recipes per Store are no longer a fixed 80**.
+Store ABI6 has a common 32-cell header, a 2-cell item-directory entry per item, and a downward-growing payload heap. Because schema-v3 recipe payload width depends on InputCount, **recipes per Store are no longer a fixed 80**.
 
 For an item with `N` material inputs:
 
@@ -63,9 +63,9 @@ The 780-recipe stress fixture contains 130 synthetic recipes per family. Under s
 
 No Store mixes FamilyHash partitions.
 
-## Loader ABI4
+## Loader ABI5
 
-Generated Recipe Loaders are one-shot relocatable Loader ABI4 candidates. Every Loader:
+Generated Recipe Loaders are one-shot relocatable Loader ABI5 candidates. Every Loader:
 
 1. clears only its own stack;
 2. publishes Loader magic/ABI, Recipe schema v3, CatalogInstanceId, and FamilyHash PartitionKey;
@@ -101,7 +101,7 @@ S10 RecipeHash
 S11 selected RequiredCapability
 ```
 
-`d0` may point to any Recipe Store ABI5 node. Lookup walks runtime topology, accepts only Recipe schema v3, skips unrelated FamilyHash partitions, and fences Store/Coordinator revisions before publication.
+`d0` may point to any Recipe Store ABI6 node. Lookup walks runtime topology, accepts only Recipe schema v3, skips unrelated FamilyHash partitions, and fences Store/Coordinator revisions before publication.
 
 Security Printer capability remains intentionally machine-driven. A capability-1 Security Printer query excludes Tier-Two recipe metadata that current hardware cannot execute.
 
@@ -166,7 +166,7 @@ rather than attempting to discover the recipe universe by mutating a live printe
 
 - deterministic generation;
 - Recipe schema v3 and `RECIPE_CATALOG_V6` manifest identity;
-- Loader ABI4 sparse/whole-item behavior;
+- Loader ABI5 sparse/whole-item behavior;
 - family partition purity;
 - runtime capacity placement;
 - capability-filtered ordinal Lookup ABI3;

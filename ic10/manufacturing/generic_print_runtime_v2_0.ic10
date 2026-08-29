@@ -1,5 +1,6 @@
-poke 0 31415990
+poke 0 31416075
 poke 1 2
+poke 2 0
 poke 8 1
 Loop:
 yield
@@ -8,16 +9,16 @@ beq r0 1 WaitAlloc
 beq r0 2 Ready
 beq r0 3 Running
 beq r0 4 Verify
-get r15 db 6
-get r0 db 7
+get r15 db 14
+get r0 db 15
 beq r15 r0 Loop
 poke 8 2
 poke 9 0
-poke 7 r15
-get r2 db 2
-get r3 db 3
-get r4 db 4
-get r5 db 5
+poke 15 r15
+get r2 db 10
+get r3 db 11
+get r4 db 12
+get r5 db 13
 blez r2 Fault
 beqz r3 Fault
 blez r4 Fault
@@ -29,17 +30,17 @@ bne r0 1 WaitResource
 get r0 d0 2
 bne r0 r2 Fault
 l r6 db ReferenceId
-put d1 2 r4
-put d1 3 r6
-put d1 4 r15
+put d1 8 r4
+put d1 20 r6
+put d1 21 r15
 poke 20 1
 poke 8 3
 j Loop
 WaitAlloc:
-get r15 db 6
+get r15 db 14
 get r0 d1 16
 bne r0 r15 Loop
-get r0 d1 5
+get r0 d1 22
 bltz r0 WaitResource
 bne r0 2 Loop
 ld r0 r2 ExportCount

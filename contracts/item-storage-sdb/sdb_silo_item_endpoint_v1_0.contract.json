@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10",
-  "source_sha256": "4125ed9b63787f6b4148844b515d3657a917671dd78f530c20e24db7eadc7e0a",
+  "source_sha256": "a4796282d637bd522932ec80a4b97891d50baccfe9b12ee237e701c43e3e3122",
   "identity": {
     "service_id": "ic10.script.sdb.silo.item.endpoint",
     "implementation_revision": "1.0",
@@ -79,10 +79,10 @@
       "stack": {
         "literal_reads": [
           0,
-          5,
           8,
           9,
-          13
+          13,
+          29
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -105,8 +105,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.fa334cd122f66175",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.fa334cd122f66175",
+        "interface_id": "ic10.interface.access.bd1b1bd0a7c8d8e0",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.bd1b1bd0a7c8d8e0",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [

@@ -22,16 +22,16 @@ def _generic_sources(root=R):
         'ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10'))
 
 def _drive(stores,vms,loaders,services,max_rounds=60000):
-    expected=sum(int(d.stack.get(8,0)) for g in loaders for d in g)
+    expected=sum(int(d.stack.get(14,0)) for g in loaders for d in g)
     adapter,dirvm,telemetry,coordvm,routervm,recovery,migration,worker,retirement=services
     for _ in range(max_rounds):
         adapter.run(1,max_steps=50000);dirvm.run(1,max_steps=50000);telemetry.run(1,max_steps=50000)
         coordvm.run(1,max_steps=50000);routervm.run(1,max_steps=50000)
         for vm in vms:vm.run(1,max_steps=50000)
         recovery.run(1,max_steps=50000);migration.run(1,max_steps=50000);worker.run(1,max_steps=50000);retirement.run(1,max_steps=50000)
-        imported=sum(int(d.stack.get(15,0)) for g in loaders for d in g)
+        imported=sum(int(d.stack.get(21,0)) for g in loaders for d in g)
         if imported>=expected:return
-    raise RuntimeError(f'catalog coordination imported {sum(int(d.stack.get(15,0)) for g in loaders for d in g)}/{expected} items')
+    raise RuntimeError(f'catalog coordination imported {sum(int(d.stack.get(21,0)) for g in loaders for d in g)}/{expected} items')
 
 def load_catalog_chain(store_sources,loader_source_groups,*,store_ref_base=8000,loader_ref_base=10000,coordinator_ref=None,router_ref=None,coordinator_epoch=1,coordinator_source=None,router_source=None):
     """Bring up unclaimed Generic Stores and Coordinator ABI3, then place relocatable Loader items."""

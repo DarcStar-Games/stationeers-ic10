@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10",
-  "source_sha256": "f35e322aaf4b4df61d9c33d0aaedf738b7666c2c7b67f31e133ce9eab96c32c2",
+  "source_sha256": "504b6bf644f69d0a18260b9e1460afd4fe359b28b0bf025372a5ee9d3c6b0d18",
   "identity": {
     "service_id": "ic10.script.catalog.item.migration.planner",
     "implementation_revision": "2.0",
@@ -34,7 +34,6 @@
           25,
           26,
           27,
-          28,
           29,
           30,
           31,
@@ -59,8 +58,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.b5657c3a7cff795d",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.b5657c3a7cff795d",
+        "interface_id": "ic10.interface.access.c0cb701d23d0f4b1",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.c0cb701d23d0f4b1",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -86,7 +85,6 @@
           0,
           1,
           2,
-          19,
           23
         ],
         "literal_writes": [],
@@ -112,11 +110,7 @@
           },
           {
             "address": 2,
-            "equals": "HASH(\"DirectorySchema.CatalogStoreNode\")"
-          },
-          {
-            "address": 19,
-            "equals": 1
+            "equals": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
           }
         ]
       },
@@ -153,12 +147,11 @@
       "transport": "reference-id",
       "reference": "r13",
       "literal_reads": [
-        2,
         3,
-        4,
-        7,
         8,
-        23
+        13,
+        23,
+        24
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -170,9 +163,8 @@
       "transport": "reference-id",
       "reference": "r2",
       "literal_reads": [
-        2,
         3,
-        4,
+        13,
         16,
         23,
         27,
@@ -196,7 +188,11 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [],
-    "literal_writes": [],
+    "literal_writes": [
+      0,
+      1,
+      2
+    ],
     "dynamic_read": false,
     "dynamic_write": false,
     "dynamic_read_ranges": [],
@@ -208,8 +204,45 @@
     "clears_all": false,
     "external_readable_ranges": [],
     "external_writable_ranges": [],
-    "fields": [],
-    "headers": []
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 31416069
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 0
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "magic": 31416069,
+        "abi": 1
+      }
+    ]
   },
   "behavior": {
     "publication_rules": [],
@@ -217,10 +250,33 @@
       "mode": "preserved-unless-overwritten",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 31416069,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
-    "provides": [],
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.31416069.abi1",
+        "base": 0,
+        "magic": 31416069,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      }
+    ],
     "consumes": [
       {
         "port": "d1",

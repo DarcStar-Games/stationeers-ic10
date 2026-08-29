@@ -6,9 +6,9 @@ The Catalog Coordinator is the control plane for generic catalog storage. It own
 
 Current services:
 
-- `ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` — **Coordinator ABI3**, claims Generic Stores and commits topology/assignment epochs;
+- `ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` — **Coordinator ABI4**, claims Generic Stores and commits topology/assignment epochs;
 - `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10` — **on-demand import service**; Router ABI3 assigns each pending Loader item to live capacity;
-- `ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10` — Directory Adapter ABI2 for Generic Store discovery;
+- `ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10` — Directory Adapter ABI3 for Generic Store discovery;
 - `ic10/directory-core/generic_registry_directory_host_v2_0.ic10` — persistent 64-node Store registry;
 - `ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10` — **optional observability**, aggregate lifecycle/capacity telemetry;
 - `ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10` — **optional diagnostic** selectable directory view;
@@ -29,10 +29,10 @@ Current services:
                              |
                   runtime capacity placement
                              |
-                  Generic Store ABI5 nodes
+                  Generic Store ABI6 nodes
                              ^
                              |
-                 relocatable Loader ABI4 items
+                 relocatable Loader ABI5 items
 ```
 
 ## One global claimant
@@ -52,7 +52,7 @@ The Coordinator supplies CatalogSchemaId, CatalogSchemaVersion, CatalogInstanceI
 
 Store membership uses the Generic Directory infrastructure described in `docs/DIRECTORY_STANDARD.md`.
 
-`ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10` publishes Directory Adapter ABI2 candidates. `ic10/directory-core/generic_registry_directory_host_v2_0.ic10` indexes them by NodeId and persists one 6-cell record per possible node:
+`ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10` publishes Directory Adapter ABI3 candidates. `ic10/directory-core/generic_registry_directory_host_v2_0.ic10` indexes them by NodeId and persists one 6-cell record per possible node:
 
 ```text
 [ReferenceId, State, UsedCells, AssignmentEpoch, CatalogInstanceId, LastSeenEpoch]
@@ -60,7 +60,7 @@ Store membership uses the Generic Directory infrastructure described in `docs/DI
 
 The Adapter detects duplicate NodeIds, faults both live Store instances, and publishes one DUPLICATE-state candidate; the Registry marks previously known but absent nodes MISSING. `ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10` aggregates active/unclaimed/draining/fault/missing/duplicate counts and total used/free/capacity cells.
 
-## Coordinator ABI3
+## Coordinator ABI4
 
 Key Coordinator fields used by the current control plane include:
 
@@ -98,7 +98,7 @@ The request contains no generator-defined physical ReferenceId.
 
 ## Loader Router ABI3
 
-The Router discovers Ready Loader ABI4 producers. For the Loader's current `S15` item index it reads that item's size from the Loader item directory and computes:
+The Router discovers Ready Loader ABI5 producers. For the Loader's current `S15` item index it reads that item's size from the Loader item directory and computes:
 
 ```text
 required cells = ItemCellCount + 2
@@ -145,7 +145,7 @@ The current policy intentionally moves newest items first. Arbitrary hole-produc
 
 ## Store telemetry and diagnostics
 
-`ic10/catalog-control-plane/catalog_inspector_v4_0.ic10` accepts any Store ABI5 node and reports:
+`ic10/catalog-control-plane/catalog_inspector_v4_0.ic10` accepts any Store ABI6 node and reports:
 
 - schema/version/instance;
 - Store RefId and CoordinatorRef;

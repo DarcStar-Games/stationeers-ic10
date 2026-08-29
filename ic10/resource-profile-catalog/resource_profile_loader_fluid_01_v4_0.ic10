@@ -1,19 +1,19 @@
-# GENERATED Resource Profile FLUID loader; relocatable sparse Loader ABI4; whole items.
+# GENERATED Resource Profile FLUID loader; relocatable sparse Loader ABI5; whole items.
 clr db
 poke 0 31415969
-poke 1 4
-poke 2 HASH("CatalogSchema.ResourceProfile")
-poke 3 2
-poke 4 HASH("Catalog.ResourceProfiles.Schema2")
-poke 5 1
-poke 6 HASH("LoaderId:0520dc6483d951d1")
-poke 7 1
-poke 8 4
-poke 9 16
-poke 10 64
-poke 11 HASH("LD4:bafc7012ec80e6de")
-poke 16 496
-poke 17 16
+poke 1 5
+poke 2 1
+poke 3 HASH("CatalogSchema.ResourceProfile.v2")
+poke 10 HASH("Catalog.ResourceProfiles.Schema2")
+poke 11 1
+poke 12 HASH("LoaderId:0520dc6483d951d1")
+poke 13 1
+poke 14 4
+poke 15 24
+poke 16 64
+poke 17 HASH("LD4:bafc7012ec80e6de")
+poke 24 496
+poke 25 16
 poke 496 HASH("CarbonDioxide") # CarbonDioxide
 poke 497 1
 poke 498 1
@@ -28,8 +28,8 @@ poke 506 265
 poke 507 RatioCarbonDioxide
 poke 508 0.995
 poke 509 600
-poke 18 480
-poke 19 16
+poke 26 480
+poke 27 16
 poke 480 HASH("Oxygen") # Oxygen
 poke 481 1
 poke 482 1
@@ -44,8 +44,8 @@ poke 490 162.2
 poke 491 RatioOxygen
 poke 492 0.995
 poke 493 800
-poke 20 464
-poke 21 16
+poke 28 464
+poke 29 16
 poke 464 HASH("Hydrogen") # Hydrogen
 poke 465 1
 poke 466 1
@@ -60,8 +60,8 @@ poke 474 70.0551551908
 poke 475 RatioHydrogen
 poke 476 0.995
 poke 477 200
-poke 22 448
-poke 23 16
+poke 30 448
+poke 31 16
 poke 448 HASH("Fuel.H2O2") # Prepared 2:1 Volatiles/Oxygen fuel mixture
 poke 449 1
 poke 450 1
@@ -76,4 +76,4 @@ poke 458 1
 poke 459 5000
 poke 460 12805
 poke 461 1
-poke 12 1 # immutable candidate publication LAST
+poke 18 1 # immutable candidate publication LAST

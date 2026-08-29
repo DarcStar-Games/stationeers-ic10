@@ -10,9 +10,7 @@ bne r0 31415982 Bad
 get r0 d0 1
 bne r0 3 Bad
 get r0 d0 2
-bne r0 HASH("DirectorySchema.CatalogStoreNode") Bad
-get r0 d0 19
-bne r0 1 Bad
+bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Bad
 get r15 d0 23
 mod r0 r15 2
 bnez r0 Bad

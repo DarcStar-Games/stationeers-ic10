@@ -43,12 +43,13 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read"
-          ]
+            "self-write"
+          ],
+          "const": 0
         },
         {
-          "address": 3,
-          "name": "S3",
+          "address": 8,
+          "name": "S8",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -56,8 +57,8 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
+          "address": 9,
+          "name": "S9",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -65,8 +66,17 @@
           ]
         },
         {
-          "address": 5,
-          "name": "S5",
+          "address": 10,
+          "name": "S10",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 11,
+          "name": "S11",
           "value_type": "number",
           "semantic_source": "source",
           "access": [
@@ -76,8 +86,8 @@
           "description": "consume commit only after mapping + advance request are complete"
         },
         {
-          "address": 6,
-          "name": "S6",
+          "address": 12,
+          "name": "S12",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -85,8 +95,8 @@
           ]
         },
         {
-          "address": 7,
-          "name": "S7",
+          "address": 13,
+          "name": "S13",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [

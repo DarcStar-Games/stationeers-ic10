@@ -39,7 +39,7 @@ Completion criteria:
 
 Standardize the boundary between domain-specific discovery and generic directory publication.
 
-A Directory Adapter publishes a coherent candidate snapshot on its own stack using `DIRECTORY_ADAPTER_ABI_V2`. Generic directory infrastructure consumes that snapshot and owns ordering, exact deduplication, overflow, stable generations, snapshot publication, and registry state.
+A Directory Adapter publishes a coherent candidate snapshot on its own stack using `DIRECTORY_ADAPTER_ABI_V3`. Generic directory infrastructure consumes that snapshot and owns ordering, exact deduplication, overflow, stable generations, snapshot publication, and registry state.
 
 Directory schemas remain versioned data in `data/directory_schemas.json`. Controller, Pressure Grid Link, Resource Endpoint, Resource Link, and Catalog Store Node discovery all publish through generic Snapshot/Registry host ABIs; consumers identify record semantics by DirectorySchemaId/Version rather than domain-specific directory magic values.
 
@@ -75,7 +75,7 @@ Use the three-cell snapshot record:
 
 Completion criteria:
 
-- all six supported non-deprecated printer families publish through `DIRECTORY_ADAPTER_ABI_V2`;
+- all six supported non-deprecated printer families publish through `DIRECTORY_ADAPTER_ABI_V3`;
 - Fabricator devices are excluded;
 - `FamilyHash` exactly matches the Recipe Catalog partition identity;
 - tier/capability and Power/Busy/Error/On/Lock state fit in one `ProcessorSpec`;

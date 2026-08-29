@@ -4,13 +4,13 @@ poke 1 1
 Loop:
 yield
 bdns d1 ProfileBad
-get r15 d1 5
+get r15 d1 29
 blez r15 ProfileBad
 get r0 d1 0
 bne r0 31415963 ProfileBad
 get r0 d1 1
 bne r0 1 ProfileBad
-get r0 d1 4
+get r0 d1 28
 blez r0 ProfileBad
 get r0 d1 8
 bne r0 1 ProfileBad
@@ -24,7 +24,7 @@ get r3 d1 20
 bnan r3 ProfileBad
 blt r3 0 ProfileBad
 bgt r3 1 ProfileBad
-get r0 d1 5
+get r0 d1 29
 bne r0 r15 Loop
 bdnvl d0 TotalMoles SensorBad
 bdnvl d0 r2 SensorBad

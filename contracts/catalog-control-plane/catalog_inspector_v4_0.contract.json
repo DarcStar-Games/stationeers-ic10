@@ -2,14 +2,14 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_inspector_v4_0.ic10",
-  "source_sha256": "ef4611d60d3a1fa0370a28bff33c853640439fd4f257ce9a02b16bb3ca741734",
+  "source_sha256": "c3927dee2448d221b7be91bf5324bd97490884f3923d577ad8019a814f2dd7f6",
   "identity": {
     "service_id": "ic10.script.catalog.inspector",
     "implementation_revision": "4.0",
     "deployment_family": "catalog-control-plane",
     "deployment_class": "on-demand",
     "layer": "Catalog diagnostics",
-    "purpose": "Generic Store ABI5 / Coordinator ABI3 inspector for node identity, item capacity, topology, and telemetry."
+    "purpose": "Generic Store ABI6 / Coordinator ABI4 inspector for node identity, item capacity, topology, and telemetry."
   },
   "device_ports": [
     {
@@ -29,20 +29,19 @@
         "literal_reads": [
           0,
           1,
-          2,
           3,
-          4,
-          6,
-          7,
           8,
           9,
           11,
+          13,
           15,
           16,
           17,
           18,
+          21,
           22,
           23,
+          24,
           31
         ],
         "literal_writes": [],
@@ -59,7 +58,7 @@
           },
           {
             "address": 1,
-            "equals": 5
+            "equals": 6
           }
         ]
       },
@@ -67,7 +66,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415968.abi5"
+          "ic10.stack.31415968.abi6"
         ]
       }
     }
@@ -79,10 +78,9 @@
       "literal_reads": [
         0,
         1,
-        3,
-        6,
-        7,
+        15,
         19,
+        21,
         22,
         23
       ],
@@ -98,7 +96,7 @@
         {
           "address": 1,
           "operator": "equals",
-          "value": 3
+          "value": 4
         }
       ],
       "accepted": []
@@ -117,7 +115,6 @@
         14,
         15,
         18,
-        19,
         23
       ],
       "literal_writes": [],
@@ -137,12 +134,7 @@
         {
           "address": 2,
           "operator": "equals",
-          "value": "HASH(\"DirectorySchema.CatalogStoreNode\")"
-        },
-        {
-          "address": 19,
-          "operator": "equals",
-          "value": 1
+          "value": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
         }
       ],
       "accepted": []
@@ -157,7 +149,6 @@
       2,
       3,
       4,
-      5,
       6,
       7,
       8,
@@ -244,15 +235,6 @@
       {
         "address": 4,
         "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -552,10 +534,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415968.abi5",
+            "protocol_id": "ic10.stack.31415968.abi6",
             "header_base": 0,
             "magic": 31415968,
-            "abi": 5,
+            "abi": 6,
             "publication_requirements": []
           }
         ],

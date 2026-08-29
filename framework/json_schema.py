@@ -15,7 +15,7 @@ SUPPORTED_KEYWORDS = {
     "type", "const", "enum", "properties", "required",
     "additionalProperties", "items", "minItems", "maxItems",
     "uniqueItems", "minLength", "maxLength", "pattern", "minimum",
-    "maximum", "allOf", "anyOf",
+    "maximum", "allOf", "anyOf", "oneOf",
 }
 
 
@@ -40,7 +40,7 @@ def validate_schema(schema: dict[str, Any]) -> None:
             walk(rule["additionalProperties"], f"{path}.additionalProperties")
         if "items" in rule:
             walk(rule["items"], f"{path}.items")
-        for keyword in ("allOf", "anyOf"):
+        for keyword in ("allOf", "anyOf", "oneOf"):
             for index, child in enumerate(rule.get(keyword, [])):
                 walk(child, f"{path}.{keyword}[{index}]")
 
@@ -97,15 +97,20 @@ def validate(instance: Any, schema: dict[str, Any]) -> None:
                 return
         for branch in rule.get("allOf", []):
             walk(value, branch, path)
-        if "anyOf" in rule:
+        for keyword in ("anyOf", "oneOf"):
+            if keyword not in rule:
+                continue
             branch_errors = []
-            for branch in rule["anyOf"]:
+            for branch in rule[keyword]:
                 before = len(errors)
                 walk(value, branch, path)
                 branch_errors.append(errors[before:])
                 del errors[before:]
-            if all(branch_errors):
-                errors.append(f"{path}: no anyOf branch matched")
+            matched = sum(not branch for branch in branch_errors)
+            if not matched:
+                errors.append(f"{path}: no {keyword} branch matched")
+            elif keyword == "oneOf" and matched > 1:
+                errors.append(f"{path}: {matched} oneOf branches matched, expected exactly one")
         if isinstance(value, dict):
             properties = rule.get("properties", {})
             for name in rule.get("required", []):

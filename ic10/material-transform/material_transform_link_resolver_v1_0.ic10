@@ -1,5 +1,6 @@
 poke 0 31415978
 poke 1 1
+poke 2 0
 Loop:
 yield
 bdns d0 Bad
@@ -13,24 +14,22 @@ get r0 d0 1
 bne r0 1 Bad
 get r0 d0 8
 bne r0 1 Bad
-get r2 d0 2
-get r3 d0 3
-get r4 d0 4
-get r13 d0 7
+get r2 d0 14
+get r3 d0 15
+get r4 d0 16
+get r13 d0 19
 get r0 d1 0
 bne r0 31415952 Bad
 get r0 d1 1
 bne r0 4 Bad
-get r0 d1 6
+get r0 d1 74
 bne r0 r13 Bad
 get r0 d2 0
 bne r0 31415981 Bad
 get r0 d2 1
 bne r0 1 Bad
 get r0 d2 9
-bne r0 HASH("DirectorySchema.ResourceLink") Bad
-get r0 d2 10
-bne r0 1 Bad
+bne r0 HASH("DirectorySchema.ResourceLink.v1") Bad
 get r12 d2 2
 add r0 r12 3
 get r11 d2 r0
@@ -102,17 +101,17 @@ bne r0 r14 Loop
 add r0 r12 3
 get r0 d2 r0
 bne r0 r11 Loop
-poke 2 r2
-poke 3 r4
-poke 4 r3
-poke 5 r13
+poke 8 r2
+poke 9 r4
+poke 10 r3
+poke 11 r13
 move r0 1
 j Result
 Bad:
 move r0 -1
 Result:
-poke 6 r0
-get r0 db 7
+poke 12 r0
+get r0 db 13
 add r0 r0 1
-poke 7 r0
+poke 13 r0
 j Loop

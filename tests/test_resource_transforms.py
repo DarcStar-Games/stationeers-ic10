@@ -18,12 +18,12 @@ M=json.loads((R/MANIFEST_FILE).read_text())
 fails += prove_restoration(R,files(),[sys.executable,str(R/'tools'/'generate'/'generate_resource_transforms.py')],preserve_inputs=[R/SOURCE_FILE])
 D=json.loads((R/SOURCE_FILE).read_text());T=D['transforms'];M=json.loads((R/MANIFEST_FILE).read_text())
 if len(T)!=17:fails.append(f'expected 17 transforms, got {len(T)}')
-if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_schema_version'),M.get('view_abi'))!=('RESOURCE_TRANSFORM_CATALOG_V6',5,4,4,4):fails.append('Transform runtime/schema ABI metadata mismatch')
+if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_schema_version'),M.get('view_abi'))!=('RESOURCE_TRANSFORM_CATALOG_V6',6,5,4,4):fails.append('Transform runtime/schema ABI metadata mismatch')
 if M.get('runtime_min_store_count')!=1 or M.get('input_descriptor_count')!=32 or M.get('output_descriptor_count')!=17:fails.append('Transform runtime capacity/count mismatch')
 loaders=[R/f for f in M['loaders']]
 for src in (p.read_text() for p in loaders):
  code=[z.split('#',1)[0].strip() for z in src.splitlines() if z.split('#',1)[0].strip()]
- if code[0]!='clr db' or code[-1]!='poke 12 1' or any(z.startswith(('put ','putd ','yield','j ')) for z in code):fails.append('Transform loader is not one-shot sparse own-stack producer')
+ if code[0]!='clr db' or code[-1]!='poke 18 1' or any(z.startswith(('put ','putd ','yield','j ')) for z in code):fails.append('Transform loader is not one-shot sparse own-stack producer')
  if re.search(r'^poke\s+\d+\s+0(?:\s|$)',src,re.M):fails.append('Transform loader emits explicit zero poke')
 store_src=(R/M['generic_store_program']).read_text();stores,vms,groups=load_catalog_chain([store_src],[[p.read_text() for p in loaders]],store_ref_base=1030,loader_ref_base=1040);store=stores[0];coord=vms[0].coord
 if store.stack.get(16)!=2 or int(store.stack.get(9,0))!=17 or store.stack.get(27,0)!=0:fails.append('Transform runtime Store publication invalid')
@@ -38,8 +38,8 @@ for x in T:
  for d in x['inputs']+x['outputs']:vals += [d['resource_class'],d['resource_type'],d['unit'],d['quantity']]
  if n%4 or n<len(vals) or [store.stack.get(base+j) for j in range(len(vals))]!=vals:fails.append(x['name']+': self-contained transform item mismatch')
  if any(store.stack.get(base+j,0)!=0 for j in range(len(vals),n)):fails.append(x['name']+': item padding nonzero')
- screws={'d0':store,'coord':coord,'s0':store};v=IC10((R/'ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10').read_text(),screws);v.stack[2]=key;v.run(3,max_steps=50000)
- if v.stack.get(6,0)<=0 or v.stack.get(3)!=x['required_capability_mask'] or v.stack.get(4)!=len(x['inputs']) or v.stack.get(5)!=len(x['outputs']):fails.append(x['name']+': View header mismatch')
+ screws={'d0':store,'coord':coord,'s0':store};v=IC10((R/'ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10').read_text(),screws);v.stack[70]=key;v.run(3,max_steps=50000)
+ if v.stack.get(74,0)<=0 or v.stack.get(71)!=x['required_capability_mask'] or v.stack.get(72)!=len(x['inputs']) or v.stack.get(73)!=len(x['outputs']):fails.append(x['name']+': View header mismatch')
  for j,d in enumerate(x['inputs']):
   if [v.stack.get(8+j*4+k) for k in range(4)]!=[d['resource_class'],d['resource_type'],d['unit'],d['quantity']]:fails.append(x['name']+': View input mismatch')
  for j,d in enumerate(x['outputs']):

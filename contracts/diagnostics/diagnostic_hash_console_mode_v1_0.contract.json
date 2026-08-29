@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10",
-  "source_sha256": "fc639bc2f80ed6851b499f7796e872627b3897aab1b3a38b97afad91582a9833",
+  "source_sha256": "13e9b844630591b424e52a7980ee9acdae89a611aa9a88c7b3dced87a3e1caeb",
   "identity": {
     "service_id": "ic10.script.diagnostic.hash.console.mode",
     "implementation_revision": "1.0",
@@ -16,13 +16,14 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2
+      8
     ],
     "literal_writes": [
       0,
       1,
-      3,
-      4
+      2,
+      9,
+      10
     ],
     "dynamic_read": true,
     "dynamic_write": false,
@@ -67,12 +68,22 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
+          "self-write"
+        ],
+        "const": 0
+      },
+      {
+        "address": 8,
+        "name": "S8",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
           "self-read"
         ]
       },
       {
-        "address": 3,
-        "name": "S3",
+        "address": 9,
+        "name": "S9",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -80,8 +91,8 @@
         ]
       },
       {
-        "address": 4,
-        "name": "S4",
+        "address": 10,
+        "name": "S10",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

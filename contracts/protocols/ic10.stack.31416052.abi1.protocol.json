@@ -44,25 +44,8 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ]
-        },
-        {
-          "address": 3,
-          "name": "S3",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
+          ],
+          "const": 20
         },
         {
           "address": 5,
@@ -74,7 +57,7 @@
           ]
         },
         {
-          "address": 6,
+          "address": 7,
           "name": "CompleteSampleGenerationPublishes",
           "value_type": "integer",
           "semantic_source": "source",
@@ -83,13 +66,49 @@
             "self-write"
           ],
           "description": "complete sample generation publishes LAST"
+        },
+        {
+          "address": 8,
+          "name": "S8",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 9,
+          "name": "S9",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 10,
+          "name": "S10",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 11,
+          "name": "S11",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         }
       ],
       "behavior": {
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 6,
+            "address": 7,
             "description": "complete sample generation publishes LAST",
             "source": "verified-inline-order"
           }

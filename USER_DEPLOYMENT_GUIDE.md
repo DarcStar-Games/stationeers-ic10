@@ -126,7 +126,7 @@ This family contains the deployment classes shown in its generated program inven
 <!-- FAMILY_PROGRAMS:controller-discovery START -->
 | Program | Deployment class | Purpose |
 |---|---|---|
-| `ic10/controller-discovery/controller_directory_adapter_v4_0.ic10` | `commissioning` | Publishes Controller Directory Adapter ABI2 candidates; Generic Adapter Bridge + Snapshot Host own publication. |
+| `ic10/controller-discovery/controller_directory_adapter_v4_0.ic10` | `commissioning` | Publishes Controller Directory Adapter ABI3 candidates; Generic Adapter Bridge + Snapshot Host own publication. |
 | `ic10/controller-discovery/controller_selector_v3_0.ic10` | `commissioning` | Directly derives type/member groups from the sorted Generic Controller Directory and resolves one ReferenceId; rejects overflowed discovery. |
 <!-- FAMILY_PROGRAMS:controller-discovery END -->
 
@@ -652,16 +652,16 @@ This family contains the deployment classes shown in its generated program inven
 | Program | Deployment class | Purpose |
 |---|---|---|
 | `ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` | `conditional-resident` | Coordinator Core ABI3; claims Stores, assigns runtime ordinals, and owns topology/capacity epochs. |
-| `ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10` | `conditional-resident` | Publishes Generic Store membership as Directory Adapter ABI2 registry candidates. |
+| `ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10` | `conditional-resident` | Publishes Generic Store membership as Directory Adapter ABI3 registry candidates. |
 | `ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10` | `on-demand` | Aggregates Store lifecycle counts and used/free/capacity telemetry; marks missing nodes. |
 | `ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10` | `on-demand` | Selectable Store-directory view plus Coordinator aggregate health telemetry. |
 | `ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10` | `on-demand` | Rebinds persisted Stores to a replacement Coordinator with a higher CoordinatorEpoch. |
-| `ic10/catalog-control-plane/catalog_inspector_v4_0.ic10` | `on-demand` | Generic Store ABI5 / Coordinator ABI3 inspector for node identity, item capacity, topology, and telemetry. |
+| `ic10/catalog-control-plane/catalog_inspector_v4_0.ic10` | `on-demand` | Generic Store ABI6 / Coordinator ABI4 inspector for node identity, item capacity, topology, and telemetry. |
 | `ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10` | `on-demand` | Plans whole-item compaction from DRAINING Stores into compatible live Store capacity. |
 | `ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10` | `on-demand` | Copies and commits one whole item to reserved destination capacity, then reclaims the source tail. |
-| `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10` | `on-demand` | Loader Router ABI3; places whole Loader ABI4 items into live unreserved Store capacity. |
+| `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10` | `on-demand` | Loader Router ABI3; places whole Loader ABI5 items into live unreserved Store capacity. |
 | `ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10` | `on-demand` | Safely retires an empty Store and repairs neighboring topology. |
-| `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` | `conditional-resident` | Generic Store ABI5 node with item directory + payload heap; imports runtime-routed relocatable items. |
+| `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` | `conditional-resident` | Generic Store ABI6 node with item directory + payload heap; imports runtime-routed relocatable items. |
 <!-- FAMILY_PROGRAMS:catalog-control-plane END -->
 
 ### Prerequisites
@@ -709,10 +709,10 @@ This family contains the deployment classes shown in its generated program inven
 <!-- FAMILY_PROGRAMS:input-profile-catalog START -->
 | Program | Deployment class | Purpose |
 |---|---|---|
-| `ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10` | `one-shot` | One-shot relocatable Loader ABI4 candidate containing whole self-contained Input Profile items. |
-| `ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10` | `one-shot` | One-shot relocatable Loader ABI4 candidate containing whole self-contained Input Profile items. |
-| `ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10` | `one-shot` | One-shot relocatable Loader ABI4 candidate containing whole self-contained Input Profile items. |
-| `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` | `conditional-resident` | Selects one Input schema-v3 Store ABI5 catalog context and republishes Generic Input Profile ABI1. |
+| `ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10` | `one-shot` | One-shot relocatable Loader ABI5 candidate containing whole self-contained Input Profile items. |
+| `ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10` | `one-shot` | One-shot relocatable Loader ABI5 candidate containing whole self-contained Input Profile items. |
+| `ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10` | `one-shot` | One-shot relocatable Loader ABI5 candidate containing whole self-contained Input Profile items. |
+| `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` | `conditional-resident` | Selects one Input schema-v3 Store ABI6 catalog context and republishes Generic Input Profile ABI1. |
 <!-- FAMILY_PROGRAMS:input-profile-catalog END -->
 
 ### Prerequisites
@@ -760,14 +760,14 @@ This family contains the deployment classes shown in its generated program inven
 <!-- FAMILY_PROGRAMS:resource-profile-catalog START -->
 | Program | Deployment class | Purpose |
 |---|---|---|
-| `ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10` | `one-shot` | One-shot relocatable ENERGY Resource Profile Loader ABI4 candidate. |
-| `ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI4 candidate; whole records only, own-stack zero-init. |
-| `ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI4 candidate; whole records only, own-stack zero-init. |
-| `ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI4 candidate; whole records only, own-stack zero-init. |
-| `ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI4 candidate; whole records only, own-stack zero-init. |
-| `ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI4 candidate; whole records only, own-stack zero-init. |
-| `ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10` | `one-shot` | One-shot relocatable POWER Resource Profile Loader ABI4 candidate. |
-| `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` | `conditional-resident` | Resolves one Resource Profile across runtime-placed Store ABI5 items and republishes View ABI1. |
+| `ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10` | `one-shot` | One-shot relocatable ENERGY Resource Profile Loader ABI5 candidate. |
+| `ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
+| `ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
+| `ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
+| `ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
+| `ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
+| `ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10` | `one-shot` | One-shot relocatable POWER Resource Profile Loader ABI5 candidate. |
+| `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` | `conditional-resident` | Resolves one Resource Profile across runtime-placed Store ABI6 items and republishes View ABI1. |
 <!-- FAMILY_PROGRAMS:resource-profile-catalog END -->
 
 ### Prerequisites
@@ -815,12 +815,12 @@ This family contains the deployment classes shown in its generated program inven
 <!-- FAMILY_PROGRAMS:transform-catalog START -->
 | Program | Deployment class | Purpose |
 |---|---|---|
-| `ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10` | `one-shot` | One-shot relocatable Transform Loader ABI4 candidate; each transform is a whole self-contained item. |
-| `ic10/transform-catalog/resource_transform_catalog_loader_01_v6_0.ic10` | `one-shot` | One-shot relocatable Loader ABI4 candidate; each Transform and all descriptors remain one atomic item. |
-| `ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10` | `one-shot` | One-shot relocatable Loader ABI4 candidate; each Transform and all descriptors remain one atomic item. |
-| `ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10` | `one-shot` | One-shot relocatable Loader ABI4 candidate; each Transform and all descriptors remain one atomic item. |
-| `ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10` | `one-shot` | One-shot relocatable Loader ABI4 candidate; each Transform and all descriptors remain one atomic item. |
-| `ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` | `conditional-resident` | Selects a Store ABI5 schema-v4 transform and publishes capability-based variable-input Transform Profile ABI4. |
+| `ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10` | `one-shot` | One-shot relocatable Transform Loader ABI5 candidate; each transform is a whole self-contained item. |
+| `ic10/transform-catalog/resource_transform_catalog_loader_01_v6_0.ic10` | `one-shot` | One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item. |
+| `ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10` | `one-shot` | One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item. |
+| `ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10` | `one-shot` | One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item. |
+| `ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10` | `one-shot` | One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item. |
+| `ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` | `conditional-resident` | Selects a Store ABI6 schema-v4 transform and publishes capability-based variable-input Transform Profile ABI4. |
 <!-- FAMILY_PROGRAMS:transform-catalog END -->
 
 ### Prerequisites
@@ -868,7 +868,7 @@ This family contains the deployment classes shown in its generated program inven
 <!-- FAMILY_PROGRAMS:recipe-catalog START -->
 | Program | Deployment class | Purpose |
 |---|---|---|
-| `ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10` | `conditional-resident` | Recipe Lookup v8 ABI3 across runtime-placed Recipe schema-v3 Store ABI5 printer-family partitions. |
+| `ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10` | `conditional-resident` | Recipe Lookup v8 ABI3 across runtime-placed Recipe schema-v3 Store ABI6 printer-family partitions. |
 | `ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10` | `conditional-resident` | Resolves exact RecipeHash execution metadata from Recipe schema-v3 stores, including bounded reagent requirements and stale-response echo. |
 <!-- FAMILY_PROGRAMS:recipe-catalog END -->
 
@@ -1503,7 +1503,7 @@ This family contains the deployment classes shown in its generated program inven
 | `ic10/power-grid/power_producer_endpoint_v1_0.ic10` | `conditional-resident` | Publishes one exact POWER producer/aggregate supply as a Generic Resource Endpoint. |
 | `ic10/power-grid/power_reservation_allocator_v1_0.ic10` | `conditional-resident` | Validates, commits, cleans old/orphan epochs, and publishes the active power allocator authority. |
 | `ic10/power-grid/power_reservation_committer_v1_0.ic10` | `conditional-resident` | Commits one common POWER reservation epoch with shared-source aggregation and foreign-owner protection. |
-| `ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10` | `conditional-resident` | Publishes priority-ordered PowerReservation candidates through Generic Directory Adapter ABI2. |
+| `ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10` | `conditional-resident` | Publishes priority-ordered PowerReservation candidates through Generic Directory Adapter ABI3. |
 | `ic10/power-grid/power_sink_flow_builder_v1_0.ic10` | `conditional-resident` | Builds one sink flow, retrying later sources until a compatible physical path is found. |
 | `ic10/power-grid/power_sink_selector_v1_0.ic10` | `conditional-resident` | Selects managed POWER sinks in critical/sheddable/charge dispatch order. |
 | `ic10/power-grid/power_source_selector_v1_0.ic10` | `conditional-resident` | Selects available POWER sources by preference while accounting for staged use and battery direction. |
@@ -1749,7 +1749,7 @@ Conditional-resident when fuel-backed automatic generation is enabled.
 Use to inspect live stack-published service state and capture release-bound physical observations for Item 12 without giving commissioning tools actuator authority.
 
 ### Use this when
-Use the Stack Cell Monitor for one human-visible IC stack value. Use the Snapshot Probe when one evidence observation needs several values with optional generation fencing.
+Use the Stack Header Reader to identify an unknown IC and see what it declares. Use the Stack Cell Monitor for one human-visible IC stack value at a chosen address. Use the Snapshot Probe when one evidence observation needs several values with optional generation fencing.
 
 ### Deployment class
 This family contains the deployment classes shown in its generated program inventory; reclaim rules are summarized below.
@@ -1759,20 +1759,21 @@ This family contains the deployment classes shown in its generated program inven
 | Program | Deployment class | Purpose |
 |---|---|---|
 | `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` | `on-demand` | Read-only six-source live commissioning snapshot probe with optional stack-generation fencing. |
-| `ic10/live-commissioning/stack_cell_monitor_v1_0.ic10` | `on-demand` | Read-only target IC stack-cell monitor with a Logic Memory address selector and visible value mirror. |
+| `ic10/live-commissioning/stack_cell_monitor_v1_0.ic10` | `on-demand` | Read-only target IC stack-cell probe with a Logic Memory address selector and visible value mirror. |
+| `ic10/live-commissioning/stack_header_reader_v1_0.ic10` | `on-demand` | Read-only common stack header reader: reports a target's identity, ABI, capabilities, and declared fields. |
 <!-- FAMILY_PROGRAMS:live-commissioning END -->
 
 ### Prerequisites
-The Stack Cell Monitor needs one target IC housing and one Logic Memory address selector. Formal Item-12 capture additionally requires a current verified release, `data/live_commissioning_cases.json`, `tools/live_commission.py`, and a real Stationeers installation under test.
+The Stack Header Reader needs only a target IC housing, and optionally a Logic Memory to mirror the discovered magic. The Stack Cell Monitor needs one target IC housing and one Logic Memory address selector. Formal Item-12 capture additionally requires a current verified release, `data/live_commissioning_cases.json`, `tools/live_commission.py`, and a real Stationeers installation under test.
 
 ### Wiring and configuration
-`ic10/live-commissioning/stack_cell_monitor_v1_0.ic10` uses `d0` for a target IC housing, `d1` for a Logic Memory stack-address selector, and optional `d2` for a mirrored value Memory. `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` is a read-only six-source snapshot probe. Each descriptor can read a dynamic LogicType or stack cell, with optional generation fencing for coherent stack capture. Neither tool may sit in an actuator path.
+`ic10/live-commissioning/stack_header_reader_v1_0.ic10` uses `d0` for a target IC housing and optional `d1` for a Setting mirror; it reads only the common header at `S0..S7` and publishes what the target declares. `ic10/live-commissioning/stack_cell_monitor_v1_0.ic10` uses `d0` for a target IC housing, `d1` for a Logic Memory stack-address selector, and optional `d2` for a mirrored value Memory. `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` is a read-only six-source snapshot probe. Each descriptor can read a dynamic LogicType or stack cell, with optional generation fencing for coherent stack capture. Neither tool may sit in an actuator path.
 
 ### Deployment procedure
 For visible inspection, select an exact `0..511` address and read the monitor housing or optional output Memory. For formal evidence, create a session with `tools/live_commission.py`, configure the Snapshot Probe only for cases that benefit from coherent capture, perform the physical action, record PASS/FAIL/BLOCKED plus notes/observations, and verify session fingerprint before accepting it.
 
 ### Healthy state
-The Stack Cell Monitor reports status `1` for a finite value or `2` for a captured NaN and never mutates its target. Every accepted formal observation is bound to exact framework fingerprint and case-catalog hash. Framework/case changes make old evidence stale rather than reusable.
+The Stack Header Reader reports status `3` for a valid common header, and the Stack Cell Monitor reports status `1` for a finite value or `2` for a captured NaN. Neither ever mutates its target. Every accepted formal observation is bound to exact framework fingerprint and case-catalog hash. Framework/case changes make old evidence stale rather than reusable.
 
 ### Commissioning proof
 This family is the evidence mechanism for all `LG-*` suites; Item 12 closes only when all required current cases PASS.

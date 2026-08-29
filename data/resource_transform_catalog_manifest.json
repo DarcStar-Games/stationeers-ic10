@@ -1,9 +1,9 @@
 {
-  "catalog_store_abi": 5,
+  "catalog_store_abi": 6,
   "catalog_store_magic": 31415968,
-  "catalog_loader_abi": 4,
+  "catalog_loader_abi": 5,
   "catalog_loader_magic": 31415969,
-  "catalog_coordinator_abi": 3,
+  "catalog_coordinator_abi": 4,
   "catalog_coordinator_magic": 31415970,
   "store_model": "generic_dynamic_item_heap",
   "loader_model": "one_shot_sparse_relocatable_whole_items",

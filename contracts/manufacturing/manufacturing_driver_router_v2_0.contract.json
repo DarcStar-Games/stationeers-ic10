@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10",
-  "source_sha256": "caf3b558b6610e94df99265f19af0d151dbedfea6b14e465aaf69f1b2bb72fd8",
+  "source_sha256": "58bbb691b29067ad2f38a3a7b4c0ce1d587baf91fd0fad531ca40676090e8dca",
   "identity": {
     "service_id": "ic10.script.manufacturing.driver.router",
     "implementation_revision": "2.0",
@@ -30,13 +30,13 @@
           11
         ],
         "literal_writes": [
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8
+          8,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -49,8 +49,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.b52b7ce2842c0e52",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.b52b7ce2842c0e52",
+        "interface_id": "ic10.interface.access.3fa2ec6c5d9751c8",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.3fa2ec6c5d9751c8",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -78,13 +78,13 @@
           11
         ],
         "literal_writes": [
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8
+          8,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -97,8 +97,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.b52b7ce2842c0e52",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.b52b7ce2842c0e52",
+        "interface_id": "ic10.interface.access.3fa2ec6c5d9751c8",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.3fa2ec6c5d9751c8",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -164,6 +164,7 @@
     "literal_writes": [
       0,
       1,
+      2,
       10,
       11,
       12,
@@ -201,6 +202,16 @@
           "self-write"
         ],
         "const": 2
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 0
       },
       {
         "address": 9,

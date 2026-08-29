@@ -11,7 +11,7 @@ If you are new to the framework, read the documents in this order:
 1. **README.md** — mental model, major components, and terminology.
 2. **docs/ARCHITECTURE.md** — component ownership and end-to-end data flow.
 3. **docs/PI_CONTROLLER_GETTING_STARTED.md** — smallest creative-mode PI controller bench test using existing scripts.
-4. **docs/STACK_CELL_MONITOR_GETTING_STARTED.md** — reusable visible inspection of production IC stack cells.
+4. **docs/STACK_ABI_ENVELOPE.md** and **docs/STACK_CELL_MONITOR_GETTING_STARTED.md** — common service discovery contract and reusable visible inspection of production IC stack cells.
 5. **docs/CONTROLLER_DIRECTORY_GETTING_STARTED.md** — isolated Controller Directory discovery, publication, removal, and recovery test.
 6. **docs/COMMISSIONING_QUICKSTART.md** — shortest path to a full PI deployment and diagnostics panel.
 7. **USER_DEPLOYMENT_GUIDE.md** — operator-facing per-family deployment manual covering all production IC10 programs, residency/reclaim rules, health checks, restart behavior, and live proof.
@@ -48,7 +48,7 @@ The repository uses **semantic paths**, not historical source ordinals. Producti
 
 ```text
 ic10/<deployment-family>/     versioned production IC10 programs
-contracts/                    generated per-script contracts, registry, and protocol definitions
+contracts/                    generated per-script contracts, protocol/envelope registries, and definitions
 schemas/                      JSON Schema definitions for generated contract documents
 docs/                         engineering/reference documentation
 framework/                    executable protocol reference models
@@ -62,7 +62,7 @@ tools/                        command-line entrypoints
 tools/generate/               code generators driven by data/
 ```
 
-Do not infer execution order, ABI identity, or deployment order from a filename. Use the semantic path, version suffix, `data/source_manifest.json`, `contracts/index.json`, `docs/SCRIPT_INDEX.md`, and `USER_DEPLOYMENT_GUIDE.md`.
+Do not infer execution order, ABI identity, or deployment order from a filename. Use the semantic path, version suffix, `data/source_manifest.json`, `contracts/index.json`, `contracts/stack_envelope_inventory.json`, `docs/SCRIPT_INDEX.md`, and `USER_DEPLOYMENT_GUIDE.md`.
 
 ## Mental model
 
@@ -137,7 +137,7 @@ The source bundle contains **173 production-capable IC10 programs**, but they ar
 - **resident runtime/control-plane** — controller Runtime/Host/Policy that normally stays powered whenever its family is installed;
 - **conditional resident** — resource, directory, scheduler, and domain services that stay powered only while their optional subsystem/live consumer is enabled;
 - **commissioning** — discovery selectors, configuration UI/input services, and diagnostic mapping services; power/reprogram them after commissioning when no live consumer needs them;
-- **one-shot catalog producers** — Loader ABI4 programs; reclaim those housings after all intended items are durably imported. Loader Router is on-demand during import/rebuild rather than a one-shot data producer;
+- **one-shot catalog producers** — Loader ABI5 programs; reclaim those housings after all intended items are durably imported. Loader Router is on-demand during import/rebuild rather than a one-shot data producer;
 - **on-demand diagnostics/lifecycle** — Catalog Inspector, Directory Telemetry, Directory View, Recovery, Item Migration Planner + Worker, Store Retirement Manager, the read-only Live Commission Snapshot Probe, and the visible Stack Cell Monitor.
 
 `ControllerTest` is no longer a production family/profile. Its Runtime, Policy, and standalone test Input Profile live under `tests/ic10/` and are deployed only for framework isolation testing.
@@ -158,7 +158,7 @@ Generic jobs use `GENERIC_JOB_ABI_V1`. `ic10/generic-jobs/generic_job_store_v1_0
 
 Offline lifecycle, crash-recovery, optimistic-generation, and slot-reuse behavior is exercised by `tests/test_job_abi.py`.
 
-Recipe schema v3 uses common **Store ABI5 / Loader ABI4** and partitions runtime storage by **printer family first**. Each recipe is a variable-width, 4-cell-aligned whole item carrying RecipeHash, FamilyHash, capability tier, ordinal, InputCount, and bounded `[ManufacturingReagentHash, Quantity]` pairs. Runtime Store capacity is therefore derived from actual whole-item widths rather than a fixed 80 recipes. `ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10` remains Lookup ABI3 for family/ordinal browsing, while `ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10` resolves exact RecipeHash execution metadata for the scheduler. The 780-recipe stress fixture now derives 18 Stores (`48+48+34` per family). See `docs/CATALOG_COORDINATION.md`, `docs/CATALOG_STORAGE.md`, `docs/CATALOG_SCHEMA.md`, `docs/RECIPE_CATALOG.md`, and `docs/MANUFACTURING_SCHEDULER.md`.
+Recipe schema v3 uses common **Store ABI6 / Loader ABI5** and partitions runtime storage by **printer family first**. Each recipe is a variable-width, 4-cell-aligned whole item carrying RecipeHash, FamilyHash, capability tier, ordinal, InputCount, and bounded `[ManufacturingReagentHash, Quantity]` pairs. Runtime Store capacity is therefore derived from actual whole-item widths rather than a fixed 80 recipes. `ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10` remains Lookup ABI3 for family/ordinal browsing, while `ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10` resolves exact RecipeHash execution metadata for the scheduler. The 780-recipe stress fixture now derives 18 Stores (`48+48+34` per family). See `docs/CATALOG_COORDINATION.md`, `docs/CATALOG_STORAGE.md`, `docs/CATALOG_SCHEMA.md`, `docs/RECIPE_CATALOG.md`, and `docs/MANUFACTURING_SCHEDULER.md`.
 
 MaterialGrid uses one canonical one-to-three-input transform transaction backed by the 17-transform catalog. `ic10/material-transform/material_transform_admission_v1_0.ic10` validates capability, universal declared pressure/temperature bounds, and output capacity; `ic10/material-transform/material_transform_link_resolver_v1_0.ic10` resolves typed routes; `ic10/material-transform/multi_material_reservation_stager_v1_0.ic10` stages reservations/Guards; `ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10` publishes one common epoch only after every input stages; and `ic10/material-transform/generic_material_transform_runtime_v2_0.ic10` waits for all inputs and confirms coherent output growth. Item 6 now adds queue scheduling and parallel processor discovery above this unchanged transaction. Printing reuses the same Stager/Allocator protocol through a print-specific resolver, while Recipe schema-v3 reagent identities are matched to concrete MaterialGrid resources through Resource Profile `ManufacturingReagentHash`. Gas/fuel strategy remains a separate domain concern; bounded dependency expansion is implemented in Item 8 and electrical PowerGrid reservation/load shedding is implemented in Item 9. See `docs/RESOURCE_GRID_CORE.md`, `docs/MATERIAL_GRID_FOUNDATION.md`, `docs/MATERIAL_TRANSFER_SYSTEM.md`, `docs/ORE_PROCESSING_TRANSFORMS.md`, and `docs/MANUFACTURING_SCHEDULER.md`.
 
@@ -198,7 +198,7 @@ The key consequence is that an interrupted write should leave either the old com
 
 ## Shared Input Profile Catalog
 
-Controller and diagnostic input metadata is catalog-backed through Store ABI5 / Loader ABI4. Deploy the global Coordinator/Router and at least one unclaimed `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` with a unique `S18 NodeId`, then program the three one-shot sparse Loader candidates `ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10` through `ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10`. The Router places the six self-contained schema-v3 production/diagnostic profiles into compatible runtime capacity; they currently fit one Generic Store. `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` then selects the desired context and republishes the unchanged Generic Input Profile ABI expected by Scanner/Resolver/Config Loader.
+Controller and diagnostic input metadata is catalog-backed through Store ABI6 / Loader ABI5. Deploy the global Coordinator/Router and at least one unclaimed `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` with a unique `S18 NodeId`, then program the three one-shot sparse Loader candidates `ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10` through `ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10`. The Router places the six self-contained schema-v3 production/diagnostic profiles into compatible runtime capacity; they currently fit one Generic Store. `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` then selects the desired context and republishes the unchanged Generic Input Profile ABI expected by Scanner/Resolver/Config Loader.
 
 Examples: `S2=HASH("ControllerPI"), S3=1` for PI configuration; `HASH("ControllerSequencer")/1`, `HASH("ControllerPhasePressure")/1`, `HASH("ControllerPressureDomain")/1`, or `HASH("ControllerPressureTransfer")/1` for those families; `HASH("DiagnosticMapping")/1` for diagnostics. All profiles share the one catalog store.
 

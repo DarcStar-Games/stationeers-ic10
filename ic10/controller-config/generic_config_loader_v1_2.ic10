@@ -69,13 +69,13 @@ getd r0 r8 0
 bne r0 31415929 ProfileDone
 getd r0 r8 1
 bne r0 1 ProfileDone
-getd r11 r8 2
+getd r11 r8 8
 bne r11 r4 ProfileDone
-getd r11 r8 3
+getd r11 r8 9
 bne r11 r13 ProfileDone
-getd r11 r8 4
+getd r11 r8 10
 bne r11 r6 ProfileDone
-getd r11 r8 5
+getd r11 r8 11
 blez r11 ProfileDone
 putd editor 27 r8
 putd editor 28 r0

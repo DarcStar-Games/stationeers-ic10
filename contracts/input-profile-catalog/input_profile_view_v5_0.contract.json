@@ -2,14 +2,14 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/input-profile-catalog/input_profile_view_v5_0.ic10",
-  "source_sha256": "ae7b0e571859258cb6acc983d446c6c3c4e02ca50bd7ba7783b181c542185532",
+  "source_sha256": "25f95c4735d077c40a0f88efaedd9c47e37df3d9ab6473299b07965c6d0d0434",
   "identity": {
     "service_id": "ic10.script.input.profile.view",
     "implementation_revision": "5.0",
     "deployment_family": "input-profile-catalog",
     "deployment_class": "conditional-resident",
     "layer": "Input metadata",
-    "purpose": "Selects one Input schema-v3 Store ABI5 catalog context and republishes Generic Input Profile ABI1."
+    "purpose": "Selects one Input schema-v3 Store ABI6 catalog context and republishes Generic Input Profile ABI1."
   },
   "device_ports": [
     {
@@ -27,8 +27,8 @@
       },
       "stack": {
         "literal_reads": [
-          4,
-          11
+          11,
+          13
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -42,8 +42,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.432bfc938e849f06",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.432bfc938e849f06",
+        "interface_id": "ic10.interface.access.5d0d80bd0cde99a4",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.5d0d80bd0cde99a4",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -62,7 +62,7 @@
       "reference": "r12",
       "literal_reads": [
         0,
-        7
+        22
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -82,13 +82,12 @@
       "literal_reads": [
         0,
         1,
-        2,
         3,
-        4,
-        6,
-        7,
         9,
-        17
+        13,
+        17,
+        21,
+        24
       ],
       "literal_writes": [],
       "dynamic_read": true,
@@ -102,17 +101,12 @@
         {
           "address": 1,
           "operator": "equals",
-          "value": 5
-        },
-        {
-          "address": 2,
-          "operator": "equals",
-          "value": "HASH(\"CatalogSchema.InputProfile\")"
+          "value": 6
         },
         {
           "address": 3,
           "operator": "equals",
-          "value": 3
+          "value": "HASH(\"CatalogSchema.InputProfile.v3\")"
         }
       ],
       "accepted": []
@@ -121,14 +115,15 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3
+      8,
+      9
     ],
     "literal_writes": [
       0,
       1,
-      4,
-      5
+      2,
+      10,
+      11
     ],
     "dynamic_read": false,
     "dynamic_write": true,
@@ -171,12 +166,12 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
+          "self-write"
         ]
       },
       {
-        "address": 3,
-        "name": "S3",
+        "address": 8,
+        "name": "S8",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -184,8 +179,17 @@
         ]
       },
       {
-        "address": 4,
-        "name": "S4",
+        "address": 9,
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 10,
+        "name": "S10",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -193,8 +197,8 @@
         ]
       },
       {
-        "address": 5,
-        "name": "S5",
+        "address": 11,
+        "name": "S11",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10",
-  "source_sha256": "c5e40759533b248c2b80294e933d1c40cdb9298cd271dc87e2cd162e7562014c",
+  "source_sha256": "814f7fb98d996e91b204d8e664541b5607a8d5002a2fc169fec02fc5df4ac75d",
   "identity": {
     "service_id": "ic10.script.direct.item.storage.endpoint",
     "implementation_revision": "1.0",
@@ -99,10 +99,10 @@
       "stack": {
         "literal_reads": [
           0,
-          5,
           8,
           9,
-          13
+          13,
+          29
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -125,8 +125,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.fa334cd122f66175",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.fa334cd122f66175",
+        "interface_id": "ic10.interface.access.bd1b1bd0a7c8d8e0",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.bd1b1bd0a7c8d8e0",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [

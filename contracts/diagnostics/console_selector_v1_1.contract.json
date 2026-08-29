@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/console_selector_v1_1.ic10",
-  "source_sha256": "5cecdc2b306abb440f103b94ac7c89cd74187fd46b604371ea171c44844551f2",
+  "source_sha256": "2be418282d9d2afae348e03a9d149b9dc1a9f28bb36f29b43b5428a00526a90a",
   "identity": {
     "service_id": "ic10.script.console.selector",
     "implementation_revision": "1.1",
@@ -19,7 +19,7 @@
       "literal_reads": [
         0,
         1,
-        2
+        8
       ],
       "literal_writes": [],
       "dynamic_read": true,
@@ -42,27 +42,28 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3,
-      6,
       8,
+      9,
       10,
       11,
       12,
       13,
-      14
+      14,
+      15,
+      18
     ],
     "literal_writes": [
       0,
       1,
-      3,
-      4,
-      5,
-      6,
-      7,
+      2,
       8,
       11,
-      14
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -102,55 +103,9 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
           "self-write"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
         "address": 8,
@@ -162,6 +117,15 @@
           "self-write"
         ],
         "description": "never leave a previously selected display disabled on faults"
+      },
+      {
+        "address": 9,
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
       },
       {
         "address": 10,
@@ -211,6 +175,53 @@
           "self-write"
         ],
         "description": "handled desired token after complete result/status"
+      },
+      {
+        "address": 15,
+        "name": "S15",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 16,
+        "name": "S16",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 17,
+        "name": "S17",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 18,
+        "name": "S18",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 19,
+        "name": "S19",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
       }
     ],
     "headers": [

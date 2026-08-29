@@ -11,7 +11,7 @@ The unified Resource Profile catalog now includes two additional ResourceClass p
 | 4 `POWER` | `HASH("Power.Electrical")` | 4 `WATT` | instantaneous electrical supply/demand |
 | 5 `ENERGY` | `HASH("Power.Electrical")` | 5 `JOULE` | stored electrical energy identity/telemetry |
 
-`tools/generate/generate_resource_profiles.py` produces Loader ABI4 candidates `ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10` and `ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10`. POWER/ENERGY are ordinary Resource Profile items; Store ABI5 and Coordinator ABI3 are unchanged.
+`tools/generate/generate_resource_profiles.py` produces Loader ABI5 candidates `ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10` and `ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10`. POWER/ENERGY are ordinary Resource Profile items; Store ABI6 and Coordinator ABI4 are unchanged.
 
 Stationeers reports Station Battery `Charge`/`Maximum` in its game-energy convention (commonly documented as watt*tick/J-equivalent storage) and electrical transfer rates in watts. The framework never substitutes an ENERGY quantity for a POWER quantity merely because both are numeric.
 

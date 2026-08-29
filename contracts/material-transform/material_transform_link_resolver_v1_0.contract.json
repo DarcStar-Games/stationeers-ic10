@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-transform/material_transform_link_resolver_v1_0.ic10",
-  "source_sha256": "59a674ca91eb937e39ce982291d8110316f5e04512636b93fcee67b907ccb841",
+  "source_sha256": "18454a812c8d822b6fdac304279408e9f0778ca60a3952d1af4b0304241ff133",
   "identity": {
     "service_id": "ic10.script.material.transform.link.resolver",
     "implementation_revision": "1.0",
@@ -27,12 +27,12 @@
         "literal_reads": [
           0,
           1,
-          2,
-          3,
-          4,
-          7,
           8,
-          9
+          9,
+          14,
+          15,
+          16,
+          19
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -79,7 +79,7 @@
         "literal_reads": [
           0,
           1,
-          6
+          74
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -128,8 +128,7 @@
           0,
           1,
           2,
-          9,
-          10
+          9
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -154,11 +153,7 @@
           },
           {
             "address": 9,
-            "equals": "HASH(\"DirectorySchema.ResourceLink\")"
-          },
-          {
-            "address": 10,
-            "equals": 1
+            "equals": "HASH(\"DirectorySchema.ResourceLink.v1\")"
           }
         ]
       },
@@ -249,17 +244,18 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      7
+      13
     ],
     "literal_writes": [
       0,
       1,
       2,
-      3,
-      4,
-      5,
-      6,
-      7
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
     ],
     "dynamic_read": false,
     "dynamic_write": true,
@@ -306,8 +302,8 @@
         ]
       },
       {
-        "address": 3,
-        "name": "S3",
+        "address": 8,
+        "name": "S8",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -315,8 +311,8 @@
         ]
       },
       {
-        "address": 4,
-        "name": "S4",
+        "address": 9,
+        "name": "S9",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -324,8 +320,8 @@
         ]
       },
       {
-        "address": 5,
-        "name": "S5",
+        "address": 10,
+        "name": "S10",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -333,8 +329,8 @@
         ]
       },
       {
-        "address": 6,
-        "name": "S6",
+        "address": 11,
+        "name": "S11",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -342,8 +338,17 @@
         ]
       },
       {
-        "address": 7,
-        "name": "S7",
+        "address": 12,
+        "name": "S12",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 13,
+        "name": "S13",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

@@ -12,7 +12,7 @@ def ck(c,m):
 def close(a,b,t=1e-5):return abs(a-b)<=t
 H=lambda s:'HASH:'+s
 # Furnace transform conditions become a coherent cross-domain utility request.
-view=Device(100,stack={0:31415952,1:4,6:7,64:23500,65:24000,66:600,67:100000,68:H('AlloyInconel'),69:1},props={'ReferenceId':100})
+view=Device(100,stack={0:31415952,1:4,74:7,64:23500,65:24000,66:600,67:100000,68:H('AlloyInconel'),69:1},props={'ReferenceId':100})
 furnace=Device(101,props={'ReferenceId':101,'PrefabHash':H('StructureAdvancedFurnace'),'Pressure':20000,'Temperature':500,'Power':1,'Error':0,'Maximum':100,'SettingInput':0,'SettingOutput':0})
 freq=IC10((R/'ic10/process-furnace/furnace_process_condition_request_v1_0.ic10').read_text(),{'d0':view,'d1':furnace},self_ref=247)
 freq.stack.update({16:H('Fuel.H2O2'),17:1,18:1});freq.run(2)
@@ -36,7 +36,7 @@ ck(tr.stack.get(99)==H('ControllerPressureTransfer') and tr.stack.get(103)==1,'e
 ck(furnace.props.get('SettingInput',0)>0,'Grant-authorized furnace inlet pump did not actuate')
 guard.stack[4]=0;tr.run(1);ck(furnace.props.get('SettingInput')==0,'withdrawn PressureGrid grant did not safe-off embedded furnace pump')
 # Mixture profile purity checks two components under the existing PurityGuard ABI.
-prof=Device(301,stack={0:31415963,1:1,4:1,5:3,8:1,9:H('Fuel.H2O2'),10:1,11:5,12:1,13:'RatioVolatiles',14:2/3,15:'RatioOxygen',16:1/3,17:.005,18:1,19:5000,20:12805,21:1},props={'ReferenceId':301})
+prof=Device(301,stack={0:31415963,1:1,28:1,29:3,8:1,9:H('Fuel.H2O2'),10:1,11:5,12:1,13:'RatioVolatiles',14:2/3,15:'RatioOxygen',16:1/3,17:.005,18:1,19:5000,20:12805,21:1},props={'ReferenceId':301})
 mix=Device(302,props={'ReferenceId':302,'TotalMoles':10,'Temperature':300,'RatioVolatiles':2/3,'RatioOxygen':1/3})
 pg=IC10((R/'ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10').read_text(),{'d0':mix,'d1':prof},self_ref=250);pg.run(2)
 ck(pg.stack.get(0)==31415947 and pg.stack.get(5)==1 and pg.stack.get(2)==H('Fuel.H2O2'),'two-component mixture did not reuse PurityGuard ABI1')

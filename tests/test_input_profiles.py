@@ -18,15 +18,15 @@ M=json.loads((R/MANIFEST_FILE).read_text())
 fails += prove_restoration(R,files(),[sys.executable,str(R/'tools'/'generate'/'generate_input_profiles.py')],preserve_inputs=[R/SOURCE_FILE])
 M=json.loads((R/MANIFEST_FILE).read_text())
 if D.get('catalog_schema_version') not in (2,3): pass
-if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_schema_version'))!=('INPUT_PROFILE_CATALOG_V4',5,4,3):fails.append('Input Profile runtime schema metadata mismatch')
+if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_schema_version'))!=('INPUT_PROFILE_CATALOG_V4',6,5,3):fails.append('Input Profile runtime schema metadata mismatch')
 if M.get('runtime_store_placement') is not True or M.get('runtime_min_store_count')!=1 or M.get('profile_count')!=6:fails.append('Input Profile runtime capacity/count mismatch')
 if len(M.get('item_cell_lengths',[]))!=6 or any(n%4 for n in M['item_cell_lengths']):fails.append('Input Profile self-contained item alignment mismatch')
 loaders=[R/f for f in M['loaders']]
 for src in (p.read_text() for p in loaders):
  code=[z.split('#',1)[0].strip() for z in src.splitlines() if z.split('#',1)[0].strip()]
- if code[0]!='clr db' or code[-1]!='poke 12 1' or any(z.startswith(('put ','putd ','yield','j ')) for z in code):fails.append('Input loader is not one-shot sparse own-stack producer')
+ if code[0]!='clr db' or code[-1]!='poke 18 1' or any(z.startswith(('put ','putd ','yield','j ')) for z in code):fails.append('Input loader is not one-shot sparse own-stack producer')
  if re.search(r'^poke\s+\d+\s+0(?:\s|$)',src,re.M):fails.append('Input loader emits explicit zero poke')
- if re.search(r'^poke\s+13\s+[^0]',src,re.M):fails.append('Input loader preassigns Store')
+ if re.search(r'^poke\s+19\s+[^0]',src,re.M):fails.append('Input loader preassigns Store')
 store_src=(R/M['generic_store_program']).read_text();stores,vms,groups=load_catalog_chain([store_src],[[p.read_text() for p in loaders]],store_ref_base=910,loader_ref_base=920);store=stores[0];coord=vms[0].coord
 if store.stack.get(16)!=2 or int(store.stack.get(9,0))!=6 or store.stack.get(27,0)!=0:fails.append('Input Profile runtime Store publication invalid')
 # Check each self-contained item exactly reproduces source fields and zero padding.
@@ -40,9 +40,9 @@ for i,p in enumerate(P):
 # Legacy View ABI remains identical.
 screws={'d0':store,'coord':coord,'s0':store};src=(R/'ic10/input-profile-catalog/input_profile_view_v5_0.ic10').read_text()
 for p in P:
- v=IC10(src,screws);v.stack[2]='HASH:'+p['profile_type'];v.stack[3]=p['schema'];v.run(3,max_steps=50000)
+ v=IC10(src,screws);v.stack[8]='HASH:'+p['profile_type'];v.stack[9]=p['schema'];v.run(3,max_steps=50000)
  flat=[x for row in p['descriptors'] for x in row]
- if v.stack.get(4)!=p['field_count'] or v.stack.get(5,0)<=0 or [v.stack.get(32+i) for i in range(len(flat))]!=flat:fails.append(p['slug']+': descriptor View mismatch')
+ if v.stack.get(10)!=p['field_count'] or v.stack.get(11,0)<=0 or [v.stack.get(32+i) for i in range(len(flat))]!=flat:fails.append(p['slug']+': descriptor View mismatch')
  for slot,val in p['enum_pairs']:
   if v.stack.get(slot)!=val:fails.append(p['slug']+f': enum slot {slot} mismatch')
 text='\n'.join(p.read_text() for p in loaders)

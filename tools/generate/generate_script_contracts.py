@@ -6,11 +6,13 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 
 from framework.script_contracts import build_all, generated_artifact_paths, json_text
+from framework.stack_envelope import build_inventory
 
 ROOT = _PROJECT_ROOT
 INDEX_FILE = "contracts/index.json"
 REGISTRY_FILE = "contracts/protocol_registry.json"
-FIXED_OUTPUTS = (INDEX_FILE, REGISTRY_FILE)
+ENVELOPE_INVENTORY_FILE = "contracts/stack_envelope_inventory.json"
+FIXED_OUTPUTS = (INDEX_FILE, REGISTRY_FILE, ENVELOPE_INVENTORY_FILE)
 
 
 def declared_outputs(root=ROOT):
@@ -20,6 +22,7 @@ def declared_outputs(root=ROOT):
 
 def main() -> None:
     contracts, index, protocols, protocol_definitions = build_all(ROOT)
+    envelope_inventory = build_inventory(ROOT, contracts, protocols)
     expected = {ROOT / rel for rel in contracts}
     for stale in generated_artifact_paths(ROOT, "*.contract.json"):
         if stale not in expected:
@@ -34,11 +37,15 @@ def main() -> None:
         target.write_text(json_text(contract), encoding="utf-8")
     (ROOT / INDEX_FILE).write_text(json_text(index), encoding="utf-8")
     (ROOT / REGISTRY_FILE).write_text(json_text(protocols), encoding="utf-8")
+    (ROOT / ENVELOPE_INVENTORY_FILE).write_text(json_text(envelope_inventory), encoding="utf-8")
     for rel, definition in protocol_definitions.items():
         target = ROOT / rel
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(json_text(definition), encoding="utf-8")
-    print(f"Generated {len(contracts)} script contracts and {len(protocol_definitions)} protocol definitions")
+    print(
+        f"Generated {len(contracts)} script contracts, {len(protocol_definitions)} protocol definitions, "
+        "and the stack-envelope inventory"
+    )
 
 
 if __name__ == "__main__":

@@ -1,18 +1,18 @@
 {
   "$schema": "../../schemas/protocol_definition.schema.json",
   "format": "IC10_PROTOCOL_DEFINITION_V1",
-  "protocol_id": "ic10.stack.31415987.abi2",
-  "name": "Transform Candidate Executor ABI2",
+  "protocol_id": "ic10.stack.31416061.abi1",
+  "name": "Controller Pi Runtime ABI1",
   "transport": "ic-housing-stack",
-  "magic": 31415987,
-  "abi": 2,
+  "magic": 31416061,
+  "abi": 1,
   "header_bases": [
     0
   ],
   "canonical_refs": [],
   "provider_interfaces": [
     {
-      "source": "ic10/manufacturing/transform_candidate_executor_v2_0.ic10",
+      "source": "ic10/controller-pi/controller_pi_runtime_v1_1.ic10",
       "header_base": 0,
       "readable_ranges": [],
       "writable_ranges": [],
@@ -25,7 +25,7 @@
           "access": [
             "self-write"
           ],
-          "const": 31415987
+          "const": 31416061
         },
         {
           "address": 1,
@@ -35,7 +35,7 @@
           "access": [
             "self-write"
           ],
-          "const": 2
+          "const": 1
         },
         {
           "address": 2,
@@ -43,35 +43,9 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 3,
-          "name": "S3",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
+            "self-write"
+          ],
+          "const": 8
         },
         {
           "address": 6,
@@ -79,30 +53,53 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read"
-          ]
+            "self-write"
+          ],
+          "const": 96
         },
         {
-          "address": 7,
-          "name": "S7",
+          "address": 96,
+          "name": "Header@S96.Magic",
+          "value_type": "hash",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ],
+          "const": 27182818
+        },
+        {
+          "address": 97,
+          "name": "Header@S96.ABI",
+          "value_type": "integer",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 98,
+          "name": "S98",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read"
-          ]
+            "self-write"
+          ],
+          "const": 2046
         },
         {
-          "address": 8,
-          "name": "S8",
+          "address": 99,
+          "name": "S99",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read"
-          ]
+            "self-write"
+          ],
+          "const": "HASH(\"ControllerPI\")"
         },
         {
-          "address": 9,
-          "name": "S9",
+          "address": 100,
+          "name": "S100",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -110,8 +107,8 @@
           ]
         },
         {
-          "address": 10,
-          "name": "S10",
+          "address": 101,
+          "name": "S101",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -120,39 +117,106 @@
           ]
         },
         {
-          "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 20,
-          "name": "S20",
+          "address": 102,
+          "name": "S102",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
             "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 103,
+          "name": "S103",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 104,
+          "name": "S104",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 105,
+          "name": "S105",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 106,
+          "name": "S106",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 107,
+          "name": "S107",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 108,
+          "name": "S108",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 109,
+          "name": "S109",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 116,
+          "name": "S116",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 117,
+          "name": "S117",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 118,
+          "name": "S118",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
             "self-write"
           ]
         }
@@ -168,14 +232,28 @@
             "id": "header.s0.magic",
             "kind": "cell-equals",
             "address": 0,
-            "equals": 31415987,
+            "equals": 31416061,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s96.magic",
+            "kind": "cell-equals",
+            "address": 96,
+            "equals": 27182818,
             "source": "generated-protocol-header"
           },
           {
             "id": "header.s0.abi",
             "kind": "cell-equals",
             "address": 1,
-            "equals": 2,
+            "equals": 1,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s96.abi",
+            "kind": "cell-equals",
+            "address": 97,
+            "equals": 1,
             "source": "generated-protocol-header"
           }
         ]

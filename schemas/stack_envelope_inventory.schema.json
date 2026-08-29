@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DarcStar-Games/stationeers-ic10/schemas/stack_envelope_inventory.schema.json",
+  "title": "Stationeers IC10 Stack Envelope inventory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "format", "envelope", "hash_namespace", "totals", "services"],
+  "properties": {
+    "$schema": {"const": "../schemas/stack_envelope_inventory.schema.json"},
+    "format": {"const": "IC10_STACK_ENVELOPE_INVENTORY_V1"},
+    "envelope": {"$ref": "#/$defs/envelope"},
+    "hash_namespace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["service_id", "schema_id", "implementation_id"],
+      "properties": {
+        "service_id": {"type": "string", "minLength": 1},
+        "schema_id": {"type": "string", "minLength": 1},
+        "implementation_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "totals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["deployable_programs", "migrated_v1", "legacy_exempt", "backlog_reserved_cell_users", "backlog_dynamic_range_users"],
+      "properties": {
+        "deployable_programs": {"type": "integer", "minimum": 1},
+        "migrated_v1": {"type": "integer", "minimum": 1},
+        "legacy_exempt": {"type": "integer", "minimum": 0},
+        "backlog_reserved_cell_users": {"type": "integer", "minimum": 0},
+        "backlog_dynamic_range_users": {"type": "integer", "minimum": 0}
+      }
+    },
+    "services": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/service"}
+    }
+  },
+  "$defs": {
+    "envelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["base", "length", "capability_bits_v1", "state_values", "state_field_mask", "state_reserved_mask", "custom_state_shift", "value_bits", "extension_magic", "extension_version", "extension_min_length", "extension_max_length"],
+      "properties": {
+        "base": {"const": 0},
+        "length": {"const": 8},
+        "capability_bits_v1": {"const": 31},
+        "state_values": {"type": "array", "items": {"type": "integer", "minimum": 0, "maximum": 5}},
+        "state_field_mask": {"const": 15},
+        "state_reserved_mask": {"const": 240},
+        "custom_state_shift": {"const": 8},
+        "value_bits": {"const": 53},
+        "extension_magic": {"const": 31416054},
+        "extension_version": {"const": 1},
+        "extension_min_length": {"const": 4},
+        "extension_max_length": {"const": 192}
+      }
+    },
+    "range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end"],
+      "properties": {
+        "start": {"type": "integer", "minimum": 0, "maximum": 511},
+        "end": {"type": "integer", "minimum": 0, "maximum": 511}
+      }
+    },
+    "pressure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["literal_cell_count", "highest_literal_cell", "dynamic_read_ranges", "dynamic_write_ranges", "line_count", "line_headroom_120", "measured_v1_publication_cost_lines", "measured_v1_stack_cost_cells"],
+      "properties": {
+        "literal_cell_count": {"type": "integer", "minimum": 0},
+        "highest_literal_cell": {"type": ["integer", "null"], "minimum": 0, "maximum": 511},
+        "dynamic_read_ranges": {"type": "array", "items": {"$ref": "#/$defs/range"}},
+        "dynamic_write_ranges": {"type": "array", "items": {"$ref": "#/$defs/range"}},
+        "line_count": {"type": "integer", "minimum": 1, "maximum": 128},
+        "line_headroom_120": {"type": "integer", "minimum": -8},
+        "measured_v1_publication_cost_lines": {"const": 8},
+        "measured_v1_stack_cost_cells": {"const": 8}
+      }
+    },
+    "collision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["literal_cells", "dynamic_read_cells", "dynamic_write_cells", "dynamic_read_provenance", "dynamic_write_provenance"],
+      "properties": {
+        "literal_cells": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 7}},
+        "dynamic_read_cells": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 7}},
+        "dynamic_write_cells": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 7}},
+        "dynamic_read_provenance": {"type": "string"},
+        "dynamic_write_provenance": {"type": "string"}
+      }
+    },
+    "service": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "service_contract_id", "deployment_family", "status", "current_layout", "stack_pressure", "window_collision"],
+      "properties": {
+        "source": {"type": "string", "pattern": "^ic10/.+_v[0-9]+_[0-9]+\\.ic10$"},
+        "service_contract_id": {"type": "string", "pattern": "^ic10\\.script\\.[a-z0-9.]+$"},
+        "deployment_family": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+        "status": {"enum": ["migrated-v1", "legacy-exempt"]},
+        "current_layout": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["headers", "schema_fields", "payload_bases", "payload_inventory_status", "existing_consumer_checks"],
+          "properties": {
+            "headers": {"type": "array", "items": {"type": "object"}},
+            "schema_fields": {"type": "array", "items": {"type": "object"}},
+            "payload_bases": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 510}},
+            "payload_inventory_status": {"enum": ["declared-stack-protocol", "no-declared-stack-protocol"]},
+            "existing_consumer_checks": {"type": "array", "items": {"type": "object"}}
+          }
+        },
+        "stack_pressure": {"$ref": "#/$defs/pressure"},
+        "window_collision": {"$ref": "#/$defs/collision"},
+        "envelope": {"$ref": "#/$defs/migrated"},
+        "legacy_exemption": {"$ref": "#/$defs/exemption"}
+      },
+      "oneOf": [
+        {"required": ["envelope"]},
+        {"required": ["legacy_exemption"]}
+      ]
+    },
+    "migrated": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["service_id", "magic", "service_abi", "schema_id", "schema_id_hash", "schema_version", "extension_base", "telemetry_base", "publishes_state", "custom_state_bits", "publishes_generation", "capability_mask", "extension_flags", "implementation_id", "implementation_id_hash", "publication_validation", "pilot_family"],
+      "properties": {
+        "service_id": {"type": "string", "pattern": "^ic10\\.script\\.[a-z0-9.]+$"},
+        "magic": {"type": "integer"},
+        "service_abi": {"type": "integer", "minimum": 1},
+        "schema_id": {"type": ["string", "null"]},
+        "schema_id_hash": {"type": ["string", "null"]},
+        "schema_version": {"type": "integer", "minimum": 0},
+        "extension_base": {"type": "integer", "minimum": 0, "maximum": 508},
+        "telemetry_base": {"type": "integer", "minimum": 0, "maximum": 511},
+        "publishes_state": {"type": "boolean"},
+        "custom_state_bits": {"type": "integer", "minimum": 0},
+        "publishes_generation": {"type": "boolean"},
+        "capability_mask": {"type": "integer", "minimum": 0, "maximum": 31},
+        "extension_flags": {"type": "integer", "minimum": 0, "maximum": 1},
+        "implementation_id": {"type": ["string", "null"]},
+        "implementation_id_hash": {"type": ["string", "null"]},
+        "publication_validation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["source_sha256", "entry_path", "legacy_owned_ranges", "post_init_dynamic_write_ranges"],
+          "properties": {
+            "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            "entry_path": {"const": "straight-line-before-first-yield"},
+            "legacy_owned_ranges": {
+              "type": "array",
+              "items": {"$ref": "#/$defs/range"}
+            },
+            "post_init_dynamic_write_ranges": {
+              "type": "array",
+              "items": {"$ref": "#/$defs/range"}
+            }
+          }
+        },
+        "pilot_family": {"enum": ["stack-monitor", "generic-telemetry", "directory", "catalog", "catalog-control-plane", "diagnostics", "power-jobs", "material-transform", "catalog-loader", "input-profile-catalog", "resource-profile-catalog", "transform-catalog", "transaction", "manufacturing"]}
+      }
+    },
+    "exemption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "reason", "migration_rule"],
+      "properties": {
+        "id": {"const": "pre-envelope-v1-layout"},
+        "reason": {"type": "string", "minLength": 1},
+        "migration_rule": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

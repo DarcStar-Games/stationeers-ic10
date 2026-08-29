@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10",
-  "source_sha256": "bb3c5a1a7e37cd4a1ae9478e7370326dc69a5583beb31fb1ada23398298aa84e",
+  "source_sha256": "d41e026fa4e0e5d9525687b3505bd1db9b6b24c2d2fd90358b3d6cb4039e8438",
   "identity": {
     "service_id": "ic10.script.material.sdb.stacker.feeder",
     "implementation_revision": "1.0",
@@ -148,9 +148,9 @@
       "stack": {
         "literal_reads": [
           0,
-          5,
           8,
-          9
+          9,
+          29
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -173,8 +173,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.d1e7bc9b85b86e04",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.d1e7bc9b85b86e04",
+        "interface_id": "ic10.interface.access.a2a572155db42331",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.a2a572155db42331",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

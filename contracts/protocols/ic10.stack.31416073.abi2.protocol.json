@@ -1,18 +1,18 @@
 {
   "$schema": "../../schemas/protocol_definition.schema.json",
   "format": "IC10_PROTOCOL_DEFINITION_V1",
-  "protocol_id": "ic10.stack.31415970.abi3",
-  "name": "Catalog Coordinator Core ABI3",
+  "protocol_id": "ic10.stack.31416073.abi2",
+  "name": "Transform Candidate Executor ABI2",
   "transport": "ic-housing-stack",
-  "magic": 31415970,
-  "abi": 3,
+  "magic": 31416073,
+  "abi": 2,
   "header_bases": [
     0
   ],
   "canonical_refs": [],
   "provider_interfaces": [
     {
-      "source": "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10",
+      "source": "ic10/manufacturing/transform_candidate_executor_v2_0.ic10",
       "header_base": 0,
       "readable_ranges": [],
       "writable_ranges": [],
@@ -23,9 +23,9 @@
           "value_type": "hash",
           "semantic_source": "protocol-header",
           "access": [
-            "self-read",
             "self-write"
-          ]
+          ],
+          "const": 31416073
         },
         {
           "address": 1,
@@ -34,7 +34,8 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 2
         },
         {
           "address": 2,
@@ -42,58 +43,9 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read",
             "self-write"
-          ]
-        },
-        {
-          "address": 3,
-          "name": "S3",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
+          ],
+          "const": 0
         },
         {
           "address": 8,
@@ -101,7 +53,7 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-write"
+            "self-read"
           ]
         },
         {
@@ -119,6 +71,7 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
+            "self-read",
             "self-write"
           ]
         },
@@ -141,30 +94,12 @@
           ]
         },
         {
-          "address": 13,
-          "name": "S13",
+          "address": 14,
+          "name": "S14",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 17,
-          "name": "S17",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 19,
-          "name": "S19",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
+            "self-read"
           ]
         },
         {
@@ -178,12 +113,39 @@
           ]
         },
         {
+          "address": 21,
+          "name": "S21",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 22,
+          "name": "S22",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
           "address": 23,
           "name": "S23",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-write"
+            "self-read"
+          ]
+        },
+        {
+          "address": 24,
+          "name": "S24",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
           ]
         },
         {
@@ -192,8 +154,7 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read",
-            "self-write"
+            "self-read"
           ]
         },
         {
@@ -204,76 +165,30 @@
           "access": [
             "self-read"
           ]
-        },
-        {
-          "address": 27,
-          "name": "S27",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 28,
-          "name": "S28",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 29,
-          "name": "S29",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 30,
-          "name": "S30",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 31,
-          "name": "S31",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 32,
-          "name": "S32",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
         }
       ],
       "behavior": {
-        "publication_rules": [
-          {
-            "kind": "seqlock",
-            "address": 7,
-            "description": "Topology sequence is odd while mutating and even when stable.",
-            "source": "source-fingerprinted-paired-sequence"
-          }
-        ],
+        "publication_rules": [],
         "restart": {
-          "mode": "conditional-reset",
+          "mode": "preserved-unless-overwritten",
           "source": "static-entry-path-analysis"
         },
-        "invariants": []
+        "invariants": [
+          {
+            "id": "header.s0.magic",
+            "kind": "cell-equals",
+            "address": 0,
+            "equals": 31416073,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s0.abi",
+            "kind": "cell-equals",
+            "address": 1,
+            "equals": 2,
+            "source": "generated-protocol-header"
+          }
+        ]
       }
     }
   ],
