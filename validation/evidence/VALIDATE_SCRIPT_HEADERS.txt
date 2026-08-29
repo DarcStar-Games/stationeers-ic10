@@ -14,6 +14,7 @@ PASS framework/json_schema.py                                   module -x
 PASS framework/script_contracts.py                              module -x
 PASS framework/source_metadata.py                               module -x
 PASS framework/stack_envelope.py                                module -x
+PASS tests/fixtures/script_header_prose.py                      module -x
 PASS tests/test_async_request.py                                entry  +x
 PASS tests/test_banked_transaction.py                           entry  +x
 PASS tests/test_catalog_schema.py                               entry  +x
@@ -95,7 +96,7 @@ PASS validation/validators/validate_source_catalog.py           entry  +x
 PASS validation/validators/validate_stack_envelopes.py          entry  +x
 PASS validation/validators/validate_user_deployment_guide.py    entry  +x
 ====================================================================================================
-Checked 94 files: 78 entry points, 16 imported modules
+Checked 95 files: 78 entry points, 17 imported modules
 Single import name enforced for 78 modules reachable from a script directory
 Entry points are the 15 commands under tools/ plus the 63 scripts tools/run_validation.py runs elsewhere; nothing is an entry point by location
 No work at import for all 17 modules under tools/, and a guard reaches main() in each of the 15 entry points

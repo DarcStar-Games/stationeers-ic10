@@ -60,7 +60,7 @@ def is_entry_point(rel: Path) -> bool:
     return rel.parts[0] == COMMAND_ROOT or rel.as_posix() in REGISTERED
 
 
-def unregistered_script(rel: Path, lines, text, executable):
+def unregistered_script(rel: Path, lines, executable, has_bootstrap):
     """A file beside the registered scripts that dresses as one nothing runs.
 
     Registration is not paperwork here: tools/run_validation.py executes the paths in
@@ -77,11 +77,9 @@ def unregistered_script(rel: Path, lines, text, executable):
     leaves the fourth mark below. A file wearing none of the four is checked as what
     it is: a helper a test imports.
 
-    Read strictly beside the registered scripts, never below. Two of the marks are
-    textual -- a shebang, and the substring the bootstrap check already keys off --
-    and a fixture is free to contain either as data: tests/fixtures/ exists to hold a
-    malformed header a test reads as text, which would otherwise be convicted of
-    carrying a bootstrap it is only quoting. Judging fixture input by the shape of a
+    Read strictly beside the registered scripts, never below. A fixture is free to
+    contain a shebang or quote a bootstrap as data: tests/fixtures/ exists to hold a
+    malformed header a test reads as text. Judging fixture input by the shape of a
     script is the whole of #18, and this check must not reintroduce it one level down.
     """
     # An entry point is by definition not a file nothing runs, and it is the first
@@ -93,7 +91,7 @@ def unregistered_script(rel: Path, lines, text, executable):
     marks = [name for name, worn in (
         ("a shebang", lines[0].startswith("#!")),
         ("the executable bit", executable),
-        ("the bootstrap", "_ProjectPath" in text),
+        ("the bootstrap", has_bootstrap),
         # The other three are what a new test inherits from the file it was copied
         # from, which is the likely way one arrives unregistered. This one holds when
         # it was written from scratch and none of them were: a test_ or validate_ name
@@ -172,6 +170,29 @@ def header_end(body) -> int:
     while at < len(body) and is_future(body[at]):
         at += 1
     return at
+
+
+def carries_bootstrap(tree) -> bool:
+    """Whether the executable header structurally claims the project bootstrap.
+
+    The canonical header assigns ``_PROJECT_ROOT`` at module level. Comments,
+    docstrings and string literals may quote ``_ProjectPath`` without turning an
+    imported module into a script. Keeping malformed bootstrap claims recognizable
+    lets check_bootstrap() retain its precise canonical-line diagnosis.
+    """
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and any(
+            isinstance(target, ast.Name) and target.id == "_PROJECT_ROOT"
+            for target in node.targets
+        ):
+            return True
+        if (
+            isinstance(node, ast.AnnAssign)
+            and isinstance(node.target, ast.Name)
+            and node.target.id == "_PROJECT_ROOT"
+        ):
+            return True
+    return False
 
 
 def check_bootstrap(rel: Path, lines, tree, failures):
@@ -254,9 +275,18 @@ def inspect(path: Path, shadowable):
     executable = bool(path.stat().st_mode & 0o100)
     failures = []
 
+    try:
+        tree = ast.parse(text)
+    except SyntaxError as exc:
+        tree = None
+        parse_failure = f"does not parse: {exc}"
+    else:
+        parse_failure = None
+    has_bootstrap = carries_bootstrap(tree) if tree else False
+
     # One cause, reported alone: every check below reads from a role this file is
     # claiming and has not been given, so their verdicts would describe the wrong fix.
-    claim = unregistered_script(rel, lines, text, executable)
+    claim = unregistered_script(rel, lines, executable, has_bootstrap)
     if claim:
         return entry, executable, [claim]
 
@@ -274,15 +304,12 @@ def inspect(path: Path, shadowable):
         if line.startswith("#!"):
             failures.append(f"dead shebang at line {n}: the kernel reads an interpreter line only at line 1")
 
-    try:
-        tree = ast.parse(text)
-    except SyntaxError as exc:
-        failures.append(f"does not parse: {exc}")
+    if parse_failure:
+        failures.append(parse_failure)
         return entry, executable, failures
 
     if not ast.get_docstring(tree) and any(is_docstring(node) for node in tree.body):
         failures.append("module docstring is demoted to a dead expression by a statement above it")
-    has_bootstrap = "_ProjectPath" in text
     if entry != has_bootstrap:
         failures.append("entry point without the bootstrap" if entry else "imported module carries the bootstrap")
     elif has_bootstrap:
