@@ -1495,12 +1495,12 @@
       ]
     },
     {
-      "protocol_id": "ic10.stack.31415983.abi2",
+      "protocol_id": "ic10.stack.31415983.abi3",
       "transport": "ic-housing-stack",
       "magic": 31415983,
-      "abi": 2,
-      "name": "Generic Directory Adapter ABI2",
-      "definition_ref": "contracts/protocols/ic10.stack.31415983.abi2.protocol.json",
+      "abi": 3,
+      "name": "Generic Directory Adapter ABI3",
+      "definition_ref": "contracts/protocols/ic10.stack.31415983.abi3.protocol.json",
       "canonical_refs": [
         "data/directory_schemas.json#/adapter_abi"
       ],

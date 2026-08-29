@@ -9,7 +9,7 @@
   },
   "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10": {
    "layer": "Catalog control plane",
-   "purpose": "Publishes Generic Store membership as Directory Adapter ABI2 registry candidates.",
+   "purpose": "Publishes Generic Store membership as Directory Adapter ABI3 registry candidates.",
    "deployment_family": "catalog-control-plane",
    "deployment_class": "conditional-resident"
   },
@@ -99,7 +99,7 @@
   },
   "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10": {
    "layer": "Discovery adapter",
-   "purpose": "Publishes Controller Directory Adapter ABI2 candidates; Generic Adapter Bridge + Snapshot Host own publication.",
+   "purpose": "Publishes Controller Directory Adapter ABI3 candidates; Generic Adapter Bridge + Snapshot Host own publication.",
    "deployment_family": "controller-discovery",
    "deployment_class": "commissioning"
   },
@@ -639,7 +639,7 @@
   },
   "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10": {
    "layer": "Power discovery",
-   "purpose": "Publishes priority-ordered PowerReservation candidates through Generic Directory Adapter ABI2.",
+   "purpose": "Publishes priority-ordered PowerReservation candidates through Generic Directory Adapter ABI3.",
    "deployment_family": "power-grid",
    "deployment_class": "conditional-resident"
   },

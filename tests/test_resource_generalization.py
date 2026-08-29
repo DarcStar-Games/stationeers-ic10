@@ -30,9 +30,9 @@ for n in ('poke 0 31415953','getd r11 r7 2','getd r12 r8 2','getd r0 r9 9','getd
 ed=(R/'ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10').read_text()
 ld=(R/'ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10').read_text()
 bridge=(R/'ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10').read_text(); dh=(R/'ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10').read_text()
-for n in ('poke 0 31415983','poke 2 HASH("DirectorySchema.ResourceEndpoint")','poke 4 3','poke 5 64','poke 10 1'):
+for n in ('poke 0 31415983','poke 3 HASH("DirectorySchema.ResourceEndpoint.v1")','poke 10 3','poke 11 64','poke 15 1'):
     need(ed,n,'resource endpoint adapter')
-for n in ('poke 0 31415983','poke 2 HASH("DirectorySchema.ResourceLink")','poke 4 1','poke 5 64','poke 10 1'):
+for n in ('poke 0 31415983','poke 3 HASH("DirectorySchema.ResourceLink.v1")','poke 10 1','poke 11 64','poke 15 1'):
     need(ld,n,'resource link adapter')
 for n in ('put d1 11 r2','put d1 12 r3','move r6 2'):
     need(bridge,n,'generic directory adapter bridge')
@@ -41,7 +41,7 @@ for n in ('poke 0 31415981','poke 1 1','poke 31 31415981','bgt r3 64 Error','pok
 
 # Resource Reservation discovery and Item-7 storage providers reuse the same generic substrate.
 rd=(R/'ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10').read_text()
-for n in ('poke 0 31415983','poke 2 HASH("DirectorySchema.ResourceReservation")','poke 4 3','poke 5 64','poke 10 1'):
+for n in ('poke 0 31415983','poke 3 HASH("DirectorySchema.ResourceReservation.v1")','poke 10 3','poke 11 64','poke 15 1'):
     need(rd,n,'resource reservation adapter')
 for fn,kind in [
  ('ic10/item-storage-vending/material_vending_inventory_v1_0.ic10','StorageAccess.Vending'),

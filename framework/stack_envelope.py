@@ -247,7 +247,7 @@ def publication_errors(
             errors.append("control transfer occurs before the first envelope-bearing yield")
             break
         if op == "clr" and len(row) >= 2 and row[1] == "db":
-            state.clear()
+            state = {address: 0 for address in expected}   # clr db zeroes every cell
         elif op in _REFERENCE_STACK_WRITES or (op == "put" and len(row) >= 2 and row[1] == "db"):
             errors.append("reference-addressed own-stack write occurs before the first envelope-bearing yield")
         elif op in {"push", "pop"}:
@@ -300,6 +300,16 @@ def publication_errors(
     return errors
 
 
+def clears_before_yield(rows: list[list[str]]) -> bool:
+    """A boot-time `clr db` deterministically zeroes every cell, initializers included."""
+    for row in rows:
+        if row[0] == "yield":
+            return False
+        if row[0] == "clr" and len(row) >= 2 and row[1] == "db":
+            return True
+    return False
+
+
 def generation_errors(
     rows: list[list[str]], aliases: dict[str, int], declares_generation: bool
 ) -> list[str]:
@@ -314,10 +324,8 @@ def generation_errors(
         return [
             f"S{GENERATION_CELL} is reserved unless the service declares HAS_GENERATION"
         ] if generation_rows else []
-    if len(generation_rows) < 2:
-        return [
-            f"HAS_GENERATION requires S{GENERATION_CELL} initialized and then advanced"
-        ]
+    if not generation_rows:
+        return [f"HAS_GENERATION requires S{GENERATION_CELL} to be published"]
     if generation_rows[-1] != poke_rows[-1]:
         return [f"the generation at S{GENERATION_CELL} must be the last cell published"]
     return []
@@ -522,8 +530,10 @@ def declaration_errors(
         for address, value in expected.items():
             written = writes.get(address, set())
             if address == GENERATION_CELL:
-                # a generation is initialized to its literal start and advanced dynamically
-                if value not in written or any(other is not None for other in written - {value}):
+                # a generation starts at zero — written, or cleared with the whole stack —
+                # and only ever advances dynamically after that
+                initialized = value in written or clears_before_yield(source_rows)
+                if not initialized or any(other is not None for other in written - {value}):
                     errors.append(
                         f"{source}: S{address} must be initialized to {value} and only advanced dynamically"
                     )

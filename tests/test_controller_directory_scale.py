@@ -8,7 +8,7 @@ import sys
 from framework.ic10_harness import IC10,Device
 R=_PROJECT_ROOT
 D=(R/'ic10/controller-discovery/controller_directory_adapter_v4_0.ic10').read_text();B=(R/'ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10').read_text();H=(R/'ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10').read_text();S=(R/'ic10/controller-discovery/controller_selector_v3_0.ic10').read_text();A=(R/'ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10').read_text();L=(R/'ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10').read_text();P=(R/'ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10').read_text();fails=[]
-for n in ('poke 0 31415983','poke 2 HASH("DirectorySchema.Controller")','poke 4 2','poke 5 64','poke 10 1'):
+for n in ('poke 0 31415983','poke 3 HASH("DirectorySchema.Controller.v1")','poke 10 2','poke 11 64','poke 15 1'):
  if n not in D:fails.append('Controller adapter missing '+n)
 for n in ('put d1 9 r0','put d1 10 r0','put d1 11 r2','put d1 12 r3','move r6 2'):
  if n not in B:fails.append('Directory bridge missing '+n)

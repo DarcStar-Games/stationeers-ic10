@@ -25,7 +25,7 @@ def records(h):
  b=int(h.stack.get(2,0));w=int(h.stack.get(11,0));cap=int(h.stack.get(12,0));c=int(h.stack.get(5+b,0));base=32+b*w*cap
  return [[h.stack.get(base+i*w+j,0) for j in range(w)] for i in range(c)]
 
-def adapter_ok(a,mode=1):return a.stack.get(0)==31415983 and a.stack.get(1)==2 and a.stack.get(10)==mode and int(a.stack.get(8,0))%2==0
+def adapter_ok(a,mode=1):return a.stack.get(0)==31415983 and a.stack.get(1)==3 and a.stack.get(15)==mode and int(a.stack.get(13,0))%2==0
 # Controller snapshot.
 cs=[]
 for ref,typ in ((201,'HASH:Z'),(202,'HASH:A'),(203,'HASH:A')):cs.append(Device(ref,stack={96:27182818,97:2,99:typ},props={'ReferenceId':ref,'PrefabHash':-128473777}))
@@ -118,22 +118,22 @@ wrong='''# synthetic wrong registry schema Adapter ABI2
 Boot:
 clr db
 poke 0 31415983
-poke 1 2
-poke 2 HASH(\"DirectorySchema.Wrong\")
-poke 3 9
-poke 4 6
-poke 5 64
-poke 6 0
+poke 1 3
+poke 2 17
+poke 8 HASH(\"DirectorySchema.Wrong\")
+poke 9 9
+poke 10 6
+poke 11 64
+poke 12 0
 poke 7 1
-poke 8 2
-poke 10 2
+poke 13 2
+poke 15 2
 Loop:
 yield
-get r0 db 11
+get r0 db 16
 beqz r0 Loop
-poke 12 r0
-j Loop
-'''
+poke 17 r0
+j Loop'''
 wv=IC10(wrong,self_ref=720);wd=Device(720,wv.stack,{'ReferenceId':720});wr=IC10((R/'ic10/directory-core/generic_registry_directory_host_v2_0.ic10').read_text(),{'d0':wd},self_ref=721)
 for _ in range(20):wv.run(1,max_steps=50000);wr.run(1,max_steps=50000)
 if wr.stack.get(16)!=-4 or wr.stack.get(2,0)!=0:fails.append('Registry Host accepted wrong schema/version')
@@ -144,49 +144,50 @@ if q.run_tick(128)!='quantum' or q.reg.get('r0',0)<=0:fails.append('IC10 harness
 toggle='''Boot:
 clr db
 poke 0 31415983
-poke 1 2
-poke 2 HASH(\"DirectorySchema.Test\")
-poke 3 1
-poke 4 1
-poke 5 2
+poke 1 3
+poke 2 17
+poke 3 HASH(\"DirectorySchema.Test.v1\")
+poke 8 HASH(\"DirectorySchema.Test\")
+poke 9 1
 poke 10 1
+poke 11 2
+poke 15 1
 Loop:
 yield
-get r0 db 11
+get r0 db 16
 beqz r0 Scan
-poke 12 r0
+poke 17 r0
 j Loop
 Scan:
-poke 12 0
-get r0 db 8
+poke 17 0
+get r0 db 13
 add r0 r0 1
-poke 8 r0
-get r13 db 13
+poke 13 r0
+get r13 db 20
 bnez r13 B
-poke 16 10
-poke 17 20
+poke 18 10
+poke 19 20
 j Finish
 B:
-poke 16 11
-poke 17 21
+poke 18 11
+poke 19 21
 Finish:
-poke 6 2
+poke 12 2
+get r0 db 13
+add r0 r0 1
+poke 13 r0
+seq r13 r13 0
+poke 20 r13
 get r0 db 7
 add r0 r0 1
 poke 7 r0
-get r0 db 8
-add r0 r0 1
-poke 8 r0
-seq r13 r13 0
-poke 13 r13
-j Loop
-'''
+j Loop'''
 hv3,hd3=host(730);tv=IC10(toggle,self_ref=731);td=Device(731,tv.stack,{'ReferenceId':731});bb=IC10(B,{'d0':td,'d1':hd3},self_ref=732)
 # Reboot the Adapter while a freeze is outstanding; Bridge must reassert the token and recover.
 rebooted=False
 for _ in range(100):
  run_round_robin([tv,bb,hv3],rounds=1,max_instructions=8)
- if td.stack.get(11,0) and td.stack.get(12,0)!=td.stack.get(11,0):
+ if td.stack.get(16,0) and td.stack.get(17,0)!=td.stack.get(16,0):
   tv.pc=0; rebooted=True; break
 if not rebooted:fails.append('could not stage Adapter reboot during freeze')
 for _ in range(300):

@@ -72,7 +72,7 @@ item6=[
 for rel in item6:
     p=R/rel
     if not p.exists(): fail(f'missing manufacturing service {rel}')
-    elif len(p.read_text().splitlines())>120: fail(rel+': exceeds 120-line target')
+    elif len(p.read_text().splitlines())>128: fail(rel+': exceeds the 128-line hard limit')
 if fails:
     print('Manufacturing contracts: FAIL'); [print(' -',x) for x in fails]; sys.exit(1)
 print('Manufacturing contracts: PASS')

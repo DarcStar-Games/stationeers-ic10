@@ -13,15 +13,11 @@
    ]
   },
   "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10": {
-   "source_sha256": "cfb6fab4f35c15f5a6001febbd6e23fac146a70f0d17665336be86a37b7e4403",
+   "source_sha256": "cebcc1ea2dd619dc0e3dd8c326127fb72065efbae222bd6b5d7c559be957e204",
    "external_readable_ranges": [
     [
      0,
-     12
-    ],
-    [
-     16,
-     399
+     401
     ]
    ]
   },
@@ -136,15 +132,11 @@
    ]
   },
   "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10": {
-   "source_sha256": "823ecbd97efe9964ef8f43cccb15ff1ba6dd756dffdeecb8990b8dcc8c2b4627",
+   "source_sha256": "0f3bbc2793f5da12d9445110269562e0bbdc2be050beea68805e7e2d01a04914",
    "external_readable_ranges": [
     [
      0,
-     12
-    ],
-    [
-     16,
-     143
+     145
     ]
    ],
    "network_protocols": [
@@ -470,13 +462,13 @@
    }
   },
   "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10": {
-   "source_sha256": "a0aa7830b85a0991640b8a99ea43c8fd599e8ebaedb3f14e227d29525cf4c358",
+   "source_sha256": "d69248c53ebf904c95c8137ca52f82840355e23856a41f711824bd56ce760c8d",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
       [
-       16,
-       207
+       18,
+       209
       ]
      ]
     },
@@ -497,7 +489,7 @@
    }
   },
   "ic10/directory-core/generic_registry_directory_host_v2_0.ic10": {
-   "source_sha256": "f2909112300ac1a0427377cef87d213311fb8e09bb064e78bf4fe1f2f64bd939",
+   "source_sha256": "bae902681b6f7a1809b0631ea74aaf4d074bb4beb69504528e73b12cea42e228",
    "publication_rules": [
     {
      "kind": "seqlock",
@@ -727,15 +719,11 @@
    }
   },
   "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10": {
-   "source_sha256": "dfe01ba4c0db2e5f2c88a41a572ccf5c5037537459f1ec508722c910ee2166f2",
+   "source_sha256": "1ab71791f61406ec8727589f5b0622f71770b307fa20d9875456c2e5e7594154",
    "external_readable_ranges": [
     [
      0,
-     12
-    ],
-    [
-     16,
-     207
+     209
     ]
    ]
   },
@@ -904,15 +892,11 @@
    }
   },
   "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10": {
-   "source_sha256": "aaa963711fcae254173ff5a704f6c70d283ba0bd5bf677513672f769ddc398de",
+   "source_sha256": "8354c0386b934421c506d1a4a995dee515488a217cf9c09a830b53eb9746d11d",
    "external_readable_ranges": [
     [
      0,
-     12
-    ],
-    [
-     16,
-     207
+     209
     ]
    ]
   },
@@ -1135,15 +1119,11 @@
    ]
   },
   "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10": {
-   "source_sha256": "8349b28ddb20f8a6dd8a29dc367355b9c83ddab85e04cc810be966913bd36616",
+   "source_sha256": "b599f53e96a3ff967b66b6f60bc6482cdaa46530f3773a7a2cf1d6751d219a57",
    "external_readable_ranges": [
     [
      0,
-     12
-    ],
-    [
-     16,
-     207
+     209
     ]
    ],
    "ports": {
@@ -1286,28 +1266,20 @@
    }
   },
   "ic10/printer-directory/printer_directory_adapter_v1_0.ic10": {
-   "source_sha256": "f943f68445767a9d49562f53f94b851d5be1fed57b14d678c97d7814bae1e9a9",
+   "source_sha256": "5ef497b364cfb112f90ab605c3c81d7ffa6313c4c257e52d0c7a77dd6cfda567",
    "external_readable_ranges": [
     [
      0,
-     12
-    ],
-    [
-     16,
-     207
+     209
     ]
    ]
   },
   "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10": {
-   "source_sha256": "e8ca1cb91c472dbe854bd9f3b254ac820b0eccebb6248569cce62c7919000fbd",
+   "source_sha256": "e8d66b2349d50499b1203c380eb3704214396fdeca8cfe4d42adb8ce9186c05a",
    "external_readable_ranges": [
     [
      0,
-     12
-    ],
-    [
-     16,
-     207
+     209
     ]
    ],
    "ports": {
@@ -1477,41 +1449,29 @@
    }
   },
   "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10": {
-   "source_sha256": "dd238e7430026441e2cacbe5e5b12d0e9d4490887300e59d06c8a7586fcfc644",
+   "source_sha256": "06c710d8808af3970bd7810b6b7ce24316062eaf0ae7674ab92022ce770e7def",
    "external_readable_ranges": [
     [
      0,
-     12
-    ],
-    [
-     16,
-     207
+     209
     ]
    ]
   },
   "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10": {
-   "source_sha256": "d10ca64db22b2a48b990ee2b47a77f678e1332aa52761806fb0e31a09204148b",
+   "source_sha256": "657c0e74147e17dc88e9962c8862c58a1da13957e28150a9cd0a04368c9b2655",
    "external_readable_ranges": [
     [
      0,
-     12
-    ],
-    [
-     16,
-     79
+     81
     ]
    ]
   },
   "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10": {
-   "source_sha256": "97b610918a51fc74704a6e9b2b353d074d771d98517b272030560fa27509f31f",
+   "source_sha256": "33b7f4a2f57e295bb13486a5e903fed4b330ba6fda43fc7bc29984ef42dc804c",
    "external_readable_ranges": [
     [
      0,
-     12
-    ],
-    [
-     16,
-     207
+     209
     ]
    ]
   },

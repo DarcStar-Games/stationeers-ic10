@@ -89,7 +89,7 @@ At this point the runtime should advertise generic telemetry and the Host/Policy
 
 ### 2. Controller discovery
 
-1. Deploy one `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10` for the Controller Directory, one `ic10/controller-discovery/controller_directory_adapter_v4_0.ic10`, and one `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` with `d0` -> the Controller adapter and `d1` -> the Host. The adapter publishes Adapter ABI2 candidates on its own stack; the Bridge/Host publish Controller Directory ABI2.
+1. Deploy one `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10` for the Controller Directory, one `ic10/controller-discovery/controller_directory_adapter_v4_0.ic10`, and one `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` with `d0` -> the Controller adapter and `d1` -> the Host. The adapter publishes Adapter ABI3 candidates on its own stack; the Bridge/Host publish Controller Directory ABI2.
 2. Deploy `ic10/controller-discovery/controller_selector_v3_0.ic10` and set its `S2` directly to the Controller Directory **Host**. Selector ABI2 derives type/member groups from the sorted snapshot; there is no Controller Type Catalog.
 
 Wait for at least one complete discovery generation before assuming a missing controller is a configuration problem.

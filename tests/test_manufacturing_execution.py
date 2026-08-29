@@ -60,8 +60,8 @@ ck(pr.stack.get(8)==7 and pr.stack.get(7)==1,'print runtime did not reach COMPLE
 proc=Device(401,props={'ReferenceId':401,'PrefabHash':'HASH:StructureAdvancedFurnace','Power':1,'Error':0,'Activate':0})
 runtime=Device(402,stack={0:31415980,1:2,3:0,6:0,14:401},props={'ReferenceId':402,'PrefabHash':123})
 la=IC10(src('ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10'),{'r':runtime,'p':proc});la.run(2)
-ck(la.stack.get(2)=='HASH:DirectorySchema.TransformLane' and la.stack.get(3)==1 and la.stack.get(6)==1,'transform lane adapter header/count mismatch')
-ck([la.stack.get(16+i) for i in range(3)]==[402,401,263],'transform lane ProcessorSpec mismatch')
+ck(la.stack.get(3)=='HASH:DirectorySchema.TransformLane.v1' and la.stack.get(9)==1 and la.stack.get(12)==1,'transform lane adapter header/count mismatch')
+ck([la.stack.get(18+i) for i in range(3)]==[402,401,263],'transform lane ProcessorSpec mismatch')
 
 if fails:
  print('Manufacturing execution substrate: FAIL');[print(' -',x) for x in fails];sys.exit(1)

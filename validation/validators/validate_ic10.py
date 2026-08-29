@@ -15,6 +15,9 @@ LIMIT_BYTES = 4096
 MAINTAINABILITY_LINES = 120
 # Reviewed spends of the deliberate 120..128 margin. The hard limit still applies.
 SOFT_LIMIT_EXEMPTIONS = {
+    "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10":
+        "widest Adapter ABI3 candidate record set; publishes the common header alongside"
+        " a three-cell entry width",
     "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10":
         "publishes the common S0 header; its Generic Telemetry block stays at S96",
     "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10":

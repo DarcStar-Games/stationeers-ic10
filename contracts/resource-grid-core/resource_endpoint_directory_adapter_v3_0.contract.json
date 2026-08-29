@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10",
-  "source_sha256": "dd238e7430026441e2cacbe5e5b12d0e9d4490887300e59d06c8a7586fcfc644",
+  "source_sha256": "06c710d8808af3970bd7810b6b7ce24316062eaf0ae7674ab92022ce770e7def",
   "identity": {
     "service_id": "ic10.script.resource.endpoint.directory.adapter",
     "implementation_revision": "3.0",
@@ -55,22 +55,24 @@
     "size": 512,
     "literal_reads": [
       7,
-      8,
-      11
+      13,
+      16
     ],
     "literal_writes": [
       0,
       1,
       2,
       3,
-      4,
-      5,
-      6,
       7,
       8,
       9,
       10,
-      12
+      11,
+      12,
+      13,
+      14,
+      15,
+      17
     ],
     "dynamic_read": false,
     "dynamic_write": true,
@@ -94,11 +96,7 @@
     "external_readable_ranges": [
       {
         "start": 0,
-        "end": 12
-      },
-      {
-        "start": 16,
-        "end": 207
+        "end": 209
       }
     ],
     "external_writable_ranges": [],
@@ -140,33 +138,6 @@
         ]
       },
       {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
         "address": 7,
         "name": "S7",
         "value_type": "number",
@@ -182,7 +153,6 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read",
           "self-write"
         ]
       },
@@ -210,12 +180,58 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
+          "self-write"
         ]
       },
       {
         "address": 12,
         "name": "S12",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 13,
+        "name": "S13",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 14,
+        "name": "S14",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 15,
+        "name": "S15",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 16,
+        "name": "S16",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 17,
+        "name": "S17",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -227,7 +243,7 @@
       {
         "base": 0,
         "magic": 31415983,
-        "abi": 2
+        "abi": 3
       }
     ]
   },
@@ -242,10 +258,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415983.abi2",
+        "protocol_id": "ic10.stack.31415983.abi3",
         "base": 0,
         "magic": 31415983,
-        "abi": 2,
+        "abi": 3,
         "source": "literal-own-stack-header"
       }
     ],

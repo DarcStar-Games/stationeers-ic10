@@ -29,10 +29,10 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 9,
-    "legacy_exempt": 165,
-    "backlog_reserved_cell_users": 148,
-    "backlog_dynamic_range_users": 61
+    "migrated_v1": 19,
+    "legacy_exempt": 155,
+    "backlog_reserved_cell_users": 138,
+    "backlog_dynamic_range_users": 51
   },
   "services": [
     {
@@ -113,23 +113,28 @@
       "source": "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10",
       "service_contract_id": "ic10.script.catalog.coordinator.directory.adapter",
       "deployment_family": "catalog-control-plane",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
             "base": 0,
             "magic": 31415983,
-            "abi": 2
+            "abi": 3
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.CatalogStoreNode\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 1
           }
@@ -140,7 +145,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415983.abi2",
+            "protocol_id": "ic10.stack.31415983.abi3",
             "provider_header_bases": [
               0
             ],
@@ -166,8 +171,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 12,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 17,
         "dynamic_read_ranges": [
           {
             "start": 0,
@@ -180,8 +185,8 @@
             "end": 511
           }
         ],
-        "line_count": 89,
-        "line_headroom_120": 31,
+        "line_count": 91,
+        "line_headroom_120": 29,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -191,9 +196,6 @@
           1,
           2,
           3,
-          4,
-          5,
-          6,
           7
         ],
         "dynamic_read_cells": [
@@ -219,10 +221,39 @@
         "dynamic_read_provenance": "conservative-full-stack",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.catalog.coordinator.directory.adapter",
+        "magic": 31415983,
+        "service_abi": 3,
+        "schema_id": "DirectorySchema.CatalogStoreNode",
+        "schema_id_hash": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")",
+        "schema_version": 1,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": true,
+        "capability_mask": 17,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "cebcc1ea2dd619dc0e3dd8c326127fb72065efbae222bd6b5d7c559be957e204",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 401
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 18,
+              "end": 401
+            }
+          ]
+        },
+        "pilot_family": "directory"
       }
     },
     {
@@ -1046,23 +1077,28 @@
       "source": "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10",
       "service_contract_id": "ic10.script.controller.directory.adapter",
       "deployment_family": "controller-discovery",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
             "base": 0,
             "magic": 31415983,
-            "abi": 2
+            "abi": 3
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"DirectorySchema.Controller.v1\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.Controller\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 1
           }
@@ -1073,7 +1109,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415983.abi2",
+            "protocol_id": "ic10.stack.31415983.abi3",
             "provider_header_bases": [
               0
             ],
@@ -1099,8 +1135,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 12,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
@@ -1108,8 +1144,8 @@
             "end": 511
           }
         ],
-        "line_count": 58,
-        "line_headroom_120": 62,
+        "line_count": 60,
+        "line_headroom_120": 60,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -1119,9 +1155,6 @@
           1,
           2,
           3,
-          4,
-          5,
-          6,
           7
         ],
         "dynamic_read_cells": [],
@@ -1138,10 +1171,39 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.controller.directory.adapter",
+        "magic": 31415983,
+        "service_abi": 3,
+        "schema_id": "DirectorySchema.Controller",
+        "schema_id_hash": "HASH(\"DirectorySchema.Controller.v1\")",
+        "schema_version": 1,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": true,
+        "capability_mask": 17,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "0f3bbc2793f5da12d9445110269562e0bbdc2be050beea68805e7e2d01a04914",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 145
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 18,
+              "end": 145
+            }
+          ]
+        },
+        "pilot_family": "directory"
       }
     },
     {
@@ -5752,23 +5814,28 @@
       "source": "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10",
       "service_contract_id": "ic10.script.transform.lane.directory.adapter",
       "deployment_family": "manufacturing",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
             "base": 0,
             "magic": 31415983,
-            "abi": 2
+            "abi": 3
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"DirectorySchema.TransformLane.v1\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.TransformLane\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 1
           }
@@ -5779,7 +5846,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415983.abi2",
+            "protocol_id": "ic10.stack.31415983.abi3",
             "provider_header_bases": [
               0
             ],
@@ -5805,8 +5872,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 12,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
@@ -5814,8 +5881,8 @@
             "end": 511
           }
         ],
-        "line_count": 78,
-        "line_headroom_120": 42,
+        "line_count": 80,
+        "line_headroom_120": 40,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -5825,9 +5892,6 @@
           1,
           2,
           3,
-          4,
-          5,
-          6,
           7
         ],
         "dynamic_read_cells": [],
@@ -5844,10 +5908,39 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.transform.lane.directory.adapter",
+        "magic": 31415983,
+        "service_abi": 3,
+        "schema_id": "DirectorySchema.TransformLane",
+        "schema_id_hash": "HASH(\"DirectorySchema.TransformLane.v1\")",
+        "schema_version": 1,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": true,
+        "capability_mask": 17,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "1ab71791f61406ec8727589f5b0622f71770b307fa20d9875456c2e5e7594154",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 209
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 18,
+              "end": 209
+            }
+          ]
+        },
+        "pilot_family": "directory"
       }
     },
     {
@@ -7422,23 +7515,28 @@
       "source": "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10",
       "service_contract_id": "ic10.script.power.reservation.directory.adapter",
       "deployment_family": "power-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
             "base": 0,
             "magic": 31415983,
-            "abi": 2
+            "abi": 3
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"DirectorySchema.PowerReservation.v1\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.PowerReservation\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 1
           }
@@ -7449,7 +7547,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415983.abi2",
+            "protocol_id": "ic10.stack.31415983.abi3",
             "provider_header_bases": [
               0
             ],
@@ -7475,8 +7573,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 14,
-        "highest_literal_cell": 14,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
@@ -7484,8 +7582,8 @@
             "end": 511
           }
         ],
-        "line_count": 103,
-        "line_headroom_120": 17,
+        "line_count": 105,
+        "line_headroom_120": 15,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -7495,9 +7593,6 @@
           1,
           2,
           3,
-          4,
-          5,
-          6,
           7
         ],
         "dynamic_read_cells": [],
@@ -7514,10 +7609,39 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.reservation.directory.adapter",
+        "magic": 31415983,
+        "service_abi": 3,
+        "schema_id": "DirectorySchema.PowerReservation",
+        "schema_id_hash": "HASH(\"DirectorySchema.PowerReservation.v1\")",
+        "schema_version": 1,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": true,
+        "capability_mask": 17,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "8354c0386b934421c506d1a4a995dee515488a217cf9c09a830b53eb9746d11d",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 209
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 18,
+              "end": 209
+            }
+          ]
+        },
+        "pilot_family": "directory"
       }
     },
     {
@@ -8779,23 +8903,28 @@
       "source": "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10",
       "service_contract_id": "ic10.script.pressure.grid.link.directory.adapter",
       "deployment_family": "pressure-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
             "base": 0,
             "magic": 31415983,
-            "abi": 2
+            "abi": 3
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"DirectorySchema.PressureGridLink.v1\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.PressureGridLink\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 1
           }
@@ -8806,7 +8935,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415983.abi2",
+            "protocol_id": "ic10.stack.31415983.abi3",
             "provider_header_bases": [
               0
             ],
@@ -8832,8 +8961,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 12,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
@@ -8841,8 +8970,8 @@
             "end": 511
           }
         ],
-        "line_count": 88,
-        "line_headroom_120": 32,
+        "line_count": 90,
+        "line_headroom_120": 30,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -8852,9 +8981,6 @@
           1,
           2,
           3,
-          4,
-          5,
-          6,
           7
         ],
         "dynamic_read_cells": [],
@@ -8871,10 +8997,39 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pressure.grid.link.directory.adapter",
+        "magic": 31415983,
+        "service_abi": 3,
+        "schema_id": "DirectorySchema.PressureGridLink",
+        "schema_id_hash": "HASH(\"DirectorySchema.PressureGridLink.v1\")",
+        "schema_version": 1,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": true,
+        "capability_mask": 17,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "b599f53e96a3ff967b66b6f60bc6482cdaa46530f3773a7a2cf1d6751d219a57",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 209
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 18,
+              "end": 209
+            }
+          ]
+        },
+        "pilot_family": "directory"
       }
     },
     {
@@ -9794,23 +9949,28 @@
       "source": "ic10/printer-directory/printer_directory_adapter_v1_0.ic10",
       "service_contract_id": "ic10.script.printer.directory.adapter",
       "deployment_family": "printer-directory",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
             "base": 0,
             "magic": 31415983,
-            "abi": 2
+            "abi": 3
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"DirectorySchema.Printer.v2\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.Printer\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 2
           }
@@ -9821,7 +9981,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415983.abi2",
+            "protocol_id": "ic10.stack.31415983.abi3",
             "provider_header_bases": [
               0
             ],
@@ -9847,8 +10007,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 12,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
@@ -9856,8 +10016,8 @@
             "end": 511
           }
         ],
-        "line_count": 117,
-        "line_headroom_120": 3,
+        "line_count": 119,
+        "line_headroom_120": 1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -9867,9 +10027,6 @@
           1,
           2,
           3,
-          4,
-          5,
-          6,
           7
         ],
         "dynamic_read_cells": [],
@@ -9886,10 +10043,39 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.printer.directory.adapter",
+        "magic": 31415983,
+        "service_abi": 3,
+        "schema_id": "DirectorySchema.Printer",
+        "schema_id_hash": "HASH(\"DirectorySchema.Printer.v2\")",
+        "schema_version": 2,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": true,
+        "capability_mask": 17,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "5ef497b364cfb112f90ab605c3c81d7ffa6313c4c257e52d0c7a77dd6cfda567",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 209
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 18,
+              "end": 209
+            }
+          ]
+        },
+        "pilot_family": "directory"
       }
     },
     {
@@ -9981,23 +10167,28 @@
       "source": "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10",
       "service_contract_id": "ic10.script.printer.execution.directory.adapter",
       "deployment_family": "printer-directory",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
             "base": 0,
             "magic": 31415983,
-            "abi": 2
+            "abi": 3
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"DirectorySchema.PrinterExecution.v1\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.PrinterExecution\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 1
           }
@@ -10008,7 +10199,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415983.abi2",
+            "protocol_id": "ic10.stack.31415983.abi3",
             "provider_header_bases": [
               0
             ],
@@ -10034,8 +10225,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 12,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
@@ -10043,8 +10234,8 @@
             "end": 511
           }
         ],
-        "line_count": 120,
-        "line_headroom_120": 0,
+        "line_count": 122,
+        "line_headroom_120": -2,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -10054,9 +10245,6 @@
           1,
           2,
           3,
-          4,
-          5,
-          6,
           7
         ],
         "dynamic_read_cells": [],
@@ -10073,10 +10261,39 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.printer.execution.directory.adapter",
+        "magic": 31415983,
+        "service_abi": 3,
+        "schema_id": "DirectorySchema.PrinterExecution",
+        "schema_id_hash": "HASH(\"DirectorySchema.PrinterExecution.v1\")",
+        "schema_version": 1,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": true,
+        "capability_mask": 17,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "e8d66b2349d50499b1203c380eb3704214396fdeca8cfe4d42adb8ce9186c05a",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 209
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 18,
+              "end": 209
+            }
+          ]
+        },
+        "pilot_family": "directory"
       }
     },
     {
@@ -10943,23 +11160,28 @@
       "source": "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10",
       "service_contract_id": "ic10.script.resource.endpoint.directory.adapter",
       "deployment_family": "resource-grid-core",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
             "base": 0,
             "magic": 31415983,
-            "abi": 2
+            "abi": 3
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"DirectorySchema.ResourceEndpoint.v1\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.ResourceEndpoint\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 1
           }
@@ -10970,7 +11192,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415983.abi2",
+            "protocol_id": "ic10.stack.31415983.abi3",
             "provider_header_bases": [
               0
             ],
@@ -10996,8 +11218,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 12,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
@@ -11005,8 +11227,8 @@
             "end": 511
           }
         ],
-        "line_count": 64,
-        "line_headroom_120": 56,
+        "line_count": 66,
+        "line_headroom_120": 54,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11016,9 +11238,6 @@
           1,
           2,
           3,
-          4,
-          5,
-          6,
           7
         ],
         "dynamic_read_cells": [],
@@ -11035,33 +11254,67 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.resource.endpoint.directory.adapter",
+        "magic": 31415983,
+        "service_abi": 3,
+        "schema_id": "DirectorySchema.ResourceEndpoint",
+        "schema_id_hash": "HASH(\"DirectorySchema.ResourceEndpoint.v1\")",
+        "schema_version": 1,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": true,
+        "capability_mask": 17,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "06c710d8808af3970bd7810b6b7ce24316062eaf0ae7674ab92022ce770e7def",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 209
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 18,
+              "end": 209
+            }
+          ]
+        },
+        "pilot_family": "directory"
       }
     },
     {
       "source": "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10",
       "service_contract_id": "ic10.script.resource.link.directory.adapter",
       "deployment_family": "resource-grid-core",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
             "base": 0,
             "magic": 31415983,
-            "abi": 2
+            "abi": 3
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"DirectorySchema.ResourceLink.v1\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.ResourceLink\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 1
           }
@@ -11072,7 +11325,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415983.abi2",
+            "protocol_id": "ic10.stack.31415983.abi3",
             "provider_header_bases": [
               0
             ],
@@ -11098,8 +11351,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 12,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
@@ -11107,8 +11360,8 @@
             "end": 511
           }
         ],
-        "line_count": 57,
-        "line_headroom_120": 63,
+        "line_count": 59,
+        "line_headroom_120": 61,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11118,9 +11371,6 @@
           1,
           2,
           3,
-          4,
-          5,
-          6,
           7
         ],
         "dynamic_read_cells": [],
@@ -11137,33 +11387,67 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.resource.link.directory.adapter",
+        "magic": 31415983,
+        "service_abi": 3,
+        "schema_id": "DirectorySchema.ResourceLink",
+        "schema_id_hash": "HASH(\"DirectorySchema.ResourceLink.v1\")",
+        "schema_version": 1,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": true,
+        "capability_mask": 17,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "657c0e74147e17dc88e9962c8862c58a1da13957e28150a9cd0a04368c9b2655",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 81
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 18,
+              "end": 81
+            }
+          ]
+        },
+        "pilot_family": "directory"
       }
     },
     {
       "source": "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10",
       "service_contract_id": "ic10.script.resource.reservation.directory.adapter",
       "deployment_family": "resource-grid-core",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
             "base": 0,
             "magic": 31415983,
-            "abi": 2
+            "abi": 3
           }
         ],
         "schema_fields": [
           {
-            "address": 2,
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"DirectorySchema.ResourceReservation.v1\")"
+          },
+          {
+            "address": 8,
             "name": "SchemaId",
             "const": "HASH(\"DirectorySchema.ResourceReservation\")"
           },
           {
-            "address": 3,
+            "address": 9,
             "name": "SchemaVersion",
             "const": 1
           }
@@ -11174,7 +11458,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415983.abi2",
+            "protocol_id": "ic10.stack.31415983.abi3",
             "provider_header_bases": [
               0
             ],
@@ -11200,8 +11484,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 12,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
@@ -11209,8 +11493,8 @@
             "end": 511
           }
         ],
-        "line_count": 64,
-        "line_headroom_120": 56,
+        "line_count": 66,
+        "line_headroom_120": 54,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11220,9 +11504,6 @@
           1,
           2,
           3,
-          4,
-          5,
-          6,
           7
         ],
         "dynamic_read_cells": [],
@@ -11239,10 +11520,39 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.resource.reservation.directory.adapter",
+        "magic": 31415983,
+        "service_abi": 3,
+        "schema_id": "DirectorySchema.ResourceReservation",
+        "schema_id_hash": "HASH(\"DirectorySchema.ResourceReservation.v1\")",
+        "schema_version": 1,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": true,
+        "capability_mask": 17,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "33b7f4a2f57e295bb13486a5e903fed4b330ba6fda43fc7bc29984ef42dc804c",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 209
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 18,
+              "end": 209
+            }
+          ]
+        },
+        "pilot_family": "directory"
       }
     },
     {

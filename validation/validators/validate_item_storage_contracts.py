@@ -31,7 +31,7 @@ before('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','poke 33 
 need('ic10/resource-grid-core/resource_reservation_v1_0.ic10','poke 17 0','poke 18 0','poke 19 0','poke 20 r14','poke 21 0','poke 22 -1','poke 23 0','poke 24 -1','CompareHints:','Changed:','CopyHints:','poke 12 r0')
 before('ic10/resource-grid-core/resource_reservation_v1_0.ic10','poke 20 r14','poke 12 r0')
 # Reservation directory + bounded read-only selector.
-need('ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10','HASH("DirectorySchema.ResourceReservation")','poke 4 3','poke 5 64')
+need('ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10','HASH("DirectorySchema.ResourceReservation")','poke 10 3','poke 11 64')
 need('ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10','HASH("DirectorySchema.ResourceReservation")','bge r8 6 Overflow','and r1 r1 9','and r1 r1 18','HASH("StorageAccess.LArRE")','getd sp ra 23','getd r0 ra 12','bne r0 r13 Find','poke 8 r0','poke 7 r15')
 if 'putd ' in txt('ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10'): fails.append('191 selector mutates reservations; quote must be read-only')
 # Allocator revalidates semantic mirror generation, commits owner+epoch+action hints, and releaser is exact-owner/epoch only.

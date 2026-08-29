@@ -9860,7 +9860,7 @@
       "contract": "contracts/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.contract.json",
       "service_id": "ic10.script.catalog.coordinator.directory.adapter",
       "provides": [
-        "ic10.stack.31415983.abi2"
+        "ic10.stack.31415983.abi3"
       ],
       "consumes": []
     },
@@ -9995,7 +9995,7 @@
       "contract": "contracts/controller-discovery/controller_directory_adapter_v4_0.contract.json",
       "service_id": "ic10.script.controller.directory.adapter",
       "provides": [
-        "ic10.stack.31415983.abi2"
+        "ic10.stack.31415983.abi3"
       ],
       "consumes": [
         "ic10.stack.27182818.abi1",
@@ -10310,7 +10310,7 @@
       "provides": [],
       "consumes": [
         "ic10.stack.31415981.abi1",
-        "ic10.stack.31415983.abi2"
+        "ic10.stack.31415983.abi3"
       ]
     },
     {
@@ -10321,7 +10321,7 @@
         "ic10.stack.31415982.abi3"
       ],
       "consumes": [
-        "ic10.stack.31415983.abi2"
+        "ic10.stack.31415983.abi3"
       ]
     },
     {
@@ -10614,7 +10614,7 @@
       "contract": "contracts/manufacturing/transform_lane_directory_adapter_v1_0.contract.json",
       "service_id": "ic10.script.transform.lane.directory.adapter",
       "provides": [
-        "ic10.stack.31415983.abi2"
+        "ic10.stack.31415983.abi3"
       ],
       "consumes": []
     },
@@ -10849,7 +10849,7 @@
       "contract": "contracts/power-grid/power_reservation_directory_adapter_v1_0.contract.json",
       "service_id": "ic10.script.power.reservation.directory.adapter",
       "provides": [
-        "ic10.stack.31415983.abi2"
+        "ic10.stack.31415983.abi3"
       ],
       "consumes": []
     },
@@ -11029,7 +11029,7 @@
       "contract": "contracts/pressure-grid/pressure_grid_link_directory_adapter_v3_0.contract.json",
       "service_id": "ic10.script.pressure.grid.link.directory.adapter",
       "provides": [
-        "ic10.stack.31415983.abi2"
+        "ic10.stack.31415983.abi3"
       ],
       "consumes": [
         "ic10.stack.31415981.abi1"
@@ -11182,7 +11182,7 @@
       "contract": "contracts/printer-directory/printer_directory_adapter_v1_0.contract.json",
       "service_id": "ic10.script.printer.directory.adapter",
       "provides": [
-        "ic10.stack.31415983.abi2"
+        "ic10.stack.31415983.abi3"
       ],
       "consumes": []
     },
@@ -11200,7 +11200,7 @@
       "contract": "contracts/printer-directory/printer_execution_directory_adapter_v1_0.contract.json",
       "service_id": "ic10.script.printer.execution.directory.adapter",
       "provides": [
-        "ic10.stack.31415983.abi2"
+        "ic10.stack.31415983.abi3"
       ],
       "consumes": [
         "ic10.stack.31415981.abi1"
@@ -11323,7 +11323,7 @@
       "contract": "contracts/resource-grid-core/resource_endpoint_directory_adapter_v3_0.contract.json",
       "service_id": "ic10.script.resource.endpoint.directory.adapter",
       "provides": [
-        "ic10.stack.31415983.abi2"
+        "ic10.stack.31415983.abi3"
       ],
       "consumes": []
     },
@@ -11332,7 +11332,7 @@
       "contract": "contracts/resource-grid-core/resource_link_directory_adapter_v3_0.contract.json",
       "service_id": "ic10.script.resource.link.directory.adapter",
       "provides": [
-        "ic10.stack.31415983.abi2"
+        "ic10.stack.31415983.abi3"
       ],
       "consumes": []
     },
@@ -11341,7 +11341,7 @@
       "contract": "contracts/resource-grid-core/resource_reservation_directory_adapter_v1_0.contract.json",
       "service_id": "ic10.script.resource.reservation.directory.adapter",
       "provides": [
-        "ic10.stack.31415983.abi2"
+        "ic10.stack.31415983.abi3"
       ],
       "consumes": []
     },

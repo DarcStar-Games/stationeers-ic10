@@ -138,34 +138,34 @@ bdns d0 Loop
 get r0 d0 0
 bne r0 31415983 Loop
 get r0 d0 1
-bne r0 2 Loop
-get r0 d0 10
+bne r0 3 Loop
+get r0 d0 15
 bne r0 2 Loop
 get r11 db 24
 add r11 r11 1
 poke 24 r11
 Freeze:
-put d0 11 r11
+put d0 16 r11
 yield
-get r0 d0 12
+get r0 d0 17
 bne r0 r11 Freeze
-get r0 d0 2
+get r0 d0 8
 bne r0 HASH("DirectorySchema.CatalogStoreNode") SourceBad
-get r0 d0 3
-bne r0 1 SourceBad
-get r0 d0 4
-bne r0 6 SourceBad
-get r0 d0 5
-bne r0 64 SourceBad
 get r0 d0 9
+bne r0 1 SourceBad
+get r0 d0 10
+bne r0 6 SourceBad
+get r0 d0 11
+bne r0 64 SourceBad
+get r0 d0 14
 bgtz r0 Overflow
-get r15 d0 8
+get r15 d0 13
 mod r0 r15 2
 bnez r0 SourceBad
 get r14 d0 7
 get r0 db 3
 beq r14 r0 Release
-get r13 d0 6
+get r13 d0 12
 get r10 db 23
 mod r0 r10 2
 bnez r0 Mutating
@@ -177,7 +177,7 @@ move r7 0
 Candidates:
 bge r7 r13 Sweep
 mul r3 r7 6
-add r3 r3 16
+add r3 r3 18
 get r2 d0 r3
 blt r2 1 Bad
 bgt r2 64 Bad
@@ -226,13 +226,13 @@ Bad:
 poke 16 -1
 j Close
 Publish:
-get r0 d0 2
+get r0 d0 8
 poke 2 r0
 poke 3 r14
 get r0 db 4
 add r0 r0 1
 poke 4 r0
-get r0 d0 3
+get r0 d0 9
 poke 19 r0
 poke 20 6
 poke 21 64
@@ -240,7 +240,7 @@ Close:
 add r10 r10 1
 poke 23 r10
 Release:
-put d0 11 0
+put d0 16 0
 j Loop
 '''
 def make_coordinator_core_program():
@@ -600,28 +600,30 @@ add r7 r7 1
 j Scan
 '''
 def make_coordinator_directory_scanner_program():
-    return '''# Catalog Store Directory Adapter v3.0: Adapter ABI2; unique NodeId candidates.
+    return '''# Catalog Store Directory Adapter v3.0: Adapter ABI3; unique NodeId candidates.
 Boot:
 clr db
 poke 0 31415983
-poke 1 2
-poke 2 HASH("DirectorySchema.CatalogStoreNode")
-poke 3 1
-poke 4 6
-poke 5 64
-poke 10 2
+poke 1 3
+poke 2 17
+poke 3 HASH("DirectorySchema.CatalogStoreNode.v1")
+poke 8 HASH("DirectorySchema.CatalogStoreNode")
+poke 9 1
+poke 10 6
+poke 11 64
+poke 15 2
 Loop:
 yield
-get r0 db 11
+get r0 db 16
 beqz r0 ScanStart
-poke 12 r0
+poke 17 r0
 j Loop
 ScanStart:
-poke 12 0
-get r15 db 8
+poke 17 0
+get r15 db 13
 add r15 r15 1
-poke 8 r15
-poke 9 0
+poke 13 r15
+poke 14 0
 move r6 448
 Clear:
 poke r6 0
@@ -645,7 +647,7 @@ get r6 db r5
 bgtz r6 Duplicate
 bge r8 64 Overflow
 mul r3 r8 6
-add r3 r3 16
+add r3 r3 18
 poke r3 r2
 add r3 r3 1
 ld r0 r1 ReferenceId
@@ -669,7 +671,7 @@ j Scan
 Duplicate:
 sub r6 r6 1
 mul r6 r6 6
-add r6 r6 16
+add r6 r6 18
 add r3 r6 1
 get r0 db r3
 putd r0 16 4
@@ -678,16 +680,16 @@ add r3 r6 2
 poke r3 8
 j Scan
 Overflow:
-poke 9 1
+poke 14 1
 j Scan
 Publish:
-poke 6 r8
+poke 12 r8
+get r0 db 13
+add r0 r0 1
+poke 13 r0
 get r0 db 7
 add r0 r0 1
 poke 7 r0
-get r0 db 8
-add r0 r0 1
-poke 8 r0
 j Loop
 '''
 def make_coordinator_directory_telemetry_program():

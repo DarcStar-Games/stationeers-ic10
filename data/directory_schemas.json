@@ -11,7 +11,7 @@
     "command_slot": 16,
     "candidate_base": 17,
     "adapter_bridge": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
-    "input_model": "DIRECTORY_ADAPTER_ABI_V2 through generic bridge",
+    "input_model": "DIRECTORY_ADAPTER_ABI_V3 through generic bridge",
     "publication_header": {
       "magic_slot": 0,
       "magic": 31415981,
@@ -27,7 +27,7 @@
   },
   "registry_host": {
     "publication": "persistent_direct_index_seqlock",
-    "adapter_input": "DIRECTORY_ADAPTER_ABI_V2",
+    "adapter_input": "DIRECTORY_ADAPTER_ABI_V3",
     "registry_entry_width": 6,
     "registry_capacity": 64,
     "registry_base": 64,

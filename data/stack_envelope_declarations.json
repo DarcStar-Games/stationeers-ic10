@@ -22,6 +22,62 @@
   "value_bits": 53
  },
  "migrated": {
+  "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10": {
+   "service_id": "ic10.script.catalog.coordinator.directory.adapter",
+   "magic": 31415983,
+   "service_abi": 3,
+   "schema_id": "DirectorySchema.CatalogStoreNode",
+   "schema_version": 1,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": true,
+   "source_sha256": "cebcc1ea2dd619dc0e3dd8c326127fb72065efbae222bd6b5d7c559be957e204",
+   "legacy_owned_ranges": [
+    [
+     8,
+     401
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     18,
+     401
+    ]
+   ],
+   "pilot_family": "directory"
+  },
+  "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10": {
+   "service_id": "ic10.script.controller.directory.adapter",
+   "magic": 31415983,
+   "service_abi": 3,
+   "schema_id": "DirectorySchema.Controller",
+   "schema_version": 1,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": true,
+   "source_sha256": "0f3bbc2793f5da12d9445110269562e0bbdc2be050beea68805e7e2d01a04914",
+   "legacy_owned_ranges": [
+    [
+     8,
+     145
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     18,
+     145
+    ]
+   ],
+   "pilot_family": "directory"
+  },
   "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10": {
    "service_id": "ic10.script.controller.phase.pressure.runtime",
    "magic": 31416060,
@@ -153,6 +209,62 @@
    "pilot_family": "stack-monitor",
    "custom_state_bits": 0
   },
+  "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10": {
+   "service_id": "ic10.script.transform.lane.directory.adapter",
+   "magic": 31415983,
+   "service_abi": 3,
+   "schema_id": "DirectorySchema.TransformLane",
+   "schema_version": 1,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": true,
+   "source_sha256": "1ab71791f61406ec8727589f5b0622f71770b307fa20d9875456c2e5e7594154",
+   "legacy_owned_ranges": [
+    [
+     8,
+     209
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     18,
+     209
+    ]
+   ],
+   "pilot_family": "directory"
+  },
+  "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10": {
+   "service_id": "ic10.script.power.reservation.directory.adapter",
+   "magic": 31415983,
+   "service_abi": 3,
+   "schema_id": "DirectorySchema.PowerReservation",
+   "schema_version": 1,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": true,
+   "source_sha256": "8354c0386b934421c506d1a4a995dee515488a217cf9c09a830b53eb9746d11d",
+   "legacy_owned_ranges": [
+    [
+     8,
+     209
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     18,
+     209
+    ]
+   ],
+   "pilot_family": "directory"
+  },
   "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": {
    "service_id": "ic10.script.controller.pressure.domain.runtime",
    "magic": 31416063,
@@ -218,6 +330,90 @@
    "pilot_family": "generic-telemetry",
    "publishes_generation": false,
    "custom_state_bits": 0
+  },
+  "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10": {
+   "service_id": "ic10.script.pressure.grid.link.directory.adapter",
+   "magic": 31415983,
+   "service_abi": 3,
+   "schema_id": "DirectorySchema.PressureGridLink",
+   "schema_version": 1,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": true,
+   "source_sha256": "b599f53e96a3ff967b66b6f60bc6482cdaa46530f3773a7a2cf1d6751d219a57",
+   "legacy_owned_ranges": [
+    [
+     8,
+     209
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     18,
+     209
+    ]
+   ],
+   "pilot_family": "directory"
+  },
+  "ic10/printer-directory/printer_directory_adapter_v1_0.ic10": {
+   "service_id": "ic10.script.printer.directory.adapter",
+   "magic": 31415983,
+   "service_abi": 3,
+   "schema_id": "DirectorySchema.Printer",
+   "schema_version": 2,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": true,
+   "source_sha256": "5ef497b364cfb112f90ab605c3c81d7ffa6313c4c257e52d0c7a77dd6cfda567",
+   "legacy_owned_ranges": [
+    [
+     8,
+     209
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     18,
+     209
+    ]
+   ],
+   "pilot_family": "directory"
+  },
+  "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10": {
+   "service_id": "ic10.script.printer.execution.directory.adapter",
+   "magic": 31415983,
+   "service_abi": 3,
+   "schema_id": "DirectorySchema.PrinterExecution",
+   "schema_version": 1,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": true,
+   "source_sha256": "e8d66b2349d50499b1203c380eb3704214396fdeca8cfe4d42adb8ce9186c05a",
+   "legacy_owned_ranges": [
+    [
+     8,
+     209
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     18,
+     209
+    ]
+   ],
+   "pilot_family": "directory"
   },
   "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10": {
    "service_id": "ic10.script.embedded.pressure.transfer.runtime",
@@ -288,6 +484,90 @@
    "pilot_family": "generic-telemetry",
    "publishes_generation": false,
    "custom_state_bits": 0
+  },
+  "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10": {
+   "service_id": "ic10.script.resource.endpoint.directory.adapter",
+   "magic": 31415983,
+   "service_abi": 3,
+   "schema_id": "DirectorySchema.ResourceEndpoint",
+   "schema_version": 1,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": true,
+   "source_sha256": "06c710d8808af3970bd7810b6b7ce24316062eaf0ae7674ab92022ce770e7def",
+   "legacy_owned_ranges": [
+    [
+     8,
+     209
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     18,
+     209
+    ]
+   ],
+   "pilot_family": "directory"
+  },
+  "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10": {
+   "service_id": "ic10.script.resource.link.directory.adapter",
+   "magic": 31415983,
+   "service_abi": 3,
+   "schema_id": "DirectorySchema.ResourceLink",
+   "schema_version": 1,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": true,
+   "source_sha256": "657c0e74147e17dc88e9962c8862c58a1da13957e28150a9cd0a04368c9b2655",
+   "legacy_owned_ranges": [
+    [
+     8,
+     81
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     18,
+     81
+    ]
+   ],
+   "pilot_family": "directory"
+  },
+  "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10": {
+   "service_id": "ic10.script.resource.reservation.directory.adapter",
+   "magic": 31415983,
+   "service_abi": 3,
+   "schema_id": "DirectorySchema.ResourceReservation",
+   "schema_version": 1,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": true,
+   "source_sha256": "33b7f4a2f57e295bb13486a5e903fed4b330ba6fda43fc7bc29984ef42dc804c",
+   "legacy_owned_ranges": [
+    [
+     8,
+     209
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     18,
+     209
+    ]
+   ],
+   "pilot_family": "directory"
   }
  },
  "legacy_exemption": {

@@ -126,7 +126,7 @@ This family contains the deployment classes shown in its generated program inven
 <!-- FAMILY_PROGRAMS:controller-discovery START -->
 | Program | Deployment class | Purpose |
 |---|---|---|
-| `ic10/controller-discovery/controller_directory_adapter_v4_0.ic10` | `commissioning` | Publishes Controller Directory Adapter ABI2 candidates; Generic Adapter Bridge + Snapshot Host own publication. |
+| `ic10/controller-discovery/controller_directory_adapter_v4_0.ic10` | `commissioning` | Publishes Controller Directory Adapter ABI3 candidates; Generic Adapter Bridge + Snapshot Host own publication. |
 | `ic10/controller-discovery/controller_selector_v3_0.ic10` | `commissioning` | Directly derives type/member groups from the sorted Generic Controller Directory and resolves one ReferenceId; rejects overflowed discovery. |
 <!-- FAMILY_PROGRAMS:controller-discovery END -->
 
@@ -652,7 +652,7 @@ This family contains the deployment classes shown in its generated program inven
 | Program | Deployment class | Purpose |
 |---|---|---|
 | `ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` | `conditional-resident` | Coordinator Core ABI3; claims Stores, assigns runtime ordinals, and owns topology/capacity epochs. |
-| `ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10` | `conditional-resident` | Publishes Generic Store membership as Directory Adapter ABI2 registry candidates. |
+| `ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10` | `conditional-resident` | Publishes Generic Store membership as Directory Adapter ABI3 registry candidates. |
 | `ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10` | `on-demand` | Aggregates Store lifecycle counts and used/free/capacity telemetry; marks missing nodes. |
 | `ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10` | `on-demand` | Selectable Store-directory view plus Coordinator aggregate health telemetry. |
 | `ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10` | `on-demand` | Rebinds persisted Stores to a replacement Coordinator with a higher CoordinatorEpoch. |
@@ -1503,7 +1503,7 @@ This family contains the deployment classes shown in its generated program inven
 | `ic10/power-grid/power_producer_endpoint_v1_0.ic10` | `conditional-resident` | Publishes one exact POWER producer/aggregate supply as a Generic Resource Endpoint. |
 | `ic10/power-grid/power_reservation_allocator_v1_0.ic10` | `conditional-resident` | Validates, commits, cleans old/orphan epochs, and publishes the active power allocator authority. |
 | `ic10/power-grid/power_reservation_committer_v1_0.ic10` | `conditional-resident` | Commits one common POWER reservation epoch with shared-source aggregation and foreign-owner protection. |
-| `ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10` | `conditional-resident` | Publishes priority-ordered PowerReservation candidates through Generic Directory Adapter ABI2. |
+| `ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10` | `conditional-resident` | Publishes priority-ordered PowerReservation candidates through Generic Directory Adapter ABI3. |
 | `ic10/power-grid/power_sink_flow_builder_v1_0.ic10` | `conditional-resident` | Builds one sink flow, retrying later sources until a compatible physical path is found. |
 | `ic10/power-grid/power_sink_selector_v1_0.ic10` | `conditional-resident` | Selects managed POWER sinks in critical/sheddable/charge dispatch order. |
 | `ic10/power-grid/power_source_selector_v1_0.ic10` | `conditional-resident` | Selects available POWER sources by preference while accounting for staged use and battery direction. |

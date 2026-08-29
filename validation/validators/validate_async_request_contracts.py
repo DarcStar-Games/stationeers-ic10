@@ -103,9 +103,9 @@ need('ic10/printer-directory/printer_execution_bank_v2_0.ic10','poke r0 r14\nadd
 need('ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','get r15 db 14','poke 23 -1','poke 15 r15');before('ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','poke 23 -1','poke 15 r15')
 # Adapter freeze request S11 / ack S12 is the same terminal-ack profile.
 for f in ('ic10/controller-discovery/controller_directory_adapter_v4_0.ic10','ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10','ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10'):
- need(f,'get r0 db 11','poke 12 r0')
+ need(f,'get r0 db 16','poke 17 r0')
 for f in ('ic10/directory-core/generic_registry_directory_host_v2_0.ic10','ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10'):
- need(f,'put d0 11 r11','get r0 d0 12','bne r0 r11 Freeze')
+ need(f,'put d0 16 r11','get r0 d0 17','bne r0 r11 Freeze')
 
 
 # Cargo LArRE storage service is TERMINAL_RESPONSE; endpoint client publishes payload before token and fences response.

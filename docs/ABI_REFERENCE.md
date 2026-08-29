@@ -15,7 +15,7 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 | Generic Input Resolver | `31415931` | `S1` | 1 |
 | Generic Snapshot Directory Host | `31415981` | `S1` | 1 |
 | Generic Registry Directory Host | `31415982` | `S1` | 3 |
-| Directory Adapter | `31415983` | `S1` | 2 |
+| Directory Adapter | `31415983` | `S1` | 3 |
 | Generic Job Store | `31415984` | `S1` | 1 |
 | PhasePressure Request Arbiter | `31415933` | `S1` | 1 |
 | PressureDomain Inventory | `31415935` | `S1` | 2 |
@@ -113,7 +113,7 @@ Coordinator ABI3 supports 64 NodeIds, missing/duplicate health, higher-epoch rec
 
 ## Controller discovery through Generic Snapshot Directory ABI v1
 
-The shared discovery path supports **64 telemetry controllers**. `ic10/controller-discovery/controller_directory_adapter_v4_0.ic10` publishes `DIRECTORY_ADAPTER_ABI_V2` candidates with schema `DirectorySchema.Controller`; `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` commits them into `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10`.
+The shared discovery path supports **64 telemetry controllers**. `ic10/controller-discovery/controller_directory_adapter_v4_0.ic10` publishes `DIRECTORY_ADAPTER_ABI_V3` candidates with schema `DirectorySchema.Controller`; `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` commits them into `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10`.
 
 ```text
 Controller Directory (Generic Snapshot Host)
@@ -135,7 +135,7 @@ A snapshot with overflow set is **known incomplete**. Controller Selector report
 
 ## Printer Directory schema v2
 
-`ic10/printer-directory/printer_directory_adapter_v1_0.ic10` publishes Adapter ABI2 candidates for `DirectorySchema.Printer` v2. Generic Bridge/Host publish:
+`ic10/printer-directory/printer_directory_adapter_v1_0.ic10` publishes Adapter ABI3 candidates for `DirectorySchema.Printer` v2. Generic Bridge/Host publish:
 
 ```text
 [ReferenceId, FamilyHash, ProcessorSpec]
@@ -425,7 +425,7 @@ Roadmap item 6 plus its hardening pass uses ordinals 172..187. Services whose re
 [RuntimeReferenceId, ProcessorReferenceId, ProcessorSpec]
 ```
 
-`ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10` publishes Adapter ABI2 candidates and accepts Transform Runtime ABI2. ProcessorSpec bits 0..7 are the capability mask; bits 8/9/10 are Power/Busy/Error.
+`ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10` publishes Adapter ABI3 candidates and accepts Transform Runtime ABI2. ProcessorSpec bits 0..7 are the capability mask; bits 8/9/10 are Power/Busy/Error.
 
 ### Manufacturing Candidate Selector ABI2
 
@@ -469,7 +469,7 @@ Magic `31415996`. `ic10/printer-directory/printer_execution_bank_v2_0.ic10` loca
 
 ### DirectorySchema.PrinterExecution v1
 
-`ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10` joins Printer Directory v2 with live Execution Banks ABI2 and publishes Adapter ABI2 records:
+`ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10` joins Printer Directory v2 with live Execution Banks ABI2 and publishes Adapter ABI3 records:
 
 ```text
 [PrinterReferenceId, FamilyHash, ProcessorSpec]
@@ -1208,7 +1208,7 @@ Capability bits are `SMELT_BASIC=1`, `FURNACE_ALLOY=2`, `ADVANCED_ALLOY=4`. Arc 
 
 The reusable live-directory infrastructure is defined in `docs/DIRECTORY_STANDARD.md` and `data/directory_schemas.json`.
 
-`DIRECTORY_ADAPTER_ABI_V2` uses magic `31415983`, ABI2. Candidate adapters publish:
+`DIRECTORY_ADAPTER_ABI_V3` uses magic `31415983`, ABI2. Candidate adapters publish:
 
 ```text
 S2 schema id             S3 schema version
@@ -1225,7 +1225,7 @@ There are no consumer-facing domain magic/ABI fields in the Adapter contract.
 
 `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` consumes Snapshot-mode adapters and drives `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10` (magic `31415981`, ABI1). The Host owns sorting, exact dedupe, overflow, A/B publication, stable generation, and publishes schema ID/version/width/capacity in S9..S12.
 
-`ic10/directory-core/generic_registry_directory_host_v2_0.ic10` (magic `31415982`, ABI3) consumes Registry-mode Adapter ABI2 directly. It accepts only `DirectorySchema.CatalogStoreNode` v1 with width 6/capacity 64, publishes schema ID at S2, schema version at S19, width at S20, capacity at S21, and an odd/even publication sequence at S23. It freezes the Adapter during a rebuild; readers require S23 even and unchanged around registry reads.
+`ic10/directory-core/generic_registry_directory_host_v2_0.ic10` (magic `31415982`, ABI3) consumes Registry-mode Adapter ABI3 directly. It accepts only `DirectorySchema.CatalogStoreNode` v1 with width 6/capacity 64, publishes schema ID at S2, schema version at S19, width at S20, capacity at S21, and an odd/even publication sequence at S23. It freezes the Adapter during a rebuild; readers require S23 even and unchanged around registry reads.
 
 Consumers identify a directory by **generic Host magic + Host ABI + DirectorySchemaId + DirectorySchemaVersion**. This is the canonical current directory contract; domain-specific compatibility facades are not retained.
 

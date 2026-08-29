@@ -8,7 +8,7 @@ Current services:
 
 - `ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` — **Coordinator ABI3**, claims Generic Stores and commits topology/assignment epochs;
 - `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10` — **on-demand import service**; Router ABI3 assigns each pending Loader item to live capacity;
-- `ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10` — Directory Adapter ABI2 for Generic Store discovery;
+- `ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10` — Directory Adapter ABI3 for Generic Store discovery;
 - `ic10/directory-core/generic_registry_directory_host_v2_0.ic10` — persistent 64-node Store registry;
 - `ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10` — **optional observability**, aggregate lifecycle/capacity telemetry;
 - `ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10` — **optional diagnostic** selectable directory view;
@@ -52,7 +52,7 @@ The Coordinator supplies CatalogSchemaId, CatalogSchemaVersion, CatalogInstanceI
 
 Store membership uses the Generic Directory infrastructure described in `docs/DIRECTORY_STANDARD.md`.
 
-`ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10` publishes Directory Adapter ABI2 candidates. `ic10/directory-core/generic_registry_directory_host_v2_0.ic10` indexes them by NodeId and persists one 6-cell record per possible node:
+`ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10` publishes Directory Adapter ABI3 candidates. `ic10/directory-core/generic_registry_directory_host_v2_0.ic10` indexes them by NodeId and persists one 6-cell record per possible node:
 
 ```text
 [ReferenceId, State, UsedCells, AssignmentEpoch, CatalogInstanceId, LastSeenEpoch]
