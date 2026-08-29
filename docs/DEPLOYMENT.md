@@ -288,7 +288,7 @@ The generalized Resource Core is additive and is not required for an existing pr
 ### A. Deploy shared Resource Profile infrastructure
 
 1. Ensure the global Coordinator Core is running. Start Loader Router only for the import/rebuild window.
-2. Provide Generic Store capacity by programming `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` on unclaimed IC housings and assigning each a unique `S18 NodeId` from 1..64. The current profile catalog needs at least three Stores under Store ABI5 geometry, but no Store is preassigned to FLUID or ITEM.
+2. Provide Generic Store capacity by programming `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` on unclaimed IC housings and assigning each a unique `S18 NodeId` from 1..64. The current profile catalog needs at least three Stores under Store ABI6 geometry, but no Store is preassigned to FLUID or ITEM.
 3. Deploy the generated FLUID and ITEM Resource Profile loader candidates. They contain relocatable whole 16-cell profile items and require no Store wiring or Store ordinal.
 4. The Router places each item into matching runtime capacity; the Coordinator claims/links more Stores only when needed.
 5. Verify the 39 profiles settle into healthy ACTIVE Stores with stable even `S17`. Use Coordinator telemetry/View rather than Loader counts to determine readiness.

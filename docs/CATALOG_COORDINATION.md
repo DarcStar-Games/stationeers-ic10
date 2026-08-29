@@ -29,7 +29,7 @@ Current services:
                              |
                   runtime capacity placement
                              |
-                  Generic Store ABI5 nodes
+                  Generic Store ABI6 nodes
                              ^
                              |
                  relocatable Loader ABI5 items
@@ -145,7 +145,7 @@ The current policy intentionally moves newest items first. Arbitrary hole-produc
 
 ## Store telemetry and diagnostics
 
-`ic10/catalog-control-plane/catalog_inspector_v4_0.ic10` accepts any Store ABI5 node and reports:
+`ic10/catalog-control-plane/catalog_inspector_v4_0.ic10` accepts any Store ABI6 node and reports:
 
 - schema/version/instance;
 - Store RefId and CoordinatorRef;

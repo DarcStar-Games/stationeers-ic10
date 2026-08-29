@@ -77,17 +77,15 @@ get r0 db 7
 add r0 r0 1
 poke 7 r0
 get r2 db 27
-putd r1 2 r2
-get r2 db 28
 putd r1 3 r2
 get r2 db 29
-putd r1 4 r2
+putd r1 13 r2
 get r2 db 2
-putd r1 5 r2
+putd r1 14 r2
 get r2 db 30
-putd r1 6 r2
+putd r1 21 r2
 blez r2 LinkDone
-putd r2 7 r1
+putd r2 24 r1
 LinkDone:
 get r2 db 31
 putd r1 8 r2

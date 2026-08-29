@@ -34,7 +34,7 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 | Generic Resource Endpoint | `31415949` | `S1` | 1 |
 | Generic Resource Reservation | `31415950` | `S1` | 1 |
 | Resource Transform Profile | `31415952` | `S1` | 4 |
-| Catalog Store (all static catalogs) | `31415968` | `S1` | 5 |
+| Catalog Store (all static catalogs) | `31415968` | `S1` | 6 |
 | Catalog Loader metadata | `31415969` | `S1` | 5 |
 | Catalog Coordinator Core | `31415970` | `S1` | 3 |
 | Catalog Loader Router | `31415971` | `S1` | 3 |
@@ -77,11 +77,11 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 | Process PressureDomain Runtime | `31416066` | `S1` | 1 |
 | Stack header extension | `31416054` | `E+1` | 1 |
 
-## Catalog Store ABI v5
+## Catalog Store ABI v6
 
-Magic `31415968`, ABI `5`. `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` is the only physical Store program. Human commissioning sets only `S18 NodeId` (1..64); Coordinator ABI3 assigns schema/version/instance, partition, StoreOrdinal, topology, Coordinator identity, and AssignmentEpoch.
+Magic `31415968`, ABI `6`. It publishes the common header at `S0..S3`: the coordinator assigns the folded `SchemaId` at `S3`, and the instance, coordinator identity, and store-chain pointers moved to `S13`, `S14`, `S21` and `S24`. `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` is the only physical Store program. Human commissioning sets only `S18 NodeId` (1..64); Coordinator ABI3 assigns schema/version/instance, partition, StoreOrdinal, topology, Coordinator identity, and AssignmentEpoch.
 
-Store ABI5 uses a generic item heap rather than schema-specific fixed regions:
+Store ABI6 uses a generic item heap rather than schema-specific fixed regions:
 
 ```text
 S9   LocalItemCount
@@ -104,7 +104,7 @@ Each item consumes its payload size plus two directory cells. See `docs/CATALOG_
 Magic `31415969`, ABI `5`. A generated Loader is one-shot, self-clearing, sparse, and **relocatable**. It publishes the common header at `S0..S3` — `CapabilityMask` `1` and `SchemaId` `HASH("<schema>.v<version>")` — then its payload from `S8`:
 
 ```text
-S8/S9   schema id and version, unfolded for Store ABI5 matching (transitional)
+S8/S9   schema id and version, unfolded for Store ABI6 matching (transitional)
 S10     instance      S14 item count        S18 Ready, written LAST
 S11     partition     S15 header cells      S19 TargetStoreRef, begins zero
 S12     LoaderId      S16 total payload     S20 AssignmentToken, begins zero
@@ -112,7 +112,7 @@ S13     kind          S17 signature         S21 next imported item index
 S24..   item directory
 ```
 
-The Router writes `S19`/`S20` after runtime placement. `S8`/`S9` disappear when Store ABI5 folds its own schema slots.
+The Router writes `S19`/`S20` after runtime placement. `S8`/`S9` disappear when Store ABI6 folds its own schema slots.
 
 ## Catalog Coordinator ABI v3
 
@@ -297,7 +297,7 @@ For Dial kinds, `+3` must provide the intended Dial Mode/step count (`1..999`). 
 
 ### Input Profile Catalog Store / View
 
-Input Profiles use Store ABI5 with `CatalogSchemaId=HASH("CatalogSchema.InputProfile")`, **CatalogSchemaVersion=3**, and stable `CatalogInstanceId=HASH("Catalog.InputProfiles.Schema3")`. Six self-contained variable-length production/diagnostic profiles fit one Store at runtime and are supplied by the generated `ic10/input-profile-catalog/input_profile_catalog_loader_*_v4_0.ic10` candidates.
+Input Profiles use Store ABI6 with `CatalogSchemaId=HASH("CatalogSchema.InputProfile")`, **CatalogSchemaVersion=3**, and stable `CatalogInstanceId=HASH("Catalog.InputProfiles.Schema3")`. Six self-contained variable-length production/diagnostic profiles fit one Store at runtime and are supplied by the generated `ic10/input-profile-catalog/input_profile_catalog_loader_*_v4_0.ic10` candidates.
 
 Each schema-v3 item is:
 
@@ -395,7 +395,7 @@ The Bridge configures Resolver count/Profile from the Loader-validated Editor st
 
 ## Unified Resource Profile Catalog / View
 
-Resource Profiles use Store ABI5, `CatalogSchemaId=HASH("CatalogSchema.ResourceProfile")`, **schema version 2**, and instance `HASH("Catalog.ResourceProfiles.Schema2")`. Every profile is a fixed 16-cell item: 14 semantic cells plus two zero padding cells (`SchemaCellMask=0x3fff`). PartitionKey is ResourceClass.
+Resource Profiles use Store ABI6, `CatalogSchemaId=HASH("CatalogSchema.ResourceProfile")`, **schema version 2**, and instance `HASH("Catalog.ResourceProfiles.Schema2")`. Every profile is a fixed 16-cell item: 14 semantic cells plus two zero padding cells (`SchemaCellMask=0x3fff`). PartitionKey is ResourceClass.
 
 With the 2-cell Store item-directory overhead, a Store holds 26 such items. The current 39 records derive at runtime as one FLUID Store (10), two ITEM Stores (26+1), one POWER Store (1), and one ENERGY Store (1). Seven Loader ABI5 candidates provide the records; none contains a Store ordinal or physical target.
 
@@ -403,7 +403,7 @@ With the 2-cell Store item-directory overhead, a Store holds 26 such items. The 
 
 ## Recipe Catalog / Lookup ABI v3
 
-Recipes use `CatalogSchema.Recipe`, **schema version 3**, through Store ABI5. Each recipe is one variable-width 4-cell-aligned item:
+Recipes use `CatalogSchema.Recipe`, **schema version 3**, through Store ABI6. Each recipe is one variable-width 4-cell-aligned item:
 
 ```text
 [RecipeHash, FamilyHash, RequiredCapability, FamilyOrdinal, InputCount,
@@ -1202,7 +1202,7 @@ The 27 current ITEM records (10 ores, 7 basic ingots, 5 alloys, and 5 superalloy
 
 ### Resource Transform Catalog Store / Profile View
 
-Resource Transforms use Store ABI5 with `CatalogSchemaId=HASH("CatalogSchema.ResourceTransform")`, **payload schema version 4**. All 17 current transforms fit one Store at 466/512 cells including Store header and item-directory overhead; five generated `ic10/transform-catalog/resource_transform_catalog_loader_*_v6_0.ic10` candidates exist only because of IC10 source limits.
+Resource Transforms use Store ABI6 with `CatalogSchemaId=HASH("CatalogSchema.ResourceTransform")`, **payload schema version 4**. All 17 current transforms fit one Store at 466/512 cells including Store header and item-directory overhead; five generated `ic10/transform-catalog/resource_transform_catalog_loader_*_v6_0.ic10` candidates exist only because of IC10 source limits.
 
 Every transform is one self-contained item:
 

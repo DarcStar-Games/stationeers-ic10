@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10",
-  "source_sha256": "b4a582fb27fe1155fdc76a7e138e12576bebea3f00576fcedb94a6c62e5bc0a7",
+  "source_sha256": "ef2cea056fc69736d96272b09cacddfd48a29fc1b3e096a552e6ac92fb50bb9a",
   "identity": {
     "service_id": "ic10.script.resource.profile.loader.item.00",
     "implementation_revision": "4.0",
@@ -21,8 +21,6 @@
       1,
       2,
       3,
-      8,
-      9,
       10,
       11,
       12,
@@ -185,24 +183,6 @@
       {
         "address": 3,
         "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 9,
-        "name": "S9",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

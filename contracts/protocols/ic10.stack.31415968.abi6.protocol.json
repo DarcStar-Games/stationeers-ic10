@@ -1,11 +1,11 @@
 {
   "$schema": "../../schemas/protocol_definition.schema.json",
   "format": "IC10_PROTOCOL_DEFINITION_V1",
-  "protocol_id": "ic10.stack.31415968.abi5",
-  "name": "Generic Catalog Store ABI5",
+  "protocol_id": "ic10.stack.31415968.abi6",
+  "name": "Generic Catalog Store ABI6",
   "transport": "ic-housing-stack",
   "magic": 31415968,
-  "abi": 5,
+  "abi": 6,
   "header_bases": [
     0
   ],
@@ -48,21 +48,12 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read"
+            "self-write"
           ]
         },
         {
           "address": 3,
           "name": "S3",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 4,
-          "name": "S4",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -86,6 +77,15 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
+          ]
+        },
+        {
+          "address": 13,
+          "name": "S13",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
           ]
         },
         {
@@ -224,14 +224,13 @@
       "literal_reads": [
         0,
         1,
-        2,
         3,
-        4,
         6,
         7,
         8,
         9,
         11,
+        13,
         15,
         16,
         17,
@@ -254,7 +253,7 @@
         {
           "address": 1,
           "operator": "equals",
-          "value": 5
+          "value": 6
         }
       ],
       "publication_requirements": []

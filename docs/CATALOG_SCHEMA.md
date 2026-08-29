@@ -25,11 +25,11 @@ CELL_BLOCK_WIDTH = 4
 
 A logical item occupies one or more complete four-cell blocks. Semantic fields that do not fill the final block are padded with canonical zero cells.
 
-`SchemaCellMask` and `TailCellMask` remain the standard way to describe which cells in a fixed-width schema unit are semantically valid. Cells outside the relevant mask must be zero. Store ABI5 catalogs use **self-contained relocatable items** rather than cross-item absolute region pointers. No alternate region-pointer storage contract is part of the current baseline.
+`SchemaCellMask` and `TailCellMask` remain the standard way to describe which cells in a fixed-width schema unit are semantically valid. Cells outside the relevant mask must be zero. Store ABI6 catalogs use **self-contained relocatable items** rather than cross-item absolute region pointers. No alternate region-pointer storage contract is part of the current baseline.
 
 ## Why self-contained items
 
-Store ABI5 performs runtime placement and item-level migration. Therefore a logical item must be movable without fixing addresses in another Store region.
+Store ABI6 performs runtime placement and item-level migration. Therefore a logical item must be movable without fixing addresses in another Store region.
 
 Current rule:
 
@@ -60,7 +60,7 @@ PartitionKey is ResourceClass:
 - `4` = POWER;
 - `5` = ENERGY.
 
-The current 39 profiles require a commissioning estimate of five Stores under Store ABI5 geometry: one FLUID Store (10 profiles), two ITEM Stores (26+1), one POWER Store, and one ENERGY Store. That estimate is not a generated placement assignment. FLUID `ProfileKind=5`, schema 1 is the prepared two-component mixture shape introduced by Item 11; see `docs/PROCESS_UTILITY_ORCHESTRATION.md`.
+The current 39 profiles require a commissioning estimate of five Stores under Store ABI6 geometry: one FLUID Store (10 profiles), two ITEM Stores (26+1), one POWER Store, and one ENERGY Store. That estimate is not a generated placement assignment. FLUID `ProfileKind=5`, schema 1 is the prepared two-component mixture shape introduced by Item 11; see `docs/PROCESS_UTILITY_ORCHESTRATION.md`.
 
 ## Input Profile schema v3
 
@@ -152,7 +152,7 @@ Payloads are placed independently in the Loader's upper stack. Runtime Store pla
 
 The Loader self-clears before sparse writes, so every unwritten semantic zero and padding cell is deterministically zero.
 
-## Store ABI5 item directory
+## Store ABI6 item directory
 
 Committed Store items are indexed from S32:
 

@@ -18,7 +18,7 @@ M=json.loads((R/MANIFEST_FILE).read_text())
 fails += prove_restoration(R,files(),[sys.executable,str(R/'tools'/'generate'/'generate_input_profiles.py')],preserve_inputs=[R/SOURCE_FILE])
 M=json.loads((R/MANIFEST_FILE).read_text())
 if D.get('catalog_schema_version') not in (2,3): pass
-if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_schema_version'))!=('INPUT_PROFILE_CATALOG_V4',5,5,3):fails.append('Input Profile runtime schema metadata mismatch')
+if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_schema_version'))!=('INPUT_PROFILE_CATALOG_V4',6,5,3):fails.append('Input Profile runtime schema metadata mismatch')
 if M.get('runtime_store_placement') is not True or M.get('runtime_min_store_count')!=1 or M.get('profile_count')!=6:fails.append('Input Profile runtime capacity/count mismatch')
 if len(M.get('item_cell_lengths',[]))!=6 or any(n%4 for n in M['item_cell_lengths']):fails.append('Input Profile self-contained item alignment mismatch')
 loaders=[R/f for f in M['loaders']]

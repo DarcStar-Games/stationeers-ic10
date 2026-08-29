@@ -2,7 +2,7 @@
  "format": "IC10_SCRIPT_CONTRACT_OVERRIDES_V1",
  "scripts": {
   "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10": {
-   "source_sha256": "c155b927ba9c8e10c90390067bdf3b3ec851ab60ad5acb95a3c52ace3c84b18f",
+   "source_sha256": "a9932a9bf34fc4a807650398001e4ae937fba7f7e19607bd936c6ad7d0acaf7c",
    "publication_rules": [
     {
      "kind": "seqlock",
@@ -13,7 +13,7 @@
    ]
   },
   "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10": {
-   "source_sha256": "cebcc1ea2dd619dc0e3dd8c326127fb72065efbae222bd6b5d7c559be957e204",
+   "source_sha256": "31bea61e8eaf5b187268c0cb7a7c983e8c5934f115080a55fe6e6215814898e1",
    "external_readable_ranges": [
     [
      0,
@@ -58,7 +58,7 @@
    }
   },
   "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10": {
-   "source_sha256": "81a27385d2525628968a3b8057cd487339c190175d02d6e5a49ae5f24b760ecd",
+   "source_sha256": "455448ab3a179307babee2a4739d495a0e9659c5dcb4d10ba9d641885dba72c4",
    "ports": {
     "d1": {
      "dynamic_read_ranges": [
@@ -71,7 +71,7 @@
    }
   },
   "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10": {
-   "source_sha256": "6393224c71784cbd9ad8156cd9d2cf83e5e9e92cc87b43f32122733b2dfee203",
+   "source_sha256": "6d0fa7efc43fca1048f6f5f380bddf857e328657342e3581acf780b5a044193b",
    "ports": {
     "d1": {
      "dynamic_read_ranges": [
@@ -84,7 +84,7 @@
    }
   },
   "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10": {
-   "source_sha256": "87316e7924eac65b5ea441e664b3d27f0c8ca03573fb4b594eefec803bfd581d",
+   "source_sha256": "ef29932abe1845fe0da2d6aad4c1db686e924eebf10ac3aac7c620bdb488c3bc",
    "publication_rules": [
     {
      "kind": "seqlock",
@@ -1476,7 +1476,7 @@
    ]
   },
   "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10": {
-   "source_sha256": "149ea4c71df8a27e1f3229f1952559202834c1d2044992bd3bae042e0a124b60",
+   "source_sha256": "7de3c982ab9237a550c842cf1af93ea4e8d10e8268fd7178124305c73a72d837",
    "external_readable_ranges": [
     [
      0,
@@ -1485,7 +1485,7 @@
    ]
   },
   "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": {
-   "source_sha256": "29ceb963bbd5eab87bad41541f26be5dca7623a251ebbd7048ec57883e447d1b",
+   "source_sha256": "181c8aab30f61bc32ba59195630a251a681f0f0211168c450cbe0014464ae38d",
    "external_readable_ranges": [
     [
      0,

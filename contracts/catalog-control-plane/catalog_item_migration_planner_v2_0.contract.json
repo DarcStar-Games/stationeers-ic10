@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10",
-  "source_sha256": "81a27385d2525628968a3b8057cd487339c190175d02d6e5a49ae5f24b760ecd",
+  "source_sha256": "455448ab3a179307babee2a4739d495a0e9659c5dcb4d10ba9d641885dba72c4",
   "identity": {
     "service_id": "ic10.script.catalog.item.migration.planner",
     "implementation_revision": "2.0",
@@ -34,7 +34,6 @@
           25,
           26,
           27,
-          28,
           29,
           30,
           31,
@@ -59,8 +58,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.b5657c3a7cff795d",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.b5657c3a7cff795d",
+        "interface_id": "ic10.interface.access.c0cb701d23d0f4b1",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.c0cb701d23d0f4b1",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -153,12 +152,11 @@
       "transport": "reference-id",
       "reference": "r13",
       "literal_reads": [
-        2,
         3,
-        4,
-        7,
         8,
-        23
+        13,
+        23,
+        24
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -170,9 +168,8 @@
       "transport": "reference-id",
       "reference": "r2",
       "literal_reads": [
-        2,
         3,
-        4,
+        13,
         16,
         23,
         27,

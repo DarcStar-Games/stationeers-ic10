@@ -15,7 +15,7 @@ import hashlib, json
 from pathlib import Path
 
 CELL_BLOCK_WIDTH=4
-STORE_MAGIC=31415968; STORE_ABI=5
+STORE_MAGIC=31415968; STORE_ABI=6
 LOADER_MAGIC=31415969; LOADER_ABI=5
 COORD_MAGIC=31415970; COORD_ABI=3
 STORE_HEADER_CELLS=32; STORE_DIR_WIDTH=2; STORE_TOTAL_CELLS=512
@@ -85,7 +85,7 @@ def make_item_loader(*,label,schema_name,schema_version,instance_name,partition_
     _,tok=stable_hash_token('LD4',sig_obj)
     L=[f'# {label}; relocatable sparse Loader ABI5; whole items.','clr db',f'poke 0 {LOADER_MAGIC}',f'poke 1 {LOADER_ABI}',
        'poke 2 1',f'poke 3 HASH("{schema_name}.v{schema_version}")',
-       f'poke 8 HASH("{schema_name}")',f'poke 9 {schema_version}',f'poke 10 HASH("{instance_name}")']
+       f'poke 10 HASH("{instance_name}")']
     if str(partition_key_expr)!='0':L.append(f'poke 11 {partition_key_expr}')
     L += [f'poke 12 {loader_id_expr}','poke 13 1',f'poke 14 {n}',f'poke 15 {LOADER_HEADER_CELLS}',f'poke 16 {total}',f'poke 17 HASH("{tok}")']
     for i,(start,x) in enumerate(placements):
@@ -117,8 +117,8 @@ def split_catalog_items(*,label,schema_name,schema_version,instance_name,partiti
 # ---------- Generic Store + Coordinator services ----------
 def make_generic_store_program():
     L=[
-'# Generic Catalog Store v3.0: Store ABI5 dynamic item heap; set S18 NodeId 1..64.','Boot:','yield','get r13 db 18','blez r13 NeedId','bgt r13 64 NeedId','get r0 db 0',f'beq r0 {STORE_MAGIC} Existing','clr db',f'poke 0 {STORE_MAGIC}',f'poke 1 {STORE_ABI}','poke 10 32','poke 16 1','poke 18 r13','poke 19 32','poke 20 512','poke 22 32','poke 29 480','j Service','Existing:','get r0 db 1',f'bne r0 {STORE_ABI} Fault',
-'Service:','yield','get r0 db 16','bne r0 2 Idle','l r12 db ReferenceId','get r1 db:0 r7','blt r1 0 Reset','add r7 r7 1','getd r0 r1 0',f'bne r0 {LOADER_MAGIC} Service','getd r0 r1 1',f'bne r0 {LOADER_ABI} Service','getd r0 r1 18','bne r0 1 Service','getd r0 r1 19','bne r0 r12 Service','getd r0 r1 8','get r6 db 2','bne r0 r6 Service','getd r0 r1 9','get r6 db 3','bne r0 r6 Service','getd r0 r1 10','get r6 db 4','bne r0 r6 Service','getd r0 r1 11','get r6 db 23','bne r0 r6 Service','getd r3 r1 21','getd r4 r1 14','bge r3 r4 Service','mul r5 r3 2','add r5 r5 24','getd r8 r1 r5','add r5 r5 1','getd r9 r1 r5','get r0 db 29','add r6 r9 2','bgt r6 r0 Bad','get r0 db 17','add r0 r0 1','poke 17 r0','get r10 db 20','sub r10 r10 r9','get r11 db 19','move r5 0',
+'# Generic Catalog Store v3.0: Store ABI5 dynamic item heap; set S18 NodeId 1..64.','Boot:','yield','get r13 db 18','blez r13 NeedId','bgt r13 64 NeedId','get r0 db 0',f'beq r0 {STORE_MAGIC} Existing','clr db',f'poke 0 {STORE_MAGIC}',f'poke 1 {STORE_ABI}','poke 2 1','poke 10 32','poke 16 1','poke 18 r13','poke 19 32','poke 20 512','poke 22 32','poke 29 480','j Service','Existing:','get r0 db 1',f'bne r0 {STORE_ABI} Fault',
+'Service:','yield','get r0 db 16','bne r0 2 Idle','l r12 db ReferenceId','get r1 db:0 r7','blt r1 0 Reset','add r7 r7 1','getd r0 r1 0',f'bne r0 {LOADER_MAGIC} Service','getd r0 r1 1',f'bne r0 {LOADER_ABI} Service','getd r0 r1 18','bne r0 1 Service','getd r0 r1 19','bne r0 r12 Service','getd r0 r1 3','get r6 db 3','bne r0 r6 Service','getd r0 r1 10','get r6 db 13','bne r0 r6 Service','getd r0 r1 11','get r6 db 23','bne r0 r6 Service','getd r3 r1 21','getd r4 r1 14','bge r3 r4 Service','mul r5 r3 2','add r5 r5 24','getd r8 r1 r5','add r5 r5 1','getd r9 r1 r5','get r0 db 29','add r6 r9 2','bgt r6 r0 Bad','get r0 db 17','add r0 r0 1','poke 17 r0','get r10 db 20','sub r10 r10 r9','get r11 db 19','move r5 0',
 'Copy:','bge r5 r9 Commit','add r6 r8 r5','getd r6 r1 r6','add r0 r10 r5','poke r0 r6','add r5 r5 1','j Copy','Commit:','poke r11 r10','add r11 r11 1','poke r11 r9','add r11 r11 1','poke 19 r11','poke 20 r10','get r0 db 9','add r0 r0 1','poke 9 r0','get r6 db 22','add r6 r6 r9','add r6 r6 2','poke 22 r6','sub r6 r10 r11','poke 29 r6','get r0 db 15','add r0 r0 1','poke 15 r0','get r0 db 17','add r0 r0 1','poke 17 r0','add r3 r3 1','putd r1 21 r3','poke 27 0','putd r1 19 0','j Service','Bad:','poke 16 4','poke 28 -2','j Idle','Reset:','move r7 0','j Service','NeedId:','s db Setting -1','j Boot','Fault:','poke 16 4','Idle:','yield','get r0 db 16','beq r0 2 Service','j Idle']
     return '\n'.join(L)+'\n' 
 
@@ -324,17 +324,15 @@ get r0 db 7
 add r0 r0 1
 poke 7 r0
 get r2 db 27
-putd r1 2 r2
-get r2 db 28
 putd r1 3 r2
 get r2 db 29
-putd r1 4 r2
+putd r1 13 r2
 get r2 db 2
-putd r1 5 r2
+putd r1 14 r2
 get r2 db 30
-putd r1 6 r2
+putd r1 21 r2
 blez r2 LinkDone
-putd r2 7 r1
+putd r2 24 r1
 LinkDone:
 get r2 db 31
 putd r1 8 r2
@@ -365,9 +363,9 @@ j ra
 '''
 def make_loader_router_program():
     L=[
-'# Catalog Loader Router v3.0: per-item runtime capacity placement; d0 Coordinator ABI3.','Loop:','yield','bdns d0 Loop','l r15 d0 ReferenceId','getd r0 r15 0',f'bne r0 {COORD_MAGIC} Loop','getd r0 r15 1',f'bne r0 {COORD_ABI} Loop','poke 0 31415971','poke 1 3','poke 2 0','poke 3 0','poke 4 0','move r7 0','Scan:','get r1 db:0 r7','blt r1 0 Reset','add r7 r7 1','getd r0 r1 0',f'bne r0 {LOADER_MAGIC} Scan','getd r0 r1 1',f'bne r0 {LOADER_ABI} Scan','getd r0 r1 18','bne r0 1 Scan','getd r3 r1 21','getd r4 r1 14','bge r3 r4 Scan','getd r0 r1 19','bgtz r0 Scan','mul r0 r3 2','add r0 r0 25','getd r11 r1 r0','add r11 r11 2','get r0 db 2','add r0 r0 1','poke 2 r0','get r6 db 3','add r6 r6 1','poke 3 r6','get r6 db 4','add r6 r6 r11','poke 4 r6','getd r12 r1 11','getd r13 r1 10','getd r14 r1 8','getd sp r1 9','move r8 0','move r9 0','move r10 -1','move r6 0','move ra 0',
-'Find:','get r2 db:0 r8','blt r2 0 FindDone','add r8 r8 1','getd r0 r2 0',f'bne r0 {STORE_MAGIC} Find','getd r0 r2 1',f'bne r0 {STORE_ABI} Find','getd r0 r2 16','bne r0 2 Find','getd r0 r2 11','bne r0 r15 Find','getd r0 r2 4','bne r0 r13 Find','getd r0 r2 8','ble r0 r10 Match','move r10 r0','move r9 r2','Match:','getd r0 r2 2','bne r0 r14 Find','getd r0 r2 3','bne r0 sp Find','getd r0 r2 23','bne r0 r12 Find','getd r0 r2 29','blt r0 r11 Find','getd r0 r2 27','blez r0 Free','move r6 1','j Find','Free:','move ra r2','j Find',
-'FindDone:','bgtz ra Assign','bgtz r6 Scan','getd r0 r15 25','bgtz r0 Scan','putd r15 25 1','putd r15 26 r12','putd r15 27 r14','putd r15 28 sp','putd r15 29 r13','putd r15 30 r9','add r0 r10 1','putd r15 31 r0','putd r15 32 r11','j Scan','Assign:','get r0 d0 6','add r0 r0 1','put d0 6 r0','putd ra 27 r11','putd r1 19 ra','putd r1 20 r0','j Scan','Reset:','move r7 0','j Loop']
+'# Catalog Loader Router v3.0: per-item runtime capacity placement; d0 Coordinator ABI3.','Loop:','yield','bdns d0 Loop','l r15 d0 ReferenceId','getd r0 r15 0',f'bne r0 {COORD_MAGIC} Loop','getd r0 r15 1',f'bne r0 {COORD_ABI} Loop','poke 0 31415971','poke 1 3','poke 2 0','poke 3 0','poke 4 0','move r7 0','Scan:','get r1 db:0 r7','blt r1 0 Reset','add r7 r7 1','getd r0 r1 0',f'bne r0 {LOADER_MAGIC} Scan','getd r0 r1 1',f'bne r0 {LOADER_ABI} Scan','getd r0 r1 18','bne r0 1 Scan','getd r3 r1 21','getd r4 r1 14','bge r3 r4 Scan','getd r0 r1 19','bgtz r0 Scan','mul r0 r3 2','add r0 r0 25','getd r11 r1 r0','add r11 r11 2','get r0 db 2','add r0 r0 1','poke 2 r0','get r6 db 3','add r6 r6 1','poke 3 r6','get r6 db 4','add r6 r6 r11','poke 4 r6','getd r12 r1 11','getd r13 r1 10','getd r14 r1 3','move r8 0','move r9 0','move r10 -1','move r6 0','move ra 0',
+'Find:','get r2 db:0 r8','blt r2 0 FindDone','add r8 r8 1','getd r0 r2 0',f'bne r0 {STORE_MAGIC} Find','getd r0 r2 1',f'bne r0 {STORE_ABI} Find','getd r0 r2 16','bne r0 2 Find','getd r0 r2 11','bne r0 r15 Find','getd r0 r2 13','bne r0 r13 Find','getd r0 r2 8','ble r0 r10 Match','move r10 r0','move r9 r2','Match:','getd r0 r2 3','bne r0 r14 Find','getd r0 r2 23','bne r0 r12 Find','getd r0 r2 29','blt r0 r11 Find','getd r0 r2 27','blez r0 Free','move r6 1','j Find','Free:','move ra r2','j Find',
+'FindDone:','bgtz ra Assign','bgtz r6 Scan','getd r0 r15 25','bgtz r0 Scan','putd r15 25 1','putd r15 26 r12','putd r15 27 r14','putd r15 29 r13','putd r15 30 r9','add r0 r10 1','putd r15 31 r0','putd r15 32 r11','j Scan','Assign:','get r0 d0 6','add r0 r0 1','put d0 6 r0','putd ra 27 r11','putd r1 19 ra','putd r1 20 r0','j Scan','Reset:','move r7 0','j Loop']
     return '\n'.join(L)+'\n'
 
 def make_recovery_manager_program():
@@ -481,14 +479,11 @@ blez r2 DNext
 beq r2 r13 DNext
 getd r0 r2 16
 bne r0 2 DNext
-getd r0 r2 2
-getd r5 r13 2
-bne r0 r5 DNext
 getd r0 r2 3
 getd r5 r13 3
 bne r0 r5 DNext
-getd r0 r2 4
-getd r5 r13 4
+getd r0 r2 13
+getd r5 r13 13
 bne r0 r5 DNext
 getd r0 r2 23
 getd r5 r13 23
@@ -520,13 +515,11 @@ get r0 d0 25
 bgtz r0 Loop
 getd r0 r13 23
 put d0 26 r0
-getd r0 r13 2
-put d0 27 r0
 getd r0 r13 3
-put d0 28 r0
-getd r0 r13 4
+put d0 27 r0
+getd r0 r13 13
 put d0 29 r0
-getd r0 r13 7
+getd r0 r13 24
 put d0 30 r0
 getd r0 r13 8
 add r0 r0 1
@@ -588,13 +581,13 @@ bne r0 r11 Loop
 get r0 d0 7
 add r0 r0 1
 put d0 7 r0
-getd r2 r1 6
-getd r3 r1 7
+getd r2 r1 21
+getd r3 r1 24
 blez r2 NoPrev
-putd r2 7 r3
+putd r2 24 r3
 NoPrev:
 blez r3 NoNext
-putd r3 6 r2
+putd r3 21 r2
 NoNext:
 putd r1 16 5
 get r0 d0 6
@@ -647,7 +640,7 @@ add r7 r7 1
 getd r0 r1 0
 bne r0 31415968 Scan
 getd r0 r1 1
-bne r0 5 Scan
+bne r0 6 Scan
 getd r2 r1 18
 blez r2 Scan
 bgt r2 64 Scan
@@ -671,7 +664,7 @@ add r3 r3 1
 getd r0 r1 26
 poke r3 r0
 add r3 r3 1
-getd r0 r1 4
+getd r0 r1 13
 poke r3 r0
 add r6 r8 1
 poke r5 r6

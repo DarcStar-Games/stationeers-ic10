@@ -64,7 +64,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 26,
+        "literal_cell_count": 25,
         "highest_literal_cell": 32,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -73,8 +73,8 @@
             "end": 511
           }
         ],
-        "line_count": 117,
-        "line_headroom_120": 3,
+        "line_count": 115,
+        "line_headroom_120": 5,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -238,7 +238,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "cebcc1ea2dd619dc0e3dd8c326127fb72065efbae222bd6b5d7c559be957e204",
+          "source_sha256": "31bea61e8eaf5b187268c0cb7a7c983e8c5934f115080a55fe6e6215814898e1",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -483,7 +483,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 35,
+        "literal_cell_count": 34,
         "highest_literal_cell": 40,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -492,8 +492,8 @@
             "end": 511
           }
         ],
-        "line_count": 118,
-        "line_headroom_120": 2,
+        "line_count": 116,
+        "line_headroom_120": 4,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -504,7 +504,6 @@
           2,
           3,
           4,
-          5,
           6,
           7
         ],
@@ -561,8 +560,8 @@
         "highest_literal_cell": 2,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 115,
-        "line_headroom_120": 5,
+        "line_count": 110,
+        "line_headroom_120": 10,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -594,7 +593,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "81a27385d2525628968a3b8057cd487339c190175d02d6e5a49ae5f24b760ecd",
+          "source_sha256": "455448ab3a179307babee2a4739d495a0e9659c5dcb4d10ba9d641885dba72c4",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [],
           "post_init_dynamic_write_ranges": []
@@ -709,8 +708,8 @@
         "highest_literal_cell": 4,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 112,
-        "line_headroom_120": 8,
+        "line_count": 108,
+        "line_headroom_120": 12,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -799,7 +798,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "6393224c71784cbd9ad8156cd9d2cf83e5e9e92cc87b43f32122733b2dfee203",
+          "source_sha256": "6d0fa7efc43fca1048f6f5f380bddf857e328657342e3581acf780b5a044193b",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [],
           "post_init_dynamic_write_ranges": []
@@ -817,7 +816,7 @@
           {
             "base": 0,
             "magic": 31415968,
-            "abi": 5
+            "abi": 6
           }
         ],
         "schema_fields": [],
@@ -827,7 +826,7 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.31415968.abi5",
+            "protocol_id": "ic10.stack.31415968.abi6",
             "provider_header_bases": [
               0
             ],
@@ -854,8 +853,8 @@
             "end": 511
           }
         ],
-        "line_count": 120,
-        "line_headroom_120": 0,
+        "line_count": 118,
+        "line_headroom_120": 2,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -864,8 +863,7 @@
           0,
           1,
           2,
-          3,
-          4
+          3
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -4183,16 +4181,6 @@
             "const": "HASH(\"CatalogSchema.InputProfile.v3\")"
           },
           {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"CatalogSchema.InputProfile\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 3
-          },
-          {
             "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.InputProfiles.Schema3\")"
@@ -4213,7 +4201,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 109,
+        "literal_cell_count": 107,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -4222,8 +4210,8 @@
             "end": 511
           }
         ],
-        "line_count": 111,
-        "line_headroom_120": 9,
+        "line_count": 109,
+        "line_headroom_120": 11,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -4274,16 +4262,6 @@
             "const": "HASH(\"CatalogSchema.InputProfile.v3\")"
           },
           {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"CatalogSchema.InputProfile\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 3
-          },
-          {
             "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.InputProfiles.Schema3\")"
@@ -4304,7 +4282,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 82,
+        "literal_cell_count": 80,
         "highest_literal_cell": 509,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -4313,8 +4291,8 @@
             "end": 511
           }
         ],
-        "line_count": 84,
-        "line_headroom_120": 36,
+        "line_count": 82,
+        "line_headroom_120": 38,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -4365,16 +4343,6 @@
             "const": "HASH(\"CatalogSchema.InputProfile.v3\")"
           },
           {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"CatalogSchema.InputProfile\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 3
-          },
-          {
             "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.InputProfiles.Schema3\")"
@@ -4395,7 +4363,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 112,
+        "literal_cell_count": 110,
         "highest_literal_cell": 509,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -4404,8 +4372,8 @@
             "end": 511
           }
         ],
-        "line_count": 114,
-        "line_headroom_120": 6,
+        "line_count": 112,
+        "line_headroom_120": 8,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -4474,8 +4442,8 @@
             "end": 511
           }
         ],
-        "line_count": 112,
-        "line_headroom_120": 8,
+        "line_count": 110,
+        "line_headroom_120": 10,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11080,8 +11048,8 @@
         "highest_literal_cell": 11,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 106,
-        "line_headroom_120": 14,
+        "line_count": 104,
+        "line_headroom_120": 16,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11144,8 +11112,8 @@
             "end": 511
           }
         ],
-        "line_count": 118,
-        "line_headroom_120": 2,
+        "line_count": 116,
+        "line_headroom_120": 4,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11925,16 +11893,6 @@
             "const": "HASH(\"CatalogSchema.ResourceProfile.v2\")"
           },
           {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"CatalogSchema.ResourceProfile\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 2
-          },
-          {
             "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
@@ -11955,7 +11913,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 22,
+        "literal_cell_count": 20,
         "highest_literal_cell": 500,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -11964,8 +11922,8 @@
             "end": 511
           }
         ],
-        "line_count": 24,
-        "line_headroom_120": 96,
+        "line_count": 22,
+        "line_headroom_120": 98,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12016,16 +11974,6 @@
             "const": "HASH(\"CatalogSchema.ResourceProfile.v2\")"
           },
           {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"CatalogSchema.ResourceProfile\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 2
-          },
-          {
             "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
@@ -12046,7 +11994,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 111,
+        "literal_cell_count": 109,
         "highest_literal_cell": 509,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -12055,8 +12003,8 @@
             "end": 511
           }
         ],
-        "line_count": 113,
-        "line_headroom_120": 7,
+        "line_count": 111,
+        "line_headroom_120": 9,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12107,16 +12055,6 @@
             "const": "HASH(\"CatalogSchema.ResourceProfile.v2\")"
           },
           {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"CatalogSchema.ResourceProfile\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 2
-          },
-          {
             "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
@@ -12137,7 +12075,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 79,
+        "literal_cell_count": 77,
         "highest_literal_cell": 509,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -12146,8 +12084,8 @@
             "end": 511
           }
         ],
-        "line_count": 81,
-        "line_headroom_120": 39,
+        "line_count": 79,
+        "line_headroom_120": 41,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12198,16 +12136,6 @@
             "const": "HASH(\"CatalogSchema.ResourceProfile.v2\")"
           },
           {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"CatalogSchema.ResourceProfile\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 2
-          },
-          {
             "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
@@ -12228,7 +12156,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 115,
+        "literal_cell_count": 113,
         "highest_literal_cell": 502,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -12237,8 +12165,8 @@
             "end": 511
           }
         ],
-        "line_count": 117,
-        "line_headroom_120": 3,
+        "line_count": 115,
+        "line_headroom_120": 5,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12289,16 +12217,6 @@
             "const": "HASH(\"CatalogSchema.ResourceProfile.v2\")"
           },
           {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"CatalogSchema.ResourceProfile\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 2
-          },
-          {
             "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
@@ -12319,7 +12237,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 115,
+        "literal_cell_count": 113,
         "highest_literal_cell": 503,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -12328,8 +12246,8 @@
             "end": 511
           }
         ],
-        "line_count": 117,
-        "line_headroom_120": 3,
+        "line_count": 115,
+        "line_headroom_120": 5,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12380,16 +12298,6 @@
             "const": "HASH(\"CatalogSchema.ResourceProfile.v2\")"
           },
           {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"CatalogSchema.ResourceProfile\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 2
-          },
-          {
             "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
@@ -12410,7 +12318,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 75,
+        "literal_cell_count": 73,
         "highest_literal_cell": 503,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -12419,8 +12327,8 @@
             "end": 511
           }
         ],
-        "line_count": 77,
-        "line_headroom_120": 43,
+        "line_count": 75,
+        "line_headroom_120": 45,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12471,16 +12379,6 @@
             "const": "HASH(\"CatalogSchema.ResourceProfile.v2\")"
           },
           {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"CatalogSchema.ResourceProfile\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 2
-          },
-          {
             "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
@@ -12501,7 +12399,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 22,
+        "literal_cell_count": 20,
         "highest_literal_cell": 500,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -12510,8 +12408,8 @@
             "end": 511
           }
         ],
-        "line_count": 24,
-        "line_headroom_120": 96,
+        "line_count": 22,
+        "line_headroom_120": 98,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12605,8 +12503,8 @@
             "end": 511
           }
         ],
-        "line_count": 94,
-        "line_headroom_120": 26,
+        "line_count": 92,
+        "line_headroom_120": 28,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12779,16 +12677,6 @@
             "const": "HASH(\"CatalogSchema.ResourceTransform.v4\")"
           },
           {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"CatalogSchema.ResourceTransform\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 4
-          },
-          {
             "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceTransforms.Schema4\")"
@@ -12809,7 +12697,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 109,
+        "literal_cell_count": 107,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -12818,8 +12706,8 @@
             "end": 511
           }
         ],
-        "line_count": 111,
-        "line_headroom_120": 9,
+        "line_count": 109,
+        "line_headroom_120": 11,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12870,16 +12758,6 @@
             "const": "HASH(\"CatalogSchema.ResourceTransform.v4\")"
           },
           {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"CatalogSchema.ResourceTransform\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 4
-          },
-          {
             "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceTransforms.Schema4\")"
@@ -12900,7 +12778,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 98,
+        "literal_cell_count": 96,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -12909,8 +12787,8 @@
             "end": 511
           }
         ],
-        "line_count": 100,
-        "line_headroom_120": 20,
+        "line_count": 98,
+        "line_headroom_120": 22,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12961,16 +12839,6 @@
             "const": "HASH(\"CatalogSchema.ResourceTransform.v4\")"
           },
           {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"CatalogSchema.ResourceTransform\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 4
-          },
-          {
             "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceTransforms.Schema4\")"
@@ -12991,7 +12859,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 110,
+        "literal_cell_count": 108,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -13000,8 +12868,8 @@
             "end": 511
           }
         ],
-        "line_count": 112,
-        "line_headroom_120": 8,
+        "line_count": 110,
+        "line_headroom_120": 10,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -13052,16 +12920,6 @@
             "const": "HASH(\"CatalogSchema.ResourceTransform.v4\")"
           },
           {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"CatalogSchema.ResourceTransform\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 4
-          },
-          {
             "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceTransforms.Schema4\")"
@@ -13082,7 +12940,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 95,
+        "literal_cell_count": 93,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -13091,8 +12949,8 @@
             "end": 511
           }
         ],
-        "line_count": 97,
-        "line_headroom_120": 23,
+        "line_count": 95,
+        "line_headroom_120": 25,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -13143,16 +13001,6 @@
             "const": "HASH(\"CatalogSchema.ResourceTransform.v4\")"
           },
           {
-            "address": 8,
-            "name": "SchemaId",
-            "const": "HASH(\"CatalogSchema.ResourceTransform\")"
-          },
-          {
-            "address": 9,
-            "name": "SchemaVersion",
-            "const": 4
-          },
-          {
             "address": 10,
             "name": "SchemaIdentityHash",
             "const": "HASH(\"Catalog.ResourceTransforms.Schema4\")"
@@ -13173,7 +13021,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 41,
+        "literal_cell_count": 39,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -13182,8 +13030,8 @@
             "end": 511
           }
         ],
-        "line_count": 43,
-        "line_headroom_120": 77,
+        "line_count": 41,
+        "line_headroom_120": 79,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },

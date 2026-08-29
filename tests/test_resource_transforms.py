@@ -18,7 +18,7 @@ M=json.loads((R/MANIFEST_FILE).read_text())
 fails += prove_restoration(R,files(),[sys.executable,str(R/'tools'/'generate'/'generate_resource_transforms.py')],preserve_inputs=[R/SOURCE_FILE])
 D=json.loads((R/SOURCE_FILE).read_text());T=D['transforms'];M=json.loads((R/MANIFEST_FILE).read_text())
 if len(T)!=17:fails.append(f'expected 17 transforms, got {len(T)}')
-if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_schema_version'),M.get('view_abi'))!=('RESOURCE_TRANSFORM_CATALOG_V6',5,5,4,4):fails.append('Transform runtime/schema ABI metadata mismatch')
+if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_schema_version'),M.get('view_abi'))!=('RESOURCE_TRANSFORM_CATALOG_V6',6,5,4,4):fails.append('Transform runtime/schema ABI metadata mismatch')
 if M.get('runtime_min_store_count')!=1 or M.get('input_descriptor_count')!=32 or M.get('output_descriptor_count')!=17:fails.append('Transform runtime capacity/count mismatch')
 loaders=[R/f for f in M['loaders']]
 for src in (p.read_text() for p in loaders):

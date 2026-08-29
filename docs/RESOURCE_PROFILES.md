@@ -43,7 +43,7 @@ Resource Profile Loaders are **Loader ABI5** relocatable candidates:
 
 They do not contain Store ordinals or physical Store ReferenceIds. Each Loader self-clears, writes only non-zero cells, keeps every 16-cell profile intact, writes Ready last, and terminates.
 
-With Store ABI5 geometry, each 16-cell profile consumes 18 Store cells: 16 payload + 2 item-directory cells. An empty Store has 480 cells after the 32-cell header, so one Store can hold 26 profiles.
+With Store ABI6 geometry, each 16-cell profile consumes 18 Store cells: 16 payload + 2 item-directory cells. An empty Store has 480 cells after the 32-cell header, so one Store can hold 26 profiles.
 
 The current runtime outcome is therefore:
 
@@ -90,7 +90,7 @@ This keeps manufacturing resource planning inside the existing Resource Profile/
 
 ## View ABI1
 
-`ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` accepts any Store ABI5 node from the Resource Profile catalog on `d0`. It follows PreviousStoreRef to the head, scans Store item-directory entries, follows NextStoreRef, and checks stable Store/Coordinator revisions.
+`ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` accepts any Store ABI6 node from the Resource Profile catalog on `d0`. It follows PreviousStoreRef to the head, scans Store item-directory entries, follows NextStoreRef, and checks stable Store/Coordinator revisions.
 
 Request:
 

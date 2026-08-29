@@ -2,14 +2,14 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10",
-  "source_sha256": "87316e7924eac65b5ea441e664b3d27f0c8ca03573fb4b594eefec803bfd581d",
+  "source_sha256": "ef29932abe1845fe0da2d6aad4c1db686e924eebf10ac3aac7c620bdb488c3bc",
   "identity": {
     "service_id": "ic10.script.generic.catalog.store",
     "implementation_revision": "3.0",
     "deployment_family": "catalog-control-plane",
     "deployment_class": "conditional-resident",
     "layer": "Catalog storage",
-    "purpose": "Generic Store ABI5 node with item directory + payload heap; imports runtime-routed relocatable items."
+    "purpose": "Generic Store ABI6 node with item directory + payload heap; imports runtime-routed relocatable items."
   },
   "device_ports": [],
   "network_dependencies": [
@@ -29,8 +29,7 @@
       "literal_reads": [
         0,
         1,
-        8,
-        9,
+        3,
         10,
         11,
         14,
@@ -69,10 +68,9 @@
     "literal_reads": [
       0,
       1,
-      2,
       3,
-      4,
       9,
+      13,
       15,
       16,
       17,
@@ -86,6 +84,7 @@
     "literal_writes": [
       0,
       1,
+      2,
       9,
       10,
       15,
@@ -152,21 +151,12 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
+          "self-write"
         ]
       },
       {
         "address": 3,
         "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -190,6 +180,15 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
+        ]
+      },
+      {
+        "address": 13,
+        "name": "S13",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
         ]
       },
       {
@@ -304,7 +303,7 @@
       {
         "base": 0,
         "magic": 31415968,
-        "abi": 5
+        "abi": 6
       }
     ]
   },
@@ -326,10 +325,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415968.abi5",
+        "protocol_id": "ic10.stack.31415968.abi6",
         "base": 0,
         "magic": 31415968,
-        "abi": 5,
+        "abi": 6,
         "source": "literal-own-stack-header"
       }
     ],

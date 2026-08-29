@@ -656,12 +656,12 @@ This family contains the deployment classes shown in its generated program inven
 | `ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10` | `on-demand` | Aggregates Store lifecycle counts and used/free/capacity telemetry; marks missing nodes. |
 | `ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10` | `on-demand` | Selectable Store-directory view plus Coordinator aggregate health telemetry. |
 | `ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10` | `on-demand` | Rebinds persisted Stores to a replacement Coordinator with a higher CoordinatorEpoch. |
-| `ic10/catalog-control-plane/catalog_inspector_v4_0.ic10` | `on-demand` | Generic Store ABI5 / Coordinator ABI3 inspector for node identity, item capacity, topology, and telemetry. |
+| `ic10/catalog-control-plane/catalog_inspector_v4_0.ic10` | `on-demand` | Generic Store ABI6 / Coordinator ABI3 inspector for node identity, item capacity, topology, and telemetry. |
 | `ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10` | `on-demand` | Plans whole-item compaction from DRAINING Stores into compatible live Store capacity. |
 | `ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10` | `on-demand` | Copies and commits one whole item to reserved destination capacity, then reclaims the source tail. |
 | `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10` | `on-demand` | Loader Router ABI3; places whole Loader ABI5 items into live unreserved Store capacity. |
 | `ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10` | `on-demand` | Safely retires an empty Store and repairs neighboring topology. |
-| `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` | `conditional-resident` | Generic Store ABI5 node with item directory + payload heap; imports runtime-routed relocatable items. |
+| `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` | `conditional-resident` | Generic Store ABI6 node with item directory + payload heap; imports runtime-routed relocatable items. |
 <!-- FAMILY_PROGRAMS:catalog-control-plane END -->
 
 ### Prerequisites
@@ -712,7 +712,7 @@ This family contains the deployment classes shown in its generated program inven
 | `ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10` | `one-shot` | One-shot relocatable Loader ABI5 candidate containing whole self-contained Input Profile items. |
 | `ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10` | `one-shot` | One-shot relocatable Loader ABI5 candidate containing whole self-contained Input Profile items. |
 | `ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10` | `one-shot` | One-shot relocatable Loader ABI5 candidate containing whole self-contained Input Profile items. |
-| `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` | `conditional-resident` | Selects one Input schema-v3 Store ABI5 catalog context and republishes Generic Input Profile ABI1. |
+| `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` | `conditional-resident` | Selects one Input schema-v3 Store ABI6 catalog context and republishes Generic Input Profile ABI1. |
 <!-- FAMILY_PROGRAMS:input-profile-catalog END -->
 
 ### Prerequisites
@@ -767,7 +767,7 @@ This family contains the deployment classes shown in its generated program inven
 | `ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
 | `ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
 | `ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10` | `one-shot` | One-shot relocatable POWER Resource Profile Loader ABI5 candidate. |
-| `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` | `conditional-resident` | Resolves one Resource Profile across runtime-placed Store ABI5 items and republishes View ABI1. |
+| `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` | `conditional-resident` | Resolves one Resource Profile across runtime-placed Store ABI6 items and republishes View ABI1. |
 <!-- FAMILY_PROGRAMS:resource-profile-catalog END -->
 
 ### Prerequisites
@@ -820,7 +820,7 @@ This family contains the deployment classes shown in its generated program inven
 | `ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10` | `one-shot` | One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item. |
 | `ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10` | `one-shot` | One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item. |
 | `ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10` | `one-shot` | One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item. |
-| `ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` | `conditional-resident` | Selects a Store ABI5 schema-v4 transform and publishes capability-based variable-input Transform Profile ABI4. |
+| `ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` | `conditional-resident` | Selects a Store ABI6 schema-v4 transform and publishes capability-based variable-input Transform Profile ABI4. |
 <!-- FAMILY_PROGRAMS:transform-catalog END -->
 
 ### Prerequisites
@@ -868,7 +868,7 @@ This family contains the deployment classes shown in its generated program inven
 <!-- FAMILY_PROGRAMS:recipe-catalog START -->
 | Program | Deployment class | Purpose |
 |---|---|---|
-| `ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10` | `conditional-resident` | Recipe Lookup v8 ABI3 across runtime-placed Recipe schema-v3 Store ABI5 printer-family partitions. |
+| `ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10` | `conditional-resident` | Recipe Lookup v8 ABI3 across runtime-placed Recipe schema-v3 Store ABI6 printer-family partitions. |
 | `ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10` | `conditional-resident` | Resolves exact RecipeHash execution metadata from Recipe schema-v3 stores, including bounded reagent requirements and stale-response echo. |
 <!-- FAMILY_PROGRAMS:recipe-catalog END -->
 

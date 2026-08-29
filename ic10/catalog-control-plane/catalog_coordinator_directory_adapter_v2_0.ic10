@@ -36,7 +36,7 @@ add r7 r7 1
 getd r0 r1 0
 bne r0 31415968 Scan
 getd r0 r1 1
-bne r0 5 Scan
+bne r0 6 Scan
 getd r2 r1 18
 blez r2 Scan
 bgt r2 64 Scan
@@ -60,7 +60,7 @@ add r3 r3 1
 getd r0 r1 26
 poke r3 r0
 add r3 r3 1
-getd r0 r1 4
+getd r0 r1 13
 poke r3 r0
 add r6 r8 1
 poke r5 r6

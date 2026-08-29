@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10",
-  "source_sha256": "6393224c71784cbd9ad8156cd9d2cf83e5e9e92cc87b43f32122733b2dfee203",
+  "source_sha256": "6d0fa7efc43fca1048f6f5f380bddf857e328657342e3581acf780b5a044193b",
   "identity": {
     "service_id": "ic10.script.catalog.store.retirement.manager",
     "implementation_revision": "2.0",
@@ -124,10 +124,10 @@
       "transport": "reference-id",
       "reference": "r1",
       "literal_reads": [
-        6,
-        7,
         9,
-        16
+        16,
+        21,
+        24
       ],
       "literal_writes": [
         16
@@ -148,7 +148,7 @@
       "reference": "r2",
       "literal_reads": [],
       "literal_writes": [
-        7
+        24
       ],
       "dynamic_read": false,
       "dynamic_write": false,
@@ -160,7 +160,7 @@
       "reference": "r3",
       "literal_reads": [],
       "literal_writes": [
-        6
+        21
       ],
       "dynamic_read": false,
       "dynamic_write": false,

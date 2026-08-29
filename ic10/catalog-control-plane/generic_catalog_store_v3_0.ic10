@@ -8,7 +8,8 @@ get r0 db 0
 beq r0 31415968 Existing
 clr db
 poke 0 31415968
-poke 1 5
+poke 1 6
+poke 2 1
 poke 10 32
 poke 16 1
 poke 18 r13
@@ -19,7 +20,7 @@ poke 29 480
 j Service
 Existing:
 get r0 db 1
-bne r0 5 Fault
+bne r0 6 Fault
 Service:
 yield
 get r0 db 16
@@ -36,14 +37,11 @@ getd r0 r1 18
 bne r0 1 Service
 getd r0 r1 19
 bne r0 r12 Service
-getd r0 r1 8
-get r6 db 2
-bne r0 r6 Service
-getd r0 r1 9
+getd r0 r1 3
 get r6 db 3
 bne r0 r6 Service
 getd r0 r1 10
-get r6 db 4
+get r6 db 13
 bne r0 r6 Service
 getd r0 r1 11
 get r6 db 23

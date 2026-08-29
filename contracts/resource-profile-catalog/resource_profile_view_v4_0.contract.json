@@ -2,14 +2,14 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10",
-  "source_sha256": "149ea4c71df8a27e1f3229f1952559202834c1d2044992bd3bae042e0a124b60",
+  "source_sha256": "7de3c982ab9237a550c842cf1af93ea4e8d10e8268fd7178124305c73a72d837",
   "identity": {
     "service_id": "ic10.script.resource.profile.view",
     "implementation_revision": "4.0",
     "deployment_family": "resource-profile-catalog",
     "deployment_class": "conditional-resident",
     "layer": "Resource metadata",
-    "purpose": "Resolves one Resource Profile across runtime-placed Store ABI5 items and republishes View ABI1."
+    "purpose": "Resolves one Resource Profile across runtime-placed Store ABI6 items and republishes View ABI1."
   },
   "device_ports": [
     {
@@ -27,8 +27,8 @@
       },
       "stack": {
         "literal_reads": [
-          4,
-          11
+          11,
+          13
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -42,8 +42,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.432bfc938e849f06",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.432bfc938e849f06",
+        "interface_id": "ic10.interface.access.5d0d80bd0cde99a4",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.5d0d80bd0cde99a4",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -83,13 +83,12 @@
       "literal_reads": [
         0,
         1,
-        2,
         3,
-        4,
-        6,
-        7,
         9,
-        17
+        13,
+        17,
+        21,
+        24
       ],
       "literal_writes": [],
       "dynamic_read": true,
@@ -103,17 +102,12 @@
         {
           "address": 1,
           "operator": "equals",
-          "value": 5
-        },
-        {
-          "address": 2,
-          "operator": "equals",
-          "value": "HASH(\"CatalogSchema.ResourceProfile\")"
+          "value": 6
         },
         {
           "address": 3,
           "operator": "equals",
-          "value": 2
+          "value": "HASH(\"CatalogSchema.ResourceProfile.v2\")"
         }
       ],
       "accepted": []

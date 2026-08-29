@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/transform-catalog/resource_transform_catalog_loader_01_v6_0.ic10",
-  "source_sha256": "dc192248421e04658a4171ea73ac951b7182b156aee7fa2e8ed016521202abb3",
+  "source_sha256": "b823a77703b0650e58cc0a5e75c0adac7cbbfd34a1c90a44dbf561ab2cd8e2a9",
   "identity": {
     "service_id": "ic10.script.resource.transform.catalog.loader.01",
     "implementation_revision": "6.0",
@@ -21,8 +21,6 @@
       1,
       2,
       3,
-      8,
-      9,
       10,
       12,
       13,
@@ -168,24 +166,6 @@
       {
         "address": 3,
         "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 9,
-        "name": "S9",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

@@ -14,7 +14,7 @@ getd r15 r12 7
 mod r0 r15 2
 bnez r0 Bad
 First:
-getd r1 r2 6
+getd r1 r2 21
 blez r1 Store
 move r2 r1
 j First
@@ -22,7 +22,7 @@ Store:
 getd r0 r2 0
 bne r0 31415968 Bad
 getd r0 r2 1
-bne r0 5 Bad
+bne r0 6 Bad
 getd r14 r2 17
 mod r0 r14 2
 bnez r0 Loop
@@ -84,7 +84,7 @@ poke 69 1
 poke 6 r14
 j Loop
 StoreDone:
-getd r1 r2 7
+getd r1 r2 24
 blez r1 Missing
 move r2 r1
 j Store

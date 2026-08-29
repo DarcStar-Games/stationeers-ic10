@@ -38,7 +38,7 @@ The catalog states declarative requirements. Runtime services validate live proc
 
 ## 2. Catalog schema
 
-Each transform is one self-contained, 4-cell-aligned Store ABI5 item. Its logical content is:
+Each transform is one self-contained, 4-cell-aligned Store ABI6 item. Its logical content is:
 
 ```text
 12-cell header:

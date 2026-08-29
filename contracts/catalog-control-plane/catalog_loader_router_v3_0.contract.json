@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10",
-  "source_sha256": "b234cef7ca4ee4bf1e79d54a7e453dea2558e09b3e97918f488e242a6108361b",
+  "source_sha256": "fe87721516bf4d272eec5bedfc0cf8ccdce7a9d1fd8d065353cdd9bef18cdce0",
   "identity": {
     "service_id": "ic10.script.catalog.loader.router",
     "implementation_revision": "3.0",
@@ -74,8 +74,7 @@
       "literal_reads": [
         0,
         1,
-        8,
-        9,
+        3,
         10,
         11,
         14,
@@ -120,7 +119,6 @@
         25,
         26,
         27,
-        28,
         29,
         30,
         31,
@@ -148,11 +146,10 @@
       "literal_reads": [
         0,
         1,
-        2,
         3,
-        4,
         8,
         11,
+        13,
         16,
         23,
         27,
@@ -170,7 +167,7 @@
         {
           "address": 1,
           "operator": "equals",
-          "value": 5
+          "value": 6
         },
         {
           "address": 16,

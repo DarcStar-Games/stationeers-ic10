@@ -2,14 +2,14 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10",
-  "source_sha256": "29ceb963bbd5eab87bad41541f26be5dca7623a251ebbd7048ec57883e447d1b",
+  "source_sha256": "181c8aab30f61bc32ba59195630a251a681f0f0211168c450cbe0014464ae38d",
   "identity": {
     "service_id": "ic10.script.resource.transform.profile.view",
     "implementation_revision": "8.0",
     "deployment_family": "transform-catalog",
     "deployment_class": "conditional-resident",
     "layer": "Transformation metadata",
-    "purpose": "Selects a Store ABI5 schema-v4 transform and publishes capability-based variable-input Transform Profile ABI4."
+    "purpose": "Selects a Store ABI6 schema-v4 transform and publishes capability-based variable-input Transform Profile ABI4."
   },
   "device_ports": [
     {
@@ -81,10 +81,10 @@
       "literal_reads": [
         0,
         1,
-        6,
-        7,
         9,
-        17
+        17,
+        21,
+        24
       ],
       "literal_writes": [],
       "dynamic_read": true,
@@ -98,7 +98,7 @@
         {
           "address": 1,
           "operator": "equals",
-          "value": 5
+          "value": 6
         }
       ],
       "accepted": []

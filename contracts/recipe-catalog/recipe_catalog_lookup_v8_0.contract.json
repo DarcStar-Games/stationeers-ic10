@@ -2,14 +2,14 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10",
-  "source_sha256": "5fc4c51f6760899eebacd02071b5cd8ea8971fce91a478bc8b2b981b7b3dadec",
+  "source_sha256": "fd8cf6051e527fa9446abe4b034d1e4010114fffdee4455fb033220c8080c9d6",
   "identity": {
     "service_id": "ic10.script.recipe.catalog.lookup",
     "implementation_revision": "8.0",
     "deployment_family": "recipe-catalog",
     "deployment_class": "conditional-resident",
     "layer": "Recipe metadata",
-    "purpose": "Recipe Lookup v8 ABI3 across runtime-placed Recipe schema-v3 Store ABI5 printer-family partitions."
+    "purpose": "Recipe Lookup v8 ABI3 across runtime-placed Recipe schema-v3 Store ABI6 printer-family partitions."
   },
   "device_ports": [
     {
@@ -62,13 +62,12 @@
       "literal_reads": [
         0,
         1,
-        2,
         3,
-        6,
-        7,
         9,
         17,
-        23
+        21,
+        23,
+        24
       ],
       "literal_writes": [],
       "dynamic_read": true,
@@ -82,17 +81,12 @@
         {
           "address": 1,
           "operator": "equals",
-          "value": 5
-        },
-        {
-          "address": 2,
-          "operator": "equals",
-          "value": "HASH(\"CatalogSchema.Recipe\")"
+          "value": 6
         },
         {
           "address": 3,
           "operator": "equals",
-          "value": 3
+          "value": "HASH(\"CatalogSchema.Recipe.v3\")"
         }
       ],
       "accepted": []

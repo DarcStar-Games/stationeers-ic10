@@ -61,9 +61,9 @@ bne r0 {COORD_MAGIC} Bad
 getd r15 r12 7
 mod r0 r15 2
 bnez r0 Bad
-get r13 d0 4
+get r13 d0 13
 First:
-getd r1 r2 6
+getd r1 r2 21
 blez r1 Store
 move r2 r1
 j First
@@ -72,11 +72,9 @@ getd r0 r2 0
 bne r0 {STORE_MAGIC} Bad
 getd r0 r2 1
 bne r0 {STORE_ABI} Bad
-getd r0 r2 2
-bne r0 HASH("{SCHEMA}") Bad
 getd r0 r2 3
-bne r0 {SCHEMA_VERSION} Bad
-getd r0 r2 4
+bne r0 HASH("{SCHEMA}.v{SCHEMA_VERSION}") Bad
+getd r0 r2 13
 bne r0 r13 Bad
 getd r14 r2 17
 mod r0 r14 2
@@ -123,7 +121,7 @@ Next:
 add r5 r5 1
 j Scan
 StoreDone:
-getd r1 r2 7
+getd r1 r2 24
 blez r1 Missing
 move r2 r1
 j Store

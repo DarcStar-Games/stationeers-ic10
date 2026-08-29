@@ -16,7 +16,7 @@ for name,src in [('Scanner',scanner),('Resolver',resolver)]:
 for s in ('poke 0 31415930','poke 1 1','poke 10 r9'):need(scanner,s,'Scanner')
 for s in ('poke 0 31415931','putd scanner 9 r6','poke 5 r9'):need(resolver,s,'Resolver')
 for s in ('getd r12 editor r0','putd editor 20 r12','putd editor 25 1'):need(config,s,'Config Bridge')
-for s in ('poke 0 31415929','poke 1 1','bne r0 31415968 Bad','bne r0 5 Bad','bne r0 HASH("CatalogSchema.InputProfile") Bad','bne r0 3 Bad','poke 5 r14'):need(view,s,'Input Profile View')
+for s in ('poke 0 31415929','poke 1 1','bne r0 31415968 Bad','bne r0 6 Bad','bne r0 HASH("CatalogSchema.InputProfile.v3") Bad','poke 5 r14'):need(view,s,'Input Profile View')
 data=json.loads((R/'data/input_profiles.json').read_text());diag=[p for p in data['profiles'] if p['profile_type']=='DiagnosticMapping']
 if data.get('catalog_schema_version')!=3 or len(diag)!=1 or diag[0]['field_count']!=7:fails.append('Input schema v3 / DiagnosticMapping mismatch')
 loaders=sorted((R/'ic10'/'input-profile-catalog').glob('input_profile_catalog_loader_*_v4_0.ic10'))

@@ -36,13 +36,13 @@ bne r0 r11 Loop
 get r0 d0 7
 add r0 r0 1
 put d0 7 r0
-getd r2 r1 6
-getd r3 r1 7
+getd r2 r1 21
+getd r3 r1 24
 blez r2 NoPrev
-putd r2 7 r3
+putd r2 24 r3
 NoPrev:
 blez r3 NoNext
-putd r3 6 r2
+putd r3 21 r2
 NoNext:
 putd r1 16 5
 get r0 d0 6

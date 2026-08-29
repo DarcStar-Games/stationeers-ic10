@@ -87,8 +87,8 @@ if records(hv)!=[[x] for x in range(2,66)]:fails.append('Snapshot Host overflow 
 bank=int(hd.stack.get(2,0))
 if hd.stack.get(7+bank,0)!=1:fails.append('Snapshot Host failed to publish overflow')
 # Registry mode consumes the same Adapter ABI directly and indexes by NodeId.
-store1=Device(701,stack={0:31415968,1:5,16:2,18:7,22:100,26:3,4:'HASH:CatA'},props={'ReferenceId':701,'PrefabHash':2037291645})
-store2=Device(702,stack={0:31415968,1:5,16:1,18:9,22:32,26:0,4:0},props={'ReferenceId':702,'PrefabHash':2037291645})
+store1=Device(701,stack={0:31415968,1:6,16:2,18:7,22:100,26:3,13:'HASH:CatA'},props={'ReferenceId':701,'PrefabHash':2037291645})
+store2=Device(702,stack={0:31415968,1:6,16:1,18:9,22:32,26:0,13:0},props={'ReferenceId':702,'PrefabHash':2037291645})
 av=IC10((R/'ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10').read_text(),{'s1':store1,'s2':store2},self_ref=710);ad=Device(710,av.stack,{'ReferenceId':710});rv=IC10((R/'ic10/directory-core/generic_registry_directory_host_v2_0.ic10').read_text(),{'d0':ad},self_ref=711)
 for _ in range(40):av.run(1,max_steps=50000);rv.run(1,max_steps=50000)
 if not adapter_ok(av,2) or rv.stack.get(0)!=31415982 or rv.stack.get(1)!=3 or rv.stack.get(2)!='HASH:DirectorySchema.CatalogStoreNode' or rv.stack.get(19)!=1:fails.append('Registry Adapter ABI/header mismatch')

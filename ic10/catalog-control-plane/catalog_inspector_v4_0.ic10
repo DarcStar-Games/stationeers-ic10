@@ -8,7 +8,7 @@ l r13 d0 ReferenceId
 get r0 d0 0
 bne r0 31415968 Bad
 get r0 d0 1
-bne r0 5 Bad
+bne r0 6 Bad
 get r12 d0 11
 blez r12 Bad
 getd r0 r12 0
@@ -35,12 +35,10 @@ getd r11 r14 18
 mod r0 r11 2
 bnez r0 Bad
 poke 2 0
-get r0 d0 2
-poke 3 r0
 get r0 d0 3
+poke 3 r0
+get r0 d0 13
 poke 4 r0
-get r0 d0 4
-poke 5 r0
 poke 6 r13
 poke 7 r12
 get r1 d0 18

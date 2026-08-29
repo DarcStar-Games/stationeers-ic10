@@ -33,7 +33,7 @@
   },
   "ic10/catalog-control-plane/catalog_inspector_v4_0.ic10": {
    "layer": "Catalog diagnostics",
-   "purpose": "Generic Store ABI5 / Coordinator ABI3 inspector for node identity, item capacity, topology, and telemetry.",
+   "purpose": "Generic Store ABI6 / Coordinator ABI3 inspector for node identity, item capacity, topology, and telemetry.",
    "deployment_family": "catalog-control-plane",
    "deployment_class": "on-demand"
   },
@@ -63,7 +63,7 @@
   },
   "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10": {
    "layer": "Catalog storage",
-   "purpose": "Generic Store ABI5 node with item directory + payload heap; imports runtime-routed relocatable items.",
+   "purpose": "Generic Store ABI6 node with item directory + payload heap; imports runtime-routed relocatable items.",
    "deployment_family": "catalog-control-plane",
    "deployment_class": "conditional-resident"
   },
@@ -357,7 +357,7 @@
   },
   "ic10/input-profile-catalog/input_profile_view_v5_0.ic10": {
    "layer": "Input metadata",
-   "purpose": "Selects one Input schema-v3 Store ABI5 catalog context and republishes Generic Input Profile ABI1.",
+   "purpose": "Selects one Input schema-v3 Store ABI6 catalog context and republishes Generic Input Profile ABI1.",
    "deployment_family": "input-profile-catalog",
    "deployment_class": "conditional-resident"
   },
@@ -897,7 +897,7 @@
   },
   "ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10": {
    "layer": "Recipe metadata",
-   "purpose": "Recipe Lookup v8 ABI3 across runtime-placed Recipe schema-v3 Store ABI5 printer-family partitions.",
+   "purpose": "Recipe Lookup v8 ABI3 across runtime-placed Recipe schema-v3 Store ABI6 printer-family partitions.",
    "deployment_family": "recipe-catalog",
    "deployment_class": "conditional-resident"
   },
@@ -963,7 +963,7 @@
   },
   "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10": {
    "layer": "Resource metadata",
-   "purpose": "Resolves one Resource Profile across runtime-placed Store ABI5 items and republishes View ABI1.",
+   "purpose": "Resolves one Resource Profile across runtime-placed Store ABI6 items and republishes View ABI1.",
    "deployment_family": "resource-profile-catalog",
    "deployment_class": "conditional-resident"
   },
@@ -987,7 +987,7 @@
   },
   "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": {
    "layer": "Transformation metadata",
-   "purpose": "Selects a Store ABI5 schema-v4 transform and publishes capability-based variable-input Transform Profile ABI4.",
+   "purpose": "Selects a Store ABI6 schema-v4 transform and publishes capability-based variable-input Transform Profile ABI4.",
    "deployment_family": "transform-catalog",
    "deployment_class": "conditional-resident"
   }
@@ -1377,14 +1377,14 @@
    "deployment_family": "resource-profile-catalog",
    "deployment_class": "conditional-resident",
    "layer": "Resource metadata",
-   "purpose": "Generic Store ABI5 data node; FLUID placement and ordinal are runtime Coordinator-owned."
+   "purpose": "Generic Store ABI6 data node; FLUID placement and ordinal are runtime Coordinator-owned."
   },
   {
    "pattern": "^(?:.*/)?resource_profile_item_store_.*\\.ic10$",
    "deployment_family": "resource-profile-catalog",
    "deployment_class": "conditional-resident",
    "layer": "Resource metadata",
-   "purpose": "Generic Store ABI5 data node; ITEM placement and ordinal are runtime Coordinator-owned."
+   "purpose": "Generic Store ABI6 data node; ITEM placement and ordinal are runtime Coordinator-owned."
   }
  ]
 }

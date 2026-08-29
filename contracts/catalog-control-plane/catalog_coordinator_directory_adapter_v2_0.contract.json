@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10",
-  "source_sha256": "cebcc1ea2dd619dc0e3dd8c326127fb72065efbae222bd6b5d7c559be957e204",
+  "source_sha256": "31bea61e8eaf5b187268c0cb7a7c983e8c5934f115080a55fe6e6215814898e1",
   "identity": {
     "service_id": "ic10.script.catalog.coordinator.directory.adapter",
     "implementation_revision": "2.0",
@@ -41,7 +41,7 @@
       "literal_reads": [
         0,
         1,
-        4,
+        13,
         16,
         18,
         22,
@@ -61,7 +61,7 @@
         {
           "address": 1,
           "operator": "equals",
-          "value": 5
+          "value": 6
         }
       ],
       "accepted": []
