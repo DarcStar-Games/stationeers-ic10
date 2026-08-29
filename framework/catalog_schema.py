@@ -429,6 +429,10 @@ j Loop
 '''
 def make_migration_manager_program():
     return '''# Catalog Item Migration Planner v2.0: d0 Core,d1 Directory.
+Boot:
+poke 0 31416069
+poke 1 1
+poke 2 0
 Loop:
 yield
 bdns d0 Loop
@@ -541,11 +545,15 @@ add r7 r7 1
 j FindSrc
 '''
 def make_migration_worker_program():
-    L=['# Catalog Item Migration Worker v1.0: d0 Core; copies newest whole item then pops source.','Loop:','yield','bdns d0 Loop','get r0 d0 0',f'bne r0 {COORD_MAGIC} Loop','get r1 d0 40','blez r1 Loop','get r2 d0 41','blez r2 Loop','getd r3 r1 9','blez r3 Clear','sub r3 r3 1','mul r4 r3 2','add r4 r4 32','getd r8 r1 r4','add r4 r4 1','getd r9 r1 r4','add r11 r9 2','getd r0 r2 29','blt r0 r11 Clear','get r0 d0 7','add r0 r0 1','put d0 7 r0','getd r10 r2 20','sub r10 r10 r9','getd r12 r2 19','move r5 0','Copy:','bge r5 r9 Publish','add r0 r8 r5','getd r0 r1 r0','add r4 r10 r5','putd r2 r4 r0','add r5 r5 1','j Copy','Publish:','putd r2 r12 r10','add r12 r12 1','putd r2 r12 r9','add r12 r12 1','putd r2 19 r12','putd r2 20 r10','getd r0 r2 9','add r0 r0 1','putd r2 9 r0','getd r0 r2 22','add r0 r0 r11','putd r2 22 r0','sub r0 r10 r12','putd r2 29 r0','getd r0 r2 15','add r0 r0 1','putd r2 15 r0','getd r0 r1 9','sub r0 r0 1','putd r1 9 r0','getd r0 r1 19','sub r0 r0 2','putd r1 19 r0','add r0 r8 r9','putd r1 20 r0','getd r0 r1 22','sub r0 r0 r11','putd r1 22 r0','getd r4 r1 19','getd r5 r1 20','sub r0 r5 r4','putd r1 29 r0','getd r0 r1 15','add r0 r0 1','putd r1 15 r0','get r0 d0 6','add r0 r0 1','put d0 6 r0','get r0 d0 7','add r0 r0 1','put d0 7 r0','Clear:','blez r2 NoReserve','putd r2 27 0','NoReserve:','put d0 40 0','put d0 41 0','j Loop']
+    L=['# Catalog Item Migration Worker v1.0: d0 Core; copies newest whole item then pops source.','Boot:','poke 0 31416071','poke 1 1','poke 2 0','Loop:','yield','bdns d0 Loop','get r0 d0 0',f'bne r0 {COORD_MAGIC} Loop','get r1 d0 40','blez r1 Loop','get r2 d0 41','blez r2 Loop','getd r3 r1 9','blez r3 Clear','sub r3 r3 1','mul r4 r3 2','add r4 r4 32','getd r8 r1 r4','add r4 r4 1','getd r9 r1 r4','add r11 r9 2','getd r0 r2 29','blt r0 r11 Clear','get r0 d0 7','add r0 r0 1','put d0 7 r0','getd r10 r2 20','sub r10 r10 r9','getd r12 r2 19','move r5 0','Copy:','bge r5 r9 Publish','add r0 r8 r5','getd r0 r1 r0','add r4 r10 r5','putd r2 r4 r0','add r5 r5 1','j Copy','Publish:','putd r2 r12 r10','add r12 r12 1','putd r2 r12 r9','add r12 r12 1','putd r2 19 r12','putd r2 20 r10','getd r0 r2 9','add r0 r0 1','putd r2 9 r0','getd r0 r2 22','add r0 r0 r11','putd r2 22 r0','sub r0 r10 r12','putd r2 29 r0','getd r0 r2 15','add r0 r0 1','putd r2 15 r0','getd r0 r1 9','sub r0 r0 1','putd r1 9 r0','getd r0 r1 19','sub r0 r0 2','putd r1 19 r0','add r0 r8 r9','putd r1 20 r0','getd r0 r1 22','sub r0 r0 r11','putd r1 22 r0','getd r4 r1 19','getd r5 r1 20','sub r0 r5 r4','putd r1 29 r0','getd r0 r1 15','add r0 r0 1','putd r1 15 r0','get r0 d0 6','add r0 r0 1','put d0 6 r0','get r0 d0 7','add r0 r0 1','put d0 7 r0','Clear:','blez r2 NoReserve','putd r2 27 0','NoReserve:','put d0 40 0','put d0 41 0','j Loop']
     return '\n'.join(L)+'\n' 
 
 def make_retirement_manager_program():
     return '''# Catalog Store Retirement Manager v2.0: d0 Core,d1 Registry ABI3.
+Boot:
+poke 0 31416070
+poke 1 1
+poke 2 0
 Loop:
 yield
 bdns d0 Loop
@@ -694,6 +702,10 @@ j Loop
 '''
 def make_coordinator_directory_telemetry_program():
     return '''# Catalog Directory Telemetry v2.0: d0 Generic Registry Host ABI3.
+Boot:
+poke 0 31416068
+poke 1 1
+poke 2 0
 Loop:
 yield
 bdns d0 Loop

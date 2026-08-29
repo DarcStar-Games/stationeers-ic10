@@ -2791,6 +2791,70 @@
         }
       ],
       "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416068.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416068,
+      "abi": 1,
+      "name": "Catalog Coordinator Directory Telemetry ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416068.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416069.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416069,
+      "abi": 1,
+      "name": "Catalog Item Migration Planner ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416069.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416070.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416070,
+      "abi": 1,
+      "name": "Catalog Store Retirement Manager ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416070.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416071.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416071,
+      "abi": 1,
+      "name": "Catalog Item Migration Worker ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416071.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
     }
   ]
 }

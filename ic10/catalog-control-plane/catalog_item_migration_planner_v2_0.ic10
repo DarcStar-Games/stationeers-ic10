@@ -1,4 +1,8 @@
 # Catalog Item Migration Planner v2.0: d0 Core,d1 Directory.
+Boot:
+poke 0 31416069
+poke 1 1
+poke 2 0
 Loop:
 yield
 bdns d0 Loop

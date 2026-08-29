@@ -228,6 +228,7 @@ def publication_errors(
     declaration: dict[str, Any],
     reserved_cells: set[int] | None = None,
     mutable_cells: frozenset[int] = frozenset(),
+    reference_writes_own_stack: bool = True,
 ) -> list[str]:
     """Prove the fixed envelope is on the straight-line entry path and remains reserved."""
     path = Path(path)
@@ -280,7 +281,9 @@ def publication_errors(
             elif op == "clrd":
                 errors.append("reference-addressed clear after publication can erase the fixed envelope")
             elif op == "putd" or (op == "put" and len(row) >= 2 and row[1] == "db"):
-                dynamic_after = True
+                # a reference-addressed write only touches this stack when it can name self,
+                # which the generated contract resolves far more precisely than a source scan
+                dynamic_after = dynamic_after or reference_writes_own_stack
             elif op == "poke" and len(row) >= 3:
                 address = _integer(row[1], aliases)
                 if address is None:
@@ -600,7 +603,10 @@ def declaration_errors(
             f"{source}: {error}"
             for error in publication_errors(
                 root / source, published_expected, declaration, reserved_cells,
-                frozenset(
+                reference_writes_own_stack=bool(
+                    by_source[source]["own_stack"]["dynamic_write_ranges"]
+                ),
+                mutable_cells=frozenset(
                     ({STATE_CELL} if capability_mask & HAS_STATE else set())
                     | ({GENERATION_CELL} if capability_mask & HAS_GENERATION else set())
                 ),

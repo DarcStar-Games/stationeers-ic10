@@ -1,4 +1,8 @@
 # Catalog Directory Telemetry v2.0: d0 Generic Registry Host ABI3.
+Boot:
+poke 0 31416068
+poke 1 1
+poke 2 0
 Loop:
 yield
 bdns d0 Loop

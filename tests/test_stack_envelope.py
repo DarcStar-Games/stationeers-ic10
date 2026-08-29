@@ -47,8 +47,8 @@ ck(inventory["envelope"]["base"] == 0 and inventory["envelope"]["length"] == 8,
    "the common header is no longer the first eight stack cells")
 ck(inventory["totals"] == {
     "deployable_programs": 174,
-    "migrated_v1": 19,
-    "legacy_exempt": 155,
+    "migrated_v1": 23,
+    "legacy_exempt": 151,
     "backlog_reserved_cell_users": 138,
     "backlog_dynamic_range_users": 51,
 }, "generated coverage/backlog totals changed without review")
@@ -253,6 +253,15 @@ bad["migrated"][MONITOR]["custom_state_bits"] = 1
 ck(any("custom state bits require HAS_STATE" in error
        for error in declaration_errors(ROOT, contracts, bad)),
    "custom state bits were accepted without a declared state cell")
+
+# An identity-only migration publishes three cells and declares nothing optional.
+worker = by_source["ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10"]
+ck(worker["envelope"]["capability_mask"] == 0,
+   "an identity-only service declared optional header fields")
+vm_worker = IC10((ROOT / worker["source"]).read_text())
+vm_worker.run(1)
+ck([vm_worker.stack.get(cell) for cell in (0, 1, 2)] == [31416071, 1, 0],
+   "the migration worker does not publish an identity-only header")
 
 # The capability mask is derived from the declaration, never hand-written.
 ck(by_source[MONITOR]["envelope"]["capability_mask"] == 20,

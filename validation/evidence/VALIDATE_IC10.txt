@@ -2,14 +2,14 @@ IC10 static validation
 ====================================================================================================
 PASS ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10 lines=117 headroom=11 max=86 CRLF=1636 comments= 1
 PASS ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10 lines= 91 headroom=37 max=79 CRLF=1306 comments= 1
-PASS ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10 lines= 97 headroom=31 max=66 CRLF=1352 comments= 1
+PASS ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10 lines=101 headroom=27 max=66 CRLF=1396 comments= 1
 PASS ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10 lines= 47 headroom=81 max=79 CRLF= 709 comments= 1
 PASS ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10 lines= 56 headroom=72 max=78 CRLF= 886 comments= 1
 PASS ic10/catalog-control-plane/catalog_inspector_v4_0.ic10 lines=118 headroom=10 max=51 CRLF=1639 comments= 0
-PASS ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10 lines=111 headroom=17 max=60 CRLF=1622 comments= 1
-PASS ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10 lines= 85 headroom=43 max=89 CRLF=1263 comments= 1
+PASS ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10 lines=115 headroom=13 max=60 CRLF=1666 comments= 1
+PASS ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10 lines= 89 headroom=39 max=89 CRLF=1307 comments= 1
 PASS ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10 lines=112 headroom=16 max=87 CRLF=1613 comments= 1
-PASS ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10 lines= 53 headroom=75 max=66 CRLF= 798 comments= 1
+PASS ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10 lines= 57 headroom=71 max=66 CRLF= 842 comments= 1
 PASS ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10 lines=120 headroom= 8 max=81 CRLF=1680 comments= 1
 PASS ic10/controller-config/config_input_bridge_v1_0.ic10 lines= 61 headroom=67 max=83 CRLF=1520 comments=10
 PASS ic10/controller-config/generic_config_committer_v1_1.ic10 lines= 97 headroom=31 max=77 CRLF=1735 comments= 3

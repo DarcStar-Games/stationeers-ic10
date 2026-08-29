@@ -29,8 +29,8 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 19,
-    "legacy_exempt": 155,
+    "migrated_v1": 23,
+    "legacy_exempt": 151,
     "backlog_reserved_cell_users": 138,
     "backlog_dynamic_range_users": 51
   },
@@ -260,35 +260,74 @@
       "source": "ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10",
       "service_contract_id": "ic10.script.catalog.coordinator.directory.telemetry",
       "deployment_family": "catalog-control-plane",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
-        "headers": [],
+        "headers": [
+          {
+            "base": 0,
+            "magic": 31416068,
+            "abi": 1
+          }
+        ],
         "schema_fields": [],
-        "payload_bases": [],
-        "payload_inventory_status": "no-declared-stack-protocol",
-        "existing_consumer_checks": []
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.31416068.abi1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": []
+          }
+        ]
       },
       "stack_pressure": {
-        "literal_cell_count": 0,
-        "highest_literal_cell": null,
+        "literal_cell_count": 3,
+        "highest_literal_cell": 2,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 97,
-        "line_headroom_120": 23,
+        "line_count": 101,
+        "line_headroom_120": 19,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
       "window_collision": {
-        "literal_cells": [],
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.catalog.coordinator.directory.telemetry",
+        "magic": 31416068,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "74487ec6495ca5a508458e767f087b9065f8b6311cd7dc12bc6b32f928b4c801",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-control-plane"
       }
     },
     {
@@ -493,70 +532,148 @@
       "source": "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10",
       "service_contract_id": "ic10.script.catalog.item.migration.planner",
       "deployment_family": "catalog-control-plane",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
-        "headers": [],
+        "headers": [
+          {
+            "base": 0,
+            "magic": 31416069,
+            "abi": 1
+          }
+        ],
         "schema_fields": [],
-        "payload_bases": [],
-        "payload_inventory_status": "no-declared-stack-protocol",
-        "existing_consumer_checks": []
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.31416069.abi1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": []
+          }
+        ]
       },
       "stack_pressure": {
-        "literal_cell_count": 0,
-        "highest_literal_cell": null,
+        "literal_cell_count": 3,
+        "highest_literal_cell": 2,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 111,
-        "line_headroom_120": 9,
+        "line_count": 115,
+        "line_headroom_120": 5,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
       "window_collision": {
-        "literal_cells": [],
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.catalog.item.migration.planner",
+        "magic": 31416069,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "81a27385d2525628968a3b8057cd487339c190175d02d6e5a49ae5f24b760ecd",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-control-plane"
       }
     },
     {
       "source": "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10",
       "service_contract_id": "ic10.script.catalog.item.migration.worker",
       "deployment_family": "catalog-control-plane",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
-        "headers": [],
+        "headers": [
+          {
+            "base": 0,
+            "magic": 31416071,
+            "abi": 1
+          }
+        ],
         "schema_fields": [],
-        "payload_bases": [],
-        "payload_inventory_status": "no-declared-stack-protocol",
-        "existing_consumer_checks": []
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.31416071.abi1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": []
+          }
+        ]
       },
       "stack_pressure": {
-        "literal_cell_count": 0,
-        "highest_literal_cell": null,
+        "literal_cell_count": 3,
+        "highest_literal_cell": 2,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 85,
-        "line_headroom_120": 35,
+        "line_count": 89,
+        "line_headroom_120": 31,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
       "window_collision": {
-        "literal_cells": [],
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.catalog.item.migration.worker",
+        "magic": 31416071,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "139c93e2de890178ba4e469dcd571220ca10c884795b1066d335ee95dc584122",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-control-plane"
       }
     },
     {
@@ -620,35 +737,74 @@
       "source": "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10",
       "service_contract_id": "ic10.script.catalog.store.retirement.manager",
       "deployment_family": "catalog-control-plane",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
-        "headers": [],
+        "headers": [
+          {
+            "base": 0,
+            "magic": 31416070,
+            "abi": 1
+          }
+        ],
         "schema_fields": [],
-        "payload_bases": [],
-        "payload_inventory_status": "no-declared-stack-protocol",
-        "existing_consumer_checks": []
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.31416070.abi1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": []
+          }
+        ]
       },
       "stack_pressure": {
-        "literal_cell_count": 0,
-        "highest_literal_cell": null,
+        "literal_cell_count": 3,
+        "highest_literal_cell": 2,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 53,
-        "line_headroom_120": 67,
+        "line_count": 57,
+        "line_headroom_120": 63,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
       "window_collision": {
-        "literal_cells": [],
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.catalog.store.retirement.manager",
+        "magic": 31416070,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "6393224c71784cbd9ad8156cd9d2cf83e5e9e92cc87b43f32122733b2dfee203",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-control-plane"
       }
     },
     {

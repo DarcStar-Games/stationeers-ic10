@@ -15,7 +15,13 @@
     "abi": 3
    }
   ],
-  "ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10": [],
+  "ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10": [
+   {
+    "base": 0,
+    "magic": 31416068,
+    "abi": 1
+   }
+  ],
   "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10": [
    {
     "base": 0,
@@ -37,8 +43,20 @@
     "abi": 4
    }
   ],
-  "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10": [],
-  "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10": [],
+  "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10": [
+   {
+    "base": 0,
+    "magic": 31416069,
+    "abi": 1
+   }
+  ],
+  "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10": [
+   {
+    "base": 0,
+    "magic": 31416071,
+    "abi": 1
+   }
+  ],
   "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10": [
    {
     "base": 0,
@@ -46,7 +64,13 @@
     "abi": 3
    }
   ],
-  "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10": [],
+  "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10": [
+   {
+    "base": 0,
+    "magic": 31416070,
+    "abi": 1
+   }
+  ],
   "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10": [
    {
     "base": 0,

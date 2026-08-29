@@ -64,6 +64,10 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 | Config Input Bridge | `22360681` | `S1` | 1 |
 | Stack Cell Monitor | `31416052` | `S1` | 1 |
 | Stack Header Reader | `31416067` | `S1` | 1 |
+| Catalog Directory Telemetry | `31416068` | `S1` | 1 |
+| Catalog Item Migration Planner | `31416069` | `S1` | 1 |
+| Catalog Store Retirement Manager | `31416070` | `S1` | 1 |
+| Catalog Item Migration Worker | `31416071` | `S1` | 1 |
 | Controller PhasePressure Runtime | `31416060` | `S1` | 1 |
 | Controller PI Runtime | `31416061` | `S1` | 1 |
 | Controller Sequencer Runtime | `31416062` | `S1` | 1 |
