@@ -9,7 +9,10 @@ import json,re,sys
 import tools.generate.update_magic_registry as magic_registry
 ROOT=_PROJECT_ROOT
 validation=Validation(ROOT)
-mds=[p for p in ROOT.rglob('*.md') if 'validation' not in p.parts and '.claude' not in p.parts]
+# Match inside the repository: p.parts carries the absolute path, so a checkout
+# under a directory named .claude (a git worktree lives at .claude/worktrees/<name>)
+# would otherwise exclude every markdown file and pass this validator vacuously.
+mds=[p for p in ROOT.rglob('*.md') if not {'validation','.claude'}&set(p.relative_to(ROOT).parts)]
 existing={p.name for p in ROOT.iterdir() if p.is_file()}
 GLOB=set('*{}?[]')
 def referenced_paths(ref):

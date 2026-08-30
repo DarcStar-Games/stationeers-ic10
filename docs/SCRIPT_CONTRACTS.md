@@ -95,7 +95,7 @@ Each document under `contracts/protocols/` carries typed provider fields,
 published/writable ranges, consumer reads/writes, dynamic ranges, constraints,
 and supplemental domain references. A base-0 protocol is identified by its
 contract name, which already carries the ABI, so its document is named
-`ic10.stack.<contract>.v<abi>.protocol.json`; the Generic Telemetry block at
+`contracts/protocols/ic10.stack.*.protocol.json`; the Generic Telemetry block at
 `S96` keeps the numeric `ic10.stack.<magic>.abi<n>` form because its consumers
 accept a version range. Header base is tracked separately either way, so the
 `S96` header is never mistaken for an `S0` header.

@@ -17,7 +17,7 @@ value it publishes, and every consumer still comparing the old identity stops
 matching and fails closed — it can never silently accept a contract it was not
 written against. That is why a consumer needs only the one comparison, and why
 `S1` is the readable ABI beside the identity rather than a second gate. Programs
-that check `S1` as well are consistent, not wrong; `validate_service_identity.py`
+that check `S1` as well are consistent, not wrong; `validation/validators/validate_service_identity.py`
 requires that any such check agree with the ABI folded into the name.
 
 Two rules keep the guarantee alive, both enforced by
@@ -34,7 +34,7 @@ version cell at `S97`, because its consumers accept a version *range* — the on
 place where identity and version genuinely need to be checked apart.
 
 Retired hand-allocated magics (the old pi-digit constants) must not reappear in
-prose; `validate_documentation.py` fails the build if one does.
+prose; `validation/validators/validate_documentation.py` fails the build if one does.
 
 ## Service identities
 
@@ -406,7 +406,7 @@ Width is 3, capacity 64. FamilyHash equals Recipe Catalog PartitionKey. Fabricat
 
 ## Generic Job Store ABI v1
 
-Persistence profile: `BANKED_TRANSACTION_V1 / SELECTOR_BANK`. Recovery requires `S0=31415984` **and** `S1=1` before existing slot geometry is interpreted.
+Persistence profile: `BANKED_TRANSACTION_V1 / SELECTOR_BANK`. Recovery requires `S0=HASH("GenericJobStore.v1")` **and** `S1=1` before existing slot geometry is interpreted.
 
 
 `ic10/generic-jobs/generic_job_store_v1_0.ic10` publishes identity `HASH("GenericJobStore.v1")` and implements the physical store for `GENERIC_JOB_ABI_V1`. The logical job record is eleven fields:

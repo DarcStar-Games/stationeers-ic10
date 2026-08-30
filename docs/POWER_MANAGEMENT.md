@@ -19,7 +19,7 @@ For Station Batteries, dispatch uses a **one-game-tick horizon**: the safe insta
 
 ## 2. POWER Endpoint extension
 
-All live power providers use Generic Resource Endpoint ABI1 (`magic 31415949`). The ordinary Endpoint cells retain their generic meaning:
+All live power providers use Generic Resource Endpoint ABI1 (`HASH("ResourceEndpoint.v1")`). The ordinary Endpoint cells retain their generic meaning:
 
 ```text
 S52 ResourceClass = POWER
@@ -123,7 +123,7 @@ Thus generation is used before battery discharge; critical loads are considered 
 
 ## 4. Generic Resource Links for electricity
 
-Power topology remains Generic Resource Link ABI1 (`magic 31415953`, ResourceClass POWER).
+Power topology remains Generic Resource Link ABI1 (`HASH("ResourceLink.v1")`, ResourceClass POWER).
 
 ### Static path — `ic10/power-grid/power_static_link_v1_0.ic10`
 

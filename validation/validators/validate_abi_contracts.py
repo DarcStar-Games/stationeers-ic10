@@ -41,7 +41,12 @@ for f,toks in {
 'ic10/printer-directory/printer_execution_bank_v2_0.ic10':['poke 0 HASH("PrinterExecutionBank.v2")','poke 1 2'],
 'ic10/printer-directory/printer_capacity_client_v2_0.ic10':['poke 0 HASH("PrinterCapacityClient.v2")','poke 1 2'],
 'ic10/manufacturing/transform_candidate_readiness_v1_0.ic10':['poke 0 HASH("TransformCandidateReadiness.v1")','poke 1 1']}.items():need(f,*toks)
-# Every current catalog Loader is ABI4, sparse and producer-owned.
+# Every current catalog Loader is sparse and producer-owned.
+# NOTE: these globs are anchored at the repository root, where no .ic10 lives, so
+# this loop currently iterates zero times and asserts nothing. Its expectations
+# are stale with it -- the loaders publish ABI5 and no longer write S12=1. Only
+# the S0 identity is corrected here; repairing the check needs the current Loader
+# ABI5 contract re-derived, tracked in issue #82.
 loaders=list(R.glob('*_resource_profile_loader_*_v4_0.ic10'))+list(R.glob('*_input_profile_catalog_loader_*_v4_0.ic10'))+list(R.glob('*_resource_transform_catalog_loader_*_v6_0.ic10'))
 for p in loaders:
  t=p.read_text()
