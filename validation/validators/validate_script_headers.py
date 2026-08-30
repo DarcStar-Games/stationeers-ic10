@@ -52,6 +52,18 @@ BOOTSTRAP = (
     "_PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[{depth}]",
     "if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))",
 )
+IMPORT_NAME_PROBES = (
+    (
+        "import fixtures.script_header_prose",
+        "fixtures.script_header_prose",
+        "tests.fixtures.script_header_prose",
+    ),
+    (
+        "from fixtures import script_header_prose",
+        "fixtures.script_header_prose",
+        "tests.fixtures.script_header_prose",
+    ),
+)
 
 
 def is_entry_point(rel: Path) -> bool:
@@ -116,14 +128,52 @@ def shadowable_modules(paths):
     SCRIPTS, with nothing keeping them equal. A divergence would be silent and
     would land in release inventory or validation scope, so a module gets
     exactly one name: the package form, rooted at the repository root.
+
+    A child directory is reachable too, as an implicit namespace package even
+    without an __init__.py. Running a test leaves <root>/tests on sys.path, so
+    tests/fixtures/example.py answers both to fixtures.example and to
+    tests.fixtures.example. Map the first directory component here; the import
+    checker preserves the rest of the dotted name when it reports the one valid
+    spelling. Return the unambiguous map and every collision separately, because
+    choosing one canonical name from an ambiguity would make the advice false.
     """
     dirs = {p.parent for p in paths if is_entry_point(p.relative_to(ROOT))}
-    return {
-        q.stem: ".".join(q.relative_to(ROOT).with_suffix("").parts)
-        for d in sorted(dirs)
-        for q in sorted(d.glob("*.py"))
-        if q.stem != "__init__"
-    }
+    candidates = {}
+    for directory in sorted(dirs):
+        for path in paths:
+            try:
+                relative = path.relative_to(directory)
+            except ValueError:
+                continue
+            if len(relative.parts) == 1:
+                if path.stem != "__init__":
+                    canonical = ".".join(path.relative_to(ROOT).with_suffix("").parts)
+                    candidates.setdefault(path.stem, set()).add(canonical)
+                continue
+            bare = relative.parts[0]
+            canonical = (directory / bare).relative_to(ROOT)
+            candidates.setdefault(bare, set()).add(".".join(canonical.parts))
+    return resolve_shadowable_candidates(candidates)
+
+
+def resolve_shadowable_candidates(candidates):
+    """Return unambiguous aliases and every alias with competing canonical names."""
+    shadowable = {}
+    conflicts = {}
+    for bare, names in sorted(candidates.items()):
+        canonical = tuple(sorted(set(names)))
+        if len(canonical) == 1:
+            shadowable[bare] = canonical[0]
+        elif canonical:
+            conflicts[bare] = canonical
+    return shadowable, conflicts
+
+
+def canonical_import(name, shadowable):
+    """Return the repository-rooted spelling for a reachable bare import."""
+    bare = name.split(".")[0]
+    package = shadowable.get(bare)
+    return package + name[len(bare):] if package else None
 
 
 def check_import_names(tree, shadowable, failures):
@@ -142,16 +192,60 @@ def check_import_names(tree, shadowable, failures):
         # A relative import already names its package, so only absolute ones can go bare.
         elif isinstance(node, ast.ImportFrom) and not node.level and node.module:
             names = [node.module]
+            canonical_parent = canonical_import(node.module, shadowable)
+            if canonical_parent:
+                parent = ROOT.joinpath(*canonical_parent.split("."))
+                submodules = [
+                    f"{node.module}.{alias.name}"
+                    for alias in node.names
+                    if alias.name != "*"
+                    and (
+                        (parent / alias.name).is_dir()
+                        or (parent / alias.name).with_suffix(".py").is_file()
+                    )
+                ]
+                if submodules:
+                    names = submodules
         else:
             continue
         for name in names:
-            package = shadowable.get(name.split(".")[0])
+            bare = name.split(".")[0]
+            package = shadowable.get(bare)
             if package:
-                # Only tools/ is proven work-free; elsewhere the fixed import still runs the file.
-                runs = "" if package.startswith(COMMAND_ROOT + ".") else " -- and outside tools/ importing an entry point usually runs it"
-                failures.append(
-                    f"line {node.lineno}: bare-name import of {name!r}; its only name is {package!r}{runs}"
+                canonical = canonical_import(name, shadowable)
+                canonical_path = PurePosixPath(*canonical.split(".")).with_suffix(".py").as_posix()
+                # Fixtures are not entry points; registered scripts outside tools/ usually run at import.
+                runs = (
+                    " -- and outside tools/ importing an entry point usually runs it"
+                    if canonical_path in REGISTERED and not package.startswith(COMMAND_ROOT + ".")
+                    else ""
                 )
+                failures.append(
+                    f"line {node.lineno}: bare-name import of {name!r}; its only name is {canonical!r}{runs}"
+                )
+
+
+def import_name_regression_failures(shadowable):
+    """Exercise the namespace spellings and fail-closed collision behavior from #27."""
+    failures = []
+    for source, bare, canonical in IMPORT_NAME_PROBES:
+        found = []
+        check_import_names(ast.parse(source), shadowable, found)
+        expected = [f"line 1: bare-name import of {bare!r}; its only name is {canonical!r}"]
+        if found != expected:
+            failures.append(f"{source!r}: expected {expected!r}, found {found!r}")
+
+    mapped, conflicts = resolve_shadowable_candidates({
+        "duplicate": {"tests.duplicate", "validation.validators.duplicate"},
+    })
+    expected_conflicts = {
+        "duplicate": ("tests.duplicate", "validation.validators.duplicate"),
+    }
+    if mapped or conflicts != expected_conflicts:
+        failures.append(
+            f"ambiguous alias probe did not fail closed: mapped={mapped!r}, conflicts={conflicts!r}"
+        )
+    return failures
 
 
 def is_docstring(node) -> bool:
@@ -325,14 +419,20 @@ def main():
         p for p in ROOT.rglob("*.py")
         if not SKIP_PARTS & set(p.relative_to(ROOT).parts)
     )
-    shadowable = shadowable_modules(paths)
+    shadowable, alias_conflicts = shadowable_modules(paths)
+    regression_failures = import_name_regression_failures(shadowable)
     rows = [(p.relative_to(ROOT).as_posix(), *inspect(p, shadowable)) for p in paths]
     # The list is load-bearing now, so read it in both directions. A path renamed or
     # deleted out from under it still fails the run -- python3 on a missing file exits
     # non-zero -- but it fails as a traceback inside one evidence file among the whole
     # suite's, rather than as the one sentence that names it.
     missing = sorted(name for name in REGISTERED if not (ROOT / name).is_file())
-    failed = any(row[-1] for row in rows) or bool(missing)
+    failed = (
+        any(row[-1] for row in rows)
+        or bool(missing)
+        or bool(alias_conflicts)
+        or bool(regression_failures)
+    )
 
     print("Python script header validation")
     print("=" * 100)
@@ -345,10 +445,16 @@ def main():
     for name in missing:
         print(f"FAIL {name:58} {'listed':6} --")
         print("     - tools/run_validation.py runs this path and no such file exists")
+    for bare, canonical in alias_conflicts.items():
+        print(f"FAIL import alias {bare!r} resolves to multiple in-tree names: {', '.join(canonical)}")
+    for failure in regression_failures:
+        print(f"FAIL import-name regression probe: {failure}")
     print("=" * 100)
     entries = sum(1 for row in rows if row[1])
     print(f"Checked {len(rows)} files: {entries} entry points, {len(rows)-entries} imported modules")
     print(f"Single import name enforced for {len(shadowable)} modules reachable from a script directory")
+    print(f"Import-name regression probes cover {len(IMPORT_NAME_PROBES)} namespace spellings;"
+          " ambiguous aliases fail closed")
     # Both counts come from the rows, so they partition `entries` by construction. Taking
     # the second from len(REGISTERED) instead reads the same today and stops summing the
     # moment a tools/ command is also registered -- committed evidence must not be able
