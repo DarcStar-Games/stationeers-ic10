@@ -11,7 +11,16 @@ PASS framework/generator_productivity.py                        module -x
 PASS framework/ic10_harness.py                                  module -x
 PASS framework/job_abi.py                                       module -x
 PASS framework/json_schema.py                                   module -x
-PASS framework/script_contracts.py                              module -x
+PASS framework/script_contracts/__init__.py                     module -x
+PASS framework/script_contracts/assembly.py                     module -x
+PASS framework/script_contracts/checks.py                       module -x
+PASS framework/script_contracts/control_flow.py                 module -x
+PASS framework/script_contracts/device_ports.py                 module -x
+PASS framework/script_contracts/dynamic_ranges.py               module -x
+PASS framework/script_contracts/naming.py                       module -x
+PASS framework/script_contracts/own_stack.py                    module -x
+PASS framework/script_contracts/parsing.py                      module -x
+PASS framework/script_contracts/publication.py                  module -x
 PASS framework/script_wiring.py                                 module -x
 PASS framework/source_metadata.py                               module -x
 PASS framework/stack_envelope.py                                module -x
@@ -99,7 +108,7 @@ PASS validation/validators/validate_source_catalog.py           entry  +x
 PASS validation/validators/validate_stack_envelopes.py          entry  +x
 PASS validation/validators/validate_user_deployment_guide.py    entry  +x
 ====================================================================================================
-Checked 98 files: 80 entry points, 18 imported modules
+Checked 107 files: 80 entry points, 27 imported modules
 Single import name enforced for 82 modules reachable from a script directory
 Import-name regression probes cover 2 namespace spellings and 10 dynamic loads; ambiguous aliases fail closed
 Entry points are the 15 commands under tools/ plus the 65 scripts tools/run_validation.py runs elsewhere; nothing is an entry point by location
