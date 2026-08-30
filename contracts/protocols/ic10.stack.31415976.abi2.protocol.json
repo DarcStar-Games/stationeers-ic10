@@ -24,7 +24,8 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 31415976
         },
         {
           "address": 1,
@@ -33,11 +34,22 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 2
         },
         {
           "address": 2,
           "name": "S2",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0
+        },
+        {
+          "address": 8,
+          "name": "S8",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -52,7 +64,22 @@
           "mode": "preserved-unless-overwritten",
           "source": "static-entry-path-analysis"
         },
-        "invariants": []
+        "invariants": [
+          {
+            "id": "header.s0.magic",
+            "kind": "cell-equals",
+            "address": 0,
+            "equals": 31415976,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s0.abi",
+            "kind": "cell-equals",
+            "address": 1,
+            "equals": 2,
+            "source": "generated-protocol-header"
+          }
+        ]
       }
     }
   ],

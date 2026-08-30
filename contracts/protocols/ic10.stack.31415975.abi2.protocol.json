@@ -41,7 +41,7 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read"
+            "self-write"
           ]
         },
         {
@@ -51,6 +51,15 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
+          ]
+        },
+        {
+          "address": 12,
+          "name": "S12",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
           ]
         },
         {

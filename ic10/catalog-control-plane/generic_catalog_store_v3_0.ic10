@@ -1,15 +1,13 @@
 # Generic Catalog Store v3.0: Store ABI5 dynamic item heap; set S18 NodeId 1..64.
 Boot:
-yield
 get r13 db 18
-blez r13 NeedId
-bgt r13 64 NeedId
 get r0 db 0
-beq r0 31415968 Existing
+bne r0 31415968 Wipe
+get r0 db 1
+bne r0 6 Fault
+j Header
+Wipe:
 clr db
-poke 0 31415968
-poke 1 6
-poke 2 1
 poke 10 32
 poke 16 1
 poke 18 r13
@@ -17,10 +15,14 @@ poke 19 32
 poke 20 512
 poke 22 32
 poke 29 480
-j Service
-Existing:
-get r0 db 1
-bne r0 6 Fault
+Header:
+poke 0 31415968
+poke 1 6
+poke 2 1
+NodeWait:
+get r13 db 18
+blez r13 NeedId
+bgt r13 64 NeedId
 Service:
 yield
 get r0 db 16
@@ -108,7 +110,8 @@ move r7 0
 j Service
 NeedId:
 s db Setting -1
-j Boot
+yield
+j NodeWait
 Fault:
 poke 16 4
 Idle:

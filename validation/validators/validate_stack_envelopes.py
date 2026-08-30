@@ -79,6 +79,13 @@ HEADER_READS = {
     # reads Loader ABI5 SchemaId S3 as a header field
     ("ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10", "r1"): {3},
     ("ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10", "r1"): {3},
+    ("ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10", "r2"): {3},
+    # read the Store's coordinator-assigned SchemaId S3 as a header field
+    ("ic10/input-profile-catalog/input_profile_view_v5_0.ic10", "r2"): {3},
+    ("ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10", "r1"): {3},
+    ("ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10", "r2"): {3},
+    ("ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10", "r2"): {3},
+    ("ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10", "r2"): {3},
 }
 for wired_source, wired_ports in json.loads((ROOT / "data" / "script_wiring.json").read_text())["ports"].items():
     for wired_port, peer in wired_ports.items():

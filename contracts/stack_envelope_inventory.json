@@ -29,17 +29,17 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 145,
-    "legacy_exempt": 29,
-    "backlog_reserved_cell_users": 26,
-    "backlog_dynamic_range_users": 11
+    "migrated_v1": 151,
+    "legacy_exempt": 23,
+    "backlog_reserved_cell_users": 20,
+    "backlog_dynamic_range_users": 7
   },
   "services": [
     {
       "source": "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10",
       "service_contract_id": "ic10.script.catalog.coordinator.core",
       "deployment_family": "catalog-control-plane",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -98,10 +98,42 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.catalog.coordinator.core",
+        "magic": 31415970,
+        "service_abi": 4,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "36152168d0fecb47761d8cdb353c14758d93f9fdcd3646ca7e3db62db900b52d",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 23
+            },
+            {
+              "start": 25,
+              "end": 27
+            },
+            {
+              "start": 29,
+              "end": 32
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-control-plane"
       }
     },
     {
@@ -319,7 +351,7 @@
       "source": "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10",
       "service_contract_id": "ic10.script.catalog.coordinator.directory.view",
       "deployment_family": "catalog-control-plane",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -344,7 +376,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 8,
+        "literal_cell_count": 9,
         "highest_literal_cell": 28,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -353,8 +385,8 @@
             "end": 511
           }
         ],
-        "line_count": 45,
-        "line_headroom_120": 75,
+        "line_count": 46,
+        "line_headroom_120": 74,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -378,17 +410,50 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.catalog.coordinator.directory.view",
+        "magic": 31415975,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "46cf690c0363819e1574fb2b6ba65ec650e8e90187dd515b45127394f93a300a",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 11,
+              "end": 18
+            },
+            {
+              "start": 25,
+              "end": 28
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 13,
+              "end": 18
+            }
+          ]
+        },
+        "pilot_family": "catalog-control-plane"
       }
     },
     {
       "source": "ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10",
       "service_contract_id": "ic10.script.catalog.coordinator.recovery",
       "deployment_family": "catalog-control-plane",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -413,12 +478,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 3,
-        "highest_literal_cell": 2,
+        "literal_cell_count": 4,
+        "highest_literal_cell": 8,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 54,
-        "line_headroom_120": 66,
+        "line_count": 55,
+        "line_headroom_120": 65,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -433,17 +498,41 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.catalog.coordinator.recovery",
+        "magic": 31415976,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "42e5d0a34da94089e45f5467443d68445fb44e89c03dc9619b2d86a7a7a15bac",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 8
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-control-plane"
       }
     },
     {
       "source": "ic10/catalog-control-plane/catalog_inspector_v4_0.ic10",
       "service_contract_id": "ic10.script.catalog.inspector",
       "deployment_family": "catalog-control-plane",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -468,8 +557,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 34,
-        "highest_literal_cell": 40,
+        "literal_cell_count": 35,
+        "highest_literal_cell": 45,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
@@ -486,11 +575,7 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -506,10 +591,39 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.catalog.inspector",
+        "magic": 31415972,
+        "service_abi": 4,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "a9b06302ad1f51394dbef7d4d3c24808b014d4cf0d852dc4a131f10a98495ac8",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 45
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 20,
+              "end": 25
+            }
+          ]
+        },
+        "pilot_family": "catalog-control-plane"
       }
     },
     {
@@ -664,7 +778,7 @@
       "source": "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10",
       "service_contract_id": "ic10.script.catalog.loader.router",
       "deployment_family": "catalog-control-plane",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -689,12 +803,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 5,
-        "highest_literal_cell": 4,
+        "literal_cell_count": 6,
+        "highest_literal_cell": 10,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 108,
-        "line_headroom_120": 12,
+        "line_count": 109,
+        "line_headroom_120": 11,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -702,19 +816,41 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.catalog.loader.router",
+        "magic": 31415971,
+        "service_abi": 3,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "9f6e4e1a13cc81dab31e83fd5af19068e252b6abf8af74e91c0f8489ec1fc43f",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 10
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-control-plane"
       }
     },
     {
@@ -795,7 +931,7 @@
       "source": "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10",
       "service_contract_id": "ic10.script.generic.catalog.store",
       "deployment_family": "catalog-control-plane",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -838,8 +974,8 @@
             "end": 511
           }
         ],
-        "line_count": 118,
-        "line_headroom_120": 2,
+        "line_count": 121,
+        "line_headroom_120": -1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -864,10 +1000,51 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.generic.catalog.store",
+        "magic": 31415968,
+        "service_abi": 6,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 1,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "53470f933499444f725d1f3477dea8e6ce54ad416fd0e1a798dedf5529768a6e",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 9,
+              "end": 10
+            },
+            {
+              "start": 13,
+              "end": 13
+            },
+            {
+              "start": 15,
+              "end": 20
+            },
+            {
+              "start": 22,
+              "end": 511
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 24,
+              "end": 511
+            }
+          ]
+        },
+        "pilot_family": "catalog-control-plane"
       }
     },
     {

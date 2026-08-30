@@ -70,6 +70,8 @@ SOFT_LIMIT_EXEMPTIONS = {
         "publishes the common S0 header above its candidate-route table",
     "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10":
         "publishes the common S0 header with its request mailbox relocated above it",
+    "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10":
+        "publishes the common S0 header above its dynamic item heap and directory",
 }
 
 

@@ -32,13 +32,13 @@ bnez r0 Bad
 getd r11 r14 18
 mod r0 r11 2
 bnez r0 Bad
-poke 2 0
+poke 41 0
 get r0 d0 3
-poke 3 r0
+poke 42 r0
 get r0 d0 13
-poke 4 r0
-poke 6 r13
-poke 7 r12
+poke 43 r0
+poke 44 r13
+poke 45 r12
 get r1 d0 18
 poke 8 r1
 get r0 d0 16
@@ -107,8 +107,8 @@ getd r0 r14 18
 bne r0 r11 Loop
 getd r0 r12 22
 bne r0 r15 Loop
-poke 2 1
+poke 41 1
 j Loop
 Bad:
-poke 2 -1
+poke 41 -1
 j Loop

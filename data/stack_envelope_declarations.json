@@ -4474,6 +4474,184 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "pressure-grid"
+  },
+  "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10": {
+   "service_id": "ic10.script.catalog.coordinator.core",
+   "magic": 31415970,
+   "service_abi": 4,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "36152168d0fecb47761d8cdb353c14758d93f9fdcd3646ca7e3db62db900b52d",
+   "legacy_owned_ranges": [
+    [
+     8,
+     23
+    ],
+    [
+     25,
+     27
+    ],
+    [
+     29,
+     32
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-control-plane"
+  },
+  "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10": {
+   "service_id": "ic10.script.generic.catalog.store",
+   "magic": 31415968,
+   "service_abi": 6,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "53470f933499444f725d1f3477dea8e6ce54ad416fd0e1a798dedf5529768a6e",
+   "legacy_owned_ranges": [
+    [
+     9,
+     10
+    ],
+    [
+     13,
+     13
+    ],
+    [
+     15,
+     20
+    ],
+    [
+     22,
+     511
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     24,
+     511
+    ]
+   ],
+   "pilot_family": "catalog-control-plane",
+   "schema_assigned_externally": true
+  },
+  "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10": {
+   "service_id": "ic10.script.catalog.coordinator.directory.view",
+   "magic": 31415975,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "46cf690c0363819e1574fb2b6ba65ec650e8e90187dd515b45127394f93a300a",
+   "legacy_owned_ranges": [
+    [
+     11,
+     18
+    ],
+    [
+     25,
+     28
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     13,
+     18
+    ]
+   ],
+   "pilot_family": "catalog-control-plane"
+  },
+  "ic10/catalog-control-plane/catalog_inspector_v4_0.ic10": {
+   "service_id": "ic10.script.catalog.inspector",
+   "magic": 31415972,
+   "service_abi": 4,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "a9b06302ad1f51394dbef7d4d3c24808b014d4cf0d852dc4a131f10a98495ac8",
+   "legacy_owned_ranges": [
+    [
+     8,
+     45
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     20,
+     25
+    ]
+   ],
+   "pilot_family": "catalog-control-plane"
+  },
+  "ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10": {
+   "service_id": "ic10.script.catalog.coordinator.recovery",
+   "magic": 31415976,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "42e5d0a34da94089e45f5467443d68445fb44e89c03dc9619b2d86a7a7a15bac",
+   "legacy_owned_ranges": [
+    [
+     8,
+     8
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-control-plane"
+  },
+  "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10": {
+   "service_id": "ic10.script.catalog.loader.router",
+   "magic": 31415971,
+   "service_abi": 3,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "9f6e4e1a13cc81dab31e83fd5af19068e252b6abf8af74e91c0f8489ec1fc43f",
+   "legacy_owned_ranges": [
+    [
+     8,
+     10
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-control-plane"
   }
  },
  "legacy_exemption": {

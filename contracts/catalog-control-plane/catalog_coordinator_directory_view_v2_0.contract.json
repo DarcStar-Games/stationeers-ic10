@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10",
-  "source_sha256": "54c3e275af040474cf1da192e5be37aef6b5ce990d9528e8ffee2a63f8a14131",
+  "source_sha256": "46cf690c0363819e1574fb2b6ba65ec650e8e90187dd515b45127394f93a300a",
   "identity": {
     "service_id": "ic10.script.catalog.coordinator.directory.view",
     "implementation_revision": "2.0",
@@ -80,9 +80,9 @@
       "stack": {
         "literal_reads": [
           0,
-          3,
-          6,
-          7
+          15,
+          16,
+          21
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -101,8 +101,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.5ec20095d3a739ee",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.5ec20095d3a739ee",
+        "interface_id": "ic10.interface.access.ddb2d674a657e03b",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.ddb2d674a657e03b",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -117,11 +117,12 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2
+      12
     ],
     "literal_writes": [
       0,
       1,
+      2,
       11,
       25,
       26,
@@ -169,7 +170,7 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
+          "self-write"
         ]
       },
       {
@@ -179,6 +180,15 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
+        ]
+      },
+      {
+        "address": 12,
+        "name": "S12",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
         ]
       },
       {

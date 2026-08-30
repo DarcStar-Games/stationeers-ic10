@@ -1,16 +1,16 @@
 IC10 static validation
 ====================================================================================================
-PASS ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10 lines=114 headroom=14 max=86 CRLF=1611 comments= 1
+PASS ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10 lines=114 headroom=14 max=86 CRLF=1615 comments= 1
 PASS ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10 lines= 89 headroom=39 max=79 CRLF=1248 comments= 1
 PASS ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10 lines= 99 headroom=29 max=66 CRLF=1370 comments= 1
-PASS ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10 lines= 45 headroom=83 max=79 CRLF= 684 comments= 1
-PASS ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10 lines= 54 headroom=74 max=78 CRLF= 862 comments= 1
-PASS ic10/catalog-control-plane/catalog_inspector_v4_0.ic10 lines=114 headroom=14 max=54 CRLF=1595 comments= 0
+PASS ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10 lines= 46 headroom=82 max=79 CRLF= 700 comments= 1
+PASS ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10 lines= 55 headroom=73 max=78 CRLF= 873 comments= 1
+PASS ic10/catalog-control-plane/catalog_inspector_v4_0.ic10 lines=114 headroom=14 max=54 CRLF=1602 comments= 0
 PASS ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10 lines=108 headroom=20 max=60 CRLF=1569 comments= 1
 PASS ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10 lines= 89 headroom=39 max=89 CRLF=1313 comments= 1
-PASS ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10 lines=108 headroom=20 max=87 CRLF=1559 comments= 1
+PASS ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10 lines=109 headroom=19 max=87 CRLF=1572 comments= 1
 PASS ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10 lines= 55 headroom=73 max=66 CRLF= 826 comments= 1
-PASS ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10 lines=118 headroom=10 max=81 CRLF=1648 comments= 1
+PASS ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10 lines=121 headroom= 7 max=81 CRLF=1678 comments= 1
 PASS ic10/controller-config/config_input_bridge_v1_0.ic10 lines= 62 headroom=66 max=83 CRLF=1535 comments=10
 PASS ic10/controller-config/generic_config_committer_v1_1.ic10 lines=100 headroom=28 max=77 CRLF=1781 comments= 3
 PASS ic10/controller-config/generic_config_editor_v1_0.ic10 lines=110 headroom=18 max=85 CRLF=2192 comments=11

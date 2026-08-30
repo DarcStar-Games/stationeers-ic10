@@ -121,11 +121,12 @@ class NormalizedDeclaration:
     post_init_dynamic_write_ranges: tuple[StackRange, ...] = ()
     source_sha256: str = ""
     pilot_family: str = ""
+    schema_assigned_externally: bool = False
 
     @property
     def capability_mask(self) -> int:
         return (
-            (HAS_SCHEMA if self.schema_id is not None else 0)
+            (HAS_SCHEMA if self.schema_id is not None or self.schema_assigned_externally else 0)
             | (HAS_EXTENSION if self.extension_base else 0)
             | (HAS_STATE if self.publishes_state else 0)
             | (HAS_TELEMETRY if self.telemetry_base else 0)
@@ -344,6 +345,9 @@ def normalize_declaration(
         collector.add("implementation_id must be null or a string")
     source_sha256 = require("source_sha256", str, "")
     pilot_family = require("pilot_family", str, "")
+    schema_assigned_externally = require("schema_assigned_externally", bool, False, required=False)
+    if schema_assigned_externally and (schema_id is not None or schema_version):
+        collector.add("schema_assigned_externally requires a null schema_id and version 0")
 
     normalized_ranges: dict[str, tuple[StackRange, ...]] = {}
     for name, default in (
@@ -381,6 +385,7 @@ def normalize_declaration(
         post_init_dynamic_write_ranges=normalized_ranges["post_init_dynamic_write_ranges"],
         source_sha256=source_sha256,
         pilot_family=pilot_family,
+        schema_assigned_externally=schema_assigned_externally,
     ), []
 
 
@@ -582,7 +587,7 @@ def expected_envelope_cells(declaration: NormalizedDeclaration) -> dict[int, Any
         BASE + 1: declaration.service_abi,
         CAPABILITY_MASK_CELL: declaration.capability_mask,
     }
-    if declaration.capability_mask & HAS_SCHEMA:
+    if declaration.capability_mask & HAS_SCHEMA and not declaration.schema_assigned_externally:
         expected[SCHEMA_ID_CELL] = schema_hash(
             declaration.schema_id or "", declaration.schema_version
         )
@@ -803,8 +808,14 @@ def publication_rule_errors(
         expected,
         declaration.publication_metadata(),
         reserved,
+        # A boot-only `clr db` is the entry clear the publication scan already
+        # validates; it is not evidence that reference-addressed writes can name
+        # this stack. Computed own pokes still flag themselves directly.
         reference_writes_own_stack=bool(
             contract["own_stack"]["dynamic_write_ranges"]
+            and not (contract["own_stack"]["clears_all"]
+                     and contract["own_stack"]["dynamic_write_proven_ranges"]
+                     == [{"start": 0, "end": 511}])
         ),
         mutable_cells=frozenset(
             ({STATE_CELL} if declaration.publishes_state else set())
@@ -1025,7 +1036,8 @@ def build_inventory(
                 "custom_state_bits": declaration.get("custom_state_bits", 0),
                 "publishes_generation": declaration["publishes_generation"],
                 "capability_mask": (
-                    (HAS_SCHEMA if declaration["schema_id"] is not None else 0)
+                    (HAS_SCHEMA if declaration["schema_id"] is not None
+                     or declaration.get("schema_assigned_externally") else 0)
                     | (HAS_EXTENSION if declaration["extension_base"] else 0)
                     | (HAS_STATE if declaration["publishes_state"] else 0)
                     | (HAS_TELEMETRY if declaration["telemetry_base"] else 0)

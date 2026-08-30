@@ -2,7 +2,7 @@
  "format": "IC10_SCRIPT_CONTRACT_OVERRIDES_V1",
  "scripts": {
   "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10": {
-   "source_sha256": "9908b2e5bc8087035f29efb60a772a8914ceb2582bbbba5c1a0711262484dab6",
+   "source_sha256": "36152168d0fecb47761d8cdb353c14758d93f9fdcd3646ca7e3db62db900b52d",
    "publication_rules": [
     {
      "kind": "seqlock",
@@ -45,7 +45,7 @@
    }
   },
   "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10": {
-   "source_sha256": "54c3e275af040474cf1da192e5be37aef6b5ce990d9528e8ffee2a63f8a14131",
+   "source_sha256": "46cf690c0363819e1574fb2b6ba65ec650e8e90187dd515b45127394f93a300a",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -84,7 +84,7 @@
    }
   },
   "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10": {
-   "source_sha256": "ef29932abe1845fe0da2d6aad4c1db686e924eebf10ac3aac7c620bdb488c3bc",
+   "source_sha256": "53470f933499444f725d1f3477dea8e6ce54ad416fd0e1a798dedf5529768a6e",
    "publication_rules": [
     {
      "kind": "seqlock",
