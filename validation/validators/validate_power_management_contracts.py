@@ -30,8 +30,8 @@ need('ic10/resource-grid-core/resource_reservation_v1_0.ic10','get r5 d0 5','get
 need('ic10/power-grid/power_source_selector_v1_0.ic10','getd r11 r10 6','add r13 r13 r4','getd r0 r10 28')
 need('ic10/power-grid/power_sink_selector_v1_0.ic10','getd r11 r10 7','slt r12 r9 5000000','seq r12 r12 0')
 # Generic links + transformer overhead.
-need('ic10/power-grid/power_static_link_v1_0.ic10','poke 0 31415953','poke 4 4','poke 6 1')
-need('ic10/power-grid/power_transformer_link_v1_0.ic10','poke 6 2','bdnvl d0 RequiredPower ReqReady','poke 14 r5')
+need('ic10/power-grid/power_static_link_v1_0.ic10','poke 0 31415953','poke 30 4','poke 32 1')
+need('ic10/power-grid/power_transformer_link_v1_0.ic10','poke 32 2','bdnvl d0 RequiredPower ReqReady','poke 14 r5')
 need('ic10/power-grid/power_link_selector_v1_0.ic10','HASH("DirectorySchema.ResourceLink.v1")','getd r13 r1 14','add r13 r13 r4')
 # Directory and bounded coherent plan.
 need('ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10','HASH("DirectorySchema.PowerReservation.v1")','poke 10 3','poke 11 64','getd r0 r1 17','get r13 db 8','1000000','5000000')

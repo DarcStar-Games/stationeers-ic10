@@ -175,18 +175,19 @@ Magic: `31415953`
 ```text
 S0   magic = 31415953
 S1   ABI = 1
-S2   source Generic Resource Reservation ReferenceId
-S3   sink Generic Resource Reservation ReferenceId
-S4   ResourceClass
-S5   ResourceType
-S6   native route/link class
-S7   current maximum transferable resource units/tick
+S2   capability mask = 0
 S8   generic cost hint; 0 when the specialization has no normalized value
 S9   status
 S10  NativeLink ReferenceId
 S11  NativeLink generation
 S12  PublicationGeneration; written LAST
 S13  link flags
+S28  source Generic Resource Reservation ReferenceId
+S29  sink Generic Resource Reservation ReferenceId
+S30  ResourceClass
+S31  ResourceType
+S32  native route/link class
+S33  current maximum transferable resource units/tick
 ```
 
 `ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10` is the first implementation. It verifies that its generic source/sink Reservations ultimately resolve to the same PressureDomain Inventories used by the native PressureTransfer before publishing the generalized link.

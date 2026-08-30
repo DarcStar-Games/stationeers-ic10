@@ -15,7 +15,7 @@ def ordered(t,a,b,l):
 e=text('ic10/material-grid/material_import_slot_endpoint_v1_0.ic10')
 for s in ('poke 0 31415949','poke 2 2','poke 4 2','get r14 d1 29','bne r0 31415963 Bad','get r0 d1 8','bne r0 2 Bad','ls r4 d0 0 Occupied','poke 11 r0'):need(e,s,'material import endpoint')
 l=text('ic10/material-grid/material_resource_link_v1_0.ic10')
-for s in ('l r3 d0 ReferenceId','l r4 d1 ReferenceId','poke 2 r3','poke 3 r4','poke 6 HASH("MaterialStackerSorter")','poke 19 r10','poke 20 r11','poke 21 r13','poke 22 r8'):need(l,s,'material link')
+for s in ('l r3 d0 ReferenceId','l r4 d1 ReferenceId','poke 28 r3','poke 29 r4','poke 32 HASH("MaterialStackerSorter")','poke 19 r10','poke 20 r11','poke 21 r13','poke 22 r8'):need(l,s,'material link')
 # Grant Guard is current-allocator-only and binds exact topology/transaction identity.
 g=text('ic10/material-grid/material_transfer_grant_guard_v1_0.ic10')
 for s in ('poke 0 31415960','bne r0 2 Bad','bne r0 r2 Consume','bne r0 r3 Consume','bne r0 r4 Consume','bne r0 r5 Consume','bne r0 r6 Consume','bne r0 r7 Consume','bne r0 r1 Consume','bne r0 r11 Consume','bne r0 2 ResBad'):need(g,s,'material grant guard')

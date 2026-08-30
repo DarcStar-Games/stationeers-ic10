@@ -5908,67 +5908,6 @@
         }
       ]
     },
-    "ic10.interface.access.90381b3b48b32c7d": {
-      "stack": {
-        "literal_reads": [
-          5,
-          12,
-          16,
-          22
-        ],
-        "literal_writes": [],
-        "dynamic_read": false,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "none",
-        "dynamic_write_range_source": "none",
-        "constraints": []
-      },
-      "assumptions": {
-        "properties_read": [
-          "ReferenceId"
-        ],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 5,
-            "end": 5
-          },
-          {
-            "start": 12,
-            "end": 12
-          },
-          {
-            "start": 16,
-            "end": 16
-          },
-          {
-            "start": 22,
-            "end": 22
-          }
-        ],
-        "stack_writable_ranges": [],
-        "constraints": [],
-        "properties_readable": [
-          "ReferenceId"
-        ],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/material-grid/material_transfer_executor_v1_0.ic10",
-          "port": "d0"
-        }
-      ]
-    },
     "ic10.interface.access.946c8fd776a2626e": {
       "stack": {
         "literal_reads": [
@@ -7396,6 +7335,67 @@
       "consumers": [
         {
           "source": "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10",
+          "port": "d0"
+        }
+      ]
+    },
+    "ic10.interface.access.b709ec9eb1bffed4": {
+      "stack": {
+        "literal_reads": [
+          12,
+          16,
+          22,
+          31
+        ],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": []
+      },
+      "assumptions": {
+        "properties_read": [
+          "ReferenceId"
+        ],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 12,
+            "end": 12
+          },
+          {
+            "start": 16,
+            "end": 16
+          },
+          {
+            "start": 22,
+            "end": 22
+          },
+          {
+            "start": 31,
+            "end": 31
+          }
+        ],
+        "stack_writable_ranges": [],
+        "constraints": [],
+        "properties_readable": [
+          "ReferenceId"
+        ],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/material-grid/material_transfer_executor_v1_0.ic10",
           "port": "d0"
         }
       ]

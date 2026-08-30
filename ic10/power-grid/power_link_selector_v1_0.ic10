@@ -35,17 +35,17 @@ getd r14 r1 12
 blez r14 Find
 getd r0 r1 0
 bne r0 31415953 Find
-getd r0 r1 4
+getd r0 r1 30
 bne r0 4 Find
-getd r0 r1 2
+getd r0 r1 28
 bne r0 r2 Find
-getd r0 r1 3
+getd r0 r1 29
 bne r0 r3 Find
 getd r0 r1 9
 bne r0 1 Find
-getd r11 r1 7
+getd r11 r1 33
 blt r11 r4 Find
-getd r12 r1 6
+getd r12 r1 32
 move r13 0
 bne r12 2 Calc
 getd r13 r1 14

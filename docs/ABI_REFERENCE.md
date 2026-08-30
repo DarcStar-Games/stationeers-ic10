@@ -1478,23 +1478,24 @@ Both schemas inspect only coherently published Generic Resource services and pub
 ```text
 S0   magic = 31415953
 S1   ABI = 1
-S2   source Generic Resource Reservation ReferenceId
-S3   sink Generic Resource Reservation ReferenceId
-S4   ResourceClass
-S5   ResourceType
-S6   native route/link class
-S7   maximum transferable resource units/tick
+S2   capability mask = 0
 S8   normalized cost hint; 0 when unavailable
 S9   status
 S10  NativeLink ReferenceId
 S11  NativeLink generation
 S12  PublicationGeneration; written LAST
 S13  link flags
+S28  source Generic Resource Reservation ReferenceId
+S29  sink Generic Resource Reservation ReferenceId
+S30  ResourceClass
+S31  ResourceType
+S32  native route/link class
+S33  maximum transferable resource units/tick
 ```
 
 `ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10` validates that the generic source/sink endpoints ultimately reference the same PressureDomain Inventories as the native PressureTransfer reservations before publishing the generalized link.
 
-`ic10/material-grid/material_resource_link_v1_0.ic10` publishes the same Generic Link ABI for a discrete ITEM route. Its S2/S3 are the **source/sink Generic Resource Reservation ReferenceIds**; native material topology is carried separately in extension cells so generic planners do not confuse an Endpoint with its mutable Reservation surface.
+`ic10/material-grid/material_resource_link_v1_0.ic10` publishes the same Generic Link ABI for a discrete ITEM route. Its S28/S29 are the **source/sink Generic Resource Reservation ReferenceIds**; native material topology is carried separately in extension cells so generic planners do not confuse an Endpoint with its mutable Reservation surface.
 
 For the Material Link, S13 currently uses flags value `7`: directed physical route + discrete/batch transport + observed-rate semantics. Generic consumers should treat flags as capabilities and should not infer pressure-flow behavior from them.
 

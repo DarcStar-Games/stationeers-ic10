@@ -1,4 +1,4 @@
 Script wiring validation: PASS
  - all 264 device ports across 174 programs declare a peer (208 script edges, 56 physical devices)
  - every declared provider exists, matches its port's target kind, and satisfies any S0 magic/ABI check
- - 64 edges into migrated programs touch no S2..S7 header cell; 2 reviewed header reads are declared in the map
+ - 66 edges into migrated programs touch no S2..S7 header cell; 2 reviewed header reads are declared in the map

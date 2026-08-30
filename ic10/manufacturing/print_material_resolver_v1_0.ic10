@@ -58,9 +58,9 @@ getd r0 r1 22
 bne r0 r2 Find
 getd r0 r1 27
 bne r0 r9 Find
-getd r3 r1 2
-getd r4 r1 3
-getd r5 r1 5
+getd r3 r1 28
+getd r4 r1 29
+getd r5 r1 31
 mul r0 r12 r6
 getd r14 r3 6
 blt r14 r0 NoRes

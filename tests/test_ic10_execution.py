@@ -85,7 +85,7 @@ src_gr=Device(731,stack={0:31415950,1:1,2:721,3:1,4:'HASH:Pollutant',5:1,6:20,7:
 sink_gr=Device(732,stack={0:31415950,1:1,2:722,3:1,4:'HASH:Pollutant',5:2,6:0,7:20,8:0,9:1,10:1,11:3,12:2},props={'ReferenceId':732})
 pt=Device(740,stack={96:27182818,97:2,99:'HASH:ControllerPressureTransfer',100:4.5,101:1,102:'HASH:Pollutant',103:1,106:711,107:712,115:9},props={'ReferenceId':740})
 rl=IC10((R/'ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10').read_text(),{'d0':pt,'d1':src_gr,'d2':sink_gr,'x1':src_pres,'x2':sink_pres,'x3':src_ep,'x4':sink_ep,'x5':src_inv,'x6':sink_inv},self_ref=720); rl.run(2)
-if rl.stack.get(0)!=31415953 or rl.stack.get(2)!=731 or rl.stack.get(3)!=732 or rl.stack.get(5)!='HASH:Pollutant' or rl.stack.get(7)!=4.5 or rl.stack.get(9)!=1: fails.append('Generic Resource Link adapter execution mismatch')
+if rl.stack.get(0)!=31415953 or rl.stack.get(28)!=731 or rl.stack.get(29)!=732 or rl.stack.get(31)!='HASH:Pollutant' or rl.stack.get(33)!=4.5 or rl.stack.get(9)!=1: fails.append('Generic Resource Link adapter execution mismatch')
 
 # Harness device-validity branches follow IC10 semantics: bdnvs branches only when a LogicType is not writable.
 wdev=Device(801,props={'ReferenceId':801,'On':1})

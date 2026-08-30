@@ -69,7 +69,7 @@ for i,(typ,qty) in enumerate(((101,1),(102,1),(103,2))):
     guard=Device(912+i*10,stack={0:31415960,1:1,13:1},props={'ReferenceId':912+i*10})
     exe=Device(913+i*10,stack={0:31415958,1:1,2:0,7:1},props={'ReferenceId':913+i*10})
     feed=Device(914+i*10,stack={0:31415961,1:1},props={'ReferenceId':914+i*10})
-    link=Device(915+i*10,stack={0:31415953,1:1,2:sr.ref,3:dr.ref,4:2,5:typ,9:1,12:1,14:guard.ref,15:exe.ref,16:feed.ref,21:700+i,22:proc.ref,23:0},props={'ReferenceId':915+i*10})
+    link=Device(915+i*10,stack={0:31415953,1:1,28:sr.ref,29:dr.ref,30:2,31:typ,9:1,12:1,14:guard.ref,15:exe.ref,16:feed.ref,21:700+i,22:proc.ref,23:0},props={'ReferenceId':915+i*10})
     links.append((link,sr,dr,guard,exe,feed,qty))
     for d in (link,sr,dr,guard,exe,feed): dyn[f'x{d.ref}']=d
 ld=Device(950,stack={0:31415981,1:1,2:0,3:1,5:3,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:64,32:links[0][0].ref,33:links[1][0].ref,34:links[2][0].ref},props={'ReferenceId':950})
@@ -91,7 +91,7 @@ epoch=alloc_vm.stack.get(14,0)
 if epoch<=0 or alloc_vm.stack.get(22)!=1: fails.append('multi allocator failed atomic common-epoch commit')
 for link,sr,dr,guard,exe,feed,qty in links:
     if sr.stack.get(14)!=qty*2 or dr.stack.get(15)!=qty*2 or guard.stack.get(17)!=epoch or guard.stack.get(18)!=alloc_dev.ref:
-        fails.append(f'multi allocator staged incorrect reservation/grant for type {link.stack[5]}')
+        fails.append(f'multi allocator staged incorrect reservation/grant for type {link.stack[31]}')
 # Every Guard should activate only after the common allocator epoch is visible.
 for i,(link,sr,dr,guard,exe,feed,qty) in enumerate(links):
     gv=IC10(g,{'d0':link,'d1':alloc_dev,'d2':exe,'xsrc':sr,'xsink':dr},self_ref=guard.ref); gv.stack=guard.stack; gv.run(2)

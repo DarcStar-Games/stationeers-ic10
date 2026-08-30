@@ -44,54 +44,8 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ]
-        },
-        {
-          "address": 3,
-          "name": "S3",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
           ],
-          "const": 2
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ],
-          "const": "HASH(\"MaterialStackerSorter\")"
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
+          "const": 0
         },
         {
           "address": 8,
@@ -275,6 +229,62 @@
           "access": [
             "self-write"
           ]
+        },
+        {
+          "address": 28,
+          "name": "S28",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 29,
+          "name": "S29",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 30,
+          "name": "S30",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 2
+        },
+        {
+          "address": 31,
+          "name": "S31",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 32,
+          "name": "S32",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": "HASH(\"MaterialStackerSorter\")"
+        },
+        {
+          "address": 33,
+          "name": "S33",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         }
       ],
       "behavior": {
@@ -334,55 +344,8 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ]
-        },
-        {
-          "address": 3,
-          "name": "S3",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
           ],
-          "const": 4
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ],
-          "const": "HASH(\"Power.Electrical\")"
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ],
-          "const": 1
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
+          "const": 0
         },
         {
           "address": 8,
@@ -459,6 +422,63 @@
           "access": [
             "self-read"
           ]
+        },
+        {
+          "address": 28,
+          "name": "S28",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 29,
+          "name": "S29",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 30,
+          "name": "S30",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 4
+        },
+        {
+          "address": 31,
+          "name": "S31",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": "HASH(\"Power.Electrical\")"
+        },
+        {
+          "address": 32,
+          "name": "S32",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 33,
+          "name": "S33",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         }
       ],
       "behavior": {
@@ -518,55 +538,8 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ]
-        },
-        {
-          "address": 3,
-          "name": "S3",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
           ],
-          "const": 4
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ],
-          "const": "HASH(\"Power.Electrical\")"
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ],
-          "const": 2
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
+          "const": 0
         },
         {
           "address": 8,
@@ -651,6 +624,63 @@
           "access": [
             "self-read"
           ]
+        },
+        {
+          "address": 28,
+          "name": "S28",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 29,
+          "name": "S29",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 30,
+          "name": "S30",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 4
+        },
+        {
+          "address": 31,
+          "name": "S31",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": "HASH(\"Power.Electrical\")"
+        },
+        {
+          "address": 32,
+          "name": "S32",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 2
+        },
+        {
+          "address": 33,
+          "name": "S33",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         }
       ],
       "behavior": {
@@ -710,54 +740,8 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ]
-        },
-        {
-          "address": 3,
-          "name": "S3",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 4,
-          "name": "S4",
-          "value_type": "enum",
-          "semantic_source": "source",
-          "access": [
-            "self-write"
           ],
-          "const": 1,
-          "description": "ResourceClass FLUID"
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
+          "const": 0
         },
         {
           "address": 8,
@@ -817,6 +801,62 @@
           ],
           "const": 1,
           "description": "directed physical link"
+        },
+        {
+          "address": 28,
+          "name": "S28",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 29,
+          "name": "S29",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 30,
+          "name": "S30",
+          "value_type": "enum",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "const": 1,
+          "description": "ResourceClass FLUID"
+        },
+        {
+          "address": 31,
+          "name": "S31",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 32,
+          "name": "S32",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 33,
+          "name": "S33",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         }
       ],
       "behavior": {
@@ -855,15 +895,15 @@
       "literal_reads": [
         0,
         1,
-        2,
-        3,
-        5,
         9,
         12,
         15,
         16,
         21,
-        22
+        22,
+        28,
+        29,
+        31
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [],

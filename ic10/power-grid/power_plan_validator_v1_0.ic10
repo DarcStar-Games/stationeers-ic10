@@ -55,17 +55,17 @@ getd r0 r8 12
 bne r0 r12 Bad
 getd r0 r6 0
 bne r0 31415953 Bad
-getd r0 r6 4
+getd r0 r6 30
 bne r0 4 Bad
-getd r0 r6 2
+getd r0 r6 28
 bne r0 r7 Bad
-getd r0 r6 3
+getd r0 r6 29
 bne r0 r8 Bad
 getd r0 r6 9
 bne r0 1 Bad
 getd r0 r6 12
 bne r0 r13 Bad
-getd r0 r6 6
+getd r0 r6 32
 beq r0 2 Transformer
 bne r10 r9 Bad
 j Direction

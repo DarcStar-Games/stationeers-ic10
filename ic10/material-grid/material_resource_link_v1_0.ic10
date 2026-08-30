@@ -1,8 +1,9 @@
 # Material Link ABI1. d0 srcRes,d1 sinkRes,d2 Feeder,d3 Guard,d4 Exec.
 poke 0 31415953
 poke 1 1
-poke 4 2
-poke 6 HASH("MaterialStackerSorter")
+poke 2 0
+poke 30 2
+poke 32 HASH("MaterialStackerSorter")
 poke 8 0
 poke 12 0
 poke 13 7
@@ -76,11 +77,11 @@ get r0 d4 19
 blez r0 Bad
 l r15 d4 ReferenceId
 l r1 db ReferenceId
-poke 2 r3
-poke 3 r4
-poke 5 r2
+poke 28 r3
+poke 29 r4
+poke 31 r2
 get r0 d4 17
-poke 7 r0
+poke 33 r0
 poke 9 1
 poke 10 r1
 poke 14 r14
@@ -109,7 +110,7 @@ poke 11 r0
 poke 12 r0
 j Loop
 Bad:
-poke 7 0
+poke 33 0
 poke 9 -1
 get r0 db 12
 add r0 r0 1

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_link_selector_v1_0.ic10",
-  "source_sha256": "9484f6b27335557e6b99c3fb433fadaec585877657420c44110a8ba480acffd2",
+  "source_sha256": "2539709f8f036ec43314a480f465d7c94afefbf7545f11c3cd1c32efdfbd6331",
   "identity": {
     "service_id": "ic10.script.power.link.selector",
     "implementation_revision": "1.0",
@@ -73,14 +73,14 @@
       "reference": "r1",
       "literal_reads": [
         0,
-        2,
-        3,
-        4,
-        6,
-        7,
         9,
         12,
-        14
+        14,
+        28,
+        29,
+        30,
+        32,
+        33
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -92,14 +92,14 @@
           "value": 31415953
         },
         {
-          "address": 4,
-          "operator": "equals",
-          "value": 4
-        },
-        {
           "address": 9,
           "operator": "equals",
           "value": 1
+        },
+        {
+          "address": 30,
+          "operator": "equals",
+          "value": 4
         }
       ],
       "accepted": []

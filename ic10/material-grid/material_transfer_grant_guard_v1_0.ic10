@@ -24,9 +24,9 @@ bne r0 1 Bad
 get r0 d0 9
 blez r0 Bad
 l r1 d0 ReferenceId
-get r2 d0 2
-get r3 d0 3
-get r4 d0 5
+get r2 d0 28
+get r3 d0 29
+get r4 d0 31
 get r5 d0 16
 get r6 d0 21
 get r7 d0 22

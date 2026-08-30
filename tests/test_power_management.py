@@ -41,7 +41,7 @@ sv.stack.update({2:0,3:1});sv.run(3);ck(sv.stack.get(5)==1 and sv.stack.get(7)==
 kv=IC10((R/'ic10/power-grid/power_sink_selector_v1_0.ic10').read_text(),{'d0':pdir,'x0':src,'x1':sink},self_ref=230)
 kv.stack.update({2:0,3:1});kv.run(3);ck(kv.stack.get(5)==1 and kv.stack.get(7)==80,'sink selector did not use Reservation S7 import')
 # Transformer overhead link selector.
-link=Device(1401,stack={0:31415953,1:1,2:1201,3:1202,4:4,5:'HASH:Power.Electrical',6:2,7:100,8:0,9:1,10:1500,11:0,12:9,13:3,14:5},props={'ReferenceId':1401})
+link=Device(1401,stack={0:31415953,1:1,28:1201,29:1202,30:4,31:'HASH:Power.Electrical',32:2,33:100,8:0,9:1,10:1500,11:0,12:9,13:3,14:5},props={'ReferenceId':1401})
 ldir=Device(1400,stack={0:31415981,1:1,2:0,5:1,7:0,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:64,32:1401},props={'ReferenceId':1400})
 lv=IC10((R/'ic10/power-grid/power_link_selector_v1_0.ic10').read_text(),{'d0':ldir,'x0':link},self_ref=229)
 lv.stack.update({2:1201,3:1202,4:80,5:1});lv.run(3);ck(lv.stack.get(7)==1 and lv.stack.get(9)==85,'transformer overhead not charged source-side')

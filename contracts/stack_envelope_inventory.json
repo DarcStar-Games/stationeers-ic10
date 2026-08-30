@@ -29,9 +29,9 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 89,
-    "legacy_exempt": 85,
-    "backlog_reserved_cell_users": 75,
+    "migrated_v1": 93,
+    "legacy_exempt": 81,
+    "backlog_reserved_cell_users": 71,
     "backlog_dynamic_range_users": 22
   },
   "services": [
@@ -6542,7 +6542,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "f722876b18223155780d5b9f3bfbfa7629237799bfc68f12363a06d9ef69f330",
+          "source_sha256": "727b2ebc7928517c2b1d07815ba216dafbe06f20b3e1996b01ffb763486ed31e",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -7094,7 +7094,7 @@
       "source": "ic10/material-grid/material_resource_link_v1_0.ic10",
       "service_contract_id": "ic10.script.material.resource.link",
       "deployment_family": "material-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -7128,12 +7128,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 28,
-        "highest_literal_cell": 27,
+        "literal_cell_count": 29,
+        "highest_literal_cell": 33,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 117,
-        "line_headroom_120": 3,
+        "line_count": 118,
+        "line_headroom_120": 2,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -7141,22 +7141,41 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.material.resource.link",
+        "magic": 31415953,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "88f5ec2245d65fecb24ad5047ced1039232cd212ea2569261ce779dcbf7ec4aa",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 33
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "material-grid"
       }
     },
     {
@@ -7234,7 +7253,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "c3d562e6ebaa6a295bd43f06f5f860f8f5fbeb89a5f4e5e4e4ab0deb545ccd47",
+          "source_sha256": "5576722352ddfac91bf28c7e986a4828028e203df993a3db66b5eef56e097bff",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -7334,7 +7353,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "636637231b4ec8ab7f7607ff4c9161d5714749137b53b62e6d7f3c2e2bc0692f",
+          "source_sha256": "ed9ec190cf121f7882ea6664da2eb0a4c9ac63bb58acfdfaabafdb54ee255448",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -7708,7 +7727,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "fcf09ae8ed413a9ea7c6a6bd898d9b7b0a48c9dbd2427b09c1ffabae3113ff22",
+          "source_sha256": "ebcd00138559bb5009e8c87d33b8503a760fc9785a258b96fb7b6c1eac7c4eec",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -7930,7 +7949,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "8e37902238cd27faafa92e6b1c937cb0bfa85a663fc1949c9f2efdee7da41f0f",
+          "source_sha256": "71d8f89dbce8981c9ccc12935d2e6c5751ee9acd6b476c7494444f3c971d2bb2",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -9023,76 +9042,7 @@
       "source": "ic10/power-grid/power_static_link_v1_0.ic10",
       "service_contract_id": "ic10.script.power.static.link",
       "deployment_family": "power-grid",
-      "status": "legacy-exempt",
-      "current_layout": {
-        "headers": [
-          {
-            "base": 0,
-            "magic": 31415953,
-            "abi": 1
-          }
-        ],
-        "schema_fields": [],
-        "payload_bases": [
-          0
-        ],
-        "payload_inventory_status": "declared-stack-protocol",
-        "existing_consumer_checks": [
-          {
-            "protocol_id": "ic10.stack.31415953.abi1",
-            "provider_header_bases": [
-              0
-            ],
-            "consumers": [
-              {
-                "source": "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10",
-                "endpoint": {
-                  "kind": "device-port",
-                  "value": "d0"
-                },
-                "header_base": 0
-              }
-            ]
-          }
-        ]
-      },
-      "stack_pressure": {
-        "literal_cell_count": 16,
-        "highest_literal_cell": 21,
-        "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [],
-        "line_count": 51,
-        "line_headroom_120": 69,
-        "measured_v1_publication_cost_lines": 8,
-        "measured_v1_stack_cost_cells": 8
-      },
-      "window_collision": {
-        "literal_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
-        "dynamic_read_cells": [],
-        "dynamic_write_cells": [],
-        "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "none"
-      },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
-      }
-    },
-    {
-      "source": "ic10/power-grid/power_transformer_link_v1_0.ic10",
-      "service_contract_id": "ic10.script.power.transformer.link",
-      "deployment_family": "power-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -9127,11 +9077,11 @@
       },
       "stack_pressure": {
         "literal_cell_count": 17,
-        "highest_literal_cell": 21,
+        "highest_literal_cell": 33,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 68,
-        "line_headroom_120": 52,
+        "line_count": 52,
+        "line_headroom_120": 68,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -9139,22 +9089,145 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.static.link",
+        "magic": 31415953,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "f3e96a39c9f6b23239d4d4eb6125823261bcf64354be043257c6f7d79264f77d",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 13
+            },
+            {
+              "start": 20,
+              "end": 21
+            },
+            {
+              "start": 28,
+              "end": 33
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-grid"
+      }
+    },
+    {
+      "source": "ic10/power-grid/power_transformer_link_v1_0.ic10",
+      "service_contract_id": "ic10.script.power.transformer.link",
+      "deployment_family": "power-grid",
+      "status": "migrated-v1",
+      "current_layout": {
+        "headers": [
+          {
+            "base": 0,
+            "magic": 31415953,
+            "abi": 1
+          }
+        ],
+        "schema_fields": [],
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.31415953.abi1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": [
+              {
+                "source": "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              }
+            ]
+          }
+        ]
+      },
+      "stack_pressure": {
+        "literal_cell_count": 18,
+        "highest_literal_cell": 33,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "line_count": 69,
+        "line_headroom_120": 51,
+        "measured_v1_publication_cost_lines": 8,
+        "measured_v1_stack_cost_cells": 8
+      },
+      "window_collision": {
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
+        "dynamic_read_cells": [],
+        "dynamic_write_cells": [],
+        "dynamic_read_provenance": "none",
+        "dynamic_write_provenance": "none"
+      },
+      "envelope": {
+        "service_id": "ic10.script.power.transformer.link",
+        "magic": 31415953,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "c1407a95053164c82d05201d266207b166b851287c688292b0304041b310a3f1",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 14
+            },
+            {
+              "start": 20,
+              "end": 21
+            },
+            {
+              "start": 28,
+              "end": 33
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-grid"
       }
     },
     {
@@ -12568,7 +12641,7 @@
       "source": "ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10",
       "service_contract_id": "ic10.script.pressure.resource.link.adapter",
       "deployment_family": "resource-grid-core",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -12602,12 +12675,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 14,
-        "highest_literal_cell": 13,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 33,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 82,
-        "line_headroom_120": 38,
+        "line_count": 83,
+        "line_headroom_120": 37,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12615,22 +12688,45 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pressure.resource.link.adapter",
+        "magic": 31415953,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "47d23a0486e8e98f38b3687944fe0d3f6231f072aabd71c6f179a724e551d398",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 13
+            },
+            {
+              "start": 28,
+              "end": 33
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "resource-grid-core"
       }
     },
     {

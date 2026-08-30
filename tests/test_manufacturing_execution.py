@@ -29,8 +29,8 @@ recipe=Device(200,stack={5:2,6:9,7:1,8:'HASH:Iron',9:30,10:'HASH:Copper',11:10},
 # source/sink reservations advertise sufficient exact ITEM capacity.
 sr1=Device(211,stack={6:100},props={'ReferenceId':211});dr1=Device(212,stack={7:100},props={'ReferenceId':212})
 sr2=Device(221,stack={6:100},props={'ReferenceId':221});dr2=Device(222,stack={7:100},props={'ReferenceId':222})
-l1=Device(213,stack={2:211,3:212,5:-1301215609,9:1,22:900,27:'HASH:Iron'},props={'ReferenceId':213})
-l2=Device(223,stack={2:221,3:222,5:-404336834,9:1,22:900,27:'HASH:Copper'},props={'ReferenceId':223})
+l1=Device(213,stack={28:211,29:212,31:-1301215609,9:1,22:900,27:'HASH:Iron'},props={'ReferenceId':213})
+l2=Device(223,stack={28:221,29:222,31:-404336834,9:1,22:900,27:'HASH:Copper'},props={'ReferenceId':223})
 ld=Device(230,stack={0:31415981,1:1,2:0,3:4,5:2,7:0,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:64,13:0,32:213,33:223},props={'ReferenceId':230})
 rv=IC10(src('ic10/manufacturing/print_material_resolver_v1_0.ic10'),{'d0':recipe,'d1':ld,'l1':l1,'l2':l2,'sr1':sr1,'dr1':dr1,'sr2':sr2,'dr2':dr2});rv.run(1)
 rv.stack.update({16:900,17:2,18:1});rv.run(1)

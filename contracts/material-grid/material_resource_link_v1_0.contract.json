@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-grid/material_resource_link_v1_0.ic10",
-  "source_sha256": "45bc2a7a43102a745b2437399e459f90a1ba44bce0686db1575dc32e02251bd2",
+  "source_sha256": "88f5ec2245d65fecb24ad5047ced1039232cd212ea2569261ce779dcbf7ec4aa",
   "identity": {
     "service_id": "ic10.script.material.resource.link",
     "implementation_revision": "1.0",
@@ -319,11 +319,6 @@
       0,
       1,
       2,
-      3,
-      4,
-      5,
-      6,
-      7,
       8,
       9,
       10,
@@ -343,7 +338,13 @@
       24,
       25,
       26,
-      27
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -384,54 +385,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
         ],
-        "const": 2
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": "HASH(\"MaterialStackerSorter\")"
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
+        "const": 0
       },
       {
         "address": 8,
@@ -610,6 +565,62 @@
       {
         "address": 27,
         "name": "S27",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 28,
+        "name": "S28",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 29,
+        "name": "S29",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 30,
+        "name": "S30",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 2
+      },
+      {
+        "address": 31,
+        "name": "S31",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 32,
+        "name": "S32",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": "HASH(\"MaterialStackerSorter\")"
+      },
+      {
+        "address": 33,
+        "name": "S33",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
