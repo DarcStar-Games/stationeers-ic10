@@ -181,7 +181,7 @@ Production IC10 programs: 174
 | `ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10` | 110 | Transformation metadata | `transform-catalog` | `one-shot` | One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item. |
 | `ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10` | 95 | Transformation metadata | `transform-catalog` | `one-shot` | One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item. |
 | `ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10` | 41 | Transformation metadata | `transform-catalog` | `one-shot` | One-shot relocatable Loader ABI5 candidate; each Transform and all descriptors remain one atomic item. |
-| `ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` | 121 | Transformation metadata | `transform-catalog` | `conditional-resident` | Selects a Store ABI6 schema-v4 transform and publishes capability-based variable-input Transform Profile ABI4. |
+| `ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` | 115 | Transformation metadata | `transform-catalog` | `conditional-resident` | Selects a Store ABI6 schema-v4 transform and publishes capability-based variable-input Transform Profile ABI4. |
 
 ## Pressure-grid dependency map
 

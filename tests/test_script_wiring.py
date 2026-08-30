@@ -20,8 +20,9 @@ PORTS = {
     PROVIDER: {},
     CONSUMER: {
         "d0": {"kind": "stack-protocol", "reads": {0, 1, 9}, "writes": {10},
-               "constraints": {0: 31410001, 1: 2}},
-        "d1": {"kind": "physical-device", "reads": set(), "writes": set(), "constraints": {}},
+               "read_ranges": [], "write_ranges": [], "constraints": {0: 31410001, 1: 2}},
+        "d1": {"kind": "physical-device", "reads": set(), "writes": set(),
+               "read_ranges": [], "write_ranges": [], "constraints": {}},
     },
 }
 PUBLISHERS = {PROVIDER: [{"base": 0, "magic": 31410001, "abi": 2}], CONSUMER: []}
@@ -124,6 +125,39 @@ expect("write into a migrated peer's header always fails",
 expect("reviewed reads never excuse a header write",
        any("only the owner" in f
            for f in failing(reviewed, ports=header_write, migrated={PROVIDER})))
+
+envelope_write = deepcopy(PORTS)
+envelope_write[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], writes={1})
+expect("write to a migrated peer's S0/S1 identity cells fails",
+       any("only the owner" in f for f in failing(ports=envelope_write, migrated={PROVIDER})))
+
+ranged_write = deepcopy(PORTS)
+ranged_write[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], write_ranges=[(3, 12)])
+expect("dynamic write range over a migrated peer's envelope fails",
+       any("only the owner" in f for f in failing(ports=ranged_write, migrated={PROVIDER})))
+expect("unmigrated peer allows the same range", failing(ports=ranged_write) == [])
+
+ranged_read = deepcopy(PORTS)
+ranged_read[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], read_ranges=[(3, 3)])
+expect("dynamic read range over a migrated peer's header fails",
+       any("header cells now" in f for f in failing(ports=ranged_read, migrated={PROVIDER})))
+expect("declared header read excuses the ranged read",
+       failing(reviewed, ports=ranged_read, migrated={PROVIDER}) == [])
+
+abi_only = deepcopy(PORTS)
+abi_only[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], constraints={1: 2})
+expect("ABI-only constraint matching the provider passes", failing(ports=abi_only) == [])
+abi_only[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], constraints={1: 3})
+expect("ABI-only constraint the provider never publishes fails",
+       any("publishes no" in f for f in failing(ports=abi_only)))
+
+malformed = deepcopy(WIRING)
+malformed["ports"][CONSUMER]["d0"]["header_reads"] = {"S3": "SchemaId"}
+expect("check flags a non-numeric header_reads key",
+       any("are not header" in f for f in failing(malformed)))
+edges = inbound_edges(malformed, PORTS, {PROVIDER})
+expect("inbound edges skip malformed header_reads keys instead of crashing",
+       edges and edges[0]["header_reads"] == {})
 
 edges = inbound_edges(WIRING, PORTS, {PROVIDER})
 expect("inbound edges name the consumer, port, and cells",

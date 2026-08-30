@@ -333,7 +333,7 @@ When debugging or extending the framework, preserve these rules:
 22. **POWER execution authority is exact.** Electrical actuation requires stable PlanGeneration plus the allocator's active epoch and exact Reservation/Link generations; staged reservations alone are never authority.
 23. **Interrupted publication is fail-closed.** Any odd/torn publication found after reflash is invalidated or kept unreadable until recovery establishes a complete state; Item 10 tests this rule across subsystem boundaries.
 24. **Live evidence is release-bound.** A field PASS belongs only to the framework/case-catalog fingerprint that produced it; automated model/harness evidence is never relabeled as a physical Stationeers PASS.
-25. **Device-port wiring is declared, not inferred.** Every port names its intended peer in `data/script_wiring.json` (see `docs/SCRIPT_WIRING.md`); relocating a peer's cells must fail validation for every stranded consumer, not only the magic-checking ones.
+25. **Device-port wiring is declared, not inferred.** Every port names its intended peer in `data/script_wiring.json` (see `docs/SCRIPT_WIRING.md`). Validation holds the declaration to the source: a port's magic/ABI checks must agree with its declared provider, and no consumer may read or write a migrated peer's `S0..S7` envelope — literally or through a dynamic range — without a reviewed `header_reads` declaration. Relocating payload above the envelope is a planning-time concern: `tools/plan_header_migration.py` lists every declared inbound edge (and every unattributable reference access) before a family moves.
 
 ## Terminology
 

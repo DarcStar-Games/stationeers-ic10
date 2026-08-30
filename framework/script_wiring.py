@@ -18,6 +18,7 @@ from framework.stack_envelope import BASE, LENGTH
 
 FORMAT = "IC10_SCRIPT_WIRING_V1"
 HEADER_CELLS = frozenset(range(BASE + 2, BASE + LENGTH))
+ENVELOPE_CELLS = frozenset(range(BASE, BASE + LENGTH))
 
 
 def load_wiring(root: Path) -> dict[str, Any]:
@@ -26,6 +27,14 @@ def load_wiring(root: Path) -> dict[str, Any]:
     schema = json.loads((root / "schemas/script_wiring.schema.json").read_text())
     validate(value, schema)
     return value
+
+
+def ranged(ranges: list[tuple[int, int]], cells: frozenset[int]) -> set[int]:
+    """The cells a set of dynamic ranges can reach inside `cells`."""
+    hit: set[int] = set()
+    for start, end in ranges:
+        hit |= cells & set(range(start, end + 1))
+    return hit
 
 
 def port_index(contracts: dict[str, dict[str, Any]]) -> dict[str, dict[str, dict[str, Any]]]:
@@ -41,6 +50,8 @@ def port_index(contracts: dict[str, dict[str, Any]]) -> dict[str, dict[str, dict
                 "kind": port["target"]["kind"],
                 "reads": set(stack["literal_reads"]),
                 "writes": set(stack["literal_writes"]),
+                "read_ranges": [(r["start"], r["end"]) for r in stack["dynamic_read_ranges"]],
+                "write_ranges": [(r["start"], r["end"]) for r in stack["dynamic_write_ranges"]],
                 "constraints": constraints,
             }
         index[source] = ports
@@ -106,6 +117,8 @@ def check_port(
         declared_reads = {cell: field for cell, field in declared_reads.items()
                           if cell not in invalid}
     allowed = {int(cell) for cell in declared_reads}
+    reached_reads = port["reads"] | ranged(port["read_ranges"], ENVELOPE_CELLS)
+    reached_writes = port["writes"] | ranged(port["write_ranges"], ENVELOPE_CELLS)
     magic = port["constraints"].get(0)
     abi = port["constraints"].get(1)
     for provider in peer["providers"]:
@@ -121,19 +134,24 @@ def check_port(
                     f"{source} {name}: checks S0 magic {magic}"
                     + (f" ABI {abi}" if isinstance(abi, int) else "")
                     + f" but provider {provider} does not publish it at S{BASE}")
+        elif isinstance(abi, int):
+            if not any(entry.get("abi") == abi for entry in headers):
+                failures.append(
+                    f"{source} {name}: checks S1 ABI {abi} but provider {provider}"
+                    f" publishes no S{BASE} header carrying it")
         if provider in migrated:
-            read = sorted((port["reads"] & HEADER_CELLS) - allowed)
+            read = sorted((reached_reads & HEADER_CELLS) - allowed)
             if read:
                 failures.append(
                     f"{source} {name}: reads S{read} of migrated {provider}"
                     " -- those are header cells now; relocate the read or declare"
                     " a reviewed header_reads entry")
-            written = sorted(port["writes"] & HEADER_CELLS)
+            written = sorted(reached_writes & ENVELOPE_CELLS)
             if written:
                 failures.append(
                     f"{source} {name}: writes S{written} of migrated {provider}"
-                    " -- only the owner may publish header cells")
-    unused = allowed - port["reads"]
+                    " -- only the owner may publish envelope cells")
+    unused = allowed - reached_reads
     if unused:
         failures.append(f"{source} {name}: header_reads declares S{sorted(unused)}"
                         " which the port never reads")
@@ -163,6 +181,7 @@ def inbound_edges(
                 "reads": sorted(port.get("reads", ())),
                 "writes": sorted(port.get("writes", ())),
                 "header_reads": {int(cell): field
-                                 for cell, field in peer.get("header_reads", {}).items()},
+                                 for cell, field in peer.get("header_reads", {}).items()
+                                 if cell.isdigit()},
             })
     return edges

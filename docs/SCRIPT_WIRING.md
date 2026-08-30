@@ -58,12 +58,14 @@ when:
   (the reverse is legitimate: a stack-shaped port may face a game device with a
   native stack, or an IC housing hosting an arbitrary program);
 - a port checks an `S0` magic (and `S1` ABI) that a declared provider does not
-  publish at `S0` — the mechanical edges and the declared edges must agree;
-- a port reads a migrated provider's `S2..S7` without a `header_reads`
-  declaration, or writes those cells at all — only the owner publishes header
+  publish at `S0` — the mechanical edges and the declared edges must agree; a
+  port pinning only the `S1` ABI is checked the same way;
+- a port reads a migrated provider's `S2..S7` — literally or through a declared
+  dynamic range — without a `header_reads` declaration, or writes anywhere in
+  that provider's `S0..S7` envelope at all: only the owner publishes envelope
   cells;
 - a `header_reads` declaration names a cell outside `S2..S7` or one the port
-  never reads.
+  never reaches.
 
 `validation/validators/validate_stack_envelopes.py` keeps its independent,
 source-scan-based guard for magic-checking consumers and reference-register
@@ -73,7 +75,10 @@ map's `header_reads` declarations, so there is one list to maintain.
 `tools/plan_header_migration.py` uses the map to print a family's exact inbound
 edges — every consumer port wired at a family member, with the cells it touches
 and which of them the header window displaces — instead of asking the operator
-to confirm every unattributed low-cell access by hand.
+to confirm every unattributed low-cell access by hand. Reference-register
+accesses (`getd`/`putd` through a resolved ReferenceId) have no port for the map
+to key on, so the planner still scans the family and its magic-namers and lists
+those separately for manual confirmation.
 
 ## Maintenance
 

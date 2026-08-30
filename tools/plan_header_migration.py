@@ -15,6 +15,7 @@ INVENTORY = ROOT / 'contracts/stack_envelope_inventory.json'
 SOFT_LIMIT = 120
 HARD_LIMIT = 128
 COMPUTED_WRITE = r'^poke (r[0-9]+|ra|sp) '
+REF_ACCESS = r'^(?:put|get)d (?:r\d+ )?(r\d+|ra|sp) (\d+)\b'
 SELF_OFFSET = r'^add (r[0-9]+|ra|sp) \1 (\d+)$'
 MOVE_BASE = r'^move (r[0-9]+|ra|sp) (\d+)$'
 ADD_BASE = r'^add (r[0-9]+|ra|sp) (r[0-9]+|ra|sp) (\d+)$'
@@ -123,6 +124,29 @@ def cells(values, base, length):
     return ','.join(f'S{cell}*' if cell in moved else f'S{cell}' for cell in values)
 
 
+def reference_edges(docs, family, magics):
+    """Low-cell accesses through a stack reference, which the wiring map cannot key on.
+
+    The map declares device-port peers only; a `getd`/`putd` through a resolved
+    ReferenceId has no port to look up. Reported for the family itself and for any
+    program naming one of its magics, because those are the only ones that can be
+    addressing a migrating program by reference.
+    """
+    interesting = set(family)
+    for source in docs:
+        text = Path(ROOT / source).read_text()
+        if any(str(magic) in text for magic in magics):
+            interesting.add(source)
+    edges = []
+    for source in sorted(interesting):
+        for number, line in enumerate(Path(ROOT / source).read_text().splitlines(), 1):
+            code = line.split('#', 1)[0].strip()
+            match = re.match(REF_ACCESS, code)
+            if match and 2 <= int(match.group(2)) < 8:
+                edges.append((source, number, code))
+    return edges
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument('family')
@@ -184,6 +208,14 @@ def main() -> None:
             print(f'      reviewed header read: S{cell} as {field}')
     if not edges:
         print('   none: nothing wires a port at any program in this family')
+    magics = {header['magic'] for source in family for header in docs[source]['own_stack']['headers']}
+    references = reference_edges(docs, family, magics)
+    if references:
+        print('\nreference accesses to S2..S7 in the family and its magic-namers:')
+        print('   (a reference carries no port for the wiring map to key on; confirm each target)')
+        for source, number, code in references:
+            marker = 'IN FAMILY' if Path(source).name in names else '         '
+            print(f'   {marker} {Path(source).name}:{number}: {code}')
     print('\nvalidators and tests naming these programs:')
     for path in sorted(glob.glob(str(ROOT / 'tests/test_*.py')) + glob.glob(str(ROOT / 'validation/validators/*.py'))):
         text = Path(path).read_text()

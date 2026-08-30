@@ -79,7 +79,7 @@ viewt=(R/'ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10').rea
 for n in ('clr db','poke 0 31415969','poke 1 5','poke 3 HASH("CatalogSchema.ResourceTransform.v4")','poke 18 1 # immutable candidate publication LAST'):
     need(loader,n,'transform catalog loader')
 if 'putd ' in loader or 'put d0 ' in loader or 'yield' in loader: fails.append('transform catalog loader leaked push/poll behavior')
-for n in ('poke 0 31415952','poke 1 4','add r6 r8 12','mul r0 r4 4','jal CopyPool'):
+for n in ('poke 0 31415952','poke 1 4','add r6 r8 12','mul r9 r11 4','jal CopyPool','poke 68 r10'):
     need(viewt,n,'transform profile view')
 for x in trs['transforms']:
     if '# '+x['display_name'] not in loader: fails.append(x['slug']+': transform human-name comment missing')

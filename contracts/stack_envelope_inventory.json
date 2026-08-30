@@ -14672,8 +14672,8 @@
             "end": 511
           }
         ],
-        "line_count": 121,
-        "line_headroom_120": -1,
+        "line_count": 115,
+        "line_headroom_120": 5,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -14714,7 +14714,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "49d27fd438c041cf93ee14480a67f600c1c4afd5570e26c117b38bb799c8b8b5",
+          "source_sha256": "309045a00e8d7c5286e340445ef1c1e245cfcc6fad294610aad32c0bd6348226",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
