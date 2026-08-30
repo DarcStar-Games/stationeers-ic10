@@ -29,9 +29,9 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 85,
-    "legacy_exempt": 89,
-    "backlog_reserved_cell_users": 79,
+    "migrated_v1": 87,
+    "legacy_exempt": 87,
+    "backlog_reserved_cell_users": 77,
     "backlog_dynamic_range_users": 22
   },
   "services": [
@@ -10960,7 +10960,7 @@
       "source": "ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10",
       "service_contract_id": "ic10.script.pressure.medium.purity.guard",
       "deployment_family": "pressure-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -10985,12 +10985,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 8,
-        "highest_literal_cell": 7,
+        "literal_cell_count": 9,
+        "highest_literal_cell": 13,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 66,
-        "line_headroom_120": 54,
+        "line_count": 67,
+        "line_headroom_120": 53,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -10998,22 +10998,41 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pressure.medium.purity.guard",
+        "magic": 31415947,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "ecf44a2d6531e57a25d33628968ad74bc51891572e6f7e24588d28f251df5301",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 13
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "pressure-grid"
       }
     },
     {
@@ -12039,7 +12058,7 @@
       "source": "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10",
       "service_contract_id": "ic10.script.gas.mixture.purity.guard",
       "deployment_family": "process-gas-preparation",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -12064,12 +12083,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 8,
-        "highest_literal_cell": 7,
+        "literal_cell_count": 9,
+        "highest_literal_cell": 13,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 76,
-        "line_headroom_120": 44,
+        "line_count": 77,
+        "line_headroom_120": 43,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12077,22 +12096,41 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.gas.mixture.purity.guard",
+        "magic": 31415947,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "89ca4f3765b7388fbf00f3323970c99bbeb3e78bf9fb561df230b654de4adafc",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 13
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "process-gas-preparation"
       }
     },
     {
@@ -12249,7 +12287,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "79a7bf6ab700bb9dd4c423083f51ac3f04b17247ab7518141199d6f37ab4464a",
+          "source_sha256": "0f3cd23ed1bab8b0e9d72ab98bb125580b9c83ea8083a5a2c44d3d6e72e6b596",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {

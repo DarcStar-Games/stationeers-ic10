@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10",
-  "source_sha256": "79a7bf6ab700bb9dd4c423083f51ac3f04b17247ab7518141199d6f37ab4464a",
+  "source_sha256": "0f3cd23ed1bab8b0e9d72ab98bb125580b9c83ea8083a5a2c44d3d6e72e6b596",
   "identity": {
     "service_id": "ic10.script.gas.fuel.generator.utility.controller",
     "implementation_revision": "1.0",
@@ -158,8 +158,8 @@
       },
       "stack": {
         "literal_reads": [
-          5,
-          7
+          11,
+          13
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -170,7 +170,7 @@
         "dynamic_write_range_source": "none",
         "constraints": [
           {
-            "address": 5,
+            "address": 11,
             "equals": 1
           }
         ]
@@ -178,8 +178,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.063fbb17a50f4644",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.063fbb17a50f4644",
+        "interface_id": "ic10.interface.access.d73b497b7366c1d3",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.d73b497b7366c1d3",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

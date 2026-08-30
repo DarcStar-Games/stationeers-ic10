@@ -39,8 +39,8 @@ guard.stack[4]=0;tr.run(1);ck(furnace.props.get('SettingInput')==0,'withdrawn Pr
 prof=Device(301,stack={0:31415963,1:1,28:1,29:3,8:1,9:H('Fuel.H2O2'),10:1,11:5,12:1,13:'RatioVolatiles',14:2/3,15:'RatioOxygen',16:1/3,17:.005,18:1,19:5000,20:12805,21:1},props={'ReferenceId':301})
 mix=Device(302,props={'ReferenceId':302,'TotalMoles':10,'Temperature':300,'RatioVolatiles':2/3,'RatioOxygen':1/3})
 pg=IC10((R/'ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10').read_text(),{'d0':mix,'d1':prof},self_ref=250);pg.run(2)
-ck(pg.stack.get(0)==31415947 and pg.stack.get(5)==1 and pg.stack.get(2)==H('Fuel.H2O2'),'two-component mixture did not reuse PurityGuard ABI1')
-mix.props['RatioVolatiles']=.60;mix.props['RatioOxygen']=.40;pg.run(1);ck(pg.stack.get(5)==-4,'off-ratio fuel mix not rejected')
+ck(pg.stack.get(0)==31415947 and pg.stack.get(11)==1 and pg.stack.get(8)==H('Fuel.H2O2'),'two-component mixture did not reuse PurityGuard ABI1')
+mix.props['RatioVolatiles']=.60;mix.props['RatioOxygen']=.40;pg.run(1);ck(pg.stack.get(11)==-4,'off-ratio fuel mix not rejected')
 # Composition mixer compensates for unequal source temperatures.
 in1=Device(311,props={'ReferenceId':311,'Temperature':400,'RatioVolatiles':1.0})
 in2=Device(312,props={'ReferenceId':312,'Temperature':300,'RatioOxygen':1.0})
@@ -63,7 +63,7 @@ tout.props['Pressure']=600;tm.run(1);ck(tmix.props.get('On')==0 and tm.stack.get
 gfg=Device(401,props={'ReferenceId':401,'PrefabHash':H('StructureGasGenerator'),'Pressure':.05,'Temperature':300,'Error':0,'On':0})
 plan=Device(402,stack={0:31416028,1:1,2:2,5:5000,6:0},props={'ReferenceId':402})
 ambient=Device(403,props={'ReferenceId':403,'Pressure':100,'Temperature':300})
-guard2=Device(404,stack={5:1,7:2},props={'ReferenceId':404})
+guard2=Device(404,stack={11:1,13:2},props={'ReferenceId':404})
 gc=IC10((R/'ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10').read_text(),{'d0':gfg,'d1':plan,'d2':ambient,'d3':guard2},self_ref=253)
 gc.stack.update({16:H('Fuel.H2O2'),17:.1,18:1,19:1000,20:1});gc.run(2)
 ck(gc.stack.get(10)==1 and gc.stack.get(21)==2 and gfg.props.get('On')==0,'GFG shortage did not request fuel while remaining safely off')
@@ -99,7 +99,7 @@ th=IC10((R/'ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10'
 ck(to_pc(th,54),'could not reach thermal-mixer final demand cut');threq.stack[11]=2;th.run(1)
 ck(thdev.props.get('On')==0,'thermal mixer actuated on stale ProcessCondition generation')
 # GFG: replace PowerPlan sequence immediately before final plan/mixture re-fence.
-gf=Device(531,props={'ReferenceId':531,'PrefabHash':H('StructureGasGenerator'),'Pressure':.5,'Temperature':300,'Error':0,'On':0});pl=Device(532,stack={0:31416028,1:1,2:2,5:5000,6:0},props={'ReferenceId':532});amb=Device(533,props={'ReferenceId':533,'Pressure':100,'Temperature':300});mg=Device(534,stack={5:1,7:2},props={'ReferenceId':534})
+gf=Device(531,props={'ReferenceId':531,'PrefabHash':H('StructureGasGenerator'),'Pressure':.5,'Temperature':300,'Error':0,'On':0});pl=Device(532,stack={0:31416028,1:1,2:2,5:5000,6:0},props={'ReferenceId':532});amb=Device(533,props={'ReferenceId':533,'Pressure':100,'Temperature':300});mg=Device(534,stack={11:1,13:2},props={'ReferenceId':534})
 gv=IC10((R/'ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10').read_text(),{'d0':gf,'d1':pl,'d2':amb,'d3':mg},self_ref=553);gv.stack.update({16:H('Fuel.H2O2'),17:.1,18:1,19:1000,20:1});gv.run(1)
 ck(to_pc(gv,57),'could not reach GFG final PowerPlan cut');pl.stack.update({2:4,5:0,6:0});gv.run(1)
 ck(gf.props.get('On')==0,'GFG started from stale/replaced PowerPlan shortage')

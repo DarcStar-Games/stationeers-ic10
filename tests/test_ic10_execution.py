@@ -29,7 +29,7 @@ for ratio,expect in [(.999,1),(.90,-4)]:
     analyzer=Device(201,props={'ReferenceId':201,'TotalMoles':100,'RatioPollutant':ratio})
     g=IC10((R/'ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10').read_text(),{'d0':analyzer,'d1':profile})
     g.run(2)
-    if g.stack.get(5)!=expect: fails.append(f'Purity Guard ratio {ratio} produced {g.stack.get(5)}, expected {expect}')
+    if g.stack.get(11)!=expect: fails.append(f'Purity Guard ratio {ratio} produced {g.stack.get(11)}, expected {expect}')
 # Grant Guard: coherent current topology must equal staged topology and committed planner epoch.
 transfer=Device(300,stack={96:27182818,97:2,99:'HASH:ControllerPressureTransfer',101:1,102:'HASH:Pollutant',106:401,107:402,108:5,109:7,110:500,111:4,115:10,117:401,118:402,119:'HASH:Pollutant',120:1},props={'ReferenceId':300})
 planner=Device(500,stack={0:31415937,1:2,14:7},props={'ReferenceId':500})

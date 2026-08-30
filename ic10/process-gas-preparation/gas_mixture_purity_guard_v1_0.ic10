@@ -1,6 +1,7 @@
 # Two-gas Purity Guard ABI1. d0 analyzer,d1 mixture Profile.
 poke 0 31415947
 poke 1 1
+poke 2 0
 Loop:
 yield
 bdns d1 ProfileBad
@@ -65,12 +66,12 @@ Fault:
 move r1 0
 move r11 0
 Publish:
-poke 2 r1
-poke 3 r11
-poke 4 r6
-poke 5 r14
-poke 6 r15
-get r0 db 7
+poke 8 r1
+poke 9 r11
+poke 10 r6
+poke 11 r14
+poke 12 r15
+get r0 db 13
 add r0 r0 1
-poke 7 r0
+poke 13 r0
 j Loop

@@ -1073,12 +1073,13 @@ The Transfer runtime does **not** activate a staged grant directly. Its `d3` poi
 ```text
 S0  magic = 31415947
 S1  ABI = 1
-S2  MediumType
-S3  observed gas ratio
-S4  required purity threshold
-S5  status: 1 good, -1 profile, -2 sensor/property, -3 numeric, -4 contaminated
-S6  Resource Profile View generation used
-S7  publication generation; written LAST
+S2  capability mask = 0
+S8  MediumType
+S9  observed gas ratio
+S10 required purity threshold
+S11 status: 1 good, -1 profile, -2 sensor/property, -3 numeric, -4 contaminated
+S12 Resource Profile View generation used
+S13 publication generation; written LAST
 ```
 
 For a nonempty gas bus, `S3 >= S4` is required. Empty buses are accepted because there is no contaminating inventory.

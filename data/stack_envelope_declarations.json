@@ -2782,7 +2782,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "79a7bf6ab700bb9dd4c423083f51ac3f04b17247ab7518141199d6f37ab4464a",
+   "source_sha256": "0f3cd23ed1bab8b0e9d72ab98bb125580b9c83ea8083a5a2c44d3d6e72e6b596",
    "legacy_owned_ranges": [
     [
      8,
@@ -2795,6 +2795,52 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "process-gfg"
+  },
+  "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10": {
+   "service_id": "ic10.script.gas.mixture.purity.guard",
+   "magic": 31415947,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "89ca4f3765b7388fbf00f3323970c99bbeb3e78bf9fb561df230b654de4adafc",
+   "legacy_owned_ranges": [
+    [
+     8,
+     13
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "process-gas-preparation"
+  },
+  "ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10": {
+   "service_id": "ic10.script.pressure.medium.purity.guard",
+   "magic": 31415947,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "ecf44a2d6531e57a25d33628968ad74bc51891572e6f7e24588d28f251df5301",
+   "legacy_owned_ranges": [
+    [
+     8,
+     13
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "pressure-grid"
   }
  },
  "legacy_exemption": {

@@ -136,12 +136,13 @@ Statuses:
 ```text
 S0  magic = 31415947
 S1  ABI = 1
-S2  MediumType
-S3  observed ratio
-S4  required threshold
-S5  status: 1 good, -1 profile, -2 sensor/property, -3 numeric, -4 contaminated
-S6  Resource Profile View generation used
-S7  publication generation LAST
+S2  capability mask = 0
+S8  MediumType
+S9  observed ratio
+S10 required threshold
+S11 status: 1 good, -1 profile, -2 sensor/property, -3 numeric, -4 contaminated
+S12 Resource Profile View generation used
+S13 publication generation LAST
 ```
 
 ## Commissioning

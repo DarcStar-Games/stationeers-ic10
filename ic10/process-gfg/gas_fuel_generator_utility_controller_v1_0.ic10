@@ -37,11 +37,11 @@ l r8 d0 Temperature
 l r9 d2 Pressure
 l r10 d2 Temperature
 l r11 d0 ReferenceId
-get r12 d3 7
+get r12 d3 13
 blez r12 Bad
-get r0 d3 5
+get r0 d3 11
 bne r0 1 FuelWait
-get r0 d3 7
+get r0 d3 13
 bne r0 r12 Loop
 get r13 db 17
 get r14 db 18
@@ -63,7 +63,7 @@ j FuelWait
 Start:
 get r0 d1 2
 bne r0 r15 Loop
-get r0 d3 7
+get r0 d3 13
 bne r0 r12 Loop
 s d0 On 1
 move r3 1

@@ -21,15 +21,15 @@ blt r1 1 DomainBad
 bgt r1 3 DomainBad
 bne r3 r1 DomainBad
 bdns d2 PurityBad
-get r15 d2 7
+get r15 d2 13
 blez r15 PurityBad
 get r0 d2 0
 bne r0 31415947 PurityBad
-get r0 d2 2
+get r0 d2 8
 bne r0 r2 PurityBad
-get r0 d2 5
+get r0 d2 11
 bne r0 1 PurityBad
-get r0 d2 7
+get r0 d2 13
 bne r0 r15 Loop
 bdnvl d1 Pressure SensorBad
 bdnvl d1 Temperature SensorBad
