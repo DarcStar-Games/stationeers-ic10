@@ -29,9 +29,9 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 75,
-    "legacy_exempt": 99,
-    "backlog_reserved_cell_users": 89,
+    "migrated_v1": 77,
+    "legacy_exempt": 97,
+    "backlog_reserved_cell_users": 87,
     "backlog_dynamic_range_users": 23
   },
   "services": [
@@ -11800,7 +11800,7 @@
       "source": "ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10",
       "service_contract_id": "ic10.script.gas.mixer.utility.controller",
       "deployment_family": "process-gas-preparation",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -11825,12 +11825,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 5,
-        "highest_literal_cell": 4,
+        "literal_cell_count": 6,
+        "highest_literal_cell": 10,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 111,
-        "line_headroom_120": 9,
+        "line_count": 112,
+        "line_headroom_120": 8,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11838,19 +11838,41 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.gas.mixer.utility.controller",
+        "magic": 31416049,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "6dca6854eb8e65a829ffa1e6c43f62b029a11cdc8bdea6b031d5a41045feddd1",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 10
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "process-gas-preparation"
       }
     },
     {
@@ -11917,7 +11939,7 @@
       "source": "ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10",
       "service_contract_id": "ic10.script.thermal.gas.mixer.controller",
       "deployment_family": "process-gas-preparation",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -11942,12 +11964,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 6,
-        "highest_literal_cell": 5,
+        "literal_cell_count": 7,
+        "highest_literal_cell": 11,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 82,
-        "line_headroom_120": 38,
+        "line_count": 83,
+        "line_headroom_120": 37,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11955,20 +11977,41 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.thermal.gas.mixer.controller",
+        "magic": 31416050,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "f7000c6d39b7c76f32505b7fb81b375fec6a2e1798264965913740adeb023919",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 11
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "process-gas-preparation"
       }
     },
     {

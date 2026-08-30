@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10",
-  "source_sha256": "711535cdc7d0d51b3fa850dbf305c134992dbf0d39760de40a3102977a155893",
+  "source_sha256": "6dca6854eb8e65a829ffa1e6c43f62b029a11cdc8bdea6b031d5a41045feddd1",
   "identity": {
     "service_id": "ic10.script.gas.mixer.utility.controller",
     "implementation_revision": "1.0",
@@ -346,14 +346,15 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      4
+      10
     ],
     "literal_writes": [
       0,
       1,
       2,
-      3,
-      4
+      8,
+      9,
+      10
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -394,11 +395,12 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
-        "address": 3,
-        "name": "S3",
+        "address": 8,
+        "name": "S8",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -406,8 +408,17 @@
         ]
       },
       {
-        "address": 4,
-        "name": "S4",
+        "address": 9,
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 10,
+        "name": "S10",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

@@ -14,7 +14,7 @@ from framework.script_contracts import build_all
 from framework.stack_envelope import BASE, LENGTH, DeclarationError, build_inventory
 
 ROOT = _PROJECT_ROOT
-PILOT_FAMILIES = {"stack-monitor", "generic-telemetry", "directory", "catalog", "catalog-control-plane", "diagnostics", "power-jobs", "material-transform", "catalog-loader", "input-profile-catalog", "resource-profile-catalog", "transform-catalog", "transaction", "manufacturing", "controller-discovery", "pressure-domain", "recipe-catalog", "shared-input"}
+PILOT_FAMILIES = {"stack-monitor", "generic-telemetry", "directory", "catalog", "catalog-control-plane", "diagnostics", "power-jobs", "material-transform", "catalog-loader", "input-profile-catalog", "resource-profile-catalog", "transform-catalog", "transaction", "manufacturing", "controller-discovery", "pressure-domain", "recipe-catalog", "shared-input", "process-gas-preparation"}
 fails: list[str] = []
 
 try:

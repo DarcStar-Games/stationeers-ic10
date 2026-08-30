@@ -1,6 +1,7 @@
 # Thermal Gas Mixer ABI1. d0 hot,d1 cold,d2 out,d3 mixer,d4 condition.
 poke 0 31416050
 poke 1 1
+poke 2 0
 Loop:
 yield
 bdns d4 Bad
@@ -73,10 +74,10 @@ move r11 -1
 bdnvs d3 On Publish
 s d3 On 0
 Publish:
-poke 2 r11
-poke 3 r10
-poke 4 r6
-get r0 db 5
+poke 8 r11
+poke 9 r10
+poke 10 r6
+get r0 db 11
 add r0 r0 1
-poke 5 r0
+poke 11 r0
 j Loop

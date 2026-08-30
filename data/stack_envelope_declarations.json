@@ -2536,6 +2536,52 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "shared-input"
+  },
+  "ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10": {
+   "service_id": "ic10.script.gas.mixer.utility.controller",
+   "magic": 31416049,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "6dca6854eb8e65a829ffa1e6c43f62b029a11cdc8bdea6b031d5a41045feddd1",
+   "legacy_owned_ranges": [
+    [
+     8,
+     10
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "process-gas-preparation"
+  },
+  "ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10": {
+   "service_id": "ic10.script.thermal.gas.mixer.controller",
+   "magic": 31416050,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "f7000c6d39b7c76f32505b7fb81b375fec6a2e1798264965913740adeb023919",
+   "legacy_owned_ranges": [
+    [
+     8,
+     11
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "process-gas-preparation"
   }
  },
  "legacy_exemption": {

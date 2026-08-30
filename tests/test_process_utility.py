@@ -50,15 +50,15 @@ mixer=Device(314,props={'ReferenceId':314,'Setting':0,'On':0})
 mc=IC10((R/'ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10').read_text(),{'d0':in1,'d1':in2,'d2':out,'d3':mixer,'d4':prof,'d5':mixd},self_ref=251);mc.run(2)
 expected=((2/3)*400)/(((1/3)*300)+((2/3)*400))*100
 ck(close(mixer.props.get('Setting'),expected,1e-4) and mixer.props.get('On')==1,'temperature-corrected fuel mixer setting wrong')
-out.props.update({'TotalMoles':5,'Pressure':50,'RatioVolatiles':2/3,'RatioOxygen':1/3});mc.run(1);ck(mixer.props.get('On')==1 and mc.stack.get(2)==2,'fuel mixer stopped before demanded mixture pressure was available')
-out.props['Pressure']=120;mc.run(1);ck(mixer.props.get('On')==0 and mc.stack.get(2)==1,'fuel mixer did not stop after target composition+pressure became visible')
+out.props.update({'TotalMoles':5,'Pressure':50,'RatioVolatiles':2/3,'RatioOxygen':1/3});mc.run(1);ck(mixer.props.get('On')==1 and mc.stack.get(8)==2,'fuel mixer stopped before demanded mixture pressure was available')
+out.props['Pressure']=120;mc.run(1);ck(mixer.props.get('On')==0 and mc.stack.get(8)==1,'fuel mixer did not stop after target composition+pressure became visible')
 # Thermal mixer uses the process temperature window while preserving pressure routing as a separate authority.
 hot=Device(321,props={'ReferenceId':321,'Temperature':1000});cold=Device(322,props={'ReferenceId':322,'Temperature':300});tout=Device(323,props={'ReferenceId':323,'Temperature':500,'Pressure':100});tmix=Device(324,props={'ReferenceId':324,'Setting':0,'On':0})
 treq=Device(325,stack={0:31416048,1:1,4:500,6:600,7:700,10:1,11:2,12:1},props={'ReferenceId':325})
 tm=IC10((R/'ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10').read_text(),{'d0':hot,'d1':cold,'d2':tout,'d3':tmix,'d4':treq},self_ref=252);tm.run(2)
-ck(tmix.props.get('On')==1 and 0<=tmix.props.get('Setting',-1)<=100 and close(tm.stack.get(4),650),'thermal mixer did not target midpoint of bounded process window')
-tout.props['Temperature']=650;tm.run(1);ck(tmix.props.get('On')==1 and tm.stack.get(2)==2,'thermal mixer stopped before demanded conditioned-gas pressure')
-tout.props['Pressure']=600;tm.run(1);ck(tmix.props.get('On')==0 and tm.stack.get(2)==1,'thermal mixer did not stop at process temperature+pressure window')
+ck(tmix.props.get('On')==1 and 0<=tmix.props.get('Setting',-1)<=100 and close(tm.stack.get(10),650),'thermal mixer did not target midpoint of bounded process window')
+tout.props['Temperature']=650;tm.run(1);ck(tmix.props.get('On')==1 and tm.stack.get(8)==2,'thermal mixer stopped before demanded conditioned-gas pressure')
+tout.props['Pressure']=600;tm.run(1);ck(tmix.props.get('On')==0 and tm.stack.get(8)==1,'thermal mixer did not stop at process temperature+pressure window')
 # POWER shortage -> fuel-pressure request -> GFG start; shortage removal shuts it down.
 gfg=Device(401,props={'ReferenceId':401,'PrefabHash':H('StructureGasGenerator'),'Pressure':.05,'Temperature':300,'Error':0,'On':0})
 plan=Device(402,stack={0:31416028,1:1,2:2,5:5000,6:0},props={'ReferenceId':402})
@@ -71,7 +71,7 @@ ck(gc.stack.get(3)==H('Fuel.H2O2') and gc.stack.get(4)==.1 and gc.stack.get(5)==
 # The GFG ProcessCondition can directly drive prepared-fuel generation; mixing continues until its demanded pressure is available.
 gd=Device(405,stack=gc.stack,props={'ReferenceId':405});fuelout=Device(406,props={'ReferenceId':406,'TotalMoles':1,'Pressure':0,'RatioVolatiles':2/3,'RatioOxygen':1/3});gmix=Device(407,props={'ReferenceId':407,'Setting':0,'On':0})
 gmc=IC10((R/'ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10').read_text(),{'d0':in1,'d1':in2,'d2':fuelout,'d3':gmix,'d4':prof,'d5':gd},self_ref=2511);gmc.run(2);ck(gmix.props.get('On')==1,'GFG fuel demand did not activate prepared-mixture generation')
-fuelout.props['Pressure']=.2;gmc.run(1);ck(gmix.props.get('On')==0 and gmc.stack.get(2)==1,'prepared-mixture generator did not satisfy GFG pressure demand')
+fuelout.props['Pressure']=.2;gmc.run(1);ck(gmix.props.get('On')==0 and gmc.stack.get(8)==1,'prepared-mixture generator did not satisfy GFG pressure demand')
 gfg.props['Pressure']=.5;gc.run(1);ck(gfg.props.get('On')==1 and gc.stack.get(21)==1,'GFG did not start after fuel+ambient readiness')
 plan.stack.update({2:4,5:0,6:0});gc.run(1);ck(gfg.props.get('On')==0 and gc.stack.get(10)==0,'GFG did not stop when POWER shortage cleared')
 # Adversarial stale-authority cuts: mutate authority after initial observation but before final physical write.
@@ -91,12 +91,12 @@ ck(af.props.get('SettingInput')==0,'embedded furnace pump actuated after final-c
 # Composition mixer: change ProcessCondition generation just before its final demand fence.
 miout=Device(511,props={'ReferenceId':511,'TotalMoles':0,'Pressure':0,'RatioVolatiles':0,'RatioOxygen':0});mid=Device(512,stack={0:31416048,1:1,3:H('Fuel.H2O2'),4:100,10:1,11:1,12:1},props={'ReferenceId':512});midev=Device(513,props={'ReferenceId':513,'Setting':0,'On':0})
 mi=IC10((R/'ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10').read_text(),{'d0':in1,'d1':in2,'d2':miout,'d3':midev,'d4':prof,'d5':mid},self_ref=551);mi.run(1)
-ck(to_pc(mi,87),'could not reach composition-mixer final demand cut');mid.stack[11]=2;mi.run(1)
+ck(to_pc(mi,88),'could not reach composition-mixer final demand cut');mid.stack[11]=2;mi.run(1)
 ck(midev.props.get('On')==0,'composition mixer actuated on stale ProcessCondition generation')
 # Thermal mixer: same stale ProcessCondition cut.
 thout=Device(521,props={'ReferenceId':521,'Temperature':400,'Pressure':0});thdev=Device(522,props={'ReferenceId':522,'Setting':0,'On':0});threq=Device(523,stack={0:31416048,1:1,4:500,6:600,7:700,10:1,11:1,12:1},props={'ReferenceId':523})
 th=IC10((R/'ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10').read_text(),{'d0':hot,'d1':cold,'d2':thout,'d3':thdev,'d4':threq},self_ref=552);th.run(1)
-ck(to_pc(th,53),'could not reach thermal-mixer final demand cut');threq.stack[11]=2;th.run(1)
+ck(to_pc(th,54),'could not reach thermal-mixer final demand cut');threq.stack[11]=2;th.run(1)
 ck(thdev.props.get('On')==0,'thermal mixer actuated on stale ProcessCondition generation')
 # GFG: replace PowerPlan sequence immediately before final plan/mixture re-fence.
 gf=Device(531,props={'ReferenceId':531,'PrefabHash':H('StructureGasGenerator'),'Pressure':.5,'Temperature':300,'Error':0,'On':0});pl=Device(532,stack={0:31416028,1:1,2:2,5:5000,6:0},props={'ReferenceId':532});amb=Device(533,props={'ReferenceId':533,'Pressure':100,'Temperature':300});mg=Device(534,stack={5:1,7:2},props={'ReferenceId':534})
