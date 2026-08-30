@@ -13,6 +13,11 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 | Generic Input Profile | `31415929` | `S1` | 1 |
 | Generic Input Scanner | `31415930` | `S1` | 1 |
 | Generic Input Resolver | `31415931` | `S1` | 1 |
+| PI Config Policy | `31416077` | `S1` | 1 |
+| Sequencer Config Policy | `31416078` | `S1` | 1 |
+| Phase-Pressure Config Policy | `31416079` | `S1` | 1 |
+| Pressure-Domain Config Policy | `31416080` | `S1` | 1 |
+| Pressure-Transfer Config Policy | `31416081` | `S1` | 1 |
 | Generic Snapshot Directory Host | `31415981` | `S1` | 1 |
 | Generic Registry Directory Host | `31415982` | `S1` | 3 |
 | Directory Adapter | `31415983` | `S1` | 3 |
@@ -266,6 +271,11 @@ appear nowhere below.
 | `31416074` | 2 | `S0` | `ic10/manufacturing/print_candidate_executor_v2_0.ic10` | Evaluates one print candidate, reserves output capacity, resolves/material-allocates reagents, and launches the generic print runtime. |
 | `31416075` | 2 | `S0` | `ic10/manufacturing/generic_print_runtime_v2_0.ic10` | Runs a bounded printer batch through native ExecuteRecipe and verifies coherent ExportCount completion. |
 | `31416076` | 2 | `S0` | `ic10/manufacturing/transform_job_driver_v2_0.ic10` | Iterates TransformLane candidates and normalizes transform planning/execution progress for the scheduler. |
+| `31416077` | 1 | `S0` | `ic10/controller-pi/pi_config_policy_v1_0.ic10` | PI defaults, masks, validation, normalization, signature. |
+| `31416078` | 1 | `S0` | `ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10` | Sequencer defaults, timing/threshold validation, signature. |
+| `31416079` | 1 | `S0` | `ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10` | PhasePressure bounds/factors/mode validation and signature. |
+| `31416080` | 1 | `S0` | `ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10` | PressureDomain role/bounds validation and signature. |
+| `31416081` | 1 | `S0` | `ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10` | Validates the four-field PressureTransfer schema. |
 <!-- PUBLISHED_HEADERS END -->
 
 ## Catalog Store ABI v6

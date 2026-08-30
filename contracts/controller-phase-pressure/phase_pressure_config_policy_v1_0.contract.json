@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10",
-  "source_sha256": "db06d8d0ba2cb733500adcfac452099600e8dacad887bc4bbd65ed1e734757da",
+  "source_sha256": "d329b9bc798606621a2c32f3f30743a6dd85c080a2a02c7820d159710e22c37f",
   "identity": {
     "service_id": "ic10.script.phase.pressure.config.policy",
     "implementation_revision": "1.0",
@@ -100,7 +100,11 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [],
-    "literal_writes": [],
+    "literal_writes": [
+      0,
+      1,
+      2
+    ],
     "dynamic_read": false,
     "dynamic_write": false,
     "dynamic_read_ranges": [],
@@ -112,8 +116,45 @@
     "clears_all": false,
     "external_readable_ranges": [],
     "external_writable_ranges": [],
-    "fields": [],
-    "headers": []
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 31416079
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 0
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "magic": 31416079,
+        "abi": 1
+      }
+    ]
   },
   "behavior": {
     "publication_rules": [],
@@ -121,10 +162,33 @@
       "mode": "preserved-unless-overwritten",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 31416079,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
-    "provides": [],
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.31416079.abi1",
+        "base": 0,
+        "magic": 31416079,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      }
+    ],
     "consumes": [
       {
         "port": "d0",

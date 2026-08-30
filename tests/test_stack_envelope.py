@@ -61,8 +61,8 @@ ck(inventory["envelope"]["base"] == 0 and inventory["envelope"]["length"] == 8,
    "the common header is no longer the first eight stack cells")
 ck(inventory["totals"] == {
     "deployable_programs": 174,
-    "migrated_v1": 103,
-    "legacy_exempt": 71,
+    "migrated_v1": 108,
+    "legacy_exempt": 66,
     "backlog_reserved_cell_users": 61,
     "backlog_dynamic_range_users": 22,
 }, "generated coverage/backlog totals changed without review")

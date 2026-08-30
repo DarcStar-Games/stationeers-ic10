@@ -29,8 +29,8 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 103,
-    "legacy_exempt": 71,
+    "migrated_v1": 108,
+    "legacy_exempt": 66,
     "backlog_reserved_cell_users": 61,
     "backlog_dynamic_range_users": 22
   },
@@ -1552,35 +1552,74 @@
       "source": "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10",
       "service_contract_id": "ic10.script.phase.pressure.config.policy",
       "deployment_family": "controller-phase-pressure",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
-        "headers": [],
+        "headers": [
+          {
+            "base": 0,
+            "magic": 31416079,
+            "abi": 1
+          }
+        ],
         "schema_fields": [],
-        "payload_bases": [],
-        "payload_inventory_status": "no-declared-stack-protocol",
-        "existing_consumer_checks": []
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.31416079.abi1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": []
+          }
+        ]
       },
       "stack_pressure": {
-        "literal_cell_count": 0,
-        "highest_literal_cell": null,
+        "literal_cell_count": 3,
+        "highest_literal_cell": 2,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 94,
-        "line_headroom_120": 26,
+        "line_count": 97,
+        "line_headroom_120": 23,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
       "window_collision": {
-        "literal_cells": [],
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.phase.pressure.config.policy",
+        "magic": 31416079,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "d329b9bc798606621a2c32f3f30743a6dd85c080a2a02c7820d159710e22c37f",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "controller-phase-pressure"
       }
     },
     {
@@ -1693,35 +1732,74 @@
       "source": "ic10/controller-pi/pi_config_policy_v1_0.ic10",
       "service_contract_id": "ic10.script.pi.config.policy",
       "deployment_family": "controller-pi",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
-        "headers": [],
+        "headers": [
+          {
+            "base": 0,
+            "magic": 31416077,
+            "abi": 1
+          }
+        ],
         "schema_fields": [],
-        "payload_bases": [],
-        "payload_inventory_status": "no-declared-stack-protocol",
-        "existing_consumer_checks": []
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.31416077.abi1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": []
+          }
+        ]
       },
       "stack_pressure": {
-        "literal_cell_count": 0,
-        "highest_literal_cell": null,
+        "literal_cell_count": 3,
+        "highest_literal_cell": 2,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 86,
-        "line_headroom_120": 34,
+        "line_count": 89,
+        "line_headroom_120": 31,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
       "window_collision": {
-        "literal_cells": [],
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pi.config.policy",
+        "magic": 31416077,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "b84a85d68ab5c56836eabd239261afaf22bee72afc36b0b6dfa2339e6ce47c30",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "controller-pi"
       }
     },
     {
@@ -1834,35 +1912,74 @@
       "source": "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10",
       "service_contract_id": "ic10.script.sequencer.config.policy",
       "deployment_family": "controller-sequencer",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
-        "headers": [],
+        "headers": [
+          {
+            "base": 0,
+            "magic": 31416078,
+            "abi": 1
+          }
+        ],
         "schema_fields": [],
-        "payload_bases": [],
-        "payload_inventory_status": "no-declared-stack-protocol",
-        "existing_consumer_checks": []
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.31416078.abi1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": []
+          }
+        ]
       },
       "stack_pressure": {
-        "literal_cell_count": 0,
-        "highest_literal_cell": null,
+        "literal_cell_count": 3,
+        "highest_literal_cell": 2,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 97,
-        "line_headroom_120": 23,
+        "line_count": 100,
+        "line_headroom_120": 20,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
       "window_collision": {
-        "literal_cells": [],
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.sequencer.config.policy",
+        "magic": 31416078,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "b8c44abd945d096f489968342e0bdcb53ef9ff29fa98951c1ef00cca7257aa2d",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "controller-sequencer"
       }
     },
     {
@@ -10296,35 +10413,74 @@
       "source": "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10",
       "service_contract_id": "ic10.script.pressure.domain.config.policy",
       "deployment_family": "pressure-domain",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
-        "headers": [],
+        "headers": [
+          {
+            "base": 0,
+            "magic": 31416080,
+            "abi": 1
+          }
+        ],
         "schema_fields": [],
-        "payload_bases": [],
-        "payload_inventory_status": "no-declared-stack-protocol",
-        "existing_consumer_checks": []
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.31416080.abi1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": []
+          }
+        ]
       },
       "stack_pressure": {
-        "literal_cell_count": 0,
-        "highest_literal_cell": null,
+        "literal_cell_count": 3,
+        "highest_literal_cell": 2,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 78,
-        "line_headroom_120": 42,
+        "line_count": 81,
+        "line_headroom_120": 39,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
       "window_collision": {
-        "literal_cells": [],
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pressure.domain.config.policy",
+        "magic": 31416080,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "686c01ca2f82af873177ae07e0997cc59727b6f643f7750df316fb1d72ffb265",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "pressure-domain"
       }
     },
     {
@@ -11505,35 +11661,74 @@
       "source": "ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10",
       "service_contract_id": "ic10.script.pressure.transfer.config.policy",
       "deployment_family": "pressure-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
-        "headers": [],
+        "headers": [
+          {
+            "base": 0,
+            "magic": 31416081,
+            "abi": 1
+          }
+        ],
         "schema_fields": [],
-        "payload_bases": [],
-        "payload_inventory_status": "no-declared-stack-protocol",
-        "existing_consumer_checks": []
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.31416081.abi1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": []
+          }
+        ]
       },
       "stack_pressure": {
-        "literal_cell_count": 0,
-        "highest_literal_cell": null,
+        "literal_cell_count": 3,
+        "highest_literal_cell": 2,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 69,
-        "line_headroom_120": 51,
+        "line_count": 72,
+        "line_headroom_120": 48,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
       "window_collision": {
-        "literal_cells": [],
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pressure.transfer.config.policy",
+        "magic": 31416081,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "9cbd840c98815715e019d1b73f1d3476d92fcdf6f1a642e6dfccb8c3d2c33b55",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "pressure-grid"
       }
     },
     {

@@ -1,4 +1,7 @@
 alias Host d0 # Sequencer Policy v1.0: cycle geometry/defaults/validation.
+poke 0 31416078
+poke 1 1
+poke 2 0
 Boot:
 yield
 bdns Host Boot

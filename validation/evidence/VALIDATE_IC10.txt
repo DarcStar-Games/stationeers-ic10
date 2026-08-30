@@ -19,11 +19,11 @@ PASS ic10/controller-config/generic_persistent_config_host_v1_1.ic10 lines=120 h
 PASS ic10/controller-discovery/controller_directory_adapter_v4_0.ic10 lines= 58 headroom=70 max=79 CRLF= 850 comments= 1
 PASS ic10/controller-discovery/controller_selector_v3_0.ic10 lines=109 headroom=19 max=81 CRLF=1926 comments= 5
 PASS ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10 lines=124 headroom= 4 max=67 CRLF=1903 comments= 0
-PASS ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10 lines= 94 headroom=34 max=75 CRLF=1488 comments= 1
+PASS ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10 lines= 97 headroom=31 max=75 CRLF=1525 comments= 1
 PASS ic10/controller-pi/controller_pi_runtime_v1_1.ic10 lines=119 headroom= 9 max=80 CRLF=2333 comments= 9
-PASS ic10/controller-pi/pi_config_policy_v1_0.ic10 lines= 86 headroom=42 max=78 CRLF=1566 comments= 4
+PASS ic10/controller-pi/pi_config_policy_v1_0.ic10 lines= 89 headroom=39 max=78 CRLF=1603 comments= 4
 PASS ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10 lines=123 headroom= 5 max=64 CRLF=2011 comments= 5
-PASS ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10 lines= 97 headroom=31 max=74 CRLF=1574 comments= 2
+PASS ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10 lines=100 headroom=28 max=74 CRLF=1611 comments= 2
 PASS ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10 lines= 80 headroom=48 max=58 CRLF=1089 comments= 1
 PASS ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10 lines= 52 headroom=76 max=71 CRLF= 744 comments= 1
 PASS ic10/dependency-planning/dependency_child_creator_v2_0.ic10 lines=106 headroom=22 max=38 CRLF=1391 comments= 1
@@ -121,7 +121,7 @@ PASS ic10/power-jobs/power_job_scheduler_v1_0.ic10 lines= 75 headroom=53 max=58 
 PASS ic10/power-jobs/power_policy_target_resolver_v1_0.ic10 lines= 73 headroom=55 max=54 CRLF= 991 comments= 1
 PASS ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10 lines=124 headroom= 4 max=68 CRLF=1904 comments= 0
 PASS ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10 lines=118 headroom=10 max=57 CRLF=1799 comments= 0
-PASS ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10 lines= 78 headroom=50 max=68 CRLF=1267 comments= 1
+PASS ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10 lines= 81 headroom=47 max=68 CRLF=1304 comments= 1
 PASS ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10 lines=124 headroom= 4 max=73 CRLF=1902 comments= 1
 PASS ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10 lines=120 headroom= 8 max=49 CRLF=1920 comments= 0
 PASS ic10/pressure-grid/pressure_grid_cost_profile_v1_0.ic10 lines= 11 headroom=117 max=70 CRLF= 180 comments= 1
@@ -136,7 +136,7 @@ PASS ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10 lines=118 head
 PASS ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10 lines= 51 headroom=77 max=66 CRLF= 690 comments= 1
 PASS ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10 lines= 67 headroom=61 max=79 CRLF=1065 comments= 1
 PASS ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10 lines=120 headroom= 8 max=48 CRLF=1711 comments= 0
-PASS ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10 lines= 69 headroom=59 max=64 CRLF=1076 comments= 1
+PASS ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10 lines= 72 headroom=56 max=64 CRLF=1113 comments= 1
 PASS ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10 lines=112 headroom=16 max=88 CRLF=1726 comments= 2
 PASS ic10/printer-directory/printer_capacity_client_v2_0.ic10 lines=120 headroom= 8 max=70 CRLF=1674 comments= 1
 PASS ic10/printer-directory/printer_directory_adapter_v1_0.ic10 lines=117 headroom=11 max=88 CRLF=2216 comments= 1
