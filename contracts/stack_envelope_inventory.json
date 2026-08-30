@@ -29,10 +29,10 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 69,
-    "legacy_exempt": 105,
-    "backlog_reserved_cell_users": 95,
-    "backlog_dynamic_range_users": 24
+    "migrated_v1": 70,
+    "legacy_exempt": 104,
+    "backlog_reserved_cell_users": 94,
+    "backlog_dynamic_range_users": 23
   },
   "services": [
     {
@@ -5872,7 +5872,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "b4e2bbf06b335f4d59603f9321a5c74358c796cd9dc07e9a9154fc734d650834",
+          "source_sha256": "6629f5ccc8019794d03d901b4220e7785a12ad7b28b3becf56283b89a17aba95",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -6222,7 +6222,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "64387a07d9d49899a74f48cce9960ed9a9135ea5c76b024089d059ff44211def",
+          "source_sha256": "6eae9652c178387b7e9a0e7f2a3c7941007f237e744f2224873d84b9f94a4513",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -6342,7 +6342,7 @@
       "source": "ic10/manufacturing/print_material_resolver_v1_0.ic10",
       "service_contract_id": "ic10.script.print.material.resolver",
       "deployment_family": "manufacturing",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -6367,8 +6367,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 11,
-        "highest_literal_cell": 15,
+        "literal_cell_count": 13,
+        "highest_literal_cell": 18,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
@@ -6376,8 +6376,8 @@
             "end": 511
           }
         ],
-        "line_count": 117,
-        "line_headroom_120": 3,
+        "line_count": 119,
+        "line_headroom_120": 1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -6385,10 +6385,7 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          5,
-          6
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -6404,10 +6401,47 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.print.material.resolver",
+        "magic": 31415989,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "f722876b18223155780d5b9f3bfbfa7629237799bfc68f12363a06d9ef69f330",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 9
+            },
+            {
+              "start": 11,
+              "end": 18
+            },
+            {
+              "start": 20,
+              "end": 511
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 20,
+              "end": 511
+            }
+          ]
+        },
+        "pilot_family": "manufacturing"
       }
     },
     {

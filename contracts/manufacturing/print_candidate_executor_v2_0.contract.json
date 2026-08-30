@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/print_candidate_executor_v2_0.ic10",
-  "source_sha256": "64387a07d9d49899a74f48cce9960ed9a9135ea5c76b024089d059ff44211def",
+  "source_sha256": "6eae9652c178387b7e9a0e7f2a3c7941007f237e744f2224873d84b9f94a4513",
   "identity": {
     "service_id": "ic10.script.print.candidate.executor",
     "implementation_revision": "2.0",
@@ -25,13 +25,13 @@
       },
       "stack": {
         "literal_reads": [
-          6,
+          12,
           13
         ],
         "literal_writes": [
-          2,
-          11,
-          12
+          16,
+          17,
+          18
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -44,8 +44,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.3e2122901d72205f",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.3e2122901d72205f",
+        "interface_id": "ic10.interface.access.1cb351da731b16a7",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.1cb351da731b16a7",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

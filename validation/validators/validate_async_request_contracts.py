@@ -90,7 +90,7 @@ for f,result,token in [
  ('ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10','poke 8 1','poke 7 r15'),
  ('ic10/generic-jobs/generic_job_store_v1_0.ic10','poke 9 1','poke 8 r15'),
  ('ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10','poke 9 1','poke 8 r15'),
- ('ic10/manufacturing/print_material_resolver_v1_0.ic10','poke 6 1','poke 13 r15'),
+ ('ic10/manufacturing/print_material_resolver_v1_0.ic10','poke 12 1','poke 13 r15'),
  ('ic10/printer-directory/printer_capacity_client_v2_0.ic10','poke 7 r0','poke 6 r15'),
  ('ic10/manufacturing/transform_candidate_readiness_v1_0.ic10','poke 9 r0','poke 10 r0')]:
  need(f,result,token);before(f,result,token)

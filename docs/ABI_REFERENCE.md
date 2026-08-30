@@ -655,7 +655,7 @@ Magic `31416076`. `ic10/manufacturing/transform_job_driver_v2_0.ic10` iterates T
 
 ### Print Material Resolver ABI1
 
-Magic `31415989`. `ic10/manufacturing/print_material_resolver_v1_0.ic10` consumes Recipe Execution View on d0 and ResourceLink Snapshot Directory on d1. It publishes S3 InputCount, S6 status, S13 response token, and S20.. four-cell `[LinkRef, QuantityPerOutput, ResourceType, Unit]` records compatible with Multi Reservation Stager/Allocator.
+Magic `31415989`. `ic10/manufacturing/print_material_resolver_v1_0.ic10` consumes Recipe Execution View on d0 and ResourceLink Snapshot Directory on d1. Its request mailbox is S16 target printer ReferenceId, S17 requested output quantity, and S18 request generation. It publishes S8 printer binding echo, S9 InputCount, S11 generation, S12 status, S13 response token, and S20.. four-cell `[LinkRef, QuantityPerOutput, ResourceType, Unit]` records compatible with Multi Reservation Stager/Allocator.
 
 ### Generic Print Runtime ABI2
 

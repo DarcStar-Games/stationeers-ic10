@@ -1,14 +1,15 @@
 poke 0 31415989
 poke 1 1
-poke 5 0
-poke 6 0
+poke 2 0
+poke 11 0
+poke 12 0
 Loop:
 yield
-get r15 db 12
+get r15 db 18
 get r0 db 13
 beq r15 r0 Loop
-get r2 db 2
-get r6 db 11
+get r2 db 16
+get r6 db 17
 blez r2 Bad
 blez r6 Bad
 get r14 d0 6
@@ -101,17 +102,18 @@ GenA:
 get r0 d1 3
 Gen:
 bne r0 r10 Loop
-poke 3 r8
-get r0 db 5
+poke 9 r8
+poke 8 r2
+get r0 db 11
 add r0 r0 1
-poke 5 r0
-poke 6 1
+poke 11 r0
+poke 12 1
 poke 15 r10
 poke 13 r15
 j Loop
 Bad:
 move r0 -1
 Fail:
-poke 6 r0
+poke 12 r0
 poke 13 r15
 j Loop

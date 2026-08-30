@@ -786,7 +786,7 @@
     "providers": [
      "ic10/manufacturing/print_material_resolver_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:277: \"then wire Generic Print Runtime `d0 -> Print Material Resolver`, `d1 -> print Allocator`\"; docs/MANUFACTURING_SCHEDULER.md:433: \"Configure Print Runtime `d0 -> Print Material Resolver`\" [Constraint addr6==1 matches the resolver's status cell (resolver initializes cells 5 and 6 to 0 and publishes readiness there).]"
+    "note": "docs/DEPLOYMENT.md:277: \"then wire Generic Print Runtime `d0 -> Print Material Resolver`, `d1 -> print Allocator`\"; docs/MANUFACTURING_SCHEDULER.md:433: \"Configure Print Runtime `d0 -> Print Material Resolver`\" [Constraint addr12==1 matches the resolver's status cell (resolver initializes cells 11 and 12 to 0 and publishes readiness there).]"
    },
    "d1": {
     "kind": "script",

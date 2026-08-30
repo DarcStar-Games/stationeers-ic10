@@ -33,16 +33,16 @@ l1=Device(213,stack={2:211,3:212,5:-1301215609,9:1,22:900,27:'HASH:Iron'},props=
 l2=Device(223,stack={2:221,3:222,5:-404336834,9:1,22:900,27:'HASH:Copper'},props={'ReferenceId':223})
 ld=Device(230,stack={0:31415981,1:1,2:0,3:4,5:2,7:0,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:64,13:0,32:213,33:223},props={'ReferenceId':230})
 rv=IC10(src('ic10/manufacturing/print_material_resolver_v1_0.ic10'),{'d0':recipe,'d1':ld,'l1':l1,'l2':l2,'sr1':sr1,'dr1':dr1,'sr2':sr2,'dr2':dr2});rv.run(1)
-rv.stack.update({2:900,11:2,12:1});rv.run(1)
-ck(rv.stack.get(6)==1 and rv.stack.get(3)==2,'print material resolver rejected reachable reagents')
+rv.stack.update({16:900,17:2,18:1});rv.run(1)
+ck(rv.stack.get(12)==1 and rv.stack.get(9)==2 and rv.stack.get(8)==900,'print material resolver rejected reachable reagents')
 ck([rv.stack.get(20+i) for i in range(8)]==[213,30,-1301215609,2,223,10,-404336834,2],'print resolver did not publish transform-compatible four-cell link records')
 # Insufficient source resource is classified WAIT_RESOURCE; sink loss is WAIT_CAPACITY.
-sr1.stack[6]=1;rv.stack[12]=2;rv.run(1);ck(rv.stack.get(6)==-3,'insufficient reagent was not classified resource wait')
-sr1.stack[6]=100;dr1.stack[7]=1;rv.stack[12]=3;rv.run(1);ck(rv.stack.get(6)==-4,'insufficient sink capacity was not classified capacity wait')
+sr1.stack[6]=1;rv.stack[18]=2;rv.run(1);ck(rv.stack.get(12)==-3,'insufficient reagent was not classified resource wait')
+sr1.stack[6]=100;dr1.stack[7]=1;rv.stack[18]=3;rv.run(1);ck(rv.stack.get(12)==-4,'insufficient sink capacity was not classified capacity wait')
 dr1.stack[7]=100
 
 # Generic print runtime consumes the same allocator completion contract and native printer instruction stack.
-resolver=Device(300,stack={2:910,3:2,5:1,6:1,16:1},props={'ReferenceId':300})
+resolver=Device(300,stack={8:910,9:2,11:1,12:1},props={'ReferenceId':300})
 allocator=Device(301,stack={22:0,16:0},props={'ReferenceId':301})
 printer=Device(910,stack={},props={'ReferenceId':910,'ExportCount':5,'Error':0,'On':0})
 pr=IC10(src('ic10/manufacturing/generic_print_runtime_v2_0.ic10'),{'d0':resolver,'d1':allocator,'p':printer});pr.run(1)
