@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-grid/material_transfer_executor_v1_0.ic10",
-  "source_sha256": "ae539452c38e829dd5e6ab7c85dec690c00963953e70708f1f972f667cf41f3a",
+  "source_sha256": "c3d562e6ebaa6a295bd43f06f5f860f8f5fbeb89a5f4e5e4e4ab0deb545ccd47",
   "identity": {
     "service_id": "ic10.script.material.transfer.executor",
     "implementation_revision": "1.0",
@@ -72,8 +72,8 @@
       },
       "stack": {
         "literal_reads": [
-          6,
-          7
+          24,
+          25
         ],
         "literal_writes": [
           16,
@@ -92,8 +92,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.65e4aaff15106f55",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.65e4aaff15106f55",
+        "interface_id": "ic10.interface.access.ad46bdcf3dd82916",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.ad46bdcf3dd82916",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [

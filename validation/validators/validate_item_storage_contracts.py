@@ -51,8 +51,8 @@ if 'yield' in body: fails.append('196 direct storage scan yields inside bounded 
 # SDB is explicitly lower-bound, dedicated, locked, and never pretends stack count is exact quantity.
 need('ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10','poke 13 24','bne r0 1 Bad','get r7 db 21','l r4 d0 Quantity','mul r8 r4 r7','sub r9 600 r4','s d0 Lock 1')
 # SDB feeder reuses Material Feeder ABI and exact Stacker metering after FIFO stack export.
-need('ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10','poke 0 31415961','s d0 Lock 1','l r0 d0 Quantity','s d0 Open 1','l r0 d1 ImportCount','s d1 Setting r9','s d1 Output 0','poke 7 r6')
-before('ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10','poke 6 0','poke 7 r6')
+need('ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10','poke 0 31415961','s d0 Lock 1','l r0 d0 Quantity','s d0 Open 1','l r0 d1 ImportCount','s d1 Setting r9','s d1 Output 0','poke 25 r6')
+before('ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10','poke 24 0','poke 25 r6')
 if fails:
  print('Item storage contracts: FAIL'); [print(' -',x) for x in fails]; sys.exit(1)
 print('Item storage contracts: PASS')

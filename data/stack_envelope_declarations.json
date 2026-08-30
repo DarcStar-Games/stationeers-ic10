@@ -2728,7 +2728,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "ae539452c38e829dd5e6ab7c85dec690c00963953e70708f1f972f667cf41f3a",
+   "source_sha256": "c3d562e6ebaa6a295bd43f06f5f860f8f5fbeb89a5f4e5e4e4ab0deb545ccd47",
    "legacy_owned_ranges": [
     [
      8,
@@ -2841,6 +2841,52 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "pressure-grid"
+  },
+  "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10": {
+   "service_id": "ic10.script.material.vending.stacker.feeder",
+   "magic": 31415961,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "4cf7cc3bc0a19d3c869b18c046346d16449c01f5e9bc94434f2605b151196688",
+   "legacy_owned_ranges": [
+    [
+     8,
+     25
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "material-grid"
+  },
+  "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10": {
+   "service_id": "ic10.script.material.sdb.stacker.feeder",
+   "magic": 31415961,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "2e7f2656f025568c4dcf2a4077c01a3a73a29ab66229d460ead56d93213e88dd",
+   "legacy_owned_ranges": [
+    [
+     8,
+     25
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "item-storage-sdb"
   }
  },
  "legacy_exemption": {

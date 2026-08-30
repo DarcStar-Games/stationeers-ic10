@@ -42,6 +42,10 @@ SOFT_LIMIT_EXEMPTIONS = {
         "publishes the common S0 header; its Generic Telemetry block stays at S96",
     "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10":
         "publishes the common S0 header; its Generic Telemetry block stays at S96",
+    "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10":
+        "publishes the common S0 header with its Feeder ABI1 payload relocated above it",
+    "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10":
+        "publishes the common S0 header with its Feeder ABI1 payload relocated above it",
 }
 
 

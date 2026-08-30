@@ -53,11 +53,11 @@ bne r0 31415961 Bad
 get r0 d2 1
 bne r0 1 Bad
 l r9 d2 ReferenceId
-get r10 d2 2
+get r10 d2 12
 bne r7 r10 Bad
-get r11 d2 3
-get r12 d2 4
-get sp d2 5
+get r11 d2 13
+get r12 d2 14
+get sp d2 15
 get r13 d2 11
 get r0 d2 10
 bne r0 r14 Loop

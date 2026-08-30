@@ -66,7 +66,7 @@ PASS ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10 lines= 90 h
 PASS ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10 lines=120 headroom= 8 max=25 CRLF=1666 comments= 0
 PASS ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10 lines=120 headroom= 8 max=35 CRLF=1618 comments= 0
 PASS ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10 lines=116 headroom=12 max=38 CRLF=1605 comments= 0
-PASS ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10 lines=120 headroom= 8 max=80 CRLF=1694 comments= 1
+PASS ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10 lines=121 headroom= 7 max=80 CRLF=1716 comments= 1
 PASS ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10 lines= 82 headroom=46 max=79 CRLF=1215 comments= 1
 PASS ic10/item-storage-vending/material_vending_inventory_v1_0.ic10 lines=112 headroom=16 max=83 CRLF=1884 comments=11
 PASS ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10 lines=108 headroom=20 max=87 CRLF=1430 comments= 1
@@ -85,10 +85,10 @@ PASS ic10/manufacturing/transform_job_driver_v2_0.ic10 lines=114 headroom=14 max
 PASS ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10 lines= 78 headroom=50 max=87 CRLF=1211 comments= 1
 PASS ic10/material-grid/material_export_slot_endpoint_v1_0.ic10 lines= 52 headroom=76 max=83 CRLF= 794 comments= 1
 PASS ic10/material-grid/material_import_slot_endpoint_v1_0.ic10 lines= 62 headroom=66 max=76 CRLF= 861 comments= 1
-PASS ic10/material-grid/material_resource_link_v1_0.ic10 lines=117 headroom=11 max=70 CRLF=1689 comments= 1
-PASS ic10/material-grid/material_transfer_executor_v1_0.ic10 lines=120 headroom= 8 max=62 CRLF=1692 comments= 2
+PASS ic10/material-grid/material_resource_link_v1_0.ic10 lines=117 headroom=11 max=70 CRLF=1693 comments= 1
+PASS ic10/material-grid/material_transfer_executor_v1_0.ic10 lines=120 headroom= 8 max=62 CRLF=1696 comments= 2
 PASS ic10/material-grid/material_transfer_grant_guard_v1_0.ic10 lines=120 headroom= 8 max=84 CRLF=1779 comments= 1
-PASS ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10 lines=120 headroom= 8 max=72 CRLF=1718 comments= 2
+PASS ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10 lines=121 headroom= 7 max=73 CRLF=1741 comments= 2
 PASS ic10/material-transform/generic_material_transform_runtime_v2_0.ic10 lines=120 headroom= 8 max=20 CRLF=1696 comments= 0
 PASS ic10/material-transform/material_transform_admission_v1_0.ic10 lines=123 headroom= 5 max=82 CRLF=1836 comments= 1
 PASS ic10/material-transform/material_transform_link_resolver_v1_0.ic10 lines=123 headroom= 5 max=50 CRLF=1725 comments= 0

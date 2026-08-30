@@ -25,9 +25,9 @@ jal Grant
 j Publish
 WaitReady:
 get r1 db 14
-get r0 d1 7
+get r0 d1 25
 bne r0 r1 Publish
-get r0 d1 6
+get r0 d1 24
 bltz r0 Fail
 beqz r0 Publish
 get r2 db 12
@@ -38,9 +38,9 @@ poke 9 2
 j Publish
 WaitEmit:
 get r1 db 14
-get r0 d1 7
+get r0 d1 25
 bne r0 r1 Publish
-get r0 d1 6
+get r0 d1 24
 bltz r0 Fail
 bne r0 2 Publish
 poke 9 3

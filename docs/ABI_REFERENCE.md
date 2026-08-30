@@ -1596,16 +1596,17 @@ Observed/public state:
 ```text
 S0   magic
 S1   ABI = 1
-S2   source Vending ReferenceId
-S3   Stacker ReferenceId
-S4   current Stacker buffer quantity
-S5   current Stacker buffer ResourceType
-S6   status: 0 idle, 1 exact batch ready, 2 emitted, -1 fault
-S7   active/request epoch
+S2   capability mask = 0
 S8   ready epoch
 S9   emitted epoch
 S10  publication generation
 S11  Logic Sorter ReferenceId
+S12  source Vending ReferenceId
+S13  Stacker ReferenceId
+S14  current Stacker buffer quantity
+S15  current Stacker buffer ResourceType
+S24  status: 0 idle, 1 exact batch ready, 2 emitted, -1 fault
+S25  active/request epoch
 ```
 
 Executor request surface:
@@ -1619,7 +1620,7 @@ S19  release-command epoch; Executor writes only after sink counter snapshot
 
 Internal persistent state uses S20-S23. `S0` magic is also the reflash marker: when the same ABI image is reflashed, an in-flight prepared batch is retained instead of being cleared.
 
-The request surface follows `ASYNC_REQUEST_V1 / LIVE_CURRENT`. Executor writes S16/S17 and resets S19 before publishing request epoch S18 **last**. Feeder resets request-specific S6 to idle and initializes its internal/hardware state before publishing matching current token S7 **last**. Immediate device-unavailable faults publish S6=-1 before S7, so a caller is never stranded behind an identity the Feeder will never expose. S8/S9 remain ready/emitted evidence, but consumers must first require S7 to equal the expected request epoch.
+The request surface follows `ASYNC_REQUEST_V1 / LIVE_CURRENT`. Executor writes S16/S17 and resets S19 before publishing request epoch S18 **last**. Feeder resets request-specific S24 to idle and initializes its internal/hardware state before publishing matching current token S25 **last**. Immediate device-unavailable faults publish S24=-1 before S25, so a caller is never stranded behind an identity the Feeder will never expose. S8/S9 remain ready/emitted evidence, but consumers must first require S25 to equal the expected request epoch.
 
 ### Material Transfer Executor ABI v1
 
