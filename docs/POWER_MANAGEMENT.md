@@ -22,12 +22,12 @@ For Station Batteries, dispatch uses a **one-game-tick horizon**: the safe insta
 All live power providers use Generic Resource Endpoint ABI1 (`magic 31415949`). The ordinary Endpoint cells retain their generic meaning:
 
 ```text
-S2  ResourceClass = POWER
-S3  ResourceType = HASH("Power.Electrical")
-S4  role bits
-S5  ExportAvailable watts
-S6  ImportCapacity watts
-S7  generic current quantity/capacity summary
+S52 ResourceClass = POWER
+S53 ResourceType = HASH("Power.Electrical")
+S54 role bits
+S55 ExportAvailable watts
+S56 ImportCapacity watts
+S57 generic current quantity/capacity summary
 S8  health
 S9  native physical provider ReferenceId
 S11 publication generation

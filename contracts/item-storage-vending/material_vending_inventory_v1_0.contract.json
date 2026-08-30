@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-vending/material_vending_inventory_v1_0.ic10",
-  "source_sha256": "a91d527212916e716e9b54c9180047034aad6f656d083a75c8dbb0cc095b1cee",
+  "source_sha256": "abeedd3ae5de0c1efaa60bbc754ad910e59dd30d654d06d0c13009f334c7cb69",
   "identity": {
     "service_id": "ic10.script.material.vending.inventory",
     "implementation_revision": "1.0",
@@ -167,11 +167,6 @@
       0,
       1,
       2,
-      3,
-      4,
-      5,
-      6,
-      7,
       8,
       9,
       10,
@@ -182,7 +177,13 @@
       35,
       38,
       39,
-      40
+      40,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -219,62 +220,12 @@
       {
         "address": 2,
         "name": "S2",
-        "value_type": "enum",
-        "semantic_source": "source",
-        "access": [
-          "self-write"
-        ],
-        "const": 2,
-        "description": "ResourceClass ITEM"
-      },
-      {
-        "address": 3,
-        "name": "S3",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "source",
-        "access": [
-          "self-write"
         ],
-        "const": 7,
-        "description": "export + import + storage"
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "source",
-        "access": [
-          "self-write"
-        ],
-        "const": 0,
-        "description": "chute throughput unknown here"
+        "const": 0
       },
       {
         "address": 8,
@@ -404,6 +355,66 @@
         "access": [
           "self-write"
         ]
+      },
+      {
+        "address": 52,
+        "name": "S52",
+        "value_type": "enum",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "const": 2,
+        "description": "ResourceClass ITEM"
+      },
+      {
+        "address": 53,
+        "name": "S53",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 54,
+        "name": "S54",
+        "value_type": "number",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "const": 7,
+        "description": "export + import + storage"
+      },
+      {
+        "address": 55,
+        "name": "S55",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 56,
+        "name": "S56",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 57,
+        "name": "S57",
+        "value_type": "number",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "const": 0,
+        "description": "chute throughput unknown here"
       }
     ],
     "headers": [

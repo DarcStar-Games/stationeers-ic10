@@ -23,10 +23,10 @@ parts={x['partition_key']:x for x in M['partitions']}
 for cls,name in [(4,'ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10'),(5,'ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10')]:
  if cls not in parts or name not in parts[cls]['loaders']:fails.append(f'missing generated ResourceClass {cls} loader')
 # Endpoint/Reservation direction contract: Endpoint S5/S6 -> Reservation S6/S7.
-need('ic10/power-grid/power_producer_endpoint_v1_0.ic10','poke 2 4','poke 5 r3','poke 35 1','poke 38 r8','poke 39 r9')
-need('ic10/power-grid/power_consumer_endpoint_v1_0.ic10','poke 6 r3','poke 35 2','get r4 db 50','beq r4 2 Shed')
-need('ic10/power-grid/power_battery_endpoint_v1_0.ic10','poke 5 r9','poke 6 r10','poke 35 3','get r0 db 23','get r13 db 50','beq r13 5 Hold')
-need('ic10/resource-grid-core/resource_reservation_v1_0.ic10','get r5 d0 5','get r6 d0 6','poke 6 r5','poke 7 r6','poke 28 r0','poke 31 r0')
+need('ic10/power-grid/power_producer_endpoint_v1_0.ic10','poke 52 4','poke 55 r3','poke 35 1','poke 38 r8','poke 39 r9')
+need('ic10/power-grid/power_consumer_endpoint_v1_0.ic10','poke 56 r3','poke 35 2','get r4 db 50','beq r4 2 Shed')
+need('ic10/power-grid/power_battery_endpoint_v1_0.ic10','poke 55 r9','poke 56 r10','poke 35 3','get r0 db 23','get r13 db 50','beq r13 5 Hold')
+need('ic10/resource-grid-core/resource_reservation_v1_0.ic10','get r5 d0 55','get r6 d0 56','poke 6 r5','poke 7 r6','poke 28 r0','poke 31 r0')
 need('ic10/power-grid/power_source_selector_v1_0.ic10','getd r11 r10 6','add r13 r13 r4','getd r0 r10 28')
 need('ic10/power-grid/power_sink_selector_v1_0.ic10','getd r11 r10 7','slt r12 r9 5000000','seq r12 r12 0')
 # Generic links + transformer overhead.

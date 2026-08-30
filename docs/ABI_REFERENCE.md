@@ -1342,18 +1342,19 @@ The Resource Core is an additive normalization layer above domain-specific imple
 ```text
 S0   magic = 31415949
 S1   ABI = 1
-S2   ResourceClass
-S3   ResourceType
-S4   role/capability bits: export=1, import=2, storage=4
-S5   ExportAvailable
-S6   ImportCapacity
-S7   MaxRate; 0 means unknown at the endpoint layer
+S2   capability mask = 0
 S8   status
 S9   NativeProvider ReferenceId
 S10  NativeGeneration
 S11  PublicationGeneration; payload first, generation LAST
 S12  Unit: mole=1, item quantity=2, reagent=3, watt=4, joule=5
 S13  precision flags: exact export=1, exact import=2, exact rate=4
+S52  ResourceClass
+S53  ResourceType
+S54  role/capability bits: export=1, import=2, storage=4
+S55  ExportAvailable
+S56  ImportCapacity
+S57  MaxRate; 0 means unknown at the endpoint layer
 ```
 
 `ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10` maps PressureDomain Inventory ABI2 into this contract. `ic10/item-storage-vending/material_vending_inventory_v1_0.ic10` publishes the same ABI directly for one ItemHash in a 100-slot vending warehouse.

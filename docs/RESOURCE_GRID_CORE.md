@@ -64,18 +64,19 @@ Magic: `31415949`
 ```text
 S0   magic = 31415949
 S1   ABI = 1
-S2   ResourceClass
-S3   ResourceType
-S4   role/capability bitmask
-S5   ExportAvailable
-S6   ImportCapacity
-S7   MaxRate; 0 means unknown/not represented at endpoint layer
+S2   capability mask = 0
 S8   status; >0 usable, <0 invalid/unavailable
 S9   NativeProvider ReferenceId
 S10  NativeGeneration / native snapshot identity
 S11  PublicationGeneration; payload written first, generation LAST
 S12  Unit
 S13  precision flags
+S52  ResourceClass
+S53  ResourceType
+S54  role/capability bitmask
+S55  ExportAvailable
+S56  ImportCapacity
+S57  MaxRate; 0 means unknown/not represented at endpoint layer
 ```
 
 Role bits:

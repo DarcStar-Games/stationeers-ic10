@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10",
-  "source_sha256": "56f806a241a0bd6cb7c82b54c05005913ad62913c48d8e5645a605611d30dec2",
+  "source_sha256": "343cf366846160ed6b14f5566ab5f43826403d459626a6a1f9bea90db64fe0f2",
   "identity": {
     "service_id": "ic10.script.larre.item.storage.endpoint",
     "implementation_revision": "1.0",
@@ -155,10 +155,6 @@
       0,
       1,
       2,
-      3,
-      4,
-      5,
-      6,
       8,
       9,
       10,
@@ -173,7 +169,12 @@
       35,
       38,
       39,
-      40
+      40,
+      52,
+      53,
+      54,
+      55,
+      56
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -220,44 +221,7 @@
         "access": [
           "self-write"
         ],
-        "const": 2
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 7
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
+        "const": 0
       },
       {
         "address": 8,
@@ -502,6 +466,53 @@
       {
         "address": 40,
         "name": "S40",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 52,
+        "name": "S52",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 2
+      },
+      {
+        "address": 53,
+        "name": "S53",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 54,
+        "name": "S54",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 7
+      },
+      {
+        "address": 55,
+        "name": "S55",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 56,
+        "name": "S56",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

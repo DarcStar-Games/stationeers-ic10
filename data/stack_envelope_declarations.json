@@ -1392,7 +1392,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "0948ee9c69a48fb3a2007f331f95f990d284283b9e1c3e45df5cf990576181a7",
+   "source_sha256": "bb2543614afb55db5d75d6355a084c46c346091d501be6ef9046a3e00eea344f",
    "legacy_owned_ranges": [
     [
      10,
@@ -2995,6 +2995,344 @@
     [
      28,
      33
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "resource-grid-core"
+  },
+  "ic10/material-grid/material_export_slot_endpoint_v1_0.ic10": {
+   "service_id": "ic10.script.material.export.slot.endpoint",
+   "magic": 31415949,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "3abe64bf3dfb305083685c57858dd72368f2ddb2b51e1e060c8578fb0269f940",
+   "legacy_owned_ranges": [
+    [
+     8,
+     14
+    ],
+    [
+     35,
+     35
+    ],
+    [
+     52,
+     57
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "material-grid"
+  },
+  "ic10/material-grid/material_import_slot_endpoint_v1_0.ic10": {
+   "service_id": "ic10.script.material.import.slot.endpoint",
+   "magic": 31415949,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "07a3c8f265c26894646229bada19a8b09c24c74e284b04e041932735d4d81cae",
+   "legacy_owned_ranges": [
+    [
+     8,
+     14
+    ],
+    [
+     52,
+     57
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "material-grid"
+  },
+  "ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10": {
+   "service_id": "ic10.script.direct.item.storage.endpoint",
+   "magic": 31415949,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "9e698eb9847f6724082d140e9c938a619d5e0419a016a94f49d390a646633d20",
+   "legacy_owned_ranges": [
+    [
+     8,
+     14
+    ],
+    [
+     20,
+     21
+    ],
+    [
+     35,
+     40
+    ],
+    [
+     52,
+     56
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "item-storage-direct"
+  },
+  "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10": {
+   "service_id": "ic10.script.larre.item.storage.endpoint",
+   "magic": 31415949,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "343cf366846160ed6b14f5566ab5f43826403d459626a6a1f9bea90db64fe0f2",
+   "legacy_owned_ranges": [
+    [
+     8,
+     14
+    ],
+    [
+     20,
+     28
+    ],
+    [
+     30,
+     40
+    ],
+    [
+     52,
+     56
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "item-storage-larre"
+  },
+  "ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10": {
+   "service_id": "ic10.script.sdb.silo.item.endpoint",
+   "magic": 31415949,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "8ac396004704d3c5e334451f6fea57d584d9b89aac727f8c4e472d324280a931",
+   "legacy_owned_ranges": [
+    [
+     8,
+     14
+    ],
+    [
+     20,
+     21
+    ],
+    [
+     35,
+     40
+    ],
+    [
+     52,
+     56
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "item-storage-sdb"
+  },
+  "ic10/item-storage-vending/material_vending_inventory_v1_0.ic10": {
+   "service_id": "ic10.script.material.vending.inventory",
+   "magic": 31415949,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "abeedd3ae5de0c1efaa60bbc754ad910e59dd30d654d06d0c13009f334c7cb69",
+   "legacy_owned_ranges": [
+    [
+     8,
+     14
+    ],
+    [
+     35,
+     40
+    ],
+    [
+     52,
+     57
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "item-storage-vending"
+  },
+  "ic10/power-grid/power_battery_endpoint_v1_0.ic10": {
+   "service_id": "ic10.script.power.battery.endpoint",
+   "magic": 31415949,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "142ee29e4b47d7d071c496c43a48abc2c06cc1dd6291a9ad73b3c1221fbac735",
+   "legacy_owned_ranges": [
+    [
+     8,
+     13
+    ],
+    [
+     16,
+     23
+    ],
+    [
+     35,
+     35
+    ],
+    [
+     38,
+     47
+    ],
+    [
+     50,
+     57
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-grid"
+  },
+  "ic10/power-grid/power_consumer_endpoint_v1_0.ic10": {
+   "service_id": "ic10.script.power.consumer.endpoint",
+   "magic": 31415949,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "84696a4d30c69a7167e19b3a87fd6c1dbd1d0879df3548aa59b7aab7e8fc862b",
+   "legacy_owned_ranges": [
+    [
+     8,
+     13
+    ],
+    [
+     16,
+     21
+    ],
+    [
+     35,
+     35
+    ],
+    [
+     38,
+     40
+    ],
+    [
+     50,
+     57
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-grid"
+  },
+  "ic10/power-grid/power_producer_endpoint_v1_0.ic10": {
+   "service_id": "ic10.script.power.producer.endpoint",
+   "magic": 31415949,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "2253e632a844bffb00f30608973beb99c4380c9c154b76135d1c3057e4078c29",
+   "legacy_owned_ranges": [
+    [
+     8,
+     13
+    ],
+    [
+     16,
+     20
+    ],
+    [
+     35,
+     35
+    ],
+    [
+     38,
+     40
+    ],
+    [
+     52,
+     57
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-grid"
+  },
+  "ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10": {
+   "service_id": "ic10.script.pressure.resource.endpoint.adapter",
+   "magic": 31415949,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "a4fa41ae78988959728d7373a154307a4d0addf2f036eca70e4e38adf553fa75",
+   "legacy_owned_ranges": [
+    [
+     8,
+     13
+    ],
+    [
+     52,
+     57
     ]
    ],
    "post_init_dynamic_write_ranges": [],

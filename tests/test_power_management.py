@@ -14,21 +14,21 @@ def ck(cond,msg):
 p=Device(1001,props={'ReferenceId':1001,'PowerPotential':500,'On':1,'Error':0})
 vm=IC10((R/'ic10/power-grid/power_producer_endpoint_v1_0.ic10').read_text(),{'d0':p},self_ref=221)
 vm.stack.update({16:'PowerPotential',17:400,18:10,19:101,20:2});vm.run(2)
-ck(vm.stack.get(5)==400 and vm.stack.get(6)==0 and vm.stack.get(35)==1,'producer capacity publication')
+ck(vm.stack.get(55)==400 and vm.stack.get(56)==0 and vm.stack.get(35)==1,'producer capacity publication')
 # Consumer desired demand survives physical off; SHED zeros demand.
 c=Device(1002,props={'ReferenceId':1002,'On':0})
 cv=IC10((R/'ic10/power-grid/power_consumer_endpoint_v1_0.ic10').read_text(),{'d0':c},self_ref=222)
 cv.stack.update({16:0,17:120,18:10,19:201,20:900,21:10});cv.run(2)
-ck(cv.stack.get(6)==120 and cv.stack.get(8)==1,'consumer desired demand erased by physical off')
-cv.stack[50]=2;cv.run(1);ck(cv.stack.get(6)==0,'consumer SHED override did not zero import')
+ck(cv.stack.get(56)==120 and cv.stack.get(8)==1,'consumer desired demand erased by physical off')
+cv.stack[50]=2;cv.run(1);ck(cv.stack.get(56)==0,'consumer SHED override did not zero import')
 # Battery reserve/target math + off suppression.
 b=Device(1003,props={'ReferenceId':1003,'On':1,'Error':0,'Charge':600,'Maximum':1000,'PowerPotential':50,'PowerActual':20})
 bv=IC10((R/'ic10/power-grid/power_battery_endpoint_v1_0.ic10').read_text(),{'d0':b},self_ref=223)
 bv.stack.update({16:200,17:150,18:.2,19:.8,20:10,21:301,22:500,23:1,50:0,51:0});bv.run(2)
-ck(bv.stack.get(5)==150 and bv.stack.get(6)==200,'battery reserve/target capacity math')
-b.props['On']=0;bv.run(1);ck(bv.stack.get(5)==0 and bv.stack.get(6)==0,'off battery still advertises capacity')
+ck(bv.stack.get(55)==150 and bv.stack.get(56)==200,'battery reserve/target capacity math')
+b.props['On']=0;bv.run(1);ck(bv.stack.get(55)==0 and bv.stack.get(56)==0,'off battery still advertises capacity')
 # Generic Reservation offset regression: endpoint export/import land at Reservation S6/S7.
-ep=Device(1100,stack={0:31415949,1:1,2:4,3:'HASH:Power.Electrical',4:3,5:321,6:123,7:0,8:1,9:1001,10:0,11:1,12:4,13:3,35:1,38:10,39:101,40:16},props={'ReferenceId':1100})
+ep=Device(1100,stack={0:31415949,1:1,52:4,53:'HASH:Power.Electrical',54:3,55:321,56:123,57:0,8:1,9:1001,10:0,11:1,12:4,13:3,35:1,38:10,39:101,40:16},props={'ReferenceId':1100})
 rrvm=IC10((R/'ic10/resource-grid-core/resource_reservation_v1_0.ic10').read_text(),{'d0':ep},self_ref=1200);rrvm.run(2)
 ck(rrvm.stack.get(6)==321 and rrvm.stack.get(7)==123 and rrvm.stack.get(5)==3,'Reservation POWER capacity offsets wrong')
 # Source/Sink selectors must read S6/S7, not role/cross-direction cells.

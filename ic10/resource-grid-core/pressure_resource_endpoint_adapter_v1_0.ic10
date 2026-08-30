@@ -1,7 +1,8 @@
 # Pressure -> Generic Resource Endpoint ABI1. d0 PressureDomain Inventory ABI2.
 poke 0 31415949
 poke 1 1
-poke 2 1 # ResourceClass FLUID
+poke 2 0
+poke 52 1 # ResourceClass FLUID
 poke 12 1 # Unit MOLE
 poke 13 3 # exact export + exact import
 poke 11 0
@@ -38,11 +39,11 @@ Store:
 move r6 7
 Publish:
 l r7 d0 ReferenceId
-poke 3 r2
-poke 4 r6
-poke 5 r3
-poke 6 r4
-poke 7 0 # rate unknown at endpoint layer
+poke 53 r2
+poke 54 r6
+poke 55 r3
+poke 56 r4
+poke 57 0 # rate unknown at endpoint layer
 poke 8 r5
 poke 9 r7
 poke 10 r14
@@ -52,9 +53,9 @@ poke 11 r0
 move r15 r14
 j Loop
 Bad:
-poke 5 0
-poke 6 0
-poke 7 0
+poke 55 0
+poke 56 0
+poke 57 0
 poke 8 -1
 get r0 db 11
 add r0 r0 1

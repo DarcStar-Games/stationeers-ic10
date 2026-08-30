@@ -1,9 +1,10 @@
 # POWER producer Endpoint ABI1. d0 provider; config S16..20.
 poke 0 31415949
 poke 1 1
-poke 2 4
-poke 3 HASH("Power.Electrical")
-poke 4 1
+poke 2 0
+poke 52 4
+poke 53 HASH("Power.Electrical")
+poke 54 1
 poke 12 4
 poke 13 1
 poke 35 1
@@ -40,9 +41,9 @@ get r9 db 19
 get r10 db 20
 clamp r10 r10 0 999
 mul r10 r10 16
-poke 5 r3
-poke 6 0
-poke 7 0
+poke 55 r3
+poke 56 0
+poke 57 0
 poke 8 1
 poke 9 r7
 poke 10 0
@@ -54,8 +55,8 @@ add r0 r0 1
 poke 11 r0
 j Loop
 Bad:
-poke 5 0
-poke 6 0
+poke 55 0
+poke 56 0
 poke 8 -1
 get r0 db 11
 add r0 r0 1

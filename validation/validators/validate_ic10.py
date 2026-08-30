@@ -46,6 +46,8 @@ SOFT_LIMIT_EXEMPTIONS = {
         "publishes the common S0 header with its Feeder ABI1 payload relocated above it",
     "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10":
         "publishes the common S0 header with its Feeder ABI1 payload relocated above it",
+    "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10":
+        "publishes the common S0 header with its Endpoint ABI1 payload relocated above it",
 }
 
 

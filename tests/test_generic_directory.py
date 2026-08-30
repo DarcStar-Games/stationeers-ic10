@@ -32,7 +32,7 @@ for ref,typ in ((201,'HASH:Z'),(202,'HASH:A'),(203,'HASH:A')):cs.append(Device(r
 a,b,h,hd=snapshot((R/'ic10/controller-discovery/controller_directory_adapter_v4_0.ic10').read_text(),{f'c{i}':d for i,d in enumerate(cs)},100)
 if not adapter_ok(a) or hd.stack.get(0)!=31415981 or hd.stack.get(1)!=1 or hd.stack.get(9)!='HASH:DirectorySchema.Controller.v1' or records(h)!=[['HASH:A',202],['HASH:A',203],['HASH:Z',201]]:fails.append('Controller Adapter ABI/snapshot mismatch')
 # Endpoint snapshot.
-eps=[Device(301,stack={0:31415949,1:1,2:2,3:9,11:1},props={'ReferenceId':301,'PrefabHash':2037291645}),Device(302,stack={0:31415949,1:1,2:1,3:7,11:1},props={'ReferenceId':302,'PrefabHash':-128473777})]
+eps=[Device(301,stack={0:31415949,1:1,52:2,53:9,11:1},props={'ReferenceId':301,'PrefabHash':2037291645}),Device(302,stack={0:31415949,1:1,52:1,53:7,11:1},props={'ReferenceId':302,'PrefabHash':-128473777})]
 a,b,h,hd=snapshot((R/'ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10').read_text(),{'e0':eps[0],'e1':eps[1]},110)
 if not adapter_ok(a) or records(h)!=[[1,7,302],[2,9,301]]:fails.append('Resource Endpoint Adapter ABI/snapshot mismatch')
 # Resource Link snapshot.
