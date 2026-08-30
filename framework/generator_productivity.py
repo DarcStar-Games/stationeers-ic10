@@ -6,19 +6,27 @@ import stat
 import subprocess
 import tempfile
 
+from framework.repository_inventory import InventoryPolicy, inventory_path_is_ignored, repository_files
 
-def _ignored(source, names):
-    ignored = {name for name in names if name in {".git", "__pycache__"} or name.endswith(".pyc")}
-    if Path(source).name == "validation":
-        ignored.add("evidence")
+
+PRODUCTIVITY_INVENTORY_POLICY = InventoryPolicy(ignored_subtrees=frozenset({"validation/evidence"}))
+
+
+def _copy_ignore(root: Path):
+    """Adapt the productivity inventory policy to ``shutil.copytree``."""
+    root = Path(root).resolve()
+
+    def ignored(source, names):
+        parent = Path(source).resolve().relative_to(root)
+        return {name for name in names
+                if inventory_path_is_ignored(parent / name, policy=PRODUCTIVITY_INVENTORY_POLICY)}
+
     return ignored
 
 
 def _snapshot(root: Path):
     result = {}
-    for path in sorted(root.rglob("*")):
-        if not path.is_file() or ".git" in path.parts or "__pycache__" in path.parts or path.suffix == ".pyc":
-            continue
+    for path in repository_files(root, policy=PRODUCTIVITY_INVENTORY_POLICY):
         rel = path.relative_to(root)
         result[rel] = (path.read_bytes(), stat.S_IMODE(path.stat().st_mode))
     return result
@@ -85,7 +93,7 @@ def prove_restoration(root: Path, outputs, command, preserve_inputs=(), timeout=
 
     with tempfile.TemporaryDirectory() as temporary:
         shadow = Path(temporary) / "checkout"
-        shutil.copytree(root, shadow, symlinks=True, ignore=_ignored)
+        shutil.copytree(root, shadow, symlinks=True, ignore=_copy_ignore(root))
         baseline = _snapshot(shadow)
         for rel in relatives:
             target = shadow / rel

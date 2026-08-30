@@ -7,13 +7,9 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 from pathlib import Path
 import argparse, hashlib, shutil, subprocess, sys, zipfile
 import tools.run_validation as validation
+from framework.repository_inventory import InventoryPolicy,LOCAL_TOOLING_DIRECTORIES,repository_files
 
 ROOT=_PROJECT_ROOT
-# Local VCS/tooling state is not shippable framework content. run_validation.py
-# excludes the same set from the input fingerprint, and
-# validation/validators/validate_release_tooling.py fails if the two diverge.
-TOOLING_DIRS={'.git','.github','.claude','.githooks'}
-
 def sha(path):
     h=hashlib.sha256()
     with path.open('rb') as f:
@@ -29,21 +25,15 @@ def write_deployment_baseline():
     files=sorted((ROOT/'ic10').rglob('*.ic10'),key=lambda p:p.relative_to(ROOT).as_posix())
     (ROOT/'DEPLOYMENT_BASELINE.sha256').write_text(''.join(f'{sha(p)}  {p.relative_to(ROOT).as_posix()}\n' for p in files))
 
+def release_inventory_policy():
+    return InventoryPolicy(
+        ignored_directories=LOCAL_TOOLING_DIRECTORIES,
+        ignored_names=frozenset({'ARCHIVE_MANIFEST.sha256'}),
+        fail_on_empty=True,
+    )
+
 def tracked_files(exclude=()):
-    skip={'ARCHIVE_MANIFEST.sha256'}
-    excluded={Path(x).resolve() for x in exclude}
-    files=[]
-    for p in ROOT.rglob('*'):
-        if not p.is_file(): continue
-        # Match inside the repository: p.parts carries the absolute path, so a checkout under a
-        # directory named .git/.claude/__pycache__ would otherwise exclude the whole repository.
-        inside=set(p.relative_to(ROOT).parts)
-        if TOOLING_DIRS&inside or '__pycache__' in inside or p.name in skip or p.suffix=='.pyc': continue
-        if p.resolve() in excluded: continue
-        files.append(p)
-    # Fail closed rather than shipping an empty archive under a manifest that verifies.
-    if not files: raise RuntimeError('release inventory swept to empty')
-    return sorted(files,key=lambda p:p.relative_to(ROOT).as_posix())
+    return repository_files(ROOT,policy=release_inventory_policy(),exclude=exclude)
 
 def archive_manifest(files):
     return ''.join(f'{sha(p)}  {p.relative_to(ROOT).as_posix()}\n' for p in files)
