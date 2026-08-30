@@ -1,0 +1,6 @@
+Diagnostics execution: PASS
+ - real Input Bridge resolves console/controller/commit edits and fails closed without a Profile generation
+ - real Console Registry double-buffers sorted console pairs with monotonic generations
+ - real Console Selector resolves ordinals against current Registry cells, advances, and restores displays
+ - real Selector Bridge propagates UI state only from a valid Input Bridge
+ - real Hash Console Mode writes desired Modes once and skips unreadable slots

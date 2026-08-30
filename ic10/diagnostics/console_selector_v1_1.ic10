@@ -1,5 +1,5 @@
 # Console Selector v1.1: pure Registry resolver with desired/advance transactions.
-# S2 Registry,S3 ordinal,S4 display,S5 status,S10 advance,S12 desired,S13 request gen.
+# S9 Registry,S15 ordinal,S16 display,S17 status,S10 advance,S12 desired,S13 request gen.
 alias registry r1
 poke 0 17320509
 poke 1 1
@@ -13,9 +13,9 @@ bne r0 14142136 NoRegistry
 getd r0 registry 1
 bne r0 1 NoRegistry
 getd r8 registry 8
-add r12 r8 3
+add r12 r8 10
 getd r9 registry r12
-add r12 r8 5
+add r12 r8 12
 getd r10 registry r12
 blez r10 NoConsole
 # Start from persistent selection, then apply any new desired request and advance.
@@ -45,7 +45,7 @@ getd r14 registry r12
 # Reject concurrent Registry or request changes before identity publication.
 getd r0 registry 8
 bne r0 r8 Updating
-add r12 r8 3
+add r12 r8 10
 getd r0 registry r12
 bne r0 r9 Updating
 get r0 db 13

@@ -59,6 +59,11 @@ class IC10:
             if key in self.screws: return self.screws[key]
             raise KeyError(key)
         if t in self.screws: return self.screws[t]
+        # device(d?|r?|id) operands accept a ReferenceId held in a register or literal.
+        v=self.val(t)
+        if isinstance(v,(int,float)) and not (isinstance(v,float) and math.isnan(v)):
+            try: return self.ref_device(v)
+            except StopIteration: raise KeyError(t) from None
         raise KeyError(t)
     def ref_device(self,ref):
         ref=int(ref)
@@ -125,18 +130,22 @@ class IC10:
             elif op=='ls':
                 dev=self.device(a[1]); idx=int(self.val(a[2])); key=self.propkey(a[3])
                 self.setreg(a[0],dev.slots.get(idx,{}).get(key,0.0))
+            elif op=='ss':
+                dev=self.device(a[0]); idx=int(self.val(a[1])); key=self.propkey(a[2])
+                dev.slots.setdefault(idx,{})[key]=self.val(a[3])
             elif op in ('add','sub','mul','div','min','max','pow','mod'):
                 x,y=self.num(a[1]),self.num(a[2])
                 f={'add':lambda:x+y,'sub':lambda:x-y,'mul':lambda:x*y,'div':lambda:x/y,'min':lambda:min(x,y),'max':lambda:max(x,y),'pow':lambda:x**y,'mod':lambda:x%y}[op]
                 self.setreg(a[0],f())
-            elif op in ('and','or','sll'):
+            elif op in ('and','or','sll','srl'):
                 x,y=int(self.num(a[1])),int(self.num(a[2]))
-                v={'and':x & y,'or':x | y,'sll':x << y}[op]; self.setreg(a[0],v)
+                v={'and':x & y,'or':x | y,'sll':x << y,'srl':(x & 0xFFFFFFFFFFFFFFFF) >> y}[op]; self.setreg(a[0],v)
             elif op=='clamp': self.setreg(a[0],max(self.val(a[2]),min(self.val(a[1]),self.val(a[3]))))
             elif op in ('seq','sne','slt','sgt'):
                 x,y=self.val(a[1]),self.val(a[2])
                 v=(x==y) if op=='seq' else (x!=y) if op=='sne' else (x<y) if op=='slt' else (x>y)
                 self.setreg(a[0],1 if v else 0)
+            elif op=='sgtz': self.setreg(a[0],1 if self.num(a[1])>0 else 0)
             elif op=='snan':
                 v=self.val(a[1]); self.setreg(a[0],1 if isinstance(v,float) and math.isnan(v) else 0)
             elif op=='select': self.setreg(a[0],self.val(a[2]) if self.val(a[1])!=0 else self.val(a[3]))
