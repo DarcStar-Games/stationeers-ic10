@@ -2,6 +2,7 @@
 # S16 medium,S17 min kPa,S18 max kPa,S19 shed W,S20 on.
 poke 0 31416048
 poke 1 1
+poke 2 0
 poke 11 0
 Loop:
 yield
@@ -76,12 +77,12 @@ s d0 On 0
 move r3 -4
 Request:
 get r0 db 16
-poke 2 r11
-poke 3 r0
-poke 4 r13
-poke 5 r14
-poke 6 1
-poke 7 5000
+poke 22 r11
+poke 23 r0
+poke 24 r13
+poke 25 r14
+poke 26 1
+poke 27 5000
 poke 8 r2
 poke 9 HASH("Process.GasFuelGenerator")
 poke 10 1

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10",
-  "source_sha256": "3b52259485e85238776ecde1f8b4e7298928cf049d637e09287caca6cf6997da",
+  "source_sha256": "79a7bf6ab700bb9dd4c423083f51ac3f04b17247ab7518141199d6f37ab4464a",
   "identity": {
     "service_id": "ic10.script.gas.fuel.generator.utility.controller",
     "implementation_revision": "1.0",
@@ -205,11 +205,6 @@
       0,
       1,
       2,
-      3,
-      4,
-      5,
-      6,
-      7,
       8,
       9,
       10,
@@ -218,7 +213,13 @@
       13,
       14,
       15,
-      21
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -259,54 +260,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
         ],
-        "const": 1
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 5000
+        "const": 0
       },
       {
         "address": 8,
@@ -436,6 +391,62 @@
         "access": [
           "self-write"
         ]
+      },
+      {
+        "address": 22,
+        "name": "S22",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 23,
+        "name": "S23",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 24,
+        "name": "S24",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 25,
+        "name": "S25",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 26,
+        "name": "S26",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 27,
+        "name": "S27",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 5000
       }
     ],
     "headers": [

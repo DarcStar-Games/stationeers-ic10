@@ -1359,7 +1359,7 @@
    "implementation_id": null,
    "telemetry_base": 96,
    "publishes_state": false,
-   "source_sha256": "d7f7e2e52e1510a4193f5bcef4e71f5502e94991e6d1562b2ef3915dd456299d",
+   "source_sha256": "c4f19ec228a9eb782aee05d10a6daf7773e3d6f5e3a6fb5f6743a9d7572cfd0b",
    "legacy_owned_ranges": [
     [
      96,
@@ -2550,7 +2550,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "6dca6854eb8e65a829ffa1e6c43f62b029a11cdc8bdea6b031d5a41045feddd1",
+   "source_sha256": "3a1fa2d8257f074b5cfa4501a2914728e4f04e023fea9109c27e69df0a5069c5",
    "legacy_owned_ranges": [
     [
      8,
@@ -2573,7 +2573,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "f7000c6d39b7c76f32505b7fb81b375fec6a2e1798264965913740adeb023919",
+   "source_sha256": "e1c09a7ec07447efad89b0a0c6abf6831e0cc45dca300e9f35741e650b09643a",
    "legacy_owned_ranges": [
     [
      8,
@@ -2741,6 +2741,60 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "material-grid"
+  },
+  "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10": {
+   "service_id": "ic10.script.furnace.process.condition.request",
+   "magic": 31416048,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "371b892d23a3542848281f542981f757da40346d299f6880fc1ed204f450fbe7",
+   "legacy_owned_ranges": [
+    [
+     8,
+     18
+    ],
+    [
+     22,
+     27
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "process-furnace"
+  },
+  "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10": {
+   "service_id": "ic10.script.gas.fuel.generator.utility.controller",
+   "magic": 31416048,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "79a7bf6ab700bb9dd4c423083f51ac3f04b17247ab7518141199d6f37ab4464a",
+   "legacy_owned_ranges": [
+    [
+     8,
+     21
+    ],
+    [
+     22,
+     27
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "process-gfg"
   }
  },
  "legacy_exemption": {

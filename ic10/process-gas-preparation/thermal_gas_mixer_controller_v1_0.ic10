@@ -13,9 +13,9 @@ get r0 d4 12
 bne r0 1 Bad
 get r0 d4 10
 beqz r0 Off
-get r3 d4 4
-get r4 d4 6
-get r5 d4 7
+get r3 d4 24
+get r4 d4 26
+get r5 d4 27
 get r0 d4 11
 bne r0 r15 Loop
 move r6 r4

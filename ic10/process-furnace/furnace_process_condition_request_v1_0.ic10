@@ -1,6 +1,7 @@
 # Furnace Process Condition ABI1. d0 Transform View,d1 furnace.
 poke 0 31416048
 poke 1 1
+poke 2 0
 poke 11 0
 Loop:
 yield
@@ -69,12 +70,12 @@ THint:
 l r13 d1 ReferenceId
 get r2 db 16
 get r3 db 18
-poke 2 r13
-poke 3 r2
-poke 4 r5
-poke 5 r6
-poke 6 r7
-poke 7 r8
+poke 22 r13
+poke 23 r2
+poke 24 r5
+poke 25 r6
+poke 26 r7
+poke 27 r8
 poke 8 r9
 poke 9 r15
 poke 10 1

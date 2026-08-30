@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10",
-  "source_sha256": "f7000c6d39b7c76f32505b7fb81b375fec6a2e1798264965913740adeb023919",
+  "source_sha256": "e1c09a7ec07447efad89b0a0c6abf6831e0cc45dca300e9f35741e650b09643a",
   "identity": {
     "service_id": "ic10.script.thermal.gas.mixer.controller",
     "implementation_revision": "1.0",
@@ -178,12 +178,12 @@
       "stack": {
         "literal_reads": [
           0,
-          4,
-          6,
-          7,
           10,
           11,
-          12
+          12,
+          24,
+          26,
+          27
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -206,8 +206,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.fded22a78e3b7ae8",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.fded22a78e3b7ae8",
+        "interface_id": "ic10.interface.access.3e3aec2844bc5107",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.3e3aec2844bc5107",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

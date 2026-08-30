@@ -32,9 +32,9 @@ get r0 d5 12
 bne r0 1 Bad
 get r0 d5 10
 beqz r0 Off
-get r0 d5 3
+get r0 d5 23
 bne r0 r1 Bad
-get r14 d5 4
+get r14 d5 24
 get r0 d5 11
 bne r0 sp Loop
 bdnvl d0 Temperature Bad

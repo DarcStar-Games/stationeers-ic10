@@ -18,12 +18,7 @@ Magic `31416048`, ABI 1.
 ```text
 S0   magic = 31416048
 S1   ABI = 1
-S2   Target ReferenceId
-S3   semantic FLUID ResourceType / prepared-medium hash
-S4   MinimumPressure kPa
-S5   MaximumPressure kPa; <=0 means no upper bound represented
-S6   MinimumTemperature K
-S7   MaximumTemperature K; <=0 means no upper bound represented
+S2   capability mask = 0
 S8   unmet-condition bitmask: bit0 pressure, bit1 temperature
 S9   process identity / strategy-specific identity
 S10  Active: 1 demand is live, 0 inactive
@@ -32,6 +27,12 @@ S12  Status: 1 valid, <0 invalid
 S13  Strategy code
 S14  pressure target hint
 S15  temperature target hint
+S22  Target ReferenceId
+S23  semantic FLUID ResourceType / prepared-medium hash
+S24  MinimumPressure kPa
+S25  MaximumPressure kPa; <=0 means no upper bound represented
+S26  MinimumTemperature K
+S27  MaximumTemperature K; <=0 means no upper bound represented
 ```
 
 A consumer captures positive `S11`, reads the payload, and requires unchanged `S11` before accepting the request. Signed Stationeers hashes are valid identities; only explicit zero/missing identity is treated as absent where a field requires an identity.
@@ -70,7 +71,7 @@ ProcessCondition TargetPressure window
         +--> ordinary PressureGrid discovery, quote, route and commit
 ```
 
-The projected process chamber uses role `STORAGE` so its current pressure can expose both import and export correction capacity within the requested window. Its semantic medium is exactly ProcessCondition `S3`.
+The projected process chamber uses role `STORAGE` so its current pressure can expose both import and export correction capacity within the requested window. Its semantic medium is exactly ProcessCondition `S23`.
 
 ### Advanced Furnace embedded pumps as PressureTransfer
 

@@ -3720,6 +3720,84 @@
         }
       ]
     },
+    "ic10.interface.access.3e3aec2844bc5107": {
+      "stack": {
+        "literal_reads": [
+          0,
+          10,
+          11,
+          12,
+          24,
+          26,
+          27
+        ],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 31416048
+          },
+          {
+            "address": 12,
+            "equals": 1
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 0,
+            "end": 0
+          },
+          {
+            "start": 10,
+            "end": 12
+          },
+          {
+            "start": 24,
+            "end": 24
+          },
+          {
+            "start": 26,
+            "end": 27
+          }
+        ],
+        "stack_writable_ranges": [],
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 31416048
+          },
+          {
+            "address": 12,
+            "equals": 1
+          }
+        ],
+        "properties_readable": [],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10",
+          "port": "d4"
+        }
+      ]
+    },
     "ic10.interface.access.3ec1d81e463d783d": {
       "stack": {
         "literal_reads": [
@@ -4597,6 +4675,79 @@
         {
           "source": "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10",
           "port": "d1"
+        }
+      ]
+    },
+    "ic10.interface.access.65c4df697d91621e": {
+      "stack": {
+        "literal_reads": [
+          0,
+          10,
+          11,
+          12,
+          23,
+          24
+        ],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 31416048
+          },
+          {
+            "address": 12,
+            "equals": 1
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 0,
+            "end": 0
+          },
+          {
+            "start": 10,
+            "end": 12
+          },
+          {
+            "start": 23,
+            "end": 24
+          }
+        ],
+        "stack_writable_ranges": [],
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 31416048
+          },
+          {
+            "address": 12,
+            "equals": 1
+          }
+        ],
+        "properties_readable": [],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10",
+          "port": "d5"
         }
       ]
     },
@@ -7735,79 +7886,6 @@
         }
       ]
     },
-    "ic10.interface.access.c326f2e6280ace70": {
-      "stack": {
-        "literal_reads": [
-          0,
-          3,
-          4,
-          10,
-          11,
-          12
-        ],
-        "literal_writes": [],
-        "dynamic_read": false,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "none",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 0,
-            "equals": 31416048
-          },
-          {
-            "address": 12,
-            "equals": 1
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 0,
-            "end": 0
-          },
-          {
-            "start": 3,
-            "end": 4
-          },
-          {
-            "start": 10,
-            "end": 12
-          }
-        ],
-        "stack_writable_ranges": [],
-        "constraints": [
-          {
-            "address": 0,
-            "equals": 31416048
-          },
-          {
-            "address": 12,
-            "equals": 1
-          }
-        ],
-        "properties_readable": [],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10",
-          "port": "d5"
-        }
-      ]
-    },
     "ic10.interface.access.c345c585044e2f73": {
       "stack": {
         "literal_reads": [
@@ -9808,84 +9886,6 @@
         {
           "source": "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10",
           "port": "d0"
-        }
-      ]
-    },
-    "ic10.interface.access.fded22a78e3b7ae8": {
-      "stack": {
-        "literal_reads": [
-          0,
-          4,
-          6,
-          7,
-          10,
-          11,
-          12
-        ],
-        "literal_writes": [],
-        "dynamic_read": false,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "none",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 0,
-            "equals": 31416048
-          },
-          {
-            "address": 12,
-            "equals": 1
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 0,
-            "end": 0
-          },
-          {
-            "start": 4,
-            "end": 4
-          },
-          {
-            "start": 6,
-            "end": 7
-          },
-          {
-            "start": 10,
-            "end": 12
-          }
-        ],
-        "stack_writable_ranges": [],
-        "constraints": [
-          {
-            "address": 0,
-            "equals": 31416048
-          },
-          {
-            "address": 12,
-            "equals": 1
-          }
-        ],
-        "properties_readable": [],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10",
-          "port": "d4"
         }
       ]
     }
