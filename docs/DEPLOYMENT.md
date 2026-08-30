@@ -117,7 +117,7 @@ Commission the global catalog control plane before any catalog-backed commission
 5. The Router places each profile item into compatible live capacity. If no Store has room, Coordinator Core claims an UNCLAIMED Generic Store and assigns the next runtime ordinal. For the current six profiles one Store is sufficient. Wait for an ACTIVE Input Store with `S9=6` and a stable even `S17`; do not treat `S15` as a fixed Loader-count contract.
 6. Program `ic10/input-profile-catalog/input_profile_view_v5_0.ic10`; connect View to the ACTIVE Input Profile Store and Coordinator as documented by the View ABI, then set `S2/S3` for the desired context. Common contexts are `HASH("ControllerPI")/1`, `HASH("ControllerSequencer")/1`, `HASH("ControllerPhasePressure")/1`, `HASH("ControllerPressureDomain")/1`, and `HASH("ControllerPressureTransfer")/1`. Diagnostics uses `HASH("DiagnosticMapping")/1`.
 7. Program `ic10/shared-input/generic_input_scanner_v1_1.ic10` and attach commissioning inputs plus the configured View.
-8. Program `ic10/shared-input/generic_input_resolver_v1_0.ic10`; set Resolver `S2` to Scanner ReferenceId.
+8. Program `ic10/shared-input/generic_input_resolver_v1_0.ic10`; set Resolver `S8` to Scanner ReferenceId.
 9. For configuration, deploy `ic10/controller-config/config_input_bridge_v1_0.ic10`; set `S2` to Editor RefId and `S3` to Resolver RefId.
 10. Set Generic Config Loader `S3` to Scanner RefId so it discovers/validates the Profile ABI published by the View.
 

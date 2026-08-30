@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-config/config_input_bridge_v1_0.ic10",
-  "source_sha256": "a5c99b2072a565c9c2b513bea846a37291aab699930ccfd760fc30ac6651ba6b",
+  "source_sha256": "c621338174fda56cb0bcfe224c5909e6ae0a4c0d6d78021d3ec4f975edc86ba0",
   "identity": {
     "service_id": "ic10.script.config.input.bridge",
     "implementation_revision": "1.0",
@@ -66,15 +66,15 @@
       "literal_reads": [
         0,
         1,
-        5,
-        6,
-        7,
         11,
-        12
+        12,
+        13,
+        14,
+        15
       ],
       "literal_writes": [
-        3,
-        4
+        9,
+        10
       ],
       "dynamic_read": false,
       "dynamic_write": false,

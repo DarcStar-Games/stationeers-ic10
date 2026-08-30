@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/shared-input/generic_input_resolver_v1_0.ic10",
-  "source_sha256": "f6562ba62ddc839bdc7673167556dbd67d71d0a7213f10fe31ca6ccac7ecfe51",
+  "source_sha256": "caec36f0685a4e9390592c95c3566651a2c36cda9e530a280e164e5fe724482d",
   "identity": {
     "service_id": "ic10.script.generic.input.resolver",
     "implementation_revision": "1.0",
@@ -45,8 +45,8 @@
       "literal_reads": [
         0,
         1,
-        2,
-        10
+        10,
+        12
       ],
       "literal_writes": [
         9
@@ -71,19 +71,20 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3,
-      4,
+      8,
+      9,
+      10,
       12
     ],
     "literal_writes": [
       0,
       1,
-      5,
-      6,
-      7,
+      2,
       11,
-      12
+      12,
+      13,
+      14,
+      15
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -123,21 +124,13 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
-        ]
+          "self-write"
+        ],
+        "const": 0
       },
       {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
+        "address": 8,
+        "name": "S8",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -145,30 +138,21 @@
         ]
       },
       {
-        "address": 5,
-        "name": "S5",
+        "address": 9,
+        "name": "S9",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-write"
+          "self-read"
         ]
       },
       {
-        "address": 6,
-        "name": "S6",
+        "address": 10,
+        "name": "S10",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
+          "self-read"
         ]
       },
       {
@@ -190,6 +174,33 @@
           "self-write"
         ],
         "description": "coherent resolved snapshot publishes LAST"
+      },
+      {
+        "address": 13,
+        "name": "S13",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 14,
+        "name": "S14",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 15,
+        "name": "S15",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
       }
     ],
     "headers": [

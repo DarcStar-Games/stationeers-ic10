@@ -29,9 +29,9 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 73,
-    "legacy_exempt": 101,
-    "backlog_reserved_cell_users": 91,
+    "migrated_v1": 75,
+    "legacy_exempt": 99,
+    "backlog_reserved_cell_users": 89,
     "backlog_dynamic_range_users": 23
   },
   "services": [
@@ -3397,7 +3397,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "cef5d685336c04862f4791b6caea0d6ed825ed36db9b4fb5177c69fdd3520029",
+          "source_sha256": "24efabed059cbcf56b4e44a704d5d5241c372db38e6a2d43462113ea7b810bb6",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -13938,7 +13938,7 @@
       "source": "ic10/shared-input/generic_input_resolver_v1_0.ic10",
       "service_contract_id": "ic10.script.generic.input.resolver",
       "deployment_family": "shared-input",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -13963,12 +13963,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 10,
-        "highest_literal_cell": 12,
+        "literal_cell_count": 11,
+        "highest_literal_cell": 15,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 113,
-        "line_headroom_120": 7,
+        "line_count": 114,
+        "line_headroom_120": 6,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -13976,29 +13976,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.generic.input.resolver",
+        "magic": 31415931,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "caec36f0685a4e9390592c95c3566651a2c36cda9e530a280e164e5fe724482d",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 15
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "shared-input"
       }
     },
     {
       "source": "ic10/shared-input/generic_input_scanner_v1_1.ic10",
       "service_contract_id": "ic10.script.generic.input.scanner",
       "deployment_family": "shared-input",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -14023,12 +14042,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 12,
-        "highest_literal_cell": 11,
+        "literal_cell_count": 13,
+        "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 84,
-        "line_headroom_120": 36,
+        "line_count": 86,
+        "line_headroom_120": 34,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -14036,22 +14055,41 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.generic.input.scanner",
+        "magic": 31415930,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "6ae518dadd08e71c9d09ee69fe02566fa54a36adea417380bd1c2c4be105f7a5",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 17
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "shared-input"
       }
     },
     {

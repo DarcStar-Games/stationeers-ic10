@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10",
-  "source_sha256": "cef5d685336c04862f4791b6caea0d6ed825ed36db9b4fb5177c69fdd3520029",
+  "source_sha256": "24efabed059cbcf56b4e44a704d5d5241c372db38e6a2d43462113ea7b810bb6",
   "identity": {
     "service_id": "ic10.script.diagnostic.input.bridge",
     "implementation_revision": "1.0",
@@ -62,14 +62,14 @@
       "literal_reads": [
         0,
         1,
-        5,
-        6,
         11,
-        12
+        12,
+        13,
+        14
       ],
       "literal_writes": [
-        3,
-        4
+        9,
+        10
       ],
       "dynamic_read": false,
       "dynamic_write": false,

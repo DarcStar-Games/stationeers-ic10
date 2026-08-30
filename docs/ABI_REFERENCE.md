@@ -508,19 +508,20 @@ The Scanner owns all physical commissioning screws and knows nothing about confi
 ```text
 S0   magic = 31415930
 S1   ABI = 1
-S2   hardware snapshot generation; written last
-S3   Field Dial ReferenceId
-S4   Value Dial ReferenceId
-S5   Logic-Memory-like ReferenceId
-S6   Switch-like ReferenceId
-S7   capability bitmask
+S2   capability mask = 0
 S8   populated/assigned-screw bitmask
 S9   requested logical control count 1..32
 S10  selected logical control ordinal 1..N; 0 unavailable
 S11  discovered Generic Input Profile ReferenceId; 0 absent
+S12  hardware snapshot generation; written last
+S13  Field Dial ReferenceId
+S14  Value Dial ReferenceId
+S15  Logic-Memory-like ReferenceId
+S16  Switch-like ReferenceId
+S17  capability bitmask
 ```
 
-`S7`: bit0 Field Dial, bit1 Value Dial, bit2 Memory, bit3 Switch, bit4 Profile. First Dial by screw order is Field Dial; second is Value Dial. `S9` is supplied by the paired Resolver. Scanner sets Field Dial Mode to `S9-1`, reads its exact integer Setting, and publishes a 1-based ordinal at S10.
+`S17`: bit0 Field Dial, bit1 Value Dial, bit2 Memory, bit3 Switch, bit4 Profile. First Dial by screw order is Field Dial; second is Value Dial. `S9` is supplied by the paired Resolver. Scanner sets Field Dial Mode to `S9-1`, reads its exact integer Setting, and publishes a 1-based ordinal at S10.
 
 ## Generic Input Resolver ABI v1
 
@@ -529,14 +530,15 @@ One Resolver instance is paired with one active commissioning input context. It 
 ```text
 S0   magic = 31415931
 S1   ABI = 1
-S2   Generic Input Scanner RefId
-S3   logical control count 1..32
-S4   validated/context-appropriate Profile RefId; 0 => Memory descriptors
-S5   selected logical control ordinal 1..N
-S6   resolved value
-S7   resolved InputKind
+S2   capability mask = 0
+S8   Generic Input Scanner RefId
+S9   logical control count 1..32
+S10  validated/context-appropriate Profile RefId; 0 => Memory descriptors
 S11  status; 1 ready, <0 invalid/unavailable
 S12  resolved snapshot generation; written last
+S13  selected logical control ordinal 1..N
+S14  resolved value
+S15  resolved InputKind
 ```
 
 The Resolver implements Dial scaling with `lerp`, integer quantization only for `DIAL_INTEGER`, Switch min/max mapping, enum lookup, and preferred-device -> Memory fallback. It rechecks Scanner and Profile generations before publishing.

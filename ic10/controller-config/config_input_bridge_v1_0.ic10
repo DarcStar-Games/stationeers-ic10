@@ -29,14 +29,14 @@ getd r0 resolver 0
 bne r0 31415931 Invalid
 getd r0 resolver 1
 bne r0 1 Invalid
-putd resolver 3 r6
-putd resolver 4 r7
+putd resolver 9 r6
+putd resolver 10 r7
 getd r15 resolver 12 # resolved snapshot generation
 getd r0 resolver 11
 bne r0 1 Invalid
-getd r9 resolver 5 # logical active-field ordinal
-getd r10 resolver 6
-getd r11 resolver 7
+getd r9 resolver 13 # logical active-field ordinal
+getd r10 resolver 14
+getd r11 resolver 15
 blez r9 Invalid
 bgt r9 r6 Invalid
 bnan r10 Invalid

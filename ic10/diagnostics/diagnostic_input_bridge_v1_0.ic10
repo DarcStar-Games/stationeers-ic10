@@ -35,13 +35,13 @@ getd r0 resolver 0
 bne r0 31415931 Invalid
 getd r0 resolver 1
 bne r0 1 Invalid
-putd resolver 3 7
-putd resolver 4 r2
+putd resolver 9 7
+putd resolver 10 r2
 getd r15 resolver 12 # coherent Resolver snapshot generation
 getd r0 resolver 11
 bne r0 1 Invalid
-getd r8 resolver 5
-getd r9 resolver 6
+getd r8 resolver 13
+getd r9 resolver 14
 getd r0 resolver 12
 bne r0 r15 Loop
 getd r0 r2 11

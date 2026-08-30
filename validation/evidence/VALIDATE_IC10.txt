@@ -11,7 +11,7 @@ PASS ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10 lines= 8
 PASS ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10 lines=108 headroom=20 max=87 CRLF=1559 comments= 1
 PASS ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10 lines= 55 headroom=73 max=66 CRLF= 826 comments= 1
 PASS ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10 lines=118 headroom=10 max=81 CRLF=1648 comments= 1
-PASS ic10/controller-config/config_input_bridge_v1_0.ic10 lines= 61 headroom=67 max=83 CRLF=1520 comments=10
+PASS ic10/controller-config/config_input_bridge_v1_0.ic10 lines= 61 headroom=67 max=83 CRLF=1524 comments=10
 PASS ic10/controller-config/generic_config_committer_v1_1.ic10 lines= 97 headroom=31 max=77 CRLF=1735 comments= 3
 PASS ic10/controller-config/generic_config_editor_v1_0.ic10 lines=109 headroom=19 max=85 CRLF=2160 comments=11
 PASS ic10/controller-config/generic_config_loader_v1_2.ic10 lines=119 headroom= 9 max=78 CRLF=2486 comments=13
@@ -45,7 +45,7 @@ PASS ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10 lines= 91
 PASS ic10/diagnostics/console_registry_v1_1.ic10 lines= 85 headroom=43 max=82 CRLF=1883 comments=12
 PASS ic10/diagnostics/console_selector_v1_1.ic10 lines= 93 headroom=35 max=89 CRLF=1963 comments= 8
 PASS ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10 lines= 47 headroom=81 max=79 CRLF=1258 comments=13
-PASS ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10 lines=114 headroom=14 max=75 CRLF=2266 comments=11
+PASS ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10 lines=114 headroom=14 max=75 CRLF=2269 comments=11
 PASS ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10 lines=121 headroom= 7 max=87 CRLF=2437 comments= 4
 PASS ic10/diagnostics/diagnostic_renderer_v1_1.ic10 lines= 67 headroom=61 max=76 CRLF=1737 comments=15
 PASS ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10 lines= 47 headroom=81 max=79 CRLF=1188 comments= 4
@@ -166,8 +166,8 @@ PASS ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10 lin
 PASS ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10 lines= 75 headroom=53 max=86 CRLF=1383 comments= 8
 PASS ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10 lines= 22 headroom=106 max=87 CRLF= 556 comments= 3
 PASS ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10 lines= 93 headroom=35 max=76 CRLF=1317 comments= 1
-PASS ic10/shared-input/generic_input_resolver_v1_0.ic10 lines=113 headroom=15 max=80 CRLF=2163 comments= 7
-PASS ic10/shared-input/generic_input_scanner_v1_1.ic10 lines= 84 headroom=44 max=89 CRLF=1575 comments= 7
+PASS ic10/shared-input/generic_input_resolver_v1_0.ic10 lines=114 headroom=14 max=83 CRLF=2190 comments= 7
+PASS ic10/shared-input/generic_input_scanner_v1_1.ic10 lines= 86 headroom=42 max=84 CRLF=1609 comments= 8
 PASS ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10 lines=109 headroom=19 max=83 CRLF=1965 comments= 7
 PASS ic10/transform-catalog/resource_transform_catalog_loader_01_v6_0.ic10 lines= 98 headroom=30 max=83 CRLF=1744 comments= 6
 PASS ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10 lines=110 headroom=18 max=83 CRLF=1882 comments= 6

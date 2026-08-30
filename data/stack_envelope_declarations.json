@@ -330,7 +330,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "cef5d685336c04862f4791b6caea0d6ed825ed36db9b4fb5177c69fdd3520029",
+   "source_sha256": "24efabed059cbcf56b4e44a704d5d5241c372db38e6a2d43462113ea7b810bb6",
    "legacy_owned_ranges": [
     [
      8,
@@ -2490,6 +2490,52 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "recipe-catalog"
+  },
+  "ic10/shared-input/generic_input_scanner_v1_1.ic10": {
+   "service_id": "ic10.script.generic.input.scanner",
+   "magic": 31415930,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "6ae518dadd08e71c9d09ee69fe02566fa54a36adea417380bd1c2c4be105f7a5",
+   "legacy_owned_ranges": [
+    [
+     8,
+     17
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "shared-input"
+  },
+  "ic10/shared-input/generic_input_resolver_v1_0.ic10": {
+   "service_id": "ic10.script.generic.input.resolver",
+   "magic": 31415931,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "caec36f0685a4e9390592c95c3566651a2c36cda9e530a280e164e5fe724482d",
+   "legacy_owned_ranges": [
+    [
+     8,
+     15
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "shared-input"
   }
  },
  "legacy_exemption": {
