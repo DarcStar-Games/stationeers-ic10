@@ -2467,6 +2467,29 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "pressure-domain"
+  },
+  "ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10": {
+   "service_id": "ic10.script.recipe.catalog.lookup",
+   "magic": 31415967,
+   "service_abi": 3,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "d0a7ff3cc9d22db8b83007c8e5839e0a5b56275df59fc73498172a8e78c49c1e",
+   "legacy_owned_ranges": [
+    [
+     8,
+     16
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "recipe-catalog"
   }
  },
  "legacy_exemption": {

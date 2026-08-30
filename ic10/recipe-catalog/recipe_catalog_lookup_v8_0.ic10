@@ -1,16 +1,17 @@
 # Recipe Catalog Lookup v8: Store ABI5 dynamic item heap; d0=any Recipe Store.
-# Request S3 Family,S4 Cap,S5 Ordinal,S6 Gen. Response S7..S11.
+# Request S12 Family,S13 Cap,S14 Ordinal,S15 Gen. Response S8..S11,S16 token.
 poke 0 31415967
 poke 1 3
-poke 7 0
+poke 2 0
+poke 16 0
 Loop:
 yield
-get r15 db 6
-get r0 db 7
+get r15 db 15
+get r0 db 16
 beq r15 r0 Loop
-get r3 db 3
-get r4 db 4
-get r5 db 5
+get r3 db 12
+get r4 db 13
+get r5 db 14
 bltz r5 BadRequest
 bdns d0 CatalogBad
 l r1 d0 ReferenceId
@@ -86,7 +87,7 @@ j CatalogBad
 Found:
 poke 8 1
 poke 9 r8
-poke 7 r15
+poke 16 r15
 j Loop
 BadRequest:
 move r0 -1
@@ -100,5 +101,5 @@ Fail:
 poke 8 r0
 poke 9 r8
 poke 10 0
-poke 7 r15
+poke 16 r15
 j Loop

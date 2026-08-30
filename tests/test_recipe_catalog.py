@@ -35,7 +35,7 @@ def load(root,m,base,lb):
 
 def net(stores,coord):return {'coord':coord,**{f's{i}':s for i,s in enumerate(stores)}}
 def lookup(root,stores,coord,fam,cap,ordinal,gen=1):
- v=IC10((root/LOOKUP_FILE).read_text(),{'d0':stores[-1]}|net(stores,coord));v.stack[3]='HASH:'+fam;v.stack[4]=cap;v.stack[5]=ordinal;v.stack[6]=gen;v.run(3,max_steps=50000);return v
+ v=IC10((root/LOOKUP_FILE).read_text(),{'d0':stores[-1]}|net(stores,coord));v.stack[12]='HASH:'+fam;v.stack[13]=cap;v.stack[14]=ordinal;v.stack[15]=gen;v.run(3,max_steps=50000);return v
 loader_invariants(fixture,M);stores,vms,groups=load(fixture,M,1150,2000);coord=vms[0].coord
 active=[s for s in stores if s.stack.get(16)==2]
 if len(active)!=6:fails.append('fixture did not runtime-claim exactly six Stores')
