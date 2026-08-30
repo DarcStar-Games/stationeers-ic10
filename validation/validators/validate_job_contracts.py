@@ -3,12 +3,12 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.validation import Validation
 from pathlib import Path
 import json,sys
 from framework.job_abi import JobState,JobType,NORMAL_CHAIN,TERMINAL,WAIT_FROM,WAIT_STATES
-R=_PROJECT_ROOT;fails=[]
-def ck(v,msg):
-    if not v:fails.append(msg)
+R=_PROJECT_ROOT;result=Validation(R)
+ck=result.check
 s=json.loads((R/'data/generic_job_schema.json').read_text())
 ck(s.get('format')=='GENERIC_JOB_ABI_V1','schema format')
 ck(s.get('magic')==31415984 and s.get('abi')==1,'schema magic/ABI')
@@ -35,10 +35,8 @@ for token in ('bne r0 31415984 Reset','get r0 db 1','beq r0 1 Recover','poke 0 3
 doc=(R/'docs/GENERIC_JOB_ABI.md').read_text()
 for token in ('TRANSFORM','PRINT','TRANSFER','POWER','QUEUED -> PLANNING -> RESERVING -> READY -> RUNNING -> VERIFYING -> COMPLETE','WAIT_RESOURCE','WAIT_PROCESSOR','WAIT_CAPACITY','ExpectedJobGeneration','active state bank','same-service reflash','scheduler-neutral'):
     ck(token in doc,f'Job documentation missing {token!r}')
-if fails:
-    print('Generic Job contract validation: FAIL');[print(' -',x) for x in fails];sys.exit(1)
-print('Generic Job contract validation: PASS')
-print(' - GENERIC_JOB_ABI_V1 schema/model/IC10 geometry agree on 32 logical eleven-field jobs')
-print(' - JobType/state enums and lifecycle/wait/terminal sets are synchronized')
-print(' - Store ABI1 owns optimistic generation, terminal immutability and crash journal markers')
-print(' - Store magic+ABI gate protects physical queue geometry before recovery')
+raise SystemExit(result.finish('Generic Job contract validation',[
+ 'GENERIC_JOB_ABI_V1 schema/model/IC10 geometry agree on 32 logical eleven-field jobs',
+ 'JobType/state enums and lifecycle/wait/terminal sets are synchronized',
+ 'Store ABI1 owns optimistic generation, terminal immutability and crash journal markers',
+ 'Store magic+ABI gate protects physical queue geometry before recovery']))

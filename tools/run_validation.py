@@ -29,7 +29,7 @@ TESTS=[
 'tests/test_dependency_planning.py','tests/test_diagnostics_execution.py','tests/test_generic_directory.py','tests/test_ic10_execution.py','tests/test_ic10_opcode_handlers.py','tests/test_input_profiles.py','tests/test_job_abi.py',
 'tests/test_manufacturing_execution.py','tests/test_manufacturing_scheduler.py','tests/test_material_grid_protocol.py','tests/test_script_contracts.py',
 'tests/test_material_transform_protocol.py','tests/test_persistence_protocol.py','tests/test_phase_pressure_protocol.py',
-'tests/test_pressure_domain_protocol.py','tests/test_pressure_grid_protocol.py','tests/test_pressure_inventory_protocol.py',
+'tests/test_pressure_domain_protocol.py','tests/test_pressure_grid_protocol.py','tests/test_pressure_inventory_protocol.py','tests/test_validation_helpers.py',
 'tests/test_commission_wiring.py','tests/test_commissioning_validators.py',
 'tests/test_pressure_reservation_protocol.py','tests/test_pressure_route_cost.py','tests/test_printer_directory.py','tests/test_script_wiring.py','tests/test_stack_envelope.py',
 'tests/test_printer_execution_capacity.py','tests/test_recipe_catalog.py','tests/test_generator_productivity.py','tests/test_resource_generalization.py',

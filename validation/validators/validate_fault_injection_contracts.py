@@ -3,30 +3,13 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.validation import Validation
 from pathlib import Path
 import sys
 R=_PROJECT_ROOT
-fails=[]
-def need(path,*terms):
- t=(R/path).read_text()
- for term in terms:
-  if term not in t:fails.append(f'{path}: missing {term!r}')
-def ordered(path,*terms):
- t=(R/path).read_text();pos=[]
- for term in terms:
-  i=t.find(term);pos.append(i)
-  if i<0:fails.append(f'{path}: missing ordered marker {term!r}')
- if all(i>=0 for i in pos) and pos!=sorted(pos):fails.append(f'{path}: unsafe ordering for {terms!r}')
-
-def ordered_after(path,anchor,*terms):
- t=(R/path).read_text()
- if anchor not in t:
-  fails.append(f'{path}: missing anchor {anchor!r}');return
- t=t.split(anchor,1)[1];pos=[]
- for term in terms:
-  i=t.find(term);pos.append(i)
-  if i<0:fails.append(f'{path}: missing post-anchor marker {term!r}')
- if all(i>=0 for i in pos) and pos!=sorted(pos):fails.append(f'{path}: unsafe post-anchor ordering for {terms!r}')
+result=Validation(R)
+need=result.contains
+ordered=result.ordered
 
 need('framework/fault_injection.py','inject_every_boundary','deepcopy','recover','check')
 need('tests/test_fault_injection.py','ic10/power-grid/power_dispatch_plan_store_v1_0.ic10','allowed_transition','internal_token','LArRE')
@@ -44,15 +27,13 @@ ordered('ic10/power-grid/power_dispatch_plan_store_v1_0.ic10','and r1 r0 1','pok
 # New POWER reservations are committed before old release; allocator authority is published last.
 ordered('ic10/power-grid/power_reservation_allocator_v1_0.ic10','poke 8 0','WaitC:','WaitR:','Publish:','poke 10 1')
 # Executors are gated by allocator active flag and exact PlanGeneration.
-ordered_after('ic10/power-grid/power_load_executor_v1_0.ic10','Set:','get r0 d1 10','get r0 d1 8','get r0 d1 9','Write:','sd r3 On r4')
-ordered_after('ic10/power-grid/power_link_executor_v1_0.ic10','Set:','get r0 d1 10','get r0 d1 8','get r0 d1 9','Write:','sd r3 Setting r4','sd r3 On r5')
+result.ordered('ic10/power-grid/power_load_executor_v1_0.ic10','get r0 d1 10','get r0 d1 8','get r0 d1 9','Write:','sd r3 On r4',after='Set:',rule='post-anchor order')
+result.ordered('ic10/power-grid/power_link_executor_v1_0.ic10','get r0 d1 10','get r0 d1 8','get r0 d1 9','Write:','sd r3 Setting r4','sd r3 On r5',after='Set:',rule='post-anchor order')
 # Item 10 documentation must be present and marked complete.
 need('docs/INTERRUPTION_FAULT_INJECTION.md','Catalog migration','Directory mutation','LArRE','POWER replacement','Generic Job lifecycle')
 need('ROADMAP.md','10. Broad interruption and fault-injection suite — COMPLETE','Items **1–11 are implemented and automatically validated**','Item **12 is ACTIVE**')
 need('docs/COMPLETED_MILESTONES.md','10. Broad interruption and fault-injection suite — COMPLETE')
-if fails:
- print('Fault-injection contracts: FAIL');[print(' -',x) for x in fails];sys.exit(1)
-print('Fault-injection contracts: PASS')
-print(' - reusable cut-at-every-boundary harness is part of the release suite')
-print(' - catalog/LArRE/dependency/Gateway/POWER publication order is statically fenced')
-print(' - POWER Plan Store reflash recovery invalidates torn plans before restoring readability')
+raise SystemExit(result.finish('Fault-injection contracts',[
+ 'reusable cut-at-every-boundary harness is part of the release suite',
+ 'catalog/LArRE/dependency/Gateway/POWER publication order is statically fenced',
+ 'POWER Plan Store reflash recovery invalidates torn plans before restoring readability']))

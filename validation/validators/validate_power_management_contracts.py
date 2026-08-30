@@ -3,25 +3,23 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.validation import Validation
 from pathlib import Path
 import json,sys,re
-R=_PROJECT_ROOT;fails=[]
-def need(path,*tokens):
- t=(R/path).read_text()
- for tok in tokens:
-  if tok not in t:fails.append(f'{path}: missing {tok!r}')
+R=_PROJECT_ROOT;result=Validation(R)
+need=result.contains
 # Catalog semantics.
 D=json.loads((R/'data/resource_profiles.json').read_text())
-if D.get('resource_classes',{}).get('POWER')!=4:fails.append('ResourceClass.POWER != 4')
-if D.get('resource_classes',{}).get('ENERGY')!=5:fails.append('ResourceClass.ENERGY != 5')
-if D.get('units',{}).get('WATT')!=4:fails.append('Unit.WATT != 4')
-if D.get('units',{}).get('JOULE')!=5:fails.append('Unit.JOULE != 5')
+if D.get('resource_classes',{}).get('POWER')!=4:result.fail('ResourceClass.POWER != 4')
+if D.get('resource_classes',{}).get('ENERGY')!=5:result.fail('ResourceClass.ENERGY != 5')
+if D.get('units',{}).get('WATT')!=4:result.fail('Unit.WATT != 4')
+if D.get('units',{}).get('JOULE')!=5:result.fail('Unit.JOULE != 5')
 pp=[p for p in D['profiles'] if p['resource_class'] in (4,5)]
-if len(pp)!=2:fails.append('expected exactly POWER + ENERGY electrical profiles')
+if len(pp)!=2:result.fail('expected exactly POWER + ENERGY electrical profiles')
 M=json.loads((R/'data/resource_profile_catalog_manifest.json').read_text())
 parts={x['partition_key']:x for x in M['partitions']}
 for cls,name in [(4,'ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10'),(5,'ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10')]:
- if cls not in parts or name not in parts[cls]['loaders']:fails.append(f'missing generated ResourceClass {cls} loader')
+ if cls not in parts or name not in parts[cls]['loaders']:result.fail(f'missing generated ResourceClass {cls} loader')
 # Endpoint/Reservation direction contract: Endpoint S5/S6 -> Reservation S6/S7.
 need('ic10/power-grid/power_producer_endpoint_v1_0.ic10','poke 52 4','poke 55 r3','poke 35 1','poke 38 r8','poke 39 r9')
 need('ic10/power-grid/power_consumer_endpoint_v1_0.ic10','poke 56 r3','poke 35 2','get r4 db 50','beq r4 2 Shed')
@@ -44,7 +42,7 @@ need('ic10/power-grid/power_link_executor_v1_0.ic10','Set:','get r0 d1 10','get 
 # POWER jobs and Gateway lane D.
 need('ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10','poke 1 3','get r15 db 64','move r6 4','move r7 64','move r8 68')
 need('ic10/generic-jobs/generic_job_selector_v3_0.ic10','poke 1 3','get r10 db 18','bne r5 r10 Next','beq r2 7 Next','bge r2 11 Next')
-if (R/'239_power_job_selector_v1_0.ic10').exists():fails.append('duplicate POWER Job selector must not exist')
+if (R/'239_power_job_selector_v1_0.ic10').exists():result.fail('duplicate POWER Job selector must not exist')
 need('ic10/power-jobs/power_policy_target_resolver_v1_0.ic10','HASH("DirectorySchema.PowerReservation.v1")','getd r5 r7 28')
 need('ic10/power-jobs/power_job_policy_apply_v1_0.ic10','bne r10 4 Bad','bne r11 r6 Bad','putd r13 50 r4','putd r13 51 r7')
 need('ic10/power-jobs/power_job_policy_verify_v1_0.ic10','getd r0 r6 50','getd r0 r6 51','NeedExportZero:','NeedImportZero:')
@@ -55,11 +53,9 @@ need('ic10/power-jobs/power_job_scheduler_v1_0.ic10','put d0 18 4','put d0 19 r0
 # Schema registry.
 S=json.loads((R/'data/directory_schemas.json').read_text())
 ps=[s for s in S['schemas'] if s['schema_id']=='DirectorySchema.PowerReservation']
-if len(ps)!=1 or ps[0]['entry_width']!=3 or ps[0]['capacity']!=64:fails.append('PowerReservation directory schema mismatch')
-if fails:
- print('Power management contracts: FAIL');[print(' -',x) for x in fails];sys.exit(1)
-print('Power management contracts: PASS')
-print(' - POWER/ENERGY reuse Resource Profile + Endpoint/Reservation/Link contracts')
-print(' - source uses Reservation S6 export and sink uses S7 import')
-print(' - bounded priority dispatch, transformer overhead, common reservation epoch')
-print(' - JobType.POWER uses Gateway lane D and finite policy lifecycle')
+if len(ps)!=1 or ps[0]['entry_width']!=3 or ps[0]['capacity']!=64:result.fail('PowerReservation directory schema mismatch')
+raise SystemExit(result.finish('Power management contracts',[
+ 'POWER/ENERGY reuse Resource Profile + Endpoint/Reservation/Link contracts',
+ 'source uses Reservation S6 export and sink uses S7 import',
+ 'bounded priority dispatch, transformer overhead, common reservation epoch',
+ 'JobType.POWER uses Gateway lane D and finite policy lifecycle']))

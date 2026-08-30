@@ -3,21 +3,17 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.validation import Validation
 from pathlib import Path
 import sys
-R=_PROJECT_ROOT;fails=[]
+R=_PROJECT_ROOT;result=Validation(R)
 
-def text(f): return (R/f).read_text()
-def need(f,*toks):
- s=text(f)
- for x in toks:
-  if x not in s:fails.append(f'{f}: missing {x!r}')
-def before(f,a,b):
- s=text(f);ia=s.find(a);ib=s.find(b)
- if ia<0 or ib<0 or ia>=ib:fails.append(f'{f}: expected {a!r} before {b!r}')
+text=result.source
+need=result.contains
+before=result.ordered
 def fence(f,token_read,cmp_read,state_read):
  s=text(f);a=s.find(token_read);b=s.find(cmp_read,a+1);c=s.find(state_read,b+1)
- if a<0 or b<0 or c<0 or not (a<b<c):fails.append(f'{f}: expected identity fence before {state_read!r}')
+ if a<0 or b<0 or c<0 or not (a<b<c):result.fail(f'{f}: expected identity fence before {state_read!r}')
 
 # LIVE_CURRENT producers: request-specific state/error is initialized before CurrentToken.
 for f,state,token in [
@@ -42,7 +38,7 @@ before('ic10/material-grid/material_transfer_executor_v1_0.ic10','put d1 19 0','
 for label in ('WaitReady:','WaitEmit:'):
  s=text('ic10/material-grid/material_transfer_executor_v1_0.ic10');p=s.find(label);q=s.find('j Publish',p)
  block=s[p:q]
- if not all(x in block for x in ('get r1 db 14','get r0 d1 25','bne r0 r1 Publish','get r0 d1 24')):fails.append('ic10/material-grid/material_transfer_executor_v1_0.ic10: '+label+' lacks CurrentToken fence before status')
+ if not all(x in block for x in ('get r1 db 14','get r0 d1 25','bne r0 r1 Publish','get r0 d1 24')):result.fail('ic10/material-grid/material_transfer_executor_v1_0.ic10: '+label+' lacks CurrentToken fence before status')
 
 # Diagnostic request publishers complete payload before request identity/publication.
 need('ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10','poke r0 r9\njal BumpController','poke 18 r9\nget r0 db 25\nadd r0 r0 1\npoke 25 r0')
@@ -56,7 +52,7 @@ before('ic10/diagnostics/console_selector_v1_1.ic10','poke 17 1','poke 14 r15 # 
 need('ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10','getd r8 input 24','getd r0 controllerSelector 13','getd r8 input 25','getd r0 consoleSelector 14','getd r8 consoleSelector 10','getd r0 consoleSelector 11','getd r0 consoleSelector 17','getd r0 controllerSelector 8')
 s=text('ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10')
 for a,b in [('getd r0 controllerSelector 13','getd r0 controllerSelector 8'),('getd r0 consoleSelector 14','getd r0 consoleSelector 17'),('getd r0 consoleSelector 11','getd display consoleSelector 16')]:
- if s.find(a)>=s.find(b):fails.append('ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10: stale selector result can be consumed before '+a)
+ if s.find(a)>=s.find(b):result.fail('ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10: stale selector result can be consumed before '+a)
 
 # Existing pressure request/response services are formally TERMINAL_RESPONSE.
 pressure=[
@@ -67,7 +63,7 @@ pressure=[
  ('ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10','poke 9 r0','poke 10 r15'),
  ('ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10','poke 9 1','poke 10 r3'),
  ('ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10','poke 9 1','poke 10 r14')]
-for f,result,token in pressure:need(f,result,token);before(f,result,token)
+for f,result_marker,token in pressure:need(f,result_marker,token);before(f,result_marker,token)
 # Pressure callers fence child status/results on exact child response tokens.
 for f,toks in {
  'ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10':('get r0 d2 10','bne r0 r15 Loop','get r0 d2 9'),
@@ -86,14 +82,14 @@ for f in ('ic10/controller-pi/pi_config_policy_v1_0.ic10','ic10/controller-seque
  need(f,'put Host 21 sp','put Host 20 r15');before(f,'put Host 21 sp','put Host 20 r15')
 
 # Other existing terminal-response services.
-for f,result,token in [
+for f,result_marker,token in [
  ('ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10','poke 8 1','poke 16 r15'),
  ('ic10/generic-jobs/generic_job_store_v1_0.ic10','poke 9 1','poke 8 r15'),
  ('ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10','poke 9 1','poke 8 r15'),
  ('ic10/manufacturing/print_material_resolver_v1_0.ic10','poke 12 1','poke 13 r15'),
  ('ic10/printer-directory/printer_capacity_client_v2_0.ic10','poke 17 r0','poke 16 r15'),
  ('ic10/manufacturing/transform_candidate_readiness_v1_0.ic10','poke 9 r0','poke 10 r0')]:
- need(f,result,token);before(f,result,token)
+ need(f,result_marker,token);before(f,result_marker,token)
 # Multi-material Stager publishes terminal status immediately before each response token.
 need('ic10/material-transform/multi_material_reservation_stager_v1_0.ic10','poke 13 1\npoke 14 r15','poke 13 2\npoke 14 r15','poke 13 -1\npoke 14 r15')
 # Printer Execution Bank has six independent per-pin terminal streams: status before handled request token.
@@ -119,10 +115,8 @@ need('ic10/manufacturing/manufacturing_scheduler_v1_0.ic10','get r0 d2 10','get 
 # Snapshot identity fencing used by Transform readiness remains separate from async request identity.
 need('ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10','poke 68 r10','poke 69 1','poke 71 -2','poke 71 -3')
 
-if fails:
- print('Async request contracts: FAIL');[print(' -',x) for x in fails];sys.exit(1)
-print('Async request contracts: PASS')
-print(' - LIVE_CURRENT producers initialize state before current request identity; invalid accepted requests bind identity')
-print(' - diagnostic selector and material-feeder consumers reject stale status/results before exact token equality')
-print(' - pressure, config, recipe, Job Store, print resolver, printer bank, LArRE storage and directory handshakes are registered TERMINAL_RESPONSE users')
-print(' - request payload publication is token-last and transaction/directory/snapshot authorities remain distinct')
+raise SystemExit(result.finish('Async request contracts',[
+ 'LIVE_CURRENT producers initialize state before current request identity; invalid accepted requests bind identity',
+ 'diagnostic selector and material-feeder consumers reject stale status/results before exact token equality',
+ 'pressure, config, recipe, Job Store, print resolver, printer bank, LArRE storage and directory handshakes are registered TERMINAL_RESPONSE users',
+ 'request payload publication is token-last and transaction/directory/snapshot authorities remain distinct']))

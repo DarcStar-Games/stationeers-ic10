@@ -3,15 +3,13 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.validation import Validation
 from pathlib import Path
 import json,sys,tempfile
 from framework.catalog_test_helpers import generate_recipe_fixture
-R=_PROJECT_ROOT; fails=[]
-def fail(x): fails.append(x)
-def need(path,*tokens):
-    t=(R/path).read_text()
-    for tok in tokens:
-        if tok not in t: fail(f'{path}: missing {tok!r}')
+R=_PROJECT_ROOT;result=Validation(R)
+fail=result.fail
+need=result.contains
 # Recipe v3 + execution metadata.
 recipe_tmp=tempfile.TemporaryDirectory();rm=generate_recipe_fixture(Path(recipe_tmp.name))
 if rm.get('catalog_schema_version')!=3 or rm.get('format')!='RECIPE_CATALOG_V6': fail('Recipe catalog is not schema3/format V6')
@@ -73,12 +71,10 @@ for rel in item6:
     p=R/rel
     if not p.exists(): fail(f'missing manufacturing service {rel}')
     elif len(p.read_text().splitlines())>128: fail(rel+': exceeds the 128-line hard limit')
-if fails:
-    print('Manufacturing contracts: FAIL'); [print(' -',x) for x in fails]; sys.exit(1)
-print('Manufacturing contracts: PASS')
-print(' - async state/error publication is request-token fenced end-to-end')
-print(' - Transform readiness is profile/generation-qualified with no arbitrary 16-tick timeout')
-print(' - WAIT traversal reaches lower-priority runnable jobs across multiple waiters')
-print(' - Printer reservation separates request/response identity from exact-ref lock ownership')
-print(' - one dynamic manufacturing selector implementation can serve Transform and Print domains')
-print(' - manufacturing execution contains 16 bounded semantic services/adapters, all <=120 lines')
+raise SystemExit(result.finish('Manufacturing contracts',[
+ 'async state/error publication is request-token fenced end-to-end',
+ 'Transform readiness is profile/generation-qualified with no arbitrary 16-tick timeout',
+ 'WAIT traversal reaches lower-priority runnable jobs across multiple waiters',
+ 'Printer reservation separates request/response identity from exact-ref lock ownership',
+ 'one dynamic manufacturing selector implementation can serve Transform and Print domains',
+ 'manufacturing execution contains 16 bounded semantic services/adapters, all <=120 lines']))

@@ -3,14 +3,14 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.validation import Validation
 from pathlib import Path
 import re,subprocess,tempfile,sys
 import tools.build_release as br
 import tools.run_validation as rv
-R=_PROJECT_ROOT;fails=[]
+R=_PROJECT_ROOT;result=Validation(R)
 
-def ck(x,msg):
- if not x:fails.append(msg)
+ck=result.check
 
 def canonical_read_permissions(text):
  lines=text.splitlines()
@@ -40,7 +40,7 @@ try:
  validation=s.index("run_validation.py')],cwd=ROOT,check=True")
  manifest=s.index('manifest=archive_manifest(files)')
  ck(unlink<guide<gen<contracts<validation<manifest,'release output / generators / validation / manifest ordering is invalid')
-except ValueError: fails.append('release build ordering markers missing')
+except ValueError: result.fail('release build ordering markers missing')
 ck("run_validation.py'),'--resume'" not in s,'release build reuses validation evidence instead of regenerating it')
 ck('tracked_files({out})' in s,'ZIP creation does not exclude requested output')
 ck('validation_evidence_files()' in s,'release build does not require the complete validation evidence set')
@@ -50,7 +50,7 @@ ck(not (R/'ARCHIVE_MANIFEST.sha256').exists(),'ARCHIVE_MANIFEST.sha256 must be a
 manifest=br.archive_manifest(files)
 ck(len(manifest.splitlines())==len(files),'release manifest entry count differs from release inventory')
 try: br.verify_manifest(manifest)
-except RuntimeError as e: fails.append(f'generated in-memory archive manifest does not verify: {e}')
+except RuntimeError as e: result.fail(f'generated in-memory archive manifest does not verify: {e}')
 evidence=br.validation_evidence_files()
 ck(evidence[:3]==[rv.SUMMARY,rv.RUN_LOG,rv.STATE],'release evidence omits a summary, run log, or resume state')
 ck(len(evidence)==3+len(rv.SCRIPTS),'release evidence does not contain one output per validation script')
@@ -70,7 +70,7 @@ ck('.github' in br.TOOLING_DIRS,'.github automation tooling is included in relea
 # checks rather than depending on a contributor to review workflow YAML by eye.
 workflow=R/'.github/workflows/clean-validation.yml';ci_doc=R/'docs/CI.md'
 if not workflow.exists():
- fails.append('clean validation GitHub Actions workflow is missing')
+ result.fail('clean validation GitHub Actions workflow is missing')
 else:
  w=workflow.read_text()
  ck(workflow not in br.tracked_files(),'CI workflow leaked into the release inventory')
@@ -103,11 +103,11 @@ else:
  for use in uses:
   match=re.fullmatch(r'([^@]+)@([0-9a-f]{40})',use)
   if not match:
-   fails.append(f'CI action is not pinned to an immutable commit SHA: {use!r}')
+   result.fail(f'CI action is not pinned to an immutable commit SHA: {use!r}')
   else: seen.add(match.group(1))
  ck(seen==expected,f'CI action set differs from the reviewed set: {sorted(seen)}')
 if not ci_doc.exists():
- fails.append('docs/CI.md is missing')
+ result.fail('docs/CI.md is missing')
 else:
  d=ci_doc.read_text()
  for marker in ('.github/workflows/clean-validation.yml','Clean validation',
@@ -151,16 +151,14 @@ with tempfile.TemporaryDirectory() as td:
   ck(base!=moved,'source under a tooling-named parent directory is excluded from the fingerprint')
   (fake/'validation'/'evidence'/'E.txt').write_text('z')
   ck(moved==rv.input_fingerprint(fake),'validation evidence leaked into the input fingerprint')
- except RuntimeError as e: fails.append(f'fingerprint swept a tooling-named parent directory to empty: {e}')
+ except RuntimeError as e: result.fail(f'fingerprint swept a tooling-named parent directory to empty: {e}')
  empty=Path(td)/'empty';empty.mkdir()
- try: rv.input_fingerprint(empty);fails.append('an input sweep that found nothing did not fail closed')
+ try: rv.input_fingerprint(empty);result.fail('an input sweep that found nothing did not fail closed')
  except RuntimeError: pass
-if fails:
- print('Release tooling validation: FAIL');[print(' -',x) for x in fails];sys.exit(1)
-print('Release tooling validation: PASS')
-print(' - in-tree output archive is excluded before manifest and ZIP inventory; the manifest exists only inside the ZIP')
-print(' - build ordering removes stale output, refreshes deployment inventory, source index, and script contracts before validation/manifests')
-print(f' - release inventory and validation fingerprint exclude the same tooling dirs: {sorted(br.TOOLING_DIRS)}')
-print(' - CI runs clean validation with read-only permissions, pinned dependencies, source-tree enforcement, and failure evidence')
-print(' - validation evidence is ignored, never staged by the hook, and regenerated for release archives')
-print(' - exclusion matches inside the repository only, and a sweep that finds nothing fails closed')
+raise SystemExit(result.finish('Release tooling validation',[
+ 'in-tree output archive is excluded before manifest and ZIP inventory; the manifest exists only inside the ZIP',
+ 'build ordering removes stale output, refreshes deployment inventory, source index, and script contracts before validation/manifests',
+ f'release inventory and validation fingerprint exclude the same tooling dirs: {sorted(br.TOOLING_DIRS)}',
+ 'CI runs clean validation with read-only permissions, pinned dependencies, source-tree enforcement, and failure evidence',
+ 'validation evidence is ignored, never staged by the hook, and regenerated for release archives',
+ 'exclusion matches inside the repository only, and a sweep that finds nothing fails closed']))
