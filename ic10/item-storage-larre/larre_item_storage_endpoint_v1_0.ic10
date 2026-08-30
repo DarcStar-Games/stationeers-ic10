@@ -33,12 +33,12 @@ bne r15 r0 Move
 get r7 db 23
 add r7 r7 1
 poke 23 r7
-put d0 2 1
-put d0 3 r4
-put d0 4 r5
-put d0 5 r6
-put d0 6 r3
-put d0 7 r2
+put d0 17 1
+put d0 18 r4
+put d0 19 r5
+put d0 20 r6
+put d0 21 r3
+put d0 22 r2
 put d0 8 r7
 WaitScan:
 yield
@@ -82,16 +82,16 @@ bgt r13 3 MoveBad
 get r7 db 23
 add r7 r7 1
 poke 23 r7
-put d0 2 r13
+put d0 17 r13
 get r0 db 25
-put d0 3 r0
+put d0 18 r0
 get r0 db 26
-put d0 4 r0
+put d0 19 r0
 get r0 db 27
-put d0 5 r0
+put d0 20 r0
 get r0 db 28
-put d0 6 r0
-put d0 7 r2
+put d0 21 r0
+put d0 22 r2
 get r0 db 30
 put d0 15 r0
 put d0 8 r7

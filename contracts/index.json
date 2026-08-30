@@ -1744,99 +1744,6 @@
         }
       ]
     },
-    "ic10.interface.access.06280f4dfb739aa3": {
-      "stack": {
-        "literal_reads": [
-          0,
-          9,
-          10,
-          11,
-          12,
-          13,
-          14,
-          16
-        ],
-        "literal_writes": [
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          15
-        ],
-        "dynamic_read": false,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "none",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 0,
-            "equals": 31415986
-          },
-          {
-            "address": 9,
-            "equals": 1
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 0,
-            "end": 0
-          },
-          {
-            "start": 9,
-            "end": 14
-          },
-          {
-            "start": 16,
-            "end": 16
-          }
-        ],
-        "stack_writable_ranges": [
-          {
-            "start": 2,
-            "end": 8
-          },
-          {
-            "start": 15,
-            "end": 15
-          }
-        ],
-        "constraints": [
-          {
-            "address": 0,
-            "equals": 31415986
-          },
-          {
-            "address": 9,
-            "equals": 1
-          }
-        ],
-        "properties_readable": [],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10",
-          "port": "d0"
-        }
-      ]
-    },
     "ic10.interface.access.063fbb17a50f4644": {
       "stack": {
         "literal_reads": [
@@ -8304,6 +8211,103 @@
         {
           "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
           "port": "d1"
+        }
+      ]
+    },
+    "ic10.interface.access.ced8c20d590c25df": {
+      "stack": {
+        "literal_reads": [
+          0,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          16
+        ],
+        "literal_writes": [
+          8,
+          15,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22
+        ],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 31415986
+          },
+          {
+            "address": 9,
+            "equals": 1
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 0,
+            "end": 0
+          },
+          {
+            "start": 9,
+            "end": 14
+          },
+          {
+            "start": 16,
+            "end": 16
+          }
+        ],
+        "stack_writable_ranges": [
+          {
+            "start": 8,
+            "end": 8
+          },
+          {
+            "start": 15,
+            "end": 15
+          },
+          {
+            "start": 17,
+            "end": 22
+          }
+        ],
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 31415986
+          },
+          {
+            "address": 9,
+            "equals": 1
+          }
+        ],
+        "properties_readable": [],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10",
+          "port": "d0"
         }
       ]
     },

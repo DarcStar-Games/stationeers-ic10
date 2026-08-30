@@ -29,9 +29,9 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 79,
-    "legacy_exempt": 95,
-    "backlog_reserved_cell_users": 85,
+    "migrated_v1": 81,
+    "legacy_exempt": 93,
+    "backlog_reserved_cell_users": 83,
     "backlog_dynamic_range_users": 22
   },
   "services": [
@@ -5233,7 +5233,7 @@
       "source": "ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10",
       "service_contract_id": "ic10.script.larre.cargo.storage.service",
       "deployment_family": "item-storage-larre",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -5258,12 +5258,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 17,
-        "highest_literal_cell": 16,
+        "literal_cell_count": 18,
+        "highest_literal_cell": 22,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 119,
-        "line_headroom_120": 1,
+        "line_count": 120,
+        "line_headroom_120": 0,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -5271,22 +5271,41 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.larre.cargo.storage.service",
+        "magic": 31415986,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "baf580299e217e52492148c51c67e56ddf55a14361b5a07d569c434e7449787b",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 22
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "item-storage-larre"
       }
     },
     {
@@ -5361,7 +5380,7 @@
       "source": "ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10",
       "service_contract_id": "ic10.script.larre.storage.reserved.move.client",
       "deployment_family": "item-storage-larre",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -5386,12 +5405,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 14,
-        "highest_literal_cell": 16,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 19,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 115,
-        "line_headroom_120": 5,
+        "line_count": 116,
+        "line_headroom_120": 4,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -5399,22 +5418,41 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.larre.storage.reserved.move.client",
+        "magic": 31415991,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "37dbb004cdba19b15d90347aafa68b4f0d2b9809ec104517cd1e8d2ab80b5cf2",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 19
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "item-storage-larre"
       }
     },
     {

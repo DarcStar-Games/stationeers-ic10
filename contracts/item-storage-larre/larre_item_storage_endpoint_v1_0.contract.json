@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10",
-  "source_sha256": "a00e0a86ba01765750901c900077d950ce991c94e3d2fc87813df5651342c416",
+  "source_sha256": "56f806a241a0bd6cb7c82b54c05005913ad62913c48d8e5645a605611d30dec2",
   "identity": {
     "service_id": "ic10.script.larre.item.storage.endpoint",
     "implementation_revision": "1.0",
@@ -35,14 +35,14 @@
           16
         ],
         "literal_writes": [
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
           8,
-          15
+          15,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -64,8 +64,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.06280f4dfb739aa3",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.06280f4dfb739aa3",
+        "interface_id": "ic10.interface.access.ced8c20d590c25df",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.ced8c20d590c25df",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

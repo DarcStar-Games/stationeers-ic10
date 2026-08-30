@@ -110,8 +110,8 @@ for f in ('ic10/directory-core/generic_registry_directory_host_v2_0.ic10','ic10/
 
 # Cargo LArRE storage service is TERMINAL_RESPONSE; endpoint client publishes payload before token and fences response.
 need('ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10','Reply:\npoke 9 r0','poke 14 r15');before('ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10','Reply:\npoke 9 r0','poke 14 r15')
-need('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','put d0 7 r2','put d0 8 r7','get r0 d0 14','bne r0 r7 WaitScan','bne r0 r7 WaitMove')
-before('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','put d0 7 r2','put d0 8 r7')
+need('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','put d0 22 r2','put d0 8 r7','get r0 d0 14','bne r0 r7 WaitScan','bne r0 r7 WaitMove')
+before('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','put d0 22 r2','put d0 8 r7')
 
 # Router exposes request-specific state only after selected driver echoes the token.
 need('ic10/manufacturing/manufacturing_driver_router_v2_0.ic10','get r0 d0 9','get r0 d1 9','poke 10 r15')

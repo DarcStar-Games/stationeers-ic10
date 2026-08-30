@@ -63,9 +63,9 @@ PASS ic10/input-profile-catalog/input_profile_view_v5_0.ic10 lines=111 headroom=
 PASS ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10 lines=102 headroom=26 max=71 CRLF=1442 comments= 1
 PASS ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10 lines=116 headroom=12 max=57 CRLF=1637 comments= 0
 PASS ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10 lines= 90 headroom=38 max=73 CRLF=1286 comments= 1
-PASS ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10 lines=119 headroom= 9 max=25 CRLF=1645 comments= 0
-PASS ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10 lines=120 headroom= 8 max=35 CRLF=1606 comments= 0
-PASS ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10 lines=115 headroom=13 max=38 CRLF=1590 comments= 0
+PASS ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10 lines=120 headroom= 8 max=25 CRLF=1666 comments= 0
+PASS ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10 lines=120 headroom= 8 max=35 CRLF=1618 comments= 0
+PASS ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10 lines=116 headroom=12 max=38 CRLF=1605 comments= 0
 PASS ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10 lines=120 headroom= 8 max=80 CRLF=1694 comments= 1
 PASS ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10 lines= 82 headroom=46 max=79 CRLF=1215 comments= 1
 PASS ic10/item-storage-vending/material_vending_inventory_v1_0.ic10 lines=112 headroom=16 max=83 CRLF=1884 comments=11

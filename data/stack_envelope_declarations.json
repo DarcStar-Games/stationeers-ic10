@@ -2637,6 +2637,52 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "item-storage-common"
+  },
+  "ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10": {
+   "service_id": "ic10.script.larre.cargo.storage.service",
+   "magic": 31415986,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "baf580299e217e52492148c51c67e56ddf55a14361b5a07d569c434e7449787b",
+   "legacy_owned_ranges": [
+    [
+     8,
+     22
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "item-storage-larre"
+  },
+  "ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10": {
+   "service_id": "ic10.script.larre.storage.reserved.move.client",
+   "magic": 31415991,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "37dbb004cdba19b15d90347aafa68b4f0d2b9809ec104517cd1e8d2ab80b5cf2",
+   "legacy_owned_ranges": [
+    [
+     8,
+     19
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "item-storage-larre"
   }
  },
  "legacy_exemption": {

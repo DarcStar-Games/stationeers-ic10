@@ -24,8 +24,8 @@ before('ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10','Reply:\n
 for f,kind in [('ic10/item-storage-vending/material_vending_inventory_v1_0.ic10','StorageAccess.Vending'),('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','StorageAccess.LArRE'),('ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10','StorageAccess.Direct'),('ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10','StorageAccess.SDB')]:
  need(f,'poke 14 r0',f'poke 35 HASH("{kind}")','get r0 db 36','db 37','poke 38','poke 39','poke 40')
 # LArRE endpoint serializes scan and raw move through one service and publishes response last.
-need('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','put d0 2 1','put d0 8 r7','bne r0 r7 WaitScan','put d0 2 r13','put d0 15 r0','put d0 8 r7','bne r0 r7 WaitMove','poke 32 r0','poke 33 r1','poke 34 r15')
-before('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','put d0 7 r2','put d0 8 r7')
+need('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','put d0 17 1','put d0 8 r7','bne r0 r7 WaitScan','put d0 17 r13','put d0 15 r0','put d0 8 r7','bne r0 r7 WaitMove','poke 32 r0','poke 33 r1','poke 34 r15')
+before('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','put d0 22 r2','put d0 8 r7')
 before('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','poke 33 r1','poke 34 r15')
 # Generic reservation owns a semantic mirror generation and coherently mirrors opaque storage action hints.
 need('ic10/resource-grid-core/resource_reservation_v1_0.ic10','poke 17 0','poke 18 0','poke 19 0','poke 20 r14','poke 21 0','poke 22 -1','poke 23 0','poke 24 -1','CompareHints:','Changed:','CopyHints:','poke 12 r0')
