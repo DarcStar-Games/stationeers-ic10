@@ -15,7 +15,7 @@ INVENTORY = ROOT / 'contracts/stack_envelope_inventory.json'
 SOFT_LIMIT = 120
 HARD_LIMIT = 128
 COMPUTED_WRITE = r'^poke (r[0-9]+|ra|sp) '
-REF_ACCESS = r'^(?:put|get)d (?:r\d+ )?(r\d+|ra|sp) (\d+)\b'
+REF_ACCESS = r'^getd \S+ \S+ (\d+)\b|^putd \S+ (\d+)\b'
 SELF_OFFSET = r'^add (r[0-9]+|ra|sp) \1 (\d+)$'
 MOVE_BASE = r'^move (r[0-9]+|ra|sp) (\d+)$'
 ADD_BASE = r'^add (r[0-9]+|ra|sp) (r[0-9]+|ra|sp) (\d+)$'
@@ -142,9 +142,16 @@ def reference_edges(docs, family, magics):
         for number, line in enumerate(Path(ROOT / source).read_text().splitlines(), 1):
             code = line.split('#', 1)[0].strip()
             match = re.match(REF_ACCESS, code)
-            if match and 2 <= int(match.group(2)) < 8:
+            if match and 2 <= int(match.group(1) or match.group(2)) < 8:
                 edges.append((source, number, code))
     return edges
+
+
+def spans(ranges, base, length):
+    """Render dynamic ranges, starring any that overlap the header window."""
+    moved = set(range(base + 2, base + length))
+    return ','.join(f'S{start}..S{end}' + ('*' if moved & set(range(start, end + 1)) else '')
+                    for start, end in ranges)
 
 
 def main() -> None:
@@ -201,6 +208,10 @@ def main() -> None:
         access = '; '.join(part for part in (
             f"reads {cells(edge['reads'], arguments.base, arguments.length)}" if edge['reads'] else '',
             f"writes {cells(edge['writes'], arguments.base, arguments.length)}" if edge['writes'] else '',
+            f"ranged reads {spans(edge['read_ranges'], arguments.base, arguments.length)}"
+            if edge['read_ranges'] else '',
+            f"ranged writes {spans(edge['write_ranges'], arguments.base, arguments.length)}"
+            if edge['write_ranges'] else '',
         ) if part)
         targets = ', '.join(Path(target).name for target in edge['targets'])
         print(f"   {marker} {Path(edge['consumer']).name} {edge['port']} -> {targets}: {access}")

@@ -60,6 +60,11 @@ when:
 - a port checks an `S0` magic (and `S1` ABI) that a declared provider does not
   publish at `S0` — the mechanical edges and the declared edges must agree; a
   port pinning only the `S1` ABI is checked the same way;
+- a magic-checking port's `providers` list omits a registered publisher of that
+  magic, so the any-of lists cannot drift as new publishers appear;
+- a `physical-device` declaration sits on a port whose `S0` check names a
+  registered script header, or overrides a stack-shaped contract target without
+  a `note` saying why the peer is not a script;
 - a port reads a migrated provider's `S2..S7` — literally or through a declared
   dynamic range — without a `header_reads` declaration, or writes anywhere in
   that provider's `S0..S7` envelope at all: only the owner publishes envelope

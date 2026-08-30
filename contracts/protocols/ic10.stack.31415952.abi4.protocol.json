@@ -57,6 +57,7 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
+            "self-read",
             "self-write"
           ]
         },
@@ -66,6 +67,7 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
+            "self-read",
             "self-write"
           ]
         },
@@ -111,6 +113,7 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
+            "self-read",
             "self-write"
           ]
         },
@@ -153,7 +156,8 @@
         65,
         66,
         67,
-        70,
+        68,
+        69,
         71,
         72,
         73,
@@ -191,6 +195,11 @@
           "value": 2
         },
         {
+          "address": 69,
+          "operator": "equals",
+          "value": 1
+        },
+        {
           "address": 73,
           "operator": "equals",
           "value": 1
@@ -208,6 +217,8 @@
       "literal_reads": [
         0,
         1,
+        68,
+        69,
         74
       ],
       "literal_writes": [],
@@ -230,6 +241,11 @@
           "address": 1,
           "operator": "equals",
           "value": 4
+        },
+        {
+          "address": 69,
+          "operator": "equals",
+          "value": 1
         }
       ],
       "publication_requirements": []

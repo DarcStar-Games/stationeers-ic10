@@ -346,7 +346,7 @@ The Host publishes Generic Snapshot Directory magic `31415981`, ABI1, with `Dire
 1. Ensure Coordinator Core/Router are running and there is available Generic Store capacity.
 2. Deploy Transform Loader candidates `ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10` through `ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10`.
 3. Wait for the current 17 transform items to reside in ACTIVE Store capacity with stable even store sequence.
-4. Deploy `ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` and select the desired TransformType; require View ABI3 and positive publication generation.
+4. Deploy `ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` and select the desired TransformType; require View ABI4, a matching S68 request echo with S69 status 1, and a positive S74 publication generation.
 5. Publish a healthy output Resource Reservation for the transform output identity.
 
 ### F. Deploy the one current material transform transaction path

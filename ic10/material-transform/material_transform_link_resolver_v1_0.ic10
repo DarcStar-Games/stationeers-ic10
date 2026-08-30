@@ -94,6 +94,12 @@ poke r0 r6
 add r7 r7 1
 j Input
 Publish:
+get r0 d1 68
+bne r0 r2 Loop
+get r0 d1 69
+bne r0 1 Loop
+get r0 d1 74
+bne r0 r13 Loop
 get r0 d2 2
 bne r0 r12 Loop
 get r0 d0 9

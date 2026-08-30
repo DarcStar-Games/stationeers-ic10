@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10",
-  "source_sha256": "309045a00e8d7c5286e340445ef1c1e245cfcc6fad294610aad32c0bd6348226",
+  "source_sha256": "5545bf42aa74832144e6a82fd9e18c9bd6ac030e41f1784cc4090ce267ad77b8",
   "identity": {
     "service_id": "ic10.script.resource.transform.profile.view",
     "implementation_revision": "8.0",
@@ -107,7 +107,10 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      70
+      68,
+      69,
+      70,
+      74
     ],
     "literal_writes": [
       0,
@@ -176,6 +179,7 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
+          "self-read",
           "self-write"
         ]
       },
@@ -185,6 +189,7 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
+          "self-read",
           "self-write"
         ]
       },
@@ -230,6 +235,7 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
+          "self-read",
           "self-write"
         ]
       },

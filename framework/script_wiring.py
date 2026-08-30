@@ -100,13 +100,25 @@ def check_port(
     migrated: set[str],
 ) -> list[str]:
     failures: list[str] = []
+    magic = port["constraints"].get(0)
+    abi = port["constraints"].get(1)
     if port["kind"] == "physical-device" and peer["kind"] != "physical-device":
         failures.append(f"{source} {name}: contract target is {port['kind']!r}"
                         f" but wiring declares {peer['kind']!r}")
         return failures
     # The reverse direction is legitimate: a stack-shaped port may face a game
-    # device with a native stack, or an IC housing hosting an arbitrary program.
+    # device with a native stack, or an IC housing hosting an arbitrary program --
+    # but a port that checks a registered script magic has proven a script peer,
+    # and the override away from the contract's own kind must say why.
     if peer["kind"] == "physical-device":
+        if isinstance(magic, int) and any(
+                entry["base"] == BASE and entry["magic"] == magic
+                for entries in publishers.values() for entry in entries):
+            failures.append(f"{source} {name}: declared physical-device but the port checks"
+                            f" S0 magic {magic}, a registered script header")
+        if port["kind"] != "physical-device" and not peer.get("note"):
+            failures.append(f"{source} {name}: physical-device peer on a stack-shaped port"
+                            " needs a note saying why the peer is not a script")
         return failures
     declared_reads = peer.get("header_reads", {})
     invalid = sorted(cell for cell in declared_reads
@@ -119,8 +131,14 @@ def check_port(
     allowed = {int(cell) for cell in declared_reads}
     reached_reads = port["reads"] | ranged(port["read_ranges"], ENVELOPE_CELLS)
     reached_writes = port["writes"] | ranged(port["write_ranges"], ENVELOPE_CELLS)
-    magic = port["constraints"].get(0)
-    abi = port["constraints"].get(1)
+    if isinstance(magic, int):
+        expected = {path for path, entries in publishers.items() for entry in entries
+                    if entry["base"] == BASE and entry["magic"] == magic
+                    and (not isinstance(abi, int) or entry.get("abi") == abi)}
+        omitted = sorted(expected - set(peer["providers"]))
+        if omitted:
+            failures.append(f"{source} {name}: checks S0 magic {magic} but the providers"
+                            f" list omits publisher(s) {omitted}")
     for provider in peer["providers"]:
         if provider not in ports:
             failures.append(f"{source} {name}: provider {provider} is not a deployable program")
@@ -180,6 +198,8 @@ def inbound_edges(
                 "targets": targets,
                 "reads": sorted(port.get("reads", ())),
                 "writes": sorted(port.get("writes", ())),
+                "read_ranges": sorted(port.get("read_ranges", ())),
+                "write_ranges": sorted(port.get("write_ranges", ())),
                 "header_reads": {int(cell): field
                                  for cell, field in peer.get("header_reads", {}).items()
                                  if cell.isdigit()},

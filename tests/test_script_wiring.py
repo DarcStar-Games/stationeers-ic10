@@ -83,9 +83,29 @@ mismatched["ports"][CONSUMER]["d1"] = {"kind": "script", "providers": [PROVIDER]
 expect("script peer on a physical-device port fails",
        any("wiring declares" in f for f in failing(mismatched)))
 
+native_ports = deepcopy(PORTS)
+native_ports[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], constraints={})
 native_stack = deepcopy(WIRING)
-native_stack["ports"][CONSUMER]["d0"] = {"kind": "physical-device", "role": "Sorter"}
-expect("device with a native stack on a stack port passes", failing(native_stack) == [])
+native_stack["ports"][CONSUMER]["d0"] = {"kind": "physical-device", "role": "Sorter",
+                                         "note": "device native stack"}
+expect("noted device with a native stack on a stack port passes",
+       failing(native_stack, ports=native_ports) == [])
+del native_stack["ports"][CONSUMER]["d0"]["note"]
+expect("unnoted physical peer on a stack-shaped port fails",
+       any("needs a note" in f for f in failing(native_stack, ports=native_ports)))
+native_stack["ports"][CONSUMER]["d0"]["note"] = "claimed device"
+expect("physical peer on a magic-checking port fails",
+       any("registered script header" in f for f in failing(native_stack)))
+
+crowd = deepcopy(PUBLISHERS)
+crowd["ic10/test-family/rival_v1_0.ic10"] = [{"base": 0, "magic": 31410001, "abi": 2}]
+crowd_ports = deepcopy(PORTS)
+crowd_ports["ic10/test-family/rival_v1_0.ic10"] = {}
+crowd_wiring = deepcopy(WIRING)
+crowd_wiring["ports"]["ic10/test-family/rival_v1_0.ic10"] = {}
+expect("magic publisher omitted from the providers list fails",
+       any("omits publisher" in f
+           for f in failing(crowd_wiring, ports=crowd_ports, publishers=crowd)))
 
 wrong_magic = deepcopy(PORTS)
 wrong_magic[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], constraints={0: 31419999})
@@ -160,9 +180,10 @@ expect("inbound edges skip malformed header_reads keys instead of crashing",
        edges and edges[0]["header_reads"] == {})
 
 edges = inbound_edges(WIRING, PORTS, {PROVIDER})
-expect("inbound edges name the consumer, port, and cells",
+expect("inbound edges name the consumer, port, cells, and ranges",
        edges == [{"consumer": CONSUMER, "port": "d0", "targets": [PROVIDER],
-                  "reads": [0, 1, 9], "writes": [10], "header_reads": {}}])
+                  "reads": [0, 1, 9], "writes": [10],
+                  "read_ranges": [], "write_ranges": [], "header_reads": {}}])
 expect("no edges into an unreferenced family", inbound_edges(WIRING, PORTS, {CONSUMER}) == [])
 
 if failures:

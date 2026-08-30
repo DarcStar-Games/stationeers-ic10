@@ -60,9 +60,8 @@ for p in mds:
             fails.append(f'{p.name}: broken local markdown link {target}')
 
 forbidden={
-    'Transform Profile View ABI3':'Transform Profile View is ABI4 with the S68..S75 resolved-request mailbox',
-    'Transform View ABI3':'Transform Profile View is ABI4 with the S68..S75 resolved-request mailbox',
-    'Transform View ABI 3':'Transform Profile View is ABI4 with the S68..S75 resolved-request mailbox',
+    'View ABI3':'the Transform Profile View is ABI4 with the S68..S75 resolved-request mailbox',
+    'View ABI 3':'the Transform Profile View is ABI4 with the S68..S75 resolved-request mailbox',
     'Pressure Reservation Allocator ABI2':'Allocator is ABI3',
     'Pressure Reservation Allocator ABI 2':'Allocator is ABI3',
     'PressureTransfer v1.3 publishes':'Transfer runtime is v2.0',

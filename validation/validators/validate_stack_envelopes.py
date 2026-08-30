@@ -76,15 +76,15 @@ if actual is not None:
 # reads live in the wiring map as header_reads; only reference-register reads, which
 # have no port for the map to key on, are declared here.
 HEADER_READS = {
-    ("ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10", "r1"):
-        "reads Loader ABI5 SchemaId S3 as a header field",
-    ("ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10", "r1"):
-        "reads Loader ABI5 SchemaId S3 as a header field",
+    # reads Loader ABI5 SchemaId S3 as a header field
+    ("ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10", "r1"): {3},
+    ("ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10", "r1"): {3},
 }
 for wired_source, wired_ports in json.loads((ROOT / "data" / "script_wiring.json").read_text())["ports"].items():
     for wired_port, peer in wired_ports.items():
         if peer.get("header_reads"):
-            HEADER_READS[(wired_source, wired_port)] = "declared header_reads in data/script_wiring.json"
+            HEADER_READS[(wired_source, wired_port)] = {
+                int(cell) for cell in peer["header_reads"] if cell.isdigit()}
 read0 = re.compile(r"^get (r\d+) (d[0-5]) 0$")
 refread0 = re.compile(r"^getd (r\d+) (r\d+|ra|sp) 0$")
 compare = re.compile(r"^(?:bne|beq) (r\d+) (\d{7,8}) \w+$")
@@ -116,9 +116,10 @@ for source in sorted(ROOT.glob("ic10/*/*.ic10")):
             handle = hit.group(1) or hit.group(3)
             touched.setdefault(handle, set()).add(int(hit.group(2) or hit.group(4)))
     for handle, magic in peers.items():
-        reserved = sorted(touched.get(handle, set()) & set(range(BASE + 2, BASE + LENGTH)))
+        reserved = sorted(touched.get(handle, set()) & set(range(BASE + 2, BASE + LENGTH))
+                          - HEADER_READS.get((rel, handle), set()))
         targets = [q for q in publishers.get(magic, []) if q in json.loads((ROOT / "data" / "stack_envelope_declarations.json").read_text())["migrated"]]
-        if reserved and targets and (rel, handle) not in HEADER_READS:
+        if reserved and targets:
             fails.append(
                 f"{rel} {handle}: reads S{reserved} of migrated {targets[0]} -- those are header cells now"
             )

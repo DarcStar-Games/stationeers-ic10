@@ -41,6 +41,14 @@ beq r0 r10 Found
 add r5 r5 1
 j Scan
 Found:
+get r0 db 68
+bne r0 r10 Rewrite
+get r0 db 69
+bne r0 1 Rewrite
+get r0 db 74
+beq r0 r14 Loop
+Rewrite:
+poke 69 0
 move r9 8
 Clear:
 poke r9 0
@@ -60,15 +68,10 @@ poke 73 r5
 add r0 r8 8
 getd r0 r2 r0
 poke 75 r0
-move r9 0
-Bounds:
-add r0 r8 r9
-add r0 r0 4
-getd r0 r2 r0
-add r1 r9 64
-poke r1 r0
-add r9 r9 1
-blt r9 4 Bounds
+add r6 r8 4
+move r1 64
+move r11 1
+jal CopyPool
 add r6 r8 12
 move r1 8
 move r11 r4

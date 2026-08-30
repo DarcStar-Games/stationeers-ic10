@@ -39,6 +39,10 @@ THead:
 move r10 0
 move r11 0
 TCheck:
+get r0 d0 68
+bne r0 r3 Loop
+get r0 d0 69
+bne r0 1 Loop
 get r0 d0 74
 bne r0 r14 Loop
 j Publish
