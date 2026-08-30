@@ -786,7 +786,7 @@
     "providers": [
      "ic10/manufacturing/print_material_resolver_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:277: \"then wire Generic Print Runtime `d0 -> Print Material Resolver`, `d1 -> print Allocator`\"; docs/MANUFACTURING_SCHEDULER.md:433: \"Configure Print Runtime `d0 -> Print Material Resolver`\" [Constraint addr6==1 matches the resolver's status cell (resolver initializes cells 5 and 6 to 0 and publishes readiness there).]"
+    "note": "docs/DEPLOYMENT.md:277: \"then wire Generic Print Runtime `d0 -> Print Material Resolver`, `d1 -> print Allocator`\"; docs/MANUFACTURING_SCHEDULER.md:433: \"Configure Print Runtime `d0 -> Print Material Resolver`\" [Constraint addr12==1 matches the resolver's status cell (resolver initializes cells 11 and 12 to 0 and publishes readiness there).]"
    },
    "d1": {
     "kind": "script",
@@ -1160,7 +1160,7 @@
      "ic10/manufacturing/print_material_resolver_v1_0.ic10",
      "ic10/material-transform/material_transform_link_resolver_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md: \"164 Allocator ABI2: d0 Link Resolver, d1 Stager\" (transform lane) and \"Deploy a print-specific ... stager ... allocator ... Wire both to the print resolver exactly as the transform lane wires them to its resolver\" (manufacturing step 9) [Any-of by lane: transform lane uses material_transform_link_resolver (tests/test_material_transform_protocol.py wires alloc d0 to the resolver device; fixed-cell reads S9/S11/S12==1 match resolver pokes 8..13); print lane uses print_material_resolver per DEPLOYMENT step 9, whose S16.. four-cell records are documented \"compatible with Multi Reservation Stager/Allocator\" (docs/ABI_REFERENCE.md 31415989). Fixed-cell corroboration is direct only for the transform resolver; the print-resolver pairing rests on the explicit deployment line.]"
+    "note": "docs/DEPLOYMENT.md: \"164 Allocator ABI2: d0 Link Resolver, d1 Stager\" (transform lane) and \"Deploy a print-specific ... stager ... allocator ... Wire both to the print resolver exactly as the transform lane wires them to its resolver\" (manufacturing step 9) [Any-of by lane: transform lane uses material_transform_link_resolver (tests/test_material_transform_protocol.py wires alloc d0 to the resolver device; fixed-cell reads S9/S11/S12==1 match resolver pokes 8..13); print lane uses print_material_resolver per DEPLOYMENT step 9, whose S20.. four-cell records are documented \"compatible with Multi Reservation Stager/Allocator\" (docs/ABI_REFERENCE.md 31415989). Fixed-cell corroboration is direct only for the transform resolver; the print-resolver pairing rests on the explicit deployment line.]"
    },
    "d1": {
     "kind": "script",
@@ -1177,7 +1177,7 @@
      "ic10/manufacturing/print_material_resolver_v1_0.ic10",
      "ic10/material-transform/material_transform_link_resolver_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md: \"163 Stager: d0 Link Resolver, d1 Multi Allocator\" and manufacturing step 9: \"Wire both to the print resolver exactly as the transform lane wires them to its resolver\"; pin comment \"d0 Resolver,d1 Allocator\" [Same any-of-by-lane as the Allocator d0. Stager's fixed reads (d0 S9/S11/S12==1 plus dynamic S16.. record reads) match the transform Link Resolver exactly (tests/test_material_transform_protocol.py wires stager d0 to the resolver); the print-lane pairing is the explicit DEPLOYMENT step with record-format compatibility documented in docs/ABI_REFERENCE.md.]"
+    "note": "docs/DEPLOYMENT.md: \"163 Stager: d0 Link Resolver, d1 Multi Allocator\" and manufacturing step 9: \"Wire both to the print resolver exactly as the transform lane wires them to its resolver\"; pin comment \"d0 Resolver,d1 Allocator\" [Same any-of-by-lane as the Allocator d0. Stager's fixed reads (d0 S9/S11/S12==1 plus dynamic S20.. record reads) match the transform Link Resolver exactly (tests/test_material_transform_protocol.py wires stager d0 to the resolver); the print-lane pairing is the explicit DEPLOYMENT step with record-format compatibility documented in docs/ABI_REFERENCE.md.]"
    },
    "d1": {
     "kind": "physical-device",

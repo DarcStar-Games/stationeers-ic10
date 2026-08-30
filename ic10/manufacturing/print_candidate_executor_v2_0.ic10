@@ -42,17 +42,17 @@ StartResolver:
 get r1 d3 8
 blez r1 Bad
 poke 33 r1
-put d1 2 r1
+put d1 16 r1
 get r1 db 19
-put d1 11 r1
-put d1 12 r15
+put d1 17 r1
+put d1 18 r15
 poke 20 2
 j Loop
 ResolveWait:
 get r15 db 8
 get r0 d1 13
 bne r0 r15 Loop
-get r0 d1 6
+get r0 d1 12
 beq r0 1 Launch
 beq r0 -3 Resource
 beq r0 -4 Capacity

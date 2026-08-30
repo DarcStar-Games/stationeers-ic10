@@ -884,20 +884,20 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "4e85626256e3dd2560c647c37f2eabf433c67770431a268406edb21f7770af08",
+   "source_sha256": "fcf09ae8ed413a9ea7c6a6bd898d9b7b0a48c9dbd2427b09c1ffabae3113ff22",
    "legacy_owned_ranges": [
     [
      8,
      13
     ],
     [
-     16,
+     20,
      511
     ]
    ],
    "post_init_dynamic_write_ranges": [
     [
-     16,
+     20,
      511
     ]
    ],
@@ -916,7 +916,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "a304e3bcbb672da69e5eaba299d45348109d13ca6ce3da362b477bbafe6a7583",
+   "source_sha256": "a70c50a1acb17813dcfe9ee801c10a6e65802fb20db71a0fb8a214a62c2a96a5",
    "legacy_owned_ranges": [
     [
      8,
@@ -943,7 +943,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "1c763b7ab03b9edca93367b871dcf6f3e6802ed00d62737826bd409f3a4a821c",
+   "source_sha256": "8e37902238cd27faafa92e6b1c937cb0bfa85a663fc1949c9f2efdee7da41f0f",
    "legacy_owned_ranges": [
     [
      8,
@@ -2124,7 +2124,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "b4e2bbf06b335f4d59603f9321a5c74358c796cd9dc07e9a9154fc734d650834",
+   "source_sha256": "6629f5ccc8019794d03d901b4220e7785a12ad7b28b3becf56283b89a17aba95",
    "legacy_owned_ranges": [
     [
      8,
@@ -2236,7 +2236,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "64387a07d9d49899a74f48cce9960ed9a9135ea5c76b024089d059ff44211def",
+   "source_sha256": "6eae9652c178387b7e9a0e7f2a3c7941007f237e744f2224873d84b9f94a4513",
    "legacy_owned_ranges": [
     [
      8,
@@ -2256,6 +2256,42 @@
     ]
    ],
    "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing"
+  },
+  "ic10/manufacturing/print_material_resolver_v1_0.ic10": {
+   "service_id": "ic10.script.print.material.resolver",
+   "magic": 31415989,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "f722876b18223155780d5b9f3bfbfa7629237799bfc68f12363a06d9ef69f330",
+   "legacy_owned_ranges": [
+    [
+     8,
+     9
+    ],
+    [
+     11,
+     18
+    ],
+    [
+     20,
+     511
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     20,
+     511
+    ]
+   ],
    "pilot_family": "manufacturing"
   },
   "ic10/manufacturing/print_job_driver_v2_0.ic10": {

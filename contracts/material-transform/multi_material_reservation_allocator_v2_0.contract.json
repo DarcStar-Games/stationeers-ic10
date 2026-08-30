@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10",
-  "source_sha256": "a304e3bcbb672da69e5eaba299d45348109d13ca6ce3da362b477bbafe6a7583",
+  "source_sha256": "a70c50a1acb17813dcfe9ee801c10a6e65802fb20db71a0fb8a214a62c2a96a5",
   "identity": {
     "service_id": "ic10.script.multi.material.reservation.allocator",
     "implementation_revision": "2.0",
@@ -34,8 +34,8 @@
         "dynamic_write": false,
         "dynamic_read_ranges": [
           {
-            "start": 16,
-            "end": 79
+            "start": 20,
+            "end": 83
           }
         ],
         "dynamic_write_ranges": [],
@@ -51,8 +51,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.929b22f42685fc2a",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.929b22f42685fc2a",
+        "interface_id": "ic10.interface.access.272534e178453368",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.272534e178453368",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

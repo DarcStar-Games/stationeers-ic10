@@ -309,8 +309,8 @@ version and is rejected by v1 readers; it may not silently repurpose a v1 cell.
 | Stack Header Reader | 8 | 117 | the reference reader; validates every declared field |
 | Stack Cell Monitor | 8 | 45 | the probe: one cell at a chosen address |
 | Generic Telemetry family | 8 | +4 each | 7 runtimes migrated; 5 spend reviewed margin, 0 consumers changed |
-| Manufacturing family | 8 | +1 each | 9 migrated; six move a whole peer-written mailbox, 1 spends reviewed margin |
-| Backlog | — | — | 105 programs, 95 of which use `S2..S7` today |
+| Manufacturing family | 8 | +1 each | 10 migrated; seven move a whole peer-written mailbox, 1 spends reviewed margin |
+| Backlog | — | — | 104 programs, 94 of which use `S2..S7` today |
 
 ## Worked migration: Generic Telemetry
 
