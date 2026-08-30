@@ -84,7 +84,9 @@ so the working directory never changes what a command reads or writes. A script 
 Python also leaves the running script's own directory on `sys.path` for the life of the run, so
 every module beside an entry point answers to a second, bare name. Import in-tree modules by
 package — `import tools.build_release`, never `import build_release` — or one file becomes two
-module objects holding two copies of its constants, with nothing keeping them equal.
+module objects holding two copies of its constants, with nothing keeping them equal. The same rule
+applies to dynamic imports: literal bare names and literal path loads that resolve inside this
+checkout are rejected; generated or external paths remain available for intentional dynamic loading.
 
 Under `tools/`, module level may only import, define, and name constants; the work happens in
 `main()` behind `if __name__ == "__main__"`. Running a generator regenerates its outputs — importing
