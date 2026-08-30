@@ -359,7 +359,7 @@ Run the complete validator/protocol suite from the bundle directory:
 python3 tools/run_validation.py
 ```
 
-This runs the complete validator/test inventory defined in `tools/run_validation.py`, writes per-script machine evidence under `validation/evidence/`, writes the pass/fail inventory to `validation/FULL_VALIDATION_RUN.txt`, and regenerates `VALIDATION_SUMMARY.txt`. Those paths plus `validation/VALIDATION_STATE.json` are ignored, ephemeral output; a clean validation run does not modify tracked files.
+This runs the complete validator/test inventory defined by `framework/validation_suite.py`, writes per-script machine evidence under `validation/evidence/`, writes the pass/fail inventory to `validation/FULL_VALIDATION_RUN.txt`, and regenerates `VALIDATION_SUMMARY.txt`. The runner in `tools/run_validation.py` consumes that manifest in declared order. Those output paths plus `validation/VALIDATION_STATE.json` are ignored and ephemeral; a clean validation run does not modify tracked files.
 
 GitHub Actions runs the same command without `--resume` for every pull request and push to `main`, then requires the checkout to remain clean. Protect `main` with the **Clean validation** status check described in `docs/CI.md`.
 

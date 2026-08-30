@@ -4,6 +4,7 @@ import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from framework.validation import Validation
+from framework.validation_suite import suite_entries
 from pathlib import Path
 import json,re,sys
 R=_PROJECT_ROOT
@@ -45,9 +46,9 @@ else:
 for name,needle in [('ROADMAP.md','## 12. Live-game commissioning and evidence closure — ACTIVE'),('README.md','docs/LIVE_COMMISSIONING.md'),('docs/FRAMEWORK_HARDENING_TESTS.md','Item 12 field-evidence workflow'),('docs/ABI_REFERENCE.md','Live Commission Snapshot Probe ABI1'),('docs/ABI_REFERENCE.md','Stack Cell Monitor ABI1')]:
     p=R/name
     if not p.exists() or needle not in p.read_text(): validation.fail(f'{name}: missing commissioning contract marker')
-rv=(R/'tools'/'run_validation.py').read_text()
+registered={entry.path for entry in suite_entries(R)}
 for n in ('validation/validators/validate_live_commissioning_contracts.py','tests/test_live_commissioning.py'):
-    if n not in rv: validation.fail(f'run_validation missing {n}')
+    if n not in registered: validation.fail(f'validation suite manifest missing {n}')
 manifest=json.loads((R/'data/source_manifest.json').read_text()).get('scripts',{})
 if 'ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10' not in manifest: validation.fail('source_manifest missing live commissioning snapshot probe')
 if 'ic10/live-commissioning/stack_cell_monitor_v1_0.ic10' not in manifest: validation.fail('source_manifest missing stack cell monitor')
