@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10",
-  "source_sha256": "1d38dbce477ecb873339027aafedc73fb8bad41adaaf709d3138fe3ab95b353d",
+  "source_sha256": "ddb4a6b20c92c4c8307d448f3e0ae37f336856fc71abf98f720bd9dd8622bb6c",
   "identity": {
     "service_id": "ic10.script.power.policy.target.resolver",
     "implementation_revision": "1.0",
@@ -73,10 +73,10 @@
       "reference": "r7",
       "literal_reads": [
         0,
-        2,
-        3,
         12,
-        28
+        28,
+        32,
+        33
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -88,7 +88,7 @@
           "value": 31415950
         },
         {
-          "address": 3,
+          "address": 33,
           "operator": "equals",
           "value": 4
         }

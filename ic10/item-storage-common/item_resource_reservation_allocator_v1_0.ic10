@@ -39,11 +39,11 @@ bnez r0 Bad
 getd r0 r1 9
 blez r0 Bad
 beq r5 1 QuoteExport
-getd r0 r1 7
+getd r0 r1 37
 getd r2 r1 15
 j QuoteFree
 QuoteExport:
-getd r0 r1 6
+getd r0 r1 36
 getd r2 r1 14
 QuoteFree:
 sub r0 r0 r2

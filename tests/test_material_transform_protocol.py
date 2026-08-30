@@ -20,7 +20,7 @@ x=src('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10')
 g=src('ic10/material-grid/material_transfer_grant_guard_v1_0.ic10')
 for tok in ('bgt r4 3 Bad','and r0 r6 r3','HASH("StructureAdvancedFurnace")','l r0 d1 Pressure','l r0 d1 Temperature','poke 8 1'):
     need(a,tok,'generic admission')
-for tok in ('get r10 d2 r0','getd r0 r1 22','getd r0 r15 6','poke r0 r1'):
+for tok in ('get r10 d2 r0','getd r0 r1 22','getd r0 r15 36','poke r0 r1'):
     need(r,tok,'link resolver')
 for tok in ('putd r2 14 r10','putd r3 15 r10','putd r4 17 r1','poke 13 1'):
     need(s,tok,'reservation stager')
@@ -37,7 +37,7 @@ for tok in ('put d3 21 r15','s d0 Activate 1','sub r0 r0 r1','put d3 23 r0'):
 def cap_admit(prefab,required,input_count=2,pressure=2000,temperature=1500):
     pp=Device(970,props={'ReferenceId':970,'PrefabHash':'HASH:'+prefab,'Power':1,'Error':0,'Pressure':pressure,'Temperature':temperature})
     vv=Device(971,stack={0:31415952,1:4,70:321,71:required,72:input_count,73:1,74:7,8:2,9:101,10:2,11:1,12:2,13:102,14:2,15:1,16:2,17:103,18:2,19:1,32:2,33:444,34:2,35:1,64:100,65:100000,66:300,67:100000,68:321,69:1})
-    oo=Device(972,stack={0:31415950,1:1,3:2,4:444,6:0,7:100,9:1,10:2,12:1})
+    oo=Device(972,stack={0:31415950,1:1,33:2,34:444,36:0,37:100,9:1,10:2,12:1})
     vm=IC10(a,{'d0':vv,'d1':pp,'d2':oo},self_ref=973);vm.run(2);return vm.stack.get(8)
 for prefab in ('StructureArcFurnace','StructureFurnace','StructureAdvancedFurnace'):
     if cap_admit(prefab,1,1)!=1:fails.append('basic-smelt capability rejected '+prefab)
@@ -54,7 +54,7 @@ for prefab in ('StructureArcFurnace','StructureFurnace','StructureAdvancedFurnac
 
 # Synthetic 3-input transform path.
 proc=Device(900,props={'ReferenceId':900,'PrefabHash':'HASH:StructureAdvancedFurnace','Power':1,'Error':0,'Pressure':2000,'Temperature':1500,'Activate':0})
-out=Device(901,stack={0:31415950,1:1,3:2,4:444,6:0,7:100,9:1,10:2,12:1},props={'ReferenceId':901})
+out=Device(901,stack={0:31415950,1:1,33:2,34:444,36:0,37:100,9:1,10:2,12:1},props={'ReferenceId':901})
 view=Device(902,stack={0:31415952,1:4,70:123,71:4,72:3,73:1,74:5,75:0,
     8:2,9:101,10:2,11:1,12:2,13:102,14:2,15:1,16:2,17:103,18:2,19:2,
     32:2,33:444,34:2,35:1,64:1000,65:3000,66:1200,67:1800,68:123,69:1},props={'ReferenceId':902})
@@ -64,8 +64,8 @@ if adm_vm.stack.get(8)!=1 or adm_vm.stack.get(16)!=3: fails.append('generic admi
 
 links=[]; dyn={}
 for i,(typ,qty) in enumerate(((101,1),(102,1),(103,2))):
-    sr=Device(910+i*10,stack={0:31415950,1:1,3:2,4:typ,6:20,7:0,9:1,10:2,12:1},props={'ReferenceId':910+i*10})
-    dr=Device(911+i*10,stack={0:31415950,1:1,3:2,4:typ,6:0,7:20,9:1,10:2,12:1},props={'ReferenceId':911+i*10})
+    sr=Device(910+i*10,stack={0:31415950,1:1,33:2,34:typ,36:20,37:0,9:1,10:2,12:1},props={'ReferenceId':910+i*10})
+    dr=Device(911+i*10,stack={0:31415950,1:1,33:2,34:typ,36:0,37:20,9:1,10:2,12:1},props={'ReferenceId':911+i*10})
     guard=Device(912+i*10,stack={0:31415960,1:1,13:1},props={'ReferenceId':912+i*10})
     exe=Device(913+i*10,stack={0:31415958,1:1,2:0,7:1},props={'ReferenceId':913+i*10})
     feed=Device(914+i*10,stack={0:31415961,1:1},props={'ReferenceId':914+i*10})
@@ -106,7 +106,7 @@ for link,sr,dr,*_ in links:
     if sr.stack.get(14)!=0 or sr.stack.get(16)!=0 or dr.stack.get(15)!=0 or dr.stack.get(16)!=0:
         fails.append('multi allocator did not clear completed reservations')
 # Rejection on the third input must roll back earlier staging without publishing S14.
-links[2][1].stack[6]=1
+links[2][1].stack[36]=1
 alloc_vm.stack[8]=2; alloc_vm.stack[20]=999; alloc_vm.stack[21]=2
 for _ in range(12):
     alloc_vm.run(1); stager_vm.run(1)
@@ -114,7 +114,7 @@ for _ in range(12):
 if alloc_vm.stack.get(14)!=0 or alloc_vm.stack.get(22)>=0: fails.append('failed multi-input request published a commit epoch')
 for link,sr,dr,*_ in links:
     if sr.stack.get(14)!=0 or dr.stack.get(15)!=0: fails.append('failed multi-input request leaked partial reservation')
-links[2][1].stack[6]=20
+links[2][1].stack[36]=20
 
 # Runtime hand-off: use a fresh request and simulate committed input/output completion.
 rt_vm=IC10(x,{'d0':proc,'d1':adm_dev,'d2':res_dev,'d3':alloc_dev,'d4':out},self_ref=960)
@@ -126,7 +126,7 @@ for _ in range(40):
     if ep>0:
         for link,*_ in links: link.stack[23]=ep
     if proc.props.get('Activate')==1 and not output_done:
-        out.stack[6]+=2; out.stack[12]+=1; output_done=True
+        out.stack[36]+=2; out.stack[12]+=1; output_done=True
     if rt_vm.stack.get(21)==3 and rt_vm.stack.get(20)==1: break
 if rt_vm.stack.get(21)!=3 or rt_vm.stack.get(20)!=1 or proc.props.get('Activate')!=0:
     fails.append('generic transform runtime failed 3-input transaction/output confirmation')

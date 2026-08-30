@@ -34,11 +34,11 @@ getd r14 r10 12
 blez r14 Find
 getd r0 r10 0
 bne r0 31415950 Find
-getd r0 r10 3
+getd r0 r10 33
 bne r0 4 Find
 getd r0 r10 9
 blez r0 Find
-getd r11 r10 7
+getd r11 r10 37
 blez r11 Find
 getd r0 r10 12
 bne r0 r14 Find

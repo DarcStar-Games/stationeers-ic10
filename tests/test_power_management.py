@@ -30,10 +30,10 @@ b.props['On']=0;bv.run(1);ck(bv.stack.get(55)==0 and bv.stack.get(56)==0,'off ba
 # Generic Reservation offset regression: endpoint export/import land at Reservation S6/S7.
 ep=Device(1100,stack={0:31415949,1:1,52:4,53:'HASH:Power.Electrical',54:3,55:321,56:123,57:0,8:1,9:1001,10:0,11:1,12:4,13:3,35:1,38:10,39:101,40:16},props={'ReferenceId':1100})
 rrvm=IC10((R/'ic10/resource-grid-core/resource_reservation_v1_0.ic10').read_text(),{'d0':ep},self_ref=1200);rrvm.run(2)
-ck(rrvm.stack.get(6)==321 and rrvm.stack.get(7)==123 and rrvm.stack.get(5)==3,'Reservation POWER capacity offsets wrong')
+ck(rrvm.stack.get(36)==321 and rrvm.stack.get(37)==123 and rrvm.stack.get(35)==3,'Reservation POWER capacity offsets wrong')
 # Source/Sink selectors must read S6/S7, not role/cross-direction cells.
-src=Device(1201,stack={0:31415950,1:1,2:1100,3:4,4:'HASH:Power.Electrical',5:1,6:100,7:0,9:1,12:5,17:0,28:1,30:101,31:16},props={'ReferenceId':1201})
-sink=Device(1202,stack={0:31415950,1:1,2:1101,3:4,4:'HASH:Power.Electrical',5:2,6:0,7:80,9:1,12:6,17:0,28:2,30:201,31:14410},props={'ReferenceId':1202})
+src=Device(1201,stack={0:31415950,1:1,32:1100,33:4,34:'HASH:Power.Electrical',35:1,36:100,37:0,9:1,12:5,17:0,28:1,30:101,31:16},props={'ReferenceId':1201})
+sink=Device(1202,stack={0:31415950,1:1,32:1101,33:4,34:'HASH:Power.Electrical',35:2,36:0,37:80,9:1,12:6,17:0,28:2,30:201,31:14410},props={'ReferenceId':1202})
 pdir=Device(1300,stack={0:31415981,1:1,2:0,5:2,7:0,9:'HASH:DirectorySchema.PowerReservation.v1',11:3,12:64,32:1000001,33:101,34:1201,35:3000099,36:201,37:1202},props={'ReferenceId':1300})
 plan=Device(1301,stack={24:0},props={'ReferenceId':1301})
 sv=IC10((R/'ic10/power-grid/power_source_selector_v1_0.ic10').read_text(),{'d0':pdir,'d1':plan,'x0':src,'x1':sink},self_ref=228)
@@ -122,8 +122,8 @@ ck(lc.stack.get(8)==1 and lc.stack.get(9)==8,'lifecycle client did not return ex
 
 # PolicyId resolution scans the POWER Reservation directory snapshot and binds
 # exactly one live Reservation through the relocated request/reply cells S8..S15.
-res_a=Device(2500,stack={0:31415950,1:1,2:2600,3:4,12:9,17:0,28:2,30:501,31:0},props={'ReferenceId':2500})
-res_b=Device(2501,stack={0:31415950,1:1,2:2601,3:4,12:4,17:0,28:3,30:502,31:0},props={'ReferenceId':2501})
+res_a=Device(2500,stack={0:31415950,1:1,32:2600,33:4,12:9,17:0,28:2,30:501,31:0},props={'ReferenceId':2500})
+res_b=Device(2501,stack={0:31415950,1:1,32:2601,33:4,12:4,17:0,28:3,30:502,31:0},props={'ReferenceId':2501})
 pdir2=Device(2400,stack={0:31415981,2:0,5:2,7:0,9:'HASH:DirectorySchema.PowerReservation.v1',32:1000001,33:501,34:2500,35:2000002,36:502,37:2501},props={'ReferenceId':2400})
 tr=IC10((R/'ic10/power-jobs/power_policy_target_resolver_v1_0.ic10').read_text(),{'d0':pdir2,'x0':res_a,'x1':res_b},self_ref=2410)
 tr.stack.update({10:501,11:1});tr.run(2)
@@ -134,12 +134,12 @@ pdir2.stack[5]=2;tr.stack.update({10:999,11:3});tr.run(1)
 ck(tr.stack.get(13)==-2 and tr.stack.get(12)==3,'policy target resolver resolved an absent PolicyId')
 
 # Policy verification settles or waits on the bound Reservation/Endpoint pair.
-vres=Device(2510,stack={0:31415950,1:1,2:2610,3:4,6:0,7:0,12:5,28:2},props={'ReferenceId':2510})
+vres=Device(2510,stack={0:31415950,1:1,32:2610,33:4,36:0,37:0,12:5,28:2},props={'ReferenceId':2510})
 vep=Device(2610,stack={50:2,51:3},props={'ReferenceId':2610})
 pvv=IC10((R/'ic10/power-jobs/power_job_policy_verify_v1_0.ic10').read_text(),{'x0':vres,'x1':vep},self_ref=2420)
 pvv.stack.update({9:2510,10:2,11:3,12:1});pvv.run(2)
 ck(pvv.stack.get(8)==1 and pvv.stack.get(13)==1,'policy verify rejected a settled consumer policy')
-bres=Device(2511,stack={0:31415950,1:1,2:2611,3:4,6:4,7:0,12:6,28:3},props={'ReferenceId':2511})
+bres=Device(2511,stack={0:31415950,1:1,32:2611,33:4,36:4,37:0,12:6,28:3},props={'ReferenceId':2511})
 bep=Device(2611,stack={50:5,51:3},props={'ReferenceId':2611})
 pvv2=IC10((R/'ic10/power-jobs/power_job_policy_verify_v1_0.ic10').read_text(),{'x0':bres,'x1':bep},self_ref=2421)
 pvv2.stack.update({9:2511,10:5,11:3,12:1});pvv2.run(2)

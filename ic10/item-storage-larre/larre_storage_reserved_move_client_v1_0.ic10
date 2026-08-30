@@ -14,7 +14,7 @@ beq r13 3 RecoverStart
 bdns d1 Bad
 bdns d2 Bad
 l r12 d0 ReferenceId
-get r0 d1 2
+get r0 d1 32
 bne r0 r12 Bad
 get r10 db 10
 get r11 db 14
@@ -32,8 +32,8 @@ bne r0 r1 Stale
 get r0 d2 12
 get r1 d2 19
 bne r0 r1 Stale
-get r2 d1 4
-get r3 d2 4
+get r2 d1 34
+get r3 d2 34
 bne r2 r3 Bad
 beq r13 1 Outbound
 bne r13 2 Bad

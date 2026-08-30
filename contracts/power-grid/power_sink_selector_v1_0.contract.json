@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_sink_selector_v1_0.ic10",
-  "source_sha256": "16204350f7b6f50e0512f4a4a39ee07b57321446cd57ba35d0da133027b2ec5f",
+  "source_sha256": "2ccafc4024135ef2fd9f7cdadf9b8da66713805baf961c3019d353d56a12e590",
   "identity": {
     "service_id": "ic10.script.power.sink.selector",
     "implementation_revision": "1.0",
@@ -73,10 +73,10 @@
       "reference": "r10",
       "literal_reads": [
         0,
-        3,
-        7,
         9,
-        12
+        12,
+        33,
+        37
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -88,7 +88,7 @@
           "value": 31415950
         },
         {
-          "address": 3,
+          "address": 33,
           "operator": "equals",
           "value": 4
         }

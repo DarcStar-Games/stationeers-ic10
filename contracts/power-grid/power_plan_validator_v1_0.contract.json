@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_plan_validator_v1_0.ic10",
-  "source_sha256": "b665aae588843b6bbdec538940c67a4675537f214a5cd73efd7563d3ba626a1f",
+  "source_sha256": "c41e0e3796a7032bc24e5013348114b1a144ce114a30674f72bb32c7982dc5f8",
   "identity": {
     "service_id": "ic10.script.power.plan.validator",
     "implementation_revision": "1.0",
@@ -99,9 +99,9 @@
       "reference": "r7",
       "literal_reads": [
         0,
-        3,
         9,
-        12
+        12,
+        33
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -113,7 +113,7 @@
           "value": 31415950
         },
         {
-          "address": 3,
+          "address": 33,
           "operator": "equals",
           "value": 4
         }
@@ -125,9 +125,9 @@
       "reference": "r8",
       "literal_reads": [
         0,
-        3,
         9,
-        12
+        12,
+        33
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -139,7 +139,7 @@
           "value": 31415950
         },
         {
-          "address": 3,
+          "address": 33,
           "operator": "equals",
           "value": 4
         }

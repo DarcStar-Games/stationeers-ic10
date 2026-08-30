@@ -47,27 +47,27 @@ get r0 d2 6
 bne r0 1 CleanupNew
 get r5 db 3
 blez r5 Publish
-put d3 2 r5
-put d3 3 r3
+put d3 8 r5
+put d3 9 r3
 poke 20 3
 j Loop
 WaitR:
 get r3 db 30
-get r0 d3 4
+get r0 d3 10
 bne r0 r3 Loop
-get r0 d3 5
+get r0 d3 11
 bne r0 1 CleanupNew
 j Publish
 CleanupNew:
 get r0 db 22
-put d3 2 r0
+put d3 8 r0
 get r3 db 30
-put d3 3 r3
+put d3 9 r3
 poke 20 4
 j Loop
 WaitCleanup:
 get r3 db 30
-get r0 d3 4
+get r0 d3 10
 bne r0 r3 Loop
 j Fail
 Publish:

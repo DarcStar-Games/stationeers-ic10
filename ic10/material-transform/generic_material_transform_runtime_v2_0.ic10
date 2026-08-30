@@ -69,7 +69,7 @@ bne r0 r15 Fault
 get r0 d3 22
 bltz r0 Fault
 bne r0 2 Publish
-get r11 d4 6
+get r11 d4 36
 get r12 d4 12
 s d0 Activate 1
 poke 13 0
@@ -96,7 +96,7 @@ bne r0 r1 Fault
 get r0 d4 12
 get r1 db 12
 beq r0 r1 Publish
-get r0 d4 6
+get r0 d4 36
 get r1 db 11
 sub r0 r0 r1
 get r1 d1 17

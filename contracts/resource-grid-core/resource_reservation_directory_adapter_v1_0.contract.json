@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10",
-  "source_sha256": "acfb44deea89941a540de6b00a1700e6e6df40e2e42e37657a30fce75b78c2d6",
+  "source_sha256": "7a564e5d7de06f0fc00dba4225b75767ba861bfffb7fc4ffc6b5a218f02af8fb",
   "identity": {
     "service_id": "ic10.script.resource.reservation.directory.adapter",
     "implementation_revision": "1.0",
@@ -29,9 +29,9 @@
       "literal_reads": [
         0,
         1,
-        3,
-        4,
-        12
+        12,
+        33,
+        34
       ],
       "literal_writes": [],
       "dynamic_read": false,

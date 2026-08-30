@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10",
-  "source_sha256": "71d8f89dbce8981c9ccc12935d2e6c5751ee9acd6b476c7494444f3c971d2bb2",
+  "source_sha256": "d590500c566496def0296284d36cf70a7cf0071beb645cfedb4823ef54415299",
   "identity": {
     "service_id": "ic10.script.multi.material.reservation.stager",
     "implementation_revision": "1.0",
@@ -105,8 +105,8 @@
       "transport": "reference-id",
       "reference": "r2",
       "literal_reads": [
-        6,
-        9
+        9,
+        36
       ],
       "literal_writes": [
         13,
@@ -122,8 +122,8 @@
       "transport": "reference-id",
       "reference": "r3",
       "literal_reads": [
-        7,
-        9
+        9,
+        37
       ],
       "literal_writes": [
         13,

@@ -627,7 +627,7 @@
    ]
   },
   "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10": {
-   "source_sha256": "83582663f43b8057e7128a60f7b64692bb8c40e6c814876fd8a631e05917cca9",
+   "source_sha256": "0cc94fe0ed236d3e9701aa3611a1232a80a538337df3288f1f4697110d50a61a",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -640,7 +640,7 @@
    }
   },
   "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10": {
-   "source_sha256": "e5f7a713982b3d9e7636db8d0b2264d1ec8238a828f805aa5e121c616a00289d",
+   "source_sha256": "8d6c92d181dc6b10d8b18801f70567ca2441fbc1ce42ab479a5bafcf2ca6068d",
    "external_readable_ranges": [
     [
      0,
@@ -706,7 +706,7 @@
    }
   },
   "ic10/manufacturing/print_material_resolver_v1_0.ic10": {
-   "source_sha256": "727b2ebc7928517c2b1d07815ba216dafbe06f20b3e1996b01ffb763486ed31e",
+   "source_sha256": "cdcf65c27c2fdc3e8da2cd65d31156942ac634b6fdcfc4a34e2961dfa1389239",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -736,7 +736,7 @@
    ]
   },
   "ic10/material-transform/material_transform_admission_v1_0.ic10": {
-   "source_sha256": "8650e521b5ef7f4607001a60910e1cc59a4a374e6b76cc4f22b11940aa6d4736",
+   "source_sha256": "71b8d7a92ce158a31c1bf62f98ae956d3fc0745100f2b4c2510518e14b7bb39e",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -749,7 +749,7 @@
    }
   },
   "ic10/material-transform/material_transform_link_resolver_v1_0.ic10": {
-   "source_sha256": "ebcd00138559bb5009e8c87d33b8503a760fc9785a258b96fb7b6c1eac7c4eec",
+   "source_sha256": "7450fa4e06710d2e3d065b057b988812f8e35c81d96a8114ab1c53657a098210",
    "ports": {
     "d1": {
      "dynamic_read_ranges": [
@@ -783,7 +783,7 @@
    }
   },
   "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10": {
-   "source_sha256": "71d8f89dbce8981c9ccc12935d2e6c5751ee9acd6b476c7494444f3c971d2bb2",
+   "source_sha256": "d590500c566496def0296284d36cf70a7cf0071beb645cfedb4823ef54415299",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -847,7 +847,7 @@
    }
   },
   "ic10/power-grid/power_load_executor_v1_0.ic10": {
-   "source_sha256": "2f053e2b71a19f4159f8d7c0d20d81ac1d2974bb81c37d20240fb763c79d68dc",
+   "source_sha256": "e428ee2c8e31961354cc916e81b14aa99c206bcc3ea18cf03d5cf3b11b94312a",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -860,7 +860,7 @@
    }
   },
   "ic10/power-grid/power_plan_validator_v1_0.ic10": {
-   "source_sha256": "b665aae588843b6bbdec538940c67a4675537f214a5cd73efd7563d3ba626a1f",
+   "source_sha256": "c41e0e3796a7032bc24e5013348114b1a144ce114a30674f72bb32c7982dc5f8",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -900,7 +900,7 @@
    }
   },
   "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10": {
-   "source_sha256": "98388d4d01e95e5edeb148079da95641282e3e359b806caae5ea8544563b3ab9",
+   "source_sha256": "7ec8c2b6603675b9187bcd479bb2487b2e08a06c9f1132b76bcbb710cc244938",
    "external_readable_ranges": [
     [
      0,
@@ -909,7 +909,7 @@
    ]
   },
   "ic10/power-grid/power_sink_selector_v1_0.ic10": {
-   "source_sha256": "16204350f7b6f50e0512f4a4a39ee07b57321446cd57ba35d0da133027b2ec5f",
+   "source_sha256": "2ccafc4024135ef2fd9f7cdadf9b8da66713805baf961c3019d353d56a12e590",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -922,7 +922,7 @@
    }
   },
   "ic10/power-grid/power_source_selector_v1_0.ic10": {
-   "source_sha256": "ac1f7b35372d07e53ec01f6b83ed36b7bddb4085500486623f44cbcc83ab90d7",
+   "source_sha256": "27d529ec38e901fa893d2ad11e801f1aaa3e9a3124fc20a9cd1b219f994557b9",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -956,7 +956,7 @@
    }
   },
   "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": {
-   "source_sha256": "1d38dbce477ecb873339027aafedc73fb8bad41adaaf709d3138fe3ab95b353d",
+   "source_sha256": "ddb4a6b20c92c4c8307d448f3e0ae37f336856fc71abf98f720bd9dd8622bb6c",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -1475,7 +1475,7 @@
    ]
   },
   "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10": {
-   "source_sha256": "acfb44deea89941a540de6b00a1700e6e6df40e2e42e37657a30fce75b78c2d6",
+   "source_sha256": "7a564e5d7de06f0fc00dba4225b75767ba861bfffb7fc4ffc6b5a218f02af8fb",
    "external_readable_ranges": [
     [
      0,
@@ -1498,6 +1498,35 @@
     [
      0,
      75
+    ]
+   ]
+  },
+  "ic10/resource-grid-core/resource_reservation_v1_0.ic10": {
+   "source_sha256": "59e44ee0b819e8b7d80668fb7b7395387e654f95f2b2b70f21ff8c500bad2f4b",
+   "dynamic_read_ranges": [
+    [
+     21,
+     24
+    ],
+    [
+     28,
+     31
+    ]
+   ],
+   "dynamic_write_ranges": [
+    [
+     21,
+     24
+    ]
+   ],
+   "external_writable_ranges": [
+    [
+     13,
+     19
+    ],
+    [
+     25,
+     27
     ]
    ]
   }

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10",
-  "source_sha256": "47d23a0486e8e98f38b3687944fe0d3f6231f072aabd71c6f179a724e551d398",
+  "source_sha256": "cc9ad60acba06b04b3e1d4ef77db628825545e59d5686fcd5c213055de554ce7",
   "identity": {
     "service_id": "ic10.script.pressure.resource.link.adapter",
     "implementation_revision": "1.0",
@@ -85,10 +85,10 @@
         "literal_reads": [
           0,
           1,
-          2,
-          3,
-          4,
-          12
+          12,
+          32,
+          33,
+          34
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -107,7 +107,7 @@
             "equals": 1
           },
           {
-            "address": 3,
+            "address": 33,
             "equals": 1
           }
         ]
@@ -137,10 +137,10 @@
         "literal_reads": [
           0,
           1,
-          2,
-          3,
-          4,
-          12
+          12,
+          32,
+          33,
+          34
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -159,7 +159,7 @@
             "equals": 1
           },
           {
-            "address": 3,
+            "address": 33,
             "equals": 1
           }
         ]

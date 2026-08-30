@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10",
-  "source_sha256": "e5f7a713982b3d9e7636db8d0b2264d1ec8238a828f805aa5e121c616a00289d",
+  "source_sha256": "8d6c92d181dc6b10d8b18801f70567ca2441fbc1ce42ab479a5bafcf2ca6068d",
   "identity": {
     "service_id": "ic10.script.item.resource.reservation.selector",
     "implementation_revision": "1.0",
@@ -72,9 +72,6 @@
       "transport": "reference-id",
       "reference": "ra",
       "literal_reads": [
-        5,
-        6,
-        7,
         9,
         11,
         12,
@@ -82,7 +79,10 @@
         15,
         17,
         21,
-        23
+        23,
+        35,
+        36,
+        37
       ],
       "literal_writes": [],
       "dynamic_read": false,

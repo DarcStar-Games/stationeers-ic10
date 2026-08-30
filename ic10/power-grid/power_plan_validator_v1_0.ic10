@@ -41,9 +41,9 @@ getd r0 r7 0
 bne r0 31415950 Bad
 getd r0 r8 0
 bne r0 31415950 Bad
-getd r0 r7 3
+getd r0 r7 33
 bne r0 4 Bad
-getd r0 r8 3
+getd r0 r8 33
 bne r0 4 Bad
 getd r0 r7 9
 blez r0 Bad

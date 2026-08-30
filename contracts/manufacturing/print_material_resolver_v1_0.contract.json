@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/print_material_resolver_v1_0.ic10",
-  "source_sha256": "727b2ebc7928517c2b1d07815ba216dafbe06f20b3e1996b01ffb763486ed31e",
+  "source_sha256": "cdcf65c27c2fdc3e8da2cd65d31156942ac634b6fdcfc4a34e2961dfa1389239",
   "identity": {
     "service_id": "ic10.script.print.material.resolver",
     "implementation_revision": "1.0",
@@ -140,7 +140,7 @@
       "transport": "reference-id",
       "reference": "r3",
       "literal_reads": [
-        6
+        36
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -152,7 +152,7 @@
       "transport": "reference-id",
       "reference": "r4",
       "literal_reads": [
-        7
+        37
       ],
       "literal_writes": [],
       "dynamic_read": false,

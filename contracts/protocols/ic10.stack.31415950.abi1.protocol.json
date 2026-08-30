@@ -15,7 +15,16 @@
       "source": "ic10/resource-grid-core/resource_reservation_v1_0.ic10",
       "header_base": 0,
       "readable_ranges": [],
-      "writable_ranges": [],
+      "writable_ranges": [
+        {
+          "start": 13,
+          "end": 19
+        },
+        {
+          "start": 25,
+          "end": 27
+        }
+      ],
       "fields": [
         {
           "address": 0,
@@ -24,7 +33,8 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 31415950
         },
         {
           "address": 1,
@@ -33,7 +43,8 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 1
         },
         {
           "address": 2,
@@ -41,59 +52,9 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read",
             "self-write"
-          ]
-        },
-        {
-          "address": 3,
-          "name": "S3",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
+          ],
+          "const": 0
         },
         {
           "address": 8,
@@ -334,6 +295,66 @@
           "access": [
             "self-write"
           ]
+        },
+        {
+          "address": 32,
+          "name": "S32",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 33,
+          "name": "S33",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 34,
+          "name": "S34",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 35,
+          "name": "S35",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 36,
+          "name": "S36",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 37,
+          "name": "S37",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
         }
       ],
       "behavior": {
@@ -349,7 +370,22 @@
           "mode": "preserved-unless-overwritten",
           "source": "static-entry-path-analysis"
         },
-        "invariants": []
+        "invariants": [
+          {
+            "id": "header.s0.magic",
+            "kind": "cell-equals",
+            "address": 0,
+            "equals": 31415950,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s0.abi",
+            "kind": "cell-equals",
+            "address": 1,
+            "equals": 1,
+            "source": "generated-protocol-header"
+          }
+        ]
       }
     }
   ],
@@ -364,11 +400,11 @@
       "literal_reads": [
         0,
         1,
-        2,
-        3,
-        4,
         10,
-        12
+        12,
+        32,
+        33,
+        34
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [],
@@ -387,12 +423,12 @@
           "value": 1
         },
         {
-          "address": 3,
+          "address": 10,
           "operator": "equals",
           "value": 2
         },
         {
-          "address": 10,
+          "address": 33,
           "operator": "equals",
           "value": 2
         }
@@ -414,11 +450,11 @@
       "literal_reads": [
         0,
         1,
-        2,
-        3,
-        4,
         10,
-        12
+        12,
+        32,
+        33,
+        34
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [],
@@ -437,12 +473,12 @@
           "value": 1
         },
         {
-          "address": 3,
+          "address": 10,
           "operator": "equals",
           "value": 2
         },
         {
-          "address": 10,
+          "address": 33,
           "operator": "equals",
           "value": 2
         }
@@ -464,12 +500,12 @@
       "literal_reads": [
         0,
         1,
-        3,
-        4,
-        7,
         9,
         10,
-        12
+        12,
+        33,
+        34,
+        37
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [],
@@ -488,7 +524,7 @@
           "value": 1
         },
         {
-          "address": 3,
+          "address": 33,
           "operator": "equals",
           "value": 2
         }
@@ -510,10 +546,10 @@
       "literal_reads": [
         0,
         1,
-        2,
-        3,
-        4,
-        12
+        12,
+        32,
+        33,
+        34
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [],
@@ -532,7 +568,7 @@
           "value": 1
         },
         {
-          "address": 3,
+          "address": 33,
           "operator": "equals",
           "value": 1
         }
@@ -554,10 +590,10 @@
       "literal_reads": [
         0,
         1,
-        2,
-        3,
-        4,
-        12
+        12,
+        32,
+        33,
+        34
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [],
@@ -576,7 +612,7 @@
           "value": 1
         },
         {
-          "address": 3,
+          "address": 33,
           "operator": "equals",
           "value": 1
         }

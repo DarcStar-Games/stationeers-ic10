@@ -62,9 +62,9 @@ getd r3 r1 28
 getd r4 r1 29
 getd r5 r1 31
 mul r0 r12 r6
-getd r14 r3 6
+getd r14 r3 36
 blt r14 r0 NoRes
-getd r14 r4 7
+getd r14 r4 37
 blt r14 r0 NoCap
 mul r0 r7 4
 add r0 r0 20

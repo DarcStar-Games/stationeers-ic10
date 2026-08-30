@@ -72,15 +72,15 @@ getd r0 r15 0
 bne r0 31415950 Find
 getd r0 r15 1
 bne r0 1 Find
-getd r0 r15 3
+getd r0 r15 33
 bne r0 2 Find
-getd r0 r15 4
+getd r0 r15 34
 bne r0 r5 Find
 getd r0 r15 10
 bne r0 2 Find
 getd r0 r15 9
 blez r0 Find
-getd r0 r15 6
+getd r0 r15 36
 blt r0 r8 Find
 mul r0 r7 4
 add r0 r0 20

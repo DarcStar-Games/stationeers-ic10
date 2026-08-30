@@ -27,8 +27,8 @@ ck(ts.stack.get(9)==1 and ts.stack.get(10)==601 and ts.stack.get(11)==701,'trans
 # Print material resolver maps semantic recipe reagents to concrete MaterialGrid links/resources.
 recipe=Device(200,stack={5:2,6:9,7:1,8:'HASH:Iron',9:30,10:'HASH:Copper',11:10},props={'ReferenceId':200})
 # source/sink reservations advertise sufficient exact ITEM capacity.
-sr1=Device(211,stack={6:100},props={'ReferenceId':211});dr1=Device(212,stack={7:100},props={'ReferenceId':212})
-sr2=Device(221,stack={6:100},props={'ReferenceId':221});dr2=Device(222,stack={7:100},props={'ReferenceId':222})
+sr1=Device(211,stack={36:100},props={'ReferenceId':211});dr1=Device(212,stack={37:100},props={'ReferenceId':212})
+sr2=Device(221,stack={36:100},props={'ReferenceId':221});dr2=Device(222,stack={37:100},props={'ReferenceId':222})
 l1=Device(213,stack={28:211,29:212,31:-1301215609,9:1,22:900,27:'HASH:Iron'},props={'ReferenceId':213})
 l2=Device(223,stack={28:221,29:222,31:-404336834,9:1,22:900,27:'HASH:Copper'},props={'ReferenceId':223})
 ld=Device(230,stack={0:31415981,1:1,2:0,3:4,5:2,7:0,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:64,13:0,32:213,33:223},props={'ReferenceId':230})
@@ -37,9 +37,9 @@ rv.stack.update({16:900,17:2,18:1});rv.run(1)
 ck(rv.stack.get(12)==1 and rv.stack.get(9)==2 and rv.stack.get(8)==900,'print material resolver rejected reachable reagents')
 ck([rv.stack.get(20+i) for i in range(8)]==[213,30,-1301215609,2,223,10,-404336834,2],'print resolver did not publish transform-compatible four-cell link records')
 # Insufficient source resource is classified WAIT_RESOURCE; sink loss is WAIT_CAPACITY.
-sr1.stack[6]=1;rv.stack[18]=2;rv.run(1);ck(rv.stack.get(12)==-3,'insufficient reagent was not classified resource wait')
-sr1.stack[6]=100;dr1.stack[7]=1;rv.stack[18]=3;rv.run(1);ck(rv.stack.get(12)==-4,'insufficient sink capacity was not classified capacity wait')
-dr1.stack[7]=100
+sr1.stack[36]=1;rv.stack[18]=2;rv.run(1);ck(rv.stack.get(12)==-3,'insufficient reagent was not classified resource wait')
+sr1.stack[36]=100;dr1.stack[37]=1;rv.stack[18]=3;rv.run(1);ck(rv.stack.get(12)==-4,'insufficient sink capacity was not classified capacity wait')
+dr1.stack[37]=100
 
 # Generic print runtime consumes the same allocator completion contract and native printer instruction stack.
 resolver=Device(300,stack={8:910,9:2,11:1,12:1},props={'ReferenceId':300})

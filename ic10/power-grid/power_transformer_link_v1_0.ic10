@@ -19,9 +19,9 @@ get r0 d1 0
 bne r0 31415950 Bad
 get r0 d2 0
 bne r0 31415950 Bad
-get r0 d1 3
+get r0 d1 33
 bne r0 4 Bad
-get r0 d2 3
+get r0 d2 33
 bne r0 4 Bad
 l r1 d1 ReferenceId
 l r2 d2 ReferenceId

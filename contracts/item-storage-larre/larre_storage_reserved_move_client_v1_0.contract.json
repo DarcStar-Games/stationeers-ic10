@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10",
-  "source_sha256": "37dbb004cdba19b15d90347aafa68b4f0d2b9809ec104517cd1e8d2ab80b5cf2",
+  "source_sha256": "f9f3fb2d0992a5e0f580e9267492d75e53138741b9d3bd76f7eed07cbf478455",
   "identity": {
     "service_id": "ic10.script.larre.storage.reserved.move.client",
     "implementation_revision": "1.0",
@@ -84,8 +84,6 @@
       },
       "stack": {
         "literal_reads": [
-          2,
-          4,
           12,
           14,
           15,
@@ -95,7 +93,9 @@
           19,
           25,
           26,
-          27
+          27,
+          32,
+          34
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -118,8 +118,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.14d0a5fa932d06a1",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.14d0a5fa932d06a1",
+        "interface_id": "ic10.interface.access.0c14163b2b57758f",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.0c14163b2b57758f",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -142,14 +142,14 @@
       },
       "stack": {
         "literal_reads": [
-          4,
           12,
           14,
           15,
           16,
           17,
           18,
-          19
+          19,
+          34
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -172,8 +172,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.c4e8cc76f2dd730f",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.c4e8cc76f2dd730f",
+        "interface_id": "ic10.interface.access.81e1ca7164d7de50",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.81e1ca7164d7de50",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

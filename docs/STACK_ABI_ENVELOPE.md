@@ -310,7 +310,7 @@ version and is rejected by v1 readers; it may not silently repurpose a v1 cell.
 | Stack Cell Monitor | 8 | 45 | the probe: one cell at a chosen address |
 | Generic Telemetry family | 8 | +4 each | 7 runtimes migrated; 5 spend reviewed margin, 0 consumers changed |
 | Manufacturing family | 8 | +1 each | 10 migrated; seven move a whole peer-written mailbox, 1 spends reviewed margin |
-| Backlog | — | — | 66 programs, 61 of which use `S2..S7` today |
+| Backlog | — | — | 64 programs, 59 of which use `S2..S7` today |
 
 ## Worked migration: Generic Telemetry
 

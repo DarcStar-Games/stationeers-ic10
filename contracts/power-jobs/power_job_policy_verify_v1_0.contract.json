@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-jobs/power_job_policy_verify_v1_0.ic10",
-  "source_sha256": "ae81e70790f6193d758f2fbacd9f788ae07936f98b839402391608048051af20",
+  "source_sha256": "966c1a095ebf5178bad28bb7779b828545267dda9ca9444d5c5e980b6ef68b5d",
   "identity": {
     "service_id": "ic10.script.power.job.policy.verify",
     "implementation_revision": "1.0",
@@ -18,12 +18,12 @@
       "reference": "r2",
       "literal_reads": [
         0,
-        2,
-        3,
-        6,
-        7,
         12,
-        28
+        28,
+        32,
+        33,
+        36,
+        37
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -35,7 +35,7 @@
           "value": 31415950
         },
         {
-          "address": 3,
+          "address": 33,
           "operator": "equals",
           "value": 4
         }

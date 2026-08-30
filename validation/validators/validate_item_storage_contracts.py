@@ -36,7 +36,7 @@ need('ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10','HA
 if 'putd ' in txt('ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10'): fails.append('191 selector mutates reservations; quote must be read-only')
 # Allocator revalidates semantic mirror generation, commits owner+epoch+action hints, and releaser is exact-owner/epoch only.
 need('ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10','getd r0 r1 12','bne r0 ra Bad','get r0 d0 16','bne r0 r14 Bad','putd r1 17 r12','putd r1 18 r13','putd r1 19 ra','putd r1 25 r0','putd r1 26 r0','putd r1 27 r0','poke 13 r15')
-need('ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10','getd r0 r1 17','bne r0 r12 Scan','getd r0 r1 18','bne r0 r13 Scan','putd r1 19 0','putd r1 25 -1','putd r1 26 0','putd r1 27 -1','poke 4 r15')
+need('ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10','getd r0 r1 17','bne r0 r12 Scan','getd r0 r1 18','bne r0 r13 Scan','putd r1 19 0','putd r1 25 -1','putd r1 26 0','putd r1 27 -1','poke 10 r15')
 # Reserved movement requires same allocator owner, both plan epochs, current semantic reservation generations, committed action hints, and paired capacity.
 need('ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10','blez r0 Stale','bne r0 r1 Stale','get r0 d1 18','bne r0 r10 Stale','get r0 d2 18','bne r0 r11 Stale',
  'get r0 d1 12','get r1 d1 19','bne r0 r1 Stale','get r0 d2 12','get r1 d2 19','bne r0 r1 Stale','get r6 d1 26','get r4 d1 25','get r5 d1 27',

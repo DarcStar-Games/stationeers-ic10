@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-grid-core/resource_reservation_v1_0.ic10",
-  "source_sha256": "00621016cdd19ac3a1f61de872e30c62a9b6aa0550724b510ef8e871f62df136",
+  "source_sha256": "59e44ee0b819e8b7d80668fb7b7395387e654f95f2b2b70f21ff8c500bad2f4b",
   "identity": {
     "service_id": "ic10.script.resource.reservation",
     "implementation_revision": "1.0",
@@ -75,27 +75,22 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
       8,
       9,
       10,
       11,
-      12
+      12,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
     ],
     "literal_writes": [
       0,
       1,
       2,
-      3,
-      4,
-      5,
-      6,
-      7,
       8,
       9,
       10,
@@ -119,20 +114,30 @@
       28,
       29,
       30,
-      31
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
     ],
     "dynamic_read": true,
     "dynamic_write": true,
     "dynamic_read_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 21,
+        "end": 24
+      },
+      {
+        "start": 28,
+        "end": 31
       }
     ],
     "dynamic_write_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 21,
+        "end": 24
       }
     ],
     "dynamic_read_proven_ranges": [
@@ -142,11 +147,20 @@
       }
     ],
     "dynamic_write_proven_ranges": [],
-    "dynamic_read_range_source": "conservative-full-stack",
-    "dynamic_write_range_source": "conservative-full-stack",
+    "dynamic_read_range_source": "source-fingerprinted-exception",
+    "dynamic_write_range_source": "source-fingerprinted-exception",
     "clears_all": false,
     "external_readable_ranges": [],
-    "external_writable_ranges": [],
+    "external_writable_ranges": [
+      {
+        "start": 13,
+        "end": 19
+      },
+      {
+        "start": 25,
+        "end": 27
+      }
+    ],
     "fields": [
       {
         "address": 0,
@@ -155,7 +169,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 31415950
       },
       {
         "address": 1,
@@ -164,7 +179,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 2,
@@ -172,59 +188,9 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read",
           "self-write"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
         "address": 8,
@@ -465,6 +431,66 @@
         "access": [
           "self-write"
         ]
+      },
+      {
+        "address": 32,
+        "name": "S32",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 33,
+        "name": "S33",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 34,
+        "name": "S34",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 35,
+        "name": "S35",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 36,
+        "name": "S36",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 37,
+        "name": "S37",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
       }
     ],
     "headers": [
@@ -488,7 +514,22 @@
       "mode": "preserved-unless-overwritten",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 31415950,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
     "provides": [

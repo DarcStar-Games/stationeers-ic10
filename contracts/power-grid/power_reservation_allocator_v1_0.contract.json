@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_reservation_allocator_v1_0.ic10",
-  "source_sha256": "fbfc5bbcc66bb3626758cfd642c1ac9c40278ca5cd612bdbf8edcb54f00f4c4b",
+  "source_sha256": "717d5a6f62fc0dae41497760a4eeee4ccbe883f5bcb439b718d86847ab51ecd9",
   "identity": {
     "service_id": "ic10.script.power.reservation.allocator",
     "implementation_revision": "1.0",
@@ -158,12 +158,12 @@
       },
       "stack": {
         "literal_reads": [
-          4,
-          5
+          10,
+          11
         ],
         "literal_writes": [
-          2,
-          3
+          8,
+          9
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -173,7 +173,7 @@
         "dynamic_write_range_source": "none",
         "constraints": [
           {
-            "address": 5,
+            "address": 11,
             "equals": 1
           }
         ]
@@ -181,8 +181,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.aab9dc1892dd1a67",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.aab9dc1892dd1a67",
+        "interface_id": "ic10.interface.access.23b7ce5b7734d655",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.23b7ce5b7734d655",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

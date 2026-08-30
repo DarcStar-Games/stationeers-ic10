@@ -48,9 +48,9 @@ getd r14 r7 12
 blez r14 None
 getd r0 r7 0
 bne r0 31415950 None
-getd r0 r7 3
+getd r0 r7 33
 bne r0 4 None
-getd r1 r7 2
+getd r1 r7 32
 getd r5 r7 28
 getd r0 r7 12
 bne r0 r14 Loop

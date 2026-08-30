@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_load_executor_v1_0.ic10",
-  "source_sha256": "2f053e2b71a19f4159f8d7c0d20d81ac1d2974bb81c37d20240fb763c79d68dc",
+  "source_sha256": "e428ee2c8e31961354cc916e81b14aa99c206bcc3ea18cf03d5cf3b11b94312a",
   "identity": {
     "service_id": "ic10.script.power.load.executor",
     "implementation_revision": "1.0",
@@ -123,13 +123,13 @@
       "reference": "r1",
       "literal_reads": [
         0,
-        2,
-        3,
         17,
         18,
         19,
         28,
-        31
+        31,
+        32,
+        33
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -141,7 +141,7 @@
           "value": 31415950
         },
         {
-          "address": 3,
+          "address": 33,
           "operator": "equals",
           "value": 4
         }

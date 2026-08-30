@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-grid/material_resource_link_v1_0.ic10",
-  "source_sha256": "88f5ec2245d65fecb24ad5047ced1039232cd212ea2569261ce779dcbf7ec4aa",
+  "source_sha256": "792d52845b9ec0f22504eb5a367ed8ab007db1e9ad0c039a30172482e1934bfc",
   "identity": {
     "service_id": "ic10.script.material.resource.link",
     "implementation_revision": "1.0",
@@ -29,11 +29,11 @@
         "literal_reads": [
           0,
           1,
-          2,
-          3,
-          4,
           10,
-          12
+          12,
+          32,
+          33,
+          34
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -52,11 +52,11 @@
             "equals": 1
           },
           {
-            "address": 3,
+            "address": 10,
             "equals": 2
           },
           {
-            "address": 10,
+            "address": 33,
             "equals": 2
           }
         ]
@@ -86,11 +86,11 @@
         "literal_reads": [
           0,
           1,
-          2,
-          3,
-          4,
           10,
-          12
+          12,
+          32,
+          33,
+          34
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -109,11 +109,11 @@
             "equals": 1
           },
           {
-            "address": 3,
+            "address": 10,
             "equals": 2
           },
           {
-            "address": 10,
+            "address": 33,
             "equals": 2
           }
         ]

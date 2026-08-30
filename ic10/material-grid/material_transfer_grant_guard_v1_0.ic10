@@ -103,9 +103,9 @@ getd r0 sp 0
 bne r0 31415950 ResBad
 getd r0 sp 1
 bne r0 1 ResBad
-getd r0 sp 3
+getd r0 sp 33
 bne r0 2 ResBad
-getd r0 sp 4
+getd r0 sp 34
 bne r0 r4 ResBad
 getd r0 sp 9
 blez r0 ResBad

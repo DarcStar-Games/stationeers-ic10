@@ -10,7 +10,7 @@ blt r1 0 Loop
 add r6 r6 1
 getd r0 r1 0
 bne r0 31415950 Scan
-getd r0 r1 3
+getd r0 r1 33
 bne r0 4 Scan
 getd r2 r1 28
 beq r2 3 Managed
@@ -19,7 +19,7 @@ getd r0 r1 31
 and r0 r0 8
 beqz r0 Scan
 Managed:
-getd r3 r1 2
+getd r3 r1 32
 getd r3 r3 9
 blez r3 Scan
 move r4 0

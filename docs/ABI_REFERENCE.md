@@ -1374,12 +1374,7 @@ S57  MaxRate; 0 means unknown at the endpoint layer
 ```text
 S0   magic = 31415950
 S1   ABI = 1
-S2   Generic Resource Endpoint ReferenceId
-S3   ResourceClass
-S4   ResourceType
-S5   role/capability bits
-S6   ExportAvailable
-S7   ImportCapacity
+S2   capability mask = 0
 S8   MaxRate
 S9   endpoint status
 S10  Unit
@@ -1389,6 +1384,12 @@ S13  build/transaction epoch; allocator-owned
 S14  ReservedExport
 S15  ReservedImport
 S16  direction lock
+S32  Generic Resource Endpoint ReferenceId
+S33  ResourceClass
+S34  ResourceType
+S35  role/capability bits
+S36  ExportAvailable
+S37  ImportCapacity
 ```
 
 The current `ic10/resource-grid-core/resource_reservation_v1_0.ic10` is intentionally domain-neutral. PressureGrid retains its specialized molar Reservation/Allocator ABI3, while MaterialGrid uses S13-S16 through Multi Material Allocator ABI2 for one-to-three-route exact-quantity ITEM transactions. A single cross-domain allocator has not yet been promoted.
@@ -1740,7 +1741,7 @@ Adapter: `ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic
 
 - `ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10`, magic `31415987`: read-only up-to-six-leg export/import quote; request is S11 type, S12 quantity, S13 direction, S14 required capabilities, S15 request generation; response token S16 last.
 - `ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10`, magic `31415988`: coherent quote commit; request is S11 expected Selector token, S12 request generation; response token S13 last; publishes owner ReferenceId/epoch and captured Endpoint generation into each Reservation.
-- `ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10`, magic `31415990`: clears only exact owner ReferenceId + epoch; response token S4 last.
+- `ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10`, magic `31415990`: clears only exact owner ReferenceId + epoch; request is S8 owner epoch, S9 request generation; response token S10 last.
 - `ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10`, magic `31415991`: requires paired source/destination ownership and current semantic Reservation-generation equality before outbound/inbound movement; response token S8 last.
 
 ### Cargo LArRE Storage Service ABI1
