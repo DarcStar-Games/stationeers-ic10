@@ -1551,12 +1551,13 @@ Public output:
 ```text
 S0   magic
 S1   ABI = 1
-S2   active/granted exact quantity
-S3   active/committed epoch
-S4   status: 1 active, 0 no active grant, -1 invalid/consumed
-S5   Material Link ReferenceId
-S6   publication generation
+S2   capability mask = 0
 S8   last consumed epoch
+S9   active/granted exact quantity
+S10  active/committed epoch
+S11  status: 1 active, 0 no active grant, -1 invalid/consumed
+S12  Material Link ReferenceId
+S13  publication generation
 ```
 
 Allocator-staged fields:
@@ -1634,13 +1635,14 @@ d2 Material Grant Guard
 ```text
 S0   magic
 S1   ABI = 1
-S2   active/last accepted epoch
-S3   completed epoch
-S4   execution status: 1 completed, 0 active/idle, -1 failed
-S5   observed delivered ITEM_QUANTITY/tick
-S6   elapsed ticks for completed/failed batch
-S7   publication generation
+S2   capability mask = 0
 S8   granted exact quantity
+S14  active/last accepted epoch
+S15  completed epoch
+S16  execution status: 1 completed, 0 active/idle, -1 failed
+S17  observed delivered ITEM_QUANTITY/tick
+S18  elapsed ticks for completed/failed batch
+S19  publication generation
 S9   internal state: 0 idle, 1 wait-ready, 2 wait-emitted, 3 wait-sink
 S10  elapsed internal ticks
 S11  ResourceType

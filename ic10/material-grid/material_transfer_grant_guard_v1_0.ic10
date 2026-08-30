@@ -6,11 +6,12 @@ poke 31 31415960
 Init:
 poke 0 31415960
 poke 1 1
-poke 4 0
-poke 6 0
+poke 2 0
+poke 11 0
+poke 13 0
 Loop:
 yield
-poke 4 0
+poke 11 0
 bdns d0 Bad
 bdns d1 Bad
 bdns d2 Bad
@@ -71,29 +72,29 @@ beqz r0 Consume
 move sp r3
 jal CheckRes
 beqz r0 Consume
-get r0 d2 2
+get r0 d2 14
 beq r0 r13 Consume
 get r0 db 16
-poke 2 r0
-poke 3 r13
-poke 4 1
-poke 5 r1
+poke 9 r0
+poke 10 r13
+poke 11 1
+poke 12 r1
 j Publish
 Consume:
 poke 8 r13
-poke 2 0
-poke 3 r13
-poke 4 -1
-poke 5 r1
+poke 9 0
+poke 10 r13
+poke 11 -1
+poke 12 r1
 j Publish
 Bad:
-poke 2 0
-poke 3 0
-poke 4 -1
+poke 9 0
+poke 10 0
+poke 11 -1
 Publish:
-get r0 db 6
+get r0 db 13
 add r0 r0 1
-poke 6 r0
+poke 13 r0
 j Loop
 CheckRes:
 getd r9 sp 12

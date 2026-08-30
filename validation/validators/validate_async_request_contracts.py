@@ -42,7 +42,7 @@ before('ic10/material-grid/material_transfer_executor_v1_0.ic10','put d1 19 0','
 for label in ('WaitReady:','WaitEmit:'):
  s=text('ic10/material-grid/material_transfer_executor_v1_0.ic10');p=s.find(label);q=s.find('j Publish',p)
  block=s[p:q]
- if not all(x in block for x in ('get r1 db 2','get r0 d1 7','bne r0 r1 Publish','get r0 d1 6')):fails.append('ic10/material-grid/material_transfer_executor_v1_0.ic10: '+label+' lacks CurrentToken fence before status')
+ if not all(x in block for x in ('get r1 db 14','get r0 d1 7','bne r0 r1 Publish','get r0 d1 6')):fails.append('ic10/material-grid/material_transfer_executor_v1_0.ic10: '+label+' lacks CurrentToken fence before status')
 
 # Diagnostic request publishers complete payload before request identity/publication.
 need('ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10','poke r0 r9\njal BumpController','poke 18 r9\nget r0 db 25\nadd r0 r0 1\npoke 25 r0')

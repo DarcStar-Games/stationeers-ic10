@@ -23,7 +23,7 @@ for s in ('poke 0 31415960','bne r0 2 Bad','bne r0 r2 Consume','bne r0 r3 Consum
 f=text('ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10')
 for s in ('beq r0 31415961 Init','s d0 RequestHash r8','s d1 Setting r9','sll r0 r8 8','or r0 r0 1','put d2 0 r0','s d1 On 0','s d2 On 0'):need(f,s,'material feeder')
 x=text('ic10/material-grid/material_transfer_executor_v1_0.ic10')
-for s in ('ld r3 r2 ImportCount','poke 13 r3','put d1 19 r1','get r0 d1 7','bne r0 r1 Publish','poke 3 r4','poke 4 1'):need(x,s,'material executor')
+for s in ('ld r3 r2 ImportCount','poke 13 r3','put d1 19 r1','get r0 d1 7','bne r0 r1 Publish','poke 15 r4','poke 16 1'):need(x,s,'material executor')
 ordered(x,'poke 13 r3','put d1 19 r1','material executor delivery snapshot')
 # One canonical transform transaction path: Admission -> Resolver -> Stager -> Allocator2 -> Runtime.
 a=text('ic10/material-transform/material_transform_admission_v1_0.ic10');r=text('ic10/material-transform/material_transform_link_resolver_v1_0.ic10');s=text('ic10/material-transform/multi_material_reservation_stager_v1_0.ic10');m=text('ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10');rt=text('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10')

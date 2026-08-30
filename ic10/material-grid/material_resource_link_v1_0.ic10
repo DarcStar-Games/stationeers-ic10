@@ -65,21 +65,21 @@ get r0 d3 0
 bne r0 31415960 Bad
 get r0 d3 1
 bne r0 1 Bad
-get r0 d3 6
+get r0 d3 13
 blez r0 Bad
 l r14 d3 ReferenceId
 get r0 d4 0
 bne r0 31415958 Bad
 get r0 d4 1
 bne r0 1 Bad
-get r0 d4 7
+get r0 d4 19
 blez r0 Bad
 l r15 d4 ReferenceId
 l r1 db ReferenceId
 poke 2 r3
 poke 3 r4
 poke 5 r2
-get r0 d4 5
+get r0 d4 17
 poke 7 r0
 poke 9 1
 poke 10 r1
@@ -92,13 +92,13 @@ poke 19 r10
 poke 20 r11
 poke 21 r13
 poke 22 r8
-get r0 d4 3
+get r0 d4 15
 poke 23 r0
-get r0 d4 4
+get r0 d4 16
 poke 24 r0
-get r0 d4 5
+get r0 d4 17
 poke 25 r0
-get r0 d4 6
+get r0 d4 18
 poke 26 r0
 getd r0 r5 14
 getd r0 r0 15

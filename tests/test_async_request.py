@@ -81,9 +81,9 @@ ck(renderer2.stack.get(8)==1 and renderer2.stack.get(64)==715,'Mapping Editor di
 # Material Transfer Executor must ignore an old Feeder failure until CurrentToken matches this grant epoch.
 feeder=Device(801,stack={6:-1,7:40,8:40,9:40},props={'ReferenceId':801})
 mx=IC10(src('ic10/material-grid/material_transfer_executor_v1_0.ic10'),{'d1':feeder},self_ref=802)
-mx.stack.update({2:41,4:0,9:1,10:0,12:900,31:31415958})
+mx.stack.update({14:41,16:0,9:1,10:0,12:900,31:31415958})
 mx.run(2)
-ck(mx.stack.get(9)==1 and mx.stack.get(4)==0,'stale Feeder failure terminated a newer transfer request')
+ck(mx.stack.get(9)==1 and mx.stack.get(16)==0,'stale Feeder failure terminated a newer transfer request')
 feeder.stack.update({6:1,7:41,8:41});sink=Device(900,props={'ImportCount':7,'ReferenceId':900});mx.screws['sink']=sink
 mx.run(1)
 ck(mx.stack.get(9)==2 and feeder.stack.get(19)==41,'Executor did not advance after Feeder CurrentToken matched')

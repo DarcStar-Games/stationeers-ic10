@@ -29,9 +29,9 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 81,
-    "legacy_exempt": 93,
-    "backlog_reserved_cell_users": 83,
+    "migrated_v1": 83,
+    "legacy_exempt": 91,
+    "backlog_reserved_cell_users": 81,
     "backlog_dynamic_range_users": 22
   },
   "services": [
@@ -7144,7 +7144,7 @@
       "source": "ic10/material-grid/material_transfer_executor_v1_0.ic10",
       "service_contract_id": "ic10.script.material.transfer.executor",
       "deployment_family": "material-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -7178,12 +7178,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
+        "literal_cell_count": 16,
         "highest_literal_cell": 31,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 119,
-        "line_headroom_120": 1,
+        "line_count": 120,
+        "line_headroom_120": 0,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -7191,29 +7191,52 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.material.transfer.executor",
+        "magic": 31415958,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "ae539452c38e829dd5e6ab7c85dec690c00963953e70708f1f972f667cf41f3a",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 19
+            },
+            {
+              "start": 31,
+              "end": 31
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "material-grid"
       }
     },
     {
       "source": "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10",
       "service_contract_id": "ic10.script.material.transfer.grant.guard",
       "deployment_family": "material-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -7255,12 +7278,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 20,
+        "literal_cell_count": 21,
         "highest_literal_cell": 31,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 119,
-        "line_headroom_120": 1,
+        "line_count": 120,
+        "line_headroom_120": 0,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -7268,21 +7291,49 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.material.transfer.grant.guard",
+        "magic": 31415960,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "636637231b4ec8ab7f7607ff4c9161d5714749137b53b62e6d7f3c2e2bc0692f",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 13
+            },
+            {
+              "start": 16,
+              "end": 26
+            },
+            {
+              "start": 31,
+              "end": 31
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "material-grid"
       }
     },
     {

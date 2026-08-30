@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-grid/material_resource_link_v1_0.ic10",
-  "source_sha256": "49617ce0a6236a62f37c3c6b5907c03b5518edda7fed7979d7f8cb4d619a9cdc",
+  "source_sha256": "eedda6118f9a0b8a15b02c3a1dc99b6dd79c23ed7940a4a91e4d780d92558b3d",
   "identity": {
     "service_id": "ic10.script.material.resource.link",
     "implementation_revision": "1.0",
@@ -193,7 +193,7 @@
         "literal_reads": [
           0,
           1,
-          6
+          13
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -238,11 +238,11 @@
         "literal_reads": [
           0,
           1,
-          3,
-          4,
-          5,
-          6,
-          7
+          15,
+          16,
+          17,
+          18,
+          19
         ],
         "literal_writes": [],
         "dynamic_read": false,

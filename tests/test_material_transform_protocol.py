@@ -66,7 +66,7 @@ links=[]; dyn={}
 for i,(typ,qty) in enumerate(((101,1),(102,1),(103,2))):
     sr=Device(910+i*10,stack={0:31415950,1:1,3:2,4:typ,6:20,7:0,9:1,10:2,12:1},props={'ReferenceId':910+i*10})
     dr=Device(911+i*10,stack={0:31415950,1:1,3:2,4:typ,6:0,7:20,9:1,10:2,12:1},props={'ReferenceId':911+i*10})
-    guard=Device(912+i*10,stack={0:31415960,1:1,6:1},props={'ReferenceId':912+i*10})
+    guard=Device(912+i*10,stack={0:31415960,1:1,13:1},props={'ReferenceId':912+i*10})
     exe=Device(913+i*10,stack={0:31415958,1:1,2:0,7:1},props={'ReferenceId':913+i*10})
     feed=Device(914+i*10,stack={0:31415961,1:1},props={'ReferenceId':914+i*10})
     link=Device(915+i*10,stack={0:31415953,1:1,2:sr.ref,3:dr.ref,4:2,5:typ,9:1,12:1,14:guard.ref,15:exe.ref,16:feed.ref,21:700+i,22:proc.ref,23:0},props={'ReferenceId':915+i*10})
@@ -95,7 +95,7 @@ for link,sr,dr,guard,exe,feed,qty in links:
 # Every Guard should activate only after the common allocator epoch is visible.
 for i,(link,sr,dr,guard,exe,feed,qty) in enumerate(links):
     gv=IC10(g,{'d0':link,'d1':alloc_dev,'d2':exe,'xsrc':sr,'xsink':dr},self_ref=guard.ref); gv.stack=guard.stack; gv.run(2)
-    if gv.stack.get(4)!=1 or gv.stack.get(3)!=epoch: fails.append(f'guard {i} did not activate common epoch')
+    if gv.stack.get(11)!=1 or gv.stack.get(10)!=epoch: fails.append(f'guard {i} did not activate common epoch')
 # Simulate all three transfer executors completing the common epoch.
 for link,*_ in links: link.stack[23]=epoch
 for _ in range(8):
