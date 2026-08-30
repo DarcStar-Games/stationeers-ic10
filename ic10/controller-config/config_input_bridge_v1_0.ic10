@@ -11,8 +11,6 @@ get editor db 8
 blez editor Invalid
 getd r0 editor 0
 bne r0 HASH("GenericConfigEditor.v1") Invalid
-getd r0 editor 1
-bne r0 1 Invalid
 putd editor 25 0 # pessimistic; complete publication sets this LAST
 getd r0 editor 15
 beqz r0 Invalid
@@ -28,8 +26,6 @@ get resolver db 9
 blez resolver Invalid
 getd r0 resolver 0
 bne r0 HASH("GenericInputResolver.v1") Invalid
-getd r0 resolver 1
-bne r0 1 Invalid
 putd resolver 9 r6
 putd resolver 10 r7
 getd r15 resolver 12 # resolved snapshot generation

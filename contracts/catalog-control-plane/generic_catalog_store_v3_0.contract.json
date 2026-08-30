@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10",
-  "source_sha256": "46f6640ff6aae5b54e1fbeee4010ed248a39153237d0bd1375a910975ea768e3",
+  "source_sha256": "ea80215e8aac9b58e9d06b1310f504f22131cc6c3c132b9d9476df3fad15a87f",
   "identity": {
     "service_id": "ic10.script.generic.catalog.store",
     "implementation_revision": "3.0",
@@ -28,7 +28,6 @@
       "reference": "r1",
       "literal_reads": [
         0,
-        1,
         3,
         10,
         11,
@@ -48,11 +47,6 @@
           "address": 0,
           "operator": "equals",
           "value": -284599001
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 5
         },
         {
           "address": 18,

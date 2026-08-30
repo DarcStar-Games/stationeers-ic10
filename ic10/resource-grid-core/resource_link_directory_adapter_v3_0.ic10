@@ -32,8 +32,6 @@ bne r0 2037291645 Scan
 Probe:
 getd r0 r1 0
 bne r0 HASH("ResourceLink.v1") Scan
-getd r0 r1 1
-bne r0 1 Scan
 getd r15 r1 12
 blez r15 Scan
 getd r0 r1 12

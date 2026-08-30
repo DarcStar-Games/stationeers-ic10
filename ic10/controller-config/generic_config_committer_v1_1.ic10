@@ -11,8 +11,6 @@ get editor db 8
 blez editor Loop
 getd r0 editor 0
 bne r0 HASH("GenericConfigEditor.v1") Loop
-getd r0 editor 1
-bne r0 1 Loop
 getd r0 editor 16
 bne r0 4 Loop
 move r13 -5
@@ -88,8 +86,6 @@ getd host controller 116
 blez host Fail
 getd r0 host 0
 bne r0 HASH("GenericPersistentConfigHost.v1") Fail
-getd r0 host 1
-bne r0 1 Fail
 getd r0 host 48
 bne r0 r4 Fail
 getd r0 host 8

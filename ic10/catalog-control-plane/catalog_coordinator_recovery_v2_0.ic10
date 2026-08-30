@@ -10,8 +10,6 @@ get r0 d0 0
 bne r0 HASH("CatalogCoordinatorCore.v4") Loop
 get r0 d1 0
 bne r0 HASH("GenericRegistryDirectoryHost.v3") Loop
-get r0 d1 1
-bne r0 3 Loop
 get r0 d1 3
 bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 get r11 d1 23

@@ -19,6 +19,12 @@ Diagnostic services also stopped implementing their own Dial/Switch reads:
 - `ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10` is screwless;
 - `ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10` remains the compact desired-selection publication bridge.
 
+## Redundant peer ABI checks
+
+The largest single reclamation to date came from deleting checks rather than restructuring code. Once the `S0` identity folded the ABI into its hashed name (`docs/ABI_REFERENCE.md`), a consumer's follow-up check of the peer's `S1` could never fail — it restated what the identity had already proven. Removing 106 of them across 74 programs returned **212 lines** and retired 12 soft-limit exemptions, without moving a single service boundary. `validation/validators/validate_service_identity.py` now rejects a new one.
+
+Two neighbouring shapes are *not* redundant and were left alone: a program checking its **own** `S1` (a torn-image guard, since the stack survives reflash) and a version check on a block header away from `S0`, such as Generic Telemetry's `S97`, whose consumers accept a version range.
+
 ## Interpretation
 
 The number of programs at 120 lines is intentional evidence of why several service boundaries remain split. Do not merge adjacent services merely to reduce IC count if the combined behavior would cross the 120-line project ceiling, obscure transactional ownership, or make automatic 128-instruction execution preemption harder to reason about.

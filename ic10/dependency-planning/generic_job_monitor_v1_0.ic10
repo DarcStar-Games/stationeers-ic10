@@ -11,8 +11,6 @@ get r10 db 13
 blez r10 Bad
 get r0 d0 0
 bne r0 HASH("GenericJobStore.v1") Bad
-get r0 d0 1
-bne r0 1 Bad
 get r14 d0 16
 and r0 r14 1
 bnez r0 Loop

@@ -15,8 +15,6 @@ blez r14 Bad
 beq r14 r15 Loop
 get r0 d0 0
 bne r0 HASH("PressureDomainInventory.v2") Bad
-get r0 d0 1
-bne r0 2 Bad
 get r1 d0 14 # role
 get r2 d0 15 # medium
 get r3 d0 16 # exportable mol

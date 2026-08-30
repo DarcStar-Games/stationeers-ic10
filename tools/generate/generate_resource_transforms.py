@@ -57,8 +57,6 @@ j First
 Store:
 getd r0 r2 0
 bne r0 {STORE_TOKEN} Bad
-getd r0 r2 1
-bne r0 {STORE_ABI} Bad
 getd r14 r2 17
 mod r0 r14 2
 bnez r0 Loop

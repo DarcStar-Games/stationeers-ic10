@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-pi/pi_config_policy_v1_0.ic10",
-  "source_sha256": "a297f973a48005beb3a00fdee04e8feef47e79f5a91a054a155ab94b8baab792",
+  "source_sha256": "c05105a2e2eefd37e326529d416ae22d1848c89b0bbf08259bcd52fd7118fbde",
   "identity": {
     "service_id": "ic10.script.pi.config.policy",
     "implementation_revision": "1.0",
@@ -28,7 +28,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           13,
           20,
           52,
@@ -82,10 +81,6 @@
           {
             "address": 0,
             "equals": -759746849
-          },
-          {
-            "address": 1,
-            "equals": 1
           }
         ]
       },

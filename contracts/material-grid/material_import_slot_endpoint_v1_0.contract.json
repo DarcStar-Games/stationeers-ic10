@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-grid/material_import_slot_endpoint_v1_0.ic10",
-  "source_sha256": "f7c0f123ddfe495cbb36b7a7f401251b6d4381ea5f25a060c1169ff52550d1d0",
+  "source_sha256": "bfeaf85787b82305f32c1b9163e55f0f67d42a1016745bb88584736b72e802d0",
   "identity": {
     "service_id": "ic10.script.material.import.slot.endpoint",
     "implementation_revision": "1.0",
@@ -79,7 +79,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           8,
           9,
           10,
@@ -99,10 +98,6 @@
           {
             "address": 0,
             "equals": 2107540686
-          },
-          {
-            "address": 1,
-            "equals": 1
           },
           {
             "address": 8,

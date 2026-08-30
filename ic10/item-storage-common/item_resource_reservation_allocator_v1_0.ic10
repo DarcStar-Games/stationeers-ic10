@@ -11,8 +11,6 @@ bdns d0 Bad
 get r14 db 11
 get r0 d0 0
 bne r0 HASH("ItemResourceReservationSelector.v1") Bad
-get r0 d0 1
-bne r0 1 Bad
 get r0 d0 16
 bne r0 r14 Bad
 get r0 d0 8

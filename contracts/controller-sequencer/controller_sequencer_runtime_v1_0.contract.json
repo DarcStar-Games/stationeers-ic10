@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10",
-  "source_sha256": "0382c75ed2e72306e8c4711c810a2cd3578ddafc15c08cad48ae0931be0bdbab",
+  "source_sha256": "3820ef5ec67f24abda758a9e1bd38333fe155851b3984a2d3bb395dabc9e3153",
   "identity": {
     "service_id": "ic10.script.controller.sequencer.runtime",
     "implementation_revision": "1.0",
@@ -174,7 +174,7 @@
       },
       "stack": {
         "literal_reads": [
-          1,
+          0,
           12,
           51
         ],
@@ -192,8 +192,8 @@
         "dynamic_write_range_source": "none",
         "constraints": [
           {
-            "address": 1,
-            "equals": 1
+            "address": 0,
+            "equals": -759746849
           },
           {
             "address": 12,
@@ -204,8 +204,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.20a43d25d387e4b2",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.20a43d25d387e4b2",
+        "interface_id": "ic10.interface.access.5cf700a8e2e67917",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.5cf700a8e2e67917",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [

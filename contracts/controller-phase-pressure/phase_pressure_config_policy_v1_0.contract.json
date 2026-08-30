@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10",
-  "source_sha256": "86b6d1f5d4b5b4e0c3c2235da5e0b5b36c3c07093c054b094032bcf492e1e897",
+  "source_sha256": "d10b69b1841ef39c2c7b6e11732256728c5472bf85907ab7b3e208f73fb8d046",
   "identity": {
     "service_id": "ic10.script.phase.pressure.config.policy",
     "implementation_revision": "1.0",
@@ -28,7 +28,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           13,
           20,
           52,
@@ -80,10 +79,6 @@
           {
             "address": 0,
             "equals": -759746849
-          },
-          {
-            "address": 1,
-            "equals": 1
           }
         ]
       },

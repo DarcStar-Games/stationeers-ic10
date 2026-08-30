@@ -21,8 +21,6 @@ bltz r6 Bad
 blez r9 Bad
 getd r0 r9 0
 bne r0 HASH("GenericSnapshotDirectoryHost.v1") Bad
-getd r0 r9 1
-bne r0 1 Bad
 getd r0 r9 9
 bne r0 r2 Bad
 getd r0 r9 11

@@ -27,8 +27,6 @@ bne r0 2037291645 InputProbe
 ProfileProbe:
 getd r0 ref 0
 bne r0 HASH("InputProfileView.v1") InputProbe
-getd r0 ref 1
-bne r0 1 InputProbe
 move r11 ref
 or r7 r7 16
 j Next

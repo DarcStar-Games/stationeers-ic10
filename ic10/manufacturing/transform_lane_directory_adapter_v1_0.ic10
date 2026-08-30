@@ -28,8 +28,6 @@ blt r1 0 Publish
 add r7 r7 1
 getd r0 r1 0
 bne r0 HASH("GenericMaterialTransformRuntime.v2") Scan
-getd r0 r1 1
-bne r0 2 Scan
 getd r2 r1 14
 blez r2 Scan
 ld r0 r2 PrefabHash

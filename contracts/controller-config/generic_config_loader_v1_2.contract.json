@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-config/generic_config_loader_v1_2.ic10",
-  "source_sha256": "5392bad9503a7225b6bdd346d248cc4c252559f5647d03338df92d4daead0c9c",
+  "source_sha256": "7c84ce45dc2acdde1de6010aa1ff713a087327d00e037ea978f69c6bba72f3d8",
   "identity": {
     "service_id": "ic10.script.generic.config.loader",
     "implementation_revision": "1.2",
@@ -49,7 +49,6 @@
       "reference": "editor",
       "literal_reads": [
         0,
-        1,
         11,
         12,
         15,
@@ -76,11 +75,6 @@
           "address": 0,
           "operator": "equals",
           "value": -533009584
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 1
         }
       ],
       "accepted": []
@@ -90,7 +84,6 @@
       "reference": "host",
       "literal_reads": [
         0,
-        1,
         8,
         10,
         48,
@@ -107,11 +100,6 @@
           "address": 0,
           "operator": "equals",
           "value": -759746849
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 1
         },
         {
           "address": 10,
@@ -131,7 +119,6 @@
       "reference": "r8",
       "literal_reads": [
         0,
-        1,
         8,
         9,
         10,
@@ -150,11 +137,6 @@
           "address": 0,
           "operator": "equals",
           "value": 940078290
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 1
         }
       ],
       "accepted": []

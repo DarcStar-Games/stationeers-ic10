@@ -16,12 +16,19 @@ refuses the three ways it could rot:
     HASH literal, which would let the name and the value drift apart;
   * two distinct contracts whose names collide under CRC32, which would make
     one identity name two services;
-  * an S1 ABI check that disagrees with the ABI folded into the name it is
-    checked beside.
+  * a consumer branching on a peer's S1, which re-asserts what S0 already pins
+    and so can never fire -- and which, left in place, invites the belief that
+    S0 alone is not enough (issue #83).
 
-Block headers away from S0 (the Generic Telemetry block at S96) are deliberately
-excluded: their consumers accept a version *range*, so they keep a hand-assigned
-magic and a separately checked version cell.
+Two deliberate exclusions:
+
+  * Block headers away from S0 (the Generic Telemetry block at S96) keep a
+    hand-assigned magic and a separately checked version cell, because their
+    consumers accept a version *range*.
+  * A program's check of its *own* S1 is a torn-image guard, not an ABI check:
+    the stack survives reflash, so a crash between ``poke 0`` and ``poke 1``
+    leaves a valid identity above an unwritten payload, and the S1 check is what
+    detects it. Those stay.
 """
 from pathlib import Path as _ProjectPath
 import sys as _project_sys
@@ -33,11 +40,11 @@ import sys
 
 from framework.ic10_source import game_hash, parse_ic10
 from framework.protocol_headers import CONTRACT_NAME_RE, header_name, header_token, load_headers
+from framework.script_contracts.control_flow import writes_register
 from framework.script_contracts.parsing import collect_aliases, parse_rows, resolve_integer
 
 ROOT = _PROJECT_ROOT
 BASE = 0
-HASH_LITERAL = re.compile(r'^HASH\("([^"\n]+)"\)$')
 fails: list[str] = []
 
 scripts, consumers = load_headers(ROOT)
@@ -106,46 +113,57 @@ for path, requirements in sorted(consumers.items()):
             if token not in text:
                 fails.append(f"{path} {requirement['port']}: accepts {contract} but never checks {token}")
 
-# 4. An S1 ABI check beside a contract identity must agree with the folded ABI.
+# 4. Every S0 comparison names its contract, and no consumer compares a peer's S1,
+#    because S0 already pins the exact ABI. Reading a peer's S1 is fine -- the live
+#    header reader does it to report an unknown target -- what is forbidden is
+#    branching on it as an acceptance test.
+own_stack_guards = 0
+peer_abi_reads = 0
+identity_checks = 0
+
+
+def compared_against(rows: list[list[str]], index: int, register: str) -> list[str] | None:
+    """The first branch comparing `register` before anything rewrites it."""
+    for later in rows[index + 1:]:
+        if later[0] in {"bne", "beq"} and len(later) >= 3 and later[1] == register:
+            return later
+        if writes_register(later, register):
+            return None
+    return None
+
+
 for source in sorted(ROOT.glob("ic10/*/*.ic10")):
     rel = source.relative_to(ROOT).as_posix()
     program = parse_ic10(source.read_text())
     rows = [list(row.tokens) for row in program.rows]
     aliases = collect_aliases(rows)[1]
-    checked: dict[str, set[str]] = {}
     for index, row in enumerate(rows):
         if row[0] not in {"get", "getd"} or len(row) < 4:
             continue
-        port, address = row[2], resolve_integer(row[3], aliases)
+        address = resolve_integer(row[3], aliases)
         if address not in (BASE, BASE + 1):
             continue
-        for later in rows[index + 1:index + 5]:
-            if later[0] in {"bne", "beq"} and len(later) >= 3 and later[1] == row[1]:
-                checked.setdefault(f"{port}:{address}", set()).add(later[2])
-                break
-    for key, values in sorted(checked.items()):
-        port, _, address = key.partition(":")
-        if address != str(BASE):
-            continue
-        abis = checked.get(f"{port}:{BASE + 1}", set())
-        for value in values:
-            match = HASH_LITERAL.fullmatch(value)
-            if not match:
-                if re.fullmatch(r"-?\d+", value):
-                    fails.append(
-                        f"{rel} {port}: compares S{BASE} against the bare numeral {value};"
-                        ' an identity check must name its contract as HASH("<Contract>.v<ABI>")'
-                    )
+        branch = compared_against(rows, index, row[1])
+        if address == BASE:
+            if branch is None:
                 continue
-            _, _, folded = match.group(1).rpartition(".v")
-            if not folded.isdigit():
-                continue
-            disagreeing = sorted(abi for abi in abis if abi.isdigit() and abi != folded)
-            if disagreeing:
+            identity_checks += 1
+            if re.fullmatch(r"-?\d+", branch[2]):
                 fails.append(
-                    f"{rel} {port}: checks {value} but also requires S{BASE + 1}"
-                    f" in {disagreeing}, disagreeing with the folded ABI {folded}"
+                    f"{rel} {row[2]}: compares S{BASE} against the bare numeral {branch[2]};"
+                    ' an identity check must name its contract as HASH("<Contract>.v<ABI>")'
                 )
+            continue
+        if row[2] == "db":
+            own_stack_guards += 1
+            continue
+        peer_abi_reads += 1
+        if branch is not None:
+            fails.append(
+                f"{rel} {row[2]}: compares the peer's S{BASE + 1} ({' '.join(branch)});"
+                f" S{BASE} already pins the exact ABI, so this check can never fire."
+                " Check the peer's identity instead"
+            )
 
 if fails:
     print("Service identity validation: FAIL")
@@ -154,6 +172,8 @@ if fails:
     sys.exit(1)
 print("Service identity validation: PASS")
 print(f" - {len(identities)} base-0 identities, each derived as HASH(\"<Contract>.v<ABI>\") with no CRC32 collision")
-print(" - every S0 publish and every S0 check spells the identity as its HASH literal, never a numeral")
+print(f" - every S0 publish and all {identity_checks} S0 checks spell the identity as its HASH literal, never a numeral")
 print(" - folding the ABI into the identity makes one S0 equality check exact: an ABI bump changes the value")
+print(f" - no consumer branches on a peer's S1: {peer_abi_reads} peer ABI reads, none compared")
+print(f" - {own_stack_guards} own-stack S1 checks stay; they detect a torn image after reflash, not a peer's ABI")
 print(" - block headers away from S0 keep hand-assigned magics; their consumers accept a version range")

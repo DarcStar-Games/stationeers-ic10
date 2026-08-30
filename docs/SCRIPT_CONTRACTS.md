@@ -191,8 +191,9 @@ versioned filename.
 2. Add every provided and consumed header to
    `data/script_protocol_headers.json`; generation rejects entries that are not
    literal writes/checks in the source.
-3. Use literal magic/ABI checks for ABI-verified wired dependencies. Declare an
-   explicit network ABI range when discovery accepts more than one ABI.
+3. Check a wired dependency with one literal `S0` identity comparison — the ABI is
+   folded into it, so do not also check the peer's `S1`. Declare an explicit network
+   ABI range when discovery accepts more than one ABI at a block header away from `S0`.
 4. Add narrow public/dynamic ranges or externally owned fields to
    `data/script_contract_overrides.json` when source inspection cannot prove
    the cross-program bound, then record the reviewed source SHA-256.

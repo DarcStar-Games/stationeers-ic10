@@ -27,8 +27,6 @@ beq r15 r0 Control
 ValidateHost:
 get r0 ConfigHost 0
 bne r0 HASH("GenericPersistentConfigHost.v1") ConfigBad
-get r0 ConfigHost 1
-bne r0 1 ConfigBad
 get r0 ConfigHost 48
 bne r0 HASH("ControllerPI") ConfigBad
 get r0 ConfigHost 50

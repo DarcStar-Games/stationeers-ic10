@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10",
-  "source_sha256": "bd5c46e16f503ea711c5f962dbfb1dfd76c9a639e08cdb897cb82cde15f9098c",
+  "source_sha256": "e5b21e92ab9556b8b3fddfeb1038597c20b45b80169af08439faf72b95eab576",
   "identity": {
     "service_id": "ic10.script.item.resource.reservation.allocator",
     "implementation_revision": "1.0",
@@ -26,7 +26,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           8,
           9,
           10,
@@ -49,10 +48,6 @@
           {
             "address": 0,
             "equals": 1606529514
-          },
-          {
-            "address": 1,
-            "equals": 1
           },
           {
             "address": 8,

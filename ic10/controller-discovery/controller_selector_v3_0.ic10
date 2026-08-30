@@ -12,8 +12,6 @@ get directory db 14
 blez directory NoDirectory
 getd r0 directory 0
 bne r0 HASH("GenericSnapshotDirectoryHost.v1") NoDirectory
-getd r0 directory 1
-bne r0 1 NoDirectory
 getd r0 directory 9
 bne r0 HASH("DirectorySchema.Controller.v1") NoDirectory
 getd r0 directory 11

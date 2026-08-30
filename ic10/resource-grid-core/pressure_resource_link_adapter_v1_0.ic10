@@ -28,8 +28,6 @@ get r14 d1 12
 blez r14 Bad
 get r0 d1 0
 bne r0 HASH("ResourceReservation.v1") Bad
-get r0 d1 1
-bne r0 1 Bad
 get r9 d1 32
 get r0 d1 33
 bne r0 1 Bad
@@ -41,8 +39,6 @@ get r13 d2 12
 blez r13 Bad
 get r0 d2 0
 bne r0 HASH("ResourceReservation.v1") Bad
-get r0 d2 1
-bne r0 1 Bad
 get r10 d2 32
 get r0 d2 33
 bne r0 1 Bad

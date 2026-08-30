@@ -10,8 +10,6 @@ get scanner db 8
 blez scanner Invalid
 getd r0 scanner 0
 bne r0 HASH("GenericInputScanner.v1") Invalid
-getd r0 scanner 1
-bne r0 1 Invalid
 get r6 db 9
 blt r6 1 Invalid
 bgt r6 32 Invalid
@@ -29,8 +27,6 @@ move r13 0
 blez profile Choose
 getd r0 profile 0
 bne r0 HASH("InputProfileView.v1") Invalid
-getd r0 profile 1
-bne r0 1 Invalid
 getd r0 profile 10
 bne r0 r6 Invalid
 getd r14 profile 11

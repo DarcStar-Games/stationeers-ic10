@@ -7,8 +7,6 @@ yield
 bdns Host Boot
 get r0 Host 0
 bne r0 HASH("GenericPersistentConfigHost.v1") Boot
-get r0 Host 1
-bne r0 1 Boot
 put Host 48 HASH("ControllerSequencer")
 put Host 50 1
 put Host 10 2

@@ -57,7 +57,11 @@ service publishes `HASH("<Contract>.v<ABI>")`. Folding the ABI into the hashed
 name is what makes one `S0` equality check exact — change the contract and the
 value every consumer compares changes with it, so a stale consumer fails closed
 rather than silently accepting a contract it was never written against. `S1`
-still publishes the ABI for readers and diagnostics.
+still publishes the ABI for readers and diagnostics, but a consumer must not
+branch on a peer's `S1`: after `S0` matches, the ABI is already proven, so the
+comparison can never fail. `validation/validators/validate_service_identity.py`
+rejects one. A program's check of its *own* `S1` is a torn-image guard, not an
+ABI check, and stays.
 
 The identity is registered in `docs/ABI_REFERENCE.md`, stable across
 implementation revisions, and unrelated to a filename — moving a source file or
@@ -116,7 +120,9 @@ debugging.
 `S1 ServiceABI` deliberately stays a separate numeric cell. The principle would
 fold it too; the arithmetic says otherwise. Magic-plus-ABI is established across
 154 programs and the whole `ABI_REFERENCE` registry, while the schema pair was
-newly standardized with 25 publishers already in the backlog.
+newly standardized with 25 publishers already in the backlog. Keeping the cell is
+not the same as gating on it — it is published so a reader can name the ABI
+without a reverse hash lookup, and read for that reason only.
 
 ### Generation
 

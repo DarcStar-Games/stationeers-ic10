@@ -11,8 +11,6 @@ get editor db 8
 blez editor Loop
 getd r0 editor 0
 bne r0 HASH("GenericConfigEditor.v1") Loop
-getd r0 editor 1
-bne r0 1 Loop
 getd r0 editor 16
 beq r0 4 Loop
 getd r0 editor 15
@@ -70,8 +68,6 @@ getd r8 r8 11
 blez r8 ProfileDone
 getd r0 r8 0
 bne r0 HASH("InputProfileView.v1") ProfileDone
-getd r0 r8 1
-bne r0 1 ProfileDone
 getd r11 r8 8
 bne r11 r4 ProfileDone
 getd r11 r8 9
@@ -81,7 +77,7 @@ bne r11 r6 ProfileDone
 getd r11 r8 11
 blez r11 ProfileDone
 putd editor 27 r8
-putd editor 28 r0
+putd editor 28 1 # ABI is pinned by the S0 identity accepted above
 putd editor 29 r11
 ProfileDone:
 getd r0 editor 11
@@ -109,8 +105,6 @@ getd host controller 116
 blez host Fail
 getd r0 host 0
 bne r0 HASH("GenericPersistentConfigHost.v1") Fail
-getd r0 host 1
-bne r0 1 Fail
 getd r0 host 48
 bne r0 r4 Fail
 getd r13 host 50 # cache schema for Profile check + Editor publication

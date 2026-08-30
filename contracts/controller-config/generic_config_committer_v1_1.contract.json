@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-config/generic_config_committer_v1_1.ic10",
-  "source_sha256": "9f0062860d558915a36ca8b30919796040bdb813d46c18d9eba6ae411713d381",
+  "source_sha256": "42fe723a6f35994f933b1fe3fe103ad1aa590ad823afc6b7b8e149f31909ecda",
   "identity": {
     "service_id": "ic10.script.generic.config.committer",
     "implementation_revision": "1.1",
@@ -49,7 +49,6 @@
       "reference": "editor",
       "literal_reads": [
         0,
-        1,
         10,
         11,
         13,
@@ -72,11 +71,6 @@
           "value": -533009584
         },
         {
-          "address": 1,
-          "operator": "equals",
-          "value": 1
-        },
-        {
           "address": 16,
           "operator": "equals",
           "value": 4
@@ -89,7 +83,6 @@
       "reference": "host",
       "literal_reads": [
         0,
-        1,
         8,
         10,
         11,
@@ -108,11 +101,6 @@
           "address": 0,
           "operator": "equals",
           "value": -759746849
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 1
         },
         {
           "address": 10,

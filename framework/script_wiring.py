@@ -100,8 +100,10 @@ def check_port(
     migrated: set[str],
 ) -> list[str]:
     failures: list[str] = []
+    # S0 is the only identity constraint a port can carry: the ABI is folded into the
+    # hashed name, so matching the magic already matches the ABI exactly. A port that
+    # pins S1 as well is rejected by validate_service_identity.py, not narrowed here.
     magic = port["constraints"].get(0)
-    abi = port["constraints"].get(1)
     if port["kind"] == "physical-device" and peer["kind"] != "physical-device":
         failures.append(f"{source} {name}: contract target is {port['kind']!r}"
                         f" but wiring declares {peer['kind']!r}")
@@ -133,8 +135,7 @@ def check_port(
     reached_writes = port["writes"] | ranged(port["write_ranges"], ENVELOPE_CELLS)
     if isinstance(magic, int):
         expected = {path for path, entries in publishers.items() for entry in entries
-                    if entry["base"] == BASE and entry["magic"] == magic
-                    and (not isinstance(abi, int) or entry.get("abi") == abi)}
+                    if entry["base"] == BASE and entry["magic"] == magic}
         omitted = sorted(expected - set(peer["providers"]))
         if omitted:
             failures.append(f"{source} {name}: checks S0 magic {magic} but the providers"
@@ -144,19 +145,10 @@ def check_port(
             failures.append(f"{source} {name}: provider {provider} is not a deployable program")
             continue
         headers = [entry for entry in publishers.get(provider, []) if entry["base"] == BASE]
-        if isinstance(magic, int):
-            matched = [entry for entry in headers if entry["magic"] == magic
-                       and (not isinstance(abi, int) or entry.get("abi") == abi)]
-            if not matched:
-                failures.append(
-                    f"{source} {name}: checks S0 magic {magic}"
-                    + (f" ABI {abi}" if isinstance(abi, int) else "")
-                    + f" but provider {provider} does not publish it at S{BASE}")
-        elif isinstance(abi, int):
-            if not any(entry.get("abi") == abi for entry in headers):
-                failures.append(
-                    f"{source} {name}: checks S1 ABI {abi} but provider {provider}"
-                    f" publishes no S{BASE} header carrying it")
+        if isinstance(magic, int) and not any(entry["magic"] == magic for entry in headers):
+            failures.append(
+                f"{source} {name}: checks S0 magic {magic}"
+                f" but provider {provider} does not publish it at S{BASE}")
         if provider in migrated:
             read = sorted((reached_reads & HEADER_CELLS) - allowed)
             if read:

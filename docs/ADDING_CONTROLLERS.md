@@ -18,7 +18,9 @@ Each new program also needs its own `S0` service identity, which you do not
 allocate: pick an UpperCamelCase contract name, declare it in
 `data/script_protocol_headers.json`, and publish `poke 0 HASH("<Contract>.v<ABI>")`.
 The ABI belongs inside the name — bumping it later mints a different value, which
-is exactly what makes every consumer's single `S0` check ABI-exact.
+is exactly what makes every consumer's single `S0` check ABI-exact. That check is
+the whole admission test: do not follow it with a check of the peer's `S1`, which
+can never fail and costs two lines.
 `validation/validators/validate_service_identity.py` enforces this; see
 `docs/ABI_REFERENCE.md`.
 

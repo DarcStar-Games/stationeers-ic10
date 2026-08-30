@@ -148,7 +148,9 @@ revisions establish *durability*, reservation epochs/ownership tokens authorize 
   `HASH("<Contract>.v<ABI>")`, so one `S0` equality check pins the exact contract and an ABI bump
   changes the value every consumer compares; identity is derived from the name, never hand-allocated.
   Both that identity and the folded schema id at `S3` must match before a directory or catalog is
-  consumed. `validation/validators/validate_service_identity.py` is authoritative. Block headers away
+  consumed. **Never check a peer's `S1`** — `S0` has already proven the ABI, so the comparison can
+  never fire; a program's check of its *own* `S1` is a torn-image guard and stays.
+  `validation/validators/validate_service_identity.py` is authoritative. Block headers away
   from `S0` (Generic Telemetry at `S96`) keep an assigned magic and a separate version cell, because
   their consumers deliberately accept a version range.
 - **Physical slots are never repurposed.** Removed config fields become reserved holes. "Physical slot"
@@ -174,8 +176,10 @@ that file as authoritative for whether an instruction exists; the community wiki
 Minimum compatible game build is 2026-07-02 (`clamp`); the target is 0.2.6428.27798 (2026-08-13),
 not the 2026-08-12 build it patches — see `docs/SOURCES.md` for why that matters to Item 12.
 
-51 of 171 programs sit at ≥117 lines. Do **not** merge adjacent services just to reduce IC count: the
-split boundaries exist to keep transactional ownership explicit and stay under the ceiling. See
+37 of 174 programs sit at ≥117 lines and 16 hold a reviewed `SOFT_LIMIT_EXEMPTIONS` entry in
+`validation/validators/validate_ic10.py`; an exemption whose program drops back under 120 fails
+validation, so the list cannot go stale. Do **not** merge adjacent services just to reduce IC count:
+the split boundaries exist to keep transactional ownership explicit and stay under the ceiling. See
 `docs/LINE_COUNT_OPTIMIZATION.md`.
 
 Filenames are *semantic name* + `_v<major>_<minor>` under `ic10/<deployment-family>/`. **Do not infer

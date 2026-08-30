@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10",
-  "source_sha256": "85682654cfae13cc8389834998f714d19f43d4d97ccaabd1c12f59b840c23bc4",
+  "source_sha256": "0bfb412f72f466cbc3a99ab3a0a46364b826213e9961fc3b4efd7c7e104d7729",
   "identity": {
     "service_id": "ic10.script.pressure.grid.route.selector",
     "implementation_revision": "2.0",
@@ -26,7 +26,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           8,
           9,
           10,
@@ -52,10 +51,6 @@
           {
             "address": 0,
             "equals": -2010415833
-          },
-          {
-            "address": 1,
-            "equals": 2
           }
         ]
       },
@@ -81,7 +76,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           9,
           10,
           19,
@@ -116,10 +110,6 @@
           {
             "address": 0,
             "equals": 1653504145
-          },
-          {
-            "address": 1,
-            "equals": 2
           }
         ]
       },

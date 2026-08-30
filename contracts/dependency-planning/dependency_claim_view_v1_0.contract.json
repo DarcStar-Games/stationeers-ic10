@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/dependency_claim_view_v1_0.ic10",
-  "source_sha256": "2a124b29a7e7543ba40df590dacba8b9dfeecd523fa3fd4083ef5867785abd6e",
+  "source_sha256": "a1b6fc78cbcc907b3aa23417398a5657eb8003b57b07bd750e2a9963334977b9",
   "identity": {
     "service_id": "ic10.script.dependency.claim.view",
     "implementation_revision": "1.0",
@@ -26,7 +26,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           40
         ],
         "literal_writes": [],
@@ -45,10 +44,6 @@
           {
             "address": 0,
             "equals": 1864195977
-          },
-          {
-            "address": 1,
-            "equals": 2
           }
         ]
       },

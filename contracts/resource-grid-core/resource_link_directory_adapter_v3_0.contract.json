@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10",
-  "source_sha256": "c820c238461056e9d23417fbae82544deae44e1e752f13d1ae61d2140ac40b89",
+  "source_sha256": "0ea6d90e5897d0e02c801a2b60b2cdc62df3987b252adc63c65d1fbd5bd50892",
   "identity": {
     "service_id": "ic10.script.resource.link.directory.adapter",
     "implementation_revision": "3.0",
@@ -28,7 +28,6 @@
       "reference": "r1",
       "literal_reads": [
         0,
-        1,
         12
       ],
       "literal_writes": [],
@@ -39,11 +38,6 @@
           "address": 0,
           "operator": "equals",
           "value": 1484497288
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 1
         }
       ],
       "accepted": []

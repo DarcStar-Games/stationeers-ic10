@@ -19,8 +19,6 @@ get r2 db 9
 blez r2 Invalid
 getd r0 r2 0
 bne r0 HASH("InputProfileView.v1") Invalid
-getd r0 r2 1
-bne r0 1 Invalid
 getd r0 r2 8
 bne r0 HASH("DiagnosticMapping") Invalid
 getd r0 r2 9
@@ -33,8 +31,6 @@ get resolver db 8
 blez resolver Invalid
 getd r0 resolver 0
 bne r0 HASH("GenericInputResolver.v1") Invalid
-getd r0 resolver 1
-bne r0 1 Invalid
 putd resolver 9 7
 putd resolver 10 r2
 getd r15 resolver 12 # coherent Resolver snapshot generation

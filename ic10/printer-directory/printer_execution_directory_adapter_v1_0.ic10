@@ -17,8 +17,6 @@ ScanStart:
 poke 17 0
 get r0 d0 0
 bne r0 HASH("GenericSnapshotDirectoryHost.v1") Loop
-get r0 d0 1
-bne r0 1 Loop
 get r0 d0 9
 bne r0 HASH("DirectorySchema.Printer.v2") Loop
 get r0 d0 11
@@ -45,8 +43,6 @@ blt r1 0 VerifyRaw
 add r7 r7 1
 getd r0 r1 0
 bne r0 HASH("PrinterExecutionBank.v2") Bank
-getd r0 r1 1
-bne r0 2 Bank
 getd r14 r1 8
 mod r0 r14 2
 bnez r0 ScanStart

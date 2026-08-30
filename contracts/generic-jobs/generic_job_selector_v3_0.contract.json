@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/generic-jobs/generic_job_selector_v3_0.ic10",
-  "source_sha256": "7d44e2912b0eccbb6d3e89ca4b8e37fe0831529cc7100cce16c1fb8edaa75fa3",
+  "source_sha256": "701a44969f730d6c701b71e1fc536ff1fc1b091f78a0700c3d7634f31077c234",
   "identity": {
     "service_id": "ic10.script.generic.job.selector",
     "implementation_revision": "3.0",
@@ -26,7 +26,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           16,
           17
         ],
@@ -46,10 +45,6 @@
           {
             "address": 0,
             "equals": -955081679
-          },
-          {
-            "address": 1,
-            "equals": 1
           }
         ]
       },

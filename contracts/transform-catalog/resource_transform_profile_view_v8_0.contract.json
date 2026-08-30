@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10",
-  "source_sha256": "720f09f0502611221bf5198e2c7d375bfeb124e5530ff2d0135f5fbed0ff40e1",
+  "source_sha256": "684f8545b583e37e0e11862e58df68bebb810c961e6d6840b448a2cde786fa4d",
   "identity": {
     "service_id": "ic10.script.resource.transform.profile.view",
     "implementation_revision": "8.0",
@@ -80,7 +80,6 @@
       "reference": "r2",
       "literal_reads": [
         0,
-        1,
         9,
         17,
         21,
@@ -94,11 +93,6 @@
           "address": 0,
           "operator": "equals",
           "value": 875310516
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 6
         }
       ],
       "accepted": []

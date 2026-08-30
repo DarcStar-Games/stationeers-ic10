@@ -11,7 +11,7 @@ for n in ('poke 1 2','get r15 d0 115','bne r0 r15 Loop','bdns d2 PurityBad','bne
  if n not in inv: fails.append('Inventory missing '+n)
 for n in ('get r2 d1 19','get r3 d1 20','bdnvl d0 r2 SensorBad','l r5 d0 r2','blt r5 r3 Contaminated','blez r4 Good'):
  if n not in guard: fails.append('Purity Guard missing '+n)
-if 'bne r0 2 Bad' not in res: fails.append('Reservation mirror does not require Inventory ABI2')
+if 'bne r0 HASH("PressureDomainInventory.v2") Bad' not in res: fails.append('Reservation mirror does not require the Inventory ABI2 identity')
 # reference gas capacity
 Rgas=8.3144; V=6000; T=300; n=1000; target=300
 mpk=V/(Rgas*T); export=max(n-target*mpk,0)

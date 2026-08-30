@@ -236,7 +236,7 @@
     "providers": [
      "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
     ],
-    "note": "docs/SEQUENCER_CONTROLLER.md:42: \"| `d3` | Paired Generic Persistent Config Host. |\" [Corroborated: consumer requires d3 cell 1 == 1 (Host ABI1, 'poke 1 1') and cell 12 == HASH(\"CFG1|ControllerSequencer|...\") matching the Host's S12 persistence schema signature.]"
+    "note": "docs/SEQUENCER_CONTROLLER.md:42: \"| `d3` | Paired Generic Persistent Config Host. |\" [Corroborated: consumer requires d3 cell 0 == HASH(\"GenericPersistentConfigHost.v1\"), the Host's published identity, and cell 12 == HASH(\"CFG1|ControllerSequencer|...\") matching the Host's S12 persistence schema signature.]"
    }
   },
   "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10": {
@@ -1625,7 +1625,7 @@
     "providers": [
      "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
     ],
-    "note": "docs/PRESSURE_GRID_CONTROLLER.md:251: \"| `d4` | paired Generic Persistent Config Host | tuning/config |\" [Pin comment 'd4 Host' agrees. Consumer requires d4 cell 1 == 1, matching the Host's 'poke 1 1' (ABI1); reads cells 5/8 of the Host's published state.]"
+    "note": "docs/PRESSURE_GRID_CONTROLLER.md:251: \"| `d4` | paired Generic Persistent Config Host | tuning/config |\" [Pin comment 'd4 Host' agrees. Consumer requires d4 cell 0 == HASH(\"GenericPersistentConfigHost.v1\"), the Host's published identity; reads cells 5/8 of the Host's published state.]"
    }
   },
   "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10": {

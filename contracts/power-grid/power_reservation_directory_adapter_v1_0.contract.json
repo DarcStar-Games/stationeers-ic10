@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10",
-  "source_sha256": "4c5b10abffb4027e5117481eedb60ef238f84560a00021f91128cce8372f0eb3",
+  "source_sha256": "c8fc9c83b35199d338a67a15f95f6ce67564a32213062d5892d92cd1334b42ca",
   "identity": {
     "service_id": "ic10.script.power.reservation.directory.adapter",
     "implementation_revision": "1.0",
@@ -28,7 +28,6 @@
       "reference": "r1",
       "literal_reads": [
         0,
-        1,
         12,
         17,
         28,
@@ -45,11 +44,6 @@
           "address": 0,
           "operator": "equals",
           "value": -1742884202
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 1
         },
         {
           "address": 33,

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/shared-input/generic_input_scanner_v1_1.ic10",
-  "source_sha256": "249fdb72fd43a0b1fc7f7ed61397b291085afa9fe74c501ebe69689dbd484b15",
+  "source_sha256": "bf2cc54785887e86a7f07021bc231cff5d4c4db5fbae0751ab8238e06d2380ea",
   "identity": {
     "service_id": "ic10.script.generic.input.scanner",
     "implementation_revision": "1.1",
@@ -17,8 +17,7 @@
       "transport": "reference-id",
       "reference": "ref",
       "literal_reads": [
-        0,
-        1
+        0
       ],
       "literal_writes": [],
       "dynamic_read": false,

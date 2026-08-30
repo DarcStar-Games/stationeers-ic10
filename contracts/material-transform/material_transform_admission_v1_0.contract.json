@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-transform/material_transform_admission_v1_0.ic10",
-  "source_sha256": "d4f468e02940c770f843b1211c16345c1cacf79a6e523325f81e335533b7dd03",
+  "source_sha256": "fa4008bd45c86053ccbb6ac265e53a1e930ae9598123489e1f5fd4a5f6ad7f85",
   "identity": {
     "service_id": "ic10.script.material.transform.admission",
     "implementation_revision": "1.0",
@@ -28,7 +28,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           32,
           33,
           34,
@@ -60,10 +59,6 @@
           {
             "address": 0,
             "equals": 499210479
-          },
-          {
-            "address": 1,
-            "equals": 4
           },
           {
             "address": 32,
@@ -154,7 +149,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           9,
           10,
           12,
@@ -173,10 +167,6 @@
           {
             "address": 0,
             "equals": -1742884202
-          },
-          {
-            "address": 1,
-            "equals": 1
           },
           {
             "address": 33,

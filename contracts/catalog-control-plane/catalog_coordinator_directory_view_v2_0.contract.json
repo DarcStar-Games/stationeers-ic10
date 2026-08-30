@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10",
-  "source_sha256": "d001e4898b7ed450f8d860a5253a93ab89d2c75aa4b5b71d5a97496d6eafc7aa",
+  "source_sha256": "ea31831ca3a520147b089a280fd10d9924ed54e0a18a7c9dac1017d191a6734d",
   "identity": {
     "service_id": "ic10.script.catalog.coordinator.directory.view",
     "implementation_revision": "2.0",
@@ -26,7 +26,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           3,
           18,
           23
@@ -47,10 +46,6 @@
           {
             "address": 0,
             "equals": -1822968058
-          },
-          {
-            "address": 1,
-            "equals": 3
           },
           {
             "address": 3,

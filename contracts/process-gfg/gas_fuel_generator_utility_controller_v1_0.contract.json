@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10",
-  "source_sha256": "a5a61940696fa15bce3cd9988a3705329cc83bd35c7532168bcb98abf43ceac2",
+  "source_sha256": "7e1a23a76832578c81f063100178228e42c5d4bf86bba88c0198024bad1f253d",
   "identity": {
     "service_id": "ic10.script.gas.fuel.generator.utility.controller",
     "implementation_revision": "1.0",
@@ -75,7 +75,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           27,
           30,
           31
@@ -91,10 +90,6 @@
           {
             "address": 0,
             "equals": -788162592
-          },
-          {
-            "address": 1,
-            "equals": 1
           }
         ]
       },

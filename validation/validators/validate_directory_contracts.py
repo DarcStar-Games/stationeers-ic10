@@ -20,8 +20,8 @@ sh=D.get('snapshot_host',{}); rh=D.get('registry_host',{})
 if sh.get('boot_marker_slot')!=31 or 'generic_magic_slot' in sh: fail('snapshot boot marker metadata mismatch')
 if rh.get('publication_sequence_slot')!=23 or 'generic_magic_slot' in rh: fail('registry publication metadata mismatch')
 need('ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','poke 0 HASH("GenericSnapshotDirectoryHost.v1")','poke 1 1','bgt r2 3 Error','bgt r3 64 Error','poke 22 1','poke 24 r6','poke 15 r15','Shift:\nbge r6 r3 Full','Insert:\nbge r6 r3 Full')
-need('ic10/directory-core/generic_registry_directory_host_v2_0.ic10','poke 0 HASH("GenericRegistryDirectoryHost.v3")','poke 1 3','bne r0 3 Loop','put d0 16 r11','get r0 d0 17','bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") SourceBad','bne r0 6 SourceBad','get r10 db 23','poke 23 r10','put d0 16 0')
-need('ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10','bne r0 3 Loop','put d0 16 r11','get r0 d0 17','get r15 d0 13','get r10 d0 7','bne r0 r15 Release','bne r0 r10 Release','put d0 16 0')
+need('ic10/directory-core/generic_registry_directory_host_v2_0.ic10','poke 0 HASH("GenericRegistryDirectoryHost.v3")','poke 1 3','put d0 16 r11','get r0 d0 17','bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") SourceBad','bne r0 6 SourceBad','get r10 db 23','poke 23 r10','put d0 16 0')
+need('ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10','bne r0 HASH("DirectoryAdapter.v3") Loop','put d0 16 r11','get r0 d0 17','get r15 d0 13','get r10 d0 7','bne r0 r15 Release','bne r0 r10 Release','put d0 16 0')
 expected={
  'DirectorySchema.Controller':('ic10/controller-discovery/controller_directory_adapter_v4_0.ic10',1,2),
  'DirectorySchema.PressureGridLink':('ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10',1,3),
@@ -81,15 +81,16 @@ for f,toks in {
  'ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10':['get r9 db 16','getd r12 r9 29','getd r12 r9 30','bnez r12 Bad','getd r0 r9 24','bne r0 r8 Loop'],
  'ic10/manufacturing/print_material_resolver_v1_0.ic10':['get r12 d1 29','get r12 d1 30','bnez r12 Bad'],
 }.items(): need(f,*toks)
-# Registry readers that can expose state or trigger side effects fence S23 and require ABI3.
+# Registry readers that can expose state or trigger side effects fence S23 and require the
+# Registry Host identity, which carries ABI3 in its hashed name.
 for f,toks in {
- 'ic10/catalog-control-plane/catalog_inspector_v4_0.ic10':['bne r0 3 Bad','getd r10 r14 23'],
- 'ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10':['bne r0 3 Loop','getd r15 r12 23'],
- 'ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10':['bne r0 3 Loop','get r14 d0 23'],
- 'ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10':['bne r0 3 Bad','get r15 d0 23'],
- 'ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10':['bne r0 3 Loop','get r11 d1 23','bne r0 r11 Loop'],
- 'ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10':['bne r0 3 Loop','get r12 d1 23','bne r0 r12 Loop'],
- 'ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10':['bne r0 3 Loop','get r11 d1 23','bne r0 r11 Loop'],
+ 'ic10/catalog-control-plane/catalog_inspector_v4_0.ic10':['bne r0 HASH("GenericRegistryDirectoryHost.v3") Bad','getd r10 r14 23'],
+ 'ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10':['bne r0 HASH("GenericRegistryDirectoryHost.v3") Loop','getd r15 r12 23'],
+ 'ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10':['bne r0 HASH("GenericRegistryDirectoryHost.v3") Loop','get r14 d0 23'],
+ 'ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10':['bne r0 HASH("GenericRegistryDirectoryHost.v3") Bad','get r15 d0 23'],
+ 'ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10':['bne r0 HASH("GenericRegistryDirectoryHost.v3") Loop','get r11 d1 23','bne r0 r11 Loop'],
+ 'ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10':['bne r0 HASH("GenericRegistryDirectoryHost.v3") Loop','get r12 d1 23','bne r0 r12 Loop'],
+ 'ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10':['bne r0 HASH("GenericRegistryDirectoryHost.v3") Loop','get r11 d1 23','bne r0 r11 Loop'],
 }.items(): need(f,*toks)
 # Domain directory magic numbers must not survive in current IC10 code. Glob under
 # ic10/, where the programs live -- anchored at the root this matched nothing.

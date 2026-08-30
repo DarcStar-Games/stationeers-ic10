@@ -28,7 +28,7 @@ for tok in ('poke 14 r1','poke 14 0','getd r0 r9 23','put d1 9 2'):
     need(m,tok,'multi allocator')
 if s.index('putd r4 17 r1') >= m.index('poke 14 r1'):
     pass # separate programs: semantic ordering checked dynamically below
-need(g,'bne r0 2 Bad','grant guard ABI2-only contract')
+need(g,'bne r0 HASH("MultiMaterialReservationAllocator.v2") Bad','grant guard ABI2-only contract')
 for tok in ('put d3 21 r15','s d0 Activate 1','sub r0 r0 r1','put d3 23 r0'):
     need(x,tok,'generic runtime')
 

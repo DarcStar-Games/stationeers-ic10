@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/shared-input/generic_input_resolver_v1_0.ic10",
-  "source_sha256": "f0e13a26cd7d0058518abaee5f0477d2ea9e21eefc45ba79a615c4b32f23cfb3",
+  "source_sha256": "80742b818f6c28e14aeaeed7e8c1d1788920febe692a66ff43e35110418b92cc",
   "identity": {
     "service_id": "ic10.script.generic.input.resolver",
     "implementation_revision": "1.0",
@@ -18,7 +18,6 @@
       "reference": "profile",
       "literal_reads": [
         0,
-        1,
         10,
         11
       ],
@@ -30,11 +29,6 @@
           "address": 0,
           "operator": "equals",
           "value": 940078290
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 1
         }
       ],
       "accepted": []
@@ -44,7 +38,6 @@
       "reference": "scanner",
       "literal_reads": [
         0,
-        1,
         10,
         12
       ],
@@ -58,11 +51,6 @@
           "address": 0,
           "operator": "equals",
           "value": -1082737849
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 1
         }
       ],
       "accepted": []

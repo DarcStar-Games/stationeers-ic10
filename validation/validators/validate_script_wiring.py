@@ -48,7 +48,7 @@ reviewed = sum(1 for peer in script_edges if peer.get("header_reads"))
 print("Script wiring validation: PASS")
 print(f" - all {total} device ports across {len(wiring['ports'])} programs declare a peer"
       f" ({len(script_edges)} script edges, {physical} physical devices)")
-print(f" - every declared provider exists, matches its port's target kind, and satisfies"
-      " any S0 magic/ABI check")
+print(f" - every declared provider exists, matches its port's target kind, and publishes"
+      " any S0 identity the port checks")
 print(f" - {guarded} edges into migrated programs touch no S2..S7 header cell;"
       f" {reviewed} reviewed header reads are declared in the map")

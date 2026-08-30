@@ -33,8 +33,6 @@ blt r1 0 Reset
 add r7 r7 1
 getd r0 r1 0
 bne r0 HASH("CatalogLoader.v5") Service
-getd r0 r1 1
-bne r0 5 Service
 getd r0 r1 18
 bne r0 1 Service
 getd r0 r1 19

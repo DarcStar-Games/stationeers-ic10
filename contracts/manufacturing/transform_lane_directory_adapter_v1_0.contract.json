@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10",
-  "source_sha256": "42590b3b8c128aa0b02b6baf0604962abd1bd5715948e8af7ab7fd1516321254",
+  "source_sha256": "d3a515f5326c6eef35c44eedde73390c2cb583fec416b3d7a9c9a6d8088c4e82",
   "identity": {
     "service_id": "ic10.script.transform.lane.directory.adapter",
     "implementation_revision": "1.0",
@@ -28,7 +28,6 @@
       "reference": "r1",
       "literal_reads": [
         0,
-        1,
         14,
         16,
         21
@@ -41,11 +40,6 @@
           "address": 0,
           "operator": "equals",
           "value": -1443322424
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 2
         }
       ],
       "accepted": []

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10",
-  "source_sha256": "1de5e5618589f8c4770d5c55b99795f2626948978a741ef08da5dc6059e6147c",
+  "source_sha256": "f0f0b37b230506e945a416dd440616f64bc6b1a722f84a9dc0043aa30f615c0a",
   "identity": {
     "service_id": "ic10.script.resource.endpoint.directory.adapter",
     "implementation_revision": "3.0",
@@ -28,7 +28,6 @@
       "reference": "r1",
       "literal_reads": [
         0,
-        1,
         11,
         52,
         53
@@ -41,11 +40,6 @@
           "address": 0,
           "operator": "equals",
           "value": 25991561
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 1
         }
       ],
       "accepted": []

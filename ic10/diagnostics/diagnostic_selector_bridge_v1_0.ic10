@@ -16,18 +16,12 @@ blez controllerSelector Invalid
 blez consoleSelector Invalid
 getd r0 input 0
 bne r0 HASH("DiagnosticInputBridge.v1") Invalid
-getd r0 input 1
-bne r0 1 Invalid
 getd r0 input 10
 bne r0 1 Invalid
 getd r0 controllerSelector 0
 bne r0 HASH("ControllerSelector.v2") Invalid
-getd r0 controllerSelector 1
-bne r0 2 Invalid
 getd r0 consoleSelector 0
 bne r0 HASH("ConsoleSelector.v1") Invalid
-getd r0 consoleSelector 1
-bne r0 1 Invalid
 # Desired pair is written before generation; selector accepts it atomically.
 getd r10 input 16
 getd r11 input 17

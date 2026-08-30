@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10",
-  "source_sha256": "6a31c86eca48aa009ab2156a92eaded8af929b278bf9dfe0a8608ccaaa8d13ea",
+  "source_sha256": "06dffdce3416b0220011b1406ba9c941bafaf2d365c3c2b6963076985c4070ab",
   "identity": {
     "service_id": "ic10.script.dependency.cancellation.guard",
     "implementation_revision": "1.0",
@@ -26,7 +26,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           40
         ],
         "literal_writes": [],
@@ -45,10 +44,6 @@
           {
             "address": 0,
             "equals": 1864195977
-          },
-          {
-            "address": 1,
-            "equals": 2
           }
         ]
       },

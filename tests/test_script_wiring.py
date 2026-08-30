@@ -112,9 +112,13 @@ wrong_magic[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], constraints={0: 314199
 expect("magic the provider never publishes fails",
        any("does not publish" in f for f in failing(ports=wrong_magic)))
 
-wrong_abi = deepcopy(PORTS)
-wrong_abi[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], constraints={0: 31410001, 1: 3})
-expect("ABI mismatch fails", any("does not publish" in f for f in failing(ports=wrong_abi)))
+# The ABI is folded into the S0 identity, so a wrong ABI is a wrong magic and is
+# caught by the case above. A port carrying a separate S1 constraint no longer exists:
+# validate_service_identity.py rejects the source construct that would produce one, so
+# the wiring layer simply ignores it rather than treating it as a second identity gate.
+stray_abi = deepcopy(PORTS)
+stray_abi[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], constraints={0: 31410001, 1: 3})
+expect("a stray S1 constraint neither gates nor breaks the edge", failing(ports=stray_abi) == [])
 
 header_read = deepcopy(PORTS)
 header_read[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], reads={0, 1, 3, 9})
@@ -165,11 +169,9 @@ expect("declared header read excuses the ranged read",
        failing(reviewed, ports=ranged_read, migrated={PROVIDER}) == [])
 
 abi_only = deepcopy(PORTS)
-abi_only[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], constraints={1: 2})
-expect("ABI-only constraint matching the provider passes", failing(ports=abi_only) == [])
 abi_only[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], constraints={1: 3})
-expect("ABI-only constraint the provider never publishes fails",
-       any("publishes no" in f for f in failing(ports=abi_only)))
+expect("an S1-only constraint identifies nothing, so the edge stays unconstrained here",
+       failing(ports=abi_only) == [])
 
 malformed = deepcopy(WIRING)
 malformed["ports"][CONSUMER]["d0"]["header_reads"] = {"S3": "SchemaId"}
@@ -189,5 +191,5 @@ expect("no edges into an unreferenced family", inbound_edges(WIRING, PORTS, {CON
 if failures:
     raise SystemExit(1)
 print("Script wiring model: PASS")
-print(" - schema, coverage, provider existence, kind agreement, magic/ABI consistency,")
+print(" - schema, coverage, provider existence, kind agreement, S0 identity consistency,")
 print("   migrated-header guard, reviewed header reads, and inbound-edge listing verified")

@@ -19,8 +19,6 @@ get r14 d1 29
 blez r14 Bad
 get r0 d1 0
 bne r0 HASH("ResourceProfileView.v1") Bad
-get r0 d1 1
-bne r0 1 Bad
 get r0 d1 28
 blez r0 Bad
 get r0 d1 8

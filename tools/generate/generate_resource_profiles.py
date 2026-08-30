@@ -68,8 +68,6 @@ j First
 Store:
 getd r0 r2 0
 bne r0 {STORE_TOKEN} Bad
-getd r0 r2 1
-bne r0 {STORE_ABI} Bad
 getd r0 r2 3
 bne r0 HASH("{SCHEMA}.v{SCHEMA_VERSION}") Bad
 getd r0 r2 13

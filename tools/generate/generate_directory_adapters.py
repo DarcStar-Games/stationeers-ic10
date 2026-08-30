@@ -12,7 +12,7 @@ SPECS=R/'data/directory_adapter_specs.json'
 def render(s):
  fields=s['fields']; w=len(fields); g=s['generation_offset']
  lines=[f"# {s['comment']}",'Boot:','clr db','poke 0 HASH("DirectoryAdapter.v3")','poke 1 3','poke 2 17',f'poke 3 HASH("{s["schema"]}.v1")','poke 10 {}'.format(w),'poke 11 64','poke 15 1']
- lines += ['Loop:','yield','get r0 db 16','beqz r0 ScanStart','poke 17 r0','j Loop','ScanStart:','poke 17 0','get r15 db 13','add r15 r15 1','poke 13 r15','poke 14 0','move r7 0','move r8 0','Scan:','get r1 db:0 r7','blt r1 0 Publish','add r7 r7 1','ld r0 r1 PrefabHash','beq r0 -128473777 Probe','bne r0 2037291645 Scan','Probe:','getd r0 r1 0',f'bne r0 {header_token(s["provider_contract"],s["provider_abi"])} Scan','getd r0 r1 1',f'bne r0 {s["provider_abi"]} Scan',f'getd r15 r1 {g}','blez r15 Scan']
+ lines += ['Loop:','yield','get r0 db 16','beqz r0 ScanStart','poke 17 r0','j Loop','ScanStart:','poke 17 0','get r15 db 13','add r15 r15 1','poke 13 r15','poke 14 0','move r7 0','move r8 0','Scan:','get r1 db:0 r7','blt r1 0 Publish','add r7 r7 1','ld r0 r1 PrefabHash','beq r0 -128473777 Probe','bne r0 2037291645 Scan','Probe:','getd r0 r1 0',f'bne r0 {header_token(s["provider_contract"],s["provider_abi"])} Scan',f'getd r15 r1 {g}','blez r15 Scan']
  for i,f in enumerate(fields):
   if f=='ref': continue
   reg='r2' if i==0 else 'r3' if i==1 else f'r{2+i}'

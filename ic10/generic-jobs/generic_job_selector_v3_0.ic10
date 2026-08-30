@@ -8,8 +8,6 @@ get r0 db 21
 beq r15 r0 Loop
 get r0 d0 0
 bne r0 HASH("GenericJobStore.v1") Bad
-get r0 d0 1
-bne r0 1 Bad
 get r12 d0 16
 and r0 r12 1
 bnez r0 Loop

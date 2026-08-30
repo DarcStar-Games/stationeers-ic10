@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-pi/controller_pi_runtime_v1_1.ic10",
-  "source_sha256": "ac378bd9437f9d2497c4c6ed843ceb0111e648946873dab09fd6844b4098983c",
+  "source_sha256": "f889f0a641aaa029ffc7a86f3e0ce38fd36d55ae7bfe6c990db925593bccf874",
   "identity": {
     "service_id": "ic10.script.controller.pi.runtime",
     "implementation_revision": "1.1",
@@ -132,7 +132,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           8,
           9,
           48,
@@ -155,10 +154,6 @@
           {
             "address": 0,
             "equals": -759746849
-          },
-          {
-            "address": 1,
-            "equals": 1
           },
           {
             "address": 48,

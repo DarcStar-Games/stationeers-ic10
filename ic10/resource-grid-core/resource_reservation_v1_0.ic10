@@ -27,8 +27,6 @@ blez r14 Bad
 beq r14 r15 Loop
 get r0 d0 0
 bne r0 HASH("ResourceEndpoint.v1") Bad
-get r0 d0 1
-bne r0 1 Bad
 l r1 d0 ReferenceId
 get r2 d0 52
 get r3 d0 53

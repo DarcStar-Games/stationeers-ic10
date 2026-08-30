@@ -24,8 +24,6 @@ move r8 0
 bdns d1 Publish
 get r0 d1 0
 bne r0 HASH("GenericSnapshotDirectoryHost.v1") Publish
-get r0 d1 1
-bne r0 1 Publish
 get r0 d1 9
 bne r0 HASH("DirectorySchema.Controller.v1") Publish
 get r0 d1 11

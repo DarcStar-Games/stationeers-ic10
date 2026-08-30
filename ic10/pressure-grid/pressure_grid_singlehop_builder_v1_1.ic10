@@ -72,8 +72,6 @@ bgt r4 2 Reject
 bdns d0 Reject
 get r0 d0 0
 bne r0 HASH("GenericSnapshotDirectoryHost.v1") Reject
-get r0 d0 1
-bne r0 1 Reject
 get r0 d0 9
 bne r0 HASH("DirectorySchema.PressureGridLink.v1") Reject
 get r0 d0 11
@@ -81,8 +79,6 @@ bne r0 3 Reject
 bdns d1 Reject
 get r0 d1 0
 bne r0 HASH("PressureReservationAllocator.v3") Reject
-get r0 d1 1
-bne r0 3 Reject
 get r5 d0 24
 add sp r5 25
 get r6 d0 sp
