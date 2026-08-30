@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_reservation_allocator_v1_0.ic10",
-  "source_sha256": "717d5a6f62fc0dae41497760a4eeee4ccbe883f5bcb439b718d86847ab51ecd9",
+  "source_sha256": "d012541dd8ff5dd10af353c0b331afafb2e3c6d85d16e670987b7b2f106dbf84",
   "identity": {
     "service_id": "ic10.script.power.reservation.allocator",
     "implementation_revision": "1.0",
@@ -25,7 +25,7 @@
       },
       "stack": {
         "literal_reads": [
-          3
+          28
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -39,8 +39,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.d6128ad2e5071d1d",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.d6128ad2e5071d1d",
+        "interface_id": "ic10.interface.access.cd445ef4d1b60df1",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.cd445ef4d1b60df1",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -63,12 +63,12 @@
       },
       "stack": {
         "literal_reads": [
-          4,
-          5
+          10,
+          11
         ],
         "literal_writes": [
-          2,
-          3
+          8,
+          9
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -78,7 +78,7 @@
         "dynamic_write_range_source": "none",
         "constraints": [
           {
-            "address": 5,
+            "address": 11,
             "equals": 1
           }
         ]
@@ -86,8 +86,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.aab9dc1892dd1a67",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.aab9dc1892dd1a67",
+        "interface_id": "ic10.interface.access.23b7ce5b7734d655",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.23b7ce5b7734d655",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -110,13 +110,13 @@
       },
       "stack": {
         "literal_reads": [
-          5,
-          6
+          11,
+          12
         ],
         "literal_writes": [
-          2,
-          3,
-          4
+          8,
+          9,
+          10
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -126,7 +126,7 @@
         "dynamic_write_range_source": "none",
         "constraints": [
           {
-            "address": 6,
+            "address": 12,
             "equals": 1
           }
         ]
@@ -134,8 +134,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.3ec1d81e463d783d",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.3ec1d81e463d783d",
+        "interface_id": "ic10.interface.access.af140d7afafe01f1",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.af140d7afafe01f1",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -197,8 +197,8 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3,
+      8,
+      9,
       20,
       21,
       22,
@@ -208,8 +208,9 @@
       0,
       1,
       2,
-      3,
-      4,
+      8,
+      9,
+      10,
       20,
       21,
       22,
@@ -253,13 +254,13 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read",
           "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
-        "address": 3,
-        "name": "S3",
+        "address": 8,
+        "name": "S8",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -268,8 +269,18 @@
         ]
       },
       {
-        "address": 4,
-        "name": "S4",
+        "address": 9,
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 10,
+        "name": "S10",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

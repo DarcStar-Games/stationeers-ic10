@@ -1,9 +1,10 @@
 # POWER allocator: validate -> commit -> release prior -> publish authority.
 poke 0 31416037
 poke 1 1
-# Reflash revokes authority; preserve prior epoch S3 for cleanup.
 poke 2 0
-poke 4 0
+# Reflash revokes authority; preserve prior epoch S3 for cleanup.
+poke 8 0
+poke 10 0
 poke 20 0
 Loop:
 yield
@@ -12,40 +13,40 @@ beq r0 1 WaitV
 beq r0 2 WaitC
 beq r0 3 WaitR
 beq r0 4 WaitCleanup
-get r2 d0 3
+get r2 d0 28
 blez r2 Loop
-get r0 db 2
+get r0 db 8
 beq r0 r2 Loop
 get r3 db 30
 add r3 r3 1
 poke 30 r3
 poke 21 r2
-put d1 2 r2
-put d1 3 r3
+put d1 8 r2
+put d1 9 r3
 poke 20 1
 j Loop
 WaitV:
 get r3 db 30
-get r0 d1 4
+get r0 d1 10
 bne r0 r3 Loop
-get r0 d1 5
+get r0 d1 11
 bne r0 1 Fail
-get r4 db 3
+get r4 db 9
 add r4 r4 1
 poke 22 r4
 get r0 db 21
-put d2 2 r0
-put d2 3 r4
-put d2 4 r3
+put d2 8 r0
+put d2 9 r4
+put d2 10 r3
 poke 20 2
 j Loop
 WaitC:
 get r3 db 30
-get r0 d2 5
+get r0 d2 11
 bne r0 r3 Loop
-get r0 d2 6
+get r0 d2 12
 bne r0 1 CleanupNew
-get r5 db 3
+get r5 db 9
 blez r5 Publish
 put d3 8 r5
 put d3 9 r3
@@ -72,13 +73,13 @@ bne r0 r3 Loop
 j Fail
 Publish:
 get r0 db 21
-poke 2 r0
+poke 8 r0
 get r0 db 22
-poke 3 r0
-poke 4 1
+poke 9 r0
+poke 10 1
 poke 20 0
 j Loop
 Fail:
-poke 4 -1
+poke 10 -1
 poke 20 0
 j Loop

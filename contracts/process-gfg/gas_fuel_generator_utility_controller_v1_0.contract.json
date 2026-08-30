@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10",
-  "source_sha256": "0f3cd23ed1bab8b0e9d72ab98bb125580b9c83ea8083a5a2c44d3d6e72e6b596",
+  "source_sha256": "ac05711974231ecb826f7a23ba15a1a4eef73eee8e212c515b25e6b6a299f6e0",
   "identity": {
     "service_id": "ic10.script.gas.fuel.generator.utility.controller",
     "implementation_revision": "1.0",
@@ -76,9 +76,9 @@
         "literal_reads": [
           0,
           1,
-          2,
-          5,
-          6
+          27,
+          30,
+          31
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -502,7 +502,7 @@
             "publication_requirements": [
               {
                 "kind": "seqlock",
-                "address": 2
+                "address": 27
               }
             ]
           }

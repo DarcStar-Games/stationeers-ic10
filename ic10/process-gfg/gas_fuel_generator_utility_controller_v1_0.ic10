@@ -18,12 +18,12 @@ get r0 d1 1
 bne r0 1 Bad
 l r0 d0 PrefabHash
 bne r0 HASH("StructureGasGenerator") Bad
-get r15 d1 2
+get r15 d1 27
 and r0 r15 1
 bnez r0 Loop
-get r4 d1 5
-get r5 d1 6
-get r0 d1 2
+get r4 d1 30
+get r5 d1 31
+get r0 d1 27
 bne r0 r15 Loop
 get r6 db 19
 sgt r0 r4 0
@@ -61,7 +61,7 @@ bgtz r0 Bad
 beqz r2 Start
 j FuelWait
 Start:
-get r0 d1 2
+get r0 d1 27
 bne r0 r15 Loop
 get r0 d3 13
 bne r0 r12 Loop

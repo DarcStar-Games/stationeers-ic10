@@ -29,10 +29,10 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 121,
-    "legacy_exempt": 53,
-    "backlog_reserved_cell_users": 48,
-    "backlog_dynamic_range_users": 15
+    "migrated_v1": 133,
+    "legacy_exempt": 41,
+    "backlog_reserved_cell_users": 38,
+    "backlog_dynamic_range_users": 14
   },
   "services": [
     {
@@ -8811,7 +8811,7 @@
       "source": "ic10/power-grid/power_dispatch_cycle_v1_0.ic10",
       "service_contract_id": "ic10.script.power.dispatch.cycle",
       "deployment_family": "power-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -8836,12 +8836,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 8,
+        "literal_cell_count": 9,
         "highest_literal_cell": 21,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 53,
-        "line_headroom_120": 67,
+        "line_count": 54,
+        "line_headroom_120": 66,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -8849,27 +8849,52 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.dispatch.cycle",
+        "magic": 31416034,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "6e4903623f62d5dc7338afd7699fe0130a15d30f4607ce812767f8dc18d563ce",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 11
+            },
+            {
+              "start": 20,
+              "end": 21
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-grid"
       }
     },
     {
       "source": "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10",
       "service_contract_id": "ic10.script.power.dispatch.plan.store",
       "deployment_family": "power-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -8903,8 +8928,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 16,
-        "highest_literal_cell": 26,
+        "literal_cell_count": 17,
+        "highest_literal_cell": 31,
         "dynamic_read_ranges": [
           {
             "start": 0,
@@ -8917,8 +8942,8 @@
             "end": 511
           }
         ],
-        "line_count": 87,
-        "line_headroom_120": 33,
+        "line_count": 88,
+        "line_headroom_120": 32,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -8926,11 +8951,7 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6
+          2
         ],
         "dynamic_read_cells": [
           0,
@@ -8955,17 +8976,62 @@
         "dynamic_read_provenance": "conservative-full-stack",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.dispatch.plan.store",
+        "magic": 31416028,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "9b616227dd82f0a3ffb0655270bf308b6ee3127ba895e4e3306eb128a66193eb",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 15
+            },
+            {
+              "start": 24,
+              "end": 31
+            },
+            {
+              "start": 32,
+              "end": 95
+            },
+            {
+              "start": 128,
+              "end": 191
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 32,
+              "end": 95
+            },
+            {
+              "start": 128,
+              "end": 191
+            }
+          ]
+        },
+        "pilot_family": "power-grid"
       }
     },
     {
       "source": "ic10/power-grid/power_dispatch_sweep_v1_0.ic10",
       "service_contract_id": "ic10.script.power.dispatch.sweep",
       "deployment_family": "power-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -8990,12 +9056,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 11,
+        "literal_cell_count": 12,
         "highest_literal_cell": 25,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 80,
-        "line_headroom_120": 40,
+        "line_count": 81,
+        "line_headroom_120": 39,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -9003,26 +9069,52 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.dispatch.sweep",
+        "magic": 31416033,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "60289c8c7113f033ea062f8404bb3de8bbeced21b7297113cabe19092ebc470a",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 10
+            },
+            {
+              "start": 20,
+              "end": 25
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-grid"
       }
     },
     {
       "source": "ic10/power-grid/power_link_executor_v1_0.ic10",
       "service_contract_id": "ic10.script.power.link.executor",
       "deployment_family": "power-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -9047,36 +9139,56 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 2,
-        "highest_literal_cell": 1,
+        "literal_cell_count": 3,
+        "highest_literal_cell": 2,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 94,
-        "line_headroom_120": 26,
+        "line_count": 95,
+        "line_headroom_120": 25,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
       "window_collision": {
         "literal_cells": [
           0,
-          1
+          1,
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.link.executor",
+        "magic": 31416039,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "af21b0db7f94fcef4b141ca5ba66115b3d92192dca7e322529cb6c7e334e91b6",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-grid"
       }
     },
     {
       "source": "ic10/power-grid/power_link_selector_v1_0.ic10",
       "service_contract_id": "ic10.script.power.link.selector",
       "deployment_family": "power-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -9101,12 +9213,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 12,
-        "highest_literal_cell": 11,
+        "literal_cell_count": 13,
+        "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 74,
-        "line_headroom_120": 46,
+        "line_count": 75,
+        "line_headroom_120": 45,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -9114,29 +9226,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.link.selector",
+        "magic": 31416030,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "ebc1f850a82b1db393ab3754704faacb81423e4ec84d48e6852dbeca290b8baf",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 17
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-grid"
       }
     },
     {
       "source": "ic10/power-grid/power_load_executor_v1_0.ic10",
       "service_contract_id": "ic10.script.power.load.executor",
       "deployment_family": "power-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -9161,36 +9292,56 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 2,
-        "highest_literal_cell": 1,
+        "literal_cell_count": 3,
+        "highest_literal_cell": 2,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 90,
-        "line_headroom_120": 30,
+        "line_count": 91,
+        "line_headroom_120": 29,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
       "window_collision": {
         "literal_cells": [
           0,
-          1
+          1,
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.load.executor",
+        "magic": 31416038,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "045fda0d49b6c1432b28b9515b53a2191e4d7f4d619de8c960c377b512c2e43e",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-grid"
       }
     },
     {
       "source": "ic10/power-grid/power_plan_validator_v1_0.ic10",
       "service_contract_id": "ic10.script.power.plan.validator",
       "deployment_family": "power-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -9215,12 +9366,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 6,
-        "highest_literal_cell": 5,
+        "literal_cell_count": 7,
+        "highest_literal_cell": 11,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 103,
-        "line_headroom_120": 17,
+        "line_count": 104,
+        "line_headroom_120": 16,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -9228,20 +9379,41 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.plan.validator",
+        "magic": 31416035,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "c2f331d87c77040b9972f368744be2c668004cb0ecadcfe63f48f8f2016afa50",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 11
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-grid"
       }
     },
     {
@@ -9352,7 +9524,7 @@
       "source": "ic10/power-grid/power_reservation_allocator_v1_0.ic10",
       "service_contract_id": "ic10.script.power.reservation.allocator",
       "deployment_family": "power-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -9377,12 +9549,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 9,
+        "literal_cell_count": 10,
         "highest_literal_cell": 30,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 84,
-        "line_headroom_120": 36,
+        "line_count": 85,
+        "line_headroom_120": 35,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -9390,26 +9562,56 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.reservation.allocator",
+        "magic": 31416037,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "d012541dd8ff5dd10af353c0b331afafb2e3c6d85d16e670987b7b2f106dbf84",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 10
+            },
+            {
+              "start": 20,
+              "end": 22
+            },
+            {
+              "start": 30,
+              "end": 30
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-grid"
       }
     },
     {
       "source": "ic10/power-grid/power_reservation_committer_v1_0.ic10",
       "service_contract_id": "ic10.script.power.reservation.committer",
       "deployment_family": "power-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -9434,12 +9636,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 7,
-        "highest_literal_cell": 6,
+        "literal_cell_count": 8,
+        "highest_literal_cell": 12,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 97,
-        "line_headroom_120": 23,
+        "line_count": 98,
+        "line_headroom_120": 22,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -9447,21 +9649,41 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.reservation.committer",
+        "magic": 31416036,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "ce8238db8dd50945c3a3ff1a018870b7f4e54e6095217aed766ef8da1024abe2",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 12
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-grid"
       }
     },
     {
@@ -9595,7 +9817,7 @@
       "source": "ic10/power-grid/power_sink_flow_builder_v1_0.ic10",
       "service_contract_id": "ic10.script.power.sink.flow.builder",
       "deployment_family": "power-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -9620,12 +9842,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 12,
+        "literal_cell_count": 13,
         "highest_literal_cell": 20,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 97,
-        "line_headroom_120": 23,
+        "line_count": 98,
+        "line_headroom_120": 22,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -9633,29 +9855,52 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.sink.flow.builder",
+        "magic": 31416032,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "fd093703fba719eb336280a4aab2a1931507f88bd9ddae9f12ae67ea3d98a69f",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 16
+            },
+            {
+              "start": 20,
+              "end": 20
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-grid"
       }
     },
     {
       "source": "ic10/power-grid/power_sink_selector_v1_0.ic10",
       "service_contract_id": "ic10.script.power.sink.selector",
       "deployment_family": "power-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -9680,12 +9925,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 12,
-        "highest_literal_cell": 11,
+        "literal_cell_count": 13,
+        "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 68,
-        "line_headroom_120": 52,
+        "line_count": 69,
+        "line_headroom_120": 51,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -9693,29 +9938,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.sink.selector",
+        "magic": 31416031,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "4fea88f6551ff4a2b86ad8317848937c1ce2e3e0f25fe4a8c5fad8872cd47973",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 17
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-grid"
       }
     },
     {
       "source": "ic10/power-grid/power_source_selector_v1_0.ic10",
       "service_contract_id": "ic10.script.power.source.selector",
       "deployment_family": "power-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -9740,12 +10004,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 11,
-        "highest_literal_cell": 10,
+        "literal_cell_count": 12,
+        "highest_literal_cell": 16,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 91,
-        "line_headroom_120": 29,
+        "line_count": 92,
+        "line_headroom_120": 28,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -9753,22 +10017,41 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.power.source.selector",
+        "magic": 31416029,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "2a4ebe340d874060a773e4a2b3e14fff7477f5e2f9db428e103319b5bc06bd5a",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 16
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "power-grid"
       }
     },
     {
@@ -13259,7 +13542,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "0f3cd23ed1bab8b0e9d72ab98bb125580b9c83ea8083a5a2c44d3d6e72e6b596",
+          "source_sha256": "ac05711974231ecb826f7a23ba15a1a4eef73eee8e212c515b25e6b6a299f6e0",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {

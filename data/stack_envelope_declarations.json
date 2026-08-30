@@ -2782,7 +2782,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "0f3cd23ed1bab8b0e9d72ab98bb125580b9c83ea8083a5a2c44d3d6e72e6b596",
+   "source_sha256": "ac05711974231ecb826f7a23ba15a1a4eef73eee8e212c515b25e6b6a299f6e0",
    "legacy_owned_ranges": [
     [
      8,
@@ -3852,6 +3852,313 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "generic-jobs"
+  },
+  "ic10/power-grid/power_dispatch_cycle_v1_0.ic10": {
+   "service_id": "ic10.script.power.dispatch.cycle",
+   "magic": 31416034,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "6e4903623f62d5dc7338afd7699fe0130a15d30f4607ce812767f8dc18d563ce",
+   "legacy_owned_ranges": [
+    [
+     8,
+     11
+    ],
+    [
+     20,
+     21
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-grid"
+  },
+  "ic10/power-grid/power_dispatch_sweep_v1_0.ic10": {
+   "service_id": "ic10.script.power.dispatch.sweep",
+   "magic": 31416033,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "60289c8c7113f033ea062f8404bb3de8bbeced21b7297113cabe19092ebc470a",
+   "legacy_owned_ranges": [
+    [
+     8,
+     10
+    ],
+    [
+     20,
+     25
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-grid"
+  },
+  "ic10/power-grid/power_link_selector_v1_0.ic10": {
+   "service_id": "ic10.script.power.link.selector",
+   "magic": 31416030,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "ebc1f850a82b1db393ab3754704faacb81423e4ec84d48e6852dbeca290b8baf",
+   "legacy_owned_ranges": [
+    [
+     8,
+     17
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-grid"
+  },
+  "ic10/power-grid/power_plan_validator_v1_0.ic10": {
+   "service_id": "ic10.script.power.plan.validator",
+   "magic": 31416035,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "c2f331d87c77040b9972f368744be2c668004cb0ecadcfe63f48f8f2016afa50",
+   "legacy_owned_ranges": [
+    [
+     8,
+     11
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-grid"
+  },
+  "ic10/power-grid/power_reservation_allocator_v1_0.ic10": {
+   "service_id": "ic10.script.power.reservation.allocator",
+   "magic": 31416037,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "d012541dd8ff5dd10af353c0b331afafb2e3c6d85d16e670987b7b2f106dbf84",
+   "legacy_owned_ranges": [
+    [
+     8,
+     10
+    ],
+    [
+     20,
+     22
+    ],
+    [
+     30,
+     30
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-grid"
+  },
+  "ic10/power-grid/power_reservation_committer_v1_0.ic10": {
+   "service_id": "ic10.script.power.reservation.committer",
+   "magic": 31416036,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "ce8238db8dd50945c3a3ff1a018870b7f4e54e6095217aed766ef8da1024abe2",
+   "legacy_owned_ranges": [
+    [
+     8,
+     12
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-grid"
+  },
+  "ic10/power-grid/power_sink_flow_builder_v1_0.ic10": {
+   "service_id": "ic10.script.power.sink.flow.builder",
+   "magic": 31416032,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "fd093703fba719eb336280a4aab2a1931507f88bd9ddae9f12ae67ea3d98a69f",
+   "legacy_owned_ranges": [
+    [
+     8,
+     16
+    ],
+    [
+     20,
+     20
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-grid"
+  },
+  "ic10/power-grid/power_sink_selector_v1_0.ic10": {
+   "service_id": "ic10.script.power.sink.selector",
+   "magic": 31416031,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "4fea88f6551ff4a2b86ad8317848937c1ce2e3e0f25fe4a8c5fad8872cd47973",
+   "legacy_owned_ranges": [
+    [
+     8,
+     17
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-grid"
+  },
+  "ic10/power-grid/power_source_selector_v1_0.ic10": {
+   "service_id": "ic10.script.power.source.selector",
+   "magic": 31416029,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "2a4ebe340d874060a773e4a2b3e14fff7477f5e2f9db428e103319b5bc06bd5a",
+   "legacy_owned_ranges": [
+    [
+     8,
+     16
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-grid"
+  },
+  "ic10/power-grid/power_link_executor_v1_0.ic10": {
+   "service_id": "ic10.script.power.link.executor",
+   "magic": 31416039,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "af21b0db7f94fcef4b141ca5ba66115b3d92192dca7e322529cb6c7e334e91b6",
+   "legacy_owned_ranges": [],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-grid"
+  },
+  "ic10/power-grid/power_load_executor_v1_0.ic10": {
+   "service_id": "ic10.script.power.load.executor",
+   "magic": 31416038,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "045fda0d49b6c1432b28b9515b53a2191e4d7f4d619de8c960c377b512c2e43e",
+   "legacy_owned_ranges": [],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "power-grid"
+  },
+  "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10": {
+   "service_id": "ic10.script.power.dispatch.plan.store",
+   "magic": 31416028,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "9b616227dd82f0a3ffb0655270bf308b6ee3127ba895e4e3306eb128a66193eb",
+   "legacy_owned_ranges": [
+    [
+     10,
+     15
+    ],
+    [
+     24,
+     31
+    ],
+    [
+     32,
+     95
+    ],
+    [
+     128,
+     191
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     32,
+     95
+    ],
+    [
+     128,
+     191
+    ]
+   ],
+   "pilot_family": "power-grid"
   }
  },
  "legacy_exemption": {

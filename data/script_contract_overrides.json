@@ -834,18 +834,18 @@
    }
   },
   "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10": {
-   "source_sha256": "6bc70a98229d35831bde0c925b19c02c2c257ab41eecfb483a376fce872b3336",
+   "source_sha256": "9b616227dd82f0a3ffb0655270bf308b6ee3127ba895e4e3306eb128a66193eb",
    "publication_rules": [
     {
      "kind": "seqlock",
-     "address": 2,
+     "address": 27,
      "verification": "paired-sequence",
      "description": "Plan publication sequence is odd while mutating and even when stable."
     }
    ]
   },
   "ic10/power-grid/power_link_executor_v1_0.ic10": {
-   "source_sha256": "c0fe31441a5ded56afc92f9dfbaa290cd3fdd55ca8e865886f6311b623885df7",
+   "source_sha256": "af21b0db7f94fcef4b141ca5ba66115b3d92192dca7e322529cb6c7e334e91b6",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -858,7 +858,7 @@
    }
   },
   "ic10/power-grid/power_link_selector_v1_0.ic10": {
-   "source_sha256": "2539709f8f036ec43314a480f465d7c94afefbf7545f11c3cd1c32efdfbd6331",
+   "source_sha256": "ebc1f850a82b1db393ab3754704faacb81423e4ec84d48e6852dbeca290b8baf",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -871,7 +871,7 @@
    }
   },
   "ic10/power-grid/power_load_executor_v1_0.ic10": {
-   "source_sha256": "e428ee2c8e31961354cc916e81b14aa99c206bcc3ea18cf03d5cf3b11b94312a",
+   "source_sha256": "045fda0d49b6c1432b28b9515b53a2191e4d7f4d619de8c960c377b512c2e43e",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -884,7 +884,7 @@
    }
   },
   "ic10/power-grid/power_plan_validator_v1_0.ic10": {
-   "source_sha256": "c41e0e3796a7032bc24e5013348114b1a144ce114a30674f72bb32c7982dc5f8",
+   "source_sha256": "c2f331d87c77040b9972f368744be2c668004cb0ecadcfe63f48f8f2016afa50",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -911,7 +911,7 @@
    }
   },
   "ic10/power-grid/power_reservation_committer_v1_0.ic10": {
-   "source_sha256": "8a8e3743b928026668f1d407b6d711f46811ac04945a51d2a6d83e1d385adbb0",
+   "source_sha256": "ce8238db8dd50945c3a3ff1a018870b7f4e54e6095217aed766ef8da1024abe2",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -933,7 +933,7 @@
    ]
   },
   "ic10/power-grid/power_sink_selector_v1_0.ic10": {
-   "source_sha256": "2ccafc4024135ef2fd9f7cdadf9b8da66713805baf961c3019d353d56a12e590",
+   "source_sha256": "4fea88f6551ff4a2b86ad8317848937c1ce2e3e0f25fe4a8c5fad8872cd47973",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -946,7 +946,7 @@
    }
   },
   "ic10/power-grid/power_source_selector_v1_0.ic10": {
-   "source_sha256": "27d529ec38e901fa893d2ad11e801f1aaa3e9a3124fc20a9cd1b219f994557b9",
+   "source_sha256": "2a4ebe340d874060a773e4a2b3e14fff7477f5e2f9db428e103319b5bc06bd5a",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [

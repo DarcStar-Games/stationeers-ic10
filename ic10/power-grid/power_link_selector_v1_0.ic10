@@ -1,14 +1,15 @@
 # POWER link selector. d0 ResourceLink directory; request source/sink/watts.
 poke 0 31416030
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 5
-get r0 db 6
+get r15 db 15
+get r0 db 16
 beq r15 r0 Loop
-get r2 db 2
-get r3 db 3
-get r4 db 4
+get r2 db 12
+get r3 db 13
+get r4 db 14
 blez r2 Bad
 blez r3 Bad
 blez r4 Bad
@@ -54,21 +55,21 @@ Calc:
 add r13 r13 r4
 getd r0 r1 12
 bne r0 r14 Find
-poke 7 1
+poke 17 1
 poke 8 r1
 poke 9 r13
 poke 10 r14
 poke 11 r12
 j Reply
 None:
-poke 7 -3
+poke 17 -3
 poke 8 0
 j Reply
 Overflow:
-poke 7 -2
+poke 17 -2
 j Reply
 Bad:
-poke 7 -1
+poke 17 -1
 Reply:
-poke 6 r15
+poke 16 r15
 j Loop

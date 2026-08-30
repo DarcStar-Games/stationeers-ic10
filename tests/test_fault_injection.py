@@ -114,61 +114,61 @@ psrc=(R/'ic10/power-grid/power_dispatch_plan_store_v1_0.ic10').read_text()
 odd_cuts=0
 for quantum in range(8,60):
  vm=IC10(psrc,{},self_ref=227)
- vm.stack.update({0:31416028,1:1,2:0,3:5,4:1,5:0,6:0,10:1,11:0,12:3,14:0,15:0,24:1})
+ vm.stack.update({0:31416028,1:1,27:0,28:5,29:1,30:0,31:0,10:1,11:0,12:3,14:0,15:0,24:1})
  for i,v in enumerate([1401,1201,1202,80,85,5,6,9],128): vm.stack[i]=v
  vm.run(2,instruction_quantum=quantum)
- if int(vm.stack.get(2,0))%2:
+ if int(vm.stack.get(27,0))%2:
   odd_cuts+=1
   rf=IC10(psrc,{},self_ref=227);rf.stack=vm.stack.copy();rf.run(1)
-  ck(int(rf.stack.get(2,0))%2==0,f'Power Plan Store remained odd after reflash q={quantum}')
-  ck(rf.stack.get(3)==0 and rf.stack.get(4)==0,f'torn Power plan remained authoritative q={quantum}')
+  ck(int(rf.stack.get(27,0))%2==0,f'Power Plan Store remained odd after reflash q={quantum}')
+  ck(rf.stack.get(28)==0 and rf.stack.get(29)==0,f'torn Power plan remained authoritative q={quantum}')
 ck(odd_cuts>=10,'Power Plan Store campaign did not reach interrupted COMMIT window')
 
 # 9. Allocator reflash itself is fail-closed: startup clears active-authority flag.
 asrc=(R/'ic10/power-grid/power_reservation_allocator_v1_0.ic10').read_text()
-a=IC10(asrc,{},self_ref=236);a.stack.update({2:5,3:10,4:1,20:2,21:6,22:11,30:11})
+a=IC10(asrc,{},self_ref=236);a.stack.update({8:5,9:10,10:1,20:2,21:6,22:11,30:11})
 a.run(1)
-ck(a.stack.get(4)==0 and a.stack.get(20)==0,'Power allocator reflash retained actuation authority')
+ck(a.stack.get(10)==0 and a.stack.get(20)==0,'Power allocator reflash retained actuation authority')
 
 # 10. Allocator reflash is safe *and live*: the current unchanged plan is
 # revalidated, a fresh epoch is committed, the prior epoch is released, and
 # authority is republished only after that sequence completes.
 from framework.ic10_harness import Device
-plan=Device(3000,stack={3:5},props={'ReferenceId':3000})
+plan=Device(3000,stack={28:5},props={'ReferenceId':3000})
 validator=Device(3001,stack={},props={'ReferenceId':3001})
 committer=Device(3002,stack={},props={'ReferenceId':3002})
 releaser=Device(3003,stack={},props={'ReferenceId':3003})
 a=IC10(asrc,{'d0':plan,'d1':validator,'d2':committer,'d3':releaser},self_ref=2360)
-a.stack.update({2:5,3:10,4:1,20:2,21:6,22:11,30:10})
+a.stack.update({8:5,9:10,10:1,20:2,21:6,22:11,30:10})
 a.run(1)
-ck(a.stack.get(2)==0 and a.stack.get(3)==10 and a.stack.get(4)==0,'allocator boot did not preserve old epoch while invalidating accepted plan')
+ck(a.stack.get(8)==0 and a.stack.get(9)==10 and a.stack.get(10)==0,'allocator boot did not preserve old epoch while invalidating accepted plan')
 # Start validation of unchanged PlanGeneration 5.
 a.run(2)
-ck(a.stack.get(20)==1 and validator.stack.get(2)==5,'allocator did not revalidate unchanged current plan after reflash')
-req=int(a.stack.get(30));validator.stack.update({4:req,5:1})
+ck(a.stack.get(20)==1 and validator.stack.get(8)==5,'allocator did not revalidate unchanged current plan after reflash')
+req=int(a.stack.get(30));validator.stack.update({10:req,11:1})
 a.run(2)
-ck(a.stack.get(20)==2 and committer.stack.get(2)==5,'allocator did not advance to fresh reservation commit')
-committer.stack.update({5:req,6:1})
+ck(a.stack.get(20)==2 and committer.stack.get(8)==5,'allocator did not advance to fresh reservation commit')
+committer.stack.update({11:req,12:1})
 a.run(2)
 ck(a.stack.get(20)==3 and releaser.stack.get(8)==10,'allocator did not release prior epoch before republish')
 releaser.stack.update({10:req,11:1})
 a.run(2)
-ck(a.stack.get(2)==5 and a.stack.get(3)==11 and a.stack.get(4)==1,'allocator did not reacquire current plan with fresh epoch')
+ck(a.stack.get(8)==5 and a.stack.get(9)==11 and a.stack.get(10)==1,'allocator did not reacquire current plan with fresh epoch')
 
 # 11. Managed load executor: revoke allocator authority after plan/reservation
 # validation but before the physical write. The device must remain OFF.
-alloc=Device(3100,stack={2:5,3:10,4:1},props={'ReferenceId':3100})
+alloc=Device(3100,stack={8:5,9:10,10:1},props={'ReferenceId':3100})
 load=Device(3101,props={'ReferenceId':3101,'On':0})
 endpoint=Device(3102,stack={9:3101},props={'ReferenceId':3102})
 res=Device(3103,stack={0:31415950,32:3102,33:4,17:3100,18:10,19:6,28:2,31:8},props={'ReferenceId':3103})
-pl=Device(3104,stack={2:2,3:5,4:1,32:0,33:0,34:3103,38:6},props={'ReferenceId':3104})
+pl=Device(3104,stack={27:2,28:5,29:1,32:0,33:0,34:3103,38:6},props={'ReferenceId':3104})
 loadvm=IC10((R/'ic10/power-grid/power_load_executor_v1_0.ic10').read_text(),{'d0':pl,'d1':alloc,'x0':res,'x1':endpoint,'x2':load},self_ref=2370)
 loadvm.run(1)
 for _ in range(500):
  if loadvm.pc==loadvm.labels['Set'] and loadvm.reg.get('r4')==1: break
  loadvm.run(1000,instruction_quantum=1)
 else: raise AssertionError('load executor did not reach pre-write authority boundary')
-alloc.stack[4]=0
+alloc.stack[10]=0
 for _ in range(40):
  loadvm.run(1000,instruction_quantum=1)
  if load.props.get('On')==0 and loadvm.pc==loadvm.labels['Scan']: break
@@ -176,19 +176,19 @@ ck(load.props.get('On')==0,'managed load actuated after allocator authority revo
 
 # 12. Transformer executor: same authority withdrawal window must zero Setting
 # and keep the transformer OFF rather than applying the stale plan.
-alloc2=Device(3200,stack={2:5,3:10,4:1},props={'ReferenceId':3200})
+alloc2=Device(3200,stack={8:5,9:10,10:1},props={'ReferenceId':3200})
 xf=Device(3201,props={'ReferenceId':3201,'Setting':0,'On':0})
 sr=Device(3202,stack={17:3200,18:10,19:5},props={'ReferenceId':3202})
 kr=Device(3203,stack={17:3200,18:10,19:6},props={'ReferenceId':3203})
 link=Device(3204,stack={0:31415953,30:4,32:2,10:3201,12:9},props={'ReferenceId':3204})
-pl2=Device(3205,stack={2:2,3:5,4:1,32:3204,33:3202,34:3203,35:80,37:5,38:6,39:9},props={'ReferenceId':3205})
+pl2=Device(3205,stack={27:2,28:5,29:1,32:3204,33:3202,34:3203,35:80,37:5,38:6,39:9},props={'ReferenceId':3205})
 xfvm=IC10((R/'ic10/power-grid/power_link_executor_v1_0.ic10').read_text(),{'d0':pl2,'d1':alloc2,'x0':link,'x1':sr,'x2':kr,'x3':xf},self_ref=2380)
 xfvm.run(1)
 for _ in range(500):
  if xfvm.pc==xfvm.labels['Set'] and xfvm.reg.get('r5')==1: break
  xfvm.run(1000,instruction_quantum=1)
 else: raise AssertionError('transformer executor did not reach pre-write authority boundary')
-alloc2.stack[4]=0
+alloc2.stack[10]=0
 for _ in range(50):
  xfvm.run(1000,instruction_quantum=1)
  if xf.props.get('On')==0 and xfvm.pc==xfvm.labels['Scan']: break

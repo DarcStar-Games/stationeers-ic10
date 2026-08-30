@@ -37,20 +37,20 @@ sink=Device(1202,stack={0:31415950,1:1,32:1101,33:4,34:'HASH:Power.Electrical',3
 pdir=Device(1300,stack={0:31415981,1:1,2:0,5:2,7:0,9:'HASH:DirectorySchema.PowerReservation.v1',11:3,12:64,32:1000001,33:101,34:1201,35:3000099,36:201,37:1202},props={'ReferenceId':1300})
 plan=Device(1301,stack={24:0},props={'ReferenceId':1301})
 sv=IC10((R/'ic10/power-grid/power_source_selector_v1_0.ic10').read_text(),{'d0':pdir,'d1':plan,'x0':src,'x1':sink},self_ref=228)
-sv.stack.update({2:0,3:1});sv.run(3);ck(sv.stack.get(5)==1 and sv.stack.get(7)==100,'source selector did not use Reservation S6 export')
+sv.stack.update({11:0,12:1});sv.run(3);ck(sv.stack.get(14)==1 and sv.stack.get(16)==100,'source selector did not use Reservation S6 export')
 kv=IC10((R/'ic10/power-grid/power_sink_selector_v1_0.ic10').read_text(),{'d0':pdir,'x0':src,'x1':sink},self_ref=230)
-kv.stack.update({2:0,3:1});kv.run(3);ck(kv.stack.get(5)==1 and kv.stack.get(7)==80,'sink selector did not use Reservation S7 import')
+kv.stack.update({12:0,13:1});kv.run(3);ck(kv.stack.get(15)==1 and kv.stack.get(17)==80,'sink selector did not use Reservation S7 import')
 # Transformer overhead link selector.
 link=Device(1401,stack={0:31415953,1:1,28:1201,29:1202,30:4,31:'HASH:Power.Electrical',32:2,33:100,8:0,9:1,10:1500,11:0,12:9,13:3,14:5},props={'ReferenceId':1401})
 ldir=Device(1400,stack={0:31415981,1:1,2:0,5:1,7:0,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:64,32:1401},props={'ReferenceId':1400})
 lv=IC10((R/'ic10/power-grid/power_link_selector_v1_0.ic10').read_text(),{'d0':ldir,'x0':link},self_ref=229)
-lv.stack.update({2:1201,3:1202,4:80,5:1});lv.run(3);ck(lv.stack.get(7)==1 and lv.stack.get(9)==85,'transformer overhead not charged source-side')
+lv.stack.update({12:1201,13:1202,14:80,15:1});lv.run(3);ck(lv.stack.get(17)==1 and lv.stack.get(9)==85,'transformer overhead not charged source-side')
 # Live coherent PlanStore BEGIN/ADD/COMMIT.
 ps=IC10((R/'ic10/power-grid/power_dispatch_plan_store_v1_0.ic10').read_text(),{},self_ref=227);ps.run(1)
 ps.stack.update({12:1,10:1});ps.run(2)
 for i,v in enumerate([1401,1201,1202,80,85,5,6,9],16):ps.stack[i]=v
 ps.stack.update({12:2,10:2});ps.run(2);ps.stack.update({14:20,15:0,12:3,10:3});ps.run(2)
-ck(ps.stack.get(2)%2==0 and ps.stack.get(3)==1 and ps.stack.get(4)==1 and ps.stack.get(32)==1401,'PlanStore coherent transaction')
+ck(ps.stack.get(27)%2==0 and ps.stack.get(28)==1 and ps.stack.get(29)==1 and ps.stack.get(32)==1401,'PlanStore coherent transaction')
 # Reference dispatch model: critical first, sheddable whole-load, battery charge partial.
 def dispatch(gen,batt,critical,shed,charge):
  flows=[]; battery_dir=0; remaining_gen=gen

@@ -61,7 +61,7 @@ tout.props['Temperature']=650;tm.run(1);ck(tmix.props.get('On')==1 and tm.stack.
 tout.props['Pressure']=600;tm.run(1);ck(tmix.props.get('On')==0 and tm.stack.get(8)==1,'thermal mixer did not stop at process temperature+pressure window')
 # POWER shortage -> fuel-pressure request -> GFG start; shortage removal shuts it down.
 gfg=Device(401,props={'ReferenceId':401,'PrefabHash':H('StructureGasGenerator'),'Pressure':.05,'Temperature':300,'Error':0,'On':0})
-plan=Device(402,stack={0:31416028,1:1,2:2,5:5000,6:0},props={'ReferenceId':402})
+plan=Device(402,stack={0:31416028,1:1,27:2,30:5000,31:0},props={'ReferenceId':402})
 ambient=Device(403,props={'ReferenceId':403,'Pressure':100,'Temperature':300})
 guard2=Device(404,stack={11:1,13:2},props={'ReferenceId':404})
 gc=IC10((R/'ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10').read_text(),{'d0':gfg,'d1':plan,'d2':ambient,'d3':guard2},self_ref=253)
@@ -73,7 +73,7 @@ gd=Device(405,stack=gc.stack,props={'ReferenceId':405});fuelout=Device(406,props
 gmc=IC10((R/'ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10').read_text(),{'d0':in1,'d1':in2,'d2':fuelout,'d3':gmix,'d4':prof,'d5':gd},self_ref=2511);gmc.run(2);ck(gmix.props.get('On')==1,'GFG fuel demand did not activate prepared-mixture generation')
 fuelout.props['Pressure']=.2;gmc.run(1);ck(gmix.props.get('On')==0 and gmc.stack.get(8)==1,'prepared-mixture generator did not satisfy GFG pressure demand')
 gfg.props['Pressure']=.5;gc.run(1);ck(gfg.props.get('On')==1 and gc.stack.get(21)==1,'GFG did not start after fuel+ambient readiness')
-plan.stack.update({2:4,5:0,6:0});gc.run(1);ck(gfg.props.get('On')==0 and gc.stack.get(10)==0,'GFG did not stop when POWER shortage cleared')
+plan.stack.update({27:4,30:0,31:0});gc.run(1);ck(gfg.props.get('On')==0 and gc.stack.get(10)==0,'GFG did not stop when POWER shortage cleared')
 # Adversarial stale-authority cuts: mutate authority after initial observation but before final physical write.
 def to_pc(vm,target,limit=400):
  for _ in range(limit):
@@ -99,9 +99,9 @@ th=IC10((R/'ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10'
 ck(to_pc(th,54),'could not reach thermal-mixer final demand cut');threq.stack[11]=2;th.run(1)
 ck(thdev.props.get('On')==0,'thermal mixer actuated on stale ProcessCondition generation')
 # GFG: replace PowerPlan sequence immediately before final plan/mixture re-fence.
-gf=Device(531,props={'ReferenceId':531,'PrefabHash':H('StructureGasGenerator'),'Pressure':.5,'Temperature':300,'Error':0,'On':0});pl=Device(532,stack={0:31416028,1:1,2:2,5:5000,6:0},props={'ReferenceId':532});amb=Device(533,props={'ReferenceId':533,'Pressure':100,'Temperature':300});mg=Device(534,stack={11:1,13:2},props={'ReferenceId':534})
+gf=Device(531,props={'ReferenceId':531,'PrefabHash':H('StructureGasGenerator'),'Pressure':.5,'Temperature':300,'Error':0,'On':0});pl=Device(532,stack={0:31416028,1:1,27:2,30:5000,31:0},props={'ReferenceId':532});amb=Device(533,props={'ReferenceId':533,'Pressure':100,'Temperature':300});mg=Device(534,stack={11:1,13:2},props={'ReferenceId':534})
 gv=IC10((R/'ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10').read_text(),{'d0':gf,'d1':pl,'d2':amb,'d3':mg},self_ref=553);gv.stack.update({16:H('Fuel.H2O2'),17:.1,18:1,19:1000,20:1});gv.run(1)
-ck(to_pc(gv,57),'could not reach GFG final PowerPlan cut');pl.stack.update({2:4,5:0,6:0});gv.run(1)
+ck(to_pc(gv,57),'could not reach GFG final PowerPlan cut');pl.stack.update({27:4,30:0,31:0});gv.run(1)
 ck(gf.props.get('On')==0,'GFG started from stale/replaced PowerPlan shortage')
 if fails:
  print('Cross-domain process utility protocol: FAIL');[print(' -',x) for x in fails];sys.exit(1)

@@ -42,44 +42,6 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 3,
-          "name": "S3",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
             "self-write"
           ]
         },
@@ -165,13 +127,60 @@
           "access": [
             "self-write"
           ]
+        },
+        {
+          "address": 27,
+          "name": "S27",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 28,
+          "name": "S28",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 29,
+          "name": "S29",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 30,
+          "name": "S30",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 31,
+          "name": "S31",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         }
       ],
       "behavior": {
         "publication_rules": [
           {
             "kind": "seqlock",
-            "address": 2,
+            "address": 27,
             "description": "Plan publication sequence is odd while mutating and even when stable.",
             "source": "source-fingerprinted-paired-sequence"
           }
@@ -195,9 +204,9 @@
       "literal_reads": [
         0,
         1,
-        2,
-        5,
-        6
+        27,
+        30,
+        31
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [],
@@ -219,7 +228,7 @@
       "publication_requirements": [
         {
           "kind": "seqlock",
-          "address": 2
+          "address": 27
         }
       ]
     }
