@@ -1,39 +1,32 @@
-"""Tokenize IC10 source into rows and resolve aliases and literal operands.
-
-This is the layer the canonical parser proposed in issue #54 will replace;
-nothing below it may re-implement tokenization.
-"""
+"""Contract-analysis views over the canonical IC10 source representation."""
 from __future__ import annotations
 
-import math
-import re
 from typing import Any
 
+from framework.ic10_source import (
+    INTEGER_RE,
+    Label,
+    integer_value,
+    literal_value,
+    parse_ic10,
+)
+
 PORTS = tuple(f"d{i}" for i in range(6))
-INTEGER_RE = re.compile(r"^-?\d+$")
 
 
 def parse_rows(source: str) -> list[list[str]]:
-    rows = []
-    for raw in source.splitlines():
-        code = raw.split("#", 1)[0].strip()
-        if not code or code.endswith(":"):
-            continue
-        rows.append(code.replace(",", " ").split())
-    return rows
+    """Return mutable rows for the existing contract-analysis phases."""
+    return [list(row.tokens) for row in parse_ic10(source).rows]
 
 
 def parse_program(source: str) -> list[dict[str, Any]]:
-    program: list[dict[str, Any]] = []
-    for raw in source.splitlines():
-        code = raw.split("#", 1)[0].strip()
-        if not code:
-            continue
-        if code.endswith(":"):
-            program.append({"label": code[:-1], "row": []})
-        else:
-            program.append({"label": None, "row": code.replace(",", " ").split()})
-    return program
+    """Return the legacy control-flow view over canonical source statements."""
+    return [
+        {"label": statement.name, "row": []}
+        if isinstance(statement, Label)
+        else {"label": None, "row": list(statement.tokens)}
+        for statement in parse_ic10(source).statements
+    ]
 
 
 def row_nodes(program: list[dict[str, Any]]) -> list[int]:
@@ -58,20 +51,8 @@ def resolve_port(token: str, aliases: dict[str, str]) -> str | None:
 
 
 def resolve_integer(token: str, aliases: dict[str, int]) -> int | None:
-    if INTEGER_RE.fullmatch(token):
-        return int(token)
-    return aliases.get(token)
+    return integer_value(token, aliases)
 
 
 def resolve_literal(token: str, aliases: dict[str, int]) -> int | float | str | None:
-    integer = resolve_integer(token, aliases)
-    if integer is not None:
-        return integer
-    try:
-        number = float(token)
-        return number if math.isfinite(number) else token.lower()
-    except ValueError:
-        pass
-    if re.fullmatch(r'HASH\("[^"\n]+"\)', token):
-        return token
-    return None
+    return literal_value(token, aliases)

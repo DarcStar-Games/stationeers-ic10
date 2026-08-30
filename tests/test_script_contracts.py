@@ -10,6 +10,7 @@ import json
 import tempfile
 
 from framework.json_schema import SchemaValidationError, validate
+from framework.ic10_source import parse_ic10
 from framework.script_contracts import (
     access_interface_id,
     access_provider_obligations,
@@ -47,6 +48,41 @@ fails = []
 def ck(condition, message):
     if not condition:
         fails.append(message)
+
+
+parser_fixture = parse_ic10(
+    '# heading\n\nStart: # entry\nalias Port d0\ndefine Limit 3\n'
+    'move r0, Limit # normalized\nbad-label:\nStart:\n'
+)
+ck(len(parser_fixture.lines) == 8 and parser_fixture.lines[0].raw_text == '# heading'
+   and parser_fixture.lines[1].code_text == '',
+   "canonical parser did not retain comments, blank lines, and physical source text")
+ck([(label.name, label.line.number, label.row_index, label.instruction_index)
+    for label in parser_fixture.labels] == [('Start', 3, 0, 0), ('Start', 8, 4, 2)],
+   "canonical parser did not resolve label row and executable indices")
+ck([(directive.kind, directive.name, directive.value, directive.row.line.number)
+    for directive in parser_fixture.directives]
+   == [('alias', 'Port', 'd0', 4), ('define', 'Limit', '3', 5)],
+   "canonical parser did not retain alias/define directives and source lines")
+ck(parser_fixture.instructions[0].opcode == 'move'
+   and parser_fixture.instructions[0].operands == ('r0', 'Limit')
+   and parser_fixture.instructions[0].line.code_text == 'move r0, Limit',
+   "canonical parser did not normalize comma-separated operands")
+ck([(item.code, item.line_number, item.related_line_number)
+    for item in parser_fixture.diagnostics]
+   == [('malformed-label', 7, None), ('duplicate-label', 8, 3)],
+   "canonical parser diagnostics did not identify malformed and duplicate labels")
+quoted_fixture = parse_ic10('define Key HASH("A B,#C") # trailing comment\n')
+ck(quoted_fixture.lines[0].code_text == 'define Key HASH("A B,#C")'
+   and quoted_fixture.lines[0].comment_text == 'trailing comment'
+   and quoted_fixture.directives[0].value == 'HASH("A B,#C")',
+   "canonical parser split quoted spaces, commas, or comment markers")
+quoted_annotations, quoted_rules = source_semantics(
+    'poke 8 HASH("Identity#V1") # generation last\nyield\n', {}
+)
+ck(quoted_annotations[8]["descriptions"] == ["generation last"]
+   and quoted_rules[0]["description"] == "generation last",
+   "contract semantics reparsed a quoted hash comment marker")
 
 
 contracts, index, protocols, protocol_definitions = build_all(ROOT)

@@ -7,7 +7,8 @@ import json
 import re
 from typing import Any
 
-from framework.script_contracts.parsing import collect_aliases, parse_program, resolve_integer, resolve_literal
+from framework.ic10_source import parse_ic10
+from framework.script_contracts.parsing import collect_aliases, resolve_integer, resolve_literal
 from framework.script_contracts.publication import stable_cells
 
 FORMAT = "IC10_STACK_ENVELOPE_INVENTORY_V1"
@@ -82,7 +83,8 @@ def load_declarations(root: Path) -> dict[str, Any]:
 
 
 def _parse(path: Path) -> tuple[list[list[str]], dict[str, int]]:
-    rows = [entry["row"] for entry in parse_program(Path(path).read_text()) if entry["row"]]
+    source = parse_ic10(Path(path).read_text())
+    rows = [list(row.tokens) for row in source.rows]
     return rows, collect_aliases(rows)[1]
 
 

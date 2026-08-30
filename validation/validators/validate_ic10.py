@@ -8,6 +8,8 @@ from pathlib import Path
 import re
 import sys
 
+from framework.ic10_source import parse_ic10
+
 ROOT = _PROJECT_ROOT
 LIMIT_LINES = 128
 LIMIT_CHARS = 90
@@ -45,7 +47,8 @@ SOFT_LIMIT_EXEMPTIONS = {
 
 def inspect(path: Path):
     text = path.read_text()
-    lines = text.splitlines()
+    parsed = parse_ic10(text)
+    lines = [line.raw_text for line in parsed.lines]
     max_len = max((len(line) for line in lines), default=0)
     crlf_bytes = len(("\r\n".join(lines) + "\r\n").encode())
     comment_lines = sum("#" in line for line in lines)
@@ -53,33 +56,37 @@ def inspect(path: Path):
     labels = {}
     duplicates = []
     relative_branches = []
-    for n, line in enumerate(lines, 1):
-        code = line.split("#", 1)[0].strip()
-        m = re.fullmatch(r"([A-Za-z_][A-Za-z0-9_]*):", code)
-        if m:
-            name = m.group(1)
-            if name in labels:
-                duplicates.append((name, labels[name], n))
-            else:
-                labels[name] = n
-        elif code:
-            op = code.split()[0]
-            if op.startswith("br"):
-                relative_branches.append((n, op))
+    for label in parsed.labels:
+        name = label.name
+        n = label.line.number
+        if name in labels:
+            duplicates.append((name, labels[name], n))
+        else:
+            labels[name] = n
+    for row in parsed.rows:
+        if row.opcode.startswith("br"):
+            relative_branches.append((row.line.number, row.opcode))
+    malformed_labels = [
+        (diagnostic.line_number, diagnostic.message)
+        for diagnostic in parsed.diagnostics
+        if diagnostic.code == "malformed-label"
+    ]
 
     invalid_registers = []
     invalid_devices = []
     invalid_stack_addresses = []
     invalid_direct_stack_operands = []
-    for n, line in enumerate(lines, 1):
-        code = line.split("#", 1)[0]
+    tokens_by_line = {row.line.number: row.tokens for row in parsed.rows}
+    for line in parsed.lines:
+        n = line.number
+        code = line.code_text
         for value in re.findall(r"\br(\d+)\b", code):
             if int(value) > 15:
                 invalid_registers.append((n, f"r{value}"))
         for value in re.findall(r"\bd(\d+)\b", code):
             if int(value) > 5:
                 invalid_devices.append((n, f"d{value}"))
-        tokens = code.strip().split()
+        tokens = tokens_by_line.get(n, ())
         if tokens:
             op = tokens[0]
             if op in {"add","sub","mul","div","min","max","pow","and","or","sll"} and "db" in tokens[1:]:
@@ -91,12 +98,13 @@ def inspect(path: Path):
                     invalid_stack_addresses.append((n, address))
 
     unresolved = []
-    for n, line in enumerate(lines, 1):
-        code = line.split("#", 1)[0].strip()
-        if not code or code.endswith(":"):
+    for row in parsed.rows:
+        n = row.line.number
+        code = row.line.code_text
+        if code.endswith(":"):
             continue
-        tokens = code.split()
-        op = tokens[0]
+        tokens = row.tokens
+        op = row.opcode
         target = None
         if op in {"j", "jal"} and len(tokens) >= 2:
             target = tokens[1]
@@ -118,6 +126,8 @@ def inspect(path: Path):
         failures.append(f"CRLF size {crlf_bytes} > {LIMIT_BYTES}")
     if duplicates:
         failures.append(f"duplicate labels: {duplicates}")
+    if malformed_labels:
+        failures.append(f"malformed labels: {malformed_labels}")
     if unresolved:
         failures.append(f"unresolved targets: {unresolved}")
     if relative_branches:

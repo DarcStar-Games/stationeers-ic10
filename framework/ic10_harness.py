@@ -3,7 +3,9 @@ Not a Stationeers emulator. Supports only the instruction subset exercised by te
 """
 from __future__ import annotations
 from dataclasses import dataclass, field
-import math, re, shlex, zlib
+import math, re, zlib
+
+from framework.ic10_source import parse_ic10
 
 @dataclass
 class Device:
@@ -18,18 +20,11 @@ class IC10:
         self.reg = {f'r{i}':0.0 for i in range(16)} | {'sp':0.0,'ra':0.0}
         self.screws = screws or {}
         self.self_ref = self_ref
-        self.labels={}
-        self.code=[]
-        self.names={}   # alias/define directives: name -> device port or literal token
-        for raw in source.splitlines():
-            raw=raw.split('#',1)[0].strip()
-            if not raw: continue
-            if raw.endswith(':'):
-                self.labels[raw[:-1]]=len(self.code); continue
-            parts=raw.replace(',',' ').split()
-            if parts[0] in ('alias','define') and len(parts)>=3:
-                self.names[parts[1]]=parts[2]; continue
-            self.code.append(raw)
+        parsed=parse_ic10(source)
+        self.labels=parsed.label_indices()
+        self._instruction_rows=parsed.instructions
+        self.code=[row.line.code_text for row in parsed.instructions]
+        self.names=parsed.directive_values()
         self.pc=0; self.yields=0
     def val(self,t):
         t=self.names.get(t,t)
@@ -84,9 +79,8 @@ class IC10:
             if instruction_quantum is not None and steps >= instruction_quantum:
                 return "quantum"
             steps+=1
-            line=self.code[self.pc]; self.pc+=1
-            toks=shlex.split(line, posix=False)
-            op=toks[0]; a=toks[1:]
+            row=self._instruction_rows[self.pc];line=row.line.code_text;self.pc+=1
+            op=row.opcode;a=list(row.operands)
             if op=='yield':
                 self.yields+=1
                 if self.yields>=target: return "yield"

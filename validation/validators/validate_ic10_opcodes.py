@@ -11,11 +11,12 @@ import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from pathlib import Path
-import json,re,sys
+import json,sys
+
+from framework.ic10_source import parse_ic10
 
 ROOT=_PROJECT_ROOT
 SET=ROOT/'data/ic10_instruction_set.json'
-LABEL=re.compile(r'[A-Za-z_][A-Za-z0-9_]*:')
 
 def load_instruction_set():
     data=json.loads(SET.read_text())
@@ -39,10 +40,8 @@ def main():
     unknown=[];mismatch=[];used=set();count=0
     for path in sources():
         rel=path.relative_to(ROOT).as_posix()
-        for n,raw in enumerate(path.read_text().splitlines(),1):
-            code=raw.split('#',1)[0].strip()
-            if not code or LABEL.fullmatch(code): continue
-            tokens=code.split();op=tokens[0];count+=1;used.add(op)
+        for row in parse_ic10(path.read_text()).rows:
+            n=row.line.number;code=row.line.code_text;tokens=row.tokens;op=row.opcode;count+=1;used.add(op)
             if op not in table:
                 unknown.append((rel,n,op,code));continue
             want=arity[op]
