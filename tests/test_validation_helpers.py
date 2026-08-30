@@ -9,6 +9,18 @@ from io import StringIO
 from pathlib import Path
 import tempfile
 
+from framework.json_schema import (
+    SchemaValidationError,
+    ValidationContext,
+    _validate_array,
+    _validate_combinators,
+    _validate_numeric,
+    _validate_object,
+    _validate_reference,
+    _validate_scalar,
+    _validate_string,
+    validate,
+)
 from framework.validation import Validation
 from framework.validation_suite import (
     SuiteEntry,
@@ -104,6 +116,150 @@ with tempfile.TemporaryDirectory() as directory:
         else:
             raise AssertionError(f"suite manifest accepted malformed registration: {expected}")
 
+    def issue_text(context):
+        return [str(issue) for issue in context.issues]
+
+    scalar_context = ValidationContext({})
+    assert not _validate_scalar(
+        scalar_context,
+        3,
+        {"const": 4, "enum": [1, 2], "type": "string"},
+        "$.scalar",
+    )
+    assert issue_text(scalar_context) == [
+        "$.scalar: expected 4, got 3",
+        "$.scalar: 3 is not one of [1, 2]",
+        "$.scalar: expected type 'string', got int",
+    ]
+
+    reference_schema = {"$defs": {"text": {"type": "string", "minLength": 3}}}
+    reference_context = ValidationContext(reference_schema)
+    _validate_reference(
+        reference_context, "x", {"$ref": "#/$defs/text"}, "$.reference"
+    )
+    assert issue_text(reference_context) == ["$.reference: string is too short"]
+
+    combinator_context = ValidationContext({})
+    combinator_context.add("$.existing", "keep this issue")
+    _validate_combinators(
+        combinator_context,
+        "ok",
+        {"anyOf": [{"type": "integer"}, {"type": "string"}]},
+        "$.choice",
+    )
+    assert issue_text(combinator_context) == ["$.existing: keep this issue"]
+    _validate_combinators(
+        combinator_context,
+        "ok",
+        {"oneOf": [{"type": "string"}, {"minLength": 1}]},
+        "$.exclusive",
+    )
+    assert issue_text(combinator_context)[-1] == (
+        "$.exclusive: 2 oneOf branches matched, expected exactly one"
+    )
+
+    all_of_context = ValidationContext({})
+    _validate_combinators(
+        all_of_context,
+        3,
+        {"allOf": [{"minimum": 4}, {"maximum": 2}]},
+        "$.combined",
+    )
+    assert issue_text(all_of_context) == [
+        "$.combined: 3 is below 4",
+        "$.combined: 3 is above 2",
+    ]
+
+    unmatched_context = ValidationContext({})
+    _validate_combinators(
+        unmatched_context,
+        False,
+        {"anyOf": [{"type": "integer"}, {"type": "string"}]},
+        "$.alternative",
+    )
+    _validate_combinators(
+        unmatched_context,
+        False,
+        {"oneOf": [{"type": "integer"}, {"type": "string"}]},
+        "$.exclusive",
+    )
+    assert issue_text(unmatched_context) == [
+        "$.alternative: no anyOf branch matched",
+        "$.exclusive: no oneOf branch matched",
+    ]
+
+    object_context = ValidationContext({})
+    _validate_object(
+        object_context,
+        {"name": 3, "extra": True},
+        {
+            "properties": {"name": {"type": "string"}},
+            "required": ["missing"],
+            "additionalProperties": False,
+        },
+        "$.object",
+    )
+    assert issue_text(object_context) == [
+        "$.object: missing required property 'missing'",
+        "$.object.name: expected type 'string', got int",
+        "$.object: unexpected property 'extra'",
+    ]
+
+    array_context = ValidationContext({})
+    _validate_array(
+        array_context,
+        [1, 1, 3],
+        {"minItems": 4, "maxItems": 2, "uniqueItems": True, "items": {"maximum": 2}},
+        "$.array",
+    )
+    assert issue_text(array_context) == [
+        "$.array: expected at least 4 items",
+        "$.array: expected at most 2 items",
+        "$.array: items are not unique",
+        "$.array[2]: 3 is above 2",
+    ]
+
+    string_context = ValidationContext({})
+    _validate_string(
+        string_context,
+        "abc",
+        {"minLength": 4, "maxLength": 2, "pattern": "Z"},
+        "$.string",
+    )
+    assert issue_text(string_context) == [
+        "$.string: string is too short",
+        "$.string: string is too long",
+        "$.string: 'abc' does not match 'Z'",
+    ]
+
+    numeric_context = ValidationContext({})
+    _validate_numeric(
+        numeric_context, 5, {"minimum": 6, "maximum": 4}, "$.number"
+    )
+    assert issue_text(numeric_context) == [
+        "$.number: 5 is below 6",
+        "$.number: 5 is above 4",
+    ]
+
+    try:
+        validate(
+            {"name": "x", "extra": True},
+            {
+                "type": "object",
+                "properties": {"name": {"type": "string", "minLength": 2}},
+                "required": ["missing"],
+                "additionalProperties": False,
+            },
+        )
+    except SchemaValidationError as error:
+        assert str(error).splitlines() == [
+            "$: missing required property 'missing'",
+            "$.name: string is too short",
+            "$: unexpected property 'extra'",
+        ]
+    else:
+        raise AssertionError("JSON Schema validation did not aggregate all failures")
+
 entries = suite_entries(_PROJECT_ROOT)
 validators = validator_entries(_PROJECT_ROOT)
 tests = test_entries(_PROJECT_ROOT)
@@ -116,3 +272,4 @@ print("Validation helper unit tests: PASS")
 print(" - cached source assertions collect precise multi-failure diagnostics")
 print(" - one finalizer preserves executable validator PASS/FAIL and exit behavior")
 print(" - suite manifest rejects missing, duplicate, uncategorized, and invalid-timeout entries")
+print(" - JSON Schema keyword handlers preserve paths and isolate combinator branches")
