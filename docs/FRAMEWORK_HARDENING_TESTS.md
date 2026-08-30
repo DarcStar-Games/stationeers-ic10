@@ -115,14 +115,14 @@ The automated safety criterion is old-complete/new-complete/invalid only. A torn
 
 ## Live-game PressureGrid cases
 
-- Deploy one Inventory service and one Reservation service for each LOW/HIGH/STORAGE domain. Verify Reservation `S10=1`, correct role/medium, plausible mirrored `S6/S7`, and initially zero `S12/S13` before enabling pumps.
-- Deploy one Purity Guard for each grid pressure domain. Verify a sufficiently pure bus reports Guard `S5=1`; deliberately select a wrong profile or introduce contamination and verify Guard rejects it and Inventory advertises zero capacity.
+- Deploy one Inventory service and one Reservation service for each LOW/HIGH/STORAGE domain. Verify Reservation `S10=1`, correct role/medium, plausible mirrored `S20/S21`, and initially zero `S12/S13` before enabling pumps.
+- Deploy one Purity Guard for each grid pressure domain. Verify a sufficiently pure bus reports Guard `S11=1`; deliberately select a wrong profile or introduce contamination and verify Guard rejects it and Inventory advertises zero capacity.
 - Compare a 6000 L and 50000 L isolated STORAGE network at the same temperature/pressure/bounds. Verify Inventory molar capacity scales with network volume.
 - Test an empty/near-vacuum HIGH sink with known volume/temperature. Verify Inventory publishes finite import demand.
 - Introduce liquid into an isolated pressure network. Verify Inventory status becomes `-4`, Reservation mirrors the fault, and no attached transfer receives a lease.
-- Deploy one LOW and one HIGH domain of the same medium plus one direct PressureTransfer. Verify Transfer candidate status becomes `1`, `S100` is a plausible planned mol/tick ceiling, Planner `S14` advances, Grant Guard `S4` becomes active only for the matching staged topology/epoch, and the Transfer pump runs only from a coherent Guard publication.
-- Add a second HIGH sink sharing the same LOW source. Force both links to be useful. Verify both can run in the same committed epoch and source Reservation `S12` never exceeds mirrored `S6`.
-- Add two LOW sources feeding one HIGH sink. Verify both can be granted concurrently and sink Reservation `S13` never exceeds mirrored `S7`.
+- Deploy one LOW and one HIGH domain of the same medium plus one direct PressureTransfer. Verify Transfer candidate status becomes `1`, `S100` is a plausible planned mol/tick ceiling, Planner `S14` advances, Grant Guard `S15` becomes active only for the matching staged topology/epoch, and the Transfer pump runs only from a coherent Guard publication.
+- Add a second HIGH sink sharing the same LOW source. Force both links to be useful. Verify both can run in the same committed epoch and source Reservation `S12` never exceeds mirrored `S20`.
+- Add two LOW sources feeding one HIGH sink. Verify both can be granted concurrently and sink Reservation `S13` never exceeds mirrored `S21`.
 - Add two completely independent LOW->HIGH pairs. Verify all eligible pumps may run together from one committed epoch.
 - Add LOW->HIGH and LOW->STORAGE links sharing one LOW source. Verify direct reuse receives reservation capacity during pass 2 before storage fallback is allocated during pass 1.
 - Add LOW->STORAGE and STORAGE->HIGH links touching the same STORAGE domain. Verify ordinary fallback never independently creates opposing storage reservations. Then admit them as one routed path and verify simultaneous import/export is allowed only under the complete path commit.
@@ -136,7 +136,7 @@ The automated safety criterion is old-complete/new-complete/invalid only. A torn
 - Rewire one Reservation endpoint to a wrong-medium service. Verify the allocator rejects the link and no matching staged epoch is published.
 - Stage and commit one Transfer lease, let it expire, and keep Planner `S14` unchanged. Verify the Grant Guard does not reactivate that same epoch. Repeat with a topology mismatch during commit, then restore the original wiring; the consumed epoch must remain inactive.
 - Power-cycle or reflash Transfer/Reservation/Allocator/Planner ICs and confirm retained stack/register state does not create an uncommitted active lease.
-- Populate Controller Directory ABI 2 progressively through 16, 32, 48, and 64 providers. Measure full two-pass plan latency and verify Planner `S7` follows `max(64,4*N+16)` (80, 144, 208, 272 ticks respectively) without lease-expiry gaps.
+- Populate Controller Directory ABI 2 progressively through 16, 32, 48, and 64 providers. Measure full two-pass plan latency and verify Planner `S11` follows `max(64,4*N+16)` (80, 144, 208, 272 ticks respectively) without lease-expiry gaps.
 - Add a 65th valid telemetry controller. Verify the inactive Directory bank publishes overflow, Controller Selector reports `-3` directly, and Arbiter/Grid Link Directory refuse the incomplete snapshot instead of silently omitting a controller.
 
 ## Live-game persistence cases

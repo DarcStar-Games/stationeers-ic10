@@ -316,7 +316,7 @@ All five production controller families use the same Generic Persistent Config H
 
 ## Transaction hardening layer
 
-The pressure-grid path now treats several multi-cell surfaces as transactions rather than informal telemetry. `ControllerPhasePressure`, `ControllerPressureDomain`, and `ControllerPressureTransfer` publish telemetry ABI2 with `S115` committed last. Resource Profile Views publish a positive `S5` generation only after resolving a complete catalog; consumers recheck that generation after reading the fields they combine.
+The pressure-grid path now treats several multi-cell surfaces as transactions rather than informal telemetry. `ControllerPhasePressure`, `ControllerPressureDomain`, and `ControllerPressureTransfer` publish telemetry ABI2 with `S115` committed last. Resource Profile Views publish a positive `S29` generation only after resolving a complete catalog; consumers recheck that generation after reading the fields they combine.
 
 Actual gas identity is checked separately from intended identity: a Medium Profile supplies the ratio LogicType and purity threshold, a Pipe Analyzer supplies the observed composition, and `Pressure Medium Purity Guard` gates Inventory publication.
 

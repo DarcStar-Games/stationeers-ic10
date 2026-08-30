@@ -37,7 +37,7 @@ The split between the Arbiter and the controller is intentional. Multi-controlle
 
 - `ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10` — scans `ControllerDirectory` incrementally and reduces matching phase-pressure requests.
 - `ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10` — consumes the reduced request, applies domain safety limits, publishes telemetry, and optionally writes the domain setpoint.
-- `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` — select `S2=HASH("ControllerPressureDomain")`, `S3=1` from the shared Input Profile Catalog for the eight commissioning controls.
+- `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` — select `S8=HASH("ControllerPressureDomain")`, `S9=1` from the shared Input Profile Catalog for the eight commissioning controls.
 - `ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10` — defaults, normalization, and semantic validation.
 
 The family uses the existing Generic Persistent Config Host and all existing configuration/discovery/diagnostic infrastructure without generic-service changes.

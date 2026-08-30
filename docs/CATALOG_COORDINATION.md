@@ -66,14 +66,15 @@ Key Coordinator fields used by the current control plane include:
 
 ```text
 S0   magic = 31415970
-S1   ABI = 3
-S2   CoordinatorId
-S3   CoordinatorEpoch
-S4   service generation
-S6   placement/migration generation
-S7   topology seqlock; stable even
+S1   ABI = 4
+S2   capability mask = 0
 S8..S13 aggregate directory health/capacity summary
+S14  CoordinatorId
+S15  CoordinatorEpoch
+S16  service generation
 S20  AssignmentEpoch counter
+S21  placement/migration generation
+S22  topology seqlock; stable even
 S23  Registry Directory ReferenceId
 ```
 

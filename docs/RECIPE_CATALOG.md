@@ -85,16 +85,16 @@ It is the compact family/ordinal browser and intentionally does not republish re
 Request:
 
 ```text
-S3 FamilyHash
-S4 maximum RequiredCapability
-S5 FamilyOrdinal
-S6 request generation
+S12 FamilyHash
+S13 maximum RequiredCapability
+S14 FamilyOrdinal
+S15 request generation
 ```
 
 Response:
 
 ```text
-S7  response generation
+S16 response generation
 S8  status: 1 found, -1 bad request, -2 catalog invalid, -3 not found
 S9  eligible recipe count for family/capability
 S10 RecipeHash

@@ -85,20 +85,21 @@ Use its `Stack Address` Logic Memory to inspect:
 | Address | Expected value | Meaning |
 | ---: | ---: | --- |
 | `0` | `31415983` | Generic Directory Adapter magic |
-| `1` | `2` | Adapter ABI |
-| `2` | record exact value | `DirectorySchema.Controller` schema hash |
-| `4` | `2` | Two cells per controller record |
-| `5` | `64` | Directory capacity |
-| `6` | `1` | One telemetry controller discovered |
-| `8` | even | Stable adapter sequence |
-| `9` | `0` | No overflow |
-| `10` | `1` | Snapshot publication mode |
+| `1` | `3` | Adapter ABI |
+| `2` | `17` | Capability mask: `HAS_SCHEMA` + `HAS_GENERATION` |
+| `3` | record exact value | `DirectorySchema.Controller.v1` folded schema hash |
+| `10` | `2` | Two cells per controller record |
+| `11` | `64` | Directory capacity |
+| `12` | `1` | One telemetry controller discovered |
+| `13` | even | Stable adapter sequence |
+| `14` | `0` | No overflow |
+| `15` | `1` | Snapshot publication mode |
 
-If other telemetry controllers share the network, `S6` should equal that larger
+If other telemetry controllers share the network, `S12` should equal that larger
 known count instead of `1`.
 
 The exported Controller Directory Adapter hardcodes
-`HASH("DirectorySchema.Controller")` at `S2`. Record its displayed numeric value;
+`HASH("DirectorySchema.Controller.v1")` at `S3`. Record its displayed numeric value;
 the Host must publish that exact value at `S9` after the Bridge commits it.
 
 ## 6. Inspect the Snapshot Host
@@ -110,18 +111,17 @@ First verify the fixed header:
 | ---: | ---: | --- |
 | `0` | `31415981` | Generic Snapshot Directory magic |
 | `1` | `1` | Host ABI |
-| `9` | same as Adapter `S2` | Controller schema identity |
-| `10` | `1` | Controller directory schema version |
+| `9` | same as Adapter `S3` | Controller schema identity |
 | `11` | `2` | Two cells per record |
 | `12` | `64` | Capacity |
 | `23` | `0` | No malformed Host request observed |
 
-Read `S2` to determine the active bank, then use the matching row:
+Read `S24` to determine the active bank, then use the matching row:
 
-| `S2` | Generation | Count | Overflow | First record |
+| `S24` | Generation | Count | Overflow | First record |
 | ---: | ---: | ---: | ---: | --- |
-| `0` | `S3` | `S5` | `S7` | type `S32`, ReferenceId `S33` |
-| `1` | `S4` | `S6` | `S8` | type `S160`, ReferenceId `S161` |
+| `0` | `S25` | `S27` | `S29` | type `S32`, ReferenceId `S33` |
+| `1` | `S26` | `S28` | `S30` | type `S160`, ReferenceId `S161` |
 
 The active generation must be positive, count must be `1`, and overflow must be
 `0`. Use the Authoring Tool tooltip to confirm that the first record's
@@ -132,7 +132,7 @@ ReferenceId matches the PI Runtime housing.
 1. Record the Host's active bank and generation.
 2. Physically disconnect the PI Runtime housing from the directory data network.
    Merely switching the IC off may leave its previous telemetry stack reachable.
-3. Wait for a new directory publication. Re-read `S2`, then the active count and
+3. Wait for a new directory publication. Re-read `S24`, then the active count and
    generation. Count should become `0`, and generation should advance.
 4. Reconnect the PI Runtime data cable.
 5. Wait for publication again. Count should return to `1`, generation should

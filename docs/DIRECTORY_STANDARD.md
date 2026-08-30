@@ -72,7 +72,7 @@ reader that knows nothing about directories can snapshot it, read, and re-check
 it. The `S13` sequence still marks a rebuild in progress, and the freeze
 handshake below still provides multi-tick coherence.
 
-A consumer that spans yields writes a nonzero token to S16 and waits until S17 matches. The Adapter acknowledges only after its current rebuild is complete, then stops rebuilding until S11 returns to zero. This guarantees one coherent candidate generation across multi-tick Bridge/Registry reads.
+A consumer that spans yields writes a nonzero token to S16 and waits until S17 matches. The Adapter acknowledges only after its current rebuild is complete, then stops rebuilding until S16 returns to zero. This guarantees one coherent candidate generation across multi-tick Bridge/Registry reads.
 
 Adapters may reject a source snapshot rather than publish derived records when that source is incomplete or incoherent. In particular, Pressure Grid Link discovery refuses an overflowed Controller directory and snapshots PressureTransfer telemetry generation around topology reads.
 
@@ -83,10 +83,7 @@ Adapters may reject a source snapshot rather than publish derived records when t
 ```text
 S0      GenericSnapshotDirectoryMagic = 31415981
 S1      ABI = 1
-S2      active bank: 0=A, 1=B
-S3/S4   generation A/B
-S5/S6   record count A/B
-S7/S8   overflow A/B
+S2      CapabilityMask = 0
 S9      DirectorySchemaId, HASH("<schema>.v<version>")
 S11     EntryWidth
 S12     Capacity
@@ -98,13 +95,17 @@ S20     inactive bank selected during rebuild
 S21     staging count
 S22     staging overflow
 S23     host error/status
+S24     active bank: 0=A, 1=B
+S25/S26 generation A/B
+S27/S28 record count A/B
+S29/S30 overflow A/B
 S32..   packed A/B banks
 ```
 
 The Host supports widths 1..3 and capacities up to 64, with at most 192 cells per bank. It owns sorting, exact-record deduplication, complete-record overflow behavior, bank switching, and stable generations.
 `S23` is a latched diagnostic error indicator for malformed Host requests; successful snapshot publication does not depend on clearing it, and normal Bridge traffic never intentionally triggers it.
 
-`ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` validates Adapter ABI2 and snapshot mode, acquires the Adapter freeze handshake, captures generation/sequence, copies SchemaId/Version and geometry into the Host, propagates adapter overflow into the staging snapshot, sends complete records, revalidates the frozen generation/sequence before publication, compares the staged result with the active snapshot, and suppresses COMMIT when nothing changed.
+`ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` validates Adapter ABI3 and snapshot mode, acquires the Adapter freeze handshake, captures generation/sequence, copies SchemaId/Version and geometry into the Host, propagates adapter overflow into the staging snapshot, sends complete records, revalidates the frozen generation/sequence before publication, compares the staged result with the active snapshot, and suppresses COMMIT when nothing changed.
 
 A snapshot consumer validates at minimum:
 
@@ -123,14 +124,15 @@ Consumers then use the schema-defined width/capacity and the ordinary active-ban
 ```text
 S0   GenericRegistryDirectoryMagic = 31415982
 S1   ABI = 3
-S2   DirectorySchemaId
-S3   last accepted candidate generation
-S4   registry publication generation
+S2   CapabilityMask = 1 (HAS_SCHEMA)
+S3   DirectorySchemaId, adapter-assigned folded hash
 S16  status/error
 S20  published record width
 S21  registry capacity
 S23  publication sequence; odd while mutating, even when stable
 S24  freeze-token counter
+S25  last accepted candidate generation
+S26  registry publication generation
 S64.. registry records
 ```
 

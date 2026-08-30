@@ -305,7 +305,7 @@ Hash Display and Graph Display circuitboards read a linked device rather than ac
 
 Gas Display is deliberately not mirrored. It reads pressure and temperature from a gas-containing device, which a Logic Memory cannot present, so link it directly to the tank or pipe the PressureGrid already manages. No framework program is involved.
 
-`ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10` optionally switches a Hash Display board between `HashType.Prefab` and `HashType.GasLiquid` through the logic slot instructions. Its `S3` counts writes issued and `S4` counts records it could not read; a non-zero `S4` across every record means the slot index or the board itself is wrong. Confirm the slot index in-game before trusting it — see `LG-DIAG-HASHMODE`.
+`ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10` optionally switches a Hash Display board between `HashType.Prefab` and `HashType.GasLiquid` through the logic slot instructions. Its `S9` counts writes issued and `S10` counts records it could not read; a non-zero `S10` across every record means the slot index or the board itself is wrong. Confirm the slot index in-game before trusting it — see `LG-DIAG-HASHMODE`.
 
 ### Common failures
 Blank display with healthy controller usually means console registration/mapping mismatch; wrong controller usually means stale directory/selection. Do not bypass exact ReferenceId checks.

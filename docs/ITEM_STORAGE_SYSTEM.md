@@ -143,17 +143,17 @@ The selector is read-only and supports up to six physical reservation legs.
 Request:
 
 ```text
-S2  ResourceType / ItemHash
-S3  RequestedQuantity > 0
-S4  Direction: 1 export, 2 import
-S5  RequiredRoleMask; 0 means no additional role filter
-S6  RequestToken, written LAST
+S11 ResourceType / ItemHash
+S12 RequestedQuantity > 0
+S13 Direction: 1 export, 2 import
+S14 RequiredRoleMask; 0 means no additional role filter
+S15 RequestToken, written LAST
 ```
 
 Response:
 
 ```text
-S7  ResponseToken, written LAST
+S16 ResponseToken, written LAST
 S8  status: 1 complete quote, -1 invalid, -2 insufficient, -3 directory overflow
 S9  QuotedTotal
 S10 LegCount, 1..6 on success
@@ -202,14 +202,14 @@ One `ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10` service is t
 Request:
 
 ```text
-S2  Operation: 1 SCAN, 2 MOVE, 3 RECOVER
-S3  source station
-S4  source slot / SCAN first slot
-S5  SCAN slot count / destination station
-S6  SCAN empty-slot MaxStack / destination slot
-S7  ItemHash
 S8  RequestToken LAST
 S15 ExpectedQuantity for MOVE
+S17 Operation: 1 SCAN, 2 MOVE, 3 RECOVER
+S18 source station
+S19 source slot / SCAN first slot
+S20 SCAN slot count / destination station
+S21 SCAN empty-slot MaxStack / destination slot
+S22 ItemHash
 ```
 
 Response:

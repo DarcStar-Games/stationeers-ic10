@@ -26,7 +26,7 @@ If this family required special cases in Generic Host, Loader, Committer, Scanne
 ## Files
 
 - `ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10` — runtime/state machine and telemetry.
-- `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` — optional commissioning metadata selected from the shared Input Profile Catalog with `S2=HASH("ControllerSequencer")`, `S3=1`.
+- `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` — optional commissioning metadata selected from the shared Input Profile Catalog with `S8=HASH("ControllerSequencer")`, `S9=1`.
 - `ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10` — config geometry, defaults, validation, normalization, and persistence signature.
 - `ic10/controller-config/generic_persistent_config_host_v1_1.ic10` — unchanged generic durable configuration Host used per sequencer instance.
 

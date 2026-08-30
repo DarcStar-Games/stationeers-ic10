@@ -183,11 +183,11 @@ If pressure and throughput were equal, the 2-hop path would win because of its l
 ```text
 S0  magic = 31415945
 S1  ABI = 1
-S2  HopWeight
-S3  StorageWeight
-S4  LiftWeightPerKPa
-S5  FlowScarcityWeight
-S6  CandidateBudget
+S8  HopWeight
+S9  StorageWeight
+S10 LiftWeightPerKPa
+S11 FlowScarcityWeight
+S12 CandidateBudget
 ```
 
 The initial profile is intentionally tiny. A human can clone it to create alternate operating policies such as:
@@ -204,12 +204,12 @@ Do not make weights negative. The Ranker rejects negative configured weights.
 Inputs:
 
 ```text
-S2  SearchId
-S3  PathLength
-S4  BottleneckMolesPerTick
-S5  Link0 ReferenceId
-S6  Link1 ReferenceId
-S7  Link2 ReferenceId when present
+S32 SearchId
+S33 PathLength
+S34 BottleneckMolesPerTick
+S35 Link0 ReferenceId
+S36 Link1 ReferenceId
+S37 Link2 ReferenceId when present
 S8  RequestToken
 ```
 
@@ -234,17 +234,17 @@ A new `SearchId` clears the retained best route before scoring the first candida
 Inputs retain the old path-request context:
 
 ```text
-S2 Planner ReferenceId
-S3 BuildEpoch
-S4 MediumType
-S5 LeaseTicks
-S6 RequestToken
+S32 Planner ReferenceId
+S33 BuildEpoch
+S34 MediumType
+S35 LeaseTicks
+S36 RequestToken
 ```
 
 Outputs:
 
 ```text
-S7  selected PathLength
+S37 selected PathLength
 S8  selected BottleneckMolesPerTick
 S9  status: 1 route, 0 none, -1 fault
 S10 ResponseToken

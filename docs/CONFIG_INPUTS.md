@@ -39,11 +39,11 @@ This is the main reason a new controller family does not need a new editor or sc
 3. Wait until the Coordinator-claimed Store is ACTIVE and reports `S9 LocalItemCount=7` and `S9 LocalItemCount=7`.
 4. Connect `ic10/input-profile-catalog/input_profile_view_v5_0.ic10 d0` to the Store. Set View `S2` to the selected controller type hash and `S3` to its config schema. Require positive View `S5`.
 5. Connect Field Dial, Value Dial, optional Logic Memory, optional Switch, and the configured Input Profile **View** to the Generic Input Scanner screws.
-6. Set Generic Input Resolver `S2` to the Scanner ReferenceId.
-7. Set Config Input Bridge `S2` to the Generic Config Editor RefId and `S3` to the Resolver RefId.
-8. Set Config Loader `S3` to the Scanner RefId so Loader can discover and validate the Generic Input Profile ABI published by the View.
+6. Set Generic Input Resolver `S8` to the Scanner ReferenceId.
+7. Set Config Input Bridge `S8` to the Generic Config Editor RefId and `S9` to the Resolver RefId.
+8. Set Config Loader `S9` to the Scanner RefId so Loader can discover and validate the Generic Input Profile ABI published by the View.
 
-All controller profiles share the runtime catalog topology. To reuse a physical panel for another family, change View `S2/S3` rather than reflashing a different profile program.
+All controller profiles share the runtime catalog topology. To reuse a physical panel for another family, change View `S8/S9` rather than reflashing a different profile program.
 
 The Config Bridge reads Loader-validated Editor metadata:
 

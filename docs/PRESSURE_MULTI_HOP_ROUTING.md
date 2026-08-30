@@ -72,12 +72,13 @@ Published Generic Snapshot Directory contract:
 
 ```text
 S0/S1   31415981 / ABI1
-S9/S10  HASH("DirectorySchema.PressureGridLink") / 1
+S2      capability mask = 0
+S9      HASH("DirectorySchema.PressureGridLink.v1")
 S11/S12 entry width 3 / capacity 64
-S2      active bank
-S3/S4   generation A/B
-S5/S6   count A/B
-S7/S8   overflow A/B
+S24     active bank
+S25/S26 generation A/B
+S27/S28 count A/B
+S29/S30 overflow A/B
 
 bank A = S32..223
 bank B = S224..415
@@ -108,17 +109,17 @@ d0 -> Grid Link Directory
 Enumerator request surface:
 
 ```text
-S2  Planner ReferenceId
-S3  reservation build epoch
-S4  MediumType
-S5  SearchId
-S6  request generation; written last
+S32 Planner ReferenceId
+S33 reservation build epoch
+S34 MediumType
+S35 SearchId
+S36 request generation; written last
 ```
 
 Response surface:
 
 ```text
-S7   path length: 2 or 3; 0 when enumeration is exhausted
+S37  path length: 2 or 3; 0 when enumeration is exhausted
 S8   bottleneck candidate mol/tick
 S9   status: 1 candidate, 0 none, -1 dependency/topology fault
 S10  response generation; written last
@@ -234,7 +235,7 @@ Planner ABI:
 ```text
 S0   magic = 31415937
 S1   ABI = 2
-S7   LeaseTicks = max(64, 4 * linkCount + 16)
+S11  LeaseTicks = max(64, 4 * linkCount + 16)
 S8   number of staged physical links in the committed plan
 S9   summary reserved end-to-end moles
 S10  plan status: 1 grants exist, 0 none, negative dependency/build fault

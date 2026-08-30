@@ -29,8 +29,8 @@ This file is the shortest human-oriented path from an empty deployment to a work
 4. **Deploy discovery/selection.** Controller Directory publishes sorted telemetry controllers; Controller Selector derives type/member groups directly and resolves the PI instance you want to edit. Use `docs/CONTROLLER_DIRECTORY_GETTING_STARTED.md` to prove the directory publication path independently first.
 5. **Program Generic Config Editor, Loader, and Committer.** Point their documented selector/editor dependencies at the shared services.
 6. **Program Generic Input Scanner.** Attach Field Dial, Value Dial, optional Logic Memory, optional Switch, and optional PI Input Profile to its six screws.
-7. **Program Generic Input Resolver and set Resolver `S2` to Scanner ReferenceId.**
-8. **Program Config Input Bridge.** Set Bridge `S2` to Editor RefId and `S3` to Resolver RefId. Set Loader `S3` to Scanner RefId so Loader can discover/validate the controller Profile.
+7. **Program Generic Input Resolver and set Resolver `S8` to Scanner ReferenceId.**
+8. **Program Config Input Bridge.** Set Bridge `S8` to Editor RefId and `S9` to Resolver RefId. Set Loader `S9` to Scanner RefId so Loader can discover/validate the controller Profile.
 9. **Select the PI controller and load it into Editor.** Loader should derive the PI active field count and ordinal -> stable slot map from the Host masks.
 10. **Edit fields.** Field Dial selects the logical field. Resolver chooses Value Dial/Switch/Memory according to the PI Profile and fallback rules. Save stages the resolved value.
 11. **Apply.** Committer publishes the candidate to Host. Policy validates it. Host durably commits the inactive A/B bank.
@@ -58,7 +58,7 @@ This file is the shortest human-oriented path from an empty deployment to a work
 
 ## Input Profile Catalog prerequisite
 
-The configuration and diagnostic Profile Views share the coordinated Input Profile catalog. Run `ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` and `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10` (`d0` -> Coordinator), add one `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` with a unique positive `S18 NodeId`, then deploy sparse Loader candidates `ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10` through `ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10`. The Store advertises UNCLAIMED; the Coordinator claims it when the Router sees the pending Input Profile loaders. Wait for an ACTIVE Input Store with `S9=6` and stable even `S17`, then attach `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` to the Store/Coordinator and set `S2/S3`. PI uses `HASH("ControllerPI")/1`; diagnostics uses `HASH("DiagnosticMapping")/1`.
+The configuration and diagnostic Profile Views share the coordinated Input Profile catalog. Run `ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10` and `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10` (`d0` -> Coordinator), add one `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` with a unique positive `S18 NodeId`, then deploy sparse Loader candidates `ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10` through `ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10`. The Store advertises UNCLAIMED; the Coordinator claims it when the Router sees the pending Input Profile loaders. Wait for an ACTIVE Input Store with `S9=6` and stable even `S17`, then attach `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` to the Store/Coordinator and set `S8/S9`. PI uses `HASH("ControllerPI")/1`; diagnostics uses `HASH("DiagnosticMapping")/1`.
 
 ## Sequencer configuration
 
@@ -102,7 +102,7 @@ ControllerPhasePressure uses the same Host/Policy/Profile/shared-input path as P
 ### Runtime wiring
 
 - Runtime `d0` -> phase-change device / enclosed process device exposing `Pressure` and `Temperature`
-- Runtime `d1` -> `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` configured with `S2=1` and `S3=HASH(<medium>)`; View anchored to any ACTIVE Resource Profile Store plus the Coordinator after the generated FLUID Resource Profile loader candidates have been placed/imported (`S9=9` on the FLUID Store and stable even `S17`)
+- Runtime `d1` -> `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` configured with `S26=1` and `S27=HASH(<medium>)`; View anchored to any ACTIVE Resource Profile Store plus the Coordinator after the generated FLUID Resource Profile loader candidates have been placed/imported (`S9=9` on the FLUID Store and stable even `S17`)
 - Runtime `d2` -> paired Generic Host
 - Policy `d0` -> same Host
 
@@ -247,8 +247,8 @@ A Transfer wires `d0` to its source Reservation, `d1` to its sink Reservation, `
 1. Commission every Inventory/Reservation endpoint first. Require Inventory `S11=1`, matching medium identity, and plausible export/import moles.
 2. Deploy the Grid Link Directory and wait until its active count reflects the expected PressureTransfer runtimes. Its topology generation should remain stable when the set of transfer endpoints has not changed.
 3. Commission one direct LOW->HIGH link. Confirm Transfer `S101=1`, `S103=1` when capacity exists, and Planner ABI2 is accepted.
-4. Confirm the Planner publishes `S7=max(64,4*N+16)` for `N` grid links, stages direct work first, and changes `S14` only after the Plan Builder completes.
-5. Confirm endpoint Reservation ledgers are populated before Planner `S14` changes. After commit, the Transfer Grant Guard must publish `S4=1`, `S5` equal to the committed epoch, and decrement its `S3` remaining-lease counter; the Transfer pump should follow only that coherent Guard output.
+4. Confirm the Planner publishes `S11=max(64,4*N+16)` for `N` grid links, stages direct work first, and changes `S14` only after the Plan Builder completes.
+5. Confirm endpoint Reservation ledgers are populated before Planner `S14` changes. After commit, the Transfer Grant Guard must publish `S15=1`, `S16` equal to the committed epoch, and decrement its `S14` remaining-lease counter; the Transfer pump should follow only that coherent Guard output.
 6. Force current capacity below the active lease rate. The Transfer must throttle to the current `S100` ceiling or turn the pump off; the lease is never permission to ignore current evidence.
 7. Add one STORAGE domain and two links `LOW->STORAGE` and `STORAGE->HIGH`. Confirm the Path Enumerator/Route Selector/Path Allocator can stage both as one 2-hop route when direct reuse is unavailable or insufficient. Both pumps should receive the same normalized staged mol/tick rate.
 8. Add a second STORAGE domain and a physical `STORAGE A->STORAGE B` link. Confirm that link advertises route class `4` and is never granted by ordinary fallback, but can participate in `LOW->A->B->HIGH`.
@@ -277,7 +277,7 @@ The automatic routed reuse limit is currently three physical links: `LOW->STORAG
 1. Use a Scanner + Resolver pair with the Diagnostic Input Profile.
 2. Point Diagnostic Input Bridge at Resolver/Profile.
 3. Point Diagnostic Selector Bridge at Input Bridge + Controller/Console Selectors.
-4. Point Mapping Editor `S7` at Diagnostic Input Bridge and wire its selector/renderer dependencies.
+4. Point Mapping Editor `S13` at Diagnostic Input Bridge and wire its selector/renderer dependencies.
 5. Use the Field Dial to choose Type, Member, Console, Channel, Mode, Color, or Commit.
 6. Use Value Dial for numeric controls. Commit uses the Switch and triggers only on an OFF->ON edge.
 7. Commit the mapping. Mapping Editor records the fully resolved mapping and asks Console Selector to advance exactly once.
@@ -330,7 +330,7 @@ The Resource Core is optional for an existing PressureGrid installation. Use the
 
 1. Wire `ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10 d0` to a healthy PressureDomain Inventory ABI2. Confirm Generic Resource Endpoint class `FLUID`, unit `MOLE`, matching medium identity, and a positive publication generation.
 2. Mirror it through `ic10/resource-grid-core/resource_reservation_v1_0.ic10` and confirm the Reservation contains the same class/type/unit and coherent export/import capacities.
-3. Configure a Resource Profile View for an ITEM record (for example `S2=2`, `S3=1758427767` for Iron Ore), wire View `d0` to the shared Resource Profile Catalog Store, and wire the View to `ic10/item-storage-vending/material_vending_inventory_v1_0.ic10 d1`; wire Inventory `d0` to a Vending Machine containing a known mixture of items.
+3. Configure a Resource Profile View for an ITEM record (for example `S26=2`, `S27=1758427767` for Iron Ore), wire View `d0` to the shared Resource Profile Catalog Store, and wire the View to `ic10/item-storage-vending/material_vending_inventory_v1_0.ic10 d1`; wire Inventory `d0` to a Vending Machine containing a known mixture of items.
 4. Confirm the material Endpoint reports only the selected ItemHash quantity. Empty slots contribute one profile-sized stack of import capacity; occupied slots containing another ItemHash contribute neither selected quantity nor selected capacity.
 5. Move an item while a full 100-slot scan is in progress. The Endpoint must discard that scan when `ImportCount` or `ExportCount` changes and publish only after a stable rescan.
 6. Deploy `ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10`, a dedicated `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10`, and `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` (`d0` -> Adapter, `d1` -> Host), then verify both the pressure adapter and material inventory appear in the Host's typed Endpoint snapshot. For generalized Links, deploy `ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10` with another Snapshot Host + Bridge.
@@ -349,7 +349,7 @@ Vending -> Stacker -> Logic Sorter -> processor/import sink
 3. Deploy `ic10/material-grid/material_transfer_grant_guard_v1_0.ic10`, `ic10/material-grid/material_transfer_executor_v1_0.ic10`, and `ic10/material-grid/material_resource_link_v1_0.ic10` using `docs/MATERIAL_TRANSFER_SYSTEM.md`.
 4. Publish the Link through `ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10` -> `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` -> a dedicated `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10`.
 5. Confirm the Host reports magic `31415981`, ABI1, schema `DirectorySchema.ResourceLink`, schema version 1, and no overflow.
-6. Confirm Link `S2/S3` are the **source/sink Reservation ReferenceIds** and Link `S19..S22` identify Vending, Stacker, Logic Sorter, and sink native device separately.
+6. Confirm Link `S28/S29` are the **source/sink Reservation ReferenceIds** and Link `S19..S22` identify Vending, Stacker, Logic Sorter, and sink native device separately.
 7. Manually verify the Sorter's accepted chute route reaches the intended sink.
 
 The route is transaction-authorized by `ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10`; there is no standalone legacy material allocator in the current baseline.

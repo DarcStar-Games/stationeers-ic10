@@ -341,14 +341,14 @@ The shared discovery path supports **64 telemetry controllers**. `ic10/controlle
 Controller Directory (Generic Snapshot Host)
 S0      magic = 31415981
 S1      ABI = 1
-S2      active bank: 0=A, 1=B
-S3/S4   generation A/B
-S5/S6   provider count A/B, 0..64
-S7/S8   overflow flag A/B; 1 means candidate 65+ existed
-S9      DirectorySchemaId = HASH("DirectorySchema.Controller")
-S10     DirectorySchemaVersion = 1
+S2      capability mask = 0
+S9      DirectorySchemaId = HASH("DirectorySchema.Controller.v1")
 S11     entry width = 2
 S12     capacity = 64
+S24     active bank: 0=A, 1=B
+S25/S26 generation A/B
+S27/S28 provider count A/B, 0..64
+S29/S30 overflow flag A/B; 1 means candidate 65+ existed
 S32..159   bank A: 64 x [ControllerType, ReferenceId]
 S160..287  bank B: 64 x [ControllerType, ReferenceId]
 ```
@@ -392,10 +392,7 @@ Store header/control cells:
 ```text
 S0   magic = 31415984
 S1   ABI = 1
-S2   QueueSequence; odd mutating, even stable
-S3   QueueGeneration
-S5   capacity = 32
-S7   request generation
+S2   capability mask = 0
 S8   response generation
 S9   response status; 1 success, <0 rejected
 S10  allocated JobId for PUBLISH_NEW
@@ -404,6 +401,10 @@ S12  slot ordinal 0..31
 S13  expected JobGeneration for SET_STATE/REAP
 S14  desired State for SET_STATE
 S15  desired ErrorStatus for SET_STATE
+S16  QueueSequence; odd mutating, even stable
+S17  QueueGeneration
+S18  capacity = 32
+S19  request generation
 S23  next JobId
 S24  applied-request/replay marker
 S25  in-flight slot state-base journal
@@ -482,10 +483,11 @@ The Profile ABI is domain-neutral. Configuration Profiles use ControllerType/sch
 ```text
 S0       magic = 31415929
 S1       ABI = 1
-S2       ContextType hash
-S3       context schema
-S4       logical control count
-S5       profile generation; written last
+S2       capability mask = 0
+S8       ContextType hash
+S9       context schema
+S10      logical control count
+S11      profile generation; written last
 S32..    four-value control descriptors
 ```
 
@@ -854,8 +856,7 @@ QUOTE calculates remaining endpoint capacity without mutation. COMMIT reserves e
 S0   magic = 31415981
 S1   ABI = 1
 S2   capability mask = 0
-S9   DirectorySchemaId = HASH("DirectorySchema.PressureGridLink")
-S10  DirectorySchemaVersion = 1
+S9   DirectorySchemaId = HASH("DirectorySchema.PressureGridLink.v1")
 S11  entry width = 3
 S12  capacity = 64
 S24  active bank
@@ -1157,18 +1158,18 @@ Consumers may use S17/S19/S8/S9 only after `S13` equals the exact expected reque
 Console Selector is screwless and has two independent request streams so automatic advance cannot be undone by stale UI state.
 
 ```text
-S2       Console Registry RefId
-S3       selected console ordinal
-S4       display ReferenceId
-S5       status; 1 valid
-S6       blink state
-S7       source generation
 S8       previous display ReferenceId
+S9       Console Registry RefId
 S10      advance request generation
 S11      handled advance generation
 S12      requested console ordinal
 S13      desired-selection request generation
 S14      handled desired-selection generation
+S15      selected console ordinal
+S16      display ReferenceId
+S17      status; 1 valid
+S18      blink state
+S19      source generation
 ```
 
 Both `S14` and `S11` are `TERMINAL_RESPONSE` tokens: resolved ordinal/ReferenceId/source generation/status are published before either handled token. A consumer of the current resolved console requires the desired stream settled (`S14 == expected S13`) and the automatic-advance stream settled (`S11 == S10`). A new desired request is applied once. A later increment of `S10` advances from the current selection even if `S12` still contains an older desired value.
@@ -1178,9 +1179,10 @@ Both `S14` and `S11` are `TERMINAL_RESPONSE` tokens: resolved ordinal/ReferenceI
 ```text
 S0       magic = 17320511
 S1       ABI = 1
-S2       Generic Input Resolver RefId
-S3       Diagnostic Input Profile RefId
-S7       status; 1 ready
+S2       capability mask = 0
+S8       Generic Input Resolver RefId
+S9       Diagnostic Input Profile RefId
+S10      status; 1 ready
 S16      desired Controller Type ordinal
 S17      desired Controller Member ordinal
 S18      desired Console ordinal
@@ -1198,10 +1200,11 @@ S25      Console Selector desired-request generation
 ```text
 S0   magic = 17320512
 S1   ABI = 1
-S2   Diagnostic Input Bridge RefId
-S3   Controller Selector RefId
-S4   Console Selector RefId
-S5   last observed console-request generation
+S2   capability mask = 0
+S8   Diagnostic Input Bridge RefId
+S9   Controller Selector RefId
+S10  Console Selector RefId
+S11  last observed console-request generation
 ```
 
 It writes desired selector values before their request generation, preserving atomic selector requests.
@@ -1211,12 +1214,13 @@ It writes desired selector values before their request generation, preserving at
 ```text
 S0   magic = 17320510
 S1   ABI = 1
-S2   Console Selector RefId
-S3   Controller Selector RefId
-S4   Diagnostic Renderer RefId
-S5   handled Commit generation
-S6   status: 1 ready, 2 committed, negative fault
-S7   Diagnostic Input Bridge RefId
+S2   capability mask = 0
+S8   Console Selector RefId
+S9   Controller Selector RefId
+S10  Diagnostic Renderer RefId
+S11  handled Commit generation
+S12  status: 1 ready, 2 committed, negative fault
+S13  Diagnostic Input Bridge RefId
 ```
 
 The Mapping Editor owns no physical screws. Before interpreting selector status or ReferenceIds it fences Controller Selector `S13` against Diagnostic Input `S24`, Console desired response `S14` against Diagnostic Input `S25`, and Console advance response `S11` against request `S10`. On a new Commit generation it then snapshots Diagnostic Input Bridge `S19..S21`, commits `[display,controller,channel,Mode,Color]`, requests Console Selector advance through `S10`, then marks the Commit generation handled.
@@ -1348,7 +1352,7 @@ Generic Config Host uses the same idea for persistence, with the bank revision a
 - `S99+N` means a computed telemetry slot offset from stack cell 99.
 - `d0`, `d1`, etc. are device screws on the IC running the script, not stack cells.
 
-Do not confuse a dependency stored as a ReferenceId in `S2` with an IC screw wired as `d0`; both are used in this framework for different reasons.
+Do not confuse a dependency stored as a ReferenceId in `S8` with an IC screw wired as `d0`; both are used in this framework for different reasons.
 
 ## ControllerPhasePressure Policy result codes
 
@@ -1453,17 +1457,17 @@ Capability bits are `SMELT_BASIC=1`, `FURNACE_ALLOY=2`, `ADVANCED_ALLOY=4`. Arc 
 
 The reusable live-directory infrastructure is defined in `docs/DIRECTORY_STANDARD.md` and `data/directory_schemas.json`.
 
-`DIRECTORY_ADAPTER_ABI_V3` uses magic `31415983`, ABI2. Candidate adapters publish:
+`DIRECTORY_ADAPTER_ABI_V3` uses magic `31415983`, ABI3. Candidate adapters publish:
 
 ```text
-S2 schema id             S3 schema version
-S4 entry width           S5 capacity
-S6 candidate count       S7 candidate generation
-S8 odd/even sequence     S9 overflow
-S10 mode: 1 snapshot, 2 registry
-S11 freeze request token; 0 releases
-S12 freeze acknowledgement token
-S16.. packed candidate records
+S2 capability mask = 17  S3 folded SchemaId, HASH("<schema>.v<version>")
+S7 candidate generation; the common header fence, written LAST
+S10 entry width           S11 capacity
+S12 candidate count       S13 odd/even sequence
+S14 overflow              S15 mode: 1 snapshot, 2 registry
+S16 freeze request token; 0 releases
+S17 freeze acknowledgement token
+S18.. packed candidate records
 ```
 
 There are no consumer-facing domain magic/ABI fields in the Adapter contract.
@@ -1481,23 +1485,25 @@ The generic Resource Core has its own schemas on the shared Snapshot Host rather
 ```text
 Resource Endpoint Directory
 S0/S1   31415981 / ABI1
-S9/S10  HASH("DirectorySchema.ResourceEndpoint") / 1
+S2      capability mask = 0
+S9      HASH("DirectorySchema.ResourceEndpoint.v1")
 S11/S12 width 3 / capacity 64
-S2      active bank
-S3/S4   generations A/B
-S5/S6   endpoint counts A/B
-S7/S8   overflow A/B
+S24     active bank
+S25/S26 generations A/B
+S27/S28 endpoint counts A/B
+S29/S30 overflow A/B
 S32..223   bank A: 64 x [ResourceClass, ResourceType, EndpointRef]
 S224..415  bank B: 64 x [ResourceClass, ResourceType, EndpointRef]
 
 Resource Link Directory
 S0/S1   31415981 / ABI1
-S9/S10  HASH("DirectorySchema.ResourceLink") / 1
+S2      capability mask = 0
+S9      HASH("DirectorySchema.ResourceLink.v1")
 S11/S12 width 1 / capacity 64
-S2      active bank
-S3/S4   generations A/B
-S5/S6   link counts A/B
-S7/S8   overflow A/B
+S24     active bank
+S25/S26 generations A/B
+S27/S28 link counts A/B
+S29/S30 overflow A/B
 S32..95   bank A: 64 x [GenericResourceLinkRef]
 S96..159  bank B: 64 x [GenericResourceLinkRef]
 ```
@@ -1782,10 +1788,7 @@ Adapter: `ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic
 Magic `31416048`, ABI1. `ic10/process-furnace/furnace_process_condition_request_v1_0.ic10` and `ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10` publish the common surface:
 
 ```text
-S2 Target ReferenceId
-S3 semantic FLUID ResourceType
-S4/S5 minimum/maximum pressure kPa
-S6/S7 minimum/maximum temperature K
+S2 capability mask = 0
 S8 unmet-condition bitmask
 S9 process identity
 S10 Active
@@ -1793,13 +1796,17 @@ S11 PublicationGeneration LAST
 S12 Status
 S13 Strategy
 S14/S15 pressure/temperature target hints
+S22 Target ReferenceId
+S23 semantic FLUID ResourceType
+S24/S25 minimum/maximum pressure kPa
+S26/S27 minimum/maximum temperature K
 ```
 
 `ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10` projects this demand as PressureDomain ABI2; `ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10` projects an Advanced Furnace embedded pump as PressureTransfer ABI2 under the ordinary GrantGuard; `ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10` reuses PurityGuard ABI1 for two-component mixtures; the gas-mixer and thermal-mixer utility controllers own composition/thermal Gas Mixer writes. ProcessCondition has no owner/epoch fields and never authorizes resource movement. See `docs/PROCESS_UTILITY_ORCHESTRATION.md`.
 
 ## Power Management ABIs — current
 
-Item 9 uses the existing Generic Resource Endpoint, Reservation, Link, Directory, and Job ABIs. `DirectorySchema.PowerReservation` v1 records `[DispatchKey,PolicyId,ReservationReferenceId]`. For Generic Resource Reservation ABI1, `S6` mirrors Endpoint `ExportAvailable` and `S7` mirrors Endpoint `ImportCapacity`; `S5` remains the role bitmap.
+Item 9 uses the existing Generic Resource Endpoint, Reservation, Link, Directory, and Job ABIs. `DirectorySchema.PowerReservation` v1 records `[DispatchKey,PolicyId,ReservationReferenceId]`. For Generic Resource Reservation ABI1, `S36` mirrors Endpoint `ExportAvailable` and `S37` mirrors Endpoint `ImportCapacity`; `S35` remains the role bitmap.
 
 `ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10` is Job Command Gateway ABI3 with four independent producer lanes A manufacturing, B dependency cancellation, C dependency child creation, and D POWER lifecycle. `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` remains the sole physical Job Store command writer. `ic10/power-grid/` implements power Endpoint/Link/discovery/dispatch/reservation/actuation; the shared generic Job selector plus `ic10/power-jobs/` implement finite `JobType.POWER` policy transactions. See `docs/POWER_MANAGEMENT.md`.
 

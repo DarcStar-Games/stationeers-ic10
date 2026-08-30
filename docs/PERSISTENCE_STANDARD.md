@@ -28,7 +28,7 @@ Host S21     Policy result
 Host S32..63 default physical image
 ```
 
-On every new Host request generation `S6`, Policy validates Host candidate `S128..159`, rewrites the valid candidate slots to their canonical normalized form, then publishes `S21` and writes matching `S20` last.
+On every new Host request generation `S52`, Policy validates Host candidate `S128..159`, rewrites the valid candidate slots to their canonical normalized form, then publishes `S21` and writes matching `S20` last.
 
 ## Persistence signature
 

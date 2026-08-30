@@ -92,19 +92,19 @@ Adapter ABI3 publishes:
 
 ```text
 S0  31415983
-S1  2
-S2  HASH("DirectorySchema.Printer")
-S3  2
-S4  3
-S5  64
-S6  candidate count
-S7  candidate generation
-S8  candidate sequence
-S9  overflow
-S10 snapshot mode = 1
-S11 freeze request
-S12 freeze acknowledgement
-S16.. candidate records
+S1  3
+S2  capability mask = 17
+S3  HASH("DirectorySchema.Printer.v2")
+S7  candidate generation; common header fence, written LAST
+S10 entry width = 3
+S11 capacity = 64
+S12 candidate count
+S13 candidate sequence
+S14 overflow
+S15 snapshot mode = 1
+S16 freeze request
+S17 freeze acknowledgement
+S18.. candidate records
 ```
 
 Live `Power`, `On`, `Activate`, `Error`, and `Lock` changes alter `ProcessorSpec` and therefore cause the published candidate generation to change. The Generic Bridge freezes one coherent Adapter generation before copying it into the Snapshot Host.

@@ -42,19 +42,19 @@ Scanner publishes exact ReferenceIds and a generation-stamped hardware snapshot.
 Resolver receives:
 
 ```text
-S2 Scanner RefId
-S3 logical control count
-S4 Profile RefId or 0
+S8  Scanner RefId
+S9  logical control count
+S10 Profile RefId or 0
 ```
 
 and publishes:
 
 ```text
-S5 logical ordinal
-S6 resolved value
-S7 input kind
 S11 ready/fault status
 S12 snapshot generation LAST
+S13 logical ordinal
+S14 resolved value
+S15 input kind
 ```
 
 One Scanner/Resolver pair should serve one active commissioning context at a time because Resolver owns Scanner requested control count and the active Profile context.

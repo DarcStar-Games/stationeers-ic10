@@ -189,7 +189,7 @@
       "required": false,
       "source_doc": "docs/DIAGNOSTIC_INPUTS.md",
       "section": "Console circuitboard mirrors",
-      "acceptance": "Confirm the circuitboard slot index and that the Mode slot logic type is readable with ls and writable with ss. Hash Console Mode then switches a board between HashType.Prefab and HashType.GasLiquid, reports writes in S3, and counts unreadable records in S4 rather than faulting.",
+      "acceptance": "Confirm the circuitboard slot index and that the Mode slot logic type is readable with ls and writable with ss. Hash Console Mode then switches a board between HashType.Prefab and HashType.GasLiquid, reports writes in S9, and counts unreadable records in S10 rather than faulting.",
       "probe_recommended": true
     }
   ]

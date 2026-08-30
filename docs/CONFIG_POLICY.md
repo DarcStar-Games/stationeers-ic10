@@ -40,7 +40,7 @@ The important metadata is summarized in `docs/PERSISTENCE_STANDARD.md` and `docs
 
 ## Request protocol
 
-Generic Committer writes candidate values and then Host `S6`. Policy observes `S6 != S20`.
+Generic Committer writes candidate values and then Host `S52`. Policy observes `S52 != S20`.
 
 Policy then:
 

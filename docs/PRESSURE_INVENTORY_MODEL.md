@@ -152,7 +152,7 @@ Before enabling transfers for a domain:
 
 1. verify the correct PHASE_MEDIUM Resource Profile View is connected to Purity Guard;
 2. verify the analyzer is on the exact network represented by PressureDomain;
-3. confirm Purity Guard `S5=1` and inspect observed ratio versus threshold;
+3. confirm Purity Guard `S11=1` and inspect observed ratio versus threshold;
 4. confirm Inventory role and MediumType match the domain;
 5. confirm Inventory `S11=1` and `S12` advances;
 6. compare reported capacity with expected network volume;

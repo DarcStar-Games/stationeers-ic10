@@ -72,17 +72,17 @@ Similarly, printing reuses `ic10/material-transform/multi_material_reservation_s
 It accepts:
 
 ```text
-S2 scheduling cursor JobId; skip every eligible JobId <= cursor, 0 = start at head
-S3 request generation
+S19 scheduling cursor JobId; skip every eligible JobId <= cursor, 0 = start at head
+S20 request generation
 ```
 
 It publishes, after revalidating the Job Store queue sequence:
 
 ```text
-S4  response generation
-S5  status: 1 selected, -2 none, -1 invalid Store
-S6  physical Job slot ordinal
-S7  JobId
+S21 response generation
+S22 status: 1 selected, -2 none, -1 invalid Store
+S23 physical Job slot ordinal
+S24 JobId
 S8  JobType
 S9  RequiredCapability
 S10 Identity
@@ -300,7 +300,7 @@ ITEM Resource Profile `ProfileSchema=2` uses parameter cell 2 as:
 ManufacturingReagentHash
 ```
 
-for printable ingot/material resources. `ic10/material-grid/material_resource_link_v1_0.ic10` republishes that semantic identity in `S27` while retaining the exact concrete ResourceType in `S5`.
+for printable ingot/material resources. `ic10/material-grid/material_resource_link_v1_0.ic10` republishes that semantic identity in `S27` while retaining the exact concrete ResourceType in `S31`.
 
 `ic10/manufacturing/print_material_resolver_v1_0.ic10` therefore matches:
 

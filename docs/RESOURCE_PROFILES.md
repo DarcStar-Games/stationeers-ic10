@@ -95,8 +95,8 @@ This keeps manufacturing resource planning inside the existing Resource Profile/
 Request:
 
 ```text
-S2 desired ResourceClass
-S3 desired ResourceType
+S26 desired ResourceClass
+S27 desired ResourceType
 ```
 
 Publication remains:
@@ -104,8 +104,8 @@ Publication remains:
 ```text
 S0  31415963
 S1  ABI 1
-S4  status: 1 found, -2 catalog invalid, -3 missing
-S5  publication generation / Store revision
+S28 status: 1 found, -2 catalog invalid, -3 missing
+S29 publication generation / Store revision
 S8..S21 selected 14 semantic cells
 S22 CatalogInstanceId
 S23 Coordinator topology/catalog generation

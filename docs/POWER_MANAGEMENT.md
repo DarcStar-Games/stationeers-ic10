@@ -161,8 +161,8 @@ Flow record:
 
 ### Selection
 
-- `ic10/power-grid/power_sink_selector_v1_0.ic10` reads sinks in PowerReservation dispatch order. It uses Reservation **S7 ImportCapacity** as demand.
-- `ic10/power-grid/power_source_selector_v1_0.ic10` selects sources from a cursor and uses Reservation **S6 ExportAvailable** as available supply. It subtracts source watts already staged in the same plan and rejects battery direction conflicts.
+- `ic10/power-grid/power_sink_selector_v1_0.ic10` reads sinks in PowerReservation dispatch order. It uses Reservation **S37 ImportCapacity** as demand.
+- `ic10/power-grid/power_source_selector_v1_0.ic10` selects sources from a cursor and uses Reservation **S36 ExportAvailable** as available supply. It subtracts source watts already staged in the same plan and rejects battery direction conflicts.
 - `ic10/power-grid/power_link_selector_v1_0.ic10` requires a live `DirectorySchema.ResourceLink v1`, verifies exact source/sink Reservation identities, checks Link generation, and computes transformer overhead.
 - `ic10/power-grid/power_sink_flow_builder_v1_0.ic10` retries later source candidates when a preferred source has no usable path.
 
