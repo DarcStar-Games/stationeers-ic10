@@ -55,28 +55,28 @@ execdir.stack[34]=spec;execdir.stack[3]=7
 # Capacity Client reserve/release waits for bank acknowledgement.
 clientbank=Device(601,stack=bank.stack,props={'ReferenceId':601})
 client=IC10(src('ic10/printer-directory/printer_capacity_client_v2_0.ic10'),{'bank':clientbank},self_ref=603);client.run(1)
-client.stack.update({2:501,3:spec,4:1,5:21})
+client.stack.update({12:501,13:spec,14:1,15:21})
 for _ in range(8):run_round_robin([client,bank],1)
-ck(client.stack.get(6)==21 and client.stack.get(7)==1 and client.stack.get(8)==501,'capacity client failed exact reserve')
-client.stack.update({4:2,5:-21});client.run(1)
-ck(client.stack.get(6)==21,'capacity client acknowledged release before bank processed it')
+ck(client.stack.get(16)==21 and client.stack.get(17)==1 and client.stack.get(8)==501,'capacity client failed exact reserve')
+client.stack.update({14:2,15:-21});client.run(1)
+ck(client.stack.get(16)==21,'capacity client acknowledged release before bank processed it')
 for _ in range(6):run_round_robin([bank,client],1)
-ck(client.stack.get(6)==-21 and client.stack.get(7)==1 and bank.stack.get(72)==0,'capacity client failed acknowledged release')
+ck(client.stack.get(16)==-21 and client.stack.get(17)==1 and bank.stack.get(72)==0,'capacity client failed acknowledged release')
 
 # Swap after client request publication but before Bank processing must fail closed.
 replacement=Device(502,props={'ReferenceId':502,'PrefabHash':'HASH:StructureElectronicsPrinter','Power':1,'On':0,'Activate':0,'Error':0,'Lock':0},slots={1:{'Occupied':0}})
 bank.screws['d0']=printer;bank.run(1)
-client.stack.update({2:501,3:spec,4:1,5:22});client.run(2) # locate/publish request; do not run Bank
+client.stack.update({12:501,13:spec,14:1,15:22});client.run(2) # locate/publish request; do not run Bank
 bank.screws['d0']=replacement;bank.run(1);client.run(2)
-ck(client.stack.get(6)==22 and client.stack.get(7)==-2 and replacement.props.get('Lock')==0,'mid-transaction printer swap did not fail closed')
+ck(client.stack.get(16)==22 and client.stack.get(17)==-2 and replacement.props.get('Lock')==0,'mid-transaction printer swap did not fail closed')
 
 # Bank reboot before acknowledgement: client reasserts request and eventually succeeds.
 bank.screws['d0']=printer;bank.run(1)
-client.stack.update({2:501,3:spec,4:1,5:23});client.run(2)
+client.stack.update({12:501,13:spec,14:1,15:23});client.run(2)
 reboot=IC10(src('ic10/printer-directory/printer_execution_bank_v2_0.ic10'),{'d0':printer},self_ref=601);reboot.run(1)
 clientbank.stack=reboot.stack
 for _ in range(10):run_round_robin([client,reboot],1)
-ck(client.stack.get(6)==23 and client.stack.get(7)==1,'capacity request did not survive Bank reboot/reassertion')
+ck(client.stack.get(16)==23 and client.stack.get(17)==1,'capacity request did not survive Bank reboot/reassertion')
 
 if fails:
  print('Printer execution capacity: FAIL');[print(' -',x) for x in fails];sys.exit(1)

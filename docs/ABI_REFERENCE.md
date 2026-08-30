@@ -693,7 +693,7 @@ Generic Job Selector ABI3 uses S2 as a JobId cursor and skips every eligible Job
 
 ### Printer Execution Bank ABI2
 
-Magic `31415996`. `ic10/printer-directory/printer_execution_bank_v2_0.ic10` locally pins up to six printers on d0..d5. Per pin: S16 current PrinterRef, S24 capacity/status, S32 ExpectedPrinterRef, S40 RequestToken (positive reserve / negative release), S48 ResponseStatus, S56 ResponseToken, S64 OwnerPrinterRef, S72 OwnerToken. Response status is written before ResponseToken. Failed requests do not create ownership. Fresh/reset initialization never clears unknown external Lock state; release clears Lock only when the currently attached printer still equals persisted OwnerPrinterRef.
+Magic `31415996`. `ic10/printer-directory/printer_execution_bank_v2_0.ic10` locally pins up to six printers on d0..d5. Its scan seqlock is S8, scan generation S9, attached count S10. Per pin: S16 current PrinterRef, S24 capacity/status, S32 ExpectedPrinterRef, S40 RequestToken (positive reserve / negative release), S48 ResponseStatus, S56 ResponseToken, S64 OwnerPrinterRef, S72 OwnerToken. Response status is written before ResponseToken. Failed requests do not create ownership. Fresh/reset initialization never clears unknown external Lock state; release clears Lock only when the currently attached printer still equals persisted OwnerPrinterRef.
 
 ### DirectorySchema.PrinterExecution v1
 
@@ -707,7 +707,7 @@ ProcessorSpec retains Printer v2 bits and adds bit13 output occupied, bit14 outp
 
 ### Printer Capacity Client ABI2
 
-Magic `31415997`. Request S2 exact PrinterReferenceId, S3 ProcessorSpec, S4 command (`1 reserve`, `2 release`), S5 request token. Response S6 token, S7 status, S8 resolved PrinterRef. S9/S10/S11 retain owning Bank/pin/reservation token. The client reasserts ExpectedPrinterRef + RequestToken while waiting, so Bank reboot cannot lose the operation; reserve success is post-validated against current pin identity plus OwnerPrinterRef/OwnerToken; release is acknowledged before local ownership state is cleared.
+Magic `31415997`. Request S12 exact PrinterReferenceId, S13 ProcessorSpec, S14 command (`1 reserve`, `2 release`), S15 request token. Response S16 token, S17 status, S8 resolved PrinterRef. S9/S10/S11 retain owning Bank/pin/reservation token. The client reasserts ExpectedPrinterRef + RequestToken while waiting, so Bank reboot cannot lose the operation; reserve success is post-validated against current pin identity plus OwnerPrinterRef/OwnerToken; release is acknowledged before local ownership state is cleared.
 
 ## ControllerPhasePressure telemetry ABI v2
 

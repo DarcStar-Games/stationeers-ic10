@@ -76,7 +76,7 @@ PASS ic10/manufacturing/generic_print_runtime_v2_0.ic10 lines=113 headroom=15 ma
 PASS ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10 lines=106 headroom=22 max=89 CRLF=1495 comments= 1
 PASS ic10/manufacturing/manufacturing_driver_router_v2_0.ic10 lines= 76 headroom=52 max=64 CRLF=1021 comments= 1
 PASS ic10/manufacturing/manufacturing_scheduler_v1_0.ic10 lines=120 headroom= 8 max=82 CRLF=1647 comments= 1
-PASS ic10/manufacturing/print_candidate_executor_v2_0.ic10 lines=121 headroom= 7 max=22 CRLF=1569 comments= 0
+PASS ic10/manufacturing/print_candidate_executor_v2_0.ic10 lines=121 headroom= 7 max=22 CRLF=1579 comments= 0
 PASS ic10/manufacturing/print_job_driver_v2_0.ic10 lines=120 headroom= 8 max=53 CRLF=1609 comments= 0
 PASS ic10/manufacturing/print_material_resolver_v1_0.ic10 lines=119 headroom= 9 max=50 CRLF=1530 comments= 0
 PASS ic10/manufacturing/transform_candidate_executor_v2_0.ic10 lines= 81 headroom=47 max=79 CRLF=1073 comments= 1
@@ -138,9 +138,9 @@ PASS ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10 lines= 67 headroo
 PASS ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10 lines=120 headroom= 8 max=48 CRLF=1711 comments= 0
 PASS ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10 lines= 72 headroom=56 max=64 CRLF=1117 comments= 1
 PASS ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10 lines=112 headroom=16 max=88 CRLF=1726 comments= 2
-PASS ic10/printer-directory/printer_capacity_client_v2_0.ic10 lines=120 headroom= 8 max=70 CRLF=1674 comments= 1
+PASS ic10/printer-directory/printer_capacity_client_v2_0.ic10 lines=121 headroom= 7 max=70 CRLF=1691 comments= 1
 PASS ic10/printer-directory/printer_directory_adapter_v1_0.ic10 lines=117 headroom=11 max=88 CRLF=2216 comments= 1
-PASS ic10/printer-directory/printer_execution_bank_v2_0.ic10 lines=120 headroom= 8 max=21 CRLF=1666 comments= 0
+PASS ic10/printer-directory/printer_execution_bank_v2_0.ic10 lines=121 headroom= 7 max=21 CRLF=1677 comments= 0
 PASS ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10 lines=118 headroom=10 max=50 CRLF=1660 comments= 0
 PASS ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10 lines=123 headroom= 5 max=69 CRLF=2015 comments= 2
 PASS ic10/process-furnace/furnace_process_condition_request_v1_0.ic10 lines=100 headroom=28 max=63 CRLF=1394 comments= 1

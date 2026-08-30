@@ -47,7 +47,7 @@ getd r0 r1 0
 bne r0 31415996 Bank
 getd r0 r1 1
 bne r0 2 Bank
-getd r14 r1 2
+getd r14 r1 8
 mod r0 r14 2
 bnez r0 ScanStart
 move r6 0
@@ -99,7 +99,7 @@ NextPin:
 add r6 r6 1
 j Pin
 VerifyBank:
-getd r0 r1 2
+getd r0 r1 8
 bne r0 r14 ScanStart
 j Bank
 VerifyRaw:

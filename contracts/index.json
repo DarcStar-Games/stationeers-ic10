@@ -3186,70 +3186,6 @@
         }
       ]
     },
-    "ic10.interface.access.2b462e2be580f744": {
-      "stack": {
-        "literal_reads": [
-          6,
-          7,
-          8
-        ],
-        "literal_writes": [
-          2,
-          3,
-          4,
-          5
-        ],
-        "dynamic_read": false,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "none",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 7,
-            "equals": 1
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 6,
-            "end": 8
-          }
-        ],
-        "stack_writable_ranges": [
-          {
-            "start": 2,
-            "end": 5
-          }
-        ],
-        "constraints": [
-          {
-            "address": 7,
-            "equals": 1
-          }
-        ],
-        "properties_readable": [],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/manufacturing/print_candidate_executor_v2_0.ic10",
-          "port": "d3"
-        }
-      ]
-    },
     "ic10.interface.access.2db866057e19e044": {
       "stack": {
         "literal_reads": [
@@ -8880,6 +8816,74 @@
         {
           "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
           "port": "d5"
+        }
+      ]
+    },
+    "ic10.interface.access.e94a61006695ef10": {
+      "stack": {
+        "literal_reads": [
+          8,
+          16,
+          17
+        ],
+        "literal_writes": [
+          12,
+          13,
+          14,
+          15
+        ],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 17,
+            "equals": 1
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 8,
+            "end": 8
+          },
+          {
+            "start": 16,
+            "end": 17
+          }
+        ],
+        "stack_writable_ranges": [
+          {
+            "start": 12,
+            "end": 15
+          }
+        ],
+        "constraints": [
+          {
+            "address": 17,
+            "equals": 1
+          }
+        ],
+        "properties_readable": [],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/manufacturing/print_candidate_executor_v2_0.ic10",
+          "port": "d3"
         }
       ]
     },

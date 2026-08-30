@@ -52,6 +52,10 @@ SOFT_LIMIT_EXEMPTIONS = {
         "publishes the common S0 header above its banked A/B config storage",
     "ic10/controller-config/generic_config_loader_v1_2.ic10":
         "gains the common S0 header and a newly registered service magic",
+    "ic10/printer-directory/printer_execution_bank_v2_0.ic10":
+        "publishes the common S0 header above its six-pin ownership arrays",
+    "ic10/printer-directory/printer_capacity_client_v2_0.ic10":
+        "publishes the common S0 header with its request mailbox relocated above it",
 }
 
 

@@ -1294,7 +1294,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "b08a73df55c517ec2670a2424fa70c91aa3c92ef6ac1377349103c8db93d3f63",
+   "source_sha256": "afb49612ef5e6c59441bae2a7016ad85004bec3b4893c38a366e20b6d0a5b9e0",
    "legacy_owned_ranges": [
     [
      10,
@@ -2236,7 +2236,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "6eae9652c178387b7e9a0e7f2a3c7941007f237e744f2224873d84b9f94a4513",
+   "source_sha256": "0d0b117f66181cfb0c7ebfcb251dfb012485d4d17c24466566300e7f69d8a6e1",
    "legacy_owned_ranges": [
     [
      8,
@@ -3647,6 +3647,61 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "controller-config"
+  },
+  "ic10/printer-directory/printer_execution_bank_v2_0.ic10": {
+   "service_id": "ic10.script.printer.execution.bank",
+   "magic": 31415996,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "ce35f406935b0839f9794d486853b8dc51860a7c0b865517fb6dd41676b64fdd",
+   "legacy_owned_ranges": [
+    [
+     8,
+     10
+    ],
+    [
+     16,
+     79
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     16,
+     79
+    ]
+   ],
+   "pilot_family": "printer-directory"
+  },
+  "ic10/printer-directory/printer_capacity_client_v2_0.ic10": {
+   "service_id": "ic10.script.printer.capacity.client",
+   "magic": 31415997,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "1703506292b88ea6ff454d6dafc7c89efca575592eb90238208e6736dd56d43d",
+   "legacy_owned_ranges": [
+    [
+     8,
+     17
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "printer-directory"
   }
  },
  "legacy_exemption": {

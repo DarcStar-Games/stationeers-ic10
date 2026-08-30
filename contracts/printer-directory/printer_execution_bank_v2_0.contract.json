@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/printer-directory/printer_execution_bank_v2_0.ic10",
-  "source_sha256": "064b435c5f626770e31046c803f4bdc78bee6923c209b70a14fc3d88eff7f19f",
+  "source_sha256": "ce35f406935b0839f9794d486853b8dc51860a7c0b865517fb6dd41676b64fdd",
   "identity": {
     "service_id": "ic10.script.printer.execution.bank",
     "implementation_revision": "2.0",
@@ -18,15 +18,16 @@
     "literal_reads": [
       0,
       1,
-      2,
-      3
+      8,
+      9
     ],
     "literal_writes": [
       0,
       1,
       2,
-      3,
-      4
+      8,
+      9,
+      10
     ],
     "dynamic_read": true,
     "dynamic_write": true,
@@ -81,13 +82,12 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read",
           "self-write"
         ]
       },
       {
-        "address": 3,
-        "name": "S3",
+        "address": 8,
+        "name": "S8",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -96,8 +96,18 @@
         ]
       },
       {
-        "address": 4,
-        "name": "S4",
+        "address": 9,
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 10,
+        "name": "S10",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
