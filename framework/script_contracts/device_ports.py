@@ -192,24 +192,8 @@ def network_dependencies(
     return result
 
 
-def analyze_device_ports(source: str, rows: list[list[str]], aliases: dict[str, str], integer_aliases: dict[str, int], overrides: dict[str, Any]) -> list[dict[str, Any]]:
-    state: dict[str, dict[str, Any]] = {}
-    alias_names: dict[str, list[str]] = defaultdict(list)
-    for name, port in aliases.items():
-        alias_names[port].append(name)
-
-    def ensure(port: str) -> dict[str, Any]:
-        return state.setdefault(port, {
-            "port": port,
-            "role": sorted(alias_names[port])[0] if alias_names[port] else port,
-            "aliases": sorted(alias_names[port]),
-            "requirement": "required",
-            "device_properties": {"reads": set(), "writes": set(), "slot_reads": set(), "slot_writes": set()},
-            "stack": {"literal_reads": set(), "literal_writes": set(), "dynamic_read": False, "dynamic_write": False,
-                      "dynamic_read_ranges": [], "dynamic_write_ranges": [], "dynamic_read_range_source": "none",
-                      "dynamic_write_range_source": "none", "constraints": []},
-        })
-
+def _optional_ports(source: str) -> set[str]:
+    """Ports the leading comment block explicitly declares optional."""
     comments = "\n".join(line for line in source.splitlines()[:6] if line.lstrip().startswith("#"))
     optional_ports = set()
     port_mentions = list(re.finditer(r"\bd[0-5]\b", comments))
@@ -218,6 +202,11 @@ def analyze_device_ports(source: str, rows: list[list[str]], aliases: dict[str, 
         clause = comments[mention.start():end]
         if "optional" in clause.lower():
             optional_ports.add(mention.group())
+    return optional_ports
+
+
+def _scan_port_accesses(rows: list[list[str]], aliases: dict[str, str], integer_aliases: dict[str, int], ensure) -> None:
+    """Record every stack, property, and slot access each instruction makes on a port."""
     for row in rows:
         if row[0] == "alias":
             continue
@@ -268,6 +257,80 @@ def analyze_device_ports(source: str, rows: list[list[str]], aliases: dict[str, 
             if port:
                 ensure(port)["device_properties"]["writes"].add(row[2])
 
+
+def _finalize_port(
+    port: str, item: dict[str, Any], optional_ports: set[str], overrides: dict[str, Any],
+    proofs: dict[tuple[str, str], RangeProof],
+) -> None:
+    """Sort the scanned sets, verify dynamic-property provenance, and resolve ranges."""
+    if port in optional_ports:
+        item["requirement"] = "optional"
+    properties = item["device_properties"]
+    item["device_properties"] = {
+        "reads": sorted(properties["reads"]),
+        "writes": sorted(properties["writes"]),
+        "slot_reads": [
+            {"slot": slot, "property": prop}
+            for slot, prop in sorted(properties["slot_reads"], key=lambda value: (str(value[0]), value[1]))
+        ],
+        "slot_writes": [
+            {"slot": slot, "property": prop}
+            for slot, prop in sorted(properties["slot_writes"], key=lambda value: (str(value[0]), value[1]))
+        ],
+    }
+    dynamic_operands = {
+        value for direction in ("reads", "writes")
+        for value in item["device_properties"][direction]
+        if DYNAMIC_PROPERTY_RE.fullmatch(value)
+    } | {
+        value["property"] for direction in ("slot_reads", "slot_writes")
+        for value in item["device_properties"][direction]
+        if DYNAMIC_PROPERTY_RE.fullmatch(value["property"])
+    }
+    declared_sources = overrides.get("ports", {}).get(port, {}).get("dynamic_property_sources", [])
+    source_operands = [value["operand"] for value in declared_sources]
+    if len(source_operands) != len(set(source_operands)) or set(source_operands) != dynamic_operands:
+        raise ValueError(
+            f"{port} dynamic LogicType provenance mismatch: "
+            f"operands={sorted(dynamic_operands)}, declared={sorted(source_operands)}"
+        )
+    if declared_sources:
+        item["dynamic_property_sources"] = sorted(
+            declared_sources, key=lambda value: (value["operand"], value["source_port"], value["address"])
+        )
+    stack = item["stack"]
+    stack["literal_reads"] = sorted(stack["literal_reads"])
+    stack["literal_writes"] = sorted(stack["literal_writes"])
+    for direction in ("read", "write"):
+        dynamic_key = f"dynamic_{direction}"
+        ranges_key = f"dynamic_{direction}_ranges"
+        source_key = f"dynamic_{direction}_range_source"
+        declared_ranges = stack[ranges_key]
+        proof = proofs.get((port, direction), RangeProof())
+        stack[ranges_key], stack[source_key] = resolve_dynamic_ranges(
+            stack[dynamic_key], proof, declared_ranges, f"{port} {direction}"
+        )
+
+
+def analyze_device_ports(source: str, rows: list[list[str]], aliases: dict[str, str], integer_aliases: dict[str, int], overrides: dict[str, Any]) -> list[dict[str, Any]]:
+    state: dict[str, dict[str, Any]] = {}
+    alias_names: dict[str, list[str]] = defaultdict(list)
+    for name, port in aliases.items():
+        alias_names[port].append(name)
+
+    def ensure(port: str) -> dict[str, Any]:
+        return state.setdefault(port, {
+            "port": port,
+            "role": sorted(alias_names[port])[0] if alias_names[port] else port,
+            "aliases": sorted(alias_names[port]),
+            "requirement": "required",
+            "device_properties": {"reads": set(), "writes": set(), "slot_reads": set(), "slot_writes": set()},
+            "stack": {"literal_reads": set(), "literal_writes": set(), "dynamic_read": False, "dynamic_write": False,
+                      "dynamic_read_ranges": [], "dynamic_write_ranges": [], "dynamic_read_range_source": "none",
+                      "dynamic_write_range_source": "none", "constraints": []},
+        })
+
+    _scan_port_accesses(rows, aliases, integer_aliases, ensure)
     for port, cells in external_equality_checks(source, rows, aliases, integer_aliases).items():
         target = ensure(port)["stack"]["constraints"]
         for address, values in sorted(cells.items()):
@@ -282,54 +345,9 @@ def analyze_device_ports(source: str, rows: list[list[str]], aliases: dict[str, 
         if "requirement" in declared:
             ensure(port)["requirement"] = declared["requirement"]
     proofs = dynamic_port_proofs(source, aliases, integer_aliases)
+    optional_ports = _optional_ports(source)
     for port, item in state.items():
-        if port in optional_ports:
-            item["requirement"] = "optional"
-        properties = item["device_properties"]
-        item["device_properties"] = {
-            "reads": sorted(properties["reads"]),
-            "writes": sorted(properties["writes"]),
-            "slot_reads": [
-                {"slot": slot, "property": prop}
-                for slot, prop in sorted(properties["slot_reads"], key=lambda value: (str(value[0]), value[1]))
-            ],
-            "slot_writes": [
-                {"slot": slot, "property": prop}
-                for slot, prop in sorted(properties["slot_writes"], key=lambda value: (str(value[0]), value[1]))
-            ],
-        }
-        dynamic_operands = {
-            value for direction in ("reads", "writes")
-            for value in item["device_properties"][direction]
-            if DYNAMIC_PROPERTY_RE.fullmatch(value)
-        } | {
-            value["property"] for direction in ("slot_reads", "slot_writes")
-            for value in item["device_properties"][direction]
-            if DYNAMIC_PROPERTY_RE.fullmatch(value["property"])
-        }
-        declared_sources = overrides.get("ports", {}).get(port, {}).get("dynamic_property_sources", [])
-        source_operands = [value["operand"] for value in declared_sources]
-        if len(source_operands) != len(set(source_operands)) or set(source_operands) != dynamic_operands:
-            raise ValueError(
-                f"{port} dynamic LogicType provenance mismatch: "
-                f"operands={sorted(dynamic_operands)}, declared={sorted(source_operands)}"
-            )
-        if declared_sources:
-            item["dynamic_property_sources"] = sorted(
-                declared_sources, key=lambda value: (value["operand"], value["source_port"], value["address"])
-            )
-        stack = item["stack"]
-        stack["literal_reads"] = sorted(stack["literal_reads"])
-        stack["literal_writes"] = sorted(stack["literal_writes"])
-        for direction in ("read", "write"):
-            dynamic_key = f"dynamic_{direction}"
-            ranges_key = f"dynamic_{direction}_ranges"
-            source_key = f"dynamic_{direction}_range_source"
-            declared_ranges = stack[ranges_key]
-            proof = proofs.get((port, direction), RangeProof())
-            stack[ranges_key], stack[source_key] = resolve_dynamic_ranges(
-                stack[dynamic_key], proof, declared_ranges, f"{port} {direction}"
-            )
+        _finalize_port(port, item, optional_ports, overrides, proofs)
     return [state[port] for port in sorted(state)]
 
 

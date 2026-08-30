@@ -7,6 +7,7 @@ plus the declared-header verification and restart classification beside it.
 from __future__ import annotations
 
 from collections import defaultdict
+from dataclasses import dataclass, field
 from typing import Any
 
 from framework.script_contracts.dynamic_ranges import (
@@ -44,35 +45,50 @@ def verify_declared_headers(rows: list[list[str]], integer_aliases: dict[str, in
     return sorted(headers, key=lambda item: (item["base"], item["magic"], item["abi"]))
 
 
-def analyze_own_stack(source: str, rows: list[list[str]], integer_aliases: dict[str, int], headers: list[dict[str, int]], overrides: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, Any]]]:
-    reads: set[int] = set(); writes: set[int] = set()
-    write_values: dict[int, set[Any]] = defaultdict(set); unknown_values: set[int] = set()
-    dynamic_read = False; dynamic_write = False; clears_all = False
+@dataclass
+class StackScan:
+    """Every literal own-stack access and the dynamic flags one source scan finds."""
+
+    reads: set[int] = field(default_factory=set)
+    writes: set[int] = field(default_factory=set)
+    write_values: dict[int, set[Any]] = field(default_factory=lambda: defaultdict(set))
+    unknown_values: set[int] = field(default_factory=set)
+    dynamic_read: bool = False
+    dynamic_write: bool = False
+    clears_all: bool = False
+
+
+def _scan_literal_accesses(rows: list[list[str]], integer_aliases: dict[str, int]) -> StackScan:
+    scan = StackScan()
     for row in rows:
         if row[0] == "get" and len(row) >= 4 and row[2] == "db":
             address = resolve_integer(row[3], integer_aliases)
-            dynamic_read |= address is None
+            scan.dynamic_read |= address is None
             if address is not None:
-                reads.add(address)
+                scan.reads.add(address)
         elif row[0] == "poke" and len(row) >= 3:
             address = resolve_integer(row[1], integer_aliases)
-            dynamic_write |= address is None
+            scan.dynamic_write |= address is None
             if address is not None:
-                writes.add(address)
+                scan.writes.add(address)
                 value = resolve_literal(row[2], integer_aliases)
                 if value is None:
-                    unknown_values.add(address)
+                    scan.unknown_values.add(address)
                 else:
-                    write_values[address].add(value)
+                    scan.write_values[address].add(value)
         elif row[0] == "peek":
-            dynamic_read = True
+            scan.dynamic_read = True
         elif row[0] in {"push", "pop"}:
-            dynamic_read = True; dynamic_write = True
+            scan.dynamic_read = True
+            scan.dynamic_write = True
         elif row[0] == "clr" and len(row) >= 2 and row[1] == "db":
-            clears_all = True
-            dynamic_write = True
-    annotations, publication_rules = source_semantics(source, integer_aliases)
-    publication_rules.extend(verified_publication_overrides(source, rows, integer_aliases, overrides))
+            scan.clears_all = True
+            scan.dynamic_write = True
+    return scan
+
+
+def _own_stack_proofs(source: str, integer_aliases: dict[str, int]) -> dict[str, RangeProof]:
+    """Prove the dynamic own-stack accesses; peek/push/pop stay unproved, clears are total."""
     accesses: list[tuple[int, str, str]] = []
     unproved = {"read": 0, "write": 0}
     clears = 0
@@ -98,26 +114,20 @@ def analyze_own_stack(source: str, rows: list[list[str]], integer_aliases: dict[
     write_proof.proved_accesses += clears
     if clears:
         write_proof.ranges = merge_ranges(write_proof.ranges + [{"start": 0, "end": 511}])
-    dynamic_read_ranges, dynamic_read_range_source = resolve_dynamic_ranges(
-        dynamic_read, proofs["read"], validated_ranges(overrides.get("dynamic_read_ranges")),
-        "own-stack read", fallback_full_stack=True,
-    )
-    dynamic_write_ranges, dynamic_write_range_source = resolve_dynamic_ranges(
-        dynamic_write, proofs["write"], validated_ranges(overrides.get("dynamic_write_ranges")),
-        "own-stack write", fallback_full_stack=True,
-    )
-    dynamic_write_cells = {
-        address for item in dynamic_write_ranges for address in range(item["start"], item["end"] + 1)
-    }
-    stable_expected: dict[int, Any] = {header["base"]: header["magic"] for header in headers}
-    stable_expected.update({header["base"] + 1: header["abi"] for header in headers})
-    stable = stable_cells(source, integer_aliases, stable_expected)
+    return proofs
+
+
+def _synthesize_fields(
+    scan: StackScan, annotations: dict[int, dict[str, Any]], headers: list[dict[str, int]],
+    stable: set[int], dynamic_write_cells: set[int], overrides: dict[str, Any],
+) -> dict[int, dict[str, Any]]:
+    """Name every accessed cell from source semantics, headers, and overrides, in that order."""
     fields: dict[int, dict[str, Any]] = {}
-    for address in sorted(reads | writes):
+    for address in sorted(scan.reads | scan.writes):
         access = []
-        if address in reads:
+        if address in scan.reads:
             access.append("self-read")
-        if address in writes:
+        if address in scan.writes:
             access.append("self-write")
         fields[address] = {
             "address": address,
@@ -126,8 +136,8 @@ def analyze_own_stack(source: str, rows: list[list[str]], integer_aliases: dict[
             "semantic_source": "unresolved",
             "access": access,
         }
-        if address not in dynamic_write_cells and address not in unknown_values and len(write_values[address]) == 1:
-            fields[address]["const"] = next(iter(write_values[address]))
+        if address not in dynamic_write_cells and address not in scan.unknown_values and len(scan.write_values[address]) == 1:
+            fields[address]["const"] = next(iter(scan.write_values[address]))
         annotation = annotations.get(address, {})
         if any(annotation.get(key) for key in ("name", "descriptions", "enums", "reserved")):
             fields[address]["semantic_source"] = "source"
@@ -143,30 +153,23 @@ def analyze_own_stack(source: str, rows: list[list[str]], integer_aliases: dict[
             fields[address]["reserved"] = True
         fields[address]["value_type"] = value_type(fields[address]["name"], fields[address].get("description", ""))
     for header in headers:
-        fields[header["base"]]["name"] = f"Header@S{header['base']}.Magic"
-        fields[header["base"]]["value_type"] = "hash"
-        fields[header["base"]]["semantic_source"] = "protocol-header"
-        if (
-            header["base"] not in dynamic_write_cells
-            and header["base"] not in unknown_values
-            and write_values[header["base"]] == {header["magic"]}
-            and header["base"] in stable
+        for offset, name, kind, expected in (
+            (0, "Magic", "hash", header["magic"]),
+            (1, "ABI", "integer", header["abi"]),
         ):
-            fields[header["base"]]["const"] = header["magic"]
-        else:
-            fields[header["base"]].pop("const", None)
-        fields[header["base"] + 1]["name"] = f"Header@S{header['base']}.ABI"
-        fields[header["base"] + 1]["value_type"] = "integer"
-        fields[header["base"] + 1]["semantic_source"] = "protocol-header"
-        if (
-            header["base"] + 1 not in dynamic_write_cells
-            and header["base"] + 1 not in unknown_values
-            and write_values[header["base"] + 1] == {header["abi"]}
-            and header["base"] + 1 in stable
-        ):
-            fields[header["base"] + 1]["const"] = header["abi"]
-        else:
-            fields[header["base"] + 1].pop("const", None)
+            cell = header["base"] + offset
+            fields[cell]["name"] = f"Header@S{header['base']}.{name}"
+            fields[cell]["value_type"] = kind
+            fields[cell]["semantic_source"] = "protocol-header"
+            if (
+                cell not in dynamic_write_cells
+                and cell not in scan.unknown_values
+                and scan.write_values[cell] == {expected}
+                and cell in stable
+            ):
+                fields[cell]["const"] = expected
+            else:
+                fields[cell].pop("const", None)
     for declared in overrides.get("stack_fields", []):
         address = declared["address"]
         current = fields.setdefault(address, {"address": address, "name": f"S{address}", "value_type": "number", "semantic_source": "override", "access": []})
@@ -179,41 +182,78 @@ def analyze_own_stack(source: str, rows: list[list[str]], integer_aliases: dict[
         for key in ("default", "enum_values", "reserved"):
             if key in declared:
                 current[key] = declared[key]
-    external_readable_ranges = validated_ranges(overrides.get("external_readable_ranges"))
-    if any(header["base"] == 0 for header in headers):
-        extension_bases = write_values[4]
-        if len(extension_bases) == 1:
-            extension_base = next(iter(extension_bases))
-            if isinstance(extension_base, int) and extension_base >= 8:
-                extension_lengths = write_values[extension_base + 2]
-                if (
-                    write_values[extension_base] == {31416054}
-                    and write_values[extension_base + 1] == {1}
-                    and len(extension_lengths) == 1
-                ):
-                    extension_length = next(iter(extension_lengths))
-                    if (
-                        isinstance(extension_length, int)
-                        and 4 <= extension_length <= 192
-                        and extension_base + extension_length <= 512
-                    ):
-                        external_readable_ranges = merge_ranges(external_readable_ranges + [{
-                            "start": extension_base,
-                            "end": extension_base + extension_length - 1,
-                        }])
+    return fields
+
+
+def _extension_readable_ranges(
+    headers: list[dict[str, int]], write_values: dict[int, set[Any]],
+    external_readable_ranges: list[dict[str, int]],
+) -> list[dict[str, int]]:
+    """Advertise a literally published S4-pointed extension block as externally readable."""
+    if not any(header["base"] == 0 for header in headers):
+        return external_readable_ranges
+    extension_bases = write_values[4]
+    if len(extension_bases) != 1:
+        return external_readable_ranges
+    extension_base = next(iter(extension_bases))
+    if not isinstance(extension_base, int) or extension_base < 8:
+        return external_readable_ranges
+    extension_lengths = write_values[extension_base + 2]
+    if (
+        write_values[extension_base] != {31416054}
+        or write_values[extension_base + 1] != {1}
+        or len(extension_lengths) != 1
+    ):
+        return external_readable_ranges
+    extension_length = next(iter(extension_lengths))
+    if (
+        not isinstance(extension_length, int)
+        or not 4 <= extension_length <= 192
+        or extension_base + extension_length > 512
+    ):
+        return external_readable_ranges
+    return merge_ranges(external_readable_ranges + [{
+        "start": extension_base,
+        "end": extension_base + extension_length - 1,
+    }])
+
+
+def analyze_own_stack(source: str, rows: list[list[str]], integer_aliases: dict[str, int], headers: list[dict[str, int]], overrides: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    scan = _scan_literal_accesses(rows, integer_aliases)
+    annotations, publication_rules = source_semantics(source, integer_aliases)
+    publication_rules.extend(verified_publication_overrides(source, rows, integer_aliases, overrides))
+    proofs = _own_stack_proofs(source, integer_aliases)
+    dynamic_read_ranges, dynamic_read_range_source = resolve_dynamic_ranges(
+        scan.dynamic_read, proofs["read"], validated_ranges(overrides.get("dynamic_read_ranges")),
+        "own-stack read", fallback_full_stack=True,
+    )
+    dynamic_write_ranges, dynamic_write_range_source = resolve_dynamic_ranges(
+        scan.dynamic_write, proofs["write"], validated_ranges(overrides.get("dynamic_write_ranges")),
+        "own-stack write", fallback_full_stack=True,
+    )
+    dynamic_write_cells = {
+        address for item in dynamic_write_ranges for address in range(item["start"], item["end"] + 1)
+    }
+    stable_expected: dict[int, Any] = {header["base"]: header["magic"] for header in headers}
+    stable_expected.update({header["base"] + 1: header["abi"] for header in headers})
+    stable = stable_cells(source, integer_aliases, stable_expected)
+    fields = _synthesize_fields(scan, annotations, headers, stable, dynamic_write_cells, overrides)
+    external_readable_ranges = _extension_readable_ranges(
+        headers, scan.write_values, validated_ranges(overrides.get("external_readable_ranges"))
+    )
     return {
         "size": 512,
-        "literal_reads": sorted(reads),
-        "literal_writes": sorted(writes),
-        "dynamic_read": dynamic_read,
-        "dynamic_write": dynamic_write,
+        "literal_reads": sorted(scan.reads),
+        "literal_writes": sorted(scan.writes),
+        "dynamic_read": scan.dynamic_read,
+        "dynamic_write": scan.dynamic_write,
         "dynamic_read_ranges": dynamic_read_ranges,
         "dynamic_write_ranges": dynamic_write_ranges,
-        "dynamic_read_proven_ranges": proofs["read"].ranges if dynamic_read else [],
-        "dynamic_write_proven_ranges": proofs["write"].ranges if dynamic_write else [],
+        "dynamic_read_proven_ranges": proofs["read"].ranges if scan.dynamic_read else [],
+        "dynamic_write_proven_ranges": proofs["write"].ranges if scan.dynamic_write else [],
         "dynamic_read_range_source": dynamic_read_range_source,
         "dynamic_write_range_source": dynamic_write_range_source,
-        "clears_all": clears_all,
+        "clears_all": scan.clears_all,
         "external_readable_ranges": external_readable_ranges,
         "external_writable_ranges": validated_ranges(overrides.get("external_writable_ranges")),
         "fields": [fields[address] for address in sorted(fields)],
