@@ -12,7 +12,7 @@ Ore processing is modeled as a **resource transform**, not as a special transpor
 Resource Transform Catalog
         |
         v
-Transform Profile View ABI3
+Transform Profile View ABI4
         |
         v
 161 Material Transform Admission
@@ -102,31 +102,34 @@ Therefore:
 
 This hierarchy avoids maintaining separate transform catalogs for each processor class.
 
-## 4. Transform Profile View ABI3
+## 4. Transform Profile View ABI4
 
-`ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` resolves a TransformType from the dynamic catalog and republishes a bounded runtime view:
+`ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` (generated) resolves a TransformType from the dynamic catalog and republishes a bounded runtime view. Identity lives in the common `S0`/`S1` header cells (magic = 31415952, ABI = 4); the resolved-request mailbox and payload sit above the descriptor pools:
 
 ```text
-S0   Resource Transform Profile magic = 31415952
-S1   ABI = 3
-S2   TransformType
-S3   RequiredCapabilityMask
-S4   InputCount
-S5   OutputCount
-S6   coherent publication generation
-S7   flags/status metadata
-S8..S31   up to three input descriptors
-S32..S63  output descriptors
+S8..S31   up to six input descriptors, four cells each
+S32..S63  up to eight output descriptors, four cells each
 S64..S67  pressure/temperature condition bounds
+S68  request echo
+S69  resolve status (1 = resolved)
+S70  TransformType request cell, written by the consumer
+S71  RequiredCapabilityMask; -2/-3 publish resolution errors
+S72  InputCount
+S73  OutputCount
+S74  coherent publication generation
+S75  condition flags
 ```
 
-Input 0 begins at S8 and output 0 at S32. The stable offsets are part of the current ABI, not compatibility scaffolding for an older runtime.
+Input 0 begins at S8 and output 0 at S32. A consumer writes the TransformType to
+S70, waits for its echo at S68 with status 1, snapshots S74, reads the fields and
+descriptors, then re-checks S74 unchanged. The stable offsets are part of the
+current ABI, not compatibility scaffolding for an older runtime.
 
 ## 5. Generic admission
 
 `ic10/material-transform/material_transform_admission_v1_0.ic10` consumes:
 
-- `d0` Transform Profile View ABI3;
+- `d0` Transform Profile View ABI4;
 - `d1` live processor;
 - `d2` output Generic Resource Reservation.
 
