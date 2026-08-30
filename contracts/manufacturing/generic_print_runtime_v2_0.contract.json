@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/generic_print_runtime_v2_0.ic10",
-  "source_sha256": "6629f5ccc8019794d03d901b4220e7785a12ad7b28b3becf56283b89a17aba95",
+  "source_sha256": "38fe5e6096c126d4c675265c25048054dc9b047af02115975889a58f620d5118",
   "identity": {
     "service_id": "ic10.script.generic.print.runtime",
     "implementation_revision": "2.0",
@@ -163,7 +163,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416075
+        "const": -602030102
       },
       {
         "address": 1,
@@ -312,7 +312,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416075,
+        "contract": "GenericPrintRuntime",
+        "magic": -602030102,
         "abi": 2
       }
     ]
@@ -328,7 +329,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416075,
+        "equals": -602030102,
         "source": "generated-protocol-header"
       },
       {
@@ -343,9 +344,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416075.abi2",
+        "protocol_id": "ic10.stack.generic-print-runtime.v2",
         "base": 0,
-        "magic": 31416075,
+        "contract": "GenericPrintRuntime",
+        "magic": -602030102,
         "abi": 2,
         "source": "literal-own-stack-header"
       }

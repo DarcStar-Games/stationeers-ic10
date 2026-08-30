@@ -1,7 +1,7 @@
 {
   "format": "GENERIC_DIRECTORY_SCHEMAS_V10",
   "snapshot_host": {
-    "generic_magic": 31415981,
+    "generic_magic": 891293726,
     "data_base": 32,
     "max_entry_width": 3,
     "max_capacity": 64,
@@ -14,7 +14,7 @@
     "input_model": "DIRECTORY_ADAPTER_ABI_V3 through generic bridge",
     "publication_header": {
       "magic_slot": 0,
-      "magic": 31415981,
+      "magic": 891293726,
       "abi_slot": 1,
       "abi": 1,
       "schema_id_slot": 9,
@@ -22,7 +22,7 @@
       "capacity_slot": 12
     },
     "boot_marker_slot": 31,
-    "boot_marker_value": 31415981
+    "boot_marker_value": 891293726
   },
   "registry_host": {
     "publication": "persistent_direct_index_seqlock",
@@ -32,7 +32,7 @@
     "registry_base": 64,
     "publication_header": {
       "magic_slot": 0,
-      "magic": 31415982,
+      "magic": -1822968058,
       "abi_slot": 1,
       "abi": 3,
       "schema_id_slot": 2,
@@ -332,7 +332,7 @@
   ],
   "adapter_abi": {
     "magic_slot": 0,
-    "magic": 31415983,
+    "magic": 583163590,
     "abi_slot": 1,
     "abi": 2,
     "schema_id_slot": 2,

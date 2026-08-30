@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-jobs/power_job_prepare_v1_0.ic10",
-  "source_sha256": "c05491989467d4cf12ca68011043e4942ee6496002c40108ae098180be422894",
+  "source_sha256": "fa794b1ecb258fede7dd69a0287062dca3434a2a64d86d3670b8c2276b9b9cfc",
   "identity": {
     "service_id": "ic10.script.power.job.prepare",
     "implementation_revision": "1.0",
@@ -203,7 +203,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416045
+        "const": -1898863327
       },
       {
         "address": 1,
@@ -348,7 +348,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416045,
+        "contract": "PowerJobPrepare",
+        "magic": -1898863327,
         "abi": 1
       }
     ]
@@ -364,7 +365,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416045,
+        "equals": -1898863327,
         "source": "generated-protocol-header"
       },
       {
@@ -379,9 +380,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416045.abi1",
+        "protocol_id": "ic10.stack.power-job-prepare.v1",
         "base": 0,
-        "magic": 31416045,
+        "contract": "PowerJobPrepare",
+        "magic": -1898863327,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

@@ -1,5 +1,5 @@
 # Stack Header Reader ABI1: d0 target IC housing, d1 optional Setting mirror.
-poke 0 31416067
+poke 0 HASH("StackHeaderReader.v1")
 poke 1 1
 poke 2 20
 poke 5 1

@@ -10,11 +10,18 @@ from functools import lru_cache
 import math
 import re
 from typing import TypeAlias
+import zlib
 
 LABEL_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 INTEGER_RE = re.compile(r"^-?\d+$")
-HASH_RE = re.compile(r'^HASH\("[^"\n]+"\)$')
+HASH_RE = re.compile(r'^HASH\("([^"\n]+)"\)$')
 DIRECTIVE_OPCODES = frozenset({"alias", "define"})
+
+
+def game_hash(name: str) -> int:
+    """The game's HASH(): CRC32 of the string, as the signed int32 IC10 sees."""
+    crc = zlib.crc32(name.encode())
+    return crc - (1 << 32) if crc >= (1 << 31) else crc
 
 
 @dataclass(frozen=True, slots=True)
@@ -211,9 +218,12 @@ def parse_ic10(source: str) -> IC10Source:
 
 
 def integer_value(token: str, aliases: dict[str, int] | None = None) -> int | None:
-    """Resolve a literal integer or a caller-supplied integer alias."""
+    """Resolve a literal integer, a HASH literal, or a caller-supplied integer alias."""
     if INTEGER_RE.fullmatch(token):
         return int(token)
+    match = HASH_RE.fullmatch(token)
+    if match:
+        return game_hash(match.group(1))
     return (aliases or {}).get(token)
 
 
@@ -228,5 +238,4 @@ def literal_value(
         number = float(token)
         return number if math.isfinite(number) else token.lower()
     except ValueError:
-        pass
-    return token if HASH_RE.fullmatch(token) else None
+        return None

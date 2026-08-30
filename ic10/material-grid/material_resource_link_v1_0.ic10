@@ -1,5 +1,5 @@
 # Material Link ABI1. d0 srcRes,d1 sinkRes,d2 Feeder,d3 Guard,d4 Exec.
-poke 0 31415953
+poke 0 HASH("ResourceLink.v1")
 poke 1 1
 poke 2 0
 poke 30 2
@@ -17,7 +17,7 @@ bdns d4 Bad
 get r14 d0 12
 blez r14 Bad
 get r0 d0 0
-bne r0 31415950 Bad
+bne r0 HASH("ResourceReservation.v1") Bad
 get r0 d0 1
 bne r0 1 Bad
 get r2 d0 34
@@ -32,7 +32,7 @@ bne r0 r14 Loop
 get r13 d1 12
 blez r13 Bad
 get r0 d1 0
-bne r0 31415950 Bad
+bne r0 HASH("ResourceReservation.v1") Bad
 get r0 d1 1
 bne r0 1 Bad
 get r0 d1 34
@@ -50,7 +50,7 @@ getd r8 r6 9
 get r14 d2 10
 blez r14 Bad
 get r0 d2 0
-bne r0 31415961 Bad
+bne r0 HASH("StackerFeeder.v1") Bad
 get r0 d2 1
 bne r0 1 Bad
 l r9 d2 ReferenceId
@@ -63,14 +63,14 @@ get r13 d2 11
 get r0 d2 10
 bne r0 r14 Loop
 get r0 d3 0
-bne r0 31415960 Bad
+bne r0 HASH("MaterialTransferGrantGuard.v1") Bad
 get r0 d3 1
 bne r0 1 Bad
 get r0 d3 13
 blez r0 Bad
 l r14 d3 ReferenceId
 get r0 d4 0
-bne r0 31415958 Bad
+bne r0 HASH("MaterialTransferExecutor.v1") Bad
 get r0 d4 1
 bne r0 1 Bad
 get r0 d4 19

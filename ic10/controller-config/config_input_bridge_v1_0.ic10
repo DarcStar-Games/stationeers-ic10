@@ -2,7 +2,7 @@
 # S8 Editor RefId,S9 Generic Input Resolver RefId; no device screws.
 alias editor r1
 alias resolver r2
-poke 0 22360681
+poke 0 HASH("ConfigInputBridge.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -10,7 +10,7 @@ yield
 get editor db 8
 blez editor Invalid
 getd r0 editor 0
-bne r0 22360680 Invalid
+bne r0 HASH("GenericConfigEditor.v1") Invalid
 getd r0 editor 1
 bne r0 1 Invalid
 putd editor 25 0 # pessimistic; complete publication sets this LAST
@@ -27,7 +27,7 @@ ProfileReady:
 get resolver db 9
 blez resolver Invalid
 getd r0 resolver 0
-bne r0 31415931 Invalid
+bne r0 HASH("GenericInputResolver.v1") Invalid
 getd r0 resolver 1
 bne r0 1 Invalid
 putd resolver 9 r6

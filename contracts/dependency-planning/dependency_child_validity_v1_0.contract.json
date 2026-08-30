@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/dependency_child_validity_v1_0.ic10",
-  "source_sha256": "cbe6968c704e38903ee8e8ebb7012084e66b6aa5eebadd606c28539bf57b3bb9",
+  "source_sha256": "2290de132fcc868900a61cfc573ecca096f39f6a15c2ef260a0bc8865bd585a9",
   "identity": {
     "service_id": "ic10.script.dependency.child.validity",
     "implementation_revision": "1.0",
@@ -159,7 +159,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416014
+        "const": -1204804829
       },
       {
         "address": 1,
@@ -285,7 +285,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416014,
+        "contract": "DependencyChildValidity",
+        "magic": -1204804829,
         "abi": 1
       }
     ]
@@ -301,7 +302,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416014,
+        "equals": -1204804829,
         "source": "generated-protocol-header"
       },
       {
@@ -316,9 +317,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416014.abi1",
+        "protocol_id": "ic10.stack.dependency-child-validity.v1",
         "base": 0,
-        "magic": 31416014,
+        "contract": "DependencyChildValidity",
+        "magic": -1204804829,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

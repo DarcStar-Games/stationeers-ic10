@@ -1,5 +1,5 @@
 # Advise ref-aware child cancellation. d0 ClaimView,d1 ChildValidity.
-poke 0 31416018
+poke 0 HASH("DependencyPlanReleaseAdvisor.v1")
 poke 1 1
 poke 2 0
 Loop:

@@ -1,5 +1,5 @@
 # Resolve PolicyId to one POWER Reservation/Endpoint.
-poke 0 31416041
+poke 0 HASH("PowerPolicyTargetResolver.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -12,7 +12,7 @@ bnez r2 Start
 j Bad
 Start:
 get r0 d0 0
-bne r0 31415981 Bad
+bne r0 HASH("GenericSnapshotDirectoryHost.v1") Bad
 get r0 d0 9
 bne r0 HASH("DirectorySchema.PowerReservation.v1") Bad
 get r8 d0 24
@@ -47,7 +47,7 @@ blez r7 None
 getd r14 r7 12
 blez r14 None
 getd r0 r7 0
-bne r0 31415950 None
+bne r0 HASH("ResourceReservation.v1") None
 getd r0 r7 33
 bne r0 4 None
 getd r1 r7 32

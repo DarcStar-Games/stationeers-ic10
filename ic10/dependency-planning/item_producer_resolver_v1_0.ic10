@@ -1,9 +1,9 @@
 # Generated ITEM producer resolver.
 Boot:
 get r0 db 0
-beq r0 31416003 Table
+beq r0 HASH("ItemProducerResolver.v1") Table
 clr db
-poke 0 31416003
+poke 0 HASH("ItemProducerResolver.v1")
 poke 1 1
 poke 2 0
 Table:

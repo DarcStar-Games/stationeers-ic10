@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10",
-  "source_sha256": "d0a7ff3cc9d22db8b83007c8e5839e0a5b56275df59fc73498172a8e78c49c1e",
+  "source_sha256": "08768d7381400ab40c48038e71eb2c3de2a6564459a8f34bf0ebaccfa4870992",
   "identity": {
     "service_id": "ic10.script.recipe.catalog.lookup",
     "implementation_revision": "8.0",
@@ -76,7 +76,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415968
+          "value": 875310516
         },
         {
           "address": 1,
@@ -86,7 +86,7 @@
         {
           "address": 3,
           "operator": "equals",
-          "value": "HASH(\"CatalogSchema.Recipe.v3\")"
+          "value": -715593446
         }
       ],
       "accepted": []
@@ -105,7 +105,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415970
+          "value": 4515138
         }
       ],
       "accepted": []
@@ -150,7 +150,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415967
+        "const": -237351216
       },
       {
         "address": 1,
@@ -258,7 +258,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415967,
+        "contract": "RecipeCatalogLookup",
+        "magic": -237351216,
         "abi": 3
       }
     ]
@@ -274,7 +275,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415967,
+        "equals": -237351216,
         "source": "generated-protocol-header"
       },
       {
@@ -289,9 +290,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415967.abi3",
+        "protocol_id": "ic10.stack.recipe-catalog-lookup.v3",
         "base": 0,
-        "magic": 31415967,
+        "contract": "RecipeCatalogLookup",
+        "magic": -237351216,
         "abi": 3,
         "source": "literal-own-stack-header"
       }

@@ -1,5 +1,5 @@
 # POWER link selector. d0 ResourceLink directory; request source/sink/watts.
-poke 0 31416030
+poke 0 HASH("PowerLinkSelector.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -15,7 +15,7 @@ blez r3 Bad
 blez r4 Bad
 bdns d0 Bad
 get r0 d0 0
-bne r0 31415981 Bad
+bne r0 HASH("GenericSnapshotDirectoryHost.v1") Bad
 get r0 d0 9
 bne r0 HASH("DirectorySchema.ResourceLink.v1") Bad
 get r8 d0 24
@@ -35,7 +35,7 @@ add r7 r7 1
 getd r14 r1 12
 blez r14 Find
 getd r0 r1 0
-bne r0 31415953 Find
+bne r0 HASH("ResourceLink.v1") Find
 getd r0 r1 30
 bne r0 4 Find
 getd r0 r1 28

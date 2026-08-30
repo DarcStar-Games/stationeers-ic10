@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10",
-  "source_sha256": "89ca4f3765b7388fbf00f3323970c99bbeb3e78bf9fb561df230b654de4adafc",
+  "source_sha256": "841f6f0fec7d62c838d0baa614905e98d64b65e14de2e94082be402cce164754",
   "identity": {
     "service_id": "ic10.script.gas.mixture.purity.guard",
     "implementation_revision": "1.0",
@@ -114,7 +114,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415963
+            "equals": 2107540686
           },
           {
             "address": 8,
@@ -133,8 +133,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.eabb8ec60a068e1b",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.eabb8ec60a068e1b",
+        "interface_id": "ic10.interface.access.53ee1e0e7959bfc0",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.53ee1e0e7959bfc0",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -182,7 +182,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415947
+        "const": -1891511623
       },
       {
         "address": 1,
@@ -263,7 +263,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415947,
+        "contract": "MediumPurityGuard",
+        "magic": -1891511623,
         "abi": 1
       }
     ]
@@ -279,7 +280,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415947,
+        "equals": -1891511623,
         "source": "generated-protocol-header"
       },
       {
@@ -294,9 +295,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415947.abi1",
+        "protocol_id": "ic10.stack.medium-purity-guard.v1",
         "base": 0,
-        "magic": 31415947,
+        "contract": "MediumPurityGuard",
+        "magic": -1891511623,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-config/generic_config_loader_v1_2.ic10",
-  "source_sha256": "7fc0253bbe9df05db90ffe4298c0f402bb96e6370ea5d826e5e8fc19545c1d76",
+  "source_sha256": "5392bad9503a7225b6bdd346d248cc4c252559f5647d03338df92d4daead0c9c",
   "identity": {
     "service_id": "ic10.script.generic.config.loader",
     "implementation_revision": "1.2",
@@ -75,7 +75,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 22360680
+          "value": -533009584
         },
         {
           "address": 1,
@@ -106,7 +106,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415928
+          "value": -759746849
         },
         {
           "address": 1,
@@ -144,12 +144,12 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415929
+          "value": -1082737849
         },
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415930
+          "value": 940078290
         },
         {
           "address": 1,
@@ -233,7 +233,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416083,
+        "contract": "GenericConfigLoader",
+        "magic": 1803162880,
         "abi": 1
       }
     ]
@@ -249,9 +250,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416083.abi1",
+        "protocol_id": "ic10.stack.generic-config-loader.v1",
         "base": 0,
-        "magic": 31416083,
+        "contract": "GenericConfigLoader",
+        "magic": 1803162880,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

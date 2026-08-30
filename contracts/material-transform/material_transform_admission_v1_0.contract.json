@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-transform/material_transform_admission_v1_0.ic10",
-  "source_sha256": "71b8d7a92ce158a31c1bf62f98ae956d3fc0745100f2b4c2510518e14b7bb39e",
+  "source_sha256": "d4f468e02940c770f843b1211c16345c1cacf79a6e523325f81e335533b7dd03",
   "identity": {
     "service_id": "ic10.script.material.transform.admission",
     "implementation_revision": "1.0",
@@ -59,7 +59,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415952
+            "equals": 499210479
           },
           {
             "address": 1,
@@ -87,7 +87,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415952.abi4"
+          "ic10.stack.resource-transform-profile-view.v4"
         ]
       }
     },
@@ -172,7 +172,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415950
+            "equals": -1742884202
           },
           {
             "address": 1,
@@ -188,7 +188,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415950.abi1"
+          "ic10.stack.resource-reservation.v1"
         ]
       }
     }
@@ -236,7 +236,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415977
+        "const": 524863963
       },
       {
         "address": 1,
@@ -371,7 +371,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415977,
+        "contract": "MaterialTransformAdmission",
+        "magic": 524863963,
         "abi": 1
       }
     ]
@@ -387,7 +388,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415977,
+        "equals": 524863963,
         "source": "generated-protocol-header"
       },
       {
@@ -402,9 +403,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415977.abi1",
+        "protocol_id": "ic10.stack.material-transform-admission.v1",
         "base": 0,
-        "magic": 31415977,
+        "contract": "MaterialTransformAdmission",
+        "magic": 524863963,
         "abi": 1,
         "source": "literal-own-stack-header"
       }
@@ -414,9 +416,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415952.abi4",
+            "protocol_id": "ic10.stack.resource-transform-profile-view.v4",
             "header_base": 0,
-            "magic": 31415952,
+            "contract": "ResourceTransformProfileView",
+            "magic": 499210479,
             "abi": 4,
             "publication_requirements": []
           }
@@ -427,9 +430,10 @@
         "port": "d2",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415950.abi1",
+            "protocol_id": "ic10.stack.resource-reservation.v1",
             "header_base": 0,
-            "magic": 31415950,
+            "contract": "ResourceReservation",
+            "magic": -1742884202,
             "abi": 1,
             "publication_requirements": [
               {

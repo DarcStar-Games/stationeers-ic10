@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_consumer_endpoint_v1_0.ic10",
-  "source_sha256": "84696a4d30c69a7167e19b3a87fd6c1dbd1d0879df3548aa59b7aab7e8fc862b",
+  "source_sha256": "11cc6057c9ee6cd0a8c9e8cf75b66b71c03592ccbda959d22b7e8f3a3e8d8e63",
   "identity": {
     "service_id": "ic10.script.power.consumer.endpoint",
     "implementation_revision": "1.0",
@@ -114,7 +114,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415949
+        "const": 25991561
       },
       {
         "address": 1,
@@ -320,7 +320,7 @@
         "access": [
           "self-write"
         ],
-        "const": "HASH(\"Power.Electrical\")"
+        "const": 1977405139
       },
       {
         "address": 54,
@@ -365,7 +365,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415949,
+        "contract": "ResourceEndpoint",
+        "magic": 25991561,
         "abi": 1
       }
     ]
@@ -381,7 +382,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415949,
+        "equals": 25991561,
         "source": "generated-protocol-header"
       },
       {
@@ -396,9 +397,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415949.abi1",
+        "protocol_id": "ic10.stack.resource-endpoint.v1",
         "base": 0,
-        "magic": 31415949,
+        "contract": "ResourceEndpoint",
+        "magic": 25991561,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

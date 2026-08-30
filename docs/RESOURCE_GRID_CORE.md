@@ -59,10 +59,10 @@ The ABI carries both `ResourceClass` and `Unit` because identical numeric values
 
 ## 3. Generic Resource Endpoint ABI v1
 
-Magic: `31415949`
+Magic: `HASH("ResourceEndpoint.v1")`
 
 ```text
-S0   magic = 31415949
+S0   magic = ResourceEndpoint.v1
 S1   ABI = 1
 S2   capability mask = 0
 S8   status; >0 usable, <0 invalid/unavailable
@@ -132,12 +132,12 @@ No existing PressureGrid service consumes this adapter yet. This is intentional:
 
 ## 5. Generic Resource Reservation ABI v1
 
-Magic: `31415950`
+Magic: `HASH("ResourceReservation.v1")`
 
 The reservation service mirrors one Generic Resource Endpoint into a stable mutable planning surface.
 
 ```text
-S0   magic = 31415950
+S0   magic = ResourceReservation.v1
 S1   ABI = 1
 S2   capability mask = 0
 S8   MaxRate
@@ -173,10 +173,10 @@ The pressure scheduler still uses its hardened pressure-specific Reservation/All
 
 ## 6. Generic Resource Link ABI v1
 
-Magic: `31415953`
+Magic: `HASH("ResourceLink.v1")`
 
 ```text
-S0   magic = 31415953
+S0   magic = ResourceLink.v1
 S1   ABI = 1
 S2   capability mask = 0
 S8   generic cost hint; 0 when the specialization has no normalized value
@@ -231,7 +231,7 @@ See `docs/ITEM_STORAGE_SYSTEM.md`.
 
 ## 8. Resource Transform Profile ABI v3
 
-Magic: `31415952`
+Magic: `HASH("ResourceTransformProfileView.v4")`
 
 A transfer preserves resource identity. A transformation changes it. The current Profile ABI is declarative but is now consumed by both compact and generic executable paths.
 
@@ -245,7 +245,7 @@ materials -> printer -> manufactured item
 ```
 
 `ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` publishes
-its identity in the common `S0`/`S1` header cells (magic = 31415952, ABI = 4)
+its identity in the common `S0`/`S1` header cells (magic = ResourceTransformProfileView.v4, ABI = 4)
 and serves resolved requests through the `S68..S75` mailbox:
 
 ```text
@@ -358,7 +358,7 @@ Power management now exercises the same Resource Profile / Endpoint / Reservatio
 
 ## 14. Cross-domain ProcessCondition
 
-Item 11 adds one concept above Resource Endpoint/Reservation/Link/Transform: a process may require an environmental/utility **condition** that is neither inventory nor mutation authority. `ProcessCondition ABI1` (`31416048`) carries target identity, semantic FLUID ResourceType, pressure/temperature windows, live unmet bits, strategy, status, and generation.
+Item 11 adds one concept above Resource Endpoint/Reservation/Link/Transform: a process may require an environmental/utility **condition** that is neither inventory nor mutation authority. `ProcessCondition ABI1` (`HASH("ProcessCondition.v1")`) carries target identity, semantic FLUID ResourceType, pressure/temperature windows, live unmet bits, strategy, status, and generation.
 
 The distinction is important:
 

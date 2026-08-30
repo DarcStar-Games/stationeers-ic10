@@ -102,7 +102,7 @@ S27 desired ResourceType
 Publication remains:
 
 ```text
-S0  31415963
+S0  ResourceProfileView.v1
 S1  ABI 1
 S28 status: 1 found, -2 catalog invalid, -3 missing
 S29 publication generation / Store revision

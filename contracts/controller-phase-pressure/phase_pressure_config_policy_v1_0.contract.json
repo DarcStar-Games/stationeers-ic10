@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10",
-  "source_sha256": "b328483cdd759cd01adb384bf1a6453e16496dbc602d572d08038a428cee250f",
+  "source_sha256": "86b6d1f5d4b5b4e0c3c2235da5e0b5b36c3c07093c054b094032bcf492e1e897",
   "identity": {
     "service_id": "ic10.script.phase.pressure.config.policy",
     "implementation_revision": "1.0",
@@ -79,7 +79,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415928
+            "equals": -759746849
           },
           {
             "address": 1,
@@ -91,7 +91,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415928.abi1"
+          "ic10.stack.generic-persistent-config-host.v1"
         ]
       }
     }
@@ -125,7 +125,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416079
+        "const": 2059523732
       },
       {
         "address": 1,
@@ -151,7 +151,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416079,
+        "contract": "PhasePressureConfigPolicy",
+        "magic": 2059523732,
         "abi": 1
       }
     ]
@@ -167,7 +168,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416079,
+        "equals": 2059523732,
         "source": "generated-protocol-header"
       },
       {
@@ -182,9 +183,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416079.abi1",
+        "protocol_id": "ic10.stack.phase-pressure-config-policy.v1",
         "base": 0,
-        "magic": 31416079,
+        "contract": "PhasePressureConfigPolicy",
+        "magic": 2059523732,
         "abi": 1,
         "source": "literal-own-stack-header"
       }
@@ -194,9 +196,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415928.abi1",
+            "protocol_id": "ic10.stack.generic-persistent-config-host.v1",
             "header_base": 0,
-            "magic": 31415928,
+            "contract": "GenericPersistentConfigHost",
+            "magic": -759746849,
             "abi": 1,
             "publication_requirements": []
           }

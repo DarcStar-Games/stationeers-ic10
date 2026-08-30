@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10",
-  "source_sha256": "371b892d23a3542848281f542981f757da40346d299f6880fc1ed204f450fbe7",
+  "source_sha256": "9dd78706ef1bf96985b6393fe76789ba5053f30f48dd9e234b5e575f46a7e4b6",
   "identity": {
     "service_id": "ic10.script.furnace.process.condition.request",
     "implementation_revision": "1.0",
@@ -45,7 +45,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415952
+            "equals": 499210479
           },
           {
             "address": 1,
@@ -61,7 +61,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415952.abi4"
+          "ic10.stack.resource-transform-profile-view.v4"
         ]
       }
     },
@@ -157,7 +157,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416048
+        "const": 1700980279
       },
       {
         "address": 1,
@@ -337,7 +337,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416048,
+        "contract": "ProcessCondition",
+        "magic": 1700980279,
         "abi": 1
       }
     ]
@@ -353,7 +354,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416048,
+        "equals": 1700980279,
         "source": "generated-protocol-header"
       },
       {
@@ -368,9 +369,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416048.abi1",
+        "protocol_id": "ic10.stack.process-condition.v1",
         "base": 0,
-        "magic": 31416048,
+        "contract": "ProcessCondition",
+        "magic": 1700980279,
         "abi": 1,
         "source": "literal-own-stack-header"
       }
@@ -380,9 +382,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415952.abi4",
+            "protocol_id": "ic10.stack.resource-transform-profile-view.v4",
             "header_base": 0,
-            "magic": 31415952,
+            "contract": "ResourceTransformProfileView",
+            "magic": 499210479,
             "abi": 4,
             "publication_requirements": []
           }

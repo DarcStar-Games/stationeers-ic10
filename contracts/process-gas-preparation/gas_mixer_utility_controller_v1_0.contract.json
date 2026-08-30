@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10",
-  "source_sha256": "3a1fa2d8257f074b5cfa4501a2914728e4f04e023fea9109c27e69df0a5069c5",
+  "source_sha256": "15d501c7126ba5547b48bb824c3cb81ae405207ec9db633ae7a1ac7f06b187db",
   "identity": {
     "service_id": "ic10.script.gas.mixer.utility.controller",
     "implementation_revision": "1.0",
@@ -259,7 +259,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415963
+            "equals": 2107540686
           },
           {
             "address": 8,
@@ -278,8 +278,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.3b51862819ab610a",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.3b51862819ab610a",
+        "interface_id": "ic10.interface.access.9c92251a0657c747",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.9c92251a0657c747",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -319,7 +319,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31416048
+            "equals": 1700980279
           },
           {
             "address": 12,
@@ -330,8 +330,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.65c4df697d91621e",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.65c4df697d91621e",
+        "interface_id": "ic10.interface.access.8e474221b1b3e931",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.8e474221b1b3e931",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -376,7 +376,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416049
+        "const": 2029702514
       },
       {
         "address": 1,
@@ -430,7 +430,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416049,
+        "contract": "GasMixerUtilityController",
+        "magic": 2029702514,
         "abi": 1
       }
     ]
@@ -446,7 +447,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416049,
+        "equals": 2029702514,
         "source": "generated-protocol-header"
       },
       {
@@ -461,9 +462,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416049.abi1",
+        "protocol_id": "ic10.stack.gas-mixer-utility-controller.v1",
         "base": 0,
-        "magic": 31416049,
+        "contract": "GasMixerUtilityController",
+        "magic": 2029702514,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

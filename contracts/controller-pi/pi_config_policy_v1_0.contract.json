@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-pi/pi_config_policy_v1_0.ic10",
-  "source_sha256": "1cfe52af7b1345aafc53ea00dc21865cd58d15f2013ed6eb4272091c84bc55dc",
+  "source_sha256": "a297f973a48005beb3a00fdee04e8feef47e79f5a91a054a155ab94b8baab792",
   "identity": {
     "service_id": "ic10.script.pi.config.policy",
     "implementation_revision": "1.0",
@@ -81,7 +81,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415928
+            "equals": -759746849
           },
           {
             "address": 1,
@@ -93,7 +93,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415928.abi1"
+          "ic10.stack.generic-persistent-config-host.v1"
         ]
       }
     }
@@ -127,7 +127,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416077
+        "const": -2022911923
       },
       {
         "address": 1,
@@ -153,7 +153,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416077,
+        "contract": "PiConfigPolicy",
+        "magic": -2022911923,
         "abi": 1
       }
     ]
@@ -169,7 +170,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416077,
+        "equals": -2022911923,
         "source": "generated-protocol-header"
       },
       {
@@ -184,9 +185,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416077.abi1",
+        "protocol_id": "ic10.stack.pi-config-policy.v1",
         "base": 0,
-        "magic": 31416077,
+        "contract": "PiConfigPolicy",
+        "magic": -2022911923,
         "abi": 1,
         "source": "literal-own-stack-header"
       }
@@ -196,9 +198,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415928.abi1",
+            "protocol_id": "ic10.stack.generic-persistent-config-host.v1",
             "header_base": 0,
-            "magic": 31415928,
+            "contract": "GenericPersistentConfigHost",
+            "magic": -759746849,
             "abi": 1,
             "publication_requirements": []
           }

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_reservation_allocator_v1_0.ic10",
-  "source_sha256": "d012541dd8ff5dd10af353c0b331afafb2e3c6d85d16e670987b7b2f106dbf84",
+  "source_sha256": "94e5bbfd5f5a2bfd959e4c5820cbd5f413e30e98038273cf8dcb5f23034d5baf",
   "identity": {
     "service_id": "ic10.script.power.reservation.allocator",
     "implementation_revision": "1.0",
@@ -236,7 +236,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416037
+        "const": -371292892
       },
       {
         "address": 1,
@@ -331,7 +331,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416037,
+        "contract": "PowerReservationAllocator",
+        "magic": -371292892,
         "abi": 1
       }
     ]
@@ -347,7 +348,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416037,
+        "equals": -371292892,
         "source": "generated-protocol-header"
       },
       {
@@ -362,9 +363,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416037.abi1",
+        "protocol_id": "ic10.stack.power-reservation-allocator.v1",
         "base": 0,
-        "magic": 31416037,
+        "contract": "PowerReservationAllocator",
+        "magic": -371292892,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

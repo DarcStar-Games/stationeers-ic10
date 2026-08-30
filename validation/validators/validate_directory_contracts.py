@@ -12,15 +12,15 @@ need=result.contains
 D=json.loads((R/'data/directory_schemas.json').read_text())
 if D.get('format')!='GENERIC_DIRECTORY_SCHEMAS_V10': fail('schema registry format mismatch')
 a=D.get('adapter_abi',{})
-for k,v in {'magic':31415983,'abi':2,'candidate_base':16,'entry_width_slot':4,'capacity_slot':5,'candidate_count_slot':6,'candidate_generation_slot':7,'sequence_slot':8,'overflow_slot':9,'mode_slot':10,'freeze_request_slot':11,'freeze_ack_slot':12}.items():
+for k,v in {'magic':583163590,'abi':2,'candidate_base':16,'entry_width_slot':4,'capacity_slot':5,'candidate_count_slot':6,'candidate_generation_slot':7,'sequence_slot':8,'overflow_slot':9,'mode_slot':10,'freeze_request_slot':11,'freeze_ack_slot':12}.items():
     if a.get(k)!=v: fail(f'adapter ABI {k} mismatch')
 for k in ('published_magic_slot','published_abi_slot'):
     if k in a: fail('legacy adapter field remains: '+k)
 sh=D.get('snapshot_host',{}); rh=D.get('registry_host',{})
 if sh.get('boot_marker_slot')!=31 or 'generic_magic_slot' in sh: fail('snapshot boot marker metadata mismatch')
 if rh.get('publication_sequence_slot')!=23 or 'generic_magic_slot' in rh: fail('registry publication metadata mismatch')
-need('ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','poke 0 31415981','poke 1 1','bgt r2 3 Error','bgt r3 64 Error','poke 22 1','poke 24 r6','poke 15 r15','Shift:\nbge r6 r3 Full','Insert:\nbge r6 r3 Full')
-need('ic10/directory-core/generic_registry_directory_host_v2_0.ic10','poke 0 31415982','poke 1 3','bne r0 3 Loop','put d0 16 r11','get r0 d0 17','bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") SourceBad','bne r0 6 SourceBad','get r10 db 23','poke 23 r10','put d0 16 0')
+need('ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','poke 0 HASH("GenericSnapshotDirectoryHost.v1")','poke 1 1','bgt r2 3 Error','bgt r3 64 Error','poke 22 1','poke 24 r6','poke 15 r15','Shift:\nbge r6 r3 Full','Insert:\nbge r6 r3 Full')
+need('ic10/directory-core/generic_registry_directory_host_v2_0.ic10','poke 0 HASH("GenericRegistryDirectoryHost.v3")','poke 1 3','bne r0 3 Loop','put d0 16 r11','get r0 d0 17','bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") SourceBad','bne r0 6 SourceBad','get r10 db 23','poke 23 r10','put d0 16 0')
 need('ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10','bne r0 3 Loop','put d0 16 r11','get r0 d0 17','get r15 d0 13','get r10 d0 7','bne r0 r15 Release','bne r0 r10 Release','put d0 16 0')
 expected={
  'DirectorySchema.Controller':('ic10/controller-discovery/controller_directory_adapter_v4_0.ic10',1,2),
@@ -42,12 +42,12 @@ for x in D.get('schemas',[]):
         if sid not in expected:
             fail('unexpected snapshot schema '+sid); continue
         f,ver,width=expected[sid]
-        need(f,'poke 0 31415983','poke 1 3','poke 2 17',f'poke 3 HASH("{sid}.v{ver}")',f'poke 10 {width}','poke 11 64','poke 15 1','get r0 db 16','poke 17 r0')
+        need(f,'poke 0 HASH("DirectoryAdapter.v3")','poke 1 3','poke 2 17',f'poke 3 HASH("{sid}.v{ver}")',f'poke 10 {width}','poke 11 64','poke 15 1','get r0 db 16','poke 17 r0')
         if width*x['capacity']>192: fail(sid+': A/B bank stride exceeds generic Host geometry')
         if x.get('schema_version')!=ver or x.get('entry_width')!=width: fail(sid+': registry geometry/version mismatch')
     elif sid=='DirectorySchema.CatalogStoreNode':
         if x.get('entry_width')!=6 or x.get('adapter_entry_width')!=6: fail('Catalog Store registry geometry mismatch')
-        need('ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10','poke 0 31415983','poke 1 3','poke 2 17','poke 3 HASH("DirectorySchema.CatalogStoreNode.v1")','poke 10 6','poke 11 64','poke 15 2','get r0 db 16','poke 17 r0')
+        need('ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10','poke 0 HASH("DirectoryAdapter.v3")','poke 1 3','poke 2 17','poke 3 HASH("DirectorySchema.CatalogStoreNode.v1")','poke 10 6','poke 11 64','poke 15 2','get r0 db 16','poke 17 r0')
     else: fail('unexpected registry schema '+sid)
 if seen!=set(expected)|{'DirectorySchema.CatalogStoreNode'}: fail('directory schema set mismatch: '+repr(seen))
 
@@ -67,7 +67,7 @@ need('ic10/printer-directory/printer_directory_adapter_v1_0.ic10','poke 3 HASH("
 # Transform lanes and printer-execution overlay are native generic-directory schemas.
 tl=next((x for x in D['schemas'] if x['schema_id']=='DirectorySchema.TransformLane'),None)
 if not tl or tl.get('fields')!=['RuntimeReferenceId','ProcessorReferenceId','ProcessorSpec']: fail('TransformLane record mismatch')
-need('ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10','getd r0 r1 0','bne r0 31415980 Scan','poke r4 r1','poke r4 r2')
+need('ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10','getd r0 r1 0','bne r0 HASH("GenericMaterialTransformRuntime.v2") Scan','poke r4 r1','poke r4 r2')
 pe=next((x for x in D['schemas'] if x['schema_id']=='DirectorySchema.PrinterExecution'),None)
 if not pe or pe.get('fields')!=['PrinterReferenceId','FamilyHash','ProcessorSpec']: fail('PrinterExecution record mismatch')
 need('ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10','bne r0 HASH("DirectorySchema.Printer.v2") Loop','poke r0 r2','sll r0 r6 16')

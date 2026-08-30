@@ -420,7 +420,7 @@ It is intentionally **not** the activation authority.
 `ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10` is the only plan commit authority. It publishes:
 
 ```text
-S0   magic = 31415937
+S0   magic = PressureGridReservationPlanner.v2
 S1   ABI = 2
 S11  LeaseTicks
 S8   staged physical-link count

@@ -1,9 +1,9 @@
 get r0 db 31
-beq r0 31415980 Init
+beq r0 HASH("GenericMaterialTransformRuntime.v2") Init
 clr db
-poke 31 31415980
+poke 31 HASH("GenericMaterialTransformRuntime.v2")
 Init:
-poke 0 31415980
+poke 0 HASH("GenericMaterialTransformRuntime.v2")
 poke 1 2
 poke 2 0
 l r0 d0 ReferenceId

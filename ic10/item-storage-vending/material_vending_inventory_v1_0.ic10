@@ -1,5 +1,5 @@
 # Material Vending Inventory: d0 Vending,d1 Resource Profile View -> Endpoint ABI1.
-poke 0 31415949
+poke 0 HASH("ResourceEndpoint.v1")
 poke 1 1
 poke 2 0
 l r0 d1 ReferenceId
@@ -16,7 +16,7 @@ yield
 bdns d0 Bad
 bdns d1 Bad
 get r0 d1 0
-bne r0 31415963 Bad
+bne r0 HASH("ResourceProfileView.v1") Bad
 get r0 d1 1
 bne r0 1 Bad
 get r14 d1 29

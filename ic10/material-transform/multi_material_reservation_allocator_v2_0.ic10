@@ -1,10 +1,10 @@
 # Multi Material Allocator ABI2. d0 Resolver,d1 Stager. Commit S14 LAST.
 get r0 db 31
-beq r0 31415954 Init
+beq r0 HASH("MultiMaterialReservationAllocator.v2") Init
 clr db
-poke 31 31415954
+poke 31 HASH("MultiMaterialReservationAllocator.v2")
 Init:
-poke 0 31415954
+poke 0 HASH("MultiMaterialReservationAllocator.v2")
 poke 1 2
 poke 2 0
 Loop:

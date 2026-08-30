@@ -264,7 +264,7 @@
       "properties": {
         "kind": {"enum": ["stack-protocol", "stack-interface", "physical-device"]},
         "verification": {"enum": ["literal-header", "access-only", "device-properties"]},
-        "protocol_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^ic10\\.stack\\.[0-9]+\\.abi[0-9]+$"}},
+        "protocol_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^ic10\\.stack\\.(?:[0-9]+\\.abi[0-9]+|[a-z0-9-]+\\.v[0-9]+)$"}},
         "interface_id": {"type": "string", "pattern": "^ic10\\.interface\\.[a-z0-9.]+$"},
         "definition_ref": {"type": "string", "pattern": "^contracts/index\\.json#/interfaces/ic10\\.interface\\.access\\.[a-f0-9]{16}$"},
         "provider_resolution": {"const": "deployment-supplied"},
@@ -413,9 +413,9 @@
       "type": "object",
       "additionalProperties": false,
       "required": ["base", "magic", "abi"],
-      "properties": {
+      "properties": {"contract": {"type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$"}, 
         "base": {"type": "integer", "minimum": 0, "maximum": 510},
-        "magic": {"type": "integer", "minimum": 10000000, "maximum": 99999999},
+        "magic": {"type": "integer", "minimum": -2147483648, "maximum": 2147483647},
         "abi": {"type": "integer", "minimum": 1, "maximum": 99}
       }
     },
@@ -502,13 +502,13 @@
     "protocolIdentity": {
       "type": "object",
       "required": ["protocol_id", "header_base", "magic", "abi"],
-      "properties": {
+      "properties": {"contract": {"type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$"}, 
         "protocol_id": {
           "type": "string",
-          "pattern": "^ic10\\.stack\\.[0-9]+\\.abi[0-9]+$"
+          "pattern": "^ic10\\.stack\\.(?:[0-9]+\\.abi[0-9]+|[a-z0-9-]+\\.v[0-9]+)$"
         },
         "header_base": {"type": "integer", "minimum": 0, "maximum": 510},
-        "magic": {"type": "integer", "minimum": 1},
+        "magic": {"type": "integer", "minimum": -2147483648, "maximum": 2147483647},
         "abi": {"type": "integer", "minimum": 1}
       }
     },
@@ -525,13 +525,13 @@
       "type": "object",
       "additionalProperties": false,
       "required": ["protocol_id", "base", "magic", "abi", "source"],
-      "properties": {
+      "properties": {"contract": {"type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$"}, 
         "protocol_id": {
           "type": "string",
-          "pattern": "^ic10\\.stack\\.[0-9]+\\.abi[0-9]+$"
+          "pattern": "^ic10\\.stack\\.(?:[0-9]+\\.abi[0-9]+|[a-z0-9-]+\\.v[0-9]+)$"
         },
         "base": {"type": "integer", "minimum": 0, "maximum": 510},
-        "magic": {"type": "integer", "minimum": 1},
+        "magic": {"type": "integer", "minimum": -2147483648, "maximum": 2147483647},
         "abi": {"type": "integer", "minimum": 1},
         "source": {"const": "literal-own-stack-header"}
       }
@@ -540,13 +540,13 @@
       "type": "object",
       "additionalProperties": false,
       "required": ["protocol_id", "header_base", "magic", "abi", "publication_requirements"],
-      "properties": {
+      "properties": {"contract": {"type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$"}, 
         "protocol_id": {
           "type": "string",
-          "pattern": "^ic10\\.stack\\.[0-9]+\\.abi[0-9]+$"
+          "pattern": "^ic10\\.stack\\.(?:[0-9]+\\.abi[0-9]+|[a-z0-9-]+\\.v[0-9]+)$"
         },
         "header_base": {"type": "integer", "minimum": 0, "maximum": 510},
-        "magic": {"type": "integer", "minimum": 1},
+        "magic": {"type": "integer", "minimum": -2147483648, "maximum": 2147483647},
         "abi": {"type": "integer", "minimum": 1},
         "publication_requirements": {
           "type": "array",

@@ -24,7 +24,7 @@
  "migrated": {
   "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10": {
    "service_id": "ic10.script.catalog.coordinator.directory.adapter",
-   "magic": 31415983,
+   "contract": "DirectoryAdapter",
    "service_abi": 3,
    "schema_id": "DirectorySchema.CatalogStoreNode",
    "schema_version": 1,
@@ -35,7 +35,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "af89e8c88a667ce592e3df6e8495c41ed68dc89797fd60e9b52c0d14099b28a5",
+   "source_sha256": "1b245831493e8a43d68965096ebf0ac0ba1fc93120ee54f5a849cb2b16d076dd",
    "legacy_owned_ranges": [
     [
      10,
@@ -52,7 +52,7 @@
   },
   "ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10": {
    "service_id": "ic10.script.catalog.coordinator.directory.telemetry",
-   "magic": 31416068,
+   "contract": "CatalogCoordinatorDirectoryTelemetry",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -63,14 +63,14 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "d46bf229146c91d6a8c5c3b3e98e102d8efbf182d4b99b9df3b36b8b2a6a2af9",
+   "source_sha256": "ae37a32e035954563ff6fac8cf4e76cfac72f31afa71faa4de7b8ff7d7689367",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "catalog-control-plane"
   },
   "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10": {
    "service_id": "ic10.script.catalog.item.migration.planner",
-   "magic": 31416069,
+   "contract": "CatalogItemMigrationPlanner",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -81,14 +81,14 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "57c72793a79e491e2528e73741bb3b4c01588ecce78805973dedb01a1435c224",
+   "source_sha256": "8881aaf8a66360e2d08d4fdbc56d377f7b8e7e226e321cd5de9341a0bcc79d97",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "catalog-control-plane"
   },
   "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10": {
    "service_id": "ic10.script.catalog.item.migration.worker",
-   "magic": 31416071,
+   "contract": "CatalogItemMigrationWorker",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -99,14 +99,14 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "985da50e453b643b00fe908763b9373b75a00d3ab6ad7192dbb9f170485178ba",
+   "source_sha256": "de287688f01201bc05c82c2f721406d563072ab48e7b6a9e0b46a83e9b65e385",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "catalog-control-plane"
   },
   "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10": {
    "service_id": "ic10.script.catalog.store.retirement.manager",
-   "magic": 31416070,
+   "contract": "CatalogStoreRetirementManager",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -117,14 +117,14 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "771bc37e153221d437a1ec810cfd52fc77227fbd9bdebbe4aa61a9a2b3dc17ce",
+   "source_sha256": "544748967ebfd1b469b8c986643121b4af8ab8ec5a011760482899c91fee89ac",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "catalog-control-plane"
   },
   "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10": {
    "service_id": "ic10.script.controller.directory.adapter",
-   "magic": 31415983,
+   "contract": "DirectoryAdapter",
    "service_abi": 3,
    "schema_id": "DirectorySchema.Controller",
    "schema_version": 1,
@@ -135,7 +135,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "04afee075ea6fb0511298cd8e2211565a1412d28ebdf30911a2d3245fc8266d9",
+   "source_sha256": "57136d75dcdc6b736d09429452b77df81233be63a51f91f8de632cd775c21797",
    "legacy_owned_ranges": [
     [
      10,
@@ -152,7 +152,7 @@
   },
   "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10": {
    "service_id": "ic10.script.controller.phase.pressure.runtime",
-   "magic": 31416060,
+   "contract": "ControllerPhasePressureRuntime",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -161,7 +161,7 @@
    "implementation_id": null,
    "telemetry_base": 96,
    "publishes_state": false,
-   "source_sha256": "9ec69e335fc8e321aeeeff6704e43a343e6d7e1ebceb9eb450334c50bdc3f96e",
+   "source_sha256": "b4edd466b76f944583d93df90b415f74c9a3de965dd024c14915c68551a9e391",
    "legacy_owned_ranges": [
     [
      96,
@@ -183,7 +183,7 @@
   },
   "ic10/controller-pi/controller_pi_runtime_v1_1.ic10": {
    "service_id": "ic10.script.controller.pi.runtime",
-   "magic": 31416061,
+   "contract": "ControllerPiRuntime",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -192,7 +192,7 @@
    "implementation_id": null,
    "telemetry_base": 96,
    "publishes_state": false,
-   "source_sha256": "eabe86d279ae48f4f62db21775e2574206760b80df5748e7795ac566762d3e38",
+   "source_sha256": "ac378bd9437f9d2497c4c6ed843ceb0111e648946873dab09fd6844b4098983c",
    "legacy_owned_ranges": [
     [
      96,
@@ -210,7 +210,7 @@
   },
   "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10": {
    "service_id": "ic10.script.controller.sequencer.runtime",
-   "magic": 31416062,
+   "contract": "ControllerSequencerRuntime",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -219,7 +219,7 @@
    "implementation_id": null,
    "telemetry_base": 96,
    "publishes_state": false,
-   "source_sha256": "cb3c3ed8d6dc22ea85d633f8c12b7540540f8c3796d36f53be1991455691c00e",
+   "source_sha256": "0382c75ed2e72306e8c4711c810a2cd3578ddafc15c08cad48ae0931be0bdbab",
    "legacy_owned_ranges": [
     [
      96,
@@ -237,7 +237,7 @@
   },
   "ic10/diagnostics/console_registry_v1_1.ic10": {
    "service_id": "ic10.script.console.registry",
-   "magic": 14142136,
+   "contract": "ConsoleRegistry",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -248,7 +248,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "7b936142c949946d481c40a569ed1f98a29b9028d7c7c4c9629a4d5fed734d6b",
+   "source_sha256": "86ffe67bc81551e81a8e4918187bdc7d7c40e70616d58c0cd706f3c372fe5a88",
    "legacy_owned_ranges": [
     [
      8,
@@ -273,7 +273,7 @@
   },
   "ic10/diagnostics/console_selector_v1_1.ic10": {
    "service_id": "ic10.script.console.selector",
-   "magic": 17320509,
+   "contract": "ConsoleSelector",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -284,7 +284,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "562299760001664ed197ff4c2b9496e9a07777c3af919fa814cc76306f18c4ff",
+   "source_sha256": "a72dd88238d9afe799fadba688e66ebb44e9d185c2f1a51a958194519a6c2e63",
    "legacy_owned_ranges": [
     [
      8,
@@ -296,7 +296,7 @@
   },
   "ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10": {
    "service_id": "ic10.script.diagnostic.hash.console.mode",
-   "magic": 17320513,
+   "contract": "DiagnosticHashConsoleMode",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -307,7 +307,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "ecd02972fafac4494d991990db276e4203236e38e0b3eabdfbd1e602f79293c4",
+   "source_sha256": "16d5cd1fef43830934d5ac553267bc6fa0fe89f94628f4d80a61c049587ce6a6",
    "legacy_owned_ranges": [
     [
      8,
@@ -319,7 +319,7 @@
   },
   "ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10": {
    "service_id": "ic10.script.diagnostic.input.bridge",
-   "magic": 17320511,
+   "contract": "DiagnosticInputBridge",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -330,7 +330,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "24efabed059cbcf56b4e44a704d5d5241c372db38e6a2d43462113ea7b810bb6",
+   "source_sha256": "b22604a4392013bacb45b8af90cca11713e29146a851cb0e3f0d3db6def24a4e",
    "legacy_owned_ranges": [
     [
      8,
@@ -351,7 +351,7 @@
   },
   "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10": {
    "service_id": "ic10.script.diagnostic.mapping.editor",
-   "magic": 17320510,
+   "contract": "DiagnosticMappingEditor",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -362,7 +362,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "feabc414837081f786ba9ce304109ed41200a1d8a8d00f0aecd1aa5afeffb246",
+   "source_sha256": "f7891920d03d8906456cfa0cc738871686e94c75b34ec84f81c5dc901b85324b",
    "legacy_owned_ranges": [
     [
      8,
@@ -374,7 +374,7 @@
   },
   "ic10/diagnostics/diagnostic_renderer_v1_1.ic10": {
    "service_id": "ic10.script.diagnostic.renderer",
-   "magic": 16180339,
+   "contract": "DiagnosticRenderer",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -385,7 +385,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "dd598915617cef3821b9ede3c2374851c1a292a47dfbebe2604d507f1755dcc0",
+   "source_sha256": "4a3deea19f0ef917f274b473d90e45b1a7e183c510ca5ee1bebbc67752ea4f91",
    "legacy_owned_ranges": [
     [
      8,
@@ -397,7 +397,7 @@
   },
   "ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10": {
    "service_id": "ic10.script.diagnostic.selector.bridge",
-   "magic": 17320512,
+   "contract": "DiagnosticSelectorBridge",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -408,7 +408,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "9ffdea0dc43291792348b52f3970e041aa6aa874de262f0e2097e23dae6acd1e",
+   "source_sha256": "2607db0faa3ab790b4f1cf6a376d26b0b9e02a4555b356e57c9f870154c7839e",
    "legacy_owned_ranges": [
     [
      8,
@@ -420,7 +420,7 @@
   },
   "ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10": {
    "service_id": "ic10.script.input.profile.catalog.loader.00",
-   "magic": 31415969,
+   "contract": "CatalogLoader",
    "service_abi": 5,
    "schema_id": "CatalogSchema.InputProfile",
    "schema_version": 3,
@@ -431,7 +431,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "8e3bc6130347ba4509470ff964e34108032f7f3b5587cf3a1fb077a7c5bd921f",
+   "source_sha256": "43029418f7ad7aa95b8428e3148ba5608db2f8d04376fcc6bac20ac431214979",
    "legacy_owned_ranges": [
     [
      10,
@@ -515,7 +515,7 @@
   },
   "ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10": {
    "service_id": "ic10.script.input.profile.catalog.loader.01",
-   "magic": 31415969,
+   "contract": "CatalogLoader",
    "service_abi": 5,
    "schema_id": "CatalogSchema.InputProfile",
    "schema_version": 3,
@@ -526,7 +526,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "a140abc261534a2099071c4fb4e5dbde18f01dc0379b65c15f588a9275ba6767",
+   "source_sha256": "654a997ba0c41ed955c7fdf6b984bf33eae76a228cede93bec68fdf8aaf9d952",
    "legacy_owned_ranges": [
     [
      10,
@@ -582,7 +582,7 @@
   },
   "ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10": {
    "service_id": "ic10.script.input.profile.catalog.loader.02",
-   "magic": 31415969,
+   "contract": "CatalogLoader",
    "service_abi": 5,
    "schema_id": "CatalogSchema.InputProfile",
    "schema_version": 3,
@@ -593,7 +593,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "fb1c5142250f5d92692f4fc7658893db27631a9d5ebffaba4a22702f0751f07b",
+   "source_sha256": "f4ffc2305b20e4dc0a190b0ab6e25f529f6737e011d30cd5bcfc15009020db48",
    "legacy_owned_ranges": [
     [
      10,
@@ -717,7 +717,7 @@
   },
   "ic10/input-profile-catalog/input_profile_view_v5_0.ic10": {
    "service_id": "ic10.script.input.profile.view",
-   "magic": 31415929,
+   "contract": "InputProfileView",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -728,7 +728,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "25f95c4735d077c40a0f88efaedd9c47e37df3d9ab6473299b07965c6d0d0434",
+   "source_sha256": "ca9fab265e7d700766d33e998753e7d9686339e331d88deb75783fb9b95316d7",
    "legacy_owned_ranges": [
     [
      8,
@@ -749,14 +749,14 @@
   },
   "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10": {
    "service_id": "ic10.script.stack.cell.monitor",
-   "magic": 31416052,
+   "contract": "StackCellMonitor",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
    "extension_base": 0,
    "extension_flags": 0,
    "implementation_id": null,
-   "source_sha256": "7e13bc7de04f0f1e86280788d42bb1a64da4ba9ac9665e507992da2c335127f6",
+   "source_sha256": "17f555d37049f6a205664e29d087a567dc40043a1c8e3b1648486b6c71dea875",
    "legacy_owned_ranges": [
     [
      8,
@@ -772,7 +772,7 @@
   },
   "ic10/live-commissioning/stack_header_reader_v1_0.ic10": {
    "service_id": "ic10.script.stack.header.reader",
-   "magic": 31416067,
+   "contract": "StackHeaderReader",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -782,7 +782,7 @@
    "telemetry_base": 0,
    "publishes_state": true,
    "publishes_generation": true,
-   "source_sha256": "8718d7fd3c9877d3117d482e669a0b8a063a9dfc5af69f2b108ac428a6c25981",
+   "source_sha256": "7fa52bdcac5acb2f46254e6ccbac8c93eca8c461b56b4db342f6fa1e2de1d202",
    "legacy_owned_ranges": [
     [
      8,
@@ -795,7 +795,7 @@
   },
   "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10": {
    "service_id": "ic10.script.transform.lane.directory.adapter",
-   "magic": 31415983,
+   "contract": "DirectoryAdapter",
    "service_abi": 3,
    "schema_id": "DirectorySchema.TransformLane",
    "schema_version": 1,
@@ -806,7 +806,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "691b59cb24b41fe00e94641bc0d3ff898c928f2f9daab10f21f1ab6d2eb62088",
+   "source_sha256": "42590b3b8c128aa0b02b6baf0604962abd1bd5715948e8af7ab7fd1516321254",
    "legacy_owned_ranges": [
     [
      10,
@@ -823,7 +823,7 @@
   },
   "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10": {
    "service_id": "ic10.script.generic.material.transform.runtime",
-   "magic": 31415980,
+   "contract": "GenericMaterialTransformRuntime",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -834,7 +834,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "eff230258213e8c184c7ae2367d483163f248e440a8113fd2398047bb23b0718",
+   "source_sha256": "31d3e8fe563c7824b10de6c7d7065b1cd7a2e72eb5c845f2fdb4ee07643781b6",
    "legacy_owned_ranges": [
     [
      8,
@@ -850,7 +850,7 @@
   },
   "ic10/material-transform/material_transform_admission_v1_0.ic10": {
    "service_id": "ic10.script.material.transform.admission",
-   "magic": 31415977,
+   "contract": "MaterialTransformAdmission",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -861,7 +861,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "71b8d7a92ce158a31c1bf62f98ae956d3fc0745100f2b4c2510518e14b7bb39e",
+   "source_sha256": "d4f468e02940c770f843b1211c16345c1cacf79a6e523325f81e335533b7dd03",
    "legacy_owned_ranges": [
     [
      8,
@@ -873,7 +873,7 @@
   },
   "ic10/material-transform/material_transform_link_resolver_v1_0.ic10": {
    "service_id": "ic10.script.material.transform.link.resolver",
-   "magic": 31415978,
+   "contract": "MaterialTransformLinkResolver",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -884,7 +884,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "984e4cba59147004cdc73730373f378a5a3150218f788e7ceee849856511cc92",
+   "source_sha256": "44a789e4e6c2afac0b1ba95f20606e3856b765c5fdf376301bebd05c3c79887b",
    "legacy_owned_ranges": [
     [
      8,
@@ -905,7 +905,7 @@
   },
   "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10": {
    "service_id": "ic10.script.multi.material.reservation.allocator",
-   "magic": 31415954,
+   "contract": "MultiMaterialReservationAllocator",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -916,7 +916,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "a70c50a1acb17813dcfe9ee801c10a6e65802fb20db71a0fb8a214a62c2a96a5",
+   "source_sha256": "f64036d38f0aa74463d2bb41ed4bb4924b3a7ba23bdbe7d75d27ceb39d7f4eba",
    "legacy_owned_ranges": [
     [
      8,
@@ -932,7 +932,7 @@
   },
   "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10": {
    "service_id": "ic10.script.multi.material.reservation.stager",
-   "magic": 31415979,
+   "contract": "MultiMaterialReservationStager",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -943,7 +943,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "d590500c566496def0296284d36cf70a7cf0071beb645cfedb4823ef54415299",
+   "source_sha256": "922ce88dc1275137a0324a38d50e7c2d10323f791d7144e5cc5b7e12cc5dd051",
    "legacy_owned_ranges": [
     [
      8,
@@ -964,7 +964,7 @@
   },
   "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10": {
    "service_id": "ic10.script.power.reservation.directory.adapter",
-   "magic": 31415983,
+   "contract": "DirectoryAdapter",
    "service_abi": 3,
    "schema_id": "DirectorySchema.PowerReservation",
    "schema_version": 1,
@@ -975,7 +975,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "7ec8c2b6603675b9187bcd479bb2487b2e08a06c9f1132b76bcbb710cc244938",
+   "source_sha256": "4c5b10abffb4027e5117481eedb60ef238f84560a00021f91128cce8372f0eb3",
    "legacy_owned_ranges": [
     [
      8,
@@ -996,7 +996,7 @@
   },
   "ic10/power-jobs/power_job_finalize_v1_0.ic10": {
    "service_id": "ic10.script.power.job.finalize",
-   "magic": 31416046,
+   "contract": "PowerJobFinalize",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -1007,7 +1007,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "353abee218120adee88c2b01649fd6c61300a3734bea95cbdcb869ae6924e073",
+   "source_sha256": "b9368bee03f073422a79bd990db37d517b0a702a8b084f2f61dc9a8f9e25cecf",
    "legacy_owned_ranges": [
     [
      8,
@@ -1019,7 +1019,7 @@
   },
   "ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10": {
    "service_id": "ic10.script.power.job.lifecycle.client",
-   "magic": 31416044,
+   "contract": "PowerJobLifecycleClient",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -1030,7 +1030,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "601cf2d70d77395dad612223fb1d4d1d30947050aebf11566736c362f0b08358",
+   "source_sha256": "dea774496b0b84a4ed7f222b9d63c6160138c2ff4e7fc9f004d8260c2aa171a0",
    "legacy_owned_ranges": [
     [
      8,
@@ -1042,7 +1042,7 @@
   },
   "ic10/power-jobs/power_job_policy_apply_v1_0.ic10": {
    "service_id": "ic10.script.power.job.policy.apply",
-   "magic": 31416042,
+   "contract": "PowerJobPolicyApply",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -1053,7 +1053,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "5f536911e4ed151726bcfbda8d2a40d1eb00c1c1358efc8dee2d5c438f92143c",
+   "source_sha256": "409c6485a66d5bf534b22d2780b1189158b26a56df96b066b60d826f9e38a9eb",
    "legacy_owned_ranges": [
     [
      8,
@@ -1065,7 +1065,7 @@
   },
   "ic10/power-jobs/power_job_policy_verify_v1_0.ic10": {
    "service_id": "ic10.script.power.job.policy.verify",
-   "magic": 31416043,
+   "contract": "PowerJobPolicyVerify",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -1076,7 +1076,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "966c1a095ebf5178bad28bb7779b828545267dda9ca9444d5c5e980b6ef68b5d",
+   "source_sha256": "3a735383fb16ea55652b94edb41dcbae2f195904091009534d8e1723d690dc13",
    "legacy_owned_ranges": [
     [
      8,
@@ -1088,7 +1088,7 @@
   },
   "ic10/power-jobs/power_job_prepare_v1_0.ic10": {
    "service_id": "ic10.script.power.job.prepare",
-   "magic": 31416045,
+   "contract": "PowerJobPrepare",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -1099,7 +1099,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "c05491989467d4cf12ca68011043e4942ee6496002c40108ae098180be422894",
+   "source_sha256": "fa794b1ecb258fede7dd69a0287062dca3434a2a64d86d3670b8c2276b9b9cfc",
    "legacy_owned_ranges": [
     [
      8,
@@ -1111,7 +1111,7 @@
   },
   "ic10/power-jobs/power_job_scheduler_v1_0.ic10": {
    "service_id": "ic10.script.power.job.scheduler",
-   "magic": 31416047,
+   "contract": "PowerJobScheduler",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -1122,7 +1122,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "f1caf24316c3dcb5519d7b87f8391ab57459564410d0161015e5d29ec849af17",
+   "source_sha256": "7856108ac5e5948a7ea03c906d5c2e2f72660b7bf5e6262d9bcb999bb6f51cb6",
    "legacy_owned_ranges": [
     [
      20,
@@ -1138,7 +1138,7 @@
   },
   "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": {
    "service_id": "ic10.script.power.policy.target.resolver",
-   "magic": 31416041,
+   "contract": "PowerPolicyTargetResolver",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -1149,7 +1149,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "cf949cedcd7ce6a48839c834017d0bedaa25aff91e1ec1b1f9982e517debf902",
+   "source_sha256": "5cf1e0332bf596f7ab3eaf3b03cc3f74f1587bff580da34bd5cd2c141b0d78ee",
    "legacy_owned_ranges": [
     [
      8,
@@ -1161,7 +1161,7 @@
   },
   "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": {
    "service_id": "ic10.script.controller.pressure.domain.runtime",
-   "magic": 31416063,
+   "contract": "ControllerPressureDomainRuntime",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -1170,7 +1170,7 @@
    "implementation_id": null,
    "telemetry_base": 96,
    "publishes_state": false,
-   "source_sha256": "5b4bba080e415fac1f80f2666a736cd775a212333f6e2de3920074d6923107a7",
+   "source_sha256": "f117686bf42e65f0eb91bc3ca0543d964bd242e34c29933f815b25c374374dc6",
    "legacy_owned_ranges": [
     [
      96,
@@ -1192,7 +1192,7 @@
   },
   "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10": {
    "service_id": "ic10.script.controller.pressure.transfer.runtime",
-   "magic": 31416064,
+   "contract": "ControllerPressureTransferRuntime",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -1201,7 +1201,7 @@
    "implementation_id": null,
    "telemetry_base": 96,
    "publishes_state": false,
-   "source_sha256": "7cc7b426ae9738eddf4ee4e457978a2baad4deb6dbf838f77aa4051a068a07c5",
+   "source_sha256": "a90de2dd80a065f50b4e878c376bc6702332fd4f0679b6a4fa118614790eaea6",
    "legacy_owned_ranges": [
     [
      96,
@@ -1227,7 +1227,7 @@
   },
   "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10": {
    "service_id": "ic10.script.pressure.grid.link.directory.adapter",
-   "magic": 31415983,
+   "contract": "DirectoryAdapter",
    "service_abi": 3,
    "schema_id": "DirectorySchema.PressureGridLink",
    "schema_version": 1,
@@ -1238,7 +1238,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "68930ee573ede32d196370a710d8a6292570ce1d76773799e9f8bb32b347d20b",
+   "source_sha256": "71885f08980d4833cbc74b1f5fedc633757307875dbcdd51c2197e7c3b534d6a",
    "legacy_owned_ranges": [
     [
      10,
@@ -1255,7 +1255,7 @@
   },
   "ic10/printer-directory/printer_directory_adapter_v1_0.ic10": {
    "service_id": "ic10.script.printer.directory.adapter",
-   "magic": 31415983,
+   "contract": "DirectoryAdapter",
    "service_abi": 3,
    "schema_id": "DirectorySchema.Printer",
    "schema_version": 2,
@@ -1266,7 +1266,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "65b76e50515d273fcd9e39c8e8f1891defab4c78c21ccb75a58c2691327378f2",
+   "source_sha256": "64dfec26e79829cdbaf2b726134f74eed9099c527c5f53ee0bcffe5804a3eb4a",
    "legacy_owned_ranges": [
     [
      10,
@@ -1283,7 +1283,7 @@
   },
   "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10": {
    "service_id": "ic10.script.printer.execution.directory.adapter",
-   "magic": 31415983,
+   "contract": "DirectoryAdapter",
    "service_abi": 3,
    "schema_id": "DirectorySchema.PrinterExecution",
    "schema_version": 1,
@@ -1294,7 +1294,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "5a138c851f64b3e2eb608805312fb23730499c0703cdb1353ca51bbf3fef1cc5",
+   "source_sha256": "b25efe3177c0c4e2998ed3e42746de1571a09d29d8d8e6be8eed7f56704c7674",
    "legacy_owned_ranges": [
     [
      10,
@@ -1311,7 +1311,7 @@
   },
   "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10": {
    "service_id": "ic10.script.embedded.pressure.transfer.runtime",
-   "magic": 31416065,
+   "contract": "EmbeddedPressureTransferRuntime",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -1320,7 +1320,7 @@
    "implementation_id": null,
    "telemetry_base": 96,
    "publishes_state": false,
-   "source_sha256": "c7bce23523a524214f354ecd7de8c3fa180ef646a73f4fe4b616d6627835fce1",
+   "source_sha256": "a8c4b0dbff5e48b7001a57e3dd457e96877ea97726c62369a6f66fc358915df2",
    "legacy_owned_ranges": [
     [
      16,
@@ -1350,7 +1350,7 @@
   },
   "ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10": {
    "service_id": "ic10.script.process.pressure.domain.runtime",
-   "magic": 31416066,
+   "contract": "ProcessPressureDomainRuntime",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -1359,7 +1359,7 @@
    "implementation_id": null,
    "telemetry_base": 96,
    "publishes_state": false,
-   "source_sha256": "c4f19ec228a9eb782aee05d10a6daf7773e3d6f5e3a6fb5f6743a9d7572cfd0b",
+   "source_sha256": "dae4441e1355276be5b3ac284485332828c4cac6b7090472c855dcd028ce164c",
    "legacy_owned_ranges": [
     [
      96,
@@ -1381,7 +1381,7 @@
   },
   "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10": {
    "service_id": "ic10.script.resource.endpoint.directory.adapter",
-   "magic": 31415983,
+   "contract": "DirectoryAdapter",
    "service_abi": 3,
    "schema_id": "DirectorySchema.ResourceEndpoint",
    "schema_version": 1,
@@ -1392,7 +1392,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "bb2543614afb55db5d75d6355a084c46c346091d501be6ef9046a3e00eea344f",
+   "source_sha256": "1de5e5618589f8c4770d5c55b99795f2626948978a741ef08da5dc6059e6147c",
    "legacy_owned_ranges": [
     [
      10,
@@ -1409,7 +1409,7 @@
   },
   "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10": {
    "service_id": "ic10.script.resource.link.directory.adapter",
-   "magic": 31415983,
+   "contract": "DirectoryAdapter",
    "service_abi": 3,
    "schema_id": "DirectorySchema.ResourceLink",
    "schema_version": 1,
@@ -1420,7 +1420,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "55c80d96f35687c2b155d36d9ab2a1aa3bb0de8a3f5a17c785e3dc02fde49823",
+   "source_sha256": "c820c238461056e9d23417fbae82544deae44e1e752f13d1ae61d2140ac40b89",
    "legacy_owned_ranges": [
     [
      10,
@@ -1437,7 +1437,7 @@
   },
   "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10": {
    "service_id": "ic10.script.resource.reservation.directory.adapter",
-   "magic": 31415983,
+   "contract": "DirectoryAdapter",
    "service_abi": 3,
    "schema_id": "DirectorySchema.ResourceReservation",
    "schema_version": 1,
@@ -1448,7 +1448,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "7a564e5d7de06f0fc00dba4225b75767ba861bfffb7fc4ffc6b5a218f02af8fb",
+   "source_sha256": "d1ba94d62b543ae8f0dec557d53e19211693cd8216cf426cf2f6ba940cb1b756",
    "legacy_owned_ranges": [
     [
      10,
@@ -1465,7 +1465,7 @@
   },
   "ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10": {
    "service_id": "ic10.script.resource.profile.loader.energy.00",
-   "magic": 31415969,
+   "contract": "CatalogLoader",
    "service_abi": 5,
    "schema_id": "CatalogSchema.ResourceProfile",
    "schema_version": 2,
@@ -1476,7 +1476,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "4939548c8e596ec9124ed32cd4b9041d6fad82bdaf859f7d8bda09320890baf2",
+   "source_sha256": "1a931f422ebd880467aebe7e5e5db2232785b5717452ddf95082a1bde99603e1",
    "legacy_owned_ranges": [
     [
      10,
@@ -1496,7 +1496,7 @@
   },
   "ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10": {
    "service_id": "ic10.script.resource.profile.loader.fluid.00",
-   "magic": 31415969,
+   "contract": "CatalogLoader",
    "service_abi": 5,
    "schema_id": "CatalogSchema.ResourceProfile",
    "schema_version": 2,
@@ -1507,7 +1507,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "934f20c7ea2d2618f582fceccab18602e969c1d6d57da65842bbc9e92b2ce14f",
+   "source_sha256": "b177a4b41e6986d282a5875b07b3cfbc13c75a20319dd507561362b33852a42b",
    "legacy_owned_ranges": [
     [
      10,
@@ -1547,7 +1547,7 @@
   },
   "ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10": {
    "service_id": "ic10.script.resource.profile.loader.fluid.01",
-   "magic": 31415969,
+   "contract": "CatalogLoader",
    "service_abi": 5,
    "schema_id": "CatalogSchema.ResourceProfile",
    "schema_version": 2,
@@ -1558,7 +1558,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "437546a20564ae0d8572744ac6a1f3514a5f5063727f11b160af825f232a9064",
+   "source_sha256": "b07e0c9f0c40b4c30355f9fda5a6cac504a95315a7e88715e0aa3e78ffc16604",
    "legacy_owned_ranges": [
     [
      10,
@@ -1590,7 +1590,7 @@
   },
   "ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10": {
    "service_id": "ic10.script.resource.profile.loader.item.00",
-   "magic": 31415969,
+   "contract": "CatalogLoader",
    "service_abi": 5,
    "schema_id": "CatalogSchema.ResourceProfile",
    "schema_version": 2,
@@ -1601,7 +1601,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "ef2cea056fc69736d96272b09cacddfd48a29fc1b3e096a552e6ac92fb50bb9a",
+   "source_sha256": "7a7e39b5d17522d0c1a6f18e30f2e73a9fc7c870a1d1c75d432dc058513ec4b9",
    "legacy_owned_ranges": [
     [
      10,
@@ -1661,7 +1661,7 @@
   },
   "ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10": {
    "service_id": "ic10.script.resource.profile.loader.item.01",
-   "magic": 31415969,
+   "contract": "CatalogLoader",
    "service_abi": 5,
    "schema_id": "CatalogSchema.ResourceProfile",
    "schema_version": 2,
@@ -1672,7 +1672,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "0134f143649b3f509dcc6effc24c2bd5822f48e35625aeb75e50e7aaa96ea7b0",
+   "source_sha256": "c989941e24ac9f3639a77ff107b30e252594f9565d7eb302ff116b60d5820431",
    "legacy_owned_ranges": [
     [
      10,
@@ -1728,7 +1728,7 @@
   },
   "ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10": {
    "service_id": "ic10.script.resource.profile.loader.item.02",
-   "magic": 31415969,
+   "contract": "CatalogLoader",
    "service_abi": 5,
    "schema_id": "CatalogSchema.ResourceProfile",
    "schema_version": 2,
@@ -1739,7 +1739,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "c3248b98553988497a63fb018315cdc0a4fa5ff0da83876f4fa48ed7dcbc5882",
+   "source_sha256": "3d8807fcc03bd3d2e94654c04924b2c6fb6dc0b250b629469c1dd3f42a98b972",
    "legacy_owned_ranges": [
     [
      10,
@@ -1779,7 +1779,7 @@
   },
   "ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10": {
    "service_id": "ic10.script.resource.profile.loader.power.00",
-   "magic": 31415969,
+   "contract": "CatalogLoader",
    "service_abi": 5,
    "schema_id": "CatalogSchema.ResourceProfile",
    "schema_version": 2,
@@ -1790,7 +1790,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "9d3a2a7e9196199732e053e4410ccbd1dfb1291a6bea03a28089644ace93de35",
+   "source_sha256": "5f91cbfe8a8d10481917fe8eb75516467bba2b0034dbb236cfcc7229c3ca180b",
    "legacy_owned_ranges": [
     [
      10,
@@ -1810,7 +1810,7 @@
   },
   "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10": {
    "service_id": "ic10.script.resource.profile.view",
-   "magic": 31415963,
+   "contract": "ResourceProfileView",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -1821,7 +1821,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "f57209498d5bddc7e1ace82324db7c206fc32937e829f1de4d2c89149bb688e8",
+   "source_sha256": "5fe9c6c3863f81a4ba6f74f794d8b67797d7399976b4c54ad9f49dbb0a06e67f",
    "legacy_owned_ranges": [
     [
      8,
@@ -1842,7 +1842,7 @@
   },
   "ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10": {
    "service_id": "ic10.script.resource.transform.catalog.loader.00",
-   "magic": 31415969,
+   "contract": "CatalogLoader",
    "service_abi": 5,
    "schema_id": "CatalogSchema.ResourceTransform",
    "schema_version": 4,
@@ -1853,7 +1853,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "ca9b524cb660cc93eb26f890649fea93e7b39b267f956514dbf7d3d6ec626c0a",
+   "source_sha256": "4df9ca67e8557591783b8cb05916a58a8e0124f8de85b36d86ddfbcfeae167f9",
    "legacy_owned_ranges": [
     [
      10,
@@ -1897,7 +1897,7 @@
   },
   "ic10/transform-catalog/resource_transform_catalog_loader_01_v6_0.ic10": {
    "service_id": "ic10.script.resource.transform.catalog.loader.01",
-   "magic": 31415969,
+   "contract": "CatalogLoader",
    "service_abi": 5,
    "schema_id": "CatalogSchema.ResourceTransform",
    "schema_version": 4,
@@ -1908,7 +1908,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "b823a77703b0650e58cc0a5e75c0adac7cbbfd34a1c90a44dbf561ab2cd8e2a9",
+   "source_sha256": "e375b2cdd91f8c2d9a763a58aecf9e2524e439269663cbf701672d6214ec3dec",
    "legacy_owned_ranges": [
     [
      10,
@@ -1948,7 +1948,7 @@
   },
   "ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10": {
    "service_id": "ic10.script.resource.transform.catalog.loader.02",
-   "magic": 31415969,
+   "contract": "CatalogLoader",
    "service_abi": 5,
    "schema_id": "CatalogSchema.ResourceTransform",
    "schema_version": 4,
@@ -1959,7 +1959,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "f04a702493ba464f51db915d6e7252eed78b6d3a595cbbf1eda35e42b41c26a2",
+   "source_sha256": "ca5760af24b24b4abcc0ec51d8fc52f67c27ef44f580049617c9799453d81f77",
    "legacy_owned_ranges": [
     [
      10,
@@ -1999,7 +1999,7 @@
   },
   "ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10": {
    "service_id": "ic10.script.resource.transform.catalog.loader.03",
-   "magic": 31415969,
+   "contract": "CatalogLoader",
    "service_abi": 5,
    "schema_id": "CatalogSchema.ResourceTransform",
    "schema_version": 4,
@@ -2010,7 +2010,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "c66e791a6d77d85bcd1e820ba9bfc4f9628ae3ae9affe34feaf5facdbfe7e530",
+   "source_sha256": "95a68ad1b0e99cc41c6755adc134d8bd66a60f832319d366d6f8101810a81ba7",
    "legacy_owned_ranges": [
     [
      10,
@@ -2046,7 +2046,7 @@
   },
   "ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10": {
    "service_id": "ic10.script.resource.transform.catalog.loader.04",
-   "magic": 31415969,
+   "contract": "CatalogLoader",
    "service_abi": 5,
    "schema_id": "CatalogSchema.ResourceTransform",
    "schema_version": 4,
@@ -2057,7 +2057,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "6d49c002d0f18d1c8369d8135722eecb203a725217693410f011938c6ca21167",
+   "source_sha256": "4bc3113f3e63b6c2157e88f9c70e37f0eb881d682767b110e0822c1b088e5995",
    "legacy_owned_ranges": [
     [
      10,
@@ -2085,7 +2085,7 @@
   },
   "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": {
    "service_id": "ic10.script.resource.transform.profile.view",
-   "magic": 31415952,
+   "contract": "ResourceTransformProfileView",
    "service_abi": 4,
    "schema_id": null,
    "schema_version": 0,
@@ -2096,7 +2096,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "5545bf42aa74832144e6a82fd9e18c9bd6ac030e41f1784cc4090ce267ad77b8",
+   "source_sha256": "720f09f0502611221bf5198e2c7d375bfeb124e5530ff2d0135f5fbed0ff40e1",
    "legacy_owned_ranges": [
     [
      8,
@@ -2113,7 +2113,7 @@
   },
   "ic10/manufacturing/generic_print_runtime_v2_0.ic10": {
    "service_id": "ic10.script.generic.print.runtime",
-   "magic": 31416075,
+   "contract": "GenericPrintRuntime",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -2124,7 +2124,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "6629f5ccc8019794d03d901b4220e7785a12ad7b28b3becf56283b89a17aba95",
+   "source_sha256": "38fe5e6096c126d4c675265c25048054dc9b047af02115975889a58f620d5118",
    "legacy_owned_ranges": [
     [
      8,
@@ -2144,7 +2144,7 @@
   },
   "ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10": {
    "service_id": "ic10.script.manufacturing.candidate.selector",
-   "magic": 31416072,
+   "contract": "ManufacturingCandidateSelector",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -2155,7 +2155,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "8239803f6e3c4c30ceade23de9104395b709d6bf0e70bfbfd23f4176ffaab312",
+   "source_sha256": "4fc17c830ea9b8eb0e6fbce18163e4e12fb5f4479e0477f75ef8041aa78f7db0",
    "legacy_owned_ranges": [
     [
      8,
@@ -2171,7 +2171,7 @@
   },
   "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10": {
    "service_id": "ic10.script.manufacturing.driver.router",
-   "magic": 31415994,
+   "contract": "ManufacturingDriverRouter",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -2182,7 +2182,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "45a6ec3fd6855bc2b405bcd59b0f2d5cfca78274136257c96dc259728b544d75",
+   "source_sha256": "02a488005d35f1afcffe2862edbcc533cf8845fb5520de103da38170ec2d40fa",
    "legacy_owned_ranges": [
     [
      9,
@@ -2194,7 +2194,7 @@
   },
   "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10": {
    "service_id": "ic10.script.manufacturing.scheduler",
-   "magic": 31415995,
+   "contract": "ManufacturingScheduler",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2205,7 +2205,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "9aedf4558472894e9b65470612b05d0607cb6a1b709c0766aa09cab00e474c30",
+   "source_sha256": "9a66468e94f4f76118108fe0d63120b5cf318ef68bb87c72c88ffe495fb7ea61",
    "legacy_owned_ranges": [
     [
      20,
@@ -2225,7 +2225,7 @@
   },
   "ic10/manufacturing/print_candidate_executor_v2_0.ic10": {
    "service_id": "ic10.script.print.candidate.executor",
-   "magic": 31416074,
+   "contract": "PrintCandidateExecutor",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -2236,7 +2236,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "0d0b117f66181cfb0c7ebfcb251dfb012485d4d17c24466566300e7f69d8a6e1",
+   "source_sha256": "eb49db3ecd9566fe4087092cf2998a1b9bf780fdd76cbf67b8eafaab6ed23057",
    "legacy_owned_ranges": [
     [
      8,
@@ -2260,7 +2260,7 @@
   },
   "ic10/manufacturing/print_material_resolver_v1_0.ic10": {
    "service_id": "ic10.script.print.material.resolver",
-   "magic": 31415989,
+   "contract": "PrintMaterialResolver",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2271,7 +2271,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "1196d56274c636aea4b62fe73d36adaf4950188d4984ec72958102a966bb4ca3",
+   "source_sha256": "89527113ac129d335e431e69ea78b17f2d84b81785d54a24ea8198704e8150d9",
    "legacy_owned_ranges": [
     [
      8,
@@ -2296,7 +2296,7 @@
   },
   "ic10/manufacturing/print_job_driver_v2_0.ic10": {
    "service_id": "ic10.script.print.job.driver",
-   "magic": 31415992,
+   "contract": "PrintJobDriver",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -2307,7 +2307,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "7f9e21341dae6a7e44f306ca89892d3bf96a57c403a597508b91716aafa16ae2",
+   "source_sha256": "b8f8ce66e12b512eb87d6696989de1331d92540ae4f34f731748cec22106d8d5",
    "legacy_owned_ranges": [
     [
      8,
@@ -2331,7 +2331,7 @@
   },
   "ic10/manufacturing/transform_candidate_executor_v2_0.ic10": {
    "service_id": "ic10.script.transform.candidate.executor",
-   "magic": 31416073,
+   "contract": "TransformCandidateExecutor",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -2342,7 +2342,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "94b8d2e1f173692ad3be2155a5c25ca9cf23da29fd71c05763f774f47f4eacb7",
+   "source_sha256": "bace7706fa189c28ce0d8783e44c5eccf48cf687696fcb86130dc1a778a1da0d",
    "legacy_owned_ranges": [
     [
      8,
@@ -2362,7 +2362,7 @@
   },
   "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10": {
    "service_id": "ic10.script.transform.candidate.readiness",
-   "magic": 31415998,
+   "contract": "TransformCandidateReadiness",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2373,7 +2373,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "fd14ae4743785762c25f6120e2360a5885368c11013c2ff7619cb58e5fa801ef",
+   "source_sha256": "e52db81fd47e0045f92b4ab21d6a8d647671e011ed5484f67d74e42e45a2d219",
    "legacy_owned_ranges": [
     [
      8,
@@ -2393,7 +2393,7 @@
   },
   "ic10/manufacturing/transform_job_driver_v2_0.ic10": {
    "service_id": "ic10.script.transform.job.driver",
-   "magic": 31416076,
+   "contract": "TransformJobDriver",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -2404,7 +2404,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "9690ea70e79629b3fdf1fc5c58a982ee2a550e8505b0a860dd5603e7b299ce9b",
+   "source_sha256": "e186f3d8974250639ea18df97720189589df179b560a7b7e8e81ae16df94e994",
    "legacy_owned_ranges": [
     [
      8,
@@ -2424,7 +2424,7 @@
   },
   "ic10/controller-discovery/controller_selector_v3_0.ic10": {
    "service_id": "ic10.script.controller.selector",
-   "magic": 17320508,
+   "contract": "ControllerSelector",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -2435,7 +2435,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "17a0287345701e8b152d654224b8e8f4d3586925360bb03e959f9389e247769a",
+   "source_sha256": "af3adb79c889a843958a96e648fa2fb486240bc4cd3f820e578f82abe1fef5bf",
    "legacy_owned_ranges": [
     [
      8,
@@ -2447,7 +2447,7 @@
   },
   "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10": {
    "service_id": "ic10.script.phase.pressure.request.arbiter",
-   "magic": 31415933,
+   "contract": "PhasePressureRequestArbiter",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2458,7 +2458,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "ee683b144fc013cf1eb49086207e99dce64d4f88b1fefb63987b28b7a29e026d",
+   "source_sha256": "a5242215cc1167b6aed12898f162249873d435a2576aa70261c7863cc309579b",
    "legacy_owned_ranges": [
     [
      8,
@@ -2470,7 +2470,7 @@
   },
   "ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10": {
    "service_id": "ic10.script.recipe.catalog.lookup",
-   "magic": 31415967,
+   "contract": "RecipeCatalogLookup",
    "service_abi": 3,
    "schema_id": null,
    "schema_version": 0,
@@ -2481,7 +2481,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "d0a7ff3cc9d22db8b83007c8e5839e0a5b56275df59fc73498172a8e78c49c1e",
+   "source_sha256": "08768d7381400ab40c48038e71eb2c3de2a6564459a8f34bf0ebaccfa4870992",
    "legacy_owned_ranges": [
     [
      8,
@@ -2493,7 +2493,7 @@
   },
   "ic10/shared-input/generic_input_scanner_v1_1.ic10": {
    "service_id": "ic10.script.generic.input.scanner",
-   "magic": 31415930,
+   "contract": "GenericInputScanner",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2504,7 +2504,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "6ae518dadd08e71c9d09ee69fe02566fa54a36adea417380bd1c2c4be105f7a5",
+   "source_sha256": "249fdb72fd43a0b1fc7f7ed61397b291085afa9fe74c501ebe69689dbd484b15",
    "legacy_owned_ranges": [
     [
      8,
@@ -2516,7 +2516,7 @@
   },
   "ic10/shared-input/generic_input_resolver_v1_0.ic10": {
    "service_id": "ic10.script.generic.input.resolver",
-   "magic": 31415931,
+   "contract": "GenericInputResolver",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2527,7 +2527,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "caec36f0685a4e9390592c95c3566651a2c36cda9e530a280e164e5fe724482d",
+   "source_sha256": "f0e13a26cd7d0058518abaee5f0477d2ea9e21eefc45ba79a615c4b32f23cfb3",
    "legacy_owned_ranges": [
     [
      8,
@@ -2539,7 +2539,7 @@
   },
   "ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10": {
    "service_id": "ic10.script.gas.mixer.utility.controller",
-   "magic": 31416049,
+   "contract": "GasMixerUtilityController",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2550,7 +2550,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "3a1fa2d8257f074b5cfa4501a2914728e4f04e023fea9109c27e69df0a5069c5",
+   "source_sha256": "15d501c7126ba5547b48bb824c3cb81ae405207ec9db633ae7a1ac7f06b187db",
    "legacy_owned_ranges": [
     [
      8,
@@ -2562,7 +2562,7 @@
   },
   "ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10": {
    "service_id": "ic10.script.thermal.gas.mixer.controller",
-   "magic": 31416050,
+   "contract": "ThermalGasMixerController",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2573,7 +2573,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "e1c09a7ec07447efad89b0a0c6abf6831e0cc45dca300e9f35741e650b09643a",
+   "source_sha256": "b7c9c89b2e43695fe081004c5b8ccecfaac57c4b2e446849b8b6dfcdadae769a",
    "legacy_owned_ranges": [
     [
      8,
@@ -2585,7 +2585,7 @@
   },
   "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10": {
    "service_id": "ic10.script.item.resource.reservation.selector",
-   "magic": 31415987,
+   "contract": "ItemResourceReservationSelector",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2596,7 +2596,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "a500ff850b32d8570527343748eb1d04d02622f1e7dbfd4d8c8a436c228c69dd",
+   "source_sha256": "d4383c4a42a56794d8e55896536f043b8023c9b1c7acdfd6f8dec4edd065c548",
    "legacy_owned_ranges": [
     [
      8,
@@ -2617,7 +2617,7 @@
   },
   "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10": {
    "service_id": "ic10.script.item.resource.reservation.allocator",
-   "magic": 31415988,
+   "contract": "ItemResourceReservationAllocator",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2628,7 +2628,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "0cc94fe0ed236d3e9701aa3611a1232a80a538337df3288f1f4697110d50a61a",
+   "source_sha256": "bd5c46e16f503ea711c5f962dbfb1dfd76c9a639e08cdb897cb82cde15f9098c",
    "legacy_owned_ranges": [
     [
      8,
@@ -2640,7 +2640,7 @@
   },
   "ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10": {
    "service_id": "ic10.script.larre.cargo.storage.service",
-   "magic": 31415986,
+   "contract": "LarreCargoStorageService",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2651,7 +2651,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "baf580299e217e52492148c51c67e56ddf55a14361b5a07d569c434e7449787b",
+   "source_sha256": "7675b20d950c10fa9d77ce7a3a9c2492104763c7acfe075dd10ee1ce47ba6fcd",
    "legacy_owned_ranges": [
     [
      8,
@@ -2663,7 +2663,7 @@
   },
   "ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10": {
    "service_id": "ic10.script.larre.storage.reserved.move.client",
-   "magic": 31415991,
+   "contract": "LarreStorageReservedMoveClient",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2674,7 +2674,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "f9f3fb2d0992a5e0f580e9267492d75e53138741b9d3bd76f7eed07cbf478455",
+   "source_sha256": "d69982fa64f97810c32cf2ba47e6b46b372070907c5839fdd21315d3ed2cff75",
    "legacy_owned_ranges": [
     [
      8,
@@ -2686,7 +2686,7 @@
   },
   "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10": {
    "service_id": "ic10.script.material.transfer.grant.guard",
-   "magic": 31415960,
+   "contract": "MaterialTransferGrantGuard",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2697,7 +2697,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "f2f2b16e4d10020181228608e37c17c5dd015858ae1306d0efc27203b8b04d09",
+   "source_sha256": "6fed5f783c64b5ba58d748e11b49894c9ae7783613b60d40ffa891bbf00df59f",
    "legacy_owned_ranges": [
     [
      8,
@@ -2717,7 +2717,7 @@
   },
   "ic10/material-grid/material_transfer_executor_v1_0.ic10": {
    "service_id": "ic10.script.material.transfer.executor",
-   "magic": 31415958,
+   "contract": "MaterialTransferExecutor",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2728,7 +2728,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "5576722352ddfac91bf28c7e986a4828028e203df993a3db66b5eef56e097bff",
+   "source_sha256": "565713e14fe96c6c2ea6b6274aa934733e1a633724725eaf2cf5283b631aae22",
    "legacy_owned_ranges": [
     [
      8,
@@ -2744,7 +2744,7 @@
   },
   "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10": {
    "service_id": "ic10.script.furnace.process.condition.request",
-   "magic": 31416048,
+   "contract": "ProcessCondition",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2755,7 +2755,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "371b892d23a3542848281f542981f757da40346d299f6880fc1ed204f450fbe7",
+   "source_sha256": "9dd78706ef1bf96985b6393fe76789ba5053f30f48dd9e234b5e575f46a7e4b6",
    "legacy_owned_ranges": [
     [
      8,
@@ -2771,7 +2771,7 @@
   },
   "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10": {
    "service_id": "ic10.script.gas.fuel.generator.utility.controller",
-   "magic": 31416048,
+   "contract": "ProcessCondition",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2782,7 +2782,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "ac05711974231ecb826f7a23ba15a1a4eef73eee8e212c515b25e6b6a299f6e0",
+   "source_sha256": "a5a61940696fa15bce3cd9988a3705329cc83bd35c7532168bcb98abf43ceac2",
    "legacy_owned_ranges": [
     [
      8,
@@ -2798,7 +2798,7 @@
   },
   "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10": {
    "service_id": "ic10.script.gas.mixture.purity.guard",
-   "magic": 31415947,
+   "contract": "MediumPurityGuard",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2809,7 +2809,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "89ca4f3765b7388fbf00f3323970c99bbeb3e78bf9fb561df230b654de4adafc",
+   "source_sha256": "841f6f0fec7d62c838d0baa614905e98d64b65e14de2e94082be402cce164754",
    "legacy_owned_ranges": [
     [
      8,
@@ -2821,7 +2821,7 @@
   },
   "ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10": {
    "service_id": "ic10.script.pressure.medium.purity.guard",
-   "magic": 31415947,
+   "contract": "MediumPurityGuard",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2832,7 +2832,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "ecf44a2d6531e57a25d33628968ad74bc51891572e6f7e24588d28f251df5301",
+   "source_sha256": "3a0c92f32a629da7830864622f2d550cb2d528bc9e2085d37c1d9b44c34c3bfd",
    "legacy_owned_ranges": [
     [
      8,
@@ -2844,7 +2844,7 @@
   },
   "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10": {
    "service_id": "ic10.script.material.vending.stacker.feeder",
-   "magic": 31415961,
+   "contract": "StackerFeeder",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2855,7 +2855,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "4cf7cc3bc0a19d3c869b18c046346d16449c01f5e9bc94434f2605b151196688",
+   "source_sha256": "59402ce803ea03b8534e516f4c03a41a65299213174dab26e3e023aa454509a3",
    "legacy_owned_ranges": [
     [
      8,
@@ -2867,7 +2867,7 @@
   },
   "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10": {
    "service_id": "ic10.script.material.sdb.stacker.feeder",
-   "magic": 31415961,
+   "contract": "StackerFeeder",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2878,7 +2878,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "2e7f2656f025568c4dcf2a4077c01a3a73a29ab66229d460ead56d93213e88dd",
+   "source_sha256": "e40af9bff9570a890fe4a87b7ad5c7fff528ab516e67114d47288c0b6b174c67",
    "legacy_owned_ranges": [
     [
      8,
@@ -2890,7 +2890,7 @@
   },
   "ic10/material-grid/material_resource_link_v1_0.ic10": {
    "service_id": "ic10.script.material.resource.link",
-   "magic": 31415953,
+   "contract": "ResourceLink",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2901,7 +2901,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "792d52845b9ec0f22504eb5a367ed8ab007db1e9ad0c039a30172482e1934bfc",
+   "source_sha256": "36e8279d876b94df03bd480aee5c7793fa6d980be8d2953c933bd56831ef269d",
    "legacy_owned_ranges": [
     [
      8,
@@ -2913,7 +2913,7 @@
   },
   "ic10/power-grid/power_static_link_v1_0.ic10": {
    "service_id": "ic10.script.power.static.link",
-   "magic": 31415953,
+   "contract": "ResourceLink",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2924,7 +2924,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "87af17afbe7df22167bf0ccf3266c9a2a5ab13004e6385b888d6040d18c80e31",
+   "source_sha256": "473be1f6d7f8256833480d3a6a834c286908c9117b39ed12054fb97635d60546",
    "legacy_owned_ranges": [
     [
      8,
@@ -2944,7 +2944,7 @@
   },
   "ic10/power-grid/power_transformer_link_v1_0.ic10": {
    "service_id": "ic10.script.power.transformer.link",
-   "magic": 31415953,
+   "contract": "ResourceLink",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2955,7 +2955,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "016d066c39f0031f25ded2ed8735ee301c44d0bac022646d27e66da4ab72e0df",
+   "source_sha256": "b502ce0a00843305f4a4da2b44b99f69172b4e7105e43c108bfb6bf3fec8304e",
    "legacy_owned_ranges": [
     [
      8,
@@ -2975,7 +2975,7 @@
   },
   "ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10": {
    "service_id": "ic10.script.pressure.resource.link.adapter",
-   "magic": 31415953,
+   "contract": "ResourceLink",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -2986,7 +2986,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "3878b33765144f2fe513e747c1cb3616f98abc50fa5863bfb50df849be509c72",
+   "source_sha256": "679fee10f3b7da31a359b84341f9e200e9f2166ad1c07b4d2b82499addc8ceef",
    "legacy_owned_ranges": [
     [
      8,
@@ -3002,7 +3002,7 @@
   },
   "ic10/material-grid/material_export_slot_endpoint_v1_0.ic10": {
    "service_id": "ic10.script.material.export.slot.endpoint",
-   "magic": 31415949,
+   "contract": "ResourceEndpoint",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3013,7 +3013,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "3abe64bf3dfb305083685c57858dd72368f2ddb2b51e1e060c8578fb0269f940",
+   "source_sha256": "3ecee22bde0c470aebf904511fa6de3a3e70170801fd6ca8c1ec45e4f6aa40f6",
    "legacy_owned_ranges": [
     [
      8,
@@ -3033,7 +3033,7 @@
   },
   "ic10/material-grid/material_import_slot_endpoint_v1_0.ic10": {
    "service_id": "ic10.script.material.import.slot.endpoint",
-   "magic": 31415949,
+   "contract": "ResourceEndpoint",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3044,7 +3044,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "07a3c8f265c26894646229bada19a8b09c24c74e284b04e041932735d4d81cae",
+   "source_sha256": "f7c0f123ddfe495cbb36b7a7f401251b6d4381ea5f25a060c1169ff52550d1d0",
    "legacy_owned_ranges": [
     [
      8,
@@ -3060,7 +3060,7 @@
   },
   "ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10": {
    "service_id": "ic10.script.direct.item.storage.endpoint",
-   "magic": 31415949,
+   "contract": "ResourceEndpoint",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3071,7 +3071,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "9e698eb9847f6724082d140e9c938a619d5e0419a016a94f49d390a646633d20",
+   "source_sha256": "1d86365ab0b2c608b7e4cc84259080a39a4b30d7bb6afcdb185577d934c3560a",
    "legacy_owned_ranges": [
     [
      8,
@@ -3095,7 +3095,7 @@
   },
   "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10": {
    "service_id": "ic10.script.larre.item.storage.endpoint",
-   "magic": 31415949,
+   "contract": "ResourceEndpoint",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3106,7 +3106,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "343cf366846160ed6b14f5566ab5f43826403d459626a6a1f9bea90db64fe0f2",
+   "source_sha256": "81efcdeda2b069a19376b5ae56bd2aa5ff11ceb3e44ec77b2aac4ce182f42070",
    "legacy_owned_ranges": [
     [
      8,
@@ -3130,7 +3130,7 @@
   },
   "ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10": {
    "service_id": "ic10.script.sdb.silo.item.endpoint",
-   "magic": 31415949,
+   "contract": "ResourceEndpoint",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3141,7 +3141,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "8ac396004704d3c5e334451f6fea57d584d9b89aac727f8c4e472d324280a931",
+   "source_sha256": "3997d9c09961271745b0c8f479d26df227c3aeef0fd1539582198be373d812fc",
    "legacy_owned_ranges": [
     [
      8,
@@ -3165,7 +3165,7 @@
   },
   "ic10/item-storage-vending/material_vending_inventory_v1_0.ic10": {
    "service_id": "ic10.script.material.vending.inventory",
-   "magic": 31415949,
+   "contract": "ResourceEndpoint",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3176,7 +3176,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "abeedd3ae5de0c1efaa60bbc754ad910e59dd30d654d06d0c13009f334c7cb69",
+   "source_sha256": "87ddc11de152245edc2a6161a399d4ee84ecbb9bdcbbffb6beb25c9c2f398bb2",
    "legacy_owned_ranges": [
     [
      8,
@@ -3196,7 +3196,7 @@
   },
   "ic10/power-grid/power_battery_endpoint_v1_0.ic10": {
    "service_id": "ic10.script.power.battery.endpoint",
-   "magic": 31415949,
+   "contract": "ResourceEndpoint",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3207,7 +3207,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "142ee29e4b47d7d071c496c43a48abc2c06cc1dd6291a9ad73b3c1221fbac735",
+   "source_sha256": "4953d094e385e25676dea1432e3d500154426efce03ad81e9e7ff5d5095646b4",
    "legacy_owned_ranges": [
     [
      8,
@@ -3235,7 +3235,7 @@
   },
   "ic10/power-grid/power_consumer_endpoint_v1_0.ic10": {
    "service_id": "ic10.script.power.consumer.endpoint",
-   "magic": 31415949,
+   "contract": "ResourceEndpoint",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3246,7 +3246,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "84696a4d30c69a7167e19b3a87fd6c1dbd1d0879df3548aa59b7aab7e8fc862b",
+   "source_sha256": "11cc6057c9ee6cd0a8c9e8cf75b66b71c03592ccbda959d22b7e8f3a3e8d8e63",
    "legacy_owned_ranges": [
     [
      8,
@@ -3274,7 +3274,7 @@
   },
   "ic10/power-grid/power_producer_endpoint_v1_0.ic10": {
    "service_id": "ic10.script.power.producer.endpoint",
-   "magic": 31415949,
+   "contract": "ResourceEndpoint",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3285,7 +3285,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "2253e632a844bffb00f30608973beb99c4380c9c154b76135d1c3057e4078c29",
+   "source_sha256": "30b9fc86095c594b47fa93914f4f1cc9339e275fd0c41859978564dcf85d198b",
    "legacy_owned_ranges": [
     [
      8,
@@ -3313,7 +3313,7 @@
   },
   "ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10": {
    "service_id": "ic10.script.pressure.resource.endpoint.adapter",
-   "magic": 31415949,
+   "contract": "ResourceEndpoint",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3324,7 +3324,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "20b917c57e6c38bf767153d94c0c94d1bf55906842879493ee1dbba0ea7c6a78",
+   "source_sha256": "913f4be25b1db09c06a04846aacf63745c2807338f73821c2c675e40ff38fac2",
    "legacy_owned_ranges": [
     [
      8,
@@ -3340,7 +3340,7 @@
   },
   "ic10/controller-pi/pi_config_policy_v1_0.ic10": {
    "service_id": "ic10.script.pi.config.policy",
-   "magic": 31416077,
+   "contract": "PiConfigPolicy",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3351,14 +3351,14 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "1cfe52af7b1345aafc53ea00dc21865cd58d15f2013ed6eb4272091c84bc55dc",
+   "source_sha256": "a297f973a48005beb3a00fdee04e8feef47e79f5a91a054a155ab94b8baab792",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "controller-pi"
   },
   "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10": {
    "service_id": "ic10.script.sequencer.config.policy",
-   "magic": 31416078,
+   "contract": "SequencerConfigPolicy",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3369,14 +3369,14 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "29399de89b56174db4bebf7442fb20a1091d0ab1d3d41f94a019cadcf743ad0a",
+   "source_sha256": "7ea22303e24c9d29be6c1ed2a6fefe79fe70ca077d186fc5054d1242c5acd63e",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "controller-sequencer"
   },
   "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10": {
    "service_id": "ic10.script.phase.pressure.config.policy",
-   "magic": 31416079,
+   "contract": "PhasePressureConfigPolicy",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3387,14 +3387,14 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "b328483cdd759cd01adb384bf1a6453e16496dbc602d572d08038a428cee250f",
+   "source_sha256": "86b6d1f5d4b5b4e0c3c2235da5e0b5b36c3c07093c054b094032bcf492e1e897",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "controller-phase-pressure"
   },
   "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10": {
    "service_id": "ic10.script.pressure.domain.config.policy",
-   "magic": 31416080,
+   "contract": "PressureDomainConfigPolicy",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3405,14 +3405,14 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "f9e4b96365c9f93d825547d5d8ba572c447d9adcafdb8697405047a1f79e31a4",
+   "source_sha256": "541fbb8efa2c09ded791bcfac97937cdcafb0421396ce861b8e273ff0ba45c14",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "pressure-domain"
   },
   "ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10": {
    "service_id": "ic10.script.pressure.transfer.config.policy",
-   "magic": 31416081,
+   "contract": "PressureTransferConfigPolicy",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3423,14 +3423,14 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "6bac525b70c238cd0521abb8ebb32b334e0e4fc8c10236182593aa1a7e5fc1dd",
+   "source_sha256": "5a0f80114fb0b996d43f0e38e38ce921f5fcd83abf3a267353f87bd879055772",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "pressure-grid"
   },
   "ic10/resource-grid-core/resource_reservation_v1_0.ic10": {
    "service_id": "ic10.script.resource.reservation",
-   "magic": 31415950,
+   "contract": "ResourceReservation",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3441,7 +3441,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "59e44ee0b819e8b7d80668fb7b7395387e654f95f2b2b70f21ff8c500bad2f4b",
+   "source_sha256": "e49a34a01c6cca1935e6f8b9a236b5afdc6f1b37764ededa1d511cb2da2ae7cf",
    "legacy_owned_ranges": [
     [
      8,
@@ -3458,7 +3458,7 @@
   },
   "ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10": {
    "service_id": "ic10.script.resource.reservation.releaser",
-   "magic": 31415990,
+   "contract": "ResourceReservationReleaser",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3469,7 +3469,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "a921b2c004b08d6d067fee44c7ca5e9f902a63524e54edce241bea4fa3f85652",
+   "source_sha256": "ea50a31b9b3e454047b39e8820a19c8160e698189282f96baf1f6b1f8e3fcb46",
    "legacy_owned_ranges": [
     [
      8,
@@ -3481,7 +3481,7 @@
   },
   "ic10/controller-config/generic_persistent_config_host_v1_1.ic10": {
    "service_id": "ic10.script.generic.persistent.config.host",
-   "magic": 31415928,
+   "contract": "GenericPersistentConfigHost",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3492,7 +3492,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "e883df1f1003620e5848bd3495227776c818e90136b6ac2cf24792f7bc37b27b",
+   "source_sha256": "6eecfbc6682545d73daa8d27e40e0ed94e6092fb5673ca147c87f2def9ec6894",
    "legacy_owned_ranges": [
     [
      8,
@@ -3533,7 +3533,7 @@
   },
   "ic10/controller-config/generic_config_editor_v1_0.ic10": {
    "service_id": "ic10.script.generic.config.editor",
-   "magic": 22360680,
+   "contract": "GenericConfigEditor",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3544,7 +3544,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "4b147dbbdb101dc7e9f72062cd6eb63b093ce90c2181156ee5c7cc4aaa42c3fb",
+   "source_sha256": "0098366cb5aaf7efc1510530d92bb2b9adaee0865e1c816cb50ea6938fb1d852",
    "legacy_owned_ranges": [
     [
      10,
@@ -3581,7 +3581,7 @@
   },
   "ic10/controller-config/generic_config_committer_v1_1.ic10": {
    "service_id": "ic10.script.generic.config.committer",
-   "magic": 31416082,
+   "contract": "GenericConfigCommitter",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3592,7 +3592,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "f1d65063f225791b4de408c658d4073e1968a589c6337b806793dd011346fc72",
+   "source_sha256": "9f0062860d558915a36ca8b30919796040bdb813d46c18d9eba6ae411713d381",
    "legacy_owned_ranges": [
     [
      8,
@@ -3604,7 +3604,7 @@
   },
   "ic10/controller-config/generic_config_loader_v1_2.ic10": {
    "service_id": "ic10.script.generic.config.loader",
-   "magic": 31416083,
+   "contract": "GenericConfigLoader",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3615,7 +3615,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "7fc0253bbe9df05db90ffe4298c0f402bb96e6370ea5d826e5e8fc19545c1d76",
+   "source_sha256": "5392bad9503a7225b6bdd346d248cc4c252559f5647d03338df92d4daead0c9c",
    "legacy_owned_ranges": [
     [
      8,
@@ -3627,7 +3627,7 @@
   },
   "ic10/controller-config/config_input_bridge_v1_0.ic10": {
    "service_id": "ic10.script.config.input.bridge",
-   "magic": 22360681,
+   "contract": "ConfigInputBridge",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3638,7 +3638,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "ed9f20ae892c10d83de7f476a696daac549a2395de9f81922d300d8696ae27cb",
+   "source_sha256": "c55be967ce640747805c2c2434e0e28f723a52eaf17fbe5a3d756e9a22c764e6",
    "legacy_owned_ranges": [
     [
      8,
@@ -3650,7 +3650,7 @@
   },
   "ic10/printer-directory/printer_execution_bank_v2_0.ic10": {
    "service_id": "ic10.script.printer.execution.bank",
-   "magic": 31415996,
+   "contract": "PrinterExecutionBank",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -3661,7 +3661,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "ce35f406935b0839f9794d486853b8dc51860a7c0b865517fb6dd41676b64fdd",
+   "source_sha256": "2eb0626b5f4c61ac5c26d67d13b746679ceeeb36e3f2011344005935f32d27dc",
    "legacy_owned_ranges": [
     [
      8,
@@ -3682,7 +3682,7 @@
   },
   "ic10/printer-directory/printer_capacity_client_v2_0.ic10": {
    "service_id": "ic10.script.printer.capacity.client",
-   "magic": 31415997,
+   "contract": "PrinterCapacityClient",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -3693,7 +3693,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "1703506292b88ea6ff454d6dafc7c89efca575592eb90238208e6736dd56d43d",
+   "source_sha256": "9b80e64d21138a940c59982e327031b76bea141ede3d6753b2b9a4bc1046f0fe",
    "legacy_owned_ranges": [
     [
      8,
@@ -3705,7 +3705,7 @@
   },
   "ic10/generic-jobs/generic_job_store_v1_0.ic10": {
    "service_id": "ic10.script.generic.job.store",
-   "magic": 31415984,
+   "contract": "GenericJobStore",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3716,7 +3716,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "f210ee9288f6577553833fe1a18d092eefa4038e8d45a3871619ef394f5ca780",
+   "source_sha256": "11540f50a9981a02c2a6aa99e0dcb48ca75864206a2ff0212c4fada14d1842f4",
    "legacy_owned_ranges": [
     [
      8,
@@ -3741,7 +3741,7 @@
   },
   "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10": {
    "service_id": "ic10.script.generic.job.store.command.executor",
-   "magic": 31416015,
+   "contract": "GenericJobStoreCommandExecutor",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3752,7 +3752,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "51d49ccc55a1b5b840ea62ccd64f8e4dd5be7c84ad5283a1d42c3d0cf4f93a12",
+   "source_sha256": "d0042d8a76357dbadf23d1d57bd650c90178786a8be5022ce29fdb3398e51fad",
    "legacy_owned_ranges": [
     [
      12,
@@ -3776,7 +3776,7 @@
   },
   "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10": {
    "service_id": "ic10.script.generic.job.command.gateway",
-   "magic": 31416001,
+   "contract": "GenericJobCommandGateway",
    "service_abi": 3,
    "schema_id": null,
    "schema_version": 0,
@@ -3787,7 +3787,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "d6596b4d9beae042396382bea8098b087756154904699e2507d7790666673edd",
+   "source_sha256": "417314e85104d60b6ba6f5e87822ea9d397492498ae384a3ca982bee1a4cad98",
    "legacy_owned_ranges": [
     [
      8,
@@ -3832,7 +3832,7 @@
   },
   "ic10/generic-jobs/generic_job_selector_v3_0.ic10": {
    "service_id": "ic10.script.generic.job.selector",
-   "magic": 31415993,
+   "contract": "GenericJobSelector",
    "service_abi": 3,
    "schema_id": null,
    "schema_version": 0,
@@ -3843,7 +3843,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "1c71179ca6e5140b0bd96c714086bda7abbfbc2660a115bf4ff4cacb899b9307",
+   "source_sha256": "7d44e2912b0eccbb6d3e89ca4b8e37fe0831529cc7100cce16c1fb8edaa75fa3",
    "legacy_owned_ranges": [
     [
      8,
@@ -3855,7 +3855,7 @@
   },
   "ic10/power-grid/power_dispatch_cycle_v1_0.ic10": {
    "service_id": "ic10.script.power.dispatch.cycle",
-   "magic": 31416034,
+   "contract": "PowerDispatchCycle",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3866,7 +3866,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "6e4903623f62d5dc7338afd7699fe0130a15d30f4607ce812767f8dc18d563ce",
+   "source_sha256": "d6973d0c04bf9de150597a933d775295952795799d50a747806d722301b02989",
    "legacy_owned_ranges": [
     [
      8,
@@ -3882,7 +3882,7 @@
   },
   "ic10/power-grid/power_dispatch_sweep_v1_0.ic10": {
    "service_id": "ic10.script.power.dispatch.sweep",
-   "magic": 31416033,
+   "contract": "PowerDispatchSweep",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3893,7 +3893,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "60289c8c7113f033ea062f8404bb3de8bbeced21b7297113cabe19092ebc470a",
+   "source_sha256": "812d40bfc6d2f4a4f08c9c0d440e56ef9050fef05350305fdf7f98d6a11a56f5",
    "legacy_owned_ranges": [
     [
      8,
@@ -3909,7 +3909,7 @@
   },
   "ic10/power-grid/power_link_selector_v1_0.ic10": {
    "service_id": "ic10.script.power.link.selector",
-   "magic": 31416030,
+   "contract": "PowerLinkSelector",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3920,7 +3920,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "491c87d7111bfa0ece8ba5336a06e781b00087aa39717f5ccff5f3134298674f",
+   "source_sha256": "42e580ea36f6405a857f269581c964677568e6fa32d2b26e186cf118c7e9ab34",
    "legacy_owned_ranges": [
     [
      8,
@@ -3932,7 +3932,7 @@
   },
   "ic10/power-grid/power_plan_validator_v1_0.ic10": {
    "service_id": "ic10.script.power.plan.validator",
-   "magic": 31416035,
+   "contract": "PowerPlanValidator",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3943,7 +3943,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "c2f331d87c77040b9972f368744be2c668004cb0ecadcfe63f48f8f2016afa50",
+   "source_sha256": "4243e27cd724956bd4441b31ac0d54e7dfe17e1cb3ab39023e769afd4ad9c3bb",
    "legacy_owned_ranges": [
     [
      8,
@@ -3955,7 +3955,7 @@
   },
   "ic10/power-grid/power_reservation_allocator_v1_0.ic10": {
    "service_id": "ic10.script.power.reservation.allocator",
-   "magic": 31416037,
+   "contract": "PowerReservationAllocator",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3966,7 +3966,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "d012541dd8ff5dd10af353c0b331afafb2e3c6d85d16e670987b7b2f106dbf84",
+   "source_sha256": "94e5bbfd5f5a2bfd959e4c5820cbd5f413e30e98038273cf8dcb5f23034d5baf",
    "legacy_owned_ranges": [
     [
      8,
@@ -3986,7 +3986,7 @@
   },
   "ic10/power-grid/power_reservation_committer_v1_0.ic10": {
    "service_id": "ic10.script.power.reservation.committer",
-   "magic": 31416036,
+   "contract": "PowerReservationCommitter",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -3997,7 +3997,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "ce8238db8dd50945c3a3ff1a018870b7f4e54e6095217aed766ef8da1024abe2",
+   "source_sha256": "fcff32a398c057f59772e5c297d5a5f612209dbaf8d0e8cbec12aa0d60c1fe1f",
    "legacy_owned_ranges": [
     [
      8,
@@ -4009,7 +4009,7 @@
   },
   "ic10/power-grid/power_sink_flow_builder_v1_0.ic10": {
    "service_id": "ic10.script.power.sink.flow.builder",
-   "magic": 31416032,
+   "contract": "PowerSinkFlowBuilder",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4020,7 +4020,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "fd093703fba719eb336280a4aab2a1931507f88bd9ddae9f12ae67ea3d98a69f",
+   "source_sha256": "d6a34a127cf497cc08b2a693bca1381b0b8137de593c7394043c741680085fd6",
    "legacy_owned_ranges": [
     [
      8,
@@ -4036,7 +4036,7 @@
   },
   "ic10/power-grid/power_sink_selector_v1_0.ic10": {
    "service_id": "ic10.script.power.sink.selector",
-   "magic": 31416031,
+   "contract": "PowerSinkSelector",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4047,7 +4047,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "7b730883d22aea71fbac4010125150c617dbc8300ff1a84052a5b599fb396013",
+   "source_sha256": "2ad76c80ba4c8a70c231a7b113ee3ad35a501e217a85af3b527e174719c46742",
    "legacy_owned_ranges": [
     [
      8,
@@ -4059,7 +4059,7 @@
   },
   "ic10/power-grid/power_source_selector_v1_0.ic10": {
    "service_id": "ic10.script.power.source.selector",
-   "magic": 31416029,
+   "contract": "PowerSourceSelector",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4070,7 +4070,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "4b78f4af84e0208957927ba48b31f5d05afc8c8f5c982bf83f8824034d3395a1",
+   "source_sha256": "48048cdc739dc6daca73da2af4310f43240492a53097e48af38fd5cef3127292",
    "legacy_owned_ranges": [
     [
      8,
@@ -4082,7 +4082,7 @@
   },
   "ic10/power-grid/power_link_executor_v1_0.ic10": {
    "service_id": "ic10.script.power.link.executor",
-   "magic": 31416039,
+   "contract": "PowerLinkExecutor",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4093,14 +4093,14 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "af21b0db7f94fcef4b141ca5ba66115b3d92192dca7e322529cb6c7e334e91b6",
+   "source_sha256": "c89d2d445affeabcaef9bf738a99972b9005ae8356c8b99b67595898cdafc739",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "power-grid"
   },
   "ic10/power-grid/power_load_executor_v1_0.ic10": {
    "service_id": "ic10.script.power.load.executor",
-   "magic": 31416038,
+   "contract": "PowerLoadExecutor",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4111,14 +4111,14 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "045fda0d49b6c1432b28b9515b53a2191e4d7f4d619de8c960c377b512c2e43e",
+   "source_sha256": "734d376a678ae364b4678c5adff0892e0f3dac6ea9597f17aba08570259f6b5d",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "power-grid"
   },
   "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10": {
    "service_id": "ic10.script.power.dispatch.plan.store",
-   "magic": 31416028,
+   "contract": "PowerDispatchPlanStore",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4129,7 +4129,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "9b616227dd82f0a3ffb0655270bf308b6ee3127ba895e4e3306eb128a66193eb",
+   "source_sha256": "dc541e69043742b00c10dcc0acc53d9f0309d18968cdb9d97fcd72f6e6481351",
    "legacy_owned_ranges": [
     [
      10,
@@ -4162,7 +4162,7 @@
   },
   "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10": {
    "service_id": "ic10.script.pressure.domain.inventory",
-   "magic": 31415935,
+   "contract": "PressureDomainInventory",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -4173,7 +4173,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "071de683f4f22be311c1f54a086e07fd25569923e9dba339da3afe82d8ac65d1",
+   "source_sha256": "a6bf313c15c86be60f0ba41c1ebeeca94b90be4b865fec789f9595f10869ca76",
    "legacy_owned_ranges": [
     [
      8,
@@ -4185,7 +4185,7 @@
   },
   "ic10/pressure-grid/pressure_grid_cost_profile_v1_0.ic10": {
    "service_id": "ic10.script.pressure.grid.cost.profile",
-   "magic": 31415945,
+   "contract": "PressureGridCostProfile",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4196,7 +4196,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "2944b40525bf1f437e2d86434cd4b7bedaab5310bf3c948a6a56a2364f878060",
+   "source_sha256": "932a39497ce5e1736dcbf125fc99cdc2642b32b2ab651a122171385931dbb567",
    "legacy_owned_ranges": [
     [
      8,
@@ -4208,7 +4208,7 @@
   },
   "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10": {
    "service_id": "ic10.script.pressure.grid.path.allocator",
-   "magic": 31415941,
+   "contract": "PressureGridPathAllocator",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4219,7 +4219,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "355af023121ba6ae1bbeab3353aae283c34ba8e02d9e6dc2ac82f8da07fc6944",
+   "source_sha256": "9569003a43e5fc80b332203f8d9ace351b52a06e1c257298fef32a60019e5a99",
    "legacy_owned_ranges": [
     [
      8,
@@ -4231,7 +4231,7 @@
   },
   "ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10": {
    "service_id": "ic10.script.pressure.grid.plan.builder",
-   "magic": 31415943,
+   "contract": "PressureGridPlanBuilder",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4242,7 +4242,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "18e996ee11b6630f45938c09041033a3810e5f9b3cc6da29bfbbeef789ad274d",
+   "source_sha256": "96efc8847b0e20da2ac1096049a146b3ffa57fe9495b523323d716be41cdc884",
    "legacy_owned_ranges": [
     [
      8,
@@ -4254,7 +4254,7 @@
   },
   "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10": {
    "service_id": "ic10.script.pressure.grid.reservation.planner",
-   "magic": 31415937,
+   "contract": "PressureGridReservationPlanner",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -4265,7 +4265,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "bcb5d7bd0c672f9fea12506d1d1be6469ee13662d9696cb11b28543b7f584035",
+   "source_sha256": "2830bb33a4beb9d98dada8a47df970ed04d082e96e098a3e0ec84e0d21354f00",
    "legacy_owned_ranges": [
     [
      8,
@@ -4277,7 +4277,7 @@
   },
   "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10": {
    "service_id": "ic10.script.pressure.grid.route.selector",
-   "magic": 31415944,
+   "contract": "PressureGridRouteSelector",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -4288,7 +4288,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "1206854eca08e899c02a10224992a2048c8d612d03870b8d24359d679814191b",
+   "source_sha256": "85682654cfae13cc8389834998f714d19f43d4d97ccaabd1c12f59b840c23bc4",
    "legacy_owned_ranges": [
     [
      8,
@@ -4313,7 +4313,7 @@
   },
   "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10": {
    "service_id": "ic10.script.pressure.grid.route.ranker",
-   "magic": 31415946,
+   "contract": "PressureGridRouteRanker",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -4324,7 +4324,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "7eea5aebbe470b864671ee397df70c651340f5d026848cefcdb3d606a7a0b7eb",
+   "source_sha256": "dfae118feb2dfda629e2464595da608feb36773f7853c556e2a7cb5e884b0b31",
    "legacy_owned_ranges": [
     [
      8,
@@ -4349,7 +4349,7 @@
   },
   "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10": {
    "service_id": "ic10.script.pressure.grid.singlehop.builder",
-   "magic": 31415942,
+   "contract": "PressureGridSinglehopBuilder",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4360,7 +4360,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "9da8ad5b2f93ea30f0bec537d8837baab97bb3431975096e0b62ad0906b82ce7",
+   "source_sha256": "6c69933defafa29d5df42db29425a3bf1ccd4a0bc3cca199c90cd83febaea0ba",
    "legacy_owned_ranges": [
     [
      8,
@@ -4372,7 +4372,7 @@
   },
   "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10": {
    "service_id": "ic10.script.pressure.inventory.reservation",
-   "magic": 31415936,
+   "contract": "PressureInventoryReservation",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4383,7 +4383,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "6e7609bf47c3f070c8c30cc3d18e2128a2715b8281d73bedb1218fd6acdf96d9",
+   "source_sha256": "61870a17f2e16542663109e9c0b2cf745f1d8a7c8f4dbfa16699fca5ea1407f6",
    "legacy_owned_ranges": [
     [
      8,
@@ -4395,7 +4395,7 @@
   },
   "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10": {
    "service_id": "ic10.script.pressure.reservation.allocator",
-   "magic": 31415938,
+   "contract": "PressureReservationAllocator",
    "service_abi": 3,
    "schema_id": null,
    "schema_version": 0,
@@ -4406,7 +4406,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "b88572f4bad120902e5b4566bcd68c12a8ac7ec7a3eab5e67efcab71ce9cfb9d",
+   "source_sha256": "9170d99e115b35ef2b313787d1463a631b24d6f23876e8f8f4fad1e606eb3131",
    "legacy_owned_ranges": [
     [
      8,
@@ -4418,7 +4418,7 @@
   },
   "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10": {
    "service_id": "ic10.script.pressure.grid.path.enumerator",
-   "magic": 31415940,
+   "contract": "PressureGridPathEnumerator",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -4429,7 +4429,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "ea9ac0830b6615fa020ee260d242d4e4fb58ece93d1407be26695c8c3d1172af",
+   "source_sha256": "b0a458f7ddd52806ceec85a500bf9f92bef68f86aef792dc8419b2b9d9ce96af",
    "legacy_owned_ranges": [
     [
      8,
@@ -4454,7 +4454,7 @@
   },
   "ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10": {
    "service_id": "ic10.script.pressure.transfer.grant.guard",
-   "magic": 31415948,
+   "contract": "PressureTransferGrantGuard",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4465,7 +4465,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "fc1afba28dffe8d2a3ae3fbbe24ade61e4aa9a875d975315b7ee6b179bba819d",
+   "source_sha256": "3ae481d7733c205504fc9811dc553cba9897e2919b6efe8a53992f320b60865c",
    "legacy_owned_ranges": [
     [
      8,
@@ -4477,7 +4477,7 @@
   },
   "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10": {
    "service_id": "ic10.script.catalog.coordinator.core",
-   "magic": 31415970,
+   "contract": "CatalogCoordinatorCore",
    "service_abi": 4,
    "schema_id": null,
    "schema_version": 0,
@@ -4488,7 +4488,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "b848e0f169ac94b38005dede11e1c2c79404a8226e89db92a5b07bce692c087d",
+   "source_sha256": "ec368b5ebf6e1b2fda1c54ccc7e32058d72f36743f1ac2991a11041cf897fefe",
    "legacy_owned_ranges": [
     [
      8,
@@ -4508,7 +4508,7 @@
   },
   "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10": {
    "service_id": "ic10.script.generic.catalog.store",
-   "magic": 31415968,
+   "contract": "GenericCatalogStore",
    "service_abi": 6,
    "schema_id": null,
    "schema_version": 0,
@@ -4519,7 +4519,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "53470f933499444f725d1f3477dea8e6ce54ad416fd0e1a798dedf5529768a6e",
+   "source_sha256": "650f4815215612d62cf8985dc1ae0dbe97898723818d5b1a733f30f68e41a2b6",
    "legacy_owned_ranges": [
     [
      9,
@@ -4549,7 +4549,7 @@
   },
   "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10": {
    "service_id": "ic10.script.catalog.coordinator.directory.view",
-   "magic": 31415975,
+   "contract": "CatalogCoordinatorDirectoryView",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -4560,7 +4560,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "1db8f7a47be36d64a09a7c1275d2d50cbad26ae50f7d03b4c5c8119fde7c8567",
+   "source_sha256": "d001e4898b7ed450f8d860a5253a93ab89d2c75aa4b5b71d5a97496d6eafc7aa",
    "legacy_owned_ranges": [
     [
      11,
@@ -4581,7 +4581,7 @@
   },
   "ic10/catalog-control-plane/catalog_inspector_v4_0.ic10": {
    "service_id": "ic10.script.catalog.inspector",
-   "magic": 31415972,
+   "contract": "CatalogInspector",
    "service_abi": 4,
    "schema_id": null,
    "schema_version": 0,
@@ -4592,7 +4592,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "d2168e95f3fe40507fee9b58460f25bee2a700d1c9ac95df01996289240f4526",
+   "source_sha256": "961eff9f3ec8dbf4cd25f048f767719d30ef9acc59d1bd32b5cce047551a0974",
    "legacy_owned_ranges": [
     [
      8,
@@ -4609,7 +4609,7 @@
   },
   "ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10": {
    "service_id": "ic10.script.catalog.coordinator.recovery",
-   "magic": 31415976,
+   "contract": "CatalogCoordinatorRecovery",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -4620,7 +4620,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "b1e54958e8583a990dc92d1cb00dff30e4e0431bda02841af562a6fade019d84",
+   "source_sha256": "81d0a72efa1019e6bc2cb88798374a2bcc3a7147b490dd115a463236bc11f548",
    "legacy_owned_ranges": [
     [
      8,
@@ -4632,7 +4632,7 @@
   },
   "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10": {
    "service_id": "ic10.script.catalog.loader.router",
-   "magic": 31415971,
+   "contract": "CatalogLoaderRouter",
    "service_abi": 3,
    "schema_id": null,
    "schema_version": 0,
@@ -4643,7 +4643,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "9f6e4e1a13cc81dab31e83fd5af19068e252b6abf8af74e91c0f8489ec1fc43f",
+   "source_sha256": "f4d194df89f72f6a8bf6d74fd66ed5b8382c27d49319a3617cc1bbc992da6b54",
    "legacy_owned_ranges": [
     [
      8,
@@ -4655,7 +4655,7 @@
   },
   "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10": {
    "service_id": "ic10.script.generic.snapshot.directory.host",
-   "magic": 31415981,
+   "contract": "GenericSnapshotDirectoryHost",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4666,7 +4666,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "6d509c3fb034c48f088c011aa92f21504d2baeb7d376be8f877a2f46d184e461",
+   "source_sha256": "b4cfbd2acfd6faf6775d3dce9327427a60432e7d4da75d44d9c5144f65e6b8b1",
    "legacy_owned_ranges": [
     [
      11,
@@ -4695,7 +4695,7 @@
   },
   "ic10/directory-core/generic_registry_directory_host_v2_0.ic10": {
    "service_id": "ic10.script.generic.registry.directory.host",
-   "magic": 31415982,
+   "contract": "GenericRegistryDirectoryHost",
    "service_abi": 3,
    "schema_id": null,
    "schema_version": 0,
@@ -4706,7 +4706,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "b882d7d2d4d15888ef0594f3fd43d5b43140f38b85deb2547cbf8d88d71f1d25",
+   "source_sha256": "3aa2461222d807cd2e09fdae4fc62ebe20b786095927a3624573b18b87f99c11",
    "legacy_owned_ranges": [
     [
      16,
@@ -4736,7 +4736,7 @@
   },
   "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10": {
    "service_id": "ic10.script.generic.directory.adapter.bridge",
-   "magic": 31416084,
+   "contract": "GenericDirectoryAdapterBridge",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4747,7 +4747,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "2d1867a0e337184741cba486229e26c627068eabe8870b985fafe0f6da621c52",
+   "source_sha256": "a6d9884325e0b9167e42e95251564b5b4df1a7c1ddd3709fa493023157c1ebdf",
    "legacy_owned_ranges": [
     [
      8,
@@ -4759,7 +4759,7 @@
   },
   "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10": {
    "service_id": "ic10.script.dependency.ancestry.guard",
-   "magic": 31416009,
+   "contract": "DependencyAncestryGuard",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4770,7 +4770,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "2ddeb7d39067d2818f2c2981903ffd0ab3295b7f1b8ac53eacbf7cfce6cb03b5",
+   "source_sha256": "44cdcd3764f4398f558af5adabfa5305c14d93cbe969fe310fab90e7164be3e0",
    "legacy_owned_ranges": [
     [
      10,
@@ -4782,7 +4782,7 @@
   },
   "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10": {
    "service_id": "ic10.script.dependency.cancellation.guard",
-   "magic": 31416013,
+   "contract": "DependencyCancellationGuard",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4793,7 +4793,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "5e6fcdb523a0c54fd0630fbf7ef3ca26a46736ef18e3578b471a962c7dccd2c1",
+   "source_sha256": "6a31c86eca48aa009ab2156a92eaded8af929b278bf9dfe0a8608ccaaa8d13ea",
    "legacy_owned_ranges": [
     [
      20,
@@ -4805,7 +4805,7 @@
   },
   "ic10/dependency-planning/dependency_child_creator_v2_0.ic10": {
    "service_id": "ic10.script.dependency.child.creator",
-   "magic": 31416006,
+   "contract": "DependencyChildCreator",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -4816,7 +4816,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "920d72cea3ca168a3738a143421380c42dbb07e6af0e0cecf0e258d5674eaabe",
+   "source_sha256": "6edf07edddfb850d95d988ce89e44cdb9d150a44fa9a92d7bd2203bb962a0620",
    "legacy_owned_ranges": [
     [
      14,
@@ -4832,7 +4832,7 @@
   },
   "ic10/dependency-planning/dependency_child_validity_v1_0.ic10": {
    "service_id": "ic10.script.dependency.child.validity",
-   "magic": 31416014,
+   "contract": "DependencyChildValidity",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4843,7 +4843,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "cbe6968c704e38903ee8e8ebb7012084e66b6aa5eebadd606c28539bf57b3bb9",
+   "source_sha256": "2290de132fcc868900a61cfc573ecca096f39f6a15c2ef260a0bc8865bd585a9",
    "legacy_owned_ranges": [
     [
      13,
@@ -4855,7 +4855,7 @@
   },
   "ic10/dependency-planning/dependency_claim_view_v1_0.ic10": {
    "service_id": "ic10.script.dependency.claim.view",
-   "magic": 31416016,
+   "contract": "DependencyClaimView",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4866,7 +4866,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "38bbfc47a9592bc49e5b9e566965e27c3609ad739662b9784662938cd31fd315",
+   "source_sha256": "2a124b29a7e7543ba40df590dacba8b9dfeecd523fa3fd4083ef5867785abd6e",
    "legacy_owned_ranges": [
     [
      15,
@@ -4878,7 +4878,7 @@
   },
   "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10": {
    "service_id": "ic10.script.dependency.plan.builder",
-   "magic": 31416011,
+   "contract": "DependencyPlanBuilder",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -4889,7 +4889,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "9453e51780e55e9270ad61319666209ad5710030a74e1adb98c0fbc862383efa",
+   "source_sha256": "17cd799479e1a0d2df67de0c055061f8c70192da92046ad98cd15bc651059845",
    "legacy_owned_ranges": [
     [
      19,
@@ -4905,7 +4905,7 @@
   },
   "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10": {
    "service_id": "ic10.script.dependency.plan.evaluator",
-   "magic": 31416008,
+   "contract": "DependencyPlanEvaluator",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -4916,7 +4916,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "23e2ae7b83d83995391ecb121b2e288d2d97fe4cef26b4e2c582d4d3f683135d",
+   "source_sha256": "88df87a9d57b46c613e9af16de821cf3dd9b974a6997c66a54d752e9206d4449",
    "legacy_owned_ranges": [
     [
      20,
@@ -4932,7 +4932,7 @@
   },
   "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10": {
    "service_id": "ic10.script.dependency.plan.release.advisor",
-   "magic": 31416018,
+   "contract": "DependencyPlanReleaseAdvisor",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -4943,7 +4943,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "030652e0945fd6522a215612c2cd1ab7c94f27dd09b7bb84dd4ccbd81d27b0aa",
+   "source_sha256": "e301cd0ff6b2b19c8050ad6e40784bf0a3d44845839447714cfc914e0d1dfa4e",
    "legacy_owned_ranges": [
     [
      12,
@@ -4955,7 +4955,7 @@
   },
   "ic10/dependency-planning/dependency_plan_store_v2_0.ic10": {
    "service_id": "ic10.script.dependency.plan.store",
-   "magic": 31416007,
+   "contract": "DependencyPlanStore",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -4966,7 +4966,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "6288f1257a2babfa154a8ac31e99c9ddfa463567c5b0bb4a5185157178365cc8",
+   "source_sha256": "45b2df22309b90253281494fb3b7bb0622598c20caf7dbd92a2601d3b5738637",
    "legacy_owned_ranges": [
     [
      9,
@@ -4995,7 +4995,7 @@
   },
   "ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10": {
    "service_id": "ic10.script.existing.dependency.plan.controller",
-   "magic": 31416019,
+   "contract": "ExistingDependencyPlanController",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -5006,7 +5006,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "7707f21439be3c836580e6f43fd6052032c96a1986a2777b931f34ee4a5f8c69",
+   "source_sha256": "e8cd467b2773d6568cc8d2c349a513760bc449597e90725b5a24388edef4e134",
    "legacy_owned_ranges": [
     [
      12,
@@ -5026,7 +5026,7 @@
   },
   "ic10/dependency-planning/generic_job_monitor_v1_0.ic10": {
    "service_id": "ic10.script.generic.job.monitor",
-   "magic": 31416004,
+   "contract": "GenericJobMonitor",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -5037,7 +5037,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "09c7edfbd8a65f4447c622e2bd03d31229130920fcac1f754e6ab749f7cbace6",
+   "source_sha256": "1d4bc0f71bff7bda42ac38a71ce76414f662f8ece28cd2413d377a3d23d8a2a0",
    "legacy_owned_ranges": [
     [
      13,
@@ -5049,7 +5049,7 @@
   },
   "ic10/dependency-planning/item_producer_resolver_v1_0.ic10": {
    "service_id": "ic10.script.item.producer.resolver",
-   "magic": 31416003,
+   "contract": "ItemProducerResolver",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -5060,7 +5060,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "9f962cfca576ed2ef82071f3410d22c910378e182b7f26efdbf61b628c11b7fa",
+   "source_sha256": "f228093388bad95bb6772754fba4776684afe33140b8f85dc2928865a49ec1a2",
    "legacy_owned_ranges": [
     [
      8,
@@ -5076,7 +5076,7 @@
   },
   "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10": {
    "service_id": "ic10.script.job.inventory.preflight",
-   "magic": 31416005,
+   "contract": "JobInventoryPreflight",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -5087,7 +5087,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "37226b3679aff9ff96bb24267d3477991b9f4d7d6b9c724f58d2ac2c8aa2e3ca",
+   "source_sha256": "7c89e151c4119517cfef583a06710b0e9231e1702a13bd9d9028f501520b8bbc",
    "legacy_owned_ranges": [
     [
      15,
@@ -5099,7 +5099,7 @@
   },
   "ic10/dependency-planning/job_requirement_view_v1_0.ic10": {
    "service_id": "ic10.script.job.requirement.view",
-   "magic": 31416002,
+   "contract": "JobRequirementView",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -5110,7 +5110,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "676179977e47817df74af02f2f298faf54c26f4b6e4b2b63e29589893a97600b",
+   "source_sha256": "6291c24006dfd3a16ad47fc30a9eb3a8005f02685642fdc9ffadd953afb51a22",
    "legacy_owned_ranges": [
     [
      15,
@@ -5122,7 +5122,7 @@
   },
   "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10": {
    "service_id": "ic10.script.manufacturing.dependency.gate",
-   "magic": 31416012,
+   "contract": "ManufacturingDependencyGate",
    "service_abi": 2,
    "schema_id": null,
    "schema_version": 0,
@@ -5133,7 +5133,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "4e37c3711540e0b2d64ec68bfdebdffc615f5b6fd703ceafe2f1113bd80f924a",
+   "source_sha256": "0d759886a6c6b1e348ee0922de382f9bdca265b40321159108a8ec948cd9e637",
    "legacy_owned_ranges": [
     [
      9,
@@ -5145,7 +5145,7 @@
   },
   "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10": {
    "service_id": "ic10.script.manufacturing.dependency.planner",
-   "magic": 31416010,
+   "contract": "ManufacturingDependencyPlanner",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -5156,7 +5156,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "0e52b32346a0cfb04e56eb1f2c6e78cd620ed67e409f9feefa95ece28955ce16",
+   "source_sha256": "d0fcc096faa07ed6654087e17e9765e5c3da774f3ac17ef51c099804bf687599",
    "legacy_owned_ranges": [
     [
      12,
@@ -5176,7 +5176,7 @@
   },
   "ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10": {
    "service_id": "ic10.script.manufacturing.reagent.resolver",
-   "magic": 31416017,
+   "contract": "ManufacturingReagentResolver",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -5187,7 +5187,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "5123adbfe82cc10fafa1526b8fe28dbc50884586bba1a2db87af4255d30bd0d9",
+   "source_sha256": "f0adcc6aa1a99e92a06e9021c121cfbe5981d7cda5bf7aa9a6f75e5c47041615",
    "legacy_owned_ranges": [
     [
      8,
@@ -5199,7 +5199,7 @@
   },
   "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10": {
    "service_id": "ic10.script.new.dependency.plan.controller",
-   "magic": 31416020,
+   "contract": "NewDependencyPlanController",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -5210,7 +5210,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "36120f9e350f88edc422798994189fb10c3a40ffa5db25225eef9f4ca81d2ca7",
+   "source_sha256": "a6730670cd676d032ad2aa765a24ec42d02dd542dc08915fd80863886c73a481",
    "legacy_owned_ranges": [
     [
      20,
@@ -5226,7 +5226,7 @@
   },
   "ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10": {
    "service_id": "ic10.script.live.commission.snapshot.probe",
-   "magic": 31416051,
+   "contract": "LiveCommissionSnapshotProbe",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -5237,7 +5237,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "c9c5118682d845826e56e1a5b4756bf78cf2478ee34d656769db67c8678c906e",
+   "source_sha256": "19e4dcee73711c58ef1a5865dfb9a2d1c4178d2eebbbeb1700385c6b21146e91",
    "legacy_owned_ranges": [
     [
      10,
@@ -5262,7 +5262,7 @@
   },
   "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10": {
    "service_id": "ic10.script.recipe.execution.profile.view",
-   "magic": 31415985,
+   "contract": "RecipeExecutionProfileView",
    "service_abi": 1,
    "schema_id": null,
    "schema_version": 0,
@@ -5273,7 +5273,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "4c9687df73aa2d835902fe7be746dfead87b5d1a3775a53f0812201727df535d",
+   "source_sha256": "37a662bd79e80992ab96312d529b8811ac80f575f10e87b32f5b349c91e27305",
    "legacy_owned_ranges": [
     [
      10,

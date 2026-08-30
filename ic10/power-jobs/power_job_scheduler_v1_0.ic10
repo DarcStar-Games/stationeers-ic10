@@ -1,5 +1,5 @@
 # POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.
-poke 0 31416047
+poke 0 HASH("PowerJobScheduler.v1")
 poke 1 1
 poke 2 0
 poke 20 0

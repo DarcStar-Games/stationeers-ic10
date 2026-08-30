@@ -36,8 +36,8 @@ for tok in ('put d3 21 r15','s d0 Activate 1','sub r0 r0 r1','put d3 23 r0'):
 # Capability matrix: basic smelts run on all furnace classes; 2-input alloys on Furnace/Advanced; superalloys on Advanced only.
 def cap_admit(prefab,required,input_count=2,pressure=2000,temperature=1500):
     pp=Device(970,props={'ReferenceId':970,'PrefabHash':'HASH:'+prefab,'Power':1,'Error':0,'Pressure':pressure,'Temperature':temperature})
-    vv=Device(971,stack={0:31415952,1:4,70:321,71:required,72:input_count,73:1,74:7,8:2,9:101,10:2,11:1,12:2,13:102,14:2,15:1,16:2,17:103,18:2,19:1,32:2,33:444,34:2,35:1,64:100,65:100000,66:300,67:100000,68:321,69:1})
-    oo=Device(972,stack={0:31415950,1:1,33:2,34:444,36:0,37:100,9:1,10:2,12:1})
+    vv=Device(971,stack={0:'HASH:ResourceTransformProfileView.v4',1:4,70:321,71:required,72:input_count,73:1,74:7,8:2,9:101,10:2,11:1,12:2,13:102,14:2,15:1,16:2,17:103,18:2,19:1,32:2,33:444,34:2,35:1,64:100,65:100000,66:300,67:100000,68:321,69:1})
+    oo=Device(972,stack={0:'HASH:ResourceReservation.v1',1:1,33:2,34:444,36:0,37:100,9:1,10:2,12:1})
     vm=IC10(a,{'d0':vv,'d1':pp,'d2':oo},self_ref=973);vm.run(2);return vm.stack.get(8)
 for prefab in ('StructureArcFurnace','StructureFurnace','StructureAdvancedFurnace'):
     if cap_admit(prefab,1,1)!=1:fails.append('basic-smelt capability rejected '+prefab)
@@ -54,8 +54,8 @@ for prefab in ('StructureArcFurnace','StructureFurnace','StructureAdvancedFurnac
 
 # Synthetic 3-input transform path.
 proc=Device(900,props={'ReferenceId':900,'PrefabHash':'HASH:StructureAdvancedFurnace','Power':1,'Error':0,'Pressure':2000,'Temperature':1500,'Activate':0})
-out=Device(901,stack={0:31415950,1:1,33:2,34:444,36:0,37:100,9:1,10:2,12:1},props={'ReferenceId':901})
-view=Device(902,stack={0:31415952,1:4,70:123,71:4,72:3,73:1,74:5,75:0,
+out=Device(901,stack={0:'HASH:ResourceReservation.v1',1:1,33:2,34:444,36:0,37:100,9:1,10:2,12:1},props={'ReferenceId':901})
+view=Device(902,stack={0:'HASH:ResourceTransformProfileView.v4',1:4,70:123,71:4,72:3,73:1,74:5,75:0,
     8:2,9:101,10:2,11:1,12:2,13:102,14:2,15:1,16:2,17:103,18:2,19:2,
     32:2,33:444,34:2,35:1,64:1000,65:3000,66:1200,67:1800,68:123,69:1},props={'ReferenceId':902})
 adm_vm=IC10(a,{'d0':view,'d1':proc,'d2':out},self_ref=903); adm_dev=Device(903,adm_vm.stack,{'ReferenceId':903})
@@ -64,15 +64,15 @@ if adm_vm.stack.get(8)!=1 or adm_vm.stack.get(16)!=3: fails.append('generic admi
 
 links=[]; dyn={}
 for i,(typ,qty) in enumerate(((101,1),(102,1),(103,2))):
-    sr=Device(910+i*10,stack={0:31415950,1:1,33:2,34:typ,36:20,37:0,9:1,10:2,12:1},props={'ReferenceId':910+i*10})
-    dr=Device(911+i*10,stack={0:31415950,1:1,33:2,34:typ,36:0,37:20,9:1,10:2,12:1},props={'ReferenceId':911+i*10})
-    guard=Device(912+i*10,stack={0:31415960,1:1,13:1},props={'ReferenceId':912+i*10})
-    exe=Device(913+i*10,stack={0:31415958,1:1,2:0,7:1},props={'ReferenceId':913+i*10})
-    feed=Device(914+i*10,stack={0:31415961,1:1},props={'ReferenceId':914+i*10})
-    link=Device(915+i*10,stack={0:31415953,1:1,28:sr.ref,29:dr.ref,30:2,31:typ,9:1,12:1,14:guard.ref,15:exe.ref,16:feed.ref,21:700+i,22:proc.ref,23:0},props={'ReferenceId':915+i*10})
+    sr=Device(910+i*10,stack={0:'HASH:ResourceReservation.v1',1:1,33:2,34:typ,36:20,37:0,9:1,10:2,12:1},props={'ReferenceId':910+i*10})
+    dr=Device(911+i*10,stack={0:'HASH:ResourceReservation.v1',1:1,33:2,34:typ,36:0,37:20,9:1,10:2,12:1},props={'ReferenceId':911+i*10})
+    guard=Device(912+i*10,stack={0:'HASH:MaterialTransferGrantGuard.v1',1:1,13:1},props={'ReferenceId':912+i*10})
+    exe=Device(913+i*10,stack={0:'HASH:MaterialTransferExecutor.v1',1:1,2:0,7:1},props={'ReferenceId':913+i*10})
+    feed=Device(914+i*10,stack={0:'HASH:StackerFeeder.v1',1:1},props={'ReferenceId':914+i*10})
+    link=Device(915+i*10,stack={0:'HASH:ResourceLink.v1',1:1,28:sr.ref,29:dr.ref,30:2,31:typ,9:1,12:1,14:guard.ref,15:exe.ref,16:feed.ref,21:700+i,22:proc.ref,23:0},props={'ReferenceId':915+i*10})
     links.append((link,sr,dr,guard,exe,feed,qty))
     for d in (link,sr,dr,guard,exe,feed): dyn[f'x{d.ref}']=d
-ld=Device(950,stack={0:31415981,1:1,24:0,25:1,27:3,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:64,32:links[0][0].ref,33:links[1][0].ref,34:links[2][0].ref},props={'ReferenceId':950})
+ld=Device(950,stack={0:'HASH:GenericSnapshotDirectoryHost.v1',1:1,24:0,25:1,27:3,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:64,32:links[0][0].ref,33:links[1][0].ref,34:links[2][0].ref},props={'ReferenceId':950})
 res_vm=IC10(r,{'d0':adm_dev,'d1':view,'d2':ld,**dyn},self_ref=951); res_dev=Device(951,res_vm.stack,{'ReferenceId':951})
 res_vm.run(2)
 if res_vm.stack.get(12)!=1 or [res_vm.stack.get(20+i*4) for i in range(3)] != [z[0].ref for z in links]:

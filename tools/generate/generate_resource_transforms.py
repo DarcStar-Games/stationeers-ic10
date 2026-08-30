@@ -6,12 +6,14 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 from framework.catalog_generation import (
  CatalogFamily,CatalogPartition,declared_output_inventory,run_catalog_generation,
 )
+from framework.ic10_source import game_hash
+from framework.protocol_headers import header_name
 from framework.catalog_schema import (
- CELL_BLOCK_WIDTH,COORDINATION_PROGRAM_FILES,COORD_MAGIC,GENERIC_STORE_FILE,STORE_ABI,STORE_MAGIC,CatalogItem,align_block,
+ CELL_BLOCK_WIDTH,COORDINATION_PROGRAM_FILES,COORD_TOKEN,GENERIC_STORE_FILE,STORE_ABI,STORE_TOKEN,CatalogItem,align_block,
 )
 SOURCE_FILE='data/resource_transforms.json';MANIFEST_FILE='data/resource_transform_catalog_manifest.json';VIEW_FILE='ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10';RESOLVER_FILE='ic10/dependency-planning/item_producer_resolver_v1_0.ic10'
 R=_PROJECT_ROOT
-SCHEMA='CatalogSchema.ResourceTransform';SCHEMA_VERSION=4;INSTANCE='Catalog.ResourceTransforms.Schema4';VIEW_MAGIC=31415952;VIEW_ABI=4
+SCHEMA='CatalogSchema.ResourceTransform';SCHEMA_VERSION=4;INSTANCE='Catalog.ResourceTransforms.Schema4';VIEW_CONTRACT='ResourceTransformProfileView';VIEW_ABI=4;VIEW_TOKEN='HASH("ResourceTransformProfileView.v4")'
 
 def build_partitions(D):
  T=D['transforms']
@@ -30,7 +32,7 @@ def build_partitions(D):
 def render_outputs(D):
  T=D['transforms']
  view=f'''# Resource Transform View v8: Store ABI5 items; ABI4 resolved-request fencing.
-poke 0 {VIEW_MAGIC}
+poke 0 {VIEW_TOKEN}
 poke 1 {VIEW_ABI}
 poke 2 0
 poke 68 0
@@ -43,7 +45,7 @@ l r2 d0 ReferenceId
 get r12 d0 11
 blez r12 Bad
 getd r0 r12 0
-bne r0 {COORD_MAGIC} Bad
+bne r0 {COORD_TOKEN} Bad
 getd r15 r12 22
 mod r0 r15 2
 bnez r0 Bad
@@ -54,7 +56,7 @@ move r2 r1
 j First
 Store:
 getd r0 r2 0
-bne r0 {STORE_MAGIC} Bad
+bne r0 {STORE_TOKEN} Bad
 getd r0 r2 1
 bne r0 {STORE_ABI} Bad
 getd r14 r2 17
@@ -156,7 +158,7 @@ j ra'''
    rt=o['resource_type']
    if rt in producer_seen: raise SystemExit(f'duplicate ITEM producer for {rt}: {producer_seen[rt]} and {t["name"]}')
    producer_seen[rt]=t['name']; producer.append((rt,t['name']))
- pl=['# Generated ITEM producer resolver.','Boot:','get r0 db 0','beq r0 31416003 Table','clr db','poke 0 31416003','poke 1 1','poke 2 0','Table:']
+ pl=['# Generated ITEM producer resolver.','Boot:','get r0 db 0','beq r0 HASH("ItemProducerResolver.v1") Table','clr db','poke 0 HASH("ItemProducerResolver.v1")','poke 1 1','poke 2 0','Table:']
  for i,(rt,name) in enumerate(producer): pl += [f'poke {32+2*i} {rt}',f'poke {33+2*i} HASH("{name}")']
  pl += ['Loop:','yield','get r15 db 9','get r0 db 10','beq r15 r0 Loop','get r2 db 8','beqz r2 Bad','move r6 0','move r7 32','Find:',f'bge r6 {len(producer)} Print','get r0 db r7','beq r0 r2 Found','add r7 r7 2','add r6 r6 1','j Find','Found:','add r7 r7 1','get r0 db r7','poke 12 1','poke 13 r0','j Good','Print:','poke 12 2','poke 13 r2','Good:','poke 11 1','poke 10 r15','j Loop','Bad:','poke 11 -1','poke 12 0','poke 13 0','poke 10 r15','j Loop']
  producer_text='\n'.join(pl)+'\n'
@@ -168,7 +170,7 @@ def loader_filename(partition,ordinal):
 
 def manifest_extensions(D,result):
  partition=result.partitions[0];meta=partition.definition.metadata
- return {'format':'RESOURCE_TRANSFORM_CATALOG_V6','catalog_token':result.token,'transform_count':result.total_items,'input_descriptor_count':meta['input_descriptor_count'],'output_descriptor_count':meta['output_descriptor_count'],'runtime_store_placement':True,'runtime_min_store_count':result.runtime_min_store_count,'runtime_store_item_counts':list(partition.store_item_counts),'item_cell_lengths':[x.cells for x in result.items],'loader_segment_count':len(result.loaders),'loaders':list(result.loaders),'loader_items':list(partition.loader_items),'view_magic':VIEW_MAGIC,'view_abi':VIEW_ABI,'processor_capability_model':D.get('processor_capability_model',{}),'loader_item_atomicity':'transform_never_split','loader_sparse_zero_init':True,'generic_store_program':GENERIC_STORE_FILE,'coordinator_core_program':result.coordination_programs[1],'loader_router_program':result.coordination_programs[2]}
+ return {'format':'RESOURCE_TRANSFORM_CATALOG_V6','catalog_token':result.token,'transform_count':result.total_items,'input_descriptor_count':meta['input_descriptor_count'],'output_descriptor_count':meta['output_descriptor_count'],'runtime_store_placement':True,'runtime_min_store_count':result.runtime_min_store_count,'runtime_store_item_counts':list(partition.store_item_counts),'item_cell_lengths':[x.cells for x in result.items],'loader_segment_count':len(result.loaders),'loaders':list(result.loaders),'loader_items':list(partition.loader_items),'view_magic':game_hash(header_name(VIEW_CONTRACT,VIEW_ABI)),'view_abi':VIEW_ABI,'processor_capability_model':D.get('processor_capability_model',{}),'loader_item_atomicity':'transform_never_split','loader_sparse_zero_init':True,'generic_store_program':GENERIC_STORE_FILE,'coordinator_core_program':result.coordination_programs[1],'loader_router_program':result.coordination_programs[2]}
 
 def source_extensions(D,result):
  return {'schema':SCHEMA_VERSION,'catalog_schema_id':SCHEMA,'catalog_schema_version':SCHEMA_VERSION,'catalog_instance_id':INSTANCE,'cell_block_width':CELL_BLOCK_WIDTH}

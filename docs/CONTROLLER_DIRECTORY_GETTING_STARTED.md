@@ -84,7 +84,7 @@ Use its `Stack Address` Logic Memory to inspect:
 
 | Address | Expected value | Meaning |
 | ---: | ---: | --- |
-| `0` | `31415983` | Generic Directory Adapter magic |
+| `0` | `HASH("DirectoryAdapter.v3")` | Generic Directory Adapter magic |
 | `1` | `3` | Adapter ABI |
 | `2` | `17` | Capability mask: `HAS_SCHEMA` + `HAS_GENERATION` |
 | `3` | record exact value | `DirectorySchema.Controller.v1` folded schema hash |
@@ -109,7 +109,7 @@ First verify the fixed header:
 
 | Address | Expected value | Meaning |
 | ---: | ---: | --- |
-| `0` | `31415981` | Generic Snapshot Directory magic |
+| `0` | `HASH("GenericSnapshotDirectoryHost.v1")` | Generic Snapshot Directory magic |
 | `1` | `1` | Host ABI |
 | `9` | same as Adapter `S3` | Controller schema identity |
 | `11` | `2` | Two cells per record |

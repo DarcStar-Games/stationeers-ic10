@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/diagnostic_renderer_v1_1.ic10",
-  "source_sha256": "dd598915617cef3821b9ede3c2374851c1a292a47dfbebe2604d507f1755dcc0",
+  "source_sha256": "4a3deea19f0ef917f274b473d90e45b1a7e183c510ca5ee1bebbc67752ea4f91",
   "identity": {
     "service_id": "ic10.script.diagnostic.renderer",
     "implementation_revision": "1.1",
@@ -80,7 +80,7 @@
         "access": [
           "self-write"
         ],
-        "const": 16180339
+        "const": -1074177220
       },
       {
         "address": 1,
@@ -124,7 +124,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 16180339,
+        "contract": "DiagnosticRenderer",
+        "magic": -1074177220,
         "abi": 1
       }
     ]
@@ -140,7 +141,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 16180339,
+        "equals": -1074177220,
         "source": "generated-protocol-header"
       },
       {
@@ -155,9 +156,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.16180339.abi1",
+        "protocol_id": "ic10.stack.diagnostic-renderer.v1",
         "base": 0,
-        "magic": 16180339,
+        "contract": "DiagnosticRenderer",
+        "magic": -1074177220,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

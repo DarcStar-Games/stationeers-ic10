@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/printer-directory/printer_execution_bank_v2_0.ic10",
-  "source_sha256": "ce35f406935b0839f9794d486853b8dc51860a7c0b865517fb6dd41676b64fdd",
+  "source_sha256": "2eb0626b5f4c61ac5c26d67d13b746679ceeeb36e3f2011344005935f32d27dc",
   "identity": {
     "service_id": "ic10.script.printer.execution.bank",
     "implementation_revision": "2.0",
@@ -118,7 +118,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415996,
+        "contract": "PrinterExecutionBank",
+        "magic": -1743126326,
         "abi": 2
       }
     ]
@@ -134,9 +135,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415996.abi2",
+        "protocol_id": "ic10.stack.printer-execution-bank.v2",
         "base": 0,
-        "magic": 31415996,
+        "contract": "PrinterExecutionBank",
+        "magic": -1743126326,
         "abi": 2,
         "source": "literal-own-stack-header"
       }

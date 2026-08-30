@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/generic-jobs/generic_job_store_v1_0.ic10",
-  "source_sha256": "f210ee9288f6577553833fe1a18d092eefa4038e8d45a3871619ef394f5ca780",
+  "source_sha256": "11540f50a9981a02c2a6aa99e0dcb48ca75864206a2ff0212c4fada14d1842f4",
   "identity": {
     "service_id": "ic10.script.generic.job.store",
     "implementation_revision": "1.0",
@@ -267,7 +267,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415984,
+        "contract": "GenericJobStore",
+        "magic": -955081679,
         "abi": 1
       }
     ]
@@ -290,9 +291,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415984.abi1",
+        "protocol_id": "ic10.stack.generic-job-store.v1",
         "base": 0,
-        "magic": 31415984,
+        "contract": "GenericJobStore",
+        "magic": -955081679,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10",
-  "source_sha256": "a70c50a1acb17813dcfe9ee801c10a6e65802fb20db71a0fb8a214a62c2a96a5",
+  "source_sha256": "f64036d38f0aa74463d2bb41ed4bb4924b3a7ba23bdbe7d75d27ceb39d7f4eba",
   "identity": {
     "service_id": "ic10.script.multi.material.reservation.allocator",
     "implementation_revision": "2.0",
@@ -384,7 +384,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415954,
+        "contract": "MultiMaterialReservationAllocator",
+        "magic": 924888977,
         "abi": 2
       }
     ]
@@ -400,9 +401,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415954.abi2",
+        "protocol_id": "ic10.stack.multi-material-reservation-allocator.v2",
         "base": 0,
-        "magic": 31415954,
+        "contract": "MultiMaterialReservationAllocator",
+        "magic": 924888977,
         "abi": 2,
         "source": "literal-own-stack-header"
       }

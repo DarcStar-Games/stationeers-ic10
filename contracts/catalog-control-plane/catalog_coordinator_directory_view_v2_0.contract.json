@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10",
-  "source_sha256": "1db8f7a47be36d64a09a7c1275d2d50cbad26ae50f7d03b4c5c8119fde7c8567",
+  "source_sha256": "d001e4898b7ed450f8d860a5253a93ab89d2c75aa4b5b71d5a97496d6eafc7aa",
   "identity": {
     "service_id": "ic10.script.catalog.coordinator.directory.view",
     "implementation_revision": "2.0",
@@ -46,7 +46,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415982
+            "equals": -1822968058
           },
           {
             "address": 1,
@@ -54,7 +54,7 @@
           },
           {
             "address": 3,
-            "equals": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
+            "equals": -698837900
           }
         ]
       },
@@ -62,7 +62,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415982.abi3"
+          "ic10.stack.generic-registry-directory-host.v3"
         ]
       }
     },
@@ -94,15 +94,15 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415970
+            "equals": 4515138
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.ddb2d674a657e03b",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.ddb2d674a657e03b",
+        "interface_id": "ic10.interface.access.93dc8c1047b605c8",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.93dc8c1047b605c8",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -231,7 +231,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415975,
+        "contract": "CatalogCoordinatorDirectoryView",
+        "magic": 597785682,
         "abi": 2
       }
     ]
@@ -247,9 +248,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415975.abi2",
+        "protocol_id": "ic10.stack.catalog-coordinator-directory-view.v2",
         "base": 0,
-        "magic": 31415975,
+        "contract": "CatalogCoordinatorDirectoryView",
+        "magic": 597785682,
         "abi": 2,
         "source": "literal-own-stack-header"
       }
@@ -259,9 +261,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415982.abi3",
+            "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
             "header_base": 0,
-            "magic": 31415982,
+            "contract": "GenericRegistryDirectoryHost",
+            "magic": -1822968058,
             "abi": 3,
             "publication_requirements": [
               {

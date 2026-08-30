@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10",
-  "source_sha256": "53470f933499444f725d1f3477dea8e6ce54ad416fd0e1a798dedf5529768a6e",
+  "source_sha256": "650f4815215612d62cf8985dc1ae0dbe97898723818d5b1a733f30f68e41a2b6",
   "identity": {
     "service_id": "ic10.script.generic.catalog.store",
     "implementation_revision": "3.0",
@@ -47,7 +47,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415969
+          "value": -284599001
         },
         {
           "address": 1,
@@ -302,7 +302,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415968,
+        "contract": "GenericCatalogStore",
+        "magic": 875310516,
         "abi": 6
       }
     ]
@@ -325,9 +326,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415968.abi6",
+        "protocol_id": "ic10.stack.generic-catalog-store.v6",
         "base": 0,
-        "magic": 31415968,
+        "contract": "GenericCatalogStore",
+        "magic": 875310516,
         "abi": 6,
         "source": "literal-own-stack-header"
       }

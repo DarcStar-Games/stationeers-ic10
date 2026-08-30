@@ -1,5 +1,5 @@
 # Transform Job Driver ABI2: d0 shared Selector,d1 Executor,d2 Transform Directory.
-poke 0 31416076
+poke 0 HASH("TransformJobDriver.v2")
 poke 1 2
 poke 2 0
 poke 10 2

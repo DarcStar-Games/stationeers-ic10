@@ -11,7 +11,7 @@ txt=result.source
 need=result.contains
 before=result.ordered
 # Cargo LArRE is sole native owner: scan, exact pre-pick quantity, whole-stack move, held-item recovery, token-last reply.
-need('ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10','poke 0 31415986','beq r2 1 Scan','beq r2 2 Move','beq r2 3 Recover',
+need('ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10','poke 0 HASH("LarreCargoStorageService.v1")','beq r2 1 Scan','beq r2 2 Move','beq r2 3 Recover',
  'ls r0 d0 255 OccupantHash','ls r13 d0 255 Quantity','get r0 db 15','bne r13 r0 Fault','s d0 Activate 1',
  'ls r1 d0 0 Occupied','select r0 r1 -6 -1','Reply:\npoke 9 r0','poke 14 r15')
 before('ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10','get r0 db 15','s d0 Activate 1')
@@ -39,7 +39,7 @@ need('ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10','ble
  'get r0 d2 15','blt r0 r6 Capacity','get r0 d1 15','blt r0 r6 Capacity','poke 11 r3','poke 12 r4','poke 13 r6','put d0 31 r9','bne r0 r9 Wait')
 before('ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10','poke 13 r6','put d0 31 r9')
 # Chute/export source, direct storage, and SDB providers are generic Endpoint ABI1 variants.
-need('ic10/material-grid/material_export_slot_endpoint_v1_0.ic10','poke 0 31415949','poke 13 1','HASH("ItemAccess.ExportSlot")','ls r5 d0 0 Quantity')
+need('ic10/material-grid/material_export_slot_endpoint_v1_0.ic10','poke 0 HASH("ResourceEndpoint.v1")','poke 13 1','HASH("ItemAccess.ExportSlot")','ls r5 d0 0 Quantity')
 need('ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10','bgt r5 16 Bad','Scan:','ls r0 d0 r4 Occupied','ls r1 d0 r4 MaxQuantity')
 # no yield in direct bounded scan body
 body=txt('ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10').split('Scan:',1)[1].split('Bad:',1)[0]
@@ -47,7 +47,7 @@ if 'yield' in body: result.fail('196 direct storage scan yields inside bounded s
 # SDB is explicitly lower-bound, dedicated, locked, and never pretends stack count is exact quantity.
 need('ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10','poke 13 24','bne r0 1 Bad','get r7 db 21','l r4 d0 Quantity','mul r8 r4 r7','sub r9 600 r4','s d0 Lock 1')
 # SDB feeder reuses Material Feeder ABI and exact Stacker metering after FIFO stack export.
-need('ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10','poke 0 31415961','s d0 Lock 1','l r0 d0 Quantity','s d0 Open 1','l r0 d1 ImportCount','s d1 Setting r9','s d1 Output 0','poke 25 r6')
+need('ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10','poke 0 HASH("StackerFeeder.v1")','s d0 Lock 1','l r0 d0 Quantity','s d0 Open 1','l r0 d1 ImportCount','s d1 Setting r9','s d1 Output 0','poke 25 r6')
 before('ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10','poke 24 0','poke 25 r6')
 raise SystemExit(result.finish('Item storage contracts',[
  'ITEM storage uses one Generic Endpoint/Reservation model across Vending, LArRE, direct slots, chute export and SDB',

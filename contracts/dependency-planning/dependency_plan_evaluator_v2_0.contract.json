@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10",
-  "source_sha256": "23e2ae7b83d83995391ecb121b2e288d2d97fe4cef26b4e2c582d4d3f683135d",
+  "source_sha256": "88df87a9d57b46c613e9af16de821cf3dd9b974a6997c66a54d752e9206d4449",
   "identity": {
     "service_id": "ic10.script.dependency.plan.evaluator",
     "implementation_revision": "2.0",
@@ -153,7 +153,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416008
+        "const": 888280511
       },
       {
         "address": 1,
@@ -324,7 +324,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416008,
+        "contract": "DependencyPlanEvaluator",
+        "magic": 888280511,
         "abi": 2
       }
     ]
@@ -340,7 +341,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416008,
+        "equals": 888280511,
         "source": "generated-protocol-header"
       },
       {
@@ -355,9 +356,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416008.abi2",
+        "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
         "base": 0,
-        "magic": 31416008,
+        "contract": "DependencyPlanEvaluator",
+        "magic": 888280511,
         "abi": 2,
         "source": "literal-own-stack-header"
       }

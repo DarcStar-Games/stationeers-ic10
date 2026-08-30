@@ -1,7 +1,7 @@
 # Generic Input Resolver v1.0: S8 Scanner,S9 count,S10 Profile; S13/14/15 result.
 alias scanner r1
 alias profile r2
-poke 0 31415931
+poke 0 HASH("GenericInputResolver.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -9,7 +9,7 @@ yield
 get scanner db 8
 blez scanner Invalid
 getd r0 scanner 0
-bne r0 31415930 Invalid
+bne r0 HASH("GenericInputScanner.v1") Invalid
 getd r0 scanner 1
 bne r0 1 Invalid
 get r6 db 9
@@ -28,7 +28,7 @@ move r12 0
 move r13 0
 blez profile Choose
 getd r0 profile 0
-bne r0 31415929 Invalid
+bne r0 HASH("InputProfileView.v1") Invalid
 getd r0 profile 1
 bne r0 1 Invalid
 getd r0 profile 10

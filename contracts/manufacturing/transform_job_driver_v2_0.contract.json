@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/transform_job_driver_v2_0.ic10",
-  "source_sha256": "9690ea70e79629b3fdf1fc5c58a982ee2a550e8505b0a860dd5603e7b299ce9b",
+  "source_sha256": "e186f3d8974250639ea18df97720189589df179b560a7b7e8e81ae16df94e994",
   "identity": {
     "service_id": "ic10.script.transform.job.driver",
     "implementation_revision": "2.0",
@@ -202,7 +202,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416076
+        "const": -748947688
       },
       {
         "address": 1,
@@ -379,7 +379,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416076,
+        "contract": "TransformJobDriver",
+        "magic": -748947688,
         "abi": 2
       }
     ]
@@ -395,7 +396,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416076,
+        "equals": -748947688,
         "source": "generated-protocol-header"
       },
       {
@@ -410,9 +411,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416076.abi2",
+        "protocol_id": "ic10.stack.transform-job-driver.v2",
         "base": 0,
-        "magic": 31416076,
+        "contract": "TransformJobDriver",
+        "magic": -748947688,
         "abi": 2,
         "source": "literal-own-stack-header"
       }

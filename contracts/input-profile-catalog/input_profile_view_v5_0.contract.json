@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/input-profile-catalog/input_profile_view_v5_0.ic10",
-  "source_sha256": "25f95c4735d077c40a0f88efaedd9c47e37df3d9ab6473299b07965c6d0d0434",
+  "source_sha256": "ca9fab265e7d700766d33e998753e7d9686339e331d88deb75783fb9b95316d7",
   "identity": {
     "service_id": "ic10.script.input.profile.view",
     "implementation_revision": "5.0",
@@ -71,7 +71,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415970
+          "value": 4515138
         }
       ],
       "accepted": []
@@ -96,7 +96,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415968
+          "value": 875310516
         },
         {
           "address": 1,
@@ -106,7 +106,7 @@
         {
           "address": 3,
           "operator": "equals",
-          "value": "HASH(\"CatalogSchema.InputProfile.v3\")"
+          "value": 1427828412
         }
       ],
       "accepted": []
@@ -209,7 +209,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415929,
+        "contract": "InputProfileView",
+        "magic": 940078290,
         "abi": 1
       }
     ]
@@ -225,9 +226,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415929.abi1",
+        "protocol_id": "ic10.stack.input-profile-view.v1",
         "base": 0,
-        "magic": 31415929,
+        "contract": "InputProfileView",
+        "magic": 940078290,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

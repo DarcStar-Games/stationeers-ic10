@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10",
-  "source_sha256": "9e698eb9847f6724082d140e9c938a619d5e0419a016a94f49d390a646633d20",
+  "source_sha256": "1d86365ab0b2c608b7e4cc84259080a39a4b30d7bb6afcdb185577d934c3560a",
   "identity": {
     "service_id": "ic10.script.direct.item.storage.endpoint",
     "implementation_revision": "1.0",
@@ -114,7 +114,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415963
+            "equals": 2107540686
           },
           {
             "address": 8,
@@ -125,8 +125,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.bd1b1bd0a7c8d8e0",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.bd1b1bd0a7c8d8e0",
+        "interface_id": "ic10.interface.access.fb1c20627e4c12cf",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.fb1c20627e4c12cf",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -190,7 +190,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415949
+        "const": 25991561
       },
       {
         "address": 1,
@@ -305,7 +305,7 @@
         "access": [
           "self-write"
         ],
-        "const": "HASH(\"StorageAccess.Direct\")"
+        "const": 546678565
       },
       {
         "address": 36,
@@ -403,7 +403,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415949,
+        "contract": "ResourceEndpoint",
+        "magic": 25991561,
         "abi": 1
       }
     ]
@@ -419,7 +420,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415949,
+        "equals": 25991561,
         "source": "generated-protocol-header"
       },
       {
@@ -434,9 +435,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415949.abi1",
+        "protocol_id": "ic10.stack.resource-endpoint.v1",
         "base": 0,
-        "magic": 31415949,
+        "contract": "ResourceEndpoint",
+        "magic": 25991561,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

@@ -47,7 +47,7 @@ The Reservation Allocator is the intended sole writer of `ReservedExportMoles` a
 `ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10` wraps one Inventory ABI2 service.
 
 ```text
-S0   magic = 31415936
+S0   magic = PressureInventoryReservation.v1
 S1   ABI = 1
 S2   capability mask = 0
 S8   MolesPerKPa
@@ -173,7 +173,7 @@ The current Transfer topology is read through telemetry ABI2 generation checks. 
 Grant Guard publishes:
 
 ```text
-S0  magic = 31415948
+S0  magic = PressureTransferGrantGuard.v1
 S1  ABI = 1
 S2  capability mask = 0
 S8  active GrantMolesPerTick

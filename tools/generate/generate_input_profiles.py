@@ -7,11 +7,11 @@ from framework.catalog_generation import (
  CatalogFamily,CatalogPartition,declared_output_inventory,run_catalog_generation,
 )
 from framework.catalog_schema import (
- CELL_BLOCK_WIDTH,COORDINATION_PROGRAM_FILES,COORD_MAGIC,GENERIC_STORE_FILE,STORE_ABI,STORE_MAGIC,CatalogItem,align_block,
+ CELL_BLOCK_WIDTH,COORDINATION_PROGRAM_FILES,COORD_TOKEN,GENERIC_STORE_FILE,STORE_ABI,STORE_TOKEN,CatalogItem,align_block,
 )
 SOURCE_FILE='data/input_profiles.json';MANIFEST_FILE='data/input_profile_catalog_manifest.json';VIEW_FILE='ic10/input-profile-catalog/input_profile_view_v5_0.ic10'
 R=_PROJECT_ROOT
-SCHEMA='CatalogSchema.InputProfile';SCHEMA_VERSION=3;INSTANCE='Catalog.InputProfiles.Schema3';PROFILE_MAGIC=31415929;PROFILE_ABI=1
+SCHEMA='CatalogSchema.InputProfile';SCHEMA_VERSION=3;INSTANCE='Catalog.InputProfiles.Schema3';PROFILE_CONTRACT='InputProfileView';PROFILE_ABI=1;PROFILE_TOKEN='HASH("InputProfileView.v1")'
 
 def build_partitions(D):
  P=D['profiles']
@@ -30,7 +30,7 @@ def build_partitions(D):
 
 def render_outputs(D):
  view=f'''# Input Profile View v5: dynamic Store ABI5 self-contained profile items.
-poke 0 {PROFILE_MAGIC}
+poke 0 {PROFILE_TOKEN}
 poke 1 {PROFILE_ABI}
 poke 2 0
 poke 11 0
@@ -43,7 +43,7 @@ l r2 d0 ReferenceId
 get r12 d0 11
 blez r12 Bad
 getd r0 r12 0
-bne r0 {COORD_MAGIC} Bad
+bne r0 {COORD_TOKEN} Bad
 getd r15 r12 22
 mod r0 r15 2
 bnez r0 Bad
@@ -55,7 +55,7 @@ move r2 r1
 j First
 Store:
 getd r0 r2 0
-bne r0 {STORE_MAGIC} Bad
+bne r0 {STORE_TOKEN} Bad
 getd r0 r2 1
 bne r0 {STORE_ABI} Bad
 getd r0 r2 3

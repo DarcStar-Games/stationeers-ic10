@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10",
-  "source_sha256": "cf949cedcd7ce6a48839c834017d0bedaa25aff91e1ec1b1f9982e517debf902",
+  "source_sha256": "5cf1e0332bf596f7ab3eaf3b03cc3f74f1587bff580da34bd5cd2c141b0d78ee",
   "identity": {
     "service_id": "ic10.script.power.policy.target.resolver",
     "implementation_revision": "1.0",
@@ -44,19 +44,19 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415981
+            "equals": 891293726
           },
           {
             "address": 9,
-            "equals": "HASH(\"DirectorySchema.PowerReservation.v1\")"
+            "equals": 730796175
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.4ad6a1de1fe492b0",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.4ad6a1de1fe492b0",
+        "interface_id": "ic10.interface.access.a6fbc7cdc415222b",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.a6fbc7cdc415222b",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -85,7 +85,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415950
+          "value": -1742884202
         },
         {
           "address": 33,
@@ -134,7 +134,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416041
+        "const": 454052989
       },
       {
         "address": 1,
@@ -233,7 +233,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416041,
+        "contract": "PowerPolicyTargetResolver",
+        "magic": 454052989,
         "abi": 1
       }
     ]
@@ -249,7 +250,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416041,
+        "equals": 454052989,
         "source": "generated-protocol-header"
       },
       {
@@ -264,9 +265,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416041.abi1",
+        "protocol_id": "ic10.stack.power-policy-target-resolver.v1",
         "base": 0,
-        "magic": 31416041,
+        "contract": "PowerPolicyTargetResolver",
+        "magic": 454052989,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

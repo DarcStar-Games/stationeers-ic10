@@ -1,5 +1,5 @@
 # Validate live child identity and promised output. d0 Monitor,d1 RequirementView.
-poke 0 31416014
+poke 0 HASH("DependencyChildValidity.v1")
 poke 1 1
 poke 2 0
 Loop:

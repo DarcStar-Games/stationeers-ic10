@@ -3,6 +3,7 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.ic10_source import game_hash
 
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -63,7 +64,7 @@ if overall_status(pi_plan) != "UNRESOLVED":
 if any(item["status"] == "FAIL" for item in pi_plan["results"]):
     fails.append("compatible literal-header wiring has a static failure")
 header = next(item for item in pi_plan["observations"] if item["id"] == "d2.provider-observed")
-if header.get("cells") != [{"address": 0, "expected": 31415928}, {"address": 1, "expected": 1}]:
+if header.get("cells") != [{"address": 0, "expected": game_hash("GenericPersistentConfigHost.v1")}, {"address": 1, "expected": 1}]:
     fails.append(f"literal provider header instructions were not contract-derived: {header.get('cells')}")
 if header.get("capabilities", {}).get("reads") != ["ReferenceId"]:
     fails.append("script-provider housing capabilities were omitted from runtime instructions")

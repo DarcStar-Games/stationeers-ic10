@@ -309,12 +309,12 @@ The current maximum automatic routed path is three physical links (two intermedi
 
 When debugging or extending the framework, preserve these rules:
 
-1. **ABI version is exact.** Discovery uses ABI2; transactional PhasePressure/PressureDomain/PressureTransfer telemetry uses ABI2; simple display-only telemetry families remain ABI1; Allocator is ABI3.
+1. **ABI version is exact, and the `S0` identity carries it.** A service publishes `HASH("<Contract>.v<ABI>")`, so one `S0` equality check pins the exact contract and an ABI bump changes the value every consumer compares. Discovery uses ABI2; transactional PhasePressure/PressureDomain/PressureTransfer telemetry uses ABI2; simple display-only telemetry families remain ABI1; Allocator is ABI3. Block headers away from `S0` (Generic Telemetry at `S96`) keep an assigned magic and a separate version cell because their consumers accept a version range.
 2. **Generation/request markers are published last.** Payload first, generation last.
 3. **A/B bank revision is the durable commit token.** It is invalidated before writing and finalized last.
 4. **Validity masks define configuration geometry.** Generic code must not infer meaning from contiguous slots.
 5. **Stable physical slots are never repurposed.** Removed fields become reserved holes.
-6. **Schema identity is explicit.** Generic directories and catalogs are consumed only when magic, ABI, schema ID, and schema version match the expected contract.
+6. **Schema identity is explicit.** Generic directories and catalogs are consumed only when the `S0` service identity and the folded schema identity at `S3` both match the expected contract; each is one cell carrying its own version.
 7. **Selectors resolve identity; they do not read physical UI hardware.** Domain bridges own UI transactions.
 8. **Transactional telemetry is generation-stamped.** Consumers capture `S115`, read the payload, and require the same positive `S115` afterward.
 9. **Transfer grants are topology-bound and one-shot per commit epoch.** Current source/sink/medium/route must equal the staged reservation identities; an invalidated/expired epoch cannot reactivate merely because Planner `S14` remains unchanged.

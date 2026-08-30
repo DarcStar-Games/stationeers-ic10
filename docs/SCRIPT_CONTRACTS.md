@@ -93,9 +93,12 @@ fallback surfaces for stack-envelope and migration planning.
 locations, consumer locations, and one generated definition path per protocol.
 Each document under `contracts/protocols/` carries typed provider fields,
 published/writable ranges, consumer reads/writes, dynamic ranges, constraints,
-and supplemental domain references. Protocol identity is based on magic plus
-ABI; header base is tracked separately, so the Generic Telemetry header at
-`S96` is not mistaken for an `S0` header.
+and supplemental domain references. A base-0 protocol is identified by its
+contract name, which already carries the ABI, so its document is named
+`ic10.stack.<contract>.v<abi>.protocol.json`; the Generic Telemetry block at
+`S96` keeps the numeric `ic10.stack.<magic>.abi<n>` form because its consumers
+accept a version range. Header base is tracked separately either way, so the
+`S96` header is never mistaken for an `S0` header.
 
 ## Compatibility checks
 

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10",
-  "source_sha256": "a500ff850b32d8570527343748eb1d04d02622f1e7dbfd4d8c8a436c228c69dd",
+  "source_sha256": "d4383c4a42a56794d8e55896536f043b8023c9b1c7acdfd6f8dec4edd065c548",
   "identity": {
     "service_id": "ic10.script.item.resource.reservation.selector",
     "implementation_revision": "1.0",
@@ -44,19 +44,19 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415981
+            "equals": 891293726
           },
           {
             "address": 9,
-            "equals": "HASH(\"DirectorySchema.ResourceReservation.v1\")"
+            "equals": 1963598151
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.c239453e4f0f275c",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.c239453e4f0f275c",
+        "interface_id": "ic10.interface.access.4d475087b754932d",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.4d475087b754932d",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -257,7 +257,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415987,
+        "contract": "ItemResourceReservationSelector",
+        "magic": 1606529514,
         "abi": 1
       }
     ]
@@ -273,9 +274,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415987.abi1",
+        "protocol_id": "ic10.stack.item-resource-reservation-selector.v1",
         "base": 0,
-        "magic": 31415987,
+        "contract": "ItemResourceReservationSelector",
+        "magic": 1606529514,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

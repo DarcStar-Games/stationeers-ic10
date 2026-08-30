@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10",
-  "source_sha256": "45a6ec3fd6855bc2b405bcd59b0f2d5cfca78274136257c96dc259728b544d75",
+  "source_sha256": "02a488005d35f1afcffe2862edbcc533cf8845fb5520de103da38170ec2d40fa",
   "identity": {
     "service_id": "ic10.script.manufacturing.driver.router",
     "implementation_revision": "2.0",
@@ -191,7 +191,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415994
+        "const": -1123403746
       },
       {
         "address": 1,
@@ -273,7 +273,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415994,
+        "contract": "ManufacturingDriverRouter",
+        "magic": -1123403746,
         "abi": 2
       }
     ]
@@ -289,7 +290,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415994,
+        "equals": -1123403746,
         "source": "generated-protocol-header"
       },
       {
@@ -304,9 +305,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415994.abi2",
+        "protocol_id": "ic10.stack.manufacturing-driver-router.v2",
         "base": 0,
-        "magic": 31415994,
+        "contract": "ManufacturingDriverRouter",
+        "magic": -1123403746,
         "abi": 2,
         "source": "literal-own-stack-header"
       }

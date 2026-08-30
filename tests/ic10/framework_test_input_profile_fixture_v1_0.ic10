@@ -1,6 +1,6 @@
 # Test-only Generic Input Profile fixture for ControllerTest; not in production catalog.
 clr db
-poke 0 31415929
+poke 0 HASH("InputProfileView.v1")
 poke 1 1
 poke 4 6
 poke 32 0

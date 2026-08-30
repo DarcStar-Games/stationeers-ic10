@@ -1,5 +1,5 @@
 # SDB+Stacker Feeder ABI1. d0 dedicated SDB,d1 Stacker,d2 ITEM Resource Profile.
-poke 0 31415961
+poke 0 HASH("StackerFeeder.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -43,7 +43,7 @@ blez r9 Fail
 get r14 d2 29
 blez r14 Fail
 get r0 d2 0
-bne r0 31415963 Fail
+bne r0 HASH("ResourceProfileView.v1") Fail
 get r0 d2 8
 bne r0 2 Fail
 get r0 d2 9

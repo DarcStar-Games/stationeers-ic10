@@ -1,4 +1,4 @@
-poke 0 31415946
+poke 0 HASH("PressureGridRouteRanker.v2")
 poke 1 2
 poke 2 0
 poke 22 -1
@@ -17,7 +17,7 @@ blez r3 Bad
 blez ra Bad
 bdns d0 Bad
 get r0 d0 0
-bne r0 31415945 Bad
+bne r0 HASH("PressureGridCostProfile.v1") Bad
 get r0 d0 1
 bne r0 1 Bad
 get r4 d0 8

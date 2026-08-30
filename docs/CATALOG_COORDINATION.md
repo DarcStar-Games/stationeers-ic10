@@ -65,7 +65,7 @@ The Adapter detects duplicate NodeIds, faults both live Store instances, and pub
 Key Coordinator fields used by the current control plane include:
 
 ```text
-S0   magic = 31415970
+S0   magic = CatalogCoordinatorCore.v4
 S1   ABI = 4
 S2   capability mask = 0
 S8..S13 aggregate directory health/capacity summary

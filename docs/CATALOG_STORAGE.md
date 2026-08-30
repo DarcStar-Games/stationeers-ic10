@@ -15,9 +15,9 @@ The ownership rule is strict:
 
 The current common protocols are:
 
-- Catalog Store magic `31415968`, **Store ABI6**;
-- Catalog Loader magic `31415969`, **Loader ABI5**;
-- Catalog Coordinator magic `31415970`, **Coordinator ABI4**;
+- Catalog Store identity `HASH("GenericCatalogStore.v6")`, **Store ABI6**;
+- Catalog Loader identity `HASH("CatalogLoader.v5")`, **Loader ABI5**;
+- Catalog Coordinator identity `HASH("CatalogCoordinatorCore.v4")`, **Coordinator ABI4**;
 - 4-cell payload alignment;
 - canonical zero padding;
 - whole logical items only;
@@ -32,7 +32,7 @@ Every physical catalog data node runs `ic10/catalog-control-plane/generic_catalo
 
 | Cell | Meaning |
 |---:|---|
-| S0 | StoreMagic = `31415968` |
+| S0 | StoreMagic = `HASH("GenericCatalogStore.v6")` |
 | S1 | StoreABI = `5` |
 | S2 | CatalogSchemaId |
 | S3 | CatalogSchemaVersion |
@@ -91,7 +91,7 @@ A Loader is a one-shot immutable candidate image. It does **not** know a physica
 
 | Cell | Meaning |
 |---:|---|
-| S0 | LoaderMagic = `31415969` |
+| S0 | LoaderMagic = `HASH("CatalogLoader.v5")` |
 | S1 | LoaderABI = `4` |
 | S2 | CatalogSchemaId |
 | S3 | CatalogSchemaVersion |

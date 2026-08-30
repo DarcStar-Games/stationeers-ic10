@@ -105,7 +105,7 @@ PressureDomain runtime uses telemetry ABI2. Inventory captures positive `S115`, 
 ## Inventory ABI2
 
 ```text
-S0   magic = 31415935
+S0   magic = PressureDomainInventory.v2
 S1   ABI = 2
 S2   capability mask = 0
 S8   MolesPerLiter
@@ -135,7 +135,7 @@ Statuses:
 ## Purity Guard ABI1
 
 ```text
-S0  magic = 31415947
+S0  magic = MediumPurityGuard.v1
 S1  ABI = 1
 S2  capability mask = 0
 S8  MediumType

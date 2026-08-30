@@ -5,7 +5,7 @@
 # is commissioning-class: reclaim the housing once every board reads correctly.
 # The slot index and the Mode slot logic type need one live observation before
 # this is trusted; see docs/DIAGNOSTIC_INPUTS.md and case LG-DIAG-HASHMODE.
-poke 0 17320513
+poke 0 HASH("DiagnosticHashConsoleMode.v1")
 poke 1 1
 poke 2 0
 Loop:

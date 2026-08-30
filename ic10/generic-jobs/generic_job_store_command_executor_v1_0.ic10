@@ -1,7 +1,7 @@
 # Sole Job Store command writer; create supports atomic free-slot allocation.
 Boot:
 get r0 db 0
-bne r0 31416015 Init
+bne r0 HASH("GenericJobStoreCommandExecutor.v1") Init
 get r0 db 1
 bne r0 1 Init
 get r0 db 31
@@ -9,7 +9,7 @@ bgtz r0 StoreWait
 j Loop
 Init:
 clr db
-poke 0 31416015
+poke 0 HASH("GenericJobStoreCommandExecutor.v1")
 poke 1 1
 poke 2 0
 Loop:

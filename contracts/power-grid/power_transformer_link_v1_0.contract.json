@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_transformer_link_v1_0.ic10",
-  "source_sha256": "016d066c39f0031f25ded2ed8735ee301c44d0bac022646d27e66da4ab72e0df",
+  "source_sha256": "b502ce0a00843305f4a4da2b44b99f69172b4e7105e43c108bfb6bf3fec8304e",
   "identity": {
     "service_id": "ic10.script.power.transformer.link",
     "implementation_revision": "1.0",
@@ -84,7 +84,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415950
+            "equals": -1742884202
           },
           {
             "address": 33,
@@ -95,8 +95,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.76c7273117e1f339",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.76c7273117e1f339",
+        "interface_id": "ic10.interface.access.9332a9edd1baa892",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.9332a9edd1baa892",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -137,7 +137,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415950
+            "equals": -1742884202
           },
           {
             "address": 33,
@@ -148,8 +148,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.76c7273117e1f339",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.76c7273117e1f339",
+        "interface_id": "ic10.interface.access.9332a9edd1baa892",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.9332a9edd1baa892",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -208,7 +208,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415953
+        "const": 1484497288
       },
       {
         "address": 1,
@@ -350,7 +350,7 @@
         "access": [
           "self-write"
         ],
-        "const": "HASH(\"Power.Electrical\")"
+        "const": 1977405139
       },
       {
         "address": 32,
@@ -375,7 +375,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415953,
+        "contract": "ResourceLink",
+        "magic": 1484497288,
         "abi": 1
       }
     ]
@@ -391,7 +392,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415953,
+        "equals": 1484497288,
         "source": "generated-protocol-header"
       },
       {
@@ -406,9 +407,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415953.abi1",
+        "protocol_id": "ic10.stack.resource-link.v1",
         "base": 0,
-        "magic": 31415953,
+        "contract": "ResourceLink",
+        "magic": 1484497288,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

@@ -1,10 +1,10 @@
 # Manufacturing Scheduler ABI1: d0 Job Gateway,d1 Job Selector,d2 Dependency Gate.
 get r0 db 0
-beq r0 31415995 Init
+beq r0 HASH("ManufacturingScheduler.v1") Init
 clr db
 poke 21 -1
 Init:
-poke 0 31415995
+poke 0 HASH("ManufacturingScheduler.v1")
 poke 1 1
 poke 2 0
 Loop:

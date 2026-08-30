@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10",
-  "source_sha256": "5123adbfe82cc10fafa1526b8fe28dbc50884586bba1a2db87af4255d30bd0d9",
+  "source_sha256": "f0adcc6aa1a99e92a06e9021c121cfbe5981d7cda5bf7aa9a6f75e5c47041615",
   "identity": {
     "service_id": "ic10.script.manufacturing.reagent.resolver",
     "implementation_revision": "1.0",
@@ -48,7 +48,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416017
+        "const": 509945470
       },
       {
         "address": 1,
@@ -120,7 +120,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416017,
+        "contract": "ManufacturingReagentResolver",
+        "magic": 509945470,
         "abi": 1
       }
     ]
@@ -136,7 +137,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416017,
+        "equals": 509945470,
         "source": "generated-protocol-header"
       },
       {
@@ -151,9 +152,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416017.abi1",
+        "protocol_id": "ic10.stack.manufacturing-reagent-resolver.v1",
         "base": 0,
-        "magic": 31416017,
+        "contract": "ManufacturingReagentResolver",
+        "magic": 509945470,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

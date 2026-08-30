@@ -1,4 +1,4 @@
-poke 0 31415942
+poke 0 HASH("PressureGridSinglehopBuilder.v1")
 poke 1 1
 poke 2 0
 poke 13 -1
@@ -71,7 +71,7 @@ blt r4 1 Reject
 bgt r4 2 Reject
 bdns d0 Reject
 get r0 d0 0
-bne r0 31415981 Reject
+bne r0 HASH("GenericSnapshotDirectoryHost.v1") Reject
 get r0 d0 1
 bne r0 1 Reject
 get r0 d0 9
@@ -80,7 +80,7 @@ get r0 d0 11
 bne r0 3 Reject
 bdns d1 Reject
 get r0 d1 0
-bne r0 31415938 Reject
+bne r0 HASH("PressureReservationAllocator.v3") Reject
 get r0 d1 1
 bne r0 3 Reject
 get r5 d0 24

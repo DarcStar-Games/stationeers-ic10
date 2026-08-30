@@ -1,0 +1,306 @@
+{
+  "$schema": "../../schemas/protocol_definition.schema.json",
+  "format": "IC10_PROTOCOL_DEFINITION_V1",
+  "protocol_id": "ic10.stack.controller-pressure-transfer-runtime.v1",
+  "name": "ControllerPressureTransferRuntime v1",
+  "transport": "ic-housing-stack",
+  "contract": "ControllerPressureTransferRuntime",
+  "magic": 700050398,
+  "abi": 1,
+  "header_bases": [
+    0
+  ],
+  "canonical_refs": [],
+  "provider_interfaces": [
+    {
+      "source": "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10",
+      "header_base": 0,
+      "readable_ranges": [],
+      "writable_ranges": [],
+      "fields": [
+        {
+          "address": 0,
+          "name": "Header@S0.Magic",
+          "value_type": "hash",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ],
+          "const": 700050398
+        },
+        {
+          "address": 1,
+          "name": "Header@S0.ABI",
+          "value_type": "integer",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 2,
+          "name": "S2",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 8
+        },
+        {
+          "address": 6,
+          "name": "S6",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 96
+        },
+        {
+          "address": 96,
+          "name": "Header@S96.Magic",
+          "value_type": "hash",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ],
+          "const": 27182818
+        },
+        {
+          "address": 97,
+          "name": "Header@S96.ABI",
+          "value_type": "integer",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ],
+          "const": 2
+        },
+        {
+          "address": 98,
+          "name": "S98",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 30
+        },
+        {
+          "address": 99,
+          "name": "S99",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1875690426
+        },
+        {
+          "address": 100,
+          "name": "S100",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 101,
+          "name": "S101",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 102,
+          "name": "S102",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 103,
+          "name": "S103",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 106,
+          "name": "S106",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 107,
+          "name": "S107",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 108,
+          "name": "StagedGrantMolesPerTick",
+          "value_type": "number",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ],
+          "description": "Allocator-owned staged grant consumed by the paired Grant Guard."
+        },
+        {
+          "address": 109,
+          "name": "StagedEpoch",
+          "value_type": "integer",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ],
+          "description": "Allocator commit marker written after the staged payload."
+        },
+        {
+          "address": 110,
+          "name": "StagedPlannerReferenceId",
+          "value_type": "reference-id",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ]
+        },
+        {
+          "address": 111,
+          "name": "StagedLeaseTicks",
+          "value_type": "number",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ]
+        },
+        {
+          "address": 115,
+          "name": "S115",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 116,
+          "name": "S116",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 117,
+          "name": "StagedSourceReservationReferenceId",
+          "value_type": "reference-id",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ]
+        },
+        {
+          "address": 118,
+          "name": "StagedSinkReservationReferenceId",
+          "value_type": "reference-id",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ]
+        },
+        {
+          "address": 119,
+          "name": "StagedMediumType",
+          "value_type": "hash",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ]
+        },
+        {
+          "address": 120,
+          "name": "StagedRouteKind",
+          "value_type": "enum",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ]
+        },
+        {
+          "address": 121,
+          "name": "S121",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        }
+      ],
+      "behavior": {
+        "publication_rules": [],
+        "restart": {
+          "mode": "preserved-unless-overwritten",
+          "source": "static-entry-path-analysis"
+        },
+        "invariants": [
+          {
+            "id": "header.s0.magic",
+            "kind": "cell-equals",
+            "address": 0,
+            "equals": 700050398,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s96.magic",
+            "kind": "cell-equals",
+            "address": 96,
+            "equals": 27182818,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s0.abi",
+            "kind": "cell-equals",
+            "address": 1,
+            "equals": 1,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s96.abi",
+            "kind": "cell-equals",
+            "address": 97,
+            "equals": 2,
+            "source": "generated-protocol-header"
+          }
+        ]
+      }
+    }
+  ],
+  "consumer_interfaces": []
+}

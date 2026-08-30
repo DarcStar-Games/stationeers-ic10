@@ -1,5 +1,5 @@
 # Grant Guard v1.0: d0 Transfer ABI2,d1 Planner ABI2. One activation per commit epoch.
-poke 0 31415948
+poke 0 HASH("PressureTransferGrantGuard.v1")
 poke 1 1
 poke 2 0
 poke 15 0
@@ -35,7 +35,7 @@ get r0 d0 115
 bne r0 r14 Loop
 bdns d1 Fault
 get r0 d1 0
-bne r0 31415937 Fault
+bne r0 HASH("PressureGridReservationPlanner.v2") Fault
 get r0 d1 1
 bne r0 2 Fault
 l r0 d1 ReferenceId

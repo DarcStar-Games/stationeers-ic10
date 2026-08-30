@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
-  "source_sha256": "676179977e47817df74af02f2f298faf54c26f4b6e4b2b63e29589893a97600b",
+  "source_sha256": "6291c24006dfd3a16ad47fc30a9eb3a8005f02685642fdc9ffadd953afb51a22",
   "identity": {
     "service_id": "ic10.script.job.requirement.view",
     "implementation_revision": "1.0",
@@ -215,7 +215,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416002
+        "const": -530644456
       },
       {
         "address": 1,
@@ -359,7 +359,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416002,
+        "contract": "JobRequirementView",
+        "magic": -530644456,
         "abi": 1
       }
     ]
@@ -375,7 +376,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416002,
+        "equals": -530644456,
         "source": "generated-protocol-header"
       },
       {
@@ -390,9 +391,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416002.abi1",
+        "protocol_id": "ic10.stack.job-requirement-view.v1",
         "base": 0,
-        "magic": 31416002,
+        "contract": "JobRequirementView",
+        "magic": -530644456,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

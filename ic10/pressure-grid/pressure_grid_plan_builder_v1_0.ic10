@@ -1,5 +1,5 @@
 # Grid Plan Builder v1.0: d0 SingleHop Builder,d1 Path Allocator.
-poke 0 31415943
+poke 0 HASH("PressureGridPlanBuilder.v1")
 poke 1 1
 poke 2 0
 poke 13 -1
@@ -85,12 +85,12 @@ blez r2 Reject
 blez r4 Reject
 bdns d0 Reject
 get r0 d0 0
-bne r0 31415942 Reject
+bne r0 HASH("PressureGridSinglehopBuilder.v1") Reject
 get r0 d0 1
 bne r0 1 Reject
 bdns d1 Reject
 get r0 d1 0
-bne r0 31415941 Reject
+bne r0 HASH("PressureGridPathAllocator.v1") Reject
 get r0 d1 1
 bne r0 1 Reject
 move r8 0

@@ -7,7 +7,7 @@ from pathlib import Path
 import math, sys
 R=_PROJECT_ROOT
 inv=(R/'ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10').read_text(); guard=(R/'ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10').read_text(); res=(R/'ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10').read_text(); fails=[]
-for n in ('poke 1 2','get r15 d0 115','bne r0 r15 Loop','bdns d2 PurityBad','bne r0 31415947 PurityBad','bne r0 1 PurityBad','PurityBad:','move r0 -6'):
+for n in ('poke 1 2','get r15 d0 115','bne r0 r15 Loop','bdns d2 PurityBad','bne r0 HASH("MediumPurityGuard.v1") PurityBad','bne r0 1 PurityBad','PurityBad:','move r0 -6'):
  if n not in inv: fails.append('Inventory missing '+n)
 for n in ('get r2 d1 19','get r3 d1 20','bdnvl d0 r2 SensorBad','l r5 d0 r2','blt r5 r3 Contaminated','blez r4 Good'):
  if n not in guard: fails.append('Purity Guard missing '+n)

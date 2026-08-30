@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10",
-  "source_sha256": "4c9687df73aa2d835902fe7be746dfead87b5d1a3775a53f0812201727df535d",
+  "source_sha256": "37a662bd79e80992ab96312d529b8811ac80f575f10e87b32f5b349c91e27305",
   "identity": {
     "service_id": "ic10.script.recipe.execution.profile.view",
     "implementation_revision": "1.0",
@@ -71,7 +71,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415970
+          "value": 4515138
         }
       ],
       "accepted": []
@@ -95,7 +95,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415968
+          "value": 875310516
         },
         {
           "address": 1,
@@ -105,7 +105,7 @@
         {
           "address": 3,
           "operator": "equals",
-          "value": "HASH(\"CatalogSchema.Recipe.v3\")"
+          "value": -715593446
         }
       ],
       "accepted": []
@@ -248,7 +248,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415985,
+        "contract": "RecipeExecutionProfileView",
+        "magic": -1203210243,
         "abi": 1
       }
     ]
@@ -264,9 +265,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415985.abi1",
+        "protocol_id": "ic10.stack.recipe-execution-profile-view.v1",
         "base": 0,
-        "magic": 31415985,
+        "contract": "RecipeExecutionProfileView",
+        "magic": -1203210243,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

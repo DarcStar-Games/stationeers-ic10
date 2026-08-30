@@ -10,7 +10,7 @@ poke 22 0
 poke 23 0
 poke 24 1 # initial Controller Selector request generation
 poke 25 1 # initial Console desired-request generation
-poke 0 17320511
+poke 0 HASH("DiagnosticInputBridge.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -18,7 +18,7 @@ yield
 get r2 db 9
 blez r2 Invalid
 getd r0 r2 0
-bne r0 31415929 Invalid
+bne r0 HASH("InputProfileView.v1") Invalid
 getd r0 r2 1
 bne r0 1 Invalid
 getd r0 r2 8
@@ -32,7 +32,7 @@ blez r14 Invalid
 get resolver db 8
 blez resolver Invalid
 getd r0 resolver 0
-bne r0 31415931 Invalid
+bne r0 HASH("GenericInputResolver.v1") Invalid
 getd r0 resolver 1
 bne r0 1 Invalid
 putd resolver 9 7

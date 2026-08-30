@@ -20,7 +20,7 @@ Two things follow from that, and they drive almost every convention in the repo:
 Run everything from the repository root (Python 3.10+; `python3` locally).
 
 ```bash
-python3 tools/run_validation.py                   # full suite: 24 validators + 36 protocol/execution tests
+python3 tools/run_validation.py                   # full suite: 27 validators + 40 protocol/execution tests
 python3 tools/run_validation.py --resume          # reuse prior PASSes, only if the input-tree fingerprint matches
 python3 tests/test_job_abi.py                     # run one test  (plain script, exit code = pass/fail)
 python3 validation/validators/validate_ic10.py    # run one validator
@@ -144,8 +144,13 @@ revisions establish *durability*, reservation epochs/ownership tokens authorize 
 
 - **Publish the generation/token last.** Payload cells first, the marker that makes them readable last.
   Consumers snapshot the generation, read, and re-check the same positive generation afterward.
-- **ABI versions are exact.** A consumer requiring ABI2 must reject ABI1 and ABI3, and magic + schema
-  id + schema version must all match before a directory or catalog is consumed.
+- **ABI versions are exact, and `S0` carries the ABI.** A service publishes
+  `HASH("<Contract>.v<ABI>")`, so one `S0` equality check pins the exact contract and an ABI bump
+  changes the value every consumer compares; identity is derived from the name, never hand-allocated.
+  Both that identity and the folded schema id at `S3` must match before a directory or catalog is
+  consumed. `validation/validators/validate_service_identity.py` is authoritative. Block headers away
+  from `S0` (Generic Telemetry at `S96`) keep an assigned magic and a separate version cell, because
+  their consumers deliberately accept a version range.
 - **Physical slots are never repurposed.** Removed config fields become reserved holes. "Physical slot"
   (stable 0..31 address) and "active ordinal" (contiguous 1..N UI number) are different concepts.
 - **Fail closed.** Missing capacity, stale generations, duplicate identities, overflowed directories

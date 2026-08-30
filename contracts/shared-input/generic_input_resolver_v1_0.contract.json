@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/shared-input/generic_input_resolver_v1_0.ic10",
-  "source_sha256": "caec36f0685a4e9390592c95c3566651a2c36cda9e530a280e164e5fe724482d",
+  "source_sha256": "f0e13a26cd7d0058518abaee5f0477d2ea9e21eefc45ba79a615c4b32f23cfb3",
   "identity": {
     "service_id": "ic10.script.generic.input.resolver",
     "implementation_revision": "1.0",
@@ -29,7 +29,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415929
+          "value": 940078290
         },
         {
           "address": 1,
@@ -57,7 +57,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415930
+          "value": -1082737849
         },
         {
           "address": 1,
@@ -106,7 +106,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415931
+        "const": 1971762319
       },
       {
         "address": 1,
@@ -206,7 +206,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415931,
+        "contract": "GenericInputResolver",
+        "magic": 1971762319,
         "abi": 1
       }
     ]
@@ -229,7 +230,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415931,
+        "equals": 1971762319,
         "source": "generated-protocol-header"
       },
       {
@@ -244,9 +245,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415931.abi1",
+        "protocol_id": "ic10.stack.generic-input-resolver.v1",
         "base": 0,
-        "magic": 31415931,
+        "contract": "GenericInputResolver",
+        "magic": 1971762319,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

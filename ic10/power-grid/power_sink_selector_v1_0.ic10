@@ -1,5 +1,5 @@
 # POWER sink selector. d0 PowerReservation directory; exact demand is Reservation S7.
-poke 0 31416031
+poke 0 HASH("PowerSinkSelector.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -10,7 +10,7 @@ beq r15 r0 Loop
 get r6 db 12
 bdns d0 Bad
 get r0 d0 0
-bne r0 31415981 Bad
+bne r0 HASH("GenericSnapshotDirectoryHost.v1") Bad
 get r0 d0 9
 bne r0 HASH("DirectorySchema.PowerReservation.v1") Bad
 get r5 d0 24
@@ -34,7 +34,7 @@ bge r9 6000000 None
 getd r14 r10 12
 blez r14 Find
 getd r0 r10 0
-bne r0 31415950 Find
+bne r0 HASH("ResourceReservation.v1") Find
 getd r0 r10 33
 bne r0 4 Find
 getd r0 r10 9

@@ -1,5 +1,5 @@
 # Printer Capacity Client ABI2: exact-ref, retry-safe reserve/release.
-poke 0 31415997
+poke 0 HASH("PrinterCapacityClient.v2")
 poke 1 2
 poke 2 0
 Loop:
@@ -26,7 +26,7 @@ get r1 db:0 r7
 blt r1 0 Missing
 add r7 r7 1
 getd r0 r1 0
-bne r0 31415996 FindBank
+bne r0 HASH("PrinterExecutionBank.v2") FindBank
 getd r0 r1 1
 bne r0 2 FindBank
 add r0 r3 16

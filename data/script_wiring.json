@@ -8,7 +8,7 @@
     "providers": [
      "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415982, ABI 3)",
+    "note": "peer named by S0 magic check (GenericRegistryDirectoryHost.v3, ABI 3)",
     "header_reads": {
      "3": "SchemaId"
     }
@@ -21,7 +21,7 @@
     "providers": [
      "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415982, ABI 3)",
+    "note": "peer named by S0 magic check (GenericRegistryDirectoryHost.v3, ABI 3)",
     "header_reads": {
      "3": "SchemaId"
     }
@@ -33,7 +33,7 @@
     "providers": [
      "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415982, ABI 3)",
+    "note": "peer named by S0 magic check (GenericRegistryDirectoryHost.v3, ABI 3)",
     "header_reads": {
      "3": "SchemaId"
     }
@@ -43,7 +43,7 @@
     "providers": [
      "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415970)"
+    "note": "peer named by S0 magic check (CatalogCoordinatorCore.v4)"
    }
   },
   "ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10": {
@@ -52,14 +52,14 @@
     "providers": [
      "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415970)"
+    "note": "peer named by S0 magic check (CatalogCoordinatorCore.v4)"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415982, ABI 3)",
+    "note": "peer named by S0 magic check (GenericRegistryDirectoryHost.v3, ABI 3)",
     "header_reads": {
      "3": "SchemaId"
     }
@@ -71,7 +71,7 @@
     "providers": [
      "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415968, ABI 6)",
+    "note": "peer named by S0 magic check (GenericCatalogStore.v6, ABI 6)",
     "header_reads": {
      "3": "SchemaId"
     }
@@ -83,14 +83,14 @@
     "providers": [
      "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415970)"
+    "note": "peer named by S0 magic check (CatalogCoordinatorCore.v4)"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415982, ABI 3)",
+    "note": "peer named by S0 magic check (GenericRegistryDirectoryHost.v3, ABI 3)",
     "header_reads": {
      "3": "SchemaId"
     }
@@ -102,7 +102,7 @@
     "providers": [
      "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415970)"
+    "note": "peer named by S0 magic check (CatalogCoordinatorCore.v4)"
    }
   },
   "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10": {
@@ -111,7 +111,7 @@
     "providers": [
      "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:114: \"Program ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10; connect Router `d0` -> Coordinator Core.\" (also DEPLOYMENT.md:391) [Corroborated: router source checks d0 stack cell 0 == 31415970, the Coordinator Core magic (catalog_coordinator_core_v3_0 boot checks the same value); pin comment says 'd0 Coordinator ABI3'.]"
+    "note": "docs/DEPLOYMENT.md:114: \"Program ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10; connect Router `d0` -> Coordinator Core.\" (also DEPLOYMENT.md:391) [Corroborated: router source checks d0 stack cell 0 == CatalogCoordinatorCore.v4, the Coordinator Core magic (catalog_coordinator_core_v3_0 boot checks the same value); pin comment says 'd0 Coordinator ABI3'.]"
    }
   },
   "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10": {
@@ -120,14 +120,14 @@
     "providers": [
      "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415970)"
+    "note": "peer named by S0 magic check (CatalogCoordinatorCore.v4)"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415982, ABI 3)",
+    "note": "peer named by S0 magic check (GenericRegistryDirectoryHost.v3, ABI 3)",
     "header_reads": {
      "3": "SchemaId"
     }
@@ -168,7 +168,7 @@
     "providers": [
      "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415963)"
+    "note": "peer named by S0 magic check (ResourceProfileView.v1)"
    },
    "d2": {
     "kind": "script",
@@ -184,7 +184,7 @@
     "providers": [
      "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
     ],
-    "note": "peer named by S0 magic check (31415928, ABI 1)"
+    "note": "peer named by S0 magic check (GenericPersistentConfigHost.v1, ABI 1)"
    }
   },
   "ic10/controller-pi/controller_pi_runtime_v1_1.ic10": {
@@ -203,7 +203,7 @@
     "providers": [
      "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
     ],
-    "note": "peer named by S0 magic check (31415928, ABI 1)"
+    "note": "peer named by S0 magic check (GenericPersistentConfigHost.v1, ABI 1)"
    }
   },
   "ic10/controller-pi/pi_config_policy_v1_0.ic10": {
@@ -212,7 +212,7 @@
     "providers": [
      "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
     ],
-    "note": "peer named by S0 magic check (31415928, ABI 1)"
+    "note": "peer named by S0 magic check (GenericPersistentConfigHost.v1, ABI 1)"
    }
   },
   "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10": {
@@ -245,7 +245,7 @@
     "providers": [
      "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
     ],
-    "note": "peer named by S0 magic check (31415928, ABI 1)"
+    "note": "peer named by S0 magic check (GenericPersistentConfigHost.v1, ABI 1)"
    }
   },
   "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10": {
@@ -254,7 +254,7 @@
     "providers": [
      "ic10/dependency-planning/dependency_plan_store_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31416007, ABI 2)"
+    "note": "peer named by S0 magic check (DependencyPlanStore.v2, ABI 2)"
    },
    "d1": {
     "kind": "script",
@@ -270,7 +270,7 @@
     "providers": [
      "ic10/dependency-planning/dependency_plan_store_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31416007, ABI 2)"
+    "note": "peer named by S0 magic check (DependencyPlanStore.v2, ABI 2)"
    },
    "d1": {
     "kind": "script",
@@ -339,14 +339,14 @@
     "providers": [
      "ic10/dependency-planning/dependency_plan_store_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31416007, ABI 2)"
+    "note": "peer named by S0 magic check (DependencyPlanStore.v2, ABI 2)"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/dependency-planning/dependency_child_validity_v1_0.ic10"
     ],
-    "note": "ic10/dependency-planning/dependency_claim_view_v1_0.ic10:1: \"# Active future-output claim lookup over Plan Store + Child Validity.\" [d0 is Plan Store (checked by magic 31416007 in claim view source), so the header's Child Validity peer is d1; cells match child validity exactly: request S2 ChildJobId, S3 ResourceType, S4 token; response S5 token, S6 status==1, S7..S9 state/output data (claim view rejects state 7 / >=11 = terminal).]"
+    "note": "ic10/dependency-planning/dependency_claim_view_v1_0.ic10:1: \"# Active future-output claim lookup over Plan Store + Child Validity.\" [d0 is Plan Store (checked by magic DependencyPlanStore.v2 in claim view source), so the header's Child Validity peer is d1; cells match child validity exactly: request S2 ChildJobId, S3 ResourceType, S4 token; response S5 token, S6 status==1, S7..S9 state/output data (claim view rejects state 7 / >=11 = terminal).]"
    }
   },
   "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10": {
@@ -434,7 +434,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_store_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415984, ABI 1)"
+    "note": "peer named by S0 magic check (GenericJobStore.v1, ABI 1)"
    }
   },
   "ic10/dependency-planning/item_producer_resolver_v1_0.ic10": {},
@@ -569,7 +569,7 @@
      "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10",
      "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415983, ABI 3); reads Adapter ABI3 SchemaId S3 and Generation S7 as header fields",
+    "note": "peer named by S0 magic check (DirectoryAdapter.v3, ABI 3); reads Adapter ABI3 SchemaId S3 and Generation S7 as header fields",
     "header_reads": {
      "3": "SchemaId",
      "7": "Generation"
@@ -580,7 +580,7 @@
     "providers": [
      "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415981, ABI 1)"
+    "note": "peer named by S0 magic check (GenericSnapshotDirectoryHost.v1, ABI 1)"
    }
   },
   "ic10/directory-core/generic_registry_directory_host_v2_0.ic10": {
@@ -598,7 +598,7 @@
      "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10",
      "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415983, ABI 3); reads Adapter ABI3 SchemaId S3 and Generation S7 as header fields",
+    "note": "peer named by S0 magic check (DirectoryAdapter.v3, ABI 3); reads Adapter ABI3 SchemaId S3 and Generation S7 as header fields",
     "header_reads": {
      "3": "SchemaId",
      "7": "Generation"
@@ -621,7 +621,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_store_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415984, ABI 1)"
+    "note": "peer named by S0 magic check (GenericJobStore.v1, ABI 1)"
    }
   },
   "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10": {
@@ -643,7 +643,7 @@
     "providers": [
      "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
     ],
-    "note": "docs/CONFIG_INPUTS.md:40: \"Connect ic10/input-profile-catalog/input_profile_view_v5_0.ic10 d0 to the Store\" (the Store is the coordinator-claimed generic_catalog_store_v3_0 added in step 1, CONFIG_INPUTS.md:37). [Corroborated: View reads d0 cell 11 (Coordinator ReferenceId, checked against Coordinator magic 31415970) and cell 13 (CatalogSchemaId), then walks the NextStoreRef chain (cell 21) to a node with Store magic 31415968 == generic_catalog_store_v3_0. Any claimed Input Profile Store instance qualifies.]"
+    "note": "docs/CONFIG_INPUTS.md:40: \"Connect ic10/input-profile-catalog/input_profile_view_v5_0.ic10 d0 to the Store\" (the Store is the coordinator-claimed generic_catalog_store_v3_0 added in step 1, CONFIG_INPUTS.md:37). [Corroborated: View reads d0 cell 11 (Coordinator ReferenceId, checked against Coordinator magic CatalogCoordinatorCore.v4) and cell 13 (CatalogSchemaId), then walks the NextStoreRef chain (cell 21) to a node with Store magic GenericCatalogStore.v6 == generic_catalog_store_v3_0. Any claimed Input Profile Store instance qualifies.]"
    }
   },
   "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10": {
@@ -652,7 +652,7 @@
     "providers": [
      "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415987, ABI 1)"
+    "note": "peer named by S0 magic check (ItemResourceReservationSelector.v1, ABI 1)"
    }
   },
   "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10": {
@@ -661,7 +661,7 @@
     "providers": [
      "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415981)"
+    "note": "peer named by S0 magic check (GenericSnapshotDirectoryHost.v1)"
    }
   },
   "ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10": {
@@ -675,7 +675,7 @@
     "providers": [
      "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415963)"
+    "note": "peer named by S0 magic check (ResourceProfileView.v1)"
    }
   },
   "ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10": {
@@ -691,14 +691,14 @@
     "providers": [
      "ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415986)"
+    "note": "peer named by S0 magic check (LarreCargoStorageService.v1)"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415963)"
+    "note": "peer named by S0 magic check (ResourceProfileView.v1)"
    }
   },
   "ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10": {
@@ -714,7 +714,7 @@
     "providers": [
      "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
     ],
-    "note": "docs/ITEM_STORAGE_SYSTEM.md: \"d1  storage Generic Resource Reservation\" [resource_reservation_v1_0.ic10 is the only program publishing Generic Resource Reservation ABI1 (magic 31415950 as own S0). Consumer's reads (S12 generation, S14/S15 reserved amounts, S16 direction lock in {1,2}, S19/S25..S27 committed hints) match the Reservation base + Item Storage extension cells documented in docs/ITEM_STORAGE_SYSTEM.md section 5.]"
+    "note": "docs/ITEM_STORAGE_SYSTEM.md: \"d1  storage Generic Resource Reservation\" [resource_reservation_v1_0.ic10 is the only program publishing Generic Resource Reservation ABI1 (magic ResourceReservation.v1 as own S0). Consumer's reads (S12 generation, S14/S15 reserved amounts, S16 direction lock in {1,2}, S19/S25..S27 committed hints) match the Reservation base + Item Storage extension cells documented in docs/ITEM_STORAGE_SYSTEM.md section 5.]"
    },
    "d2": {
     "kind": "script",
@@ -740,7 +740,7 @@
     "providers": [
      "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415963)"
+    "note": "peer named by S0 magic check (ResourceProfileView.v1)"
    }
   },
   "ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10": {
@@ -754,7 +754,7 @@
     "providers": [
      "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415963)"
+    "note": "peer named by S0 magic check (ResourceProfileView.v1)"
    }
   },
   "ic10/item-storage-vending/material_vending_inventory_v1_0.ic10": {
@@ -768,7 +768,7 @@
     "providers": [
      "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415963, ABI 1)"
+    "note": "peer named by S0 magic check (ResourceProfileView.v1, ABI 1)"
    }
   },
   "ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10": {},
@@ -974,7 +974,7 @@
     "providers": [
      "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415963)"
+    "note": "peer named by S0 magic check (ResourceProfileView.v1)"
    }
   },
   "ic10/material-grid/material_import_slot_endpoint_v1_0.ic10": {
@@ -988,7 +988,7 @@
     "providers": [
      "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415963, ABI 1)"
+    "note": "peer named by S0 magic check (ResourceProfileView.v1, ABI 1)"
    }
   },
   "ic10/material-grid/material_resource_link_v1_0.ic10": {
@@ -997,14 +997,14 @@
     "providers": [
      "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415950, ABI 1)"
+    "note": "peer named by S0 magic check (ResourceReservation.v1, ABI 1)"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415950, ABI 1)"
+    "note": "peer named by S0 magic check (ResourceReservation.v1, ABI 1)"
    },
    "d2": {
     "kind": "script",
@@ -1012,21 +1012,21 @@
      "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10",
      "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415961, ABI 1)"
+    "note": "peer named by S0 magic check (StackerFeeder.v1, ABI 1)"
    },
    "d3": {
     "kind": "script",
     "providers": [
      "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415960, ABI 1)"
+    "note": "peer named by S0 magic check (MaterialTransferGrantGuard.v1, ABI 1)"
    },
    "d4": {
     "kind": "script",
     "providers": [
      "ic10/material-grid/material_transfer_executor_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415958, ABI 1)"
+    "note": "peer named by S0 magic check (MaterialTransferExecutor.v1, ABI 1)"
    }
   },
   "ic10/material-grid/material_transfer_executor_v1_0.ic10": {
@@ -1049,7 +1049,7 @@
     "providers": [
      "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415960, ABI 1)"
+    "note": "peer named by S0 magic check (MaterialTransferGrantGuard.v1, ABI 1)"
    }
   },
   "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10": {
@@ -1061,14 +1061,14 @@
      "ic10/power-grid/power_transformer_link_v1_0.ic10",
      "ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415953, ABI 1)"
+    "note": "peer named by S0 magic check (ResourceLink.v1, ABI 1)"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415954, ABI 2)"
+    "note": "peer named by S0 magic check (MultiMaterialReservationAllocator.v2, ABI 2)"
    },
    "d2": {
     "kind": "script",
@@ -1106,28 +1106,28 @@
     "providers": [
      "ic10/material-transform/material_transform_admission_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md: \"165 Runtime: d0 Processor, d1 Admission, d2 Link Resolver, d3 Multi Allocator, d4 Output Reservation\" (section F) [docs/ABI_REFERENCE.md (31415980): \"wires d0 processor, d1 Admission...\". Consumer reads d1 S8==1, S17, S19; Admission pokes 8 (admit status 1/-1), 17, 19 among its S14..S19 payload. Exact match.]"
+    "note": "docs/DEPLOYMENT.md: \"165 Runtime: d0 Processor, d1 Admission, d2 Link Resolver, d3 Multi Allocator, d4 Output Reservation\" (section F) [docs/ABI_REFERENCE.md (GenericMaterialTransformRuntime.v2): \"wires d0 processor, d1 Admission...\". Consumer reads d1 S8==1, S17, S19; Admission pokes 8 (admit status 1/-1), 17, 19 among its S14..S19 payload. Exact match.]"
    },
    "d2": {
     "kind": "script",
     "providers": [
      "ic10/material-transform/material_transform_link_resolver_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md: \"165 Runtime: ... d2 Link Resolver ...\" [Consumer reads d2 S11 and S12==1; the Link Resolver pokes 11 and 12 (status, asserted ==1 in tests/test_material_transform_protocol.py). ABI_REFERENCE (31415980) confirms \"d2 Resolver\".]"
+    "note": "docs/DEPLOYMENT.md: \"165 Runtime: ... d2 Link Resolver ...\" [Consumer reads d2 S11 and S12==1; the Link Resolver pokes 11 and 12 (status, asserted ==1 in tests/test_material_transform_protocol.py). ABI_REFERENCE (GenericMaterialTransformRuntime.v2) confirms \"d2 Resolver\".]"
    },
    "d3": {
     "kind": "script",
     "providers": [
      "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md: \"165 Runtime: ... d3 Multi Allocator ...\" [ABI_REFERENCE (31415980): \"d3 Allocator ABI2\". Consumer reads d3 S14, the Allocator ABI2 committed common epoch (\"publishes the common active epoch at S14 last\"), plus S16/S22, and writes the allocator request cells. Runtime S22 = committed material epoch mirrors that S14 read.]"
+    "note": "docs/DEPLOYMENT.md: \"165 Runtime: ... d3 Multi Allocator ...\" [ABI_REFERENCE (GenericMaterialTransformRuntime.v2): \"d3 Allocator ABI2\". Consumer reads d3 S14, the Allocator ABI2 committed common epoch (\"publishes the common active epoch at S14 last\"), plus S16/S22, and writes the allocator request cells. Runtime S22 = committed material epoch mirrors that S14 read.]"
    },
    "d4": {
     "kind": "script",
     "providers": [
      "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md: \"165 Runtime: ... d4 Output Reservation\" [Only program publishing Generic Resource Reservation ABI1 (magic 31415950). Consumer reads d4 S6 (mirrored ExportAvailable) and S12 (semantic mirror generation) to confirm coherent output growth, matching the Reservation's poked cells 6/12.]"
+    "note": "docs/DEPLOYMENT.md: \"165 Runtime: ... d4 Output Reservation\" [Only program publishing Generic Resource Reservation ABI1 (magic ResourceReservation.v1). Consumer reads d4 S6 (mirrored ExportAvailable) and S12 (semantic mirror generation) to confirm coherent output growth, matching the Reservation's poked cells 6/12.]"
    }
   },
   "ic10/material-transform/material_transform_admission_v1_0.ic10": {
@@ -1136,7 +1136,7 @@
     "providers": [
      "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415952, ABI 4)"
+    "note": "peer named by S0 magic check (ResourceTransformProfileView.v4, ABI 4)"
    },
    "d1": {
     "kind": "physical-device",
@@ -1148,7 +1148,7 @@
     "providers": [
      "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415950, ABI 1)"
+    "note": "peer named by S0 magic check (ResourceReservation.v1, ABI 1)"
    }
   },
   "ic10/material-transform/material_transform_link_resolver_v1_0.ic10": {
@@ -1157,21 +1157,21 @@
     "providers": [
      "ic10/material-transform/material_transform_admission_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415977, ABI 1)"
+    "note": "peer named by S0 magic check (MaterialTransformAdmission.v1, ABI 1)"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415952, ABI 4)"
+    "note": "peer named by S0 magic check (ResourceTransformProfileView.v4, ABI 4)"
    },
    "d2": {
     "kind": "script",
     "providers": [
      "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415981, ABI 1)"
+    "note": "peer named by S0 magic check (GenericSnapshotDirectoryHost.v1, ABI 1)"
    }
   },
   "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10": {
@@ -1181,7 +1181,7 @@
      "ic10/manufacturing/print_material_resolver_v1_0.ic10",
      "ic10/material-transform/material_transform_link_resolver_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md: \"164 Allocator ABI2: d0 Link Resolver, d1 Stager\" (transform lane) and \"Deploy a print-specific ... stager ... allocator ... Wire both to the print resolver exactly as the transform lane wires them to its resolver\" (manufacturing step 9) [Any-of by lane: transform lane uses material_transform_link_resolver (tests/test_material_transform_protocol.py wires alloc d0 to the resolver device; fixed-cell reads S9/S11/S12==1 match resolver pokes 8..13); print lane uses print_material_resolver per DEPLOYMENT step 9, whose S20.. four-cell records are documented \"compatible with Multi Reservation Stager/Allocator\" (docs/ABI_REFERENCE.md 31415989). Fixed-cell corroboration is direct only for the transform resolver; the print-resolver pairing rests on the explicit deployment line.]"
+    "note": "docs/DEPLOYMENT.md: \"164 Allocator ABI2: d0 Link Resolver, d1 Stager\" (transform lane) and \"Deploy a print-specific ... stager ... allocator ... Wire both to the print resolver exactly as the transform lane wires them to its resolver\" (manufacturing step 9) [Any-of by lane: transform lane uses material_transform_link_resolver (tests/test_material_transform_protocol.py wires alloc d0 to the resolver device; fixed-cell reads S9/S11/S12==1 match resolver pokes 8..13); print lane uses print_material_resolver per DEPLOYMENT step 9, whose S20.. four-cell records are documented \"compatible with Multi Reservation Stager/Allocator\" (docs/ABI_REFERENCE.md PrintMaterialResolver.v1). Fixed-cell corroboration is direct only for the transform resolver; the print-resolver pairing rests on the explicit deployment line.]"
    },
    "d1": {
     "kind": "script",
@@ -1282,7 +1282,7 @@
     "providers": [
      "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415981)"
+    "note": "peer named by S0 magic check (GenericSnapshotDirectoryHost.v1)"
    }
   },
   "ic10/power-grid/power_load_executor_v1_0.ic10": {
@@ -1391,7 +1391,7 @@
     "providers": [
      "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415981)"
+    "note": "peer named by S0 magic check (GenericSnapshotDirectoryHost.v1)"
    }
   },
   "ic10/power-grid/power_source_selector_v1_0.ic10": {
@@ -1400,7 +1400,7 @@
     "providers": [
      "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415981)"
+    "note": "peer named by S0 magic check (GenericSnapshotDirectoryHost.v1)"
    },
    "d1": {
     "kind": "script",
@@ -1416,14 +1416,14 @@
     "providers": [
      "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415950)"
+    "note": "peer named by S0 magic check (ResourceReservation.v1)"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415950)"
+    "note": "peer named by S0 magic check (ResourceReservation.v1)"
    }
   },
   "ic10/power-grid/power_transformer_link_v1_0.ic10": {
@@ -1437,14 +1437,14 @@
     "providers": [
      "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415950)"
+    "note": "peer named by S0 magic check (ResourceReservation.v1)"
    },
    "d2": {
     "kind": "script",
     "providers": [
      "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415950)"
+    "note": "peer named by S0 magic check (ResourceReservation.v1)"
    }
   },
   "ic10/power-jobs/power_job_finalize_v1_0.ic10": {
@@ -1485,7 +1485,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_store_v1_0.ic10"
     ],
-    "note": "ic10/power-jobs/power_job_policy_apply_v1_0.ic10: '# Apply guarded POWER policy while exact job remains READY. d0 JobStore,d1 Resolver.' [Purely dynamic reads of job-record cells (get r1 d0 r0) to revalidate exact READY JobId/generation/type/PolicyId - docs/POWER_MANAGEMENT.md: 'revalidates the exact READY JobId/generation/type/PolicyId before writing Endpoint override cells'. The Generic Job Store (magic 31415984) is the only physical job store.]"
+    "note": "ic10/power-jobs/power_job_policy_apply_v1_0.ic10: '# Apply guarded POWER policy while exact job remains READY. d0 JobStore,d1 Resolver.' [Purely dynamic reads of job-record cells (get r1 d0 r0) to revalidate exact READY JobId/generation/type/PolicyId - docs/POWER_MANAGEMENT.md: 'revalidates the exact READY JobId/generation/type/PolicyId before writing Endpoint override cells'. The Generic Job Store (magic GenericJobStore.v1) is the only physical job store.]"
    },
    "d1": {
     "kind": "script",
@@ -1534,7 +1534,7 @@
     "providers": [
      "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415981)"
+    "note": "peer named by S0 magic check (GenericSnapshotDirectoryHost.v1)"
    }
   },
   "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": {
@@ -1548,14 +1548,14 @@
     "providers": [
      "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415963)"
+    "note": "peer named by S0 magic check (ResourceProfileView.v1)"
    },
    "d2": {
     "kind": "script",
     "providers": [
      "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10"
     ],
-    "note": "peer named by S0 magic check (31415933)"
+    "note": "peer named by S0 magic check (PhasePressureRequestArbiter.v1)"
    },
    "d3": {
     "kind": "physical-device",
@@ -1581,7 +1581,7 @@
     "providers": [
      "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415981, ABI 1)"
+    "note": "peer named by S0 magic check (GenericSnapshotDirectoryHost.v1, ABI 1)"
    }
   },
   "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10": {
@@ -1590,7 +1590,7 @@
     "providers": [
      "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
     ],
-    "note": "peer named by S0 magic check (31415928, ABI 1)"
+    "note": "peer named by S0 magic check (GenericPersistentConfigHost.v1, ABI 1)"
    }
   },
   "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10": {
@@ -1599,14 +1599,14 @@
     "providers": [
      "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10"
     ],
-    "note": "peer named by S0 magic check (31415936, ABI 1)"
+    "note": "peer named by S0 magic check (PressureInventoryReservation.v1, ABI 1)"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10"
     ],
-    "note": "peer named by S0 magic check (31415936, ABI 1)"
+    "note": "peer named by S0 magic check (PressureInventoryReservation.v1, ABI 1)"
    },
    "d2": {
     "kind": "physical-device",
@@ -1618,7 +1618,7 @@
     "providers": [
      "ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415948, ABI 1)"
+    "note": "peer named by S0 magic check (PressureTransferGrantGuard.v1, ABI 1)"
    },
    "d4": {
     "kind": "script",
@@ -1647,7 +1647,7 @@
      "ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10",
      "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415947)"
+    "note": "peer named by S0 magic check (MediumPurityGuard.v1)"
    }
   },
   "ic10/pressure-grid/pressure_grid_cost_profile_v1_0.ic10": {},
@@ -1657,7 +1657,7 @@
     "providers": [
      "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415981, ABI 1)"
+    "note": "peer named by S0 magic check (GenericSnapshotDirectoryHost.v1, ABI 1)"
    }
   },
   "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10": {
@@ -1666,14 +1666,14 @@
     "providers": [
      "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415944)"
+    "note": "peer named by S0 magic check (PressureGridRouteSelector.v2)"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415938, ABI 3)"
+    "note": "peer named by S0 magic check (PressureReservationAllocator.v3, ABI 3)"
    }
   },
   "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10": {
@@ -1682,7 +1682,7 @@
     "providers": [
      "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415981, ABI 1)"
+    "note": "peer named by S0 magic check (GenericSnapshotDirectoryHost.v1, ABI 1)"
    }
   },
   "ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10": {
@@ -1691,14 +1691,14 @@
     "providers": [
      "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10"
     ],
-    "note": "peer named by S0 magic check (31415942, ABI 1)"
+    "note": "peer named by S0 magic check (PressureGridSinglehopBuilder.v1, ABI 1)"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10"
     ],
-    "note": "peer named by S0 magic check (31415941, ABI 1)"
+    "note": "peer named by S0 magic check (PressureGridPathAllocator.v1, ABI 1)"
    }
   },
   "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10": {
@@ -1707,21 +1707,21 @@
     "providers": [
      "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415981, ABI 1)"
+    "note": "peer named by S0 magic check (GenericSnapshotDirectoryHost.v1, ABI 1)"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415963)"
+    "note": "peer named by S0 magic check (ResourceProfileView.v1)"
    },
    "d2": {
     "kind": "script",
     "providers": [
      "ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415943, ABI 1)"
+    "note": "peer named by S0 magic check (PressureGridPlanBuilder.v1, ABI 1)"
    }
   },
   "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10": {
@@ -1730,7 +1730,7 @@
     "providers": [
      "ic10/pressure-grid/pressure_grid_cost_profile_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415945, ABI 1)"
+    "note": "peer named by S0 magic check (PressureGridCostProfile.v1, ABI 1)"
    }
   },
   "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10": {
@@ -1739,14 +1739,14 @@
     "providers": [
      "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415940, ABI 2)"
+    "note": "peer named by S0 magic check (PressureGridPathEnumerator.v2, ABI 2)"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415946, ABI 2)"
+    "note": "peer named by S0 magic check (PressureGridRouteRanker.v2, ABI 2)"
    }
   },
   "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10": {
@@ -1755,14 +1755,14 @@
     "providers": [
      "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415981, ABI 1)"
+    "note": "peer named by S0 magic check (GenericSnapshotDirectoryHost.v1, ABI 1)"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415938, ABI 3)"
+    "note": "peer named by S0 magic check (PressureReservationAllocator.v3, ABI 3)"
    }
   },
   "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10": {
@@ -1771,7 +1771,7 @@
     "providers": [
      "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10"
     ],
-    "note": "peer named by S0 magic check (31415935, ABI 2)"
+    "note": "peer named by S0 magic check (PressureDomainInventory.v2, ABI 2)"
    }
   },
   "ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10": {
@@ -1785,7 +1785,7 @@
     "providers": [
      "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415963, ABI 1)"
+    "note": "peer named by S0 magic check (ResourceProfileView.v1, ABI 1)"
    }
   },
   "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10": {},
@@ -1795,7 +1795,7 @@
     "providers": [
      "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
     ],
-    "note": "peer named by S0 magic check (31415928, ABI 1)"
+    "note": "peer named by S0 magic check (GenericPersistentConfigHost.v1, ABI 1)"
    }
   },
   "ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10": {
@@ -1812,7 +1812,7 @@
     "providers": [
      "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10"
     ],
-    "note": "peer named by S0 magic check (31415937, ABI 2)"
+    "note": "peer named by S0 magic check (PressureGridReservationPlanner.v2, ABI 2)"
    }
   },
   "ic10/printer-directory/printer_capacity_client_v2_0.ic10": {},
@@ -1824,7 +1824,7 @@
     "providers": [
      "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415981, ABI 1)"
+    "note": "peer named by S0 magic check (GenericSnapshotDirectoryHost.v1, ABI 1)"
    }
   },
   "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10": {
@@ -1833,14 +1833,14 @@
     "providers": [
      "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10"
     ],
-    "note": "peer named by S0 magic check (31415936)"
+    "note": "peer named by S0 magic check (PressureInventoryReservation.v1)"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10"
     ],
-    "note": "peer named by S0 magic check (31415936)"
+    "note": "peer named by S0 magic check (PressureInventoryReservation.v1)"
    },
    "d2": {
     "kind": "physical-device",
@@ -1852,7 +1852,7 @@
     "providers": [
      "ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415948)"
+    "note": "peer named by S0 magic check (PressureTransferGrantGuard.v1)"
    }
   },
   "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10": {
@@ -1861,7 +1861,7 @@
     "providers": [
      "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415952, ABI 4)"
+    "note": "peer named by S0 magic check (ResourceTransformProfileView.v4, ABI 4)"
    },
    "d1": {
     "kind": "physical-device",
@@ -1876,7 +1876,7 @@
      "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10",
      "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31416048, ABI 1)"
+    "note": "peer named by S0 magic check (ProcessCondition.v1, ABI 1)"
    },
    "d1": {
     "kind": "physical-device",
@@ -1910,7 +1910,7 @@
     "providers": [
      "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415963)"
+    "note": "peer named by S0 magic check (ResourceProfileView.v1)"
    },
    "d5": {
     "kind": "script",
@@ -1918,7 +1918,7 @@
      "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10",
      "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31416048)"
+    "note": "peer named by S0 magic check (ProcessCondition.v1)"
    }
   },
   "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10": {
@@ -1932,7 +1932,7 @@
     "providers": [
      "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415963)"
+    "note": "peer named by S0 magic check (ResourceProfileView.v1)"
    }
   },
   "ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10": {
@@ -1962,7 +1962,7 @@
      "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10",
      "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31416048)"
+    "note": "peer named by S0 magic check (ProcessCondition.v1)"
    }
   },
   "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10": {
@@ -1976,7 +1976,7 @@
     "providers": [
      "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31416028, ABI 1)"
+    "note": "peer named by S0 magic check (PowerDispatchPlanStore.v1, ABI 1)"
    },
    "d2": {
     "kind": "physical-device",
@@ -1988,7 +1988,7 @@
     "providers": [
      "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:439: \"Deploy ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10 with GFG d0, Power Plan Store d1, ambient sensor d2, mixture guard d3\"; docs/PROCESS_UTILITY_ORCHESTRATION.md:235: \"the mixture PurityGuard reports valid prepared fuel\". [The 'mixture guard' is defined at PROCESS_UTILITY_ORCHESTRATION.md:115 as gas_mixture_purity_guard_v1_0 (consumes Resource Profile kind 5 prepared fuel mixture, publishes PurityGuard ABI1 31415947). Cell shape matches: consumer reads d3 cell 5 (valid flag, must be 1) and cell 7 (generation), which the guard pokes at lines 71/75. ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10 publishes the same ABI1 surface, but the docs specify the mixture guard for GFG fuel.]"
+    "note": "docs/DEPLOYMENT.md:439: \"Deploy ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10 with GFG d0, Power Plan Store d1, ambient sensor d2, mixture guard d3\"; docs/PROCESS_UTILITY_ORCHESTRATION.md:235: \"the mixture PurityGuard reports valid prepared fuel\". [The 'mixture guard' is defined at PROCESS_UTILITY_ORCHESTRATION.md:115 as gas_mixture_purity_guard_v1_0 (consumes Resource Profile kind 5 prepared fuel mixture, publishes PurityGuard ABI1 MediumPurityGuard.v1). Cell shape matches: consumer reads d3 cell 5 (valid flag, must be 1) and cell 7 (generation), which the guard pokes at lines 71/75. ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10 publishes the same ABI1 surface, but the docs specify the mixture guard for GFG fuel.]"
    }
   },
   "ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10": {
@@ -1997,7 +1997,7 @@
     "providers": [
      "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
     ],
-    "note": "docs/RECIPE_CATALOG.md:104: \"`d0` may point to any Recipe Store ABI6 node\"; docs/RECIPE_CATALOG.md:154: \"Provide enough unclaimed Generic Stores for the generated manifest's runtime minimum\". [A 'Recipe Store' is a coordinator-claimed generic_catalog_store_v3_0 instance holding Recipe schema v3 items (recipe Loaders are generated per deployment and never shipped). Corroborated: lookup reads d0 cell 11 (Coordinator ref, magic 31415970) and walks the cell-21 chain to Store magic 31415968.]"
+    "note": "docs/RECIPE_CATALOG.md:104: \"`d0` may point to any Recipe Store ABI6 node\"; docs/RECIPE_CATALOG.md:154: \"Provide enough unclaimed Generic Stores for the generated manifest's runtime minimum\". [A 'Recipe Store' is a coordinator-claimed generic_catalog_store_v3_0 instance holding Recipe schema v3 items (recipe Loaders are generated per deployment and never shipped). Corroborated: lookup reads d0 cell 11 (Coordinator ref, magic CatalogCoordinatorCore.v4) and walks the cell-21 chain to Store magic GenericCatalogStore.v6.]"
    }
   },
   "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10": {
@@ -2006,7 +2006,7 @@
     "providers": [
      "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
     ],
-    "note": "docs/RECIPE_CATALOG.md:112: \"`d0` points to any Store in the Recipe topology\"; docs/RECIPE_CATALOG.md:158: \"Attach ... recipe_execution_profile_view_v1_0.ic10 to any Recipe Store\". [Same Store ABI6 topology walk as the Lookup: d0 cell 11 -> Coordinator (31415970), chain via cell 21 to Store magic 31415968 (generic_catalog_store_v3_0). Pin comment agrees: 'd0=any Recipe Store'.]"
+    "note": "docs/RECIPE_CATALOG.md:112: \"`d0` points to any Store in the Recipe topology\"; docs/RECIPE_CATALOG.md:158: \"Attach ... recipe_execution_profile_view_v1_0.ic10 to any Recipe Store\". [Same Store ABI6 topology walk as the Lookup: d0 cell 11 -> Coordinator (CatalogCoordinatorCore.v4), chain via cell 21 to Store magic GenericCatalogStore.v6 (generic_catalog_store_v3_0). Pin comment agrees: 'd0=any Recipe Store'.]"
    }
   },
   "ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10": {
@@ -2015,7 +2015,7 @@
     "providers": [
      "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10"
     ],
-    "note": "peer named by S0 magic check (31415935, ABI 2)"
+    "note": "peer named by S0 magic check (PressureDomainInventory.v2, ABI 2)"
    }
   },
   "ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10": {
@@ -2031,14 +2031,14 @@
     "providers": [
      "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415950, ABI 1)"
+    "note": "peer named by S0 magic check (ResourceReservation.v1, ABI 1)"
    },
    "d2": {
     "kind": "script",
     "providers": [
      "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415950, ABI 1)"
+    "note": "peer named by S0 magic check (ResourceReservation.v1, ABI 1)"
    }
   },
   "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10": {},
@@ -2066,7 +2066,7 @@
      "ic10/power-grid/power_producer_endpoint_v1_0.ic10",
      "ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415949, ABI 1)"
+    "note": "peer named by S0 magic check (ResourceEndpoint.v1, ABI 1)"
    }
   },
   "ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10": {},
@@ -2082,7 +2082,7 @@
     "providers": [
      "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
     ],
-    "note": "docs/RESOURCE_PROFILES.md:93: \"resource_profile_view_v4_0.ic10 accepts any Store ABI6 node from the Resource Profile catalog on `d0`.\" [Pin comment agrees ('d0=any Store'). Corroborated: reads d0 cell 11 (Coordinator ref, magic 31415970) and cell 13 (CatalogSchemaId), walks the store chain to magic 31415968 == generic_catalog_store_v3_0. Any claimed Resource Profile Store instance qualifies.]"
+    "note": "docs/RESOURCE_PROFILES.md:93: \"resource_profile_view_v4_0.ic10 accepts any Store ABI6 node from the Resource Profile catalog on `d0`.\" [Pin comment agrees ('d0=any Store'). Corroborated: reads d0 cell 11 (Coordinator ref, magic CatalogCoordinatorCore.v4) and cell 13 (CatalogSchemaId), walks the store chain to magic GenericCatalogStore.v6 == generic_catalog_store_v3_0. Any claimed Resource Profile Store instance qualifies.]"
    }
   },
   "ic10/shared-input/generic_input_resolver_v1_0.ic10": {},
@@ -2098,7 +2098,7 @@
     "providers": [
      "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:346-349 (section E): transform items 'reside in ACTIVE Store capacity' provided as Generic Store capacity, then \"Deploy ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10\"; source checks d0 chain ends at Store magic 31415968. [No single literal 'd0 -> Store' sentence, but the View's d0 handling is byte-identical in shape to resource_profile_view_v4_0 (whose doc is explicit): d0 cell 11 -> Coordinator magic 31415970, cell-21 chain to Store magic 31415968 / ABI6, which only generic_catalog_store_v3_0 publishes. Any claimed Transform catalog Store instance qualifies.]"
+    "note": "docs/DEPLOYMENT.md:346-349 (section E): transform items 'reside in ACTIVE Store capacity' provided as Generic Store capacity, then \"Deploy ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10\"; source checks d0 chain ends at Store magic GenericCatalogStore.v6. [No single literal 'd0 -> Store' sentence, but the View's d0 handling is byte-identical in shape to resource_profile_view_v4_0 (whose doc is explicit): d0 cell 11 -> Coordinator magic CatalogCoordinatorCore.v4, cell-21 chain to Store magic GenericCatalogStore.v6 / ABI6, which only generic_catalog_store_v3_0 publishes. Any claimed Transform catalog Store instance qualifies.]"
    }
   }
  }

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-transform/material_transform_link_resolver_v1_0.ic10",
-  "source_sha256": "984e4cba59147004cdc73730373f378a5a3150218f788e7ceee849856511cc92",
+  "source_sha256": "44a789e4e6c2afac0b1ba95f20606e3856b765c5fdf376301bebd05c3c79887b",
   "identity": {
     "service_id": "ic10.script.material.transform.link.resolver",
     "implementation_revision": "1.0",
@@ -44,7 +44,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415977
+            "equals": 524863963
           },
           {
             "address": 1,
@@ -60,7 +60,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415977.abi1"
+          "ic10.stack.material-transform-admission.v1"
         ]
       }
     },
@@ -98,7 +98,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415952
+            "equals": 499210479
           },
           {
             "address": 1,
@@ -114,7 +114,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415952.abi4"
+          "ic10.stack.resource-transform-profile-view.v4"
         ]
       }
     },
@@ -151,7 +151,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415981
+            "equals": 891293726
           },
           {
             "address": 1,
@@ -159,7 +159,7 @@
           },
           {
             "address": 9,
-            "equals": "HASH(\"DirectorySchema.ResourceLink.v1\")"
+            "equals": -1926307111
           }
         ]
       },
@@ -167,7 +167,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415981.abi1"
+          "ic10.stack.generic-snapshot-directory-host.v1"
         ]
       }
     }
@@ -192,7 +192,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415953
+          "value": 1484497288
         },
         {
           "address": 1,
@@ -226,7 +226,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415950
+          "value": -1742884202
         },
         {
           "address": 1,
@@ -366,7 +366,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415978,
+        "contract": "MaterialTransformLinkResolver",
+        "magic": -1860170822,
         "abi": 1
       }
     ]
@@ -382,9 +383,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415978.abi1",
+        "protocol_id": "ic10.stack.material-transform-link-resolver.v1",
         "base": 0,
-        "magic": 31415978,
+        "contract": "MaterialTransformLinkResolver",
+        "magic": -1860170822,
         "abi": 1,
         "source": "literal-own-stack-header"
       }
@@ -394,9 +396,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415977.abi1",
+            "protocol_id": "ic10.stack.material-transform-admission.v1",
             "header_base": 0,
-            "magic": 31415977,
+            "contract": "MaterialTransformAdmission",
+            "magic": 524863963,
             "abi": 1,
             "publication_requirements": []
           }
@@ -407,9 +410,10 @@
         "port": "d1",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415952.abi4",
+            "protocol_id": "ic10.stack.resource-transform-profile-view.v4",
             "header_base": 0,
-            "magic": 31415952,
+            "contract": "ResourceTransformProfileView",
+            "magic": 499210479,
             "abi": 4,
             "publication_requirements": []
           }
@@ -420,9 +424,10 @@
         "port": "d2",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415981.abi1",
+            "protocol_id": "ic10.stack.generic-snapshot-directory-host.v1",
             "header_base": 0,
-            "magic": 31415981,
+            "contract": "GenericSnapshotDirectoryHost",
+            "magic": 891293726,
             "abi": 1,
             "publication_requirements": []
           }

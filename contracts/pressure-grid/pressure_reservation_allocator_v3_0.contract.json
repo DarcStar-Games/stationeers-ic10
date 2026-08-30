@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10",
-  "source_sha256": "b88572f4bad120902e5b4566bcd68c12a8ac7ec7a3eab5e67efcab71ce9cfb9d",
+  "source_sha256": "9170d99e115b35ef2b313787d1463a631b24d6f23876e8f8f4fad1e606eb3131",
   "identity": {
     "service_id": "ic10.script.pressure.reservation.allocator",
     "implementation_revision": "3.0",
@@ -53,7 +53,7 @@
         {
           "address": 99,
           "operator": "equals",
-          "value": "HASH(\"ControllerPressureTransfer\")"
+          "value": 1875690426
         },
         {
           "address": 101,
@@ -177,7 +177,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415938
+        "const": 1852509515
       },
       {
         "address": 1,
@@ -311,7 +311,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415938,
+        "contract": "PressureReservationAllocator",
+        "magic": 1852509515,
         "abi": 3
       }
     ]
@@ -327,7 +328,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415938,
+        "equals": 1852509515,
         "source": "generated-protocol-header"
       },
       {
@@ -342,9 +343,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415938.abi3",
+        "protocol_id": "ic10.stack.pressure-reservation-allocator.v3",
         "base": 0,
-        "magic": 31415938,
+        "contract": "PressureReservationAllocator",
+        "magic": 1852509515,
         "abi": 3,
         "source": "literal-own-stack-header"
       }

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_dispatch_cycle_v1_0.ic10",
-  "source_sha256": "6e4903623f62d5dc7338afd7699fe0130a15d30f4607ce812767f8dc18d563ce",
+  "source_sha256": "d6973d0c04bf9de150597a933d775295952795799d50a747806d722301b02989",
   "identity": {
     "service_id": "ic10.script.power.dispatch.cycle",
     "implementation_revision": "1.0",
@@ -146,7 +146,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416034
+        "const": -191013575
       },
       {
         "address": 1,
@@ -229,7 +229,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416034,
+        "contract": "PowerDispatchCycle",
+        "magic": -191013575,
         "abi": 1
       }
     ]
@@ -245,7 +246,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416034,
+        "equals": -191013575,
         "source": "generated-protocol-header"
       },
       {
@@ -260,9 +261,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416034.abi1",
+        "protocol_id": "ic10.stack.power-dispatch-cycle.v1",
         "base": 0,
-        "magic": 31416034,
+        "contract": "PowerDispatchCycle",
+        "magic": -191013575,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

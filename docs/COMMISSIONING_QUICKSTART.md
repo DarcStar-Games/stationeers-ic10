@@ -348,7 +348,7 @@ Vending -> Stacker -> Logic Sorter -> processor/import sink
 2. Publish source and sink Generic Resource Reservations for the same ItemHash. For a furnace sink, use `ic10/material-grid/material_import_slot_endpoint_v1_0.ic10` plus `ic10/resource-grid-core/resource_reservation_v1_0.ic10`.
 3. Deploy `ic10/material-grid/material_transfer_grant_guard_v1_0.ic10`, `ic10/material-grid/material_transfer_executor_v1_0.ic10`, and `ic10/material-grid/material_resource_link_v1_0.ic10` using `docs/MATERIAL_TRANSFER_SYSTEM.md`.
 4. Publish the Link through `ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10` -> `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` -> a dedicated `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10`.
-5. Confirm the Host reports magic `31415981`, ABI1, schema `DirectorySchema.ResourceLink`, schema version 1, and no overflow.
+5. Confirm the Host reports identity `HASH("GenericSnapshotDirectoryHost.v1")`, schema `DirectorySchema.ResourceLink`, schema version 1, and no overflow.
 6. Confirm Link `S28/S29` are the **source/sink Reservation ReferenceIds** and Link `S19..S22` identify Vending, Stacker, Logic Sorter, and sink native device separately.
 7. Manually verify the Sorter's accepted chute route reaches the intended sink.
 

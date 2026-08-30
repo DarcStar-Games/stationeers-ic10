@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10",
-  "source_sha256": "24efabed059cbcf56b4e44a704d5d5241c372db38e6a2d43462113ea7b810bb6",
+  "source_sha256": "b22604a4392013bacb45b8af90cca11713e29146a851cb0e3f0d3db6def24a4e",
   "identity": {
     "service_id": "ic10.script.diagnostic.input.bridge",
     "implementation_revision": "1.0",
@@ -31,7 +31,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415929
+          "value": 940078290
         },
         {
           "address": 1,
@@ -41,7 +41,7 @@
         {
           "address": 8,
           "operator": "equals",
-          "value": "HASH(\"DiagnosticMapping\")"
+          "value": -1838357131
         },
         {
           "address": 9,
@@ -77,7 +77,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415931
+          "value": 1971762319
         },
         {
           "address": 1,
@@ -297,7 +297,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 17320511,
+        "contract": "DiagnosticInputBridge",
+        "magic": 1404237530,
         "abi": 1
       }
     ]
@@ -313,9 +314,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.17320511.abi1",
+        "protocol_id": "ic10.stack.diagnostic-input-bridge.v1",
         "base": 0,
-        "magic": 17320511,
+        "contract": "DiagnosticInputBridge",
+        "magic": 1404237530,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

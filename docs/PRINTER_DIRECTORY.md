@@ -91,7 +91,7 @@ Fabricator semantics are deliberately excluded. In particular, `StructureFabrica
 Adapter ABI3 publishes:
 
 ```text
-S0  31415983
+S0  DirectoryAdapter.v3
 S1  3
 S2  capability mask = 17
 S3  HASH("DirectorySchema.Printer.v2")

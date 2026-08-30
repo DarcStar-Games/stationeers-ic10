@@ -1,5 +1,5 @@
 # Pressure -> Generic Resource Endpoint ABI1. d0 PressureDomain Inventory ABI2.
-poke 0 31415949
+poke 0 HASH("ResourceEndpoint.v1")
 poke 1 1
 poke 2 0
 poke 52 1 # ResourceClass FLUID
@@ -14,7 +14,7 @@ get r14 d0 12
 blez r14 Bad
 beq r14 r15 Loop
 get r0 d0 0
-bne r0 31415935 Bad
+bne r0 HASH("PressureDomainInventory.v2") Bad
 get r0 d0 1
 bne r0 2 Bad
 get r1 d0 14 # role

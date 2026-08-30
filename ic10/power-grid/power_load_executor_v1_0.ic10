@@ -1,5 +1,5 @@
 # Break-before-make managed POWER load/battery On executor. d0 PlanStore,d1 Allocator.
-poke 0 31416038
+poke 0 HASH("PowerLoadExecutor.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -10,7 +10,7 @@ get r1 db:0 r6
 blt r1 0 Loop
 add r6 r6 1
 getd r0 r1 0
-bne r0 31415950 Scan
+bne r0 HASH("ResourceReservation.v1") Scan
 getd r0 r1 33
 bne r0 4 Scan
 getd r2 r1 28

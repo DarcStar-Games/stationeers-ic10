@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_battery_endpoint_v1_0.ic10",
-  "source_sha256": "142ee29e4b47d7d071c496c43a48abc2c06cc1dd6291a9ad73b3c1221fbac735",
+  "source_sha256": "4953d094e385e25676dea1432e3d500154426efce03ad81e9e7ff5d5095646b4",
   "identity": {
     "service_id": "ic10.script.power.battery.endpoint",
     "implementation_revision": "1.0",
@@ -126,7 +126,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415949
+        "const": 25991561
       },
       {
         "address": 1,
@@ -413,7 +413,7 @@
         "access": [
           "self-write"
         ],
-        "const": "HASH(\"Power.Electrical\")"
+        "const": 1977405139
       },
       {
         "address": 54,
@@ -456,7 +456,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415949,
+        "contract": "ResourceEndpoint",
+        "magic": 25991561,
         "abi": 1
       }
     ]
@@ -472,7 +473,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415949,
+        "equals": 25991561,
         "source": "generated-protocol-header"
       },
       {
@@ -487,9 +488,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415949.abi1",
+        "protocol_id": "ic10.stack.resource-endpoint.v1",
         "base": 0,
-        "magic": 31415949,
+        "contract": "ResourceEndpoint",
+        "magic": 25991561,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

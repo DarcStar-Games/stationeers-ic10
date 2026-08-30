@@ -1,5 +1,5 @@
 # Finalize one POWER job step. d0 lifecycle,d1 resolver,d2 verify.
-poke 0 31416046
+poke 0 HASH("PowerJobFinalize.v1")
 poke 1 1
 poke 2 0
 poke 20 0

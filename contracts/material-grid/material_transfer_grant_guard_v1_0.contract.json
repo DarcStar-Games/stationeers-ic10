@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10",
-  "source_sha256": "f2f2b16e4d10020181228608e37c17c5dd015858ae1306d0efc27203b8b04d09",
+  "source_sha256": "6fed5f783c64b5ba58d748e11b49894c9ae7783613b60d40ffa891bbf00df59f",
   "identity": {
     "service_id": "ic10.script.material.transfer.grant.guard",
     "implementation_revision": "1.0",
@@ -49,7 +49,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415953
+            "equals": 1484497288
           },
           {
             "address": 1,
@@ -61,7 +61,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415953.abi1"
+          "ic10.stack.resource-link.v1"
         ]
       }
     },
@@ -94,7 +94,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415954
+            "equals": 924888977
           },
           {
             "address": 1,
@@ -106,7 +106,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415954.abi2"
+          "ic10.stack.multi-material-reservation-allocator.v2"
         ]
       }
     },
@@ -173,7 +173,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415950
+          "value": -1742884202
         },
         {
           "address": 1,
@@ -244,7 +244,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415960
+        "const": 754423306
       },
       {
         "address": 1,
@@ -430,13 +430,14 @@
           "self-read",
           "self-write"
         ],
-        "const": 31415960
+        "const": 754423306
       }
     ],
     "headers": [
       {
         "base": 0,
-        "magic": 31415960,
+        "contract": "MaterialTransferGrantGuard",
+        "magic": 754423306,
         "abi": 1
       }
     ]
@@ -452,7 +453,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415960,
+        "equals": 754423306,
         "source": "generated-protocol-header"
       },
       {
@@ -467,9 +468,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415960.abi1",
+        "protocol_id": "ic10.stack.material-transfer-grant-guard.v1",
         "base": 0,
-        "magic": 31415960,
+        "contract": "MaterialTransferGrantGuard",
+        "magic": 754423306,
         "abi": 1,
         "source": "literal-own-stack-header"
       }
@@ -479,9 +481,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415953.abi1",
+            "protocol_id": "ic10.stack.resource-link.v1",
             "header_base": 0,
-            "magic": 31415953,
+            "contract": "ResourceLink",
+            "magic": 1484497288,
             "abi": 1,
             "publication_requirements": []
           }
@@ -492,9 +495,10 @@
         "port": "d1",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415954.abi2",
+            "protocol_id": "ic10.stack.multi-material-reservation-allocator.v2",
             "header_base": 0,
-            "magic": 31415954,
+            "contract": "MultiMaterialReservationAllocator",
+            "magic": 924888977,
             "abi": 2,
             "publication_requirements": []
           }

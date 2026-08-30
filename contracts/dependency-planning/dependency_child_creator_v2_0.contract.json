@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/dependency_child_creator_v2_0.ic10",
-  "source_sha256": "920d72cea3ca168a3738a143421380c42dbb07e6af0e0cecf0e258d5674eaabe",
+  "source_sha256": "6edf07edddfb850d95d988ce89e44cdb9d150a44fa9a92d7bd2203bb962a0620",
   "identity": {
     "service_id": "ic10.script.dependency.child.creator",
     "implementation_revision": "2.0",
@@ -264,7 +264,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416006
+        "const": 962330483
       },
       {
         "address": 1,
@@ -408,7 +408,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416006,
+        "contract": "DependencyChildCreator",
+        "magic": 962330483,
         "abi": 2
       }
     ]
@@ -424,7 +425,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416006,
+        "equals": 962330483,
         "source": "generated-protocol-header"
       },
       {
@@ -439,9 +440,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416006.abi2",
+        "protocol_id": "ic10.stack.dependency-child-creator.v2",
         "base": 0,
-        "magic": 31416006,
+        "contract": "DependencyChildCreator",
+        "magic": 962330483,
         "abi": 2,
         "source": "literal-own-stack-header"
       }

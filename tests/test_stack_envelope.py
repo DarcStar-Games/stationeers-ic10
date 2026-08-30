@@ -16,6 +16,7 @@ from framework.ic10_harness import Device, IC10
 from framework.json_schema import validate
 from framework.script_contracts import build_all
 from framework.script_contracts.own_stack import analyze_own_stack
+from framework.ic10_source import game_hash
 from framework.stack_envelope import (
     BASE,
     LENGTH,
@@ -23,6 +24,7 @@ from framework.stack_envelope import (
     NormalizedDeclaration,
     StackRange,
     schema_hash,
+    schema_hash_token,
     build_inventory,
     canonical_schema_pairs,
     declaration_errors,
@@ -67,7 +69,7 @@ ck(inventory["totals"] == {
     "backlog_dynamic_range_users": 0,
 }, "generated coverage/backlog totals changed without review")
 by_source = {item["source"]: item for item in inventory["services"]}
-ck(by_source[MONITOR]["envelope"]["magic"] == 31416052,
+ck(by_source[MONITOR]["envelope"]["magic"] == game_hash("StackCellMonitor.v1"),
    "the migrated monitor does not carry its registered magic as its on-stack identity")
 ck(all(item["current_layout"]["payload_inventory_status"] ==
        ("declared-stack-protocol" if item["current_layout"]["headers"]
@@ -110,14 +112,14 @@ ck({"start": 400, "end": 404} in extension_contract["external_readable_ranges"],
 # The monitor publishes the mandatory header cells and its declared state.
 vm = IC10((ROOT / MONITOR).read_text())
 vm.run(1)
-ck(vm.stack.get(0) == 31416052 and vm.stack.get(1) == 1,
+ck(vm.stack.get(0) == 'HASH:StackCellMonitor.v1' and vm.stack.get(1) == 1,
    "monitor does not publish its identity at S0/S1")
 ck(vm.stack.get(2) == 20, "monitor does not publish the derived capability mask at S2")
 ck(vm.stack.get(5) == 1, "monitor does not publish its booting state at S5")
 ck(vm.stack.get(7) == 0, "monitor does not initialize its generation cell to zero")
 contract = next(document for document in contracts.values() if document["source"] == MONITOR)
 ck([header for header in contract["own_stack"]["headers"]
-    if header["base"] == 0 and header["magic"] == 31416052 and header["abi"] == 1],
+    if header["base"] == 0 and header["magic"] == game_hash("StackCellMonitor.v1") and header["abi"] == 1],
    "the monitor's S0/S1 identity is not a verified contract header")
 
 # The Generic Telemetry family migrated additively: the S96 block never moved.
@@ -132,7 +134,8 @@ for item in telemetry:
     runtime.run(1)
     ck(runtime.stack.get(96) == 27182818,
        f"{item['source']}: the established telemetry magic moved")
-    ck(runtime.stack.get(0) == envelope["magic"] and runtime.stack.get(1) == 1,
+    ck(runtime.stack.get(0) == f'HASH:{envelope["contract"]}.v{envelope["service_abi"]}'
+       and runtime.stack.get(1) == 1,
        f"{item['source']}: does not publish its identity at S0/S1")
     ck(runtime.stack.get(2) == 8 and runtime.stack.get(6) == 96,
        f"{item['source']}: does not publish the telemetry pointer it declares")
@@ -240,7 +243,7 @@ ck(solo.stack.get(5) == 4 and solo.stack.get(8) == -1,
    "an unwired reader does not report blocked state alongside its missing target")
 solo = IC10((ROOT / READER).read_text())
 solo.run(1)
-ck([solo.stack.get(cell) for cell in (0, 1, 2, 7)] == [31416067, 1, 20, 0],
+ck([solo.stack.get(cell) for cell in (0, 1, 2, 7)] == ['HASH:StackHeaderReader.v1', 1, 20, 0],
    "the reader does not publish the header it validates")
 
 # State packs a v1 field, reserved zeros, and declared service-specific bits.
@@ -274,7 +277,7 @@ ck(worker["envelope"]["capability_mask"] == 0,
    "an identity-only service declared optional header fields")
 vm_worker = IC10((ROOT / worker["source"]).read_text())
 vm_worker.run(1)
-ck([vm_worker.stack.get(cell) for cell in (0, 1, 2)] == [31416071, 1, 0],
+ck([vm_worker.stack.get(cell) for cell in (0, 1, 2)] == ['HASH:CatalogItemMigrationWorker.v1', 1, 0],
    "the migration worker does not publish an identity-only header")
 
 # The capability mask is derived from the declaration, never hand-written.
@@ -297,7 +300,7 @@ ck(any("reserved unless the service declares HAS_STATE" in error
    "a source writing S6 passed without declaring HAS_STATE")
 
 declaration = load_declarations(ROOT)["migrated"][MONITOR]
-mask_expected = {0: 31416052, 1: 1, 2: 20, 7: 0}
+mask_expected = {0: game_hash("StackCellMonitor.v1"), 1: 1, 2: 20, 7: 0}
 
 # The state cell is the one header cell publication may change afterwards.
 ck(not any("post-init write can change" in error
@@ -314,6 +317,8 @@ ck(any("post-init write can change reserved S5" in error
 
 # One cell carries the schema and the version it is at.
 ck(schema_hash("DirectorySchema.ResourceLink", 1)
+   == game_hash("DirectorySchema.ResourceLink.v1")
+   and schema_hash_token("DirectorySchema.ResourceLink", 1)
    == 'HASH("DirectorySchema.ResourceLink.v1")',
    "the published schema identity does not carry its version")
 bad = deepcopy(load_declarations(ROOT))
@@ -366,17 +371,17 @@ bad["migrated"][MONITOR]["service_id"] = "ic10.script.unrelated.service"
 ck(any("canonical contract identity" in error for error in declaration_errors(ROOT, contracts, bad)),
    "validator accepted a ServiceId that differs from the script contract")
 bad = deepcopy(load_declarations(ROOT))
-bad["migrated"][MONITOR]["magic"] = 31415999
+bad["migrated"][MONITOR]["contract"] = "UnpublishedService"
 ck(any("do not publish the declared magic" in error
        for error in declaration_errors(ROOT, contracts, bad)),
-   "validator accepted a magic the source never publishes at S0")
+   "validator accepted an identity the source never publishes at S0")
 ck(extension_ownership_errors([{"start": 0, "end": 15}], 12, 4),
    "validator allowed an extension to overwrite established payload cells")
 ck(not extension_ownership_errors([{"start": 0, "end": 15}], 16, 4),
    "validator rejected an extension in unowned stack cells")
-for field in ("magic", "service_abi", "extension_base"):
+for field in ("contract", "service_abi", "extension_base"):
     bad = deepcopy(load_declarations(ROOT))
-    bad["migrated"][MONITOR][field] = "1"
+    bad["migrated"][MONITOR][field] = 1 if field == "contract" else "1"
     try:
         malformed_errors = declaration_errors(ROOT, contracts, bad)
     except TypeError:
@@ -389,7 +394,8 @@ minimal = NormalizedDeclaration(source="minimal.ic10")
 minimal_contract = {
     "identity": {"service_id": "ic10.script.example"},
     "own_stack": {
-        "headers": [{"base": 0, "magic": 1, "abi": 1}],
+        "headers": [{"base": 0, "contract": "Example",
+                     "magic": game_hash("Example.v1"), "abi": 1}],
         "literal_reads": [],
         "literal_writes": [],
         "dynamic_write_ranges": [],
@@ -415,7 +421,7 @@ ck(any("missing scripts" in error for error in declaration_set_errors(
 with TemporaryDirectory() as temporary:
     temporary_root = _ProjectPath(temporary)
     minimal_source = temporary_root / minimal.source
-    minimal_source.write_text("poke 0 1\npoke 1 1\npoke 2 0\nyield\n")
+    minimal_source.write_text('poke 0 HASH("Example.v1")\npoke 1 1\npoke 2 0\nyield\n')
     publishable = replace(
         minimal, source_sha256=hashlib.sha256(minimal_source.read_bytes()).hexdigest()
     )
@@ -424,9 +430,9 @@ with TemporaryDirectory() as temporary:
     ), "the publication rule rejected a minimal normalized declaration")
 
 malformed = deepcopy(load_declarations(ROOT)["migrated"][MONITOR])
-malformed["magic"] = "1"
+malformed["contract"] = 1
 normalized, shape_errors = normalize_declaration(MONITOR, malformed)
-ck(normalized is None and shape_errors == [f"{MONITOR}: magic must be an int"],
+ck(normalized is None and shape_errors == [f"{MONITOR}: contract must be a str"],
    "malformed declaration shape cascaded into secondary validation errors")
 for missing_field in (
     "schema_id",
@@ -509,19 +515,19 @@ ck(any("custom_state_bits must fit" in error for error in invalid_state_errors)
 
 # Text in an unreachable branch or erased after publication is not publication.
 declaration = load_declarations(ROOT)["migrated"][MONITOR]
-expected = {0: 31416052, 1: 1, 2: 20, 7: 0}
+expected = {0: game_hash("StackCellMonitor.v1"), 1: 1, 2: 20, 7: 0}
 source = (ROOT / MONITOR).read_text()
 with TemporaryDirectory() as temporary:
     unreachable = _ProjectPath(temporary) / "unreachable.ic10"
-    unreachable.write_text(source.replace("poke 0 31416052", "j Skip\npoke 0 31416052\nSkip:", 1))
+    unreachable.write_text(source.replace('poke 0 HASH("StackCellMonitor.v1")', 'j Skip\npoke 0 HASH("StackCellMonitor.v1")\nSkip:', 1))
     mutated = deepcopy(declaration)
     mutated["source_sha256"] = hashlib.sha256(unreachable.read_bytes()).hexdigest()
     ck(any("control transfer occurs before" in error
            for error in publication_errors(unreachable, expected, mutated)),
        "publication validator accepted unreachable header initialization")
     guarded = _ProjectPath(temporary) / "guarded.ic10"
-    guarded.write_text(source.replace("poke 0 31416052",
-        "get r0 db 31\nbeq r0 31416052 Init\nclr db\npoke 31 31416052\nInit:\npoke 0 31416052", 1))
+    guarded.write_text(source.replace('poke 0 HASH("StackCellMonitor.v1")',
+        'get r0 db 31\nbeq r0 HASH("StackCellMonitor.v1") Init\nclr db\npoke 31 HASH("StackCellMonitor.v1")\nInit:\npoke 0 HASH("StackCellMonitor.v1")', 1))
     mutated["source_sha256"] = hashlib.sha256(guarded.read_bytes()).hexdigest()
     ck(not [error for error in publication_errors(guarded, expected, mutated)
             if "control transfer" in error or "does not retain" in error],

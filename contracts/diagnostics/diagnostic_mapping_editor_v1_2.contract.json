@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10",
-  "source_sha256": "feabc414837081f786ba9ce304109ed41200a1d8a8d00f0aecd1aa5afeffb246",
+  "source_sha256": "f7891920d03d8906456cfa0cc738871686e94c75b34ec84f81c5dc901b85324b",
   "identity": {
     "service_id": "ic10.script.diagnostic.mapping.editor",
     "implementation_revision": "1.2",
@@ -78,7 +78,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 17320511
+          "value": 1404237530
         },
         {
           "address": 1,
@@ -157,7 +157,7 @@
         "access": [
           "self-write"
         ],
-        "const": 17320510
+        "const": 95468331
       },
       {
         "address": 1,
@@ -239,7 +239,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 17320510,
+        "contract": "DiagnosticMappingEditor",
+        "magic": 95468331,
         "abi": 1
       }
     ]
@@ -255,7 +256,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 17320510,
+        "equals": 95468331,
         "source": "generated-protocol-header"
       },
       {
@@ -270,9 +271,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.17320510.abi1",
+        "protocol_id": "ic10.stack.diagnostic-mapping-editor.v1",
         "base": 0,
-        "magic": 17320510,
+        "contract": "DiagnosticMappingEditor",
+        "magic": 95468331,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

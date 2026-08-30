@@ -361,8 +361,14 @@ def verify_declared_consumers(source: str, rows: list[list[str]], aliases: dict[
             base = item["header_base"]
             magic = item["magic"]
             abi = item["abi"]
-            if magic not in checks[port][base] or abi not in checks[port][base + 1]:
+            contract = item.get("contract")
+            # A contract-named identity folds the ABI into the hashed S0 value, so
+            # the single S0 equality check is what proves the exact contract. A
+            # numeric block header still needs its separate version cell checked.
+            if magic not in checks[port][base]:
                 raise ValueError(f"declared consumer {requirement} is not enforced by literal source checks")
+            if not contract and abi not in checks[port][base + 1]:
+                raise ValueError(f"declared consumer {requirement} does not check S{base + 1} ABI")
             for publication in item.get("publication_requirements", []):
                 address = publication["address"]
                 publication_reads = sum(
@@ -384,8 +390,9 @@ def verify_declared_consumers(source: str, rows: list[list[str]], aliases: dict[
                         f"declared seqlock consumer {requirement} does not parity-check and re-read S{address}"
                     )
             accepted.append({
-                "protocol_id": protocol_id(magic, abi),
+                "protocol_id": protocol_id(magic, abi, contract),
                 "header_base": base,
+                **({"contract": contract} if contract else {}),
                 "magic": magic,
                 "abi": abi,
                 "publication_requirements": item.get("publication_requirements", []),

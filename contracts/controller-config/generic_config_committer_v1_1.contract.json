@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-config/generic_config_committer_v1_1.ic10",
-  "source_sha256": "f1d65063f225791b4de408c658d4073e1968a589c6337b806793dd011346fc72",
+  "source_sha256": "9f0062860d558915a36ca8b30919796040bdb813d46c18d9eba6ae411713d381",
   "identity": {
     "service_id": "ic10.script.generic.config.committer",
     "implementation_revision": "1.1",
@@ -69,7 +69,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 22360680
+          "value": -533009584
         },
         {
           "address": 1,
@@ -107,7 +107,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415928
+          "value": -759746849
         },
         {
           "address": 1,
@@ -191,7 +191,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416082,
+        "contract": "GenericConfigCommitter",
+        "magic": -1848849874,
         "abi": 1
       }
     ]
@@ -207,9 +208,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416082.abi1",
+        "protocol_id": "ic10.stack.generic-config-committer.v1",
         "base": 0,
-        "magic": 31416082,
+        "contract": "GenericConfigCommitter",
+        "magic": -1848849874,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

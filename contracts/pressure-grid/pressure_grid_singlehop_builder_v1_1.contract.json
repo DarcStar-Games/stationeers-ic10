@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10",
-  "source_sha256": "9da8ad5b2f93ea30f0bec537d8837baab97bb3431975096e0b62ad0906b82ce7",
+  "source_sha256": "6c69933defafa29d5df42db29425a3bf1ccd4a0bc3cca199c90cd83febaea0ba",
   "identity": {
     "service_id": "ic10.script.pressure.grid.singlehop.builder",
     "implementation_revision": "1.1",
@@ -46,7 +46,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415981
+            "equals": 891293726
           },
           {
             "address": 1,
@@ -54,7 +54,7 @@
           },
           {
             "address": 9,
-            "equals": "HASH(\"DirectorySchema.PressureGridLink.v1\")"
+            "equals": -821773385
           },
           {
             "address": 11,
@@ -66,7 +66,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415981.abi1"
+          "ic10.stack.generic-snapshot-directory-host.v1"
         ]
       }
     },
@@ -108,7 +108,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415938
+            "equals": 1852509515
           },
           {
             "address": 1,
@@ -120,7 +120,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415938.abi3"
+          "ic10.stack.pressure-reservation-allocator.v3"
         ]
       }
     }
@@ -196,7 +196,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415942
+        "const": -590988592
       },
       {
         "address": 1,
@@ -323,7 +323,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415942,
+        "contract": "PressureGridSinglehopBuilder",
+        "magic": -590988592,
         "abi": 1
       }
     ]
@@ -339,7 +340,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415942,
+        "equals": -590988592,
         "source": "generated-protocol-header"
       },
       {
@@ -354,9 +355,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415942.abi1",
+        "protocol_id": "ic10.stack.pressure-grid-singlehop-builder.v1",
         "base": 0,
-        "magic": 31415942,
+        "contract": "PressureGridSinglehopBuilder",
+        "magic": -590988592,
         "abi": 1,
         "source": "literal-own-stack-header"
       }
@@ -366,9 +368,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415981.abi1",
+            "protocol_id": "ic10.stack.generic-snapshot-directory-host.v1",
             "header_base": 0,
-            "magic": 31415981,
+            "contract": "GenericSnapshotDirectoryHost",
+            "magic": 891293726,
             "abi": 1,
             "publication_requirements": []
           }
@@ -379,9 +382,10 @@
         "port": "d1",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415938.abi3",
+            "protocol_id": "ic10.stack.pressure-reservation-allocator.v3",
             "header_base": 0,
-            "magic": 31415938,
+            "contract": "PressureReservationAllocator",
+            "magic": 1852509515,
             "abi": 3,
             "publication_requirements": []
           }

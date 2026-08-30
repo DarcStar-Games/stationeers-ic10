@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10",
-  "source_sha256": "b848e0f169ac94b38005dede11e1c2c79404a8226e89db92a5b07bce692c087d",
+  "source_sha256": "ec368b5ebf6e1b2fda1c54ccc7e32058d72f36743f1ac2991a11041cf897fefe",
   "identity": {
     "service_id": "ic10.script.catalog.coordinator.core",
     "implementation_revision": "3.0",
@@ -47,7 +47,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415982
+            "equals": -1822968058
           },
           {
             "address": 1,
@@ -55,7 +55,7 @@
           },
           {
             "address": 3,
-            "equals": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
+            "equals": -698837900
           }
         ]
       },
@@ -63,7 +63,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415982.abi3"
+          "ic10.stack.generic-registry-directory-host.v3"
         ]
       }
     }
@@ -433,7 +433,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415970,
+        "contract": "CatalogCoordinatorCore",
+        "magic": 4515138,
         "abi": 4
       }
     ]
@@ -456,9 +457,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415970.abi4",
+        "protocol_id": "ic10.stack.catalog-coordinator-core.v4",
         "base": 0,
-        "magic": 31415970,
+        "contract": "CatalogCoordinatorCore",
+        "magic": 4515138,
         "abi": 4,
         "source": "literal-own-stack-header"
       }
@@ -468,9 +470,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415982.abi3",
+            "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
             "header_base": 0,
-            "magic": 31415982,
+            "contract": "GenericRegistryDirectoryHost",
+            "magic": -1822968058,
             "abi": 3,
             "publication_requirements": []
           }

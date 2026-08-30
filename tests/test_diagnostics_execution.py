@@ -20,8 +20,8 @@ def src(p):return (R/p).read_text()
 # Diagnostic Input Bridge: one resolved control edit lands in UI state with status 1.
 # The Profile generation lives at Profile S11; a Profile that publishes none is invalid
 # (the #41 defect read a vacated cell and rejected every request).
-profile=Device(800,stack={0:31415929,1:1,8:'HASH:DiagnosticMapping',9:1,10:7,11:5},props={'ReferenceId':800})
-resolver=Device(801,stack={0:31415931,1:1,13:3,14:9,11:1,12:2},props={'ReferenceId':801})
+profile=Device(800,stack={0:'HASH:InputProfileView.v1',1:1,8:'HASH:DiagnosticMapping',9:1,10:7,11:5},props={'ReferenceId':800})
+resolver=Device(801,stack={0:'HASH:GenericInputResolver.v1',1:1,13:3,14:9,11:1,12:2},props={'ReferenceId':801})
 ib=IC10(src('ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10'),{'p':profile,'r':resolver},self_ref=810)
 ib.stack.update({8:801,9:800});ib.run(2)
 ck(ib.stack.get(10)==1 and ib.stack.get(18)==9 and ib.stack.get(25)==2,'input bridge SetConsole request rejected or misplaced')
@@ -56,7 +56,7 @@ ck([reg.stack.get(32+i) for i in range(6)]==[100,502,100,503,200,501],'registry 
 
 # Console Selector: resolve a desired ordinal against the Registry's current
 # publication cells (bank S8, generation S10/11, count S12/13) and blink it.
-regdev=Device(520,stack={0:14142136,1:1,8:0,10:3,12:2,32:100,33:601,34:200,35:602},props={'ReferenceId':520})
+regdev=Device(520,stack={0:'HASH:ConsoleRegistry.v1',1:1,8:0,10:3,12:2,32:100,33:601,34:200,35:602},props={'ReferenceId':520})
 led1=Device(601,props={'ReferenceId':601,'On':1})
 led2=Device(602,props={'ReferenceId':602,'On':1})
 sel=IC10(src('ic10/diagnostics/console_selector_v1_1.ic10'),{'led1':led1,'led2':led2,'reg':regdev},self_ref=530)
@@ -72,9 +72,9 @@ regdev.stack[12]=2
 
 # Diagnostic Selector Bridge: copies the Input Bridge UI state into both selector
 # request windows only while the Input Bridge reports a valid status.
-inputd=Device(540,stack={0:17320511,1:1,10:1,16:2,17:3,24:4,18:5,25:6},props={'ReferenceId':540})
-ctrlsel=Device(541,stack={0:17320508,1:2},props={'ReferenceId':541})
-conssel=Device(542,stack={0:17320509,1:1},props={'ReferenceId':542})
+inputd=Device(540,stack={0:'HASH:DiagnosticInputBridge.v1',1:1,10:1,16:2,17:3,24:4,18:5,25:6},props={'ReferenceId':540})
+ctrlsel=Device(541,stack={0:'HASH:ControllerSelector.v2',1:2},props={'ReferenceId':541})
+conssel=Device(542,stack={0:'HASH:ConsoleSelector.v1',1:1},props={'ReferenceId':542})
 sb=IC10(src('ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10'),{'a':inputd,'b':ctrlsel,'c':conssel},self_ref=550)
 sb.stack.update({8:540,9:541,10:542});sb.run(2)
 ck(ctrlsel.stack.get(10)==2 and ctrlsel.stack.get(11)==3 and ctrlsel.stack.get(12)==4,'selector bridge controller pair propagation')

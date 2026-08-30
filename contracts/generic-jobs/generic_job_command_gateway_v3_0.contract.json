@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10",
-  "source_sha256": "d6596b4d9beae042396382bea8098b087756154904699e2507d7790666673edd",
+  "source_sha256": "417314e85104d60b6ba6f5e87822ea9d397492498ae384a3ca982bee1a4cad98",
   "identity": {
     "service_id": "ic10.script.generic.job.command.gateway",
     "implementation_revision": "3.0",
@@ -327,7 +327,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416001,
+        "contract": "GenericJobCommandGateway",
+        "magic": 2138182493,
         "abi": 3
       }
     ]
@@ -343,9 +344,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416001.abi3",
+        "protocol_id": "ic10.stack.generic-job-command-gateway.v3",
         "base": 0,
-        "magic": 31416001,
+        "contract": "GenericJobCommandGateway",
+        "magic": 2138182493,
         "abi": 3,
         "source": "literal-own-stack-header"
       }

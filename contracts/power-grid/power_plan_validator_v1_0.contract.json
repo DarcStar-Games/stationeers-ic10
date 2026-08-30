@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_plan_validator_v1_0.ic10",
-  "source_sha256": "c2f331d87c77040b9972f368744be2c668004cb0ecadcfe63f48f8f2016afa50",
+  "source_sha256": "4243e27cd724956bd4441b31ac0d54e7dfe17e1cb3ab39023e769afd4ad9c3bb",
   "identity": {
     "service_id": "ic10.script.power.plan.validator",
     "implementation_revision": "1.0",
@@ -79,7 +79,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415953
+          "value": 1484497288
         },
         {
           "address": 9,
@@ -110,7 +110,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415950
+          "value": -1742884202
         },
         {
           "address": 33,
@@ -136,7 +136,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415950
+          "value": -1742884202
         },
         {
           "address": 33,
@@ -181,7 +181,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416035
+        "const": 1450092031
       },
       {
         "address": 1,
@@ -244,7 +244,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416035,
+        "contract": "PowerPlanValidator",
+        "magic": 1450092031,
         "abi": 1
       }
     ]
@@ -260,7 +261,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416035,
+        "equals": 1450092031,
         "source": "generated-protocol-header"
       },
       {
@@ -275,9 +276,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416035.abi1",
+        "protocol_id": "ic10.stack.power-plan-validator.v1",
         "base": 0,
-        "magic": 31416035,
+        "contract": "PowerPlanValidator",
+        "magic": 1450092031,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

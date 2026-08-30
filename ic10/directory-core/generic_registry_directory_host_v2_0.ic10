@@ -1,19 +1,19 @@
 Boot: # Generic Registry Directory Host ABI3: CatalogStoreNode persistent registry.
 get r0 db 0
-bne r0 31415982 Init
+bne r0 HASH("GenericRegistryDirectoryHost.v3") Init
 get r0 db 1
 beq r0 3 Header
 Init:
 clr db
 Header:
-poke 0 31415982
+poke 0 HASH("GenericRegistryDirectoryHost.v3")
 poke 1 3
 poke 2 1
 Loop:
 yield
 bdns d0 Loop
 get r0 d0 0
-bne r0 31415983 Loop
+bne r0 HASH("DirectoryAdapter.v3") Loop
 get r0 d0 1
 bne r0 3 Loop
 get r0 d0 15

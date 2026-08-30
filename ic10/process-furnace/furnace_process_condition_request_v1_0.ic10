@@ -1,5 +1,5 @@
 # Furnace Process Condition ABI1. d0 Transform View,d1 furnace.
-poke 0 31416048
+poke 0 HASH("ProcessCondition.v1")
 poke 1 1
 poke 2 0
 poke 11 0
@@ -12,7 +12,7 @@ bdns d1 Bad
 get r14 d0 74
 blez r14 Bad
 get r0 d0 0
-bne r0 31415952 Bad
+bne r0 HASH("ResourceTransformProfileView.v4") Bad
 get r0 d0 1
 bne r0 4 Bad
 get r15 d0 68

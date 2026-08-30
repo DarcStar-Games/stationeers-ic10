@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-pi/controller_pi_runtime_v1_1.ic10",
-  "source_sha256": "eabe86d279ae48f4f62db21775e2574206760b80df5748e7795ac566762d3e38",
+  "source_sha256": "ac378bd9437f9d2497c4c6ed843ceb0111e648946873dab09fd6844b4098983c",
   "identity": {
     "service_id": "ic10.script.controller.pi.runtime",
     "implementation_revision": "1.1",
@@ -154,7 +154,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415928
+            "equals": -759746849
           },
           {
             "address": 1,
@@ -162,7 +162,7 @@
           },
           {
             "address": 48,
-            "equals": "HASH(\"ControllerPI\")"
+            "equals": -1020491928
           },
           {
             "address": 50,
@@ -174,7 +174,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415928.abi1"
+          "ic10.stack.generic-persistent-config-host.v1"
         ]
       }
     }
@@ -233,7 +233,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416061
+        "const": 1952773389
       },
       {
         "address": 1,
@@ -303,7 +303,7 @@
         "access": [
           "self-write"
         ],
-        "const": "HASH(\"ControllerPI\")"
+        "const": -1020491928
       },
       {
         "address": 100,
@@ -432,7 +432,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416061,
+        "contract": "ControllerPiRuntime",
+        "magic": 1952773389,
         "abi": 1
       },
       {
@@ -453,7 +454,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416061,
+        "equals": 1952773389,
         "source": "generated-protocol-header"
       },
       {
@@ -482,9 +483,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416061.abi1",
+        "protocol_id": "ic10.stack.controller-pi-runtime.v1",
         "base": 0,
-        "magic": 31416061,
+        "contract": "ControllerPiRuntime",
+        "magic": 1952773389,
         "abi": 1,
         "source": "literal-own-stack-header"
       },
@@ -501,9 +503,10 @@
         "port": "d2",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415928.abi1",
+            "protocol_id": "ic10.stack.generic-persistent-config-host.v1",
             "header_base": 0,
-            "magic": 31415928,
+            "contract": "GenericPersistentConfigHost",
+            "magic": -759746849,
             "abi": 1,
             "publication_requirements": []
           }

@@ -1,5 +1,5 @@
 # Recipe Execution Profile View ABI1: d0=any Recipe Store; request S10 RecipeHash.
-poke 0 31415985
+poke 0 HASH("RecipeExecutionProfileView.v1")
 poke 1 1
 poke 2 0
 poke 14 0
@@ -13,7 +13,7 @@ l r2 d0 ReferenceId
 get r12 d0 11
 blez r12 Bad
 getd r0 r12 0
-bne r0 31415970 Bad
+bne r0 HASH("CatalogCoordinatorCore.v4") Bad
 getd r15 r12 22
 mod r0 r15 2
 bnez r0 Loop
@@ -25,7 +25,7 @@ move r2 r1
 j First
 Store:
 getd r0 r2 0
-bne r0 31415968 Bad
+bne r0 HASH("GenericCatalogStore.v6") Bad
 getd r0 r2 1
 bne r0 6 Bad
 getd r0 r2 3

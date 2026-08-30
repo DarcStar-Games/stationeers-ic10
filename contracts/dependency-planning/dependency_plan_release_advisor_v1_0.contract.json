@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10",
-  "source_sha256": "030652e0945fd6522a215612c2cd1ab7c94f27dd09b7bb84dd4ccbd81d27b0aa",
+  "source_sha256": "e301cd0ff6b2b19c8050ad6e40784bf0a3d44845839447714cfc914e0d1dfa4e",
   "identity": {
     "service_id": "ic10.script.dependency.plan.release.advisor",
     "implementation_revision": "1.0",
@@ -144,7 +144,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416018
+        "const": -223726304
       },
       {
         "address": 1,
@@ -261,7 +261,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416018,
+        "contract": "DependencyPlanReleaseAdvisor",
+        "magic": -223726304,
         "abi": 1
       }
     ]
@@ -277,7 +278,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416018,
+        "equals": -223726304,
         "source": "generated-protocol-header"
       },
       {
@@ -292,9 +293,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416018.abi1",
+        "protocol_id": "ic10.stack.dependency-plan-release-advisor.v1",
         "base": 0,
-        "magic": 31416018,
+        "contract": "DependencyPlanReleaseAdvisor",
+        "magic": -223726304,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

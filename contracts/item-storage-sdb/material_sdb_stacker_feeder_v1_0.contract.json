@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10",
-  "source_sha256": "2e7f2656f025568c4dcf2a4077c01a3a73a29ab66229d460ead56d93213e88dd",
+  "source_sha256": "e40af9bff9570a890fe4a87b7ad5c7fff528ab516e67114d47288c0b6b174c67",
   "identity": {
     "service_id": "ic10.script.material.sdb.stacker.feeder",
     "implementation_revision": "1.0",
@@ -162,7 +162,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415963
+            "equals": 2107540686
           },
           {
             "address": 8,
@@ -173,8 +173,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.a2a572155db42331",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.a2a572155db42331",
+        "interface_id": "ic10.interface.access.6e91396e196e7cfe",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.6e91396e196e7cfe",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -239,7 +239,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415961
+        "const": 1559898316
       },
       {
         "address": 1,
@@ -434,7 +434,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415961,
+        "contract": "StackerFeeder",
+        "magic": 1559898316,
         "abi": 1
       }
     ]
@@ -450,7 +451,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415961,
+        "equals": 1559898316,
         "source": "generated-protocol-header"
       },
       {
@@ -465,9 +466,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415961.abi1",
+        "protocol_id": "ic10.stack.stacker-feeder.v1",
         "base": 0,
-        "magic": 31415961,
+        "contract": "StackerFeeder",
+        "magic": 1559898316,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

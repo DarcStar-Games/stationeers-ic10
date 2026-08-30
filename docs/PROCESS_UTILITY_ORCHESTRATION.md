@@ -13,10 +13,10 @@ The design rule remains:
 
 ## 1. ProcessCondition ABI1
 
-Magic `31416048`, ABI 1.
+identity `HASH("ProcessCondition.v1")`.
 
 ```text
-S0   magic = 31416048
+S0   magic = ProcessCondition.v1
 S1   ABI = 1
 S2   capability mask = 0
 S8   unmet-condition bitmask: bit0 pressure, bit1 temperature
@@ -113,7 +113,7 @@ RatioTolerance      = 0.005
 
 The profile is stored in the existing Resource Profile catalog alongside pure gases. This raises the current catalog to 39 profiles: FLUID 10, ITEM 27, POWER 1, ENERGY 1, still fitting the existing five-Store minimum commissioning geometry.
 
-`ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10` consumes Resource Profile kind 5 and publishes the existing PurityGuard ABI1 (`31415947`). The ordinary Pressure Inventory service can therefore purity-gate a prepared mixture exactly as it does a pure phase medium without learning two-component chemistry.
+`ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10` consumes Resource Profile kind 5 and publishes the existing PurityGuard ABI1 (`HASH("MediumPurityGuard.v1")`). The ordinary Pressure Inventory service can therefore purity-gate a prepared mixture exactly as it does a pure phase medium without learning two-component chemistry.
 
 Empty storage is considered admissible for import; once nonempty, both component ratios and temperature must satisfy the profile.
 

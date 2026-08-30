@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-jobs/power_job_scheduler_v1_0.ic10",
-  "source_sha256": "f1caf24316c3dcb5519d7b87f8391ab57459564410d0161015e5d29ec849af17",
+  "source_sha256": "7856108ac5e5948a7ea03c906d5c2e2f72660b7bf5e6262d9bcb999bb6f51cb6",
   "identity": {
     "service_id": "ic10.script.power.job.scheduler",
     "implementation_revision": "1.0",
@@ -111,7 +111,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416047
+        "const": 1434271477
       },
       {
         "address": 1,
@@ -214,7 +214,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416047,
+        "contract": "PowerJobScheduler",
+        "magic": 1434271477,
         "abi": 1
       }
     ]
@@ -230,7 +231,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416047,
+        "equals": 1434271477,
         "source": "generated-protocol-header"
       },
       {
@@ -245,9 +246,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416047.abi1",
+        "protocol_id": "ic10.stack.power-job-scheduler.v1",
         "base": 0,
-        "magic": 31416047,
+        "contract": "PowerJobScheduler",
+        "magic": 1434271477,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

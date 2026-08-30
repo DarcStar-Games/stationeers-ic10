@@ -1,11 +1,11 @@
 Boot:
 get r0 db 0
-bne r0 31415984 Reset
+bne r0 HASH("GenericJobStore.v1") Reset
 get r0 db 1
 beq r0 1 Recover
 Reset:
 clr db
-poke 0 31415984
+poke 0 HASH("GenericJobStore.v1")
 poke 1 1
 poke 2 0
 poke 18 32

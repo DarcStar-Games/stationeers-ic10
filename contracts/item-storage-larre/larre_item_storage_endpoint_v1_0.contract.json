@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10",
-  "source_sha256": "343cf366846160ed6b14f5566ab5f43826403d459626a6a1f9bea90db64fe0f2",
+  "source_sha256": "81efcdeda2b069a19376b5ae56bd2aa5ff11ceb3e44ec77b2aac4ce182f42070",
   "identity": {
     "service_id": "ic10.script.larre.item.storage.endpoint",
     "implementation_revision": "1.0",
@@ -53,7 +53,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415986
+            "equals": -817020094
           },
           {
             "address": 9,
@@ -64,8 +64,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.ced8c20d590c25df",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.ced8c20d590c25df",
+        "interface_id": "ic10.interface.access.ec92ee27be353d08",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.ec92ee27be353d08",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -106,7 +106,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415963
+            "equals": 2107540686
           },
           {
             "address": 8,
@@ -117,8 +117,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.bd1b1bd0a7c8d8e0",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.bd1b1bd0a7c8d8e0",
+        "interface_id": "ic10.interface.access.fb1c20627e4c12cf",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.fb1c20627e4c12cf",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -201,7 +201,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415949
+        "const": 25991561
       },
       {
         "address": 1,
@@ -425,7 +425,7 @@
         "access": [
           "self-write"
         ],
-        "const": "HASH(\"StorageAccess.LArRE\")"
+        "const": -491515906
       },
       {
         "address": 36,
@@ -523,7 +523,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415949,
+        "contract": "ResourceEndpoint",
+        "magic": 25991561,
         "abi": 1
       }
     ]
@@ -539,7 +540,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415949,
+        "equals": 25991561,
         "source": "generated-protocol-header"
       },
       {
@@ -554,9 +555,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415949.abi1",
+        "protocol_id": "ic10.stack.resource-endpoint.v1",
         "base": 0,
-        "magic": 31415949,
+        "contract": "ResourceEndpoint",
+        "magic": 25991561,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

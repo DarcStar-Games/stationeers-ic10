@@ -1,5 +1,5 @@
 # Active future-output claim lookup over Plan Store + Child Validity.
-poke 0 31416016
+poke 0 HASH("DependencyClaimView.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -12,7 +12,7 @@ get r3 db 16
 get r4 db 17
 beqz r2 Bad
 get r0 d0 0
-bne r0 31416007 Bad
+bne r0 HASH("DependencyPlanStore.v2") Bad
 get r0 d0 1
 bne r0 2 Bad
 get r14 d0 40

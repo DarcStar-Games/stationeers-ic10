@@ -1,7 +1,7 @@
 # Transform Lane Directory Adapter v1.0: Transform Runtime ABI2; Adapter ABI2 snapshot.
 Boot:
 clr db
-poke 0 31415983
+poke 0 HASH("DirectoryAdapter.v3")
 poke 1 3
 poke 2 17
 poke 3 HASH("DirectorySchema.TransformLane.v1")
@@ -27,7 +27,7 @@ get r1 db:0 r7
 blt r1 0 Publish
 add r7 r7 1
 getd r0 r1 0
-bne r0 31415980 Scan
+bne r0 HASH("GenericMaterialTransformRuntime.v2") Scan
 getd r0 r1 1
 bne r0 2 Scan
 getd r2 r1 14

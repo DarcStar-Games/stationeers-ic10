@@ -3,7 +3,7 @@
 # S13 handled request generation,S14 Directory,S15/16 selection,S17 controller,
 # S18 index,S19 type.
 alias directory r1
-poke 0 17320508
+poke 0 HASH("ControllerSelector.v2")
 poke 1 2
 poke 2 0
 Loop:
@@ -11,7 +11,7 @@ yield
 get directory db 14
 blez directory NoDirectory
 getd r0 directory 0
-bne r0 31415981 NoDirectory
+bne r0 HASH("GenericSnapshotDirectoryHost.v1") NoDirectory
 getd r0 directory 1
 bne r0 1 NoDirectory
 getd r0 directory 9

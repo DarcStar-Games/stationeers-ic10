@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10",
-  "source_sha256": "9aedf4558472894e9b65470612b05d0607cb6a1b709c0766aa09cab00e474c30",
+  "source_sha256": "9a66468e94f4f76118108fe0d63120b5cf318ef68bb87c72c88ffe495fb7ea61",
   "identity": {
     "service_id": "ic10.script.manufacturing.scheduler",
     "implementation_revision": "1.0",
@@ -337,7 +337,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415995,
+        "contract": "ManufacturingScheduler",
+        "magic": 1734660008,
         "abi": 1
       }
     ]
@@ -353,9 +354,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415995.abi1",
+        "protocol_id": "ic10.stack.manufacturing-scheduler.v1",
         "base": 0,
-        "magic": 31415995,
+        "contract": "ManufacturingScheduler",
+        "magic": 1734660008,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

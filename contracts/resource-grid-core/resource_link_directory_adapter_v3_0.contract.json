@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10",
-  "source_sha256": "55c80d96f35687c2b155d36d9ab2a1aa3bb0de8a3f5a17c785e3dc02fde49823",
+  "source_sha256": "c820c238461056e9d23417fbae82544deae44e1e752f13d1ae61d2140ac40b89",
   "identity": {
     "service_id": "ic10.script.resource.link.directory.adapter",
     "implementation_revision": "3.0",
@@ -38,7 +38,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415953
+          "value": 1484497288
         },
         {
           "address": 1,
@@ -220,7 +220,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415983,
+        "contract": "DirectoryAdapter",
+        "magic": 583163590,
         "abi": 3
       }
     ]
@@ -236,9 +237,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415983.abi3",
+        "protocol_id": "ic10.stack.directory-adapter.v3",
         "base": 0,
-        "magic": 31415983,
+        "contract": "DirectoryAdapter",
+        "magic": 583163590,
         "abi": 3,
         "source": "literal-own-stack-header"
       }

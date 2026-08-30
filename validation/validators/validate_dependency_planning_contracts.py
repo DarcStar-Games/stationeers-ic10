@@ -9,25 +9,25 @@ import re,sys
 R=_PROJECT_ROOT;validation=Validation(R)
 req={
 'ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10':['poke 1 3','get r15 db 48','get r15 db 64','put d0 21 r6'],
-'ic10/dependency-planning/job_requirement_view_v1_0.ic10':['poke 0 31416002','put d2 8 r10'],
-'ic10/dependency-planning/item_producer_resolver_v1_0.ic10':['poke 0 31416003','Table:'],
-'ic10/dependency-planning/generic_job_monitor_v1_0.ic10':['poke 0 31416004'],
-'ic10/dependency-planning/job_inventory_preflight_v1_0.ic10':['poke 0 31416005','bne r0 -2 Bad'],
+'ic10/dependency-planning/job_requirement_view_v1_0.ic10':['poke 0 HASH("JobRequirementView.v1")','put d2 8 r10'],
+'ic10/dependency-planning/item_producer_resolver_v1_0.ic10':['poke 0 HASH("ItemProducerResolver.v1")','Table:'],
+'ic10/dependency-planning/generic_job_monitor_v1_0.ic10':['poke 0 HASH("GenericJobMonitor.v1")'],
+'ic10/dependency-planning/job_inventory_preflight_v1_0.ic10':['poke 0 HASH("JobInventoryPreflight.v1")','bne r0 -2 Bad'],
 'ic10/dependency-planning/dependency_child_creator_v2_0.ic10':['poke 1 2','put d3 63 -1','put d3 48 r15'],
 'ic10/dependency-planning/dependency_plan_store_v2_0.ic10':['poke 1 2','poke r0 0','poke r0 r3'],
 'ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10':['poke 1 2','get r0 db 27','bne r11 r0 Replan','bne r12 r0 Replan'],
-'ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10':['poke 0 31416009','beq r11 r8 TooDeep'],
-'ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10':['poke 0 31416010','put d0 12 2','put d0 12 3'],
+'ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10':['poke 0 HASH("DependencyAncestryGuard.v1")','beq r11 r8 TooDeep'],
+'ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10':['poke 0 HASH("ManufacturingDependencyPlanner.v1")','put d0 12 2','put d0 12 3'],
 'ic10/dependency-planning/dependency_plan_builder_v2_0.ic10':['poke 1 2','get sp d0 27'],
 'ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10':['poke 1 2','put d0 19 r15','put d1 9 r15'],
-'ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10':['poke 0 31416013'],
-'ic10/dependency-planning/dependency_child_validity_v1_0.ic10':['poke 0 31416014'],
-'ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10':['poke 0 31416015','FindFree:','put d0 11 r10'],
-'ic10/dependency-planning/dependency_claim_view_v1_0.ic10':['poke 0 31416016','poke 27 r4'],
-'ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10':['poke 0 31416017'],
-'ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10':['poke 0 31416018'],
-'ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10':['poke 0 31416019','beq r0 5 Replan','put d3 32 r15'],
-'ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10':['poke 0 31416020']}
+'ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10':['poke 0 HASH("DependencyCancellationGuard.v1")'],
+'ic10/dependency-planning/dependency_child_validity_v1_0.ic10':['poke 0 HASH("DependencyChildValidity.v1")'],
+'ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10':['poke 0 HASH("GenericJobStoreCommandExecutor.v1")','FindFree:','put d0 11 r10'],
+'ic10/dependency-planning/dependency_claim_view_v1_0.ic10':['poke 0 HASH("DependencyClaimView.v1")','poke 27 r4'],
+'ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10':['poke 0 HASH("ManufacturingReagentResolver.v1")'],
+'ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10':['poke 0 HASH("DependencyPlanReleaseAdvisor.v1")'],
+'ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10':['poke 0 HASH("ExistingDependencyPlanController.v1")','beq r0 5 Replan','put d3 32 r15'],
+'ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10':['poke 0 HASH("NewDependencyPlanController.v1")']}
 for rel,pats in req.items():
  p=R/rel
  if not p.exists():validation.fail(f'{rel}: missing implementation');continue

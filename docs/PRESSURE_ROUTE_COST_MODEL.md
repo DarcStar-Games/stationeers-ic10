@@ -181,7 +181,7 @@ If pressure and throughput were equal, the 2-hop path would win because of its l
 `ic10/pressure-grid/pressure_grid_cost_profile_v1_0.ic10` publishes:
 
 ```text
-S0  magic = 31415945
+S0  magic = PressureGridCostProfile.v1
 S1  ABI = 1
 S8  HopWeight
 S9  StorageWeight

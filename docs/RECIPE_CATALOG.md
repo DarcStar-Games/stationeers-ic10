@@ -78,7 +78,7 @@ The generator splits source only between complete recipe items. No generated Loa
 
 ## Browse Lookup ABI3
 
-`ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10` publishes magic `31415967`, ABI3.
+`ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10` publishes identity `HASH("RecipeCatalogLookup.v3")`.
 
 It is the compact family/ordinal browser and intentionally does not republish reagent arrays.
 
@@ -120,7 +120,7 @@ S10 RecipeHash
 Publication:
 
 ```text
-S0  31415985
+S0  RecipeExecutionProfileView.v1
 S1  ABI 1
 S2  capability mask = 0
 S11 FamilyHash

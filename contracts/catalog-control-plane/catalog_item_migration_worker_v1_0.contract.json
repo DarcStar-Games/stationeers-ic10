@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10",
-  "source_sha256": "985da50e453b643b00fe908763b9373b75a00d3ab6ad7192dbb9f170485178ba",
+  "source_sha256": "de287688f01201bc05c82c2f721406d563072ab48e7b6a9e0b46a83e9b65e385",
   "identity": {
     "service_id": "ic10.script.catalog.item.migration.worker",
     "implementation_revision": "1.0",
@@ -46,15 +46,15 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415970
+            "equals": 4515138
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.50caee72197b36d0",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.50caee72197b36d0",
+        "interface_id": "ic10.interface.access.b3e4b92a714756eb",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.b3e4b92a714756eb",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -143,7 +143,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416071
+        "const": -265228004
       },
       {
         "address": 1,
@@ -169,7 +169,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416071,
+        "contract": "CatalogItemMigrationWorker",
+        "magic": -265228004,
         "abi": 1
       }
     ]
@@ -185,7 +186,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416071,
+        "equals": -265228004,
         "source": "generated-protocol-header"
       },
       {
@@ -200,9 +201,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416071.abi1",
+        "protocol_id": "ic10.stack.catalog-item-migration-worker.v1",
         "base": 0,
-        "magic": 31416071,
+        "contract": "CatalogItemMigrationWorker",
+        "magic": -265228004,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

@@ -154,7 +154,7 @@ This is the preferred mode when `ControllerPressureDomain` or another explicit i
 The runtime expects `d1` to be `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` resolving a `PHASE_MEDIUM` record:
 
 ```text
-S0   magic = 31415963
+S0   magic = ResourceProfileView.v1
 S29  positive coherent publication generation
 S9   MediumType hash
 S11  ProfileKind = 1 PHASE_MEDIUM

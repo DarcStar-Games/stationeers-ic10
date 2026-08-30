@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10",
-  "source_sha256": "5545bf42aa74832144e6a82fd9e18c9bd6ac030e41f1784cc4090ce267ad77b8",
+  "source_sha256": "720f09f0502611221bf5198e2c7d375bfeb124e5530ff2d0135f5fbed0ff40e1",
   "identity": {
     "service_id": "ic10.script.resource.transform.profile.view",
     "implementation_revision": "8.0",
@@ -70,7 +70,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415970
+          "value": 4515138
         }
       ],
       "accepted": []
@@ -93,7 +93,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415968
+          "value": 875310516
         },
         {
           "address": 1,
@@ -252,7 +252,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415952,
+        "contract": "ResourceTransformProfileView",
+        "magic": 499210479,
         "abi": 4
       }
     ]
@@ -268,9 +269,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415952.abi4",
+        "protocol_id": "ic10.stack.resource-transform-profile-view.v4",
         "base": 0,
-        "magic": 31415952,
+        "contract": "ResourceTransformProfileView",
+        "magic": 499210479,
         "abi": 4,
         "source": "literal-own-stack-header"
       }

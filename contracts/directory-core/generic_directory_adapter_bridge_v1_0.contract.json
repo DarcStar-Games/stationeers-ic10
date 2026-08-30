@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
-  "source_sha256": "2d1867a0e337184741cba486229e26c627068eabe8870b985fafe0f6da621c52",
+  "source_sha256": "a6d9884325e0b9167e42e95251564b5b4df1a7c1ddd3709fa493023157c1ebdf",
   "identity": {
     "service_id": "ic10.script.generic.directory.adapter.bridge",
     "implementation_revision": "1.0",
@@ -54,7 +54,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415983
+            "equals": 583163590
           },
           {
             "address": 1,
@@ -70,7 +70,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415983.abi3"
+          "ic10.stack.directory-adapter.v3"
         ]
       }
     },
@@ -123,7 +123,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415981
+            "equals": 891293726
           },
           {
             "address": 1,
@@ -135,7 +135,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415981.abi1"
+          "ic10.stack.generic-snapshot-directory-host.v1"
         ]
       }
     }
@@ -174,7 +174,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416084
+        "const": -1784275788
       },
       {
         "address": 1,
@@ -220,7 +220,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416084,
+        "contract": "GenericDirectoryAdapterBridge",
+        "magic": -1784275788,
         "abi": 1
       }
     ]
@@ -236,7 +237,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416084,
+        "equals": -1784275788,
         "source": "generated-protocol-header"
       },
       {
@@ -251,9 +252,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416084.abi1",
+        "protocol_id": "ic10.stack.generic-directory-adapter-bridge.v1",
         "base": 0,
-        "magic": 31416084,
+        "contract": "GenericDirectoryAdapterBridge",
+        "magic": -1784275788,
         "abi": 1,
         "source": "literal-own-stack-header"
       }
@@ -263,9 +265,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415983.abi3",
+            "protocol_id": "ic10.stack.directory-adapter.v3",
             "header_base": 0,
-            "magic": 31415983,
+            "contract": "DirectoryAdapter",
+            "magic": 583163590,
             "abi": 3,
             "publication_requirements": []
           }
@@ -276,9 +279,10 @@
         "port": "d1",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415981.abi1",
+            "protocol_id": "ic10.stack.generic-snapshot-directory-host.v1",
             "header_base": 0,
-            "magic": 31415981,
+            "contract": "GenericSnapshotDirectoryHost",
+            "magic": 891293726,
             "abi": 1,
             "publication_requirements": []
           }

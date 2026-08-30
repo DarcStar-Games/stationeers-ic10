@@ -5,7 +5,7 @@ alias renderer r3
 alias input r4
 alias display r5
 alias controller r6
-poke 0 17320510
+poke 0 HASH("DiagnosticMappingEditor.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -13,9 +13,9 @@ yield
 get consoleSelector db 8
 get controllerSelector db 9
 get renderer db 10
-move r10 17320509
-move r11 17320508
-move r12 16180339
+move r10 HASH("ConsoleSelector.v1")
+move r11 HASH("ControllerSelector.v2")
+move r12 HASH("DiagnosticRenderer.v1")
 move r7 1
 ValidateService:
 blez rr7 NoService
@@ -31,7 +31,7 @@ ble r7 3 ValidateService
 get input db 13
 blez input NoService
 getd r0 input 0
-bne r0 17320511 NoService
+bne r0 HASH("DiagnosticInputBridge.v1") NoService
 getd r0 input 1
 bne r0 1 NoService
 getd r0 input 10

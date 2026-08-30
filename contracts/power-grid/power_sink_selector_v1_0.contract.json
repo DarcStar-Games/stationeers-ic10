@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_sink_selector_v1_0.ic10",
-  "source_sha256": "7b730883d22aea71fbac4010125150c617dbc8300ff1a84052a5b599fb396013",
+  "source_sha256": "2ad76c80ba4c8a70c231a7b113ee3ad35a501e217a85af3b527e174719c46742",
   "identity": {
     "service_id": "ic10.script.power.sink.selector",
     "implementation_revision": "1.0",
@@ -44,19 +44,19 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415981
+            "equals": 891293726
           },
           {
             "address": 9,
-            "equals": "HASH(\"DirectorySchema.PowerReservation.v1\")"
+            "equals": 730796175
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.4ad6a1de1fe492b0",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.4ad6a1de1fe492b0",
+        "interface_id": "ic10.interface.access.a6fbc7cdc415222b",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.a6fbc7cdc415222b",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -85,7 +85,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415950
+          "value": -1742884202
         },
         {
           "address": 33,
@@ -136,7 +136,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416031
+        "const": 194397096
       },
       {
         "address": 1,
@@ -253,7 +253,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416031,
+        "contract": "PowerSinkSelector",
+        "magic": 194397096,
         "abi": 1
       }
     ]
@@ -269,7 +270,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416031,
+        "equals": 194397096,
         "source": "generated-protocol-header"
       },
       {
@@ -284,9 +285,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416031.abi1",
+        "protocol_id": "ic10.stack.power-sink-selector.v1",
         "base": 0,
-        "magic": 31416031,
+        "contract": "PowerSinkSelector",
+        "magic": 194397096,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

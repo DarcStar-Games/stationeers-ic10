@@ -14,7 +14,7 @@ The Scanner loops all six screws. Roles are capability-driven:
 - second Dial => **Value Dial**;
 - readable-Open device => **Switch**;
 - other readable-Setting device => **Memory fallback**;
-- IC housing with stack magic `31415929` and ABI 1 => **Input Profile**.
+- IC housing with stack identity `HASH("InputProfileView.v1")` and ABI 1 => **Input Profile**.
 
 The first/second Dial distinction is deterministic screw order. Other device roles may occupy any remaining screws.
 
@@ -61,7 +61,7 @@ One Scanner/Resolver pair should serve one active commissioning context at a tim
 
 ## Catalog-backed profile selection
 
-The Scanner still recognizes the stable Generic Input Profile ABI (`31415929`, ABI 1), but current profile definitions no longer each require a dedicated IC stack. All six production/diagnostic definitions fit one runtime-placed Coordinator-managed Store today. The physical node runs `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` and is claimed from the UNCLAIMED pool. Three one-shot sparse Loader ABI5 candidates publish whole-profile data on their own zero-initialized stacks; the Router assigns them and the Store pulls/imports them. `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` selects one `[ContextType, schema]` entry and materializes its descriptors/enum cells into the stable Generic Input Profile ABI.
+The Scanner still recognizes the stable Generic Input Profile ABI (`HASH("InputProfileView.v1")`), but current profile definitions no longer each require a dedicated IC stack. All six production/diagnostic definitions fit one runtime-placed Coordinator-managed Store today. The physical node runs `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` and is claimed from the UNCLAIMED pool. Three one-shot sparse Loader ABI5 candidates publish whole-profile data on their own zero-initialized stacks; the Router assigns them and the Store pulls/imports them. `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` selects one `[ContextType, schema]` entry and materializes its descriptors/enum cells into the stable Generic Input Profile ABI.
 
 Typical View requests are:
 

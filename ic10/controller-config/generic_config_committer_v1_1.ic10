@@ -2,7 +2,7 @@
 alias editor r1
 alias controller r2
 alias host r3
-poke 0 31416082
+poke 0 HASH("GenericConfigCommitter.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -10,7 +10,7 @@ yield
 get editor db 8
 blez editor Loop
 getd r0 editor 0
-bne r0 22360680 Loop
+bne r0 HASH("GenericConfigEditor.v1") Loop
 getd r0 editor 1
 bne r0 1 Loop
 getd r0 editor 16
@@ -87,7 +87,7 @@ getd r4 controller 99
 getd host controller 116
 blez host Fail
 getd r0 host 0
-bne r0 31415928 Fail
+bne r0 HASH("GenericPersistentConfigHost.v1") Fail
 getd r0 host 1
 bne r0 1 Fail
 getd r0 host 48

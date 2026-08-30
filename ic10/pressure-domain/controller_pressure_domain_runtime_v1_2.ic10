@@ -1,5 +1,5 @@
 clr db
-poke 0 31416063
+poke 0 HASH("ControllerPressureDomainRuntime.v1")
 poke 1 1
 poke 2 8
 poke 6 96
@@ -45,7 +45,7 @@ bdns d1 ProfileBad
 get r15 d1 29
 blez r15 ProfileBad
 get r0 d1 0
-bne r0 31415963 ProfileBad
+bne r0 HASH("ResourceProfileView.v1") ProfileBad
 get r0 d1 8
 bne r0 1 ProfileBad
 get r9 d1 9
@@ -54,7 +54,7 @@ bne r0 r15 Loop
 beq r2 3 Storage
 bdns d2 ArbiterBad
 get r0 d2 0
-bne r0 31415933 ArbiterBad
+bne r0 HASH("PhasePressureRequestArbiter.v1") ArbiterBad
 put d2 15 r1
 put d2 16 r2
 put d2 17 r9

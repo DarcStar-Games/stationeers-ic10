@@ -1,136 +1,136 @@
 {
- "format": "IC10_PROTOCOL_HEADERS_V1",
+ "format": "IC10_PROTOCOL_HEADERS_V2",
  "scripts": {
   "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10": [
    {
     "base": 0,
-    "magic": 31415970,
+    "contract": "CatalogCoordinatorCore",
     "abi": 4
    }
   ],
   "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31415983,
+    "contract": "DirectoryAdapter",
     "abi": 3
    }
   ],
   "ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31416068,
+    "contract": "CatalogCoordinatorDirectoryTelemetry",
     "abi": 1
    }
   ],
   "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31415975,
+    "contract": "CatalogCoordinatorDirectoryView",
     "abi": 2
    }
   ],
   "ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31415976,
+    "contract": "CatalogCoordinatorRecovery",
     "abi": 2
    }
   ],
   "ic10/catalog-control-plane/catalog_inspector_v4_0.ic10": [
    {
     "base": 0,
-    "magic": 31415972,
+    "contract": "CatalogInspector",
     "abi": 4
    }
   ],
   "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31416069,
+    "contract": "CatalogItemMigrationPlanner",
     "abi": 1
    }
   ],
   "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416071,
+    "contract": "CatalogItemMigrationWorker",
     "abi": 1
    }
   ],
   "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10": [
    {
     "base": 0,
-    "magic": 31415971,
+    "contract": "CatalogLoaderRouter",
     "abi": 3
    }
   ],
   "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31416070,
+    "contract": "CatalogStoreRetirementManager",
     "abi": 1
    }
   ],
   "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10": [
    {
     "base": 0,
-    "magic": 31415968,
+    "contract": "GenericCatalogStore",
     "abi": 6
    }
   ],
   "ic10/controller-config/config_input_bridge_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 22360681,
+    "contract": "ConfigInputBridge",
     "abi": 1
    }
   ],
   "ic10/controller-config/generic_config_committer_v1_1.ic10": [
    {
     "base": 0,
-    "magic": 31416082,
+    "contract": "GenericConfigCommitter",
     "abi": 1
    }
   ],
   "ic10/controller-config/generic_config_editor_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 22360680,
+    "contract": "GenericConfigEditor",
     "abi": 1
    }
   ],
   "ic10/controller-config/generic_config_loader_v1_2.ic10": [
    {
     "base": 0,
-    "magic": 31416083,
+    "contract": "GenericConfigLoader",
     "abi": 1
    }
   ],
   "ic10/controller-config/generic_persistent_config_host_v1_1.ic10": [
    {
     "base": 0,
-    "magic": 31415928,
+    "contract": "GenericPersistentConfigHost",
     "abi": 1
    }
   ],
   "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10": [
    {
     "base": 0,
-    "magic": 31415983,
+    "contract": "DirectoryAdapter",
     "abi": 3
    }
   ],
   "ic10/controller-discovery/controller_selector_v3_0.ic10": [
    {
     "base": 0,
-    "magic": 17320508,
+    "contract": "ControllerSelector",
     "abi": 2
    }
   ],
   "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10": [
    {
     "base": 0,
-    "magic": 31416060,
+    "contract": "ControllerPhasePressureRuntime",
     "abi": 1
    },
    {
@@ -142,14 +142,14 @@
   "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416079,
+    "contract": "PhasePressureConfigPolicy",
     "abi": 1
    }
   ],
   "ic10/controller-pi/controller_pi_runtime_v1_1.ic10": [
    {
     "base": 0,
-    "magic": 31416061,
+    "contract": "ControllerPiRuntime",
     "abi": 1
    },
    {
@@ -161,14 +161,14 @@
   "ic10/controller-pi/pi_config_policy_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416077,
+    "contract": "PiConfigPolicy",
     "abi": 1
    }
   ],
   "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416062,
+    "contract": "ControllerSequencerRuntime",
     "abi": 1
    },
    {
@@ -180,679 +180,679 @@
   "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416078,
+    "contract": "SequencerConfigPolicy",
     "abi": 1
    }
   ],
   "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416009,
+    "contract": "DependencyAncestryGuard",
     "abi": 1
    }
   ],
   "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416013,
+    "contract": "DependencyCancellationGuard",
     "abi": 1
    }
   ],
   "ic10/dependency-planning/dependency_child_creator_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31416006,
+    "contract": "DependencyChildCreator",
     "abi": 2
    }
   ],
   "ic10/dependency-planning/dependency_child_validity_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416014,
+    "contract": "DependencyChildValidity",
     "abi": 1
    }
   ],
   "ic10/dependency-planning/dependency_claim_view_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416016,
+    "contract": "DependencyClaimView",
     "abi": 1
    }
   ],
   "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31416011,
+    "contract": "DependencyPlanBuilder",
     "abi": 2
    }
   ],
   "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31416008,
+    "contract": "DependencyPlanEvaluator",
     "abi": 2
    }
   ],
   "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416018,
+    "contract": "DependencyPlanReleaseAdvisor",
     "abi": 1
    }
   ],
   "ic10/dependency-planning/dependency_plan_store_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31416007,
+    "contract": "DependencyPlanStore",
     "abi": 2
    }
   ],
   "ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416019,
+    "contract": "ExistingDependencyPlanController",
     "abi": 1
    }
   ],
   "ic10/dependency-planning/generic_job_monitor_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416004,
+    "contract": "GenericJobMonitor",
     "abi": 1
    }
   ],
   "ic10/dependency-planning/item_producer_resolver_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416003,
+    "contract": "ItemProducerResolver",
     "abi": 1
    }
   ],
   "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416005,
+    "contract": "JobInventoryPreflight",
     "abi": 1
    }
   ],
   "ic10/dependency-planning/job_requirement_view_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416002,
+    "contract": "JobRequirementView",
     "abi": 1
    }
   ],
   "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31416012,
+    "contract": "ManufacturingDependencyGate",
     "abi": 2
    }
   ],
   "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416010,
+    "contract": "ManufacturingDependencyPlanner",
     "abi": 1
    }
   ],
   "ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416017,
+    "contract": "ManufacturingReagentResolver",
     "abi": 1
    }
   ],
   "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416020,
+    "contract": "NewDependencyPlanController",
     "abi": 1
    }
   ],
   "ic10/diagnostics/console_registry_v1_1.ic10": [
    {
     "base": 0,
-    "magic": 14142136,
+    "contract": "ConsoleRegistry",
     "abi": 1
    }
   ],
   "ic10/diagnostics/console_selector_v1_1.ic10": [
    {
     "base": 0,
-    "magic": 17320509,
+    "contract": "ConsoleSelector",
     "abi": 1
    }
   ],
   "ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 17320513,
+    "contract": "DiagnosticHashConsoleMode",
     "abi": 1
    }
   ],
   "ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 17320511,
+    "contract": "DiagnosticInputBridge",
     "abi": 1
    }
   ],
   "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10": [
    {
     "base": 0,
-    "magic": 17320510,
+    "contract": "DiagnosticMappingEditor",
     "abi": 1
    }
   ],
   "ic10/diagnostics/diagnostic_renderer_v1_1.ic10": [
    {
     "base": 0,
-    "magic": 16180339,
+    "contract": "DiagnosticRenderer",
     "abi": 1
    }
   ],
   "ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 17320512,
+    "contract": "DiagnosticSelectorBridge",
     "abi": 1
    }
   ],
   "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416084,
+    "contract": "GenericDirectoryAdapterBridge",
     "abi": 1
    }
   ],
   "ic10/directory-core/generic_registry_directory_host_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31415982,
+    "contract": "GenericRegistryDirectoryHost",
     "abi": 3
    }
   ],
   "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415981,
+    "contract": "GenericSnapshotDirectoryHost",
     "abi": 1
    }
   ],
   "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10": [
    {
     "base": 0,
-    "magic": 31416001,
+    "contract": "GenericJobCommandGateway",
     "abi": 3
    }
   ],
   "ic10/generic-jobs/generic_job_selector_v3_0.ic10": [
    {
     "base": 0,
-    "magic": 31415993,
+    "contract": "GenericJobSelector",
     "abi": 3
    }
   ],
   "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416015,
+    "contract": "GenericJobStoreCommandExecutor",
     "abi": 1
    }
   ],
   "ic10/generic-jobs/generic_job_store_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415984,
+    "contract": "GenericJobStore",
     "abi": 1
    }
   ],
   "ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10": [
    {
     "base": 0,
-    "magic": 31415969,
+    "contract": "CatalogLoader",
     "abi": 5
    }
   ],
   "ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10": [
    {
     "base": 0,
-    "magic": 31415969,
+    "contract": "CatalogLoader",
     "abi": 5
    }
   ],
   "ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10": [
    {
     "base": 0,
-    "magic": 31415969,
+    "contract": "CatalogLoader",
     "abi": 5
    }
   ],
   "ic10/input-profile-catalog/input_profile_view_v5_0.ic10": [
    {
     "base": 0,
-    "magic": 31415929,
+    "contract": "InputProfileView",
     "abi": 1
    }
   ],
   "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415988,
+    "contract": "ItemResourceReservationAllocator",
     "abi": 1
    }
   ],
   "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415987,
+    "contract": "ItemResourceReservationSelector",
     "abi": 1
    }
   ],
   "ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415949,
+    "contract": "ResourceEndpoint",
     "abi": 1
    }
   ],
   "ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415986,
+    "contract": "LarreCargoStorageService",
     "abi": 1
    }
   ],
   "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415949,
+    "contract": "ResourceEndpoint",
     "abi": 1
    }
   ],
   "ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415991,
+    "contract": "LarreStorageReservedMoveClient",
     "abi": 1
    }
   ],
   "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415961,
+    "contract": "StackerFeeder",
     "abi": 1
    }
   ],
   "ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415949,
+    "contract": "ResourceEndpoint",
     "abi": 1
    }
   ],
   "ic10/item-storage-vending/material_vending_inventory_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415949,
+    "contract": "ResourceEndpoint",
     "abi": 1
    }
   ],
   "ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416051,
+    "contract": "LiveCommissionSnapshotProbe",
     "abi": 1
    }
   ],
   "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416052,
+    "contract": "StackCellMonitor",
     "abi": 1
    }
   ],
   "ic10/live-commissioning/stack_header_reader_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416067,
+    "contract": "StackHeaderReader",
     "abi": 1
    }
   ],
   "ic10/manufacturing/generic_print_runtime_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31416075,
+    "contract": "GenericPrintRuntime",
     "abi": 2
    }
   ],
   "ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31416072,
+    "contract": "ManufacturingCandidateSelector",
     "abi": 2
    }
   ],
   "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31415994,
+    "contract": "ManufacturingDriverRouter",
     "abi": 2
    }
   ],
   "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415995,
+    "contract": "ManufacturingScheduler",
     "abi": 1
    }
   ],
   "ic10/manufacturing/print_candidate_executor_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31416074,
+    "contract": "PrintCandidateExecutor",
     "abi": 2
    }
   ],
   "ic10/manufacturing/print_job_driver_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31415992,
+    "contract": "PrintJobDriver",
     "abi": 2
    }
   ],
   "ic10/manufacturing/print_material_resolver_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415989,
+    "contract": "PrintMaterialResolver",
     "abi": 1
    }
   ],
   "ic10/manufacturing/transform_candidate_executor_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31416073,
+    "contract": "TransformCandidateExecutor",
     "abi": 2
    }
   ],
   "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415998,
+    "contract": "TransformCandidateReadiness",
     "abi": 1
    }
   ],
   "ic10/manufacturing/transform_job_driver_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31416076,
+    "contract": "TransformJobDriver",
     "abi": 2
    }
   ],
   "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415983,
+    "contract": "DirectoryAdapter",
     "abi": 3
    }
   ],
   "ic10/material-grid/material_export_slot_endpoint_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415949,
+    "contract": "ResourceEndpoint",
     "abi": 1
    }
   ],
   "ic10/material-grid/material_import_slot_endpoint_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415949,
+    "contract": "ResourceEndpoint",
     "abi": 1
    }
   ],
   "ic10/material-grid/material_resource_link_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415953,
+    "contract": "ResourceLink",
     "abi": 1
    }
   ],
   "ic10/material-grid/material_transfer_executor_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415958,
+    "contract": "MaterialTransferExecutor",
     "abi": 1
    }
   ],
   "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415960,
+    "contract": "MaterialTransferGrantGuard",
     "abi": 1
    }
   ],
   "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415961,
+    "contract": "StackerFeeder",
     "abi": 1
    }
   ],
   "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31415980,
+    "contract": "GenericMaterialTransformRuntime",
     "abi": 2
    }
   ],
   "ic10/material-transform/material_transform_admission_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415977,
+    "contract": "MaterialTransformAdmission",
     "abi": 1
    }
   ],
   "ic10/material-transform/material_transform_link_resolver_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415978,
+    "contract": "MaterialTransformLinkResolver",
     "abi": 1
    }
   ],
   "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31415954,
+    "contract": "MultiMaterialReservationAllocator",
     "abi": 2
    }
   ],
   "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415979,
+    "contract": "MultiMaterialReservationStager",
     "abi": 1
    }
   ],
   "ic10/power-grid/power_battery_endpoint_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415949,
+    "contract": "ResourceEndpoint",
     "abi": 1
    }
   ],
   "ic10/power-grid/power_consumer_endpoint_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415949,
+    "contract": "ResourceEndpoint",
     "abi": 1
    }
   ],
   "ic10/power-grid/power_dispatch_cycle_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416034,
+    "contract": "PowerDispatchCycle",
     "abi": 1
    }
   ],
   "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416028,
+    "contract": "PowerDispatchPlanStore",
     "abi": 1
    }
   ],
   "ic10/power-grid/power_dispatch_sweep_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416033,
+    "contract": "PowerDispatchSweep",
     "abi": 1
    }
   ],
   "ic10/power-grid/power_link_executor_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416039,
+    "contract": "PowerLinkExecutor",
     "abi": 1
    }
   ],
   "ic10/power-grid/power_link_selector_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416030,
+    "contract": "PowerLinkSelector",
     "abi": 1
    }
   ],
   "ic10/power-grid/power_load_executor_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416038,
+    "contract": "PowerLoadExecutor",
     "abi": 1
    }
   ],
   "ic10/power-grid/power_plan_validator_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416035,
+    "contract": "PowerPlanValidator",
     "abi": 1
    }
   ],
   "ic10/power-grid/power_producer_endpoint_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415949,
+    "contract": "ResourceEndpoint",
     "abi": 1
    }
   ],
   "ic10/power-grid/power_reservation_allocator_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416037,
+    "contract": "PowerReservationAllocator",
     "abi": 1
    }
   ],
   "ic10/power-grid/power_reservation_committer_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416036,
+    "contract": "PowerReservationCommitter",
     "abi": 1
    }
   ],
   "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415983,
+    "contract": "DirectoryAdapter",
     "abi": 3
    }
   ],
   "ic10/power-grid/power_sink_flow_builder_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416032,
+    "contract": "PowerSinkFlowBuilder",
     "abi": 1
    }
   ],
   "ic10/power-grid/power_sink_selector_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416031,
+    "contract": "PowerSinkSelector",
     "abi": 1
    }
   ],
   "ic10/power-grid/power_source_selector_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416029,
+    "contract": "PowerSourceSelector",
     "abi": 1
    }
   ],
   "ic10/power-grid/power_static_link_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415953,
+    "contract": "ResourceLink",
     "abi": 1
    }
   ],
   "ic10/power-grid/power_transformer_link_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415953,
+    "contract": "ResourceLink",
     "abi": 1
    }
   ],
   "ic10/power-jobs/power_job_finalize_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416046,
+    "contract": "PowerJobFinalize",
     "abi": 1
    }
   ],
   "ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416044,
+    "contract": "PowerJobLifecycleClient",
     "abi": 1
    }
   ],
   "ic10/power-jobs/power_job_policy_apply_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416042,
+    "contract": "PowerJobPolicyApply",
     "abi": 1
    }
   ],
   "ic10/power-jobs/power_job_policy_verify_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416043,
+    "contract": "PowerJobPolicyVerify",
     "abi": 1
    }
   ],
   "ic10/power-jobs/power_job_prepare_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416045,
+    "contract": "PowerJobPrepare",
     "abi": 1
    }
   ],
   "ic10/power-jobs/power_job_scheduler_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416047,
+    "contract": "PowerJobScheduler",
     "abi": 1
    }
   ],
   "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416041,
+    "contract": "PowerPolicyTargetResolver",
     "abi": 1
    }
   ],
   "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": [
    {
     "base": 0,
-    "magic": 31416063,
+    "contract": "ControllerPressureDomainRuntime",
     "abi": 1
    },
    {
@@ -864,21 +864,21 @@
   "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10": [
    {
     "base": 0,
-    "magic": 31415933,
+    "contract": "PhasePressureRequestArbiter",
     "abi": 1
    }
   ],
   "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10": [
    {
     "base": 0,
-    "magic": 31416080,
+    "contract": "PressureDomainConfigPolicy",
     "abi": 1
    }
   ],
   "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31416064,
+    "contract": "ControllerPressureTransferRuntime",
     "abi": 1
    },
    {
@@ -890,140 +890,140 @@
   "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10": [
    {
     "base": 0,
-    "magic": 31415935,
+    "contract": "PressureDomainInventory",
     "abi": 2
    }
   ],
   "ic10/pressure-grid/pressure_grid_cost_profile_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415945,
+    "contract": "PressureGridCostProfile",
     "abi": 1
    }
   ],
   "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10": [
    {
     "base": 0,
-    "magic": 31415983,
+    "contract": "DirectoryAdapter",
     "abi": 3
    }
   ],
   "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10": [
    {
     "base": 0,
-    "magic": 31415941,
+    "contract": "PressureGridPathAllocator",
     "abi": 1
    }
   ],
   "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31415940,
+    "contract": "PressureGridPathEnumerator",
     "abi": 2
    }
   ],
   "ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415943,
+    "contract": "PressureGridPlanBuilder",
     "abi": 1
    }
   ],
   "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10": [
    {
     "base": 0,
-    "magic": 31415937,
+    "contract": "PressureGridReservationPlanner",
     "abi": 2
    }
   ],
   "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31415946,
+    "contract": "PressureGridRouteRanker",
     "abi": 2
    }
   ],
   "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31415944,
+    "contract": "PressureGridRouteSelector",
     "abi": 2
    }
   ],
   "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10": [
    {
     "base": 0,
-    "magic": 31415942,
+    "contract": "PressureGridSinglehopBuilder",
     "abi": 1
    }
   ],
   "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10": [
    {
     "base": 0,
-    "magic": 31415936,
+    "contract": "PressureInventoryReservation",
     "abi": 1
    }
   ],
   "ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415947,
+    "contract": "MediumPurityGuard",
     "abi": 1
    }
   ],
   "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10": [
    {
     "base": 0,
-    "magic": 31415938,
+    "contract": "PressureReservationAllocator",
     "abi": 3
    }
   ],
   "ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416081,
+    "contract": "PressureTransferConfigPolicy",
     "abi": 1
    }
   ],
   "ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415948,
+    "contract": "PressureTransferGrantGuard",
     "abi": 1
    }
   ],
   "ic10/printer-directory/printer_capacity_client_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31415997,
+    "contract": "PrinterCapacityClient",
     "abi": 2
    }
   ],
   "ic10/printer-directory/printer_directory_adapter_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415983,
+    "contract": "DirectoryAdapter",
     "abi": 3
    }
   ],
   "ic10/printer-directory/printer_execution_bank_v2_0.ic10": [
    {
     "base": 0,
-    "magic": 31415996,
+    "contract": "PrinterExecutionBank",
     "abi": 2
    }
   ],
   "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415983,
+    "contract": "DirectoryAdapter",
     "abi": 3
    }
   ],
   "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416065,
+    "contract": "EmbeddedPressureTransferRuntime",
     "abi": 1
    },
    {
@@ -1035,14 +1035,14 @@
   "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416048,
+    "contract": "ProcessCondition",
     "abi": 1
    }
   ],
   "ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416066,
+    "contract": "ProcessPressureDomainRuntime",
     "abi": 1
    },
    {
@@ -1054,203 +1054,203 @@
   "ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416049,
+    "contract": "GasMixerUtilityController",
     "abi": 1
    }
   ],
   "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415947,
+    "contract": "MediumPurityGuard",
     "abi": 1
    }
   ],
   "ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416050,
+    "contract": "ThermalGasMixerController",
     "abi": 1
    }
   ],
   "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31416048,
+    "contract": "ProcessCondition",
     "abi": 1
    }
   ],
   "ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10": [
    {
     "base": 0,
-    "magic": 31415967,
+    "contract": "RecipeCatalogLookup",
     "abi": 3
    }
   ],
   "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415985,
+    "contract": "RecipeExecutionProfileView",
     "abi": 1
    }
   ],
   "ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415949,
+    "contract": "ResourceEndpoint",
     "abi": 1
    }
   ],
   "ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415953,
+    "contract": "ResourceLink",
     "abi": 1
    }
   ],
   "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10": [
    {
     "base": 0,
-    "magic": 31415983,
+    "contract": "DirectoryAdapter",
     "abi": 3
    }
   ],
   "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10": [
    {
     "base": 0,
-    "magic": 31415983,
+    "contract": "DirectoryAdapter",
     "abi": 3
    }
   ],
   "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415983,
+    "contract": "DirectoryAdapter",
     "abi": 3
    }
   ],
   "ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415990,
+    "contract": "ResourceReservationReleaser",
     "abi": 1
    }
   ],
   "ic10/resource-grid-core/resource_reservation_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415950,
+    "contract": "ResourceReservation",
     "abi": 1
    }
   ],
   "ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10": [
    {
     "base": 0,
-    "magic": 31415969,
+    "contract": "CatalogLoader",
     "abi": 5
    }
   ],
   "ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10": [
    {
     "base": 0,
-    "magic": 31415969,
+    "contract": "CatalogLoader",
     "abi": 5
    }
   ],
   "ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10": [
    {
     "base": 0,
-    "magic": 31415969,
+    "contract": "CatalogLoader",
     "abi": 5
    }
   ],
   "ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10": [
    {
     "base": 0,
-    "magic": 31415969,
+    "contract": "CatalogLoader",
     "abi": 5
    }
   ],
   "ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10": [
    {
     "base": 0,
-    "magic": 31415969,
+    "contract": "CatalogLoader",
     "abi": 5
    }
   ],
   "ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10": [
    {
     "base": 0,
-    "magic": 31415969,
+    "contract": "CatalogLoader",
     "abi": 5
    }
   ],
   "ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10": [
    {
     "base": 0,
-    "magic": 31415969,
+    "contract": "CatalogLoader",
     "abi": 5
    }
   ],
   "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10": [
    {
     "base": 0,
-    "magic": 31415963,
+    "contract": "ResourceProfileView",
     "abi": 1
    }
   ],
   "ic10/shared-input/generic_input_resolver_v1_0.ic10": [
    {
     "base": 0,
-    "magic": 31415931,
+    "contract": "GenericInputResolver",
     "abi": 1
    }
   ],
   "ic10/shared-input/generic_input_scanner_v1_1.ic10": [
    {
     "base": 0,
-    "magic": 31415930,
+    "contract": "GenericInputScanner",
     "abi": 1
    }
   ],
   "ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10": [
    {
     "base": 0,
-    "magic": 31415969,
+    "contract": "CatalogLoader",
     "abi": 5
    }
   ],
   "ic10/transform-catalog/resource_transform_catalog_loader_01_v6_0.ic10": [
    {
     "base": 0,
-    "magic": 31415969,
+    "contract": "CatalogLoader",
     "abi": 5
    }
   ],
   "ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10": [
    {
     "base": 0,
-    "magic": 31415969,
+    "contract": "CatalogLoader",
     "abi": 5
    }
   ],
   "ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10": [
    {
     "base": 0,
-    "magic": 31415969,
+    "contract": "CatalogLoader",
     "abi": 5
    }
   ],
   "ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10": [
    {
     "base": 0,
-    "magic": 31415969,
+    "contract": "CatalogLoader",
     "abi": 5
    }
   ],
   "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": [
    {
     "base": 0,
-    "magic": 31415952,
+    "contract": "ResourceTransformProfileView",
     "abi": 4
    }
   ]
@@ -1262,7 +1262,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415982,
+      "contract": "GenericRegistryDirectoryHost",
       "abi": 3
      }
     ]
@@ -1275,7 +1275,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415982,
+      "contract": "GenericRegistryDirectoryHost",
       "abi": 3,
       "publication_requirements": [
        {
@@ -1293,7 +1293,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415982,
+      "contract": "GenericRegistryDirectoryHost",
       "abi": 3,
       "publication_requirements": [
        {
@@ -1311,7 +1311,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415982,
+      "contract": "GenericRegistryDirectoryHost",
       "abi": 3,
       "publication_requirements": [
        {
@@ -1329,7 +1329,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415968,
+      "contract": "GenericCatalogStore",
       "abi": 6
      }
     ]
@@ -1341,7 +1341,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415982,
+      "contract": "GenericRegistryDirectoryHost",
       "abi": 3,
       "publication_requirements": [
        {
@@ -1361,7 +1361,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415982,
+      "contract": "GenericRegistryDirectoryHost",
       "abi": 3,
       "publication_requirements": [
        {
@@ -1388,7 +1388,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415928,
+      "contract": "GenericPersistentConfigHost",
       "abi": 1
      }
     ]
@@ -1400,7 +1400,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415928,
+      "contract": "GenericPersistentConfigHost",
       "abi": 1
      }
     ]
@@ -1412,7 +1412,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415928,
+      "contract": "GenericPersistentConfigHost",
       "abi": 1
      }
     ]
@@ -1425,7 +1425,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415928,
+      "contract": "GenericPersistentConfigHost",
       "abi": 1
      }
     ]
@@ -1437,7 +1437,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31416007,
+      "contract": "DependencyPlanStore",
       "abi": 2,
       "publication_requirements": [
        {
@@ -1455,7 +1455,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31416007,
+      "contract": "DependencyPlanStore",
       "abi": 2,
       "publication_requirements": [
        {
@@ -1475,7 +1475,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31416007,
+      "contract": "DependencyPlanStore",
       "abi": 2,
       "publication_requirements": [
        {
@@ -1498,7 +1498,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415984,
+      "contract": "GenericJobStore",
       "abi": 1,
       "publication_requirements": [
        {
@@ -1530,7 +1530,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415983,
+      "contract": "DirectoryAdapter",
       "abi": 3
      }
     ]
@@ -1540,7 +1540,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415981,
+      "contract": "GenericSnapshotDirectoryHost",
       "abi": 1
      }
     ]
@@ -1552,7 +1552,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415983,
+      "contract": "DirectoryAdapter",
       "abi": 3
      }
     ]
@@ -1566,7 +1566,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415984,
+      "contract": "GenericJobStore",
       "abi": 1,
       "publication_requirements": [
        {
@@ -1590,7 +1590,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415987,
+      "contract": "ItemResourceReservationSelector",
       "abi": 1
      }
     ]
@@ -1609,7 +1609,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415963,
+      "contract": "ResourceProfileView",
       "abi": 1
      }
     ]
@@ -1636,7 +1636,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415963,
+      "contract": "ResourceProfileView",
       "abi": 1
      }
     ]
@@ -1648,7 +1648,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415950,
+      "contract": "ResourceReservation",
       "abi": 1,
       "publication_requirements": [
        {
@@ -1664,7 +1664,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415950,
+      "contract": "ResourceReservation",
       "abi": 1,
       "publication_requirements": [
        {
@@ -1680,7 +1680,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415961,
+      "contract": "StackerFeeder",
       "abi": 1
      }
     ]
@@ -1690,7 +1690,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415960,
+      "contract": "MaterialTransferGrantGuard",
       "abi": 1
      }
     ]
@@ -1700,7 +1700,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415958,
+      "contract": "MaterialTransferExecutor",
       "abi": 1
      }
     ]
@@ -1712,7 +1712,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415960,
+      "contract": "MaterialTransferGrantGuard",
       "abi": 1
      }
     ]
@@ -1724,7 +1724,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415953,
+      "contract": "ResourceLink",
       "abi": 1
      }
     ]
@@ -1734,7 +1734,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415954,
+      "contract": "MultiMaterialReservationAllocator",
       "abi": 2
      }
     ]
@@ -1748,7 +1748,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415952,
+      "contract": "ResourceTransformProfileView",
       "abi": 4
      }
     ]
@@ -1758,7 +1758,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415950,
+      "contract": "ResourceReservation",
       "abi": 1,
       "publication_requirements": [
        {
@@ -1776,7 +1776,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415977,
+      "contract": "MaterialTransformAdmission",
       "abi": 1
      }
     ]
@@ -1786,7 +1786,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415952,
+      "contract": "ResourceTransformProfileView",
       "abi": 4
      }
     ]
@@ -1796,7 +1796,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415981,
+      "contract": "GenericSnapshotDirectoryHost",
       "abi": 1
      }
     ]
@@ -1836,7 +1836,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415981,
+      "contract": "GenericSnapshotDirectoryHost",
       "abi": 1
      }
     ]
@@ -1848,7 +1848,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415928,
+      "contract": "GenericPersistentConfigHost",
       "abi": 1
      }
     ]
@@ -1860,7 +1860,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415936,
+      "contract": "PressureInventoryReservation",
       "abi": 1
      }
     ]
@@ -1870,7 +1870,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415936,
+      "contract": "PressureInventoryReservation",
       "abi": 1
      }
     ]
@@ -1880,7 +1880,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415948,
+      "contract": "PressureTransferGrantGuard",
       "abi": 1
      }
     ]
@@ -1905,7 +1905,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415981,
+      "contract": "GenericSnapshotDirectoryHost",
       "abi": 1
      }
     ]
@@ -1917,7 +1917,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415938,
+      "contract": "PressureReservationAllocator",
       "abi": 3
      }
     ]
@@ -1929,7 +1929,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415981,
+      "contract": "GenericSnapshotDirectoryHost",
       "abi": 1
      }
     ]
@@ -1941,7 +1941,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415942,
+      "contract": "PressureGridSinglehopBuilder",
       "abi": 1
      }
     ]
@@ -1951,7 +1951,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415941,
+      "contract": "PressureGridPathAllocator",
       "abi": 1
      }
     ]
@@ -1963,7 +1963,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415981,
+      "contract": "GenericSnapshotDirectoryHost",
       "abi": 1
      }
     ]
@@ -1973,7 +1973,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415943,
+      "contract": "PressureGridPlanBuilder",
       "abi": 1
      }
     ]
@@ -1985,7 +1985,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415945,
+      "contract": "PressureGridCostProfile",
       "abi": 1
      }
     ]
@@ -1997,7 +1997,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415940,
+      "contract": "PressureGridPathEnumerator",
       "abi": 2
      }
     ]
@@ -2007,7 +2007,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415946,
+      "contract": "PressureGridRouteRanker",
       "abi": 2
      }
     ]
@@ -2019,7 +2019,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415981,
+      "contract": "GenericSnapshotDirectoryHost",
       "abi": 1
      }
     ]
@@ -2029,7 +2029,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415938,
+      "contract": "PressureReservationAllocator",
       "abi": 3
      }
     ]
@@ -2041,7 +2041,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415935,
+      "contract": "PressureDomainInventory",
       "abi": 2
      }
     ]
@@ -2053,7 +2053,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415963,
+      "contract": "ResourceProfileView",
       "abi": 1
      }
     ]
@@ -2066,7 +2066,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415928,
+      "contract": "GenericPersistentConfigHost",
       "abi": 1
      }
     ]
@@ -2088,7 +2088,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415937,
+      "contract": "PressureGridReservationPlanner",
       "abi": 2
      }
     ]
@@ -2103,7 +2103,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415981,
+      "contract": "GenericSnapshotDirectoryHost",
       "abi": 1
      }
     ]
@@ -2116,7 +2116,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415952,
+      "contract": "ResourceTransformProfileView",
       "abi": 4
      }
     ]
@@ -2128,7 +2128,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31416048,
+      "contract": "ProcessCondition",
       "abi": 1
      }
     ]
@@ -2143,7 +2143,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31416028,
+      "contract": "PowerDispatchPlanStore",
       "abi": 1,
       "publication_requirements": [
        {
@@ -2163,7 +2163,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415935,
+      "contract": "PressureDomainInventory",
       "abi": 2
      }
     ]
@@ -2185,7 +2185,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415950,
+      "contract": "ResourceReservation",
       "abi": 1,
       "publication_requirements": [
        {
@@ -2201,7 +2201,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415950,
+      "contract": "ResourceReservation",
       "abi": 1,
       "publication_requirements": [
        {
@@ -2223,7 +2223,7 @@
     "accepted": [
      {
       "header_base": 0,
-      "magic": 31415949,
+      "contract": "ResourceEndpoint",
       "abi": 1
      }
     ]
