@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10",
-  "source_sha256": "3159745690c8b8563036da5bab87a7d781e2c85f420a5016feae3575ea400279",
+  "source_sha256": "cb3c3ed8d6dc22ea85d633f8c12b7540540f8c3796d36f53be1991455691c00e",
   "identity": {
     "service_id": "ic10.script.controller.sequencer.runtime",
     "implementation_revision": "1.0",
@@ -42,7 +42,7 @@
           "source_port": "d3",
           "address": 97,
           "fence": {
-            "address": 5,
+            "address": 51,
             "kind": "generation",
             "description": "Config Host generation must be positive and unchanged around the LogicType read."
           }
@@ -91,7 +91,7 @@
           "source_port": "d3",
           "address": 100,
           "fence": {
-            "address": 5,
+            "address": 51,
             "kind": "generation",
             "description": "Config Host generation must be positive and unchanged around the LogicType read."
           }
@@ -140,7 +140,7 @@
           "source_port": "d3",
           "address": 101,
           "fence": {
-            "address": 5,
+            "address": 51,
             "kind": "generation",
             "description": "Config Host generation must be positive and unchanged around the LogicType read."
           }
@@ -175,8 +175,8 @@
       "stack": {
         "literal_reads": [
           1,
-          5,
-          12
+          12,
+          51
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -204,8 +204,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.8abfaada7cd78dcd",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.8abfaada7cd78dcd",
+        "interface_id": "ic10.interface.access.cf2db59392ce76fa",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.cf2db59392ce76fa",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [

@@ -101,7 +101,7 @@
    ]
   },
   "ic10/controller-config/generic_persistent_config_host_v1_1.ic10": {
-   "source_sha256": "de990858a08a2d6fb69bd3ae85342495a0c95084783e408530bc615dfdedc221",
+   "source_sha256": "e883df1f1003620e5848bd3495227776c818e90136b6ac2cf24792f7bc37b27b",
    "external_readable_ranges": [
     [
      0,
@@ -109,14 +109,6 @@
     ]
    ],
    "external_writable_ranges": [
-    [
-     2,
-     4
-    ],
-    [
-     6,
-     6
-    ],
     [
      10,
      21
@@ -126,8 +118,40 @@
      47
     ],
     [
+     48,
+     50
+    ],
+    [
+     52,
+     52
+    ],
+    [
      128,
      159
+    ]
+   ],
+   "dynamic_read_ranges": [
+    [
+     32,
+     63
+    ],
+    [
+     128,
+     159
+    ],
+    [
+     224,
+     229
+    ]
+   ],
+   "dynamic_write_ranges": [
+    [
+     96,
+     127
+    ],
+    [
+     160,
+     229
     ]
    ]
   },
@@ -150,7 +174,7 @@
    ]
   },
   "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10": {
-   "source_sha256": "7d3f3882ee0f93c7669fbda75cad412bf487d446af4a1c929851c5a13f33b204",
+   "source_sha256": "9ec69e335fc8e321aeeeff6704e43a343e6d7e1ebceb9eb450334c50bdc3f96e",
    "ports": {
     "d0": {
      "dynamic_property_sources": [
@@ -159,7 +183,7 @@
        "source_port": "d2",
        "address": 103,
        "fence": {
-        "address": 5,
+        "address": 51,
         "kind": "generation",
         "description": "Config Host generation must be positive and unchanged around the LogicType read."
        }
@@ -177,7 +201,7 @@
    }
   },
   "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10": {
-   "source_sha256": "d329b9bc798606621a2c32f3f30743a6dd85c080a2a02c7820d159710e22c37f",
+   "source_sha256": "b328483cdd759cd01adb384bf1a6453e16496dbc602d572d08038a428cee250f",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -200,7 +224,7 @@
    }
   },
   "ic10/controller-pi/controller_pi_runtime_v1_1.ic10": {
-   "source_sha256": "b812ea0a25adedc38a7e8fb0b938542ce867c3db70d5223a4ee0cdf10398d848",
+   "source_sha256": "eabe86d279ae48f4f62db21775e2574206760b80df5748e7795ac566762d3e38",
    "ports": {
     "d0": {
      "dynamic_property_sources": [
@@ -209,7 +233,7 @@
        "source_port": "d2",
        "address": 107,
        "fence": {
-        "address": 5,
+        "address": 51,
         "kind": "generation",
         "description": "Config Host generation must be positive and unchanged around the LogicType read."
        }
@@ -223,7 +247,7 @@
        "source_port": "d2",
        "address": 108,
        "fence": {
-        "address": 5,
+        "address": 51,
         "kind": "generation",
         "description": "Config Host generation must be positive and unchanged around the LogicType read."
        }
@@ -241,7 +265,7 @@
    }
   },
   "ic10/controller-pi/pi_config_policy_v1_0.ic10": {
-   "source_sha256": "b84a85d68ab5c56836eabd239261afaf22bee72afc36b0b6dfa2339e6ce47c30",
+   "source_sha256": "1cfe52af7b1345aafc53ea00dc21865cd58d15f2013ed6eb4272091c84bc55dc",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -264,7 +288,7 @@
    }
   },
   "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10": {
-   "source_sha256": "3159745690c8b8563036da5bab87a7d781e2c85f420a5016feae3575ea400279",
+   "source_sha256": "cb3c3ed8d6dc22ea85d633f8c12b7540540f8c3796d36f53be1991455691c00e",
    "ports": {
     "d0": {
      "dynamic_property_sources": [
@@ -273,7 +297,7 @@
        "source_port": "d3",
        "address": 97,
        "fence": {
-        "address": 5,
+        "address": 51,
         "kind": "generation",
         "description": "Config Host generation must be positive and unchanged around the LogicType read."
        }
@@ -287,7 +311,7 @@
        "source_port": "d3",
        "address": 100,
        "fence": {
-        "address": 5,
+        "address": 51,
         "kind": "generation",
         "description": "Config Host generation must be positive and unchanged around the LogicType read."
        }
@@ -301,7 +325,7 @@
        "source_port": "d3",
        "address": 101,
        "fence": {
-        "address": 5,
+        "address": 51,
         "kind": "generation",
         "description": "Config Host generation must be positive and unchanged around the LogicType read."
        }
@@ -319,7 +343,7 @@
    }
   },
   "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10": {
-   "source_sha256": "b8c44abd945d096f489968342e0bdcb53ef9ff29fa98951c1ef00cca7257aa2d",
+   "source_sha256": "29399de89b56174db4bebf7442fb20a1091d0ab1d3d41f94a019cadcf743ad0a",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -969,7 +993,7 @@
    }
   },
   "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": {
-   "source_sha256": "e89641ac953a80fd4b854941427bc958648247352e555e7a776c981c5f73993e",
+   "source_sha256": "5b4bba080e415fac1f80f2666a736cd775a212333f6e2de3920074d6923107a7",
    "ports": {
     "d3": {
      "dynamic_property_sources": [
@@ -978,7 +1002,7 @@
        "source_port": "d5",
        "address": 101,
        "fence": {
-        "address": 5,
+        "address": 51,
         "kind": "generation",
         "description": "Config Host generation must be positive and unchanged around the LogicType read."
        }
@@ -992,7 +1016,7 @@
        "source_port": "d5",
        "address": 102,
        "fence": {
-        "address": 5,
+        "address": 51,
         "kind": "generation",
         "description": "Config Host generation must be positive and unchanged around the LogicType read."
        }
@@ -1023,7 +1047,7 @@
    }
   },
   "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10": {
-   "source_sha256": "686c01ca2f82af873177ae07e0997cc59727b6f643f7750df316fb1d72ffb265",
+   "source_sha256": "f9e4b96365c9f93d825547d5d8ba572c447d9adcafdb8697405047a1f79e31a4",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -1046,7 +1070,7 @@
    }
   },
   "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10": {
-   "source_sha256": "cfe73dff9c3a4bbe564b297bd65bca5c4088e3cff3384c94c910dca357103abf",
+   "source_sha256": "ee9a8b2be2f704058e95661388d43e516eb404cd7342ff9ec06f52ed1fc862dd",
    "ports": {
     "d4": {
      "dynamic_read_ranges": [
@@ -1251,7 +1275,7 @@
    }
   },
   "ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10": {
-   "source_sha256": "9cbd840c98815715e019d1b73f1d3476d92fcdf6f1a642e6dfccb8c3d2c33b55",
+   "source_sha256": "6bac525b70c238cd0521abb8ebb32b334e0e4fc8c10236182593aa1a7e5fc1dd",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [

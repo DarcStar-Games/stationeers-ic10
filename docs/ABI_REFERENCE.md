@@ -13,6 +13,8 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 | Generic Input Profile | `31415929` | `S1` | 1 |
 | Generic Input Scanner | `31415930` | `S1` | 1 |
 | Generic Input Resolver | `31415931` | `S1` | 1 |
+| Generic Config Committer | `31416082` | `S1` | 1 |
+| Generic Config Loader | `31416083` | `S1` | 1 |
 | PI Config Policy | `31416077` | `S1` | 1 |
 | Sequencer Config Policy | `31416078` | `S1` | 1 |
 | Phase-Pressure Config Policy | `31416079` | `S1` | 1 |
@@ -276,6 +278,8 @@ appear nowhere below.
 | `31416079` | 1 | `S0` | `ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10` | PhasePressure bounds/factors/mode validation and signature. |
 | `31416080` | 1 | `S0` | `ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10` | PressureDomain role/bounds validation and signature. |
 | `31416081` | 1 | `S0` | `ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10` | Validates the four-field PressureTransfer schema. |
+| `31416082` | 1 | `S0` | `ic10/controller-config/generic_config_committer_v1_1.ic10` | Copies staged values into Host candidate config and starts apply. |
+| `31416083` | 1 | `S0` | `ic10/controller-config/generic_config_loader_v1_2.ic10` | Loads selected Host/Profile state and builds active-ordinal mapping. |
 <!-- PUBLISHED_HEADERS END -->
 
 ## Catalog Store ABI v6
@@ -444,12 +448,7 @@ Block width is fixed at 8. Masks are authoritative schema geometry.
 ```text
 S0       magic = 31415928
 S1       ABI = 1
-S2       ControllerType hash
-S3       reserved
-S4       controller config schema
-S5       effective generation
-S6       request generation
-S7       response generation
+S2       capability mask = 0
 S8       operational status; >0 ready
 S9       effective config revision
 S10      block count 1..4
@@ -459,6 +458,11 @@ S13      Policy generation; metadata/defaults precede increment
 S16..19  validity masks for physical blocks 0..3
 S20      Policy response generation
 S21      Policy validation result
+S48      ControllerType hash
+S50      controller config schema
+S51      effective generation
+S52      request generation
+S53      response generation
 S96..127 effective physical image
 S128..159 candidate physical image
 S160..191 durable bank A image
@@ -558,9 +562,7 @@ The Resolver implements Dial scaling with `lerp`, integer quantization only for 
 ```text
 S0       magic = 22360680
 S1       ABI = 1
-S2       Controller Selector RefId
-S5       Apply generation
-S6..8    Save/Reload/Apply previous states
+S2       capability mask = 0
 S10      loaded controller RefId
 S11      staging revision
 S12      desired controller RefId
@@ -583,6 +585,9 @@ S30      loaded block count
 S32..63  staged physical config image
 S64..95  active UI ordinal -> physical image slot map
 S96..99  loaded Host block-mask snapshot
+S100     Controller Selector RefId
+S101..103 Save/Reload/Apply previous states
+S104     Apply generation
 ```
 
 ## Config Input Bridge ABI v1
@@ -590,8 +595,9 @@ S96..99  loaded Host block-mask snapshot
 ```text
 S0   magic = 22360681
 S1   ABI = 1
-S2   Generic Config Editor RefId
-S3   Generic Input Resolver RefId
+S2   capability mask = 0
+S8   Generic Config Editor RefId
+S9   Generic Input Resolver RefId
 ```
 
 The Bridge configures Resolver count/Profile from the Loader-validated Editor state, then converts Resolver logical ordinal through Editor `S64..95` and publishes Editor `S20/S21/S22/S26`, with Editor `S25` written last.

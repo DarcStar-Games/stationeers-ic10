@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10",
-  "source_sha256": "cfe73dff9c3a4bbe564b297bd65bca5c4088e3cff3384c94c910dca357103abf",
+  "source_sha256": "ee9a8b2be2f704058e95661388d43e516eb404cd7342ff9ec06f52ed1fc862dd",
   "identity": {
     "service_id": "ic10.script.controller.pressure.transfer.runtime",
     "implementation_revision": "2.0",
@@ -223,8 +223,8 @@
       "stack": {
         "literal_reads": [
           1,
-          5,
-          8
+          8,
+          51
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -248,8 +248,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.946c8fd776a2626e",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.946c8fd776a2626e",
+        "interface_id": "ic10.interface.access.edbe9104d707ecb1",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.edbe9104d707ecb1",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [

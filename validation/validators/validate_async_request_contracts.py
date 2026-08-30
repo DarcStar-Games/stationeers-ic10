@@ -77,11 +77,11 @@ for f,toks in {
  'ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10':('get r0 d1 10','bne r0 r6 Loop','get r0 d1 9','get r0 d0 10','bne r0 r5 Loop','get r0 d0 9')}.items(): need(f,*toks)
 
 # Generic Config Committer is the async caller: complete masked candidate before Host request token, then consume only an exact Host response.
-need('ic10/controller-config/generic_config_committer_v1_1.ic10','putd host r12 r9','putd host 6 r15 # publish only after complete masked candidate copy','getd r0 host 7','beq r0 r15 Response','getd r0 host 11')
-before('ic10/controller-config/generic_config_committer_v1_1.ic10','putd host r12 r9','putd host 6 r15 # publish only after complete masked candidate copy')
+need('ic10/controller-config/generic_config_committer_v1_1.ic10','putd host r12 r9','putd host 52 r15 # publish only after complete masked candidate copy','getd r0 host 53','beq r0 r15 Response','getd r0 host 11')
+before('ic10/controller-config/generic_config_committer_v1_1.ic10','putd host r12 r9','putd host 52 r15 # publish only after complete masked candidate copy')
 
 # Config Host + family policies already implement terminal response fencing.
-need('ic10/controller-config/generic_persistent_config_host_v1_1.ic10','poke 11 5','poke 7 r15','get r0 db 20','bne r0 r15 Loop');before('ic10/controller-config/generic_persistent_config_host_v1_1.ic10','poke 11 5','poke 7 r15')
+need('ic10/controller-config/generic_persistent_config_host_v1_1.ic10','poke 11 5','poke 53 r15','get r0 db 20','bne r0 r15 Loop');before('ic10/controller-config/generic_persistent_config_host_v1_1.ic10','poke 11 5','poke 53 r15')
 for f in ('ic10/controller-pi/pi_config_policy_v1_0.ic10','ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10','ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10','ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10','ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10'):
  need(f,'put Host 21 sp','put Host 20 r15');before(f,'put Host 21 sp','put Host 20 r15')
 

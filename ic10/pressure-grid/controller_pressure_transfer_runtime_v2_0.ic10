@@ -17,7 +17,7 @@ get r0 d4 1
 bne r0 1 Fault
 get r0 d4 8
 blez r0 Fault
-get sp d4 5
+get sp d4 51
 move r0 1
 move ra 96
 Load:
@@ -25,7 +25,7 @@ get rr0 d4 ra
 add ra ra 1
 add r0 r0 1
 ble r0 4 Load
-get r0 d4 5
+get r0 d4 51
 bne r0 sp Loop
 l r0 d4 ReferenceId
 poke 116 r0

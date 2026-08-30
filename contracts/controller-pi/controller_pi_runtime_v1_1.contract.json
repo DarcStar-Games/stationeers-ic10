@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-pi/controller_pi_runtime_v1_1.ic10",
-  "source_sha256": "b812ea0a25adedc38a7e8fb0b938542ce867c3db70d5223a4ee0cdf10398d848",
+  "source_sha256": "eabe86d279ae48f4f62db21775e2574206760b80df5748e7795ac566762d3e38",
   "identity": {
     "service_id": "ic10.script.controller.pi.runtime",
     "implementation_revision": "1.1",
@@ -44,7 +44,7 @@
           "source_port": "d2",
           "address": 107,
           "fence": {
-            "address": 5,
+            "address": 51,
             "kind": "generation",
             "description": "Config Host generation must be positive and unchanged around the LogicType read."
           }
@@ -95,7 +95,7 @@
           "source_port": "d2",
           "address": 108,
           "fence": {
-            "address": 5,
+            "address": 51,
             "kind": "generation",
             "description": "Config Host generation must be positive and unchanged around the LogicType read."
           }
@@ -133,11 +133,11 @@
         "literal_reads": [
           0,
           1,
-          2,
-          4,
-          5,
           8,
-          9
+          9,
+          48,
+          50,
+          51
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -161,11 +161,11 @@
             "equals": 1
           },
           {
-            "address": 2,
+            "address": 48,
             "equals": "HASH(\"ControllerPI\")"
           },
           {
-            "address": 4,
+            "address": 50,
             "equals": 1
           }
         ]

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-config/generic_config_committer_v1_1.ic10",
-  "source_sha256": "26f454ed90295b312c12720ef4811c22ae66120df88fbb40638bffcdfcce6ff3",
+  "source_sha256": "f1d65063f225791b4de408c658d4073e1968a589c6337b806793dd011346fc72",
   "identity": {
     "service_id": "ic10.script.generic.config.committer",
     "implementation_revision": "1.1",
@@ -50,7 +50,6 @@
       "literal_reads": [
         0,
         1,
-        5,
         10,
         11,
         13,
@@ -58,7 +57,8 @@
         16,
         18,
         19,
-        30
+        30,
+        104
       ],
       "literal_writes": [
         16
@@ -90,16 +90,16 @@
       "literal_reads": [
         0,
         1,
-        2,
-        4,
-        6,
-        7,
         8,
         10,
-        11
+        11,
+        48,
+        50,
+        52,
+        53
       ],
       "literal_writes": [
-        6
+        52
       ],
       "dynamic_read": true,
       "dynamic_write": true,
@@ -131,9 +131,13 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
+      8
+    ],
+    "literal_writes": [
+      0,
+      1,
       2
     ],
-    "literal_writes": [],
     "dynamic_read": false,
     "dynamic_write": false,
     "dynamic_read_ranges": [],
@@ -147,8 +151,36 @@
     "external_writable_ranges": [],
     "fields": [
       {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
         "address": 2,
         "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 0
+      },
+      {
+        "address": 8,
+        "name": "S8",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -156,7 +188,13 @@
         ]
       }
     ],
-    "headers": []
+    "headers": [
+      {
+        "base": 0,
+        "magic": 31416082,
+        "abi": 1
+      }
+    ]
   },
   "behavior": {
     "publication_rules": [],
@@ -167,7 +205,15 @@
     "invariants": []
   },
   "contracts": {
-    "provides": [],
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.31416082.abi1",
+        "base": 0,
+        "magic": 31416082,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      }
+    ],
     "consumes": []
   },
   "extraction": {

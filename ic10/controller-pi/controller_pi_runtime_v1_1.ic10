@@ -20,7 +20,7 @@ sne ra r0 sp # host identity change also forces static validation/reload
 poke 116 r0
 get r0 ConfigHost 8
 blez r0 ConfigBad
-get r15 ConfigHost 5
+get r15 ConfigHost 51
 get r0 db 117
 bnez ra ValidateHost
 beq r15 r0 Control
@@ -29,9 +29,9 @@ get r0 ConfigHost 0
 bne r0 31415928 ConfigBad
 get r0 ConfigHost 1
 bne r0 1 ConfigBad
-get r0 ConfigHost 2
+get r0 ConfigHost 48
 bne r0 HASH("ControllerPI") ConfigBad
-get r0 ConfigHost 4
+get r0 ConfigHost 50
 bne r0 1 ConfigBad
 move r0 1
 move ra 96
@@ -41,7 +41,7 @@ bnan rr0 ConfigBad
 add ra ra 1
 add r0 r0 1
 ble r0 14 LoadConfig
-get sp ConfigHost 5
+get sp ConfigHost 51
 bne sp r15 Loop # reject torn mirror
 get sp ConfigHost 9
 poke 118 sp

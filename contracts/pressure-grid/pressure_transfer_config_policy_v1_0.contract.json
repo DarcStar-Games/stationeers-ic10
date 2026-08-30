@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10",
-  "source_sha256": "9cbd840c98815715e019d1b73f1d3476d92fcdf6f1a642e6dfccb8c3d2c33b55",
+  "source_sha256": "6bac525b70c238cd0521abb8ebb32b334e0e4fc8c10236182593aa1a7e5fc1dd",
   "identity": {
     "service_id": "ic10.script.pressure.transfer.config.policy",
     "implementation_revision": "1.0",
@@ -29,14 +29,12 @@
         "literal_reads": [
           0,
           1,
-          6,
-          7,
           13,
-          20
+          20,
+          52,
+          53
         ],
         "literal_writes": [
-          2,
-          4,
           10,
           12,
           13,
@@ -49,7 +47,9 @@
           32,
           33,
           34,
-          35
+          35,
+          48,
+          50
         ],
         "dynamic_read": true,
         "dynamic_write": true,

@@ -85,7 +85,13 @@
     "abi": 1
    }
   ],
-  "ic10/controller-config/generic_config_committer_v1_1.ic10": [],
+  "ic10/controller-config/generic_config_committer_v1_1.ic10": [
+   {
+    "base": 0,
+    "magic": 31416082,
+    "abi": 1
+   }
+  ],
   "ic10/controller-config/generic_config_editor_v1_0.ic10": [
    {
     "base": 0,
@@ -93,7 +99,13 @@
     "abi": 1
    }
   ],
-  "ic10/controller-config/generic_config_loader_v1_2.ic10": [],
+  "ic10/controller-config/generic_config_loader_v1_2.ic10": [
+   {
+    "base": 0,
+    "magic": 31416083,
+    "abi": 1
+   }
+  ],
   "ic10/controller-config/generic_persistent_config_host_v1_1.ic10": [
    {
     "base": 0,

@@ -2,9 +2,12 @@
 alias editor r1
 alias controller r2
 alias host r3
+poke 0 31416083
+poke 1 1
+poke 2 0
 Loop:
 yield
-get editor db 2
+get editor db 8
 blez editor Loop
 getd r0 editor 0
 bne r0 22360680 Loop
@@ -17,11 +20,11 @@ bnez r0 Loop
 getd controller editor 12
 blez controller Fail
 jal ResolveHost
-getd r15 host 6
-getd r0 host 7
+getd r15 host 52
+getd r0 host 53
 bne r15 r0 Loop
-putd editor 5 r0
-getd r14 host 5 # coherent effective-generation snapshot
+putd editor 104 r0
+getd r14 host 51 # coherent effective-generation snapshot
 move r7 0 # block index
 move r6 0 # active-field/UI ordinal count derived from masks
 Block:
@@ -54,12 +57,12 @@ NextBlock:
 add r7 r7 1
 blt r7 r5 Block
 blez r6 Fail
-getd r0 host 5
+getd r0 host 51
 bne r0 r14 Loop
 getd r0 editor 12
 bne r0 controller Loop
 putd editor 27 0 # stale ABI/generation are ignored when Profile RefId is zero
-get r8 db 3
+get r8 db 9
 blez r8 ProfileDone
 getd r0 r8 0
 bne r0 31415930 ProfileDone
@@ -108,9 +111,9 @@ getd r0 host 0
 bne r0 31415928 Fail
 getd r0 host 1
 bne r0 1 Fail
-getd r0 host 2
+getd r0 host 48
 bne r0 r4 Fail
-getd r13 host 4 # cache schema for Profile check + Editor publication
+getd r13 host 50 # cache schema for Profile check + Editor publication
 getd r0 host 8
 blez r0 Fail
 getd r5 host 10

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10",
-  "source_sha256": "b8c44abd945d096f489968342e0bdcb53ef9ff29fa98951c1ef00cca7257aa2d",
+  "source_sha256": "29399de89b56174db4bebf7442fb20a1091d0ab1d3d41f94a019cadcf743ad0a",
   "identity": {
     "service_id": "ic10.script.sequencer.config.policy",
     "implementation_revision": "1.0",
@@ -29,14 +29,12 @@
         "literal_reads": [
           0,
           1,
-          6,
-          7,
           13,
-          20
+          20,
+          52,
+          53
         ],
         "literal_writes": [
-          2,
-          4,
           10,
           12,
           13,
@@ -53,7 +51,9 @@
           37,
           38,
           39,
-          40
+          40,
+          48,
+          50
         ],
         "dynamic_read": true,
         "dynamic_write": true,

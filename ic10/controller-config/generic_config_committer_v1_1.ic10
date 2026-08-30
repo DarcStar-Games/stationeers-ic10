@@ -2,9 +2,12 @@
 alias editor r1
 alias controller r2
 alias host r3
+poke 0 31416082
+poke 1 1
+poke 2 0
 Loop:
 yield
-get editor db 2
+get editor db 8
 blez editor Loop
 getd r0 editor 0
 bne r0 22360680 Loop
@@ -13,7 +16,7 @@ bne r0 1 Loop
 getd r0 editor 16
 bne r0 4 Loop
 move r13 -5
-getd r15 editor 5
+getd r15 editor 104
 getd r14 editor 13
 getd r0 editor 11
 bne r0 r14 Fail
@@ -25,13 +28,13 @@ bne r0 controller Fail
 getd r0 editor 18
 bne r0 host Fail
 getd r0 editor 19
-getd r12 host 4
+getd r12 host 50
 bne r0 r12 Fail
 getd r0 editor 30
 bne r0 r5 Fail
-getd r0 host 7
+getd r0 host 53
 beq r0 r15 Response
-getd r0 host 6
+getd r0 host 52
 beq r0 r15 Loop
 move r7 0
 Block:
@@ -61,11 +64,11 @@ add r7 r7 1
 blt r7 r5 Block
 getd r0 editor 11
 bne r0 r14 Loop
-getd r0 editor 5
+getd r0 editor 104
 bne r0 r15 Loop
 getd r0 editor 16
 bne r0 4 Loop
-putd host 6 r15 # publish only after complete masked candidate copy
+putd host 52 r15 # publish only after complete masked candidate copy
 j Loop
 Response:
 getd r0 host 11
@@ -87,7 +90,7 @@ getd r0 host 0
 bne r0 31415928 Fail
 getd r0 host 1
 bne r0 1 Fail
-getd r0 host 2
+getd r0 host 48
 bne r0 r4 Fail
 getd r0 host 8
 blez r0 Fail

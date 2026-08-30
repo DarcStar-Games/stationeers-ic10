@@ -4,7 +4,7 @@
   "own_stack_range_inventory": {
     "dynamic_script_count": 62,
     "source_proven_surface_count": 43,
-    "unresolved_fallback_count": 57,
+    "unresolved_fallback_count": 55,
     "scripts": [
       {
         "source": "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10",
@@ -157,23 +157,35 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 32,
+              "end": 63
+            },
+            {
+              "start": 128,
+              "end": 159
+            },
+            {
+              "start": 224,
+              "end": 229
             }
           ],
           "proven_ranges": [],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-fingerprinted-exception"
         },
         "write": {
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 96,
+              "end": 127
+            },
+            {
+              "start": 160,
+              "end": 229
             }
           ],
           "proven_ranges": [],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-fingerprinted-exception"
         }
       },
       {
@@ -3531,81 +3543,6 @@
         }
       ]
     },
-    "ic10.interface.access.38761c8544a5e437": {
-      "stack": {
-        "literal_reads": [
-          5,
-          8,
-          12
-        ],
-        "literal_writes": [],
-        "dynamic_read": true,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [
-          {
-            "start": 96,
-            "end": 104
-          }
-        ],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-derived",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 12,
-            "equals": "HASH(\"CFG1|ControllerPhasePressure|1|2|255|1|0|0\")"
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [
-          "ReferenceId"
-        ],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 5,
-            "end": 5
-          },
-          {
-            "start": 8,
-            "end": 8
-          },
-          {
-            "start": 12,
-            "end": 12
-          },
-          {
-            "start": 96,
-            "end": 104
-          }
-        ],
-        "stack_writable_ranges": [],
-        "constraints": [
-          {
-            "address": 12,
-            "equals": "HASH(\"CFG1|ControllerPhasePressure|1|2|255|1|0|0\")"
-          }
-        ],
-        "properties_readable": [
-          "ReferenceId"
-        ],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10",
-          "port": "d2"
-        }
-      ]
-    },
     "ic10.interface.access.3b51862819ab610a": {
       "stack": {
         "literal_reads": [
@@ -5835,89 +5772,6 @@
         }
       ]
     },
-    "ic10.interface.access.8abfaada7cd78dcd": {
-      "stack": {
-        "literal_reads": [
-          1,
-          5,
-          12
-        ],
-        "literal_writes": [],
-        "dynamic_read": true,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [
-          {
-            "start": 96,
-            "end": 104
-          }
-        ],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-derived",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 1,
-            "equals": 1
-          },
-          {
-            "address": 12,
-            "equals": "HASH(\"CFG1|ControllerSequencer|1|2|255|1|0|0\")"
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [
-          "ReferenceId"
-        ],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 1,
-            "end": 1
-          },
-          {
-            "start": 5,
-            "end": 5
-          },
-          {
-            "start": 12,
-            "end": 12
-          },
-          {
-            "start": 96,
-            "end": 104
-          }
-        ],
-        "stack_writable_ranges": [],
-        "constraints": [
-          {
-            "address": 1,
-            "equals": 1
-          },
-          {
-            "address": 12,
-            "equals": "HASH(\"CFG1|ControllerSequencer|1|2|255|1|0|0\")"
-          }
-        ],
-        "properties_readable": [
-          "ReferenceId"
-        ],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10",
-          "port": "d3"
-        }
-      ]
-    },
     "ic10.interface.access.8b76f56d3efd5e64": {
       "stack": {
         "literal_reads": [
@@ -6045,81 +5899,6 @@
         {
           "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
           "port": "d1"
-        }
-      ]
-    },
-    "ic10.interface.access.946c8fd776a2626e": {
-      "stack": {
-        "literal_reads": [
-          1,
-          5,
-          8
-        ],
-        "literal_writes": [],
-        "dynamic_read": true,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [
-          {
-            "start": 96,
-            "end": 99
-          }
-        ],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-derived",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 1,
-            "equals": 1
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [
-          "ReferenceId"
-        ],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 1,
-            "end": 1
-          },
-          {
-            "start": 5,
-            "end": 5
-          },
-          {
-            "start": 8,
-            "end": 8
-          },
-          {
-            "start": 96,
-            "end": 99
-          }
-        ],
-        "stack_writable_ranges": [],
-        "constraints": [
-          {
-            "address": 1,
-            "equals": 1
-          }
-        ],
-        "properties_readable": [
-          "ReferenceId"
-        ],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10",
-          "port": "d4"
         }
       ]
     },
@@ -6728,6 +6507,81 @@
       "consumers": [
         {
           "source": "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10",
+          "port": "d2"
+        }
+      ]
+    },
+    "ic10.interface.access.a35c5a268d957af3": {
+      "stack": {
+        "literal_reads": [
+          8,
+          12,
+          51
+        ],
+        "literal_writes": [],
+        "dynamic_read": true,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [
+          {
+            "start": 96,
+            "end": 104
+          }
+        ],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "source-derived",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 12,
+            "equals": "HASH(\"CFG1|ControllerPhasePressure|1|2|255|1|0|0\")"
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [
+          "ReferenceId"
+        ],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 8,
+            "end": 8
+          },
+          {
+            "start": 12,
+            "end": 12
+          },
+          {
+            "start": 51,
+            "end": 51
+          },
+          {
+            "start": 96,
+            "end": 104
+          }
+        ],
+        "stack_writable_ranges": [],
+        "constraints": [
+          {
+            "address": 12,
+            "equals": "HASH(\"CFG1|ControllerPhasePressure|1|2|255|1|0|0\")"
+          }
+        ],
+        "properties_readable": [
+          "ReferenceId"
+        ],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10",
           "port": "d2"
         }
       ]
@@ -8094,81 +7948,6 @@
         }
       ]
     },
-    "ic10.interface.access.c682e555c18d6058": {
-      "stack": {
-        "literal_reads": [
-          5,
-          8,
-          12
-        ],
-        "literal_writes": [],
-        "dynamic_read": true,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [
-          {
-            "start": 96,
-            "end": 103
-          }
-        ],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-derived",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 12,
-            "equals": "HASH(\"CFG1|ControllerPressureDomain|1|1|255|0|0|0\")"
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [
-          "ReferenceId"
-        ],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 5,
-            "end": 5
-          },
-          {
-            "start": 8,
-            "end": 8
-          },
-          {
-            "start": 12,
-            "end": 12
-          },
-          {
-            "start": 96,
-            "end": 103
-          }
-        ],
-        "stack_writable_ranges": [],
-        "constraints": [
-          {
-            "address": 12,
-            "equals": "HASH(\"CFG1|ControllerPressureDomain|1|1|255|0|0|0\")"
-          }
-        ],
-        "properties_readable": [
-          "ReferenceId"
-        ],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
-          "port": "d5"
-        }
-      ]
-    },
     "ic10.interface.access.c803a35092890703": {
       "stack": {
         "literal_reads": [],
@@ -8436,6 +8215,89 @@
         {
           "source": "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10",
           "port": "d0"
+        }
+      ]
+    },
+    "ic10.interface.access.cf2db59392ce76fa": {
+      "stack": {
+        "literal_reads": [
+          1,
+          12,
+          51
+        ],
+        "literal_writes": [],
+        "dynamic_read": true,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [
+          {
+            "start": 96,
+            "end": 104
+          }
+        ],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "source-derived",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 1,
+            "equals": 1
+          },
+          {
+            "address": 12,
+            "equals": "HASH(\"CFG1|ControllerSequencer|1|2|255|1|0|0\")"
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [
+          "ReferenceId"
+        ],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 1,
+            "end": 1
+          },
+          {
+            "start": 12,
+            "end": 12
+          },
+          {
+            "start": 51,
+            "end": 51
+          },
+          {
+            "start": 96,
+            "end": 104
+          }
+        ],
+        "stack_writable_ranges": [],
+        "constraints": [
+          {
+            "address": 1,
+            "equals": 1
+          },
+          {
+            "address": 12,
+            "equals": "HASH(\"CFG1|ControllerSequencer|1|2|255|1|0|0\")"
+          }
+        ],
+        "properties_readable": [
+          "ReferenceId"
+        ],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10",
+          "port": "d3"
         }
       ]
     },
@@ -8946,6 +8808,81 @@
         }
       ]
     },
+    "ic10.interface.access.e3fc86f8b97f6e44": {
+      "stack": {
+        "literal_reads": [
+          8,
+          12,
+          51
+        ],
+        "literal_writes": [],
+        "dynamic_read": true,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [
+          {
+            "start": 96,
+            "end": 103
+          }
+        ],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "source-derived",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 12,
+            "equals": "HASH(\"CFG1|ControllerPressureDomain|1|1|255|0|0|0\")"
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [
+          "ReferenceId"
+        ],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 8,
+            "end": 8
+          },
+          {
+            "start": 12,
+            "end": 12
+          },
+          {
+            "start": 51,
+            "end": 51
+          },
+          {
+            "start": 96,
+            "end": 103
+          }
+        ],
+        "stack_writable_ranges": [],
+        "constraints": [
+          {
+            "address": 12,
+            "equals": "HASH(\"CFG1|ControllerPressureDomain|1|1|255|0|0|0\")"
+          }
+        ],
+        "properties_readable": [
+          "ReferenceId"
+        ],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
+          "port": "d5"
+        }
+      ]
+    },
     "ic10.interface.access.eabb8ec60a068e1b": {
       "stack": {
         "literal_reads": [
@@ -9119,6 +9056,81 @@
         {
           "source": "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10",
           "port": "d3"
+        }
+      ]
+    },
+    "ic10.interface.access.edbe9104d707ecb1": {
+      "stack": {
+        "literal_reads": [
+          1,
+          8,
+          51
+        ],
+        "literal_writes": [],
+        "dynamic_read": true,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [
+          {
+            "start": 96,
+            "end": 99
+          }
+        ],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "source-derived",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 1,
+            "equals": 1
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [
+          "ReferenceId"
+        ],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 1,
+            "end": 1
+          },
+          {
+            "start": 8,
+            "end": 8
+          },
+          {
+            "start": 51,
+            "end": 51
+          },
+          {
+            "start": 96,
+            "end": 99
+          }
+        ],
+        "stack_writable_ranges": [],
+        "constraints": [
+          {
+            "address": 1,
+            "equals": 1
+          }
+        ],
+        "properties_readable": [
+          "ReferenceId"
+        ],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10",
+          "port": "d4"
         }
       ]
     },
@@ -10078,7 +10090,9 @@
       "source": "ic10/controller-config/generic_config_committer_v1_1.ic10",
       "contract": "contracts/controller-config/generic_config_committer_v1_1.contract.json",
       "service_id": "ic10.script.generic.config.committer",
-      "provides": [],
+      "provides": [
+        "ic10.stack.31416082.abi1"
+      ],
       "consumes": []
     },
     {
@@ -10094,7 +10108,9 @@
       "source": "ic10/controller-config/generic_config_loader_v1_2.ic10",
       "contract": "contracts/controller-config/generic_config_loader_v1_2.contract.json",
       "service_id": "ic10.script.generic.config.loader",
-      "provides": [],
+      "provides": [
+        "ic10.stack.31416083.abi1"
+      ],
       "consumes": []
     },
     {

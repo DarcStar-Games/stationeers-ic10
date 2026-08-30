@@ -83,7 +83,7 @@ for obligation_id, address, expected in (
         fails.append(f"{obligation_id} did not produce a fenced runtime observation")
     elif observation.get("cells") != [{"address": address, "expected": expected}]:
         fails.append(f"{obligation_id} did not preserve its concrete LogicType expectation")
-    elif [item["address"] for item in observation.get("fences", [])] != [5]:
+    elif [item["address"] for item in observation.get("fences", [])] != [51]:
         fails.append(f"{obligation_id} did not use the Config Host generation fence")
 
 unbound_pi = json.loads(json.dumps(pi))

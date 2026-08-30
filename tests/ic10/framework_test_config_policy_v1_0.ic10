@@ -7,8 +7,8 @@ get r0 Host 0
 bne r0 31415928 Boot
 get r0 Host 1
 bne r0 1 Boot
-put Host 2 HASH("ControllerTest")
-put Host 4 1
+put Host 48 HASH("ControllerTest")
+put Host 50 1
 put Host 10 1
 put Host 16 63
 put Host 17 0
@@ -23,14 +23,14 @@ put Host 36 -1
 put Host 37 30
 put Host 38 0
 put Host 39 0
-get r0 Host 7
+get r0 Host 53
 put Host 20 r0
 get r0 Host 13
 add r0 r0 1
 put Host 13 r0 # generation publishes metadata/defaults LAST
 Loop:
 yield
-get r15 Host 6
+get r15 Host 52
 get r0 Host 20
 beq r15 r0 Loop
 move r10 0

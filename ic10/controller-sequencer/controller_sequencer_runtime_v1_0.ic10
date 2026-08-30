@@ -20,7 +20,7 @@ move r13 r0
 poke 116 r0
 get r0 d3 1
 bne r0 1 ConfigBad
-get r15 d3 5
+get r15 d3 51
 bnez sp Reload
 beq r15 r14 Control
 Reload:
@@ -34,7 +34,7 @@ bnan rr0 ConfigBad
 add ra ra 1
 add r0 r0 1
 ble r0 9 LoadConfig
-get sp d3 5
+get sp d3 51
 bne sp r15 Loop
 move r14 r15
 move r10 0

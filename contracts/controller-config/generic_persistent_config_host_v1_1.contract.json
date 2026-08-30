@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-config/generic_persistent_config_host_v1_1.ic10",
-  "source_sha256": "de990858a08a2d6fb69bd3ae85342495a0c95084783e408530bc615dfdedc221",
+  "source_sha256": "e883df1f1003620e5848bd3495227776c818e90136b6ac2cf24792f7bc37b27b",
   "identity": {
     "service_id": "ic10.script.generic.persistent.config.host",
     "implementation_revision": "1.1",
@@ -16,9 +16,6 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      5,
-      6,
-      7,
       9,
       10,
       12,
@@ -27,38 +24,54 @@
       21,
       24,
       25,
-      26
+      26,
+      51,
+      52,
+      53
     ],
     "literal_writes": [
       0,
       1,
-      5,
-      7,
+      2,
       8,
       9,
       11,
       24,
       25,
-      26
+      26,
+      51,
+      53
     ],
     "dynamic_read": true,
     "dynamic_write": true,
     "dynamic_read_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 32,
+        "end": 63
+      },
+      {
+        "start": 128,
+        "end": 159
+      },
+      {
+        "start": 224,
+        "end": 229
       }
     ],
     "dynamic_write_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 96,
+        "end": 127
+      },
+      {
+        "start": 160,
+        "end": 229
       }
     ],
     "dynamic_read_proven_ranges": [],
     "dynamic_write_proven_ranges": [],
-    "dynamic_read_range_source": "conservative-full-stack",
-    "dynamic_write_range_source": "conservative-full-stack",
+    "dynamic_read_range_source": "source-fingerprinted-exception",
+    "dynamic_write_range_source": "source-fingerprinted-exception",
     "clears_all": false,
     "external_readable_ranges": [
       {
@@ -68,20 +81,20 @@
     ],
     "external_writable_ranges": [
       {
-        "start": 2,
-        "end": 4
-      },
-      {
-        "start": 6,
-        "end": 6
-      },
-      {
         "start": 10,
         "end": 21
       },
       {
         "start": 32,
         "end": 47
+      },
+      {
+        "start": 48,
+        "end": 50
+      },
+      {
+        "start": 52,
+        "end": 52
       },
       {
         "start": 128,
@@ -96,7 +109,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 31415928
       },
       {
         "address": 1,
@@ -105,36 +119,18 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
-        "address": 5,
-        "name": "S5",
+        "address": 2,
+        "name": "S2",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read",
           "self-write"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
         "address": 8,
@@ -241,6 +237,35 @@
           "self-read",
           "self-write"
         ]
+      },
+      {
+        "address": 51,
+        "name": "S51",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 52,
+        "name": "S52",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 53,
+        "name": "S53",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
       }
     ],
     "headers": [
@@ -257,7 +282,22 @@
       "mode": "preserved-unless-overwritten",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 31415928,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
     "provides": [

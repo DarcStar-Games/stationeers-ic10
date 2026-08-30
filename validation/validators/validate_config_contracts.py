@@ -22,7 +22,7 @@ for typ in families:
  if typ in host:fails.append('Generic Host special-cases '+typ)
 for pat,label in [(r'add sp sp 226','destination-footer invalidation'),(r'push r13','footer schema'),(r'push r15','footer config revision'),(r'push r11','bank revision LAST')]:
  if not re.search(pat,host,re.M):fails.append('Generic Host missing '+label)
-for pat,label in [(r'get r15 db 6','replay request generation'),(r'get r0 db 9','recovered config revision'),(r'bne r15 r0 NoReplay','post-commit replay comparison'),(r'poke 7 r15','post-commit replay acknowledgement')]:
+for pat,label in [(r'get r15 db 52','replay request generation'),(r'get r0 db 9','recovered config revision'),(r'bne r15 r0 NoReplay','post-commit replay comparison'),(r'poke 53 r15','post-commit replay acknowledgement')]:
  if not re.search(pat,host,re.M):fails.append('Generic Host missing '+label)
 for typ,(pn,rn,blocks,masks,fields) in families.items():
  pol=(R/pn).read_text();run=(R/rn).read_text();prof=profiles.get(typ)

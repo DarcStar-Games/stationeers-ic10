@@ -412,6 +412,7 @@ def publication_errors(
     state: dict[int, Any] = {}
     first_yield = None
     branch_proved = False
+    scan_from = None
     for index, row in enumerate(rows):
         op = row[0]
         if op == "yield":
@@ -425,6 +426,7 @@ def publication_errors(
             if missing:
                 errors.append("control transfer occurs before the first envelope-bearing yield")
             branch_proved = not missing
+            scan_from = index
             break
         if op == "clr" and len(row) >= 2 and row[1] == "db":
             state = {address: 0 for address in expected}   # clr db zeroes every cell
@@ -454,11 +456,19 @@ def publication_errors(
     if any(reserved & set(range(item["start"], item["end"] + 1)) for item in reviewed_ranges):
         errors.append("reviewed post-init dynamic write range overlaps envelope or extension cells")
     dynamic_after = False
+    # After a proven-stable reflash-guard branch, everything past the branch is
+    # post-publication for reserved-cell purposes; stable_cells already proved
+    # every envelope cell holds its value at every observation point, including
+    # across any guarded recovery clear that re-publishes the header.
+    guard_proved = first_yield is None and branch_proved
+    if guard_proved:
+        first_yield = scan_from
     if first_yield is not None:
         for row in rows[first_yield + 1:]:
             op = row[0]
             if op == "clr" and len(row) >= 2 and row[1] == "db":
-                errors.append("clr db after publication can erase the fixed envelope")
+                if not guard_proved:
+                    errors.append("clr db after publication can erase the fixed envelope")
             elif op == "clrd" or op == "putd" or (op == "put" and len(row) >= 2 and row[1] == "db"):
                 # a reference-addressed write only touches this stack when it can name self,
                 # which the generated contract resolves far more precisely than a source scan

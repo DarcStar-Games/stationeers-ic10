@@ -48,6 +48,10 @@ SOFT_LIMIT_EXEMPTIONS = {
         "publishes the common S0 header with its Feeder ABI1 payload relocated above it",
     "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10":
         "publishes the common S0 header with its Endpoint ABI1 payload relocated above it",
+    "ic10/controller-config/generic_persistent_config_host_v1_1.ic10":
+        "publishes the common S0 header above its banked A/B config storage",
+    "ic10/controller-config/generic_config_loader_v1_2.ic10":
+        "gains the common S0 header and a newly registered service magic",
 }
 
 

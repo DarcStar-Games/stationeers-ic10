@@ -2935,6 +2935,38 @@
         }
       ],
       "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416082.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416082,
+      "abi": 1,
+      "name": "Generic Config Committer ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416082.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/controller-config/generic_config_committer_v1_1.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416083.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416083,
+      "abi": 1,
+      "name": "Generic Config Loader ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416083.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/controller-config/generic_config_loader_v1_2.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
     }
   ]
 }

@@ -161,7 +161,7 @@
    "implementation_id": null,
    "telemetry_base": 96,
    "publishes_state": false,
-   "source_sha256": "7d3f3882ee0f93c7669fbda75cad412bf487d446af4a1c929851c5a13f33b204",
+   "source_sha256": "9ec69e335fc8e321aeeeff6704e43a343e6d7e1ebceb9eb450334c50bdc3f96e",
    "legacy_owned_ranges": [
     [
      96,
@@ -192,7 +192,7 @@
    "implementation_id": null,
    "telemetry_base": 96,
    "publishes_state": false,
-   "source_sha256": "b812ea0a25adedc38a7e8fb0b938542ce867c3db70d5223a4ee0cdf10398d848",
+   "source_sha256": "eabe86d279ae48f4f62db21775e2574206760b80df5748e7795ac566762d3e38",
    "legacy_owned_ranges": [
     [
      96,
@@ -219,7 +219,7 @@
    "implementation_id": null,
    "telemetry_base": 96,
    "publishes_state": false,
-   "source_sha256": "3159745690c8b8563036da5bab87a7d781e2c85f420a5016feae3575ea400279",
+   "source_sha256": "cb3c3ed8d6dc22ea85d633f8c12b7540540f8c3796d36f53be1991455691c00e",
    "legacy_owned_ranges": [
     [
      96,
@@ -1170,7 +1170,7 @@
    "implementation_id": null,
    "telemetry_base": 96,
    "publishes_state": false,
-   "source_sha256": "e89641ac953a80fd4b854941427bc958648247352e555e7a776c981c5f73993e",
+   "source_sha256": "5b4bba080e415fac1f80f2666a736cd775a212333f6e2de3920074d6923107a7",
    "legacy_owned_ranges": [
     [
      96,
@@ -1201,7 +1201,7 @@
    "implementation_id": null,
    "telemetry_base": 96,
    "publishes_state": false,
-   "source_sha256": "cfe73dff9c3a4bbe564b297bd65bca5c4088e3cff3384c94c910dca357103abf",
+   "source_sha256": "ee9a8b2be2f704058e95661388d43e516eb404cd7342ff9ec06f52ed1fc862dd",
    "legacy_owned_ranges": [
     [
      96,
@@ -3351,7 +3351,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "b84a85d68ab5c56836eabd239261afaf22bee72afc36b0b6dfa2339e6ce47c30",
+   "source_sha256": "1cfe52af7b1345aafc53ea00dc21865cd58d15f2013ed6eb4272091c84bc55dc",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "controller-pi"
@@ -3369,7 +3369,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "b8c44abd945d096f489968342e0bdcb53ef9ff29fa98951c1ef00cca7257aa2d",
+   "source_sha256": "29399de89b56174db4bebf7442fb20a1091d0ab1d3d41f94a019cadcf743ad0a",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "controller-sequencer"
@@ -3387,7 +3387,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "d329b9bc798606621a2c32f3f30743a6dd85c080a2a02c7820d159710e22c37f",
+   "source_sha256": "b328483cdd759cd01adb384bf1a6453e16496dbc602d572d08038a428cee250f",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "controller-phase-pressure"
@@ -3405,7 +3405,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "686c01ca2f82af873177ae07e0997cc59727b6f643f7750df316fb1d72ffb265",
+   "source_sha256": "f9e4b96365c9f93d825547d5d8ba572c447d9adcafdb8697405047a1f79e31a4",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "pressure-domain"
@@ -3423,7 +3423,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "9cbd840c98815715e019d1b73f1d3476d92fcdf6f1a642e6dfccb8c3d2c33b55",
+   "source_sha256": "6bac525b70c238cd0521abb8ebb32b334e0e4fc8c10236182593aa1a7e5fc1dd",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "pressure-grid"
@@ -3478,6 +3478,175 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "resource-grid-core"
+  },
+  "ic10/controller-config/generic_persistent_config_host_v1_1.ic10": {
+   "service_id": "ic10.script.generic.persistent.config.host",
+   "magic": 31415928,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "e883df1f1003620e5848bd3495227776c818e90136b6ac2cf24792f7bc37b27b",
+   "legacy_owned_ranges": [
+    [
+     8,
+     13
+    ],
+    [
+     20,
+     21
+    ],
+    [
+     24,
+     26
+    ],
+    [
+     51,
+     53
+    ],
+    [
+     96,
+     127
+    ],
+    [
+     160,
+     229
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     96,
+     127
+    ],
+    [
+     160,
+     229
+    ]
+   ],
+   "pilot_family": "controller-config"
+  },
+  "ic10/controller-config/generic_config_editor_v1_0.ic10": {
+   "service_id": "ic10.script.generic.config.editor",
+   "magic": 22360680,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "4b147dbbdb101dc7e9f72062cd6eb63b093ce90c2181156ee5c7cc4aaa42c3fb",
+   "legacy_owned_ranges": [
+    [
+     10,
+     16
+    ],
+    [
+     18,
+     18
+    ],
+    [
+     20,
+     21
+    ],
+    [
+     25,
+     26
+    ],
+    [
+     32,
+     63
+    ],
+    [
+     100,
+     104
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     32,
+     63
+    ]
+   ],
+   "pilot_family": "controller-config"
+  },
+  "ic10/controller-config/generic_config_committer_v1_1.ic10": {
+   "service_id": "ic10.script.generic.config.committer",
+   "magic": 31416082,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "f1d65063f225791b4de408c658d4073e1968a589c6337b806793dd011346fc72",
+   "legacy_owned_ranges": [
+    [
+     8,
+     8
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "controller-config"
+  },
+  "ic10/controller-config/generic_config_loader_v1_2.ic10": {
+   "service_id": "ic10.script.generic.config.loader",
+   "magic": 31416083,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "7fc0253bbe9df05db90ffe4298c0f402bb96e6370ea5d826e5e8fc19545c1d76",
+   "legacy_owned_ranges": [
+    [
+     8,
+     9
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "controller-config"
+  },
+  "ic10/controller-config/config_input_bridge_v1_0.ic10": {
+   "service_id": "ic10.script.config.input.bridge",
+   "magic": 22360681,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "ed9f20ae892c10d83de7f476a696daac549a2395de9f81922d300d8696ae27cb",
+   "legacy_owned_ranges": [
+    [
+     8,
+     9
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "controller-config"
   }
  },
  "legacy_exemption": {
