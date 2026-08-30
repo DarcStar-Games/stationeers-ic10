@@ -31,7 +31,7 @@ move r12 0
 Stage:
 bge r12 r8 Staged
 mul r0 r12 4
-add r0 r0 16
+add r0 r0 20
 get r9 d0 r0
 add r0 r0 1
 get r10 d0 r0

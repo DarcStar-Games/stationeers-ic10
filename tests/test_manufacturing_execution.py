@@ -35,7 +35,7 @@ ld=Device(230,stack={0:31415981,1:1,2:0,3:4,5:2,7:0,9:'HASH:DirectorySchema.Reso
 rv=IC10(src('ic10/manufacturing/print_material_resolver_v1_0.ic10'),{'d0':recipe,'d1':ld,'l1':l1,'l2':l2,'sr1':sr1,'dr1':dr1,'sr2':sr2,'dr2':dr2});rv.run(1)
 rv.stack.update({2:900,11:2,12:1});rv.run(1)
 ck(rv.stack.get(6)==1 and rv.stack.get(3)==2,'print material resolver rejected reachable reagents')
-ck([rv.stack.get(16+i) for i in range(8)]==[213,30,-1301215609,2,223,10,-404336834,2],'print resolver did not publish transform-compatible four-cell link records')
+ck([rv.stack.get(20+i) for i in range(8)]==[213,30,-1301215609,2,223,10,-404336834,2],'print resolver did not publish transform-compatible four-cell link records')
 # Insufficient source resource is classified WAIT_RESOURCE; sink loss is WAIT_CAPACITY.
 sr1.stack[6]=1;rv.stack[12]=2;rv.run(1);ck(rv.stack.get(6)==-3,'insufficient reagent was not classified resource wait')
 sr1.stack[6]=100;dr1.stack[7]=1;rv.stack[12]=3;rv.run(1);ck(rv.stack.get(6)==-4,'insufficient sink capacity was not classified capacity wait')

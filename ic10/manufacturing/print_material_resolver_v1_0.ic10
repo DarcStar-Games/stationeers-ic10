@@ -66,7 +66,7 @@ blt r14 r0 NoRes
 getd r14 r4 7
 blt r14 r0 NoCap
 mul r0 r7 4
-add r0 r0 16
+add r0 r0 20
 poke r0 r1
 add r0 r0 1
 poke r0 r12

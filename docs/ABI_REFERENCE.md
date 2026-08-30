@@ -655,7 +655,7 @@ Magic `31416076`. `ic10/manufacturing/transform_job_driver_v2_0.ic10` iterates T
 
 ### Print Material Resolver ABI1
 
-Magic `31415989`. `ic10/manufacturing/print_material_resolver_v1_0.ic10` consumes Recipe Execution View on d0 and ResourceLink Snapshot Directory on d1. It publishes S3 InputCount, S6 status, S13 response token, and S16.. four-cell `[LinkRef, QuantityPerOutput, ResourceType, Unit]` records compatible with Multi Reservation Stager/Allocator.
+Magic `31415989`. `ic10/manufacturing/print_material_resolver_v1_0.ic10` consumes Recipe Execution View on d0 and ResourceLink Snapshot Directory on d1. It publishes S3 InputCount, S6 status, S13 response token, and S20.. four-cell `[LinkRef, QuantityPerOutput, ResourceType, Unit]` records compatible with Multi Reservation Stager/Allocator.
 
 ### Generic Print Runtime ABI2
 
@@ -1653,15 +1653,15 @@ Magic `31415977`. `ic10/material-transform/material_transform_admission_v1_0.ic1
 
 ### Material Transform Link Resolver ABI v1
 
-Magic `31415978`. `ic10/material-transform/material_transform_link_resolver_v1_0.ic10` consumes Admission, Transform View, and Resource Link Directory. It resolves each required input to a healthy Material Link whose ResourceType matches the descriptor and whose native sink is the exact admitted processor. S2 is TransformType, S3 InputCount, S4 processor Ref, S5 stable profile generation, S6 status, S7 publication generation, and S16..S27 contain up to three `[LinkRef, QuantityPerJob, ResourceType, ResourceClass]` records.
+Magic `31415978`. `ic10/material-transform/material_transform_link_resolver_v1_0.ic10` consumes Admission, Transform View, and Resource Link Directory. It resolves each required input to a healthy Material Link whose ResourceType matches the descriptor and whose native sink is the exact admitted processor. S8 is TransformType, S9 InputCount, S10 processor Ref, S11 stable profile generation, S12 status, S13 publication generation, and S20..S31 contain up to three `[LinkRef, QuantityPerJob, ResourceType, ResourceClass]` records.
 
 ### Multi Reservation Stager ABI v1
 
-Magic `31415979`. `ic10/material-transform/multi_material_reservation_stager_v1_0.ic10` is deliberately not commit authority. Allocator commands S2 (`1` stage, `2` cleanup), S3 epoch, S4 batch count and S5 request token. The Stager validates all 1..3 resolved links, provisionally reserves source/sink Resource Reservations, prepares each existing Grant Guard, records staged link/source/sink triples at S32..S40, and publishes S6 status/S7 acknowledged request token. Any failure enters cleanup and removes all partial reservations before returning failure.
+Magic `31415979`. `ic10/material-transform/multi_material_reservation_stager_v1_0.ic10` is deliberately not commit authority. Allocator commands S9 (`1` stage, `2` cleanup), S10 epoch, S11 batch count and S12 request token. The Stager validates all 1..3 resolved links, provisionally reserves source/sink Resource Reservations, prepares each existing Grant Guard, records staged link/source/sink triples at S32..S40, and publishes S13 status/S14 acknowledged request token. Any failure enters cleanup and removes all partial reservations before returning failure.
 
 ### Material Reservation Allocator ABI v2
 
-Magic `31415954`, ABI2 in `ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10`. Request surface uses S2 BatchCount, S3 RuntimeRef and S4 RequestGeneration. The allocator asks the Stager to prepare every input first. Only after successful staging does it publish the common active epoch at **S14 last**. S5 is state/status, S13 is next epoch, S15 completed epoch, S16 consumed request generation, and S17..S19 coordinate Stager commands/results. On successful staging it publishes S5 before S16, satisfying the `ASYNC_REQUEST_V1` LIVE_CURRENT ordering while keeping S14 as the separate transaction commit authority. `ic10/material-grid/material_transfer_grant_guard_v1_0.ic10` requires Material Allocator **ABI2 exactly**. No Guard can activate from merely staged state because S14 remains zero until the atomic commit point.
+Magic `31415954`, ABI2 in `ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10`. Request surface uses S8 BatchCount, S20 RuntimeRef and S21 RequestGeneration. The allocator asks the Stager to prepare every input first. Only after successful staging does it publish the common active epoch at **S14 last**. S22 is state/status, S13 is next epoch, S15 completed epoch, S16 consumed request generation, and S17..S19 coordinate Stager commands/results. On successful staging it publishes S22 before S16, satisfying the `ASYNC_REQUEST_V1` LIVE_CURRENT ordering while keeping S14 as the separate transaction commit authority. `ic10/material-grid/material_transfer_grant_guard_v1_0.ic10` requires Material Allocator **ABI2 exactly**. No Guard can activate from merely staged state because S14 remains zero until the atomic commit point.
 
 ### Generic Material Transform Runtime ABI v2
 
