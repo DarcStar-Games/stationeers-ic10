@@ -1,6 +1,7 @@
 """Build and validate the fixed-address IC10 stack-envelope inventory."""
 from __future__ import annotations
 
+from dataclasses import dataclass, field
 from pathlib import Path
 import hashlib
 import json
@@ -68,6 +69,76 @@ class DeclarationError(ValueError):
     def __init__(self, errors: list[str]) -> None:
         super().__init__("; ".join(errors))
         self.errors = list(errors)
+
+
+@dataclass
+class ErrorCollector:
+    """Collect independent validation failures with an optional source prefix."""
+
+    source: str | None = None
+    errors: list[str] = field(default_factory=list)
+
+    def add(self, message: str) -> None:
+        self.errors.append(f"{self.source}: {message}" if self.source else message)
+
+    def extend(self, messages: list[str]) -> None:
+        for message in messages:
+            self.add(message)
+
+
+@dataclass(frozen=True)
+class StackRange:
+    """A normalized inclusive stack range."""
+
+    start: int
+    end: int
+
+    def cells(self) -> set[int]:
+        return set(range(self.start, self.end + 1))
+
+    def as_dict(self) -> dict[str, int]:
+        return {"start": self.start, "end": self.end}
+
+
+@dataclass(frozen=True)
+class NormalizedDeclaration:
+    """Typed values used by per-service stack-envelope validation rules."""
+
+    source: str
+    service_id: str = "ic10.script.example"
+    magic: int = 1
+    service_abi: int = 1
+    schema_id: str | None = None
+    schema_version: int = 0
+    extension_base: int = 0
+    telemetry_base: int = 0
+    publishes_state: bool = False
+    custom_state_bits: int = 0
+    publishes_generation: bool = False
+    extension_flags: int = 0
+    implementation_id: str | None = None
+    legacy_owned_ranges: tuple[StackRange, ...] = ()
+    post_init_dynamic_write_ranges: tuple[StackRange, ...] = ()
+    source_sha256: str = ""
+    pilot_family: str = ""
+
+    @property
+    def capability_mask(self) -> int:
+        return (
+            (HAS_SCHEMA if self.schema_id is not None else 0)
+            | (HAS_EXTENSION if self.extension_base else 0)
+            | (HAS_STATE if self.publishes_state else 0)
+            | (HAS_TELEMETRY if self.telemetry_base else 0)
+            | (HAS_GENERATION if self.publishes_generation else 0)
+        )
+
+    def publication_metadata(self) -> dict[str, Any]:
+        return {
+            "source_sha256": self.source_sha256,
+            "post_init_dynamic_write_ranges": [
+                [item.start, item.end] for item in self.post_init_dynamic_write_ranges
+            ],
+        }
 
 
 def legacy_source_digest(sources: list[str]) -> str:
@@ -204,15 +275,113 @@ def _schema_fields(
 
 
 def _declared_ranges(value: Any) -> list[dict[str, int]]:
+    if not isinstance(value, list):
+        raise ValueError(f"reviewed dynamic ranges must be an explicit list: {value!r}")
     ranges = []
-    for item in value or []:
-        if not isinstance(item, list) or len(item) != 2 or not all(isinstance(cell, int) for cell in item):
+    for item in value:
+        if (
+            not isinstance(item, list)
+            or len(item) != 2
+            or not all(type(cell) is int for cell in item)
+        ):
             raise ValueError(f"invalid reviewed dynamic range: {item!r}")
         start, end = item
         if not 0 <= start <= end <= 511:
             raise ValueError(f"reviewed dynamic range outside S0..S511: {item!r}")
         ranges.append({"start": start, "end": end})
     return ranges
+
+
+def normalize_declaration(
+    source: str, value: Any
+) -> tuple[NormalizedDeclaration | None, list[str]]:
+    """Normalize one declaration, returning only precise shape errors on failure."""
+    collector = ErrorCollector(source)
+    if not isinstance(value, dict):
+        collector.add("declaration must be an object")
+        return None, collector.errors
+
+    def require(
+        name: str,
+        expected_type: type,
+        default: Any = None,
+        *,
+        required: bool = True,
+    ) -> Any:
+        if name not in value:
+            if required:
+                collector.add(f"{name} is required")
+            return default
+        candidate = value.get(name, default)
+        valid = type(candidate) is expected_type
+        if expected_type is str:
+            valid = isinstance(candidate, str)
+        if not valid:
+            article = "an" if expected_type is int else "a"
+            collector.add(f"{name} must be {article} {expected_type.__name__}")
+            return default
+        return candidate
+
+    service_id = require("service_id", str, "")
+    magic = require("magic", int, 0)
+    service_abi = require("service_abi", int, 0)
+    schema_id = value.get("schema_id")
+    if "schema_id" not in value:
+        collector.add("schema_id is required")
+    elif schema_id is not None and not isinstance(schema_id, str):
+        collector.add("schema_id must be null or a string")
+    schema_version = require("schema_version", int, 0)
+    extension_base = require("extension_base", int, 0)
+    telemetry_base = require("telemetry_base", int, 0)
+    publishes_state = require("publishes_state", bool, False)
+    custom_state_bits = require("custom_state_bits", int, 0, required=False)
+    publishes_generation = require("publishes_generation", bool, False)
+    extension_flags = require("extension_flags", int, 0)
+    implementation_id = value.get("implementation_id")
+    if "implementation_id" not in value:
+        collector.add("implementation_id is required")
+    elif implementation_id is not None and not isinstance(implementation_id, str):
+        collector.add("implementation_id must be null or a string")
+    source_sha256 = require("source_sha256", str, "")
+    pilot_family = require("pilot_family", str, "")
+
+    normalized_ranges: dict[str, tuple[StackRange, ...]] = {}
+    for name, default in (
+        ("legacy_owned_ranges", None),
+        ("post_init_dynamic_write_ranges", []),
+    ):
+        if name not in value:
+            collector.add(f"{name} is required")
+            continue
+        try:
+            normalized_ranges[name] = tuple(
+                StackRange(item["start"], item["end"])
+                for item in _declared_ranges(value.get(name, default))
+            )
+        except ValueError as error:
+            collector.add(str(error))
+
+    if collector.errors:
+        return None, collector.errors
+    return NormalizedDeclaration(
+        source=source,
+        service_id=service_id,
+        magic=magic,
+        service_abi=service_abi,
+        schema_id=schema_id,
+        schema_version=schema_version,
+        extension_base=extension_base,
+        telemetry_base=telemetry_base,
+        publishes_state=publishes_state,
+        custom_state_bits=custom_state_bits,
+        publishes_generation=publishes_generation,
+        extension_flags=extension_flags,
+        implementation_id=implementation_id,
+        legacy_owned_ranges=normalized_ranges["legacy_owned_ranges"],
+        post_init_dynamic_write_ranges=normalized_ranges["post_init_dynamic_write_ranges"],
+        source_sha256=source_sha256,
+        pilot_family=pilot_family,
+    ), []
 
 
 def extension_ownership_errors(
@@ -359,14 +528,9 @@ def _consumer_checks(source: str, protocol_registry: dict[str, Any]) -> list[dic
     return checks
 
 
-def declaration_errors(
-    root: Path,
-    contracts: dict[str, dict[str, Any]],
-    declarations: dict[str, Any],
-) -> list[str]:
-    root = Path(root)
-    errors: list[str] = []
-    canonical = {
+def canonical_envelope() -> dict[str, Any]:
+    """Return the immutable v1 declaration constants."""
+    return {
         "base": BASE,
         "length": LENGTH,
         "capability_bits_v1": CAPABILITY_BITS_V1,
@@ -380,253 +544,381 @@ def declaration_errors(
         "extension_min_length": EXTENSION_MIN_LENGTH,
         "extension_max_length": EXTENSION_MAX_LENGTH,
     }
-    if declarations.get("envelope") != canonical:
-        errors.append(f"envelope constants differ from the canonical v1 layout: {canonical}")
-    by_source = {contract["source"]: contract for contract in contracts.values()}
-    migrated = declarations.get("migrated", {})
+
+
+def expected_envelope_cells(declaration: NormalizedDeclaration) -> dict[int, Any]:
+    """Derive the fixed header cells from a normalized declaration."""
+    expected: dict[int, Any] = {
+        BASE: declaration.magic,
+        BASE + 1: declaration.service_abi,
+        CAPABILITY_MASK_CELL: declaration.capability_mask,
+    }
+    if declaration.capability_mask & HAS_SCHEMA:
+        expected[SCHEMA_ID_CELL] = schema_hash(
+            declaration.schema_id or "", declaration.schema_version
+        )
+    if declaration.capability_mask & HAS_EXTENSION:
+        expected[EXTENSION_BASE_CELL] = declaration.extension_base
+    if declaration.capability_mask & HAS_TELEMETRY:
+        expected[TELEMETRY_BASE_CELL] = declaration.telemetry_base
+    if declaration.capability_mask & HAS_GENERATION:
+        expected[GENERATION_CELL] = 0
+    return expected
+
+
+def identity_header_errors(
+    declaration: NormalizedDeclaration, contract: dict[str, Any]
+) -> list[str]:
+    """Validate semantic identity and its contract-backed S0/S1 header."""
+    errors: list[str] = []
+    if not SERVICE_ID_RE.fullmatch(declaration.service_id):
+        errors.append(f"invalid semantic service_id {declaration.service_id!r}")
+    canonical_service_id = contract["identity"]["service_id"]
+    if declaration.service_id != canonical_service_id:
+        errors.append(
+            f"service_id {declaration.service_id!r} != canonical contract identity "
+            f"{canonical_service_id!r}"
+        )
+    if declaration.magic == 0:
+        errors.append("magic must be the service's registered nonzero integer")
+    if declaration.service_abi < 1:
+        errors.append("service_abi must be a positive integer")
+    if not any(
+        header["base"] == BASE
+        and header["magic"] == declaration.magic
+        and header["abi"] == declaration.service_abi
+        for header in contract["own_stack"]["headers"]
+    ):
+        errors.append("S0/S1 do not publish the declared magic and ABI as a verified header")
+    return errors
+
+
+def schema_capability_errors(
+    declaration: NormalizedDeclaration,
+    bound_schema_pairs: set[tuple[str, int]],
+    writes: dict[int, set[Any]],
+) -> list[str]:
+    """Validate schema bindings, capability pointers, and fixed header writes."""
+    errors: list[str] = []
+    if declaration.schema_id is not None and not declaration.schema_id:
+        errors.append("schema_id must be null or a nonempty semantic hash name")
+    if (declaration.schema_id is None) != (declaration.schema_version == 0):
+        errors.append("schema_id and schema_version must both be absent/zero or both present")
+    if declaration.schema_id is not None and (
+        f'HASH("{declaration.schema_id}")', declaration.schema_version
+    ) not in bound_schema_pairs:
+        errors.append("schema/version is not canonical and is not verified by this source")
+    if not 0 <= declaration.telemetry_base <= 511:
+        errors.append("telemetry_base must be an integer in S0..S511")
+    elif declaration.telemetry_base and declaration.telemetry_base < BASE + LENGTH:
+        errors.append("telemetry_base cannot point inside the common header")
+
+    expected = expected_envelope_cells(declaration)
+    for cell in range(BASE, BASE + LENGTH):
+        if cell not in expected and cell not in (STATE_CELL, GENERATION_CELL) and writes.get(cell):
+            errors.append(f"S{cell} is reserved and must not be written undeclared")
+    for address, value in expected.items():
+        if address != GENERATION_CELL and writes.get(address, set()) != {value}:
+            errors.append(f"S{address} must be written exactly as {value}")
+    return errors
+
+
+def state_generation_rule_errors(
+    declaration: NormalizedDeclaration,
+    rows: list[list[str]],
+    aliases: dict[str, int],
+    writes: dict[int, set[Any]],
+) -> list[str]:
+    """Validate declared state values and generation publication semantics."""
+    errors = generation_errors(rows, aliases, declaration.publishes_generation)
+    if declaration.publishes_generation:
+        written = writes.get(GENERATION_CELL, set())
+        initialized = 0 in written or clears_before_yield(rows)
+        if not initialized or any(other is not None for other in written - {0}):
+            errors.append(
+                f"S{GENERATION_CELL} must be initialized to 0 and only advanced dynamically"
+            )
+
+    custom_bits_valid = 0 <= declaration.custom_state_bits < 2 ** (
+        VALUE_BITS - CUSTOM_STATE_SHIFT
+    )
+    if not custom_bits_valid:
+        errors.append("custom_state_bits must fit the service-specific state range")
+    effective_custom_bits = declaration.custom_state_bits if custom_bits_valid else 0
+    state_writes = writes.get(STATE_CELL, set())
+    if declaration.publishes_state:
+        if not state_writes:
+            errors.append(f"HAS_STATE requires the source to publish S{STATE_CELL}")
+        errors.extend(state_errors(state_writes, effective_custom_bits))
+    elif custom_bits_valid and declaration.custom_state_bits:
+        errors.append("custom state bits require HAS_STATE")
+    elif state_writes:
+        errors.append(f"S{STATE_CELL} is reserved unless the service declares HAS_STATE")
+    return errors
+
+
+@dataclass(frozen=True)
+class ExtensionRuleResult:
+    """Extension validation output needed by layout and publication rules."""
+
+    errors: tuple[str, ...]
+    published_cells: dict[int, Any]
+    reserved_cells: frozenset[int]
+
+
+def extension_rule_result(
+    declaration: NormalizedDeclaration, writes: dict[int, set[Any]]
+) -> ExtensionRuleResult:
+    """Validate extension identity, bounds, ownership inputs, and literal writes."""
+    errors: list[str] = []
+    published: dict[int, Any] = {}
+    reserved: set[int] = set()
+    base = declaration.extension_base
+    flags_valid = 0 <= declaration.extension_flags <= 1
+    if base and not 0 <= base <= 511 - EXTENSION_MIN_LENGTH + 1:
+        errors.append("extension base cannot fit the minimum extension header")
+    if not flags_valid:
+        errors.append("extension_flags may use only v1 HAS_IMPLEMENTATION_ID bit 0")
+    if base == 0:
+        if declaration.extension_flags != 0 or declaration.implementation_id is not None:
+            errors.append("absent extension requires zero flags and no ImplementationId")
+        return ExtensionRuleResult(tuple(errors), published, frozenset())
+
+    has_implementation_id = flags_valid and bool(declaration.extension_flags & 1)
+    implementation_valid = (
+        isinstance(declaration.implementation_id, str)
+        and bool(IMPLEMENTATION_ID_RE.fullmatch(declaration.implementation_id))
+    )
+    if has_implementation_id and not implementation_valid:
+        errors.append("HAS_IMPLEMENTATION_ID requires a semantic ic10.implementation.* identity")
+    elif flags_valid and not has_implementation_id and declaration.implementation_id is not None:
+        errors.append("ImplementationId requires HAS_IMPLEMENTATION_ID")
+    if not 0 <= base <= 511 - EXTENSION_MIN_LENGTH + 1:
+        return ExtensionRuleResult(tuple(errors), published, frozenset())
+
+    for address, value in {
+        base: EXTENSION_MAGIC,
+        base + 1: EXTENSION_VERSION,
+        base + 3: declaration.extension_flags,
+    }.items():
+        if writes.get(address) != {value}:
+            errors.append(f"extension S{address} must be written exactly as {value}")
+    lengths = writes.get(base + 2, set())
+    if len(lengths) != 1 or type(next(iter(lengths), None)) is not int:
+        errors.append("extension length must be one literal integer")
+        return ExtensionRuleResult(tuple(errors), published, frozenset())
+
+    extension_length = next(iter(lengths))
+    extension_end = base + extension_length
+    published.update({
+        base: EXTENSION_MAGIC,
+        base + 1: EXTENSION_VERSION,
+        base + 2: extension_length,
+        base + 3: declaration.extension_flags,
+    })
+    if 0 <= base < extension_end <= 512:
+        reserved.update(range(base, extension_end))
+        errors.extend(extension_ownership_errors(
+            [item.as_dict() for item in declaration.legacy_owned_ranges],
+            base,
+            extension_length,
+        ))
+    if not EXTENSION_MIN_LENGTH <= extension_length <= EXTENSION_MAX_LENGTH:
+        errors.append("extension length is outside v1 bounds")
+    if extension_end > 512:
+        errors.append("extension exceeds the 512-cell stack")
+    if base < BASE + LENGTH:
+        errors.append("extension overlaps the fixed header")
+    if has_implementation_id and implementation_valid:
+        if extension_length < 5:
+            errors.append("HAS_IMPLEMENTATION_ID extension is shorter than five cells")
+        implementation_value = f'HASH("{declaration.implementation_id}")'
+        published[base + 4] = implementation_value
+        if writes.get(base + 4) != {implementation_value}:
+            errors.append(
+                "extension ImplementationId must be written exactly as "
+                f"{implementation_value}"
+            )
+    return ExtensionRuleResult(tuple(errors), published, frozenset(reserved))
+
+
+def legacy_layout_errors(
+    declaration: NormalizedDeclaration,
+    contract: dict[str, Any],
+    extension_cells: frozenset[int],
+) -> list[str]:
+    """Reconcile reviewed legacy ownership with literal and dynamic stack use."""
+    actual = (
+        set(contract["own_stack"]["literal_reads"])
+        | set(contract["own_stack"]["literal_writes"])
+    ) - set(range(BASE, BASE + LENGTH)) - set(extension_cells)
+    for item in declaration.post_init_dynamic_write_ranges:
+        actual.update(item.cells())
+    reviewed = set().union(*(item.cells() for item in declaration.legacy_owned_ranges))
+    return (["legacy_owned_ranges no longer match the pre-extension stack layout"]
+            if actual != reviewed else [])
+
+
+def publication_rule_errors(
+    root: Path,
+    declaration: NormalizedDeclaration,
+    contract: dict[str, Any],
+    published_cells: dict[int, Any],
+    extension_cells: frozenset[int],
+) -> list[str]:
+    """Validate entry-path publication, reserved cells, and the line hard limit."""
+    expected = expected_envelope_cells(declaration) | published_cells
+    reserved = set(range(BASE, BASE + LENGTH)) | set(extension_cells)
+    errors = publication_errors(
+        Path(root) / declaration.source,
+        expected,
+        declaration.publication_metadata(),
+        reserved,
+        reference_writes_own_stack=bool(
+            contract["own_stack"]["dynamic_write_ranges"]
+        ),
+        mutable_cells=frozenset(
+            ({STATE_CELL} if declaration.publishes_state else set())
+            | ({GENERATION_CELL} if declaration.publishes_generation else set())
+        ),
+    )
+    line_count = len((Path(root) / declaration.source).read_text().splitlines())
+    if line_count > 128:
+        errors.append(f"migrated pilot is {line_count} lines, above the 128-line hard limit")
+    return errors
+
+
+def declaration_set_errors(
+    by_source: dict[str, dict[str, Any]],
+    migrated: dict[str, Any],
+    exemption: dict[str, Any],
+) -> list[str]:
+    """Validate declaration coverage and the immutable pre-v1 baseline."""
+    errors: list[str] = []
     unknown = sorted(set(migrated) - set(by_source))
     if unknown:
         errors.append(f"migrated declarations reference missing scripts: {unknown}")
-    exemption = declarations.get("legacy_exemption", {})
-    declared_legacy = exemption.get("sources", [])
-    if not isinstance(declared_legacy, list) or any(not isinstance(source, str) for source in declared_legacy):
-        errors.append("legacy exemption sources must be an explicit path list")
-        declared_legacy = []
+    shape_errors: list[str] = []
+    for field_name in ("id", "reason", "migration_rule"):
+        value = exemption.get(field_name)
+        if not isinstance(value, str) or not value:
+            shape_errors.append(f"legacy exemption {field_name} must be a nonempty string")
+    declared_legacy = exemption.get("sources")
+    if not isinstance(declared_legacy, list) or any(
+        not isinstance(source, str) for source in declared_legacy
+    ):
+        shape_errors.append("legacy exemption sources must be an explicit path list")
+    source_count = exemption.get("source_count")
+    if type(source_count) is not int:
+        shape_errors.append("legacy exemption source_count must be an integer")
+    source_digest = exemption.get("source_set_sha256")
+    if not isinstance(source_digest, str) or not re.fullmatch(r"[0-9a-f]{64}", source_digest):
+        shape_errors.append("legacy exemption source_set_sha256 must be a lowercase SHA-256 digest")
+    if shape_errors:
+        return errors + shape_errors
     if len(declared_legacy) != len(set(declared_legacy)):
         errors.append("legacy exemption source list contains duplicates")
     legacy_sources = sorted(set(declared_legacy))
     unclassified = sorted(set(by_source) - set(migrated) - set(legacy_sources))
     if unclassified:
-        errors.append(f"new deployable programs must publish the header or receive explicit exemptions: {unclassified}")
-    if exemption.get("source_count") != len(legacy_sources):
         errors.append(
-            f"legacy baseline count {exemption.get('source_count')} != baseline path count {len(legacy_sources)}"
+            "new deployable programs must publish the header or receive explicit "
+            f"exemptions: {unclassified}"
+        )
+    if source_count != len(legacy_sources):
+        errors.append(
+            f"legacy baseline count {source_count} != baseline path count "
+            f"{len(legacy_sources)}"
         )
     digest = legacy_source_digest(legacy_sources)
-    if exemption.get("source_set_sha256") != digest:
+    if source_digest != digest:
         errors.append(
-            "legacy exemption source set changed; migrate the new service or explicitly review and refresh the baseline"
+            "legacy exemption source set changed; migrate the new service or explicitly "
+            "review and refresh the baseline"
         )
     if digest != PRE_V1_LEGACY_BASELINE_SHA256:
         errors.append("pre-v1 legacy baseline is immutable; new paths must publish the envelope")
+    return errors
+
+
+def declaration_errors(
+    root: Path,
+    contracts: dict[str, dict[str, Any]],
+    declarations: dict[str, Any],
+) -> list[str]:
+    """Normalize declarations and run each independent validation rule in one pass."""
+    root = Path(root)
+    collector = ErrorCollector()
+    if not isinstance(declarations, dict):
+        return ["stack envelope declarations must be an object"]
+    canonical = canonical_envelope()
+    if declarations.get("envelope") != canonical:
+        collector.add(f"envelope constants differ from the canonical v1 layout: {canonical}")
+    by_source = {contract["source"]: contract for contract in contracts.values()}
+    migrated = declarations.get("migrated")
+    migrated_valid = "migrated" in declarations and isinstance(migrated, dict)
+    if not migrated_valid:
+        collector.add(
+            "migrated declarations are required as an object keyed by source path"
+            if "migrated" not in declarations
+            else "migrated declarations must be an object keyed by source path"
+        )
+        migrated = {}
+
+    exemption = declarations.get("legacy_exemption")
+    exemption_valid = "legacy_exemption" in declarations and isinstance(exemption, dict)
+    if not exemption_valid:
+        collector.add(
+            "legacy_exemption is required as an object"
+            if "legacy_exemption" not in declarations
+            else "legacy_exemption must be an object"
+        )
+        exemption = {}
+    if migrated_valid and exemption_valid:
+        collector.errors.extend(declaration_set_errors(by_source, migrated, exemption))
+
     canonical_pairs = canonical_schema_pairs(root)
     service_ids: dict[str, str] = {}
-    for source, declaration in sorted(migrated.items()):
+    for source, raw_declaration in sorted(migrated.items()):
         if source not in by_source:
             continue
-        service_id = declaration.get("service_id")
-        if not isinstance(service_id, str) or not SERVICE_ID_RE.fullmatch(service_id):
-            errors.append(f"{source}: invalid semantic service_id {service_id!r}")
-        elif service_id in service_ids:
-            errors.append(f"duplicate semantic service_id {service_id}: {service_ids[service_id]} and {source}")
-        else:
-            service_ids[service_id] = source
-        canonical_service_id = by_source[source]["identity"]["service_id"]
-        if service_id != canonical_service_id:
-            errors.append(
-                f"{source}: service_id {service_id!r} != canonical contract identity {canonical_service_id!r}"
+        declaration, shape_errors = normalize_declaration(source, raw_declaration)
+        collector.errors.extend(shape_errors)
+        if declaration is None:
+            continue
+        service = ErrorCollector(source)
+        if declaration.service_id in service_ids:
+            collector.add(
+                f"duplicate semantic service_id {declaration.service_id}: "
+                f"{service_ids[declaration.service_id]} and {source}"
             )
-        magic_value = declaration.get("magic")
-        service_abi_value = declaration.get("service_abi")
-        schema_version_value = declaration.get("schema_version")
-        extension_base_value = declaration.get("extension_base")
-        magic = magic_value if type(magic_value) is int else 0
-        service_abi = service_abi_value if type(service_abi_value) is int else 0
-        schema_id = declaration.get("schema_id")
-        schema_version = schema_version_value if type(schema_version_value) is int else -1
-        extension_base = extension_base_value if type(extension_base_value) is int else -1
-        extension_flags_value = declaration.get("extension_flags", -1)
-        extension_flags = extension_flags_value if type(extension_flags_value) is int else -1
-        implementation_id = declaration.get("implementation_id")
-        telemetry_base_value = declaration.get("telemetry_base")
-        telemetry_base = telemetry_base_value if type(telemetry_base_value) is int else -1
-        publishes_state = declaration.get("publishes_state")
-        publishes_generation = declaration.get("publishes_generation")
-        if type(magic_value) is not int or magic == 0:
-            errors.append(f"{source}: magic must be the service's registered nonzero integer")
-        if type(service_abi_value) is not int or service_abi < 1:
-            errors.append(f"{source}: service_abi must be a positive integer")
-        if type(schema_version_value) is not int:
-            errors.append(f"{source}: schema_version must be an integer")
-        if type(extension_base_value) is not int:
-            errors.append(f"{source}: extension_base must be an integer")
-        if type(telemetry_base_value) is not int or not 0 <= telemetry_base <= 511:
-            errors.append(f"{source}: telemetry_base must be an integer in S0..S511")
-        if type(publishes_state) is not bool:
-            errors.append(f"{source}: publishes_state must be a boolean")
-        if type(publishes_generation) is not bool:
-            errors.append(f"{source}: publishes_generation must be a boolean")
-        if telemetry_base and telemetry_base < BASE + LENGTH:
-            errors.append(f"{source}: telemetry_base cannot point inside the common header")
-        if schema_id is not None and (not isinstance(schema_id, str) or not schema_id):
-            errors.append(f"{source}: schema_id must be null or a nonempty semantic hash name")
-        if (schema_id is None) != (schema_version == 0):
-            errors.append(f"{source}: schema_id and schema_version must both be absent/zero or both present")
-        headers = by_source[source]["own_stack"]["headers"]
-        if not any(
-            header["base"] == BASE and header["magic"] == magic and header["abi"] == service_abi
-            for header in headers
-        ):
-            errors.append(f"{source}: S0/S1 do not publish the declared magic and ABI as a verified header")
-        source_rows, source_aliases = _parse(root / source)
-        writes = _writes(source_rows, source_aliases)
-        bound_schema_pairs = _schema_check_pairs(source_rows, source_aliases) | canonical_pairs
-        if schema_id is not None and (
-            f'HASH("{schema_id}")', schema_version
-        ) not in bound_schema_pairs:
-            errors.append(f"{source}: schema/version is not canonical and is not verified by this source")
-        if extension_base and not 0 <= extension_base <= 511 - EXTENSION_MIN_LENGTH + 1:
-            errors.append(f"{source}: extension base cannot fit the minimum extension header")
-        if type(extension_flags_value) is not int or extension_flags < 0 or extension_flags & ~1:
-            errors.append(f"{source}: extension_flags may use only v1 HAS_IMPLEMENTATION_ID bit 0")
-        if extension_base == 0 and (extension_flags != 0 or implementation_id is not None):
-            errors.append(f"{source}: absent extension requires zero flags and no ImplementationId")
-        if extension_flags & 1:
-            if not isinstance(implementation_id, str) or not IMPLEMENTATION_ID_RE.fullmatch(implementation_id):
-                errors.append(f"{source}: HAS_IMPLEMENTATION_ID requires a semantic ic10.implementation.* identity")
-        elif implementation_id is not None:
-            errors.append(f"{source}: ImplementationId requires HAS_IMPLEMENTATION_ID")
-        try:
-            legacy_owned_ranges = _declared_ranges(declaration.get("legacy_owned_ranges"))
-        except ValueError as error:
-            errors.append(f"{source}: {error}")
-            legacy_owned_ranges = []
-        capability_mask = (
-            (HAS_SCHEMA if schema_id is not None else 0)
-            | (HAS_EXTENSION if extension_base else 0)
-            | (HAS_STATE if publishes_state is True else 0)
-            | (HAS_TELEMETRY if telemetry_base else 0)
-            | (HAS_GENERATION if publishes_generation is True else 0)
-        )
-        expected: dict[int, Any] = {
-            BASE: magic,
-            BASE + 1: service_abi,
-            CAPABILITY_MASK_CELL: capability_mask,
-        }
-        if capability_mask & HAS_SCHEMA:
-            expected[SCHEMA_ID_CELL] = schema_hash(schema_id, schema_version)
-        if capability_mask & HAS_EXTENSION:
-            expected[EXTENSION_BASE_CELL] = extension_base
-        if capability_mask & HAS_TELEMETRY:
-            expected[TELEMETRY_BASE_CELL] = telemetry_base
-        if capability_mask & HAS_GENERATION:
-            expected[GENERATION_CELL] = 0
-        errors.extend(
-            f"{source}: {error}"
-            for error in generation_errors(
-                source_rows, source_aliases, bool(capability_mask & HAS_GENERATION)
-            )
-        )
-        state_writes = writes.get(STATE_CELL, set())
-        custom_state_bits = declaration.get("custom_state_bits", 0)
-        if type(custom_state_bits) is not int or not 0 <= custom_state_bits < 2 ** (
-            VALUE_BITS - CUSTOM_STATE_SHIFT
-        ):
-            errors.append(f"{source}: custom_state_bits must fit the service-specific state range")
-            custom_state_bits = 0
-        if capability_mask & HAS_STATE:
-            if not state_writes:
-                errors.append(f"{source}: HAS_STATE requires the source to publish S{STATE_CELL}")
-            errors.extend(
-                f"{source}: {error}" for error in state_errors(state_writes, custom_state_bits)
-            )
-        elif custom_state_bits:
-            errors.append(f"{source}: custom state bits require HAS_STATE")
-        elif state_writes:
-            errors.append(f"{source}: S{STATE_CELL} is reserved unless the service declares HAS_STATE")
-        for cell in range(BASE, BASE + LENGTH):
-            if cell not in expected and cell not in (STATE_CELL, GENERATION_CELL) and writes.get(cell):
-                errors.append(f"{source}: S{cell} is reserved and must not be written undeclared")
-        published_expected = dict(expected)
-        reserved_cells = set(range(BASE, BASE + LENGTH))
-        extension_cells: set[int] = set()
-        for address, value in expected.items():
-            written = writes.get(address, set())
-            if address == GENERATION_CELL:
-                # a generation starts at zero — written, or cleared with the whole stack —
-                # and only ever advances dynamically after that
-                initialized = value in written or clears_before_yield(source_rows)
-                if not initialized or any(other is not None for other in written - {value}):
-                    errors.append(
-                        f"{source}: S{address} must be initialized to {value} and only advanced dynamically"
-                    )
-            elif written != {value}:
-                errors.append(f"{source}: S{address} must be written exactly as {value}")
-        if extension_base:
-            for address, value in {
-                extension_base: EXTENSION_MAGIC,
-                extension_base + 1: EXTENSION_VERSION,
-                extension_base + 3: extension_flags,
-            }.items():
-                if writes.get(address) != {value}:
-                    errors.append(f"{source}: extension S{address} must be written exactly as {value}")
-            lengths = writes.get(extension_base + 2, set())
-            if len(lengths) != 1 or not isinstance(next(iter(lengths), None), int):
-                errors.append(f"{source}: extension length must be one literal integer")
-            else:
-                extension_length = next(iter(lengths))
-                extension_end = extension_base + extension_length
-                published_expected.update({
-                    extension_base: EXTENSION_MAGIC,
-                    extension_base + 1: EXTENSION_VERSION,
-                    extension_base + 2: extension_length,
-                    extension_base + 3: extension_flags,
-                })
-                if 0 <= extension_base < extension_end <= 512:
-                    extension_cells = set(range(extension_base, extension_end))
-                    reserved_cells.update(extension_cells)
-                    errors.extend(
-                        f"{source}: {error}"
-                        for error in extension_ownership_errors(
-                            legacy_owned_ranges, extension_base, extension_length
-                        )
-                    )
-                if not EXTENSION_MIN_LENGTH <= extension_length <= EXTENSION_MAX_LENGTH:
-                    errors.append(f"{source}: extension length is outside v1 bounds")
-                if extension_end > 512:
-                    errors.append(f"{source}: extension exceeds the 512-cell stack")
-                if extension_base < BASE + LENGTH:
-                    errors.append(f"{source}: extension overlaps the fixed header")
-                if extension_flags & 1:
-                    if extension_length < 5:
-                        errors.append(f"{source}: HAS_IMPLEMENTATION_ID extension is shorter than five cells")
-                    implementation_value = f'HASH("{implementation_id}")'
-                    published_expected[extension_base + 4] = implementation_value
-                    if writes.get(extension_base + 4) != {implementation_value}:
-                        errors.append(
-                            f"{source}: extension ImplementationId must be written exactly as {implementation_value}"
-                        )
-        actual_legacy_cells = (
-            set(by_source[source]["own_stack"]["literal_reads"])
-            | set(by_source[source]["own_stack"]["literal_writes"])
-        ) - set(range(BASE, BASE + LENGTH)) - extension_cells
-        try:
-            reviewed_dynamic_ranges = _declared_ranges(
-                declaration.get("post_init_dynamic_write_ranges", [])
-            )
-        except ValueError:
-            reviewed_dynamic_ranges = []
-        actual_legacy_cells.update(_range_cells(reviewed_dynamic_ranges))
-        if actual_legacy_cells != _range_cells(legacy_owned_ranges):
-            errors.append(f"{source}: legacy_owned_ranges no longer match the pre-extension stack layout")
-        errors.extend(
-            f"{source}: {error}"
-            for error in publication_errors(
-                root / source, published_expected, declaration, reserved_cells,
-                reference_writes_own_stack=bool(
-                    by_source[source]["own_stack"]["dynamic_write_ranges"]
-                ),
-                mutable_cells=frozenset(
-                    ({STATE_CELL} if capability_mask & HAS_STATE else set())
-                    | ({GENERATION_CELL} if capability_mask & HAS_GENERATION else set())
-                ),
-            )
-        )
-        # validate_ic10.py owns the 120-line soft ceiling and its reviewed exemptions.
-        line_count = len((root / source).read_text().splitlines())
-        if line_count > 128:
-            errors.append(f"{source}: migrated pilot is {line_count} lines, above the 128-line hard limit")
-    return errors
+        elif SERVICE_ID_RE.fullmatch(declaration.service_id):
+            service_ids[declaration.service_id] = source
+
+        contract = by_source[source]
+        rows, aliases = _parse(root / source)
+        writes = _writes(rows, aliases)
+        service.extend(identity_header_errors(declaration, contract))
+        service.extend(schema_capability_errors(
+            declaration,
+            _schema_check_pairs(rows, aliases) | canonical_pairs,
+            writes,
+        ))
+        service.extend(state_generation_rule_errors(declaration, rows, aliases, writes))
+        extension = extension_rule_result(declaration, writes)
+        service.extend(list(extension.errors))
+        service.extend(legacy_layout_errors(
+            declaration, contract, extension.reserved_cells
+        ))
+        service.extend(publication_rule_errors(
+            root,
+            declaration,
+            contract,
+            extension.published_cells,
+            extension.reserved_cells,
+        ))
+        collector.errors.extend(service.errors)
+    return collector.errors
 
 
 def build_inventory(

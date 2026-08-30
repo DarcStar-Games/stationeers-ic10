@@ -6,6 +6,7 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 
 from copy import deepcopy
+from dataclasses import replace
 import hashlib
 import json
 import sys
@@ -18,13 +19,25 @@ from framework.script_contracts.own_stack import analyze_own_stack
 from framework.stack_envelope import (
     BASE,
     LENGTH,
+    STATE_CELL,
+    NormalizedDeclaration,
+    StackRange,
     schema_hash,
     build_inventory,
     canonical_schema_pairs,
     declaration_errors,
+    declaration_set_errors,
+    expected_envelope_cells,
+    extension_rule_result,
     extension_ownership_errors,
     generation_errors,
+    identity_header_errors,
+    legacy_layout_errors,
+    normalize_declaration,
+    publication_rule_errors,
+    schema_capability_errors,
     state_errors,
+    state_generation_rule_errors,
     legacy_source_digest,
     load_declarations,
     publication_errors,
@@ -370,6 +383,129 @@ for field in ("magic", "service_abi", "extension_base"):
         malformed_errors = []
     ck(any(field in error for error in malformed_errors),
        f"malformed {field} crashed or bypassed declaration validation")
+
+# Normalization gates independent rules, which accept a minimal typed declaration.
+minimal = NormalizedDeclaration(source="minimal.ic10")
+minimal_contract = {
+    "identity": {"service_id": "ic10.script.example"},
+    "own_stack": {
+        "headers": [{"base": 0, "magic": 1, "abi": 1}],
+        "literal_reads": [],
+        "literal_writes": [],
+        "dynamic_write_ranges": [],
+    },
+}
+minimal_writes = {address: {value} for address, value in expected_envelope_cells(minimal).items()}
+ck(not identity_header_errors(minimal, minimal_contract),
+   "the identity/header rule rejected a minimal normalized declaration")
+ck(not schema_capability_errors(minimal, set(), minimal_writes),
+   "the schema/capability rule rejected a minimal normalized declaration")
+ck(not state_generation_rule_errors(minimal, [["yield"]], {}, minimal_writes),
+   "the state/generation rule rejected a minimal normalized declaration")
+minimal_extension = extension_rule_result(minimal, minimal_writes)
+ck(not minimal_extension.errors,
+   "the extension rule rejected a minimal normalized declaration")
+ck(not legacy_layout_errors(minimal, minimal_contract, minimal_extension.reserved_cells),
+   "the legacy-layout rule rejected a minimal normalized declaration")
+ck(StackRange(10, 12).cells() == {10, 11, 12},
+   "normalized stack ranges do not retain their inclusive cells")
+ck(any("missing scripts" in error for error in declaration_set_errors(
+    {}, {"missing.ic10": {}}, {"sources": [], "source_count": 0}
+)), "the declaration-set rule did not reject a missing migrated source")
+with TemporaryDirectory() as temporary:
+    temporary_root = _ProjectPath(temporary)
+    minimal_source = temporary_root / minimal.source
+    minimal_source.write_text("poke 0 1\npoke 1 1\npoke 2 0\nyield\n")
+    publishable = replace(
+        minimal, source_sha256=hashlib.sha256(minimal_source.read_bytes()).hexdigest()
+    )
+    ck(not publication_rule_errors(
+        temporary_root, publishable, minimal_contract, {}, frozenset()
+    ), "the publication rule rejected a minimal normalized declaration")
+
+malformed = deepcopy(load_declarations(ROOT)["migrated"][MONITOR])
+malformed["magic"] = "1"
+normalized, shape_errors = normalize_declaration(MONITOR, malformed)
+ck(normalized is None and shape_errors == [f"{MONITOR}: magic must be an int"],
+   "malformed declaration shape cascaded into secondary validation errors")
+for missing_field in (
+    "schema_id",
+    "implementation_id",
+    "legacy_owned_ranges",
+    "post_init_dynamic_write_ranges",
+):
+    missing = deepcopy(load_declarations(ROOT))
+    del missing["migrated"][MONITOR][missing_field]
+    missing_errors = declaration_errors(ROOT, contracts, missing)
+    ck(any(f"{missing_field} is required" in error for error in missing_errors),
+       f"missing {missing_field} reached inventory rendering without a shape error")
+
+malformed_top_level = deepcopy(load_declarations(ROOT))
+malformed_top_level["migrated"] = []
+ck(declaration_errors(ROOT, contracts, malformed_top_level) == [
+    "migrated declarations must be an object keyed by source path"
+], "malformed migrated declarations cascaded into coverage errors")
+malformed_top_level = deepcopy(load_declarations(ROOT))
+malformed_top_level["legacy_exemption"]["sources"] = "not-a-list"
+ck(declaration_errors(ROOT, contracts, malformed_top_level) == [
+    "legacy exemption sources must be an explicit path list"
+], "malformed legacy sources cascaded into baseline and classification errors")
+for missing_field, expected_error in (
+    ("migrated", "migrated declarations are required as an object keyed by source path"),
+    ("legacy_exemption", "legacy_exemption is required as an object"),
+):
+    malformed_top_level = deepcopy(load_declarations(ROOT))
+    del malformed_top_level[missing_field]
+    ck(declaration_errors(ROOT, contracts, malformed_top_level) == [expected_error],
+       f"missing {missing_field} cascaded into derived declaration errors")
+
+for missing_field in (
+    "id", "reason", "migration_rule", "sources", "source_count", "source_set_sha256"
+):
+    malformed_exemption = deepcopy(load_declarations(ROOT))
+    del malformed_exemption["legacy_exemption"][missing_field]
+    exemption_errors = declaration_errors(ROOT, contracts, malformed_exemption)
+    ck(len(exemption_errors) == 1 and missing_field in exemption_errors[0],
+       f"missing legacy exemption {missing_field} bypassed or cascaded after shape validation")
+malformed_exemption = deepcopy(load_declarations(ROOT))
+malformed_exemption["legacy_exemption"]["source_count"] = float(
+    malformed_exemption["legacy_exemption"]["source_count"]
+)
+ck(declaration_errors(ROOT, contracts, malformed_exemption) == [
+    "legacy exemption source_count must be an integer"
+], "a floating-point legacy source_count passed integer shape validation")
+
+range_declaration = deepcopy(load_declarations(ROOT)["migrated"][MONITOR])
+for range_field in ("legacy_owned_ranges", "post_init_dynamic_write_ranges"):
+    for invalid_ranges in (0, False, "", {}):
+        malformed_range = deepcopy(range_declaration)
+        malformed_range[range_field] = invalid_ranges
+        normalized, range_errors = normalize_declaration(MONITOR, malformed_range)
+        ck(normalized is None and any("must be an explicit list" in error
+                                     for error in range_errors),
+           f"{range_field} accepted malformed value {invalid_ranges!r} as an empty list")
+    malformed_range = deepcopy(range_declaration)
+    malformed_range[range_field] = [[False, False]]
+    normalized, range_errors = normalize_declaration(MONITOR, malformed_range)
+    ck(normalized is None and any("invalid reviewed dynamic range" in error
+                                 for error in range_errors),
+       f"{range_field} accepted boolean endpoints as integer cells")
+
+invalid_custom_mask = replace(minimal, custom_state_bits=-1)
+ck(state_generation_rule_errors(
+    invalid_custom_mask, [["yield"]], {}, {}
+) == ["custom_state_bits must fit the service-specific state range"],
+   "an invalid custom-state mask cascaded into a HAS_STATE error")
+invalid_custom_mask = replace(minimal, publishes_state=True, custom_state_bits=-1)
+invalid_state_errors = state_generation_rule_errors(
+    invalid_custom_mask,
+    [["poke", str(STATE_CELL), "18"], ["yield"]],
+    {},
+    {STATE_CELL: {18}},
+)
+ck(any("custom_state_bits must fit" in error for error in invalid_state_errors)
+   and any("reserved bit" in error for error in invalid_state_errors),
+   "an invalid custom-state mask suppressed independent state-value validation")
 
 # Text in an unreachable branch or erased after publication is not publication.
 declaration = load_declarations(ROOT)["migrated"][MONITOR]
