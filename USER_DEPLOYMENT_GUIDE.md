@@ -134,7 +134,7 @@ This family contains the deployment classes shown in its generated program inven
 Generic Snapshot Directory family and live framework controllers publishing generic telemetry.
 
 ### Wiring and configuration
-`ic10/controller-discovery/controller_directory_adapter_v4_0.ic10` publishes Controller Directory adapter candidates. Wire it through `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` to a dedicated `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10`. Set `ic10/controller-discovery/controller_selector_v3_0.ic10` S2 to the Controller Directory **Host**. The selector derives type/member groups directly; there is no separate Controller Type Catalog.
+`ic10/controller-discovery/controller_directory_adapter_v4_0.ic10` publishes Controller Directory adapter candidates. Wire it through `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` to a dedicated `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10`. Set `ic10/controller-discovery/controller_selector_v3_0.ic10` S14 to the Controller Directory **Host**. The selector derives type/member groups directly; there is no separate Controller Type Catalog.
 
 ### Deployment procedure
 Bring up the Host/Bridge, then adapter, then selector. Verify controller count and overflow before selecting. Exercise at least two instances of one family to verify member ordering.

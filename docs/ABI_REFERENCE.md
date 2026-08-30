@@ -1103,21 +1103,21 @@ It requires a coherent current Transfer ABI2 snapshot, matching staged source/si
 Controller Selector is screwless and scans the sorted Generic Controller Directory directly. It derives type/member groups on demand and revalidates the active bank/generation before publication.
 
 ```text
-S2       Generic Snapshot Controller Directory RefId
-S3       selected type ordinal
-S4       selected member ordinal
-S5       controller ReferenceId
-S6       absolute provider index0
-S7       ControllerType hash
 S8       status; 1 valid
 S9       source generation
 S10      requested type ordinal
 S11      requested member ordinal
 S12      request generation; values precede generation
-S13      handled request generation; TERMINAL_RESPONSE token written after S5..S9 result/status
+S13      handled request generation; TERMINAL_RESPONSE token written after the result/status
+S14      Generic Snapshot Controller Directory RefId
+S15      selected type ordinal
+S16      selected member ordinal
+S17      controller ReferenceId
+S18      absolute provider index0
+S19      ControllerType hash
 ```
 
-Consumers may use S5/S7/S8/S9 only after `S13` equals the exact expected request generation. A stale valid status from the prior request is not evidence that a newer desired Type/Member has resolved.
+Consumers may use S17/S19/S8/S9 only after `S13` equals the exact expected request generation. A stale valid status from the prior request is not evidence that a newer desired Type/Member has resolved.
 
 ## Console Selector ABI v1
 

@@ -1,12 +1,14 @@
 # Controller Selector v3.0: direct sorted Generic Controller Directory selection.
-# ABI2. S2 Directory,S3/4 selection,S5 controller,S6 index,S7 type,S8 status,S9 gen.
-# S10/11 desired type/member,S12 request generation,S13 handled request generation.
+# ABI2. S8 status,S9 gen,S10/11 desired type/member,S12 request generation,
+# S13 handled request generation,S14 Directory,S15/16 selection,S17 controller,
+# S18 index,S19 type.
 alias directory r1
 poke 0 17320508
 poke 1 2
+poke 2 0
 Loop:
 yield
-get directory db 2
+get directory db 14
 blez directory NoDirectory
 getd r0 directory 0
 bne r0 31415981 NoDirectory
@@ -27,8 +29,8 @@ bgtz r0 Overflow
 blez r11 NoControllers
 get r4 db 12
 get r3 db 13
-get r14 db 3
-get r15 db 4
+get r14 db 15
+get r15 db 16
 beq r4 r3 RequestReady
 get r14 db 10
 get r15 db 11
@@ -80,11 +82,11 @@ getd r0 directory r12
 bne r0 r9 Updating
 get r0 db 12
 bne r0 r4 Updating
-poke 3 r14
-poke 4 r15
-poke 5 r5
-poke 6 r6
-poke 7 r7
+poke 15 r14
+poke 16 r15
+poke 17 r5
+poke 18 r6
+poke 19 r7
 poke 9 r9
 poke 8 1
 poke 13 r4 # TERMINAL_RESPONSE token LAST

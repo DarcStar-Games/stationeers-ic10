@@ -362,7 +362,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "f10b171a92fe2928fa2c2cebc0c91a416ecfdb533636700a3e0e0ae27714b187",
+   "source_sha256": "feabc414837081f786ba9ce304109ed41200a1d8a8d00f0aecd1aa5afeffb246",
    "legacy_owned_ranges": [
     [
      8,
@@ -2421,6 +2421,29 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "manufacturing"
+  },
+  "ic10/controller-discovery/controller_selector_v3_0.ic10": {
+   "service_id": "ic10.script.controller.selector",
+   "magic": 17320508,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "f3986c3b33342ba7bfcc59d7c4b4dff9660abcff860d6cfd843b482f015c6957",
+   "legacy_owned_ranges": [
+    [
+     8,
+     19
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "controller-discovery"
   }
  },
  "legacy_exemption": {

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10",
-  "source_sha256": "f10b171a92fe2928fa2c2cebc0c91a416ecfdb533636700a3e0e0ae27714b187",
+  "source_sha256": "feabc414837081f786ba9ce304109ed41200a1d8a8d00f0aecd1aa5afeffb246",
   "identity": {
     "service_id": "ic10.script.diagnostic.mapping.editor",
     "implementation_revision": "1.2",
@@ -41,9 +41,9 @@
       "transport": "reference-id",
       "reference": "controllerSelector",
       "literal_reads": [
-        5,
         8,
-        13
+        13,
+        17
       ],
       "literal_writes": [],
       "dynamic_read": false,

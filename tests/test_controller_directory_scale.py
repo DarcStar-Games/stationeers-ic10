@@ -27,12 +27,12 @@ for i,(typ,ref) in enumerate(records):dir.stack[32+2*i]=typ;dir.stack[33+2*i]=re
 import re
 execS='\n'.join(x for x in S.splitlines() if not x.lstrip().startswith('alias '))
 execS=re.sub(r'\bdirectory\b','r1',execS)
-vm=IC10(execS,{'d0':dir});vm.stack[2]=700;vm.stack[10]=2;vm.stack[11]=2;vm.stack[12]=1
+vm=IC10(execS,{'d0':dir});vm.stack[14]=700;vm.stack[10]=2;vm.stack[11]=2;vm.stack[12]=1
 vm.run(3,max_steps=10000)
-if (vm.stack.get(3),vm.stack.get(4),vm.stack.get(5),vm.stack.get(6),vm.stack.get(7),vm.stack.get(8))!=(2,2,202,3,'HASH:ControllerB',1):fails.append('Selector direct type/member resolution failed')
+if (vm.stack.get(15),vm.stack.get(16),vm.stack.get(17),vm.stack.get(18),vm.stack.get(19),vm.stack.get(8))!=(2,2,202,3,'HASH:ControllerB',1):fails.append('Selector direct type/member resolution failed')
 # Out-of-range type/member clamp to final type/final member.
 vm.stack[10]=99;vm.stack[11]=99;vm.stack[12]=2;vm.run(2,max_steps=10000)
-if (vm.stack.get(3),vm.stack.get(4),vm.stack.get(5),vm.stack.get(7))!=(3,1,301,'HASH:ControllerC'):fails.append('Selector direct clamp failed')
+if (vm.stack.get(15),vm.stack.get(16),vm.stack.get(17),vm.stack.get(19))!=(3,1,301,'HASH:ControllerC'):fails.append('Selector direct clamp failed')
 # Incomplete snapshots remain fail-closed.
 dir.stack[7]=1;dir.stack[3]=10;vm.run(2,max_steps=10000)
 if vm.stack.get(8)!=-3:fails.append('Selector does not surface overflow')

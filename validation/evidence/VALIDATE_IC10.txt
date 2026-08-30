@@ -13,11 +13,11 @@ PASS ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10 lines
 PASS ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10 lines=118 headroom=10 max=81 CRLF=1648 comments= 1
 PASS ic10/controller-config/config_input_bridge_v1_0.ic10 lines= 61 headroom=67 max=83 CRLF=1520 comments=10
 PASS ic10/controller-config/generic_config_committer_v1_1.ic10 lines= 97 headroom=31 max=77 CRLF=1735 comments= 3
-PASS ic10/controller-config/generic_config_editor_v1_0.ic10 lines=109 headroom=19 max=85 CRLF=2159 comments=11
+PASS ic10/controller-config/generic_config_editor_v1_0.ic10 lines=109 headroom=19 max=85 CRLF=2160 comments=11
 PASS ic10/controller-config/generic_config_loader_v1_2.ic10 lines=119 headroom= 9 max=78 CRLF=2486 comments=13
 PASS ic10/controller-config/generic_persistent_config_host_v1_1.ic10 lines=120 headroom= 8 max=75 CRLF=2052 comments=10
 PASS ic10/controller-discovery/controller_directory_adapter_v4_0.ic10 lines= 58 headroom=70 max=79 CRLF= 850 comments= 1
-PASS ic10/controller-discovery/controller_selector_v3_0.ic10 lines=107 headroom=21 max=84 CRLF=1898 comments= 4
+PASS ic10/controller-discovery/controller_selector_v3_0.ic10 lines=109 headroom=19 max=81 CRLF=1926 comments= 5
 PASS ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10 lines=124 headroom= 4 max=67 CRLF=1903 comments= 0
 PASS ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10 lines= 94 headroom=34 max=75 CRLF=1488 comments= 1
 PASS ic10/controller-pi/controller_pi_runtime_v1_1.ic10 lines=119 headroom= 9 max=80 CRLF=2333 comments= 9
@@ -46,7 +46,7 @@ PASS ic10/diagnostics/console_registry_v1_1.ic10 lines= 85 headroom=43 max=82 CR
 PASS ic10/diagnostics/console_selector_v1_1.ic10 lines= 93 headroom=35 max=89 CRLF=1963 comments= 8
 PASS ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10 lines= 47 headroom=81 max=79 CRLF=1258 comments=13
 PASS ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10 lines=114 headroom=14 max=75 CRLF=2266 comments=11
-PASS ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10 lines=121 headroom= 7 max=87 CRLF=2436 comments= 4
+PASS ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10 lines=121 headroom= 7 max=87 CRLF=2437 comments= 4
 PASS ic10/diagnostics/diagnostic_renderer_v1_1.ic10 lines= 67 headroom=61 max=76 CRLF=1737 comments=15
 PASS ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10 lines= 47 headroom=81 max=79 CRLF=1188 comments= 4
 PASS ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10 lines=107 headroom=21 max=79 CRLF=1500 comments= 1

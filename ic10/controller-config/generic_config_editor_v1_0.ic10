@@ -28,7 +28,7 @@ getd r0 selector 1
 bne r0 2 NoSelector
 getd r0 selector 8
 bne r0 1 NoTarget
-getd r15 selector 5
+getd r15 selector 17
 blez r15 NoTarget
 get r0 db 12
 beq r0 r15 Controls
