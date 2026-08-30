@@ -451,7 +451,7 @@
     "providers": [
      "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"job_inventory_preflight_v1_0.ic10 quotes Item-7 DirectorySchema.ResourceReservation through the existing six-leg selector\" [Selector cells match: request S2 resource, S3 qty, S4 direction, S5, S6 token; response S7 token, S8 status (-2 lower-bound, -3 overflow), S9 known, S10 leg count, per-leg records at S32+3i (Reservation ref + generation) which preflight folds into its rolling fingerprints.]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"job_inventory_preflight_v1_0.ic10 quotes Item-7 DirectorySchema.ResourceReservation through the existing six-leg selector\" [Selector cells match: request S11 resource, S12 qty, S13 direction, S14 mask, S15 token; response S16 token, S8 status (-2 lower-bound, -3 overflow), S9 known, S10 leg count, per-leg records at S32+3i for the six quoted legs (S32..S49, Reservation ref + generation) which preflight folds into its rolling fingerprints.]"
    }
   },
   "ic10/dependency-planning/job_requirement_view_v1_0.ic10": {
@@ -1266,7 +1266,7 @@
     "providers": [
      "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_link_executor_v1_0.ic10: '# Break-before-make Transformer Setting/On executor. d0 PlanStore,d1 Allocator.' [Reads d0 S2/S3/S4 (sequence/PlanGeneration/count) plus dynamic flow records S16..79 (data/script_contract_overrides.json dynamic_read_ranges [[16,79]]); tests/test_fault_injection.py wires a plan-store-shaped device to d0.]"
+    "note": "ic10/power-grid/power_link_executor_v1_0.ic10: '# Break-before-make Transformer Setting/On executor. d0 PlanStore,d1 Allocator.' [Reads d0 S27/S28/S29 (sequence/PlanGeneration/count) plus the committed flow records at S32+8i for eight flows (S32..S95; data/script_contract_overrides.json dynamic_read_ranges [[32,95]]); tests/test_fault_injection.py wires a plan-store-shaped device to d0.]"
    },
    "d1": {
     "kind": "script",
@@ -1291,7 +1291,7 @@
     "providers": [
      "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_load_executor_v1_0.ic10: '# Break-before-make managed POWER load/battery On executor. d0 PlanStore,d1 Allocator.' [Reads d0 S2/S3/S4 (sequence/PlanGeneration/count) plus dynamic flow records; tests/test_fault_injection.py wires plan-store-shaped device 'pl' (stack {2:2,3:5,4:1,...}) to d0.]"
+    "note": "ic10/power-grid/power_load_executor_v1_0.ic10: '# Break-before-make managed POWER load/battery On executor. d0 PlanStore,d1 Allocator.' [Reads d0 S27/S28/S29 (sequence/PlanGeneration/count) plus the committed flow records at S32..S95; tests/test_fault_injection.py wires plan-store-shaped device 'pl' (stack {27:2,28:5,29:1,...}) to d0.]"
    },
    "d1": {
     "kind": "script",
@@ -1307,7 +1307,7 @@
     "providers": [
      "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_plan_validator_v1_0.ic10: '# Validate one coherent POWER dispatch plan. d0 PlanStore.' [Reads d0 S2 (even sequence check: mod r0 r14 2), S3 (exact PlanGeneration), S4 (flow count) plus dynamic flow records - docs/POWER_MANAGEMENT.md section 6: validator rechecks 'exact PlanGeneration and even publication sequence'.]"
+    "note": "ic10/power-grid/power_plan_validator_v1_0.ic10: '# Validate one coherent POWER dispatch plan. d0 PlanStore.' [Reads d0 S27 (even sequence check: mod r0 r14 2), S28 (exact PlanGeneration), S29 (flow count) plus the committed flow records at S32..S95 - docs/POWER_MANAGEMENT.md section 6: validator rechecks 'exact PlanGeneration and even publication sequence'.]"
    }
   },
   "ic10/power-grid/power_producer_endpoint_v1_0.ic10": {
@@ -1353,7 +1353,7 @@
     "providers": [
      "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_reservation_committer_v1_0.ic10: '# Commit POWER Reservation ownership for one plan. d0 PlanStore,d1 Allocator owner.' [Reads d0 S2 (even sequence: mod r14 2), S3 (exact PlanGeneration), S4 (count) plus dynamic flow records - the Plan Store read surface.]"
+    "note": "ic10/power-grid/power_reservation_committer_v1_0.ic10: '# Commit POWER Reservation ownership for one plan. d0 PlanStore,d1 Allocator owner.' [Reads d0 S27 (even sequence: mod r14 2), S28 (exact PlanGeneration), S29 (count) plus the committed flow records at S32..S95 - the Plan Store read surface.]"
    },
    "d1": {
     "kind": "physical-device",
@@ -1407,7 +1407,7 @@
     "providers": [
      "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_source_selector_v1_0.ic10: '# POWER source selector. d0 PowerReservation directory,d1 PlanStore.' [Reads d1 S24 (staged-flow region) dynamically to subtract source watts already staged in the same plan - docs/POWER_MANAGEMENT.md: 'It subtracts source watts already staged in the same plan.' tests/test_power_management.py wires the plan device (stack {24:0}) to d1.]"
+    "note": "ic10/power-grid/power_source_selector_v1_0.ic10: '# POWER source selector. d0 PowerReservation directory,d1 PlanStore.' [Reads d1 S24 (staged-flow count) and the staged records at S128+8i (S128..S191) to subtract source watts already staged in the same plan - docs/POWER_MANAGEMENT.md: 'It subtracts source watts already staged in the same plan.' tests/test_power_management.py wires the plan device (stack {24:0}) to d1.]"
    }
   },
   "ic10/power-grid/power_static_link_v1_0.ic10": {

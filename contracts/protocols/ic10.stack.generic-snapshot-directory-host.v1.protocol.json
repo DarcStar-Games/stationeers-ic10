@@ -20,7 +20,7 @@
       "readable_ranges": [
         {
           "start": 0,
-          "end": 23
+          "end": 30
         },
         {
           "start": 32,
@@ -222,6 +222,10 @@
       ],
       "dynamic_read_ranges": [
         {
+          "start": 27,
+          "end": 30
+        },
+        {
           "start": 32,
           "end": 415
         }
@@ -257,6 +261,10 @@
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
+        {
+          "start": 25,
+          "end": 30
+        },
         {
           "start": 32,
           "end": 159
@@ -294,6 +302,10 @@
       "literal_writes": [],
       "dynamic_read_ranges": [
         {
+          "start": 25,
+          "end": 30
+        },
+        {
           "start": 32,
           "end": 287
         }
@@ -330,6 +342,10 @@
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
+        {
+          "start": 27,
+          "end": 30
+        },
         {
           "start": 32,
           "end": 287
@@ -372,6 +388,10 @@
       "literal_writes": [],
       "dynamic_read_ranges": [
         {
+          "start": 25,
+          "end": 30
+        },
+        {
           "start": 32,
           "end": 415
         }
@@ -408,6 +428,10 @@
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
+        {
+          "start": 27,
+          "end": 30
+        },
         {
           "start": 32,
           "end": 415
@@ -451,6 +475,10 @@
       "literal_writes": [],
       "dynamic_read_ranges": [
         {
+          "start": 25,
+          "end": 30
+        },
+        {
           "start": 32,
           "end": 415
         }
@@ -492,6 +520,10 @@
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
+        {
+          "start": 25,
+          "end": 30
+        },
         {
           "start": 32,
           "end": 415

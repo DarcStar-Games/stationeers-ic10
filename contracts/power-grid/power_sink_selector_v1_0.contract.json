@@ -34,6 +34,10 @@
         "dynamic_write": false,
         "dynamic_read_ranges": [
           {
+            "start": 27,
+            "end": 30
+          },
+          {
             "start": 32,
             "end": 415
           }
@@ -55,8 +59,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.a6fbc7cdc415222b",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.a6fbc7cdc415222b",
+        "interface_id": "ic10.interface.access.23e6e26af1f3f8a0",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.23e6e26af1f3f8a0",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
