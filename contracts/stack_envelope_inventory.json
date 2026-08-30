@@ -8536,7 +8536,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
+        "literal_cell_count": 14,
         "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
@@ -8589,9 +8589,13 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "1ac2f83f18077488a2a91c7a01e544ff787dcfc242702dd9a3730477accdf9ca",
+          "source_sha256": "98388d4d01e95e5edeb148079da95641282e3e359b806caae5ea8544563b3ab9",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 8
+            },
             {
               "start": 10,
               "end": 209

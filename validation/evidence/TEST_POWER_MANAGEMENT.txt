@@ -4,3 +4,5 @@ Power management protocol: PASS
  - live PlanStore coherent transaction and transformer overhead
  - priority/load-shed/battery-charge reference model
  - POWER Job Gateway lane-D generation contract
+ - live policy target resolver binds unique Reservations and rejects ambiguity
+ - live policy verify settles consumer/battery modes through the bound pair

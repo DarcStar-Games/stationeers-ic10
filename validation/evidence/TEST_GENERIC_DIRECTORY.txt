@@ -7,3 +7,4 @@ Generic Directory infrastructure: PASS
  - 128-instruction/8-instruction adversarial scheduler never publishes a torn Adapter generation
  - freeze request is reasserted and recovers after Adapter reboot
  - Registry Host rejects wrong schema/version before mutation
+ - Power Reservation Adapter keys producer/consumer/battery dispatch and honors the S8 owner binding
