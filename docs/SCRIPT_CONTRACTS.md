@@ -193,7 +193,9 @@ versioned filename.
 4. Add narrow public/dynamic ranges or externally owned fields to
    `data/script_contract_overrides.json` when source inspection cannot prove
    the cross-program bound, then record the reviewed source SHA-256.
-5. Regenerate contracts and run the full validation suite.
+5. Declare each device port's canonical peer in `data/script_wiring.json`
+   (`docs/SCRIPT_WIRING.md`).
+6. Regenerate contracts and run the full validation suite.
 
 This inventory is also the measured input for the common stack-envelope design
 in GitHub issue #29: it identifies existing header locations, occupied cells,

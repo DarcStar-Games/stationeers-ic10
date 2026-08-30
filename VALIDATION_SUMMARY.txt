@@ -1,9 +1,9 @@
 Stationeers IC10 Framework — Clean Release Validation
 =====================================================
 
-Overall: PASS (63/63 validation/test scripts)
-Validators: 25/25 PASS
-Execution/protocol tests: 38/38 PASS
+Overall: PASS (65/65 validation/test scripts)
+Validators: 26/26 PASS
+Execution/protocol tests: 39/39 PASS
 Production IC10 programs: 174
 Maximum production line count: 124/120
 Tight programs (>=117 lines): 48
@@ -22,5 +22,5 @@ Release hygiene
 
 Evidence
 --------
-- validation/FULL_VALIDATION_RUN.txt contains the complete 63-script pass/fail inventory.
+- validation/FULL_VALIDATION_RUN.txt contains the complete 65-script pass/fail inventory.
 - validation/evidence/ contains stdout for each validator/test.

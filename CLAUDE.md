@@ -140,7 +140,7 @@ revisions establish *durability*, reservation epochs/ownership tokens authorize 
 
 ### Invariants that break things silently when violated
 
-`README.md` has the full 24-item list. The ones that bite hardest:
+`README.md` has the full 25-item list. The ones that bite hardest:
 
 - **Publish the generation/token last.** Payload cells first, the marker that makes them readable last.
   Consumers snapshot the generation, read, and re-check the same positive generation afterward.
@@ -207,7 +207,9 @@ validation passes. Add its exact semantic path to `data/source_manifest.json` (o
 `generated_deployment_rules` for a generated family), give the family a human-owned chapter in
 `USER_DEPLOYMENT_GUIDE.md`, then run `tools/generate/update_user_deployment_inventory.py`,
 `tools/generate/generate_source_catalog.py`, and the `validation/validators/validate_source_catalog.py` and
-`validation/validators/validate_user_deployment_guide.py` validators. A program with no deployment family is an incomplete
+`validation/validators/validate_user_deployment_guide.py` validators. Declare each device port's
+canonical peer in `data/script_wiring.json` (`docs/SCRIPT_WIRING.md`) — every port must name what
+it points at before `validation/validators/validate_script_wiring.py` passes. A program with no deployment family is an incomplete
 feature even if its tests pass. Full walkthrough: `docs/ADDING_CONTROLLERS.md`.
 
 ### A new test or validator

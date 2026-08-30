@@ -72,17 +72,19 @@ if actual is not None:
 # migrates, its S2..S7 are header cells the owner publishes -- so a consumer still
 # reading payload there is reading the mask or the schema id instead. That mistake is
 # invisible to the contract layer, which sees a published cell and calls the read
-# satisfied, so it is checked here against every migrated peer.
+# satisfied, so it is checked here against every migrated peer. Reviewed device-port
+# reads live in the wiring map as header_reads; only reference-register reads, which
+# have no port for the map to key on, are declared here.
 HEADER_READS = {
-    ("ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10", "d0"):
-        "reads Adapter ABI3 SchemaId S3 and Generation S7 as header fields",
-    ("ic10/directory-core/generic_registry_directory_host_v2_0.ic10", "d0"):
-        "reads Adapter ABI3 SchemaId S3 and Generation S7 as header fields",
     ("ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10", "r1"):
         "reads Loader ABI5 SchemaId S3 as a header field",
     ("ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10", "r1"):
         "reads Loader ABI5 SchemaId S3 as a header field",
 }
+for wired_source, wired_ports in json.loads((ROOT / "data" / "script_wiring.json").read_text())["ports"].items():
+    for wired_port, peer in wired_ports.items():
+        if peer.get("header_reads"):
+            HEADER_READS[(wired_source, wired_port)] = "declared header_reads in data/script_wiring.json"
 read0 = re.compile(r"^get (r\d+) (d[0-5]) 0$")
 refread0 = re.compile(r"^getd (r\d+) (r\d+|ra|sp) 0$")
 compare = re.compile(r"^(?:bne|beq) (r\d+) (\d{7,8}) \w+$")
