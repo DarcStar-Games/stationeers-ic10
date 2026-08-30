@@ -13,7 +13,8 @@ all, whatever the trip counts turn out to be. A declared range that omits the
 base cannot be describing that access, which is what makes the base checkable
 without a trip-count proof. Addresses that also depend on a value read at
 runtime (a bank index, a peer-published record pointer) have no such witness
-and are left alone.
+here; `value_bounds` bounds those from the branches that guard them, and falls
+back to the base when it cannot.
 
 The seed of each register is the nearest earlier write, found by a linear
 backward scan rather than a dominance proof: the strict proof in
@@ -157,16 +158,15 @@ def address_form(
     return form
 
 
-def dynamic_access_bases(
-    source: str, aliases: dict[str, str], integer_aliases: dict[str, int],
-) -> list[tuple[str, str, int, str]]:
-    """`(target, direction, base, instruction)` for every base-bearing dynamic access.
+def dynamic_accesses(
+    program: list[dict], aliases: dict[str, str], integer_aliases: dict[str, int],
+) -> list[tuple[int, str, str, str, list[str]]]:
+    """`(index, target, direction, address token, row)` for every computed access.
 
-    `target` is a device port name or `db` for the program's own housing stack.
-    Accesses whose address depends on a runtime-read value are omitted: they
-    have no first-iteration witness to check a declared range against.
+    `target` is a device port name or `db` for the program's own housing stack;
+    an access through an unresolvable port token is not one this analysis can
+    attribute to anything, so it is left out.
     """
-    program = parse_program(source)
     found = []
     for index, entry in enumerate(program):
         row = entry["row"]
@@ -186,27 +186,24 @@ def dynamic_access_bases(
             continue
         if target is None or resolve_integer(token, integer_aliases) is not None:
             continue
+        found.append((index, target, direction, token, row))
+    return found
+
+
+def dynamic_access_bases(
+    source: str, aliases: dict[str, str], integer_aliases: dict[str, int],
+) -> list[tuple[str, str, int, str]]:
+    """`(target, direction, base, instruction)` for every base-bearing dynamic access.
+
+    Accesses whose address depends on a runtime-read value are omitted: they
+    have no first-iteration witness. `value_bounds` reaches further by bounding
+    that value from the guards around it.
+    """
+    program = parse_program(source)
+    found = []
+    for index, target, direction, token, row in dynamic_accesses(program, aliases, integer_aliases):
         steps, sites = induction_variables(program, index)
         form = address_form(program, index, token, integer_aliases, steps, sites)
         if form.induction_only and 0 <= form.constant <= 511:
             found.append((target, direction, form.constant, " ".join(row)))
     return found
-
-
-def declared_base_errors(
-    source: str, aliases: dict[str, str], integer_aliases: dict[str, int],
-    declared: dict[tuple[str, str], list[dict[str, int]]],
-) -> list[str]:
-    """Report every dynamic access whose base cell no declared range covers."""
-    errors = []
-    for target, direction, base, instruction in dynamic_access_bases(source, aliases, integer_aliases):
-        ranges = declared.get((target, direction))
-        if ranges is None:
-            continue
-        if not any(item["start"] <= base <= item["end"] for item in ranges):
-            shown = [[item["start"], item["end"]] for item in ranges]
-            errors.append(
-                f"{target} {direction} range {shown} omits S{base}, the address "
-                f"`{instruction}` computes on its first pass"
-            )
-    return errors

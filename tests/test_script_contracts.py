@@ -22,7 +22,7 @@ from framework.script_contracts import (
     ranges_overlap,
     verify_override_source,
 )
-from framework.script_contracts.address_forms import declared_base_errors, dynamic_access_bases
+from framework.script_contracts.address_forms import dynamic_access_bases
 from framework.script_contracts.control_flow import writes_register
 from framework.script_contracts.device_ports import (
     analyze_device_ports,
@@ -41,6 +41,10 @@ from framework.script_contracts.publication import (
     source_semantics,
     verified_publication_overrides,
     verified_seqlock_consumer,
+)
+from framework.script_contracts.value_bounds import (
+    declared_coverage_errors,
+    dynamic_access_cells,
 )
 from framework.source_metadata import deployable_scripts
 
@@ -419,20 +423,69 @@ record_loop_ports, record_loop_aliases = collect_aliases(record_loop_rows)
 ck([item[:3] for item in dynamic_access_bases(record_loop_source, record_loop_ports, record_loop_aliases)] ==
    [("d1", "read", 32), ("d1", "read", 34)],
    "a strided record loop did not reduce to its first-pass base addresses")
-ck(len(declared_base_errors(record_loop_source, record_loop_ports, record_loop_aliases,
-                            {("d1", "read"): [{"start": 16, "end": 31}]})) == 2,
+ck([(item[0], item[1], sorted(item[2])) for item in
+    dynamic_access_cells(record_loop_source, record_loop_ports, record_loop_aliases)] ==
+   [("d1", "read", [32]), ("d1", "read", [34])],
+   "a loop counted against an unbounded peer count claimed more than its first pass")
+ck(len(declared_coverage_errors(record_loop_source, record_loop_ports, record_loop_aliases,
+                                {("d1", "read"): [{"start": 16, "end": 31}]})) == 2,
    "a declared range that omits the record base was accepted")
-ck(not declared_base_errors(record_loop_source, record_loop_ports, record_loop_aliases,
-                            {("d1", "read"): [{"start": 32, "end": 49}]}),
+ck(not declared_coverage_errors(record_loop_source, record_loop_ports, record_loop_aliases,
+                                {("d1", "read"): [{"start": 32, "end": 49}]}),
    "the record window the loop actually reaches was rejected")
+
+# The same loop, with the count validated the way a fail-closed consumer does:
+# six legs of three cells reach S32..S49, so a two-leg window is short.
+guarded_loop_source = record_loop_source.replace(
+    "move r6 0\n", "blt r12 0 Done\nbgt r12 6 Done\nmove r6 0\n"
+)
+guarded_loop_rows = parse_rows(guarded_loop_source)
+guarded_loop_ports, guarded_loop_aliases = collect_aliases(guarded_loop_rows)
+ck([(item[0], item[1], sorted(item[2])) for item in
+    dynamic_access_cells(guarded_loop_source, guarded_loop_ports, guarded_loop_aliases)] ==
+   [("d1", "read", [32, 35, 38, 41, 44, 47]), ("d1", "read", [34, 37, 40, 43, 46, 49])],
+   "a validated record count did not bound the far end of the loop it counts")
+ck(sorted(int(cell[1:]) for cell in
+          " ".join(declared_coverage_errors(
+              guarded_loop_source, guarded_loop_ports, guarded_loop_aliases,
+              {("d1", "read"): [{"start": 32, "end": 37}]})).replace(",", " ").split()
+          if cell.startswith("S")) == [38, 40, 41, 43, 44, 46, 47, 49],
+   "a window anchored right but cut short was accepted")
+ck(not declared_coverage_errors(guarded_loop_source, guarded_loop_ports, guarded_loop_aliases,
+                                {("d1", "read"): [{"start": 32, "end": 49}]}),
+   "the full record window a validated count reaches was rejected")
+
+# A bottom test counts a loop out just as well, and bounds an address register
+# advanced beside the counter rather than compared against anything itself.
+staging_source = (
+    "move r3 128\nmove r4 16\nCopy:\nget r0 db r4\npoke r3 r0\n"
+    "add r3 r3 1\nadd r4 r4 1\nble r4 23 Copy\n"
+)
+staging_rows = parse_rows(staging_source)
+staging_ports, staging_aliases = collect_aliases(staging_rows)
+ck([(item[0], item[1], min(item[2]), max(item[2])) for item in
+    dynamic_access_cells(staging_source, staging_ports, staging_aliases)] ==
+   [("db", "read", 16, 23), ("db", "write", 128, 135)],
+   "a bottom-tested staging loop was not counted out by its own exit test")
+
+# Dropping the call and return edges leaves blocks with fewer predecessors than
+# they have, which over-states what dominates them: both bounds stand down.
+subroutine_source = staging_source + "jal Helper\nj Copy\nHelper:\nj ra\n"
+subroutine_rows = parse_rows(subroutine_source)
+subroutine_ports, subroutine_aliases = collect_aliases(subroutine_rows)
+ck([(item[0], item[1], sorted(item[2])) for item in
+    dynamic_access_cells(subroutine_source, subroutine_ports, subroutine_aliases)] ==
+   [("db", "read", [16]), ("db", "write", [128])],
+   "an unmodeled transfer did not stand the branch bounds down to the base rule")
 
 peer_based_source = "get r5 d0 24\nadd r0 r5 25\nget r1 d0 r0\n"
 peer_based_rows = parse_rows(peer_based_source)
 peer_based_ports, peer_based_aliases = collect_aliases(peer_based_rows)
 ck(not dynamic_access_bases(peer_based_source, peer_based_ports, peer_based_aliases)
-   and not declared_base_errors(peer_based_source, peer_based_ports, peer_based_aliases,
-                                {("d0", "read"): [{"start": 400, "end": 401}]}),
-   "an address offset by a peer-published value was given a base it cannot be held to")
+   and not dynamic_access_cells(peer_based_source, peer_based_ports, peer_based_aliases)
+   and not declared_coverage_errors(peer_based_source, peer_based_ports, peer_based_aliases,
+                                    {("d0", "read"): [{"start": 400, "end": 401}]}),
+   "an address offset by an unbounded peer value was given cells it cannot be held to")
 
 own_table_source = "move ra 96\nTable:\nget r0 db ra\npoke ra r0\nadd ra ra 1\nblt ra 100 Table\n"
 own_table_rows = parse_rows(own_table_source)
@@ -440,6 +493,10 @@ own_table_ports, own_table_aliases = collect_aliases(own_table_rows)
 ck([item[:3] for item in dynamic_access_bases(own_table_source, own_table_ports, own_table_aliases)] ==
    [("db", "read", 96), ("db", "write", 96)],
    "own-stack table accesses were not reduced to their base cell")
+ck([(item[0], item[1], sorted(item[2])) for item in
+    dynamic_access_cells(own_table_source, own_table_ports, own_table_aliases)] ==
+   [("db", "read", [96, 97, 98, 99]), ("db", "write", [96, 97, 98, 99])],
+   "the own-stack table loop was not bounded by its literal exit test")
 
 conflicting_header_source = bounded_own_source.replace(
     "poke 1 1\n", "poke 1 1\npoke 0 0\n"
