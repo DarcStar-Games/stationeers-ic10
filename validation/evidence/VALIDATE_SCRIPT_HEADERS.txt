@@ -100,7 +100,8 @@ PASS validation/validators/validate_stack_envelopes.py          entry  +x
 PASS validation/validators/validate_user_deployment_guide.py    entry  +x
 ====================================================================================================
 Checked 98 files: 80 entry points, 18 imported modules
-Single import name enforced for 80 modules reachable from a script directory
+Single import name enforced for 82 modules reachable from a script directory
+Import-name regression probes cover 2 namespace spellings and 10 dynamic loads; ambiguous aliases fail closed
 Entry points are the 15 commands under tools/ plus the 65 scripts tools/run_validation.py runs elsewhere; nothing is an entry point by location
 No work at import for all 17 modules under tools/, and a guard reaches main() in each of the 15 entry points
 Result: PASS
