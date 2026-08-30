@@ -357,7 +357,7 @@ The route is transaction-authorized by `ic10/material-transform/multi_material_r
 ### C. Furnace transform smoke test
 
 1. Ensure Coordinator Core/Router are running, provide Generic Store capacity, and deploy the generated Resource Transform loader candidates. Wait for the 17 Transform items to reside in ACTIVE Store capacity.
-2. Deploy `ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` and select a TransformType. Require View ABI3 and positive publication generation.
+2. Deploy `ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` and select a TransformType. Require View ABI4, a matching S68 request echo with S69 status 1, and a positive S74 publication generation.
 3. Provide a healthy output Resource Reservation with capacity for the declared output.
 4. Deploy/wire the current path:
 

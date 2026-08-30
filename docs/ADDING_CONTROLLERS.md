@@ -97,6 +97,8 @@ At minimum:
 4. Run shared input and persistence model tests.
 5. Exercise live-game edit/apply/recovery cases.
 6. Verify diagnostics can discover the runtime and render documented telemetry channels.
+7. Declare each new program's device-port peers in `data/script_wiring.json` and run
+   `validation/validators/validate_script_wiring.py` — see `docs/SCRIPT_WIRING.md`.
 
 ## Example: why a new family should not need generic changes
 

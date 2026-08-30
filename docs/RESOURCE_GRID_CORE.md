@@ -240,20 +240,22 @@ Steel + Copper + Cobalt -> Advanced Furnace -> Astroloy
 materials -> printer -> manufactured item
 ```
 
-`ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` publishes:
+`ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` publishes
+its identity in the common `S0`/`S1` header cells (magic = 31415952, ABI = 4)
+and serves resolved requests through the `S68..S75` mailbox:
 
 ```text
-S0   magic = 31415952
-S1   ABI = 3
-S2   TransformType hash
-S3   RequiredCapabilityMask
-S4   input count, 1..6 descriptor slots available
-S5   output count, current execution path requires 1
-S6   ProfileGeneration
-S7   flags
-S8..S31   input descriptors
-S32..S63  output descriptors
+S8..S31   input descriptors, 1..6 slots available
+S32..S63  output descriptors, current execution path requires 1
 S64..S67  pressure/temperature bounds
+S68  request echo
+S69  resolve status (1 = resolved)
+S70  TransformType request cell, written by the consumer
+S71  RequiredCapabilityMask; -2/-3 publish resolution errors
+S72  InputCount
+S73  OutputCount
+S74  coherent publication generation
+S75  condition flags
 ```
 
 Each four-cell resource descriptor is `[ResourceClass, ResourceType, Unit, Quantity]`. Capability bits are `SMELT_BASIC=1`, `FURNACE_ALLOY=2`, and `ADVANCED_ALLOY=4`; Arc Furnace advertises `1`, Furnace `3`, and Advanced Furnace `7`. The current catalog contains 17 transforms: seven basic smelts, five base alloys, and five advanced alloys/superalloys.

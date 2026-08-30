@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10",
-  "source_sha256": "750d5e6b0f140540b03a2fa8c950bcb7ada4acfa2019524d29f5ed665aad9280",
+  "source_sha256": "08fe0751ee731c7bde5b40de933e2eaeef0b227948d6266509fc54c435d96548",
   "identity": {
     "service_id": "ic10.script.manufacturing.dependency.planner",
     "implementation_revision": "1.0",
@@ -130,7 +130,7 @@
       "stack": {
         "literal_reads": [
           4,
-          12,
+          5,
           13,
           14,
           15,
@@ -151,7 +151,7 @@
         "dynamic_write_range_source": "none",
         "constraints": [
           {
-            "address": 12,
+            "address": 5,
             "equals": 6
           }
         ]
@@ -159,8 +159,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.db25e225974d2e4c",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.db25e225974d2e4c",
+        "interface_id": "ic10.interface.access.9696b1d19025d080",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.9696b1d19025d080",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

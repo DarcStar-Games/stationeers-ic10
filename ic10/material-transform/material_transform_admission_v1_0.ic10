@@ -21,7 +21,7 @@ blt r4 1 Bad
 bgt r4 3 Bad
 get r0 d0 73
 bne r0 1 Bad
-get r2 d0 70
+get r2 d0 68
 get r3 d0 71
 l r15 d1 ReferenceId
 l r0 d1 PrefabHash
@@ -94,6 +94,10 @@ get r0 d2 7
 blt r0 r13 Bad
 get r0 d2 12
 bne r0 r6 Loop
+get r0 d0 68
+bne r0 r2 Loop
+get r0 d0 69
+bne r0 1 Loop
 get r0 d0 74
 bne r0 r14 Loop
 poke 14 r2

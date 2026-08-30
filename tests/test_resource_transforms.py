@@ -39,6 +39,7 @@ for x in T:
  if n%4 or n<len(vals) or [store.stack.get(base+j) for j in range(len(vals))]!=vals:fails.append(x['name']+': self-contained transform item mismatch')
  if any(store.stack.get(base+j,0)!=0 for j in range(len(vals),n)):fails.append(x['name']+': item padding nonzero')
  screws={'d0':store,'coord':coord,'s0':store};v=IC10((R/'ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10').read_text(),screws);v.stack[70]=key;v.run(3,max_steps=50000)
+ if v.stack.get(68)!=key or v.stack.get(69)!=1:fails.append(x['name']+': View echo/status mismatch')
  if v.stack.get(74,0)<=0 or v.stack.get(71)!=x['required_capability_mask'] or v.stack.get(72)!=len(x['inputs']) or v.stack.get(73)!=len(x['outputs']):fails.append(x['name']+': View header mismatch')
  for j,d in enumerate(x['inputs']):
   if [v.stack.get(8+j*4+k) for k in range(4)]!=[d['resource_class'],d['resource_type'],d['unit'],d['quantity']]:fails.append(x['name']+': View input mismatch')

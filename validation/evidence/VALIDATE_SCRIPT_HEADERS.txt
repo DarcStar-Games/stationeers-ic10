@@ -12,6 +12,7 @@ PASS framework/ic10_harness.py                                  module -x
 PASS framework/job_abi.py                                       module -x
 PASS framework/json_schema.py                                   module -x
 PASS framework/script_contracts.py                              module -x
+PASS framework/script_wiring.py                                 module -x
 PASS framework/source_metadata.py                               module -x
 PASS framework/stack_envelope.py                                module -x
 PASS tests/fixtures/script_header_prose.py                      module -x
@@ -50,6 +51,7 @@ PASS tests/test_resource_generalization.py                      entry  +x
 PASS tests/test_resource_profiles.py                            entry  +x
 PASS tests/test_resource_transforms.py                          entry  +x
 PASS tests/test_script_contracts.py                             entry  +x
+PASS tests/test_script_wiring.py                                entry  +x
 PASS tests/test_sequencer_protocol.py                           entry  +x
 PASS tests/test_shared_input_protocol.py                        entry  +x
 PASS tests/test_stack_envelope.py                               entry  +x
@@ -92,13 +94,14 @@ PASS validation/validators/validate_process_utility_contracts.py entry  +x
 PASS validation/validators/validate_release_tooling.py          entry  +x
 PASS validation/validators/validate_script_contracts.py         entry  +x
 PASS validation/validators/validate_script_headers.py           entry  +x
+PASS validation/validators/validate_script_wiring.py            entry  +x
 PASS validation/validators/validate_source_catalog.py           entry  +x
 PASS validation/validators/validate_stack_envelopes.py          entry  +x
 PASS validation/validators/validate_user_deployment_guide.py    entry  +x
 ====================================================================================================
-Checked 95 files: 78 entry points, 17 imported modules
-Single import name enforced for 80 modules reachable from a script directory
+Checked 98 files: 80 entry points, 18 imported modules
+Single import name enforced for 82 modules reachable from a script directory
 Import-name regression probes cover 2 namespace spellings and 10 dynamic loads; ambiguous aliases fail closed
-Entry points are the 15 commands under tools/ plus the 63 scripts tools/run_validation.py runs elsewhere; nothing is an entry point by location
+Entry points are the 15 commands under tools/ plus the 65 scripts tools/run_validation.py runs elsewhere; nothing is an entry point by location
 No work at import for all 17 modules under tools/, and a guard reaches main() in each of the 15 entry points
 Result: PASS

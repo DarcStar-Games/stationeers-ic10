@@ -19,7 +19,7 @@ jal Clear
 ExistingResult:
 bne r4 5 Reply
 jal New
-get r4 d2 12
+get r4 d2 5
 bne r4 6 Reply
 put d0 12 2
 put d0 13 r2

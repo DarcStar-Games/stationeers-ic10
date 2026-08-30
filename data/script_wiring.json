@@ -1,0 +1,2084 @@
+{
+ "$schema": "../schemas/script_wiring.schema.json",
+ "format": "IC10_SCRIPT_WIRING_V1",
+ "ports": {
+  "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415982, ABI 3)"
+   }
+  },
+  "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10": {},
+  "ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415982, ABI 3)"
+   }
+  },
+  "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415982, ABI 3)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415970)"
+   }
+  },
+  "ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415970)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415982, ABI 3)"
+   }
+  },
+  "ic10/catalog-control-plane/catalog_inspector_v4_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415968, ABI 6)"
+   }
+  },
+  "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415970)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415982, ABI 3)"
+   }
+  },
+  "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415970)"
+   }
+  },
+  "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:114: \"Program ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10; connect Router `d0` -> Coordinator Core.\" (also DEPLOYMENT.md:391) [Corroborated: router source checks d0 stack cell 0 == 31415970, the Coordinator Core magic (catalog_coordinator_core_v3_0 boot checks the same value); pin comment says 'd0 Coordinator ABI3'.]"
+   }
+  },
+  "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415970)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415982, ABI 3)"
+   }
+  },
+  "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10": {},
+  "ic10/controller-config/config_input_bridge_v1_0.ic10": {},
+  "ic10/controller-config/generic_config_committer_v1_1.ic10": {},
+  "ic10/controller-config/generic_config_editor_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "SaveField",
+    "note": "reads Setting"
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "ReloadConfig",
+    "note": "reads Setting"
+   },
+   "d2": {
+    "kind": "physical-device",
+    "role": "ApplyConfig",
+    "note": "reads Setting"
+   }
+  },
+  "ic10/controller-config/generic_config_loader_v1_2.ic10": {},
+  "ic10/controller-config/generic_persistent_config_host_v1_1.ic10": {},
+  "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10": {},
+  "ic10/controller-discovery/controller_selector_v3_0.ic10": {},
+  "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads Pressure,Temperature; writes r8"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415963)"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
+    ],
+    "note": "docs/PHASE_PRESSURE_CONTROLLER.md:71: \"| `d2` | paired Generic Persistent Config Host | Supplies coherent accepted controller configuration. |\" [Corroborated: consumer requires d2 cell 12 == HASH(\"CFG1|ControllerPhasePressure|...\"); the Host holds the 'persistence schema signature supplied by Policy' at its S12 (generic_persistent_config_host_v1_1.ic10 line 11).]"
+   }
+  },
+  "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415928, ABI 1)"
+   }
+  },
+  "ic10/controller-pi/controller_pi_runtime_v1_1.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "Process",
+    "note": "reads r12"
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "Actuator",
+    "note": "writes r13"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415928, ABI 1)"
+   }
+  },
+  "ic10/controller-pi/pi_config_policy_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415928, ABI 1)"
+   }
+  },
+  "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads r2"
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "d1",
+    "note": "writes r5"
+   },
+   "d2": {
+    "kind": "physical-device",
+    "role": "d2",
+    "note": "writes r6"
+   },
+   "d3": {
+    "kind": "script",
+    "providers": [
+     "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
+    ],
+    "note": "docs/SEQUENCER_CONTROLLER.md:42: \"| `d3` | Paired Generic Persistent Config Host. |\" [Corroborated: consumer requires d3 cell 1 == 1 (Host ABI1, 'poke 1 1') and cell 12 == HASH(\"CFG1|ControllerSequencer|...\") matching the Host's S12 persistence schema signature.]"
+   }
+  },
+  "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415928, ABI 1)"
+   }
+  },
+  "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/dependency_plan_store_v2_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31416007, ABI 2)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/generic_job_monitor_v1_0.ic10"
+    ],
+    "note": "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10:1: \"# Bounded depth/cycle guard. d0 Plan Store,d1 Job Monitor.\" [Job Monitor interface matches exactly: request S2 JobId, S3 token (writes 2,3), response S4 token, S5 status==1, results S6..S12 (reads 4,5,7,8).]"
+   }
+  },
+  "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/dependency_plan_store_v2_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31416007, ABI 2)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/generic_job_monitor_v1_0.ic10"
+    ],
+    "note": "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10:1: \"# Parent-terminal cleanup guard. d0 PlanStore,d1 JobMonitor,d2 Planner.\" [Matches generic_job_monitor cells: request S2/S3, response S4 token, S5 status, S11 job state.]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10"
+    ],
+    "note": "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10:1: \"d2 Planner\"; docs/DEPENDENCY_PLANNING.md: \"dependency_cancellation_guard ... requests cleanup through the Planner\" [Planner cleanup interface matches: planner reads db24 parent + db25 token, replies db26 token/db27 status; guard writes 24,25 and reads 26.]"
+   }
+  },
+  "ic10/dependency-planning/dependency_child_creator_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/item_producer_resolver_v1_0.ic10"
+    ],
+    "note": "docs/DEPENDENCY_PLANNING.md: \"item_producer_resolver_v1_0.ic10 ... Known transform outputs resolve to ProducerKind=TRANSFORM\"; creator \"validates producer identity\" [No pin comment. Resolver interface matches exactly and uniquely: request S2 ResourceType + S3 token (creator writes d0 2,3), response S4 token, S5 status==1, S6 ProducerKind, S7 identity (creator reads 4,5,6,7; branches to NoProducer on status!=1).]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/job_requirement_view_v1_0.ic10"
+    ],
+    "note": "docs/DEPENDENCY_PLANNING.md: \"dependency_child_creator_v2_0.ic10 validates producer identity, ancestry/depth, current output semantics\" (output semantics come from the normalized Requirement View) [No pin comment. Requirement View interface matches exactly: request S2..S5 + S6 token (creator writes 2..6), response S7 token, S8 status==1, S11 promised output ResourceType (creator checks d1 11 == requested resource), S12 per-unit output qty; also reads S9/S10 into sp/ra.]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10"
+    ],
+    "note": "docs/DEPENDENCY_PLANNING.md: \"Self-dependencies and immediate ancestor cycles ... are rejected before child publication\"; creator validates \"ancestry/depth\" [No pin comment. Ancestry guard interface matches exactly: request S2..S6 + S7 token (creator writes 2..7), response S8 token, S9 status with -2 depth / -3 cycle (guard pokes 9 -2 / 9 -3; creator branches beq -2 Depth / beq -3 Cycle on d2 9).]"
+   },
+   "d3": {
+    "kind": "script",
+    "providers": [
+     "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10"
+    ],
+    "note": "docs/DEPENDENCY_PLANNING.md: \"submits child intent through Gateway lane C\"; docs/DEPLOYMENT.md: \"lane C Child Creator\" [Gateway lane C cells confirmed in gateway source: lane C token S48/response S49 (get r15 db 48 / get r0 db 49), request payload S53..S63, reply pokes 50,51,52. Creator writes d3 53..63 + token 48, reads 49,50(status==1),51 (child JobId).]"
+   }
+  },
+  "ic10/dependency-planning/dependency_child_validity_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/generic_job_monitor_v1_0.ic10"
+    ],
+    "note": "ic10/dependency-planning/dependency_child_validity_v1_0.ic10:1: \"# Validate live child identity and promised output. d0 Monitor,d1 RequirementView.\" [Monitor cells match: request S2 JobId + S3 token, response S4 token, S5 status==1, results S6..S12.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/job_requirement_view_v1_0.ic10"
+    ],
+    "note": "ic10/dependency-planning/dependency_child_validity_v1_0.ic10:1: \"d1 RequirementView\"; docs/DEPENDENCY_PLANNING.md: \"combines exact Job monitoring with the normalized Requirement View\" [Requirement View cells match: request S2..S5 + S6 token, response S7 token, S8 status==1, S11 promised output ResourceType.]"
+   }
+  },
+  "ic10/dependency-planning/dependency_claim_view_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/dependency_plan_store_v2_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31416007, ABI 2)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/dependency_child_validity_v1_0.ic10"
+    ],
+    "note": "ic10/dependency-planning/dependency_claim_view_v1_0.ic10:1: \"# Active future-output claim lookup over Plan Store + Child Validity.\" [d0 is Plan Store (checked by magic 31416007 in claim view source), so the header's Child Validity peer is d1; cells match child validity exactly: request S2 ChildJobId, S3 ResourceType, S4 token; response S5 token, S6 status==1, S7..S9 state/output data (claim view rejects state 7 / >=11 = terminal).]"
+   }
+  },
+  "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/dependency_claim_view_v1_0.ic10"
+    ],
+    "note": "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10:1: \"# Reuse active future-output claim or create one child. d0 ClaimView,d1 ChildCreator.\" [Claim View cells match: request S2 ResourceType, S3 parent, S4, S5 token; response S6 token, S7 status==1, S8/S9 shared child/FutureQty, S14 aggregate claims.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/dependency_child_creator_v2_0.ic10"
+    ],
+    "note": "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10:1: \"d1 ChildCreator\" [Child Creator cells match: request S2..S9 + S10 token, response S11 token, S12 status==1, S13 child JobId, S15 promised quantity.]"
+   }
+  },
+  "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/dependency_child_validity_v1_0.ic10"
+    ],
+    "note": "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10:1: \"# Evaluate one persisted dependency plan. d0 ChildValidity,d1 Preflight.\" [Child validity cells match: request S2,S3 + S4 token; response S5 token, S6 status, S7..S9.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10"
+    ],
+    "note": "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10:1: \"d1 Preflight\"; docs/DEPENDENCY_PLANNING.md: \"dependency_plan_evaluator_v2_0.ic10 runs a fresh parent inventory preflight\" [Preflight cells match: request S2..S4 + S5 token; response S6 token, S7 status, S11 known qty, S13/S14 quote fingerprints (used for the changed-vs-unchanged replan decision).]"
+   }
+  },
+  "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/dependency_claim_view_v1_0.ic10"
+    ],
+    "note": "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10:1: \"# Advise ref-aware child cancellation. d0 ClaimView,d1 ChildValidity.\" [Claim View cells match: request S2..S4 + S5 token; response S6 token, S7 status.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/dependency_child_validity_v1_0.ic10"
+    ],
+    "note": "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10:1: \"d1 ChildValidity\" [Child validity cells match: request S2,S3 + S4 token; response S5 token, S6 status, S7..S9 child state/generation data.]"
+   }
+  },
+  "ic10/dependency-planning/dependency_plan_store_v2_0.ic10": {},
+  "ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/dependency_plan_store_v2_0.ic10"
+    ],
+    "note": "docs/DEPENDENCY_PLANNING.md: \"The Plan Store supports only three operations: lookup parent, upsert, and clear\"; plan store source: op S12 (1..3), parent S13, token S9, response S10/S11, lookup record copied to S32..S39 [No pin comment. Interface match is exact and unique: controller writes d0 12=1 (lookup op), 13=ParentJobId, 9=token; reads 10 resp, 11 status (-2 missing), 33 ChildJobId, 34 ResourceType, 36..39 BaselineKnown/FutureQty/fingerprints - exactly the plan store record copy-out at S32..S39.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10"
+    ],
+    "note": "docs/DEPENDENCY_PLANNING.md decision table (\"inventory now satisfies -> READY ... quote fingerprints changed -> replan\") matches the controller's branch on d1 13 codes 1/2/3/4/5/-3/-4 [No pin comment. Evaluator cells match exactly: request S2..S10 + S11 token (controller writes 2..11), response S12 token, S13 decision code (evaluator pokes 12 r15 / 13 r0).]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10"
+    ],
+    "note": "docs/DEPENDENCY_PLANNING.md: \"dependency_plan_release_advisor_v1_0.ic10 decides whether a child can be cancelled when one parent releases its plan\"; controller header: \"Existing-plan decision + ref-aware cancel\" [No pin comment. Release advisor cells match exactly: request S2 parent, S3 child, S4 resource + S5 token; response S6 token, S8 cancellable flag, S9/S10 child JobId/generation used to build the lane-B cancel command.]"
+   },
+   "d3": {
+    "kind": "script",
+    "providers": [
+     "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10"
+    ],
+    "note": "docs/DEPENDENCY_PLANNING.md: \"Planner may request cancellation through Gateway lane B\"; docs/DEPLOYMENT.md: \"lane B dependency Planner cancellation\" [Gateway lane B cells confirmed in gateway source: token S32/response S33 (get r15 db 32 / get r0 db 33), lifecycle payload copied from S36..S40. Controller writes d3 36=2 (SET_STATE), 37 child JobId, 38 generation, 39=12, 40=-20, token 32; reads 33. Docs attribute lane B to \"Planner cancellation\"; the existing-plan controller is the component that physically writes it on the planner's behalf.]"
+   }
+  },
+  "ic10/dependency-planning/generic_job_monitor_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/generic-jobs/generic_job_store_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415984, ABI 1)"
+   }
+  },
+  "ic10/dependency-planning/item_producer_resolver_v1_0.ic10": {},
+  "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/job_requirement_view_v1_0.ic10"
+    ],
+    "note": "docs/DEPENDENCY_PLANNING.md: the Requirement View \"normalizes TRANSFORM and PRINT metadata into one bounded ITEM view\" that preflight iterates per input [No pin comment. Requirement View interface matches exactly: request S2 JobType, S3 metadata, S4 quantity, S5 input index + S6 token (preflight's Req subroutine writes 2..6), response S7 token, S8 status==1, S10 input count, S13 input ResourceType, S14 required qty (RV pokes 9..14).]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10"
+    ],
+    "note": "docs/DEPENDENCY_PLANNING.md: \"job_inventory_preflight_v1_0.ic10 quotes Item-7 DirectorySchema.ResourceReservation through the existing six-leg selector\" [Selector cells match: request S2 resource, S3 qty, S4 direction, S5, S6 token; response S7 token, S8 status (-2 lower-bound, -3 overflow), S9 known, S10 leg count, per-leg records at S32+3i (Reservation ref + generation) which preflight folds into its rolling fingerprints.]"
+   }
+  },
+  "ic10/dependency-planning/job_requirement_view_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10"
+    ],
+    "note": "docs/DEPENDENCY_PLANNING.md: \"Transform requirements come from Transform Profile ABI4\"; consumer uses the S68..S75 resolved-request mailbox of the v8 view"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10"
+    ],
+    "note": "docs/DEPENDENCY_PLANNING.md: \"Print requirements come from Recipe execution metadata\"; provider header: \"Recipe Execution Profile View ABI1 ... request S2 RecipeHash\" [No pin comment, but cells match exactly and uniquely: consumer writes S2 RecipeHash and reads S41 request echo, S7 status==1, S6 generation fence, S4/S5 counts, reagent pairs at S8+2i - precisely the cells recipe_execution_profile_view pokes (41, 7, 6, 3/4/5, dynamic pairs).]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10"
+    ],
+    "note": "docs/DEPENDENCY_PLANNING.md: \"Print requirements come from ... manufacturing_reagent_resolver_v1_0.ic10, which maps ManufacturingReagentHash aliases back to canonical ITEM ResourceType values\" [Resolver cells match: request S2 alias + S3 token (consumer writes 2,3), response S4 token, S5 status==1, S6 resolved ResourceType.]"
+   }
+  },
+  "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10"
+    ],
+    "note": "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10:1: \"# Dependency Gate ABI2. d0 Planner,d1 DriverRouter,d2 JobSelector.\" [Planner cells match: request S2 parent + S3..S8 job metadata + S9 token (gate writes 2..9), response S10 token, S11 status (planner pokes 10 r15 / 11 r4).]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md: \"manufacturing_dependency_gate_v2_0.ic10 between Scheduler and ic10/manufacturing/manufacturing_driver_router_v2_0.ic10\"; pin comment \"d1 DriverRouter\" [Driver Router ABI2 cells match: request token S9 (gate writes d1 9), response S10 token, S11/S12 status/result (router pokes 10 r15, 11, 12).]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/generic-jobs/generic_job_selector_v3_0.ic10"
+    ],
+    "note": "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10:1: \"d2 JobSelector\" [Read-only consumption of the selector's published selection: S5 status==1, S6 slot, S7 JobId, S8, S10, S13, S14, S16 - all cells the selector pokes (5..17).]"
+   }
+  },
+  "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/dependency_plan_store_v2_0.ic10"
+    ],
+    "note": "docs/DEPENDENCY_PLANNING.md: \"manufacturing_dependency_planner_v1_0.ic10 alone mutates Plan Store through its request interface\" [Plan store request interface matches exactly: token S9, response S10, status S11, op S12 (planner uses 2=upsert, 3=clear), parent S13, upsert payload S14..S20 (plan store copies db14..db20 into the record). No pin comment, but the doc statement plus unique cell match are decisive.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10"
+    ],
+    "note": "docs/DEPENDENCY_PLANNING.md control-flow diagram: \"208 Dependency Planner -> 217 Existing-plan controller\" [Existing controller cells match: request S2 parent, S3..S8 copied job metadata (planner's CopyExisting loop = the dynamic write), S9 mode (0 evaluate / 1 cleanup), S10 token; response S11 token, S12 result, S13 cleared flag.]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10"
+    ],
+    "note": "docs/DEPENDENCY_PLANNING.md new-plan flow; request S2/S3, echo S4, status 6 at S5, payload S13..S19 match the controller exactly"
+   }
+  },
+  "ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10": {},
+  "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10"
+    ],
+    "note": "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10:1: \"# New-plan decision. d0 Preflight,d1 Builder,d2 JobMonitor.\" [Preflight cells match: request S2..S4 + S5 token, response S6 token, S7 status (1 ready / 2 probe / 3 deficit / -2 overflow), results S8..S14 including S13/S14 fingerprints.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10"
+    ],
+    "note": "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10:1: \"d1 Builder\" [Builder cells match: request S2..S12 + S13 token (controller writes 2..13), response S14 token, S15 status==1, S16 child JobId, S17 FutureQty.]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/generic_job_monitor_v1_0.ic10"
+    ],
+    "note": "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10:1: \"d2 JobMonitor\" [Monitor cells match: request S2 JobId + S3 token, response S4 token, S5 status==1, results S6..S12; the constraint d2[11]==2 is the monitor's S11 job state cell requiring the parent to still be PLANNING.]"
+   }
+  },
+  "ic10/diagnostics/console_registry_v1_1.ic10": {},
+  "ic10/diagnostics/console_selector_v1_1.ic10": {},
+  "ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10": {},
+  "ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10": {},
+  "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10": {},
+  "ic10/diagnostics/diagnostic_renderer_v1_1.ic10": {},
+  "ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10": {},
+  "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10",
+     "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10",
+     "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10",
+     "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10",
+     "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10",
+     "ic10/printer-directory/printer_directory_adapter_v1_0.ic10",
+     "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10",
+     "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10",
+     "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10",
+     "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415983, ABI 3); reads Adapter ABI3 SchemaId S3 and Generation S7 as header fields",
+    "header_reads": {
+     "3": "SchemaId",
+     "7": "Generation"
+    }
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415981, ABI 1)"
+   }
+  },
+  "ic10/directory-core/generic_registry_directory_host_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10",
+     "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10",
+     "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10",
+     "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10",
+     "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10",
+     "ic10/printer-directory/printer_directory_adapter_v1_0.ic10",
+     "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10",
+     "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10",
+     "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10",
+     "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415983, ABI 3); reads Adapter ABI3 SchemaId S3 and Generation S7 as header fields",
+    "header_reads": {
+     "3": "SchemaId",
+     "7": "Generation"
+    }
+   }
+  },
+  "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10": {},
+  "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10"
+    ],
+    "note": "docs/GENERIC_JOB_ABI.md:379: \"Both serialize mutations through the Job Gateway and sole physical Store command executor\"; USER_DEPLOYMENT_GUIDE.md:1086 chain Store -> Gateway -> Executor. [No literal 'Gateway d0 -> X' line, but the correspondence is cell-exact: Gateway writes d0 cells 7..20/22 (payload), handshakes via d0 2 vs 3, and reads replies at d0 3,4,5,6; the Executor reads its own db 2,7..22 and replies at db 3,4,5,6 (poke 3/4/5/6). No other program has that mailbox shape.]"
+   }
+  },
+  "ic10/generic-jobs/generic_job_selector_v3_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/generic-jobs/generic_job_store_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415984, ABI 1)"
+   }
+  },
+  "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/generic-jobs/generic_job_store_v1_0.ic10"
+    ],
+    "note": "docs/GENERIC_JOB_ABI.md:383: \"generic_job_store_command_executor_v1_0.ic10 remains the sole physical Job Store mailbox writer\" (executor's only port is d0). [Corroborated cell-exact: Executor writes d0 7 (command seq) and 11..15 (payload), reads replies d0 8,9,10; generic_job_store_v1_0 reads db 7, db 11..15 and pokes 8,9,10. Executor also walks the Store's slot directory at 288+7*slot and record bank at 32/33+8*slot.]"
+   }
+  },
+  "ic10/generic-jobs/generic_job_store_v1_0.ic10": {},
+  "ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10": {},
+  "ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10": {},
+  "ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10": {},
+  "ic10/input-profile-catalog/input_profile_view_v5_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
+    ],
+    "note": "docs/CONFIG_INPUTS.md:40: \"Connect ic10/input-profile-catalog/input_profile_view_v5_0.ic10 d0 to the Store\" (the Store is the coordinator-claimed generic_catalog_store_v3_0 added in step 1, CONFIG_INPUTS.md:37). [Corroborated: View reads d0 cell 11 (Coordinator ReferenceId, checked against Coordinator magic 31415970) and cell 13 (CatalogSchemaId), then walks the NextStoreRef chain (cell 21) to a node with Store magic 31415968 == generic_catalog_store_v3_0. Any claimed Input Profile Store instance qualifies.]"
+   }
+  },
+  "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415987, ABI 1)"
+   }
+  },
+  "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415981)"
+   }
+  },
+  "ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads ReferenceId"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415963)"
+   }
+  },
+  "ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads Error,Idle,Power; writes Activate,Setting,TargetSlotIndex"
+   }
+  },
+  "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415986)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415963)"
+   }
+  },
+  "ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10"
+    ],
+    "note": "docs/ITEM_STORAGE_SYSTEM.md: \"d0  189 LArRE ITEM Storage Endpoint\" (section 9 wiring block) [Consumer requires d0 S35 == HASH(\"StorageAccess.LArRE\"); the endpoint's line 8 is exactly `poke 35 HASH(\"StorageAccess.LArRE\")`, and it is the only program publishing that access magic. Doc also states the client is the sole movement client for one larre_item_storage_endpoint instance.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
+    ],
+    "note": "docs/ITEM_STORAGE_SYSTEM.md: \"d1  storage Generic Resource Reservation\" [resource_reservation_v1_0.ic10 is the only program publishing Generic Resource Reservation ABI1 (magic 31415950 as own S0). Consumer's reads (S12 generation, S14/S15 reserved amounts, S16 direction lock in {1,2}, S19/S25..S27 committed hints) match the Reservation base + Item Storage extension cells documented in docs/ITEM_STORAGE_SYSTEM.md section 5.]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
+    ],
+    "note": "docs/ITEM_STORAGE_SYSTEM.md: \"d2  external Generic Resource Reservation\" [Same Reservation ABI1 cell shape as d1 (S12, S14..S19); doc requires both Reservations to share the same positive owner ReferenceId. The external Reservation typically fronts an external endpoint such as ic10/material-grid/material_export_slot_endpoint_v1_0.ic10, but the d2 peer program itself is the generic Reservation.]"
+   }
+  },
+  "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads Quantity,ReferenceId; writes Lock,Open"
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "d1",
+    "note": "reads ExportCount,ImportCount,ReferenceId; writes Mode,On,Output,Setting"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415963)"
+   }
+  },
+  "ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads Error,ExportCount,ImportCount,Power,Quantity,ReferenceId; writes Lock"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415963)"
+   }
+  },
+  "ic10/item-storage-vending/material_vending_inventory_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads Error,ExportCount,ImportCount,Power,ReferenceId"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415963, ABI 1)"
+   }
+  },
+  "ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10": {},
+  "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "Target standard or compact IC Housing (the housing of whichever framework IC is being inspected)",
+    "note": "docs/STACK_CELL_MONITOR_GETTING_STARTED.md wiring table: \"| `d0` | Target standard or compact IC housing |\"; docs/LIVE_COMMISSIONING.md:116: \"reads one selected S0..S511 cell from a standard or compact IC housing\". [Pin comment agrees: 'd0 target IC housing'. The peer is a game device class (IC Housing), not a fixed script; the monitor rejects non-housing devices via PrefabHash.]"
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "d1",
+    "note": "reads Setting"
+   },
+   "d2": {
+    "kind": "physical-device",
+    "role": "d2",
+    "note": "writes Setting"
+   }
+  },
+  "ic10/live-commissioning/stack_header_reader_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "Target standard or compact IC Housing (housing of any framework IC publishing the common S0..S7 stack header)",
+    "note": "docs/ABI_REFERENCE.md:1796: \"`d0` is the target IC housing and optional `d1` mirrors the discovered magic\". [Pin comment agrees: 'd0 target IC housing'. Reads only S0..S7 of the target; works against any header-publishing IC, so the wired peer is the housing device class, not one script.]"
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "d1",
+    "note": "writes Setting"
+   }
+  },
+  "ic10/manufacturing/generic_print_runtime_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/manufacturing/print_material_resolver_v1_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:277: \"then wire Generic Print Runtime `d0 -> Print Material Resolver`, `d1 -> print Allocator`\"; docs/MANUFACTURING_SCHEDULER.md:433: \"Configure Print Runtime `d0 -> Print Material Resolver`\" [Constraint addr6==1 matches the resolver's status cell (resolver initializes cells 5 and 6 to 0 and publishes readiness there).]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:277: \"Deploy a print-specific ... multi_material_reservation_allocator_v2_0.ic10 ... then wire Generic Print Runtime ... `d1 -> print Allocator`\"; docs/MANUFACTURING_SCHEDULER.md:433: \"`d1 -> print-lane Multi Material Allocator ABI2`\" [A dedicated print-lane instance of the allocator, separate from the transform-lane instance. MANUFACTURING_SCHEDULER.md:361 corroborates: the runtime 'uses the same Multi Material Allocator ABI2 completion contract as transforms'.]"
+   }
+  },
+  "ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10": {},
+  "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/manufacturing/transform_job_driver_v2_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:269: \"manufacturing_driver_router_v2_0.ic10 (`d0 -> Transform Driver`, `d1 -> Print Driver`, `d2 -> Job Selector`)\"; docs/MANUFACTURING_SCHEDULER.md:427: \"with `d0 -> Transform Job Driver`\" [d0 and d1 show identical read/write cell sets, consistent with both job drivers exposing the same driver-facing request ABI (Transform/Print Job Driver ABI2).]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/manufacturing/print_job_driver_v2_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:269: \"(`d0 -> Transform Driver`, `d1 -> Print Driver`, `d2 -> Job Selector`)\"; docs/MANUFACTURING_SCHEDULER.md:427: \"`d1 -> Print Job Driver`\""
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/generic-jobs/generic_job_selector_v3_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:269: \"(`d0 -> Transform Driver`, `d1 -> Print Driver`, `d2 -> Job Selector`)\"; docs/MANUFACTURING_SCHEDULER.md:427: \"`d2 -> Job Selector`\" [Port is read-only (reads 7..13), consistent with mirroring the Selector's published selection cells.]"
+   }
+  },
+  "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:269: \"manufacturing_scheduler_v1_0.ic10 (`d0 -> Job Gateway`, `d1 -> Job Selector`, `d2 -> Dependency Gate`)\"; source pin comment: \"d0 Job Gateway\"; docs/DEPENDENCY_PLANNING.md:175: \"generic_job_command_gateway_v3_0.ic10 arbitrates independent command producers\" (Scheduler = lane A) [docs/MANUFACTURING_SCHEDULER.md:426 still says `d0 -> Job Store` \u2014 that is the pre-Item-8 wiring; DEPLOYMENT.md, the source pin comment, and DEPENDENCY_PLANNING.md (Scheduler publishes through Gateway lane A rather than writing the Job Store directly) supersede it.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/generic-jobs/generic_job_selector_v3_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:269: \"(`d0 -> Job Gateway`, `d1 -> Job Selector`, `d2 -> Dependency Gate`)\"; docs/MANUFACTURING_SCHEDULER.md:426: \"`d1 -> Job Selector`\"; source pin comment: \"d1 Job Selector\" [All three evidence sources agree.]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:269: \"(`d0 -> Job Gateway`, `d1 -> Job Selector`, `d2 -> Dependency Gate`)\"; source pin comment: \"d2 Dependency Gate\"; docs/DEPENDENCY_PLANNING.md:181: \"manufacturing_dependency_gate_v2_0.ic10 gates access to the unchanged Transform/Print Driver Router\" [docs/MANUFACTURING_SCHEDULER.md:426 still says `d2 -> Driver Router` \u2014 pre-Item-8 wiring; Item 8 inserted the Dependency Gate between Scheduler and Router (DEPENDENCY_PLANNING.md diagram line 37: \"210 Dependency Gate ABI2\").]"
+   }
+  },
+  "ic10/manufacturing/print_candidate_executor_v2_0.ic10": {
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/manufacturing/print_material_resolver_v1_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:275: \"Wire print_candidate_executor_v2_0.ic10: `d0 -> Recipe Execution View`, `d1 -> Print Material Resolver`, `d2 -> Generic Print Runtime`, `d3 -> Printer Capacity Client`\"; docs/MANUFACTURING_SCHEDULER.md:431: \"`d1 -> 177 Print Material Resolver`\""
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/manufacturing/generic_print_runtime_v2_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:275: \"`d2 -> Generic Print Runtime`\"; docs/MANUFACTURING_SCHEDULER.md:431: \"`d2 -> 178 Print Runtime ABI2`\" [MANUFACTURING_SCHEDULER.md:394 corroborates the executor 'launch[es] Generic Print Runtime only after capacity and resource planning succeed'.]"
+   },
+   "d3": {
+    "kind": "script",
+    "providers": [
+     "ic10/printer-directory/printer_capacity_client_v2_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:275: \"`d3 -> Printer Capacity Client`. Capacity Client discovers Execution Banks and revalidates exact PrinterReferenceId at reservation time\"; docs/MANUFACTURING_SCHEDULER.md:431: \"`d3 -> 186 Capacity Client ABI2`\" [Writes 2..5 / reads 6..8 with addr7==1 fit the client's request/acknowledged-response transaction (ExpectedPrinterRef + RequestToken in, status/ack out).]"
+   }
+  },
+  "ic10/manufacturing/print_job_driver_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:274: \"Deploy a second manufacturing_candidate_selector_v2_0.ic10 instance with `d0 -> PrinterExecution Snapshot Host`; wire the Print Job Driver `d0` to that selector\" [The PrinterExecution-facing selector instance (DEPLOYMENT.md deploys two instances; MANUFACTURING_SCHEDULER.md:428 describes a single shared-selector variant \u2014 same program either way).]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:274: \"`d1 -> ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10`\"; docs/MANUFACTURING_SCHEDULER.md:430: \"Configure Print Job Driver `d1 -> 172 Recipe Execution Profile View`\" [Constraint addr7==1 matches the view's status cell (view initializes cells 6 and 7 to 0); read of cell 41 fits the view's bounded reagent-requirement records.]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/manufacturing/print_candidate_executor_v2_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:274: \"`d2 -> ic10/manufacturing/print_candidate_executor_v2_0.ic10`\"; docs/MANUFACTURING_SCHEDULER.md:430: \"`d2 -> 176 Print Candidate Executor`\""
+   },
+   "d3": {
+    "kind": "physical-device",
+    "role": "d3",
+    "note": "reads ReferenceId"
+   }
+  },
+  "ic10/manufacturing/print_material_resolver_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:276: \"Wire `177 d0 -> Recipe Execution View`, `d1 -> ResourceLink Snapshot Directory`\" (177 = Print Material Resolver per docs/MANUFACTURING_SCHEDULER.md:431); docs/MANUFACTURING_SCHEDULER.md:432: \"Configure Print Material Resolver `d0 -> Recipe Execution Profile View`\" [Constraint addr7==1 matches the view's status cell (view initializes cells 6 and 7 to 0).]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:276: \"`d1 -> ResourceLink Snapshot Directory`\"; docs/MANUFACTURING_SCHEDULER.md:432: \"`d1 -> ResourceLink Snapshot Directory`\"; docs/DIRECTORY_STANDARD.md:90: \"S9 DirectorySchemaId, HASH(\\\"<schema>.v<version>\\\")\" [The docs name the directory role, not a file; the ResourceLink snapshot directory is a dedicated Generic Snapshot Host instance (166) fed via generic_directory_adapter_bridge from the ResourceLink adapter. The consumer's constraint addr9==HASH(\"DirectorySchema.ResourceLink.v1\") matches the host's S9 DirectorySchemaId cell exactly.]"
+   }
+  },
+  "ic10/manufacturing/transform_candidate_executor_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10"
+    ],
+    "note": "docs/MANUFACTURING_SCHEDULER.md:429: \"configure `175 d0 -> 187 Transform Candidate Readiness`\"; source pin comment: \"Transform Candidate Executor ABI2: d0 Readiness; exact request-token fencing\" [SCRIPT_INDEX describes the readiness program as fencing Transform Profile/Admission/Link-Resolver completion to one exact candidate request, matching the executor's request/response cell usage (writes 8,11..16; reads 9,10).]"
+   }
+  },
+  "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10": {},
+  "ic10/manufacturing/transform_job_driver_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:271: \"Deploy one manufacturing_candidate_selector_v2_0.ic10 instance with `d0 -> TransformLane Snapshot Host`; wire the Transform Job Driver `d0` to that selector\"; source pin comment: \"d0 shared Selector\" [The TransformLane-facing selector instance; docs/MANUFACTURING_SCHEDULER.md:428 describes the shared-selector variant of the same program.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/manufacturing/transform_candidate_executor_v2_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:271: \"and `d1 -> ic10/manufacturing/transform_candidate_executor_v2_0.ic10`\"; docs/MANUFACTURING_SCHEDULER.md:429: \"Configure Transform Driver `d1 -> 175 Transform Candidate Executor`\"; source pin comment: \"d1 Executor\""
+   },
+   "d2": {
+    "kind": "physical-device",
+    "role": "d2",
+    "note": "reads ReferenceId"
+   }
+  },
+  "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10": {},
+  "ic10/material-grid/material_export_slot_endpoint_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads ExportCount,ImportCount,ReferenceId"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415963)"
+   }
+  },
+  "ic10/material-grid/material_import_slot_endpoint_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads ExportCount,ImportCount,ReferenceId"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415963, ABI 1)"
+   }
+  },
+  "ic10/material-grid/material_resource_link_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415950, ABI 1)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415950, ABI 1)"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10",
+     "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415961, ABI 1)"
+   },
+   "d3": {
+    "kind": "script",
+    "providers": [
+     "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415960, ABI 1)"
+   },
+   "d4": {
+    "kind": "script",
+    "providers": [
+     "ic10/material-grid/material_transfer_executor_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415958, ABI 1)"
+   }
+  },
+  "ic10/material-grid/material_transfer_executor_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/material-grid/material_resource_link_v1_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md: \"Executor `d0` -> Link, `d1` -> Feeder, `d2` -> Guard.\" (section C step 6); pin comment \"d0 Link,d1 Feeder,d2 Guard\" [docs/MATERIAL_TRANSFER_SYSTEM.md Transfer Executor block repeats \"d0 -> Material Resource Link\". Consumer reads d0 S5/S12/S16/S22 which match the Link's ResourceType/status/Feeder-ref/native-sink cells as modeled in tests/test_material_transform_protocol.py.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md: \"Executor `d0` -> Link, `d1` -> Feeder, `d2` -> Guard.\"; pin comment \"d0 Link,d1 Feeder,d2 Guard\" [Consumer writes d1 S16..S19 and reads d1 S6/S7; the Feeder reads its own db 16..19 as the request mailbox and pokes 6 (status) and 7 (LIVE_CURRENT identity) as responses. Exact cell-level match.]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415960, ABI 1)"
+   }
+  },
+  "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/material-grid/material_resource_link_v1_0.ic10",
+     "ic10/power-grid/power_static_link_v1_0.ic10",
+     "ic10/power-grid/power_transformer_link_v1_0.ic10",
+     "ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415953, ABI 1)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415954, ABI 2)"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/material-grid/material_transfer_executor_v1_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md: \"Guard `d0` -> Link, `d1` -> `ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10`, `d2` -> Executor;\"; pin comment \"d0 Link,d1 Allocator,d2 Executor\" [docs/MATERIAL_TRANSFER_SYSTEM.md Grant Guard block: \"d2 -> Material Transfer Executor\". Guard reads d2 S2 and d2 ReferenceId; the Executor publishes S2 (poke 2 at lines 103/116) and topology binding by ReferenceId is the Guard's documented job.]"
+   }
+  },
+  "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads ReferenceId; writes RequestHash"
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "d1",
+    "note": "reads ExportCount,ImportCount,ReferenceId; writes Mode,On,Output,Setting"
+   },
+   "d2": {
+    "kind": "physical-device",
+    "role": "Logic Sorter",
+    "note": "docs/DEPLOYMENT.md: \"`ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10`: `d0` Vending, `d1` Stacker, `d2` Logic Sorter;\" [Source corroborates a native device, not an IC: `s d2 Mode 1`, `clr d2`, `put d2 0 r0` (writes a filter hash into the Sorter's internal stack), `s d2 On 1/0`. The stack write at address 0 targets the Sorter's device stack, not an IC housing.]"
+   }
+  },
+  "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads Error,ReferenceId; writes Activate"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/material-transform/material_transform_admission_v1_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md: \"165 Runtime: d0 Processor, d1 Admission, d2 Link Resolver, d3 Multi Allocator, d4 Output Reservation\" (section F) [docs/ABI_REFERENCE.md (31415980): \"wires d0 processor, d1 Admission...\". Consumer reads d1 S8==1, S17, S19; Admission pokes 8 (admit status 1/-1), 17, 19 among its S14..S19 payload. Exact match.]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/material-transform/material_transform_link_resolver_v1_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md: \"165 Runtime: ... d2 Link Resolver ...\" [Consumer reads d2 S11 and S12==1; the Link Resolver pokes 11 and 12 (status, asserted ==1 in tests/test_material_transform_protocol.py). ABI_REFERENCE (31415980) confirms \"d2 Resolver\".]"
+   },
+   "d3": {
+    "kind": "script",
+    "providers": [
+     "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md: \"165 Runtime: ... d3 Multi Allocator ...\" [ABI_REFERENCE (31415980): \"d3 Allocator ABI2\". Consumer reads d3 S14, the Allocator ABI2 committed common epoch (\"publishes the common active epoch at S14 last\"), plus S16/S22, and writes the allocator request cells. Runtime S7 = committed material epoch mirrors that S14 read.]"
+   },
+   "d4": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md: \"165 Runtime: ... d4 Output Reservation\" [Only program publishing Generic Resource Reservation ABI1 (magic 31415950). Consumer reads d4 S6 (mirrored ExportAvailable) and S12 (semantic mirror generation) to confirm coherent output growth, matching the Reservation's poked cells 6/12.]"
+   }
+  },
+  "ic10/material-transform/material_transform_admission_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415952, ABI 4)"
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "d1",
+    "note": "reads Error,Power,PrefabHash,Pressure,ReferenceId,Temperature"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415950, ABI 1)"
+   }
+  },
+  "ic10/material-transform/material_transform_link_resolver_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/material-transform/material_transform_admission_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415977, ABI 1)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415952, ABI 4)"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415981, ABI 1)"
+   }
+  },
+  "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/manufacturing/print_material_resolver_v1_0.ic10",
+     "ic10/material-transform/material_transform_link_resolver_v1_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md: \"164 Allocator ABI2: d0 Link Resolver, d1 Stager\" (transform lane) and \"Deploy a print-specific ... stager ... allocator ... Wire both to the print resolver exactly as the transform lane wires them to its resolver\" (manufacturing step 9) [Any-of by lane: transform lane uses material_transform_link_resolver (tests/test_material_transform_protocol.py wires alloc d0 to the resolver device; fixed-cell reads S9/S11/S12==1 match resolver pokes 8..13); print lane uses print_material_resolver per DEPLOYMENT step 9, whose S16.. four-cell records are documented \"compatible with Multi Reservation Stager/Allocator\" (docs/ABI_REFERENCE.md 31415989). Fixed-cell corroboration is direct only for the transform resolver; the print-resolver pairing rests on the explicit deployment line.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md: \"164 Allocator ABI2: d0 Link Resolver, d1 Stager\"; pin comment \"d0 Resolver,d1 Stager\" [Consumer writes d1 S9..S12 and reads d1 S13/S14 (S13 in {1,2}); the Stager reads its own db 9 (command: 1 stage, 2 cleanup), db 12/db 14 and pokes 13 (status/ack). Exact source-level mailbox match; tests wire stager_dev to allocator d1.]"
+   }
+  },
+  "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/manufacturing/print_material_resolver_v1_0.ic10",
+     "ic10/material-transform/material_transform_link_resolver_v1_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md: \"163 Stager: d0 Link Resolver, d1 Multi Allocator\" and manufacturing step 9: \"Wire both to the print resolver exactly as the transform lane wires them to its resolver\"; pin comment \"d0 Resolver,d1 Allocator\" [Same any-of-by-lane as the Allocator d0. Stager's fixed reads (d0 S9/S11/S12==1 plus dynamic S16.. record reads) match the transform Link Resolver exactly (tests/test_material_transform_protocol.py wires stager d0 to the resolver); the print-lane pairing is the explicit DEPLOYMENT step with record-format compatibility documented in docs/ABI_REFERENCE.md.]"
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "d1",
+    "note": "reads ReferenceId"
+   }
+  },
+  "ic10/power-grid/power_battery_endpoint_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads Charge,Error,Maximum,On,PowerActual,PowerPotential,ReferenceId"
+   }
+  },
+  "ic10/power-grid/power_consumer_endpoint_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads ReferenceId,r2"
+   }
+  },
+  "ic10/power-grid/power_dispatch_cycle_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
+    ],
+    "note": "ic10/power-grid/power_dispatch_cycle_v1_0.ic10: '# Power dispatch cycle: PlanStore BEGIN -> sweep -> COMMIT.' + docs/POWER_MANAGEMENT.md section 5: 'power_dispatch_cycle_v1_0.ic10 owns: PlanStore BEGIN -> priority sweep -> PlanStore COMMIT' [Cycle writes d0 S12=1/3 (BEGIN/COMMIT command) + S10 token, reads S11 ack, S13 status, S3 committed PlanGeneration - the exact Plan Store mailbox layout tests/test_power_management.py drives (stack 12/10 command/token, S2 seq, S3 gen).]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_dispatch_sweep_v1_0.ic10"
+    ],
+    "note": "ic10/power-grid/power_dispatch_cycle_v1_0.ic10: '# Power dispatch cycle: PlanStore BEGIN -> sweep -> COMMIT.' (cycle writes d1 S2 request, awaits d1 S3 ack / S4 status) [Sweep's own request surface is S2 incoming token, S3 ack (poke 3 r15), S4 status (+1/-1) - matches cycle's d1 access [reads 3,4; writes 2; S4==1] exactly.]"
+   }
+  },
+  "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10": {},
+  "ic10/power-grid/power_dispatch_sweep_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_sink_selector_v1_0.ic10"
+    ],
+    "note": "ic10/power-grid/power_dispatch_sweep_v1_0.ic10: '# Sweep priority-ordered POWER sinks. d0 SinkSelector,d1 FlowBuilder,d2 PlanStore.' [Sink selector request surface: S2 cursor, S3 token, S4 ack (poke 4 r15), S5 status, S6-S11 results - matches sweep's d0 access [writes 2,3; reads 4..11].]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_sink_flow_builder_v1_0.ic10"
+    ],
+    "note": "ic10/power-grid/power_dispatch_sweep_v1_0.ic10: '# Sweep priority-ordered POWER sinks. d0 SinkSelector,d1 FlowBuilder,d2 PlanStore.' [Flow builder request surface: S2-S5 params, S6 incoming token, S7 ack, S8 status - matches sweep's d1 access [writes 2..6; reads 7,8].]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
+    ],
+    "note": "ic10/power-grid/power_dispatch_sweep_v1_0.ic10: '# Sweep priority-ordered POWER sinks. d0 SinkSelector,d1 FlowBuilder,d2 PlanStore.' [Sweep writes only d2 S14 (total shed watts) and S15 (critical shortage) - the Plan Store's shed/critical cells exercised in tests/test_power_management.py (ps.stack.update({14:20,15:0})). docs/POWER_MANAGEMENT.md: 'The sweep reports total shed watts and separately marks critical shortage.']"
+   }
+  },
+  "ic10/power-grid/power_link_executor_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
+    ],
+    "note": "ic10/power-grid/power_link_executor_v1_0.ic10: '# Break-before-make Transformer Setting/On executor. d0 PlanStore,d1 Allocator.' [Reads d0 S2/S3/S4 (sequence/PlanGeneration/count) plus dynamic flow records S16..79 (data/script_contract_overrides.json dynamic_read_ranges [[16,79]]); tests/test_fault_injection.py wires a plan-store-shaped device to d0.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_reservation_allocator_v1_0.ic10"
+    ],
+    "note": "ic10/power-grid/power_link_executor_v1_0.ic10: '# Break-before-make Transformer Setting/On executor. d0 PlanStore,d1 Allocator.' [Reads d1 S2/S3/S4 with S4==1 - exactly the allocator's published authority [PlanGeneration, Epoch, ACTIVE] (allocator Publish: poke 2 gen, poke 3 epoch, poke 4 1); also reads d1 ReferenceId to match Reservation owner. tests/test_fault_injection.py wires 'alloc' device stack {2:5,3:10,4:1} to d1.]"
+   }
+  },
+  "ic10/power-grid/power_link_selector_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415981)"
+   }
+  },
+  "ic10/power-grid/power_load_executor_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
+    ],
+    "note": "ic10/power-grid/power_load_executor_v1_0.ic10: '# Break-before-make managed POWER load/battery On executor. d0 PlanStore,d1 Allocator.' [Reads d0 S2/S3/S4 (sequence/PlanGeneration/count) plus dynamic flow records; tests/test_fault_injection.py wires plan-store-shaped device 'pl' (stack {2:2,3:5,4:1,...}) to d0.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_reservation_allocator_v1_0.ic10"
+    ],
+    "note": "ic10/power-grid/power_load_executor_v1_0.ic10: '# Break-before-make managed POWER load/battery On executor. d0 PlanStore,d1 Allocator.' [Reads d1 S2/S3/S4 with S4==1 ([PlanGeneration, Epoch, ACTIVE]) plus d1 ReferenceId as reservation owner identity - matches allocator publication and tests/test_fault_injection.py 'alloc' wiring.]"
+   }
+  },
+  "ic10/power-grid/power_plan_validator_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
+    ],
+    "note": "ic10/power-grid/power_plan_validator_v1_0.ic10: '# Validate one coherent POWER dispatch plan. d0 PlanStore.' [Reads d0 S2 (even sequence check: mod r0 r14 2), S3 (exact PlanGeneration), S4 (flow count) plus dynamic flow records - docs/POWER_MANAGEMENT.md section 6: validator rechecks 'exact PlanGeneration and even publication sequence'.]"
+   }
+  },
+  "ic10/power-grid/power_producer_endpoint_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads Error,On,ReferenceId,r2"
+   }
+  },
+  "ic10/power-grid/power_reservation_allocator_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
+    ],
+    "note": "tests/test_fault_injection.py: \"plan=Device(3000,stack={3:5},...) ... a=IC10(asrc,{'d0':plan,'d1':validator,'d2':committer,'d3':releaser},...)\" [Allocator reads only d0 S3 (PlanGeneration) to detect a new plan, then feeds that generation to the validator; matches Plan Store S3 and the docs/POWER_MANAGEMENT.md validate->commit->release->publish pipeline.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_plan_validator_v1_0.ic10"
+    ],
+    "note": "tests/test_fault_injection.py: \"'allocator did not revalidate unchanged current plan after reflash'\" (d1 named 'validator') + docs/POWER_MANAGEMENT.md: 'validate complete plan -> commit new Reservation epoch -> ...' [Allocator writes d1 S2 (PlanGeneration) + S3 (request token), reads S4 ack / S5 status - exactly power_plan_validator's request surface (get r2 db 2; token db 3 vs ack db 4; status S5).]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_reservation_committer_v1_0.ic10"
+    ],
+    "note": "tests/test_fault_injection.py: \"'allocator did not advance to fresh reservation commit'\" (d2 named 'committer') + docs/POWER_MANAGEMENT.md: 'power_reservation_committer_v1_0.ic10 writes one common allocator epoch' [Allocator writes d2 S2 (PlanGeneration), S3 (new epoch), S4 (token), reads S5 ack / S6 status - exactly the committer's request surface (get r2 db 2 / r3 db 3; token db 4 vs ack db 5).]"
+   },
+   "d3": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10"
+    ],
+    "note": "tests/test_fault_injection.py: \"releaser=Device(3003,...)\" wired to d3; \"'allocator did not release prior epoch before republish'\" + docs/POWER_MANAGEMENT.md: 'release previous owner epoch' [No doc line names the exact script for this pin, but resource_reservation_releaser_v1_0 is the only epoch-release service in the repo and its surface matches exactly: S2 epoch, S3 token, S4 ack (poke 4 r15 last), S5 status (poke 5 +/-1); its own d0 must point back at the allocator ('d0 owner service' - it releases only reservations owned by d0's ReferenceId + the given epoch). Used for both release-prior-epoch (WaitR) and cleanup-of-new-epoch (WaitCleanup).]"
+   }
+  },
+  "ic10/power-grid/power_reservation_committer_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
+    ],
+    "note": "ic10/power-grid/power_reservation_committer_v1_0.ic10: '# Commit POWER Reservation ownership for one plan. d0 PlanStore,d1 Allocator owner.' [Reads d0 S2 (even sequence: mod r14 2), S3 (exact PlanGeneration), S4 (count) plus dynamic flow records - the Plan Store read surface.]"
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "d1",
+    "note": "reads ReferenceId"
+   }
+  },
+  "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10": {},
+  "ic10/power-grid/power_sink_flow_builder_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_source_selector_v1_0.ic10"
+    ],
+    "note": "ic10/power-grid/power_sink_flow_builder_v1_0.ic10: '# Build one POWER sink flow. d0 SourceSelector,d1 LinkSelector,d2 PlanStore.' [Source selector request surface: S2 cursor, S3 token, S4 ack, S5 status (poke 5 1), S6+ results - matches builder d0 access [writes 2,3; reads 4..9; S5==1].]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_link_selector_v1_0.ic10"
+    ],
+    "note": "ic10/power-grid/power_sink_flow_builder_v1_0.ic10: '# Build one POWER sink flow. d0 SourceSelector,d1 LinkSelector,d2 PlanStore.' [Link selector request surface: S2/S3/S4 source/sink/watts params, S5 token, S6 ack (poke 6 r15), S7 status (poke 7), S8-S11 results - matches builder d1 access [writes 2..5; reads 6..10; S7==1].]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
+    ],
+    "note": "ic10/power-grid/power_sink_flow_builder_v1_0.ic10: '# Build one POWER sink flow. d0 SourceSelector,d1 LinkSelector,d2 PlanStore.' [Writes d2 S12 command (ADD) + S10 token + S16..S23 eight-cell flow record, reads S11 ack / S13 status - the Plan Store ADD mailbox exercised byte-for-byte in tests/test_power_management.py (flow record loaded at 16..23).]"
+   }
+  },
+  "ic10/power-grid/power_sink_selector_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415981)"
+   }
+  },
+  "ic10/power-grid/power_source_selector_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415981)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
+    ],
+    "note": "ic10/power-grid/power_source_selector_v1_0.ic10: '# POWER source selector. d0 PowerReservation directory,d1 PlanStore.' [Reads d1 S24 (staged-flow region) dynamically to subtract source watts already staged in the same plan - docs/POWER_MANAGEMENT.md: 'It subtracts source watts already staged in the same plan.' tests/test_power_management.py wires the plan device (stack {24:0}) to d1.]"
+   }
+  },
+  "ic10/power-grid/power_static_link_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415950)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415950)"
+   }
+  },
+  "ic10/power-grid/power_transformer_link_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads Error,Maximum,ReferenceId,RequiredPower"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415950)"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415950)"
+   }
+  },
+  "ic10/power-jobs/power_job_finalize_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10"
+    ],
+    "note": "ic10/power-jobs/power_job_finalize_v1_0.ic10: '# Finalize one POWER job step. d0 lifecycle,d1 resolver,d2 verify.' [Lifecycle client surface: S10-S13 params, S14 token, S15 ack (poke 15 r15), S8 status (poke 8 +/-1), S9 resulting generation - matches finalize d0 access [writes 10..14; reads 8,9,15; S8==1]. tests/test_power_management.py wires 'life' device to d0.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10"
+    ],
+    "note": "ic10/power-jobs/power_job_finalize_v1_0.ic10: '# Finalize one POWER job step. d0 lifecycle,d1 resolver,d2 verify.' [Resolver surface: S10 PolicyId param, S11 token, S12 ack (poke 12 r15), S13 status (poke 13), S14/S15 resolved refs - matches finalize d1 access [writes 10,11; reads 12,13,14; S13==1].]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-jobs/power_job_policy_verify_v1_0.ic10"
+    ],
+    "note": "ic10/power-jobs/power_job_finalize_v1_0.ic10: '# Finalize one POWER job step. d0 lifecycle,d1 resolver,d2 verify.' [Verify surface: S9-S11 params, S12 token, S13 ack (poke 13 r15), S8 status (poke 8 1/0/-1) - matches finalize d2 access [writes 9..12; reads 8,13]. tests/test_power_management.py wires 'verify' device to d2.]"
+   }
+  },
+  "ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10"
+    ],
+    "note": "docs/POWER_MANAGEMENT.md: 'power_job_lifecycle_client_v1_0.ic10 uses Job Gateway lane D.' + docs/DEPLOYMENT.md: 'lane D Power Scheduler. Do not connect two writers to one lane.' [Client writes d0 S68-S72 (command 2 + params) and S64 token, reads S65 ack / S66 status==1 - exactly gateway v3's lane-D window (gateway: get r15 db 64 / get r0 db 65; lane base registers 64/68). Header: '# Lane-D POWER lifecycle client'.]"
+   }
+  },
+  "ic10/power-jobs/power_job_policy_apply_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/generic-jobs/generic_job_store_v1_0.ic10"
+    ],
+    "note": "ic10/power-jobs/power_job_policy_apply_v1_0.ic10: '# Apply guarded POWER policy while exact job remains READY. d0 JobStore,d1 Resolver.' [Purely dynamic reads of job-record cells (get r1 d0 r0) to revalidate exact READY JobId/generation/type/PolicyId - docs/POWER_MANAGEMENT.md: 'revalidates the exact READY JobId/generation/type/PolicyId before writing Endpoint override cells'. The Generic Job Store (magic 31415984) is the only physical job store.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10"
+    ],
+    "note": "ic10/power-jobs/power_job_policy_apply_v1_0.ic10: '# Apply guarded POWER policy while exact job remains READY. d0 JobStore,d1 Resolver.' [Resolver surface: S10 param, S11 token, S12 ack, S13 status, S14/S15 results plus published S8/S9 (poke 8 r5 / poke 9 r14) - matches apply d1 access [writes 10,11; reads 8,12,13,14,15; S13==1].]"
+   }
+  },
+  "ic10/power-jobs/power_job_policy_verify_v1_0.ic10": {},
+  "ic10/power-jobs/power_job_prepare_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10"
+    ],
+    "note": "ic10/power-jobs/power_job_prepare_v1_0.ic10: '# Prepare one POWER job step. d0 lifecycle,d1 resolver,d2 apply.' [Same lifecycle-client surface as finalize d0: writes S10-S13 params + S14 token, reads S15 ack, S8 status==1, S9 next generation. tests/test_power_management.py wires 'life' device to d0.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10"
+    ],
+    "note": "ic10/power-jobs/power_job_prepare_v1_0.ic10: '# Prepare one POWER job step. d0 lifecycle,d1 resolver,d2 apply.' [Writes d1 S10 (PolicyId) + S11 (token), reads S12 ack / S13 status - the resolver request surface. docs/POWER_MANAGEMENT.md: prepare 'maps a temporarily missing target to WAIT_RESOURCE, faults invalid/ambiguous policy intent' (resolver status -2/-3 codes).]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-jobs/power_job_policy_apply_v1_0.ic10"
+    ],
+    "note": "ic10/power-jobs/power_job_prepare_v1_0.ic10: '# Prepare one POWER job step. d0 lifecycle,d1 resolver,d2 apply.' [Apply surface: S14-S18(+19) params, S8 token, S9 ack (poke 9 r15), S10 status (poke 10 1/-1) - matches prepare d2 access [writes 8,14..19; reads 9,10; S10==1]. tests/test_power_management.py wires 'apply' device to d2.]"
+   }
+  },
+  "ic10/power-jobs/power_job_scheduler_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/generic-jobs/generic_job_selector_v3_0.ic10"
+    ],
+    "note": "USER_DEPLOYMENT_GUIDE.md (power-jobs chapter): 'Generic selector `ic10/generic-jobs/generic_job_selector_v3_0.ic10` is configured for exact `JobType.POWER`.' + pin comment '# POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.' [Scheduler boot-writes d0 S18=4 (exact JobType.POWER mode) - the selector's mode cell driven identically in tests/test_power_management.py (gsel.stack.update({...,18:4})); request/ack/result cells (writes 2,3; reads 4..7 etc.) match selector v3's cursor/token/result surface. docs/POWER_MANAGEMENT.md: 'generic_job_selector_v3_0.ic10 is the shared coherent Job selector. POWER Scheduler configures exact JobType.POWER mode.']"
+   }
+  },
+  "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415981)"
+   }
+  },
+  "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads Pressure"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415963)"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415933)"
+   },
+   "d3": {
+    "kind": "physical-device",
+    "role": "d3",
+    "note": "writes r6"
+   },
+   "d4": {
+    "kind": "physical-device",
+    "role": "d4",
+    "note": "writes r7"
+   },
+   "d5": {
+    "kind": "script",
+    "providers": [
+     "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
+    ],
+    "note": "docs/PRESSURE_DOMAIN_CONTROLLER.md:196: \"| `d5` | Generic Persistent Config Host | Supplies the accepted PressureDomain configuration. |\" [Corroborated: consumer requires d5 cell 12 == HASH(\"CFG1|ControllerPressureDomain|...\") matching the Host's S12 persistence schema signature.]"
+   }
+  },
+  "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415981, ABI 1)"
+   }
+  },
+  "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415928, ABI 1)"
+   }
+  },
+  "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415936, ABI 1)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415936, ABI 1)"
+   },
+   "d2": {
+    "kind": "physical-device",
+    "role": "d2",
+    "note": "reads Maximum,On,Setting; writes On,Setting"
+   },
+   "d3": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415948, ABI 1)"
+   },
+   "d4": {
+    "kind": "script",
+    "providers": [
+     "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
+    ],
+    "note": "docs/PRESSURE_GRID_CONTROLLER.md:251: \"| `d4` | paired Generic Persistent Config Host | tuning/config |\" [Pin comment 'd4 Host' agrees. Consumer requires d4 cell 1 == 1, matching the Host's 'poke 1 1' (ABI1); reads cells 5/8 of the Host's published state.]"
+   }
+  },
+  "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:76: \"Inventory `d0` -> PressureDomain runtime, `d1` -> Pipe Analyzer ..., and `d2` -> that domain's Pressure Medium Purity Guard\" [Corroborated: consumer requires d0 cells 96==27182818, 97==2, 99==HASH(\"ControllerPressureDomain\"); the runtime pokes exactly those header values (lines 6-9).]"
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "d1",
+    "note": "reads Pressure,Temperature,TotalMoles,Volume,VolumeOfLiquid"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10",
+     "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415947)"
+   }
+  },
+  "ic10/pressure-grid/pressure_grid_cost_profile_v1_0.ic10": {},
+  "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10": {
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415981, ABI 1)"
+   }
+  },
+  "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415944)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415938, ABI 3)"
+   }
+  },
+  "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415981, ABI 1)"
+   }
+  },
+  "ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415942, ABI 1)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415941, ABI 1)"
+   }
+  },
+  "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415981, ABI 1)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415963)"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415943, ABI 1)"
+   }
+  },
+  "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_grid_cost_profile_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415945, ABI 1)"
+   }
+  },
+  "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415940, ABI 2)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415946, ABI 2)"
+   }
+  },
+  "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415981, ABI 1)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415938, ABI 3)"
+   }
+  },
+  "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415935, ABI 2)"
+   }
+  },
+  "ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads TotalMoles,r2"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415963, ABI 1)"
+   }
+  },
+  "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10": {},
+  "ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415928, ABI 1)"
+   }
+  },
+  "ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10",
+     "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:80: \"Grant Guard `d0` -> that Transfer runtime, `d1` -> the medium-specific Planner ABI2\"; docs/DEPLOYMENT.md:431 pairs the guard with ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10 for embedded furnace pumps. [Any-of: both runtimes publish the identical header the guard requires (96==27182818, 97==2, 99==HASH(\"ControllerPressureTransfer\")); PROCESS_UTILITY_ORCHESTRATION.md:77 says the embedded runtime 'projects one Advanced Furnace embedded pump direction as the standard ControllerPressureTransfer ABI2' and actuates only under this Grant Guard.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415937, ABI 2)"
+   }
+  },
+  "ic10/printer-directory/printer_capacity_client_v2_0.ic10": {},
+  "ic10/printer-directory/printer_directory_adapter_v1_0.ic10": {},
+  "ic10/printer-directory/printer_execution_bank_v2_0.ic10": {},
+  "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415981, ABI 1)"
+   }
+  },
+  "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415936)"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415936)"
+   },
+   "d2": {
+    "kind": "physical-device",
+    "role": "d2",
+    "note": "reads Error,Maximum,Power,PrefabHash; writes SettingInput,SettingOutput"
+   },
+   "d3": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415948)"
+   }
+  },
+  "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415952, ABI 4)"
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "d1",
+    "note": "reads PrefabHash,Pressure,ReferenceId,Temperature"
+   }
+  },
+  "ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10",
+     "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31416048, ABI 1)"
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "d1",
+    "note": "reads Pressure,ReferenceId"
+   }
+  },
+  "ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads Temperature,r2"
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "d1",
+    "note": "reads Temperature,r4"
+   },
+   "d2": {
+    "kind": "physical-device",
+    "role": "d2",
+    "note": "reads Pressure,TotalMoles,r2,r4"
+   },
+   "d3": {
+    "kind": "physical-device",
+    "role": "d3",
+    "note": "reads On,Setting; writes On,Setting"
+   },
+   "d4": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415963)"
+   },
+   "d5": {
+    "kind": "script",
+    "providers": [
+     "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10",
+     "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31416048)"
+   }
+  },
+  "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads Temperature,TotalMoles,r2,r4"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415963)"
+   }
+  },
+  "ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads Temperature"
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "d1",
+    "note": "reads Temperature"
+   },
+   "d2": {
+    "kind": "physical-device",
+    "role": "d2",
+    "note": "reads Pressure,Temperature"
+   },
+   "d3": {
+    "kind": "physical-device",
+    "role": "d3",
+    "note": "writes On,Setting"
+   },
+   "d4": {
+    "kind": "script",
+    "providers": [
+     "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10",
+     "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31416048)"
+   }
+  },
+  "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads Error,PrefabHash,Pressure,ReferenceId,Temperature; writes On"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31416028, ABI 1)"
+   },
+   "d2": {
+    "kind": "physical-device",
+    "role": "d2",
+    "note": "reads Pressure,Temperature"
+   },
+   "d3": {
+    "kind": "script",
+    "providers": [
+     "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:439: \"Deploy ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10 with GFG d0, Power Plan Store d1, ambient sensor d2, mixture guard d3\"; docs/PROCESS_UTILITY_ORCHESTRATION.md:235: \"the mixture PurityGuard reports valid prepared fuel\". [The 'mixture guard' is defined at PROCESS_UTILITY_ORCHESTRATION.md:115 as gas_mixture_purity_guard_v1_0 (consumes Resource Profile kind 5 prepared fuel mixture, publishes PurityGuard ABI1 31415947). Cell shape matches: consumer reads d3 cell 5 (valid flag, must be 1) and cell 7 (generation), which the guard pokes at lines 71/75. ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10 publishes the same ABI1 surface, but the docs specify the mixture guard for GFG fuel.]"
+   }
+  },
+  "ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
+    ],
+    "note": "docs/RECIPE_CATALOG.md:104: \"`d0` may point to any Recipe Store ABI6 node\"; docs/RECIPE_CATALOG.md:154: \"Provide enough unclaimed Generic Stores for the generated manifest's runtime minimum\". [A 'Recipe Store' is a coordinator-claimed generic_catalog_store_v3_0 instance holding Recipe schema v3 items (recipe Loaders are generated per deployment and never shipped). Corroborated: lookup reads d0 cell 11 (Coordinator ref, magic 31415970) and walks the cell-21 chain to Store magic 31415968.]"
+   }
+  },
+  "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
+    ],
+    "note": "docs/RECIPE_CATALOG.md:112: \"`d0` points to any Store in the Recipe topology\"; docs/RECIPE_CATALOG.md:158: \"Attach ... recipe_execution_profile_view_v1_0.ic10 to any Recipe Store\". [Same Store ABI6 topology walk as the Lookup: d0 cell 11 -> Coordinator (31415970), chain via cell 21 to Store magic 31415968 (generic_catalog_store_v3_0). Pin comment agrees: 'd0=any Recipe Store'.]"
+   }
+  },
+  "ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415935, ABI 2)"
+   }
+  },
+  "ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10"
+    ],
+    "note": "Pin comment: \"PressureTransfer -> Generic Resource Link ABI1. d0 Transfer\"; docs/RESOURCE_GRID_CORE.md:192: \"verifies that its generic source/sink Reservations ultimately resolve to the same PressureDomain Inventories used by the native PressureTransfer\". [Corroborated: consumer requires d0 cells 96==27182818, 97==2, 99==HASH(\"ControllerPressureTransfer\"), matching controller_pressure_transfer_runtime_v2_0's poked header. ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10 publishes the same header and would pass the check, but no doc describes projecting the furnace-embedded pump into the Generic Resource Core (DEPLOYMENT.md:379 scopes the adapter to PressureGrid projection), so it is not listed.]"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415950, ABI 1)"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415950, ABI 1)"
+   }
+  },
+  "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10": {},
+  "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10": {},
+  "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10": {},
+  "ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "d0",
+    "note": "reads ReferenceId"
+   }
+  },
+  "ic10/resource-grid-core/resource_reservation_v1_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10",
+     "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10",
+     "ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10",
+     "ic10/item-storage-vending/material_vending_inventory_v1_0.ic10",
+     "ic10/material-grid/material_export_slot_endpoint_v1_0.ic10",
+     "ic10/material-grid/material_import_slot_endpoint_v1_0.ic10",
+     "ic10/power-grid/power_battery_endpoint_v1_0.ic10",
+     "ic10/power-grid/power_consumer_endpoint_v1_0.ic10",
+     "ic10/power-grid/power_producer_endpoint_v1_0.ic10",
+     "ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10"
+    ],
+    "note": "peer named by S0 magic check (31415949, ABI 1)"
+   }
+  },
+  "ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10": {},
+  "ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10": {},
+  "ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10": {},
+  "ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10": {},
+  "ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10": {},
+  "ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10": {},
+  "ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10": {},
+  "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
+    ],
+    "note": "docs/RESOURCE_PROFILES.md:93: \"resource_profile_view_v4_0.ic10 accepts any Store ABI6 node from the Resource Profile catalog on `d0`.\" [Pin comment agrees ('d0=any Store'). Corroborated: reads d0 cell 11 (Coordinator ref, magic 31415970) and cell 13 (CatalogSchemaId), walks the store chain to magic 31415968 == generic_catalog_store_v3_0. Any claimed Resource Profile Store instance qualifies.]"
+   }
+  },
+  "ic10/shared-input/generic_input_resolver_v1_0.ic10": {},
+  "ic10/shared-input/generic_input_scanner_v1_1.ic10": {},
+  "ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10": {},
+  "ic10/transform-catalog/resource_transform_catalog_loader_01_v6_0.ic10": {},
+  "ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10": {},
+  "ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10": {},
+  "ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10": {},
+  "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": {
+   "d0": {
+    "kind": "script",
+    "providers": [
+     "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
+    ],
+    "note": "docs/DEPLOYMENT.md:346-349 (section E): transform items 'reside in ACTIVE Store capacity' provided as Generic Store capacity, then \"Deploy ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10\"; source checks d0 chain ends at Store magic 31415968. [No single literal 'd0 -> Store' sentence, but the View's d0 handling is byte-identical in shape to resource_profile_view_v4_0 (whose doc is explicit): d0 cell 11 -> Coordinator magic 31415970, cell-21 chain to Store magic 31415968 / ABI6, which only generic_catalog_store_v3_0 publishes. Any claimed Transform catalog Store instance qualifies.]"
+   }
+  }
+ }
+}

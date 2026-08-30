@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
-  "source_sha256": "c326dcc0c0df82b75478ace80569d6f29f60353fb472774056e95e47a50487e4",
+  "source_sha256": "3e96a7674eaac8ca0d85bea6057e469e2eda8d585fda76f5cdcc5928ef5696c2",
   "identity": {
     "service_id": "ic10.script.job.requirement.view",
     "implementation_revision": "1.0",
@@ -25,16 +25,16 @@
       },
       "stack": {
         "literal_reads": [
-          3,
-          4,
-          6,
           33,
           35,
           68,
-          69
+          69,
+          71,
+          72,
+          74
         ],
         "literal_writes": [
-          2
+          70
         ],
         "dynamic_read": true,
         "dynamic_write": false,
@@ -57,8 +57,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.709b75a9a5e6a928",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.709b75a9a5e6a928",
+        "interface_id": "ic10.interface.access.1603336c96f1f913",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.1603336c96f1f913",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

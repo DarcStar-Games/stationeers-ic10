@@ -18,6 +18,12 @@ SOFT_LIMIT_EXEMPTIONS = {
     "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10":
         "capability-fenced transform view publishing the common header above a 60-cell"
         " resolved-request table",
+    "ic10/material-transform/material_transform_admission_v1_0.ic10":
+        "admission gate re-checking the transform view's echo/status/generation fence after"
+        " every payload read",
+    "ic10/material-transform/material_transform_link_resolver_v1_0.ic10":
+        "link resolver re-checking the transform view's echo/status/generation fence after"
+        " its input-descriptor loop",
     "ic10/manufacturing/print_candidate_executor_v2_0.ic10":
         "four-phase print launch fencing four devices; publishes the common header with its"
         " request mailbox relocated above it",

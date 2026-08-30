@@ -8,12 +8,14 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 from pathlib import Path
 import argparse, glob, json, re
 
+from framework.script_wiring import inbound_edges, load_wiring, port_index
+
 ROOT = _PROJECT_ROOT
 INVENTORY = ROOT / 'contracts/stack_envelope_inventory.json'
 SOFT_LIMIT = 120
 HARD_LIMIT = 128
-PORT_ACCESS = r'^(put|get)d? (?:(\S+) )?(d[0-9]|\S+) (\d+)\b'
 COMPUTED_WRITE = r'^poke (r[0-9]+|ra|sp) '
+REF_ACCESS = r'^getd \S+ \S+ (\d+)\b|^putd \S+ (\d+)\b'
 SELF_OFFSET = r'^add (r[0-9]+|ra|sp) \1 (\d+)$'
 MOVE_BASE = r'^move (r[0-9]+|ra|sp) (\d+)$'
 ADD_BASE = r'^add (r[0-9]+|ra|sp) (r[0-9]+|ra|sp) (\d+)$'
@@ -116,11 +118,19 @@ def plan_program(own, source, base, length):
     return dict(zip(move, free))
 
 
-def port_edges(docs, family, magics):
-    """Low-cell accesses through a port or reference, which carry no magic to key on.
+def cells(values, base, length):
+    """Render literal cells, starring the ones a header at `base` would relocate."""
+    moved = set(range(base + 2, base + length))
+    return ','.join(f'S{cell}*' if cell in moved else f'S{cell}' for cell in values)
 
-    Reported for the family itself and for any program naming one of its magics,
-    because those are the only ones that can be addressing a migrating program.
+
+def reference_edges(docs, family, magics):
+    """Low-cell accesses through a stack reference, which the wiring map cannot key on.
+
+    The map declares device-port peers only; a `getd`/`putd` through a resolved
+    ReferenceId has no port to look up. Reported for the family itself and for any
+    program naming one of its magics, because those are the only ones that can be
+    addressing a migrating program by reference.
     """
     interesting = set(family)
     for source in docs:
@@ -131,12 +141,17 @@ def port_edges(docs, family, magics):
     for source in sorted(interesting):
         for number, line in enumerate(Path(ROOT / source).read_text().splitlines(), 1):
             code = line.split('#', 1)[0].strip()
-            match = re.match(PORT_ACCESS, code)
-            if not match or match.group(3) == 'db':
-                continue
-            if 2 <= int(match.group(4)) < 8:
+            match = re.match(REF_ACCESS, code)
+            if match and 2 <= int(match.group(1) or match.group(2)) < 8:
                 edges.append((source, number, code))
     return edges
+
+
+def spans(ranges, base, length):
+    """Render dynamic ranges, starring any that overlap the header window."""
+    moved = set(range(base + 2, base + length))
+    return ','.join(f'S{start}..S{end}' + ('*' if moved & set(range(start, end + 1)) else '')
+                    for start, end in ranges)
 
 
 def main() -> None:
@@ -186,12 +201,32 @@ def main() -> None:
         print(f'   {Path(source).name:46} {plan}')
         for note in notes:
             print(f'      {note}')
+    print('\ninbound edges declared in data/script_wiring.json (S* = cell the header displaces):')
+    edges = inbound_edges(load_wiring(ROOT), port_index(docs), set(family))
+    for edge in edges:
+        marker = 'IN FAMILY' if Path(edge['consumer']).name in names else '         '
+        access = '; '.join(part for part in (
+            f"reads {cells(edge['reads'], arguments.base, arguments.length)}" if edge['reads'] else '',
+            f"writes {cells(edge['writes'], arguments.base, arguments.length)}" if edge['writes'] else '',
+            f"ranged reads {spans(edge['read_ranges'], arguments.base, arguments.length)}"
+            if edge['read_ranges'] else '',
+            f"ranged writes {spans(edge['write_ranges'], arguments.base, arguments.length)}"
+            if edge['write_ranges'] else '',
+        ) if part)
+        targets = ', '.join(Path(target).name for target in edge['targets'])
+        print(f"   {marker} {Path(edge['consumer']).name} {edge['port']} -> {targets}: {access}")
+        for cell, field in sorted(edge['header_reads'].items()):
+            print(f'      reviewed header read: S{cell} as {field}')
+    if not edges:
+        print('   none: nothing wires a port at any program in this family')
     magics = {header['magic'] for source in family for header in docs[source]['own_stack']['headers']}
-    print('\nport and reference accesses to S2..S7 in the family and its namers:')
-    print('   (a port carries no magic to key on; confirm each target before remapping)')
-    for source, number, code in port_edges(docs, family, magics):
-        marker = 'IN FAMILY' if Path(source).name in names else '         '
-        print(f'   {marker} {Path(source).name}:{number}: {code}')
+    references = reference_edges(docs, family, magics)
+    if references:
+        print('\nreference accesses to S2..S7 in the family and its magic-namers:')
+        print('   (a reference carries no port for the wiring map to key on; confirm each target)')
+        for source, number, code in references:
+            marker = 'IN FAMILY' if Path(source).name in names else '         '
+            print(f'   {marker} {Path(source).name}:{number}: {code}')
     print('\nvalidators and tests naming these programs:')
     for path in sorted(glob.glob(str(ROOT / 'tests/test_*.py')) + glob.glob(str(ROOT / 'validation/validators/*.py'))):
         text = Path(path).read_text()

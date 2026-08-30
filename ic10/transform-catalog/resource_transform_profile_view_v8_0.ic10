@@ -2,6 +2,8 @@
 poke 0 31415952
 poke 1 4
 poke 2 0
+poke 68 0
+poke 69 0
 Loop:
 yield
 get r10 db 70
@@ -39,6 +41,14 @@ beq r0 r10 Found
 add r5 r5 1
 j Scan
 Found:
+get r0 db 68
+bne r0 r10 Rewrite
+get r0 db 69
+bne r0 1 Rewrite
+get r0 db 74
+beq r0 r14 Loop
+Rewrite:
+poke 69 0
 move r9 8
 Clear:
 poke r9 0
@@ -58,21 +68,14 @@ poke 73 r5
 add r0 r8 8
 getd r0 r2 r0
 poke 75 r0
-move r9 0
-Bounds:
-add r0 r8 r9
-add r0 r0 4
-getd r0 r2 r0
-add r1 r9 64
-poke r1 r0
-add r9 r9 1
-blt r9 4 Bounds
+add r6 r8 4
+move r1 64
+move r11 1
+jal CopyPool
 add r6 r8 12
 move r1 8
 move r11 r4
 jal CopyPool
-mul r0 r4 4
-add r6 r6 r0
 move r1 32
 move r11 r5
 jal CopyPool
@@ -80,9 +83,9 @@ getd r0 r2 17
 bne r0 r14 Loop
 getd r0 r12 22
 bne r0 r15 Loop
-poke 68 r10
 poke 69 1
 poke 74 r14
+poke 68 r10
 j Loop
 StoreDone:
 getd r1 r2 24
@@ -90,32 +93,26 @@ blez r1 Missing
 move r2 r1
 j Store
 Bad:
-poke 68 r10
+poke 69 0
 poke 71 -2
+poke 68 r10
 j Loop
 Missing:
 getd r0 r12 22
 bne r0 r15 Loop
-poke 68 r10
+poke 69 0
 poke 71 -3
+poke 68 r10
 j Loop
 CopyPool:
-move r9 0
-CPItem:
-bge r9 r11 CPDone
-mul r0 r9 4
-add r0 r0 r6
-mul r10 r9 4
-add r10 r10 r1
-move r7 0
+mul r9 r11 4
+add r9 r9 r1
 CPCell:
-add r13 r0 r7
-getd r13 r2 r13
-add sp r10 r7
-poke sp r13
-add r7 r7 1
-blt r7 4 CPCell
-add r9 r9 1
-j CPItem
+bge r1 r9 CPDone
+getd r13 r2 r6
+poke r1 r13
+add r6 r6 1
+add r1 r1 1
+j CPCell
 CPDone:
 j ra

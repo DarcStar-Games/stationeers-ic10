@@ -2725,8 +2725,8 @@
         "highest_literal_cell": 14,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 93,
-        "line_headroom_120": 27,
+        "line_count": 97,
+        "line_headroom_120": 23,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -7354,8 +7354,8 @@
         "highest_literal_cell": 19,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 119,
-        "line_headroom_120": 1,
+        "line_count": 123,
+        "line_headroom_120": -3,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -7387,7 +7387,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "6bfa5cc9223abacbdfcf7fc35034e7893e5b945d58cad3f48e0db97c9c985aeb",
+          "source_sha256": "8650e521b5ef7f4607001a60910e1cc59a4a374e6b76cc4f22b11940aa6d4736",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -7438,8 +7438,8 @@
             "end": 511
           }
         ],
-        "line_count": 117,
-        "line_headroom_120": 3,
+        "line_count": 123,
+        "line_headroom_120": -3,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -7480,7 +7480,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "18454a812c8d822b6fdac304279408e9f0778ca60a3952d1af4b0304241ff133",
+          "source_sha256": "4e85626256e3dd2560c647c37f2eabf433c67770431a268406edb21f7770af08",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -11557,8 +11557,8 @@
         "highest_literal_cell": 18,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 95,
-        "line_headroom_120": 25,
+        "line_count": 99,
+        "line_headroom_120": 21,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -14672,8 +14672,8 @@
             "end": 511
           }
         ],
-        "line_count": 121,
-        "line_headroom_120": -1,
+        "line_count": 118,
+        "line_headroom_120": 2,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -14714,7 +14714,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "49d27fd438c041cf93ee14480a67f600c1c4afd5570e26c117b38bb799c8b8b5",
+          "source_sha256": "5545bf42aa74832144e6a82fd9e18c9bd6ac030e41f1784cc4090ce267ad77b8",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
