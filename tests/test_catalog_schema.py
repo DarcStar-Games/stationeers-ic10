@@ -18,18 +18,18 @@ if (C.STORE_HEADER_CELLS,C.STORE_DIR_WIDTH,C.STORE_TOTAL_CELLS)!=(32,2,512):fail
 for f in ('resource_profile_catalog_manifest.json','input_profile_catalog_manifest.json','resource_transform_catalog_manifest.json'):
  m=json.loads((R/'data'/f).read_text())
  if not m.get('runtime_store_placement') or m.get('store_model')!='generic_dynamic_item_heap' or m.get('catalog_store_abi')!=6 or m.get('catalog_loader_abi')!=5:fails.append(f+': not on runtime-placement ABI')
-# A Loader item is relocatable: producer leaves runtime assignment fields zero.
-for p in list(R.glob('*_loader_*_v4_0.ic10'))+list(R.glob('*_loader_*_v6_0.ic10')):
- txt=p.read_text()
- if 'HASH("CatalogLoader.v5")' not in txt: continue
- if 'poke 13 0' in txt or 'poke 14 0' in txt: pass
- # More importantly no producer writes a positive physical target into S13/S14.
- for line in txt.splitlines():
+# A Loader item is relocatable: the producer leaves runtime assignment zero.
+# Glob under ic10/ -- anchored at the repository root this matched no file, so
+# the check never ran; the cells it named moved to S19/S20 with the S0 header.
+loaders=[q for q in sorted(R.glob('ic10/*/*_loader_*_v4_0.ic10'))+sorted(R.glob('ic10/*/*_loader_*_v6_0.ic10'))
+         if 'HASH("CatalogLoader.v5")' in q.read_text()]
+if not loaders: fails.append('no catalog Loader programs found; the relocatable check is unenforced')
+for p in loaders:
+ for line in p.read_text().splitlines():
   code=line.split('#',1)[0].strip().split()
-  if len(code)>=3 and code[0]=='poke' and code[1] in ('13','14'):
-   try:
-    if float(code[2])>0:fails.append(p.name+': loader preassigns physical Store')
-   except ValueError:pass
+  # S19 TargetStoreRef, S20 assignment epoch: the Router owns both at runtime.
+  if len(code)>=3 and code[0]=='poke' and code[1] in ('19','20'):
+   fails.append(p.name+': loader preassigns physical Store placement at S'+code[1])
 # Item-level compaction test: two compatible Stores, source DRAINING with two items, destination ACTIVE with one.
 SCHEMA='HASH:CatalogSchema.Test';INSTANCE='HASH:Catalog.Test';PART='HASH:Partition.Test';core_ref=500;src_ref=501;dst_ref=502;dir_ref=503
 core=Device(core_ref,stack={0:hv(C.COORD_CONTRACT,C.COORD_ABI),1:C.COORD_ABI,6:0,7:2,25:0,40:0,41:0,42:0},props={'ReferenceId':core_ref})

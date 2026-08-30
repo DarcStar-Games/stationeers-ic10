@@ -91,12 +91,15 @@ for f,toks in {
  'ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10':['bne r0 3 Loop','get r12 d1 23','bne r0 r12 Loop'],
  'ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10':['bne r0 3 Loop','get r11 d1 23','bne r0 r11 Loop'],
 }.items(): need(f,*toks)
-# Domain directory magic numbers must not survive in current IC10 code.
+# Domain directory magic numbers must not survive in current IC10 code. Glob under
+# ic10/, where the programs live -- anchored at the root this matched nothing.
+sources={p:p.read_text() for p in sorted(R.glob('ic10/*/*.ic10'))}
+if not sources: fail('no production IC10 sources found; the legacy-magic sweep is unchecked')
 for legacy in ('14142135','31415939','14142138','14142139','31415973'):
-    for p in R.glob('*.ic10'):
-        if legacy in p.read_text(): fail(f'legacy directory magic {legacy} remains in {p.name}')
+    for p,text in sources.items():
+        if legacy in text: fail(f'legacy directory magic {legacy} remains in {p.relative_to(R).as_posix()}')
 raise SystemExit(result.finish('Generic Directory contracts',[
- 'Adapter ABI2 feeds Controller/Pressure/Resource/Reservation/Printer/TransformLane/PrinterExecution snapshots',
+ 'Adapter ABI3 feeds Controller/Pressure/Resource/Reservation/Printer/TransformLane/PrinterExecution snapshots',
  'Printer v2 and TransformLane v1 share ProcessorSpec capability/power/busy/error semantics',
  'PrinterExecution v1 preserves exact PrinterRef and overlays locally verified output capacity',
  'transaction-critical snapshot consumers fail closed on overflow and revalidate active bank/generation']))

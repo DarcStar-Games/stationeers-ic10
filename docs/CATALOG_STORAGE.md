@@ -33,29 +33,28 @@ Every physical catalog data node runs `ic10/catalog-control-plane/generic_catalo
 | Cell | Meaning |
 |---:|---|
 | S0 | StoreMagic = `HASH("GenericCatalogStore.v6")` |
-| S1 | StoreABI = `5` |
-| S2 | CatalogSchemaId |
-| S3 | CatalogSchemaVersion |
-| S4 | CatalogInstanceId |
-| S5 | CoordinatorId |
-| S6 | PreviousStoreRef |
-| S7 | NextStoreRef |
+| S1 | StoreABI = `6` |
+| S2 | CapabilityMask = `1` (HAS_SCHEMA) |
+| S3 | CatalogSchemaId, version folded in; assigned by the Coordinator |
+| S4..S7 | common header capability cells; unused by the Store |
 | S8 | StoreOrdinal assigned at runtime |
 | S9 | LocalItemCount |
 | S10 | ItemDirectoryBase = `32` |
 | S11 | CoordinatorRef |
 | S12 | CoordinatorEpoch |
-| S13..S14 | reserved |
+| S13 | CatalogInstanceId; assigned by the Coordinator |
+| S14 | reserved |
 | S15 | committed item-import generation/count |
 | S16 | StoreState |
 | S17 | Store data seqlock; odd while mutating, even stable |
 | S18 | human-assigned NodeId `1..64` |
 | S19 | next free item-directory cell |
 | S20 | payload heap top / next free payload boundary |
-| S21 | reserved |
+| S21 | PreviousStoreRef; consumers walk it back to the first Store |
 | S22 | used cells including header, item directory, and payload |
 | S23 | PartitionKey; zero for unpartitioned catalogs |
-| S24..S25 | reserved |
+| S24 | NextStoreRef; consumers walk it forward through the chain |
+| S25 | reserved |
 | S26 | AssignmentEpoch used by directory telemetry |
 | S27 | in-flight capacity reservation in cells |
 | S28 | local fault/status detail |
@@ -91,23 +90,23 @@ A Loader is a one-shot immutable candidate image. It does **not** know a physica
 
 | Cell | Meaning |
 |---:|---|
-| S0 | LoaderMagic = `HASH("CatalogLoader.v5")` |
-| S1 | LoaderABI = `4` |
-| S2 | CatalogSchemaId |
-| S3 | CatalogSchemaVersion |
-| S4 | CatalogInstanceId |
-| S5 | PartitionKey |
-| S6 | stable LoaderId |
-| S7 | Loader publication generation/version |
-| S8 | ItemCount |
-| S9 | Loader item-directory base = `16` |
-| S10 | total payload cells |
-| S11 | payload signature |
-| S12 | Ready; `1` written LAST |
-| S13 | runtime-assigned TargetStoreRef; initially zero |
-| S14 | runtime assignment token/epoch; initially zero |
-| S15 | next item index already imported by the Store |
-| S16.. | Loader item directory `[ItemBase, ItemCellCount]` |
+| S0 | LoaderIdentity = `HASH("CatalogLoader.v5")` |
+| S1 | LoaderABI = `5` |
+| S2 | CapabilityMask = `1` (HAS_SCHEMA) |
+| S3 | CatalogSchemaId, version folded in: `HASH("<schema>.v<version>")` |
+| S10 | CatalogInstanceId |
+| S11 | PartitionKey; written only when non-zero |
+| S12 | stable LoaderId |
+| S13 | Loader publication generation/version |
+| S14 | ItemCount |
+| S15 | Loader item-directory base = `24` |
+| S16 | total payload cells |
+| S17 | payload signature |
+| S18 | Ready; `1` written LAST |
+| S19 | runtime-assigned TargetStoreRef; initially zero |
+| S20 | runtime assignment token/epoch; initially zero |
+| S21 | next item index already imported by the Store |
+| S24.. | Loader item directory `[ItemBase, ItemCellCount]` |
 | upper stack | zero-initialized sparse item payloads |
 
 Generated Loaders follow this lifecycle:
@@ -117,7 +116,7 @@ clr db                 # Loader's own stack only
 write ABI header
 write item locations
 write non-zero payload cells only
-poke 12 1              # Ready LAST
+poke 18 1              # Ready LAST
 END
 ```
 

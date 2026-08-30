@@ -122,7 +122,7 @@ def split_catalog_items(*,label,schema_name,schema_version,instance_name,partiti
 
 # ---------- Generic Store + Coordinator services ----------
 def make_generic_store_program():
-    return '''# Generic Catalog Store v3.0: Store ABI5 dynamic item heap; set S18 NodeId 1..64.
+    return '''# Generic Catalog Store v3.0: Store ABI6 dynamic item heap; set S18 NodeId 1..64.
 Boot:
 get r13 db 18
 get r0 db 0

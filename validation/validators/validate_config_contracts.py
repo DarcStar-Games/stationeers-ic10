@@ -48,10 +48,12 @@ for q in (test_runtime,test_policy):
  if q.exists() and 'HASH("ControllerTest")' not in q.read_text():validation.fail(q.name+': ControllerTest identity missing')
 
 # Input metadata is centralized: production must not reintroduce standalone per-family Input Profile programs.
-for q in R.glob('*.ic10'):
- text=q.read_text()
- if 'poke 0 HASH("InputProfileView.v1")' in text and q.name!='ic10/input-profile-catalog/input_profile_view_v5_0.ic10':
-  validation.fail('standalone production Input Profile program exists: '+q.name)
+# Glob under ic10/ and compare the repository-relative path: anchored at the root
+# this matched nothing, and q.name (a bare filename) could never equal a path.
+for q in sorted(R.glob('ic10/*/*.ic10')):
+ rel=q.relative_to(R).as_posix()
+ if 'poke 0 HASH("InputProfileView.v1")' in q.read_text() and rel!='ic10/input-profile-catalog/input_profile_view_v5_0.ic10':
+  validation.fail('standalone production Input Profile program exists: '+rel)
 raise SystemExit(validation.finish('Config contract validation',[
  'Generic Persistent Config Host remains family-neutral',
  'controller masks/signatures agree with centralized Input Profile metadata',

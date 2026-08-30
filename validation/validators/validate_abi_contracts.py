@@ -41,18 +41,23 @@ for f,toks in {
 'ic10/printer-directory/printer_execution_bank_v2_0.ic10':['poke 0 HASH("PrinterExecutionBank.v2")','poke 1 2'],
 'ic10/printer-directory/printer_capacity_client_v2_0.ic10':['poke 0 HASH("PrinterCapacityClient.v2")','poke 1 2'],
 'ic10/manufacturing/transform_candidate_readiness_v1_0.ic10':['poke 0 HASH("TransformCandidateReadiness.v1")','poke 1 1']}.items():need(f,*toks)
-# Every current catalog Loader is sparse and producer-owned.
-# NOTE: these globs are anchored at the repository root, where no .ic10 lives, so
-# this loop currently iterates zero times and asserts nothing. Its expectations
-# are stale with it -- the loaders publish ABI5 and no longer write S12=1. Only
-# the S0 identity is corrected here; repairing the check needs the current Loader
-# ABI5 contract re-derived, tracked in issue #82.
-loaders=list(R.glob('*_resource_profile_loader_*_v4_0.ic10'))+list(R.glob('*_input_profile_catalog_loader_*_v4_0.ic10'))+list(R.glob('*_resource_transform_catalog_loader_*_v6_0.ic10'))
+# Every current catalog Loader is ABI5: a sparse, relocatable, immutable one-shot
+# candidate image. Glob under ic10/, where the programs actually live -- anchored
+# at the repository root these patterns matched nothing and asserted nothing.
+loaders=sorted(R.glob('ic10/*/resource_profile_loader_*_v4_0.ic10'))+sorted(R.glob('ic10/*/input_profile_catalog_loader_*_v4_0.ic10'))+sorted(R.glob('ic10/*/resource_transform_catalog_loader_*_v6_0.ic10'))
+if not loaders:result.fail('no catalog Loader programs found; the Loader contract is unchecked')
 for p in loaders:
  t=p.read_text()
- for x in ('clr db','poke 0 HASH("CatalogLoader.v5")','poke 1 4','poke 12 1'):
+ for x in ('clr db','poke 0 HASH("CatalogLoader.v5")','poke 1 5','poke 18 1'):
   if x not in t:result.fail(p.name+': missing '+x)
- if 'putd ' in t or 'put d0 ' in t or '\nyield' in t or '\nj ' in t:result.fail(p.name+': Loader ABI4 must be immutable one-shot producer')
+ if 'putd ' in t or 'put d0 ' in t or '\nyield' in t or '\nj ' in t:result.fail(p.name+': Loader ABI5 must be immutable one-shot producer')
+ # Relocatable: the producer never names a physical Store. S19 TargetStoreRef and
+ # S20 assignment epoch stay zero until the Router places the image at runtime.
+ for cell in ('poke 19 ','poke 20 '):
+  if cell in t:result.fail(p.name+': producer writes runtime placement cell '+cell.strip())
+ # Ready at S18 is the publication marker, so it must be the final write.
+ pokes=[ln.split('#')[0].strip() for ln in t.splitlines() if ln.startswith('poke ')]
+ if pokes and pokes[-1]!='poke 18 1':result.fail(p.name+': S18 Ready is not the last write, so a partial image can be read as complete')
 # One ServiceMagic naming one contract is no longer a rule this file can check:
 # S0 is HASH("<Contract>.v<ABI>"), so the identity *is* the contract and the ABI
 # together, and validate_service_identity.py proves both that every identity is
@@ -61,7 +66,7 @@ for name,count,ver in [('resource_profiles.json',39,2),('input_profiles.json',6,
  d=json.loads((R/'data'/name).read_text());rows=d.get('profiles',d.get('transforms',[]))
  if len(rows)!=count or d.get('catalog_schema_version')!=ver:result.fail(name+': cardinality/schema version mismatch')
 raise SystemExit(result.finish('ABI contract validation',[
- 'Store ABI5 / Loader ABI4 / Coordinator ABI3 separate runtime placement from payload schema versions',
- 'Directory Adapter ABI2 freezes coherent candidates for Snapshot Host ABI1 or Registry Host ABI3',
+ 'Store ABI6 / Loader ABI5 / Coordinator ABI4 separate runtime placement from payload schema versions',
+ 'Directory Adapter ABI3 freezes coherent candidates for Snapshot Host ABI1 or Registry Host ABI3',
  'S0 identities are derived and unique (validate_service_identity.py); a shared identity is one generic contract with many instances',
- 'Resource/Input consumer ABIs remain ABI1; Transform/Recipe Lookup remain ABI3; manufacturing services use explicit ABI1/ABI2 contracts; changed async-token semantics are ABI2']))
+ 'Resource/Input consumer ABIs remain ABI1; Transform View is ABI4 and Recipe Lookup ABI3; manufacturing services use explicit ABI1/ABI2 contracts; changed async-token semantics are ABI2']))

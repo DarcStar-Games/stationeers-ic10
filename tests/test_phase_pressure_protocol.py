@@ -10,11 +10,15 @@ D=json.loads((R/'data/resource_profiles.json').read_text())
 fails=[]
 phase=[p for p in D['profiles'] if p['profile_kind']==1]
 if len(phase)!=9: fails.append(f'expected 9 phase-medium resource profiles, got {len(phase)}')
-# Unified catalog generation must be reproducible.
-before={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [*R.glob('*_resource_profile_loader_*_v4_0.ic10'),R/'ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10',R/'ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10',R/'ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10',R/'ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10']}
+# Unified catalog generation must be reproducible. Glob under ic10/, where the
+# loaders live: anchored at the repository root this matched none of them, so
+# every generated loader sat outside the byte-stability check.
+generated=[*sorted(R.glob('ic10/*/resource_profile_loader_*_v4_0.ic10')),R/'ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10',R/'ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10',R/'ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10',R/'ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10']
+if len(generated)<5: fails.append('resource profile loaders are missing from the reproducibility check')
+def digests(): return {q.name:hashlib.sha256(q.read_bytes()).hexdigest() for q in generated}
+before=digests()
 subprocess.run([sys.executable,str(R/'tools'/'generate'/'generate_resource_profiles.py')],check=True,cwd=R,stdout=subprocess.DEVNULL)
-after={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [*R.glob('*_resource_profile_loader_*_v4_0.ic10'),R/'ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10',R/'ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10',R/'ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10',R/'ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10']}
-if before!=after: fails.append('resource profile catalog is not reproducible from resource_profiles.json')
+if before!=digests(): fails.append('resource profile catalog is not reproducible from resource_profiles.json')
 for p in phase:
     q=p['params']; A,B,minP,maxP,minT,maxT,ratio,purity,latent=q
     if p['resource_class']!=1 or p['unit']!=1 or p['profile_schema']!=2: fails.append(p['slug']+': phase type metadata mismatch')
