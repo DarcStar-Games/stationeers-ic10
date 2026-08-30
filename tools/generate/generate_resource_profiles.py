@@ -3,33 +3,30 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
-from pathlib import Path
 from collections import defaultdict
-import json
-from framework.catalog_schema import *
+from framework.catalog_generation import (
+ CatalogFamily,CatalogPartition,declared_output_inventory,run_catalog_generation,
+)
+from framework.catalog_schema import (
+ CELL_BLOCK_WIDTH,COORDINATION_PROGRAM_FILES,COORD_MAGIC,GENERIC_STORE_FILE,STORE_ABI,STORE_MAGIC,CatalogItem,
+)
 SOURCE_FILE='data/resource_profiles.json';MANIFEST_FILE='data/resource_profile_catalog_manifest.json';VIEW_FILE='ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10';RESOLVER_FILE='ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10'
-FIXED_OUTPUTS=COORDINATION_PROGRAM_FILES+(VIEW_FILE,RESOLVER_FILE,MANIFEST_FILE,SOURCE_FILE)
-R=_PROJECT_ROOT;OUT=(R/VIEW_FILE).parent;DEP=(R/RESOLVER_FILE).parent
+R=_PROJECT_ROOT
 SCHEMA='CatalogSchema.ResourceProfile';SCHEMA_VERSION=2;INSTANCE='Catalog.ResourceProfiles.Schema2'
 VIEW_MAGIC=31415963;VIEW_ABI=1;SEMANTIC_WIDTH=14;ITEM_CELLS=16
 CLASS_NAMES={1:'fluid',2:'item',4:'power',5:'energy'}
 
-def main():
- OUT.mkdir(parents=True,exist_ok=True);DEP.mkdir(parents=True,exist_ok=True);COORD_PROGRAMS=ensure_coordination_programs(R)
- D=json.loads((R/SOURCE_FILE).read_text());P=D['profiles']
+def build_partitions(D):
+ P=D['profiles']
  seen=set()
  for p in P:
   k=(p['resource_class'],str(p['resource_type_kind']),str(p['resource_type']))
   if k in seen:raise SystemExit(f'duplicate resource profile identity: {k}')
   seen.add(k)
   if len(p['params'])!=9:raise SystemExit(p['slug']+': expected 9 params')
- cat_obj={'schema':SCHEMA,'schema_version':SCHEMA_VERSION,'profiles':P};digest,token=stable_hash_token('RP6',cat_obj)
- for pat in ('resource_profile_loader_*_v*.ic10','resource_profile_view_v*.ic10'):
-  for f in OUT.glob(pat):f.unlink()
- (R/RESOLVER_FILE).unlink(missing_ok=True)
  groups=defaultdict(list)
  for p in P:groups[p['resource_class']].append(p)
- all_loaders=[];parts_meta=[]
+ partitions=[]
  for cls in sorted(groups):
   items=[]
   for p in groups[cls]:
@@ -38,11 +35,11 @@ def main():
    vals=vals[:ITEM_CELLS]+[0]*max(0,ITEM_CELLS-len(vals))
    human=p.get('description') or p.get('resource_type_name') or p['slug'];items.append(CatalogItem(tuple(vals),human))
   cname=CLASS_NAMES[cls]
-  parts=split_catalog_items(label=f'GENERATED Resource Profile {cname.upper()} loader',schema_name=SCHEMA,schema_version=SCHEMA_VERSION,instance_name=INSTANCE,partition_key_expr=str(cls),items=items)
-  lfiles=[]
-  for li,(subset,text) in enumerate(parts):
-   name=f'resource_profile_loader_{cname}_{li:02d}_v4_0.ic10';(OUT/name).write_text(text);rel=f'ic10/resource-profile-catalog/{name}';lfiles.append(rel);all_loaders.append(rel)
-  parts_meta.append({'partition_key':cls,'partition':'ResourceClass.'+cname.upper(),'item_count':len(items),'item_cells':ITEM_CELLS,'runtime_min_store_count':len(pack_store_counts([ITEM_CELLS]*len(items))),'loader_count':len(parts),'loaders':lfiles})
+  partitions.append(CatalogPartition(str(cls),f'GENERATED Resource Profile {cname.upper()} loader',tuple(items),{'partition_key':cls,'partition':'ResourceClass.'+cname.upper(),'cname':cname}))
+ return tuple(partitions)
+
+def render_outputs(D):
+ P=D['profiles']
  view=f'''# Resource Profile View v4: dynamic Store ABI5 item directory; d0=any Store.
 poke 0 {VIEW_MAGIC}
 poke 1 {VIEW_ABI}
@@ -136,7 +133,6 @@ bne r0 r15 Loop
 poke 29 0
 poke 28 -3
 j Loop'''
- (R/VIEW_FILE).write_text(view)
  # Item 8 manufacturing reagent aliases are derived from ITEM Resource Profiles.
  reagents=[]; reagent_seen={}
  for p in P:
@@ -155,13 +151,29 @@ j Loop'''
  for i,(_,rt) in enumerate(reagents): rl += [f'R{i}:',f'poke 6 {rt}','poke 5 1','poke 4 r15','j Loop']
  reagent_text='\n'.join(rl)+'\n'
  if len(reagent_text.splitlines())>120: raise SystemExit('215 reagent resolver exceeds 120-line IC10 ceiling')
- (R/RESOLVER_FILE).write_text(reagent_text)
- minstores=sum(x['runtime_min_store_count'] for x in parts_meta)
- manifest=common_manifest(schema_name=SCHEMA,schema_version=SCHEMA_VERSION,instance_name=INSTANCE,store_count=minstores,total_items=len(P),catalog_digest=digest)
- manifest.update({'format':'RESOURCE_PROFILE_CATALOG_V6','catalog_token':token,'profile_count':len(P),'semantic_record_width':SEMANTIC_WIDTH,'physical_item_width':ITEM_CELLS,'storage_partition':'resource_class','runtime_store_placement':True,'runtime_min_store_count':minstores,'loader_segment_count':len(all_loaders),'loaders':all_loaders,'partitions':parts_meta,'loader_item_atomicity':'logical_item_never_split','loader_sparse_zero_init':True,'generic_store_program':GENERIC_STORE_FILE,'coordinator_core_program':COORD_PROGRAMS[1],'loader_router_program':COORD_PROGRAMS[2]})
- (R/MANIFEST_FILE).write_text(json.dumps(manifest,indent=2)+'\n')
- D.update({'format':'RESOURCE_PROFILE_CATALOG_V6','catalog_schema_id':SCHEMA,'catalog_schema_version':SCHEMA_VERSION,'catalog_instance_id':INSTANCE,'cell_block_width':CELL_BLOCK_WIDTH,'semantic_record_width':SEMANTIC_WIDTH,'physical_item_width':ITEM_CELLS,'storage_partition':'resource_class'})
- (R/SOURCE_FILE).write_text(json.dumps(D,indent=2)+'\n')
- print(f'Resource Profile generation: PASS - {len(P)} profiles / runtime min {minstores} stores / {len(all_loaders)} relocatable loaders')
+ return {VIEW_FILE:view,RESOLVER_FILE:reagent_text}
+
+def loader_filename(partition,ordinal):
+ cname=partition.metadata['cname']
+ return f'ic10/resource-profile-catalog/resource_profile_loader_{cname}_{ordinal:02d}_v4_0.ic10'
+
+def manifest_extensions(D,result):
+ partitions=[]
+ for generated in result.partitions:
+  metadata=generated.definition.metadata
+  partitions.append({'partition_key':metadata['partition_key'],'partition':metadata['partition'],'item_count':generated.item_count,'item_cells':ITEM_CELLS,'runtime_min_store_count':generated.runtime_min_store_count,'loader_count':len(generated.loaders),'loaders':list(generated.loaders)})
+ return {'format':'RESOURCE_PROFILE_CATALOG_V6','catalog_token':result.token,'profile_count':result.total_items,'semantic_record_width':SEMANTIC_WIDTH,'physical_item_width':ITEM_CELLS,'storage_partition':'resource_class','runtime_store_placement':True,'runtime_min_store_count':result.runtime_min_store_count,'loader_segment_count':len(result.loaders),'loaders':list(result.loaders),'partitions':partitions,'loader_item_atomicity':'logical_item_never_split','loader_sparse_zero_init':True,'generic_store_program':GENERIC_STORE_FILE,'coordinator_core_program':result.coordination_programs[1],'loader_router_program':result.coordination_programs[2]}
+
+def source_extensions(D,result):
+ return {'format':'RESOURCE_PROFILE_CATALOG_V6','catalog_schema_id':SCHEMA,'catalog_schema_version':SCHEMA_VERSION,'catalog_instance_id':INSTANCE,'cell_block_width':CELL_BLOCK_WIDTH,'semantic_record_width':SEMANTIC_WIDTH,'physical_item_width':ITEM_CELLS,'storage_partition':'resource_class'}
+
+FIXED_OUTPUTS=COORDINATION_PROGRAM_FILES+(VIEW_FILE,RESOLVER_FILE,MANIFEST_FILE,SOURCE_FILE)
+
+def family():
+ return CatalogFamily(root=R,source_file=SOURCE_FILE,manifest_file=MANIFEST_FILE,schema_name=SCHEMA,schema_version=SCHEMA_VERSION,instance_name=INSTANCE,collection_key='profiles',digest_prefix='RP6',cleanup_globs=('ic10/resource-profile-catalog/resource_profile_loader_*_v*.ic10','ic10/resource-profile-catalog/resource_profile_view_v*.ic10',RESOLVER_FILE),rendered_output_files=(VIEW_FILE,RESOLVER_FILE),build_partitions=build_partitions,loader_filename=loader_filename,render_outputs=render_outputs,manifest_extensions=manifest_extensions,source_extensions=source_extensions,summary_label='Resource Profile',summary_item_name='profiles')
+
+def declared_outputs():return declared_output_inventory(family())
+
+def main():run_catalog_generation(family())
 
 if __name__=='__main__':main()

@@ -7,13 +7,12 @@ from pathlib import Path
 from framework.ic10_harness import IC10
 from framework.catalog_test_helpers import load_catalog_chain
 from framework.generator_productivity import prove_restoration
-from tools.generate.generate_resource_profiles import FIXED_OUTPUTS,MANIFEST_FILE,SOURCE_FILE
+from tools.generate.generate_resource_profiles import MANIFEST_FILE,SOURCE_FILE,declared_outputs
 import json,sys,re
 R=_PROJECT_ROOT;D=json.loads((R/'data/resource_profiles.json').read_text());P=D['profiles'];fails=[]
 
 def generated_files():
- M=json.loads((R/MANIFEST_FILE).read_text())
- return [*[R/f for f in FIXED_OUTPUTS],*[R/f for p in M['partitions'] for f in p['loaders']]]
+ return [R/f for f in declared_outputs()]
 M=json.loads((R/MANIFEST_FILE).read_text())
 fails += prove_restoration(R,generated_files(),[sys.executable,str(R/'tools'/'generate'/'generate_resource_profiles.py')],preserve_inputs=[R/SOURCE_FILE])
 M=json.loads((R/MANIFEST_FILE).read_text())

@@ -3,6 +3,7 @@ Python script header validation
 PASS framework/__init__.py                                      module -x
 PASS framework/async_request.py                                 module -x
 PASS framework/banked_transaction.py                            module -x
+PASS framework/catalog_generation.py                            module -x
 PASS framework/catalog_schema.py                                module -x
 PASS framework/catalog_test_helpers.py                          module -x
 PASS framework/commissioning.py                                 module -x
@@ -109,7 +110,7 @@ PASS validation/validators/validate_source_catalog.py           entry  +x
 PASS validation/validators/validate_stack_envelopes.py          entry  +x
 PASS validation/validators/validate_user_deployment_guide.py    entry  +x
 ====================================================================================================
-Checked 108 files: 80 entry points, 28 imported modules
+Checked 109 files: 80 entry points, 29 imported modules
 Single import name enforced for 82 modules reachable from a script directory
 Import-name regression probes cover 2 namespace spellings and 10 dynamic loads; ambiguous aliases fail closed
 Entry points are the 15 commands under tools/ plus the 65 scripts tools/run_validation.py runs elsewhere; nothing is an entry point by location

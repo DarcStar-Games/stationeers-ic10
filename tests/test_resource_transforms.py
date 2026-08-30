@@ -7,13 +7,12 @@ from pathlib import Path
 from framework.ic10_harness import IC10
 from framework.catalog_test_helpers import load_catalog_chain
 from framework.generator_productivity import prove_restoration
-from tools.generate.generate_resource_transforms import FIXED_OUTPUTS,MANIFEST_FILE,SOURCE_FILE
+from tools.generate.generate_resource_transforms import MANIFEST_FILE,SOURCE_FILE,declared_outputs
 import json,re,sys
 R=_PROJECT_ROOT;fails=[]
 
 def files():
- M=json.loads((R/MANIFEST_FILE).read_text())
- return [*[R/f for f in FIXED_OUTPUTS],*[R/f for f in M['loaders']]]
+ return [R/f for f in declared_outputs()]
 M=json.loads((R/MANIFEST_FILE).read_text())
 fails += prove_restoration(R,files(),[sys.executable,str(R/'tools'/'generate'/'generate_resource_transforms.py')],preserve_inputs=[R/SOURCE_FILE])
 D=json.loads((R/SOURCE_FILE).read_text());T=D['transforms'];M=json.loads((R/MANIFEST_FILE).read_text())
