@@ -1,5 +1,0 @@
-Generic Job contract validation: PASS
- - GENERIC_JOB_ABI_V1 schema/model/IC10 geometry agree on 32 logical eleven-field jobs
- - JobType/state enums and lifecycle/wait/terminal sets are synchronized
- - Store ABI1 owns optimistic generation, terminal immutability and crash journal markers
- - Store magic+ABI gate protects physical queue geometry before recovery

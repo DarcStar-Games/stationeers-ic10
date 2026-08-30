@@ -6,6 +6,7 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from pathlib import Path
 import argparse, hashlib, shutil, subprocess, sys, zipfile
+import tools.run_validation as validation
 
 ROOT=_PROJECT_ROOT
 # Local VCS/tooling state is not shippable framework content. run_validation.py
@@ -52,6 +53,12 @@ def verify_manifest(manifest):
         digest,rel=line.split('  ',1); p=ROOT/rel
         if not p.exists() or sha(p)!=digest: raise RuntimeError(f'manifest mismatch: {rel}')
 
+def validation_evidence_files():
+    """Return every ephemeral validation file required in a release archive."""
+    return [validation.SUMMARY,validation.RUN_LOG,validation.STATE]+[
+        validation.EVIDENCE/validation.evidence_name(script) for script in validation.SCRIPTS
+    ]
+
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--output',required=True);args=ap.parse_args()
     out=Path(args.output).resolve()
@@ -63,9 +70,15 @@ def main():
     subprocess.run([sys.executable,str(ROOT/'tools'/'generate'/'generate_source_catalog.py')],cwd=ROOT,check=True)
     subprocess.run([sys.executable,str(ROOT/'tools'/'generate'/'update_magic_registry.py')],cwd=ROOT,check=True)
     subprocess.run([sys.executable,str(ROOT/'tools'/'generate'/'generate_script_contracts.py')],cwd=ROOT,check=True)
-    subprocess.run([sys.executable,str(ROOT/'tools'/'run_validation.py'),'--resume'],cwd=ROOT,check=True)
+    # Releases always regenerate evidence from scratch. Local validation may use
+    # --resume, but a release must not package output reused from an earlier run.
+    subprocess.run([sys.executable,str(ROOT/'tools'/'run_validation.py')],cwd=ROOT,check=True)
+    evidence=validation_evidence_files();missing=[p for p in evidence if not p.is_file()]
+    if missing: raise RuntimeError(f'missing release validation evidence: {missing[0].relative_to(ROOT)}')
     # No source/generated-doc mutation is allowed after validation except release evidence/manifests.
     write_deployment_baseline(); files=tracked_files({out}); manifest=archive_manifest(files); verify_manifest(manifest)
+    omitted=[p for p in evidence if p not in files]
+    if omitted: raise RuntimeError(f'release inventory omitted validation evidence: {omitted[0].relative_to(ROOT)}')
     with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED) as z:
         for p in files:
             z.write(p,p.relative_to(ROOT).as_posix())

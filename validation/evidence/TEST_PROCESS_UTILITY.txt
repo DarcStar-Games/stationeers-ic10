@@ -1,6 +1,0 @@
-Cross-domain process utility protocol: PASS
- - transform P/T bounds become coherent ProcessCondition requests
- - furnace chambers/pumps reuse PressureDomain, PressureTransfer and GrantGuard authorities
- - H2/O2 mixture generation is temperature-corrected and purity-gated through Resource Profiles
- - hot/cold gas blending targets furnace temperature windows without bypassing PressureGrid
- - POWER shortage drives fuel pressure demand and GFG startup, then shuts down when shortage clears

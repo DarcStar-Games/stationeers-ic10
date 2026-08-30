@@ -1,4 +1,0 @@
-Stack header tests: PASS
- - the reader validates a target from S0..S7 alone and republishes only declared fields
- - schema binding, extension bounds, and the pre-v1 baseline gate fail closed
- - migration backlog: 0 programs, 0 using S2..S7

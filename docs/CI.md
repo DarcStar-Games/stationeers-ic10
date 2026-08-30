@@ -18,10 +18,12 @@ python3 tools/run_validation.py
 
 After validation, CI fails if any tracked file changed or any untracked,
 non-ignored file appeared. This catches stale generated contracts, registries,
-schemas, evidence summaries, and other committed artifacts. On failure, the job
-uploads the generated validation summary, state, full run inventory, and
-per-script evidence for seven days. CI-generated evidence is diagnostic only and
-is never committed by the workflow.
+schemas, and other committed artifacts. Validation summaries, state, logs, and
+per-script evidence are ignored, so generating them does not dirty the source
+checkout. On failure, the job uploads those diagnostics for seven days; the
+workflow never commits them. CI-generated evidence is diagnostic only.
+The clean-tree step also rejects any validation-output path present in Git's
+index, preventing a forced add from silently restoring committed evidence.
 
 ## Branch protection
 
@@ -46,9 +48,14 @@ python3 tools/run_validation.py
 git status --short
 ```
 
-The command must report a full-suite PASS, and `git status --short` must print
-nothing. Local pre-commit validation may use `--resume` for developer feedback;
-the required remote check never does.
+The command must report a full-suite PASS, and `git status --short` must show no
+tracked or non-ignored changes. The generated files remain available locally but
+are hidden by the normal status view. Local pre-commit validation may use
+`--resume` for developer feedback; the required remote check never does.
+
+Release builds also run the suite without `--resume`, verify the complete
+evidence set, and include it in the release ZIP even though it is ignored in the
+source checkout.
 
 Workflow-only changes do not alter the framework input fingerprint or invalidate
 live-game evidence: `.github/` is excluded from both that fingerprint and release

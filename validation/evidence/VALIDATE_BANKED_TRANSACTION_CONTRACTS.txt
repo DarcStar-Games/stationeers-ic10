@@ -1,4 +1,0 @@
-Banked transaction contract validation: PASS
- - Config Host implements REVISION_BANK with post-commit replay acknowledgement
- - Job Store implements SELECTOR_BANK and gates recovery on exact magic+ABI
- - both production ICs remain within the 120-line project ceiling

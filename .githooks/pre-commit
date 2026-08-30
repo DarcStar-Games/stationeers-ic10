@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Keep committed validation evidence in sync with the source it attests to.
+# Validate the working tree without committing ephemeral evidence.
 #
 # tools/run_validation.py hashes and validates the WORKING TREE, not the index. If the
-# tree holds anything that will not be part of this commit, refreshed evidence
-# would describe a tree that never enters history. So this fails closed rather
-# than stashing behind your back.
+# tree holds anything that will not be part of this commit, the result would
+# describe a tree that never enters history. So this fails closed rather than
+# stashing behind your back. Validation output is ignored by git.
 #
-# Bypass (commits without refreshing evidence):  git commit --no-verify
+# Bypass (commits without validation):  git commit --no-verify
 # Partial commits (git commit -- <path>) are not supported; use --no-verify.
 set -uo pipefail
 
@@ -14,6 +14,14 @@ ROOT="$(git rev-parse --show-toplevel)" || exit 1
 cd "$ROOT" || exit 1
 
 problem=0
+tracked_evidence="$(git ls-files -- VALIDATION_SUMMARY.txt \
+    validation/FULL_VALIDATION_RUN.txt validation/VALIDATION_STATE.json \
+    validation/evidence)"
+if [ -n "$tracked_evidence" ]; then
+    echo "pre-commit: generated validation evidence is tracked:" >&2
+    printf '%s\n' "$tracked_evidence" | sed 's/^/    /' >&2
+    problem=1
+fi
 if ! git diff --quiet; then
     echo "pre-commit: unstaged changes to tracked files:" >&2
     git diff --name-only | sed 's/^/    /' >&2
@@ -28,9 +36,9 @@ fi
 if [ "$problem" -ne 0 ]; then
     cat >&2 <<'MSG'
 
-Validation hashes the working tree, so evidence committed now would describe a
-tree that is never committed. Stage them, stash them, or add them to .gitignore.
-To commit anyway without refreshing evidence:  git commit --no-verify
+Validation hashes the working tree, so the result would describe a tree that is
+never committed. Stage the changes, stash them, or add intentional local output
+to .gitignore. To commit without validation:  git commit --no-verify
 MSG
     exit 1
 fi
@@ -47,7 +55,3 @@ if ! python3 tools/run_validation.py --resume; then
     } >&2
     exit 1
 fi
-
-# Land refreshed evidence in the same commit as the change that caused it.
-git add -- VALIDATION_SUMMARY.txt validation/VALIDATION_STATE.json \
-           validation/FULL_VALIDATION_RUN.txt validation/evidence || exit 1

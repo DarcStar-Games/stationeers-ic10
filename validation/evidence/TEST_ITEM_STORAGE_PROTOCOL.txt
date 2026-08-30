@@ -1,6 +1,0 @@
-Item storage protocol: PASS
- - multi-location quotes split up to physical reservations; LArRE whole-stack sources reserve the actual stack
- - allocator identity/epoch plus semantic reservation generation prevents stale/double physical movement without invalidating identical republishes
- - paired destination capacity is mandatory; held-item faults retain a restart-safe recovery origin
- - direct/LArRE policy gates, inbound chute sources, exact release ownership, and SDB lower-bound semantics are covered
- - SDB FIFO export plus Stacker accumulation meters the exact requested processor quantity

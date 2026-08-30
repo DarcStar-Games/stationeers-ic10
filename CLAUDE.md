@@ -30,13 +30,13 @@ python3 tools/build_release.py --output rel.zip   # regenerate, validate, hash, 
 
 `tools/run_validation.py` writes per-script stdout to `validation/evidence/`, the pass/fail inventory to
 `validation/FULL_VALIDATION_RUN.txt`, and regenerates `VALIDATION_SUMMARY.txt`. Those files plus
-`validation/VALIDATION_STATE.json` are tracked in git, so a validation run dirties the working tree.
+`validation/VALIDATION_STATE.json` are ignored ephemeral output, so validation does not dirty tracked files.
 
-A pre-commit hook in `.githooks/` runs the suite and stages that refreshed evidence into the same
-commit, so it is normally not something you run by hand before committing. Enable it once per clone
-with `git config core.hooksPath .githooks`. It **refuses to run against a tree with unstaged or
-untracked files** — validation hashes the working tree, not the index, so a dirty tree would record
-evidence describing a tree that never enters history. Stage everything, or pass `--no-verify`.
+A pre-commit hook in `.githooks/` runs the suite and retains refreshed evidence locally for diagnostics
+and fingerprint-guarded resume; it never stages that output. Enable it once per clone with
+`git config core.hooksPath .githooks`. It **refuses to run against a tree with unstaged or non-ignored
+untracked files** — validation hashes the working tree, not the index, so a dirty tree would validate
+content that never enters history. Stage everything, or pass `--no-verify`.
 
 Code generators (run when their source changes; `tools/build_release.py` refreshes its required generated outputs itself):
 
@@ -188,7 +188,7 @@ not ABIs. Use `data/source_manifest.json`, `docs/SCRIPT_INDEX.md`, and `USER_DEP
 | `docs/SCRIPT_INDEX.md` | `tools/generate/generate_source_catalog.py` | `ic10/` + `data/source_manifest.json` |
 | `<!-- FAMILY_PROGRAMS:… -->` blocks in `USER_DEPLOYMENT_GUIDE.md` | `tools/generate/update_user_deployment_inventory.py` | `data/source_manifest.json` |
 | `<!-- PUBLISHED_HEADERS -->` block in `docs/ABI_REFERENCE.md` | `tools/generate/update_magic_registry.py` | `data/script_protocol_headers.json` |
-| `validation/evidence/`, `VALIDATION_SUMMARY.txt`, `validation/FULL_VALIDATION_RUN.txt`, `DEPLOYMENT_BASELINE.sha256` | `tools/run_validation.py` / `tools/build_release.py` | — |
+| `validation/evidence/`, `VALIDATION_SUMMARY.txt`, `validation/FULL_VALIDATION_RUN.txt`, `validation/VALIDATION_STATE.json` (ignored locally; packaged in releases), `DEPLOYMENT_BASELINE.sha256` | `tools/run_validation.py` / `tools/build_release.py` | — |
 | `ARCHIVE_MANIFEST.sha256` (inside the release ZIP only) | `tools/build_release.py` | — |
 
 Recipe-catalog loaders are generated into a temp directory for fixtures only and are never shipped;
