@@ -7,7 +7,7 @@ from pathlib import Path
 import json,re,sys
 import tools.generate.update_magic_registry as magic_registry
 ROOT=_PROJECT_ROOT
-mds=[p for p in ROOT.rglob('*.md') if 'validation' not in p.parts]
+mds=[p for p in ROOT.rglob('*.md') if 'validation' not in p.parts and '.claude' not in p.parts]
 existing={p.name for p in ROOT.iterdir() if p.is_file()}
 fails=[]
 GLOB=set('*{}?[]')
@@ -155,11 +155,20 @@ forbidden={
  'Directory Adapter ABI2':'Directory Adapter is ABI3 since the common header migration',
  '31416053':'the envelope magic was removed with the S320 window; identity is the service magic at S0',
  'PrimaryPayloadBase':'the payload header is the common header, so there is no separate payload base',
+ 'publishes TransformType S2':'Material Transform Admission publishes TransformType at S14',
+ 'S2 is requested batch count, S3 request generation':'Material Transform Runtime receives requests at S8/S16',
+ 'Runtime S7 = committed material epoch':'Material Transform Runtime mirrors the committed epoch at S22',
 }
 for p in mds:
     txt=p.read_text(errors='replace')
     for phrase,why in forbidden.items():
         if phrase in txt:fails.append(f'{p.name}: stale phrase {phrase!r} ({why})')
+
+wiring=(ROOT/'data/script_wiring.json').read_text()
+for phrase,why in {
+    'Runtime S7 = committed material epoch':'Material Transform Runtime mirrors the committed epoch at S22',
+}.items():
+    if phrase in wiring:fails.append(f'data/script_wiring.json: stale phrase {phrase!r} ({why})')
 
 required={
  'ROADMAP.md':['9. Power-management reuse — COMPLETE','10. Broad interruption and fault-injection suite — COMPLETE','11. Cross-domain process & utility orchestration — COMPLETE','12. Live-game commissioning and evidence closure — ACTIVE','Items **1–11 are implemented and automatically validated**','Item **12 is ACTIVE**','docs/LIVE_COMMISSIONING.md','docs/COMPLETED_MILESTONES.md'],
