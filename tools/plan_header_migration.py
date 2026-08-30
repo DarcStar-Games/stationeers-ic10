@@ -183,7 +183,7 @@ def main() -> None:
             floor, floors = derived
             detail = ', '.join(
                 f"S{offset}{'' if index is None else f' + {index}*n'} (line {at[0]})"
-                for (offset, index), at in sorted(floors.items()))
+                for (offset, index), at in sorted(floors.items(), key=lambda item: (item[0][0], item[0][1] or '')))
             notes.append(f'ASSUMES computed writes floor at S{floor}, from {detail};'
                          ' confirm each index register is non-negative')
         if reaches_header:
