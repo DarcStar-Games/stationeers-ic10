@@ -26,7 +26,7 @@ VALIDATORS=[
 'validation/validators/validate_release_tooling.py','validation/validators/validate_generated_directory_adapters.py','validation/validators/validate_script_headers.py','validation/validators/validate_source_catalog.py','validation/validators/validate_script_contracts.py','validation/validators/validate_script_wiring.py','validation/validators/validate_stack_envelopes.py','validation/validators/validate_user_deployment_guide.py','validation/validators/validate_item_storage_contracts.py','validation/validators/validate_process_utility_contracts.py','validation/validators/validate_live_commissioning_contracts.py']
 TESTS=[
 'tests/test_async_request.py','tests/test_banked_transaction.py','tests/test_catalog_schema.py','tests/test_controller_directory_scale.py',
-'tests/test_dependency_planning.py','tests/test_diagnostics_execution.py','tests/test_generic_directory.py','tests/test_ic10_execution.py','tests/test_input_profiles.py','tests/test_job_abi.py',
+'tests/test_dependency_planning.py','tests/test_diagnostics_execution.py','tests/test_generic_directory.py','tests/test_ic10_execution.py','tests/test_ic10_opcode_handlers.py','tests/test_input_profiles.py','tests/test_job_abi.py',
 'tests/test_manufacturing_execution.py','tests/test_manufacturing_scheduler.py','tests/test_material_grid_protocol.py','tests/test_script_contracts.py',
 'tests/test_material_transform_protocol.py','tests/test_persistence_protocol.py','tests/test_phase_pressure_protocol.py',
 'tests/test_pressure_domain_protocol.py','tests/test_pressure_grid_protocol.py','tests/test_pressure_inventory_protocol.py',

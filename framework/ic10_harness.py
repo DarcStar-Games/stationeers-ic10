@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 import math, re, zlib
 
+from framework.ic10_opcodes import execute_opcode
 from framework.ic10_source import parse_ic10
 
 @dataclass
@@ -84,111 +85,12 @@ class IC10:
             if instruction_quantum is not None and steps >= instruction_quantum:
                 return "quantum"
             steps+=1
-            row=self._instruction_rows[self.pc];line=row.line.code_text;self.pc+=1
-            op=row.opcode;a=list(row.operands)
-            if op=='yield':
+            row=self._instruction_rows[self.pc];self.pc+=1
+            if row.opcode=='yield':
                 self.yields+=1
                 if self.yields>=target: return "yield"
-            elif op=='clr':
-                if a[0]=='db': self.stack.clear()
-                else: self.device(a[0]).stack.clear()
-            elif op=='move': self.setreg(a[0],self.val(a[1]))
-            elif op=='round': self.setreg(a[0],round(self.val(a[1])))
-            elif op=='abs': self.setreg(a[0],abs(self.val(a[1])))
-            elif op=='floor': self.setreg(a[0],math.floor(self.val(a[1])))
-            elif op=='poke': self.stack_put(a[0],self.val(a[1]))
-            elif op=='push':
-                self.stack_put('sp',self.val(a[0])); self.reg['sp']=self.val('sp')+1
-            elif op=='pop':
-                self.reg['sp']=self.val('sp')-1; self.setreg(a[0],self.stack_get('sp'))
-            elif op=='get':
-                dev=a[1]
-                if dev=='db': v=self.stack_get(a[2])
-                elif dev=='db:0':
-                    idx=int(self.val(a[2])); seen=[]
-                    for d in self.screws.values():
-                        if d.ref not in [x.ref for x in seen]: seen.append(d)
-                    v=seen[idx].ref if 0 <= idx < len(seen) else -1
-                else: v=self.device(dev).stack.get(int(self.val(a[2])),0.0)
-                self.setreg(a[0],v)
-            elif op=='put': self.device(a[0]).stack[int(self.val(a[1]))]=self.val(a[2])
-            elif op=='getd':
-                ref=int(self.val(a[1])); dev=self.ref_device(ref)
-                self.setreg(a[0],dev.stack.get(int(self.val(a[2])),0.0))
-            elif op=='putd':
-                ref=int(self.val(a[0])); dev=self.ref_device(ref)
-                dev.stack[int(self.val(a[1]))]=self.val(a[2])
-            elif op=='l':
-                dev=self.device(a[1]); key=self.propkey(a[2]); self.setreg(a[0], dev.props.get(key, math.nan))
-            elif op=='ld':
-                ref=int(self.val(a[1])); dev=self.ref_device(ref)
-                key=self.propkey(a[2]); self.setreg(a[0],dev.props.get(key,math.nan))
-            elif op=='s':
-                dev=self.device(a[0]); key=self.propkey(a[1]); dev.props[key]=self.val(a[2])
-            elif op=='sd':
-                ref=int(self.val(a[0])); dev=self.ref_device(ref); key=self.propkey(a[1]); dev.props[key]=self.val(a[2])
-            elif op=='ls':
-                dev=self.device(a[1]); idx=int(self.val(a[2])); key=self.propkey(a[3])
-                self.setreg(a[0],dev.slots.get(idx,{}).get(key,0.0))
-            elif op=='ss':
-                dev=self.device(a[0]); idx=int(self.val(a[1])); key=self.propkey(a[2])
-                dev.slots.setdefault(idx,{})[key]=self.val(a[3])
-            elif op in ('add','sub','mul','div','min','max','pow','mod'):
-                x,y=self.num(a[1]),self.num(a[2])
-                f={'add':lambda:x+y,'sub':lambda:x-y,'mul':lambda:x*y,'div':lambda:x/y,'min':lambda:min(x,y),'max':lambda:max(x,y),'pow':lambda:x**y,'mod':lambda:x%y}[op]
-                self.setreg(a[0],f())
-            elif op in ('and','or','sll','srl'):
-                x,y=int(self.num(a[1])),int(self.num(a[2]))
-                v={'and':x & y,'or':x | y,'sll':x << y,'srl':(x & 0xFFFFFFFFFFFFFFFF) >> y}[op]; self.setreg(a[0],v)
-            elif op=='clamp': self.setreg(a[0],max(self.val(a[2]),min(self.val(a[1]),self.val(a[3]))))
-            elif op in ('seq','sne','slt','sgt'):
-                x,y=self.val(a[1]),self.val(a[2])
-                v=(x==y) if op=='seq' else (x!=y) if op=='sne' else (x<y) if op=='slt' else (x>y)
-                self.setreg(a[0],1 if v else 0)
-            elif op=='sgtz': self.setreg(a[0],1 if self.num(a[1])>0 else 0)
-            elif op=='snan':
-                v=self.val(a[1]); self.setreg(a[0],1 if isinstance(v,float) and math.isnan(v) else 0)
-            elif op=='select': self.setreg(a[0],self.val(a[2]) if self.val(a[1])!=0 else self.val(a[3]))
-            elif op=='j': self.branch(a[0])
-            elif op=='jal': self.reg['ra']=self.pc; self.branch(a[0])
-            elif op=='beq':
-                if self.val(a[0])==self.val(a[1]): self.branch(a[2])
-            elif op=='bne':
-                if self.val(a[0])!=self.val(a[1]): self.branch(a[2])
-            elif op=='blt':
-                if self.val(a[0])<self.val(a[1]): self.branch(a[2])
-            elif op=='bgt':
-                if self.val(a[0])>self.val(a[1]): self.branch(a[2])
-            elif op=='ble':
-                if self.val(a[0])<=self.val(a[1]): self.branch(a[2])
-            elif op=='bge':
-                if self.val(a[0])>=self.val(a[1]): self.branch(a[2])
-            elif op=='beqz':
-                if self.val(a[0])==0: self.branch(a[1])
-            elif op=='bnez':
-                if self.val(a[0])!=0: self.branch(a[1])
-            elif op=='blez':
-                if self.val(a[0])<=0: self.branch(a[1])
-            elif op=='bgtz':
-                if self.val(a[0])>0: self.branch(a[1])
-            elif op=='bltz':
-                if self.val(a[0])<0: self.branch(a[1])
-            elif op=='bgez':
-                if self.val(a[0])>=0: self.branch(a[1])
-            elif op=='bnan':
-                v=self.val(a[0]);
-                if isinstance(v,float) and math.isnan(v): self.branch(a[1])
-            elif op=='bdns':
-                try: self.device(a[0]); exists=True
-                except KeyError: exists=False
-                if not exists: self.branch(a[1])
-            elif op in ('bdnvl','bdnvs'):
-                try: dev=self.device(a[0]); exists=self.propkey(a[1]) in dev.props
-                except KeyError: exists=False
-                if op=='bdnvl' and not exists: self.branch(a[2])
-                if op=='bdnvs' and not exists: self.branch(a[2])
             else:
-                raise NotImplementedError(f'{op}: {line}')
+                execute_opcode(self,row)
         if instruction_quantum is not None and steps >= instruction_quantum:
             return "quantum"
         if steps>=max_steps: raise RuntimeError('step limit exceeded')
