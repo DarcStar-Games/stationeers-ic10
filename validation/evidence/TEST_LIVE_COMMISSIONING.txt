@@ -1,8 +1,0 @@
-Recorded LG-SEQUENCER: FAIL
-Recorded LG-SEQUENCER: PASS
-Live commissioning tests: PASS
- - release-bound session freshness and append-only rerun history
- - all required suites can close only through explicit PASS observations
- - real IC10 probe captures dynamic LogicType + generation-fenced stack values
- - nonpositive/torn stack generation fails closed
- - real stack monitor covers reused state, both housing types, optional output, and invalid inputs

@@ -1,6 +1,0 @@
-Recipe Catalog runtime-placement schema: PASS
- - fixture dynamically claims one pure Store per printer family
- - capability-1 Security Printer lookup excludes its inaccessible Tier Two metadata
- - RecipeHash execution view republishes family/capability and exact reagent requirements
- - 780-recipe stress case derives 18 Stores at runtime: 48+48+34 recipes per family under schema v3
- - Loaders contain whole recipes only and never preassign physical Stores

@@ -1,7 +1,0 @@
-Generic Material Transform protocol: PASS
- - admission validates 1..3 inputs, hierarchical processor capabilities, universal transform conditions, and output capacity
- - resolver selects complete typed Material Links terminating at the exact processor
- - stager prepares every reservation/Guard before allocator publishes one common epoch
- - any failed input rolls back partial reservations without publishing a commit epoch
- - Grant Guard accepts only the current Allocator ABI2 contract
- - generic runtime completes a simulated 3-input transform and confirms output growth

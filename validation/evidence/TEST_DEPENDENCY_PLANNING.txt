@@ -1,5 +1,0 @@
-Dependency planning: PASS
- - future-output sharing accounts for aggregate claims and never reuses completed children
- - bounded depth/cycle and completed-child inventory liveness semantics are covered
- - Plan Store 8-cell commit marker survives interrupted odd-sequence recovery
- - four-lane Gateway + sole Store executor atomically guards parent generation and allocates child slots

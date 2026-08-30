@@ -1,7 +1,0 @@
-Manufacturing contracts: PASS
- - async state/error publication is request-token fenced end-to-end
- - Transform readiness is profile/generation-qualified with no arbitrary 16-tick timeout
- - WAIT traversal reaches lower-priority runnable jobs across multiple waiters
- - Printer reservation separates request/response identity from exact-ref lock ownership
- - one dynamic manufacturing selector implementation can serve Transform and Print domains
- - manufacturing execution contains 16 bounded semantic services/adapters, all <=120 lines

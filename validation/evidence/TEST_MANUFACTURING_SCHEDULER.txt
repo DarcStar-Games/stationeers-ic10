@@ -1,5 +1,0 @@
-Manufacturing Scheduler: PASS
- - JobId cursor guarantees progress across multiple high-priority WAIT jobs
- - Router publishes state only after selected driver current-token match
- - stale prior COMPLETE cannot advance a new job without driver acceptance
- - scheduler still commits exactly one legal Job ABI edge at a time

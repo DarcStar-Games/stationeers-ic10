@@ -35,10 +35,15 @@ jobs:
           PYTHONDONTWRITEBYTECODE: "1"
         run: python3 tools/run_validation.py
 
-      - name: Assert validation left the checkout clean
+      - name: Assert validation left tracked and non-ignored files clean
         if: ${{ always() }}
         shell: bash
         run: |
+          tracked_evidence="$(git ls-files -- VALIDATION_SUMMARY.txt validation/FULL_VALIDATION_RUN.txt validation/VALIDATION_STATE.json validation/evidence)"
+          if [[ -n "$tracked_evidence" ]]; then
+            printf 'Generated validation evidence must not be tracked:\n%s\n' "$tracked_evidence"
+            exit 1
+          fi
           git diff --exit-code --stat
           status="$(git status --porcelain=v1 --untracked-files=all)"
           if [[ -n "$status" ]]; then

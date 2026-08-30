@@ -1,5 +1,0 @@
-Phase-pressure/resource-profile model: PASS
- - 9 phase-medium records share the unified resource profile source/catalog
- - catalog store/loaders reproduce exactly from resource_profiles.json
- - phase records retain thermodynamic, latent-heat, gas-ratio, and purity metadata
- - PhasePressure consumes coherent Resource Profile View generation and publishes telemetry ABI2

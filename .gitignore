@@ -10,3 +10,13 @@ __pycache__/
 
 # Generated and embedded inside release archives; never maintained in a checkout.
 ARCHIVE_MANIFEST.sha256
+
+# Local agent worktrees are tooling state, not framework inputs.
+/.claude/worktrees/
+
+# Local/CI validation output. Release builds regenerate these files and package
+# them in the release ZIP, but they are not repository source.
+/VALIDATION_SUMMARY.txt
+/validation/FULL_VALIDATION_RUN.txt
+/validation/VALIDATION_STATE.json
+/validation/evidence/

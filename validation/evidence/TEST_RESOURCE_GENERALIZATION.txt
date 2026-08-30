@@ -1,9 +1,0 @@
-Resource generalization model: PASS
- - pressure and material providers share Generic Resource Endpoint ABI1
- - Generic Resource Reservation contains no pressure-specific dependency
- - Pressure Resource Link adapter topology-binds generic reservations to native pressure inventories
- - Resource Endpoint/Link/Reservation adapters reuse the 64-entry Generic Snapshot Directory Host with explicit overflow
- - Vending, LArRE, direct-slot and SDB storage share Generic ITEM Endpoint/Reservation contracts; SDB precision remains lower-bound
- - 27 ITEM profiles (10 ores, 7 basic ingots, 5 alloys, 5 superalloys) share the unified Resource Profile catalog
- - 17 variable-input transforms share one block-structured catalog and request-fenced capability-based ABI4 View
- - Vending inventory scan is incremental and invalidates on import/export churn
