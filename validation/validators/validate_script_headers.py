@@ -64,6 +64,52 @@ IMPORT_NAME_PROBES = (
         "tests.fixtures.script_header_prose",
     ),
 )
+DYNAMIC_IMPORT_PROBES = (
+    (
+        'import importlib\nimportlib.import_module("build_release")',
+        ["line 2: dynamic bare-name import of 'build_release'; its only name is 'tools.build_release'"],
+    ),
+    (
+        'from importlib import import_module as load\nload("build_release")',
+        ["line 2: dynamic bare-name import of 'build_release'; its only name is 'tools.build_release'"],
+    ),
+    (
+        '__import__("build_release")',
+        ["line 1: dynamic bare-name import of 'build_release'; its only name is 'tools.build_release'"],
+    ),
+    (
+        'import builtins\nbuiltins.__import__("build_release")',
+        ["line 2: dynamic bare-name import of 'build_release'; its only name is 'tools.build_release'"],
+    ),
+    (
+        'from pathlib import Path as _ProjectPath\n'
+        '_PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]\n'
+        'import importlib.util\nimportlib.util.spec_from_file_location('
+        '"_rv", _PROJECT_ROOT / "tools" / "run_validation.py")',
+        [
+            "line 4: path-keyed load of in-tree module 'tools/run_validation.py' as '_rv'; "
+            "import it only as 'tools.run_validation'"
+        ],
+    ),
+    ('import importlib\nimportlib.import_module("tools.build_release")', []),
+    ('import importlib\nname = "build_release"\nimportlib.import_module(name)', []),
+    (
+        'import importlib.util\nimportlib.util.spec_from_file_location('
+        '"generated", "/tmp/generated.py")',
+        [],
+    ),
+    (
+        'ROOT = _PROJECT_ROOT\nimport importlib.util\ndef load(ROOT):\n'
+        ' return importlib.util.spec_from_file_location('
+        '"other", ROOT / "tools" / "run_validation.py")',
+        [],
+    ),
+    (
+        'import importlib\ndef load(importlib):\n'
+        ' return importlib.import_module("build_release")',
+        [],
+    ),
+)
 
 
 def is_entry_point(rel: Path) -> bool:
@@ -176,7 +222,389 @@ def canonical_import(name, shadowable):
     return package + name[len(bare):] if package else None
 
 
-def check_import_names(tree, shadowable, failures):
+def importable_module_paths(paths):
+    """Map Python files in this checkout to their repository-rooted import names."""
+    modules = {}
+    for path in paths:
+        rel = path.relative_to(ROOT)
+        parts = rel.parent.parts if rel.name == "__init__.py" else rel.with_suffix("").parts
+        if parts:
+            modules[path.resolve()] = ".".join(parts)
+    return modules
+
+
+OTHER_BINDING = "<other>"
+PROJECT_ROOT_BINDING = "<project-root>"
+GLOBAL_BINDING = "<global>"
+
+
+def target_names(node):
+    """Return names bound by an assignment target."""
+    if isinstance(node, ast.Name):
+        return [node.id]
+    if isinstance(node, (ast.Tuple, ast.List)):
+        return [name for item in node.elts for name in target_names(item)]
+    if isinstance(node, ast.Starred):
+        return target_names(node.value)
+    return []
+
+
+def is_project_root_value(node):
+    """Whether an expression is the path expression from the enforced bootstrap."""
+    return (
+        isinstance(node, ast.Subscript)
+        and isinstance(node.slice, ast.Constant)
+        and isinstance(node.slice.value, int)
+        and isinstance(node.value, ast.Attribute)
+        and node.value.attr == "parents"
+        and isinstance(node.value.value, ast.Call)
+        and not node.value.value.args
+        and not node.value.value.keywords
+        and isinstance(node.value.value.func, ast.Attribute)
+        and node.value.value.func.attr == "resolve"
+        and isinstance(node.value.value.func.value, ast.Call)
+        and qualified_name(node.value.value.func.value.func) == "_ProjectPath"
+        and len(node.value.value.func.value.args) == 1
+        and isinstance(node.value.value.func.value.args[0], ast.Name)
+        and node.value.value.func.value.args[0].id == "__file__"
+    )
+
+
+class ScopeBindingCollector(ast.NodeVisitor):
+    """Collect bindings belonging to one lexical scope, excluding child scopes."""
+
+    def __init__(self, root_names=(), arguments=(), allow_project_root=False):
+        self.bindings = {}
+        self.global_names = set()
+        self.nonlocal_names = set()
+        self.root_names = set(root_names)
+        self.allow_project_root = allow_project_root
+        for name in arguments:
+            self.add(name, OTHER_BINDING)
+
+    def add(self, name, value):
+        previous = self.bindings.get(name)
+        self.bindings[name] = value if previous is None or previous == value else OTHER_BINDING
+
+    def visit_Import(self, node):
+        for alias in node.names:
+            local = alias.asname or alias.name.split(".")[0]
+            if alias.name == "importlib" or alias.name.startswith("importlib."):
+                value = alias.name if alias.asname else alias.name.split(".")[0]
+            elif alias.name == "builtins":
+                value = "builtins"
+            else:
+                value = OTHER_BINDING
+            self.add(local, value)
+
+    def visit_ImportFrom(self, node):
+        recognized = {"builtins", "importlib", "importlib.util"}
+        for alias in node.names:
+            if alias.name == "*":
+                continue
+            local = alias.asname or alias.name
+            value = f"{node.module}.{alias.name}" if node.module in recognized else OTHER_BINDING
+            self.add(local, value)
+
+    def visit_Assign(self, node):
+        value = (
+            PROJECT_ROOT_BINDING
+            if self.allow_project_root and (
+                isinstance(node.value, ast.Name) and node.value.id in self.root_names
+                or is_project_root_value(node.value)
+            )
+            else OTHER_BINDING
+        )
+        for target in node.targets:
+            for name in target_names(target):
+                self.add(name, value)
+        self.visit(node.value)
+
+    def visit_AnnAssign(self, node):
+        for name in target_names(node.target):
+            self.add(name, OTHER_BINDING)
+        if node.value:
+            self.visit(node.value)
+
+    def visit_AugAssign(self, node):
+        for name in target_names(node.target):
+            self.add(name, OTHER_BINDING)
+        self.visit(node.value)
+
+    def visit_NamedExpr(self, node):
+        for name in target_names(node.target):
+            self.add(name, OTHER_BINDING)
+        self.visit(node.value)
+
+    def visit_Name(self, node):
+        if isinstance(node.ctx, ast.Store):
+            self.add(node.id, OTHER_BINDING)
+
+    def visit_ExceptHandler(self, node):
+        if node.name:
+            self.add(node.name, OTHER_BINDING)
+        for child in node.body:
+            self.visit(child)
+
+    def visit_Global(self, node):
+        self.global_names.update(node.names)
+
+    def visit_Nonlocal(self, node):
+        self.nonlocal_names.update(node.names)
+
+    def visit_FunctionDef(self, node):
+        self.add(node.name, OTHER_BINDING)
+
+    visit_AsyncFunctionDef = visit_FunctionDef
+
+    def visit_ClassDef(self, node):
+        self.add(node.name, OTHER_BINDING)
+
+    def visit_Lambda(self, node):
+        pass
+
+    def visit_ListComp(self, node):
+        pass
+
+    visit_SetComp = visit_ListComp
+    visit_DictComp = visit_ListComp
+    visit_GeneratorExp = visit_ListComp
+
+    def finish(self):
+        for name in self.nonlocal_names:
+            # Removing the local binding makes resolution continue in an enclosing scope.
+            self.bindings.pop(name, None)
+        for name in self.global_names:
+            self.bindings[name] = GLOBAL_BINDING
+        return self.bindings
+
+
+def argument_names(arguments):
+    args = [*arguments.posonlyargs, *arguments.args, *arguments.kwonlyargs]
+    names = [item.arg for item in args]
+    if arguments.vararg:
+        names.append(arguments.vararg.arg)
+    if arguments.kwarg:
+        names.append(arguments.kwarg.arg)
+    return names
+
+
+def scope_bindings(body, root_names=(), arguments=(), allow_project_root=False):
+    collector = ScopeBindingCollector(root_names, arguments, allow_project_root)
+    for node in body:
+        collector.visit(node)
+    return collector.finish()
+
+
+def qualified_name(node):
+    """Return the dotted spelling of a simple name or attribute chain."""
+    parts = []
+    while isinstance(node, ast.Attribute):
+        parts.append(node.attr)
+        node = node.value
+    if not isinstance(node, ast.Name):
+        return None
+    parts.append(node.id)
+    return ".".join(reversed(parts))
+
+
+def bound_call_name(node, resolve_name):
+    """Resolve the imported prefix of a call without evaluating Python code."""
+    name = qualified_name(node)
+    if not name:
+        return None
+    first, *rest = name.split(".")
+    bound = resolve_name(first)
+    return ".".join((bound, *rest)) if bound not in {None, OTHER_BINDING, PROJECT_ROOT_BINDING} else None
+
+
+def call_argument(node, position, keyword):
+    if len(node.args) > position:
+        return node.args[position]
+    return next((item.value for item in node.keywords if item.arg == keyword), None)
+
+
+def project_root_names(tree):
+    """Find module constants that are direct aliases of the canonical bootstrap root."""
+    names = {"_PROJECT_ROOT"}
+    changed = True
+    while changed:
+        changed = False
+        for node in tree.body:
+            if not isinstance(node, ast.Assign) or not isinstance(node.value, ast.Name):
+                continue
+            if node.value.id not in names:
+                continue
+            for target in node.targets:
+                if isinstance(target, ast.Name) and target.id not in names:
+                    names.add(target.id)
+                    changed = True
+    return names
+
+
+def literal_path(node, resolve_name):
+    """Resolve a path made only from strings and the enforced repository-root constant."""
+    if isinstance(node, ast.Constant) and isinstance(node.value, str):
+        return Path(node.value)
+    if isinstance(node, ast.Name) and resolve_name(node.id) == PROJECT_ROOT_BINDING:
+        return ROOT
+    if (
+        isinstance(node, ast.Call)
+        and qualified_name(node.func) in {"Path", "_ProjectPath"}
+        and len(node.args) == 1
+        and not node.keywords
+    ):
+        return literal_path(node.args[0], resolve_name)
+    if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Div):
+        left = literal_path(node.left, resolve_name)
+        right = literal_path(node.right, resolve_name)
+        if left is not None and right is not None and not right.is_absolute():
+            return left / right
+    return None
+
+
+class DynamicImportChecker(ast.NodeVisitor):
+    """Check dynamic imports while resolving names in their lexical scope."""
+
+    def __init__(self, tree, shadowable, module_paths, failures):
+        self.tree = tree
+        self.shadowable = shadowable
+        self.module_paths = module_paths
+        self.failures = failures
+        self.root_names = project_root_names(tree)
+        module_bindings = scope_bindings(tree.body, self.root_names, allow_project_root=True)
+        for name in self.root_names:
+            module_bindings.setdefault(name, PROJECT_ROOT_BINDING)
+        self.scopes = [("module", module_bindings)]
+
+    def resolve_name(self, name):
+        top = len(self.scopes) - 1
+        for index in range(top, -1, -1):
+            kind, bindings = self.scopes[index]
+            # Class bodies are not enclosing lexical scopes for functions or comprehensions.
+            if kind == "class" and index != top:
+                continue
+            if name in bindings:
+                value = bindings[name]
+                if value == GLOBAL_BINDING:
+                    return self.scopes[0][1].get(name)
+                return value
+        return "builtins.__import__" if name == "__import__" else None
+
+    def visit_Module(self, node):
+        for child in node.body:
+            self.visit(child)
+
+    def visit_Call(self, node):
+        loader = bound_call_name(node.func, self.resolve_name)
+        if loader in {"importlib.import_module", "builtins.__import__"}:
+            target = call_argument(node, 0, "name")
+            if isinstance(target, ast.Constant) and isinstance(target.value, str):
+                canonical = canonical_import(target.value, self.shadowable)
+                if canonical:
+                    self.failures.append(
+                        f"line {node.lineno}: dynamic bare-name import of {target.value!r}; "
+                        f"its only name is {canonical!r}"
+                    )
+        elif loader == "importlib.util.spec_from_file_location":
+            target = call_argument(node, 1, "location")
+            path = literal_path(target, self.resolve_name) if target else None
+            if path is not None:
+                resolved = path.resolve() if path.is_absolute() else (ROOT / path).resolve()
+                canonical = self.module_paths.get(resolved)
+                if canonical:
+                    name = call_argument(node, 0, "name")
+                    loaded_as = (
+                        name.value
+                        if isinstance(name, ast.Constant) and isinstance(name.value, str)
+                        else "?"
+                    )
+                    rel = resolved.relative_to(ROOT).as_posix()
+                    self.failures.append(
+                        f"line {node.lineno}: path-keyed load of in-tree module {rel!r} as {loaded_as!r}; "
+                        f"import it only as {canonical!r}"
+                    )
+        self.generic_visit(node)
+
+    def visit_FunctionDef(self, node):
+        for decorator in node.decorator_list:
+            self.visit(decorator)
+        for argument in (*node.args.posonlyargs, *node.args.args, *node.args.kwonlyargs):
+            if argument.annotation:
+                self.visit(argument.annotation)
+        if node.args.vararg and node.args.vararg.annotation:
+            self.visit(node.args.vararg.annotation)
+        if node.args.kwarg and node.args.kwarg.annotation:
+            self.visit(node.args.kwarg.annotation)
+        for default in (*node.args.defaults, *[item for item in node.args.kw_defaults if item]):
+            self.visit(default)
+        if node.returns:
+            self.visit(node.returns)
+        bindings = scope_bindings(node.body, arguments=argument_names(node.args))
+        self.scopes.append(("function", bindings))
+        for child in node.body:
+            self.visit(child)
+        self.scopes.pop()
+
+    visit_AsyncFunctionDef = visit_FunctionDef
+
+    def visit_ClassDef(self, node):
+        for expression in (*node.decorator_list, *node.bases, *[item.value for item in node.keywords]):
+            self.visit(expression)
+        self.scopes.append(("class", scope_bindings(node.body)))
+        for child in node.body:
+            self.visit(child)
+        self.scopes.pop()
+
+    def visit_Lambda(self, node):
+        for default in (*node.args.defaults, *[item for item in node.args.kw_defaults if item]):
+            self.visit(default)
+        bindings = {name: OTHER_BINDING for name in argument_names(node.args)}
+        self.scopes.append(("lambda", bindings))
+        self.visit(node.body)
+        self.scopes.pop()
+
+    def visit_comprehension_scope(self, node, values):
+        # The first iterable is evaluated outside the comprehension's implicit scope.
+        self.visit(node.generators[0].iter)
+        bindings = {
+            name: OTHER_BINDING
+            for generator in node.generators
+            for name in target_names(generator.target)
+        }
+        self.scopes.append(("comprehension", bindings))
+        for generator in node.generators:
+            if generator is not node.generators[0]:
+                self.visit(generator.iter)
+            for condition in generator.ifs:
+                self.visit(condition)
+        for value in values:
+            self.visit(value)
+        self.scopes.pop()
+
+    def visit_ListComp(self, node):
+        self.visit_comprehension_scope(node, (node.elt,))
+
+    visit_SetComp = visit_ListComp
+    visit_GeneratorExp = visit_ListComp
+
+    def visit_DictComp(self, node):
+        self.visit_comprehension_scope(node, (node.key, node.value))
+
+
+def check_dynamic_imports(tree, shadowable, module_paths, failures):
+    """Reject literal dynamic imports that would give an in-tree module a second identity.
+
+    Dynamic loading itself is legitimate for generated modules and files in another
+    checkout. The target is therefore the boundary: names are checked only when they
+    are string literals, and paths only when an expression made from literal strings
+    and the canonical project root resolves to a Python file in this checkout.
+    Computed arguments cannot be proved statically and remain review territory.
+    """
+    DynamicImportChecker(tree, shadowable, module_paths, failures).visit(tree)
+
+
+def check_import_names(tree, shadowable, module_paths, failures):
     """An in-tree module must be imported through its package, never by bare name.
 
     Naming the package is the whole rule here, but it is not the whole advice: outside
@@ -223,14 +651,15 @@ def check_import_names(tree, shadowable, failures):
                 failures.append(
                     f"line {node.lineno}: bare-name import of {name!r}; its only name is {canonical!r}{runs}"
                 )
+    check_dynamic_imports(tree, shadowable, module_paths, failures)
 
 
-def import_name_regression_failures(shadowable):
+def import_name_regression_failures(shadowable, module_paths):
     """Exercise the namespace spellings and fail-closed collision behavior from #27."""
     failures = []
     for source, bare, canonical in IMPORT_NAME_PROBES:
         found = []
-        check_import_names(ast.parse(source), shadowable, found)
+        check_import_names(ast.parse(source), shadowable, module_paths, found)
         expected = [f"line 1: bare-name import of {bare!r}; its only name is {canonical!r}"]
         if found != expected:
             failures.append(f"{source!r}: expected {expected!r}, found {found!r}")
@@ -245,6 +674,11 @@ def import_name_regression_failures(shadowable):
         failures.append(
             f"ambiguous alias probe did not fail closed: mapped={mapped!r}, conflicts={conflicts!r}"
         )
+    for source, expected in DYNAMIC_IMPORT_PROBES:
+        found = []
+        check_import_names(ast.parse(source), shadowable, module_paths, found)
+        if found != expected:
+            failures.append(f"{source!r}: expected {expected!r}, found {found!r}")
     return failures
 
 
@@ -356,7 +790,7 @@ def check_work_in_main(rel: Path, tree, entry, has_bootstrap, failures):
         failures.append("nothing runs when this is executed: no `if __name__` guard to call main()")
 
 
-def inspect(path: Path, shadowable):
+def inspect(path: Path, shadowable, module_paths):
     rel = path.relative_to(ROOT)
     entry = is_entry_point(rel)
     text = path.read_text()
@@ -408,7 +842,7 @@ def inspect(path: Path, shadowable):
         failures.append("entry point without the bootstrap" if entry else "imported module carries the bootstrap")
     elif has_bootstrap:
         check_bootstrap(rel, lines, tree, failures)
-    check_import_names(tree, shadowable, failures)
+    check_import_names(tree, shadowable, module_paths, failures)
     check_work_in_main(rel, tree, entry, has_bootstrap, failures)
 
     return entry, executable, failures
@@ -420,8 +854,9 @@ def main():
         if not SKIP_PARTS & set(p.relative_to(ROOT).parts)
     )
     shadowable, alias_conflicts = shadowable_modules(paths)
-    regression_failures = import_name_regression_failures(shadowable)
-    rows = [(p.relative_to(ROOT).as_posix(), *inspect(p, shadowable)) for p in paths]
+    module_paths = importable_module_paths(paths)
+    regression_failures = import_name_regression_failures(shadowable, module_paths)
+    rows = [(p.relative_to(ROOT).as_posix(), *inspect(p, shadowable, module_paths)) for p in paths]
     # The list is load-bearing now, so read it in both directions. A path renamed or
     # deleted out from under it still fails the run -- python3 on a missing file exits
     # non-zero -- but it fails as a traceback inside one evidence file among the whole
@@ -453,8 +888,8 @@ def main():
     entries = sum(1 for row in rows if row[1])
     print(f"Checked {len(rows)} files: {entries} entry points, {len(rows)-entries} imported modules")
     print(f"Single import name enforced for {len(shadowable)} modules reachable from a script directory")
-    print(f"Import-name regression probes cover {len(IMPORT_NAME_PROBES)} namespace spellings;"
-          " ambiguous aliases fail closed")
+    print(f"Import-name regression probes cover {len(IMPORT_NAME_PROBES)} namespace spellings and "
+          f"{len(DYNAMIC_IMPORT_PROBES)} dynamic loads; ambiguous aliases fail closed")
     # Both counts come from the rows, so they partition `entries` by construction. Taking
     # the second from len(REGISTERED) instead reads the same today and stops summing the
     # moment a tools/ command is also registered -- committed evidence must not be able
