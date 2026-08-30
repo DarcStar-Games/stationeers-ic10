@@ -1,5 +1,5 @@
 # Catalog Coordinator Recovery v2.0: d0 Core,d1 Registry ABI3; epoch takeover.
-poke 0 31415976
+poke 0 HASH("CatalogCoordinatorRecovery.v2")
 poke 1 2
 poke 2 0
 Loop:
@@ -7,9 +7,9 @@ yield
 bdns d0 Loop
 bdns d1 Loop
 get r0 d0 0
-bne r0 31415970 Loop
+bne r0 HASH("CatalogCoordinatorCore.v4") Loop
 get r0 d1 0
-bne r0 31415982 Loop
+bne r0 HASH("GenericRegistryDirectoryHost.v3") Loop
 get r0 d1 1
 bne r0 3 Loop
 get r0 d1 3

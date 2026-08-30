@@ -8,12 +8,12 @@ from framework.catalog_generation import (
  CatalogFamily,CatalogPartition,declared_output_inventory,run_catalog_generation,
 )
 from framework.catalog_schema import (
- CELL_BLOCK_WIDTH,COORDINATION_PROGRAM_FILES,COORD_MAGIC,GENERIC_STORE_FILE,STORE_ABI,STORE_MAGIC,CatalogItem,
+ CELL_BLOCK_WIDTH,COORDINATION_PROGRAM_FILES,COORD_TOKEN,GENERIC_STORE_FILE,STORE_ABI,STORE_TOKEN,CatalogItem,
 )
 SOURCE_FILE='data/resource_profiles.json';MANIFEST_FILE='data/resource_profile_catalog_manifest.json';VIEW_FILE='ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10';RESOLVER_FILE='ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10'
 R=_PROJECT_ROOT
 SCHEMA='CatalogSchema.ResourceProfile';SCHEMA_VERSION=2;INSTANCE='Catalog.ResourceProfiles.Schema2'
-VIEW_MAGIC=31415963;VIEW_ABI=1;SEMANTIC_WIDTH=14;ITEM_CELLS=16
+VIEW_CONTRACT='ResourceProfileView';VIEW_ABI=1;VIEW_TOKEN='HASH("ResourceProfileView.v1")';SEMANTIC_WIDTH=14;ITEM_CELLS=16
 CLASS_NAMES={1:'fluid',2:'item',4:'power',5:'energy'}
 
 def build_partitions(D):
@@ -41,7 +41,7 @@ def build_partitions(D):
 def render_outputs(D):
  P=D['profiles']
  view=f'''# Resource Profile View v4: dynamic Store ABI5 item directory; d0=any Store.
-poke 0 {VIEW_MAGIC}
+poke 0 {VIEW_TOKEN}
 poke 1 {VIEW_ABI}
 poke 2 0
 poke 28 0
@@ -55,7 +55,7 @@ l r2 d0 ReferenceId
 get r12 d0 11
 blez r12 Bad
 getd r0 r12 0
-bne r0 {COORD_MAGIC} Bad
+bne r0 {COORD_TOKEN} Bad
 getd r15 r12 22
 mod r0 r15 2
 bnez r0 Bad
@@ -67,7 +67,7 @@ move r2 r1
 j First
 Store:
 getd r0 r2 0
-bne r0 {STORE_MAGIC} Bad
+bne r0 {STORE_TOKEN} Bad
 getd r0 r2 1
 bne r0 {STORE_ABI} Bad
 getd r0 r2 3
@@ -145,7 +145,7 @@ j Loop'''
   if p['resource_type_kind'] != 'literal_hash': raise SystemExit(p['slug']+': dependency reagent resolver requires literal ITEM ResourceType')
   if alias in reagent_seen and reagent_seen[alias] != rt: raise SystemExit(f'duplicate ManufacturingReagentHash {alias}')
   reagent_seen[alias]=rt; reagents.append((alias,rt))
- rl=['# Generated manufacturing reagent alias -> concrete ITEM ResourceType.','poke 0 31416017','poke 1 1','poke 2 0','Loop:','yield','get r15 db 9','get r0 db 10','beq r15 r0 Loop','get r2 db 8']
+ rl=['# Generated manufacturing reagent alias -> concrete ITEM ResourceType.','poke 0 HASH("ManufacturingReagentResolver.v1")','poke 1 1','poke 2 0','Loop:','yield','get r15 db 9','get r0 db 10','beq r15 r0 Loop','get r2 db 8']
  for i,(alias,_) in enumerate(reagents): rl.append(f'beq r2 {alias} R{i}')
  rl += ['poke 11 -2','poke 12 0','poke 10 r15','j Loop']
  for i,(_,rt) in enumerate(reagents): rl += [f'R{i}:',f'poke 12 {rt}','poke 11 1','poke 10 r15','j Loop']

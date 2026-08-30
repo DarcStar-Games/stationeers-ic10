@@ -1,4 +1,4 @@
-poke 0 31415993
+poke 0 HASH("GenericJobSelector.v3")
 poke 1 3
 poke 2 0
 Loop:
@@ -7,7 +7,7 @@ get r15 db 20
 get r0 db 21
 beq r15 r0 Loop
 get r0 d0 0
-bne r0 31415984 Bad
+bne r0 HASH("GenericJobStore.v1") Bad
 get r0 d0 1
 bne r0 1 Bad
 get r12 d0 16

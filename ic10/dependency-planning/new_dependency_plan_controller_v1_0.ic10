@@ -1,5 +1,5 @@
 # New-plan decision. d0 Preflight,d1 Builder,d2 JobMonitor.
-poke 0 31416020
+poke 0 HASH("NewDependencyPlanController.v1")
 poke 1 1
 poke 2 0
 Loop:

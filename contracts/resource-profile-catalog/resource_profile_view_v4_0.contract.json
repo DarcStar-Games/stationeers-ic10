@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10",
-  "source_sha256": "f57209498d5bddc7e1ace82324db7c206fc32937e829f1de4d2c89149bb688e8",
+  "source_sha256": "5fe9c6c3863f81a4ba6f74f794d8b67797d7399976b4c54ad9f49dbb0a06e67f",
   "identity": {
     "service_id": "ic10.script.resource.profile.view",
     "implementation_revision": "4.0",
@@ -72,7 +72,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415970
+          "value": 4515138
         }
       ],
       "accepted": []
@@ -97,7 +97,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415968
+          "value": 875310516
         },
         {
           "address": 1,
@@ -107,7 +107,7 @@
         {
           "address": 3,
           "operator": "equals",
-          "value": "HASH(\"CatalogSchema.ResourceProfile.v2\")"
+          "value": -118800371
         }
       ],
       "accepted": []
@@ -255,7 +255,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415963,
+        "contract": "ResourceProfileView",
+        "magic": 2107540686,
         "abi": 1
       }
     ]
@@ -271,9 +272,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415963.abi1",
+        "protocol_id": "ic10.stack.resource-profile-view.v1",
         "base": 0,
-        "magic": 31415963,
+        "contract": "ResourceProfileView",
+        "magic": 2107540686,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

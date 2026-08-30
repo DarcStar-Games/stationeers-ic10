@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_link_selector_v1_0.ic10",
-  "source_sha256": "491c87d7111bfa0ece8ba5336a06e781b00087aa39717f5ccff5f3134298674f",
+  "source_sha256": "42e580ea36f6405a857f269581c964677568e6fa32d2b26e186cf118c7e9ab34",
   "identity": {
     "service_id": "ic10.script.power.link.selector",
     "implementation_revision": "1.0",
@@ -44,19 +44,19 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415981
+            "equals": 891293726
           },
           {
             "address": 9,
-            "equals": "HASH(\"DirectorySchema.ResourceLink.v1\")"
+            "equals": -1926307111
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.215e9759c829bc88",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.215e9759c829bc88",
+        "interface_id": "ic10.interface.access.5b032c68f6132b34",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.5b032c68f6132b34",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -89,7 +89,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415953
+          "value": 1484497288
         },
         {
           "address": 9,
@@ -145,7 +145,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416030
+        "const": 461119354
       },
       {
         "address": 1,
@@ -262,7 +262,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416030,
+        "contract": "PowerLinkSelector",
+        "magic": 461119354,
         "abi": 1
       }
     ]
@@ -278,7 +279,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416030,
+        "equals": 461119354,
         "source": "generated-protocol-header"
       },
       {
@@ -293,9 +294,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416030.abi1",
+        "protocol_id": "ic10.stack.power-link-selector.v1",
         "base": 0,
-        "magic": 31416030,
+        "contract": "PowerLinkSelector",
+        "magic": 461119354,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

@@ -155,12 +155,12 @@ This prevents a target calculated under an old controller configuration or old m
 
 ## PhasePressure Request Arbiter ABI v1
 
-Magic: `31415933`, ABI: `1`.
+Magic: `HASH("PhasePressureRequestArbiter.v1")`, ABI: `1`.
 
 The Arbiter is **not** generic telemetry and is not discovered as a controller. It is an internal pressure-grid service.
 
 ```text
-S0   magic = 31415933
+S0   magic = PhasePressureRequestArbiter.v1
 S1   ABI = 1
 S2   capability mask = 0
 

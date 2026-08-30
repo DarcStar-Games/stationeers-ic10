@@ -1,5 +1,5 @@
 # Power dispatch cycle: PlanStore BEGIN -> sweep -> COMMIT.
-poke 0 31416034
+poke 0 HASH("PowerDispatchCycle.v1")
 poke 1 1
 poke 2 0
 poke 20 0

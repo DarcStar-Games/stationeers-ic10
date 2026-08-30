@@ -1,11 +1,11 @@
 get r0 db 0
-bne r0 31415996 Reset
+bne r0 HASH("PrinterExecutionBank.v2") Reset
 get r0 db 1
 beq r0 2 Init
 Reset:
 clr db
 Init:
-poke 0 31415996
+poke 0 HASH("PrinterExecutionBank.v2")
 poke 1 2
 poke 2 0
 Loop:

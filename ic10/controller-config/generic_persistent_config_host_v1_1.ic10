@@ -1,5 +1,5 @@
 Boot:
-poke 0 31415928
+poke 0 HASH("GenericPersistentConfigHost.v1")
 poke 1 1
 poke 2 0
 poke 8 0

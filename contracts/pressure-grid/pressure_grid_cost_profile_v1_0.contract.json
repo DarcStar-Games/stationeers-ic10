@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_cost_profile_v1_0.ic10",
-  "source_sha256": "2944b40525bf1f437e2d86434cd4b7bedaab5310bf3c948a6a56a2364f878060",
+  "source_sha256": "932a39497ce5e1736dcbf125fc99cdc2642b32b2ab651a122171385931dbb567",
   "identity": {
     "service_id": "ic10.script.pressure.grid.cost.profile",
     "implementation_revision": "1.0",
@@ -46,7 +46,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415945
+        "const": 1214212615
       },
       {
         "address": 1,
@@ -122,7 +122,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415945,
+        "contract": "PressureGridCostProfile",
+        "magic": 1214212615,
         "abi": 1
       }
     ]
@@ -138,7 +139,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415945,
+        "equals": 1214212615,
         "source": "generated-protocol-header"
       },
       {
@@ -153,9 +154,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415945.abi1",
+        "protocol_id": "ic10.stack.pressure-grid-cost-profile.v1",
         "base": 0,
-        "magic": 31415945,
+        "contract": "PressureGridCostProfile",
+        "magic": 1214212615,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

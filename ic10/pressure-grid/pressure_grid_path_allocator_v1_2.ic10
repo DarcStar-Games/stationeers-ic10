@@ -1,4 +1,4 @@
-poke 0 31415941
+poke 0 HASH("PressureGridPathAllocator.v1")
 poke 1 1
 poke 2 0
 move r15 -1
@@ -17,9 +17,9 @@ blez r4 Reject
 bdns d0 Reject
 bdns d1 Reject
 get r0 d0 0
-bne r0 31415944 Reject
+bne r0 HASH("PressureGridRouteSelector.v2") Reject
 get r0 d1 0
-bne r0 31415938 Reject
+bne r0 HASH("PressureReservationAllocator.v3") Reject
 get r0 d1 1
 bne r0 3 Reject
 get r10 db 12

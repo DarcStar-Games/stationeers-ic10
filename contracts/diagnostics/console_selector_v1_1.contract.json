@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/console_selector_v1_1.ic10",
-  "source_sha256": "562299760001664ed197ff4c2b9496e9a07777c3af919fa814cc76306f18c4ff",
+  "source_sha256": "a72dd88238d9afe799fadba688e66ebb44e9d185c2f1a51a958194519a6c2e63",
   "identity": {
     "service_id": "ic10.script.console.selector",
     "implementation_revision": "1.1",
@@ -28,7 +28,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 14142136
+          "value": 1352670811
         },
         {
           "address": 1,
@@ -85,7 +85,7 @@
         "access": [
           "self-write"
         ],
-        "const": 17320509
+        "const": 1820001013
       },
       {
         "address": 1,
@@ -227,7 +227,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 17320509,
+        "contract": "ConsoleSelector",
+        "magic": 1820001013,
         "abi": 1
       }
     ]
@@ -243,7 +244,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 17320509,
+        "equals": 1820001013,
         "source": "generated-protocol-header"
       },
       {
@@ -258,9 +259,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.17320509.abi1",
+        "protocol_id": "ic10.stack.console-selector.v1",
         "base": 0,
-        "magic": 17320509,
+        "contract": "ConsoleSelector",
+        "magic": 1820001013,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

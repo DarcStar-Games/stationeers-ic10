@@ -13,42 +13,42 @@ def need(t,s,msg):
 p=(R/'ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10').read_text()
 m=(R/'ic10/item-storage-vending/material_vending_inventory_v1_0.ic10').read_text()
 for t,label in ((p,'pressure adapter'),(m,'material inventory')):
-    need(t,'poke 0 31415949',label)
+    need(t,'poke 0 HASH("ResourceEndpoint.v1")',label)
     need(t,'poke 1 1',label)
     need(t,'poke 11 0',label)
 # Resource reservation depends only on Generic Resource Endpoint, not pressure magic.
 r=(R/'ic10/resource-grid-core/resource_reservation_v1_0.ic10').read_text()
-need(r,'bne r0 31415949 Bad','generic reservation')
+need(r,'bne r0 HASH("ResourceEndpoint.v1") Bad','generic reservation')
 need(r,'poke 12 0 # semantic mirror generation initialization','generic reservation')
 need(r,'poke 12 r0 # semantic mirror generation LAST','generic reservation')
-if '31415935' in r or 'Pressure' in r.split('\n',1)[1]: fails.append('generic reservation leaked pressure-specific dependency')
+if 'HASH("PressureDomainInventory.v2")' in r or 'Pressure' in r.split('\n',1)[1]: fails.append('generic reservation leaked pressure-specific dependency')
 # Generic Resource Link view binds pressure topology to the corresponding generic endpoint providers.
 l=(R/'ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10').read_text()
-for n in ('poke 0 31415953','getd r11 r7 16','getd r12 r8 16','getd r0 r9 9','getd r0 r10 9','poke 12 r0'):
+for n in ('poke 0 HASH("ResourceLink.v1")','getd r11 r7 16','getd r12 r8 16','getd r0 r9 9','getd r0 r10 9','poke 12 r0'):
     need(l,n,'pressure resource link adapter')
 # Resource discovery uses independent 64-entry endpoint/link directories with explicit overflow.
 ed=(R/'ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10').read_text()
 ld=(R/'ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10').read_text()
 bridge=(R/'ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10').read_text(); dh=(R/'ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10').read_text()
-for n in ('poke 0 31415983','poke 3 HASH("DirectorySchema.ResourceEndpoint.v1")','poke 10 3','poke 11 64','poke 15 1'):
+for n in ('poke 0 HASH("DirectoryAdapter.v3")','poke 3 HASH("DirectorySchema.ResourceEndpoint.v1")','poke 10 3','poke 11 64','poke 15 1'):
     need(ed,n,'resource endpoint adapter')
-for n in ('poke 0 31415983','poke 3 HASH("DirectorySchema.ResourceLink.v1")','poke 10 1','poke 11 64','poke 15 1'):
+for n in ('poke 0 HASH("DirectoryAdapter.v3")','poke 3 HASH("DirectorySchema.ResourceLink.v1")','poke 10 1','poke 11 64','poke 15 1'):
     need(ld,n,'resource link adapter')
 for n in ('put d1 11 r2','put d1 12 r3','move r6 2'):
     need(bridge,n,'generic directory adapter bridge')
-for n in ('poke 0 31415981','poke 1 1','poke 31 31415981','bgt r3 64 Error','poke 22 1','poke 24 r6'):
+for n in ('poke 0 HASH("GenericSnapshotDirectoryHost.v1")','poke 1 1','poke 31 HASH("GenericSnapshotDirectoryHost.v1")','bgt r3 64 Error','poke 22 1','poke 24 r6'):
     need(dh,n,'generic snapshot directory host')
 
 # Resource Reservation discovery and Item-7 storage providers reuse the same generic substrate.
 rd=(R/'ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10').read_text()
-for n in ('poke 0 31415983','poke 3 HASH("DirectorySchema.ResourceReservation.v1")','poke 10 3','poke 11 64','poke 15 1'):
+for n in ('poke 0 HASH("DirectoryAdapter.v3")','poke 3 HASH("DirectorySchema.ResourceReservation.v1")','poke 10 3','poke 11 64','poke 15 1'):
     need(rd,n,'resource reservation adapter')
 for fn,kind in [
  ('ic10/item-storage-vending/material_vending_inventory_v1_0.ic10','StorageAccess.Vending'),
  ('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','StorageAccess.LArRE'),
  ('ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10','StorageAccess.Direct'),
  ('ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10','StorageAccess.SDB')]:
-    z=(R/fn).read_text(); need(z,'poke 0 31415949',fn); need(z,'poke 14 r0',fn); need(z,f'HASH("{kind}")',fn)
+    z=(R/fn).read_text(); need(z,'poke 0 HASH("ResourceEndpoint.v1")',fn); need(z,'poke 14 r0',fn); need(z,f'HASH("{kind}")',fn)
 res=(R/'ic10/resource-grid-core/resource_reservation_v1_0.ic10').read_text()
 for n in ('poke 17 0 # owner ReferenceId','poke 19 0 # reserved semantic mirror generation','CompareHints:','CopyHints:','poke 25 -1 # committed action source slot'):
     need(res,n,'generic reservation Item-7 extension')
@@ -56,7 +56,7 @@ if 'StorageAccess.LArRE' in res or 'ItemHash' in res: fails.append('generic rese
 sdb=(R/'ic10/item-storage-sdb/sdb_silo_item_endpoint_v1_0.ic10').read_text()
 need(sdb,'poke 13 24','SDB lower-bound precision')
 feeder=(R/'ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10').read_text()
-need(feeder,'poke 0 31415961','SDB feeder ABI reuse'); need(feeder,'s d1 Setting r9','SDB exact Stacker metering')
+need(feeder,'poke 0 HASH("StackerFeeder.v1")','SDB feeder ABI reuse'); need(feeder,'s d1 Setting r9','SDB exact Stacker metering')
 
 # Unified Resource Profile source contains the complete current material ITEM set.
 data=json.loads((R/'data/resource_profiles.json').read_text())
@@ -68,7 +68,7 @@ for x in items:
     if x['params'][0] <= 0: fails.append(x['slug']+': invalid MaxStack')
     if expected_schema==2 and x['params'][2]==0: fails.append(x['slug']+': missing ManufacturingReagentHash')
 view=(R/'ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10').read_text()
-for n in ('poke 0 31415963','get r10 db 26','get r11 db 27','getd r0 r2 r8'):
+for n in ('poke 0 HASH("ResourceProfileView.v1")','get r10 db 26','get r11 db 27','getd r0 r2 r8'):
     need(view,n,'resource profile view')
 # Transform ABI3 reads self-contained relocatable items and complete furnace material set.
 trs=json.loads((R/'data/resource_transforms.json').read_text())
@@ -76,10 +76,10 @@ if len(trs['transforms'])!=17: fails.append('expected 17 furnace transforms')
 loaders=sorted((R/'ic10'/'transform-catalog').glob('resource_transform_catalog_loader_*_v6_0.ic10'))
 loader='\n'.join(p.read_text() for p in loaders)
 viewt=(R/'ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10').read_text()
-for n in ('clr db','poke 0 31415969','poke 1 5','poke 3 HASH("CatalogSchema.ResourceTransform.v4")','poke 18 1 # immutable candidate publication LAST'):
+for n in ('clr db','poke 0 HASH("CatalogLoader.v5")','poke 1 5','poke 3 HASH("CatalogSchema.ResourceTransform.v4")','poke 18 1 # immutable candidate publication LAST'):
     need(loader,n,'transform catalog loader')
 if 'putd ' in loader or 'put d0 ' in loader or 'yield' in loader: fails.append('transform catalog loader leaked push/poll behavior')
-for n in ('poke 0 31415952','poke 1 4','add r6 r8 12','mul r9 r11 4','jal CopyPool','poke 68 r10'):
+for n in ('poke 0 HASH("ResourceTransformProfileView.v4")','poke 1 4','add r6 r8 12','mul r9 r11 4','jal CopyPool','poke 68 r10'):
     need(viewt,n,'transform profile view')
 for x in trs['transforms']:
     if '# '+x['display_name'] not in loader: fails.append(x['slug']+': transform human-name comment missing')

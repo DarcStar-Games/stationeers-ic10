@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/print_job_driver_v2_0.ic10",
-  "source_sha256": "7f9e21341dae6a7e44f306ca89892d3bf96a57c403a597508b91716aafa16ae2",
+  "source_sha256": "b8f8ce66e12b512eb87d6696989de1331d92540ae4f34f731748cec22106d8d5",
   "identity": {
     "service_id": "ic10.script.print.job.driver",
     "implementation_revision": "2.0",
@@ -250,7 +250,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415992
+        "const": -1547125913
       },
       {
         "address": 1,
@@ -418,7 +418,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415992,
+        "contract": "PrintJobDriver",
+        "magic": -1547125913,
         "abi": 2
       }
     ]
@@ -434,7 +435,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415992,
+        "equals": -1547125913,
         "source": "generated-protocol-header"
       },
       {
@@ -449,9 +450,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415992.abi2",
+        "protocol_id": "ic10.stack.print-job-driver.v2",
         "base": 0,
-        "magic": 31415992,
+        "contract": "PrintJobDriver",
+        "magic": -1547125913,
         "abi": 2,
         "source": "literal-own-stack-header"
       }

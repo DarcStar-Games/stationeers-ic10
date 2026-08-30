@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10",
-  "source_sha256": "ea9ac0830b6615fa020ee260d242d4e4fb58ece93d1407be26695c8c3d1172af",
+  "source_sha256": "b0a458f7ddd52806ceec85a500bf9f92bef68f86aef792dc8419b2b9d9ce96af",
   "identity": {
     "service_id": "ic10.script.pressure.grid.path.enumerator",
     "implementation_revision": "2.0",
@@ -45,7 +45,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415981
+            "equals": 891293726
           },
           {
             "address": 1,
@@ -53,7 +53,7 @@
           },
           {
             "address": 9,
-            "equals": "HASH(\"DirectorySchema.PressureGridLink.v1\")"
+            "equals": -821773385
           }
         ]
       },
@@ -61,7 +61,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415981.abi1"
+          "ic10.stack.generic-snapshot-directory-host.v1"
         ]
       }
     }
@@ -305,7 +305,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415940,
+        "contract": "PressureGridPathEnumerator",
+        "magic": -2010415833,
         "abi": 2
       }
     ]
@@ -321,9 +322,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415940.abi2",
+        "protocol_id": "ic10.stack.pressure-grid-path-enumerator.v2",
         "base": 0,
-        "magic": 31415940,
+        "contract": "PressureGridPathEnumerator",
+        "magic": -2010415833,
         "abi": 2,
         "source": "literal-own-stack-header"
       }
@@ -333,9 +335,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415981.abi1",
+            "protocol_id": "ic10.stack.generic-snapshot-directory-host.v1",
             "header_base": 0,
-            "magic": 31415981,
+            "contract": "GenericSnapshotDirectoryHost",
+            "magic": 891293726,
             "abi": 1,
             "publication_requirements": []
           }

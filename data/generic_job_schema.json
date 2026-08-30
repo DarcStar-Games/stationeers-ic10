@@ -1,6 +1,6 @@
 {
   "format": "GENERIC_JOB_ABI_V1",
-  "magic": 31415984,
+  "magic": -955081679,
   "abi": 1,
   "store_program": "ic10/generic-jobs/generic_job_store_v1_0.ic10",
   "capacity": 32,
@@ -119,7 +119,7 @@
   },
   "banked_transaction_profile": "SELECTOR_BANK",
   "storage_compatibility": {
-    "magic": 31415984,
+    "magic": -955081679,
     "abi": 1,
     "rule": "both must match before durable stack geometry is interpreted"
   }

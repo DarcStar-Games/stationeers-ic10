@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10",
-  "source_sha256": "c4f19ec228a9eb782aee05d10a6daf7773e3d6f5e3a6fb5f6743a9d7572cfd0b",
+  "source_sha256": "dae4441e1355276be5b3ac284485332828c4cac6b7090472c855dcd028ce164c",
   "identity": {
     "service_id": "ic10.script.process.pressure.domain.runtime",
     "implementation_revision": "1.0",
@@ -45,7 +45,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31416048
+            "equals": 1700980279
           },
           {
             "address": 1,
@@ -57,7 +57,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31416048.abi1"
+          "ic10.stack.process-condition.v1"
         ]
       }
     },
@@ -145,7 +145,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416066
+        "const": 206384948
       },
       {
         "address": 1,
@@ -215,7 +215,7 @@
         "access": [
           "self-write"
         ],
-        "const": "HASH(\"ControllerPressureDomain\")"
+        "const": 1770891776
       },
       {
         "address": 100,
@@ -295,7 +295,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416066,
+        "contract": "ProcessPressureDomainRuntime",
+        "magic": 206384948,
         "abi": 1
       },
       {
@@ -316,7 +317,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416066,
+        "equals": 206384948,
         "source": "generated-protocol-header"
       },
       {
@@ -345,9 +346,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416066.abi1",
+        "protocol_id": "ic10.stack.process-pressure-domain-runtime.v1",
         "base": 0,
-        "magic": 31416066,
+        "contract": "ProcessPressureDomainRuntime",
+        "magic": 206384948,
         "abi": 1,
         "source": "literal-own-stack-header"
       },
@@ -364,9 +366,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31416048.abi1",
+            "protocol_id": "ic10.stack.process-condition.v1",
             "header_base": 0,
-            "magic": 31416048,
+            "contract": "ProcessCondition",
+            "magic": 1700980279,
             "abi": 1,
             "publication_requirements": []
           }

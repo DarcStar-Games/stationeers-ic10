@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/transform_candidate_executor_v2_0.ic10",
-  "source_sha256": "94b8d2e1f173692ad3be2155a5c25ca9cf23da29fd71c05763f774f47f4eacb7",
+  "source_sha256": "bace7706fa189c28ce0d8783e44c5eccf48cf687696fcb86130dc1a778a1da0d",
   "identity": {
     "service_id": "ic10.script.transform.candidate.executor",
     "implementation_revision": "2.0",
@@ -122,7 +122,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416073
+        "const": -1660731198
       },
       {
         "address": 1,
@@ -267,7 +267,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416073,
+        "contract": "TransformCandidateExecutor",
+        "magic": -1660731198,
         "abi": 2
       }
     ]
@@ -283,7 +284,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416073,
+        "equals": -1660731198,
         "source": "generated-protocol-header"
       },
       {
@@ -298,9 +299,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416073.abi2",
+        "protocol_id": "ic10.stack.transform-candidate-executor.v2",
         "base": 0,
-        "magic": 31416073,
+        "contract": "TransformCandidateExecutor",
+        "magic": -1660731198,
         "abi": 2,
         "source": "literal-own-stack-header"
       }

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/transform-catalog/resource_transform_catalog_loader_01_v6_0.ic10",
-  "source_sha256": "b823a77703b0650e58cc0a5e75c0adac7cbbfd34a1c90a44dbf561ab2cd8e2a9",
+  "source_sha256": "e375b2cdd91f8c2d9a763a58aecf9e2524e439269663cbf701672d6214ec3dec",
   "identity": {
     "service_id": "ic10.script.resource.transform.catalog.loader.01",
     "implementation_revision": "6.0",
@@ -1009,7 +1009,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415969,
+        "contract": "CatalogLoader",
+        "magic": -284599001,
         "abi": 5
       }
     ]
@@ -1032,9 +1033,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415969.abi5",
+        "protocol_id": "ic10.stack.catalog-loader.v5",
         "base": 0,
-        "magic": 31415969,
+        "contract": "CatalogLoader",
+        "magic": -284599001,
         "abi": 5,
         "source": "literal-own-stack-header"
       }

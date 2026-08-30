@@ -1,5 +1,5 @@
 # Create one bounded dependency child.
-poke 0 31416006
+poke 0 HASH("DependencyChildCreator.v2")
 poke 1 2
 poke 2 0
 Loop:

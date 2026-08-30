@@ -35,8 +35,8 @@ program to say what four of its own cells already said.
 
 | Cell | Name | Written | Rule |
 | ---: | --- | --- | --- |
-| `S0` | `ServiceMagic` | always | the service's registered nonzero magic; identity |
-| `S1` | `ServiceABI` | always | positive exact ABI of this service contract |
+| `S0` | `ServiceMagic` | always | `HASH("<Contract>.v<ABI>")`; the derived service identity |
+| `S1` | `ServiceABI` | always | the same ABI in readable form; `S0` is what pins it |
 | `S2` | `CapabilityMask` | always | which of `S3..S7` this service declares |
 | `S3` | `SchemaId` | bit 0 | schema identity **and version**, one exact match |
 | `S4` | `ExtensionBase` | bit 1 | base of a v1 extension, `S8` or later |
@@ -52,11 +52,18 @@ the header safe on hardware where the stack survives reflash: a cell nobody wrot
 holds whatever the previous script left, so v1 reads it only when a service that
 provably writes it says to.
 
-The magic is the on-stack identity. It is registered in `docs/ABI_REFERENCE.md`,
-stable across implementation revisions, and unrelated to a filename — moving a
-source file or bumping a `_v<major>_<minor>` suffix changes neither the magic nor
-the service contract. It identifies a *contract*, not a program: the three
-generated directory adapters share one magic because they publish one contract.
+The magic is the on-stack identity, and it is **derived, not allocated**: a
+service publishes `HASH("<Contract>.v<ABI>")`. Folding the ABI into the hashed
+name is what makes one `S0` equality check exact — change the contract and the
+value every consumer compares changes with it, so a stale consumer fails closed
+rather than silently accepting a contract it was never written against. `S1`
+still publishes the ABI for readers and diagnostics.
+
+The identity is registered in `docs/ABI_REFERENCE.md`, stable across
+implementation revisions, and unrelated to a filename — moving a source file or
+bumping a `_v<major>_<minor>` suffix changes neither the identity nor the service
+contract. It identifies a *contract*, not a program: the three generated
+directory adapters share one identity because they publish one contract.
 The semantic `ic10.script.*` id remains the registry-side identity in
 `contracts/`; it is not published on the stack.
 
@@ -90,8 +97,8 @@ hand-maintained capability bit is exactly the kind of metadata that rots.
 
 `S3` publishes `HASH("<schema id>.v<version>")`, not a bare schema name, and
 there is no separate version cell. The framework already requires exact
-matching — *magic, schema id, and schema version must all match before a
-directory or catalog is consumed* — so two exact comparisons of two cells
+matching — *the service identity, schema id, and schema version must all match
+before a directory or catalog is consumed* — so two exact comparisons of two cells
 collapse into one exact comparison of one cell with nothing lost. It is measured
 work saved, not only a cell: 25 publishers each spent a cell and a line on a
 separate version, and 20 consumer sites spent two lines checking it.

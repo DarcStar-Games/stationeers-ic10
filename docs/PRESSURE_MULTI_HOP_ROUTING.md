@@ -71,7 +71,7 @@ The system-wide Controller directory still discovers all controller families thr
 Published Generic Snapshot Directory contract:
 
 ```text
-S0/S1   31415981 / ABI1
+S0/S1   GenericSnapshotDirectoryHost.v1 / ABI1
 S2      capability mask = 0
 S9      HASH("DirectorySchema.PressureGridLink.v1")
 S11/S12 entry width 3 / capacity 64
@@ -233,7 +233,7 @@ The Planner is now deliberately small because its responsibility is transaction 
 Planner ABI:
 
 ```text
-S0   magic = 31415937
+S0   magic = PressureGridReservationPlanner.v2
 S1   ABI = 2
 S11  LeaseTicks = max(64, 4 * linkCount + 16)
 S8   number of staged physical links in the committed plan

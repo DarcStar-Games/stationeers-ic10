@@ -1,5 +1,5 @@
 # Bounded depth/cycle guard. d0 Plan Store,d1 Job Monitor.
-poke 0 31416009
+poke 0 HASH("DependencyAncestryGuard.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -17,7 +17,7 @@ bne r3 r5 ScanSetup
 beq r4 r6 Cycle
 ScanSetup:
 get r0 d0 0
-bne r0 31416007 Bad
+bne r0 HASH("DependencyPlanStore.v2") Bad
 get r0 d0 1
 bne r0 2 Bad
 get r14 d0 40

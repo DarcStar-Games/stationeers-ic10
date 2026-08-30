@@ -14,6 +14,14 @@ If adding a family appears to require editing those generic services, first chec
 
 Choose a unique `ControllerType` hash and controller config schema number. Then assign every field a stable physical slot in one to four eight-slot blocks.
 
+Each new program also needs its own `S0` service identity, which you do not
+allocate: pick an UpperCamelCase contract name, declare it in
+`data/script_protocol_headers.json`, and publish `poke 0 HASH("<Contract>.v<ABI>")`.
+The ABI belongs inside the name — bumping it later mints a different value, which
+is exactly what makes every consumer's single `S0` check ABI-exact.
+`validation/validators/validate_service_identity.py` enforces this; see
+`docs/ABI_REFERENCE.md`.
+
 Write down the mapping before coding:
 
 | Physical slot | Meaning | Type/constraints | Default | Preferred input |
@@ -68,7 +76,7 @@ A Profile controls commissioning UX, not the durable schema. It can therefore be
 - enum tables remain numeric/symbolic source entries that the generator compiles into sparse numeric target/value pairs;
 - run `tools/generate/generate_input_profiles.py`;
 - verify all generated loaders still fit the 120-line soft target and the one catalog store remains below 512 cells;
-- configure View `S2=ControllerType`, `S3=schema` and verify it republishes Generic Input Profile magic `31415929`, ABI 1, with positive generation `S5`.
+- configure View `S2=ControllerType`, `S3=schema` and verify it republishes Generic Input Profile identity `HASH("InputProfileView.v1")`, with positive generation `S5`.
 
 The Profile's field order must match the active ordinal order derived from Policy masks, not raw physical slot count including holes. If the Input Profile catalog eventually exceeds one stack, split storage because of **512-cell capacity**, not because a Loader program becomes too large; source-size pressure is handled by additional sparse whole-profile Loader candidates.
 

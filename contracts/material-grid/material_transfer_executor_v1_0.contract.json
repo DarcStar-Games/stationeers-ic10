@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-grid/material_transfer_executor_v1_0.ic10",
-  "source_sha256": "5576722352ddfac91bf28c7e986a4828028e203df993a3db66b5eef56e097bff",
+  "source_sha256": "565713e14fe96c6c2ea6b6274aa934733e1a633724725eaf2cf5283b631aae22",
   "identity": {
     "service_id": "ic10.script.material.transfer.executor",
     "implementation_revision": "1.0",
@@ -136,7 +136,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415960
+            "equals": 754423306
           },
           {
             "address": 1,
@@ -152,7 +152,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415960.abi1"
+          "ic10.stack.material-transfer-grant-guard.v1"
         ]
       }
     }
@@ -208,7 +208,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415958
+        "const": -1929928026
       },
       {
         "address": 1,
@@ -354,13 +354,14 @@
           "self-read",
           "self-write"
         ],
-        "const": 31415958
+        "const": -1929928026
       }
     ],
     "headers": [
       {
         "base": 0,
-        "magic": 31415958,
+        "contract": "MaterialTransferExecutor",
+        "magic": -1929928026,
         "abi": 1
       }
     ]
@@ -376,7 +377,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415958,
+        "equals": -1929928026,
         "source": "generated-protocol-header"
       },
       {
@@ -391,9 +392,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415958.abi1",
+        "protocol_id": "ic10.stack.material-transfer-executor.v1",
         "base": 0,
-        "magic": 31415958,
+        "contract": "MaterialTransferExecutor",
+        "magic": -1929928026,
         "abi": 1,
         "source": "literal-own-stack-header"
       }
@@ -403,9 +405,10 @@
         "port": "d2",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415960.abi1",
+            "protocol_id": "ic10.stack.material-transfer-grant-guard.v1",
             "header_base": 0,
-            "magic": 31415960,
+            "contract": "MaterialTransferGrantGuard",
+            "magic": 754423306,
             "abi": 1,
             "publication_requirements": []
           }

@@ -1,4 +1,4 @@
-poke 0 31415933
+poke 0 HASH("PhasePressureRequestArbiter.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -49,7 +49,7 @@ j Loop
 Start:
 bdns d0 BadDirectory
 get r0 d0 0
-bne r0 31415981 BadDirectory
+bne r0 HASH("GenericSnapshotDirectoryHost.v1") BadDirectory
 get r0 d0 1
 bne r0 1 BadDirectory
 get r0 d0 9

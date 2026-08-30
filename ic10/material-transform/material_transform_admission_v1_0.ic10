@@ -1,5 +1,5 @@
 # Material Transform Admission ABI1. View ABI4 requires processor capability mask.
-poke 0 31415977
+poke 0 HASH("MaterialTransformAdmission.v1")
 poke 1 1
 poke 2 0
 l r0 d0 ReferenceId
@@ -13,7 +13,7 @@ bdns d2 Bad
 get r14 d0 74
 blez r14 Bad
 get r0 d0 0
-bne r0 31415952 Bad
+bne r0 HASH("ResourceTransformProfileView.v4") Bad
 get r0 d0 1
 bne r0 4 Bad
 get r4 d0 72
@@ -79,7 +79,7 @@ blez r13 Bad
 get r6 d2 12
 blez r6 Bad
 get r0 d2 0
-bne r0 31415950 Bad
+bne r0 HASH("ResourceReservation.v1") Bad
 get r0 d2 1
 bne r0 1 Bad
 get r0 d2 33

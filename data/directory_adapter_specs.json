@@ -5,7 +5,7 @@
    "file": "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10",
    "comment": "Resource Endpoint Directory Adapter v3.0: generic Adapter ABI2 candidates.",
    "schema": "DirectorySchema.ResourceEndpoint",
-   "provider_magic": 31415949,
+   "provider_contract": "ResourceEndpoint",
    "provider_abi": 1,
    "generation_offset": 11,
    "fields": [
@@ -18,7 +18,7 @@
    "file": "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10",
    "comment": "Resource Link Directory Adapter v3.0: generic Adapter ABI2 candidates.",
    "schema": "DirectorySchema.ResourceLink",
-   "provider_magic": 31415953,
+   "provider_contract": "ResourceLink",
    "provider_abi": 1,
    "generation_offset": 12,
    "fields": [
@@ -29,7 +29,7 @@
    "file": "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10",
    "comment": "Resource Reservation Directory Adapter v1.0: [Class,Type,ReservationRef].",
    "schema": "DirectorySchema.ResourceReservation",
-   "provider_magic": 31415950,
+   "provider_contract": "ResourceReservation",
    "provider_abi": 1,
    "generation_offset": 12,
    "fields": [

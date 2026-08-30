@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10",
-  "source_sha256": "7707f21439be3c836580e6f43fd6052032c96a1986a2777b931f34ee4a5f8c69",
+  "source_sha256": "e8cd467b2773d6568cc8d2c349a513760bc449597e90725b5a24388edef4e134",
   "identity": {
     "service_id": "ic10.script.existing.dependency.plan.controller",
     "implementation_revision": "1.0",
@@ -243,7 +243,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416019
+        "const": 1736671601
       },
       {
         "address": 1,
@@ -351,7 +351,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416019,
+        "contract": "ExistingDependencyPlanController",
+        "magic": 1736671601,
         "abi": 1
       }
     ]
@@ -367,7 +368,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416019,
+        "equals": 1736671601,
         "source": "generated-protocol-header"
       },
       {
@@ -382,9 +383,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416019.abi1",
+        "protocol_id": "ic10.stack.existing-dependency-plan-controller.v1",
         "base": 0,
-        "magic": 31416019,
+        "contract": "ExistingDependencyPlanController",
+        "magic": 1736671601,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

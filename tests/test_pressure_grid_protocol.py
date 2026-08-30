@@ -7,7 +7,7 @@ from pathlib import Path
 import sys
 R=_PROJECT_ROOT
 T=(R/'ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10').read_text(); G=(R/'ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10').read_text(); A=(R/'ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10').read_text(); Rank=(R/'ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10').read_text(); LD=(R/'ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10').read_text(); fails=[]
-for n in ('poke 97 2','bdns d3 SafeOff','bne r0 31415948 SafeOff','get r15 d3 18','bne r6 r15 SafeOff'):
+for n in ('poke 97 2','bdns d3 SafeOff','bne r0 HASH("PressureTransferGrantGuard.v1") SafeOff','get r15 d3 18','bne r6 r15 SafeOff'):
  if n not in T: fails.append('Transfer missing '+n)
 for n in ('get r14 d0 115','bne r0 r14 Loop','bne r4 r10 Consume','get r14 d1 14'):
  if n not in G: fails.append('Guard missing '+n)

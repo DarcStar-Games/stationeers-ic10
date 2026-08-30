@@ -1,5 +1,5 @@
 # Resource Transform View v8: Store ABI5 items; ABI4 resolved-request fencing.
-poke 0 31415952
+poke 0 HASH("ResourceTransformProfileView.v4")
 poke 1 4
 poke 2 0
 poke 68 0
@@ -12,7 +12,7 @@ l r2 d0 ReferenceId
 get r12 d0 11
 blez r12 Bad
 getd r0 r12 0
-bne r0 31415970 Bad
+bne r0 HASH("CatalogCoordinatorCore.v4") Bad
 getd r15 r12 22
 mod r0 r15 2
 bnez r0 Bad
@@ -23,7 +23,7 @@ move r2 r1
 j First
 Store:
 getd r0 r2 0
-bne r0 31415968 Bad
+bne r0 HASH("GenericCatalogStore.v6") Bad
 getd r0 r2 1
 bne r0 6 Bad
 getd r14 r2 17

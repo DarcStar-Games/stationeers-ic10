@@ -1,5 +1,5 @@
 # Validate one coherent POWER dispatch plan. d0 PlanStore.
-poke 0 31416035
+poke 0 HASH("PowerPlanValidator.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -39,9 +39,9 @@ get r13 d0 r5
 blez r9 Bad
 blt r10 r9 Bad
 getd r0 r7 0
-bne r0 31415950 Bad
+bne r0 HASH("ResourceReservation.v1") Bad
 getd r0 r8 0
-bne r0 31415950 Bad
+bne r0 HASH("ResourceReservation.v1") Bad
 getd r0 r7 33
 bne r0 4 Bad
 getd r0 r8 33
@@ -55,7 +55,7 @@ bne r0 r11 Bad
 getd r0 r8 12
 bne r0 r12 Bad
 getd r0 r6 0
-bne r0 31415953 Bad
+bne r0 HASH("ResourceLink.v1") Bad
 getd r0 r6 30
 bne r0 4 Bad
 getd r0 r6 28

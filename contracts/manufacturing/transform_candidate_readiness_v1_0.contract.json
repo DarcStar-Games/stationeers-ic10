@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10",
-  "source_sha256": "fd14ae4743785762c25f6120e2360a5885368c11013c2ff7619cb58e5fa801ef",
+  "source_sha256": "e52db81fd47e0045f92b4ab21d6a8d647671e011ed5484f67d74e42e45a2d219",
   "identity": {
     "service_id": "ic10.script.transform.candidate.readiness",
     "implementation_revision": "1.0",
@@ -162,7 +162,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415998
+        "const": 1038073891
       },
       {
         "address": 1,
@@ -300,7 +300,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415998,
+        "contract": "TransformCandidateReadiness",
+        "magic": 1038073891,
         "abi": 1
       }
     ]
@@ -316,7 +317,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415998,
+        "equals": 1038073891,
         "source": "generated-protocol-header"
       },
       {
@@ -331,9 +332,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415998.abi1",
+        "protocol_id": "ic10.stack.transform-candidate-readiness.v1",
         "base": 0,
-        "magic": 31415998,
+        "contract": "TransformCandidateReadiness",
+        "magic": 1038073891,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

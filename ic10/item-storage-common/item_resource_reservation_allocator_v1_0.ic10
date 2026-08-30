@@ -1,5 +1,5 @@
 # ITEM Reservation Allocator ABI1: commits one coherent Selector quote.
-poke 0 31415988
+poke 0 HASH("ItemResourceReservationAllocator.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -10,7 +10,7 @@ beq r15 r0 Loop
 bdns d0 Bad
 get r14 db 11
 get r0 d0 0
-bne r0 31415987 Bad
+bne r0 HASH("ItemResourceReservationSelector.v1") Bad
 get r0 d0 1
 bne r0 1 Bad
 get r0 d0 16

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/console_registry_v1_1.ic10",
-  "source_sha256": "7b936142c949946d481c40a569ed1f98a29b9028d7c7c4c9629a4d5fed734d6b",
+  "source_sha256": "86ffe67bc81551e81a8e4918187bdc7d7c40e70616d58c0cd706f3c372fe5a88",
   "identity": {
     "service_id": "ic10.script.console.registry",
     "implementation_revision": "1.1",
@@ -108,7 +108,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 14142136,
+        "contract": "ConsoleRegistry",
+        "magic": 1352670811,
         "abi": 1
       }
     ]
@@ -124,9 +125,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.14142136.abi1",
+        "protocol_id": "ic10.stack.console-registry.v1",
         "base": 0,
-        "magic": 14142136,
+        "contract": "ConsoleRegistry",
+        "magic": 1352670811,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

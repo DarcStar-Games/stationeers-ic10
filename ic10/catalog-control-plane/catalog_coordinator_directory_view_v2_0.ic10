@@ -1,5 +1,5 @@
 # Catalog Coordinator Directory View ABI2: d0 Registry ABI3,d1 Core; S2 NodeId.
-poke 0 31415975
+poke 0 HASH("CatalogCoordinatorDirectoryView.v2")
 poke 1 2
 poke 2 0
 Loop:
@@ -7,7 +7,7 @@ yield
 bdns d0 Bad
 bdns d1 Bad
 get r0 d0 0
-bne r0 31415982 Bad
+bne r0 HASH("GenericRegistryDirectoryHost.v3") Bad
 get r0 d0 1
 bne r0 3 Bad
 get r0 d0 3
@@ -16,7 +16,7 @@ get r15 d0 23
 mod r0 r15 2
 bnez r0 Bad
 get r0 d1 0
-bne r0 31415970 Bad
+bne r0 HASH("CatalogCoordinatorCore.v4") Bad
 get r2 db 12
 blt r2 1 Bad
 bgt r2 64 Bad

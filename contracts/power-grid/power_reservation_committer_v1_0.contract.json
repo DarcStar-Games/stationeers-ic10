@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_reservation_committer_v1_0.ic10",
-  "source_sha256": "ce8238db8dd50945c3a3ff1a018870b7f4e54e6095217aed766ef8da1024abe2",
+  "source_sha256": "fcff32a398c057f59772e5c297d5a5f612209dbaf8d0e8cbec12aa0d60c1fe1f",
   "identity": {
     "service_id": "ic10.script.power.reservation.committer",
     "implementation_revision": "1.0",
@@ -174,7 +174,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416036
+        "const": -1280997118
       },
       {
         "address": 1,
@@ -246,7 +246,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416036,
+        "contract": "PowerReservationCommitter",
+        "magic": -1280997118,
         "abi": 1
       }
     ]
@@ -262,7 +263,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416036,
+        "equals": -1280997118,
         "source": "generated-protocol-header"
       },
       {
@@ -277,9 +278,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416036.abi1",
+        "protocol_id": "ic10.stack.power-reservation-committer.v1",
         "base": 0,
-        "magic": 31416036,
+        "contract": "PowerReservationCommitter",
+        "magic": -1280997118,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

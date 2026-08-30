@@ -1,5 +1,5 @@
 # Transformer POWER Resource Link ABI1; transformer d0, reservations d1/d2.
-poke 0 31415953
+poke 0 HASH("ResourceLink.v1")
 poke 1 1
 poke 2 0
 poke 30 4
@@ -16,9 +16,9 @@ get r15 d2 12
 blez r14 Bad
 blez r15 Bad
 get r0 d1 0
-bne r0 31415950 Bad
+bne r0 HASH("ResourceReservation.v1") Bad
 get r0 d2 0
-bne r0 31415950 Bad
+bne r0 HASH("ResourceReservation.v1") Bad
 get r0 d1 33
 bne r0 4 Bad
 get r0 d2 33

@@ -1,4 +1,4 @@
-poke 0 31415935
+poke 0 HASH("PressureDomainInventory.v2")
 poke 1 2
 poke 2 0
 Loop:
@@ -25,7 +25,7 @@ bdns d2 PurityBad
 get r15 d2 13
 blez r15 PurityBad
 get r0 d2 0
-bne r0 31415947 PurityBad
+bne r0 HASH("MediumPurityGuard.v1") PurityBad
 get r0 d2 8
 bne r0 r2 PurityBad
 get r0 d2 11

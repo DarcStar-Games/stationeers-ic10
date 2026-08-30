@@ -15,7 +15,7 @@ job_path='ic10/generic-jobs/generic_job_store_v1_0.ic10';cfg_path='ic10/controll
 job=result.source(job_path);cfg=result.source(cfg_path)
 result.line_limit(job_path,121,rule='Job Store line budget')
 result.line_limit(cfg_path,121,rule='Config Host line budget')
-for token in ('bne r0 31415984 Reset','get r0 db 1','beq r0 1 Recover'):
+for token in ('bne r0 HASH("GenericJobStore.v1") Reset','get r0 db 1','beq r0 1 Recover'):
     ck(token in job,f'Job Store missing storage compatibility gate {token!r}')
 for token in ('get r15 db 52','get r0 db 9','bne r15 r0 NoReplay','poke 11 5','poke 53 r15'):
     ck(token in cfg,f'Config Host missing replay acknowledgement {token!r}')

@@ -20,13 +20,19 @@ def service_id(path: Path) -> str:
     return "ic10.script." + stem.replace("_", ".")
 
 
-def protocol_id(magic: int, abi: int) -> str:
+def protocol_id(magic: int, abi: int, contract: str | None = None) -> str:
+    """Contract-named headers get a symbolic id; numeric block headers keep the magic."""
+    if contract:
+        kebab = re.sub(r"(?<!^)(?=[A-Z])", "-", contract).lower()
+        return f"ic10.stack.{kebab}.v{abi}"
     return f"ic10.stack.{magic}.abi{abi}"
 
 
-def protocol_name(pid: str, abi: int, provider_sources: list[str], definitions: dict[str, Any]) -> str:
+def protocol_name(pid: str, abi: int, provider_sources: list[str], definitions: dict[str, Any], contract: str | None = None) -> str:
     if pid in definitions and definitions[pid].get("name"):
         return definitions[pid]["name"]
+    if contract:
+        return f"{contract} v{abi}"
     if pid.startswith("ic10.stack.27182818."):
         return f"Generic Controller Telemetry ABI{abi}"
     if provider_sources:

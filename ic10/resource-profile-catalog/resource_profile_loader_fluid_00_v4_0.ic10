@@ -1,6 +1,6 @@
 # GENERATED Resource Profile FLUID loader; relocatable sparse Loader ABI5; whole items.
 clr db
-poke 0 31415969
+poke 0 HASH("CatalogLoader.v5")
 poke 1 5
 poke 2 1
 poke 3 HASH("CatalogSchema.ResourceProfile.v2")

@@ -8,7 +8,7 @@ move r3 0 # displays staged into inactive bank
 get r5 db 8
 seq r5 r5 1 # script-owned bank is discrete; no round/clamp pair needed
 seq r14 r5 0
-poke 0 14142136
+poke 0 HASH("ConsoleRegistry.v1")
 poke 1 1
 poke 2 0
 Loop:

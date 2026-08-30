@@ -1,7 +1,7 @@
 # Power Reservation Directory Adapter ABI2: [DispatchKey,PolicyId,ReservationRef].
 Boot:
 clr db
-poke 0 31415983
+poke 0 HASH("DirectoryAdapter.v3")
 poke 1 3
 poke 2 17
 poke 3 HASH("DirectorySchema.PowerReservation.v1")
@@ -27,7 +27,7 @@ get r1 db:0 r7
 blt r1 0 Publish
 add r7 r7 1
 getd r0 r1 0
-bne r0 31415950 Scan
+bne r0 HASH("ResourceReservation.v1") Scan
 getd r0 r1 1
 bne r0 1 Scan
 getd r14 r1 12

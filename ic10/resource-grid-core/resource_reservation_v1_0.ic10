@@ -1,5 +1,5 @@
 # Generic Resource Reservation ABI1. d0 Generic Resource Endpoint ABI1.
-poke 0 31415950
+poke 0 HASH("ResourceReservation.v1")
 poke 1 1
 poke 2 0
 poke 12 0 # semantic mirror generation initialization
@@ -26,7 +26,7 @@ get r14 d0 11
 blez r14 Bad
 beq r14 r15 Loop
 get r0 d0 0
-bne r0 31415949 Bad
+bne r0 HASH("ResourceEndpoint.v1") Bad
 get r0 d0 1
 bne r0 1 Bad
 l r1 d0 ReferenceId

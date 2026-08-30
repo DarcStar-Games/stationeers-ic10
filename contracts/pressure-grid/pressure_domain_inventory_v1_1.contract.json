@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10",
-  "source_sha256": "071de683f4f22be311c1f54a086e07fd25569923e9dba339da3afe82d8ac65d1",
+  "source_sha256": "a6bf313c15c86be60f0ba41c1ebeeca94b90be4b865fec789f9595f10869ca76",
   "identity": {
     "service_id": "ic10.script.pressure.domain.inventory",
     "implementation_revision": "1.1",
@@ -55,7 +55,7 @@
           },
           {
             "address": 99,
-            "equals": "HASH(\"ControllerPressureDomain\")"
+            "equals": 1770891776
           }
         ]
       },
@@ -140,7 +140,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415947
+            "equals": -1891511623
           },
           {
             "address": 11,
@@ -151,8 +151,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.7d6da22d2a94142e",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.7d6da22d2a94142e",
+        "interface_id": "ic10.interface.access.7cc703645945ed7f",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.7cc703645945ed7f",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -205,7 +205,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415935
+        "const": 205841631
       },
       {
         "address": 1,
@@ -331,7 +331,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415935,
+        "contract": "PressureDomainInventory",
+        "magic": 205841631,
         "abi": 2
       }
     ]
@@ -347,7 +348,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415935,
+        "equals": 205841631,
         "source": "generated-protocol-header"
       },
       {
@@ -362,9 +363,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415935.abi2",
+        "protocol_id": "ic10.stack.pressure-domain-inventory.v2",
         "base": 0,
-        "magic": 31415935,
+        "contract": "PressureDomainInventory",
+        "magic": 205841631,
         "abi": 2,
         "source": "literal-own-stack-header"
       }

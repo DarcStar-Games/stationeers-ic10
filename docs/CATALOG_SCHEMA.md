@@ -78,7 +78,7 @@ Each Input Profile is one variable-length self-contained item:
 
 No descriptor or enum pool lives in another absolute Store region. A complete profile therefore migrates atomically.
 
-The consumer-facing Generic Input Profile View remains magic `31415929`, ABI1.
+The consumer-facing Generic Input Profile View remains identity `HASH("InputProfileView.v1")`.
 
 ## Resource Transform schema v4
 

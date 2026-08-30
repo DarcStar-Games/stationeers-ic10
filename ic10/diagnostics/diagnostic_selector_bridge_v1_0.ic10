@@ -3,7 +3,7 @@
 alias input r1
 alias controllerSelector r2
 alias consoleSelector r3
-poke 0 17320512
+poke 0 HASH("DiagnosticSelectorBridge.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -15,17 +15,17 @@ blez input Invalid
 blez controllerSelector Invalid
 blez consoleSelector Invalid
 getd r0 input 0
-bne r0 17320511 Invalid
+bne r0 HASH("DiagnosticInputBridge.v1") Invalid
 getd r0 input 1
 bne r0 1 Invalid
 getd r0 input 10
 bne r0 1 Invalid
 getd r0 controllerSelector 0
-bne r0 17320508 Invalid
+bne r0 HASH("ControllerSelector.v2") Invalid
 getd r0 controllerSelector 1
 bne r0 2 Invalid
 getd r0 consoleSelector 0
-bne r0 17320509 Invalid
+bne r0 HASH("ConsoleSelector.v1") Invalid
 getd r0 consoleSelector 1
 bne r0 1 Invalid
 # Desired pair is written before generation; selector accepts it atomically.

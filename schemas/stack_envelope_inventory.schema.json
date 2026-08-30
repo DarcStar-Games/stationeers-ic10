@@ -127,10 +127,12 @@
     "migrated": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["service_id", "magic", "service_abi", "schema_id", "schema_id_hash", "schema_version", "extension_base", "telemetry_base", "publishes_state", "custom_state_bits", "publishes_generation", "capability_mask", "extension_flags", "implementation_id", "implementation_id_hash", "publication_validation", "pilot_family"],
+      "required": ["service_id", "contract", "magic", "magic_token", "service_abi", "schema_id", "schema_id_hash", "schema_version", "extension_base", "telemetry_base", "publishes_state", "custom_state_bits", "publishes_generation", "capability_mask", "extension_flags", "implementation_id", "implementation_id_hash", "publication_validation", "pilot_family"],
       "properties": {
         "service_id": {"type": "string", "pattern": "^ic10\\.script\\.[a-z0-9.]+$"},
+        "contract": {"type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$"},
         "magic": {"type": "integer"},
+        "magic_token": {"type": "string"},
         "service_abi": {"type": "integer", "minimum": 1},
         "schema_id": {"type": ["string", "null"]},
         "schema_id_hash": {"type": ["string", "null"]},

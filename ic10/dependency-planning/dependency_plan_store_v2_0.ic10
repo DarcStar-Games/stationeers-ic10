@@ -1,6 +1,6 @@
 Boot:
 get r0 db 0
-bne r0 31416007 Init
+bne r0 HASH("DependencyPlanStore.v2") Init
 get r0 db 1
 bne r0 2 Init
 get r0 db 40
@@ -11,7 +11,7 @@ poke 40 r0
 j Loop
 Init:
 clr db
-poke 0 31416007
+poke 0 HASH("DependencyPlanStore.v2")
 poke 1 2
 poke 2 0
 Loop:

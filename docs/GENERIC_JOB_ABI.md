@@ -156,7 +156,7 @@ Returning to `PLANNING` is therefore deliberately conservative. It prevents a sc
 `ic10/generic-jobs/generic_job_store_v1_0.ic10` publishes:
 
 ```text
-S0   magic = 31415984
+S0   magic = GenericJobStore.v1
 S1   ABI = 1
 S2   capability mask = 0
 S8   Store response generation

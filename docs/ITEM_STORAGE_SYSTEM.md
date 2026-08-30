@@ -195,7 +195,7 @@ Release is owner-scoped. It clears only Reservations whose `S17 OwnerReferenceId
 ## 7. Cargo LArRE storage service
 
 Program: `ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10`  
-Magic: `31415986`, ABI1. `d0` is one Cargo LArRE.
+Magic: `HASH("LarreCargoStorageService.v1")`. `d0` is one Cargo LArRE.
 
 One `ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10` service is the sole native writer for its arm. It owns rail-station movement (`Setting`), Cargo `TargetSlotIndex`, proxy slot 255 inspection, and `Activate`.
 
@@ -353,7 +353,7 @@ A lower-bound Endpoint is safe for reservation, but absence of a reservation quo
 
 ## 11. Exact SDB delivery through the existing feeder ABI
 
-`ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10` uses the same Material Feeder ABI1 magic (`31415961`) already consumed by Material Resource Link/Executor. It does not introduce a second manufacturing transfer architecture.
+`ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10` uses the same Material Feeder ABI1 magic (`HASH("StackerFeeder.v1")`) already consumed by Material Resource Link/Executor. It does not introduce a second manufacturing transfer architecture.
 
 Wiring:
 

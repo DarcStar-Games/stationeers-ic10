@@ -2,7 +2,7 @@
 # S8 pins,S9 count,S10 ordinal,S11 Profile,S12 gen,S13 Field,S14 Value,S15 Memory,
 # S16 Switch,S17 caps.
 alias ref r1
-poke 0 31415930
+poke 0 HASH("GenericInputScanner.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -26,7 +26,7 @@ beq r0 -128473777 ProfileProbe
 bne r0 2037291645 InputProbe
 ProfileProbe:
 getd r0 ref 0
-bne r0 31415929 InputProbe
+bne r0 HASH("InputProfileView.v1") InputProbe
 getd r0 ref 1
 bne r0 1 InputProbe
 move r11 ref

@@ -4,6 +4,7 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.ic10_source import game_hash
 
 from copy import deepcopy
 import json
@@ -156,8 +157,8 @@ ck(any("unreadable=[511]" in error for error in compatibility_errors(out_of_rang
 wrong_schema = deepcopy(documents)
 for provider in wrong_schema:
     for field in provider["own_stack"]["fields"]:
-        if field.get("const") == 'HASH("ControllerPressureTransfer")':
-            field["const"] = 'HASH("ControllerPressureDomain")'
+        if field.get("const") == game_hash("ControllerPressureTransfer"):
+            field["const"] = game_hash("ControllerPressureDomain")
 ck(any("unequal=" in error for error in compatibility_errors(wrong_schema)),
    "consumer schema/controller discriminator mismatch was not rejected")
 
@@ -294,7 +295,7 @@ _, payload_aliases = collect_aliases(payload_rows)
 ck(verify_declared_headers(payload_rows, payload_aliases, []) == [],
    "undeclared payload values were inferred as a protocol header")
 try:
-    verify_declared_headers(payload_rows, payload_aliases, [{"base": 8, "magic": 31415998, "abi": 1}])
+    verify_declared_headers(payload_rows, payload_aliases, [{"base": 8, "magic": game_hash("TransformCandidateReadiness.v1"), "abi": 1}])
     fails.append("incorrect authoritative protocol header was accepted")
 except ValueError:
     pass
@@ -745,7 +746,7 @@ ck(verify_declared_consumers(consumer_source, consumer_rows, consumer_ports, con
    "undeclared payload equality checks were inferred as a consumed protocol")
 try:
     verify_declared_consumers(consumer_source, consumer_rows, consumer_ports, consumer_aliases, [{
-        "port": "d0", "accepted": [{"header_base": 8, "magic": 31415998, "abi": 1}]
+        "port": "d0", "accepted": [{"header_base": 8, "magic": game_hash("TransformCandidateReadiness.v1"), "abi": 1}]
     }])
     fails.append("incorrect authoritative consumed protocol was accepted")
 except ValueError:

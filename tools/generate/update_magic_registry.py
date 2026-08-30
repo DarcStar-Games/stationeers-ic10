@@ -6,30 +6,30 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from pathlib import Path
 import json,re,sys
+from framework.protocol_headers import header_token, load_headers
 from framework.source_metadata import resolve_script_metadata
 ROOT=_PROJECT_ROOT
 REFERENCE=ROOT/'docs'/'ABI_REFERENCE.md'
-HEADERS=ROOT/'data'/'script_protocol_headers.json'
 START='<!-- PUBLISHED_HEADERS START -->'
 END='<!-- PUBLISHED_HEADERS END -->'
-SUMMARY='Published header registry: CHECK PASS ({rows} headers, {magics} magics)'
+SUMMARY='Published header registry: CHECK PASS ({rows} headers, {magics} identities)'
 
 def rows():
     """One row per declared header: a program may publish a service header and a telemetry block."""
-    data=json.loads(HEADERS.read_text())
-    if data.get('format')!='IC10_PROTOCOL_HEADERS_V1':
-        raise SystemExit('unsupported script protocol header format')
+    scripts,_=load_headers(ROOT)
     out=[]
-    for path,headers in data['scripts'].items():
+    for path,headers in scripts.items():
         for header in headers:
             meta=resolve_script_metadata(path,root=ROOT)
-            out.append((header['magic'],header['abi'],header['base'],path,str(meta.get('purpose',''))))
-    return sorted(out,key=lambda row:(row[0],row[2],row[3]))
+            identity=(header_token(header['contract'],header['abi']) if header.get('contract')
+                      else str(header['magic']))
+            out.append((identity,header['magic'],header['abi'],header['base'],path,str(meta.get('purpose',''))))
+    return sorted(out,key=lambda row:(row[3],row[0],row[4]))
 
 def render(table):
-    out=[START,'| Magic | ABI | Cell | Program | Purpose |','|---:|---:|---:|---|---|']
-    for magic,abi,base,path,purpose in table:
-        out.append(f"| `{magic}` | {abi} | `S{base}` | `{path}` | {purpose.replace('|',chr(92)+'|')} |")
+    out=[START,'| Identity | Value | ABI | Cell | Program | Purpose |','|---|---:|---:|---:|---|---|']
+    for identity,magic,abi,base,path,purpose in table:
+        out.append(f"| `{identity}` | `{magic}` | {abi} | `S{base}` | `{path}` | {purpose.replace('|',chr(92)+'|')} |")
     out.append(END)
     return '\n'.join(out)
 
@@ -48,5 +48,5 @@ def main():
         print(summary)
         return
     REFERENCE.write_text(updated)
-    print(f'Updated docs/ABI_REFERENCE.md with {len(table)} published headers across {len({row[0] for row in table})} magics')
+    print(f'Updated docs/ABI_REFERENCE.md with {len(table)} published headers across {len({row[0] for row in table})} identities')
 if __name__=='__main__':main()

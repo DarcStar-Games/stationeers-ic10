@@ -3,6 +3,7 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.ic10_source import game_hash
 from pathlib import Path
 import json, math, sys
 from framework.ic10_harness import IC10
@@ -39,7 +40,7 @@ def stage(vm,slot,i):
     for n,v in enumerate(vals,1):vm.stack[b+n]=v
 
 # Canonical schema/model.
-ck(SCHEMA['magic']==31415984 and SCHEMA['abi']==1,'schema magic/ABI mismatch')
+ck(SCHEMA['magic']==game_hash('GenericJobStore.v1') and SCHEMA['abi']==1,'schema magic/ABI mismatch')
 ck(SCHEMA['capacity']==32 and SCHEMA['logical_record_width']==11,'schema geometry mismatch')
 ck(SCHEMA['fields']==['JobId','JobType','RequiredCapability','Identity','InputCount','OutputCount','RequestedQuantity','Priority','State','Generation','ErrorStatus'],'logical fields mismatch')
 for jt in JobType:ck(SCHEMA['job_types'][jt.name]==jt.value,f'job type {jt.name} mismatch')
@@ -70,10 +71,10 @@ ck(not allowed_transition(JobState.PLANNING,JobState.FAULT,0),'FAULT accepted wi
 for st in JobState:ck(can_reap(st)==(st in {JobState.COMPLETE,JobState.FAULT,JobState.CANCELLED}),f'reap classification wrong for {st}')
 
 # Store publish/update/reap and optimistic generation.
-vm=boot();ck(vm.stack.get(0)==31415984 and vm.stack.get(1)==1,'store header missing')
+vm=boot();ck(vm.stack.get(0)=='HASH:GenericJobStore.v1' and vm.stack.get(1)==1,'store header missing')
 ck(vm.stack.get(18)==32 and vm.stack.get(23)==1,'store capacity/next id mismatch')
 # Same magic with a different Store ABI is incompatible storage geometry and must reset.
-rv=boot({0:31415984,1:99,16:7,23:88,288:1,289:12,290:9,291:-1})
+rv=boot({0:'HASH:GenericJobStore.v1',1:99,16:7,23:88,288:1,289:12,290:9,291:-1})
 ck(rv.stack.get(1)==1 and rv.stack.get(23)==1 and rv.stack.get(288,0)==0,'incompatible Store ABI was interpreted instead of reset')
 stage(vm,0,valid)
 status,jid=request(vm,1,1,0)

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10",
-  "source_sha256": "e1c09a7ec07447efad89b0a0c6abf6831e0cc45dca300e9f35741e650b09643a",
+  "source_sha256": "b7c9c89b2e43695fe081004c5b8ccecfaac57c4b2e446849b8b6dfcdadae769a",
   "identity": {
     "service_id": "ic10.script.thermal.gas.mixer.controller",
     "implementation_revision": "1.0",
@@ -195,7 +195,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31416048
+            "equals": 1700980279
           },
           {
             "address": 12,
@@ -206,8 +206,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.3e3aec2844bc5107",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.3e3aec2844bc5107",
+        "interface_id": "ic10.interface.access.d4965a7d3f608b4b",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.d4965a7d3f608b4b",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -253,7 +253,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416050
+        "const": -133767719
       },
       {
         "address": 1,
@@ -316,7 +316,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416050,
+        "contract": "ThermalGasMixerController",
+        "magic": -133767719,
         "abi": 1
       }
     ]
@@ -332,7 +333,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416050,
+        "equals": -133767719,
         "source": "generated-protocol-header"
       },
       {
@@ -347,9 +348,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416050.abi1",
+        "protocol_id": "ic10.stack.thermal-gas-mixer-controller.v1",
         "base": 0,
-        "magic": 31416050,
+        "contract": "ThermalGasMixerController",
+        "magic": -133767719,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

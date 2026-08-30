@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10",
-  "source_sha256": "0cc94fe0ed236d3e9701aa3611a1232a80a538337df3288f1f4697110d50a61a",
+  "source_sha256": "bd5c46e16f503ea711c5f962dbfb1dfd76c9a639e08cdb897cb82cde15f9098c",
   "identity": {
     "service_id": "ic10.script.item.resource.reservation.allocator",
     "implementation_revision": "1.0",
@@ -48,7 +48,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415987
+            "equals": 1606529514
           },
           {
             "address": 1,
@@ -64,7 +64,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415987.abi1"
+          "ic10.stack.item-resource-reservation-selector.v1"
         ]
       }
     }
@@ -142,7 +142,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415988
+        "const": 1440212682
       },
       {
         "address": 1,
@@ -242,7 +242,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415988,
+        "contract": "ItemResourceReservationAllocator",
+        "magic": 1440212682,
         "abi": 1
       }
     ]
@@ -258,7 +259,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415988,
+        "equals": 1440212682,
         "source": "generated-protocol-header"
       },
       {
@@ -273,9 +274,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415988.abi1",
+        "protocol_id": "ic10.stack.item-resource-reservation-allocator.v1",
         "base": 0,
-        "magic": 31415988,
+        "contract": "ItemResourceReservationAllocator",
+        "magic": 1440212682,
         "abi": 1,
         "source": "literal-own-stack-header"
       }
@@ -285,9 +287,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415987.abi1",
+            "protocol_id": "ic10.stack.item-resource-reservation-selector.v1",
             "header_base": 0,
-            "magic": 31415987,
+            "contract": "ItemResourceReservationSelector",
+            "magic": 1606529514,
             "abi": 1,
             "publication_requirements": []
           }

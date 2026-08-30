@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10",
-  "source_sha256": "9ffdea0dc43291792348b52f3970e041aa6aa874de262f0e2097e23dae6acd1e",
+  "source_sha256": "2607db0faa3ab790b4f1cf6a376d26b0b9e02a4555b356e57c9f870154c7839e",
   "identity": {
     "service_id": "ic10.script.diagnostic.selector.bridge",
     "implementation_revision": "1.0",
@@ -30,7 +30,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 17320509
+          "value": 1820001013
         },
         {
           "address": 1,
@@ -58,7 +58,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 17320508
+          "value": 1512745005
         },
         {
           "address": 1,
@@ -88,7 +88,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 17320511
+          "value": 1404237530
         },
         {
           "address": 1,
@@ -137,7 +137,7 @@
         "access": [
           "self-write"
         ],
-        "const": 17320512
+        "const": 659377832
       },
       {
         "address": 1,
@@ -200,7 +200,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 17320512,
+        "contract": "DiagnosticSelectorBridge",
+        "magic": 659377832,
         "abi": 1
       }
     ]
@@ -223,7 +224,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 17320512,
+        "equals": 659377832,
         "source": "generated-protocol-header"
       },
       {
@@ -238,9 +239,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.17320512.abi1",
+        "protocol_id": "ic10.stack.diagnostic-selector-bridge.v1",
         "base": 0,
-        "magic": 17320512,
+        "contract": "DiagnosticSelectorBridge",
+        "magic": 659377832,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

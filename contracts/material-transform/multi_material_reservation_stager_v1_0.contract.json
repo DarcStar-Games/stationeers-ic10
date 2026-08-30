@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10",
-  "source_sha256": "d590500c566496def0296284d36cf70a7cf0071beb645cfedb4823ef54415299",
+  "source_sha256": "922ce88dc1275137a0324a38d50e7c2d10323f791d7144e5cc5b7e12cc5dd051",
   "identity": {
     "service_id": "ic10.script.multi.material.reservation.stager",
     "implementation_revision": "1.0",
@@ -315,7 +315,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415979,
+        "contract": "MultiMaterialReservationStager",
+        "magic": 1387894212,
         "abi": 1
       }
     ]
@@ -331,9 +332,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415979.abi1",
+        "protocol_id": "ic10.stack.multi-material-reservation-stager.v1",
         "base": 0,
-        "magic": 31415979,
+        "contract": "MultiMaterialReservationStager",
+        "magic": 1387894212,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

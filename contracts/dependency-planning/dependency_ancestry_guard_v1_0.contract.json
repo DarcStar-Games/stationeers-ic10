@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10",
-  "source_sha256": "2ddeb7d39067d2818f2c2981903ffd0ab3295b7f1b8ac53eacbf7cfce6cb03b5",
+  "source_sha256": "44cdcd3764f4398f558af5adabfa5305c14d93cbe969fe310fab90e7164be3e0",
   "identity": {
     "service_id": "ic10.script.dependency.ancestry.guard",
     "implementation_revision": "1.0",
@@ -44,7 +44,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31416007
+            "equals": 1864195977
           },
           {
             "address": 1,
@@ -56,7 +56,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31416007.abi2"
+          "ic10.stack.dependency-plan-store.v2"
         ]
       }
     },
@@ -149,7 +149,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416009
+        "const": 675484384
       },
       {
         "address": 1,
@@ -248,7 +248,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416009,
+        "contract": "DependencyAncestryGuard",
+        "magic": 675484384,
         "abi": 1
       }
     ]
@@ -264,7 +265,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416009,
+        "equals": 675484384,
         "source": "generated-protocol-header"
       },
       {
@@ -279,9 +280,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416009.abi1",
+        "protocol_id": "ic10.stack.dependency-ancestry-guard.v1",
         "base": 0,
-        "magic": 31416009,
+        "contract": "DependencyAncestryGuard",
+        "magic": 675484384,
         "abi": 1,
         "source": "literal-own-stack-header"
       }
@@ -291,9 +293,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31416007.abi2",
+            "protocol_id": "ic10.stack.dependency-plan-store.v2",
             "header_base": 0,
-            "magic": 31416007,
+            "contract": "DependencyPlanStore",
+            "magic": 1864195977,
             "abi": 2,
             "publication_requirements": [
               {

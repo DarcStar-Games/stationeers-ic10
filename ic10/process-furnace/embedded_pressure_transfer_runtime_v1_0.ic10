@@ -1,6 +1,6 @@
 # Embedded PressureTransfer ABI2. d0 src,d1 sink,d2 furnace,d3 Guard.
 # S16 on,S17 1=in 2=out,S18 min delta,S19 gain,S20 max.
-poke 0 31416065
+poke 0 HASH("EmbeddedPressureTransferRuntime.v1")
 poke 1 1
 poke 2 8
 poke 6 96
@@ -30,7 +30,7 @@ bgtz r0 Fault
 get r15 d0 11
 blez r15 Fault
 get r0 d0 0
-bne r0 31415936 Fault
+bne r0 HASH("PressureInventoryReservation.v1") Fault
 get r7 d0 18
 get r9 d0 19
 l r5 d0 ReferenceId
@@ -42,7 +42,7 @@ bne r0 r15 Loop
 get r15 d1 11
 blez r15 Fault
 get r0 d1 0
-bne r0 31415936 Fault
+bne r0 HASH("PressureInventoryReservation.v1") Fault
 get r8 d1 18
 get r0 d1 19
 bne r0 r9 Fault
@@ -81,7 +81,7 @@ bdns d3 SafeOff
 get r15 d3 18
 blez r15 SafeOff
 get r0 d3 0
-bne r0 31415948 SafeOff
+bne r0 HASH("PressureTransferGrantGuard.v1") SafeOff
 l r5 db ReferenceId
 get r0 d3 17
 bne r0 r5 SafeOff

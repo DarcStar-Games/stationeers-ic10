@@ -1,5 +1,5 @@
 # Direct ITEM storage endpoint: bounded no-yield slot scan, max 16 slots.
-poke 0 31415949
+poke 0 HASH("ResourceEndpoint.v1")
 poke 1 1
 poke 2 0
 poke 52 2
@@ -16,7 +16,7 @@ bdns d1 Bad
 get r14 d1 29
 blez r14 Bad
 get r0 d1 0
-bne r0 31415963 Bad
+bne r0 HASH("ResourceProfileView.v1") Bad
 get r0 d1 8
 bne r0 2 Bad
 get r2 d1 9

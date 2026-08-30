@@ -1,5 +1,5 @@
 # Pressure Medium Purity Guard v1.0: d0 Pipe Analyzer,d1 Resource Profile View.
-poke 0 31415947
+poke 0 HASH("MediumPurityGuard.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -8,7 +8,7 @@ bdns d1 ProfileBad
 get r15 d1 29
 blez r15 ProfileBad
 get r0 d1 0
-bne r0 31415963 ProfileBad
+bne r0 HASH("ResourceProfileView.v1") ProfileBad
 get r0 d1 1
 bne r0 1 ProfileBad
 get r0 d1 28

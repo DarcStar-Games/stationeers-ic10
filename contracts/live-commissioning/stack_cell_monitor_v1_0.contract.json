@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10",
-  "source_sha256": "7e13bc7de04f0f1e86280788d42bb1a64da4ba9ac9665e507992da2c335127f6",
+  "source_sha256": "17f555d37049f6a205664e29d087a567dc40043a1c8e3b1648486b6c71dea875",
   "identity": {
     "service_id": "ic10.script.stack.cell.monitor",
     "implementation_revision": "1.0",
@@ -171,7 +171,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416052
+        "const": -1491597128
       },
       {
         "address": 1,
@@ -253,7 +253,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416052,
+        "contract": "StackCellMonitor",
+        "magic": -1491597128,
         "abi": 1
       }
     ]
@@ -276,7 +277,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416052,
+        "equals": -1491597128,
         "source": "generated-protocol-header"
       },
       {
@@ -291,9 +292,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416052.abi1",
+        "protocol_id": "ic10.stack.stack-cell-monitor.v1",
         "base": 0,
-        "magic": 31416052,
+        "contract": "StackCellMonitor",
+        "magic": -1491597128,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

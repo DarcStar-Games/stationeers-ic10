@@ -114,7 +114,7 @@ psrc=(R/'ic10/power-grid/power_dispatch_plan_store_v1_0.ic10').read_text()
 odd_cuts=0
 for quantum in range(8,60):
  vm=IC10(psrc,{},self_ref=227)
- vm.stack.update({0:31416028,1:1,27:0,28:5,29:1,30:0,31:0,10:1,11:0,12:3,14:0,15:0,24:1})
+ vm.stack.update({0:'HASH:PowerDispatchPlanStore.v1',1:1,27:0,28:5,29:1,30:0,31:0,10:1,11:0,12:3,14:0,15:0,24:1})
  for i,v in enumerate([1401,1201,1202,80,85,5,6,9],128): vm.stack[i]=v
  vm.run(2,instruction_quantum=quantum)
  if int(vm.stack.get(27,0))%2:
@@ -160,7 +160,7 @@ ck(a.stack.get(8)==5 and a.stack.get(9)==11 and a.stack.get(10)==1,'allocator di
 alloc=Device(3100,stack={8:5,9:10,10:1},props={'ReferenceId':3100})
 load=Device(3101,props={'ReferenceId':3101,'On':0})
 endpoint=Device(3102,stack={9:3101},props={'ReferenceId':3102})
-res=Device(3103,stack={0:31415950,32:3102,33:4,17:3100,18:10,19:6,28:2,31:8},props={'ReferenceId':3103})
+res=Device(3103,stack={0:'HASH:ResourceReservation.v1',32:3102,33:4,17:3100,18:10,19:6,28:2,31:8},props={'ReferenceId':3103})
 pl=Device(3104,stack={27:2,28:5,29:1,32:0,33:0,34:3103,38:6},props={'ReferenceId':3104})
 loadvm=IC10((R/'ic10/power-grid/power_load_executor_v1_0.ic10').read_text(),{'d0':pl,'d1':alloc,'x0':res,'x1':endpoint,'x2':load},self_ref=2370)
 loadvm.run(1)
@@ -180,7 +180,7 @@ alloc2=Device(3200,stack={8:5,9:10,10:1},props={'ReferenceId':3200})
 xf=Device(3201,props={'ReferenceId':3201,'Setting':0,'On':0})
 sr=Device(3202,stack={17:3200,18:10,19:5},props={'ReferenceId':3202})
 kr=Device(3203,stack={17:3200,18:10,19:6},props={'ReferenceId':3203})
-link=Device(3204,stack={0:31415953,30:4,32:2,10:3201,12:9},props={'ReferenceId':3204})
+link=Device(3204,stack={0:'HASH:ResourceLink.v1',30:4,32:2,10:3201,12:9},props={'ReferenceId':3204})
 pl2=Device(3205,stack={27:2,28:5,29:1,32:3204,33:3202,34:3203,35:80,37:5,38:6,39:9},props={'ReferenceId':3205})
 xfvm=IC10((R/'ic10/power-grid/power_link_executor_v1_0.ic10').read_text(),{'d0':pl2,'d1':alloc2,'x0':link,'x1':sr,'x2':kr,'x3':xf},self_ref=2380)
 xfvm.run(1)

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10",
-  "source_sha256": "cb3c3ed8d6dc22ea85d633f8c12b7540540f8c3796d36f53be1991455691c00e",
+  "source_sha256": "0382c75ed2e72306e8c4711c810a2cd3578ddafc15c08cad48ae0931be0bdbab",
   "identity": {
     "service_id": "ic10.script.controller.sequencer.runtime",
     "implementation_revision": "1.0",
@@ -197,15 +197,15 @@
           },
           {
             "address": 12,
-            "equals": "HASH(\"CFG1|ControllerSequencer|1|2|255|1|0|0\")"
+            "equals": 1568849247
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.cf2db59392ce76fa",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.cf2db59392ce76fa",
+        "interface_id": "ic10.interface.access.20a43d25d387e4b2",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.20a43d25d387e4b2",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -258,7 +258,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416062
+        "const": 996332648
       },
       {
         "address": 1,
@@ -329,7 +329,7 @@
         "access": [
           "self-write"
         ],
-        "const": "HASH(\"ControllerSequencer\")"
+        "const": -1495862074
       },
       {
         "address": 100,
@@ -389,7 +389,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416062,
+        "contract": "ControllerSequencerRuntime",
+        "magic": 996332648,
         "abi": 1
       },
       {
@@ -410,7 +411,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416062,
+        "equals": 996332648,
         "source": "generated-protocol-header"
       },
       {
@@ -439,9 +440,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416062.abi1",
+        "protocol_id": "ic10.stack.controller-sequencer-runtime.v1",
         "base": 0,
-        "magic": 31416062,
+        "contract": "ControllerSequencerRuntime",
+        "magic": 996332648,
         "abi": 1,
         "source": "literal-own-stack-header"
       },

@@ -136,7 +136,7 @@ If any input fails before commit, the Stager clears all partial source/sink rese
 
 ## 4. Grant Guard invariants
 
-The Guard requires Material Allocator magic `31415954` with **ABI2 exactly**. It never trusts a matching epoch alone.
+The Guard requires Material Allocator identity `HASH("MultiMaterialReservationAllocator.v2")` with **ABI2 exactly**. It never trusts a matching epoch alone.
 
 Before activation it verifies that staged identity still matches the live Link and execution path:
 

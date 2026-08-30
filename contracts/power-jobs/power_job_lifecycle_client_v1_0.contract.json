@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10",
-  "source_sha256": "601cf2d70d77395dad612223fb1d4d1d30947050aebf11566736c362f0b08358",
+  "source_sha256": "dea774496b0b84a4ed7f222b9d63c6160138c2ff4e7fc9f004d8260c2aa171a0",
   "identity": {
     "service_id": "ic10.script.power.job.lifecycle.client",
     "implementation_revision": "1.0",
@@ -103,7 +103,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416044
+        "const": 811825990
       },
       {
         "address": 1,
@@ -202,7 +202,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416044,
+        "contract": "PowerJobLifecycleClient",
+        "magic": 811825990,
         "abi": 1
       }
     ]
@@ -218,7 +219,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416044,
+        "equals": 811825990,
         "source": "generated-protocol-header"
       },
       {
@@ -233,9 +234,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416044.abi1",
+        "protocol_id": "ic10.stack.power-job-lifecycle-client.v1",
         "base": 0,
-        "magic": 31416044,
+        "contract": "PowerJobLifecycleClient",
+        "magic": 811825990,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

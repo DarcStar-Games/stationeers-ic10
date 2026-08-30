@@ -1,7 +1,7 @@
 # Console Selector v1.1: pure Registry resolver with desired/advance transactions.
 # S9 Registry,S15 ordinal,S16 display,S17 status,S10 advance,S12 desired,S13 request gen.
 alias registry r1
-poke 0 17320509
+poke 0 HASH("ConsoleSelector.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -9,7 +9,7 @@ yield
 get registry db 9
 blez registry NoRegistry
 getd r0 registry 0
-bne r0 14142136 NoRegistry
+bne r0 HASH("ConsoleRegistry.v1") NoRegistry
 getd r0 registry 1
 bne r0 1 NoRegistry
 getd r8 registry 8

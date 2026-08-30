@@ -10,11 +10,14 @@ import json
 import re
 import sys
 
+from framework.ic10_source import game_hash
 from framework.json_schema import SchemaValidationError, validate
+from framework.protocol_headers import load_headers
 from framework.script_contracts import build_all
 from framework.stack_envelope import BASE, LENGTH, DeclarationError, build_inventory
 
 ROOT = _PROJECT_ROOT
+HASH_LITERAL = re.compile(r'^HASH\("([^"\n]+)"\)$')
 PILOT_FAMILIES = {"stack-monitor", "generic-telemetry", "directory", "catalog", "catalog-control-plane", "diagnostics", "power-jobs", "material-transform", "catalog-loader", "input-profile-catalog", "resource-profile-catalog", "transform-catalog", "transaction", "manufacturing", "controller-discovery", "pressure-domain", "recipe-catalog", "shared-input", "process-gas-preparation", "item-storage-common", "item-storage-larre", "material-grid", "process-furnace", "process-gfg", "pressure-grid", "item-storage-sdb", "power-grid", "resource-grid-core", "item-storage-direct", "item-storage-vending", "controller-pi", "controller-sequencer", "controller-phase-pressure", "controller-config", "printer-directory", "generic-jobs", "directory-core", "dependency-planning", "live-commissioning"}
 validation = Validation(ROOT)
 
@@ -95,10 +98,10 @@ for wired_source, wired_ports in json.loads((ROOT / "data" / "script_wiring.json
                 int(cell) for cell in peer["header_reads"] if cell.isdigit()}
 read0 = re.compile(r"^get (r\d+) (d[0-5]) 0$")
 refread0 = re.compile(r"^getd (r\d+) (r\d+|ra|sp) 0$")
-compare = re.compile(r"^(?:bne|beq) (r\d+) (\d{7,8}) \w+$")
+compare = re.compile(r'^(?:bne|beq) (r\d+) (\d{7,8}|HASH\("[^"\n]+"\)) \w+$')
 access = re.compile(r"^(?:get|put) (?:r\d+ )?(d[0-5]) (\d+)|^(?:getd|putd) (?:r\d+ )?(r\d+|ra|sp) (\d+)")
 publishers = {}
-for path, entries in json.loads((ROOT / "data" / "script_protocol_headers.json").read_text())["scripts"].items():
+for path, entries in load_headers(ROOT)[0].items():
     for entry in entries:
         if entry["base"] == 0:
             publishers.setdefault(entry["magic"], []).append(path)
@@ -113,7 +116,9 @@ for source in sorted(ROOT.glob("ic10/*/*.ic10")):
         for following in lines[index + 1:index + 4]:
             checked = compare.match(following)
             if checked and checked.group(1) == found.group(1):
-                peers[found.group(2)] = int(checked.group(2))
+                token = checked.group(2)
+                literal = HASH_LITERAL.fullmatch(token)
+                peers[found.group(2)] = game_hash(literal.group(1)) if literal else int(token)
                 break
     if not peers:
         continue

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10",
-  "source_sha256": "c9c5118682d845826e56e1a5b4756bf78cf2478ee34d656769db67c8678c906e",
+  "source_sha256": "19e4dcee73711c58ef1a5865dfb9a2d1c4178d2eebbbeb1700385c6b21146e91",
   "identity": {
     "service_id": "ic10.script.live.commission.snapshot.probe",
     "implementation_revision": "1.0",
@@ -151,7 +151,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416051,
+        "contract": "LiveCommissionSnapshotProbe",
+        "magic": -211474941,
         "abi": 1
       }
     ]
@@ -167,9 +168,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416051.abi1",
+        "protocol_id": "ic10.stack.live-commission-snapshot-probe.v1",
         "base": 0,
-        "magic": 31416051,
+        "contract": "LiveCommissionSnapshotProbe",
+        "magic": -211474941,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

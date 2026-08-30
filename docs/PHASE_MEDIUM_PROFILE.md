@@ -9,7 +9,7 @@ The canonical source is `data/resource_profiles.json`. `tools/generate/generate_
 The View publishes a phase record as:
 
 ```text
-S0   magic = 31415963
+S0   magic = ResourceProfileView.v1
 S1   View ABI = 1
 S28  status = 1 while valid
 S29  publication generation; positive only while the record is valid

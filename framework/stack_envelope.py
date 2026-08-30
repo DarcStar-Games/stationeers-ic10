@@ -8,7 +8,8 @@ import json
 import re
 from typing import Any
 
-from framework.ic10_source import parse_ic10
+from framework.ic10_source import game_hash, parse_ic10
+from framework.protocol_headers import header_name, header_token
 from framework.script_contracts.parsing import collect_aliases, resolve_integer, resolve_literal
 from framework.script_contracts.publication import stable_cells
 
@@ -106,7 +107,7 @@ class NormalizedDeclaration:
 
     source: str
     service_id: str = "ic10.script.example"
-    magic: int = 1
+    contract: str = "Example"
     service_abi: int = 1
     schema_id: str | None = None
     schema_version: int = 0
@@ -122,6 +123,15 @@ class NormalizedDeclaration:
     source_sha256: str = ""
     pilot_family: str = ""
     schema_assigned_externally: bool = False
+
+    @property
+    def magic(self) -> int:
+        """S0 is derived, never allocated: the ABI is folded into the hashed name."""
+        return game_hash(header_name(self.contract, self.service_abi))
+
+    @property
+    def magic_token(self) -> str:
+        return header_token(self.contract, self.service_abi)
 
     @property
     def capability_mask(self) -> int:
@@ -174,6 +184,26 @@ def _literal_writes(path: Path) -> dict[int, set[Any]]:
     return _writes(*_parse(path))
 
 
+def _write_tokens(rows: list[list[str]], aliases: dict[str, int]) -> dict[int, set[str]]:
+    """Raw HASH token text per cell, for the rules that need the semantic name.
+
+    Every published identity resolves to a number, so the rules that compare
+    values work numerically; only the rules that must recover *which* schema a
+    cell names read the source spelling back.
+    """
+    tokens: dict[int, set[str]] = {}
+    for row in rows:
+        if len(row) >= 3 and row[0] == "poke" and HASH_RE.fullmatch(row[2]):
+            address = resolve_integer(row[1], aliases)
+            if address is not None:
+                tokens.setdefault(address, set()).add(row[2])
+    return tokens
+
+
+def _literal_write_tokens(path: Path) -> dict[int, set[str]]:
+    return _write_tokens(*_parse(path))
+
+
 def _schema_check_pairs(rows: list[list[str]], aliases: dict[str, int]) -> set[tuple[str, int]]:
     """Recover the (SchemaId, SchemaVersion) pairs a source verifies on a published stack."""
     checked: dict[int, set[Any]] = {}
@@ -186,7 +216,9 @@ def _schema_check_pairs(rows: list[list[str]], aliases: dict[str, int]) -> set[t
             continue
         for later in rows[index + 1:]:
             if later[0] in {"beq", "bne"} and len(later) >= 3 and later[1] == register:
-                value = resolve_literal(later[2], aliases)
+                # the source spelling is what names the schema; the number it
+                # resolves to cannot be read back into an identity
+                value = later[2] if HASH_RE.fullmatch(later[2]) else resolve_literal(later[2], aliases)
                 if value is not None:
                     checked.setdefault(address, set()).add(value)
                 break
@@ -233,9 +265,14 @@ def canonical_schema_pairs(root: Path) -> set[tuple[str, int]]:
     return pairs
 
 
-def schema_hash(schema_id: str, schema_version: int) -> str:
+def schema_hash_token(schema_id: str, schema_version: int) -> str:
+    """The source literal a program writes to publish its schema identity."""
+    return header_token(schema_id, schema_version)
+
+
+def schema_hash(schema_id: str, schema_version: int) -> int:
     """The published schema identity carries its version: one cell, one exact match."""
-    return 'HASH("' + f"{schema_id}.v{schema_version}" + '")'
+    return game_hash(header_name(schema_id, schema_version))
 
 
 def _range_cells(ranges: list[dict[str, int]]) -> set[int]:
@@ -253,9 +290,9 @@ def _schema_fields(
                 key: field[key] for key in ("address", "name", "const") if key in field
             }
     writes = _literal_writes(path) if writes is None else writes
-    for address, values in sorted(writes.items()):
+    for address, values in sorted(_literal_write_tokens(path).items()):
         for value in values:
-            match = HASH_RE.fullmatch(value) if isinstance(value, str) else None
+            match = HASH_RE.fullmatch(value)
             if match is None or "schema" not in match.group(1).lower():
                 continue
             schema_name = match.group(1)
@@ -324,8 +361,10 @@ def normalize_declaration(
         return candidate
 
     service_id = require("service_id", str, "")
-    magic = require("magic", int, 0)
+    contract = require("contract", str, "")
     service_abi = require("service_abi", int, 0)
+    if contract and not re.fullmatch(r"[A-Z][A-Za-z0-9]*", contract):
+        collector.add("contract must be an UpperCamelCase identity name")
     schema_id = value.get("schema_id")
     if "schema_id" not in value:
         collector.add("schema_id is required")
@@ -370,7 +409,7 @@ def normalize_declaration(
     return NormalizedDeclaration(
         source=source,
         service_id=service_id,
-        magic=magic,
+        contract=contract,
         service_abi=service_abi,
         schema_id=schema_id,
         schema_version=schema_version,
@@ -580,6 +619,16 @@ def canonical_envelope() -> dict[str, Any]:
     }
 
 
+def envelope_cell_tokens(declaration: NormalizedDeclaration) -> dict[int, str]:
+    """Source spelling of the hashed envelope cells, for diagnostics."""
+    tokens = {BASE: declaration.magic_token}
+    if declaration.capability_mask & HAS_SCHEMA and not declaration.schema_assigned_externally:
+        tokens[SCHEMA_ID_CELL] = schema_hash_token(
+            declaration.schema_id or "", declaration.schema_version
+        )
+    return tokens
+
+
 def expected_envelope_cells(declaration: NormalizedDeclaration) -> dict[int, Any]:
     """Derive the fixed header cells from a normalized declaration."""
     expected: dict[int, Any] = {
@@ -654,9 +703,10 @@ def schema_capability_errors(
     for cell in range(BASE, BASE + LENGTH):
         if cell not in expected and cell not in allowed_dynamic and writes.get(cell):
             errors.append(f"S{cell} is reserved and must not be written undeclared")
+    spelling = envelope_cell_tokens(declaration)
     for address, value in expected.items():
         if address != GENERATION_CELL and writes.get(address, set()) != {value}:
-            errors.append(f"S{address} must be written exactly as {value}")
+            errors.append(f"S{address} must be written exactly as {spelling.get(address, value)}")
     return errors
 
 
@@ -769,12 +819,12 @@ def extension_rule_result(
     if has_implementation_id and implementation_valid:
         if extension_length < 5:
             errors.append("HAS_IMPLEMENTATION_ID extension is shorter than five cells")
-        implementation_value = f'HASH("{declaration.implementation_id}")'
+        implementation_value = game_hash(declaration.implementation_id)
         published[base + 4] = implementation_value
         if writes.get(base + 4) != {implementation_value}:
             errors.append(
                 "extension ImplementationId must be written exactly as "
-                f"{implementation_value}"
+                f'HASH("{declaration.implementation_id}")'
             )
     return ExtensionRuleResult(tuple(errors), published, frozenset(reserved))
 
@@ -1026,12 +1076,14 @@ def build_inventory(
         if declaration:
             entry["envelope"] = {
                 "service_id": declaration["service_id"],
-                "magic": declaration["magic"],
+                "contract": declaration["contract"],
+                "magic": game_hash(header_name(declaration["contract"], declaration["service_abi"])),
+                "magic_token": header_token(declaration["contract"], declaration["service_abi"]),
                 "service_abi": declaration["service_abi"],
                 "schema_id": declaration["schema_id"],
                 "schema_id_hash": (
                     None if declaration["schema_id"] is None
-                    else schema_hash(declaration["schema_id"], declaration["schema_version"])
+                    else schema_hash_token(declaration["schema_id"], declaration["schema_version"])
                 ),
                 "schema_version": declaration["schema_version"],
                 "extension_base": declaration["extension_base"],

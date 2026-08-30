@@ -17,7 +17,8 @@ profiles={p['profile_type']:p for p in json.loads((R/'data/input_profiles.json')
 def num(t,p):
  m=re.search(p,t,re.M);return int(m.group(1)) if m else None
 def hashtype(t):
- m=re.search(r'HASH\("(Controller[^"|]+)',t);return m.group(1) if m else None
+ # the family type carries no version; a dotted name is the program's own S0 identity
+ m=re.search(r'HASH\("(Controller[^"|.]+)"\)',t);return m.group(1) if m else None
 host=(R/'ic10/controller-config/generic_persistent_config_host_v1_1.ic10').read_text()
 for typ in families:
  if typ in host:validation.fail('Generic Host special-cases '+typ)
@@ -47,10 +48,12 @@ for q in (test_runtime,test_policy):
  if q.exists() and 'HASH("ControllerTest")' not in q.read_text():validation.fail(q.name+': ControllerTest identity missing')
 
 # Input metadata is centralized: production must not reintroduce standalone per-family Input Profile programs.
-for q in R.glob('*.ic10'):
- text=q.read_text()
- if 'poke 0 31415929' in text and q.name!='ic10/input-profile-catalog/input_profile_view_v5_0.ic10':
-  validation.fail('standalone production Input Profile program exists: '+q.name)
+# Glob under ic10/ and compare the repository-relative path: anchored at the root
+# this matched nothing, and q.name (a bare filename) could never equal a path.
+for q in sorted(R.glob('ic10/*/*.ic10')):
+ rel=q.relative_to(R).as_posix()
+ if 'poke 0 HASH("InputProfileView.v1")' in q.read_text() and rel!='ic10/input-profile-catalog/input_profile_view_v5_0.ic10':
+  validation.fail('standalone production Input Profile program exists: '+rel)
 raise SystemExit(validation.finish('Config contract validation',[
  'Generic Persistent Config Host remains family-neutral',
  'controller masks/signatures agree with centralized Input Profile metadata',

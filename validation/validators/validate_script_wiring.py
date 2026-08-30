@@ -9,6 +9,7 @@ import json
 import sys
 
 from framework.json_schema import SchemaValidationError
+from framework.protocol_headers import load_headers
 from framework.script_contracts import build_all
 from framework.script_wiring import check_wiring, inbound_edges, load_wiring, port_index
 
@@ -29,7 +30,7 @@ except Exception as error:
     raise SystemExit(1)
 
 ports = port_index(contracts)
-publishers = json.loads((ROOT / "data/script_protocol_headers.json").read_text())["scripts"]
+publishers = load_headers(ROOT)[0]
 migrated = set(json.loads((ROOT / "data/stack_envelope_declarations.json").read_text())["migrated"])
 failures = check_wiring(wiring, ports, publishers, migrated)
 

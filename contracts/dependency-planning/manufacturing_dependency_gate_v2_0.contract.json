@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10",
-  "source_sha256": "4e37c3711540e0b2d64ec68bfdebdffc615f5b6fd703ceafe2f1113bd80f924a",
+  "source_sha256": "0d759886a6c6b1e348ee0922de382f9bdca265b40321159108a8ec948cd9e637",
   "identity": {
     "service_id": "ic10.script.manufacturing.dependency.gate",
     "implementation_revision": "2.0",
@@ -188,7 +188,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416012
+        "const": 1774596483
       },
       {
         "address": 1,
@@ -251,7 +251,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416012,
+        "contract": "ManufacturingDependencyGate",
+        "magic": 1774596483,
         "abi": 2
       }
     ]
@@ -267,7 +268,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416012,
+        "equals": 1774596483,
         "source": "generated-protocol-header"
       },
       {
@@ -282,9 +283,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416012.abi2",
+        "protocol_id": "ic10.stack.manufacturing-dependency-gate.v2",
         "base": 0,
-        "magic": 31416012,
+        "contract": "ManufacturingDependencyGate",
+        "magic": 1774596483,
         "abi": 2,
         "source": "literal-own-stack-header"
       }

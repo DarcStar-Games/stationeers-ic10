@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10",
-  "source_sha256": "baf580299e217e52492148c51c67e56ddf55a14361b5a07d569c434e7449787b",
+  "source_sha256": "7675b20d950c10fa9d77ce7a3a9c2492104763c7acfe075dd10ee1ce47ba6fcd",
   "identity": {
     "service_id": "ic10.script.larre.cargo.storage.service",
     "implementation_revision": "1.0",
@@ -310,7 +310,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415986,
+        "contract": "LarreCargoStorageService",
+        "magic": -817020094,
         "abi": 1
       }
     ]
@@ -326,9 +327,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415986.abi1",
+        "protocol_id": "ic10.stack.larre-cargo-storage-service.v1",
         "base": 0,
-        "magic": 31415986,
+        "contract": "LarreCargoStorageService",
+        "magic": -817020094,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

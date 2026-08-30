@@ -61,7 +61,7 @@ Item 12 closes only when `verify` reports every required suite PASS on a non-sta
 
 `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` is a read-only on-demand diagnostic. It observes up to six devices/services connected on `d0..d5`. It never writes any observed device and therefore cannot become a commissioning bypass around normal reservations, epochs, locks, or actuator authority.
 
-Magic `31416051`, ABI 1.
+identity `HASH("LiveCommissionSnapshotProbe.v1")`.
 
 ```text
 S0  magic

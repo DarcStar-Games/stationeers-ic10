@@ -9,7 +9,10 @@ import json,re,sys
 import tools.generate.update_magic_registry as magic_registry
 ROOT=_PROJECT_ROOT
 validation=Validation(ROOT)
-mds=[p for p in ROOT.rglob('*.md') if 'validation' not in p.parts and '.claude' not in p.parts]
+# Match inside the repository: p.parts carries the absolute path, so a checkout
+# under a directory named .claude (a git worktree lives at .claude/worktrees/<name>)
+# would otherwise exclude every markdown file and pass this validator vacuously.
+mds=[p for p in ROOT.rglob('*.md') if not {'validation','.claude'}&set(p.relative_to(ROOT).parts)]
 existing={p.name for p in ROOT.iterdir() if p.is_file()}
 GLOB=set('*{}?[]')
 def referenced_paths(ref):
@@ -165,6 +168,19 @@ for p in mds:
     for phrase,why in forbidden.items():
         if phrase in txt:validation.fail(f'{p.name}: stale phrase {phrase!r} ({why})')
 
+# Every hand-allocated pi-digit magic was retired when S0 identity became derived
+# from the contract name. One reappearing in prose means a doc still names a
+# service by a value nothing publishes any more. Block headers away from S0 keep
+# their assigned magics, so those two stay documentable.
+LIVE_BLOCK_MAGICS={'31416054','27182818'}
+RETIRED_MAGIC=re.compile(r'(?<![\w.])(?:1414213[0-9]|1618033[0-9]|1732050[0-9]|2236068[0-9]|3141[56][0-9]{3})(?![\w.])')
+for p in mds:
+    for match in RETIRED_MAGIC.finditer(p.read_text(errors='replace')):
+        if match.group() in LIVE_BLOCK_MAGICS:continue
+        validation.fail(f'retired numeric magic {match.group()!r}'
+                        ' (S0 identity is HASH("<Contract>.v<ABI>"); see docs/ABI_REFERENCE.md)',
+                        path=p.name)
+
 wiring=(ROOT/'data/script_wiring.json').read_text()
 for phrase,why in {
     'Runtime S7 = committed material epoch':'Material Transform Runtime mirrors the committed epoch at S22',
@@ -178,7 +194,7 @@ required={
  'docs/CATALOG_STORAGE.md':['Store ABI6','Loader ABI5','item directory','payload heap','runtime Store placement','Whole-item invariant','S27','ItemCellCount + 2'],
  'docs/CATALOG_SCHEMA.md':['CatalogSchemaVersion','CELL_BLOCK_WIDTH = 4','canonical zero padding','Resource Profile schema v2','Input Profile schema v3','Transform schema v4','Recipe schema v3'],
  'docs/DEPENDENCY_PLANNING.md':['199 Job Command Gateway ABI3','ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10','ic10/dependency-planning/dependency_plan_store_v2_0.ic10','QuoteFingerprintA','active','FutureQty','root job -> child -> grandchild','physical reservation authority'],
- 'docs/ABI_REFERENCE.md':['Store ABI6','Loader ABI5','Coordinator ABI4','DIRECTORY_ADAPTER_ABI_V3','Generic Snapshot Directory Host','DirectorySchema.Controller','DirectorySchema.ResourceReservation','DirectorySchema.Printer','ProcessorSpec','DirectorySchema.PrinterExecution','Generic Job Store ABI v1','31415984','Transform Profile ABI4','RequiredCapabilityMask','Recipe schema v3','Manufacturing Scheduler','ABI2 exactly','Power Management ABIs — current','DirectorySchema.PowerReservation','S6','S7','ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10'],
+ 'docs/ABI_REFERENCE.md':['Store ABI6','Loader ABI5','Coordinator ABI4','DIRECTORY_ADAPTER_ABI_V3','Generic Snapshot Directory Host','DirectorySchema.Controller','DirectorySchema.ResourceReservation','DirectorySchema.Printer','ProcessorSpec','DirectorySchema.PrinterExecution','Generic Job Store ABI v1','-955081679','Transform Profile ABI4','RequiredCapabilityMask','Recipe schema v3','Manufacturing Scheduler','ABI2 exactly','Power Management ABIs — current','DirectorySchema.PowerReservation','S6','S7','ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10'],
  'README.md':['ROADMAP.md','docs/PROCESS_UTILITY_ORCHESTRATION.md','docs/INTERRUPTION_FAULT_INJECTION.md','docs/LIVE_COMMISSIONING.md','complete validator/test inventory defined in `tools/run_validation.py`','docs/DEPENDENCY_PLANNING.md','docs/COMPLETED_MILESTONES.md','docs/CATALOG_COORDINATION.md','docs/CATALOG_STORAGE.md','docs/DIRECTORY_STANDARD.md','docs/PRINTER_DIRECTORY.md','docs/GENERIC_JOB_ABI.md','docs/MANUFACTURING_SCHEDULER.md','docs/ASYNC_REQUEST_STANDARD.md','docs/BANKED_TRANSACTION_STANDARD.md','docs/SCRIPT_INDEX.md','tools/run_validation.py','tools/build_release.py','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/generic-jobs/generic_job_store_v1_0.ic10','ic10/manufacturing/manufacturing_scheduler_v1_0.ic10','docs/POWER_MANAGEMENT.md','ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10','ic10/power-jobs/power_job_scheduler_v1_0.ic10'],
  'docs/DIRECTORY_STANDARD.md':['DIRECTORY_ADAPTER_ABI_V3','ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','ic10/directory-core/generic_registry_directory_host_v2_0.ic10','ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10','ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10','data/directory_schemas.json','DirectorySchema.Controller','DirectorySchema.ResourceReservation','DirectorySchema.Printer','DirectorySchema.TransformLane','DirectorySchema.PrinterExecution','DirectorySchema.CatalogStoreNode','DirectorySchema.PowerReservation','overflow'],
  'docs/PRINTER_DIRECTORY.md':['DirectorySchema.Printer','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ProcessorSpec','Printer.Autolathe','Printer.SecurityPrinter','Printer.RocketManufactory','StructureFabricator','Capacity remains 64','DirectorySchema.PrinterExecution','tests/test_printer_directory.py'],
@@ -195,7 +211,7 @@ required={
  'docs/GENERIC_JOB_ABI.md':['GENERIC_JOB_ABI_V1','ic10/generic-jobs/generic_job_store_v1_0.ic10','JobId','RequiredCapability','WAIT_RESOURCE','WAIT_PROCESSOR','WAIT_CAPACITY','QueueSequence','JobGeneration','PUBLISH_NEW','SET_STATE','REAP','32-slot','Manufacturing Scheduler'],
  'docs/INTERRUPTION_FAULT_INJECTION.md':['inject_every_boundary','Catalog migration','Directory mutation','LArRE','POWER replacement','POWER Executors','Generic Job lifecycle','ic10/power-grid/power_dispatch_plan_store_v1_0.ic10','ic10/power-grid/power_reservation_allocator_v1_0.ic10','load/link executors'],
  'docs/POWER_MANAGEMENT.md':['ResourceClass.POWER','ResourceClass.ENERGY','one-game-tick horizon','ic10/generic-jobs/generic_job_selector_v3_0.ic10','DirectorySchema.PowerReservation','Reservation **S37 ImportCapacity**','Reservation **S36 ExportAvailable**','RespectPhysicalOn','foreign','ic10/power-grid/power_reservation_committer_v1_0.ic10','ic10/power-grid/power_reservation_allocator_v1_0.ic10','ic10/power-grid/power_link_executor_v1_0.ic10','JobType.POWER','Gateway lane D','validation/validators/validate_power_management_contracts.py','tests/test_power_management.py'],
- 'docs/PROCESS_UTILITY_ORCHESTRATION.md':['ProcessCondition ABI1','31416048','ic10/process-furnace/furnace_process_condition_request_v1_0.ic10','ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10','ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10','ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10','ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10','ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10','ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10','Fuel.H2O2','PressureGrid','Grant Guard','Electrolyzer'],
+ 'docs/PROCESS_UTILITY_ORCHESTRATION.md':['ProcessCondition ABI1','HASH("ProcessCondition.v1")','ic10/process-furnace/furnace_process_condition_request_v1_0.ic10','ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10','ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10','ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10','ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10','ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10','ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10','Fuel.H2O2','PressureGrid','Grant Guard','Electrolyzer'],
  'docs/MANUFACTURING_SCHEDULER.md':['ic10/generic-jobs/generic_job_selector_v3_0.ic10','Job Command Gateway ABI3','ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10','ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10','ic10/manufacturing/manufacturing_driver_router_v2_0.ic10','ic10/manufacturing/manufacturing_scheduler_v1_0.ic10','ic10/manufacturing/transform_candidate_readiness_v1_0.ic10','DirectorySchema.TransformLane','DirectorySchema.PrinterExecution','ManufacturingReagentHash','one reusable **dynamic** selector','scheduling cursor','ExpectedPrinterRef','OwnerPrinterRef','sole physical Job Store mailbox writer','WAIT_CAPACITY','pressure','temperature'],
 }
 for name,needles in required.items():

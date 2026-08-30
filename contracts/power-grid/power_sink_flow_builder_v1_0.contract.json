@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_sink_flow_builder_v1_0.ic10",
-  "source_sha256": "fd093703fba719eb336280a4aab2a1931507f88bd9ddae9f12ae67ea3d98a69f",
+  "source_sha256": "d6a34a127cf497cc08b2a693bca1381b0b8137de593c7394043c741680085fd6",
   "identity": {
     "service_id": "ic10.script.power.sink.flow.builder",
     "implementation_revision": "1.0",
@@ -214,7 +214,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416032
+        "const": 1387404535
       },
       {
         "address": 1,
@@ -333,7 +333,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416032,
+        "contract": "PowerSinkFlowBuilder",
+        "magic": 1387404535,
         "abi": 1
       }
     ]
@@ -349,7 +350,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416032,
+        "equals": 1387404535,
         "source": "generated-protocol-header"
       },
       {
@@ -364,9 +365,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416032.abi1",
+        "protocol_id": "ic10.stack.power-sink-flow-builder.v1",
         "base": 0,
-        "magic": 31416032,
+        "contract": "PowerSinkFlowBuilder",
+        "magic": 1387404535,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

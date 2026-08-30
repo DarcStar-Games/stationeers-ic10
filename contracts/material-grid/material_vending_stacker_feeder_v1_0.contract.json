@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10",
-  "source_sha256": "4cf7cc3bc0a19d3c869b18c046346d16449c01f5e9bc94434f2605b151196688",
+  "source_sha256": "59402ce803ea03b8534e516f4c03a41a65299213174dab26e3e023aa454509a3",
   "identity": {
     "service_id": "ic10.script.material.vending.stacker.feeder",
     "implementation_revision": "1.0",
@@ -235,7 +235,7 @@
           "self-read",
           "self-write"
         ],
-        "const": 31415961
+        "const": 1559898316
       },
       {
         "address": 1,
@@ -430,7 +430,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415961,
+        "contract": "StackerFeeder",
+        "magic": 1559898316,
         "abi": 1
       }
     ]
@@ -446,7 +447,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415961,
+        "equals": 1559898316,
         "source": "generated-protocol-header"
       },
       {
@@ -461,9 +462,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415961.abi1",
+        "protocol_id": "ic10.stack.stacker-feeder.v1",
         "base": 0,
-        "magic": 31415961,
+        "contract": "StackerFeeder",
+        "magic": 1559898316,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

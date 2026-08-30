@@ -238,7 +238,7 @@ Keep this stack resident while the Manufacturing Scheduler needs current process
 
 ## Generic Job Store
 
-Deploy `ic10/generic-jobs/generic_job_store_v1_0.ic10` when the installation needs queued manufacturing/transfer work. It has no device screws. The Store owns 32 physical job slots and publishes `GENERIC_JOB_ABI_V1` with magic `31415984`, ABI1.
+Deploy `ic10/generic-jobs/generic_job_store_v1_0.ic10` when the installation needs queued manufacturing/transfer work. It has no device screws. The Store owns 32 physical job slots and publishes `GENERIC_JOB_ABI_V1` with identity `HASH("GenericJobStore.v1")`.
 
 The logical record is:
 
@@ -339,7 +339,7 @@ ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10
 ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10
 ```
 
-The Host publishes Generic Snapshot Directory magic `31415981`, ABI1, with `DirectorySchema.ResourceLink` schema version 1, width 1, capacity 64. Use a separate Host IC for a Resource Endpoint directory if needed; the Host program is reusable but each logical directory owns a separate stack.
+The Host publishes Generic Snapshot Directory identity `HASH("GenericSnapshotDirectoryHost.v1")`, with `DirectorySchema.ResourceLink` schema version 1, width 1, capacity 64. Use a separate Host IC for a Resource Endpoint directory if needed; the Host program is reusable but each logical directory owns a separate stack.
 
 ### E. Commission the Resource Transform catalog
 

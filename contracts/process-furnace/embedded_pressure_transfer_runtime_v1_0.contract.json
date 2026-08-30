@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10",
-  "source_sha256": "c7bce23523a524214f354ecd7de8c3fa180ef646a73f4fe4b616d6627835fce1",
+  "source_sha256": "a8c4b0dbff5e48b7001a57e3dd457e96877ea97726c62369a6f66fc358915df2",
   "identity": {
     "service_id": "ic10.script.embedded.pressure.transfer.runtime",
     "implementation_revision": "1.0",
@@ -45,15 +45,15 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415936
+            "equals": -920533037
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.11ef2770b1ad923c",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.11ef2770b1ad923c",
+        "interface_id": "ic10.interface.access.8a989a765c37f701",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.8a989a765c37f701",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -96,15 +96,15 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415936
+            "equals": -920533037
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.cb0ecebb1c6a894f",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.cb0ecebb1c6a894f",
+        "interface_id": "ic10.interface.access.153a09814d786c29",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.153a09814d786c29",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -194,7 +194,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415948
+            "equals": 879244561
           },
           {
             "address": 15,
@@ -205,8 +205,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.cf7b157610a86287",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.cf7b157610a86287",
+        "interface_id": "ic10.interface.access.d7fd8416d278fb07",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.d7fd8416d278fb07",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -266,7 +266,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416065
+        "const": -1100869137
       },
       {
         "address": 1,
@@ -381,7 +381,7 @@
         "access": [
           "self-write"
         ],
-        "const": "HASH(\"ControllerPressureTransfer\")"
+        "const": 1875690426
       },
       {
         "address": 100,
@@ -540,7 +540,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416065,
+        "contract": "EmbeddedPressureTransferRuntime",
+        "magic": -1100869137,
         "abi": 1
       },
       {
@@ -561,7 +562,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416065,
+        "equals": -1100869137,
         "source": "generated-protocol-header"
       },
       {
@@ -590,9 +591,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416065.abi1",
+        "protocol_id": "ic10.stack.embedded-pressure-transfer-runtime.v1",
         "base": 0,
-        "magic": 31416065,
+        "contract": "EmbeddedPressureTransferRuntime",
+        "magic": -1100869137,
         "abi": 1,
         "source": "literal-own-stack-header"
       },

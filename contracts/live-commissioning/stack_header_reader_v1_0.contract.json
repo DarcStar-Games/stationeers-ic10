@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/live-commissioning/stack_header_reader_v1_0.ic10",
-  "source_sha256": "8718d7fd3c9877d3117d482e669a0b8a063a9dfc5af69f2b108ac428a6c25981",
+  "source_sha256": "7fa52bdcac5acb2f46254e6ccbac8c93eca8c461b56b4db342f6fa1e2de1d202",
   "identity": {
     "service_id": "ic10.script.stack.header.reader",
     "implementation_revision": "1.0",
@@ -149,7 +149,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416067
+        "const": 2031952084
       },
       {
         "address": 1,
@@ -285,7 +285,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416067,
+        "contract": "StackHeaderReader",
+        "magic": 2031952084,
         "abi": 1
       }
     ]
@@ -308,7 +309,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416067,
+        "equals": 2031952084,
         "source": "generated-protocol-header"
       },
       {
@@ -323,9 +324,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416067.abi1",
+        "protocol_id": "ic10.stack.stack-header-reader.v1",
         "base": 0,
-        "magic": 31416067,
+        "contract": "StackHeaderReader",
+        "magic": 2031952084,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

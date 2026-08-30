@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10",
-  "source_sha256": "f9f3fb2d0992a5e0f580e9267492d75e53138741b9d3bd76f7eed07cbf478455",
+  "source_sha256": "d69982fa64f97810c32cf2ba47e6b46b372070907c5839fdd21315d3ed2cff75",
   "identity": {
     "service_id": "ic10.script.larre.storage.reserved.move.client",
     "implementation_revision": "1.0",
@@ -51,15 +51,15 @@
         "constraints": [
           {
             "address": 35,
-            "equals": "HASH(\"StorageAccess.LArRE\")"
+            "equals": -491515906
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.4cacbec7b5d5acaa",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.4cacbec7b5d5acaa",
+        "interface_id": "ic10.interface.access.e8f4d0d91fddd268",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.e8f4d0d91fddd268",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -230,7 +230,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415991
+        "const": 1834669018
       },
       {
         "address": 1,
@@ -368,7 +368,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415991,
+        "contract": "LarreStorageReservedMoveClient",
+        "magic": 1834669018,
         "abi": 1
       }
     ]
@@ -384,7 +385,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415991,
+        "equals": 1834669018,
         "source": "generated-protocol-header"
       },
       {
@@ -399,9 +400,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415991.abi1",
+        "protocol_id": "ic10.stack.larre-storage-reserved-move-client.v1",
         "base": 0,
-        "magic": 31415991,
+        "contract": "LarreStorageReservedMoveClient",
+        "magic": 1834669018,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

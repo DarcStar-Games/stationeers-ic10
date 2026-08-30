@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/printer-directory/printer_capacity_client_v2_0.ic10",
-  "source_sha256": "1703506292b88ea6ff454d6dafc7c89efca575592eb90238208e6736dd56d43d",
+  "source_sha256": "9b80e64d21138a940c59982e327031b76bea141ede3d6753b2b9a4bc1046f0fe",
   "identity": {
     "service_id": "ic10.script.printer.capacity.client",
     "implementation_revision": "2.0",
@@ -37,7 +37,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415996
+          "value": -1743126326
         },
         {
           "address": 1,
@@ -92,7 +92,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415997
+        "const": -31965569
       },
       {
         "address": 1,
@@ -213,7 +213,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415997,
+        "contract": "PrinterCapacityClient",
+        "magic": -31965569,
         "abi": 2
       }
     ]
@@ -229,7 +230,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415997,
+        "equals": -31965569,
         "source": "generated-protocol-header"
       },
       {
@@ -244,9 +245,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415997.abi2",
+        "protocol_id": "ic10.stack.printer-capacity-client.v2",
         "base": 0,
-        "magic": 31415997,
+        "contract": "PrinterCapacityClient",
+        "magic": -31965569,
         "abi": 2,
         "source": "literal-own-stack-header"
       }

@@ -1,5 +1,5 @@
 # Generic Manufacturing Candidate Selector ABI2: dynamic Snapshot Directory RefId in S16.
-poke 0 31416072
+poke 0 HASH("ManufacturingCandidateSelector.v2")
 poke 1 2
 poke 2 0
 Loop:
@@ -20,7 +20,7 @@ bgt r5 2 Bad
 bltz r6 Bad
 blez r9 Bad
 getd r0 r9 0
-bne r0 31415981 Bad
+bne r0 HASH("GenericSnapshotDirectoryHost.v1") Bad
 getd r0 r9 1
 bne r0 1 Bad
 getd r0 r9 9

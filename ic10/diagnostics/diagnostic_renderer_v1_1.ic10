@@ -5,7 +5,7 @@
 alias display r1
 alias controller r2
 move r6 0 # round-robin record cursor
-poke 0 16180339
+poke 0 HASH("DiagnosticRenderer.v1")
 poke 1 1
 poke 2 0
 Loop:

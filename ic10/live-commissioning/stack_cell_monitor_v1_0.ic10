@@ -1,5 +1,5 @@
 # Stack Cell Monitor ABI1: d0 target IC housing,d1 address 0..511,d2 optional out.
-poke 0 31416052
+poke 0 HASH("StackCellMonitor.v1")
 poke 1 1
 poke 2 20
 poke 5 1

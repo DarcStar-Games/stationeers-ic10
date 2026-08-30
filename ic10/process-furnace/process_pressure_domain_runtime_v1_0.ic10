@@ -1,5 +1,5 @@
 # Process PressureDomain ABI2. d0 condition,d1 target.
-poke 0 31416066
+poke 0 HASH("ProcessPressureDomainRuntime.v1")
 poke 1 1
 poke 2 8
 poke 6 96
@@ -16,7 +16,7 @@ bdns d1 Fault
 get r15 d0 11
 blez r15 Fault
 get r0 d0 0
-bne r0 31416048 Fault
+bne r0 HASH("ProcessCondition.v1") Fault
 get r0 d0 1
 bne r0 1 Fault
 get r1 d0 10

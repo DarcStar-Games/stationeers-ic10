@@ -25,7 +25,7 @@
           "access": [
             "self-write"
           ],
-          "const": 31416060
+          "const": -913550230
         },
         {
           "address": 1,
@@ -95,7 +95,7 @@
           "access": [
             "self-write"
           ],
-          "const": "HASH(\"ControllerPhasePressure\")"
+          "const": -820323123
         },
         {
           "address": 100,
@@ -211,7 +211,7 @@
             "id": "header.s0.magic",
             "kind": "cell-equals",
             "address": 0,
-            "equals": 31416060,
+            "equals": -913550230,
             "source": "generated-protocol-header"
           },
           {
@@ -433,7 +433,7 @@
           "access": [
             "self-write"
           ],
-          "const": 31416064
+          "const": 700050398
         },
         {
           "address": 1,
@@ -503,7 +503,7 @@
           "access": [
             "self-write"
           ],
-          "const": "HASH(\"ControllerPressureTransfer\")"
+          "const": 1875690426
         },
         {
           "address": 100,
@@ -681,7 +681,7 @@
             "id": "header.s0.magic",
             "kind": "cell-equals",
             "address": 0,
-            "equals": 31416064,
+            "equals": 700050398,
             "source": "generated-protocol-header"
           },
           {
@@ -722,7 +722,7 @@
           "access": [
             "self-write"
           ],
-          "const": 31416065
+          "const": -1100869137
         },
         {
           "address": 1,
@@ -837,7 +837,7 @@
           "access": [
             "self-write"
           ],
-          "const": "HASH(\"ControllerPressureTransfer\")"
+          "const": 1875690426
         },
         {
           "address": 100,
@@ -1004,7 +1004,7 @@
             "id": "header.s0.magic",
             "kind": "cell-equals",
             "address": 0,
-            "equals": 31416065,
+            "equals": -1100869137,
             "source": "generated-protocol-header"
           },
           {
@@ -1045,7 +1045,7 @@
           "access": [
             "self-write"
           ],
-          "const": 31416066
+          "const": 206384948
         },
         {
           "address": 1,
@@ -1115,7 +1115,7 @@
           "access": [
             "self-write"
           ],
-          "const": "HASH(\"ControllerPressureDomain\")"
+          "const": 1770891776
         },
         {
           "address": 100,
@@ -1203,7 +1203,7 @@
             "id": "header.s0.magic",
             "kind": "cell-equals",
             "address": 0,
-            "equals": 31416066,
+            "equals": 206384948,
             "source": "generated-protocol-header"
           },
           {
@@ -1305,7 +1305,7 @@
         {
           "address": 99,
           "operator": "equals",
-          "value": "HASH(\"ControllerPressureDomain\")"
+          "value": 1770891776
         }
       ],
       "publication_requirements": []
@@ -1354,7 +1354,7 @@
         {
           "address": 99,
           "operator": "equals",
-          "value": "HASH(\"ControllerPressureTransfer\")"
+          "value": 1875690426
         }
       ],
       "publication_requirements": []
@@ -1397,7 +1397,7 @@
         {
           "address": 99,
           "operator": "equals",
-          "value": "HASH(\"ControllerPressureTransfer\")"
+          "value": 1875690426
         }
       ],
       "publication_requirements": []

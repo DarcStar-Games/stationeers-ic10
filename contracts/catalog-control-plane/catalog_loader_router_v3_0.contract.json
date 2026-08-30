@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10",
-  "source_sha256": "9f6e4e1a13cc81dab31e83fd5af19068e252b6abf8af74e91c0f8489ec1fc43f",
+  "source_sha256": "f4d194df89f72f6a8bf6d74fd66ed5b8382c27d49319a3617cc1bbc992da6b54",
   "identity": {
     "service_id": "ic10.script.catalog.loader.router",
     "implementation_revision": "3.0",
@@ -92,7 +92,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415969
+          "value": -284599001
         },
         {
           "address": 1,
@@ -130,7 +130,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415970
+          "value": 4515138
         },
         {
           "address": 1,
@@ -162,7 +162,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415968
+          "value": 875310516
         },
         {
           "address": 1,
@@ -225,7 +225,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415971
+        "const": 1896293257
       },
       {
         "address": 1,
@@ -281,7 +281,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415971,
+        "contract": "CatalogLoaderRouter",
+        "magic": 1896293257,
         "abi": 3
       }
     ]
@@ -297,7 +298,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415971,
+        "equals": 1896293257,
         "source": "generated-protocol-header"
       },
       {
@@ -312,9 +313,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415971.abi3",
+        "protocol_id": "ic10.stack.catalog-loader-router.v3",
         "base": 0,
-        "magic": 31415971,
+        "contract": "CatalogLoaderRouter",
+        "magic": 1896293257,
         "abi": 3,
         "source": "literal-own-stack-header"
       }

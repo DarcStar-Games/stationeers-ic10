@@ -14,10 +14,16 @@ from dataclasses import dataclass
 import hashlib, json
 from pathlib import Path
 
+from framework.ic10_source import game_hash
+from framework.protocol_headers import header_name, header_token
+
 CELL_BLOCK_WIDTH=4
-STORE_MAGIC=31415968; STORE_ABI=6
-LOADER_MAGIC=31415969; LOADER_ABI=5
-COORD_MAGIC=31415970; COORD_ABI=4
+STORE_CONTRACT='GenericCatalogStore'; STORE_ABI=6
+LOADER_CONTRACT='CatalogLoader'; LOADER_ABI=5
+COORD_CONTRACT='CatalogCoordinatorCore'; COORD_ABI=4
+STORE_TOKEN=header_token(STORE_CONTRACT,STORE_ABI); STORE_MAGIC=game_hash(header_name(STORE_CONTRACT,STORE_ABI))
+LOADER_TOKEN=header_token(LOADER_CONTRACT,LOADER_ABI); LOADER_MAGIC=game_hash(header_name(LOADER_CONTRACT,LOADER_ABI))
+COORD_TOKEN=header_token(COORD_CONTRACT,COORD_ABI); COORD_MAGIC=game_hash(header_name(COORD_CONTRACT,COORD_ABI))
 STORE_HEADER_CELLS=32; STORE_DIR_WIDTH=2; STORE_TOTAL_CELLS=512
 LOADER_HEADER_CELLS=24; LOADER_DIR_WIDTH=2
 COORDINATION_PROGRAM_FILES=('ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10','ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10','ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10','ic10/directory-core/generic_registry_directory_host_v2_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10','ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10','ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10','ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10','ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10')
@@ -83,7 +89,7 @@ def make_item_loader(*,label,schema_name,schema_version,instance_name,partition_
     total=sum(x.cells for x in items)
     sig_obj={'schema':schema_name,'version':schema_version,'instance':instance_name,'partition':str(partition_key_expr),'items':[[str(v) for v in x.payload] for x in items]}
     _,tok=stable_hash_token('LD4',sig_obj)
-    L=[f'# {label}; relocatable sparse Loader ABI5; whole items.','clr db',f'poke 0 {LOADER_MAGIC}',f'poke 1 {LOADER_ABI}',
+    L=[f'# {label}; relocatable sparse Loader ABI5; whole items.','clr db',f'poke 0 {LOADER_TOKEN}',f'poke 1 {LOADER_ABI}',
        'poke 2 1',f'poke 3 HASH("{schema_name}.v{schema_version}")',
        f'poke 10 HASH("{instance_name}")']
     if str(partition_key_expr)!='0':L.append(f'poke 11 {partition_key_expr}')
@@ -116,11 +122,11 @@ def split_catalog_items(*,label,schema_name,schema_version,instance_name,partiti
 
 # ---------- Generic Store + Coordinator services ----------
 def make_generic_store_program():
-    return '''# Generic Catalog Store v3.0: Store ABI5 dynamic item heap; set S18 NodeId 1..64.
+    return '''# Generic Catalog Store v3.0: Store ABI6 dynamic item heap; set S18 NodeId 1..64.
 Boot:
 get r13 db 18
 get r0 db 0
-bne r0 31415968 Wipe
+bne r0 HASH("GenericCatalogStore.v6") Wipe
 get r0 db 1
 bne r0 6 Fault
 j Header
@@ -134,7 +140,7 @@ poke 20 512
 poke 22 32
 poke 29 480
 Header:
-poke 0 31415968
+poke 0 HASH("GenericCatalogStore.v6")
 poke 1 6
 poke 2 1
 NodeWait:
@@ -150,7 +156,7 @@ get r1 db:0 r7
 blt r1 0 Reset
 add r7 r7 1
 getd r0 r1 0
-bne r0 31415969 Service
+bne r0 HASH("CatalogLoader.v5") Service
 getd r0 r1 1
 bne r0 5 Service
 getd r0 r1 18
@@ -241,20 +247,20 @@ j Idle
 def make_coordinator_directory_host_program():
     return '''Boot: # Generic Registry Directory Host ABI3: CatalogStoreNode persistent registry.
 get r0 db 0
-bne r0 31415982 Init
+bne r0 HASH("GenericRegistryDirectoryHost.v3") Init
 get r0 db 1
 beq r0 3 Header
 Init:
 clr db
 Header:
-poke 0 31415982
+poke 0 HASH("GenericRegistryDirectoryHost.v3")
 poke 1 3
 poke 2 1
 Loop:
 yield
 bdns d0 Loop
 get r0 d0 0
-bne r0 31415983 Loop
+bne r0 HASH("DirectoryAdapter.v3") Loop
 get r0 d0 1
 bne r0 3 Loop
 get r0 d0 15
@@ -363,7 +369,7 @@ Boot:
 get r13 db 14
 get r14 db 15
 get r0 db 0
-beq r0 31415970 Header
+beq r0 HASH("CatalogCoordinatorCore.v4") Header
 clr db
 max r13 r13 1
 max r14 r14 1
@@ -372,14 +378,14 @@ poke 15 r14
 poke 18 1
 poke 25 0
 Header:
-poke 0 31415970
+poke 0 HASH("CatalogCoordinatorCore.v4")
 poke 1 4
 poke 2 0
 Loop:
 yield
 bdns d0 Loop
 get r0 d0 0
-bne r0 31415982 Loop
+bne r0 HASH("GenericRegistryDirectoryHost.v3") Loop
 get r0 d0 1
 bne r0 3 Loop
 get r0 d0 3
@@ -475,7 +481,7 @@ j ra
 '''
 def make_loader_router_program():
     return '''# Catalog Loader Router v3.0: per-item runtime capacity placement; d0 Coordinator ABI3.
-poke 0 31415971
+poke 0 HASH("CatalogLoaderRouter.v3")
 poke 1 3
 poke 2 0
 Loop:
@@ -483,7 +489,7 @@ yield
 bdns d0 Loop
 l r15 d0 ReferenceId
 getd r0 r15 0
-bne r0 31415970 Loop
+bne r0 HASH("CatalogCoordinatorCore.v4") Loop
 getd r0 r15 1
 bne r0 4 Loop
 poke 8 0
@@ -495,7 +501,7 @@ get r1 db:0 r7
 blt r1 0 Reset
 add r7 r7 1
 getd r0 r1 0
-bne r0 31415969 Scan
+bne r0 HASH("CatalogLoader.v5") Scan
 getd r0 r1 1
 bne r0 5 Scan
 getd r0 r1 18
@@ -531,7 +537,7 @@ get r2 db:0 r8
 blt r2 0 FindDone
 add r8 r8 1
 getd r0 r2 0
-bne r0 31415968 Find
+bne r0 HASH("GenericCatalogStore.v6") Find
 getd r0 r2 1
 bne r0 6 Find
 getd r0 r2 16
@@ -586,7 +592,7 @@ j Loop
 '''
 def make_recovery_manager_program():
     return '''# Catalog Coordinator Recovery v2.0: d0 Core,d1 Registry ABI3; epoch takeover.
-poke 0 31415976
+poke 0 HASH("CatalogCoordinatorRecovery.v2")
 poke 1 2
 poke 2 0
 Loop:
@@ -594,9 +600,9 @@ yield
 bdns d0 Loop
 bdns d1 Loop
 get r0 d0 0
-bne r0 31415970 Loop
+bne r0 HASH("CatalogCoordinatorCore.v4") Loop
 get r0 d1 0
-bne r0 31415982 Loop
+bne r0 HASH("GenericRegistryDirectoryHost.v3") Loop
 get r0 d1 1
 bne r0 3 Loop
 get r0 d1 3
@@ -644,7 +650,7 @@ j Loop
 def make_migration_manager_program():
     return '''# Catalog Item Migration Planner v2.0: d0 Core,d1 Directory.
 Boot:
-poke 0 31416069
+poke 0 HASH("CatalogItemMigrationPlanner.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -652,11 +658,11 @@ yield
 bdns d0 Loop
 bdns d1 Loop
 get r0 d0 0
-bne r0 31415970 Loop
+bne r0 HASH("CatalogCoordinatorCore.v4") Loop
 get r0 d0 40
 bgtz r0 Loop
 get r0 d1 0
-bne r0 31415982 Loop
+bne r0 HASH("GenericRegistryDirectoryHost.v3") Loop
 get r0 d1 1
 bne r0 3 Loop
 get r0 d1 3
@@ -754,14 +760,14 @@ j FindSrc
 def make_migration_worker_program():
     return '''# Catalog Item Migration Worker v1.0: d0 Core; copies newest whole item then pops source.
 Boot:
-poke 0 31416071
+poke 0 HASH("CatalogItemMigrationWorker.v1")
 poke 1 1
 poke 2 0
 Loop:
 yield
 bdns d0 Loop
 get r0 d0 0
-bne r0 31415970 Loop
+bne r0 HASH("CatalogCoordinatorCore.v4") Loop
 get r1 d0 40
 blez r1 Loop
 get r2 d0 41
@@ -845,7 +851,7 @@ j Loop
 def make_retirement_manager_program():
     return '''# Catalog Store Retirement Manager v2.0: d0 Core,d1 Registry ABI3.
 Boot:
-poke 0 31416070
+poke 0 HASH("CatalogStoreRetirementManager.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -853,9 +859,9 @@ yield
 bdns d0 Loop
 bdns d1 Loop
 get r0 d0 0
-bne r0 31415970 Loop
+bne r0 HASH("CatalogCoordinatorCore.v4") Loop
 get r0 d1 0
-bne r0 31415982 Loop
+bne r0 HASH("GenericRegistryDirectoryHost.v3") Loop
 get r0 d1 1
 bne r0 3 Loop
 get r0 d1 3
@@ -903,7 +909,7 @@ def make_coordinator_directory_scanner_program():
     return '''# Catalog Store Directory Adapter v3.0: Adapter ABI3; unique NodeId candidates.
 Boot:
 clr db
-poke 0 31415983
+poke 0 HASH("DirectoryAdapter.v3")
 poke 1 3
 poke 2 17
 poke 3 HASH("DirectorySchema.CatalogStoreNode.v1")
@@ -934,7 +940,7 @@ get r1 db:0 r7
 blt r1 0 Publish
 add r7 r7 1
 getd r0 r1 0
-bne r0 31415968 Scan
+bne r0 HASH("GenericCatalogStore.v6") Scan
 getd r0 r1 1
 bne r0 6 Scan
 getd r2 r1 18
@@ -993,14 +999,14 @@ j Loop
 def make_coordinator_directory_telemetry_program():
     return '''# Catalog Directory Telemetry v2.0: d0 Generic Registry Host ABI3.
 Boot:
-poke 0 31416068
+poke 0 HASH("CatalogCoordinatorDirectoryTelemetry.v1")
 poke 1 1
 poke 2 0
 Loop:
 yield
 bdns d0 Loop
 get r0 d0 0
-bne r0 31415982 Loop
+bne r0 HASH("GenericRegistryDirectoryHost.v3") Loop
 get r0 d0 1
 bne r0 3 Loop
 get r0 d0 3
@@ -1093,7 +1099,7 @@ j Loop
 '''
 def make_coordinator_directory_view_program():
     return '''# Catalog Coordinator Directory View ABI2: d0 Registry ABI3,d1 Core; S2 NodeId.
-poke 0 31415975
+poke 0 HASH("CatalogCoordinatorDirectoryView.v2")
 poke 1 2
 poke 2 0
 Loop:
@@ -1101,7 +1107,7 @@ yield
 bdns d0 Bad
 bdns d1 Bad
 get r0 d0 0
-bne r0 31415982 Bad
+bne r0 HASH("GenericRegistryDirectoryHost.v3") Bad
 get r0 d0 1
 bne r0 3 Bad
 get r0 d0 3
@@ -1110,7 +1116,7 @@ get r15 d0 23
 mod r0 r15 2
 bnez r0 Bad
 get r0 d1 0
-bne r0 31415970 Bad
+bne r0 HASH("CatalogCoordinatorCore.v4") Bad
 get r2 db 12
 blt r2 1 Bad
 bgt r2 64 Bad

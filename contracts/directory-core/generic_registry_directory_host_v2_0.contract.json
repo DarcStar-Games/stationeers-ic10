@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/directory-core/generic_registry_directory_host_v2_0.ic10",
-  "source_sha256": "b882d7d2d4d15888ef0594f3fd43d5b43140f38b85deb2547cbf8d88d71f1d25",
+  "source_sha256": "3aa2461222d807cd2e09fdae4fc62ebe20b786095927a3624573b18b87f99c11",
   "identity": {
     "service_id": "ic10.script.generic.registry.directory.host",
     "implementation_revision": "2.0",
@@ -54,7 +54,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415983
+            "equals": 583163590
           },
           {
             "address": 1,
@@ -62,7 +62,7 @@
           },
           {
             "address": 3,
-            "equals": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
+            "equals": -698837900
           },
           {
             "address": 10,
@@ -82,7 +82,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415983.abi3"
+          "ic10.stack.directory-adapter.v3"
         ]
       }
     }
@@ -269,7 +269,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415982,
+        "contract": "GenericRegistryDirectoryHost",
+        "magic": -1822968058,
         "abi": 3
       }
     ]
@@ -292,9 +293,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415982.abi3",
+        "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
         "base": 0,
-        "magic": 31415982,
+        "contract": "GenericRegistryDirectoryHost",
+        "magic": -1822968058,
         "abi": 3,
         "source": "literal-own-stack-header"
       }
@@ -304,9 +306,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415983.abi3",
+            "protocol_id": "ic10.stack.directory-adapter.v3",
             "header_base": 0,
-            "magic": 31415983,
+            "contract": "DirectoryAdapter",
+            "magic": 583163590,
             "abi": 3,
             "publication_requirements": []
           }

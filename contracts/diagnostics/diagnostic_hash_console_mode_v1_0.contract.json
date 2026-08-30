@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10",
-  "source_sha256": "ecd02972fafac4494d991990db276e4203236e38e0b3eabdfbd1e602f79293c4",
+  "source_sha256": "16d5cd1fef43830934d5ac553267bc6fa0fe89f94628f4d80a61c049587ce6a6",
   "identity": {
     "service_id": "ic10.script.diagnostic.hash.console.mode",
     "implementation_revision": "1.0",
@@ -50,7 +50,7 @@
         "access": [
           "self-write"
         ],
-        "const": 17320513
+        "const": 944960148
       },
       {
         "address": 1,
@@ -103,7 +103,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 17320513,
+        "contract": "DiagnosticHashConsoleMode",
+        "magic": 944960148,
         "abi": 1
       }
     ]
@@ -119,7 +120,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 17320513,
+        "equals": 944960148,
         "source": "generated-protocol-header"
       },
       {
@@ -134,9 +135,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.17320513.abi1",
+        "protocol_id": "ic10.stack.diagnostic-hash-console-mode.v1",
         "base": 0,
-        "magic": 17320513,
+        "contract": "DiagnosticHashConsoleMode",
+        "magic": 944960148,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

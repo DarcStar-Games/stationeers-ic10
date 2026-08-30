@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/dependency_plan_store_v2_0.ic10",
-  "source_sha256": "6288f1257a2babfa154a8ac31e99c9ddfa463567c5b0bb4a5185157178365cc8",
+  "source_sha256": "45b2df22309b90253281494fb3b7bb0622598c20caf7dbd92a2601d3b5738637",
   "identity": {
     "service_id": "ic10.script.dependency.plan.store",
     "implementation_revision": "2.0",
@@ -157,7 +157,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416007,
+        "contract": "DependencyPlanStore",
+        "magic": 1864195977,
         "abi": 2
       }
     ]
@@ -180,9 +181,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416007.abi2",
+        "protocol_id": "ic10.stack.dependency-plan-store.v2",
         "base": 0,
-        "magic": 31416007,
+        "contract": "DependencyPlanStore",
+        "magic": 1864195977,
         "abi": 2,
         "source": "literal-own-stack-header"
       }

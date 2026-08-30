@@ -19,7 +19,7 @@ for p in loader_paths:
     if not p.exists(): fail('missing loader '+str(p.relative_to(R))); continue
     t=p.read_text(); code=[x.split('#',1)[0].strip() for x in t.splitlines() if x.split('#',1)[0].strip()]
     if t.count('clr db')!=1 or not code or code[0]!='clr db': fail(p.name+': Loader must self-clear exactly once')
-    if 'poke 0 31415969' not in t or 'poke 1 5' not in t or code[-1]!='poke 18 1': fail(p.name+': not one-shot Loader ABI5 / Ready not last')
+    if 'poke 0 HASH("CatalogLoader.v5")' not in t or 'poke 1 5' not in t or code[-1]!='poke 18 1': fail(p.name+': not one-shot Loader ABI5 / Ready not last')
     if any(x.startswith(('put ','putd ','yield','j ')) for x in code): fail(p.name+': immutable Loader must not push or loop')
     if re.search(r'^poke\s+\d+\s+0(?:\s|$)',t,re.M): fail(p.name+': explicit zero poke defeats sparse contract')
     # directory entries are [loader-cell-base, item-cell-count]; each item is whole and block aligned
@@ -45,10 +45,10 @@ for p in loader_paths:
 expected=private|prod_loaders
 if actual!=expected: fail(f'clr db ownership changed: expected {sorted(expected)}, got {sorted(actual)}')
 checks={
- 'ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10':['poke 0 31415968','poke 1 6','poke 19 32','poke 20 512','poke 29 480','getd r0 r1 1','bne r0 5 Service','poke 27 0'],
- 'ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10':['poke 0 31415970','poke 1 4','poke 2 0','bgt r7 64 ClaimFail','getd r6 r1 16','bne r6 1 Next','getd r0 r1 29','putd r1 16 2'],
- 'ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10':['poke 0 31415971','poke 1 3','getd r0 r1 1','bne r0 5 Scan','getd r0 r2 29','putd ra 27 r11','putd r1 19 ra'],
- 'ic10/directory-core/generic_registry_directory_host_v2_0.ic10':['poke 0 31415982','poke 1 3','bne r0 31415983 Loop','poke 23 r10'],
+ 'ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10':['poke 0 HASH("GenericCatalogStore.v6")','poke 1 6','poke 19 32','poke 20 512','poke 29 480','getd r0 r1 1','bne r0 5 Service','poke 27 0'],
+ 'ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10':['poke 0 HASH("CatalogCoordinatorCore.v4")','poke 1 4','poke 2 0','bgt r7 64 ClaimFail','getd r6 r1 16','bne r6 1 Next','getd r0 r1 29','putd r1 16 2'],
+ 'ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10':['poke 0 HASH("CatalogLoaderRouter.v3")','poke 1 3','getd r0 r1 1','bne r0 5 Scan','getd r0 r2 29','putd ra 27 r11','putd r1 19 ra'],
+ 'ic10/directory-core/generic_registry_directory_host_v2_0.ic10':['poke 0 HASH("GenericRegistryDirectoryHost.v3")','poke 1 3','bne r0 HASH("DirectoryAdapter.v3") Loop','poke 23 r10'],
  'ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10':['poke 1 3','poke 3 HASH("DirectorySchema.CatalogStoreNode.v1")','poke 10 6','poke 11 64','poke 15 2'],
  'ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10':['get r14 d0 15','putd r1 12 r14'],
  'ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10':['getd r0 r1 16','bne r0 3 NextSrc','putd r2 27 r11','put d0 40 r13'],
@@ -66,7 +66,7 @@ expected_schema={
 }
 for name,(schema,version,count) in expected_schema.items():
     m=json.loads((R/'data'/name).read_text())
-    if (m.get('catalog_store_magic'),m.get('catalog_store_abi'),m.get('catalog_loader_magic'),m.get('catalog_loader_abi'),m.get('catalog_coordinator_magic'),m.get('catalog_coordinator_abi'))!=(31415968,6,31415969,5,31415970,4): fail(name+': common ABI mismatch')
+    if (m.get('catalog_store_magic'),m.get('catalog_store_abi'),m.get('catalog_loader_magic'),m.get('catalog_loader_abi'),m.get('catalog_coordinator_magic'),m.get('catalog_coordinator_abi'))!=(875310516,6,-284599001,5,4515138,4): fail(name+': common ABI mismatch')
     if m.get('catalog_schema_id')!=schema or m.get('catalog_schema_version')!=version or m.get('total_item_count')!=count: fail(name+': schema/count mismatch')
     if m.get('control_plane')!='catalog_coordinator_v3_runtime_placement_item_migration' or m.get('store_model')!='generic_dynamic_item_heap' or m.get('loader_model')!='one_shot_sparse_relocatable_whole_items': fail(name+': runtime placement model metadata missing')
     if not m.get('runtime_store_placement'): fail(name+': runtime placement flag missing')

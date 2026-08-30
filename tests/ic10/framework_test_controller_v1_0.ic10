@@ -18,7 +18,7 @@ get r15 ConfigHost 5
 get r0 db 117
 beq r15 r0 PublishStatus
 get r0 ConfigHost 0
-bne r0 31415928 HostBad
+bne r0 HASH("GenericPersistentConfigHost.v1") HostBad
 get r0 ConfigHost 1
 bne r0 1 HostBad
 get r0 ConfigHost 2

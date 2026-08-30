@@ -1,10 +1,10 @@
 # Material Transfer Executor ABI1. d0 Link,d1 Feeder,d2 Guard.
 get r0 db 31
-beq r0 31415958 Init
+beq r0 HASH("MaterialTransferExecutor.v1") Init
 poke 9 0
-poke 31 31415958
+poke 31 HASH("MaterialTransferExecutor.v1")
 Init:
-poke 0 31415958
+poke 0 HASH("MaterialTransferExecutor.v1")
 poke 1 1
 poke 2 0
 poke 19 0
@@ -77,7 +77,7 @@ bdns d2 ra
 get r14 d2 13
 blez r14 ra
 get r0 d2 0
-bne r0 31415960 ra
+bne r0 HASH("MaterialTransferGrantGuard.v1") ra
 get r0 d2 1
 bne r0 1 ra
 get r0 d2 11

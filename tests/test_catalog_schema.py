@@ -3,34 +3,38 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.ic10_source import game_hash
 from pathlib import Path
 from framework.ic10_harness import IC10,Device
 import json,sys
 import framework.catalog_schema as C
 R=_PROJECT_ROOT;fails=[]
+def hv(contract,abi):
+ """The harness spelling of a published identity cell."""
+ return f'HASH:{contract}.v{abi}'
 # Common ABI/runtime-placement contract.
-if (C.STORE_MAGIC,C.STORE_ABI,C.LOADER_MAGIC,C.LOADER_ABI,C.COORD_MAGIC,C.COORD_ABI)!=(31415968,6,31415969,5,31415970,4):fails.append('Catalog common ABI constants mismatch')
+if (C.STORE_MAGIC,C.STORE_ABI,C.LOADER_MAGIC,C.LOADER_ABI,C.COORD_MAGIC,C.COORD_ABI)!=(game_hash('GenericCatalogStore.v6'),6,game_hash('CatalogLoader.v5'),5,game_hash('CatalogCoordinatorCore.v4'),4):fails.append('Catalog common ABI constants mismatch')
 if (C.STORE_HEADER_CELLS,C.STORE_DIR_WIDTH,C.STORE_TOTAL_CELLS)!=(32,2,512):fails.append('Store ABI5 item-directory geometry mismatch')
 for f in ('resource_profile_catalog_manifest.json','input_profile_catalog_manifest.json','resource_transform_catalog_manifest.json'):
  m=json.loads((R/'data'/f).read_text())
  if not m.get('runtime_store_placement') or m.get('store_model')!='generic_dynamic_item_heap' or m.get('catalog_store_abi')!=6 or m.get('catalog_loader_abi')!=5:fails.append(f+': not on runtime-placement ABI')
-# A Loader item is relocatable: producer leaves runtime assignment fields zero.
-for p in list(R.glob('*_loader_*_v4_0.ic10'))+list(R.glob('*_loader_*_v6_0.ic10')):
- txt=p.read_text()
- if '31415969' not in txt: continue
- if 'poke 13 0' in txt or 'poke 14 0' in txt: pass
- # More importantly no producer writes a positive physical target into S13/S14.
- for line in txt.splitlines():
+# A Loader item is relocatable: the producer leaves runtime assignment zero.
+# Glob under ic10/ -- anchored at the repository root this matched no file, so
+# the check never ran; the cells it named moved to S19/S20 with the S0 header.
+loaders=[q for q in sorted(R.glob('ic10/*/*_loader_*_v4_0.ic10'))+sorted(R.glob('ic10/*/*_loader_*_v6_0.ic10'))
+         if 'HASH("CatalogLoader.v5")' in q.read_text()]
+if not loaders: fails.append('no catalog Loader programs found; the relocatable check is unenforced')
+for p in loaders:
+ for line in p.read_text().splitlines():
   code=line.split('#',1)[0].strip().split()
-  if len(code)>=3 and code[0]=='poke' and code[1] in ('13','14'):
-   try:
-    if float(code[2])>0:fails.append(p.name+': loader preassigns physical Store')
-   except ValueError:pass
+  # S19 TargetStoreRef, S20 assignment epoch: the Router owns both at runtime.
+  if len(code)>=3 and code[0]=='poke' and code[1] in ('19','20'):
+   fails.append(p.name+': loader preassigns physical Store placement at S'+code[1])
 # Item-level compaction test: two compatible Stores, source DRAINING with two items, destination ACTIVE with one.
 SCHEMA='HASH:CatalogSchema.Test';INSTANCE='HASH:Catalog.Test';PART='HASH:Partition.Test';core_ref=500;src_ref=501;dst_ref=502;dir_ref=503
-core=Device(core_ref,stack={0:C.COORD_MAGIC,1:C.COORD_ABI,6:0,7:2,25:0,40:0,41:0,42:0},props={'ReferenceId':core_ref})
+core=Device(core_ref,stack={0:hv(C.COORD_CONTRACT,C.COORD_ABI),1:C.COORD_ABI,6:0,7:2,25:0,40:0,41:0,42:0},props={'ReferenceId':core_ref})
 def mkstore(ref,node,state,items):
- st={0:C.STORE_MAGIC,1:C.STORE_ABI,2:1,3:SCHEMA,13:INSTANCE,14:1,21:0,24:0,8:node-1,9:len(items),10:32,11:core_ref,12:1,15:1,16:state,17:2,18:node,19:32+2*len(items),20:512-4*len(items),22:32+6*len(items),23:PART,26:1,27:0,29:(512-4*len(items))-(32+2*len(items)),31:1}
+ st={0:hv(C.STORE_CONTRACT,C.STORE_ABI),1:C.STORE_ABI,2:1,3:SCHEMA,13:INSTANCE,14:1,21:0,24:0,8:node-1,9:len(items),10:32,11:core_ref,12:1,15:1,16:state,17:2,18:node,19:32+2*len(items),20:512-4*len(items),22:32+6*len(items),23:PART,26:1,27:0,29:(512-4*len(items))-(32+2*len(items)),31:1}
  for i,item in enumerate(items):
   base=508-i*4;st[32+i*2]=base;st[33+i*2]=4
   for j,v in enumerate(item):st[base+j]=v
@@ -38,7 +42,7 @@ def mkstore(ref,node,state,items):
 src=mkstore(src_ref,1,3,[(101,1,0,0),(202,2,0,0)]);dst=mkstore(dst_ref,2,2,[(303,3,0,0)])
 src.stack[24]=dst_ref;dst.stack[21]=src_ref
 # Registry records only need RefIds for planner traversal.
-dir_stack={0:31415982,1:3,3:'HASH:DirectorySchema.CatalogStoreNode.v1',20:6,21:64,23:0,64:src_ref,65:3,66:src.stack[22],70:dst_ref,71:2,72:dst.stack[22]};directory=Device(dir_ref,dir_stack,{'ReferenceId':dir_ref})
+dir_stack={0:'HASH:GenericRegistryDirectoryHost.v3',1:3,3:'HASH:DirectorySchema.CatalogStoreNode.v1',20:6,21:64,23:0,64:src_ref,65:3,66:src.stack[22],70:dst_ref,71:2,72:dst.stack[22]};directory=Device(dir_ref,dir_stack,{'ReferenceId':dir_ref})
 planner=IC10((R/'ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10').read_text(),{'d0':core,'d1':directory,'src':src,'dst':dst},self_ref=504)
 worker=IC10((R/'ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10').read_text(),{'d0':core,'src':src,'dst':dst},self_ref=505)
 def move_one():

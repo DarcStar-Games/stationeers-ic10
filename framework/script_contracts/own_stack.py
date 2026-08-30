@@ -37,11 +37,15 @@ def verify_declared_headers(rows: list[list[str]], integer_aliases: dict[str, in
     headers = []
     for header in declared:
         base = header["base"]; magic = header["magic"]; abi = header["abi"]
-        if not 0 <= base < 511 or magic <= 0 or abi <= 0:
+        contract = header.get("contract")
+        # A contract-named header derives its magic by hashing, so any non-zero
+        # int32 is legitimate; only a hand-allocated block magic must be positive.
+        if not 0 <= base < 511 or abi <= 0 or (magic == 0 if contract else magic <= 0):
             raise ValueError(f"invalid declared header: {header}")
         if magic not in writes[base] or abi not in writes[base + 1]:
             raise ValueError(f"declared header {header} is not written literally by source")
-        headers.append({"base": base, "magic": magic, "abi": abi})
+        headers.append({"base": base, **({"contract": contract} if contract else {}),
+                        "magic": magic, "abi": abi})
     return sorted(headers, key=lambda item: (item["base"], item["magic"], item["abi"]))
 
 

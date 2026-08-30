@@ -3,13 +3,14 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.ic10_source import game_hash
 from pathlib import Path
 import json,sys
 from framework.ic10_harness import Device,IC10,run_round_robin
 R=_PROJECT_ROOT;fails=[]
 H=(R/'ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10').read_text();B=(R/'ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10').read_text()
 S=json.loads((R/'data/directory_schemas.json').read_text())
-if S.get('format')!='GENERIC_DIRECTORY_SCHEMAS_V10' or S.get('adapter_abi',{}).get('magic')!=31415983 or S['adapter_abi'].get('abi')!=2:fails.append('Directory Adapter ABI registry metadata mismatch')
+if S.get('format')!='GENERIC_DIRECTORY_SCHEMAS_V10' or S.get('adapter_abi',{}).get('magic')!=game_hash('DirectoryAdapter.v3') or S['adapter_abi'].get('abi')!=2:fails.append('Directory Adapter ABI registry metadata mismatch')
 
 def host(ref):
  vm=IC10(H,self_ref=ref);vm.run(2);d=Device(ref,vm.stack,{'ReferenceId':ref});return vm,d
@@ -25,18 +26,18 @@ def records(h):
  b=int(h.stack.get(24,0));w=int(h.stack.get(11,0));cap=int(h.stack.get(12,0));c=int(h.stack.get(27+b,0));base=32+b*w*cap
  return [[h.stack.get(base+i*w+j,0) for j in range(w)] for i in range(c)]
 
-def adapter_ok(a,mode=1):return a.stack.get(0)==31415983 and a.stack.get(1)==3 and a.stack.get(15)==mode and int(a.stack.get(13,0))%2==0
+def adapter_ok(a,mode=1):return a.stack.get(0)=='HASH:DirectoryAdapter.v3' and a.stack.get(1)==3 and a.stack.get(15)==mode and int(a.stack.get(13,0))%2==0
 # Controller snapshot.
 cs=[]
 for ref,typ in ((201,'HASH:Z'),(202,'HASH:A'),(203,'HASH:A')):cs.append(Device(ref,stack={96:27182818,97:2,99:typ},props={'ReferenceId':ref,'PrefabHash':-128473777}))
 a,b,h,hd=snapshot((R/'ic10/controller-discovery/controller_directory_adapter_v4_0.ic10').read_text(),{f'c{i}':d for i,d in enumerate(cs)},100)
-if not adapter_ok(a) or hd.stack.get(0)!=31415981 or hd.stack.get(1)!=1 or hd.stack.get(9)!='HASH:DirectorySchema.Controller.v1' or records(h)!=[['HASH:A',202],['HASH:A',203],['HASH:Z',201]]:fails.append('Controller Adapter ABI/snapshot mismatch')
+if not adapter_ok(a) or hd.stack.get(0)!='HASH:GenericSnapshotDirectoryHost.v1' or hd.stack.get(1)!=1 or hd.stack.get(9)!='HASH:DirectorySchema.Controller.v1' or records(h)!=[['HASH:A',202],['HASH:A',203],['HASH:Z',201]]:fails.append('Controller Adapter ABI/snapshot mismatch')
 # Endpoint snapshot.
-eps=[Device(301,stack={0:31415949,1:1,52:2,53:9,11:1},props={'ReferenceId':301,'PrefabHash':2037291645}),Device(302,stack={0:31415949,1:1,52:1,53:7,11:1},props={'ReferenceId':302,'PrefabHash':-128473777})]
+eps=[Device(301,stack={0:'HASH:ResourceEndpoint.v1',1:1,52:2,53:9,11:1},props={'ReferenceId':301,'PrefabHash':2037291645}),Device(302,stack={0:'HASH:ResourceEndpoint.v1',1:1,52:1,53:7,11:1},props={'ReferenceId':302,'PrefabHash':-128473777})]
 a,b,h,hd=snapshot((R/'ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10').read_text(),{'e0':eps[0],'e1':eps[1]},110)
 if not adapter_ok(a) or records(h)!=[[1,7,302],[2,9,301]]:fails.append('Resource Endpoint Adapter ABI/snapshot mismatch')
 # Resource Link snapshot.
-links=[Device(402,stack={0:31415953,1:1,12:1},props={'ReferenceId':402,'PrefabHash':2037291645}),Device(401,stack={0:31415953,1:1,12:1},props={'ReferenceId':401,'PrefabHash':-128473777})]
+links=[Device(402,stack={0:'HASH:ResourceLink.v1',1:1,12:1},props={'ReferenceId':402,'PrefabHash':2037291645}),Device(401,stack={0:'HASH:ResourceLink.v1',1:1,12:1},props={'ReferenceId':401,'PrefabHash':-128473777})]
 a,b,h,hd=snapshot((R/'ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10').read_text(),{'l0':links[0],'l1':links[1]},120)
 if not adapter_ok(a) or records(h)!=[[401],[402]]:fails.append('Resource Link Adapter ABI/snapshot mismatch')
 # Printer snapshot: six supported families, tier/capability packing, live operational flags, no Fabricator.
@@ -63,7 +64,7 @@ if not adapter_ok(a) or hd.stack.get(9)!='HASH:DirectorySchema.Printer.v2' or pr
 
 # Pressure adapter consumes Controller Directory but publishes generic candidates; generic Bridge suppresses unchanged commits.
 p1=Device(501,stack={97:2,106:601,107:602,115:4},props={'ReferenceId':501});p2=Device(502,stack={97:2,106:603,107:604,115:5},props={'ReferenceId':502})
-cd=Device(131,stack={0:31415981,1:1,24:0,25:1,27:2,9:'HASH:DirectorySchema.Controller.v1',11:2,12:64,32:'HASH:ControllerPressureTransfer',33:501,34:'HASH:ControllerPressureTransfer',35:502},props={'ReferenceId':131})
+cd=Device(131,stack={0:'HASH:GenericSnapshotDirectoryHost.v1',1:1,24:0,25:1,27:2,9:'HASH:DirectorySchema.Controller.v1',11:2,12:64,32:'HASH:ControllerPressureTransfer',33:501,34:'HASH:ControllerPressureTransfer',35:502},props={'ReferenceId':131})
 a,b,h,hd=snapshot((R/'ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10').read_text(),{'d1':cd,'p1':p1,'p2':p2},130)
 if records(h)!=[[501,601,602],[502,603,604]]:fails.append('Pressure Link Adapter ABI/snapshot mismatch')
 g0=max(hd.stack.get(3,0),hd.stack.get(4,0))
@@ -72,12 +73,12 @@ g1=max(hd.stack.get(3,0),hd.stack.get(4,0))
 if g1!=g0:fails.append('generic Adapter Bridge advanced generation for unchanged snapshot')
 # Power Reservation snapshot: dispatch keys, class filtering, and the S8 allocator owner binding.
 pres=[
- Device(901,stack={0:31415950,1:1,33:4,35:100,12:1,17:0,28:1,30:601,31:32},props={'ReferenceId':901}),
- Device(902,stack={0:31415950,1:1,33:4,12:1,17:0,28:2,30:602,31:25},props={'ReferenceId':902}),
- Device(903,stack={0:31415950,1:1,33:4,12:1,17:0,28:3,30:603,31:48},props={'ReferenceId':903}),
- Device(904,stack={0:31415950,1:1,33:4,12:1,17:0,28:2,30:604,31:42},props={'ReferenceId':904}),
- Device(905,stack={0:31415950,1:1,33:9,35:50,12:1,17:0,28:1,30:699,31:16},props={'ReferenceId':905}),
- Device(906,stack={0:31415950,1:1,33:4,35:80,12:1,17:4242,28:1,30:605,31:16},props={'ReferenceId':906}),
+ Device(901,stack={0:'HASH:ResourceReservation.v1',1:1,33:4,35:100,12:1,17:0,28:1,30:601,31:32},props={'ReferenceId':901}),
+ Device(902,stack={0:'HASH:ResourceReservation.v1',1:1,33:4,12:1,17:0,28:2,30:602,31:25},props={'ReferenceId':902}),
+ Device(903,stack={0:'HASH:ResourceReservation.v1',1:1,33:4,12:1,17:0,28:3,30:603,31:48},props={'ReferenceId':903}),
+ Device(904,stack={0:'HASH:ResourceReservation.v1',1:1,33:4,12:1,17:0,28:2,30:604,31:42},props={'ReferenceId':904}),
+ Device(905,stack={0:'HASH:ResourceReservation.v1',1:1,33:9,35:50,12:1,17:0,28:1,30:699,31:16},props={'ReferenceId':905}),
+ Device(906,stack={0:'HASH:ResourceReservation.v1',1:1,33:4,35:80,12:1,17:4242,28:1,30:605,31:16},props={'ReferenceId':906}),
 ]
 a,b,h,hd=snapshot((R/'ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10').read_text(),{f'q{i}':d for i,d in enumerate(pres)},150)
 expected_power=[[1000002,601,901],[2000996,603,903],[3000998,602,902],[4000997,604,904],[5000996,603,903]]
@@ -105,11 +106,11 @@ if records(hv)!=[[x] for x in range(2,66)]:fails.append('Snapshot Host overflow 
 bank=int(hd.stack.get(24,0))
 if hd.stack.get(29+bank,0)!=1:fails.append('Snapshot Host failed to publish overflow')
 # Registry mode consumes the same Adapter ABI directly and indexes by NodeId.
-store1=Device(701,stack={0:31415968,1:6,16:2,18:7,22:100,26:3,13:'HASH:CatA'},props={'ReferenceId':701,'PrefabHash':2037291645})
-store2=Device(702,stack={0:31415968,1:6,16:1,18:9,22:32,26:0,13:0},props={'ReferenceId':702,'PrefabHash':2037291645})
+store1=Device(701,stack={0:'HASH:GenericCatalogStore.v6',1:6,16:2,18:7,22:100,26:3,13:'HASH:CatA'},props={'ReferenceId':701,'PrefabHash':2037291645})
+store2=Device(702,stack={0:'HASH:GenericCatalogStore.v6',1:6,16:1,18:9,22:32,26:0,13:0},props={'ReferenceId':702,'PrefabHash':2037291645})
 av=IC10((R/'ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10').read_text(),{'s1':store1,'s2':store2},self_ref=710);ad=Device(710,av.stack,{'ReferenceId':710});rv=IC10((R/'ic10/directory-core/generic_registry_directory_host_v2_0.ic10').read_text(),{'d0':ad},self_ref=711)
 for _ in range(40):av.run(1,max_steps=50000);rv.run(1,max_steps=50000)
-if not adapter_ok(av,2) or rv.stack.get(0)!=31415982 or rv.stack.get(1)!=3 or rv.stack.get(3)!='HASH:DirectorySchema.CatalogStoreNode.v1':fails.append('Registry Adapter ABI/header mismatch')
+if not adapter_ok(av,2) or rv.stack.get(0)!='HASH:GenericRegistryDirectoryHost.v3' or rv.stack.get(1)!=3 or rv.stack.get(3)!='HASH:DirectorySchema.CatalogStoreNode.v1':fails.append('Registry Adapter ABI/header mismatch')
 base7=64+(7-1)*6;base9=64+(9-1)*6
 if rv.stack.get(base7)!=701 or rv.stack.get(base7+1)!=2 or rv.stack.get(base9)!=702:fails.append('Registry Host NodeId indexing mismatch')
 # Removing Node9 from adapter discovery marks its persistent record MISSING on a later adapter generation.
@@ -135,7 +136,7 @@ if hd2.stack.get(29+bank,0)!=0 or records(hv2)!=[[x] for x in range(1,65)]:fails
 wrong='''# synthetic wrong registry schema Adapter ABI2
 Boot:
 clr db
-poke 0 31415983
+poke 0 HASH("DirectoryAdapter.v3")
 poke 1 3
 poke 2 17
 poke 8 HASH(\"DirectorySchema.Wrong\")
@@ -161,7 +162,7 @@ if q.run_tick(128)!='quantum' or q.reg.get('r0',0)<=0:fails.append('IC10 harness
 # Adversarial interleaving: alternating Adapter generations may never be mixed by Bridge publication.
 toggle='''Boot:
 clr db
-poke 0 31415983
+poke 0 HASH("DirectoryAdapter.v3")
 poke 1 3
 poke 2 17
 poke 3 HASH(\"DirectorySchema.Test.v1\")

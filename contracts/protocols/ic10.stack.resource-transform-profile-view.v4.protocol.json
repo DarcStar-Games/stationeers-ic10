@@ -1,0 +1,297 @@
+{
+  "$schema": "../../schemas/protocol_definition.schema.json",
+  "format": "IC10_PROTOCOL_DEFINITION_V1",
+  "protocol_id": "ic10.stack.resource-transform-profile-view.v4",
+  "name": "ResourceTransformProfileView v4",
+  "transport": "ic-housing-stack",
+  "contract": "ResourceTransformProfileView",
+  "magic": 499210479,
+  "abi": 4,
+  "header_bases": [
+    0
+  ],
+  "canonical_refs": [
+    "data/resource_transforms.json#"
+  ],
+  "provider_interfaces": [
+    {
+      "source": "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10",
+      "header_base": 0,
+      "readable_ranges": [
+        {
+          "start": 0,
+          "end": 75
+        }
+      ],
+      "writable_ranges": [],
+      "fields": [
+        {
+          "address": 0,
+          "name": "Header@S0.Magic",
+          "value_type": "hash",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 1,
+          "name": "Header@S0.ABI",
+          "value_type": "integer",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 2,
+          "name": "S2",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 68,
+          "name": "S68",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 69,
+          "name": "S69",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 70,
+          "name": "S70",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 71,
+          "name": "S71",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 72,
+          "name": "S72",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 73,
+          "name": "S73",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 74,
+          "name": "S74",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 75,
+          "name": "S75",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        }
+      ],
+      "behavior": {
+        "publication_rules": [],
+        "restart": {
+          "mode": "preserved-unless-overwritten",
+          "source": "static-entry-path-analysis"
+        },
+        "invariants": []
+      }
+    }
+  ],
+  "consumer_interfaces": [
+    {
+      "source": "ic10/material-transform/material_transform_admission_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        1,
+        32,
+        33,
+        34,
+        35,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        71,
+        72,
+        73,
+        74
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [
+        {
+          "start": 8,
+          "end": 19
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 499210479
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 4
+        },
+        {
+          "address": 32,
+          "operator": "equals",
+          "value": 2
+        },
+        {
+          "address": 34,
+          "operator": "equals",
+          "value": 2
+        },
+        {
+          "address": 69,
+          "operator": "equals",
+          "value": 1
+        },
+        {
+          "address": 73,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "publication_requirements": []
+    },
+    {
+      "source": "ic10/material-transform/material_transform_link_resolver_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d1"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        1,
+        68,
+        69,
+        74
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [
+        {
+          "start": 9,
+          "end": 20
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 499210479
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 4
+        },
+        {
+          "address": 69,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "publication_requirements": []
+    },
+    {
+      "source": "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        1,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        74
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "none",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 499210479
+        },
+        {
+          "address": 1,
+          "operator": "equals",
+          "value": 4
+        },
+        {
+          "address": 69,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "publication_requirements": []
+    }
+  ]
+}

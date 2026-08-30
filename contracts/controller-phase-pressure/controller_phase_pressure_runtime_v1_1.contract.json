@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10",
-  "source_sha256": "9ec69e335fc8e321aeeeff6704e43a343e6d7e1ebceb9eb450334c50bdc3f96e",
+  "source_sha256": "b4edd466b76f944583d93df90b415f74c9a3de965dd024c14915c68551a9e391",
   "identity": {
     "service_id": "ic10.script.controller.phase.pressure.runtime",
     "implementation_revision": "1.1",
@@ -101,7 +101,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415963
+            "equals": 2107540686
           },
           {
             "address": 11,
@@ -112,8 +112,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.2f9fdfc3845daab5",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.2f9fdfc3845daab5",
+        "interface_id": "ic10.interface.access.6e26dd0e3227b88f",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.6e26dd0e3227b88f",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -157,15 +157,15 @@
         "constraints": [
           {
             "address": 12,
-            "equals": "HASH(\"CFG1|ControllerPhasePressure|1|2|255|1|0|0\")"
+            "equals": 1562221057
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.a35c5a268d957af3",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.a35c5a268d957af3",
+        "interface_id": "ic10.interface.access.2f84668354be2ef7",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.2f84668354be2ef7",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -227,7 +227,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416060
+        "const": -913550230
       },
       {
         "address": 1,
@@ -297,7 +297,7 @@
         "access": [
           "self-write"
         ],
-        "const": "HASH(\"ControllerPhasePressure\")"
+        "const": -820323123
       },
       {
         "address": 100,
@@ -405,7 +405,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416060,
+        "contract": "ControllerPhasePressureRuntime",
+        "magic": -913550230,
         "abi": 1
       },
       {
@@ -426,7 +427,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416060,
+        "equals": -913550230,
         "source": "generated-protocol-header"
       },
       {
@@ -455,9 +456,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416060.abi1",
+        "protocol_id": "ic10.stack.controller-phase-pressure-runtime.v1",
         "base": 0,
-        "magic": 31416060,
+        "contract": "ControllerPhasePressureRuntime",
+        "magic": -913550230,
         "abi": 1,
         "source": "literal-own-stack-header"
       },

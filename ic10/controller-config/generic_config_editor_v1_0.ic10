@@ -6,7 +6,7 @@ alias ReloadConfig d1
 alias ApplyConfig d2
 alias selector r1
 get r0 db 0
-bne r0 22360680 Reset
+bne r0 HASH("GenericConfigEditor.v1") Reset
 get r0 db 1
 beq r0 1 Header
 Reset:
@@ -14,7 +14,7 @@ get r1 db 100
 clr db
 poke 100 r1
 Header:
-poke 0 22360680
+poke 0 HASH("GenericConfigEditor.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -24,7 +24,7 @@ s db Setting r0 # housing shows commissioning state/error code
 get selector db 100
 blez selector NoSelector
 getd r0 selector 0
-bne r0 17320508 NoSelector
+bne r0 HASH("ControllerSelector.v2") NoSelector
 getd r0 selector 1
 bne r0 2 NoSelector
 getd r0 selector 8

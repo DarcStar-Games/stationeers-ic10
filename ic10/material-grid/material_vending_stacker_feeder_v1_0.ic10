@@ -1,10 +1,10 @@
 get r0 db 0
-beq r0 31415961 Init
+beq r0 HASH("StackerFeeder.v1") Init
 poke 24 0
 poke 10 0
 poke 20 0
 Init:
-poke 0 31415961
+poke 0 HASH("StackerFeeder.v1")
 poke 1 1
 poke 2 0
 Loop:

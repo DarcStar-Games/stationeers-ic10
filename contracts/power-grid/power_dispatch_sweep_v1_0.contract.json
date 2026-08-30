@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_dispatch_sweep_v1_0.ic10",
-  "source_sha256": "60289c8c7113f033ea062f8404bb3de8bbeced21b7297113cabe19092ebc470a",
+  "source_sha256": "812d40bfc6d2f4a4f08c9c0d440e56ef9050fef05350305fdf7f98d6a11a56f5",
   "identity": {
     "service_id": "ic10.script.power.dispatch.sweep",
     "implementation_revision": "1.0",
@@ -190,7 +190,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416033
+        "const": 1687630222
       },
       {
         "address": 1,
@@ -303,7 +303,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416033,
+        "contract": "PowerDispatchSweep",
+        "magic": 1687630222,
         "abi": 1
       }
     ]
@@ -319,7 +320,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416033,
+        "equals": 1687630222,
         "source": "generated-protocol-header"
       },
       {
@@ -334,9 +335,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416033.abi1",
+        "protocol_id": "ic10.stack.power-dispatch-sweep.v1",
         "base": 0,
-        "magic": 31416033,
+        "contract": "PowerDispatchSweep",
+        "magic": 1687630222,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

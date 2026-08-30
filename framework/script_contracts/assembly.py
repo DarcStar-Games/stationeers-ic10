@@ -27,6 +27,7 @@ from framework.script_contracts.own_stack import (
     verify_declared_headers,
 )
 from framework.script_contracts.parsing import collect_aliases, parse_rows
+from framework.protocol_headers import load_headers
 from framework.source_metadata import deployable_scripts, load_manifest, resolve_script_metadata
 
 FORMAT = "IC10_SCRIPT_CONTRACT_V2"
@@ -68,7 +69,7 @@ def build_contract(path: Path, root: Path, manifest: dict[str, Any], declared_he
         port["target"] = port_target(port, consumes)
     own_stack, publication_rules = analyze_own_stack(source, rows, integer_aliases, headers, overrides)
     provides = [{
-        "protocol_id": protocol_id(header["magic"], header["abi"]),
+        "protocol_id": protocol_id(header["magic"], header["abi"], header.get("contract")),
         **header,
         "source": "literal-own-stack-header",
     } for header in headers]
@@ -116,11 +117,9 @@ def _load_declarations(root: Path) -> tuple[dict[str, Any], dict[str, Any], dict
     definitions_data = json.loads((root / "data" / "script_contract_protocol_definitions.json").read_text())
     if definitions_data.get("format") != "IC10_PROTOCOL_DEFINITIONS_V1":
         raise ValueError("unsupported script contract protocol definition format")
-    header_data = json.loads((root / "data" / "script_protocol_headers.json").read_text())
-    if header_data.get("format") != "IC10_PROTOCOL_HEADERS_V1":
-        raise ValueError("unsupported script protocol header format")
+    declared_headers, declared_consumers = load_headers(root)
     return (override_data.get("scripts", {}), definitions_data.get("protocols", {}),
-            header_data.get("scripts", {}), header_data.get("consumers", {}))
+            declared_headers, declared_consumers)
 
 
 def _build_contracts(
@@ -159,21 +158,21 @@ def _protocol_registry(
     """Derive the protocol registry from every contract's provides/consumes edges."""
     providers: dict[str, list[dict[str, Any]]] = defaultdict(list)
     consumers: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    headers: dict[str, tuple[int, int]] = {}
+    headers: dict[str, tuple[int, int, str | None]] = {}
     for contract in contracts.values():
         for provided in contract["contracts"]["provides"]:
             pid = provided["protocol_id"]
-            headers[pid] = (provided["magic"], provided["abi"])
+            headers[pid] = (provided["magic"], provided["abi"], provided.get("contract"))
             providers[pid].append({"source": contract["source"], "header_base": provided["base"]})
         for requirement in contract["contracts"]["consumes"]:
             for accepted in requirement["accepted"]:
                 pid = accepted["protocol_id"]
-                headers[pid] = (accepted["magic"], accepted["abi"])
+                headers[pid] = (accepted["magic"], accepted["abi"], accepted.get("contract"))
                 consumers[pid].append({"source": contract["source"], "endpoint": {"kind": "device-port", "value": requirement["port"]}, "header_base": accepted["header_base"]})
         for dependency in contract["network_dependencies"]:
             for accepted in dependency["accepted"]:
                 pid = accepted["protocol_id"]
-                headers[pid] = (accepted["magic"], accepted["abi"])
+                headers[pid] = (accepted["magic"], accepted["abi"], accepted.get("contract"))
                 consumers[pid].append({"source": contract["source"], "endpoint": {"kind": "network-reference", "value": dependency["reference"]}, "header_base": accepted["header_base"]})
     unknown_definitions = sorted(set(definitions) - set(headers))
     if unknown_definitions:
@@ -183,9 +182,10 @@ def _protocol_registry(
         "protocols": [{
             "protocol_id": pid,
             "transport": "ic-housing-stack",
+            **({"contract": headers[pid][2]} if headers[pid][2] else {}),
             "magic": headers[pid][0],
             "abi": headers[pid][1],
-            "name": protocol_name(pid, headers[pid][1], sorted(item["source"] for item in providers[pid]), definitions),
+            "name": protocol_name(pid, headers[pid][1], sorted(item["source"] for item in providers[pid]), definitions, headers[pid][2]),
             "definition_ref": f"contracts/protocols/{pid}.protocol.json",
             "canonical_refs": sorted(set(definitions.get(pid, {}).get("definition_refs", [])) | {
                 SUPPLEMENTAL_REFS[by_source[item["source"]]["identity"]["deployment_family"]]
@@ -256,6 +256,7 @@ def _protocol_definitions(protocol_registry: dict[str, Any], by_source: dict[str
             "protocol_id": protocol["protocol_id"],
             "name": protocol["name"],
             "transport": protocol["transport"],
+            **({"contract": protocol["contract"]} if "contract" in protocol else {}),
             "magic": protocol["magic"],
             "abi": protocol["abi"],
             "header_bases": sorted({item["header_base"] for item in protocol["providers"] + protocol["consumers"]}),

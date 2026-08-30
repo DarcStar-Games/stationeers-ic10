@@ -1,6 +1,6 @@
 # GFG utility + ProcessCondition ABI1. d0 GFG,d1 PowerPlan,d2 ambient,d3 mix Guard.
 # S16 medium,S17 min kPa,S18 max kPa,S19 shed W,S20 on.
-poke 0 31416048
+poke 0 HASH("ProcessCondition.v1")
 poke 1 1
 poke 2 0
 poke 11 0
@@ -13,7 +13,7 @@ bdns d1 Bad
 bdns d2 Bad
 bdns d3 Bad
 get r0 d1 0
-bne r0 31416028 Bad
+bne r0 HASH("PowerDispatchPlanStore.v1") Bad
 get r0 d1 1
 bne r0 1 Bad
 l r0 d0 PrefabHash

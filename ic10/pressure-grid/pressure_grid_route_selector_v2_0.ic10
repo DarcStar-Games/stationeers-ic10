@@ -1,5 +1,5 @@
 # Grid Route Selector v2.0: d0 Enumerator,d1 Ranker; reservation-aware ranked path.
-poke 0 31415944
+poke 0 HASH("PressureGridRouteSelector.v2")
 poke 1 2
 poke 2 0
 poke 12 0
@@ -86,11 +86,11 @@ blez r9 Fail
 bdns d0 Fail
 bdns d1 Fail
 get sp d0 0
-bne sp 31415940 Fail
+bne sp HASH("PressureGridPathEnumerator.v2") Fail
 get sp d0 1
 bne sp 2 Fail
 get sp d1 0
-bne sp 31415946 Fail
+bne sp HASH("PressureGridRouteRanker.v2") Fail
 get sp d1 1
 bne sp 2 Fail
 get r4 db 12

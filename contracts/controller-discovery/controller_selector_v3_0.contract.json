@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-discovery/controller_selector_v3_0.ic10",
-  "source_sha256": "17a0287345701e8b152d654224b8e8f4d3586925360bb03e959f9389e247769a",
+  "source_sha256": "af3adb79c889a843958a96e648fa2fb486240bc4cd3f820e578f82abe1fef5bf",
   "identity": {
     "service_id": "ic10.script.controller.selector",
     "implementation_revision": "3.0",
@@ -30,7 +30,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415981
+          "value": 891293726
         },
         {
           "address": 1,
@@ -40,7 +40,7 @@
         {
           "address": 9,
           "operator": "equals",
-          "value": "HASH(\"DirectorySchema.Controller.v1\")"
+          "value": 1910152468
         },
         {
           "address": 11,
@@ -95,7 +95,7 @@
         "access": [
           "self-write"
         ],
-        "const": 17320508
+        "const": 1512745005
       },
       {
         "address": 1,
@@ -233,7 +233,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 17320508,
+        "contract": "ControllerSelector",
+        "magic": 1512745005,
         "abi": 2
       }
     ]
@@ -256,7 +257,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 17320508,
+        "equals": 1512745005,
         "source": "generated-protocol-header"
       },
       {
@@ -271,9 +272,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.17320508.abi2",
+        "protocol_id": "ic10.stack.controller-selector.v2",
         "base": 0,
-        "magic": 17320508,
+        "contract": "ControllerSelector",
+        "magic": 1512745005,
         "abi": 2,
         "source": "literal-own-stack-header"
       }

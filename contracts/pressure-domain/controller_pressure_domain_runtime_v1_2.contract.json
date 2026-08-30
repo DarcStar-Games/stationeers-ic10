@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
-  "source_sha256": "5b4bba080e415fac1f80f2666a736cd775a212333f6e2de3920074d6923107a7",
+  "source_sha256": "f117686bf42e65f0eb91bc3ca0543d964bd242e34c29933f815b25c374374dc6",
   "identity": {
     "service_id": "ic10.script.controller.pressure.domain.runtime",
     "implementation_revision": "1.2",
@@ -77,7 +77,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415963
+            "equals": 2107540686
           },
           {
             "address": 8,
@@ -88,8 +88,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.8fd7464ff497e01d",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.8fd7464ff497e01d",
+        "interface_id": "ic10.interface.access.6adee158250d4dfc",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.6adee158250d4dfc",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -135,15 +135,15 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415933
+            "equals": 424300757
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.a6d25c385377d66b",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.a6d25c385377d66b",
+        "interface_id": "ic10.interface.access.e7be3e1b77eec8c9",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.e7be3e1b77eec8c9",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -285,15 +285,15 @@
         "constraints": [
           {
             "address": 12,
-            "equals": "HASH(\"CFG1|ControllerPressureDomain|1|1|255|0|0|0\")"
+            "equals": 1204547052
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.e3fc86f8b97f6e44",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.e3fc86f8b97f6e44",
+        "interface_id": "ic10.interface.access.7ab6ec53213877db",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.7ab6ec53213877db",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -525,7 +525,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416063,
+        "contract": "ControllerPressureDomainRuntime",
+        "magic": -968216424,
         "abi": 1
       },
       {
@@ -546,9 +547,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416063.abi1",
+        "protocol_id": "ic10.stack.controller-pressure-domain-runtime.v1",
         "base": 0,
-        "magic": 31416063,
+        "contract": "ControllerPressureDomainRuntime",
+        "magic": -968216424,
         "abi": 1,
         "source": "literal-own-stack-header"
       },

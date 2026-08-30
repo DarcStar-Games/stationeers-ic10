@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-jobs/power_job_policy_verify_v1_0.ic10",
-  "source_sha256": "966c1a095ebf5178bad28bb7779b828545267dda9ca9444d5c5e980b6ef68b5d",
+  "source_sha256": "3a735383fb16ea55652b94edb41dcbae2f195904091009534d8e1723d690dc13",
   "identity": {
     "service_id": "ic10.script.power.job.policy.verify",
     "implementation_revision": "1.0",
@@ -32,7 +32,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415950
+          "value": -1742884202
         },
         {
           "address": 33,
@@ -92,7 +92,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416043
+        "const": 1667855782
       },
       {
         "address": 1,
@@ -173,7 +173,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416043,
+        "contract": "PowerJobPolicyVerify",
+        "magic": 1667855782,
         "abi": 1
       }
     ]
@@ -189,7 +190,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416043,
+        "equals": 1667855782,
         "source": "generated-protocol-header"
       },
       {
@@ -204,9 +205,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416043.abi1",
+        "protocol_id": "ic10.stack.power-job-policy-verify.v1",
         "base": 0,
-        "magic": 31416043,
+        "contract": "PowerJobPolicyVerify",
+        "magic": 1667855782,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

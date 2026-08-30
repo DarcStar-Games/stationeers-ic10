@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10",
-  "source_sha256": "37226b3679aff9ff96bb24267d3477991b9f4d7d6b9c724f58d2ac2c8aa2e3ca",
+  "source_sha256": "7c89e151c4119517cfef583a06710b0e9231e1702a13bd9d9028f501520b8bbc",
   "identity": {
     "service_id": "ic10.script.job.inventory.preflight",
     "implementation_revision": "1.0",
@@ -317,7 +317,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416005,
+        "contract": "JobInventoryPreflight",
+        "magic": 1304257902,
         "abi": 1
       }
     ]
@@ -333,9 +334,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416005.abi1",
+        "protocol_id": "ic10.stack.job-inventory-preflight.v1",
         "base": 0,
-        "magic": 31416005,
+        "contract": "JobInventoryPreflight",
+        "magic": 1304257902,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

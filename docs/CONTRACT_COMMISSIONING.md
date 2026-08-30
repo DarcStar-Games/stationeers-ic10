@@ -62,7 +62,7 @@ The report prints only observations that source analysis cannot prove.
 For a literal-header provider it lists the exact cells and values for the Snapshot Probe. In the PI example, connect the Probe screw matching Policy `d0` to the declared Config Host and capture:
 
 ```text
-S0 expected 31415928
+S0 expected GenericPersistentConfigHost.v1
 S1 expected 1
 ```
 
@@ -90,7 +90,7 @@ python3 tools/commission_wiring.py record \
   --session ../field_evidence/base_a.json \
   --obligation d0.provider-observed \
   --status PASS \
-  --observed "S0=31415928 and S1=1 on config host housing" \
+  --observed "S0=GenericPersistentConfigHost.v1 and S1=1 on config host housing" \
   --refs "config-host:12345"
 ```
 

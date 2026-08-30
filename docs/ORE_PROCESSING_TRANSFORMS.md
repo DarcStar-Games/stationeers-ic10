@@ -104,7 +104,7 @@ This hierarchy avoids maintaining separate transform catalogs for each processor
 
 ## 4. Transform Profile View ABI4
 
-`ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` (generated) resolves a TransformType from the dynamic catalog and republishes a bounded runtime view. Identity lives in the common `S0`/`S1` header cells (magic = 31415952, ABI = 4); the resolved-request mailbox and payload sit above the descriptor pools:
+`ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10` (generated) resolves a TransformType from the dynamic catalog and republishes a bounded runtime view. Identity lives in the common `S0`/`S1` header cells (magic = ResourceTransformProfileView.v4, ABI = 4); the resolved-request mailbox and payload sit above the descriptor pools:
 
 ```text
 S8..S31   up to six input descriptors, four cells each

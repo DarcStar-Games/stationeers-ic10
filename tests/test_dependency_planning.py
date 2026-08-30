@@ -61,7 +61,7 @@ ck(int(ps.stack.get(40,0))%2==0,'Plan Store mutation left odd sequence')
 ps.stack.update({12:1,13:77,9:2});ps.run(1)
 ck(ps.stack.get(10)==2 and ps.stack.get(32)==77 and ps.stack.get(39)==222,'Plan Store lookup did not return 8-cell record')
 ps.stack.update({12:3,13:77,9:3});ps.run(1);ck(ps.stack.get(128)==0,'Plan Store clear did not invalidate ParentJobId commit marker')
-re=IC10(src('ic10/dependency-planning/dependency_plan_store_v2_0.ic10'));re.stack.update({0:31416007,1:2,40:5,128:0,129:999});re.run(1)
+re=IC10(src('ic10/dependency-planning/dependency_plan_store_v2_0.ic10'));re.stack.update({0:'HASH:DependencyPlanStore.v2',1:2,40:5,128:0,129:999});re.run(1)
 ck(int(re.stack.get(40,0))%2==0 and re.stack.get(128)==0,'Plan Store reflash did not normalize interrupted odd sequence')
 
 # Live Job Store + sole executor + 3-lane Gateway child creation.

@@ -1,4 +1,4 @@
-poke 0 31415978
+poke 0 HASH("MaterialTransformLinkResolver.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -9,7 +9,7 @@ bdns d2 Bad
 get r14 d0 9
 blez r14 Bad
 get r0 d0 0
-bne r0 31415977 Bad
+bne r0 HASH("MaterialTransformAdmission.v1") Bad
 get r0 d0 1
 bne r0 1 Bad
 get r0 d0 8
@@ -19,13 +19,13 @@ get r3 d0 15
 get r4 d0 16
 get r13 d0 19
 get r0 d1 0
-bne r0 31415952 Bad
+bne r0 HASH("ResourceTransformProfileView.v4") Bad
 get r0 d1 1
 bne r0 4 Bad
 get r0 d1 74
 bne r0 r13 Bad
 get r0 d2 0
-bne r0 31415981 Bad
+bne r0 HASH("GenericSnapshotDirectoryHost.v1") Bad
 get r0 d2 1
 bne r0 1 Bad
 get r0 d2 9
@@ -56,7 +56,7 @@ add r0 r9 sp
 get r1 d2 r0
 add sp sp 1
 getd r0 r1 0
-bne r0 31415953 Find
+bne r0 HASH("ResourceLink.v1") Find
 getd r0 r1 1
 bne r0 1 Find
 getd r0 r1 9
@@ -69,7 +69,7 @@ getd r0 r1 22
 bne r0 r3 Find
 getd r15 r1 28
 getd r0 r15 0
-bne r0 31415950 Find
+bne r0 HASH("ResourceReservation.v1") Find
 getd r0 r15 1
 bne r0 1 Find
 getd r0 r15 33

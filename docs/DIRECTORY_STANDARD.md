@@ -37,7 +37,7 @@ and candidate records at `S18`.
 
 | Cell | Meaning |
 |---:|---|
-| S0 | AdapterMagic = `31415983` |
+| S0 | AdapterMagic = `HASH("DirectoryAdapter.v3")` |
 | S1 | AdapterABI = `3` |
 | S2 | CapabilityMask = `17` (`HAS_SCHEMA` + `HAS_GENERATION`) |
 | S3 | SchemaId = `HASH("<DirectorySchema.X>.v<version>")` |
@@ -81,7 +81,7 @@ Adapters may reject a source snapshot rather than publish derived records when t
 `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10` publishes one canonical generic snapshot ABI:
 
 ```text
-S0      GenericSnapshotDirectoryMagic = 31415981
+S0      GenericSnapshotDirectoryMagic = GenericSnapshotDirectoryHost.v1
 S1      ABI = 1
 S2      CapabilityMask = 0
 S9      DirectorySchemaId, HASH("<schema>.v<version>")
@@ -122,7 +122,7 @@ Consumers then use the schema-defined width/capacity and the ordinary active-ban
 `ic10/directory-core/generic_registry_directory_host_v2_0.ic10` publishes:
 
 ```text
-S0   GenericRegistryDirectoryMagic = 31415982
+S0   GenericRegistryDirectoryMagic = GenericRegistryDirectoryHost.v3
 S1   ABI = 3
 S2   CapabilityMask = 1 (HAS_SCHEMA)
 S3   DirectorySchemaId, adapter-assigned folded hash

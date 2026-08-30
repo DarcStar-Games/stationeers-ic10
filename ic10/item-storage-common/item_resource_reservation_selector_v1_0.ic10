@@ -1,4 +1,4 @@
-poke 0 31415987
+poke 0 HASH("ItemResourceReservationSelector.v1")
 poke 1 1
 poke 2 0
 Loop:
@@ -14,7 +14,7 @@ blt r4 1 Bad
 bgt r4 2 Bad
 bdns d0 Bad
 get r0 d0 0
-bne r0 31415981 Bad
+bne r0 HASH("GenericSnapshotDirectoryHost.v1") Bad
 get r0 d0 9
 bne r0 HASH("DirectorySchema.ResourceReservation.v1") Bad
 get r12 d0 24

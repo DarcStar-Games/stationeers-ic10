@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10",
-  "source_sha256": "7cc7b426ae9738eddf4ee4e457978a2baad4deb6dbf838f77aa4051a068a07c5",
+  "source_sha256": "a90de2dd80a065f50b4e878c376bc6702332fd4f0679b6a4fa118614790eaea6",
   "identity": {
     "service_id": "ic10.script.controller.pressure.transfer.runtime",
     "implementation_revision": "2.0",
@@ -46,7 +46,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415936
+            "equals": -920533037
           },
           {
             "address": 1,
@@ -58,7 +58,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415936.abi1"
+          "ic10.stack.pressure-inventory-reservation.v1"
         ]
       }
     },
@@ -94,7 +94,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415936
+            "equals": -920533037
           },
           {
             "address": 1,
@@ -106,7 +106,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415936.abi1"
+          "ic10.stack.pressure-inventory-reservation.v1"
         ]
       }
     },
@@ -187,7 +187,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415948
+            "equals": 879244561
           },
           {
             "address": 1,
@@ -203,7 +203,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415948.abi1"
+          "ic10.stack.pressure-transfer-grant-guard.v1"
         ]
       }
     },
@@ -307,7 +307,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416064
+        "const": 700050398
       },
       {
         "address": 1,
@@ -377,7 +377,7 @@
         "access": [
           "self-write"
         ],
-        "const": "HASH(\"ControllerPressureTransfer\")"
+        "const": 1875690426
       },
       {
         "address": 100,
@@ -547,7 +547,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416064,
+        "contract": "ControllerPressureTransferRuntime",
+        "magic": 700050398,
         "abi": 1
       },
       {
@@ -568,7 +569,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416064,
+        "equals": 700050398,
         "source": "generated-protocol-header"
       },
       {
@@ -597,9 +598,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416064.abi1",
+        "protocol_id": "ic10.stack.controller-pressure-transfer-runtime.v1",
         "base": 0,
-        "magic": 31416064,
+        "contract": "ControllerPressureTransferRuntime",
+        "magic": 700050398,
         "abi": 1,
         "source": "literal-own-stack-header"
       },
@@ -616,9 +618,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415936.abi1",
+            "protocol_id": "ic10.stack.pressure-inventory-reservation.v1",
             "header_base": 0,
-            "magic": 31415936,
+            "contract": "PressureInventoryReservation",
+            "magic": -920533037,
             "abi": 1,
             "publication_requirements": []
           }
@@ -629,9 +632,10 @@
         "port": "d1",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415936.abi1",
+            "protocol_id": "ic10.stack.pressure-inventory-reservation.v1",
             "header_base": 0,
-            "magic": 31415936,
+            "contract": "PressureInventoryReservation",
+            "magic": -920533037,
             "abi": 1,
             "publication_requirements": []
           }
@@ -642,9 +646,10 @@
         "port": "d3",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415948.abi1",
+            "protocol_id": "ic10.stack.pressure-transfer-grant-guard.v1",
             "header_base": 0,
-            "magic": 31415948,
+            "contract": "PressureTransferGrantGuard",
+            "magic": 879244561,
             "abi": 1,
             "publication_requirements": []
           }

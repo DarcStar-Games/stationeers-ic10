@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_load_executor_v1_0.ic10",
-  "source_sha256": "045fda0d49b6c1432b28b9515b53a2191e4d7f4d619de8c960c377b512c2e43e",
+  "source_sha256": "734d376a678ae364b4678c5adff0892e0f3dac6ea9597f17aba08570259f6b5d",
   "identity": {
     "service_id": "ic10.script.power.load.executor",
     "implementation_revision": "1.0",
@@ -138,7 +138,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": 31415950
+          "value": -1742884202
         },
         {
           "address": 33,
@@ -189,7 +189,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31416038
+        "const": 1284181104
       },
       {
         "address": 1,
@@ -215,7 +215,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31416038,
+        "contract": "PowerLoadExecutor",
+        "magic": 1284181104,
         "abi": 1
       }
     ]
@@ -231,7 +232,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31416038,
+        "equals": 1284181104,
         "source": "generated-protocol-header"
       },
       {
@@ -246,9 +247,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31416038.abi1",
+        "protocol_id": "ic10.stack.power-load-executor.v1",
         "base": 0,
-        "magic": 31416038,
+        "contract": "PowerLoadExecutor",
+        "magic": 1284181104,
         "abi": 1,
         "source": "literal-own-stack-header"
       }

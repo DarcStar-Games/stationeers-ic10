@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-grid/material_resource_link_v1_0.ic10",
-  "source_sha256": "792d52845b9ec0f22504eb5a367ed8ab007db1e9ad0c039a30172482e1934bfc",
+  "source_sha256": "36e8279d876b94df03bd480aee5c7793fa6d980be8d2953c933bd56831ef269d",
   "identity": {
     "service_id": "ic10.script.material.resource.link",
     "implementation_revision": "1.0",
@@ -45,7 +45,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415950
+            "equals": -1742884202
           },
           {
             "address": 1,
@@ -65,7 +65,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415950.abi1"
+          "ic10.stack.resource-reservation.v1"
         ]
       }
     },
@@ -102,7 +102,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415950
+            "equals": -1742884202
           },
           {
             "address": 1,
@@ -122,7 +122,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415950.abi1"
+          "ic10.stack.resource-reservation.v1"
         ]
       }
     },
@@ -160,7 +160,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415961
+            "equals": 1559898316
           },
           {
             "address": 1,
@@ -172,7 +172,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415961.abi1"
+          "ic10.stack.stacker-feeder.v1"
         ]
       }
     },
@@ -205,7 +205,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415960
+            "equals": 754423306
           },
           {
             "address": 1,
@@ -217,7 +217,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415960.abi1"
+          "ic10.stack.material-transfer-grant-guard.v1"
         ]
       }
     },
@@ -254,7 +254,7 @@
         "constraints": [
           {
             "address": 0,
-            "equals": 31415958
+            "equals": -1929928026
           },
           {
             "address": 1,
@@ -266,7 +266,7 @@
         "kind": "stack-protocol",
         "verification": "literal-header",
         "protocol_ids": [
-          "ic10.stack.31415958.abi1"
+          "ic10.stack.material-transfer-executor.v1"
         ]
       }
     }
@@ -366,7 +366,7 @@
         "access": [
           "self-write"
         ],
-        "const": 31415953
+        "const": 1484497288
       },
       {
         "address": 1,
@@ -616,7 +616,7 @@
         "access": [
           "self-write"
         ],
-        "const": "HASH(\"MaterialStackerSorter\")"
+        "const": 1826901828
       },
       {
         "address": 33,
@@ -631,7 +631,8 @@
     "headers": [
       {
         "base": 0,
-        "magic": 31415953,
+        "contract": "ResourceLink",
+        "magic": 1484497288,
         "abi": 1
       }
     ]
@@ -647,7 +648,7 @@
         "id": "header.s0.magic",
         "kind": "cell-equals",
         "address": 0,
-        "equals": 31415953,
+        "equals": 1484497288,
         "source": "generated-protocol-header"
       },
       {
@@ -662,9 +663,10 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.31415953.abi1",
+        "protocol_id": "ic10.stack.resource-link.v1",
         "base": 0,
-        "magic": 31415953,
+        "contract": "ResourceLink",
+        "magic": 1484497288,
         "abi": 1,
         "source": "literal-own-stack-header"
       }
@@ -674,9 +676,10 @@
         "port": "d0",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415950.abi1",
+            "protocol_id": "ic10.stack.resource-reservation.v1",
             "header_base": 0,
-            "magic": 31415950,
+            "contract": "ResourceReservation",
+            "magic": -1742884202,
             "abi": 1,
             "publication_requirements": [
               {
@@ -692,9 +695,10 @@
         "port": "d1",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415950.abi1",
+            "protocol_id": "ic10.stack.resource-reservation.v1",
             "header_base": 0,
-            "magic": 31415950,
+            "contract": "ResourceReservation",
+            "magic": -1742884202,
             "abi": 1,
             "publication_requirements": [
               {
@@ -710,9 +714,10 @@
         "port": "d2",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415961.abi1",
+            "protocol_id": "ic10.stack.stacker-feeder.v1",
             "header_base": 0,
-            "magic": 31415961,
+            "contract": "StackerFeeder",
+            "magic": 1559898316,
             "abi": 1,
             "publication_requirements": []
           }
@@ -723,9 +728,10 @@
         "port": "d3",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415960.abi1",
+            "protocol_id": "ic10.stack.material-transfer-grant-guard.v1",
             "header_base": 0,
-            "magic": 31415960,
+            "contract": "MaterialTransferGrantGuard",
+            "magic": 754423306,
             "abi": 1,
             "publication_requirements": []
           }
@@ -736,9 +742,10 @@
         "port": "d4",
         "accepted": [
           {
-            "protocol_id": "ic10.stack.31415958.abi1",
+            "protocol_id": "ic10.stack.material-transfer-executor.v1",
             "header_base": 0,
-            "magic": 31415958,
+            "contract": "MaterialTransferExecutor",
+            "magic": -1929928026,
             "abi": 1,
             "publication_requirements": []
           }

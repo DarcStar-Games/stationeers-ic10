@@ -1,5 +1,5 @@
 # Commit POWER Reservation ownership for one plan. d0 PlanStore,d1 Allocator owner.
-poke 0 31416036
+poke 0 HASH("PowerReservationCommitter.v1")
 poke 1 1
 poke 2 0
 Loop:
