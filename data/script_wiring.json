@@ -1099,7 +1099,7 @@
     "providers": [
      "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md: \"165 Runtime: ... d3 Multi Allocator ...\" [ABI_REFERENCE (31415980): \"d3 Allocator ABI2\". Consumer reads d3 S14, the Allocator ABI2 committed common epoch (\"publishes the common active epoch at S14 last\"), plus S16/S22, and writes the allocator request cells. Runtime S7 = committed material epoch mirrors that S14 read.]"
+    "note": "docs/DEPLOYMENT.md: \"165 Runtime: ... d3 Multi Allocator ...\" [ABI_REFERENCE (31415980): \"d3 Allocator ABI2\". Consumer reads d3 S14, the Allocator ABI2 committed common epoch (\"publishes the common active epoch at S14 last\"), plus S16/S22, and writes the allocator request cells. Runtime S22 = committed material epoch mirrors that S14 read.]"
    },
    "d4": {
     "kind": "script",
