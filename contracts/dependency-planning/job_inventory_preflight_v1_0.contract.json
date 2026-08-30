@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10",
-  "source_sha256": "0c8db8066ee8107113f4fc576083ed51aef649df3859bcd1d3c237064912d04b",
+  "source_sha256": "90826ba31b7ae4bca30425d132d465f672bcdf37678184e103067c3aa46e5bbd",
   "identity": {
     "service_id": "ic10.script.job.inventory.preflight",
     "implementation_revision": "1.0",
@@ -78,17 +78,17 @@
       },
       "stack": {
         "literal_reads": [
-          7,
           8,
           9,
-          10
+          10,
+          16
         ],
         "literal_writes": [
-          2,
-          3,
-          4,
-          5,
-          6
+          11,
+          12,
+          13,
+          14,
+          15
         ],
         "dynamic_read": true,
         "dynamic_write": false,
@@ -106,8 +106,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.4a447d668f10d04e",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.4a447d668f10d04e",
+        "interface_id": "ic10.interface.access.889f7b6c87a14d00",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.889f7b6c87a14d00",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

@@ -1722,8 +1722,8 @@ Adapter: `ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic
 
 ### ITEM reservation services
 
-- `ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10`, magic `31415987`: read-only up-to-six-leg export/import quote; response token S7 last.
-- `ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10`, magic `31415988`: coherent quote commit; response token S5 last; publishes owner ReferenceId/epoch and captured Endpoint generation into each Reservation.
+- `ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10`, magic `31415987`: read-only up-to-six-leg export/import quote; request is S11 type, S12 quantity, S13 direction, S14 required capabilities, S15 request generation; response token S16 last.
+- `ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10`, magic `31415988`: coherent quote commit; request is S11 expected Selector token, S12 request generation; response token S13 last; publishes owner ReferenceId/epoch and captured Endpoint generation into each Reservation.
 - `ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10`, magic `31415990`: clears only exact owner ReferenceId + epoch; response token S4 last.
 - `ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10`, magic `31415991`: requires paired source/destination ownership and current semantic Reservation-generation equality before outbound/inbound movement; response token S8 last.
 

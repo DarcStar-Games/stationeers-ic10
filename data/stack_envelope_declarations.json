@@ -2582,6 +2582,61 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "process-gas-preparation"
+  },
+  "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10": {
+   "service_id": "ic10.script.item.resource.reservation.selector",
+   "magic": 31415987,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "e5f7a713982b3d9e7636db8d0b2264d1ec8238a828f805aa5e121c616a00289d",
+   "legacy_owned_ranges": [
+    [
+     8,
+     16
+    ],
+    [
+     32,
+     511
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     32,
+     511
+    ]
+   ],
+   "pilot_family": "item-storage-common"
+  },
+  "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10": {
+   "service_id": "ic10.script.item.resource.reservation.allocator",
+   "magic": 31415988,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "83582663f43b8057e7128a60f7b64692bb8c40e6c814876fd8a631e05917cca9",
+   "legacy_owned_ranges": [
+    [
+     8,
+     15
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "item-storage-common"
   }
  },
  "legacy_exemption": {

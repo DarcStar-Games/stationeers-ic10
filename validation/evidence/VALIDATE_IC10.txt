@@ -36,7 +36,7 @@ PASS ic10/dependency-planning/dependency_plan_store_v2_0.ic10 lines=115 headroom
 PASS ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10 lines=112 headroom=16 max=44 CRLF=1501 comments= 1
 PASS ic10/dependency-planning/generic_job_monitor_v1_0.ic10 lines= 67 headroom=61 max=54 CRLF= 885 comments= 1
 PASS ic10/dependency-planning/item_producer_resolver_v1_0.ic10 lines= 78 headroom=50 max=35 CRLF=1256 comments= 1
-PASS ic10/dependency-planning/job_inventory_preflight_v1_0.ic10 lines=111 headroom=17 max=70 CRLF=1449 comments= 1
+PASS ic10/dependency-planning/job_inventory_preflight_v1_0.ic10 lines=111 headroom=17 max=70 CRLF=1455 comments= 1
 PASS ic10/dependency-planning/job_requirement_view_v1_0.ic10 lines= 97 headroom=31 max=46 CRLF=1286 comments= 1
 PASS ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10 lines= 96 headroom=32 max=66 CRLF=1342 comments= 1
 PASS ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10 lines=120 headroom= 8 max=23 CRLF=1593 comments= 0
@@ -60,8 +60,8 @@ PASS ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10 lines=
 PASS ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10 lines= 82 headroom=46 max=78 CRLF=1659 comments= 3
 PASS ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10 lines=112 headroom=16 max=78 CRLF=1908 comments= 5
 PASS ic10/input-profile-catalog/input_profile_view_v5_0.ic10 lines=111 headroom=17 max=73 CRLF=1562 comments= 1
-PASS ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10 lines=101 headroom=27 max=71 CRLF=1423 comments= 1
-PASS ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10 lines=115 headroom=13 max=57 CRLF=1620 comments= 0
+PASS ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10 lines=102 headroom=26 max=71 CRLF=1442 comments= 1
+PASS ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10 lines=116 headroom=12 max=57 CRLF=1637 comments= 0
 PASS ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10 lines= 90 headroom=38 max=73 CRLF=1286 comments= 1
 PASS ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10 lines=119 headroom= 9 max=25 CRLF=1645 comments= 0
 PASS ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10 lines=120 headroom= 8 max=35 CRLF=1606 comments= 0

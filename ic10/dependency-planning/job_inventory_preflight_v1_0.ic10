@@ -21,17 +21,17 @@ jal Req
 get r9 d0 13
 get r10 d0 14
 blez r10 Bad
-put d1 2 r9
-put d1 3 r10
-put d1 4 1
-put d1 5 0
+put d1 11 r9
+put d1 12 r10
+put d1 13 1
+put d1 14 0
 mul r13 r15 64
 add r13 r13 r5
 add r13 r13 32
-put d1 6 r13
+put d1 15 r13
 WaitQ:
 yield
-get r0 d1 7
+get r0 d1 16
 bne r0 r13 WaitQ
 get r0 d1 8
 beq r0 -3 Overflow

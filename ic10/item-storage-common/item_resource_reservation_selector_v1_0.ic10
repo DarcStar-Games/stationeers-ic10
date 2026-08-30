@@ -1,13 +1,14 @@
 poke 0 31415987
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 6
-get r0 db 7
+get r15 db 15
+get r0 db 16
 beq r15 r0 Loop
-get r2 db 2
-get r3 db 3
-get r4 db 4
+get r2 db 11
+get r3 db 12
+get r4 db 13
 blez r3 Bad
 blt r4 1 Bad
 bgt r4 2 Bad
@@ -29,7 +30,7 @@ add r9 r9 32
 move r6 0
 move r7 0
 move r8 0
-get r14 db 5
+get r14 db 14
 Find:
 bge r6 r10 Quoted
 mul r0 r6 3
@@ -111,5 +112,5 @@ Bad:
 move r0 -1
 Reply:
 poke 8 r0
-poke 7 r15
+poke 16 r15
 j Loop

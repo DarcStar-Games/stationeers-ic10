@@ -415,7 +415,7 @@
    }
   },
   "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10": {
-   "source_sha256": "0c8db8066ee8107113f4fc576083ed51aef649df3859bcd1d3c237064912d04b",
+   "source_sha256": "90826ba31b7ae4bca30425d132d465f672bcdf37678184e103067c3aa46e5bbd",
    "ports": {
     "d1": {
      "dynamic_read_ranges": [
@@ -627,7 +627,7 @@
    ]
   },
   "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10": {
-   "source_sha256": "a9b652f1070089f263a862684500cd2bd67d9954d9582aaf0be0620037e81b71",
+   "source_sha256": "83582663f43b8057e7128a60f7b64692bb8c40e6c814876fd8a631e05917cca9",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -640,11 +640,19 @@
    }
   },
   "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10": {
-   "source_sha256": "a008bf95096fc5c7f7670b0fb793d3b567e1e575cd5faa4db67261313d52d407",
+   "source_sha256": "e5f7a713982b3d9e7636db8d0b2264d1ec8238a828f805aa5e121c616a00289d",
    "external_readable_ranges": [
     [
      0,
      10
+    ],
+    [
+     13,
+     13
+    ],
+    [
+     16,
+     16
     ],
     [
      32,
