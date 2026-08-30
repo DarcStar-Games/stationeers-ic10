@@ -119,8 +119,8 @@ PASS ic10/power-jobs/power_job_policy_verify_v1_0.ic10 lines= 62 headroom=66 max
 PASS ic10/power-jobs/power_job_prepare_v1_0.ic10 lines=105 headroom=23 max=64 CRLF=1435 comments= 1
 PASS ic10/power-jobs/power_job_scheduler_v1_0.ic10 lines= 75 headroom=53 max=58 CRLF=1012 comments= 1
 PASS ic10/power-jobs/power_policy_target_resolver_v1_0.ic10 lines= 73 headroom=55 max=54 CRLF= 991 comments= 1
-PASS ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10 lines=124 headroom= 4 max=68 CRLF=1900 comments= 0
-PASS ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10 lines=117 headroom=11 max=57 CRLF=1779 comments= 0
+PASS ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10 lines=124 headroom= 4 max=68 CRLF=1904 comments= 0
+PASS ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10 lines=118 headroom=10 max=57 CRLF=1799 comments= 0
 PASS ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10 lines= 78 headroom=50 max=68 CRLF=1267 comments= 1
 PASS ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10 lines=124 headroom= 4 max=73 CRLF=1902 comments= 1
 PASS ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10 lines=120 headroom= 8 max=49 CRLF=1917 comments= 0

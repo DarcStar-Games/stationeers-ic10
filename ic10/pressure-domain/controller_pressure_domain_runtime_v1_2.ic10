@@ -55,11 +55,11 @@ beq r2 3 Storage
 bdns d2 ArbiterBad
 get r0 d2 0
 bne r0 31415933 ArbiterBad
-put d2 3 r1
-put d2 4 r2
-put d2 5 r9
+put d2 15 r1
+put d2 16 r2
+put d2 17 r9
 get r10 db 117
-put d2 6 r10
+put d2 18 r10
 get r13 d2 12
 blez r13 NoRequest
 get r0 d2 13

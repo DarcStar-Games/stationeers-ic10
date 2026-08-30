@@ -716,10 +716,7 @@ The Arbiter is an internal pressure-grid service, not generic controller telemet
 ```text
 S0   magic = 31415933
 S1   ABI = 1
-S3   context Enabled
-S4   context Role: 1 LOW/EVAP, 2 HIGH/CONDENSE
-S5   context MediumType hash
-S6   context Host effective generation
+S2   capability mask = 0
 S8   raw aggregate requested pressure
 S9   contributing request count
 S10  result status: 0 none, 1 LOW, 2 HIGH, -3 Directory invalid, -9 context invalid
@@ -727,6 +724,10 @@ S11  Controller Directory generation used by completed pass
 S12  result generation; payload is written before this value
 S13  handled Host effective generation
 S14  handled MediumType hash
+S15  context Enabled
+S16  context Role: 1 LOW/EVAP, 2 HIGH/CONDENSE
+S17  context MediumType hash
+S18  context Host effective generation
 ```
 
 The Arbiter scans one Controller Directory provider per tick. It restarts the pass if context, active Directory bank, or source generation changes. LOW reduces with `min(RequestedPressure)` over valid matching EVAPORATE producers; HIGH reduces with `max(RequestedPressure)` over matching CONDENSE producers.

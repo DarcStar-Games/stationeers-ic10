@@ -1170,7 +1170,7 @@
    "implementation_id": null,
    "telemetry_base": 96,
    "publishes_state": false,
-   "source_sha256": "76ce80204804aee5797e958619a7cd92dd00509f782a7a90e9a91823760827a9",
+   "source_sha256": "e89641ac953a80fd4b854941427bc958648247352e555e7a776c981c5f73993e",
    "legacy_owned_ranges": [
     [
      96,
@@ -2444,6 +2444,29 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "controller-discovery"
+  },
+  "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10": {
+   "service_id": "ic10.script.phase.pressure.request.arbiter",
+   "magic": 31415933,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "7bc1dd420d26caa2b833549e4b00ba3ff183ad6ae322696d2be6349c095844aa",
+   "legacy_owned_ranges": [
+    [
+     8,
+     18
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "pressure-domain"
   }
  },
  "legacy_exemption": {

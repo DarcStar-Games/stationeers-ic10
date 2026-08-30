@@ -29,9 +29,9 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 71,
-    "legacy_exempt": 103,
-    "backlog_reserved_cell_users": 93,
+    "migrated_v1": 72,
+    "legacy_exempt": 102,
+    "backlog_reserved_cell_users": 92,
     "backlog_dynamic_range_users": 23
   },
   "services": [
@@ -9666,7 +9666,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "76ce80204804aee5797e958619a7cd92dd00509f782a7a90e9a91823760827a9",
+          "source_sha256": "e89641ac953a80fd4b854941427bc958648247352e555e7a776c981c5f73993e",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -9691,7 +9691,7 @@
       "source": "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10",
       "service_contract_id": "ic10.script.phase.pressure.request.arbiter",
       "deployment_family": "pressure-domain",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -9716,12 +9716,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 14,
+        "literal_cell_count": 14,
+        "highest_literal_cell": 18,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 117,
-        "line_headroom_120": 3,
+        "line_count": 118,
+        "line_headroom_120": 2,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -9729,20 +9729,41 @@
         "literal_cells": [
           0,
           1,
-          3,
-          4,
-          5,
-          6
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.phase.pressure.request.arbiter",
+        "magic": 31415933,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "7bc1dd420d26caa2b833549e4b00ba3ff183ad6ae322696d2be6349c095844aa",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 18
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "pressure-domain"
       }
     },
     {

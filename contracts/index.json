@@ -3083,82 +3083,6 @@
         }
       ]
     },
-    "ic10.interface.access.24e89f4526366b1b": {
-      "stack": {
-        "literal_reads": [
-          0,
-          8,
-          9,
-          10,
-          12,
-          13,
-          14
-        ],
-        "literal_writes": [
-          3,
-          4,
-          5,
-          6
-        ],
-        "dynamic_read": false,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "none",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 0,
-            "equals": 31415933
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 0,
-            "end": 0
-          },
-          {
-            "start": 8,
-            "end": 10
-          },
-          {
-            "start": 12,
-            "end": 14
-          }
-        ],
-        "stack_writable_ranges": [
-          {
-            "start": 3,
-            "end": 6
-          }
-        ],
-        "constraints": [
-          {
-            "address": 0,
-            "equals": 31415933
-          }
-        ],
-        "properties_readable": [],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
-          "port": "d2"
-        }
-      ]
-    },
     "ic10.interface.access.254645346bab19ec": {
       "stack": {
         "literal_reads": [
@@ -6907,6 +6831,82 @@
         {
           "source": "ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10",
           "port": "d0"
+        }
+      ]
+    },
+    "ic10.interface.access.a6d25c385377d66b": {
+      "stack": {
+        "literal_reads": [
+          0,
+          8,
+          9,
+          10,
+          12,
+          13,
+          14
+        ],
+        "literal_writes": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 31415933
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 0,
+            "end": 0
+          },
+          {
+            "start": 8,
+            "end": 10
+          },
+          {
+            "start": 12,
+            "end": 14
+          }
+        ],
+        "stack_writable_ranges": [
+          {
+            "start": 15,
+            "end": 18
+          }
+        ],
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 31415933
+          }
+        ],
+        "properties_readable": [],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
+          "port": "d2"
         }
       ]
     },

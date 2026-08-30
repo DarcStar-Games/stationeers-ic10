@@ -162,12 +162,13 @@ The Arbiter is **not** generic telemetry and is not discovered as a controller. 
 ```text
 S0   magic = 31415933
 S1   ABI = 1
+S2   capability mask = 0
 
 # Context written by one paired PressureDomain runtime
-S3   Enabled
-S4   Role: 1 LOW/EVAP, 2 HIGH/CONDENSE
-S5   MediumType hash
-S6   paired Host effective generation
+S15  Enabled
+S16  Role: 1 LOW/EVAP, 2 HIGH/CONDENSE
+S17  MediumType hash
+S18  paired Host effective generation
 
 # Result published by Arbiter
 S8   raw aggregate requested pressure
