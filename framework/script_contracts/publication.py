@@ -10,6 +10,7 @@ from collections import defaultdict
 import re
 from typing import Any
 
+from framework.ic10_source import IC10Source, parse_ic10
 from framework.script_contracts.control_flow import (
     all_paths_retain_target,
     branch_rejects_before_success,
@@ -179,23 +180,22 @@ def value_type(name: str, comment: str) -> str:
     return "number"
 
 
-def _commit_last_violation(lines: list[str], marker_index: int) -> str | None:
-    labels = {
-        line.split("#", 1)[0].strip()[:-1]: index
-        for index, line in enumerate(lines)
-        if line.split("#", 1)[0].strip().endswith(":")
-    }
-    pending = [marker_index + 1]
+def _commit_last_violation(parsed: IC10Source, marker_line: int) -> str | None:
+    """Find an own-stack write reachable after a commit-last marker."""
+    labels = {label.name: label.line.number for label in parsed.labels}
+    rows = {row.line.number: row for row in parsed.rows}
+    pending = [marker_line + 1]
     visited: set[int] = set()
     while pending:
         index = pending.pop()
-        while 0 <= index < len(lines) and index not in visited:
+        while 1 <= index <= len(parsed.lines) and index not in visited:
             visited.add(index)
-            code = lines[index].split("#", 1)[0].strip()
-            if not code or code.endswith(":"):
+            source_row = rows.get(index)
+            if source_row is None:
                 index += 1
                 continue
-            row = code.replace(",", " ").split()
+            row = source_row.tokens
+            code = source_row.line.code_text
             if row[0] in {"poke", "push"} or (row[0] == "clr" and len(row) >= 2 and row[1] == "db"):
                 return code
             if row[0] == "yield":
@@ -218,13 +218,11 @@ def source_semantics(source: str, integer_aliases: dict[str, int]) -> tuple[dict
     """Extract semantics explicitly documented next to literal own-stack accesses."""
     annotations: dict[int, dict[str, Any]] = defaultdict(lambda: {"descriptions": [], "enums": []})
     publication_rules: list[dict[str, Any]] = []
-    lines = source.splitlines()
-    for line_index, raw in enumerate(lines):
-        code, separator, comment_text = raw.partition("#")
-        comment = comment_text.strip() if separator else ""
-        row = code.strip().replace(",", " ").split()
-        if not row:
-            continue
+    parsed = parse_ic10(source)
+    for source_row in parsed.rows:
+        line_number = source_row.line.number
+        comment = source_row.line.comment_text
+        row = source_row.tokens
         address = None
         value = None
         if row[0] == "poke" and len(row) >= 3:
@@ -255,10 +253,10 @@ def source_semantics(source: str, integer_aliases: dict[str, int]) -> tuple[dict
         if "reserved" in comment.lower():
             target["reserved"] = True
         if "last" in comment.lower() and "identity" not in comment.lower() and row[0] == "poke":
-            violation = _commit_last_violation(lines, line_index)
+            violation = _commit_last_violation(parsed, line_number)
             if violation is not None:
                 raise ValueError(
-                    f"commit-last claim at source line {line_index + 1} is followed by own-stack write: {violation}"
+                    f"commit-last claim at source line {line_number} is followed by own-stack write: {violation}"
                 )
             publication_rules.append({
                 "kind": "commit-last",
@@ -268,7 +266,7 @@ def source_semantics(source: str, integer_aliases: dict[str, int]) -> tuple[dict
             })
         if "seqlock" in comment.lower() or "odd/even" in comment.lower():
             raise ValueError(
-                f"seqlock claim at source line {line_index + 1} requires an explicit odd/even source verifier"
+                f"seqlock claim at source line {line_number} requires an explicit odd/even source verifier"
             )
     unique_rules = {(item["kind"], item["address"], item["description"]): item for item in publication_rules}
     return annotations, sorted(unique_rules.values(), key=lambda item: (item["address"], item["kind"], item["description"]))
