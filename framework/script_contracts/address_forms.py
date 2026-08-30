@@ -14,6 +14,15 @@ base cannot be describing that access, which is what makes the base checkable
 without a trip-count proof. Addresses that also depend on a value read at
 runtime (a bank index, a peer-published record pointer) have no such witness
 and are left alone.
+
+The seed of each register is the nearest earlier write, found by a linear
+backward scan rather than a dominance proof: the strict proof in
+`dynamic_ranges` needs a fully modeled control-flow graph, and a program with a
+`jal` in it has none -- which would exempt exactly the programs whose record
+loops sit behind a subroutine. A seed that a forward jump can skip therefore
+yields a base the access need not reach, so a spurious report here names the
+instruction it derived and the range it wanted, and is answered by reading the
+source rather than by widening the range.
 """
 from __future__ import annotations
 

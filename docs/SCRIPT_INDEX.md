@@ -108,7 +108,7 @@ Production IC10 programs: 174
 | `ic10/power-grid/power_dispatch_plan_store_v1_0.ic10` | 88 | Power planning | `power-grid` | `conditional-resident` | Owns one coherent bounded eight-flow power dispatch plan with odd/even publication fencing. |
 | `ic10/power-grid/power_dispatch_sweep_v1_0.ic10` | 81 | Power planning | `power-grid` | `conditional-resident` | Sweeps priority-ordered sinks, stages flows, and records shed/critical-shortage state. |
 | `ic10/power-grid/power_link_executor_v1_0.ic10` | 95 | Power execution | `power-grid` | `conditional-resident` | Sole transformer Setting/On actuator with exact plan, source/sink Reservation, epoch, and Link fencing. |
-| `ic10/power-grid/power_link_selector_v1_0.ic10` | 75 | Power planning | `power-grid` | `conditional-resident` | Resolves a live source-to-sink POWER Resource Link and computes transformer source-side overhead. |
+| `ic10/power-grid/power_link_selector_v1_0.ic10` | 77 | Power planning | `power-grid` | `conditional-resident` | Resolves a live source-to-sink POWER Resource Link and computes transformer source-side overhead. |
 | `ic10/power-grid/power_load_executor_v1_0.ic10` | 91 | Power execution | `power-grid` | `conditional-resident` | Break-before-make actuator for managed consumer and battery On state under committed plan authority. |
 | `ic10/power-grid/power_plan_validator_v1_0.ic10` | 104 | Power safety | `power-grid` | `conditional-resident` | Revalidates a complete power plan against exact Reservation and Link generations before mutation. |
 | `ic10/power-grid/power_producer_endpoint_v1_0.ic10` | 64 | Power resource | `power-grid` | `conditional-resident` | Publishes one exact POWER producer/aggregate supply as a Generic Resource Endpoint. |

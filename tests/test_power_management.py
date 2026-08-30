@@ -45,6 +45,11 @@ link=Device(1401,stack={0:'HASH:ResourceLink.v1',1:1,28:1201,29:1202,30:4,31:'HA
 ldir=Device(1400,stack={0:'HASH:GenericSnapshotDirectoryHost.v1',1:1,24:0,27:1,29:0,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:64,32:1401},props={'ReferenceId':1400})
 lv=IC10((R/'ic10/power-grid/power_link_selector_v1_0.ic10').read_text(),{'d0':ldir,'x0':link},self_ref=229)
 lv.stack.update({12:1201,13:1202,14:80,15:1});lv.run(3);ck(lv.stack.get(17)==1 and lv.stack.get(9)==85,'transformer overhead not charged source-side')
+# Bank stride is the published record width x capacity: bank 1 starts at 32+1*64, and the
+# per-bank count/overflow move to S28/S30. A fixed 192 read S224 and dereferenced a zero ref.
+ldirb=Device(1402,stack={0:'HASH:GenericSnapshotDirectoryHost.v1',1:1,24:1,28:1,30:0,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:64,96:1401},props={'ReferenceId':1402})
+lvb=IC10((R/'ic10/power-grid/power_link_selector_v1_0.ic10').read_text(),{'d0':ldirb,'x0':link},self_ref=231)
+lvb.stack.update({12:1201,13:1202,14:80,15:1});lvb.run(3);ck(lvb.stack.get(17)==1 and lvb.stack.get(8)==1401,'link selector did not find the record in directory bank 1')
 # Live coherent PlanStore BEGIN/ADD/COMMIT.
 ps=IC10((R/'ic10/power-grid/power_dispatch_plan_store_v1_0.ic10').read_text(),{},self_ref=227);ps.run(1)
 ps.stack.update({12:1,10:1});ps.run(2)
