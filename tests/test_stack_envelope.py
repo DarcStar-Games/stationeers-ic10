@@ -13,7 +13,8 @@ from tempfile import TemporaryDirectory
 
 from framework.ic10_harness import Device, IC10
 from framework.json_schema import validate
-from framework.script_contracts import _own_stack, build_all
+from framework.script_contracts import build_all
+from framework.script_contracts.own_stack import analyze_own_stack
 from framework.stack_envelope import (
     BASE,
     LENGTH,
@@ -87,7 +88,7 @@ extension_rows = [
     line.split() for line in extension_source.splitlines()
     if line and not line.endswith(":")
 ]
-extension_contract, _ = _own_stack(
+extension_contract, _ = analyze_own_stack(
     extension_source, extension_rows, {}, [{"base": 0, "magic": 7, "abi": 1}], {}
 )
 ck({"start": 400, "end": 404} in extension_contract["external_readable_ranges"],

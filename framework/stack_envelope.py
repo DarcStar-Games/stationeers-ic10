@@ -7,7 +7,8 @@ import json
 import re
 from typing import Any
 
-from framework.script_contracts import _aliases, _integer, _literal_value, _program, _stable_cells
+from framework.script_contracts.parsing import collect_aliases, parse_program, resolve_integer, resolve_literal
+from framework.script_contracts.publication import stable_cells
 
 FORMAT = "IC10_STACK_ENVELOPE_INVENTORY_V1"
 DECLARATION_FORMAT = "IC10_STACK_ENVELOPE_DECLARATIONS_V1"
@@ -81,17 +82,17 @@ def load_declarations(root: Path) -> dict[str, Any]:
 
 
 def _parse(path: Path) -> tuple[list[list[str]], dict[str, int]]:
-    rows = [entry["row"] for entry in _program(Path(path).read_text()) if entry["row"]]
-    return rows, _aliases(rows)[1]
+    rows = [entry["row"] for entry in parse_program(Path(path).read_text()) if entry["row"]]
+    return rows, collect_aliases(rows)[1]
 
 
 def _writes(rows: list[list[str]], aliases: dict[str, int]) -> dict[int, set[Any]]:
     writes: dict[int, set[Any]] = {}
     for row in rows:
         if len(row) >= 3 and row[0] == "poke":
-            address = _integer(row[1], aliases)
+            address = resolve_integer(row[1], aliases)
             if address is not None:
-                writes.setdefault(address, set()).add(_literal_value(row[2], aliases))
+                writes.setdefault(address, set()).add(resolve_literal(row[2], aliases))
     return writes
 
 
@@ -106,12 +107,12 @@ def _schema_check_pairs(rows: list[list[str]], aliases: dict[str, int]) -> set[t
         if row[0] not in {"get", "getd"} or len(row) < 4:
             continue
         register = row[1]
-        address = _integer(row[3], aliases)
+        address = resolve_integer(row[3], aliases)
         if address is None:
             continue
         for later in rows[index + 1:]:
             if later[0] in {"beq", "bne"} and len(later) >= 3 and later[1] == register:
-                value = _literal_value(later[2], aliases)
+                value = resolve_literal(later[2], aliases)
                 if value is not None:
                     checked.setdefault(address, set()).add(value)
                 break
@@ -248,7 +249,7 @@ def publication_errors(
         if op in {"j", "jal", "jr"} or op.startswith("b"):
             # a reflash-marker guard branches before publishing; the contract layer proves
             # whether every expected cell still holds its value at every observation point
-            stable = _stable_cells(path.read_text(), aliases, expected)
+            stable = stable_cells(path.read_text(), aliases, expected)
             missing = sorted(set(expected) - stable)
             if missing:
                 errors.append("control transfer occurs before the first envelope-bearing yield")
@@ -261,11 +262,11 @@ def publication_errors(
         elif op in {"push", "pop"}:
             errors.append("dynamic own-stack write occurs before the first envelope-bearing yield")
         elif op == "poke" and len(row) >= 3:
-            address = _integer(row[1], aliases)
+            address = resolve_integer(row[1], aliases)
             if address is None:
                 errors.append("dynamic own-stack write occurs before the first envelope-bearing yield")
             elif address in expected:
-                state[address] = _literal_value(row[2], aliases)
+                state[address] = resolve_literal(row[2], aliases)
     one_shot = not any(row[0] == "yield" for row in rows)
     if first_yield is None and not branch_proved and not one_shot:
         errors.append("no reachable straight-line yield follows envelope initialization")
@@ -292,12 +293,12 @@ def publication_errors(
                 # which the generated contract resolves far more precisely than a source scan
                 dynamic_after = dynamic_after or reference_writes_own_stack
             elif op == "poke" and len(row) >= 3:
-                address = _integer(row[1], aliases)
+                address = resolve_integer(row[1], aliases)
                 if address is None:
                     dynamic_after = True
                 elif address in mutable_cells:
                     continue
-                elif address in expected and _literal_value(row[2], aliases) != expected[address]:
+                elif address in expected and resolve_literal(row[2], aliases) != expected[address]:
                     errors.append(f"post-init write can change envelope S{address}")
                 elif address in reserved and address not in expected:
                     errors.append(f"post-init write can change reserved S{address}")
@@ -327,7 +328,7 @@ def generation_errors(
     generation_rows = [
         index for index, row in enumerate(rows)
         if row[0] == "poke" and len(row) >= 3
-        and _integer(row[1], aliases) == GENERATION_CELL
+        and resolve_integer(row[1], aliases) == GENERATION_CELL
     ]
     poke_rows = [index for index, row in enumerate(rows) if row[0] == "poke"]
     if not declares_generation:

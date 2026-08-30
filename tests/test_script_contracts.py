@@ -11,19 +11,6 @@ import tempfile
 
 from framework.json_schema import SchemaValidationError, validate
 from framework.script_contracts import (
-    _aliases,
-    _device_ports,
-    _header_invariants,
-    _instructions,
-    _network_dependencies,
-    _own_stack,
-    _ranges,
-    _restart_behavior,
-    _source_semantics,
-    _verified_publication_overrides,
-    _verified_seqlock_consumer,
-    _verify_declared_consumers,
-    _verify_declared_headers,
     access_interface_id,
     access_provider_obligations,
     build_all,
@@ -32,6 +19,24 @@ from framework.script_contracts import (
     invariant_errors,
     ranges_overlap,
     verify_override_source,
+)
+from framework.script_contracts.device_ports import (
+    analyze_device_ports,
+    network_dependencies,
+    verify_declared_consumers,
+)
+from framework.script_contracts.dynamic_ranges import validated_ranges
+from framework.script_contracts.own_stack import (
+    analyze_own_stack,
+    header_invariants,
+    restart_behavior,
+    verify_declared_headers,
+)
+from framework.script_contracts.parsing import collect_aliases, parse_rows
+from framework.script_contracts.publication import (
+    source_semantics,
+    verified_publication_overrides,
+    verified_seqlock_consumer,
 )
 from framework.source_metadata import deployable_scripts
 
@@ -248,45 +253,45 @@ ck(sum(len(document["behavior"]["invariants"]) for document in documents) > 0 an
    not any(invariant_errors(document) for document in documents),
    "generated machine-readable invariants are absent or false")
 
-payload_rows = _instructions("poke 8 31415999\npoke 9 1\n")
-_, payload_aliases = _aliases(payload_rows)
-ck(_verify_declared_headers(payload_rows, payload_aliases, []) == [],
+payload_rows = parse_rows("poke 8 31415999\npoke 9 1\n")
+_, payload_aliases = collect_aliases(payload_rows)
+ck(verify_declared_headers(payload_rows, payload_aliases, []) == [],
    "undeclared payload values were inferred as a protocol header")
 try:
-    _verify_declared_headers(payload_rows, payload_aliases, [{"base": 8, "magic": 31415998, "abi": 1}])
+    verify_declared_headers(payload_rows, payload_aliases, [{"base": 8, "magic": 31415998, "abi": 1}])
     fails.append("incorrect authoritative protocol header was accepted")
 except ValueError:
     pass
 
 dynamic_source = "move ra 96\nget r0 d0 ra\n"
-dynamic_rows = _instructions(dynamic_source)
-dynamic_ports, dynamic_aliases = _aliases(dynamic_rows)
+dynamic_rows = parse_rows(dynamic_source)
+dynamic_ports, dynamic_aliases = collect_aliases(dynamic_rows)
 try:
-    _device_ports(dynamic_source, dynamic_rows, dynamic_ports, dynamic_aliases, {
+    analyze_device_ports(dynamic_source, dynamic_rows, dynamic_ports, dynamic_aliases, {
         "ports": {"d0": {"dynamic_read_ranges": [[0, 0]]}}
     })
     fails.append("source-derived dynamic range accepted an incorrect override")
 except ValueError:
     pass
-derived_port = _device_ports(dynamic_source, dynamic_rows, dynamic_ports, dynamic_aliases, {
+derived_port = analyze_device_ports(dynamic_source, dynamic_rows, dynamic_ports, dynamic_aliases, {
     "ports": {"d0": {"dynamic_read_ranges": [[96, 96]]}}
 })[0]
 ck(derived_port["stack"]["dynamic_read_range_source"] == "source-derived",
    "literal-seeded dynamic access was not marked source-derived")
 
 bypassed_seed = "j Access\nmove ra 96\nAccess:\nget r0 d0 ra\n"
-bypassed_rows = _instructions(bypassed_seed)
-bypassed_ports, bypassed_aliases = _aliases(bypassed_rows)
-bypassed = _device_ports(bypassed_seed, bypassed_rows, bypassed_ports, bypassed_aliases, {
+bypassed_rows = parse_rows(bypassed_seed)
+bypassed_ports, bypassed_aliases = collect_aliases(bypassed_rows)
+bypassed = analyze_device_ports(bypassed_seed, bypassed_rows, bypassed_ports, bypassed_aliases, {
     "ports": {"d0": {"dynamic_read_ranges": [[96, 96]]}}
 })[0]
 ck(bypassed["stack"]["dynamic_read_range_source"] == "source-fingerprinted-exception",
    "a register seed that does not dominate its access was accepted as source-derived")
 
 backedge_source = "move ra 96\nLoop:\nget r0 d0 ra\nadd ra ra 1\nj Loop\n"
-backedge_rows = _instructions(backedge_source)
-backedge_ports, backedge_aliases = _aliases(backedge_rows)
-backedge = _device_ports(backedge_source, backedge_rows, backedge_ports, backedge_aliases, {
+backedge_rows = parse_rows(backedge_source)
+backedge_ports, backedge_aliases = collect_aliases(backedge_rows)
+backedge = analyze_device_ports(backedge_source, backedge_rows, backedge_ports, backedge_aliases, {
     "ports": {"d0": {"dynamic_read_ranges": [[96, 96]]}}
 })[0]
 ck(backedge["stack"]["dynamic_read_range_source"] == "source-fingerprinted-exception",
@@ -296,9 +301,9 @@ bypassed_counter_source = (
     "move ra 96\nj Loop\nmove rc 0\nLoop:\nget r0 d0 ra\n"
     "add ra ra 1\nadd rc rc 1\nble rc 3 Loop\n"
 )
-bypassed_counter_rows = _instructions(bypassed_counter_source)
-bypassed_counter_ports, bypassed_counter_aliases = _aliases(bypassed_counter_rows)
-bypassed_counter = _device_ports(
+bypassed_counter_rows = parse_rows(bypassed_counter_source)
+bypassed_counter_ports, bypassed_counter_aliases = collect_aliases(bypassed_counter_rows)
+bypassed_counter = analyze_device_ports(
     bypassed_counter_source, bypassed_counter_rows, bypassed_counter_ports, bypassed_counter_aliases,
     {"ports": {"d0": {"dynamic_read_ranges": [[96, 99]]}}},
 )[0]
@@ -309,25 +314,25 @@ reentered_loop_source = (
     "move ra 96\nmove rc 0\nLoop:\nget r0 d0 ra\n"
     "add ra ra 1\nadd rc rc 1\nble rc 3 Loop\nj Loop\n"
 )
-reentered_loop_rows = _instructions(reentered_loop_source)
-reentered_loop_ports, reentered_loop_aliases = _aliases(reentered_loop_rows)
-reentered_loop = _device_ports(
+reentered_loop_rows = parse_rows(reentered_loop_source)
+reentered_loop_ports, reentered_loop_aliases = collect_aliases(reentered_loop_rows)
+reentered_loop = analyze_device_ports(
     reentered_loop_source, reentered_loop_rows, reentered_loop_ports, reentered_loop_aliases,
     {"ports": {"d0": {"dynamic_read_ranges": [[96, 99]]}}},
 )[0]
 ck(reentered_loop["stack"]["dynamic_read_range_source"] == "source-fingerprinted-exception",
    "a bounded loop with post-bound re-entry was accepted as source-derived")
 
-conditional_clear = _instructions("get r0 db 0\nbne r0 1 Reset\nyield\nReset:\nclr db\n")
-ck(_restart_behavior(conditional_clear, True)["mode"] == "conditional-reset",
+conditional_clear = parse_rows("get r0 db 0\nbne r0 1 Reset\nyield\nReset:\nclr db\n")
+ck(restart_behavior(conditional_clear, True)["mode"] == "conditional-reset",
    "a conditional recovery clear was mislabeled as cleared-on-init")
-ck(_restart_behavior(_instructions("clr db\nyield\n"), True)["mode"] == "cleared-on-init",
+ck(restart_behavior(parse_rows("clr db\nyield\n"), True)["mode"] == "cleared-on-init",
    "an unconditional entry-path clear was not recognized")
 
 dynamic_header_source = "poke 0 31415999\npoke 1 1\nmove ra 0\npoke ra 5\n"
-dynamic_header_rows = _instructions(dynamic_header_source)
-_, dynamic_header_aliases = _aliases(dynamic_header_rows)
-dynamic_header, _ = _own_stack(
+dynamic_header_rows = parse_rows(dynamic_header_source)
+_, dynamic_header_aliases = collect_aliases(dynamic_header_rows)
+dynamic_header, _ = analyze_own_stack(
     dynamic_header_source, dynamic_header_rows, dynamic_header_aliases,
     [{"base": 0, "magic": 31415999, "abi": 1}], {},
 )
@@ -339,9 +344,9 @@ bounded_own_source = (
     "poke 0 31415999\npoke 1 1\nmove ra 96\nmove rc 0\nLoop:\n"
     "get r0 db ra\npoke ra r0\nadd ra ra 1\nadd rc rc 1\nble rc 3 Loop\n"
 )
-bounded_own_rows = _instructions(bounded_own_source)
-_, bounded_own_aliases = _aliases(bounded_own_rows)
-bounded_own, _ = _own_stack(
+bounded_own_rows = parse_rows(bounded_own_source)
+_, bounded_own_aliases = collect_aliases(bounded_own_rows)
+bounded_own, _ = analyze_own_stack(
     bounded_own_source, bounded_own_rows, bounded_own_aliases,
     [{"base": 0, "magic": 31415999, "abi": 1}], {},
 )
@@ -352,7 +357,7 @@ ck(bounded_own["dynamic_read_ranges"] == [{"start": 96, "end": 99}] and
    bounded_own["dynamic_read_range_source"] == "source-derived" and
    bounded_own["dynamic_write_range_source"] == "source-derived",
    "bounded own-stack table reads/writes were not derived from the shared strict loop proof")
-ck({item["address"] for item in _header_invariants(
+ck({item["address"] for item in header_invariants(
        [{"base": 0, "magic": 31415999, "abi": 1}], bounded_own
    )} == {0, 1}, "non-overlapping bounded writes did not restore header invariants")
 ck(all("const" in field for field in bounded_own["fields"] if field["address"] in {0, 1}),
@@ -361,38 +366,38 @@ ck(all("const" in field for field in bounded_own["fields"] if field["address"] i
 conflicting_header_source = bounded_own_source.replace(
     "poke 1 1\n", "poke 1 1\npoke 0 0\n"
 )
-conflicting_header_rows = _instructions(conflicting_header_source)
-_, conflicting_header_aliases = _aliases(conflicting_header_rows)
-conflicting_header, _ = _own_stack(
+conflicting_header_rows = parse_rows(conflicting_header_source)
+_, conflicting_header_aliases = collect_aliases(conflicting_header_rows)
+conflicting_header, _ = analyze_own_stack(
     conflicting_header_source, conflicting_header_rows, conflicting_header_aliases,
     [{"base": 0, "magic": 31415999, "abi": 1}], {},
 )
 conflicting_header_fields = {field["address"]: field for field in conflicting_header["fields"]}
-ck("const" not in conflicting_header_fields[0] and not _header_invariants(
+ck("const" not in conflicting_header_fields[0] and not header_invariants(
        [{"base": 0, "magic": 31415999, "abi": 1}], conflicting_header
    ), "conflicting literal header write produced a false constant or invariant")
 
 conditional_header_source = (
     "beqz r5 Ready\npoke 0 31415999\npoke 1 1\nReady:\nyield\n"
 )
-conditional_header_rows = _instructions(conditional_header_source)
-_, conditional_header_aliases = _aliases(conditional_header_rows)
-conditional_header, _ = _own_stack(
+conditional_header_rows = parse_rows(conditional_header_source)
+_, conditional_header_aliases = collect_aliases(conditional_header_rows)
+conditional_header, _ = analyze_own_stack(
     conditional_header_source, conditional_header_rows, conditional_header_aliases,
     [{"base": 0, "magic": 31415999, "abi": 1}], {},
 )
-ck(not _header_invariants(
+ck(not header_invariants(
        [{"base": 0, "magic": 31415999, "abi": 1}], conditional_header
    ), "conditionally skipped header initialization produced a false invariant")
 
 delayed_header_source = "yield\npoke 0 31415999\npoke 1 1\n"
-delayed_header_rows = _instructions(delayed_header_source)
-_, delayed_header_aliases = _aliases(delayed_header_rows)
-delayed_header, _ = _own_stack(
+delayed_header_rows = parse_rows(delayed_header_source)
+_, delayed_header_aliases = collect_aliases(delayed_header_rows)
+delayed_header, _ = analyze_own_stack(
     delayed_header_source, delayed_header_rows, delayed_header_aliases,
     [{"base": 0, "magic": 31415999, "abi": 1}], {},
 )
-ck(not _header_invariants(
+ck(not header_invariants(
        [{"base": 0, "magic": 31415999, "abi": 1}], delayed_header
    ), "header initialization after the first yield produced a false invariant")
 
@@ -400,65 +405,65 @@ both_branches_header_source = (
     "beqz r5 Alternate\npoke 0 31415999\npoke 1 1\nj Ready\n"
     "Alternate:\npoke 0 31415999\npoke 1 1\nReady:\nyield\n"
 )
-both_branches_header_rows = _instructions(both_branches_header_source)
-_, both_branches_header_aliases = _aliases(both_branches_header_rows)
-both_branches_header, _ = _own_stack(
+both_branches_header_rows = parse_rows(both_branches_header_source)
+_, both_branches_header_aliases = collect_aliases(both_branches_header_rows)
+both_branches_header, _ = analyze_own_stack(
     both_branches_header_source, both_branches_header_rows, both_branches_header_aliases,
     [{"base": 0, "magic": 31415999, "abi": 1}], {},
 )
-ck({item["address"] for item in _header_invariants(
+ck({item["address"] for item in header_invariants(
        [{"base": 0, "magic": 31415999, "abi": 1}], both_branches_header
    )} == {0, 1}, "same-value initialization on every branch was not proven")
 
 called_header_source = (
     "poke 0 31415999\npoke 1 1\njal Helper\nyield\nHelper:\nj ra\n"
 )
-called_header_rows = _instructions(called_header_source)
-_, called_header_aliases = _aliases(called_header_rows)
-called_header, _ = _own_stack(
+called_header_rows = parse_rows(called_header_source)
+_, called_header_aliases = collect_aliases(called_header_rows)
+called_header, _ = analyze_own_stack(
     called_header_source, called_header_rows, called_header_aliases,
     [{"base": 0, "magic": 31415999, "abi": 1}], {},
 )
-ck({item["address"] for item in _header_invariants(
+ck({item["address"] for item in header_invariants(
        [{"base": 0, "magic": 31415999, "abi": 1}], called_header
    )} == {0, 1}, "local subroutine call suppressed guaranteed header initialization")
 
 header_after_call_source = (
     "jal Helper\npoke 0 31415999\npoke 1 1\nyield\nHelper:\nj ra\n"
 )
-header_after_call_rows = _instructions(header_after_call_source)
-_, header_after_call_aliases = _aliases(header_after_call_rows)
-header_after_call, _ = _own_stack(
+header_after_call_rows = parse_rows(header_after_call_source)
+_, header_after_call_aliases = collect_aliases(header_after_call_rows)
+header_after_call, _ = analyze_own_stack(
     header_after_call_source, header_after_call_rows, header_after_call_aliases,
     [{"base": 0, "magic": 31415999, "abi": 1}], {},
 )
-ck({item["address"] for item in _header_invariants(
+ck({item["address"] for item in header_invariants(
        [{"base": 0, "magic": 31415999, "abi": 1}], header_after_call
    )} == {0, 1}, "a non-observable subroutine call was mistaken for a loop boundary")
 
 yielding_call_source = (
     "jal Helper\npoke 0 31415999\npoke 1 1\nyield\nHelper:\nyield\nj ra\n"
 )
-yielding_call_rows = _instructions(yielding_call_source)
-_, yielding_call_aliases = _aliases(yielding_call_rows)
-yielding_call, _ = _own_stack(
+yielding_call_rows = parse_rows(yielding_call_source)
+_, yielding_call_aliases = collect_aliases(yielding_call_rows)
+yielding_call, _ = analyze_own_stack(
     yielding_call_source, yielding_call_rows, yielding_call_aliases,
     [{"base": 0, "magic": 31415999, "abi": 1}], {},
 )
-ck(not _header_invariants(
+ck(not header_invariants(
        [{"base": 0, "magic": 31415999, "abi": 1}], yielding_call
    ), "a callee yield before header initialization produced a false invariant")
 
 conditional_return_source = (
     "beqz r5 ra\npoke 0 31415999\npoke 1 1\nyield\n"
 )
-conditional_return_rows = _instructions(conditional_return_source)
-_, conditional_return_aliases = _aliases(conditional_return_rows)
-conditional_return, _ = _own_stack(
+conditional_return_rows = parse_rows(conditional_return_source)
+_, conditional_return_aliases = collect_aliases(conditional_return_rows)
+conditional_return, _ = analyze_own_stack(
     conditional_return_source, conditional_return_rows, conditional_return_aliases,
     [{"base": 0, "magic": 31415999, "abi": 1}], {},
 )
-ck(not _header_invariants(
+ck(not header_invariants(
        [{"base": 0, "magic": 31415999, "abi": 1}], conditional_return
    ), "a conditional termination before header initialization produced a false invariant")
 
@@ -473,13 +478,13 @@ unsafe_call_sources = {
     ),
 }
 for case, unsafe_call_source in unsafe_call_sources.items():
-    unsafe_call_rows = _instructions(unsafe_call_source)
-    _, unsafe_call_aliases = _aliases(unsafe_call_rows)
-    unsafe_call, _ = _own_stack(
+    unsafe_call_rows = parse_rows(unsafe_call_source)
+    _, unsafe_call_aliases = collect_aliases(unsafe_call_rows)
+    unsafe_call, _ = analyze_own_stack(
         unsafe_call_source, unsafe_call_rows, unsafe_call_aliases,
         [{"base": 0, "magic": 31415999, "abi": 1}], {},
     )
-    ck(not _header_invariants(
+    ck(not header_invariants(
            [{"base": 0, "magic": 31415999, "abi": 1}], unsafe_call
        ), f"{case} used an unsound abstract return stack for header initialization")
 
@@ -488,9 +493,9 @@ stack_pointer_sources = {
     "pop": "move sp 97\npop r0\nget r1 db sp\n",
 }
 for operation, stack_pointer_source in stack_pointer_sources.items():
-    stack_pointer_rows = _instructions(stack_pointer_source)
-    _, stack_pointer_aliases = _aliases(stack_pointer_rows)
-    stack_pointer_access, _ = _own_stack(
+    stack_pointer_rows = parse_rows(stack_pointer_source)
+    _, stack_pointer_aliases = collect_aliases(stack_pointer_rows)
+    stack_pointer_access, _ = analyze_own_stack(
         stack_pointer_source, stack_pointer_rows, stack_pointer_aliases, [], {},
     )
     ck(stack_pointer_access["dynamic_read_proven_ranges"] == [],
@@ -500,9 +505,9 @@ strided_source = (
     "move ra 96\nmove rc 0\nLoop:\npoke ra 1\n"
     "add ra ra 2\nadd rc rc 1\nble rc 3 Loop\n"
 )
-strided_rows = _instructions(strided_source)
-_, strided_aliases = _aliases(strided_rows)
-strided, _ = _own_stack(strided_source, strided_rows, strided_aliases, [], {})
+strided_rows = parse_rows(strided_source)
+_, strided_aliases = collect_aliases(strided_rows)
+strided, _ = analyze_own_stack(strided_source, strided_rows, strided_aliases, [], {})
 ck(strided["dynamic_write_ranges"] == [
        {"start": 96, "end": 96}, {"start": 98, "end": 98},
        {"start": 100, "end": 100}, {"start": 102, "end": 102},
@@ -526,24 +531,24 @@ own_negative_sources = {
     "unbounded loop": "move ra 96\nLoop:\npoke ra 1\nadd ra ra 1\nj Loop\n",
 }
 for case, own_source in own_negative_sources.items():
-    own_rows = _instructions(own_source)
-    _, own_aliases = _aliases(own_rows)
-    unresolved, _ = _own_stack(own_source, own_rows, own_aliases, [], {})
+    own_rows = parse_rows(own_source)
+    _, own_aliases = collect_aliases(own_rows)
+    unresolved, _ = analyze_own_stack(own_source, own_rows, own_aliases, [], {})
     ck(unresolved["dynamic_write_ranges"] == [{"start": 0, "end": 511}] and
        unresolved["dynamic_write_range_source"] == "conservative-full-stack",
        f"{case} own-stack address did not fail closed")
 
 exception_source = "move ra 96\nLoop:\npoke ra 1\nadd ra ra 1\nj Loop\n"
-exception_rows = _instructions(exception_source)
-_, exception_aliases = _aliases(exception_rows)
-exception, _ = _own_stack(
+exception_rows = parse_rows(exception_source)
+_, exception_aliases = collect_aliases(exception_rows)
+exception, _ = analyze_own_stack(
     exception_source, exception_rows, exception_aliases, [], {"dynamic_write_ranges": [[96, 111]]},
 )
 ck(exception["dynamic_write_range_source"] == "source-fingerprinted-exception" and
    exception["dynamic_write_ranges"] == [{"start": 96, "end": 111}],
    "reviewed own-stack range exception was not distinguished from source proof and fallback")
 try:
-    _own_stack(
+    analyze_own_stack(
         bounded_own_source, bounded_own_rows, bounded_own_aliases, [],
         {"dynamic_write_ranges": [[96, 98]]},
     )
@@ -551,10 +556,10 @@ try:
 except ValueError:
     pass
 partially_proven_source = bounded_own_source + "poke r5 1\n"
-partially_proven_rows = _instructions(partially_proven_source)
-_, partially_proven_aliases = _aliases(partially_proven_rows)
+partially_proven_rows = parse_rows(partially_proven_source)
+_, partially_proven_aliases = collect_aliases(partially_proven_rows)
 try:
-    _own_stack(
+    analyze_own_stack(
         partially_proven_source, partially_proven_rows, partially_proven_aliases, [],
         {"dynamic_write_ranges": [[96, 98]]},
     )
@@ -563,14 +568,14 @@ except ValueError:
     pass
 
 try:
-    _source_semantics("poke 12 1 # publication LAST\npoke 10 2\n", {})
+    source_semantics("poke 12 1 # publication LAST\npoke 10 2\n", {})
     fails.append("commit-last annotation was accepted before a later payload write")
 except ValueError:
     pass
 
 verified_seqlock_source = "get r0 db 2\nadd r0 r0 1\npoke 2 r0\npoke 3 5\nadd r0 r0 1\npoke 2 r0\n"
-verified_seqlock = _verified_publication_overrides(
-    verified_seqlock_source, _instructions(verified_seqlock_source),
+verified_seqlock = verified_publication_overrides(
+    verified_seqlock_source, parse_rows(verified_seqlock_source),
     {}, {"publication_rules": [{
         "kind": "seqlock", "address": 2, "verification": "paired-sequence", "description": "odd/even",
     }]},
@@ -579,8 +584,8 @@ ck(verified_seqlock and verified_seqlock[0]["source"] == "source-fingerprinted-p
    "a structurally verified seqlock publication was not represented")
 try:
     invalid_seqlock_source = "get r0 db 2\npoke 2 r0\npoke 3 5\npoke 2 r0\n"
-    _verified_publication_overrides(
-        invalid_seqlock_source, _instructions(invalid_seqlock_source), {},
+    verified_publication_overrides(
+        invalid_seqlock_source, parse_rows(invalid_seqlock_source), {},
         {"publication_rules": [{
             "kind": "seqlock", "address": 2, "verification": "paired-sequence", "description": "invalid",
         }]},
@@ -593,8 +598,8 @@ try:
         "get r9 db 2\nmove r0 0\nadd r0 r0 1\npoke 2 r0\n"
         "poke 3 5\nmove r0 0\nadd r0 r0 1\npoke 2 r0\n"
     )
-    _verified_publication_overrides(
-        unlinked_seqlock_source, _instructions(unlinked_seqlock_source), {},
+    verified_publication_overrides(
+        unlinked_seqlock_source, parse_rows(unlinked_seqlock_source), {},
         {"publication_rules": [{
             "kind": "seqlock", "address": 2, "verification": "paired-sequence", "description": "unlinked",
         }]},
@@ -607,8 +612,8 @@ try:
         "get r0 db 2\nbeqz r5 First\nj Second\nFirst:\nadd r0 r0 1\npoke 2 r0\n"
         "poke 3 5\nj Done\nSecond:\nget r0 db 2\npoke 4 6\nadd r0 r0 1\npoke 2 r0\nDone:\nyield\n"
     )
-    _verified_publication_overrides(
-        split_seqlock_source, _instructions(split_seqlock_source), {},
+    verified_publication_overrides(
+        split_seqlock_source, parse_rows(split_seqlock_source), {},
         {"publication_rules": [{
             "kind": "seqlock", "address": 2, "verification": "paired-sequence",
             "description": "mutually exclusive",
@@ -622,8 +627,8 @@ try:
         "get r0 db 2\nadd r0 r0 1\npoke 2 r0\njal Pause\npoke 3 5\n"
         "add r0 r0 1\npoke 2 r0\nj Done\nPause:\nyield\nj ra\nDone:\nyield\n"
     )
-    _verified_publication_overrides(
-        yielding_seqlock_source, _instructions(yielding_seqlock_source), {},
+    verified_publication_overrides(
+        yielding_seqlock_source, parse_rows(yielding_seqlock_source), {},
         {"publication_rules": [{
             "kind": "seqlock", "address": 2, "verification": "paired-sequence",
             "description": "cross-yield",
@@ -637,8 +642,8 @@ try:
         "get r0 db 2\nadd r0 r0 1\npoke 2 r0\nbeqz r5 Good\nj End\nGood:\n"
         "poke 3 5\nadd r0 r0 1\npoke 2 r0\nEnd:\nj End\n"
     )
-    _verified_publication_overrides(
-        early_exit_seqlock_source, _instructions(early_exit_seqlock_source), {},
+    verified_publication_overrides(
+        early_exit_seqlock_source, parse_rows(early_exit_seqlock_source), {},
         {"publication_rules": [{
             "kind": "seqlock", "address": 2, "verification": "paired-sequence",
             "description": "early exit",
@@ -648,7 +653,7 @@ try:
 except ValueError:
     pass
 try:
-    _source_semantics("poke 12 1 # publication LAST\nj Late\nLate:\npoke 10 2\nyield\n", {})
+    source_semantics("poke 12 1 # publication LAST\nj Late\nLate:\npoke 10 2\nyield\n", {})
     fails.append("commit-last annotation escaped validation through a jump target")
 except ValueError:
     pass
@@ -657,9 +662,9 @@ try:
         "get r0 d0 8\nbne r0 31415999 BadMagic\nj Abi\nBadMagic:\nj Abi\nAbi:\n"
         "get r1 d0 9\nbne r1 1 BadAbi\nj Done\nBadAbi:\nj Done\nDone:\nyield\n"
     )
-    rejoined_checks_rows = _instructions(rejoined_checks_source)
-    rejoined_checks_ports, rejoined_checks_aliases = _aliases(rejoined_checks_rows)
-    _verify_declared_consumers(
+    rejoined_checks_rows = parse_rows(rejoined_checks_source)
+    rejoined_checks_ports, rejoined_checks_aliases = collect_aliases(rejoined_checks_rows)
+    verify_declared_consumers(
         rejoined_checks_source, rejoined_checks_rows,
         rejoined_checks_ports, rejoined_checks_aliases,
         [{"port": "d0", "accepted": [{
@@ -675,9 +680,9 @@ try:
         "getd r0 r1 0\nj Abi\nbne r0 31415999 Bad\nAbi:\ngetd r0 r1 1\n"
         "j Done\nbne r0 1 Bad\nDone:\nyield\nBad:\nyield\n"
     )
-    skipped_network_rows = _instructions(skipped_network_checks_source)
-    _, skipped_network_aliases = _aliases(skipped_network_rows)
-    _network_dependencies(
+    skipped_network_rows = parse_rows(skipped_network_checks_source)
+    _, skipped_network_aliases = collect_aliases(skipped_network_rows)
+    network_dependencies(
         skipped_network_checks_source, skipped_network_rows, skipped_network_aliases,
         {"network_protocols": [{
             "reference": "r1", "header_base": 0, "magic": 31415999,
@@ -698,12 +703,12 @@ ck(any("not proven across dynamic writes" in error for error in invariant_errors
    "an invariant covered by dynamic writes was accepted")
 
 consumer_source = "get r0 d0 8\nbne r0 31415999 Bad\nget r0 d0 9\nbne r0 1 Bad\n"
-consumer_rows = _instructions(consumer_source)
-consumer_ports, consumer_aliases = _aliases(consumer_rows)
-ck(_verify_declared_consumers(consumer_source, consumer_rows, consumer_ports, consumer_aliases, []) == [],
+consumer_rows = parse_rows(consumer_source)
+consumer_ports, consumer_aliases = collect_aliases(consumer_rows)
+ck(verify_declared_consumers(consumer_source, consumer_rows, consumer_ports, consumer_aliases, []) == [],
    "undeclared payload equality checks were inferred as a consumed protocol")
 try:
-    _verify_declared_consumers(consumer_source, consumer_rows, consumer_ports, consumer_aliases, [{
+    verify_declared_consumers(consumer_source, consumer_rows, consumer_ports, consumer_aliases, [{
         "port": "d0", "accepted": [{"header_base": 8, "magic": 31415998, "abi": 1}]
     }])
     fails.append("incorrect authoritative consumed protocol was accepted")
@@ -714,9 +719,9 @@ try:
         "get r0 d0 8\nj Abi\nbne r0 31415999 Bad\nAbi:\nget r1 d0 9\n"
         "j Done\nbne r1 1 Bad\nDone:\nyield\nBad:\nyield\n"
     )
-    skipped_checks_rows = _instructions(skipped_checks_source)
-    skipped_checks_ports, skipped_checks_aliases = _aliases(skipped_checks_rows)
-    _verify_declared_consumers(
+    skipped_checks_rows = parse_rows(skipped_checks_source)
+    skipped_checks_ports, skipped_checks_aliases = collect_aliases(skipped_checks_rows)
+    verify_declared_consumers(
         skipped_checks_source, skipped_checks_rows, skipped_checks_ports, skipped_checks_aliases,
         [{"port": "d0", "accepted": [{
             "header_base": 8, "magic": 31415999, "abi": 1,
@@ -729,9 +734,9 @@ except ValueError:
 fake_fence_source = (
     "get r0 d0 2\nand r1 r0 1\nbnez r1 Retry\nget r0 d0 2\nbeq r0 r0 Stable\n"
 )
-fake_fence_rows = _instructions(fake_fence_source)
-fake_fence_ports, fake_fence_aliases = _aliases(fake_fence_rows)
-ck(not _verified_seqlock_consumer(
+fake_fence_rows = parse_rows(fake_fence_source)
+fake_fence_ports, fake_fence_aliases = collect_aliases(fake_fence_rows)
+ck(not verified_seqlock_consumer(
     fake_fence_source, fake_fence_rows, fake_fence_ports, fake_fence_aliases, "d0", 2
 ),
    "a seqlock consumer that overwrites its first snapshot and self-compares was accepted")
@@ -740,9 +745,9 @@ noop_retry_source = (
     "get r0 d0 2\nand r1 r0 1\nbnez r1 Accept\nget r2 d0 2\n"
     "bne r2 r0 Accept\nAccept:\nget r3 d0 5\n"
 )
-noop_retry_rows = _instructions(noop_retry_source)
-noop_retry_ports, noop_retry_aliases = _aliases(noop_retry_rows)
-ck(not _verified_seqlock_consumer(
+noop_retry_rows = parse_rows(noop_retry_source)
+noop_retry_ports, noop_retry_aliases = collect_aliases(noop_retry_rows)
+ck(not verified_seqlock_consumer(
     noop_retry_source, noop_retry_rows, noop_retry_ports, noop_retry_aliases, "d0", 2
 ), "a seqlock consumer whose retry target equals its success continuation was accepted")
 
@@ -750,9 +755,9 @@ unreachable_reread_source = (
     "get r0 d0 2\nand r1 r0 1\nbnez r1 Retry\nj Done\nSecond:\n"
     "get r2 d0 2\nbne r2 r0 Retry\nDone:\nyield\nRetry:\nyield\n"
 )
-unreachable_reread_rows = _instructions(unreachable_reread_source)
-unreachable_reread_ports, unreachable_reread_aliases = _aliases(unreachable_reread_rows)
-ck(not _verified_seqlock_consumer(
+unreachable_reread_rows = parse_rows(unreachable_reread_source)
+unreachable_reread_ports, unreachable_reread_aliases = collect_aliases(unreachable_reread_rows)
+ck(not verified_seqlock_consumer(
     unreachable_reread_source, unreachable_reread_rows,
     unreachable_reread_ports, unreachable_reread_aliases, "d0", 2
 ), "a seqlock consumer with an unreachable second read was accepted")
@@ -761,9 +766,9 @@ rejoined_retry_source = (
     "get r0 d0 2\nand r1 r0 1\nbnez r1 Retry\nEven:\nget r2 d0 2\n"
     "bne r2 r0 Retry\nj Done\nRetry:\nj Even\nDone:\nyield\n"
 )
-rejoined_retry_rows = _instructions(rejoined_retry_source)
-rejoined_retry_ports, rejoined_retry_aliases = _aliases(rejoined_retry_rows)
-ck(not _verified_seqlock_consumer(
+rejoined_retry_rows = parse_rows(rejoined_retry_source)
+rejoined_retry_ports, rejoined_retry_aliases = collect_aliases(rejoined_retry_rows)
+ck(not verified_seqlock_consumer(
     rejoined_retry_source, rejoined_retry_rows,
     rejoined_retry_ports, rejoined_retry_aliases, "d0", 2
 ), "a seqlock retry branch that rejoins without refreshing the first read was accepted")
@@ -794,12 +799,12 @@ try:
 except SchemaValidationError:
     pass
 try:
-    _ranges([[8, 7]])
+    validated_ranges([[8, 7]])
     fails.append("inverted stack range was accepted")
 except ValueError:
     pass
 try:
-    _ranges([[0, 10], [5, 15]])
+    validated_ranges([[0, 10], [5, 15]])
     fails.append("overlapping stack ranges were accepted")
 except ValueError:
     pass
