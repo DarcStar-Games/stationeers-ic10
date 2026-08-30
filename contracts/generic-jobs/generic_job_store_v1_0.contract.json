@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/generic-jobs/generic_job_store_v1_0.ic10",
-  "source_sha256": "bc89caf461029cc3c754d8f5580fa010f6be1bbece3b02358072c72abb1d2cd9",
+  "source_sha256": "f210ee9288f6577553833fe1a18d092eefa4038e8d45a3871619ef394f5ca780",
   "identity": {
     "service_id": "ic10.script.generic.job.store",
     "implementation_revision": "1.0",
@@ -18,15 +18,15 @@
     "literal_reads": [
       0,
       1,
-      2,
-      3,
-      7,
       8,
       11,
       12,
       13,
       14,
       15,
+      16,
+      17,
+      19,
       23,
       24,
       25,
@@ -36,11 +36,12 @@
       0,
       1,
       2,
-      3,
-      5,
       8,
       9,
       10,
+      16,
+      17,
+      18,
       23,
       24,
       25,
@@ -108,36 +109,7 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read",
           "self-write"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
         ]
       },
       {
@@ -214,6 +186,44 @@
         ]
       },
       {
+        "address": 16,
+        "name": "S16",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 17,
+        "name": "S17",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 18,
+        "name": "S18",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 19,
+        "name": "S19",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
         "address": 23,
         "name": "S23",
         "value_type": "number",
@@ -266,7 +276,7 @@
     "publication_rules": [
       {
         "kind": "seqlock",
-        "address": 2,
+        "address": 16,
         "description": "Queue sequence is odd while mutating and even when stable.",
         "source": "source-fingerprinted-paired-sequence"
       }

@@ -29,7 +29,7 @@ def intent(vm,slot):
     return [vm.stack.get(b+i,0) for i in range(8)]
 
 def request(vm,gen,cmd,slot,expected=0,newstate=0,status=0):
-    vm.stack.update({11:cmd,12:slot,13:expected,14:newstate,15:status,7:gen})
+    vm.stack.update({11:cmd,12:slot,13:expected,14:newstate,15:status,19:gen})
     vm.run(1)
     return int(vm.stack.get(9,0)),int(vm.stack.get(10,0))
 
@@ -71,16 +71,16 @@ for st in JobState:ck(can_reap(st)==(st in {JobState.COMPLETE,JobState.FAULT,Job
 
 # Store publish/update/reap and optimistic generation.
 vm=boot();ck(vm.stack.get(0)==31415984 and vm.stack.get(1)==1,'store header missing')
-ck(vm.stack.get(5)==32 and vm.stack.get(23)==1,'store capacity/next id mismatch')
+ck(vm.stack.get(18)==32 and vm.stack.get(23)==1,'store capacity/next id mismatch')
 # Same magic with a different Store ABI is incompatible storage geometry and must reset.
-rv=boot({0:31415984,1:99,2:7,23:88,288:1,289:12,290:9,291:-1})
+rv=boot({0:31415984,1:99,16:7,23:88,288:1,289:12,290:9,291:-1})
 ck(rv.stack.get(1)==1 and rv.stack.get(23)==1 and rv.stack.get(288,0)==0,'incompatible Store ABI was interpreted instead of reset')
 stage(vm,0,valid)
 status,jid=request(vm,1,1,0)
 ck(status==1 and jid==1,'new job publication failed')
 ck(intent(vm,0)==[1,1,7,12345,3,1,2,50],'published intent mismatch')
 ck(state(vm,0)[:3]==(JobState.QUEUED,1,0),'new job state/generation/status mismatch')
-ck(int(vm.stack.get(2,1))%2==0 and vm.stack.get(3)==1,'queue publication tokens incorrect')
+ck(int(vm.stack.get(16,1))%2==0 and vm.stack.get(17)==1,'queue publication tokens incorrect')
 
 # Legal lifecycle writes are mechanically generation-checked by Store.
 gen=2
@@ -122,10 +122,10 @@ ck(int(vm.stack.get(23,0))==33,'NextJobId did not advance across 32 jobs')
 # Crash recovery before active-bank flip: rollback/retry marker, old state remains authoritative.
 vm=boot();stage(vm,0,valid);request(vm,1,1,0)
 m=288;old_active=state(vm,0)[3];old_state=state(vm,0)[:3]
-cr=dict(vm.stack);cr[7]=2;cr[11]=2;cr[12]=0;cr[13]=1;cr[14]=JobState.PLANNING;cr[15]=0
-cr[25]=m;cr[26]=old_active;cr[24]=2;cr[2]=int(cr.get(2,0))+1
+cr=dict(vm.stack);cr[19]=2;cr[11]=2;cr[12]=0;cr[13]=1;cr[14]=JobState.PLANNING;cr[15]=0
+cr[25]=m;cr[26]=old_active;cr[24]=2;cr[16]=int(cr.get(16,0))+1
 rv=boot(cr)
-ck(int(rv.stack.get(2,1))%2==0 and rv.stack.get(24)==0,'pre-flip crash did not roll request back')
+ck(int(rv.stack.get(16,1))%2==0 and rv.stack.get(24)==0,'pre-flip crash did not roll request back')
 ck(state(rv,0)[:3]==old_state,'pre-flip crash changed authoritative job state')
 rv.run(1)
 ck(rv.stack.get(8)==2 and state(rv,0)[0]==JobState.PLANNING,'rolled-back request did not retry successfully')
@@ -133,11 +133,11 @@ ck(rv.stack.get(8)==2 and state(rv,0)[0]==JobState.PLANNING,'rolled-back request
 # Crash recovery after active-bank flip: committed state is retained and request is only acked.
 vm=boot();stage(vm,0,valid);request(vm,1,1,0)
 m=288;old_active=state(vm,0)[3];new_active=1-old_active;nb=m+1+3*new_active
-cr=dict(vm.stack);cr.update({7:2,11:2,12:0,13:1,14:JobState.PLANNING,15:0,25:m,26:old_active,24:2})
-cr[2]=int(cr.get(2,0))+1;cr[nb]=JobState.PLANNING;cr[nb+1]=2;cr[nb+2]=0;cr[m]=new_active
-old_qgen=int(cr.get(3,0));rv=boot(cr)
+cr=dict(vm.stack);cr.update({19:2,11:2,12:0,13:1,14:JobState.PLANNING,15:0,25:m,26:old_active,24:2})
+cr[16]=int(cr.get(16,0))+1;cr[nb]=JobState.PLANNING;cr[nb+1]=2;cr[nb+2]=0;cr[m]=new_active
+old_qgen=int(cr.get(17,0));rv=boot(cr)
 ck(state(rv,0)[:3]==(JobState.PLANNING,2,0),'post-flip crash lost committed state')
-ck(int(rv.stack.get(2,1))%2==0 and int(rv.stack.get(3,0))>old_qgen,'post-flip recovery did not republish queue generation')
+ck(int(rv.stack.get(16,1))%2==0 and int(rv.stack.get(17,0))>old_qgen,'post-flip recovery did not republish queue generation')
 rv.run(1)
 ck(rv.stack.get(8)==2 and state(rv,0)[1]==2,'post-flip recovery replayed an already committed mutation')
 

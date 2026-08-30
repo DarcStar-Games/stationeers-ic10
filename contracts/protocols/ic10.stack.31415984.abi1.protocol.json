@@ -54,36 +54,7 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read",
             "self-write"
-          ]
-        },
-        {
-          "address": 3,
-          "name": "S3",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
           ]
         },
         {
@@ -160,6 +131,44 @@
           ]
         },
         {
+          "address": 16,
+          "name": "S16",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 17,
+          "name": "S17",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 18,
+          "name": "S18",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 19,
+          "name": "S19",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
           "address": 23,
           "name": "S23",
           "value_type": "number",
@@ -204,7 +213,7 @@
         "publication_rules": [
           {
             "kind": "seqlock",
-            "address": 2,
+            "address": 16,
             "description": "Queue sequence is odd while mutating and even when stable.",
             "source": "source-fingerprinted-paired-sequence"
           }
@@ -228,7 +237,7 @@
       "literal_reads": [
         0,
         1,
-        2
+        16
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
@@ -255,7 +264,7 @@
       "publication_requirements": [
         {
           "kind": "seqlock",
-          "address": 2
+          "address": 16
         }
       ]
     },
@@ -269,8 +278,8 @@
       "literal_reads": [
         0,
         1,
-        2,
-        3
+        16,
+        17
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
@@ -297,7 +306,7 @@
       "publication_requirements": [
         {
           "kind": "seqlock",
-          "address": 2
+          "address": 16
         }
       ]
     }

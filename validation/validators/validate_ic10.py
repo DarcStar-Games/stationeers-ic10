@@ -56,6 +56,12 @@ SOFT_LIMIT_EXEMPTIONS = {
         "publishes the common S0 header above its six-pin ownership arrays",
     "ic10/printer-directory/printer_capacity_client_v2_0.ic10":
         "publishes the common S0 header with its request mailbox relocated above it",
+    "ic10/generic-jobs/generic_job_store_v1_0.ic10":
+        "publishes the common S0 header above its 32-slot durable job records",
+    "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10":
+        "publishes the common S0 header above its four producer lanes",
+    "ic10/generic-jobs/generic_job_selector_v3_0.ic10":
+        "publishes the common S0 header with its request mailbox relocated above it",
 }
 
 

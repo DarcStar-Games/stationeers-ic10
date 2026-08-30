@@ -20,21 +20,21 @@ add r0 r0 1
 poke 30 r0
 poke 31 r0
 get r1 db 23
-put d1 2 r1
-put d1 3 r0
+put d1 19 r1
+put d1 20 r0
 poke 20 1
 j Loop
 SelectWait:
 get r15 db 31
-get r0 d1 4
+get r0 d1 21
 bne r0 r15 Loop
-get r0 d1 5
+get r0 d1 22
 beq r0 1 Selected
 poke 23 0
 poke 20 0
 j Loop
 Selected:
-get r0 d1 6
+get r0 d1 23
 poke 21 r0
 get r0 d1 15
 poke 25 r0
@@ -63,7 +63,7 @@ Continue:
 poke 20 3
 j Loop
 WaitRelease:
-get r1 d1 7
+get r1 d1 24
 poke 23 r1
 j Release
 MaybeDispatch:
@@ -111,7 +111,7 @@ get r1 db 26
 put d0 13 r1
 put d0 14 r4
 put d0 15 r5
-put d0 7 r0
+put d0 19 r0
 poke 20 2
 j Loop
 Release:

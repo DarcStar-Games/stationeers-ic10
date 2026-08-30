@@ -11,17 +11,18 @@ Init:
 clr db
 poke 0 31416015
 poke 1 1
+poke 2 0
 Loop:
 yield
 get r0 db 31
 bgtz r0 StoreWait
-get r15 db 2
-get r0 db 3
+get r15 db 23
+get r0 db 24
 beq r15 r0 Loop
-get r10 db 7
+get r10 db 35
 blt r10 1 Bad
 bgt r10 3 Bad
-get r11 db 8
+get r11 db 36
 beq r10 1 CreateSlot
 blt r11 0 Bad
 bge r11 32 Bad
@@ -89,13 +90,13 @@ poke 32 r15
 poke 34 r11
 put d0 11 r10
 put d0 12 r11
-get r1 db 9
+get r1 db 37
 put d0 13 r1
-get r1 db 10
+get r1 db 38
 put d0 14 r1
-get r1 db 11
+get r1 db 39
 put d0 15 r1
-put d0 7 r0
+put d0 19 r0
 j StoreWait
 StoreWait:
 get r0 db 31
@@ -106,14 +107,14 @@ get r3 d0 10
 get r11 db 34
 get r15 db 32
 poke 31 0
-poke 4 r2
-poke 5 r3
-poke 6 r11
-poke 3 r15
+poke 25 r2
+poke 26 r3
+poke 27 r11
+poke 24 r15
 j Loop
 Bad:
-poke 4 -1
-poke 5 0
-poke 6 -1
-poke 3 r15
+poke 25 -1
+poke 26 0
+poke 27 -1
+poke 24 r15
 j Loop

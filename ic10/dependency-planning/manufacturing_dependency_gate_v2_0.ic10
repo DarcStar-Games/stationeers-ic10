@@ -6,10 +6,10 @@ yield
 get r15 db 9
 get r0 db 10
 beq r15 r0 Loop
-get r0 d2 5
+get r0 d2 22
 bne r0 1 Bad
-get r2 d2 7
-get r3 d2 6
+get r2 d2 24
+get r3 d2 23
 get r4 d2 16
 get r5 d2 8
 get r6 d2 10
@@ -41,7 +41,7 @@ beq r0 -31 ChildFail
 beq r0 -32 Cycle
 j Bad
 Dispatch:
-get r0 d2 7
+get r0 d2 24
 bne r0 r2 Loop
 get r0 d2 16
 bne r0 r4 Loop

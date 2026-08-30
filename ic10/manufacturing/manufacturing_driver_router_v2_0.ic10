@@ -14,7 +14,7 @@ beq r0 2 PMirror
 j Loop
 Dispatch:
 get r2 d2 8
-get r3 d2 7
+get r3 d2 24
 get r4 d2 9
 get r5 d2 10
 get r6 d2 11

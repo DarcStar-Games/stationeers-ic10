@@ -29,8 +29,8 @@ ck(set(s['wait_from'])=={x.value for x in WAIT_FROM},'wait_from mismatch')
 ck(set(s['wait_states'])=={x.value for x in WAIT_STATES},'wait_states mismatch')
 ck(set(s['terminal_states'])=={x.value for x in TERMINAL},'terminal states mismatch')
 src=(R/'ic10/generic-jobs/generic_job_store_v1_0.ic10').read_text();lines=src.splitlines()
-ck(len(lines)<=120,f'Job Store is {len(lines)} lines > 120')
-for token in ('bne r0 31415984 Reset','get r0 db 1','beq r0 1 Recover','poke 0 31415984','poke 1 1','poke 5 32','poke 23 1','poke 24 r15','poke 25 r3','poke 26 r4','beq r10 3 Reap','beq r6 7 Respond','bgt r6 10 Respond','beq r6 7 ReapOK','blt r6 11 Respond','bgt r6 12 Respond'):
+ck(len(lines)<=121,f'Job Store is {len(lines)} lines > 121')
+for token in ('bne r0 31415984 Reset','get r0 db 1','beq r0 1 Recover','poke 0 31415984','poke 1 1','poke 18 32','poke 23 1','poke 24 r15','poke 25 r3','poke 26 r4','beq r10 3 Reap','beq r6 7 Respond','bgt r6 10 Respond','beq r6 7 ReapOK','blt r6 11 Respond','bgt r6 12 Respond'):
     ck(token in src,f'Job Store missing {token!r}')
 doc=(R/'docs/GENERIC_JOB_ABI.md').read_text()
 for token in ('TRANSFORM','PRINT','TRANSFER','POWER','QUEUED -> PLANNING -> RESERVING -> READY -> RUNNING -> VERIFYING -> COMPLETE','WAIT_RESOURCE','WAIT_PROCESSOR','WAIT_CAPACITY','ExpectedJobGeneration','active state bank','same-service reflash','scheduler-neutral'):

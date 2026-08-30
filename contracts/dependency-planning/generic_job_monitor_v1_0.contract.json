@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/generic_job_monitor_v1_0.ic10",
-  "source_sha256": "745304c8c5d77066005cf188b4f3658d34cf4d7f1416558d9b20af9d391aba84",
+  "source_sha256": "60f2d4af18fbfec2d6d9b29c9bde57c33d1a67fbe8e8585985549fb803861cc3",
   "identity": {
     "service_id": "ic10.script.generic.job.monitor",
     "implementation_revision": "1.0",
@@ -27,7 +27,7 @@
         "literal_reads": [
           0,
           1,
-          2
+          16
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -268,7 +268,7 @@
             "publication_requirements": [
               {
                 "kind": "seqlock",
-                "address": 2
+                "address": 16
               }
             ]
           }

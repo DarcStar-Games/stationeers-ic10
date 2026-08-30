@@ -158,10 +158,7 @@ Returning to `PLANNING` is therefore deliberately conservative. It prevents a sc
 ```text
 S0   magic = 31415984
 S1   ABI = 1
-S2   QueueSequence; odd while a slot mutation is being published, even when stable
-S3   QueueGeneration; advances after committed mutations and recovery of committed odd state
-S5   capacity = 32
-S7   Store request generation
+S2   capability mask = 0
 S8   Store response generation
 S9   Store response status; 1 success, <0 rejected
 S10  allocated JobId for PUBLISH_NEW; ignore on other commands
@@ -170,6 +167,10 @@ S12  slot ordinal 0..31
 S13  expected Job Generation for SET_STATE / REAP
 S14  desired State for SET_STATE
 S15  desired ErrorStatus for SET_STATE
+S16  QueueSequence; odd while a slot mutation is being published, even when stable
+S17  QueueGeneration; advances after committed mutations and recovery of committed odd state
+S18  capacity = 32
+S19  Store request generation
 S23  next JobId
 S24  last applied request generation / replay marker
 S25  in-flight state-metadata base
@@ -271,10 +272,10 @@ publish response generation
 Readers must:
 
 ```text
-seq0 = S2
+seq0 = S16
 require seq0 even
 read intent + active state triplet
-seq1 = S2
+seq1 = S16
 accept only if seq1 == seq0 and even
 ```
 

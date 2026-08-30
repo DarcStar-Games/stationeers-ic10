@@ -75,7 +75,7 @@ def boot_job_store():
 def publish_job(vm,token,slot,intent):
  base=32+8*slot
  for n,v in enumerate([intent.job_type,intent.required_capability,intent.identity,intent.input_count,intent.output_count,intent.requested_quantity,intent.priority],1): vm.stack[base+n]=v
- vm.stack.update({11:1,12:slot,7:token});vm.run(1)
+ vm.stack.update({11:1,12:slot,19:token});vm.run(1)
  return int(vm.stack.get(10,0))
 js=boot_job_store()
 print_id=publish_job(js,1,0,JobIntent(JobType.PRINT,1,7001,1,1,1,999))
@@ -83,11 +83,11 @@ power_a=publish_job(js,2,1,JobIntent(JobType.POWER,2,8001,0,0,40,100))
 power_b=publish_job(js,3,2,JobIntent(JobType.POWER,3,8002,0,0,50,90))
 jsdev=Device(1700,js.stack,{'ReferenceId':1700})
 gsel=IC10((R/'ic10/generic-jobs/generic_job_selector_v3_0.ic10').read_text(),{'d0':jsdev},self_ref=1701);gsel.run(1)
-gsel.stack.update({2:0,3:1,18:4});gsel.run(1)
-ck(gsel.stack.get(7)==power_a and gsel.stack.get(8)==4,'generic selector exact POWER mode selected wrong domain/job')
-gsel.stack.update({2:power_a,3:2,18:4});gsel.run(1)
-ck(gsel.stack.get(7)==power_b,'generic selector POWER cursor did not advance')
-ck(gsel.stack.get(7)!=print_id,'generic selector exact POWER mode leaked PRINT job')
+gsel.stack.update({19:0,20:1,18:4});gsel.run(1)
+ck(gsel.stack.get(24)==power_a and gsel.stack.get(8)==4,'generic selector exact POWER mode selected wrong domain/job')
+gsel.stack.update({19:power_a,20:2,18:4});gsel.run(1)
+ck(gsel.stack.get(24)==power_b,'generic selector POWER cursor did not advance')
+ck(gsel.stack.get(24)!=print_id,'generic selector exact POWER mode leaked PRINT job')
 
 # Missing READY target is retryable WAIT_RESOURCE, while ambiguous/invalid target
 # faults the job instead of leaving a high-priority READY job to spin forever.

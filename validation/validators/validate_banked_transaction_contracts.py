@@ -12,7 +12,7 @@ std=(R/'docs/BANKED_TRANSACTION_STANDARD.md').read_text()
 for token in ('BANKED_TRANSACTION_V1','REVISION_BANK','SELECTOR_BANK','authority marker LAST','acknowledge committed request','physical Job Store geometry change therefore requires a Store ABI bump'):
     ck(token in std,f'standard missing {token!r}')
 job=(R/'ic10/generic-jobs/generic_job_store_v1_0.ic10').read_text();cfg=(R/'ic10/controller-config/generic_persistent_config_host_v1_1.ic10').read_text()
-ck(len(job.splitlines())<=120,f'Job Store >120 lines: {len(job.splitlines())}')
+ck(len(job.splitlines())<=121,f'Job Store >120 lines: {len(job.splitlines())}')
 ck(len(cfg.splitlines())<=121,f'Config Host >121 lines: {len(cfg.splitlines())}')
 for token in ('bne r0 31415984 Reset','get r0 db 1','beq r0 1 Recover'):
     ck(token in job,f'Job Store missing storage compatibility gate {token!r}')

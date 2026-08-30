@@ -38,7 +38,7 @@ ordered('ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10','
 # Dependency Plan Store makes a record inactive before mutating the remaining payload.
 ordered('ic10/dependency-planning/dependency_plan_store_v2_0.ic10','poke r0 0','Write:','poke r0 r3','jal End')
 # Gateway replay identity must remain deterministic externalToken*5+lane.
-ordered('ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10','mul r0 r15 5','add r0 r0 r6','put d0 2 r0')
+ordered('ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10','mul r0 r15 5','add r0 r0 r6','put d0 23 r0')
 # Power Plan Store boot must invalidate an interrupted odd COMMIT before restoring even sequence.
 ordered('ic10/power-grid/power_dispatch_plan_store_v1_0.ic10','and r1 r0 1','poke 3 0','poke 4 0','add r0 r0 1','poke 2 r0')
 # New POWER reservations are committed before old release; allocator authority is published last.

@@ -1122,7 +1122,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "59815bb3c63a41a33cea9487a8721da664a6e2d4c217f8d97a4014edd15d04fb",
+   "source_sha256": "f1caf24316c3dcb5519d7b87f8391ab57459564410d0161015e5d29ec849af17",
    "legacy_owned_ranges": [
     [
      20,
@@ -2182,7 +2182,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "58bbb691b29067ad2f38a3a7b4c0ce1d587baf91fd0fad531ca40676090e8dca",
+   "source_sha256": "45a6ec3fd6855bc2b405bcd59b0f2d5cfca78274136257c96dc259728b544d75",
    "legacy_owned_ranges": [
     [
      9,
@@ -2205,7 +2205,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "6bf0f703e33ae1d02c1b28d8ec6641e382d01d80028ba9d6796fc8f13f43ddc2",
+   "source_sha256": "9aedf4558472894e9b65470612b05d0607cb6a1b709c0766aa09cab00e474c30",
    "legacy_owned_ranges": [
     [
      20,
@@ -3702,6 +3702,156 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "printer-directory"
+  },
+  "ic10/generic-jobs/generic_job_store_v1_0.ic10": {
+   "service_id": "ic10.script.generic.job.store",
+   "magic": 31415984,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "f210ee9288f6577553833fe1a18d092eefa4038e8d45a3871619ef394f5ca780",
+   "legacy_owned_ranges": [
+    [
+     8,
+     19
+    ],
+    [
+     23,
+     26
+    ],
+    [
+     32,
+     511
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     32,
+     511
+    ]
+   ],
+   "pilot_family": "generic-jobs"
+  },
+  "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10": {
+   "service_id": "ic10.script.generic.job.store.command.executor",
+   "magic": 31416015,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "51d49ccc55a1b5b840ea62ccd64f8e4dd5be7c84ad5283a1d42c3d0cf4f93a12",
+   "legacy_owned_ranges": [
+    [
+     12,
+     13
+    ],
+    [
+     22,
+     27
+    ],
+    [
+     30,
+     32
+    ],
+    [
+     34,
+     39
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "generic-jobs"
+  },
+  "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10": {
+   "service_id": "ic10.script.generic.job.command.gateway",
+   "magic": 31416001,
+   "service_abi": 3,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "d6596b4d9beae042396382bea8098b087756154904699e2507d7790666673edd",
+   "legacy_owned_ranges": [
+    [
+     8,
+     10
+    ],
+    [
+     19,
+     19
+    ],
+    [
+     24,
+     25
+    ],
+    [
+     32,
+     35
+    ],
+    [
+     48,
+     55
+    ],
+    [
+     63,
+     67
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     8,
+     10
+    ],
+    [
+     33,
+     35
+    ],
+    [
+     65,
+     67
+    ]
+   ],
+   "pilot_family": "generic-jobs"
+  },
+  "ic10/generic-jobs/generic_job_selector_v3_0.ic10": {
+   "service_id": "ic10.script.generic.job.selector",
+   "magic": 31415993,
+   "service_abi": 3,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "1c71179ca6e5140b0bd96c714086bda7abbfbc2660a115bf4ff4cacb899b9307",
+   "legacy_owned_ranges": [
+    [
+     8,
+     24
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "generic-jobs"
   }
  },
  "legacy_exemption": {

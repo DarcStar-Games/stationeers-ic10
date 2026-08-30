@@ -426,7 +426,7 @@
    ]
   },
   "ic10/dependency-planning/generic_job_monitor_v1_0.ic10": {
-   "source_sha256": "745304c8c5d77066005cf188b4f3658d34cf4d7f1416558d9b20af9d391aba84",
+   "source_sha256": "60f2d4af18fbfec2d6d9b29c9bde57c33d1a67fbe8e8585985549fb803861cc3",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -573,24 +573,24 @@
    ]
   },
   "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10": {
-   "source_sha256": "856346080dfd53b917ad6e3868b9c65aed834eb936c397ec21a077b3c172115b",
+   "source_sha256": "d6596b4d9beae042396382bea8098b087756154904699e2507d7790666673edd",
    "ports": {
     "d0": {
      "dynamic_write_ranges": [
       [
-       7,
-       11
-      ],
-      [
        14,
        20
+      ],
+      [
+       35,
+       39
       ]
      ]
     }
    }
   },
   "ic10/generic-jobs/generic_job_selector_v3_0.ic10": {
-   "source_sha256": "ac54ce211a7c3b0dfbcbc963d8c49c994461f932600c67c614c5be163f7d0024",
+   "source_sha256": "1c71179ca6e5140b0bd96c714086bda7abbfbc2660a115bf4ff4cacb899b9307",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -603,7 +603,7 @@
    }
   },
   "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10": {
-   "source_sha256": "d203e28f5f3f11773a513c84b21cfe342b8c40cc6e480b015a655aad5e446a2a",
+   "source_sha256": "51d49ccc55a1b5b840ea62ccd64f8e4dd5be7c84ad5283a1d42c3d0cf4f93a12",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -630,11 +630,11 @@
    }
   },
   "ic10/generic-jobs/generic_job_store_v1_0.ic10": {
-   "source_sha256": "bc89caf461029cc3c754d8f5580fa010f6be1bbece3b02358072c72abb1d2cd9",
+   "source_sha256": "f210ee9288f6577553833fe1a18d092eefa4038e8d45a3871619ef394f5ca780",
    "publication_rules": [
     {
      "kind": "seqlock",
-     "address": 2,
+     "address": 16,
      "verification": "paired-sequence",
      "description": "Queue sequence is odd while mutating and even when stable."
     }

@@ -689,7 +689,7 @@ Magic `31416075`. `ic10/manufacturing/generic_print_runtime_v2_0.ic10` consumes 
 183 Scheduler            magic 31415995 ABI1
 ```
 
-Generic Job Selector ABI3 uses S2 as a JobId cursor and skips every eligible JobId `<= cursor`, guaranteeing progress before wrap. S18=0 selects the manufacturing TRANSFORM/PRINT state policy; S18>0 selects that exact JobType and its nonterminal lifecycle states. Manufacturing and POWER schedulers own domain lifecycle policy, while all physical Job Store mutation is serialized through Gateway ABI3 and `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10`.
+Generic Job Selector ABI3 uses S19 as a JobId cursor and skips every eligible JobId `<= cursor`, guaranteeing progress before wrap. Its request generation is S20 and its response token S21; status S22, selected slot S23, selected JobId S24. S18=0 selects the manufacturing TRANSFORM/PRINT state policy; S18>0 selects that exact JobType and its nonterminal lifecycle states. Manufacturing and POWER schedulers own domain lifecycle policy, while all physical Job Store mutation is serialized through Gateway ABI3 and `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10`.
 
 ### Printer Execution Bank ABI2
 
