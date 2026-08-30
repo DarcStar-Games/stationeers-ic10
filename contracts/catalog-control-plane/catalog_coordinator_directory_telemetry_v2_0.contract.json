@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10",
-  "source_sha256": "305aab7cab34af85accdf32ce5b91e18cacc13fca11721ecd390aad3814cacd5",
+  "source_sha256": "d46bf229146c91d6a8c5c3b3e98e102d8efbf182d4b99b9df3b36b8b2a6a2af9",
   "identity": {
     "service_id": "ic10.script.catalog.coordinator.directory.telemetry",
     "implementation_revision": "2.0",
@@ -27,27 +27,27 @@
         "literal_reads": [
           0,
           1,
-          2,
-          5,
-          13,
-          14,
-          15,
+          3,
           18,
-          23
+          23,
+          35,
+          43,
+          44,
+          45
         ],
         "literal_writes": [
-          5,
-          13,
-          14,
-          15,
-          18
+          18,
+          35,
+          43,
+          44,
+          45
         ],
         "dynamic_read": true,
         "dynamic_write": true,
         "dynamic_read_ranges": [
           {
-            "start": 5,
-            "end": 15
+            "start": 35,
+            "end": 45
           },
           {
             "start": 64,
@@ -56,8 +56,8 @@
         ],
         "dynamic_write_ranges": [
           {
-            "start": 5,
-            "end": 15
+            "start": 35,
+            "end": 45
           }
         ],
         "dynamic_read_range_source": "source-fingerprinted-exception",
@@ -72,7 +72,7 @@
             "equals": 3
           },
           {
-            "address": 2,
+            "address": 3,
             "equals": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
           }
         ]

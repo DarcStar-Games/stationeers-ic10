@@ -36,7 +36,7 @@ for n in ('poke 0 31415983','poke 3 HASH("DirectorySchema.ResourceLink.v1")','po
     need(ld,n,'resource link adapter')
 for n in ('put d1 11 r2','put d1 12 r3','move r6 2'):
     need(bridge,n,'generic directory adapter bridge')
-for n in ('poke 0 31415981','poke 1 1','poke 31 31415981','bgt r3 64 Error','poke 22 1','poke 2 r6'):
+for n in ('poke 0 31415981','poke 1 1','poke 31 31415981','bgt r3 64 Error','poke 22 1','poke 24 r6'):
     need(dh,n,'generic snapshot directory host')
 
 # Resource Reservation discovery and Item-7 storage providers reuse the same generic substrate.

@@ -6,9 +6,9 @@ move r14 0
 Loop:
 yield
 beqz r14 New
-get r0 d0 2
+get r0 d0 24
 bne r0 r5 Fail
-add sp r5 3
+add sp r5 25
 get r0 d0 sp
 bne r0 r6 Fail
 bgtz r13 Wait
@@ -83,13 +83,13 @@ get r0 d1 0
 bne r0 31415938 Reject
 get r0 d1 1
 bne r0 3 Reject
-get r5 d0 2
-add sp r5 3
+get r5 d0 24
+add sp r5 25
 get r6 d0 sp
-add sp r5 7
+add sp r5 29
 get r0 d0 sp
 bgtz r0 Reject
-add sp r5 5
+add sp r5 27
 get r7 d0 sp
 clamp r7 r7 0 64
 move r8 0

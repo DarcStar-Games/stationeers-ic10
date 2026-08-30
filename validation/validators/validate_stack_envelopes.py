@@ -14,7 +14,7 @@ from framework.script_contracts import build_all
 from framework.stack_envelope import BASE, LENGTH, DeclarationError, build_inventory
 
 ROOT = _PROJECT_ROOT
-PILOT_FAMILIES = {"stack-monitor", "generic-telemetry", "directory", "catalog", "catalog-control-plane", "diagnostics", "power-jobs", "material-transform", "catalog-loader", "input-profile-catalog", "resource-profile-catalog", "transform-catalog", "transaction", "manufacturing", "controller-discovery", "pressure-domain", "recipe-catalog", "shared-input", "process-gas-preparation", "item-storage-common", "item-storage-larre", "material-grid", "process-furnace", "process-gfg", "pressure-grid", "item-storage-sdb", "power-grid", "resource-grid-core", "item-storage-direct", "item-storage-vending", "controller-pi", "controller-sequencer", "controller-phase-pressure", "controller-config", "printer-directory", "generic-jobs"}
+PILOT_FAMILIES = {"stack-monitor", "generic-telemetry", "directory", "catalog", "catalog-control-plane", "diagnostics", "power-jobs", "material-transform", "catalog-loader", "input-profile-catalog", "resource-profile-catalog", "transform-catalog", "transaction", "manufacturing", "controller-discovery", "pressure-domain", "recipe-catalog", "shared-input", "process-gas-preparation", "item-storage-common", "item-storage-larre", "material-grid", "process-furnace", "process-gfg", "pressure-grid", "item-storage-sdb", "power-grid", "resource-grid-core", "item-storage-direct", "item-storage-vending", "controller-pi", "controller-sequencer", "controller-phase-pressure", "controller-config", "printer-directory", "generic-jobs", "directory-core"}
 fails: list[str] = []
 
 try:
@@ -86,6 +86,8 @@ HEADER_READS = {
     ("ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10", "r2"): {3},
     ("ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10", "r2"): {3},
     ("ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10", "r2"): {3},
+    # reads the Registry Host's adapter-assigned SchemaId S3 as a header field
+    ("ic10/catalog-control-plane/catalog_inspector_v4_0.ic10", "r14"): {3},
 }
 for wired_source, wired_ports in json.loads((ROOT / "data" / "script_wiring.json").read_text())["ports"].items():
     for wired_port, peer in wired_ports.items():

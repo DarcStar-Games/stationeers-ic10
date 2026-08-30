@@ -1,11 +1,12 @@
 Boot:
-yield
 get r0 db 31
-beq r0 31415981 Loop
+beq r0 31415981 Header
 clr db
 poke 31 31415981
+Header:
 poke 0 31415981
 poke 1 1
+poke 2 0
 Loop:
 yield
 get r15 db 14
@@ -25,7 +26,7 @@ beq r5 2 Add
 beq r5 3 Commit
 j Error
 Begin:
-get r5 db 2
+get r5 db 24
 seq r6 r5 0
 poke 20 r6
 poke 21 0
@@ -99,18 +100,18 @@ poke 22 1
 j Ack
 Commit:
 get r6 db 20
-poke 2 r6
+poke 24 r6
 get r9 db 21
-add r10 r6 5
+add r10 r6 27
 poke r10 r9
 get r9 db 22
-add r10 r6 7
+add r10 r6 29
 poke r10 r9
-get r9 db 3
-get r10 db 4
+get r9 db 25
+get r10 db 26
 max r9 r9 r10
 add r9 r9 1
-add r10 r6 3
+add r10 r6 25
 poke r10 r9
 j Ack
 Error:

@@ -20,6 +20,7 @@ Most controller/configuration services remain on **ABI 1**, while hardened trans
 | Phase-Pressure Config Policy | `31416079` | `S1` | 1 |
 | Pressure-Domain Config Policy | `31416080` | `S1` | 1 |
 | Pressure-Transfer Config Policy | `31416081` | `S1` | 1 |
+| Generic Directory Adapter Bridge | `31416084` | `S1` | 1 |
 | Generic Snapshot Directory Host | `31415981` | `S1` | 1 |
 | Generic Registry Directory Host | `31415982` | `S1` | 3 |
 | Directory Adapter | `31415983` | `S1` | 3 |
@@ -280,6 +281,7 @@ appear nowhere below.
 | `31416081` | 1 | `S0` | `ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10` | Validates the four-field PressureTransfer schema. |
 | `31416082` | 1 | `S0` | `ic10/controller-config/generic_config_committer_v1_1.ic10` | Copies staged values into Host candidate config and starts apply. |
 | `31416083` | 1 | `S0` | `ic10/controller-config/generic_config_loader_v1_2.ic10` | Loads selected Host/Profile state and builds active-ordinal mapping. |
+| `31416084` | 1 | `S0` | `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` | Consumes frozen Adapter ABI2 snapshots and drives Generic Snapshot Host BEGIN/ADD/COMMIT. |
 <!-- PUBLISHED_HEADERS END -->
 
 ## Catalog Store ABI v6
@@ -850,14 +852,15 @@ QUOTE calculates remaining endpoint capacity without mutation. COMMIT reserves e
 ```text
 S0   magic = 31415981
 S1   ABI = 1
-S2   active bank
-S3/S4 generation A/B
-S5/S6 link count A/B, 0..64
-S7/S8 overflow A/B
+S2   capability mask = 0
 S9   DirectorySchemaId = HASH("DirectorySchema.PressureGridLink")
 S10  DirectorySchemaVersion = 1
 S11  entry width = 3
 S12  capacity = 64
+S24  active bank
+S25/S26 generation A/B
+S27/S28 link count A/B, 0..64
+S29/S30 overflow A/B
 
 A = S32..223
 B = S224..415
@@ -1466,7 +1469,7 @@ There are no consumer-facing domain magic/ABI fields in the Adapter contract.
 
 `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` consumes Snapshot-mode adapters and drives `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10` (magic `31415981`, ABI1). The Host owns sorting, exact dedupe, overflow, A/B publication, stable generation, and publishes schema ID/version/width/capacity in S9..S12.
 
-`ic10/directory-core/generic_registry_directory_host_v2_0.ic10` (magic `31415982`, ABI3) consumes Registry-mode Adapter ABI3 directly. It accepts only `DirectorySchema.CatalogStoreNode` v1 with width 6/capacity 64, publishes schema ID at S2, schema version at S19, width at S20, capacity at S21, and an odd/even publication sequence at S23. It freezes the Adapter during a rebuild; readers require S23 even and unchanged around registry reads.
+`ic10/directory-core/generic_registry_directory_host_v2_0.ic10` (magic `31415982`, ABI3) consumes Registry-mode Adapter ABI3 directly. It accepts only `DirectorySchema.CatalogStoreNode` v1 with width 6/capacity 64, publishes the adapter-assigned folded SchemaId at the S3 header cell, width at S20, capacity at S21, and an odd/even publication sequence at S23. It freezes the Adapter during a rebuild; readers require S23 even and unchanged around registry reads.
 
 Consumers identify a directory by **generic Host magic + Host ABI + DirectorySchemaId + DirectorySchemaVersion**. This is the canonical current directory contract; domain-specific compatibility facades are not retained.
 

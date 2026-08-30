@@ -648,8 +648,11 @@ def schema_capability_errors(
         errors.append("telemetry_base cannot point inside the common header")
 
     expected = expected_envelope_cells(declaration)
+    allowed_dynamic = {STATE_CELL, GENERATION_CELL} | (
+        {SCHEMA_ID_CELL} if declaration.schema_assigned_externally else set()
+    )
     for cell in range(BASE, BASE + LENGTH):
-        if cell not in expected and cell not in (STATE_CELL, GENERATION_CELL) and writes.get(cell):
+        if cell not in expected and cell not in allowed_dynamic and writes.get(cell):
             errors.append(f"S{cell} is reserved and must not be written undeclared")
     for address, value in expected.items():
         if address != GENERATION_CELL and writes.get(address, set()) != {value}:
@@ -820,6 +823,7 @@ def publication_rule_errors(
         mutable_cells=frozenset(
             ({STATE_CELL} if declaration.publishes_state else set())
             | ({GENERATION_CELL} if declaration.publishes_generation else set())
+            | ({SCHEMA_ID_CELL} if declaration.schema_assigned_externally else set())
         ),
     )
     line_count = len((Path(root) / declaration.source).read_text().splitlines())

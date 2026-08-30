@@ -23,12 +23,12 @@ get r0 d0 9
 bne r0 HASH("DirectorySchema.Printer.v2") Loop
 get r0 d0 11
 bne r0 3 Loop
-get r11 d0 2
-add r0 r11 3
+get r11 d0 24
+add r0 r11 25
 get r10 d0 r0
-add r0 r11 5
+add r0 r11 27
 get r12 d0 r0
-add r0 r11 7
+add r0 r11 29
 get r0 d0 r0
 bnez r0 Loop
 mul r13 r11 192
@@ -103,9 +103,9 @@ getd r0 r1 8
 bne r0 r14 ScanStart
 j Bank
 VerifyRaw:
-get r0 d0 2
+get r0 d0 24
 bne r0 r11 ScanStart
-add r0 r11 3
+add r0 r11 25
 get r0 d0 r0
 bne r0 r10 ScanStart
 poke 12 r8

@@ -22,21 +22,21 @@ get r0 d0 0
 bne r0 31415982 Loop
 get r0 d0 1
 bne r0 3 Loop
-get r0 d0 2
+get r0 d0 3
 bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 l r12 d0 ReferenceId
 poke 23 r12
-get r0 d0 6
+get r0 d0 36
 poke 8 r0
-get r0 d0 14
+get r0 d0 44
 poke 9 r0
-get r0 d0 11
+get r0 d0 41
 poke 10 r0
-get r0 d0 9
+get r0 d0 39
 poke 11 r0
-get r0 d0 7
+get r0 d0 37
 poke 12 r0
-get r0 d0 8
+get r0 d0 38
 poke 13 r0
 get r0 db 25
 blez r0 Publish

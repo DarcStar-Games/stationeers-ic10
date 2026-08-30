@@ -21,7 +21,7 @@ for k in ('published_magic_slot','published_abi_slot'):
 sh=D.get('snapshot_host',{}); rh=D.get('registry_host',{})
 if sh.get('boot_marker_slot')!=31 or 'generic_magic_slot' in sh: fail('snapshot boot marker metadata mismatch')
 if rh.get('publication_sequence_slot')!=23 or 'generic_magic_slot' in rh: fail('registry publication metadata mismatch')
-need('ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','poke 0 31415981','poke 1 1','bgt r2 3 Error','bgt r3 64 Error','poke 22 1','poke 2 r6','poke 15 r15','Shift:\nbge r6 r3 Full','Insert:\nbge r6 r3 Full')
+need('ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','poke 0 31415981','poke 1 1','bgt r2 3 Error','bgt r3 64 Error','poke 22 1','poke 24 r6','poke 15 r15','Shift:\nbge r6 r3 Full','Insert:\nbge r6 r3 Full')
 need('ic10/directory-core/generic_registry_directory_host_v2_0.ic10','poke 0 31415982','poke 1 3','bne r0 3 Loop','put d0 16 r11','get r0 d0 17','bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") SourceBad','bne r0 6 SourceBad','get r10 db 23','poke 23 r10','put d0 16 0')
 need('ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10','bne r0 3 Loop','put d0 16 r11','get r0 d0 17','get r15 d0 13','get r10 d0 7','bne r0 r15 Release','bne r0 r10 Release','put d0 16 0')
 expected={
@@ -76,12 +76,12 @@ need('ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10','bne
 
 # Incomplete snapshots are unusable on transaction-critical paths.
 for f,toks in {
- 'ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10':['get r0 d0 2','add sp r0 7','bgtz r1 LinkBad'],
- 'ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10':['add sp r4 7','bgtz r0 Bad','get r0 d0 2','bne r0 r4 Bad'],
- 'ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10':['add sp r5 7','bgtz r0 Reject'],
- 'ic10/material-transform/material_transform_link_resolver_v1_0.ic10':['add r0 r12 7','bgtz r0 Bad','get r0 d2 2','bne r0 r12 Loop'],
- 'ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10':['get r9 db 16','getd r12 r9 7','getd r12 r9 8','bnez r12 Bad','getd r0 r9 2','bne r0 r8 Loop'],
- 'ic10/manufacturing/print_material_resolver_v1_0.ic10':['get r12 d1 7','get r12 d1 8','bnez r12 Bad'],
+ 'ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10':['get r0 d0 2','add sp r0 29','bgtz r1 LinkBad'],
+ 'ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10':['add sp r4 29','bgtz r0 Bad','get r0 d0 2','bne r0 r4 Bad'],
+ 'ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10':['add sp r5 29','bgtz r0 Reject'],
+ 'ic10/material-transform/material_transform_link_resolver_v1_0.ic10':['add r0 r12 29','bgtz r0 Bad','get r0 d2 2','bne r0 r12 Loop'],
+ 'ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10':['get r9 db 16','getd r12 r9 29','getd r12 r9 30','bnez r12 Bad','getd r0 r9 24','bne r0 r8 Loop'],
+ 'ic10/manufacturing/print_material_resolver_v1_0.ic10':['get r12 d1 29','get r12 d1 30','bnez r12 Bad'],
 }.items(): need(f,*toks)
 # Registry readers that can expose state or trigger side effects fence S23 and require ABI3.
 for f,toks in {

@@ -50,11 +50,11 @@ get r0 d2 0
 bne r0 31415943 BuildBad
 get r0 d2 1
 bne r0 1 BuildBad
-get r0 d0 2
-add sp r0 7
+get r0 d0 24
+add sp r0 29
 get r1 d0 sp
 bgtz r1 LinkBad
-add sp r0 5
+add sp r0 27
 get r0 d0 sp
 clamp r0 r0 0 64
 mul r13 r0 4

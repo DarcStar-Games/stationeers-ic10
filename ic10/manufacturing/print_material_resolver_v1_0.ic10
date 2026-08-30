@@ -22,17 +22,17 @@ blt r8 1 Bad
 bgt r8 16 Bad
 get r0 d1 9
 bne r0 HASH("DirectorySchema.ResourceLink.v1") Bad
-get r0 d1 2
+get r0 d1 24
 beqz r0 BankA
-get r10 d1 4
-get r11 d1 6
-get r12 d1 8
+get r10 d1 26
+get r11 d1 28
+get r12 d1 30
 move r13 224
 j Start
 BankA:
-get r10 d1 3
-get r11 d1 5
-get r12 d1 7
+get r10 d1 25
+get r11 d1 27
+get r12 d1 29
 move r13 32
 Start:
 bnez r12 Bad
@@ -94,12 +94,12 @@ Ready:
 get r14 db 14
 get r0 d0 6
 bne r0 r14 Loop
-get r0 d1 2
+get r0 d1 24
 beqz r0 GenA
-get r0 d1 4
+get r0 d1 26
 j Gen
 GenA:
-get r0 d1 3
+get r0 d1 25
 Gen:
 bne r0 r10 Loop
 poke 9 r8

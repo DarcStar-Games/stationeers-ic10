@@ -240,15 +240,16 @@ j Idle
 '''
 def make_coordinator_directory_host_program():
     return '''Boot: # Generic Registry Directory Host ABI3: CatalogStoreNode persistent registry.
-yield
 get r0 db 0
 bne r0 31415982 Init
 get r0 db 1
-beq r0 3 Loop
+beq r0 3 Header
 Init:
 clr db
+Header:
 poke 0 31415982
 poke 1 3
+poke 2 1
 Loop:
 yield
 bdns d0 Loop
@@ -278,7 +279,7 @@ get r15 d0 13
 mod r0 r15 2
 bnez r0 SourceBad
 get r14 d0 7
-get r0 db 3
+get r0 db 25
 beq r14 r0 Release
 get r13 d0 12
 get r10 db 23
@@ -342,11 +343,11 @@ poke 16 -1
 j Close
 Publish:
 get r0 d0 3
-poke 2 r0
-poke 3 r14
-get r0 db 4
+poke 3 r0
+poke 25 r14
+get r0 db 26
 add r0 r0 1
-poke 4 r0
+poke 26 r0
 poke 20 6
 poke 21 64
 Close:
@@ -381,21 +382,21 @@ get r0 d0 0
 bne r0 31415982 Loop
 get r0 d0 1
 bne r0 3 Loop
-get r0 d0 2
+get r0 d0 3
 bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 l r12 d0 ReferenceId
 poke 23 r12
-get r0 d0 6
+get r0 d0 36
 poke 8 r0
-get r0 d0 14
+get r0 d0 44
 poke 9 r0
-get r0 d0 11
+get r0 d0 41
 poke 10 r0
-get r0 d0 9
+get r0 d0 39
 poke 11 r0
-get r0 d0 7
+get r0 d0 37
 poke 12 r0
-get r0 d0 8
+get r0 d0 38
 poke 13 r0
 get r0 db 25
 blez r0 Publish
@@ -598,7 +599,7 @@ get r0 d1 0
 bne r0 31415982 Loop
 get r0 d1 1
 bne r0 3 Loop
-get r0 d1 2
+get r0 d1 3
 bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 get r11 d1 23
 mod r0 r11 2
@@ -658,7 +659,7 @@ get r0 d1 0
 bne r0 31415982 Loop
 get r0 d1 1
 bne r0 3 Loop
-get r0 d1 2
+get r0 d1 3
 bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 get r12 d1 23
 mod r0 r12 2
@@ -751,9 +752,96 @@ add r7 r7 1
 j FindSrc
 '''
 def make_migration_worker_program():
-    L=['# Catalog Item Migration Worker v1.0: d0 Core; copies newest whole item then pops source.','Boot:','poke 0 31416071','poke 1 1','poke 2 0','Loop:','yield','bdns d0 Loop','get r0 d0 0',f'bne r0 {COORD_MAGIC} Loop','get r1 d0 40','blez r1 Loop','get r2 d0 41','blez r2 Loop','getd r3 r1 9','blez r3 Clear','sub r3 r3 1','mul r4 r3 2','add r4 r4 32','getd r8 r1 r4','add r4 r4 1','getd r9 r1 r4','add r11 r9 2','getd r0 r2 29','blt r0 r11 Clear','get r0 d0 22','add r0 r0 1','put d0 22 r0','getd r10 r2 20','sub r10 r10 r9','getd r12 r2 19','move r5 0','Copy:','bge r5 r9 Publish','add r0 r8 r5','getd r0 r1 r0','add r4 r10 r5','putd r2 r4 r0','add r5 r5 1','j Copy','Publish:','putd r2 r12 r10','add r12 r12 1','putd r2 r12 r9','add r12 r12 1','putd r2 19 r12','putd r2 20 r10','getd r0 r2 9','add r0 r0 1','putd r2 9 r0','getd r0 r2 22','add r0 r0 r11','putd r2 22 r0','sub r0 r10 r12','putd r2 29 r0','getd r0 r2 15','add r0 r0 1','putd r2 15 r0','getd r0 r1 9','sub r0 r0 1','putd r1 9 r0','getd r0 r1 19','sub r0 r0 2','putd r1 19 r0','add r0 r8 r9','putd r1 20 r0','getd r0 r1 22','sub r0 r0 r11','putd r1 22 r0','getd r4 r1 19','getd r5 r1 20','sub r0 r5 r4','putd r1 29 r0','getd r0 r1 15','add r0 r0 1','putd r1 15 r0','get r0 d0 21','add r0 r0 1','put d0 21 r0','get r0 d0 22','add r0 r0 1','put d0 22 r0','Clear:','blez r2 NoReserve','putd r2 27 0','NoReserve:','put d0 40 0','put d0 41 0','j Loop']
-    return '\n'.join(L)+'\n' 
-
+    return '''# Catalog Item Migration Worker v1.0: d0 Core; copies newest whole item then pops source.
+Boot:
+poke 0 31416071
+poke 1 1
+poke 2 0
+Loop:
+yield
+bdns d0 Loop
+get r0 d0 0
+bne r0 31415970 Loop
+get r1 d0 40
+blez r1 Loop
+get r2 d0 41
+blez r2 Loop
+getd r3 r1 9
+blez r3 Clear
+sub r3 r3 1
+mul r4 r3 2
+add r4 r4 32
+getd r8 r1 r4
+add r4 r4 1
+getd r9 r1 r4
+add r11 r9 2
+getd r0 r2 29
+blt r0 r11 Clear
+get r0 d0 22
+add r0 r0 1
+put d0 22 r0
+getd r10 r2 20
+sub r10 r10 r9
+getd r12 r2 19
+move r5 0
+Copy:
+bge r5 r9 Publish
+add r0 r8 r5
+getd r0 r1 r0
+add r4 r10 r5
+putd r2 r4 r0
+add r5 r5 1
+j Copy
+Publish:
+putd r2 r12 r10
+add r12 r12 1
+putd r2 r12 r9
+add r12 r12 1
+putd r2 19 r12
+putd r2 20 r10
+getd r0 r2 9
+add r0 r0 1
+putd r2 9 r0
+getd r0 r2 22
+add r0 r0 r11
+putd r2 22 r0
+sub r0 r10 r12
+putd r2 29 r0
+getd r0 r2 15
+add r0 r0 1
+putd r2 15 r0
+getd r0 r1 9
+sub r0 r0 1
+putd r1 9 r0
+getd r0 r1 19
+sub r0 r0 2
+putd r1 19 r0
+add r0 r8 r9
+putd r1 20 r0
+getd r0 r1 22
+sub r0 r0 r11
+putd r1 22 r0
+getd r4 r1 19
+getd r5 r1 20
+sub r0 r5 r4
+putd r1 29 r0
+getd r0 r1 15
+add r0 r0 1
+putd r1 15 r0
+get r0 d0 21
+add r0 r0 1
+put d0 21 r0
+get r0 d0 22
+add r0 r0 1
+put d0 22 r0
+Clear:
+blez r2 NoReserve
+putd r2 27 0
+NoReserve:
+put d0 40 0
+put d0 41 0
+j Loop
+'''
 def make_retirement_manager_program():
     return '''# Catalog Store Retirement Manager v2.0: d0 Core,d1 Registry ABI3.
 Boot:
@@ -770,7 +858,7 @@ get r0 d1 0
 bne r0 31415982 Loop
 get r0 d1 1
 bne r0 3 Loop
-get r0 d1 2
+get r0 d1 3
 bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 get r11 d1 23
 mod r0 r11 2
@@ -915,7 +1003,7 @@ get r0 d0 0
 bne r0 31415982 Loop
 get r0 d0 1
 bne r0 3 Loop
-get r0 d0 2
+get r0 d0 3
 bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 get r14 d0 23
 mod r0 r14 2
@@ -926,11 +1014,11 @@ bnez r0 Open
 add r15 r15 1
 put d0 18 r15
 Open:
-move r0 5
+move r0 35
 Zero:
 put d0 r0 0
 add r0 r0 1
-ble r0 15 Zero
+ble r0 45 Zero
 move r7 1
 Sweep:
 bgt r7 64 Publish
@@ -938,9 +1026,9 @@ mul r3 r7 6
 add r3 r3 58
 get r1 d0 r3
 blez r1 Next
-get r0 d0 5
+get r0 d0 35
 add r0 r0 1
-put d0 5 r0
+put d0 35 r0
 add r4 r3 1
 get r6 d0 r4
 beq r6 1 Unclaimed
@@ -953,25 +1041,25 @@ beq r6 7 Missing
 beq r6 8 Duplicate
 j Next
 Unclaimed:
-move r2 7
+move r2 37
 j Count
 Active:
-move r2 6
+move r2 36
 j CountCap
 Draining:
-move r2 8
+move r2 38
 j CountCap
 Faulted:
-move r2 9
+move r2 39
 j Count
 Retired:
-move r2 10
+move r2 40
 j Count
 Missing:
-move r2 11
+move r2 41
 j Count
 Duplicate:
-move r2 12
+move r2 42
 Count:
 get r0 d0 r2
 add r0 r0 1
@@ -983,16 +1071,16 @@ add r0 r0 1
 put d0 r2 r0
 add r4 r3 2
 get r5 d0 r4
-get r0 d0 13
+get r0 d0 43
 add r0 r0 r5
-put d0 13 r0
+put d0 43 r0
 sub r5 512 r5
-get r0 d0 14
+get r0 d0 44
 add r0 r0 r5
-put d0 14 r0
-get r0 d0 15
+put d0 44 r0
+get r0 d0 45
 add r0 r0 512
-put d0 15 r0
+put d0 45 r0
 Next:
 add r7 r7 1
 j Sweep
@@ -1016,7 +1104,7 @@ get r0 d0 0
 bne r0 31415982 Bad
 get r0 d0 1
 bne r0 3 Bad
-get r0 d0 2
+get r0 d0 3
 bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Bad
 get r15 d0 23
 mod r0 r15 2

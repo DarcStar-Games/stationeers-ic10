@@ -18,12 +18,12 @@ getd r0 directory 9
 bne r0 HASH("DirectorySchema.Controller.v1") NoDirectory
 getd r0 directory 11
 bne r0 2 NoDirectory
-getd r10 directory 2
-add r12 r10 3
+getd r10 directory 24
+add r12 r10 25
 getd r9 directory r12
-add r12 r10 5
+add r12 r10 27
 getd r11 directory r12
-add r12 r10 7
+add r12 r10 29
 getd r0 directory r12
 bgtz r0 Overflow
 blez r11 NoControllers
@@ -75,9 +75,9 @@ mul r12 r6 2
 add r12 r12 r8
 add r12 r12 1
 getd r5 directory r12
-getd r0 directory 2
+getd r0 directory 24
 bne r0 r10 Updating
-add r12 r10 3
+add r12 r10 25
 getd r0 directory r12
 bne r0 r9 Updating
 get r0 db 12

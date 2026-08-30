@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10",
-  "source_sha256": "42e5d0a34da94089e45f5467443d68445fb44e89c03dc9619b2d86a7a7a15bac",
+  "source_sha256": "b1e54958e8583a990dc92d1cb00dff30e4e0431bda02841af562a6fade019d84",
   "identity": {
     "service_id": "ic10.script.catalog.coordinator.recovery",
     "implementation_revision": "2.0",
@@ -81,7 +81,7 @@
         "literal_reads": [
           0,
           1,
-          2,
+          3,
           23
         ],
         "literal_writes": [],
@@ -101,7 +101,7 @@
             "equals": 3
           },
           {
-            "address": 2,
+            "address": 3,
             "equals": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
           }
         ]

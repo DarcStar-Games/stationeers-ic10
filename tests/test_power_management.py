@@ -34,7 +34,7 @@ ck(rrvm.stack.get(36)==321 and rrvm.stack.get(37)==123 and rrvm.stack.get(35)==3
 # Source/Sink selectors must read S6/S7, not role/cross-direction cells.
 src=Device(1201,stack={0:31415950,1:1,32:1100,33:4,34:'HASH:Power.Electrical',35:1,36:100,37:0,9:1,12:5,17:0,28:1,30:101,31:16},props={'ReferenceId':1201})
 sink=Device(1202,stack={0:31415950,1:1,32:1101,33:4,34:'HASH:Power.Electrical',35:2,36:0,37:80,9:1,12:6,17:0,28:2,30:201,31:14410},props={'ReferenceId':1202})
-pdir=Device(1300,stack={0:31415981,1:1,2:0,5:2,7:0,9:'HASH:DirectorySchema.PowerReservation.v1',11:3,12:64,32:1000001,33:101,34:1201,35:3000099,36:201,37:1202},props={'ReferenceId':1300})
+pdir=Device(1300,stack={0:31415981,1:1,24:0,27:2,29:0,9:'HASH:DirectorySchema.PowerReservation.v1',11:3,12:64,32:1000001,33:101,34:1201,35:3000099,36:201,37:1202},props={'ReferenceId':1300})
 plan=Device(1301,stack={24:0},props={'ReferenceId':1301})
 sv=IC10((R/'ic10/power-grid/power_source_selector_v1_0.ic10').read_text(),{'d0':pdir,'d1':plan,'x0':src,'x1':sink},self_ref=228)
 sv.stack.update({11:0,12:1});sv.run(3);ck(sv.stack.get(14)==1 and sv.stack.get(16)==100,'source selector did not use Reservation S6 export')
@@ -42,7 +42,7 @@ kv=IC10((R/'ic10/power-grid/power_sink_selector_v1_0.ic10').read_text(),{'d0':pd
 kv.stack.update({12:0,13:1});kv.run(3);ck(kv.stack.get(15)==1 and kv.stack.get(17)==80,'sink selector did not use Reservation S7 import')
 # Transformer overhead link selector.
 link=Device(1401,stack={0:31415953,1:1,28:1201,29:1202,30:4,31:'HASH:Power.Electrical',32:2,33:100,8:0,9:1,10:1500,11:0,12:9,13:3,14:5},props={'ReferenceId':1401})
-ldir=Device(1400,stack={0:31415981,1:1,2:0,5:1,7:0,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:64,32:1401},props={'ReferenceId':1400})
+ldir=Device(1400,stack={0:31415981,1:1,24:0,27:1,29:0,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:64,32:1401},props={'ReferenceId':1400})
 lv=IC10((R/'ic10/power-grid/power_link_selector_v1_0.ic10').read_text(),{'d0':ldir,'x0':link},self_ref=229)
 lv.stack.update({12:1201,13:1202,14:80,15:1});lv.run(3);ck(lv.stack.get(17)==1 and lv.stack.get(9)==85,'transformer overhead not charged source-side')
 # Live coherent PlanStore BEGIN/ADD/COMMIT.
@@ -124,13 +124,13 @@ ck(lc.stack.get(8)==1 and lc.stack.get(9)==8,'lifecycle client did not return ex
 # exactly one live Reservation through the relocated request/reply cells S8..S15.
 res_a=Device(2500,stack={0:31415950,1:1,32:2600,33:4,12:9,17:0,28:2,30:501,31:0},props={'ReferenceId':2500})
 res_b=Device(2501,stack={0:31415950,1:1,32:2601,33:4,12:4,17:0,28:3,30:502,31:0},props={'ReferenceId':2501})
-pdir2=Device(2400,stack={0:31415981,2:0,5:2,7:0,9:'HASH:DirectorySchema.PowerReservation.v1',32:1000001,33:501,34:2500,35:2000002,36:502,37:2501},props={'ReferenceId':2400})
+pdir2=Device(2400,stack={0:31415981,24:0,27:2,29:0,9:'HASH:DirectorySchema.PowerReservation.v1',32:1000001,33:501,34:2500,35:2000002,36:502,37:2501},props={'ReferenceId':2400})
 tr=IC10((R/'ic10/power-jobs/power_policy_target_resolver_v1_0.ic10').read_text(),{'d0':pdir2,'x0':res_a,'x1':res_b},self_ref=2410)
 tr.stack.update({10:501,11:1});tr.run(2)
 ck(tr.stack.get(13)==1 and tr.stack.get(14)==2500 and tr.stack.get(15)==2600 and tr.stack.get(8)==2 and tr.stack.get(9)==9 and tr.stack.get(12)==1,'policy target resolver did not bind the unique POWER reservation')
-pdir2.stack.update({5:3,38:3000003,39:501,40:2501});tr.stack[11]=2;tr.run(1)
+pdir2.stack.update({27:3,38:3000003,39:501,40:2501});tr.stack[11]=2;tr.run(1)
 ck(tr.stack.get(13)==-3 and tr.stack.get(12)==2,'policy target resolver accepted an ambiguous PolicyId')
-pdir2.stack[5]=2;tr.stack.update({10:999,11:3});tr.run(1)
+pdir2.stack[27]=2;tr.stack.update({10:999,11:3});tr.run(1)
 ck(tr.stack.get(13)==-2 and tr.stack.get(12)==3,'policy target resolver resolved an absent PolicyId')
 
 # Policy verification settles or waits on the bound Reservation/Endpoint pair.

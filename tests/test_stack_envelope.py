@@ -61,10 +61,10 @@ ck(inventory["envelope"]["base"] == 0 and inventory["envelope"]["length"] == 8,
    "the common header is no longer the first eight stack cells")
 ck(inventory["totals"] == {
     "deployable_programs": 174,
-    "migrated_v1": 151,
-    "legacy_exempt": 23,
-    "backlog_reserved_cell_users": 20,
-    "backlog_dynamic_range_users": 7,
+    "migrated_v1": 154,
+    "legacy_exempt": 20,
+    "backlog_reserved_cell_users": 17,
+    "backlog_dynamic_range_users": 5,
 }, "generated coverage/backlog totals changed without review")
 by_source = {item["source"]: item for item in inventory["services"]}
 ck(by_source[MONITOR]["envelope"]["magic"] == 31416052,
@@ -77,7 +77,7 @@ ck(all(item["current_layout"]["payload_inventory_status"] ==
 # Every backlog row records what the migration must move, per program.
 backlog = [item for item in inventory["services"] if item["status"] == "legacy-exempt"]
 ck(sum(bool(set(item["window_collision"]["literal_cells"]) & set(range(2, 8)))
-       for item in backlog) == 20,
+       for item in backlog) == 17,
    "backlog rows no longer report which programs occupy the reserved cells")
 ck(all("legacy_exemption" in item for item in backlog),
    "a backlog row lost its explicit exemption record")

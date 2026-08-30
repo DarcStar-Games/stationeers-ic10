@@ -18,11 +18,11 @@ def snapshot(adapter_src,screws,ref,rounds=3000):
  hv,hd=host(ref);av=IC10(adapter_src,screws,self_ref=ref+1);ad=Device(ref+1,av.stack,{'ReferenceId':ref+1});bv=IC10(B,{'d0':ad,'d1':hd},self_ref=ref+2)
  for _ in range(rounds):
   av.run(1,max_steps=50000);bv.run(1,max_steps=50000);hv.run(1,max_steps=50000)
-  if max(hd.stack.get(3,0),hd.stack.get(4,0))>0:return av,bv,hv,hd
+  if max(hd.stack.get(25,0),hd.stack.get(26,0))>0:return av,bv,hv,hd
  raise RuntimeError('adapter/bridge/host did not publish')
 
 def records(h):
- b=int(h.stack.get(2,0));w=int(h.stack.get(11,0));cap=int(h.stack.get(12,0));c=int(h.stack.get(5+b,0));base=32+b*w*cap
+ b=int(h.stack.get(24,0));w=int(h.stack.get(11,0));cap=int(h.stack.get(12,0));c=int(h.stack.get(27+b,0));base=32+b*w*cap
  return [[h.stack.get(base+i*w+j,0) for j in range(w)] for i in range(c)]
 
 def adapter_ok(a,mode=1):return a.stack.get(0)==31415983 and a.stack.get(1)==3 and a.stack.get(15)==mode and int(a.stack.get(13,0))%2==0
@@ -63,7 +63,7 @@ if not adapter_ok(a) or hd.stack.get(9)!='HASH:DirectorySchema.Printer.v2' or pr
 
 # Pressure adapter consumes Controller Directory but publishes generic candidates; generic Bridge suppresses unchanged commits.
 p1=Device(501,stack={97:2,106:601,107:602,115:4},props={'ReferenceId':501});p2=Device(502,stack={97:2,106:603,107:604,115:5},props={'ReferenceId':502})
-cd=Device(131,stack={0:31415981,1:1,2:0,3:1,5:2,9:'HASH:DirectorySchema.Controller.v1',11:2,12:64,32:'HASH:ControllerPressureTransfer',33:501,34:'HASH:ControllerPressureTransfer',35:502},props={'ReferenceId':131})
+cd=Device(131,stack={0:31415981,1:1,24:0,25:1,27:2,9:'HASH:DirectorySchema.Controller.v1',11:2,12:64,32:'HASH:ControllerPressureTransfer',33:501,34:'HASH:ControllerPressureTransfer',35:502},props={'ReferenceId':131})
 a,b,h,hd=snapshot((R/'ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10').read_text(),{'d1':cd,'p1':p1,'p2':p2},130)
 if records(h)!=[[501,601,602],[502,603,604]]:fails.append('Pressure Link Adapter ABI/snapshot mismatch')
 g0=max(hd.stack.get(3,0),hd.stack.get(4,0))
@@ -102,14 +102,14 @@ hcmd(1)
 for x in range(65,0,-1):hcmd(2,x)
 hcmd(3)
 if records(hv)!=[[x] for x in range(2,66)]:fails.append('Snapshot Host overflow corrupted whole records')
-bank=int(hd.stack.get(2,0))
-if hd.stack.get(7+bank,0)!=1:fails.append('Snapshot Host failed to publish overflow')
+bank=int(hd.stack.get(24,0))
+if hd.stack.get(29+bank,0)!=1:fails.append('Snapshot Host failed to publish overflow')
 # Registry mode consumes the same Adapter ABI directly and indexes by NodeId.
 store1=Device(701,stack={0:31415968,1:6,16:2,18:7,22:100,26:3,13:'HASH:CatA'},props={'ReferenceId':701,'PrefabHash':2037291645})
 store2=Device(702,stack={0:31415968,1:6,16:1,18:9,22:32,26:0,13:0},props={'ReferenceId':702,'PrefabHash':2037291645})
 av=IC10((R/'ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10').read_text(),{'s1':store1,'s2':store2},self_ref=710);ad=Device(710,av.stack,{'ReferenceId':710});rv=IC10((R/'ic10/directory-core/generic_registry_directory_host_v2_0.ic10').read_text(),{'d0':ad},self_ref=711)
 for _ in range(40):av.run(1,max_steps=50000);rv.run(1,max_steps=50000)
-if not adapter_ok(av,2) or rv.stack.get(0)!=31415982 or rv.stack.get(1)!=3 or rv.stack.get(2)!='HASH:DirectorySchema.CatalogStoreNode.v1':fails.append('Registry Adapter ABI/header mismatch')
+if not adapter_ok(av,2) or rv.stack.get(0)!=31415982 or rv.stack.get(1)!=3 or rv.stack.get(3)!='HASH:DirectorySchema.CatalogStoreNode.v1':fails.append('Registry Adapter ABI/header mismatch')
 base7=64+(7-1)*6;base9=64+(9-1)*6
 if rv.stack.get(base7)!=701 or rv.stack.get(base7+1)!=2 or rv.stack.get(base9)!=702:fails.append('Registry Host NodeId indexing mismatch')
 # Removing Node9 from adapter discovery marks its persistent record MISSING on a later adapter generation.
@@ -129,8 +129,8 @@ def hcmd2(command,candidate=None):
 hcmd2(1)
 for x in range(1,65):hcmd2(2,x)
 hcmd2(2,64);hcmd2(3)
-bank=int(hd2.stack.get(2,0))
-if hd2.stack.get(7+bank,0)!=0 or records(hv2)!=[[x] for x in range(1,65)]:fails.append('Snapshot Host falsely overflowed on exact duplicate at capacity')
+bank=int(hd2.stack.get(24,0))
+if hd2.stack.get(29+bank,0)!=0 or records(hv2)!=[[x] for x in range(1,65)]:fails.append('Snapshot Host falsely overflowed on exact duplicate at capacity')
 # Registry Host must reject wrong schema even when geometry/mode are otherwise valid.
 wrong='''# synthetic wrong registry schema Adapter ABI2
 Boot:
@@ -154,7 +154,7 @@ poke 17 r0
 j Loop'''
 wv=IC10(wrong,self_ref=720);wd=Device(720,wv.stack,{'ReferenceId':720});wr=IC10((R/'ic10/directory-core/generic_registry_directory_host_v2_0.ic10').read_text(),{'d0':wd},self_ref=721)
 for _ in range(20):wv.run(1,max_steps=50000);wr.run(1,max_steps=50000)
-if wr.stack.get(16)!=-4 or wr.stack.get(2,0)!=0:fails.append('Registry Host accepted wrong schema/version')
+if wr.stack.get(16)!=-4 or wr.stack.get(3,0)!=0:fails.append('Registry Host accepted wrong schema/version')
 # Harness models the automatic execution quantum even without explicit yield.
 q=IC10('Loop:\nadd r0 r0 1\nj Loop\n')
 if q.run_tick(128)!='quantum' or q.reg.get('r0',0)<=0:fails.append('IC10 harness does not preempt a no-yield loop at the instruction quantum')
@@ -210,12 +210,12 @@ for _ in range(100):
 if not rebooted:fails.append('could not stage Adapter reboot during freeze')
 for _ in range(300):
  run_round_robin([tv,bb,hv3],rounds=1,max_instructions=8)
- if max(int(hd3.stack.get(3,0)),int(hd3.stack.get(4,0)))>0:break
-if max(int(hd3.stack.get(3,0)),int(hd3.stack.get(4,0)))==0:fails.append('Bridge did not recover freeze handshake after Adapter reboot')
+ if max(int(hd3.stack.get(25,0)),int(hd3.stack.get(26,0)))>0:break
+if max(int(hd3.stack.get(25,0)),int(hd3.stack.get(26,0)))==0:fails.append('Bridge did not recover freeze handshake after Adapter reboot')
 seen_gen=0
 for _ in range(1200):
  run_round_robin([tv,bb,hv3],rounds=1,max_instructions=8)
- g=max(int(hd3.stack.get(3,0)),int(hd3.stack.get(4,0)))
+ g=max(int(hd3.stack.get(25,0)),int(hd3.stack.get(26,0)))
  if g!=seen_gen and g>0:
   seen_gen=g; rr=records(hv3)
   if rr not in ([[10],[20]],[[11],[21]]):fails.append('Bridge published torn mixed Adapter generation under interleaving: '+repr(rr));break

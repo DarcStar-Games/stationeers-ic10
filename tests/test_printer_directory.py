@@ -20,11 +20,11 @@ def publish(devices,base=800,rounds=5000):
     bv=IC10(B,{'d0':ad,'d1':hd},self_ref=base+2)
     for _ in range(rounds):
         av.run(1,max_steps=50000);bv.run(1,max_steps=50000);hv.run(1,max_steps=50000)
-        if max(hd.stack.get(3,0),hd.stack.get(4,0))>0:return av,bv,hv,hd
+        if max(hd.stack.get(25,0),hd.stack.get(26,0))>0:return av,bv,hv,hd
     raise RuntimeError('Printer Directory did not publish')
 
 def recs(h):
-    b=int(h.stack.get(2,0));w=int(h.stack.get(11,0));cap=int(h.stack.get(12,0));n=int(h.stack.get(5+b,0));base=32+b*w*cap
+    b=int(h.stack.get(24,0));w=int(h.stack.get(11,0));cap=int(h.stack.get(12,0));n=int(h.stack.get(27+b,0));base=32+b*w*cap
     return [[h.stack.get(base+i*w+j,0) for j in range(w)] for i in range(n)]
 
 def printer(ref,prefab,power=1,on=1,active=0,error=0,lock=0):
@@ -54,11 +54,11 @@ if av.stack.get(0)!=31415983 or av.stack.get(1)!=3 or av.stack.get(2)!=17 or av.
 
 # Every packed operational flag and capability survives publication; changed state advances snapshot generation.
 target=devs[3]
-g0=max(hd.stack.get(3,0),hd.stack.get(4,0))
+g0=max(hd.stack.get(25,0),hd.stack.get(26,0))
 target.props.update({'Power':1,'On':1,'Activate':1,'Error':1,'Lock':1})
 for _ in range(5000):
     av.run(1,max_steps=50000);bv.run(1,max_steps=50000);hv.run(1,max_steps=50000)
-    if max(hd.stack.get(3,0),hd.stack.get(4,0))>g0:break
+    if max(hd.stack.get(25,0),hd.stack.get(26,0))>g0:break
 else:fails.append('changed printer status did not advance snapshot generation')
 rr={x[0]:x for x in recs(hv)}
 # cap2 + Power256 + Busy512 + Error1024 + On2048 + Lock4096 = 7938
@@ -67,8 +67,8 @@ if rr.get(904)!=[904,'HASH:Printer.ElectronicsPrinter',7938]:fails.append('Print
 # Exactly 64 complete records are retained and active-bank overflow marks the 65th supported printer.
 many=[printer(1000+i,'StructureAutolathe') for i in range(65)]
 _,_,oh,od=publish(many,base=850)
-ob=int(od.stack.get(2,0));orows=recs(oh)
-if len(orows)!=64 or od.stack.get(7+ob,0)!=1:fails.append('65-printer overflow did not publish 64 complete records + overflow')
+ob=int(od.stack.get(24,0));orows=recs(oh)
+if len(orows)!=64 or od.stack.get(29+ob,0)!=1:fails.append('65-printer overflow did not publish 64 complete records + overflow')
 if any(len(x)!=3 for x in orows):fails.append('overflow split/corrupted a Printer record')
 
 if fails:

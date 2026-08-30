@@ -14,11 +14,11 @@ get r0 d0 0
 bne r0 31415981 Bad
 get r0 d0 9
 bne r0 HASH("DirectorySchema.PowerReservation.v1") Bad
-get r5 d0 2
-add r0 r5 7
+get r5 d0 24
+add r0 r5 29
 get r0 d0 r0
 bgtz r0 Overflow
-add r0 r5 5
+add r0 r5 27
 get r7 d0 r0
 mul r8 r5 192
 add r8 r8 32

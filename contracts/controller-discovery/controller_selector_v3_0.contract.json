@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-discovery/controller_selector_v3_0.ic10",
-  "source_sha256": "f3986c3b33342ba7bfcc59d7c4b4dff9660abcff860d6cfd843b482f015c6957",
+  "source_sha256": "17a0287345701e8b152d654224b8e8f4d3586925360bb03e959f9389e247769a",
   "identity": {
     "service_id": "ic10.script.controller.selector",
     "implementation_revision": "3.0",
@@ -19,9 +19,9 @@
       "literal_reads": [
         0,
         1,
-        2,
         9,
-        11
+        11,
+        24
       ],
       "literal_writes": [],
       "dynamic_read": true,

@@ -19,21 +19,25 @@
       "readable_ranges": [
         {
           "start": 0,
-          "end": 24
+          "end": 26
         },
         {
-          "start": 64,
+          "start": 35,
+          "end": 45
+        },
+        {
+          "start": 58,
           "end": 447
         }
       ],
       "writable_ranges": [
         {
-          "start": 5,
-          "end": 15
-        },
-        {
           "start": 18,
           "end": 18
+        },
+        {
+          "start": 35,
+          "end": 45
         }
       ],
       "fields": [
@@ -72,17 +76,6 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
             "self-write"
           ]
         },
@@ -132,6 +125,26 @@
             "self-read",
             "self-write"
           ]
+        },
+        {
+          "address": 25,
+          "name": "S25",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 26,
+          "name": "S26",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
         }
       ],
       "behavior": {
@@ -162,13 +175,13 @@
       "literal_reads": [
         0,
         1,
-        2,
-        6,
-        7,
-        8,
-        9,
-        11,
-        14
+        3,
+        36,
+        37,
+        38,
+        39,
+        41,
+        44
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [],
@@ -187,7 +200,7 @@
           "value": 3
         },
         {
-          "address": 2,
+          "address": 3,
           "operator": "equals",
           "value": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
         }
@@ -204,25 +217,25 @@
       "literal_reads": [
         0,
         1,
-        2,
-        5,
-        13,
-        14,
-        15,
+        3,
         18,
-        23
+        23,
+        35,
+        43,
+        44,
+        45
       ],
       "literal_writes": [
-        5,
-        13,
-        14,
-        15,
-        18
+        18,
+        35,
+        43,
+        44,
+        45
       ],
       "dynamic_read_ranges": [
         {
-          "start": 5,
-          "end": 15
+          "start": 35,
+          "end": 45
         },
         {
           "start": 64,
@@ -231,8 +244,8 @@
       ],
       "dynamic_write_ranges": [
         {
-          "start": 5,
-          "end": 15
+          "start": 35,
+          "end": 45
         }
       ],
       "dynamic_read_range_source": "source-fingerprinted-exception",
@@ -249,7 +262,7 @@
           "value": 3
         },
         {
-          "address": 2,
+          "address": 3,
           "operator": "equals",
           "value": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
         }
@@ -271,7 +284,7 @@
       "literal_reads": [
         0,
         1,
-        2,
+        3,
         18,
         23
       ],
@@ -297,7 +310,7 @@
           "value": 3
         },
         {
-          "address": 2,
+          "address": 3,
           "operator": "equals",
           "value": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
         }
@@ -319,7 +332,7 @@
       "literal_reads": [
         0,
         1,
-        2,
+        3,
         23
       ],
       "literal_writes": [],
@@ -339,7 +352,7 @@
           "value": 3
         },
         {
-          "address": 2,
+          "address": 3,
           "operator": "equals",
           "value": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
         }
@@ -361,7 +374,7 @@
       "literal_reads": [
         0,
         1,
-        2,
+        3,
         23
       ],
       "literal_writes": [],
@@ -386,7 +399,7 @@
           "value": 3
         },
         {
-          "address": 2,
+          "address": 3,
           "operator": "equals",
           "value": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
         }
@@ -408,7 +421,7 @@
       "literal_reads": [
         0,
         1,
-        2,
+        3,
         23
       ],
       "literal_writes": [],
@@ -433,7 +446,7 @@
           "value": 3
         },
         {
-          "address": 2,
+          "address": 3,
           "operator": "equals",
           "value": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
         }

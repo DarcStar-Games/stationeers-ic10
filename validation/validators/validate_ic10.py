@@ -72,6 +72,8 @@ SOFT_LIMIT_EXEMPTIONS = {
         "publishes the common S0 header with its request mailbox relocated above it",
     "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10":
         "publishes the common S0 header above its dynamic item heap and directory",
+    "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10":
+        "publishes the common S0 header above its A/B snapshot banks",
 }
 
 

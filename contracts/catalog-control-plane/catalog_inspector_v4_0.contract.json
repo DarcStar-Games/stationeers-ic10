@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_inspector_v4_0.ic10",
-  "source_sha256": "a9b06302ad1f51394dbef7d4d3c24808b014d4cf0d852dc4a131f10a98495ac8",
+  "source_sha256": "d2168e95f3fe40507fee9b58460f25bee2a700d1c9ac95df01996289240f4526",
   "identity": {
     "service_id": "ic10.script.catalog.inspector",
     "implementation_revision": "4.0",
@@ -107,15 +107,15 @@
       "literal_reads": [
         0,
         1,
-        2,
-        4,
-        5,
+        3,
         12,
         13,
         14,
         15,
         18,
-        23
+        23,
+        26,
+        35
       ],
       "literal_writes": [],
       "dynamic_read": true,
@@ -132,7 +132,7 @@
           "value": 3
         },
         {
-          "address": 2,
+          "address": 3,
           "operator": "equals",
           "value": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
         }

@@ -20,22 +20,22 @@ get r0 db 35
 get sp db 11
 beq r0 sp Search
 poke 11 r0
-get r4 d0 2
-add sp r4 3
+get r4 d0 24
+add sp r4 25
 get r5 d0 sp
-add sp r4 7
+add sp r4 29
 get r0 d0 sp
 bgtz r0 Bad
-add sp r4 5
+add sp r4 27
 get r6 d0 sp
 beqz r6 None
 mod r7 r2 r6
 move r8 0
 poke 24 0
 Search:
-get r0 d0 2
+get r0 d0 24
 bne r0 r4 Bad
-add sp r4 3
+add sp r4 25
 get r0 d0 sp
 bne r0 r5 Bad
 add sp r8 24
