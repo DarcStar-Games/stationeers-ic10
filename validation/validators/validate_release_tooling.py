@@ -8,6 +8,8 @@ from pathlib import Path
 import re,subprocess,tempfile,sys
 import tools.build_release as br
 import tools.run_validation as rv
+from framework.generator_productivity import PRODUCTIVITY_INVENTORY_POLICY
+from framework.repository_inventory import BASE_IGNORED_DIRECTORIES,BASE_IGNORED_SUFFIXES,LOCAL_TOOLING_DIRECTORIES
 R=_PROJECT_ROOT;result=Validation(R)
 
 ck=result.check
@@ -57,13 +59,23 @@ ck(len(evidence)==3+len(rv.SCRIPTS),'release evidence does not contain one outpu
 ck(len(evidence)==len(set(evidence)),'release evidence paths are not unique')
 readme=(R/'README.md').read_text()
 ck('`ARCHIVE_MANIFEST.sha256` exists only inside the resulting ZIP' in readme,'README does not document the release-only manifest location')
-# Both sweeps carry their own copy of the same exclusion set: build_release keeps
-# local tooling out of the release inventory, run_validation keeps it out of the
-# input fingerprint. Each copy says "keep in sync with" the other, which is a
-# comment, not a check -- and a one-sided edit would either ship .git or mark
-# live commissioning evidence STALE with no source change. This is the check.
-ck(br.TOOLING_DIRS==rv.TOOLING_DIRS,f'TOOLING_DIRS diverged: build_release {sorted(br.TOOLING_DIRS)} vs run_validation {sorted(rv.TOOLING_DIRS)}')
-ck('.github' in br.TOOLING_DIRS,'.github automation tooling is included in releases or live-evidence fingerprints')
+# Release and validation intentionally share the local-tooling layer, while the
+# productivity snapshot uses only the primitive's base cache/metadata policy.
+release_policy=br.release_inventory_policy();validation_policy=rv.validation_inventory_policy()
+ck(release_policy.ignored_directories==validation_policy.ignored_directories,
+   'release and validation local-tooling policies diverged')
+ck(release_policy.ignored_directories==LOCAL_TOOLING_DIRECTORIES,
+   f'shared local-tooling policy changed: {sorted(release_policy.ignored_directories)}')
+ck('.github' in release_policy.effective_ignored_directories,
+   '.github automation tooling is included in releases or live-evidence fingerprints')
+ck(PRODUCTIVITY_INVENTORY_POLICY.ignored_directories==frozenset(),
+   'productivity snapshots silently inherited consumer-specific tooling exclusions')
+ck(PRODUCTIVITY_INVENTORY_POLICY.ignored_subtrees==frozenset({'validation/evidence'}),
+   'productivity validation-evidence exclusion is not declared in its inventory policy')
+ck(PRODUCTIVITY_INVENTORY_POLICY.effective_ignored_directories==BASE_IGNORED_DIRECTORIES,
+   'productivity snapshots do not use the repository inventory base directory policy')
+ck(PRODUCTIVITY_INVENTORY_POLICY.effective_ignored_suffixes==BASE_IGNORED_SUFFIXES,
+   'productivity snapshots do not use the repository inventory base suffix policy')
 # CI is the independent release gate: it must run the whole suite from a clean
 # checkout, fail on tracked/non-ignored output drift, and retain diagnostics
 # without granting a pull request a write-capable token. Keep these as policy
@@ -158,7 +170,7 @@ with tempfile.TemporaryDirectory() as td:
 raise SystemExit(result.finish('Release tooling validation',[
  'in-tree output archive is excluded before manifest and ZIP inventory; the manifest exists only inside the ZIP',
  'build ordering removes stale output, refreshes deployment inventory, source index, and script contracts before validation/manifests',
- f'release inventory and validation fingerprint exclude the same tooling dirs: {sorted(br.TOOLING_DIRS)}',
+ f'release and validation compose the shared local-tooling policy: {sorted(LOCAL_TOOLING_DIRECTORIES)}',
  'CI runs clean validation with read-only permissions, pinned dependencies, source-tree enforcement, and failure evidence',
  'validation evidence is ignored, never staged by the hook, and regenerated for release archives',
  'exclusion matches inside the repository only, and a sweep that finds nothing fails closed']))

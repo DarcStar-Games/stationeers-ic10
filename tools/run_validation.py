@@ -6,18 +6,13 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from pathlib import Path
 import argparse,hashlib,json,shutil,subprocess,sys
+from framework.repository_inventory import InventoryPolicy,LOCAL_TOOLING_DIRECTORIES,repository_files
 
 ROOT=_PROJECT_ROOT
 EVIDENCE=ROOT/'validation'/'evidence'
 RUN_LOG=ROOT/'validation'/'FULL_VALIDATION_RUN.txt'
 SUMMARY=ROOT/'VALIDATION_SUMMARY.txt'
 STATE=ROOT/'validation'/'VALIDATION_STATE.json'
-# Local VCS/tooling state is not framework source and must never move the input
-# fingerprint: doing so marks live commissioning evidence STALE with no source
-# change. build_release.py excludes the same set from the release inventory, and
-# validation/validators/validate_release_tooling.py fails if the two diverge.
-TOOLING_DIRS={'.git','.github','.claude','.githooks'}
-
 VALIDATORS=[
 'validation/validators/validate_abi_contracts.py','validation/validators/validate_async_request_contracts.py','validation/validators/validate_banked_transaction_contracts.py',
 'validation/validators/validate_catalog_storage.py','validation/validators/validate_config_contracts.py','validation/validators/validate_dependency_planning_contracts.py','validation/validators/validate_directory_contracts.py',
@@ -29,7 +24,7 @@ TESTS=[
 'tests/test_dependency_planning.py','tests/test_diagnostics_execution.py','tests/test_generic_directory.py','tests/test_ic10_execution.py','tests/test_ic10_opcode_handlers.py','tests/test_input_profiles.py','tests/test_job_abi.py',
 'tests/test_manufacturing_execution.py','tests/test_manufacturing_scheduler.py','tests/test_material_grid_protocol.py','tests/test_script_contracts.py',
 'tests/test_material_transform_protocol.py','tests/test_persistence_protocol.py','tests/test_phase_pressure_protocol.py',
-'tests/test_pressure_domain_protocol.py','tests/test_pressure_grid_protocol.py','tests/test_pressure_inventory_protocol.py','tests/test_validation_helpers.py',
+'tests/test_pressure_domain_protocol.py','tests/test_pressure_grid_protocol.py','tests/test_pressure_inventory_protocol.py','tests/test_validation_helpers.py','tests/test_repository_inventory.py',
 'tests/test_commission_wiring.py','tests/test_commissioning_validators.py',
 'tests/test_pressure_reservation_protocol.py','tests/test_pressure_route_cost.py','tests/test_printer_directory.py','tests/test_script_wiring.py','tests/test_stack_envelope.py',
 'tests/test_printer_execution_capacity.py','tests/test_recipe_catalog.py','tests/test_generator_productivity.py','tests/test_resource_generalization.py',
@@ -38,27 +33,27 @@ SCRIPTS=VALIDATORS+TESTS
 
 def evidence_name(script): return Path(script).stem.upper()+'.txt'
 
+def validation_inventory_policy():
+    return InventoryPolicy(
+        ignored_directories=LOCAL_TOOLING_DIRECTORIES,
+        ignored_names=frozenset({'FULL_VALIDATION_RUN.txt','VALIDATION_STATE.json','VALIDATION_SUMMARY.txt','DEPLOYMENT_BASELINE.sha256','ARCHIVE_MANIFEST.sha256'}),
+        ignored_suffixes=frozenset({'.zip'}),
+        ignored_subtrees=frozenset({'validation/evidence','field_evidence'}),
+        fail_on_empty=True,
+    )
+
+def validation_input_files(root=ROOT):
+    """Return the ordered file inventory that contributes to validation state."""
+    return repository_files(root,policy=validation_inventory_policy())
+
 def input_fingerprint(root=ROOT):
     """Hash the validation inputs under `root`, excluding repository metadata and mutable validation/release outputs."""
     # `root` is a parameter so a caller can fingerprint a checkout other than this
     # one without loading a second copy of this module to move ROOT. tools/live_commission.py
     # is that caller.
-    root=Path(root);evidence=root/'validation'/'evidence'
+    root=Path(root).resolve()
     h=hashlib.sha256()
-    skip_names={'FULL_VALIDATION_RUN.txt','VALIDATION_STATE.json','VALIDATION_SUMMARY.txt','DEPLOYMENT_BASELINE.sha256','ARCHIVE_MANIFEST.sha256'}
-    files=[]
-    for p in root.rglob('*'):
-        if not p.is_file(): continue
-        # Match inside the repository: p.parts carries the absolute path, so a checkout under a
-        # directory named .git/.claude/__pycache__ would otherwise exclude every file in it.
-        inside=set(p.relative_to(root).parts)
-        if TOOLING_DIRS&inside or '__pycache__' in inside or p.suffix in {'.pyc','.zip'}: continue
-        if p.name in skip_names or evidence in p.parents or (root/'field_evidence') in p.parents: continue
-        files.append(p)
-    # Fail closed. A sweep that excluded everything would hash the empty tree, and every session
-    # would match that digest forever instead of going STALE.
-    if not files: raise RuntimeError(f'no validation inputs found under {root}')
-    for p in sorted(files,key=lambda x:x.relative_to(root).as_posix()):
+    for p in validation_input_files(root):
         rel=p.relative_to(root).as_posix().encode();h.update(len(rel).to_bytes(4,'big'));h.update(rel)
         data=p.read_bytes();h.update(len(data).to_bytes(8,'big'));h.update(data)
     return h.hexdigest()
