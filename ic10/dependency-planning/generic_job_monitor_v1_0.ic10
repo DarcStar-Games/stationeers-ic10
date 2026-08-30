@@ -1,12 +1,13 @@
 # Exact JobId monitor over coherent Generic Job Store.
 poke 0 31416004
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 3
-get r0 db 4
+get r15 db 14
+get r0 db 15
 beq r15 r0 Loop
-get r10 db 2
+get r10 db 13
 blez r10 Bad
 get r0 d0 0
 bne r0 31415984 Bad
@@ -43,15 +44,15 @@ add r1 r1 1
 get sp d0 r1
 get r0 d0 16
 bne r0 r14 Loop
-poke 6 r6
-poke 7 r7
-poke 8 r9
-poke 9 r11
-poke 10 r12
-poke 11 r13
-poke 12 sp
-poke 5 1
-poke 4 r15
+poke 17 r6
+poke 18 r7
+poke 19 r9
+poke 20 r11
+poke 21 r12
+poke 22 r13
+poke 23 sp
+poke 16 1
+poke 15 r15
 j Loop
 Next:
 add r6 r6 1
@@ -62,6 +63,6 @@ j Fail
 Bad:
 move r0 -1
 Fail:
-poke 5 r0
-poke 4 r15
+poke 16 r0
+poke 15 r15
 j Loop

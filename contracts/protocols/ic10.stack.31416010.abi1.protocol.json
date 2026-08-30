@@ -43,12 +43,13 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read"
-          ]
+            "self-write"
+          ],
+          "const": 0
         },
         {
-          "address": 9,
-          "name": "S9",
+          "address": 12,
+          "name": "S12",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -56,8 +57,17 @@
           ]
         },
         {
-          "address": 10,
-          "name": "S10",
+          "address": 19,
+          "name": "S19",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 20,
+          "name": "S20",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -66,8 +76,8 @@
           ]
         },
         {
-          "address": 11,
-          "name": "S11",
+          "address": 21,
+          "name": "S21",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [

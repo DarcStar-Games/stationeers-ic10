@@ -74,6 +74,12 @@ SOFT_LIMIT_EXEMPTIONS = {
         "publishes the common S0 header above its dynamic item heap and directory",
     "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10":
         "publishes the common S0 header above its A/B snapshot banks",
+    "ic10/dependency-planning/dependency_claim_view_v1_0.ic10":
+        "claim lookup + shared-claim count pass publishing the common header above its"
+        " relocated request mailbox",
+    "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10":
+        "existing/new plan orchestration publishing the common header above its relocated"
+        " request and cleanup mailboxes",
 }
 
 

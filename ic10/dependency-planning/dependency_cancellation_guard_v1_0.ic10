@@ -1,6 +1,7 @@
 # Parent-terminal cleanup guard. d0 PlanStore,d1 JobMonitor,d2 Planner.
 poke 0 31416013
 poke 1 1
+poke 2 0
 Loop:
 yield
 get r0 d0 0
@@ -20,18 +21,18 @@ beqz r7 Next
 get r0 db 20
 add r0 r0 1
 poke 20 r0
-put d1 2 r7
-put d1 3 r0
+put d1 13 r7
+put d1 14 r0
 WaitJob:
 yield
-get r1 d1 4
+get r1 d1 15
 bne r1 r0 WaitJob
 get r1 d0 40
 bne r1 r14 Loop
-get r1 d1 5
+get r1 d1 16
 beq r1 -2 Cleanup
 bne r1 1 Next
-get r1 d1 11
+get r1 d1 22
 beq r1 7 Cleanup
 blt r1 11 Next
 ble r1 12 Cleanup

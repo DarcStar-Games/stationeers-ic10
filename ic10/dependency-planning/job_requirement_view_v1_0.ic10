@@ -1,15 +1,16 @@
 # Normalize TRANSFORM/PRINT ITEM requirements.
 poke 0 31416002
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 6
-get r0 db 7
+get r15 db 19
+get r0 db 20
 beq r15 r0 Loop
-get r2 db 2
-get r3 db 3
-get r4 db 4
-get r5 db 5
+get r2 db 15
+get r3 db 16
+get r4 db 17
+get r5 db 18
 blez r4 Bad
 beq r2 1 Transform
 beq r2 2 Print
@@ -65,15 +66,15 @@ get r10 d1 r0
 add r0 r0 1
 get r11 d1 r0
 mul r11 r11 r4
-put d2 2 r10
-put d2 3 r15
+put d2 8 r10
+put d2 9 r15
 WaitAlias:
 yield
-get r0 d2 4
+get r0 d2 10
 bne r0 r15 WaitAlias
-get r0 d2 5
+get r0 d2 11
 bne r0 1 Bad
-get r10 d2 6
+get r10 d2 12
 j PCheck
 PHead:
 move r10 0
@@ -82,16 +83,16 @@ PCheck:
 get r0 d1 6
 bne r0 r14 Loop
 Publish:
-poke 9 r6
-poke 10 r7
-poke 11 r8
-poke 12 r9
-poke 13 r10
-poke 14 r11
-poke 8 1
-poke 7 r15
+poke 22 r6
+poke 23 r7
+poke 24 r8
+poke 25 r9
+poke 26 r10
+poke 27 r11
+poke 21 1
+poke 20 r15
 j Loop
 Bad:
-poke 8 -1
-poke 7 r15
+poke 21 -1
+poke 20 r15
 j Loop

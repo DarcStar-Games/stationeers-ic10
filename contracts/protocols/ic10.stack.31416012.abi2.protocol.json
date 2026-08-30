@@ -38,6 +38,16 @@
           "const": 2
         },
         {
+          "address": 2,
+          "name": "S2",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0
+        },
+        {
           "address": 9,
           "name": "S9",
           "value_type": "number",

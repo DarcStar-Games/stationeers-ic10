@@ -4756,6 +4756,473 @@
    ],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "directory-core"
+  },
+  "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10": {
+   "service_id": "ic10.script.dependency.ancestry.guard",
+   "magic": 31416009,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "2ddeb7d39067d2818f2c2981903ffd0ab3295b7f1b8ac53eacbf7cfce6cb03b5",
+   "legacy_owned_ranges": [
+    [
+     10,
+     17
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "dependency-planning"
+  },
+  "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10": {
+   "service_id": "ic10.script.dependency.cancellation.guard",
+   "magic": 31416013,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "5e6fcdb523a0c54fd0630fbf7ef3ca26a46736ef18e3578b471a962c7dccd2c1",
+   "legacy_owned_ranges": [
+    [
+     20,
+     21
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "dependency-planning"
+  },
+  "ic10/dependency-planning/dependency_child_creator_v2_0.ic10": {
+   "service_id": "ic10.script.dependency.child.creator",
+   "magic": 31416006,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "920d72cea3ca168a3738a143421380c42dbb07e6af0e0cecf0e258d5674eaabe",
+   "legacy_owned_ranges": [
+    [
+     14,
+     25
+    ],
+    [
+     27,
+     27
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "dependency-planning"
+  },
+  "ic10/dependency-planning/dependency_child_validity_v1_0.ic10": {
+   "service_id": "ic10.script.dependency.child.validity",
+   "magic": 31416014,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "cbe6968c704e38903ee8e8ebb7012084e66b6aa5eebadd606c28539bf57b3bb9",
+   "legacy_owned_ranges": [
+    [
+     13,
+     23
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "dependency-planning"
+  },
+  "ic10/dependency-planning/dependency_claim_view_v1_0.ic10": {
+   "service_id": "ic10.script.dependency.claim.view",
+   "magic": 31416016,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "38bbfc47a9592bc49e5b9e566965e27c3609ad739662b9784662938cd31fd315",
+   "legacy_owned_ranges": [
+    [
+     15,
+     27
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "dependency-planning"
+  },
+  "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10": {
+   "service_id": "ic10.script.dependency.plan.builder",
+   "magic": 31416011,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "9453e51780e55e9270ad61319666209ad5710030a74e1adb98c0fbc862383efa",
+   "legacy_owned_ranges": [
+    [
+     19,
+     26
+    ],
+    [
+     30,
+     35
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "dependency-planning"
+  },
+  "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10": {
+   "service_id": "ic10.script.dependency.plan.evaluator",
+   "magic": 31416008,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "23e2ae7b83d83995391ecb121b2e288d2d97fe4cef26b4e2c582d4d3f683135d",
+   "legacy_owned_ranges": [
+    [
+     20,
+     24
+    ],
+    [
+     27,
+     37
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "dependency-planning"
+  },
+  "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10": {
+   "service_id": "ic10.script.dependency.plan.release.advisor",
+   "magic": 31416018,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "030652e0945fd6522a215612c2cd1ab7c94f27dd09b7bb84dd4ccbd81d27b0aa",
+   "legacy_owned_ranges": [
+    [
+     12,
+     21
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "dependency-planning"
+  },
+  "ic10/dependency-planning/dependency_plan_store_v2_0.ic10": {
+   "service_id": "ic10.script.dependency.plan.store",
+   "magic": 31416007,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "6288f1257a2babfa154a8ac31e99c9ddfa463567c5b0bb4a5185157178365cc8",
+   "legacy_owned_ranges": [
+    [
+     9,
+     13
+    ],
+    [
+     32,
+     40
+    ],
+    [
+     128,
+     383
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [
+    [
+     32,
+     39
+    ],
+    [
+     128,
+     383
+    ]
+   ],
+   "pilot_family": "dependency-planning"
+  },
+  "ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10": {
+   "service_id": "ic10.script.existing.dependency.plan.controller",
+   "magic": 31416019,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "7707f21439be3c836580e6f43fd6052032c96a1986a2777b931f34ee4a5f8c69",
+   "legacy_owned_ranges": [
+    [
+     12,
+     12
+    ],
+    [
+     15,
+     17
+    ],
+    [
+     19,
+     23
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "dependency-planning"
+  },
+  "ic10/dependency-planning/generic_job_monitor_v1_0.ic10": {
+   "service_id": "ic10.script.generic.job.monitor",
+   "magic": 31416004,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "09c7edfbd8a65f4447c622e2bd03d31229130920fcac1f754e6ab749f7cbace6",
+   "legacy_owned_ranges": [
+    [
+     13,
+     23
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "dependency-planning"
+  },
+  "ic10/dependency-planning/item_producer_resolver_v1_0.ic10": {
+   "service_id": "ic10.script.item.producer.resolver",
+   "magic": 31416003,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "9f962cfca576ed2ef82071f3410d22c910378e182b7f26efdbf61b628c11b7fa",
+   "legacy_owned_ranges": [
+    [
+     8,
+     13
+    ],
+    [
+     32,
+     65
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "dependency-planning"
+  },
+  "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10": {
+   "service_id": "ic10.script.job.inventory.preflight",
+   "magic": 31416005,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "37226b3679aff9ff96bb24267d3477991b9f4d7d6b9c724f58d2ac2c8aa2e3ca",
+   "legacy_owned_ranges": [
+    [
+     15,
+     27
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "dependency-planning"
+  },
+  "ic10/dependency-planning/job_requirement_view_v1_0.ic10": {
+   "service_id": "ic10.script.job.requirement.view",
+   "magic": 31416002,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "51f338fbf88958e88b0d1e7107a5eede3647f830a4acea98d7e6be10b5133fdc",
+   "legacy_owned_ranges": [
+    [
+     15,
+     27
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "dependency-planning"
+  },
+  "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10": {
+   "service_id": "ic10.script.manufacturing.dependency.gate",
+   "magic": 31416012,
+   "service_abi": 2,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "4e37c3711540e0b2d64ec68bfdebdffc615f5b6fd703ceafe2f1113bd80f924a",
+   "legacy_owned_ranges": [
+    [
+     9,
+     12
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "dependency-planning"
+  },
+  "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10": {
+   "service_id": "ic10.script.manufacturing.dependency.planner",
+   "magic": 31416010,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "0e52b32346a0cfb04e56eb1f2c6e78cd620ed67e409f9feefa95ece28955ce16",
+   "legacy_owned_ranges": [
+    [
+     12,
+     12
+    ],
+    [
+     19,
+     21
+    ],
+    [
+     24,
+     27
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "dependency-planning"
+  },
+  "ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10": {
+   "service_id": "ic10.script.manufacturing.reagent.resolver",
+   "magic": 31416017,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "5123adbfe82cc10fafa1526b8fe28dbc50884586bba1a2db87af4255d30bd0d9",
+   "legacy_owned_ranges": [
+    [
+     8,
+     12
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "dependency-planning"
+  },
+  "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10": {
+   "service_id": "ic10.script.new.dependency.plan.controller",
+   "magic": 31416020,
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "36120f9e350f88edc422798994189fb10c3a40ffa5db25225eef9f4ca81d2ca7",
+   "legacy_owned_ranges": [
+    [
+     20,
+     23
+    ],
+    [
+     31,
+     37
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "dependency-planning"
   }
  },
  "legacy_exemption": {

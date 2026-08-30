@@ -156,9 +156,9 @@ j ra'''
    rt=o['resource_type']
    if rt in producer_seen: raise SystemExit(f'duplicate ITEM producer for {rt}: {producer_seen[rt]} and {t["name"]}')
    producer_seen[rt]=t['name']; producer.append((rt,t['name']))
- pl=['# Generated ITEM producer resolver.','Boot:','get r0 db 0','beq r0 31416003 Table','clr db','poke 0 31416003','poke 1 1','Table:','move sp 32']
- for rt,name in producer: pl += [f'push {rt}',f'push HASH("{name}")']
- pl += ['Loop:','yield','get r15 db 3','get r0 db 4','beq r15 r0 Loop','get r2 db 2','beqz r2 Bad','move r6 0','move r7 32','Find:',f'bge r6 {len(producer)} Print','get r0 db r7','beq r0 r2 Found','add r7 r7 2','add r6 r6 1','j Find','Found:','add r7 r7 1','get r0 db r7','poke 6 1','poke 7 r0','j Good','Print:','poke 6 2','poke 7 r2','Good:','poke 5 1','poke 4 r15','j Loop','Bad:','poke 5 -1','poke 6 0','poke 7 0','poke 4 r15','j Loop']
+ pl=['# Generated ITEM producer resolver.','Boot:','get r0 db 0','beq r0 31416003 Table','clr db','poke 0 31416003','poke 1 1','poke 2 0','Table:']
+ for i,(rt,name) in enumerate(producer): pl += [f'poke {32+2*i} {rt}',f'poke {33+2*i} HASH("{name}")']
+ pl += ['Loop:','yield','get r15 db 9','get r0 db 10','beq r15 r0 Loop','get r2 db 8','beqz r2 Bad','move r6 0','move r7 32','Find:',f'bge r6 {len(producer)} Print','get r0 db r7','beq r0 r2 Found','add r7 r7 2','add r6 r6 1','j Find','Found:','add r7 r7 1','get r0 db r7','poke 12 1','poke 13 r0','j Good','Print:','poke 12 2','poke 13 r2','Good:','poke 11 1','poke 10 r15','j Loop','Bad:','poke 11 -1','poke 12 0','poke 13 0','poke 10 r15','j Loop']
  producer_text='\n'.join(pl)+'\n'
  if len(producer_text.splitlines())>120: raise SystemExit('201 producer resolver exceeds 120-line IC10 ceiling')
  return {VIEW_FILE:view,RESOLVER_FILE:producer_text}

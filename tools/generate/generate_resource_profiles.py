@@ -145,10 +145,10 @@ j Loop'''
   if p['resource_type_kind'] != 'literal_hash': raise SystemExit(p['slug']+': dependency reagent resolver requires literal ITEM ResourceType')
   if alias in reagent_seen and reagent_seen[alias] != rt: raise SystemExit(f'duplicate ManufacturingReagentHash {alias}')
   reagent_seen[alias]=rt; reagents.append((alias,rt))
- rl=['# Generated manufacturing reagent alias -> concrete ITEM ResourceType.','poke 0 31416017','poke 1 1','Loop:','yield','get r15 db 3','get r0 db 4','beq r15 r0 Loop','get r2 db 2']
+ rl=['# Generated manufacturing reagent alias -> concrete ITEM ResourceType.','poke 0 31416017','poke 1 1','poke 2 0','Loop:','yield','get r15 db 9','get r0 db 10','beq r15 r0 Loop','get r2 db 8']
  for i,(alias,_) in enumerate(reagents): rl.append(f'beq r2 {alias} R{i}')
- rl += ['poke 5 -2','poke 6 0','poke 4 r15','j Loop']
- for i,(_,rt) in enumerate(reagents): rl += [f'R{i}:',f'poke 6 {rt}','poke 5 1','poke 4 r15','j Loop']
+ rl += ['poke 11 -2','poke 12 0','poke 10 r15','j Loop']
+ for i,(_,rt) in enumerate(reagents): rl += [f'R{i}:',f'poke 12 {rt}','poke 11 1','poke 10 r15','j Loop']
  reagent_text='\n'.join(rl)+'\n'
  if len(reagent_text.splitlines())>120: raise SystemExit('215 reagent resolver exceeds 120-line IC10 ceiling')
  return {VIEW_FILE:view,RESOLVER_FILE:reagent_text}

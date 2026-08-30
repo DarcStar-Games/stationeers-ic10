@@ -1,13 +1,14 @@
 # Existing-plan decision + ref-aware cancel.
 poke 0 31416019
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 10
-get r0 db 11
+get r15 db 20
+get r0 db 21
 beq r15 r0 Loop
-get r2 db 2
-get r3 db 9
+get r2 db 12
+get r3 db 19
 blez r2 Bad
 put d0 12 1
 put d0 13 r2
@@ -22,28 +23,28 @@ bne r0 1 Bad
 get r6 d0 33
 get r7 d0 34
 beq r3 1 Cleanup
-get r0 db 5
-put d1 2 r0
-get r0 db 6
-put d1 3 r0
-get r0 db 7
-put d1 4 r0
-put d1 5 r6
-put d1 6 r7
+get r0 db 15
+put d1 20 r0
+get r0 db 16
+put d1 21 r0
+get r0 db 17
+put d1 22 r0
+put d1 23 r6
+put d1 24 r7
 get r0 d0 36
-put d1 7 r0
+put d1 25 r0
 get r0 d0 37
-put d1 8 r0
+put d1 26 r0
 get r0 d0 38
-put d1 9 r0
+put d1 27 r0
 get r0 d0 39
-put d1 10 r0
-put d1 11 r15
+put d1 28 r0
+put d1 29 r15
 WaitEval:
 yield
-get r0 d1 12
+get r0 d1 30
 bne r0 r15 WaitEval
-get r0 d1 13
+get r0 d1 31
 beq r0 1 ClearReady
 beq r0 2 NoAction
 beq r0 3 NoAction
@@ -81,25 +82,25 @@ Bad:
 move r0 -1
 move r1 0
 Reply:
-poke 12 r0
-poke 13 r1
-poke 11 r15
+poke 22 r0
+poke 23 r1
+poke 21 r15
 j Loop
 Release:
-put d2 2 r2
-put d2 3 r6
-put d2 4 r7
-put d2 5 r15
+put d2 12 r2
+put d2 13 r6
+put d2 14 r7
+put d2 15 r15
 WaitRelease:
 yield
-get r0 d2 6
+get r0 d2 16
 bne r0 r15 WaitRelease
-get r0 d2 8
+get r0 d2 18
 beqz r0 ReleaseDone
 put d3 36 2
-get r0 d2 9
+get r0 d2 19
 put d3 37 r0
-get r0 d2 10
+get r0 d2 20
 put d3 38 r0
 put d3 39 12
 put d3 40 -20

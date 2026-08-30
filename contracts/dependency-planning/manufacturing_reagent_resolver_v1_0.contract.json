@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10",
-  "source_sha256": "435503b6c20084452c1251318a91ea1e0f87f527d62dd8cda4b63dfdd1cf39a0",
+  "source_sha256": "5123adbfe82cc10fafa1526b8fe28dbc50884586bba1a2db87af4255d30bd0d9",
   "identity": {
     "service_id": "ic10.script.manufacturing.reagent.resolver",
     "implementation_revision": "1.0",
@@ -16,16 +16,17 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3,
-      4
+      8,
+      9,
+      10
     ],
     "literal_writes": [
       0,
       1,
-      4,
-      5,
-      6
+      2,
+      10,
+      11,
+      12
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -65,12 +66,13 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
-        ]
+          "self-write"
+        ],
+        "const": 0
       },
       {
-        "address": 3,
-        "name": "S3",
+        "address": 8,
+        "name": "S8",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -78,8 +80,17 @@
         ]
       },
       {
-        "address": 4,
-        "name": "S4",
+        "address": 9,
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 10,
+        "name": "S10",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -88,8 +99,8 @@
         ]
       },
       {
-        "address": 5,
-        "name": "S5",
+        "address": 11,
+        "name": "S11",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -97,8 +108,8 @@
         ]
       },
       {
-        "address": 6,
-        "name": "S6",
+        "address": 12,
+        "name": "S12",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

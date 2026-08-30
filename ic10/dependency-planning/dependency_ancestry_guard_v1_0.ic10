@@ -1,16 +1,17 @@
 # Bounded depth/cycle guard. d0 Plan Store,d1 Job Monitor.
 poke 0 31416009
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 7
-get r0 db 8
+get r15 db 15
+get r0 db 16
 beq r15 r0 Loop
-get r2 db 2
-get r3 db 3
-get r4 db 4
-get r5 db 5
-get r6 db 6
+get r2 db 10
+get r3 db 11
+get r4 db 12
+get r5 db 13
+get r6 db 14
 blez r2 Bad
 bne r3 r5 ScanSetup
 beq r4 r6 Cycle
@@ -44,37 +45,37 @@ j DepthScan
 ParentCheck:
 get r0 d0 40
 bne r0 r14 Loop
-put d1 2 r8
+put d1 13 r8
 mul r13 r15 64
 add r13 r13 r7
 add r13 r13 1
-put d1 3 r13
+put d1 14 r13
 WaitP:
 yield
-get r0 d1 4
+get r0 d1 15
 bne r0 r13 WaitP
 get r0 d0 40
 bne r0 r14 Loop
-get r0 d1 5
+get r0 d1 16
 bne r0 1 Bad
-get r0 d1 7
+get r0 d1 18
 bne r0 r5 Next
-get r0 d1 8
+get r0 d1 19
 beq r0 r6 Cycle
 Next:
 add r7 r7 1
 j Scan
 Good:
-poke 9 1
+poke 17 1
 j Reply
 TooDeep:
-poke 9 -2
+poke 17 -2
 j Reply
 Cycle:
-poke 9 -3
+poke 17 -3
 j Reply
 Bad:
-poke 9 -1
+poke 17 -1
 Reply:
-poke 8 r15
+poke 16 r15
 j Loop

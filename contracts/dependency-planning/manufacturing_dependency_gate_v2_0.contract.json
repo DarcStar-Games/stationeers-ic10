@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10",
-  "source_sha256": "c41d1d04f456d31876d59f927a50e892dc7ce4456d33d276aa39e41d24735b3b",
+  "source_sha256": "4e37c3711540e0b2d64ec68bfdebdffc615f5b6fd703ceafe2f1113bd80f924a",
   "identity": {
     "service_id": "ic10.script.manufacturing.dependency.gate",
     "implementation_revision": "2.0",
@@ -25,18 +25,18 @@
       },
       "stack": {
         "literal_reads": [
-          10,
-          11
+          20,
+          21
         ],
         "literal_writes": [
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -49,8 +49,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.9c3af8e168735e90",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.9c3af8e168735e90",
+        "interface_id": "ic10.interface.access.e4c9c226d0e3feb9",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.e4c9c226d0e3feb9",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -163,6 +163,7 @@
     "literal_writes": [
       0,
       1,
+      2,
       10,
       11,
       12
@@ -198,6 +199,16 @@
           "self-write"
         ],
         "const": 2
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 0
       },
       {
         "address": 9,

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10",
-  "source_sha256": "b7761e6f0c675c9c60094a9b10f32dd024f03dd7d4c386b153805d37c11e463a",
+  "source_sha256": "5e6fcdb523a0c54fd0630fbf7ef3ca26a46736ef18e3578b471a962c7dccd2c1",
   "identity": {
     "service_id": "ic10.script.dependency.cancellation.guard",
     "implementation_revision": "1.0",
@@ -73,13 +73,13 @@
       },
       "stack": {
         "literal_reads": [
-          4,
-          5,
-          11
+          15,
+          16,
+          22
         ],
         "literal_writes": [
-          2,
-          3
+          13,
+          14
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -92,8 +92,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.f60ab7c59aa9d747",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.f60ab7c59aa9d747",
+        "interface_id": "ic10.interface.access.59eeac3acaef2f00",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.59eeac3acaef2f00",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -155,6 +155,7 @@
     "literal_writes": [
       0,
       1,
+      2,
       20,
       21
     ],
@@ -189,6 +190,16 @@
           "self-write"
         ],
         "const": 1
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 0
       },
       {
         "address": 20,

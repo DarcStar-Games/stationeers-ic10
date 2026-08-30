@@ -305,12 +305,13 @@ version and is rejected by v1 readers; it may not silently repurpose a v1 cell.
 | | cells | lines | notes |
 | --- | ---: | ---: | --- |
 | Header reservation | 8 | — | costs 3 more programs than reserving 5; deferring costs a second break of ~146 |
-| Mandatory writes | 3 | 3 | `S0`/`S1` already published by 154 programs |
+| Mandatory writes | 3 | 3 | `S0`/`S1` already published by 172 programs |
 | Stack Header Reader | 8 | 117 | the reference reader; validates every declared field |
 | Stack Cell Monitor | 8 | 45 | the probe: one cell at a chosen address |
 | Generic Telemetry family | 8 | +4 each | 7 runtimes migrated; 5 spend reviewed margin, 0 consumers changed |
 | Manufacturing family | 8 | +1 each | 10 migrated; seven move a whole peer-written mailbox, 1 spends reviewed margin |
-| Backlog | — | — | 20 programs, 17 of which use `S2..S7` today |
+| Dependency-planning family | 8 | +1 each | 18 migrated as one cluster; every peer mailbox moves as a contiguous block, 2 spend reviewed margin |
+| Backlog | — | — | 2 programs, 2 of which use `S2..S7` today |
 
 ## Worked migration: Generic Telemetry
 

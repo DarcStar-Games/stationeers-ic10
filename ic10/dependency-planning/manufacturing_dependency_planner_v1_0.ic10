@@ -1,41 +1,42 @@
 poke 0 31416010
 poke 1 1
+poke 2 0
 Loop:
 yield
 get r15 db 25
 get r0 db 26
 bne r15 r0 Cleanup
-get r15 db 9
-get r0 db 10
+get r15 db 19
+get r0 db 20
 beq r15 r0 Loop
-get r2 db 2
+get r2 db 12
 blez r2 Bad
 move r3 0
 jal Existing
-get r4 d1 12
-get r5 d1 13
+get r4 d1 22
+get r5 d1 23
 beqz r5 ExistingResult
 jal Clear
 ExistingResult:
 bne r4 5 Reply
 jal New
-get r4 d2 5
+get r4 d2 23
 bne r4 6 Reply
 put d0 12 2
 put d0 13 r2
-get r0 d2 13
+get r0 d2 31
 put d0 14 r0
-get r0 d2 14
+get r0 d2 32
 put d0 15 r0
-get r0 d2 15
+get r0 d2 33
 put d0 16 r0
-get r0 d2 16
+get r0 d2 34
 put d0 17 r0
-get r0 d2 17
+get r0 d2 35
 put d0 18 r0
-get r0 d2 18
+get r0 d2 36
 put d0 19 r0
-get r0 d2 19
+get r0 d2 37
 put d0 20 r0
 mul r13 r15 16
 add r13 r13 4
@@ -53,7 +54,7 @@ get r2 db 24
 blez r2 CleanupBad
 move r3 1
 jal Existing
-get r0 d1 13
+get r0 d1 23
 beqz r0 CleanupDone
 jal ClearCleanup
 CleanupDone:
@@ -70,36 +71,36 @@ j Reply
 Bad:
 move r4 -1
 Reply:
-poke 11 r4
-poke 10 r15
+poke 21 r4
+poke 20 r15
 j Loop
 Existing:
-put d1 2 r2
-move r0 3
+put d1 12 r2
+move r0 13
 CopyExisting:
 get r1 db r0
 put d1 r0 r1
 add r0 r0 1
-ble r0 8 CopyExisting
-put d1 9 r3
+ble r0 18 CopyExisting
+put d1 19 r3
 mul r13 r15 16
 mul r0 r3 4
 add r13 r13 r0
 add r13 r13 1
-put d1 10 r13
+put d1 20 r13
 WaitExisting:
 yield
-get r0 d1 11
+get r0 d1 21
 bne r0 r13 WaitExisting
 j ra
 New:
-put d2 2 r2
+put d2 20 r2
 mul r13 r15 16
 add r13 r13 2
-put d2 3 r13
+put d2 21 r13
 WaitNew:
 yield
-get r0 d2 4
+get r0 d2 22
 bne r0 r13 WaitNew
 j ra
 Clear:

@@ -24,24 +24,24 @@ PASS ic10/controller-pi/controller_pi_runtime_v1_1.ic10 lines=119 headroom= 9 ma
 PASS ic10/controller-pi/pi_config_policy_v1_0.ic10 lines= 89 headroom=39 max=78 CRLF=1607 comments= 4
 PASS ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10 lines=123 headroom= 5 max=64 CRLF=2013 comments= 5
 PASS ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10 lines=100 headroom=28 max=74 CRLF=1615 comments= 2
-PASS ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10 lines= 80 headroom=48 max=58 CRLF=1089 comments= 1
-PASS ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10 lines= 52 headroom=76 max=71 CRLF= 744 comments= 1
-PASS ic10/dependency-planning/dependency_child_creator_v2_0.ic10 lines=106 headroom=22 max=38 CRLF=1391 comments= 1
-PASS ic10/dependency-planning/dependency_child_validity_v1_0.ic10 lines= 59 headroom=69 max=82 CRLF= 784 comments= 1
-PASS ic10/dependency-planning/dependency_claim_view_v1_0.ic10 lines=120 headroom= 8 max=69 CRLF=1657 comments= 1
-PASS ic10/dependency-planning/dependency_plan_builder_v2_0.ic10 lines= 74 headroom=54 max=85 CRLF= 978 comments= 1
-PASS ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10 lines= 86 headroom=42 max=72 CRLF=1121 comments= 1
-PASS ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10 lines= 59 headroom=69 max=69 CRLF= 798 comments= 1
-PASS ic10/dependency-planning/dependency_plan_store_v2_0.ic10 lines=115 headroom=13 max=20 CRLF=1375 comments= 0
-PASS ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10 lines=112 headroom=16 max=44 CRLF=1501 comments= 1
-PASS ic10/dependency-planning/generic_job_monitor_v1_0.ic10 lines= 67 headroom=61 max=54 CRLF= 887 comments= 1
-PASS ic10/dependency-planning/item_producer_resolver_v1_0.ic10 lines= 78 headroom=50 max=35 CRLF=1256 comments= 1
-PASS ic10/dependency-planning/job_inventory_preflight_v1_0.ic10 lines=111 headroom=17 max=70 CRLF=1455 comments= 1
-PASS ic10/dependency-planning/job_requirement_view_v1_0.ic10 lines= 97 headroom=31 max=46 CRLF=1286 comments= 1
-PASS ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10 lines= 96 headroom=32 max=66 CRLF=1346 comments= 1
-PASS ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10 lines=120 headroom= 8 max=23 CRLF=1593 comments= 0
-PASS ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10 lines=115 headroom=13 max=70 CRLF=1517 comments= 1
-PASS ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10 lines= 91 headroom=37 max=59 CRLF=1210 comments= 1
+PASS ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10 lines= 81 headroom=47 max=58 CRLF=1117 comments= 1
+PASS ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10 lines= 53 headroom=75 max=71 CRLF= 758 comments= 1
+PASS ic10/dependency-planning/dependency_child_creator_v2_0.ic10 lines=107 headroom=21 max=38 CRLF=1429 comments= 1
+PASS ic10/dependency-planning/dependency_child_validity_v1_0.ic10 lines= 60 headroom=68 max=82 CRLF= 820 comments= 1
+PASS ic10/dependency-planning/dependency_claim_view_v1_0.ic10 lines=121 headroom= 7 max=69 CRLF=1690 comments= 1
+PASS ic10/dependency-planning/dependency_plan_builder_v2_0.ic10 lines= 75 headroom=53 max=85 CRLF=1014 comments= 1
+PASS ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10 lines= 87 headroom=41 max=72 CRLF=1151 comments= 1
+PASS ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10 lines= 60 headroom=68 max=69 CRLF= 836 comments= 1
+PASS ic10/dependency-planning/dependency_plan_store_v2_0.ic10 lines=116 headroom=12 max=20 CRLF=1385 comments= 0
+PASS ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10 lines=113 headroom=15 max=44 CRLF=1531 comments= 1
+PASS ic10/dependency-planning/generic_job_monitor_v1_0.ic10 lines= 68 headroom=60 max=54 CRLF= 908 comments= 1
+PASS ic10/dependency-planning/item_producer_resolver_v1_0.ic10 lines= 78 headroom=50 max=35 CRLF=1367 comments= 1
+PASS ic10/dependency-planning/job_inventory_preflight_v1_0.ic10 lines=112 headroom=16 max=70 CRLF=1485 comments= 1
+PASS ic10/dependency-planning/job_requirement_view_v1_0.ic10 lines= 98 headroom=30 max=46 CRLF=1310 comments= 1
+PASS ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10 lines= 97 headroom=31 max=66 CRLF=1364 comments= 1
+PASS ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10 lines=121 headroom= 7 max=23 CRLF=1613 comments= 0
+PASS ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10 lines=116 headroom=12 max=70 CRLF=1582 comments= 1
+PASS ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10 lines= 92 headroom=36 max=59 CRLF=1248 comments= 1
 PASS ic10/diagnostics/console_registry_v1_1.ic10 lines= 85 headroom=43 max=82 CRLF=1883 comments=12
 PASS ic10/diagnostics/console_selector_v1_1.ic10 lines= 93 headroom=35 max=89 CRLF=1963 comments= 8
 PASS ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10 lines= 47 headroom=81 max=79 CRLF=1258 comments=13

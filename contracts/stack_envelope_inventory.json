@@ -29,10 +29,10 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 154,
-    "legacy_exempt": 20,
-    "backlog_reserved_cell_users": 17,
-    "backlog_dynamic_range_users": 5
+    "migrated_v1": 172,
+    "legacy_exempt": 2,
+    "backlog_reserved_cell_users": 2,
+    "backlog_dynamic_range_users": 2
   },
   "services": [
     {
@@ -2360,7 +2360,7 @@
       "source": "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10",
       "service_contract_id": "ic10.script.dependency.ancestry.guard",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -2385,12 +2385,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 10,
-        "highest_literal_cell": 9,
+        "literal_cell_count": 11,
+        "highest_literal_cell": 17,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 80,
-        "line_headroom_120": 40,
+        "line_count": 81,
+        "line_headroom_120": 39,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -2398,29 +2398,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.dependency.ancestry.guard",
+        "magic": 31416009,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "2ddeb7d39067d2818f2c2981903ffd0ab3295b7f1b8ac53eacbf7cfce6cb03b5",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 17
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
       "source": "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10",
       "service_contract_id": "ic10.script.dependency.cancellation.guard",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -2445,36 +2464,61 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 4,
+        "literal_cell_count": 5,
         "highest_literal_cell": 21,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 52,
-        "line_headroom_120": 68,
+        "line_count": 53,
+        "line_headroom_120": 67,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
       "window_collision": {
         "literal_cells": [
           0,
-          1
+          1,
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.dependency.cancellation.guard",
+        "magic": 31416013,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "5e6fcdb523a0c54fd0630fbf7ef3ca26a46736ef18e3578b471a962c7dccd2c1",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 20,
+              "end": 21
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
       "source": "ic10/dependency-planning/dependency_child_creator_v2_0.ic10",
       "service_contract_id": "ic10.script.dependency.child.creator",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -2499,12 +2543,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
-        "highest_literal_cell": 15,
+        "literal_cell_count": 16,
+        "highest_literal_cell": 27,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 106,
-        "line_headroom_120": 14,
+        "line_count": 107,
+        "line_headroom_120": 13,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -2512,29 +2556,52 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.dependency.child.creator",
+        "magic": 31416006,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "920d72cea3ca168a3738a143421380c42dbb07e6af0e0cecf0e258d5674eaabe",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 14,
+              "end": 25
+            },
+            {
+              "start": 27,
+              "end": 27
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
       "source": "ic10/dependency-planning/dependency_child_validity_v1_0.ic10",
       "service_contract_id": "ic10.script.dependency.child.validity",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -2559,12 +2626,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 12,
+        "literal_cell_count": 14,
+        "highest_literal_cell": 23,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 59,
-        "line_headroom_120": 61,
+        "line_count": 60,
+        "line_headroom_120": 60,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -2572,29 +2639,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.dependency.child.validity",
+        "magic": 31416014,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "cbe6968c704e38903ee8e8ebb7012084e66b6aa5eebadd606c28539bf57b3bb9",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 13,
+              "end": 23
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
       "source": "ic10/dependency-planning/dependency_claim_view_v1_0.ic10",
       "service_contract_id": "ic10.script.dependency.claim.view",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -2619,12 +2705,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
-        "highest_literal_cell": 14,
+        "literal_cell_count": 16,
+        "highest_literal_cell": 27,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 120,
-        "line_headroom_120": 0,
+        "line_count": 121,
+        "line_headroom_120": -1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -2632,29 +2718,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.dependency.claim.view",
+        "magic": 31416016,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "38bbfc47a9592bc49e5b9e566965e27c3609ad739662b9784662938cd31fd315",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 15,
+              "end": 27
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
       "source": "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10",
       "service_contract_id": "ic10.script.dependency.plan.builder",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -2679,12 +2784,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 16,
-        "highest_literal_cell": 18,
+        "literal_cell_count": 17,
+        "highest_literal_cell": 35,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 74,
-        "line_headroom_120": 46,
+        "line_count": 75,
+        "line_headroom_120": 45,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -2692,29 +2797,52 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.dependency.plan.builder",
+        "magic": 31416011,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "9453e51780e55e9270ad61319666209ad5710030a74e1adb98c0fbc862383efa",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 19,
+              "end": 26
+            },
+            {
+              "start": 30,
+              "end": 35
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
       "source": "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10",
       "service_contract_id": "ic10.script.dependency.plan.evaluator",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -2739,12 +2867,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 18,
-        "highest_literal_cell": 19,
+        "literal_cell_count": 19,
+        "highest_literal_cell": 37,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 86,
-        "line_headroom_120": 34,
+        "line_count": 87,
+        "line_headroom_120": 33,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -2752,28 +2880,52 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.dependency.plan.evaluator",
+        "magic": 31416008,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "23e2ae7b83d83995391ecb121b2e288d2d97fe4cef26b4e2c582d4d3f683135d",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 20,
+              "end": 24
+            },
+            {
+              "start": 27,
+              "end": 37
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
       "source": "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10",
       "service_contract_id": "ic10.script.dependency.plan.release.advisor",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -2798,12 +2950,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 12,
-        "highest_literal_cell": 11,
+        "literal_cell_count": 13,
+        "highest_literal_cell": 21,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 59,
-        "line_headroom_120": 61,
+        "line_count": 60,
+        "line_headroom_120": 60,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -2811,29 +2963,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.dependency.plan.release.advisor",
+        "magic": 31416018,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "030652e0945fd6522a215612c2cd1ab7c94f27dd09b7bb84dd4ccbd81d27b0aa",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 12,
+              "end": 21
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
       "source": "ic10/dependency-planning/dependency_plan_store_v2_0.ic10",
       "service_contract_id": "ic10.script.dependency.plan.store",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -2883,7 +3054,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 8,
+        "literal_cell_count": 9,
         "highest_literal_cell": 40,
         "dynamic_read_ranges": [
           {
@@ -2897,15 +3068,16 @@
             "end": 511
           }
         ],
-        "line_count": 115,
-        "line_headroom_120": 5,
+        "line_count": 116,
+        "line_headroom_120": 4,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
       "window_collision": {
         "literal_cells": [
           0,
-          1
+          1,
+          2
         ],
         "dynamic_read_cells": [
           0,
@@ -2930,17 +3102,58 @@
         "dynamic_read_provenance": "conservative-full-stack",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.dependency.plan.store",
+        "magic": 31416007,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "6288f1257a2babfa154a8ac31e99c9ddfa463567c5b0bb4a5185157178365cc8",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 9,
+              "end": 13
+            },
+            {
+              "start": 32,
+              "end": 40
+            },
+            {
+              "start": 128,
+              "end": 383
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 32,
+              "end": 39
+            },
+            {
+              "start": 128,
+              "end": 383
+            }
+          ]
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
       "source": "ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10",
       "service_contract_id": "ic10.script.existing.dependency.plan.controller",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -2965,12 +3178,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 11,
-        "highest_literal_cell": 13,
+        "literal_cell_count": 12,
+        "highest_literal_cell": 23,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 112,
-        "line_headroom_120": 8,
+        "line_count": 113,
+        "line_headroom_120": 7,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -2978,27 +3191,56 @@
         "literal_cells": [
           0,
           1,
-          2,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.existing.dependency.plan.controller",
+        "magic": 31416019,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "7707f21439be3c836580e6f43fd6052032c96a1986a2777b931f34ee4a5f8c69",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 12,
+              "end": 12
+            },
+            {
+              "start": 15,
+              "end": 17
+            },
+            {
+              "start": 19,
+              "end": 23
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
       "source": "ic10/dependency-planning/generic_job_monitor_v1_0.ic10",
       "service_contract_id": "ic10.script.generic.job.monitor",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -3023,12 +3265,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 12,
+        "literal_cell_count": 14,
+        "highest_literal_cell": 23,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 67,
-        "line_headroom_120": 53,
+        "line_count": 68,
+        "line_headroom_120": 52,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -3036,29 +3278,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.generic.job.monitor",
+        "magic": 31416004,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "09c7edfbd8a65f4447c622e2bd03d31229130920fcac1f754e6ab749f7cbace6",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 13,
+              "end": 23
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
       "source": "ic10/dependency-planning/item_producer_resolver_v1_0.ic10",
       "service_contract_id": "ic10.script.item.producer.resolver",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -3083,8 +3344,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 8,
-        "highest_literal_cell": 7,
+        "literal_cell_count": 43,
+        "highest_literal_cell": 65,
         "dynamic_read_ranges": [
           {
             "start": 0,
@@ -3106,12 +3367,7 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [
           0,
@@ -3134,19 +3390,47 @@
           7
         ],
         "dynamic_read_provenance": "conservative-full-stack",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-derived"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.item.producer.resolver",
+        "magic": 31416003,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "9f962cfca576ed2ef82071f3410d22c910378e182b7f26efdbf61b628c11b7fa",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 13
+            },
+            {
+              "start": 32,
+              "end": 65
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
       "source": "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10",
       "service_contract_id": "ic10.script.job.inventory.preflight",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -3171,12 +3455,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
-        "highest_literal_cell": 14,
+        "literal_cell_count": 16,
+        "highest_literal_cell": 27,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 111,
-        "line_headroom_120": 9,
+        "line_count": 112,
+        "line_headroom_120": 8,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -3184,29 +3468,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.job.inventory.preflight",
+        "magic": 31416005,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "37226b3679aff9ff96bb24267d3477991b9f4d7d6b9c724f58d2ac2c8aa2e3ca",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 15,
+              "end": 27
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
       "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
       "service_contract_id": "ic10.script.job.requirement.view",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -3231,12 +3534,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 15,
-        "highest_literal_cell": 14,
+        "literal_cell_count": 16,
+        "highest_literal_cell": 27,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 97,
-        "line_headroom_120": 23,
+        "line_count": 98,
+        "line_headroom_120": 22,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -3244,29 +3547,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.job.requirement.view",
+        "magic": 31416002,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "51f338fbf88958e88b0d1e7107a5eede3647f830a4acea98d7e6be10b5133fdc",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 15,
+              "end": 27
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
       "source": "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10",
       "service_contract_id": "ic10.script.manufacturing.dependency.gate",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -3291,36 +3613,61 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 6,
+        "literal_cell_count": 7,
         "highest_literal_cell": 12,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 96,
-        "line_headroom_120": 24,
+        "line_count": 97,
+        "line_headroom_120": 23,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
       "window_collision": {
         "literal_cells": [
           0,
-          1
+          1,
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.manufacturing.dependency.gate",
+        "magic": 31416012,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "4e37c3711540e0b2d64ec68bfdebdffc615f5b6fd703ceafe2f1113bd80f924a",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 9,
+              "end": 12
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
       "source": "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10",
       "service_contract_id": "ic10.script.manufacturing.dependency.planner",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -3345,7 +3692,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 10,
+        "literal_cell_count": 11,
         "highest_literal_cell": 27,
         "dynamic_read_ranges": [
           {
@@ -3354,8 +3701,8 @@
           }
         ],
         "dynamic_write_ranges": [],
-        "line_count": 120,
-        "line_headroom_120": 0,
+        "line_count": 121,
+        "line_headroom_120": -1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -3379,17 +3726,49 @@
         "dynamic_read_provenance": "conservative-full-stack",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.manufacturing.dependency.planner",
+        "magic": 31416010,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "0e52b32346a0cfb04e56eb1f2c6e78cd620ed67e409f9feefa95ece28955ce16",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 12,
+              "end": 12
+            },
+            {
+              "start": 19,
+              "end": 21
+            },
+            {
+              "start": 24,
+              "end": 27
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
       "source": "ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10",
       "service_contract_id": "ic10.script.manufacturing.reagent.resolver",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -3414,12 +3793,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 7,
-        "highest_literal_cell": 6,
+        "literal_cell_count": 8,
+        "highest_literal_cell": 12,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 115,
-        "line_headroom_120": 5,
+        "line_count": 116,
+        "line_headroom_120": 4,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -3427,28 +3806,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.manufacturing.reagent.resolver",
+        "magic": 31416017,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "5123adbfe82cc10fafa1526b8fe28dbc50884586bba1a2db87af4255d30bd0d9",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 12
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
       "source": "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10",
       "service_contract_id": "ic10.script.new.dependency.plan.controller",
       "deployment_family": "dependency-planning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -3473,12 +3872,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 19,
+        "literal_cell_count": 14,
+        "highest_literal_cell": 37,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 91,
-        "line_headroom_120": 29,
+        "line_count": 92,
+        "line_headroom_120": 28,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -3486,20 +3885,45 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.new.dependency.plan.controller",
+        "magic": 31416020,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "36120f9e350f88edc422798994189fb10c3a40ffa5db25225eef9f4ca81d2ca7",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 20,
+              "end": 23
+            },
+            {
+              "start": 31,
+              "end": 37
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "dependency-planning"
       }
     },
     {
