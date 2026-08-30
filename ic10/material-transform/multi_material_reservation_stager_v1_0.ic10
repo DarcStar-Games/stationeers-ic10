@@ -37,8 +37,8 @@ add r0 r0 1
 get r10 d0 r0
 mul r10 r10 r6
 blez r10 Rollback
-getd r2 r9 2
-getd r3 r9 3
+getd r2 r9 28
+getd r3 r9 29
 getd r4 r9 14
 getd r5 r9 16
 getd r11 r9 21
@@ -46,11 +46,11 @@ getd r13 r9 22
 getd sp r9 15
 getd r0 r2 9
 blez r0 Rollback
-getd r0 r2 6
+getd r0 r2 36
 blt r0 r10 Rollback
 getd r0 r3 9
 blez r0 Rollback
-getd r0 r3 7
+getd r0 r3 37
 blt r0 r10 Rollback
 mul r0 r12 3
 add r0 r0 32
@@ -70,7 +70,7 @@ l r0 d1 ReferenceId
 putd r4 18 r0
 putd r4 19 r2
 putd r4 20 r3
-getd r0 r9 5
+getd r0 r9 31
 putd r4 21 r0
 putd r4 22 r5
 putd r4 23 r11

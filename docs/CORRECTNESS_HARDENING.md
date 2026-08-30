@@ -26,9 +26,9 @@ PI, Test, and Sequencer telemetry remain ABI1 because current consumers do not r
 
 ## 2. Unified Resource Profiles and coherent publication
 
-`data/resource_profiles.json` is now the single source of truth for phase-medium and material-item profile metadata. `tools/generate/generate_resource_profiles.py` produces ResourceClass-partitioned active Stores plus one-shot sparse whole-profile Loader candidates; the Coordinator-selected Generic Store imports assigned candidate ranges transactionally while `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` resolves one typed record and publishes it with `S5` as the positive commit token. Dedicated per-medium and per-item profile programs were removed.
+`data/resource_profiles.json` is now the single source of truth for phase-medium and material-item profile metadata. `tools/generate/generate_resource_profiles.py` produces ResourceClass-partitioned active Stores plus one-shot sparse whole-profile Loader candidates; the Coordinator-selected Generic Store imports assigned candidate ranges transactionally while `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` resolves one typed record and publishes it with `S29` as the positive commit token. Dedicated per-medium and per-item profile programs were removed.
 
-`ControllerPhasePressure` captures and rechecks Resource Profile View `S5`; a catalog/view that is incomplete, being reflashed, or changes during the read cannot be consumed as a valid thermodynamic snapshot.
+`ControllerPhasePressure` captures and rechecks Resource Profile View `S29`; a catalog/view that is incomplete, being reflashed, or changes during the read cannot be consumed as a valid thermodynamic snapshot.
 
 The generated library contains Water, Pollutant, Silanol, Nitrous Oxide, Nitrogen, Methane, Carbon Dioxide, Oxygen, and Hydrogen.
 
@@ -210,7 +210,7 @@ The Job Store enforces these storage invariants:
 2. **State uses per-slot A/B banks.** State, Generation, and ErrorStatus are written to the inactive state bank and the active-bank selector is flipped only after that bank is complete.
 3. **Generation is optimistic concurrency control.** A writer must supply the exact current JobGeneration; a stale update cannot overwrite a newer scheduler/executor decision.
 4. **Terminal state is immutable.** COMPLETE, FAULT, and CANCELLED can be reaped but cannot be reopened.
-5. **Queue-wide reads are fenced.** `S2` is odd during mutation and even when stable; `S3` advances after committed queue mutations. Multi-slot readers must read an even sequence before the scan and require the same even sequence afterward.
+5. **Queue-wide reads are fenced.** `S16` is odd during mutation and even when stable; `S17` advances after committed queue mutations. Multi-slot readers must read an even sequence before the scan and require the same even sequence afterward.
 6. **Same-service reflash is old-or-new.** The Store journals the in-flight state-bank base and old active bank. A reboot before the bank flip retries the request; a reboot after the flip preserves and acknowledges the committed mutation without double-applying it.
 7. **There is one request-mailbox writer.** The Store does not arbitrate concurrent command producers. `ic10/manufacturing/manufacturing_scheduler_v1_0.ic10` owns TRANSFORM/PRINT lifecycle policy, but Gateway ABI3 serializes command lanes and `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` is the sole physical Job Store mailbox writer.
 

@@ -237,7 +237,13 @@ def analyze_own_stack(source: str, rows: list[list[str]], integer_aliases: dict[
     stable_expected: dict[int, Any] = {header["base"]: header["magic"] for header in headers}
     stable_expected.update({header["base"] + 1: header["abi"] for header in headers})
     stable = stable_cells(source, integer_aliases, stable_expected)
-    fields = _synthesize_fields(scan, annotations, headers, stable, dynamic_write_cells, overrides)
+    # A cell peers may write is never a provider constant, however few literal
+    # writes the owner's own source shows for it.
+    external_write_cells = {
+        address for item in validated_ranges(overrides.get("external_writable_ranges"))
+        for address in range(item["start"], item["end"] + 1)
+    }
+    fields = _synthesize_fields(scan, annotations, headers, stable, dynamic_write_cells | external_write_cells, overrides)
     external_readable_ranges = _extension_readable_ranges(
         headers, scan.write_values, validated_ranges(overrides.get("external_readable_ranges"))
     )

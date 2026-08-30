@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10",
-  "source_sha256": "7d3f3882ee0f93c7669fbda75cad412bf487d446af4a1c929851c5a13f33b204",
+  "source_sha256": "9ec69e335fc8e321aeeeff6704e43a343e6d7e1ebceb9eb450334c50bdc3f96e",
   "identity": {
     "service_id": "ic10.script.controller.phase.pressure.runtime",
     "implementation_revision": "1.1",
@@ -45,7 +45,7 @@
           "source_port": "d2",
           "address": 103,
           "fence": {
-            "address": 5,
+            "address": 51,
             "kind": "generation",
             "description": "Config Host generation must be positive and unchanged around the LogicType read."
           }
@@ -138,9 +138,9 @@
       },
       "stack": {
         "literal_reads": [
-          5,
           8,
-          12
+          12,
+          51
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -164,8 +164,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.38761c8544a5e437",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.38761c8544a5e437",
+        "interface_id": "ic10.interface.access.a35c5a268d957af3",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.a35c5a268d957af3",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [

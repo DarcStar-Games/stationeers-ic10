@@ -99,9 +99,9 @@ Direct user-facing transfer jobs do not have a separate allocator protocol in th
 Runtime submits to Allocator ABI2:
 
 ```text
-S2   BatchCount
-S3   Runtime ReferenceId
-S4   RequestGeneration
+S8   BatchCount
+S20  Runtime ReferenceId
+S21  RequestGeneration
 ```
 
 The Allocator validates a stable Link Resolver publication, allocates a new candidate epoch, and commands the Stager to prepare all one-to-three inputs.
@@ -320,7 +320,7 @@ Before enabling automatic material transforms:
 
 1. verify source and sink Reservations publish ResourceClass ITEM, the same ResourceType, and unit ITEM_QUANTITY;
 2. verify source export availability and sink import capacity are positive;
-3. verify Link `S2/S3` are Reservation ReferenceIds, not Endpoint ReferenceIds;
+3. verify Link `S28/S29` are Reservation ReferenceIds, not Endpoint ReferenceIds;
 4. verify Link `S19..S22` identify the intended Vending, Stacker, Sorter, and processor/import sink;
 5. verify Guard `d1` points to `ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10` and observes ABI2;
 6. verify the physical accepted chute route from Sorter reaches the intended sink;

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10",
-  "source_sha256": "9d100576a8099fefed132fb9c324eec60f36f912acba82eef8186966d119698c",
+  "source_sha256": "baf580299e217e52492148c51c67e56ddf55a14361b5a07d569c434e7449787b",
   "identity": {
     "service_id": "ic10.script.larre.cargo.storage.service",
     "implementation_revision": "1.0",
@@ -108,19 +108,20 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
       8,
       14,
-      15
+      15,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
     ],
     "literal_writes": [
       0,
       1,
+      2,
       9,
       10,
       11,
@@ -165,53 +166,9 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
+          "self-write"
+        ],
+        "const": 0
       },
       {
         "address": 8,
@@ -293,6 +250,60 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
+        ]
+      },
+      {
+        "address": 17,
+        "name": "S17",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 18,
+        "name": "S18",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 19,
+        "name": "S19",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 20,
+        "name": "S20",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 21,
+        "name": "S21",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 22,
+        "name": "S22",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
         ]
       }
     ],

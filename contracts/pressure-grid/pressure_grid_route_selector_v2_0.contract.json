@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10",
-  "source_sha256": "65354efe88fcc1bbd1745b68797ee3b1c1fca980a30aa8c8a53f4f5b514fb8ba",
+  "source_sha256": "1206854eca08e899c02a10224992a2048c8d612d03870b8d24359d679814191b",
   "identity": {
     "service_id": "ic10.script.pressure.grid.route.selector",
     "implementation_revision": "2.0",
@@ -27,20 +27,20 @@
         "literal_reads": [
           0,
           1,
-          7,
           8,
           9,
           10,
           16,
           17,
-          18
+          18,
+          37
         ],
         "literal_writes": [
-          2,
-          3,
-          4,
-          5,
-          6
+          32,
+          33,
+          34,
+          35,
+          36
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -92,14 +92,14 @@
           24
         ],
         "literal_writes": [
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
           8,
-          11
+          11,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37
         ],
         "dynamic_read": true,
         "dynamic_write": false,
@@ -136,24 +136,25 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3,
-      4,
-      5,
-      6,
       12,
-      20
+      20,
+      32,
+      33,
+      34,
+      35,
+      36
     ],
     "literal_writes": [
       0,
       1,
-      7,
+      2,
       8,
       9,
       10,
       11,
       12,
-      20
+      20,
+      37
     ],
     "dynamic_read": false,
     "dynamic_write": true,
@@ -193,51 +194,6 @@
       {
         "address": 2,
         "name": "S2",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -297,6 +253,60 @@
         "semantic_source": "unresolved",
         "access": [
           "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 32,
+        "name": "S32",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 33,
+        "name": "S33",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 34,
+        "name": "S34",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 35,
+        "name": "S35",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 36,
+        "name": "S36",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 37,
+        "name": "S37",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
           "self-write"
         ]
       }

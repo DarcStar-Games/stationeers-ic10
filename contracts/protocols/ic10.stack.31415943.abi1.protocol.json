@@ -43,53 +43,9 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 3,
-          "name": "S3",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
             "self-write"
-          ]
+          ],
+          "const": 0
         },
         {
           "address": 8,
@@ -147,6 +103,60 @@
             "self-read",
             "self-write"
           ]
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 16,
+          "name": "S16",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 17,
+          "name": "S17",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 18,
+          "name": "S18",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 19,
+          "name": "S19",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         }
       ],
       "behavior": {
@@ -185,17 +195,17 @@
       "literal_reads": [
         0,
         1,
-        7,
         8,
         9,
-        10
+        10,
+        19
       ],
       "literal_writes": [
-        2,
-        3,
-        4,
-        5,
-        6
+        14,
+        15,
+        16,
+        17,
+        18
       ],
       "dynamic_read_ranges": [],
       "dynamic_write_ranges": [],

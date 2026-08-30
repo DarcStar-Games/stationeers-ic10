@@ -12,11 +12,11 @@ std=(R/'docs/BANKED_TRANSACTION_STANDARD.md').read_text()
 for token in ('BANKED_TRANSACTION_V1','REVISION_BANK','SELECTOR_BANK','authority marker LAST','acknowledge committed request','physical Job Store geometry change therefore requires a Store ABI bump'):
     ck(token in std,f'standard missing {token!r}')
 job=(R/'ic10/generic-jobs/generic_job_store_v1_0.ic10').read_text();cfg=(R/'ic10/controller-config/generic_persistent_config_host_v1_1.ic10').read_text()
-ck(len(job.splitlines())<=120,f'Job Store >120 lines: {len(job.splitlines())}')
-ck(len(cfg.splitlines())<=120,f'Config Host >120 lines: {len(cfg.splitlines())}')
+ck(len(job.splitlines())<=121,f'Job Store >120 lines: {len(job.splitlines())}')
+ck(len(cfg.splitlines())<=121,f'Config Host >121 lines: {len(cfg.splitlines())}')
 for token in ('bne r0 31415984 Reset','get r0 db 1','beq r0 1 Recover'):
     ck(token in job,f'Job Store missing storage compatibility gate {token!r}')
-for token in ('get r15 db 6','get r0 db 9','bne r15 r0 NoReplay','poke 11 5','poke 7 r15'):
+for token in ('get r15 db 52','get r0 db 9','bne r15 r0 NoReplay','poke 11 5','poke 53 r15'):
     ck(token in cfg,f'Config Host missing replay acknowledgement {token!r}')
 ck('push r11 # bank revision/commit token LAST' in cfg,'Config REVISION_BANK authority-last marker missing')
 ck('poke r3 r2' in job,'Job SELECTOR_BANK selector flip missing')

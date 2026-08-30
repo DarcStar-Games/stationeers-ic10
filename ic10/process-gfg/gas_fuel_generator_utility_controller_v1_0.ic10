@@ -2,6 +2,7 @@
 # S16 medium,S17 min kPa,S18 max kPa,S19 shed W,S20 on.
 poke 0 31416048
 poke 1 1
+poke 2 0
 poke 11 0
 Loop:
 yield
@@ -17,12 +18,12 @@ get r0 d1 1
 bne r0 1 Bad
 l r0 d0 PrefabHash
 bne r0 HASH("StructureGasGenerator") Bad
-get r15 d1 2
+get r15 d1 27
 and r0 r15 1
 bnez r0 Loop
-get r4 d1 5
-get r5 d1 6
-get r0 d1 2
+get r4 d1 30
+get r5 d1 31
+get r0 d1 27
 bne r0 r15 Loop
 get r6 db 19
 sgt r0 r4 0
@@ -36,11 +37,11 @@ l r8 d0 Temperature
 l r9 d2 Pressure
 l r10 d2 Temperature
 l r11 d0 ReferenceId
-get r12 d3 7
+get r12 d3 13
 blez r12 Bad
-get r0 d3 5
+get r0 d3 11
 bne r0 1 FuelWait
-get r0 d3 7
+get r0 d3 13
 bne r0 r12 Loop
 get r13 db 17
 get r14 db 18
@@ -60,9 +61,9 @@ bgtz r0 Bad
 beqz r2 Start
 j FuelWait
 Start:
-get r0 d1 2
+get r0 d1 27
 bne r0 r15 Loop
-get r0 d3 7
+get r0 d3 13
 bne r0 r12 Loop
 s d0 On 1
 move r3 1
@@ -76,12 +77,12 @@ s d0 On 0
 move r3 -4
 Request:
 get r0 db 16
-poke 2 r11
-poke 3 r0
-poke 4 r13
-poke 5 r14
-poke 6 1
-poke 7 5000
+poke 22 r11
+poke 23 r0
+poke 24 r13
+poke 25 r14
+poke 26 1
+poke 27 5000
 poke 8 r2
 poke 9 HASH("Process.GasFuelGenerator")
 poke 10 1

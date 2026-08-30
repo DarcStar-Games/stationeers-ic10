@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10",
-  "source_sha256": "41baaecde855705463d9cf92014479bb8755705638d30643493a0a11f6956ccf",
+  "source_sha256": "bcb5d7bd0c672f9fea12506d1d1be6469ee13662d9696cb11b28543b7f584035",
   "identity": {
     "service_id": "ic10.script.pressure.grid.reservation.planner",
     "implementation_revision": "2.1",
@@ -27,9 +27,9 @@
         "literal_reads": [
           0,
           1,
-          2,
           9,
-          11
+          11,
+          24
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -136,17 +136,17 @@
         "literal_reads": [
           0,
           1,
-          7,
           8,
           9,
-          10
+          10,
+          19
         ],
         "literal_writes": [
-          2,
-          3,
-          4,
-          5,
-          6
+          14,
+          15,
+          16,
+          17,
+          18
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -184,10 +184,11 @@
     "literal_writes": [
       0,
       1,
-      7,
+      2,
       8,
       9,
       10,
+      11,
       12,
       13,
       14,
@@ -226,13 +227,14 @@
         "const": 2
       },
       {
-        "address": 7,
-        "name": "S7",
+        "address": 2,
+        "name": "S2",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
         "address": 8,
@@ -255,6 +257,15 @@
       {
         "address": 10,
         "name": "S10",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 11,
+        "name": "S11",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

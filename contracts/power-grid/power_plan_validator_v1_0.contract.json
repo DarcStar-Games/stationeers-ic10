@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_plan_validator_v1_0.ic10",
-  "source_sha256": "6cc578ddff4cf5e7a96ab5e59e7c0812e3f2725163c0d6a0d6bd4fe153dc0926",
+  "source_sha256": "c2f331d87c77040b9972f368744be2c668004cb0ecadcfe63f48f8f2016afa50",
   "identity": {
     "service_id": "ic10.script.power.plan.validator",
     "implementation_revision": "1.0",
@@ -25,9 +25,9 @@
       },
       "stack": {
         "literal_reads": [
-          2,
-          3,
-          4
+          27,
+          28,
+          29
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -46,8 +46,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.204d3b50701c06a2",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.204d3b50701c06a2",
+        "interface_id": "ic10.interface.access.5d806dc5a14bef0a",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.5d806dc5a14bef0a",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -64,13 +64,13 @@
       "reference": "r6",
       "literal_reads": [
         0,
-        2,
-        3,
-        4,
-        6,
         9,
         12,
-        14
+        14,
+        28,
+        29,
+        30,
+        32
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -82,14 +82,14 @@
           "value": 31415953
         },
         {
-          "address": 4,
-          "operator": "equals",
-          "value": 4
-        },
-        {
           "address": 9,
           "operator": "equals",
           "value": 1
+        },
+        {
+          "address": 30,
+          "operator": "equals",
+          "value": 4
         }
       ],
       "accepted": []
@@ -99,9 +99,9 @@
       "reference": "r7",
       "literal_reads": [
         0,
-        3,
         9,
-        12
+        12,
+        33
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -113,7 +113,7 @@
           "value": 31415950
         },
         {
-          "address": 3,
+          "address": 33,
           "operator": "equals",
           "value": 4
         }
@@ -125,9 +125,9 @@
       "reference": "r8",
       "literal_reads": [
         0,
-        3,
         9,
-        12
+        12,
+        33
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -139,7 +139,7 @@
           "value": 31415950
         },
         {
-          "address": 3,
+          "address": 33,
           "operator": "equals",
           "value": 4
         }
@@ -150,15 +150,16 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3,
-      4
+      8,
+      9,
+      10
     ],
     "literal_writes": [
       0,
       1,
-      4,
-      5
+      2,
+      10,
+      11
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -198,12 +199,13 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
-        ]
+          "self-write"
+        ],
+        "const": 0
       },
       {
-        "address": 3,
-        "name": "S3",
+        "address": 8,
+        "name": "S8",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -211,8 +213,17 @@
         ]
       },
       {
-        "address": 4,
-        "name": "S4",
+        "address": 9,
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 10,
+        "name": "S10",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -221,8 +232,8 @@
         ]
       },
       {
-        "address": 5,
-        "name": "S5",
+        "address": 11,
+        "name": "S11",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

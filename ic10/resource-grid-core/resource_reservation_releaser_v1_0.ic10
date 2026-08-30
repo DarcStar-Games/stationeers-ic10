@@ -1,13 +1,14 @@
 # Generic Reservation Releaser ABI1: d0 owner service; clears owner epoch only.
 poke 0 31415990
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 3
-get r0 db 4
+get r15 db 9
+get r0 db 10
 beq r15 r0 Loop
 bdns d0 Bad
-get r13 db 2
+get r13 db 8
 blez r13 Bad
 l r12 d0 ReferenceId
 move r6 0
@@ -35,12 +36,12 @@ putd r1 27 -1
 add r8 r8 1
 j Scan
 Done:
-poke 6 r8
+poke 12 r8
 move r0 1
 j Reply
 Bad:
 move r0 -1
 Reply:
-poke 5 r0
-poke 4 r15
+poke 11 r0
+poke 10 r15
 j Loop

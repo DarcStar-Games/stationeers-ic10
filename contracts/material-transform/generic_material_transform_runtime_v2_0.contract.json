@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10",
-  "source_sha256": "08494a06290676e2c2bdc788f3e6ed0651a3f62030186e92f0da84a32f02ab88",
+  "source_sha256": "eff230258213e8c184c7ae2367d483163f248e440a8113fd2398047bb23b0718",
   "identity": {
     "service_id": "ic10.script.generic.material.transform.runtime",
     "implementation_revision": "2.0",
@@ -212,8 +212,8 @@
       },
       "stack": {
         "literal_reads": [
-          6,
-          12
+          12,
+          36
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -227,8 +227,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.5020c07a0783b9e2",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.5020c07a0783b9e2",
+        "interface_id": "ic10.interface.access.1935969450c725ea",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.1935969450c725ea",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [

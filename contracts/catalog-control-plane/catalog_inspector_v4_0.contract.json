@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_inspector_v4_0.ic10",
-  "source_sha256": "c3927dee2448d221b7be91bf5324bd97490884f3923d577ad8019a814f2dd7f6",
+  "source_sha256": "d2168e95f3fe40507fee9b58460f25bee2a700d1c9ac95df01996289240f4526",
   "identity": {
     "service_id": "ic10.script.catalog.inspector",
     "implementation_revision": "4.0",
@@ -107,15 +107,15 @@
       "literal_reads": [
         0,
         1,
-        2,
-        4,
-        5,
+        3,
         12,
         13,
         14,
         15,
         18,
-        23
+        23,
+        26,
+        35
       ],
       "literal_writes": [],
       "dynamic_read": true,
@@ -132,7 +132,7 @@
           "value": 3
         },
         {
-          "address": 2,
+          "address": 3,
           "operator": "equals",
           "value": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
         }
@@ -147,10 +147,6 @@
       0,
       1,
       2,
-      3,
-      4,
-      6,
-      7,
       8,
       9,
       10,
@@ -177,7 +173,12 @@
       37,
       38,
       39,
-      40
+      40,
+      41,
+      42,
+      43,
+      44,
+      45
     ],
     "dynamic_read": false,
     "dynamic_write": true,
@@ -217,42 +218,6 @@
       {
         "address": 2,
         "name": "S2",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -496,6 +461,51 @@
       {
         "address": 40,
         "name": "S40",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 41,
+        "name": "S41",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 42,
+        "name": "S42",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 43,
+        "name": "S43",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 44,
+        "name": "S44",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 45,
+        "name": "S45",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

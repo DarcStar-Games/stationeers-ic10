@@ -1,4 +1,7 @@
 # Generic Directory Adapter Bridge v1.0: d0 Adapter ABI3,d1 Snapshot Host ABI1.
+poke 0 31416084
+poke 1 1
+poke 2 0
 Loop:
 yield
 bdns d0 Loop
@@ -13,9 +16,9 @@ get r0 d1 0
 bne r0 31415981 Loop
 get r0 d1 1
 bne r0 1 Loop
-get r11 db 3
+get r11 db 9
 add r11 r11 1
-poke 3 r11
+poke 9 r11
 Freeze:
 put d0 16 r11
 yield
@@ -25,7 +28,7 @@ get r15 d0 13
 mod r0 r15 2
 bnez r0 Release
 get r10 d0 7
-get r14 db 2
+get r14 db 8
 beq r10 r14 Release
 get r2 d0 10
 get r3 d0 11
@@ -62,12 +65,12 @@ get r0 d0 13
 bne r0 r15 Release
 get r0 d0 7
 bne r0 r10 Release
-get r0 d1 2
-add r1 r0 5
+get r0 d1 24
+add r1 r0 27
 get r1 d1 r1
 get r4 d1 21
 bne r1 r4 Commit
-add r1 r0 7
+add r1 r0 29
 get r1 d1 r1
 get r4 d1 22
 bne r1 r4 Commit
@@ -91,7 +94,7 @@ Commit:
 move r6 3
 jal Send
 Remember:
-poke 2 r10
+poke 8 r10
 Release:
 put d0 16 0
 j Loop

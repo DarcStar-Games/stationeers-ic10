@@ -47,7 +47,7 @@ For ControllerPhasePressure:
 - Policy: `ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10` (`d0` -> Host)
 - Runtime: `ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10`
 - Runtime `d0`: Phase Change device / enclosed process device exposing `Pressure` and `Temperature`
-- Runtime `d1`: Resource Profile View selecting the phase medium (`S2=1`, `S3=HASH(<medium>)`)
+- Runtime `d1`: Resource Profile View selecting the phase medium (`S26=1`, `S27=HASH(<medium>)`)
 - Runtime `d2`: Generic Host
 
 Start in HOLD. Choose deployment pressure clamps and StandbyPressure before selecting EVAPORATE/CONDENSE. `DirectWrite=1` makes the runtime own the phase device's own pressure setpoint and is usually still the correct choice in a grid deployment. `DirectWrite=0` is publish-only/alternate-actuation mode and should be used only when another explicit owner writes that same chamber property. See `docs/PHASE_PRESSURE_CONTROLLER.md`.
@@ -83,14 +83,14 @@ For Level-3 pressure transfer and routing:
 
 For STORAGE, set PressureDomain `Role=3`, wire its `d0` to a Pipe Analyzer on the tank/network and `d1` to the matching Resource Profile View; `d2/d3/d4` are not required. `MinimumPressure` becomes the reserve floor and `MaximumPressure` the import ceiling. Wire the same PressureDomain and Pipe Analyzer to its Inventory service.
 
-Before enabling a link, require Inventory `S11=1` on both endpoints and inspect `S5/S6` for plausible export/import moles. Inventory ABI2 intentionally faults if liquid is present in the observed pressure network and advertises zero capacity when the Purity Guard is not good. Commission Transfer links with modest flow caps first. The grid now builds each medium-specific plan in priority order: parallel direct LOW->HIGH reuse first, then complete 2- or 3-link LOW->STORAGE[..]->HIGH paths, then ordinary LOW->STORAGE / STORAGE->HIGH fallback. Endpoint reservation ledgers bound aggregate molar commitments across every admitted link, and all staged grants remain inert until the Planner publishes the build epoch as its final commit token. See `docs/PRESSURE_INVENTORY_MODEL.md`, `docs/PRESSURE_RESERVATION_MODEL.md`, `docs/PRESSURE_MULTI_HOP_ROUTING.md`, `docs/PRESSURE_ROUTE_COST_MODEL.md`, and `docs/PRESSURE_GRID_CONTROLLER.md`.
+Before enabling a link, require Inventory `S11=1` on both endpoints and inspect `S16/S17` for plausible export/import moles. Inventory ABI2 intentionally faults if liquid is present in the observed pressure network and advertises zero capacity when the Purity Guard is not good. Commission Transfer links with modest flow caps first. The grid now builds each medium-specific plan in priority order: parallel direct LOW->HIGH reuse first, then complete 2- or 3-link LOW->STORAGE[..]->HIGH paths, then ordinary LOW->STORAGE / STORAGE->HIGH fallback. Endpoint reservation ledgers bound aggregate molar commitments across every admitted link, and all staged grants remain inert until the Planner publishes the build epoch as its final commit token. See `docs/PRESSURE_INVENTORY_MODEL.md`, `docs/PRESSURE_RESERVATION_MODEL.md`, `docs/PRESSURE_MULTI_HOP_ROUTING.md`, `docs/PRESSURE_ROUTE_COST_MODEL.md`, and `docs/PRESSURE_GRID_CONTROLLER.md`.
 
 At this point the runtime should advertise generic telemetry and the Host/Policy should agree on type/schema/geometry.
 
 ### 2. Controller discovery
 
 1. Deploy one `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10` for the Controller Directory, one `ic10/controller-discovery/controller_directory_adapter_v4_0.ic10`, and one `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` with `d0` -> the Controller adapter and `d1` -> the Host. The adapter publishes Adapter ABI3 candidates on its own stack; the Bridge/Host publish Controller Directory ABI2.
-2. Deploy `ic10/controller-discovery/controller_selector_v3_0.ic10` and set its `S2` directly to the Controller Directory **Host**. Selector ABI2 derives type/member groups from the sorted snapshot; there is no Controller Type Catalog.
+2. Deploy `ic10/controller-discovery/controller_selector_v3_0.ic10` and set its `S14` directly to the Controller Directory **Host**. Selector ABI2 derives type/member groups from the sorted snapshot; there is no Controller Type Catalog.
 
 Wait for at least one complete discovery generation before assuming a missing controller is a configuration problem.
 
@@ -115,13 +115,13 @@ Commission the global catalog control plane before any catalog-backed commission
 3. Program at least one `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` as available catalog capacity. Before first service, set only Store `S18` to a unique NodeId `1..64`; it advertises UNCLAIMED. Do not assign schema/partition/ordinal manually.
 4. Program the three one-shot relocatable candidates `ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10` through `ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10` anywhere on the same discoverable network. They have no Store screw, clear only their own stack, publish complete whole-profile items, write Ready last, and terminate.
 5. The Router places each profile item into compatible live capacity. If no Store has room, Coordinator Core claims an UNCLAIMED Generic Store and assigns the next runtime ordinal. For the current six profiles one Store is sufficient. Wait for an ACTIVE Input Store with `S9=6` and a stable even `S17`; do not treat `S15` as a fixed Loader-count contract.
-6. Program `ic10/input-profile-catalog/input_profile_view_v5_0.ic10`; connect View to the ACTIVE Input Profile Store and Coordinator as documented by the View ABI, then set `S2/S3` for the desired context. Common contexts are `HASH("ControllerPI")/1`, `HASH("ControllerSequencer")/1`, `HASH("ControllerPhasePressure")/1`, `HASH("ControllerPressureDomain")/1`, and `HASH("ControllerPressureTransfer")/1`. Diagnostics uses `HASH("DiagnosticMapping")/1`.
+6. Program `ic10/input-profile-catalog/input_profile_view_v5_0.ic10`; connect View to the ACTIVE Input Profile Store and Coordinator as documented by the View ABI, then set `S8/S9` for the desired context. Common contexts are `HASH("ControllerPI")/1`, `HASH("ControllerSequencer")/1`, `HASH("ControllerPhasePressure")/1`, `HASH("ControllerPressureDomain")/1`, and `HASH("ControllerPressureTransfer")/1`. Diagnostics uses `HASH("DiagnosticMapping")/1`.
 7. Program `ic10/shared-input/generic_input_scanner_v1_1.ic10` and attach commissioning inputs plus the configured View.
-8. Program `ic10/shared-input/generic_input_resolver_v1_0.ic10`; set Resolver `S2` to Scanner ReferenceId.
-9. For configuration, deploy `ic10/controller-config/config_input_bridge_v1_0.ic10`; set `S2` to Editor RefId and `S3` to Resolver RefId.
-10. Set Generic Config Loader `S3` to Scanner RefId so it discovers/validates the Profile ABI published by the View.
+8. Program `ic10/shared-input/generic_input_resolver_v1_0.ic10`; set Resolver `S8` to Scanner ReferenceId.
+9. For configuration, deploy `ic10/controller-config/config_input_bridge_v1_0.ic10`; set `S8` to Editor RefId and `S9` to Resolver RefId.
+10. Set Generic Config Loader `S9` to Scanner RefId so it discovers/validates the Profile ABI published by the View.
 
-Reconfigure View `S2/S3` when intentionally reusing one physical panel for another controller family, and require a positive View generation before editing.
+Reconfigure View `S8/S9` when intentionally reusing one physical panel for another controller family, and require a positive View generation before editing.
 
 ### 5. Establish first durable config
 
@@ -131,15 +131,15 @@ Until a durable bank exists, defaults are the recovery source. This is normal on
 
 ### 6. Diagnostic services
 
-1. Deploy `ic10/diagnostics/console_registry_v1_1.ic10` and enroll displays with the expected NameHash (default `HASH("DiagAuto")` when registry `S7` is zero).
+1. Deploy `ic10/diagnostics/console_registry_v1_1.ic10` and enroll displays with the expected NameHash (default `HASH("DiagAuto")` when registry `S9` is zero).
 2. Deploy `ic10/diagnostics/console_selector_v1_1.ic10` and point it at Console Registry.
 3. Deploy `ic10/diagnostics/diagnostic_renderer_v1_1.ic10`.
 4. Deploy `ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10` and wire Renderer + Controller/Console selectors.
 5. Deploy a Scanner + Resolver pair for diagnostics.
-6. Deploy or reuse `ic10/input-profile-catalog/input_profile_view_v5_0.ic10`, connect `d0` to the shared Input Profile Catalog Store, set `S2=HASH("DiagnosticMapping")`, `S3=1`, and attach the View to the diagnostic Scanner.
-7. Deploy `ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10`; set `S2` to Resolver and `S3` to the Diagnostic Input Profile View.
-8. Deploy `ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10`; set `S2` to Diagnostic Input Bridge, `S3` to Controller Selector, `S4` to Console Selector.
-9. Set Mapping Editor `S7` to Diagnostic Input Bridge.
+6. Deploy or reuse `ic10/input-profile-catalog/input_profile_view_v5_0.ic10`, connect `d0` to the shared Input Profile Catalog Store, set `S8=HASH("DiagnosticMapping")`, `S9=1`, and attach the View to the diagnostic Scanner.
+7. Deploy `ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10`; set `S8` to Resolver and `S9` to the Diagnostic Input Profile View.
+8. Deploy `ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10`; set `S8` to Diagnostic Input Bridge, `S9` to Controller Selector, `S10` to Console Selector.
+9. Set Mapping Editor `S13` to Diagnostic Input Bridge.
 
 Use Field Dial to choose diagnostic control, Value Dial/Switch to set it, then select Commit and toggle the Switch OFF->ON.
 
@@ -250,7 +250,7 @@ The logical record is:
 
 The Store API is a low-level single-writer interface used by the Manufacturing Scheduler:
 
-1. capture an even Store `S2 QueueSequence`;
+1. capture an even Store `S16 QueueSequence`;
 2. for a new job, find a free slot (`active State=0`) and stage the seven immutable fields `JobType..Priority` into that unpublished intent slot;
 3. revalidate unchanged even QueueSequence;
 4. issue `S11=1 PUBLISH_NEW`, the slot ordinal in S12, then write a new S7 request generation last;
@@ -292,7 +292,7 @@ The generalized Resource Core is additive and is not required for an existing pr
 3. Deploy the generated FLUID and ITEM Resource Profile loader candidates. They contain relocatable whole 16-cell profile items and require no Store wiring or Store ordinal.
 4. The Router places each item into matching runtime capacity; the Coordinator claims/links more Stores only when needed.
 5. Verify the 39 profiles settle into healthy ACTIVE Stores with stable even `S17`. Use Coordinator telemetry/View rather than Loader counts to determine readiness.
-6. Deploy `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` for each simultaneously selected resource and wait for `S4=1` with positive `S5` before wiring consumers.
+6. Deploy `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` for each simultaneously selected resource and wait for `S28=1` with positive `S29` before wiring consumers.
 
 ### B. Deploy ITEM sources and processor sinks
 
@@ -325,7 +325,7 @@ For each usable resource route deploy:
 5. Guard `d0` -> Link, `d1` -> `ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10`, `d2` -> Executor;
 6. Executor `d0` -> Link, `d1` -> Feeder, `d2` -> Guard.
 
-The Link must publish **Reservation ReferenceIds** in Generic Link `S2/S3`; native Vending/Stacker/Sorter/sink identities are separate extension fields. Manually verify that the Sorter's accepted physical chute reaches the intended sink because IC10 cannot discover invisible chute connectivity.
+The Link must publish **Reservation ReferenceIds** in Generic Link `S28/S29`; native Vending/Stacker/Sorter/sink identities are separate extension fields. Manually verify that the Sorter's accepted physical chute reaches the intended sink because IC10 cannot discover invisible chute connectivity.
 
 ### D. Publish Resource Link discovery
 
@@ -444,4 +444,4 @@ Do not configure an Electrolyzer to start recursively from the same GFG shortage
 
 ## Item-12 live commissioning tools
 
-After automated validation, deploy `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` only when a field case benefits from coherent read-only capture. It is an on-demand diagnostic, not a resident control-plane dependency. Configure its six descriptors, advance `S6 DescriptorGeneration`, then publish `S2 RequestToken` last. Record the resulting values/status together with the physical action in a `tools/live_commission.py` session. Do not leave the probe wired as an actuator intermediary and do not treat its observations as reservation authority. See `docs/LIVE_COMMISSIONING.md`.
+After automated validation, deploy `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` only when a field case benefits from coherent read-only capture. It is an on-demand diagnostic, not a resident control-plane dependency. Configure its six descriptors, advance `S14 DescriptorGeneration`, then publish `S10 RequestToken` last. Record the resulting values/status together with the physical action in a `tools/live_commission.py` session. Do not leave the probe wired as an actuator intermediary and do not treat its observations as reservation authority. See `docs/LIVE_COMMISSIONING.md`.

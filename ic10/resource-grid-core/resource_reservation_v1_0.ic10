@@ -1,6 +1,7 @@
 # Generic Resource Reservation ABI1. d0 Generic Resource Endpoint ABI1.
 poke 0 31415950
 poke 1 1
+poke 2 0
 poke 12 0 # semantic mirror generation initialization
 poke 13 0 # build epoch; allocator-owned
 poke 14 0 # reserved export
@@ -29,12 +30,12 @@ bne r0 31415949 Bad
 get r0 d0 1
 bne r0 1 Bad
 l r1 d0 ReferenceId
-get r2 d0 2
-get r3 d0 3
-get r4 d0 4
-get r5 d0 5
-get r6 d0 6
-get r7 d0 7
+get r2 d0 52
+get r3 d0 53
+get r4 d0 54
+get r5 d0 55
+get r6 d0 56
+get r7 d0 57
 get r8 d0 8
 get r9 d0 12
 get r10 d0 13
@@ -48,17 +49,17 @@ get r0 d0 40
 poke 31 r0
 get r0 d0 11
 bne r0 r14 Loop
-get r0 db 2
+get r0 db 32
 bne r0 r1 Changed
-get r0 db 3
+get r0 db 33
 bne r0 r2 Changed
-get r0 db 4
+get r0 db 34
 bne r0 r3 Changed
-get r0 db 5
+get r0 db 35
 bne r0 r4 Changed
-get r0 db 6
+get r0 db 36
 bne r0 r5 Changed
-get r0 db 7
+get r0 db 37
 bne r0 r6 Changed
 get r0 db 8
 bne r0 r7 Changed
@@ -80,12 +81,12 @@ ble sp 24 CompareHints
 move r15 r14
 j Loop
 Changed:
-poke 2 r1
-poke 3 r2
-poke 4 r3
-poke 5 r4
-poke 6 r5
-poke 7 r6
+poke 32 r1
+poke 33 r2
+poke 34 r3
+poke 35 r4
+poke 36 r5
+poke 37 r6
 poke 8 r7
 poke 9 r8
 poke 10 r9
@@ -106,8 +107,8 @@ move r15 r14
 j Loop
 Bad:
 poke 20 0
-poke 6 0
-poke 7 0
+poke 36 0
+poke 37 0
 poke 8 0
 poke 9 -1
 get r0 db 12

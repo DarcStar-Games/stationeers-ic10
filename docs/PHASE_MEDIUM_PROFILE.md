@@ -11,8 +11,8 @@ The View publishes a phase record as:
 ```text
 S0   magic = 31415963
 S1   View ABI = 1
-S4   status = 1 while valid
-S5   publication generation; positive only while the record is valid
+S28  status = 1 while valid
+S29  publication generation; positive only while the record is valid
 S8   ResourceClass = 1 FLUID
 S9   MediumType hash
 S10  Unit = 1 MOLE
@@ -30,7 +30,7 @@ S21  latent heat, J/mol
 S22  CatalogId
 ```
 
-Consumers capture a positive `S5`, read the payload, and require the same `S5` afterward. If the selected identity disappears, the catalog is incomplete, or the View cannot resolve a coherent record, it clears `S5` to zero before publishing the error status.
+Consumers capture a positive `S29`, read the payload, and require the same `S29` afterward. If the selected identity disappears, the catalog is incomplete, or the View cannot resolve a coherent record, it clears `S29` to zero before publishing the error status.
 
 The default purity threshold for the included phase records is `0.995`. It is a deployment safety policy, not part of the phase equation. The Purity Guard dynamically reads `S19` from the View and requires the observed ratio to meet `S20` whenever the bus contains gas.
 

@@ -1,11 +1,12 @@
-# Recipe Execution Profile View ABI1: d0=any Recipe Store; request S2 RecipeHash.
+# Recipe Execution Profile View ABI1: d0=any Recipe Store; request S10 RecipeHash.
 poke 0 31415985
 poke 1 1
-poke 6 0
-poke 7 0
+poke 2 0
+poke 14 0
+poke 15 0
 Loop:
 yield
-get r10 db 2
+get r10 db 10
 beqz r10 Bad
 bdns d0 Bad
 l r2 d0 ReferenceId
@@ -54,19 +55,19 @@ bgt r0 r8 Bad
 move r3 0
 Clear:
 bge r3 32 CopyHeader
-add r0 r3 8
+add r0 r3 16
 poke r0 0
 add r3 r3 1
 j Clear
 CopyHeader:
-poke 3 0
+poke 11 0
 add r0 r9 1
 getd r0 r2 r0
-poke 3 r0
+poke 11 r0
 add r0 r9 2
 getd r0 r2 r0
-poke 4 r0
-poke 5 r4
+poke 12 r0
+poke 13 r4
 move r3 0
 Inputs:
 bge r3 r4 Publish
@@ -74,7 +75,7 @@ mul r0 r3 2
 add r1 r0 5
 add r1 r1 r9
 getd r1 r2 r1
-add r0 r0 8
+add r0 r0 16
 poke r0 r1
 add r1 r0 1
 add r0 r9 r3
@@ -89,10 +90,10 @@ getd r0 r2 17
 bne r0 r14 Loop
 getd r0 r12 22
 bne r0 r15 Loop
-poke 40 r11
-poke 41 r10
-poke 7 1
-poke 6 r14
+poke 48 r11
+poke 49 r10
+poke 15 1
+poke 14 r14
 j Loop
 Next:
 add r5 r5 1
@@ -103,14 +104,14 @@ blez r1 Missing
 move r2 r1
 j Store
 Bad:
-poke 41 r10
-poke 7 -2
-poke 6 0
+poke 49 r10
+poke 15 -2
+poke 14 0
 j Loop
 Missing:
-poke 41 r10
+poke 49 r10
 getd r0 r12 22
 bne r0 r15 Loop
-poke 7 -3
-poke 6 0
+poke 15 -3
+poke 14 0
 j Loop

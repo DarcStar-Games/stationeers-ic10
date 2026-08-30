@@ -2855,6 +2855,134 @@
         }
       ],
       "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416077.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416077,
+      "abi": 1,
+      "name": "Pi Config Policy ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416077.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/controller-pi/pi_config_policy_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416078.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416078,
+      "abi": 1,
+      "name": "Sequencer Config Policy ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416078.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416079.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416079,
+      "abi": 1,
+      "name": "Phase Pressure Config Policy ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416079.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416080.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416080,
+      "abi": 1,
+      "name": "Pressure Domain Config Policy ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416080.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416081.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416081,
+      "abi": 1,
+      "name": "Pressure Transfer Config Policy ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416081.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416082.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416082,
+      "abi": 1,
+      "name": "Generic Config Committer ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416082.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/controller-config/generic_config_committer_v1_1.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416083.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416083,
+      "abi": 1,
+      "name": "Generic Config Loader ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416083.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/controller-config/generic_config_loader_v1_2.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.31416084.abi1",
+      "transport": "ic-housing-stack",
+      "magic": 31416084,
+      "abi": 1,
+      "name": "Generic Directory Adapter Bridge ABI1",
+      "definition_ref": "contracts/protocols/ic10.stack.31416084.abi1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
     }
   ]
 }

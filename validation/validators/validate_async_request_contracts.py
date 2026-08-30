@@ -21,8 +21,8 @@ def fence(f,token_read,cmp_read,state_read):
 
 # LIVE_CURRENT producers: request-specific state/error is initialized before CurrentToken.
 for f,state,token in [
- ('ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10','poke 6 0','poke 7 r6'),
- ('ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10','poke 6 0','poke 7 r6'),
+ ('ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10','poke 24 0','poke 25 r6'),
+ ('ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10','poke 24 0','poke 25 r6'),
  ('ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10','poke 22 1','poke 16 r15'),
  ('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','poke 20 2','poke 21 r15'),
  ('ic10/manufacturing/transform_candidate_executor_v2_0.ic10','poke 11 2','poke 10 r15'),
@@ -31,8 +31,8 @@ for f,state,token in [
  ('ic10/manufacturing/transform_job_driver_v2_0.ic10','poke 10 2','poke 9 r15'),
  ('ic10/manufacturing/print_job_driver_v2_0.ic10','poke 10 2','poke 9 r15')]:
  need(f,state,token);before(f,state,token)
-need('ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10','poke 6 -1','poke 7 r0 # accepted fault publishes current identity LAST')
-before('ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10','poke 6 -1','poke 7 r0 # accepted fault publishes current identity LAST')
+need('ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10','poke 24 -1','poke 25 r0 # accepted fault publishes current identity LAST')
+before('ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10','poke 24 -1','poke 25 r0 # accepted fault publishes current identity LAST')
 need('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','poke 21 r15','blez r6 Fault');before('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','poke 21 r15','blez r6 Fault')
 
 # Feeder caller publishes all payload, including emit reset, before RequestToken S18.
@@ -42,7 +42,7 @@ before('ic10/material-grid/material_transfer_executor_v1_0.ic10','put d1 19 0','
 for label in ('WaitReady:','WaitEmit:'):
  s=text('ic10/material-grid/material_transfer_executor_v1_0.ic10');p=s.find(label);q=s.find('j Publish',p)
  block=s[p:q]
- if not all(x in block for x in ('get r1 db 2','get r0 d1 7','bne r0 r1 Publish','get r0 d1 6')):fails.append('ic10/material-grid/material_transfer_executor_v1_0.ic10: '+label+' lacks CurrentToken fence before status')
+ if not all(x in block for x in ('get r1 db 14','get r0 d1 25','bne r0 r1 Publish','get r0 d1 24')):fails.append('ic10/material-grid/material_transfer_executor_v1_0.ic10: '+label+' lacks CurrentToken fence before status')
 
 # Diagnostic request publishers complete payload before request identity/publication.
 need('ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10','poke r0 r9\njal BumpController','poke 18 r9\nget r0 db 25\nadd r0 r0 1\npoke 25 r0')
@@ -77,21 +77,21 @@ for f,toks in {
  'ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10':('get r0 d1 10','bne r0 r6 Loop','get r0 d1 9','get r0 d0 10','bne r0 r5 Loop','get r0 d0 9')}.items(): need(f,*toks)
 
 # Generic Config Committer is the async caller: complete masked candidate before Host request token, then consume only an exact Host response.
-need('ic10/controller-config/generic_config_committer_v1_1.ic10','putd host r12 r9','putd host 6 r15 # publish only after complete masked candidate copy','getd r0 host 7','beq r0 r15 Response','getd r0 host 11')
-before('ic10/controller-config/generic_config_committer_v1_1.ic10','putd host r12 r9','putd host 6 r15 # publish only after complete masked candidate copy')
+need('ic10/controller-config/generic_config_committer_v1_1.ic10','putd host r12 r9','putd host 52 r15 # publish only after complete masked candidate copy','getd r0 host 53','beq r0 r15 Response','getd r0 host 11')
+before('ic10/controller-config/generic_config_committer_v1_1.ic10','putd host r12 r9','putd host 52 r15 # publish only after complete masked candidate copy')
 
 # Config Host + family policies already implement terminal response fencing.
-need('ic10/controller-config/generic_persistent_config_host_v1_1.ic10','poke 11 5','poke 7 r15','get r0 db 20','bne r0 r15 Loop');before('ic10/controller-config/generic_persistent_config_host_v1_1.ic10','poke 11 5','poke 7 r15')
+need('ic10/controller-config/generic_persistent_config_host_v1_1.ic10','poke 11 5','poke 53 r15','get r0 db 20','bne r0 r15 Loop');before('ic10/controller-config/generic_persistent_config_host_v1_1.ic10','poke 11 5','poke 53 r15')
 for f in ('ic10/controller-pi/pi_config_policy_v1_0.ic10','ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10','ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10','ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10','ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10'):
  need(f,'put Host 21 sp','put Host 20 r15');before(f,'put Host 21 sp','put Host 20 r15')
 
 # Other existing terminal-response services.
 for f,result,token in [
- ('ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10','poke 8 1','poke 7 r15'),
+ ('ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10','poke 8 1','poke 16 r15'),
  ('ic10/generic-jobs/generic_job_store_v1_0.ic10','poke 9 1','poke 8 r15'),
  ('ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10','poke 9 1','poke 8 r15'),
  ('ic10/manufacturing/print_material_resolver_v1_0.ic10','poke 12 1','poke 13 r15'),
- ('ic10/printer-directory/printer_capacity_client_v2_0.ic10','poke 7 r0','poke 6 r15'),
+ ('ic10/printer-directory/printer_capacity_client_v2_0.ic10','poke 17 r0','poke 16 r15'),
  ('ic10/manufacturing/transform_candidate_readiness_v1_0.ic10','poke 9 r0','poke 10 r0')]:
  need(f,result,token);before(f,result,token)
 # Multi-material Stager publishes terminal status immediately before each response token.
@@ -110,8 +110,8 @@ for f in ('ic10/directory-core/generic_registry_directory_host_v2_0.ic10','ic10/
 
 # Cargo LArRE storage service is TERMINAL_RESPONSE; endpoint client publishes payload before token and fences response.
 need('ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10','Reply:\npoke 9 r0','poke 14 r15');before('ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10','Reply:\npoke 9 r0','poke 14 r15')
-need('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','put d0 7 r2','put d0 8 r7','get r0 d0 14','bne r0 r7 WaitScan','bne r0 r7 WaitMove')
-before('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','put d0 7 r2','put d0 8 r7')
+need('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','put d0 22 r2','put d0 8 r7','get r0 d0 14','bne r0 r7 WaitScan','bne r0 r7 WaitMove')
+before('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','put d0 22 r2','put d0 8 r7')
 
 # Router exposes request-specific state only after selected driver echoes the token.
 need('ic10/manufacturing/manufacturing_driver_router_v2_0.ic10','get r0 d0 9','get r0 d1 9','poke 10 r15')

@@ -1,12 +1,13 @@
 # Generated manufacturing reagent alias -> concrete ITEM ResourceType.
 poke 0 31416017
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 3
-get r0 db 4
+get r15 db 9
+get r0 db 10
 beq r15 r0 Loop
-get r2 db 2
+get r2 db 8
 beq r2 -1172078909 R0
 beq r2 -409226641 R1
 beq r2 -666742878 R2
@@ -24,92 +25,92 @@ beq r2 2019732679 R13
 beq r2 -586072179 R14
 beq r2 -500544800 R15
 beq r2 1787814293 R16
-poke 5 -2
-poke 6 0
-poke 4 r15
+poke 11 -2
+poke 12 0
+poke 10 r15
 j Loop
 R0:
-poke 6 -404336834
-poke 5 1
-poke 4 r15
+poke 12 -404336834
+poke 11 1
+poke 10 r15
 j Loop
 R1:
-poke 6 226410516
-poke 5 1
-poke 4 r15
+poke 12 226410516
+poke 11 1
+poke 10 r15
 j Loop
 R2:
-poke 6 -1301215609
-poke 5 1
-poke 4 r15
+poke 12 -1301215609
+poke 11 1
+poke 10 r15
 j Loop
 R3:
-poke 6 2134647745
-poke 5 1
-poke 4 r15
+poke 12 2134647745
+poke 11 1
+poke 10 r15
 j Loop
 R4:
-poke 6 -1406385572
-poke 5 1
-poke 4 r15
+poke 12 -1406385572
+poke 11 1
+poke 10 r15
 j Loop
 R5:
-poke 6 -290196476
-poke 5 1
-poke 4 r15
+poke 12 -290196476
+poke 11 1
+poke 10 r15
 j Loop
 R6:
-poke 6 -929742000
-poke 5 1
-poke 4 r15
+poke 12 -929742000
+poke 11 1
+poke 10 r15
 j Loop
 R7:
-poke 6 1058547521
-poke 5 1
-poke 4 r15
+poke 12 1058547521
+poke 11 1
+poke 10 r15
 j Loop
 R8:
-poke 6 502280180
-poke 5 1
-poke 4 r15
+poke 12 502280180
+poke 11 1
+poke 10 r15
 j Loop
 R9:
-poke 6 -297990285
-poke 5 1
-poke 4 r15
+poke 12 -297990285
+poke 11 1
+poke 10 r15
 j Loop
 R10:
-poke 6 -82508479
-poke 5 1
-poke 4 r15
+poke 12 -82508479
+poke 11 1
+poke 10 r15
 j Loop
 R11:
-poke 6 -654790771
-poke 5 1
-poke 4 r15
+poke 12 -654790771
+poke 11 1
+poke 10 r15
 j Loop
 R12:
-poke 6 412924554
-poke 5 1
-poke 4 r15
+poke 12 412924554
+poke 11 1
+poke 10 r15
 j Loop
 R13:
-poke 6 1579842814
-poke 5 1
-poke 4 r15
+poke 12 1579842814
+poke 11 1
+poke 10 r15
 j Loop
 R14:
-poke 6 -787796599
-poke 5 1
-poke 4 r15
+poke 12 -787796599
+poke 11 1
+poke 10 r15
 j Loop
 R15:
-poke 6 -1897868623
-poke 5 1
-poke 4 r15
+poke 12 -1897868623
+poke 11 1
+poke 10 r15
 j Loop
 R16:
-poke 6 156348098
-poke 5 1
-poke 4 r15
+poke 12 156348098
+poke 11 1
+poke 10 r15
 j Loop

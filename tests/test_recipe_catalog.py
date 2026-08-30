@@ -35,7 +35,7 @@ def load(root,m,base,lb):
 
 def net(stores,coord):return {'coord':coord,**{f's{i}':s for i,s in enumerate(stores)}}
 def lookup(root,stores,coord,fam,cap,ordinal,gen=1):
- v=IC10((root/LOOKUP_FILE).read_text(),{'d0':stores[-1]}|net(stores,coord));v.stack[3]='HASH:'+fam;v.stack[4]=cap;v.stack[5]=ordinal;v.stack[6]=gen;v.run(3,max_steps=50000);return v
+ v=IC10((root/LOOKUP_FILE).read_text(),{'d0':stores[-1]}|net(stores,coord));v.stack[12]='HASH:'+fam;v.stack[13]=cap;v.stack[14]=ordinal;v.stack[15]=gen;v.run(3,max_steps=50000);return v
 loader_invariants(fixture,M);stores,vms,groups=load(fixture,M,1150,2000);coord=vms[0].coord
 active=[s for s in stores if s.stack.get(16)==2]
 if len(active)!=6:fails.append('fixture did not runtime-claim exactly six Stores')
@@ -47,10 +47,10 @@ if v.stack.get(8)!=1 or v.stack.get(9)!=2 or v.stack.get(10)!='HASH:ItemAutolath
 v=lookup(fixture,stores,coord,'Printer.SecurityPrinter',1,0,gen=2)
 if v.stack.get(8)!=1 or v.stack.get(9)!=1 or v.stack.get(10)!='HASH:ItemCartridge' or v.stack.get(11)!=1:fails.append('Security capability-1 lookup exposed inaccessible Tier Two recipe')
 # Execution view resolves a RecipeHash to family/capability plus exact reagent requirements.
-ev=IC10((R/'ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10').read_text(),{'d0':stores[-1]}|net(stores,coord));ev.stack[2]='HASH:ItemKitFurnace';ev.run(3,max_steps=50000)
-if ev.stack.get(7)!=1 or ev.stack.get(41)!='HASH:ItemKitFurnace' or ev.stack.get(3)!='HASH:Printer.Autolathe' or ev.stack.get(4)!=1 or ev.stack.get(5)!=2 or [ev.stack.get(i) for i in range(8,12)]!=['HASH:Iron',30,'HASH:Copper',10]:fails.append('Recipe Execution Profile reagent resolution mismatch')
-ev.stack[2]='HASH:ItemDoesNotExist';ev.run(2,max_steps=50000)
-if ev.stack.get(7)!=-3 or ev.stack.get(41)!='HASH:ItemDoesNotExist':fails.append('Recipe Execution Profile missing-recipe response mismatch')
+ev=IC10((R/'ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10').read_text(),{'d0':stores[-1]}|net(stores,coord));ev.stack[10]='HASH:ItemKitFurnace';ev.run(3,max_steps=50000)
+if ev.stack.get(15)!=1 or ev.stack.get(49)!='HASH:ItemKitFurnace' or ev.stack.get(11)!='HASH:Printer.Autolathe' or ev.stack.get(12)!=1 or ev.stack.get(13)!=2 or [ev.stack.get(i) for i in range(16,20)]!=['HASH:Iron',30,'HASH:Copper',10]:fails.append('Recipe Execution Profile reagent resolution mismatch')
+ev.stack[10]='HASH:ItemDoesNotExist';ev.run(2,max_steps=50000)
+if ev.stack.get(15)!=-3 or ev.stack.get(49)!='HASH:ItemDoesNotExist':fails.append('Recipe Execution Profile missing-recipe response mismatch')
 # Stress generation: 130 recipes/family derives two Stores per family without generator-assigned boundaries.
 specs=(('autolathe.xml','AutolatheRecipes'),('electronics.xml','ElectronicsPrinterRecipes'),('PipeBender.xml','HydraulicPipeBenderRecipes'),('toolmanufacturer.xml','ToolManufactoryRecipes'),('security.xml','SecurityPrinterRecipes'),('rocketmanufactory.xml','RocketManufactoryRecipes'))
 with tempfile.TemporaryDirectory() as td:

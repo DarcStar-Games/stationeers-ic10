@@ -37,7 +37,7 @@ The split between the Arbiter and the controller is intentional. Multi-controlle
 
 - `ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10` — scans `ControllerDirectory` incrementally and reduces matching phase-pressure requests.
 - `ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10` — consumes the reduced request, applies domain safety limits, publishes telemetry, and optionally writes the domain setpoint.
-- `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` — select `S2=HASH("ControllerPressureDomain")`, `S3=1` from the shared Input Profile Catalog for the eight commissioning controls.
+- `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` — select `S8=HASH("ControllerPressureDomain")`, `S9=1` from the shared Input Profile Catalog for the eight commissioning controls.
 - `ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10` — defaults, normalization, and semantic validation.
 
 The family uses the existing Generic Persistent Config Host and all existing configuration/discovery/diagnostic infrastructure without generic-service changes.
@@ -162,12 +162,13 @@ The Arbiter is **not** generic telemetry and is not discovered as a controller. 
 ```text
 S0   magic = 31415933
 S1   ABI = 1
+S2   capability mask = 0
 
 # Context written by one paired PressureDomain runtime
-S3   Enabled
-S4   Role: 1 LOW/EVAP, 2 HIGH/CONDENSE
-S5   MediumType hash
-S6   paired Host effective generation
+S15  Enabled
+S16  Role: 1 LOW/EVAP, 2 HIGH/CONDENSE
+S17  MediumType hash
+S18  paired Host effective generation
 
 # Result published by Arbiter
 S8   raw aggregate requested pressure

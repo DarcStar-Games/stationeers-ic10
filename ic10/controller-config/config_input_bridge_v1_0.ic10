@@ -1,12 +1,13 @@
 # Config Input Bridge v1.0: Resolver logical control -> Editor physical image slot.
-# S2 Editor RefId,S3 Generic Input Resolver RefId; no device screws.
+# S8 Editor RefId,S9 Generic Input Resolver RefId; no device screws.
 alias editor r1
 alias resolver r2
 poke 0 22360681
 poke 1 1
+poke 2 0
 Loop:
 yield
-get editor db 2
+get editor db 8
 blez editor Invalid
 getd r0 editor 0
 bne r0 22360680 Invalid
@@ -19,24 +20,24 @@ getd r6 editor 17 # active logical control count
 blez r6 Invalid
 getd r7 editor 27 # Loader-validated Profile, or zero
 blez r7 ProfileReady
-getd r0 r7 5
+getd r0 r7 11
 getd sp editor 29
 bne r0 sp Invalid
 ProfileReady:
-get resolver db 3
+get resolver db 9
 blez resolver Invalid
 getd r0 resolver 0
 bne r0 31415931 Invalid
 getd r0 resolver 1
 bne r0 1 Invalid
-putd resolver 3 r6
-putd resolver 4 r7
+putd resolver 9 r6
+putd resolver 10 r7
 getd r15 resolver 12 # resolved snapshot generation
 getd r0 resolver 11
 bne r0 1 Invalid
-getd r9 resolver 5 # logical active-field ordinal
-getd r10 resolver 6
-getd r11 resolver 7
+getd r9 resolver 13 # logical active-field ordinal
+getd r10 resolver 14
+getd r11 resolver 15
 blez r9 Invalid
 bgt r9 r6 Invalid
 bnan r10 Invalid

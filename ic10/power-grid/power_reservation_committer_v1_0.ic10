@@ -1,21 +1,22 @@
 # Commit POWER Reservation ownership for one plan. d0 PlanStore,d1 Allocator owner.
 poke 0 31416036
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 4
-get r0 db 5
+get r15 db 10
+get r0 db 11
 beq r15 r0 Loop
-get r2 db 2
-get r3 db 3
+get r2 db 8
+get r3 db 9
 blez r2 Bad
 blez r3 Bad
-get r14 d0 2
+get r14 d0 27
 mod r0 r14 2
 bnez r0 Bad
-get r0 d0 3
+get r0 d0 28
 bne r0 r2 Bad
-get r6 d0 4
+get r6 d0 29
 l r12 d1 ReferenceId
 move r4 0
 Flow:
@@ -86,12 +87,12 @@ putd r8 19 r13
 add r4 r4 1
 j Flow
 Stable:
-get r0 d0 2
+get r0 d0 27
 bne r0 r14 Bad
-poke 6 1
+poke 12 1
 j Reply
 Bad:
-poke 6 -1
+poke 12 -1
 Reply:
-poke 5 r15
+poke 11 r15
 j Loop

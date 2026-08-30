@@ -36,6 +36,16 @@
             "self-write"
           ],
           "const": 1
+        },
+        {
+          "address": 2,
+          "name": "S2",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0
         }
       ],
       "behavior": {

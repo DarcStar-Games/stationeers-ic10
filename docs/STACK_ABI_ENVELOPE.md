@@ -18,13 +18,13 @@ The generated inventory evaluated every one of the 173 deployable programs:
 - the 12 programs with no declared header have `S0/S1` free, and 10 of them use
   no own-stack cell whatsoever.
 
-So the header costs nothing to adopt at `S0/S1`. What it costs is `S2..S7`, which
-148 programs use for family payload today. Reserving eight rather than five adds
-only three programs to that backlog — nearly every program that uses `S5..S7`
-already uses `S2..S4` — while adding cells later would break the same ~146
-programs a second time.
-Those programs are the migration backlog, and each is listed individually in
-`contracts/stack_envelope_inventory.json` with the cells it must move.
+So the header costs nothing to adopt at `S0/S1`. What it cost was `S2..S7`, which
+148 programs used for family payload before migration. Reserving eight rather than
+five added only three programs to that backlog — nearly every program that used
+`S5..S7` already used `S2..S4` — while adding cells later would have broken the
+same ~146 programs a second time.
+Those programs made up the migration backlog, now fully migrated; every program's
+envelope is listed in `contracts/stack_envelope_inventory.json`.
 
 A fixed window high in the stack — the shape first proposed for this design — avoids
 that renumbering, but only by duplicating the ABI and schema cells the majority
@@ -305,12 +305,13 @@ version and is rejected by v1 readers; it may not silently repurpose a v1 cell.
 | | cells | lines | notes |
 | --- | ---: | ---: | --- |
 | Header reservation | 8 | — | costs 3 more programs than reserving 5; deferring costs a second break of ~146 |
-| Mandatory writes | 3 | 3 | `S0`/`S1` already published by 154 programs |
+| Mandatory writes | 3 | 3 | `S0`/`S1` already published by 172 programs |
 | Stack Header Reader | 8 | 117 | the reference reader; validates every declared field |
 | Stack Cell Monitor | 8 | 45 | the probe: one cell at a chosen address |
 | Generic Telemetry family | 8 | +4 each | 7 runtimes migrated; 5 spend reviewed margin, 0 consumers changed |
 | Manufacturing family | 8 | +1 each | 10 migrated; seven move a whole peer-written mailbox, 1 spends reviewed margin |
-| Backlog | — | — | 104 programs, 94 of which use `S2..S7` today |
+| Dependency-planning family | 8 | +1 each | 18 migrated as one cluster; every peer mailbox moves as a contiguous block, 2 spend reviewed margin |
+| Backlog | — | — | 0 programs, 0 of which use `S2..S7` today |
 
 ## Worked migration: Generic Telemetry
 

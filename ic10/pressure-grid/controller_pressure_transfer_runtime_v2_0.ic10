@@ -17,7 +17,7 @@ get r0 d4 1
 bne r0 1 Fault
 get r0 d4 8
 blez r0 Fault
-get sp d4 5
+get sp d4 51
 move r0 1
 move ra 96
 Load:
@@ -25,7 +25,7 @@ get rr0 d4 ra
 add ra ra 1
 add r0 r0 1
 ble r0 4 Load
-get r0 d4 5
+get r0 d4 51
 bne r0 sp Loop
 l r0 d4 ReferenceId
 poke 116 r0
@@ -37,10 +37,10 @@ get r0 d0 0
 bne r0 31415936 Fault
 get r0 d0 1
 bne r0 1 Fault
-get r7 d0 4
-get r9 d0 5
+get r7 d0 18
+get r9 d0 19
 l r5 d0 ReferenceId
-get r10 d0 6
+get r10 d0 20
 get r12 d0 8
 get r13 d0 9
 get r0 d0 11
@@ -52,11 +52,11 @@ get r0 d1 0
 bne r0 31415936 Fault
 get r0 d1 1
 bne r0 1 Fault
-get r8 d1 4
-get r0 d1 5
+get r8 d1 18
+get r0 d1 19
 bne r0 r9 Fault
 l r6 d1 ReferenceId
-get sp d1 7
+get sp d1 21
 get r0 d1 11
 bne r0 r15 Loop
 beq r7 2 Fault
@@ -88,19 +88,19 @@ mul r10 r14 r13
 poke 100 r10
 poke 103 1
 bdns d3 SafeOff
-get r15 d3 7
+get r15 d3 18
 blez r15 SafeOff
 get r0 d3 0
 bne r0 31415948 SafeOff
 get r0 d3 1
 bne r0 1 SafeOff
 l r5 db ReferenceId
-get r0 d3 6
+get r0 d3 17
 bne r0 r5 SafeOff
-get r0 d3 4
+get r0 d3 15
 bne r0 1 SafeOff
-get r0 d3 2
-get r6 d3 7
+get r0 d3 8
+get r6 d3 18
 bne r6 r15 SafeOff
 min r0 r0 r10
 div r0 r0 r13

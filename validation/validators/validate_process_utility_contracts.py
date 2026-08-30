@@ -21,8 +21,8 @@ checks={
 'ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10':['poke 97 2','poke 99 HASH("ControllerPressureDomain")','poke 103 3','poke 105 3'],
 'ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10':['poke 99 HASH("ControllerPressureTransfer")','bne r0 31415936 Fault','bne r0 31415948 SafeOff','s d2 SettingInput r0','s d2 SettingOutput r0'],
 'ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10':['poke 0 31415947','bne r0 5 ProfileBad','bdnvl d0 r2 SensorBad','bdnvl d0 r4 SensorBad'],
-'ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10':['bne r0 31416048 Bad','get r14 d5 4','bdnvl d2 Pressure Mix','mul r12 r3 r7','div r12 r12 r11','s d3 Setting r12'],
-'ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10':['get r3 d4 4','bdnvl d2 Pressure Mix','mul r10 r7 r8','div r10 r10 r6','s d3 Setting r10'],
+'ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10':['bne r0 31416048 Bad','get r14 d5 24','bdnvl d2 Pressure Mix','mul r12 r3 r7','div r12 r12 r11','s d3 Setting r12'],
+'ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10':['get r3 d4 24','bdnvl d2 Pressure Mix','mul r10 r7 r8','div r10 r10 r6','s d3 Setting r10'],
 'ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10':['bne r0 31416028 Bad','bne r0 HASH("StructureGasGenerator") Bad','blt r9 20 EnvBad','blt r10 278 EnvBad','bgt r10 328 EnvBad','poke 0 31416048']}
 for fn,toks in checks.items():
  p=R/fn

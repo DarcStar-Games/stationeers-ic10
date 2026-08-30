@@ -1,22 +1,23 @@
 poke 0 31415991
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 5
+get r15 db 17
 get r0 db 8
 beq r15 r0 Loop
 bdns d0 Bad
 get r0 d0 35
 bne r0 HASH("StorageAccess.LArRE") Bad
-get r13 db 2
+get r13 db 9
 beq r13 3 RecoverStart
 bdns d1 Bad
 bdns d2 Bad
 l r12 d0 ReferenceId
-get r0 d1 2
+get r0 d1 32
 bne r0 r12 Bad
-get r10 db 3
-get r11 db 4
+get r10 db 10
+get r11 db 14
 get r0 d1 17
 get r1 d2 17
 blez r0 Stale
@@ -31,8 +32,8 @@ bne r0 r1 Stale
 get r0 d2 12
 get r1 d2 19
 bne r0 r1 Stale
-get r2 d1 4
-get r3 d2 4
+get r2 d1 34
+get r3 d2 34
 bne r2 r3 Bad
 beq r13 1 Outbound
 bne r13 2 Bad
@@ -109,7 +110,7 @@ j Reply
 Bad:
 move r0 -1
 Reply:
-poke 6 r0
-poke 7 r6
+poke 18 r0
+poke 19 r6
 poke 8 r15
 j Loop

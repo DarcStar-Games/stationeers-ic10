@@ -1,25 +1,26 @@
-# Generic Input Resolver v1.0: S2 Scanner,S3 count,S4 Profile; S5/6/7 result.
+# Generic Input Resolver v1.0: S8 Scanner,S9 count,S10 Profile; S13/14/15 result.
 alias scanner r1
 alias profile r2
 poke 0 31415931
 poke 1 1
+poke 2 0
 Loop:
 yield
-get scanner db 2
+get scanner db 8
 blez scanner Invalid
 getd r0 scanner 0
 bne r0 31415930 Invalid
 getd r0 scanner 1
 bne r0 1 Invalid
-get r6 db 3
+get r6 db 9
 blt r6 1 Invalid
 bgt r6 32 Invalid
 putd scanner 9 r6 # domain supplies count; Scanner owns Field Dial mechanics
-getd r15 scanner 2
+getd r15 scanner 12
 getd r9 scanner 10 # selected control ordinal 1..N
 blez r9 Invalid
 bgt r9 r6 Invalid
-get profile db 4
+get profile db 10
 move r14 0
 move r10 0 # default descriptor => Logic Memory
 move r11 0
@@ -48,11 +49,11 @@ ble r10 4 Choose
 KindMemory:
 move r10 0
 Choose:
-# kind0=>Scanner S5,kind3=>S6,all others=>S4; missing preferred falls to Memory.
+# kind0=>Scanner S15,kind3=>S16,all others=>S14; missing preferred falls to Memory.
 seq r0 r10 0
-select r5 r0 5 4
+select r5 r0 15 14
 seq r0 r10 3
-select r5 r0 6 r5
+select r5 r0 16 r5
 getd r8 scanner r5
 bgtz r8 HaveInput
 beqz r10 Invalid
@@ -90,16 +91,16 @@ sgtz r0 r0
 select r0 r0 r12 r11
 Publish:
 bnan r0 Invalid
-getd sp scanner 2
+getd sp scanner 12
 bne sp r15 Loop
 blez profile Snapshot
 getd sp profile 11
 bne sp r14 Loop
 Snapshot:
 s db Setting r0
-poke 5 r9
-poke 6 r0
-poke 7 r10
+poke 13 r9
+poke 14 r0
+poke 15 r10
 poke 11 1
 get sp db 12
 add sp sp 1
@@ -108,6 +109,6 @@ j Loop
 Invalid:
 poke 11 -1
 move r0 nan
-poke 6 r0
+poke 14 r0
 s db Setting r0
 j Loop

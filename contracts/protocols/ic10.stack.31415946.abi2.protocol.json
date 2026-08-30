@@ -22,8 +22,8 @@
       ],
       "writable_ranges": [
         {
-          "start": 5,
-          "end": 7
+          "start": 32,
+          "end": 37
         }
       ],
       "fields": [
@@ -34,7 +34,8 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 31415946
         },
         {
           "address": 1,
@@ -43,7 +44,8 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 2
         },
         {
           "address": 2,
@@ -51,26 +53,9 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 3,
-          "name": "S3",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
+            "self-write"
+          ],
+          "const": 0
         },
         {
           "address": 8,
@@ -176,6 +161,33 @@
             "self-read",
             "self-write"
           ]
+        },
+        {
+          "address": 32,
+          "name": "S32",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 33,
+          "name": "S33",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 34,
+          "name": "S34",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
         }
       ],
       "behavior": {
@@ -184,7 +196,22 @@
           "mode": "preserved-unless-overwritten",
           "source": "static-entry-path-analysis"
         },
-        "invariants": []
+        "invariants": [
+          {
+            "id": "header.s0.magic",
+            "kind": "cell-equals",
+            "address": 0,
+            "equals": 31415946,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s0.abi",
+            "kind": "cell-equals",
+            "address": 1,
+            "equals": 2,
+            "source": "generated-protocol-header"
+          }
+        ]
       }
     }
   ],
@@ -209,14 +236,14 @@
         24
       ],
       "literal_writes": [
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
         8,
-        11
+        11,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
       ],
       "dynamic_read_ranges": [
         {

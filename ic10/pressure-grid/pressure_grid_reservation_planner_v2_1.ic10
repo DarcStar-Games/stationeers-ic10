@@ -1,6 +1,7 @@
 # Grid Reservation Planner v2.1: d0 LinkDir,d1 Medium,d2 Plan Builder.
 poke 0 31415937
 poke 1 2
+poke 2 0
 move r15 0
 Loop:
 yield
@@ -9,7 +10,7 @@ get r0 d2 10
 bne r0 r15 Loop
 get r0 d2 9
 bltz r0 BuildBad
-get r9 d2 7
+get r9 d2 19
 get r10 d2 8
 poke 8 r9
 poke 9 r10
@@ -49,26 +50,26 @@ get r0 d2 0
 bne r0 31415943 BuildBad
 get r0 d2 1
 bne r0 1 BuildBad
-get r0 d0 2
-add sp r0 7
+get r0 d0 24
+add sp r0 29
 get r1 d0 sp
 bgtz r1 LinkBad
-add sp r0 5
+add sp r0 27
 get r0 d0 sp
 clamp r0 r0 0 64
 mul r13 r0 4
 add r13 r13 16
 max r13 r13 64
-poke 7 r13
+poke 11 r13
 l r11 db ReferenceId
 get r15 db 15
 add r15 r15 1
 poke 15 r15
-put d2 2 r11
-put d2 3 r8
-put d2 4 r2
-put d2 5 r13
-put d2 6 r15
+put d2 14 r11
+put d2 15 r8
+put d2 16 r2
+put d2 17 r13
+put d2 18 r15
 j Loop
 ProfileBad:
 move r0 -6

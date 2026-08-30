@@ -43,12 +43,13 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read"
-          ]
+            "self-write"
+          ],
+          "const": 0
         },
         {
-          "address": 3,
-          "name": "S3",
+          "address": 20,
+          "name": "S20",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -56,8 +57,8 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
+          "address": 21,
+          "name": "S21",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -65,8 +66,8 @@
           ]
         },
         {
-          "address": 5,
-          "name": "S5",
+          "address": 22,
+          "name": "S22",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -74,8 +75,8 @@
           ]
         },
         {
-          "address": 6,
-          "name": "S6",
+          "address": 23,
+          "name": "S23",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -83,8 +84,8 @@
           ]
         },
         {
-          "address": 9,
-          "name": "S9",
+          "address": 24,
+          "name": "S24",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -92,8 +93,8 @@
           ]
         },
         {
-          "address": 10,
-          "name": "S10",
+          "address": 27,
+          "name": "S27",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -101,8 +102,8 @@
           ]
         },
         {
-          "address": 11,
-          "name": "S11",
+          "address": 28,
+          "name": "S28",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -110,8 +111,17 @@
           ]
         },
         {
-          "address": 12,
-          "name": "S12",
+          "address": 29,
+          "name": "S29",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 30,
+          "name": "S30",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -120,8 +130,8 @@
           ]
         },
         {
-          "address": 13,
-          "name": "S13",
+          "address": 31,
+          "name": "S31",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -129,8 +139,8 @@
           ]
         },
         {
-          "address": 14,
-          "name": "S14",
+          "address": 32,
+          "name": "S32",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -138,8 +148,8 @@
           ]
         },
         {
-          "address": 15,
-          "name": "S15",
+          "address": 33,
+          "name": "S33",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -147,8 +157,8 @@
           ]
         },
         {
-          "address": 16,
-          "name": "S16",
+          "address": 34,
+          "name": "S34",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -156,8 +166,8 @@
           ]
         },
         {
-          "address": 17,
-          "name": "S17",
+          "address": 35,
+          "name": "S35",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -165,8 +175,8 @@
           ]
         },
         {
-          "address": 18,
-          "name": "S18",
+          "address": 36,
+          "name": "S36",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -174,8 +184,8 @@
           ]
         },
         {
-          "address": 19,
-          "name": "S19",
+          "address": 37,
+          "name": "S37",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [

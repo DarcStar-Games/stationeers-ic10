@@ -1,12 +1,13 @@
 poke 0 31415940
 poke 1 2
+poke 2 0
 Loop:
 yield
-get r14 db 6
+get r14 db 36
 beq r14 r15 Loop
-get r1 db 2
-get r2 db 3
-get r3 db 4
+get r1 db 32
+get r2 db 33
+get r3 db 34
 blez r1 Bad
 bdns d0 Bad
 get r0 d0 0
@@ -15,26 +16,26 @@ get r0 d0 1
 bne r0 1 Bad
 get r0 d0 9
 bne r0 HASH("DirectorySchema.PressureGridLink.v1") Bad
-get r0 db 5
+get r0 db 35
 get sp db 11
 beq r0 sp Search
 poke 11 r0
-get r4 d0 2
-add sp r4 3
+get r4 d0 24
+add sp r4 25
 get r5 d0 sp
-add sp r4 7
+add sp r4 29
 get r0 d0 sp
 bgtz r0 Bad
-add sp r4 5
+add sp r4 27
 get r6 d0 sp
 beqz r6 None
 mod r7 r2 r6
 move r8 0
 poke 24 0
 Search:
-get r0 d0 2
+get r0 d0 24
 bne r0 r4 Bad
-add sp r4 3
+add sp r4 25
 get r0 d0 sp
 bne r0 r5 Bad
 add sp r8 24
@@ -70,9 +71,9 @@ get r0 db r0
 bne r11 r0 Search
 j Store
 Root:
-getd r0 r11 4
+getd r0 r11 18
 bne r0 1 Search
-getd r0 r12 4
+getd r0 r12 18
 bne r0 3 Search
 Store:
 add r0 r8 16
@@ -86,7 +87,7 @@ min r13 r13 r0
 Rate:
 add r0 r8 28
 poke r0 r13
-getd r9 r12 4
+getd r9 r12 18
 beq r9 2 Found
 bne r9 3 Search
 bge r8 2 Search
@@ -96,7 +97,7 @@ poke sp 0
 j Search
 Found:
 add r0 r8 1
-poke 7 r0
+poke 37 r0
 poke 8 r13
 poke 9 1
 j Respond
@@ -110,7 +111,7 @@ j Empty
 Bad:
 poke 9 -1
 Empty:
-poke 7 0
+poke 37 0
 poke 8 0
 Respond:
 poke 10 r14

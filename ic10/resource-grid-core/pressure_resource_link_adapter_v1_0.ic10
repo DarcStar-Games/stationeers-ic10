@@ -1,6 +1,7 @@
 # PressureTransfer -> Generic Resource Link ABI1. d0 Transfer,d1/d2 Resource Reservations.
 poke 0 31415953
 poke 1 1
+poke 2 0
 poke 12 0
 Loop:
 yield
@@ -29,10 +30,10 @@ get r0 d1 0
 bne r0 31415950 Bad
 get r0 d1 1
 bne r0 1 Bad
-get r9 d1 2
-get r0 d1 3
+get r9 d1 32
+get r0 d1 33
 bne r0 1 Bad
-get r0 d1 4
+get r0 d1 34
 bne r0 r5 Bad
 get r0 d1 12
 bne r0 r14 Loop
@@ -42,15 +43,15 @@ get r0 d2 0
 bne r0 31415950 Bad
 get r0 d2 1
 bne r0 1 Bad
-get r10 d2 2
-get r0 d2 3
+get r10 d2 32
+get r0 d2 33
 bne r0 1 Bad
-get r0 d2 4
+get r0 d2 34
 bne r0 r5 Bad
 get r0 d2 12
 bne r0 r13 Loop
-getd r11 r7 2
-getd r12 r8 2
+getd r11 r7 16
+getd r12 r8 16
 getd r0 r9 9
 bne r0 r11 Bad
 getd r0 r10 9
@@ -58,12 +59,12 @@ bne r0 r12 Bad
 l r13 d1 ReferenceId
 l r14 d2 ReferenceId
 l r1 d0 ReferenceId
-poke 2 r13
-poke 3 r14
-poke 4 1 # ResourceClass FLUID
-poke 5 r5
-poke 6 r4
-poke 7 r3
+poke 28 r13
+poke 29 r14
+poke 30 1 # ResourceClass FLUID
+poke 31 r5
+poke 32 r4
+poke 33 r3
 poke 8 0 # generic cost hint unavailable here
 poke 9 r6
 poke 10 r1
@@ -74,7 +75,7 @@ poke 12 r0
 poke 13 1 # directed physical link
 j Loop
 Bad:
-poke 7 0
+poke 33 0
 poke 9 -1
 get r0 db 12
 add r0 r0 1

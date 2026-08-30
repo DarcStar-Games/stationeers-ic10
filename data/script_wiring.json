@@ -8,7 +8,10 @@
     "providers": [
      "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415982, ABI 3)"
+    "note": "peer named by S0 magic check (31415982, ABI 3)",
+    "header_reads": {
+     "3": "SchemaId"
+    }
    }
   },
   "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10": {},
@@ -18,7 +21,10 @@
     "providers": [
      "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415982, ABI 3)"
+    "note": "peer named by S0 magic check (31415982, ABI 3)",
+    "header_reads": {
+     "3": "SchemaId"
+    }
    }
   },
   "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10": {
@@ -27,7 +33,10 @@
     "providers": [
      "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415982, ABI 3)"
+    "note": "peer named by S0 magic check (31415982, ABI 3)",
+    "header_reads": {
+     "3": "SchemaId"
+    }
    },
    "d1": {
     "kind": "script",
@@ -50,7 +59,10 @@
     "providers": [
      "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415982, ABI 3)"
+    "note": "peer named by S0 magic check (31415982, ABI 3)",
+    "header_reads": {
+     "3": "SchemaId"
+    }
    }
   },
   "ic10/catalog-control-plane/catalog_inspector_v4_0.ic10": {
@@ -59,7 +71,10 @@
     "providers": [
      "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415968, ABI 6)"
+    "note": "peer named by S0 magic check (31415968, ABI 6)",
+    "header_reads": {
+     "3": "SchemaId"
+    }
    }
   },
   "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10": {
@@ -75,7 +90,10 @@
     "providers": [
      "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415982, ABI 3)"
+    "note": "peer named by S0 magic check (31415982, ABI 3)",
+    "header_reads": {
+     "3": "SchemaId"
+    }
    }
   },
   "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10": {
@@ -109,7 +127,10 @@
     "providers": [
      "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
     ],
-    "note": "peer named by S0 magic check (31415982, ABI 3)"
+    "note": "peer named by S0 magic check (31415982, ABI 3)",
+    "header_reads": {
+     "3": "SchemaId"
+    }
    }
   },
   "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10": {},
@@ -446,7 +467,7 @@
     "providers": [
      "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"Print requirements come from Recipe execution metadata\"; provider header: \"Recipe Execution Profile View ABI1 ... request S2 RecipeHash\" [No pin comment, but cells match exactly and uniquely: consumer writes S2 RecipeHash and reads S41 request echo, S7 status==1, S6 generation fence, S4/S5 counts, reagent pairs at S8+2i - precisely the cells recipe_execution_profile_view pokes (41, 7, 6, 3/4/5, dynamic pairs).]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"Print requirements come from Recipe execution metadata\"; provider header: \"Recipe Execution Profile View ABI1 ... request S10 RecipeHash\" [No pin comment, but cells match exactly and uniquely: consumer writes S10 RecipeHash and reads S49 request echo, S15 status==1, S14 generation fence, S12/S13 counts, reagent pairs at S16+2i - precisely the cells recipe_execution_profile_view pokes (49, 15, 14, 11/12/13, dynamic pairs).]"
    },
    "d2": {
     "kind": "script",
@@ -879,7 +900,7 @@
     "providers": [
      "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:274: \"`d1 -> ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10`\"; docs/MANUFACTURING_SCHEDULER.md:430: \"Configure Print Job Driver `d1 -> 172 Recipe Execution Profile View`\" [Constraint addr7==1 matches the view's status cell (view initializes cells 6 and 7 to 0); read of cell 41 fits the view's bounded reagent-requirement records.]"
+    "note": "docs/DEPLOYMENT.md:274: \"`d1 -> ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10`\"; docs/MANUFACTURING_SCHEDULER.md:430: \"Configure Print Job Driver `d1 -> 172 Recipe Execution Profile View`\" [Constraint addr15==1 matches the view's status cell (view initializes cells 14 and 15 to 0); read of cell 49 fits the view's bounded reagent-requirement records.]"
    },
    "d2": {
     "kind": "script",
@@ -900,7 +921,7 @@
     "providers": [
      "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:276: \"Wire `177 d0 -> Recipe Execution View`, `d1 -> ResourceLink Snapshot Directory`\" (177 = Print Material Resolver per docs/MANUFACTURING_SCHEDULER.md:431); docs/MANUFACTURING_SCHEDULER.md:432: \"Configure Print Material Resolver `d0 -> Recipe Execution Profile View`\" [Constraint addr7==1 matches the view's status cell (view initializes cells 6 and 7 to 0).]"
+    "note": "docs/DEPLOYMENT.md:276: \"Wire `177 d0 -> Recipe Execution View`, `d1 -> ResourceLink Snapshot Directory`\" (177 = Print Material Resolver per docs/MANUFACTURING_SCHEDULER.md:431); docs/MANUFACTURING_SCHEDULER.md:432: \"Configure Print Material Resolver `d0 -> Recipe Execution Profile View`\" [Constraint addr15==1 matches the view's status cell (view initializes cells 14 and 15 to 0).]"
    },
    "d1": {
     "kind": "script",

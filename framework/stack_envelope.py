@@ -121,11 +121,12 @@ class NormalizedDeclaration:
     post_init_dynamic_write_ranges: tuple[StackRange, ...] = ()
     source_sha256: str = ""
     pilot_family: str = ""
+    schema_assigned_externally: bool = False
 
     @property
     def capability_mask(self) -> int:
         return (
-            (HAS_SCHEMA if self.schema_id is not None else 0)
+            (HAS_SCHEMA if self.schema_id is not None or self.schema_assigned_externally else 0)
             | (HAS_EXTENSION if self.extension_base else 0)
             | (HAS_STATE if self.publishes_state else 0)
             | (HAS_TELEMETRY if self.telemetry_base else 0)
@@ -344,6 +345,9 @@ def normalize_declaration(
         collector.add("implementation_id must be null or a string")
     source_sha256 = require("source_sha256", str, "")
     pilot_family = require("pilot_family", str, "")
+    schema_assigned_externally = require("schema_assigned_externally", bool, False, required=False)
+    if schema_assigned_externally and (schema_id is not None or schema_version):
+        collector.add("schema_assigned_externally requires a null schema_id and version 0")
 
     normalized_ranges: dict[str, tuple[StackRange, ...]] = {}
     for name, default in (
@@ -381,6 +385,7 @@ def normalize_declaration(
         post_init_dynamic_write_ranges=normalized_ranges["post_init_dynamic_write_ranges"],
         source_sha256=source_sha256,
         pilot_family=pilot_family,
+        schema_assigned_externally=schema_assigned_externally,
     ), []
 
 
@@ -412,6 +417,7 @@ def publication_errors(
     state: dict[int, Any] = {}
     first_yield = None
     branch_proved = False
+    scan_from = None
     for index, row in enumerate(rows):
         op = row[0]
         if op == "yield":
@@ -423,8 +429,28 @@ def publication_errors(
             stable = stable_cells(path.read_text(), aliases, expected)
             missing = sorted(set(expected) - stable)
             if missing:
+                # Same-image induction: when the entry guard compares S0 against this
+                # contract's magic before branching, the skip path runs only over a
+                # stack the same contract published -- so a cell whose every literal
+                # write in this source is the expected constant already holds it
+                # there. Dynamic writes into the envelope are rejected below.
+                guard_rows = rows[:index + 1]
+                reads_magic = any(r[0] == "get" and len(r) >= 4 and r[2] == "db"
+                                  and resolve_integer(r[3], aliases) == 0 for r in guard_rows)
+                compares_magic = any(r[0].startswith("b") and any(
+                    resolve_literal(token, aliases) == expected.get(0)
+                    for token in r[1:-1]) for r in guard_rows)
+                if reads_magic and compares_magic:
+                    for address in list(missing):
+                        writes = [r for r in rows if r[0] == "poke" and len(r) >= 3
+                                  and resolve_integer(r[1], aliases) == address]
+                        if writes and all(
+                                resolve_literal(r[2], aliases) == expected[address] for r in writes):
+                            missing.remove(address)
+            if missing:
                 errors.append("control transfer occurs before the first envelope-bearing yield")
             branch_proved = not missing
+            scan_from = index
             break
         if op == "clr" and len(row) >= 2 and row[1] == "db":
             state = {address: 0 for address in expected}   # clr db zeroes every cell
@@ -454,11 +480,19 @@ def publication_errors(
     if any(reserved & set(range(item["start"], item["end"] + 1)) for item in reviewed_ranges):
         errors.append("reviewed post-init dynamic write range overlaps envelope or extension cells")
     dynamic_after = False
+    # After a proven-stable reflash-guard branch, everything past the branch is
+    # post-publication for reserved-cell purposes; stable_cells already proved
+    # every envelope cell holds its value at every observation point, including
+    # across any guarded recovery clear that re-publishes the header.
+    guard_proved = first_yield is None and branch_proved
+    if guard_proved:
+        first_yield = scan_from
     if first_yield is not None:
         for row in rows[first_yield + 1:]:
             op = row[0]
             if op == "clr" and len(row) >= 2 and row[1] == "db":
-                errors.append("clr db after publication can erase the fixed envelope")
+                if not guard_proved:
+                    errors.append("clr db after publication can erase the fixed envelope")
             elif op == "clrd" or op == "putd" or (op == "put" and len(row) >= 2 and row[1] == "db"):
                 # a reference-addressed write only touches this stack when it can name self,
                 # which the generated contract resolves far more precisely than a source scan
@@ -553,7 +587,7 @@ def expected_envelope_cells(declaration: NormalizedDeclaration) -> dict[int, Any
         BASE + 1: declaration.service_abi,
         CAPABILITY_MASK_CELL: declaration.capability_mask,
     }
-    if declaration.capability_mask & HAS_SCHEMA:
+    if declaration.capability_mask & HAS_SCHEMA and not declaration.schema_assigned_externally:
         expected[SCHEMA_ID_CELL] = schema_hash(
             declaration.schema_id or "", declaration.schema_version
         )
@@ -614,8 +648,11 @@ def schema_capability_errors(
         errors.append("telemetry_base cannot point inside the common header")
 
     expected = expected_envelope_cells(declaration)
+    allowed_dynamic = {STATE_CELL, GENERATION_CELL} | (
+        {SCHEMA_ID_CELL} if declaration.schema_assigned_externally else set()
+    )
     for cell in range(BASE, BASE + LENGTH):
-        if cell not in expected and cell not in (STATE_CELL, GENERATION_CELL) and writes.get(cell):
+        if cell not in expected and cell not in allowed_dynamic and writes.get(cell):
             errors.append(f"S{cell} is reserved and must not be written undeclared")
     for address, value in expected.items():
         if address != GENERATION_CELL and writes.get(address, set()) != {value}:
@@ -774,12 +811,19 @@ def publication_rule_errors(
         expected,
         declaration.publication_metadata(),
         reserved,
+        # A boot-only `clr db` is the entry clear the publication scan already
+        # validates; it is not evidence that reference-addressed writes can name
+        # this stack. Computed own pokes still flag themselves directly.
         reference_writes_own_stack=bool(
             contract["own_stack"]["dynamic_write_ranges"]
+            and not (contract["own_stack"]["clears_all"]
+                     and contract["own_stack"]["dynamic_write_proven_ranges"]
+                     == [{"start": 0, "end": 511}])
         ),
         mutable_cells=frozenset(
             ({STATE_CELL} if declaration.publishes_state else set())
             | ({GENERATION_CELL} if declaration.publishes_generation else set())
+            | ({SCHEMA_ID_CELL} if declaration.schema_assigned_externally else set())
         ),
     )
     line_count = len((Path(root) / declaration.source).read_text().splitlines())
@@ -996,7 +1040,8 @@ def build_inventory(
                 "custom_state_bits": declaration.get("custom_state_bits", 0),
                 "publishes_generation": declaration["publishes_generation"],
                 "capability_mask": (
-                    (HAS_SCHEMA if declaration["schema_id"] is not None else 0)
+                    (HAS_SCHEMA if declaration["schema_id"] is not None
+                     or declaration.get("schema_assigned_externally") else 0)
                     | (HAS_EXTENSION if declaration["extension_base"] else 0)
                     | (HAS_STATE if declaration["publishes_state"] else 0)
                     | (HAS_TELEMETRY if declaration["telemetry_base"] else 0)

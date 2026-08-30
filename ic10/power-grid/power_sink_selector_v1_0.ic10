@@ -1,22 +1,23 @@
 # POWER sink selector. d0 PowerReservation directory; exact demand is Reservation S7.
 poke 0 31416031
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 3
-get r0 db 4
+get r15 db 13
+get r0 db 14
 beq r15 r0 Loop
-get r6 db 2
+get r6 db 12
 bdns d0 Bad
 get r0 d0 0
 bne r0 31415981 Bad
 get r0 d0 9
 bne r0 HASH("DirectorySchema.PowerReservation.v1") Bad
-get r5 d0 2
-add r0 r5 7
+get r5 d0 24
+add r0 r5 29
 get r0 d0 r0
 bgtz r0 Overflow
-add r0 r5 5
+add r0 r5 27
 get r7 d0 r0
 mul r8 r5 192
 add r8 r8 32
@@ -34,35 +35,35 @@ getd r14 r10 12
 blez r14 Find
 getd r0 r10 0
 bne r0 31415950 Find
-getd r0 r10 3
+getd r0 r10 33
 bne r0 4 Find
 getd r0 r10 9
 blez r0 Find
-getd r11 r10 7
+getd r11 r10 37
 blez r11 Find
 getd r0 r10 12
 bne r0 r14 Find
 slt r12 r9 5000000
 seq r12 r12 0
-poke 5 1
-poke 6 r10
-poke 7 r11
+poke 15 1
+poke 16 r10
+poke 17 r11
 poke 8 r6
 poke 9 r14
 poke 10 r9
 poke 11 r12
 j Reply
 None:
-poke 5 -3
-poke 6 0
-poke 7 0
+poke 15 -3
+poke 16 0
+poke 17 0
 poke 8 r6
 j Reply
 Overflow:
-poke 5 -2
+poke 15 -2
 j Reply
 Bad:
-poke 5 -1
+poke 15 -1
 Reply:
-poke 4 r15
+poke 14 r15
 j Loop

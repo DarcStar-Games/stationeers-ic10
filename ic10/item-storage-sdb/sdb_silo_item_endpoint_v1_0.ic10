@@ -1,8 +1,9 @@
 # Dedicated SDB Silo ITEM endpoint: conservative lower-bound quantity/capacity.
 poke 0 31415949
 poke 1 1
-poke 2 2
-poke 4 7
+poke 2 0
+poke 52 2
+poke 54 7
 poke 12 2
 poke 13 24
 l r0 d1 ReferenceId
@@ -61,9 +62,9 @@ bne r0 r4 Loop
 get r0 d1 29
 bne r0 r14 Loop
 l r1 d0 ReferenceId
-poke 3 r2
-poke 5 r8
-poke 6 r9
+poke 53 r2
+poke 55 r8
+poke 56 r9
 poke 8 1
 poke 9 r1
 add r5 r5 r6
@@ -73,8 +74,8 @@ add r0 r0 1
 poke 11 r0
 j Loop
 Bad:
-poke 5 0
-poke 6 0
+poke 55 0
+poke 56 0
 poke 8 -1
 get r0 db 11
 add r0 r0 1

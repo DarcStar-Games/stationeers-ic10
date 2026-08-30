@@ -1,6 +1,7 @@
 # Break-before-make Transformer Setting/On executor. d0 PlanStore,d1 Allocator.
 poke 0 31416039
 poke 1 1
+poke 2 0
 Loop:
 yield
 move r6 0
@@ -10,25 +11,25 @@ blt r1 0 Loop
 add r6 r6 1
 getd r0 r1 0
 bne r0 31415953 Scan
-getd r0 r1 4
+getd r0 r1 30
 bne r0 4 Scan
-getd r0 r1 6
+getd r0 r1 32
 bne r0 2 Scan
 getd r3 r1 10
 blez r3 Scan
 move r4 0
 move r5 0
-get r0 d1 4
+get r0 d1 10
 bne r0 1 Set
-get r7 d1 2
-get r8 d1 3
+get r7 d1 8
+get r8 d1 9
 blez r8 Set
-get r9 d0 2
+get r9 d0 27
 mod r0 r9 2
 bnez r0 Set
-get r0 d0 3
+get r0 d0 28
 bne r0 r7 Set
-get r10 d0 4
+get r10 d0 29
 l r11 d1 ReferenceId
 move r12 0
 Find:
@@ -69,20 +70,20 @@ Next:
 add r12 r12 1
 j Find
 Stable:
-get r0 d0 2
+get r0 d0 27
 bne r0 r9 Off
 Set:
 # Turning ON requires authority to remain exact at the physical write boundary.
 beqz r5 Write
-get r0 d1 4
+get r0 d1 10
 bne r0 1 Off
-get r0 d1 2
+get r0 d1 8
 bne r0 r7 Off
-get r0 d1 3
+get r0 d1 9
 bne r0 r8 Off
-get r0 d0 2
+get r0 d0 27
 bne r0 r9 Off
-get r0 d0 3
+get r0 d0 28
 bne r0 r7 Off
 j Write
 Off:

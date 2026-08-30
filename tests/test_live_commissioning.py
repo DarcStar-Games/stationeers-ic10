@@ -32,14 +32,14 @@ logic=Device(101,props={'ReferenceId':101,42:12.5})
 stack=Device(102,stack={10:7,20:99},props={'ReferenceId':102})
 vm=IC10((R/'ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10').read_text(),{'d0':logic,'d1':stack},self_ref=2540)
 vm.run(1)
-vm.stack.update({6:1,32:1,33:42,34:-1,35:2,36:20,37:10,2:1})
+vm.stack.update({14:1,32:1,33:42,34:-1,35:2,36:20,37:10,10:1})
 vm.run(2)
-if vm.stack.get(3)!=1 or vm.stack.get(4)!=1 or vm.stack.get(5)!=2: fails.append(f'probe response header mismatch: {vm.stack.get(3)}, {vm.stack.get(4)}, {vm.stack.get(5)}')
+if vm.stack.get(11)!=1 or vm.stack.get(12)!=1 or vm.stack.get(13)!=2: fails.append(f'probe response header mismatch: {vm.stack.get(11)}, {vm.stack.get(12)}, {vm.stack.get(13)}')
 if vm.stack.get(64)!=101 or vm.stack.get(66)!=1 or vm.stack.get(67)!=12.5: fails.append('probe dynamic LogicType capture mismatch')
 if vm.stack.get(69)!=102 or vm.stack.get(71)!=1 or vm.stack.get(72)!=99 or vm.stack.get(73)!=7: fails.append('probe fenced stack capture mismatch')
 # A nonpositive stack fence fails closed, without preventing a response token.
-stack.stack[10]=0;vm.stack[2]=2;vm.run(2)
-if vm.stack.get(3)!=2 or vm.stack.get(4)!=-2 or vm.stack.get(71)!=-3: fails.append('probe torn/nonpositive generation did not fail closed')
+stack.stack[10]=0;vm.stack[10]=2;vm.run(2)
+if vm.stack.get(11)!=2 or vm.stack.get(12)!=-2 or vm.stack.get(71)!=-3: fails.append('probe torn/nonpositive generation did not fail closed')
 # Execute the actual stack monitor against an IC housing and optional output Memory.
 target=Device(201,stack={6:1,8:4,9:0},props={
     'ReferenceId':201,'PrefabHash':'HASH:StructureCircuitHousing'})

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10",
-  "source_sha256": "43423165bc41cdb75b109129342938afbadec04b237443ae78ef9e414f884be9",
+  "source_sha256": "8239803f6e3c4c30ceade23de9104395b709d6bf0e70bfbfd23f4176ffaab312",
   "identity": {
     "service_id": "ic10.script.manufacturing.candidate.selector",
     "implementation_revision": "2.0",
@@ -19,15 +19,15 @@
       "literal_reads": [
         0,
         1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
         9,
-        11
+        11,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
       ],
       "literal_writes": [],
       "dynamic_read": true,

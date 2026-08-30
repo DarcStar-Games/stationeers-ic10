@@ -1,9 +1,10 @@
 # POWER battery Endpoint ABI1. d0 battery; policy S16..22/S50..51.
 poke 0 31415949
 poke 1 1
-poke 2 4
-poke 3 HASH("Power.Electrical")
-poke 4 7
+poke 2 0
+poke 52 4
+poke 53 HASH("Power.Electrical")
+poke 54 7
 poke 12 4
 poke 13 3
 poke 35 3
@@ -77,9 +78,9 @@ clamp r0 r0 0 999
 mul r0 r0 16
 add r0 r0 8
 poke 40 r0
-poke 5 r9
-poke 6 r10
-poke 7 r3
+poke 55 r9
+poke 56 r10
+poke 57 r3
 poke 8 1
 poke 9 r15
 poke 10 r13
@@ -104,8 +105,8 @@ add r0 r0 1
 poke 11 r0
 j Loop
 Bad:
-poke 5 0
-poke 6 0
+poke 55 0
+poke 56 0
 poke 8 -1
 get r0 db 11
 add r0 r0 1

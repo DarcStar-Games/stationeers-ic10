@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-config/config_input_bridge_v1_0.ic10",
-  "source_sha256": "a5c99b2072a565c9c2b513bea846a37291aab699930ccfd760fc30ac6651ba6b",
+  "source_sha256": "ed9f20ae892c10d83de7f476a696daac549a2395de9f81922d300d8696ae27cb",
   "identity": {
     "service_id": "ic10.script.config.input.bridge",
     "implementation_revision": "1.0",
@@ -52,7 +52,7 @@
       "transport": "reference-id",
       "reference": "r7",
       "literal_reads": [
-        5
+        11
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -66,15 +66,15 @@
       "literal_reads": [
         0,
         1,
-        5,
-        6,
-        7,
         11,
-        12
+        12,
+        13,
+        14,
+        15
       ],
       "literal_writes": [
-        3,
-        4
+        9,
+        10
       ],
       "dynamic_read": false,
       "dynamic_write": false,
@@ -101,12 +101,13 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3
+      8,
+      9
     ],
     "literal_writes": [
       0,
-      1
+      1,
+      2
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -146,12 +147,22 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
+          "self-write"
+        ],
+        "const": 0
+      },
+      {
+        "address": 8,
+        "name": "S8",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
           "self-read"
         ]
       },
       {
-        "address": 3,
-        "name": "S3",
+        "address": 9,
+        "name": "S9",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

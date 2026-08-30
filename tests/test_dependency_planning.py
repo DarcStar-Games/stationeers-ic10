@@ -68,7 +68,7 @@ ck(int(re.stack.get(40,0))%2==0 and re.stack.get(128)==0,'Plan Store reflash did
 def boot_store():
  v=IC10(src('ic10/generic-jobs/generic_job_store_v1_0.ic10'));v.run(1);return v
 def store_req(v,t,cmd,slot,gen=0,state=0,err=0):
- v.stack.update({11:cmd,12:slot,13:gen,14:state,15:err,7:t});v.run(1);return int(v.stack.get(9,0)),int(v.stack.get(10,0))
+ v.stack.update({11:cmd,12:slot,13:gen,14:state,15:err,19:t});v.run(1);return int(v.stack.get(9,0)),int(v.stack.get(10,0))
 def state(v,slot):
  m=288+7*slot;a=int(v.stack.get(m,0));b=m+1+3*a
  return int(v.stack.get(b,0)),int(v.stack.get(b+1,0))

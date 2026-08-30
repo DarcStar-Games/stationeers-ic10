@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10",
-  "source_sha256": "7f6dd3527aebfb4ac5db08a19de78303e6d1521dd5bf9fe854ec7e77dbe9a42e",
+  "source_sha256": "3878b33765144f2fe513e747c1cb3616f98abc50fa5863bfb50df849be509c72",
   "identity": {
     "service_id": "ic10.script.pressure.resource.link.adapter",
     "implementation_revision": "1.0",
@@ -85,10 +85,10 @@
         "literal_reads": [
           0,
           1,
-          2,
-          3,
-          4,
-          12
+          12,
+          32,
+          33,
+          34
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -107,7 +107,7 @@
             "equals": 1
           },
           {
-            "address": 3,
+            "address": 33,
             "equals": 1
           }
         ]
@@ -137,10 +137,10 @@
         "literal_reads": [
           0,
           1,
-          2,
-          3,
-          4,
-          12
+          12,
+          32,
+          33,
+          34
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -159,7 +159,7 @@
             "equals": 1
           },
           {
-            "address": 3,
+            "address": 33,
             "equals": 1
           }
         ]
@@ -190,7 +190,7 @@
       "transport": "reference-id",
       "reference": "r7",
       "literal_reads": [
-        2
+        16
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -202,7 +202,7 @@
       "transport": "reference-id",
       "reference": "r8",
       "literal_reads": [
-        2
+        16
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -232,17 +232,18 @@
       0,
       1,
       2,
-      3,
-      4,
-      5,
-      6,
-      7,
       8,
       9,
       10,
       11,
       12,
-      13
+      13,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -283,54 +284,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "enum",
-        "semantic_source": "source",
-        "access": [
-          "self-write"
         ],
-        "const": 1,
-        "description": "ResourceClass FLUID"
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
+        "const": 0
       },
       {
         "address": 8,
@@ -390,6 +345,62 @@
         ],
         "const": 1,
         "description": "directed physical link"
+      },
+      {
+        "address": 28,
+        "name": "S28",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 29,
+        "name": "S29",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 30,
+        "name": "S30",
+        "value_type": "enum",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "const": 1,
+        "description": "ResourceClass FLUID"
+      },
+      {
+        "address": 31,
+        "name": "S31",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 32,
+        "name": "S32",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 33,
+        "name": "S33",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
       }
     ],
     "headers": [

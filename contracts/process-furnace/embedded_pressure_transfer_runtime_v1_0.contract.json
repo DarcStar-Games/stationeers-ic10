@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10",
-  "source_sha256": "a69486ae5e9bc2a294b236a86d102a7892c9bfe45f2f7f7c12e4431a682dc118",
+  "source_sha256": "c7bce23523a524214f354ecd7de8c3fa180ef646a73f4fe4b616d6627835fce1",
   "identity": {
     "service_id": "ic10.script.embedded.pressure.transfer.runtime",
     "implementation_revision": "1.0",
@@ -28,12 +28,12 @@
       "stack": {
         "literal_reads": [
           0,
-          4,
-          5,
-          6,
           8,
           9,
-          11
+          11,
+          18,
+          19,
+          20
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -52,8 +52,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.97826e4ef6b6ac28",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.97826e4ef6b6ac28",
+        "interface_id": "ic10.interface.access.11ef2770b1ad923c",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.11ef2770b1ad923c",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -81,10 +81,10 @@
       "stack": {
         "literal_reads": [
           0,
-          4,
-          5,
-          7,
-          11
+          11,
+          18,
+          19,
+          21
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -103,8 +103,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.a6f58610e3e902a4",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.a6f58610e3e902a4",
+        "interface_id": "ic10.interface.access.cb0ecebb1c6a894f",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.cb0ecebb1c6a894f",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -179,10 +179,10 @@
       "stack": {
         "literal_reads": [
           0,
-          2,
-          4,
-          6,
-          7
+          8,
+          15,
+          17,
+          18
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -197,7 +197,7 @@
             "equals": 31415948
           },
           {
-            "address": 4,
+            "address": 15,
             "equals": 1
           }
         ]
@@ -205,8 +205,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.ed8ba1dfd8ab8571",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.ed8ba1dfd8ab8571",
+        "interface_id": "ic10.interface.access.cf7b157610a86287",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.cf7b157610a86287",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

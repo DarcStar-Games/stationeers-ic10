@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10",
-  "source_sha256": "fe31f8eec2719adf6850925320bf18dab76a491010e76e871d05b9e4558ae8b9",
+  "source_sha256": "20b917c57e6c38bf767153d94c0c94d1bf55906842879493ee1dbba0ea7c6a78",
   "identity": {
     "service_id": "ic10.script.pressure.resource.endpoint.adapter",
     "implementation_revision": "1.0",
@@ -29,12 +29,12 @@
         "literal_reads": [
           0,
           1,
-          3,
-          4,
-          5,
-          6,
           11,
-          12
+          12,
+          14,
+          15,
+          16,
+          17
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -73,17 +73,18 @@
       0,
       1,
       2,
-      3,
-      4,
-      5,
-      6,
-      7,
       8,
       9,
       10,
       11,
       12,
-      13
+      13,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -120,60 +121,12 @@
       {
         "address": 2,
         "name": "S2",
-        "value_type": "enum",
-        "semantic_source": "source",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
         ],
-        "const": 1,
-        "description": "ResourceClass FLUID"
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "RateUnknownAtEndpointLayer",
-        "value_type": "number",
-        "semantic_source": "source",
-        "access": [
-          "self-write"
-        ],
-        "const": 0,
-        "description": "rate unknown at endpoint layer"
+        "const": 0
       },
       {
         "address": 8,
@@ -239,6 +192,64 @@
         ],
         "const": 3,
         "description": "exact export + exact import"
+      },
+      {
+        "address": 52,
+        "name": "S52",
+        "value_type": "enum",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "const": 1,
+        "description": "ResourceClass FLUID"
+      },
+      {
+        "address": 53,
+        "name": "S53",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 54,
+        "name": "S54",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 55,
+        "name": "S55",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 56,
+        "name": "S56",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 57,
+        "name": "RateUnknownAtEndpointLayer",
+        "value_type": "number",
+        "semantic_source": "source",
+        "access": [
+          "self-write"
+        ],
+        "const": 0,
+        "description": "rate unknown at endpoint layer"
       }
     ],
     "headers": [

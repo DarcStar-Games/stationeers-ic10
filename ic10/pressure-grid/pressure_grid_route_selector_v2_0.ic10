@@ -1,6 +1,7 @@
 # Grid Route Selector v2.0: d0 Enumerator,d1 Ranker; reservation-aware ranked path.
 poke 0 31415944
 poke 1 2
+poke 2 0
 poke 12 0
 move r15 -1
 move r14 0
@@ -17,7 +18,7 @@ get r0 d1 23
 get sp d1 24
 bge r0 sp Done
 add r5 r5 1
-put d0 6 r5
+put d0 36 r5
 move r14 1
 j Loop
 WaitEnum:
@@ -26,26 +27,26 @@ bne r0 r5 Loop
 get r0 d0 9
 bltz r0 Fail
 beqz r0 Done
-get r7 d0 7
+get r7 d0 37
 get r8 d0 8
 blez r8 Next
 add r6 r6 1
-put d1 2 r4
-put d1 3 r7
-put d1 4 r8
+put d1 32 r4
+put d1 33 r7
+put d1 34 r8
 get r0 d0 16
-put d1 5 r0
+put d1 35 r0
 get r0 d0 17
-put d1 6 r0
+put d1 36 r0
 get r0 d0 18
-put d1 7 r0
+put d1 37 r0
 put d1 11 r9
 put d1 8 r6
 move r14 2
 j Loop
 Next:
 add r5 r5 1
-put d0 6 r5
+put d0 36 r5
 j Loop
 Done:
 get r0 db 20
@@ -54,7 +55,7 @@ get r0 d1 22
 bne r0 r4 Fail
 get r7 d1 19
 get r8 d1 20
-poke 7 r7
+poke 37 r7
 poke 8 r8
 poke 9 1
 get r0 d1 21
@@ -68,18 +69,18 @@ poke sp r10
 add r0 r0 1
 j Copy
 None:
-poke 7 0
+poke 37 0
 poke 8 0
 poke 9 0
 poke 11 0
 j Respond
 New:
-get r3 db 6
+get r3 db 36
 beq r3 r15 Loop
-get r1 db 2
-get r2 db 3
-get r7 db 4
-get r9 db 5
+get r1 db 32
+get r2 db 33
+get r7 db 34
+get r9 db 35
 blez r1 Fail
 blez r9 Fail
 bdns d0 Fail
@@ -98,15 +99,15 @@ poke 12 r4
 mul r5 r4 100
 move r6 r5
 poke 20 0
-put d0 2 r1
-put d0 3 r2
-put d0 4 r7
-put d0 5 r4
-put d0 6 r5
+put d0 32 r1
+put d0 33 r2
+put d0 34 r7
+put d0 35 r4
+put d0 36 r5
 move r14 1
 j Loop
 Fail:
-poke 7 0
+poke 37 0
 poke 8 0
 poke 9 -1
 poke 11 0

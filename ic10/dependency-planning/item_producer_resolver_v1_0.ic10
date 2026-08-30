@@ -5,48 +5,48 @@ beq r0 31416003 Table
 clr db
 poke 0 31416003
 poke 1 1
+poke 2 0
 Table:
-move sp 32
-push -1301215609
-push HASH("SmeltIron")
-push -404336834
-push HASH("SmeltCopper")
-push 226410516
-push HASH("SmeltGold")
-push 2134647745
-push HASH("SmeltLead")
-push -1406385572
-push HASH("SmeltNickel")
-push -290196476
-push HASH("SmeltSilicon")
-push -929742000
-push HASH("SmeltSilver")
-push -654790771
-push HASH("AlloySteel")
-push 502280180
-push HASH("AlloyElectrum")
-push -297990285
-push HASH("AlloyInvar")
-push 1058547521
-push HASH("AlloyConstantan")
-push -82508479
-push HASH("AlloySolder")
-push 412924554
-push HASH("AlloyAstroloy")
-push 1579842814
-push HASH("AlloyHastelloy")
-push -787796599
-push HASH("AlloyInconel")
-push -1897868623
-push HASH("AlloyStellite")
-push 156348098
-push HASH("AlloyWaspaloy")
+poke 32 -1301215609
+poke 33 HASH("SmeltIron")
+poke 34 -404336834
+poke 35 HASH("SmeltCopper")
+poke 36 226410516
+poke 37 HASH("SmeltGold")
+poke 38 2134647745
+poke 39 HASH("SmeltLead")
+poke 40 -1406385572
+poke 41 HASH("SmeltNickel")
+poke 42 -290196476
+poke 43 HASH("SmeltSilicon")
+poke 44 -929742000
+poke 45 HASH("SmeltSilver")
+poke 46 -654790771
+poke 47 HASH("AlloySteel")
+poke 48 502280180
+poke 49 HASH("AlloyElectrum")
+poke 50 -297990285
+poke 51 HASH("AlloyInvar")
+poke 52 1058547521
+poke 53 HASH("AlloyConstantan")
+poke 54 -82508479
+poke 55 HASH("AlloySolder")
+poke 56 412924554
+poke 57 HASH("AlloyAstroloy")
+poke 58 1579842814
+poke 59 HASH("AlloyHastelloy")
+poke 60 -787796599
+poke 61 HASH("AlloyInconel")
+poke 62 -1897868623
+poke 63 HASH("AlloyStellite")
+poke 64 156348098
+poke 65 HASH("AlloyWaspaloy")
 Loop:
 yield
-get r15 db 3
-get r0 db 4
+get r15 db 9
+get r0 db 10
 beq r15 r0 Loop
-get r2 db 2
+get r2 db 8
 beqz r2 Bad
 move r6 0
 move r7 32
@@ -60,19 +60,19 @@ j Find
 Found:
 add r7 r7 1
 get r0 db r7
-poke 6 1
-poke 7 r0
+poke 12 1
+poke 13 r0
 j Good
 Print:
-poke 6 2
-poke 7 r2
+poke 12 2
+poke 13 r2
 Good:
-poke 5 1
-poke 4 r15
+poke 11 1
+poke 10 r15
 j Loop
 Bad:
-poke 5 -1
-poke 6 0
-poke 7 0
-poke 4 r15
+poke 11 -1
+poke 12 0
+poke 13 0
+poke 10 r15
 j Loop

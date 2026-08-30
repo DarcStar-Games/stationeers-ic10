@@ -1,12 +1,13 @@
 poke 0 31415949
 poke 1 1
-poke 2 2
+poke 2 0
+poke 52 2
 poke 12 2
 poke 13 3
 l r0 d1 ReferenceId
 poke 14 r0
 poke 35 HASH("StorageAccess.LArRE")
-poke 4 7
+poke 54 7
 Loop:
 yield
 bdns d0 Bad
@@ -33,12 +34,12 @@ bne r15 r0 Move
 get r7 db 23
 add r7 r7 1
 poke 23 r7
-put d0 2 1
-put d0 3 r4
-put d0 4 r5
-put d0 5 r6
-put d0 6 r3
-put d0 7 r2
+put d0 17 1
+put d0 18 r4
+put d0 19 r5
+put d0 20 r6
+put d0 21 r3
+put d0 22 r2
 put d0 8 r7
 WaitScan:
 yield
@@ -62,9 +63,9 @@ select r8 r1 0 r8
 and r1 r0 10
 select r9 r1 0 r9
 l r1 db ReferenceId
-poke 3 r2
-poke 5 r8
-poke 6 r9
+poke 53 r2
+poke 55 r8
+poke 56 r9
 poke 8 1
 poke 9 r1
 poke 10 r7
@@ -82,16 +83,16 @@ bgt r13 3 MoveBad
 get r7 db 23
 add r7 r7 1
 poke 23 r7
-put d0 2 r13
+put d0 17 r13
 get r0 db 25
-put d0 3 r0
+put d0 18 r0
 get r0 db 26
-put d0 4 r0
+put d0 19 r0
 get r0 db 27
-put d0 5 r0
+put d0 20 r0
 get r0 db 28
-put d0 6 r0
-put d0 7 r2
+put d0 21 r0
+put d0 22 r2
 get r0 db 30
 put d0 15 r0
 put d0 8 r7
@@ -111,8 +112,8 @@ poke 33 0
 poke 34 r15
 j Loop
 Bad:
-poke 5 0
-poke 6 0
+poke 55 0
+poke 56 0
 poke 8 -1
 get r0 db 11
 add r0 r0 1

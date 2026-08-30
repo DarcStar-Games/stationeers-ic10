@@ -1,5 +1,6 @@
 poke 0 31415986
 poke 1 1
+poke 2 0
 Loop:
 yield
 get r15 db 8
@@ -8,17 +9,17 @@ beq r15 r0 Loop
 bdns d0 Invalid
 l r0 d0 Power
 blez r0 Fault
-get r2 db 2
+get r2 db 17
 beq r2 1 Scan
 beq r2 2 Move
 beq r2 3 Recover
 j Invalid
 Scan:
-get r3 db 3
-get r4 db 4
-get r5 db 5
-get r6 db 6
-get r7 db 7
+get r3 db 18
+get r4 db 19
+get r5 db 20
+get r6 db 21
+get r7 db 22
 blez r5 Invalid
 s d0 Setting r3
 jal Idle
@@ -58,9 +59,9 @@ j Reply
 Move:
 ls r0 d0 0 Occupied
 bnez r0 Fault
-get r3 db 3
-get r4 db 4
-get r7 db 7
+get r3 db 18
+get r4 db 19
+get r7 db 22
 s d0 Setting r3
 jal Idle
 s d0 TargetSlotIndex r4
@@ -82,8 +83,8 @@ ls r0 d0 0 Occupied
 beqz r0 Fault
 ls r13 d0 0 Quantity
 Drop:
-get r5 db 5
-get r6 db 6
+get r5 db 20
+get r6 db 21
 s d0 Setting r5
 jal Idle
 s d0 TargetSlotIndex r6

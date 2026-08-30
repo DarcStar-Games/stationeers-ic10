@@ -66,14 +66,15 @@ Magic `31416051`, ABI 1.
 ```text
 S0  magic
 S1  ABI
-S2  RequestToken                caller publishes LAST
-S3  ResponseToken               probe publishes LAST
-S4  Status: 1 complete, -1 bad config generation,
+S2  capability mask = 0
+S10 RequestToken                caller publishes LAST
+S11 ResponseToken               probe publishes LAST
+S12 Status: 1 complete, -1 bad config generation,
             -2 one or more observations failed, -3 descriptor changed during capture
-S5  successful observation count
-S6  DescriptorGeneration        caller increments after descriptor edits
-S7  captured DescriptorGeneration
-S9  first failing observation ordinal, -1 if none
+S13 successful observation count
+S14 DescriptorGeneration        caller increments after descriptor edits
+S15 captured DescriptorGeneration
+S17 first failing observation ordinal, -1 if none
 ```
 
 Six descriptors live at `S32..S49`, three cells each:

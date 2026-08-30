@@ -42,6 +42,44 @@ SOFT_LIMIT_EXEMPTIONS = {
         "publishes the common S0 header; its Generic Telemetry block stays at S96",
     "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10":
         "publishes the common S0 header; its Generic Telemetry block stays at S96",
+    "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10":
+        "publishes the common S0 header with its Feeder ABI1 payload relocated above it",
+    "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10":
+        "publishes the common S0 header with its Feeder ABI1 payload relocated above it",
+    "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10":
+        "publishes the common S0 header with its Endpoint ABI1 payload relocated above it",
+    "ic10/controller-config/generic_persistent_config_host_v1_1.ic10":
+        "publishes the common S0 header above its banked A/B config storage",
+    "ic10/controller-config/generic_config_loader_v1_2.ic10":
+        "gains the common S0 header and a newly registered service magic",
+    "ic10/printer-directory/printer_execution_bank_v2_0.ic10":
+        "publishes the common S0 header above its six-pin ownership arrays",
+    "ic10/printer-directory/printer_capacity_client_v2_0.ic10":
+        "publishes the common S0 header with its request mailbox relocated above it",
+    "ic10/generic-jobs/generic_job_store_v1_0.ic10":
+        "publishes the common S0 header above its 32-slot durable job records",
+    "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10":
+        "publishes the common S0 header above its four producer lanes",
+    "ic10/generic-jobs/generic_job_selector_v3_0.ic10":
+        "publishes the common S0 header with its request mailbox relocated above it",
+    "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10":
+        "publishes the common S0 header with its inventory payload relocated above it",
+    "ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10":
+        "publishes the common S0 header with its request mailbox relocated above it",
+    "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10":
+        "publishes the common S0 header above its candidate-route table",
+    "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10":
+        "publishes the common S0 header with its request mailbox relocated above it",
+    "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10":
+        "publishes the common S0 header above its dynamic item heap and directory",
+    "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10":
+        "publishes the common S0 header above its A/B snapshot banks",
+    "ic10/dependency-planning/dependency_claim_view_v1_0.ic10":
+        "claim lookup + shared-claim count pass publishing the common header above its"
+        " relocated request mailbox",
+    "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10":
+        "existing/new plan orchestration publishing the common header above its relocated"
+        " request and cleanup mailboxes",
 }
 
 

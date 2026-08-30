@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
-  "source_sha256": "76ce80204804aee5797e958619a7cd92dd00509f782a7a90e9a91823760827a9",
+  "source_sha256": "5b4bba080e415fac1f80f2666a736cd775a212333f6e2de3920074d6923107a7",
   "identity": {
     "service_id": "ic10.script.controller.pressure.domain.runtime",
     "implementation_revision": "1.2",
@@ -121,10 +121,10 @@
           14
         ],
         "literal_writes": [
-          3,
-          4,
-          5,
-          6
+          15,
+          16,
+          17,
+          18
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -142,8 +142,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.24e89f4526366b1b",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.24e89f4526366b1b",
+        "interface_id": "ic10.interface.access.a6d25c385377d66b",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.a6d25c385377d66b",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -183,7 +183,7 @@
           "source_port": "d5",
           "address": 101,
           "fence": {
-            "address": 5,
+            "address": 51,
             "kind": "generation",
             "description": "Config Host generation must be positive and unchanged around the LogicType read."
           }
@@ -232,7 +232,7 @@
           "source_port": "d5",
           "address": 102,
           "fence": {
-            "address": 5,
+            "address": 51,
             "kind": "generation",
             "description": "Config Host generation must be positive and unchanged around the LogicType read."
           }
@@ -266,9 +266,9 @@
       },
       "stack": {
         "literal_reads": [
-          5,
           8,
-          12
+          12,
+          51
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -292,8 +292,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.c682e555c18d6058",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.c682e555c18d6058",
+        "interface_id": "ic10.interface.access.e3fc86f8b97f6e44",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.e3fc86f8b97f6e44",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [

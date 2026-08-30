@@ -55,7 +55,7 @@ map_src=no_alias(src('ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10'),{
 map_src=re.sub(r'move r10 17320509\nmove r11 17320508\nmove r12 16180339\nmove r7 1\nValidateService:\nblez rr7 NoService\ngetd r0 rr7 0\nadd r8 r7 9\nbne r0 rr8 NoService\ngetd r0 rr7 1\nseq r8 r7 2\nselect r8 r8 2 1\nbne r0 r8 NoService\nadd r7 r7 1\nble r7 3 ValidateService\n','',map_src)
 old_controller=Device(706,props={'ReferenceId':706});new_controller=Device(707,props={'ReferenceId':707})
 display=Device(705,props={'ReferenceId':705,'On':1})
-cs=Device(701,stack={0:17320508,1:2,5:706,8:1,13:1},props={'ReferenceId':701})
+cs=Device(701,stack={0:17320508,1:2,17:706,8:1,13:1},props={'ReferenceId':701})
 cons=Device(702,stack={0:17320509,1:1,16:705,17:1,10:0,11:0,14:1},props={'ReferenceId':702})
 renderer=Device(703,stack={0:16180339,1:1,8:0},props={'ReferenceId':703})
 inp=Device(704,stack={0:17320511,1:1,10:1,19:1,20:0,21:6,23:1,24:2,25:1},props={'ReferenceId':704})
@@ -63,12 +63,12 @@ me=IC10(map_src,{'cs':cs,'cons':cons,'renderer':renderer,'input':inp,'display':d
 me.stack.update({8:702,9:701,10:703,13:704})
 me.run(2)
 ck(renderer.stack.get(8,0)==0 and me.stack.get(12)==-2,'Mapping Editor consumed stale Controller Selector success')
-cs.stack.update({5:707,13:2,8:1});me.run(1)
+cs.stack.update({17:707,13:2,8:1});me.run(1)
 ck(renderer.stack.get(8)==1 and renderer.stack.get(65)==707,'Mapping Editor did not commit after Controller Selector token caught up')
 
 # A pending console auto-advance is also part of selector identity and must fence the next commit.
 display2=Device(715,props={'ReferenceId':715,'On':1});controller2=Device(716,props={'ReferenceId':716})
-cs2=Device(711,stack={0:17320508,1:2,5:716,8:1,13:3},props={'ReferenceId':711})
+cs2=Device(711,stack={0:17320508,1:2,17:716,8:1,13:3},props={'ReferenceId':711})
 cons2=Device(712,stack={0:17320509,1:1,16:705,17:1,10:4,11:3,14:2},props={'ReferenceId':712})
 renderer2=Device(713,stack={0:16180339,1:1,8:0},props={'ReferenceId':713})
 inp2=Device(714,stack={0:17320511,1:1,10:1,19:2,20:0,21:6,23:1,24:3,25:2},props={'ReferenceId':714})
@@ -79,12 +79,12 @@ cons2.stack.update({16:715,11:4,17:1});me2.run(1)
 ck(renderer2.stack.get(8)==1 and renderer2.stack.get(64)==715,'Mapping Editor did not resume after console advance token caught up')
 
 # Material Transfer Executor must ignore an old Feeder failure until CurrentToken matches this grant epoch.
-feeder=Device(801,stack={6:-1,7:40,8:40,9:40},props={'ReferenceId':801})
+feeder=Device(801,stack={24:-1,25:40,8:40,9:40},props={'ReferenceId':801})
 mx=IC10(src('ic10/material-grid/material_transfer_executor_v1_0.ic10'),{'d1':feeder},self_ref=802)
-mx.stack.update({2:41,4:0,9:1,10:0,12:900,31:31415958})
+mx.stack.update({14:41,16:0,9:1,10:0,12:900,31:31415958})
 mx.run(2)
-ck(mx.stack.get(9)==1 and mx.stack.get(4)==0,'stale Feeder failure terminated a newer transfer request')
-feeder.stack.update({6:1,7:41,8:41});sink=Device(900,props={'ImportCount':7,'ReferenceId':900});mx.screws['sink']=sink
+ck(mx.stack.get(9)==1 and mx.stack.get(16)==0,'stale Feeder failure terminated a newer transfer request')
+feeder.stack.update({24:1,25:41,8:41});sink=Device(900,props={'ImportCount':7,'ReferenceId':900});mx.screws['sink']=sink
 mx.run(1)
 ck(mx.stack.get(9)==2 and feeder.stack.get(19)==41,'Executor did not advance after Feeder CurrentToken matched')
 

@@ -9,9 +9,9 @@ R=_PROJECT_ROOT
 rank=(R/'ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10').read_text(); sel=(R/'ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10').read_text(); fails=[]
 for reg in ('r4','r5','r6','r7'):
  if f'bnan {reg} Bad' not in rank: fails.append(f'Ranker does not NaN-check {reg}')
-for n in ('get r0 d0 6','bnan r0 Bad','get ra db 11','getd r13 r11 12','getd r13 r12 13','div r0 r0 ra'):
+for n in ('get r0 d0 12','bnan r0 Bad','get ra db 11','getd r13 r11 12','getd r13 r12 13','div r0 r0 ra'):
  if n not in rank: fails.append('Ranker missing '+n)
-if 'get r9 db 5' not in sel or 'put d1 11 r9' not in sel: fails.append('Selector does not pass lease to Ranker')
+if 'get r9 db 35' not in sel or 'put d1 11 r9' not in sel: fails.append('Selector does not pass lease to Ranker')
 def cost(h,s,l,q): return 100*h+25*s+.01*l+100/q
 if not cost(3,2,0,10)<cost(2,1,20000,1): fails.append('reference cost tradeoff failed')
 # remaining reservation example: raw 10 but only 128 moles /64 ticks => 2 rate

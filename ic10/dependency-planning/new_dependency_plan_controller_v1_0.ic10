@@ -1,75 +1,76 @@
 # New-plan decision. d0 Preflight,d1 Builder,d2 JobMonitor.
 poke 0 31416020
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 3
-get r0 db 4
+get r15 db 21
+get r0 db 22
 beq r15 r0 Loop
-get r2 db 2
+get r2 db 20
 blez r2 Bad
-put d2 2 r2
-put d2 3 r15
+put d2 13 r2
+put d2 14 r15
 WaitJob:
 yield
-get r0 d2 4
+get r0 d2 15
 bne r0 r15 WaitJob
-get r0 d2 5
+get r0 d2 16
 bne r0 1 Bad
-get r3 d2 6
-get r4 d2 12
-get r5 d2 7
-get r6 d2 8
-get r7 d2 9
-get r8 d2 10
-get r0 d2 11
+get r3 d2 17
+get r4 d2 23
+get r5 d2 18
+get r6 d2 19
+get r7 d2 20
+get r8 d2 21
+get r0 d2 22
 bne r0 2 Bad
-put d0 2 r5
-put d0 3 r6
-put d0 4 r7
-put d0 5 r15
+put d0 15 r5
+put d0 16 r6
+put d0 17 r7
+put d0 18 r15
 WaitPre:
 yield
-get r0 d0 6
+get r0 d0 19
 bne r0 r15 WaitPre
-get r0 d0 7
+get r0 d0 20
 beq r0 1 Ready
 beq r0 2 Probe
 beq r0 -2 Overflow
 bne r0 3 Bad
-get r9 d0 9
-get r10 d0 10
-get r11 d0 11
-get r12 d0 12
-get r13 d0 13
-get r14 d0 14
-put d1 2 r2
-put d1 3 r3
-put d1 4 r4
-put d1 5 r5
-put d1 6 r6
-put d1 7 r8
-put d1 8 r9
-put d1 9 r12
-put d1 10 r11
-put d1 11 r13
-put d1 12 r14
-put d1 13 r15
+get r9 d0 22
+get r10 d0 23
+get r11 d0 24
+get r12 d0 25
+get r13 d0 26
+get r14 d0 27
+put d1 19 r2
+put d1 20 r3
+put d1 21 r4
+put d1 22 r5
+put d1 23 r6
+put d1 24 r8
+put d1 25 r9
+put d1 26 r12
+put d1 27 r11
+put d1 28 r13
+put d1 29 r14
+put d1 30 r15
 WaitBuild:
 yield
-get r0 d1 14
+get r0 d1 31
 bne r0 r15 WaitBuild
-get r0 d1 15
+get r0 d1 32
 bne r0 1 BuildFail
-get r0 d1 16
-poke 13 r0
-poke 14 r9
-poke 15 r10
-poke 16 r11
-get r0 d1 17
-poke 17 r0
-poke 18 r13
-poke 19 r14
+get r0 d1 33
+poke 31 r0
+poke 32 r9
+poke 33 r10
+poke 34 r11
+get r0 d1 34
+poke 35 r0
+poke 36 r13
+poke 37 r14
 move r0 6
 j Reply
 Ready:
@@ -86,6 +87,6 @@ j Reply
 Bad:
 move r0 -1
 Reply:
-poke 5 r0
-poke 4 r15
+poke 23 r0
+poke 22 r15
 j Loop

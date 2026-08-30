@@ -1,23 +1,24 @@
 # POWER source selector. d0 PowerReservation directory,d1 PlanStore.
 poke 0 31416029
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 3
-get r0 db 4
+get r15 db 12
+get r0 db 13
 beq r15 r0 Loop
-get r6 db 2
+get r6 db 11
 bdns d0 Bad
 bdns d1 Bad
 get r0 d0 0
 bne r0 31415981 Bad
 get r0 d0 9
 bne r0 HASH("DirectorySchema.PowerReservation.v1") Bad
-get r5 d0 2
-add r0 r5 7
+get r5 d0 24
+add r0 r5 29
 get r0 d0 r0
 bgtz r0 Overflow
-add r0 r5 5
+add r0 r5 27
 get r7 d0 r0
 mul r8 r5 192
 add r8 r8 32
@@ -35,11 +36,11 @@ getd r14 r10 12
 blez r14 Find
 getd r0 r10 0
 bne r0 31415950 Find
-getd r0 r10 3
+getd r0 r10 33
 bne r0 4 Find
 getd r0 r10 9
 blez r0 Find
-getd r11 r10 6
+getd r11 r10 36
 blez r11 Find
 get r12 d1 24
 move r13 0
@@ -67,25 +68,25 @@ sub r11 r11 r13
 blez r11 Find
 getd r0 r10 12
 bne r0 r14 Find
-poke 5 1
-poke 6 r10
-poke 7 r11
+poke 14 1
+poke 15 r10
+poke 16 r11
 poke 8 r6
 poke 9 r14
 getd r0 r10 28
 poke 10 r0
 j Reply
 None:
-poke 5 -3
-poke 6 0
-poke 7 0
+poke 14 -3
+poke 15 0
+poke 16 0
 poke 8 r6
 j Reply
 Overflow:
-poke 5 -2
+poke 14 -2
 j Reply
 Bad:
-poke 5 -1
+poke 14 -1
 Reply:
-poke 4 r15
+poke 13 r15
 j Loop

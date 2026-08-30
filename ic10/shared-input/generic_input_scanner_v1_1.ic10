@@ -1,8 +1,10 @@
 # Generic Input Scanner v1.1: classify six interchangeable commissioning screws.
-# S3 Field,S4 Value,S5 Memory,S6 Switch,S7 caps,S8 pins,S9 count,S10 ordinal,S11 Profile.
+# S8 pins,S9 count,S10 ordinal,S11 Profile,S12 gen,S13 Field,S14 Value,S15 Memory,
+# S16 Switch,S17 caps.
 alias ref r1
 poke 0 31415930
 poke 1 1
+poke 2 0
 Loop:
 yield
 move r2 0
@@ -56,11 +58,11 @@ or r7 r7 4
 Next:
 add r2 r2 1
 blt r2 6 Scan
-poke 3 r3
-poke 4 r4
-poke 5 r5
-poke 6 r6
-poke 7 r7
+poke 13 r3
+poke 14 r4
+poke 15 r5
+poke 16 r6
+poke 17 r7
 poke 8 r8
 # S9 is a domain-neutral requested control count; Scanner owns Field Dial mechanics.
 move r9 0
@@ -78,7 +80,7 @@ add r9 r9 1
 Publish:
 poke 10 r9
 poke 11 r11
-get r0 db 2
+get r0 db 12
 add r0 r0 1
-poke 2 r0 # complete hardware snapshot publishes LAST
+poke 12 r0 # complete hardware snapshot publishes LAST
 j Loop

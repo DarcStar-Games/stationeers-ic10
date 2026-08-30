@@ -107,17 +107,18 @@ PressureDomain runtime uses telemetry ABI2. Inventory captures positive `S115`, 
 ```text
 S0   magic = 31415935
 S1   ABI = 2
-S2   PressureDomain RefId
-S3   role
-S4   MediumType
-S5   ExportableMoles
-S6   ImportCapacityMoles
-S7   MolesPerKPa
+S2   capability mask = 0
 S8   MolesPerLiter
 S9   TotalMoles
 S10  Pressure
 S11  status
 S12  publication generation LAST
+S13  PressureDomain RefId
+S14  role
+S15  MediumType
+S16  ExportableMoles
+S17  ImportCapacityMoles
+S18  MolesPerKPa
 ```
 
 Statuses:
@@ -136,12 +137,13 @@ Statuses:
 ```text
 S0  magic = 31415947
 S1  ABI = 1
-S2  MediumType
-S3  observed ratio
-S4  required threshold
-S5  status: 1 good, -1 profile, -2 sensor/property, -3 numeric, -4 contaminated
-S6  Resource Profile View generation used
-S7  publication generation LAST
+S2  capability mask = 0
+S8  MediumType
+S9  observed ratio
+S10 required threshold
+S11 status: 1 good, -1 profile, -2 sensor/property, -3 numeric, -4 contaminated
+S12 Resource Profile View generation used
+S13 publication generation LAST
 ```
 
 ## Commissioning
@@ -150,7 +152,7 @@ Before enabling transfers for a domain:
 
 1. verify the correct PHASE_MEDIUM Resource Profile View is connected to Purity Guard;
 2. verify the analyzer is on the exact network represented by PressureDomain;
-3. confirm Purity Guard `S5=1` and inspect observed ratio versus threshold;
+3. confirm Purity Guard `S11=1` and inspect observed ratio versus threshold;
 4. confirm Inventory role and MediumType match the domain;
 5. confirm Inventory `S11=1` and `S12` advances;
 6. compare reported capacity with expected network volume;

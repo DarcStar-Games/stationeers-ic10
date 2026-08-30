@@ -24,7 +24,7 @@ need(r,'poke 12 r0 # semantic mirror generation LAST','generic reservation')
 if '31415935' in r or 'Pressure' in r.split('\n',1)[1]: fails.append('generic reservation leaked pressure-specific dependency')
 # Generic Resource Link view binds pressure topology to the corresponding generic endpoint providers.
 l=(R/'ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10').read_text()
-for n in ('poke 0 31415953','getd r11 r7 2','getd r12 r8 2','getd r0 r9 9','getd r0 r10 9','poke 12 r0'):
+for n in ('poke 0 31415953','getd r11 r7 16','getd r12 r8 16','getd r0 r9 9','getd r0 r10 9','poke 12 r0'):
     need(l,n,'pressure resource link adapter')
 # Resource discovery uses independent 64-entry endpoint/link directories with explicit overflow.
 ed=(R/'ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10').read_text()
@@ -36,7 +36,7 @@ for n in ('poke 0 31415983','poke 3 HASH("DirectorySchema.ResourceLink.v1")','po
     need(ld,n,'resource link adapter')
 for n in ('put d1 11 r2','put d1 12 r3','move r6 2'):
     need(bridge,n,'generic directory adapter bridge')
-for n in ('poke 0 31415981','poke 1 1','poke 31 31415981','bgt r3 64 Error','poke 22 1','poke 2 r6'):
+for n in ('poke 0 31415981','poke 1 1','poke 31 31415981','bgt r3 64 Error','poke 22 1','poke 24 r6'):
     need(dh,n,'generic snapshot directory host')
 
 # Resource Reservation discovery and Item-7 storage providers reuse the same generic substrate.

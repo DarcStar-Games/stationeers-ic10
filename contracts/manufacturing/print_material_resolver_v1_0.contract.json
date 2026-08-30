@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/print_material_resolver_v1_0.ic10",
-  "source_sha256": "f722876b18223155780d5b9f3bfbfa7629237799bfc68f12363a06d9ef69f330",
+  "source_sha256": "1196d56274c636aea4b62fe73d36adaf4950188d4984ec72958102a966bb4ca3",
   "identity": {
     "service_id": "ic10.script.print.material.resolver",
     "implementation_revision": "1.0",
@@ -25,9 +25,9 @@
       },
       "stack": {
         "literal_reads": [
-          5,
-          6,
-          7
+          13,
+          14,
+          15
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -43,7 +43,7 @@
         "dynamic_write_range_source": "none",
         "constraints": [
           {
-            "address": 7,
+            "address": 15,
             "equals": 1
           }
         ]
@@ -51,8 +51,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.5a2fb57c9ed68784",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.5a2fb57c9ed68784",
+        "interface_id": "ic10.interface.access.f5584873aecdb745",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.f5584873aecdb745",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -75,14 +75,14 @@
       },
       "stack": {
         "literal_reads": [
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9
+          9,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -106,8 +106,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.e26de14e8131b33e",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.e26de14e8131b33e",
+        "interface_id": "ic10.interface.access.0a350912279be68a",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.0a350912279be68a",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -123,12 +123,12 @@
       "transport": "reference-id",
       "reference": "r1",
       "literal_reads": [
-        2,
-        3,
-        5,
         9,
         22,
-        27
+        27,
+        28,
+        29,
+        31
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -140,7 +140,7 @@
       "transport": "reference-id",
       "reference": "r3",
       "literal_reads": [
-        6
+        36
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -152,7 +152,7 @@
       "transport": "reference-id",
       "reference": "r4",
       "literal_reads": [
-        7
+        37
       ],
       "literal_writes": [],
       "dynamic_read": false,

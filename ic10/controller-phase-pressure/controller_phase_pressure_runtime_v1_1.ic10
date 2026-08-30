@@ -19,7 +19,7 @@ sne ra r0 sp
 poke 116 r0
 get r0 d2 8
 blez r0 ConfigBad
-get sp d2 5
+get sp d2 51
 get r0 db 117
 bnez ra Reload
 beq sp r0 Profile
@@ -34,7 +34,7 @@ bnan rr0 ConfigBad
 add ra ra 1
 add r0 r0 1
 ble r0 9 Load
-get r0 d2 5
+get r0 d2 51
 bne r0 sp Loop
 poke 117 sp
 Profile:

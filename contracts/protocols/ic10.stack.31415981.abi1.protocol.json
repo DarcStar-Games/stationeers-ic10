@@ -57,26 +57,7 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read",
             "self-write"
-          ]
-        },
-        {
-          "address": 3,
-          "name": "S3",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
           ]
         },
         {
@@ -165,6 +146,34 @@
           ]
         },
         {
+          "address": 24,
+          "name": "S24",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 25,
+          "name": "S25",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 26,
+          "name": "S26",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
           "address": 31,
           "name": "S31",
           "value_type": "number",
@@ -196,12 +205,12 @@
       "literal_reads": [
         0,
         1,
-        2,
         14,
         15,
         20,
         21,
-        22
+        22,
+        24
       ],
       "literal_writes": [
         9,
@@ -249,8 +258,8 @@
       "literal_reads": [
         0,
         1,
-        2,
-        9
+        9,
+        24
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
@@ -291,8 +300,8 @@
       "literal_reads": [
         0,
         1,
-        2,
-        9
+        9,
+        24
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
@@ -333,9 +342,9 @@
       "literal_reads": [
         0,
         1,
-        2,
         9,
-        11
+        11,
+        24
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
@@ -381,8 +390,8 @@
       "literal_reads": [
         0,
         1,
-        2,
-        9
+        9,
+        24
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
@@ -423,9 +432,9 @@
       "literal_reads": [
         0,
         1,
-        2,
         9,
-        11
+        11,
+        24
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
@@ -471,9 +480,9 @@
       "literal_reads": [
         0,
         1,
-        2,
         9,
-        11
+        11,
+        24
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
@@ -519,9 +528,9 @@
       "literal_reads": [
         0,
         1,
-        2,
         9,
-        11
+        11,
+        24
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [

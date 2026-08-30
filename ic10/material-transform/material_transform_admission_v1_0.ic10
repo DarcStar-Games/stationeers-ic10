@@ -82,15 +82,15 @@ get r0 d2 0
 bne r0 31415950 Bad
 get r0 d2 1
 bne r0 1 Bad
-get r0 d2 3
+get r0 d2 33
 bne r0 2 Bad
-get r0 d2 4
+get r0 d2 34
 bne r0 r11 Bad
 get r0 d2 10
 bne r0 r12 Bad
 get r0 d2 9
 blez r0 Bad
-get r0 d2 7
+get r0 d2 37
 blt r0 r13 Bad
 get r0 d2 12
 bne r0 r6 Loop

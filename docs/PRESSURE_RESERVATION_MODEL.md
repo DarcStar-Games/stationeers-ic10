@@ -49,12 +49,7 @@ The Reservation Allocator is the intended sole writer of `ReservedExportMoles` a
 ```text
 S0   magic = 31415936
 S1   ABI = 1
-S2   Inventory ReferenceId
-S3   PressureDomain ReferenceId
-S4   role: 1 LOW, 2 HIGH, 3 STORAGE
-S5   MediumType
-S6   ExportableMoles
-S7   ImportCapacityMoles
+S2   capability mask = 0
 S8   MolesPerKPa
 S9   MolesPerLiter
 S10  Inventory status
@@ -63,6 +58,12 @@ S12  ReservedExportMoles       # Allocator-owned
 S13  ReservedImportMoles       # Allocator-owned
 S14  build epoch               # Allocator-owned
 S15  owning Planner RefId      # Allocator-owned
+S16  Inventory ReferenceId
+S17  PressureDomain ReferenceId
+S18  role: 1 LOW, 2 HIGH, 3 STORAGE
+S19  MediumType
+S20  ExportableMoles
+S21  ImportCapacityMoles
 ```
 
 When a new build epoch first touches an endpoint, Allocator resets the stale counters, records the new owner, and records the epoch. Abandoned-build counters therefore cannot silently carry into a later epoch.
@@ -74,23 +75,23 @@ When a new build epoch first touches an endpoint, Allocator resets the stale cou
 Request:
 
 ```text
-S2   Planner RefId
-S3   build epoch
-S4   MediumType
-S5   PressureTransfer RefId
-S6   request generation; LAST
 S10  admission mode: 1 fallback, 2 direct, 3 path hop
 S11  maximum requested mol/tick
+S13  Planner RefId
+S14  build epoch
+S15  MediumType
 S16  operation: 1 QUOTE, 0 COMMIT
+S17  PressureTransfer RefId
+S18  request generation; LAST
 ```
 
 Response:
 
 ```text
-S7   committed lease moles; 0 for QUOTE
 S8   1 admissible/granted, 0 no grant, -1 rejected
 S9   response generation; LAST
 S12  admissible/committed mol/tick
+S19  committed lease moles; 0 for QUOTE
 ```
 
 ### QUOTE
@@ -174,12 +175,13 @@ Grant Guard publishes:
 ```text
 S0  magic = 31415948
 S1  ABI = 1
-S2  active GrantMolesPerTick
-S3  remaining lease ticks
-S4  status: 1 active, 0 off, -1 fault
-S5  active committed epoch
-S6  Transfer RefId
-S7  publication generation LAST
+S2  capability mask = 0
+S8  active GrantMolesPerTick
+S14 remaining lease ticks
+S15 status: 1 active, 0 off, -1 fault
+S16 active committed epoch
+S17 Transfer RefId
+S18 publication generation LAST
 ```
 
 The physical Transfer rechecks Guard generation and locally caps the granted rate by current physical capacity every tick.

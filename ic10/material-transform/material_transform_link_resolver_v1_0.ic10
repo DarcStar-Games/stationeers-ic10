@@ -30,13 +30,13 @@ get r0 d2 1
 bne r0 1 Bad
 get r0 d2 9
 bne r0 HASH("DirectorySchema.ResourceLink.v1") Bad
-get r12 d2 2
-add r0 r12 3
+get r12 d2 24
+add r0 r12 25
 get r11 d2 r0
-add r0 r12 7
+add r0 r12 29
 get r0 d2 r0
 bgtz r0 Bad
-add r0 r12 5
+add r0 r12 27
 get r10 d2 r0
 mul r9 r12 64
 add r9 r9 32
@@ -61,26 +61,26 @@ getd r0 r1 1
 bne r0 1 Find
 getd r0 r1 9
 blez r0 Find
-getd r0 r1 4
+getd r0 r1 30
 bne r0 2 Find
-getd r0 r1 5
+getd r0 r1 31
 bne r0 r5 Find
 getd r0 r1 22
 bne r0 r3 Find
-getd r15 r1 2
+getd r15 r1 28
 getd r0 r15 0
 bne r0 31415950 Find
 getd r0 r15 1
 bne r0 1 Find
-getd r0 r15 3
+getd r0 r15 33
 bne r0 2 Find
-getd r0 r15 4
+getd r0 r15 34
 bne r0 r5 Find
 getd r0 r15 10
 bne r0 2 Find
 getd r0 r15 9
 blez r0 Find
-getd r0 r15 6
+getd r0 r15 36
 blt r0 r8 Find
 mul r0 r7 4
 add r0 r0 20
@@ -100,11 +100,11 @@ get r0 d1 69
 bne r0 1 Loop
 get r0 d1 74
 bne r0 r13 Loop
-get r0 d2 2
+get r0 d2 24
 bne r0 r12 Loop
 get r0 d0 9
 bne r0 r14 Loop
-add r0 r12 3
+add r0 r12 25
 get r0 d2 r0
 bne r0 r11 Loop
 poke 8 r2

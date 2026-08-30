@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_transformer_link_v1_0.ic10",
-  "source_sha256": "f61595afa82078f1cbdda2a2085e34a5162cbc33f0d2d350a5a1db94a74c208d",
+  "source_sha256": "016d066c39f0031f25ded2ed8735ee301c44d0bac022646d27e66da4ab72e0df",
   "identity": {
     "service_id": "ic10.script.power.transformer.link",
     "implementation_revision": "1.0",
@@ -71,8 +71,8 @@
       "stack": {
         "literal_reads": [
           0,
-          3,
-          12
+          12,
+          33
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -87,7 +87,7 @@
             "equals": 31415950
           },
           {
-            "address": 3,
+            "address": 33,
             "equals": 4
           }
         ]
@@ -95,8 +95,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.475bcb2ceb11c447",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.475bcb2ceb11c447",
+        "interface_id": "ic10.interface.access.76c7273117e1f339",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.76c7273117e1f339",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -124,8 +124,8 @@
       "stack": {
         "literal_reads": [
           0,
-          3,
-          12
+          12,
+          33
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -140,7 +140,7 @@
             "equals": 31415950
           },
           {
-            "address": 3,
+            "address": 33,
             "equals": 4
           }
         ]
@@ -148,8 +148,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.475bcb2ceb11c447",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.475bcb2ceb11c447",
+        "interface_id": "ic10.interface.access.76c7273117e1f339",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.76c7273117e1f339",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -174,18 +174,19 @@
       0,
       1,
       2,
-      3,
-      4,
-      5,
-      6,
-      7,
       8,
       9,
       10,
       11,
       12,
       13,
-      14
+      14,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -226,55 +227,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
         ],
-        "const": 4
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": "HASH(\"Power.Electrical\")"
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 2
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
+        "const": 0
       },
       {
         "address": 8,
@@ -358,6 +312,63 @@
         "semantic_source": "unresolved",
         "access": [
           "self-read"
+        ]
+      },
+      {
+        "address": 28,
+        "name": "S28",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 29,
+        "name": "S29",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 30,
+        "name": "S30",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 4
+      },
+      {
+        "address": 31,
+        "name": "S31",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": "HASH(\"Power.Electrical\")"
+      },
+      {
+        "address": 32,
+        "name": "S32",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 2
+      },
+      {
+        "address": 33,
+        "name": "S33",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
         ]
       }
     ],

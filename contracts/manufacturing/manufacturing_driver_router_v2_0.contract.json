@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10",
-  "source_sha256": "58bbb691b29067ad2f38a3a7b4c0ce1d587baf91fd0fad531ca40676090e8dca",
+  "source_sha256": "45a6ec3fd6855bc2b405bcd59b0f2d5cfca78274136257c96dc259728b544d75",
   "identity": {
     "service_id": "ic10.script.manufacturing.driver.router",
     "implementation_revision": "2.0",
@@ -121,13 +121,13 @@
       },
       "stack": {
         "literal_reads": [
-          7,
           8,
           9,
           10,
           11,
           12,
-          13
+          13,
+          24
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -141,8 +141,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.2a342e0e8381af81",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.2a342e0e8381af81",
+        "interface_id": "ic10.interface.access.444222317cd47830",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.444222317cd47830",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

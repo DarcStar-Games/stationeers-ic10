@@ -6,7 +6,8 @@ poke 31 31415958
 Init:
 poke 0 31415958
 poke 1 1
-poke 7 0
+poke 2 0
+poke 19 0
 Loop:
 yield
 get r15 db 9
@@ -23,10 +24,10 @@ Idle:
 jal Grant
 j Publish
 WaitReady:
-get r1 db 2
-get r0 d1 7
+get r1 db 14
+get r0 d1 25
 bne r0 r1 Publish
-get r0 d1 6
+get r0 d1 24
 bltz r0 Fail
 beqz r0 Publish
 get r2 db 12
@@ -36,10 +37,10 @@ put d1 19 r1
 poke 9 2
 j Publish
 WaitEmit:
-get r1 db 2
-get r0 d1 7
+get r1 db 14
+get r0 d1 25
 bne r0 r1 Publish
-get r0 d1 6
+get r0 d1 24
 bltz r0 Fail
 bne r0 2 Publish
 poke 9 3
@@ -49,62 +50,62 @@ get r2 db 12
 ld r3 r2 ImportCount
 get r4 db 13
 beq r3 r4 Publish
-get r4 db 2
-poke 3 r4
-poke 4 1
+get r4 db 14
+poke 15 r4
+poke 16 1
 get r5 db 8
 get r6 db 10
 div r5 r5 r6
-poke 5 r5
-poke 6 r6
+poke 17 r5
+poke 18 r6
 poke 9 0
 j Publish
 Fail:
-get r4 db 2
-poke 3 r4
-poke 4 -1
+get r4 db 14
+poke 15 r4
+poke 16 -1
 poke 9 0
 Publish:
-get r0 db 7
+get r0 db 19
 add r0 r0 1
-poke 7 r0
+poke 19 r0
 j Loop
 Grant:
 bdns d0 ra
 bdns d1 ra
 bdns d2 ra
-get r14 d2 6
+get r14 d2 13
 blez r14 ra
 get r0 d2 0
 bne r0 31415960 ra
 get r0 d2 1
 bne r0 1 ra
-get r0 d2 4
+get r0 d2 11
 bne r0 1 ra
 l r1 d0 ReferenceId
-get r0 d2 5
+get r0 d2 12
 bne r0 r1 ra
-get r2 d2 2
-get r3 d2 3
-get r0 d2 6
+get r2 d2 9
+get r3 d2 10
+get r0 d2 13
 bne r0 r14 ra
 blez r2 ra
-get r0 db 2
+get r0 db 14
 beq r0 r3 ra
 get r14 d0 12
 blez r14 ra
-get r4 d0 5
+get r4 d0 31
 get r5 d0 16
 get r12 d0 22
 get r0 d0 12
 bne r0 r14 ra
 l r0 d1 ReferenceId
 bne r0 r5 FailGrant
-poke 2 r3
+poke 14 r3
 poke 8 r2
 poke 11 r4
 poke 12 r12
-poke 4 0
+poke 16 0
 poke 10 0
 put d1 16 r4
 put d1 17 r2
@@ -113,7 +114,7 @@ put d1 18 r3 # RequestToken LAST after complete Feeder payload
 poke 9 1
 j ra
 FailGrant:
-poke 2 r3
-poke 3 r3
-poke 4 -1
+poke 14 r3
+poke 15 r3
+poke 16 -1
 j ra

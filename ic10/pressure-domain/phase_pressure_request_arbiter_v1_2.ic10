@@ -1,15 +1,16 @@
 poke 0 31415933
 poke 1 1
+poke 2 0
 Loop:
 yield
 beqz r15 Start
-get r0 db 6
+get r0 db 18
 bne r0 r4 Start
-get r0 db 5
+get r0 db 17
 bne r0 r3 Start
-get r0 d0 2
+get r0 d0 24
 bne r0 r6 Start
-add sp r6 3
+add sp r6 25
 get r0 d0 sp
 bne r0 r7 Start
 bge r9 r8 Commit
@@ -53,20 +54,20 @@ get r0 d0 1
 bne r0 1 BadDirectory
 get r0 d0 9
 bne r0 HASH("DirectorySchema.Controller.v1") BadDirectory
-get r1 db 3
-get r2 db 4
-get r3 db 5
-get r4 db 6
+get r1 db 15
+get r2 db 16
+get r3 db 17
+get r4 db 18
 blez r4 BadContext
 blt r2 1 BadContext
 bgt r2 2 BadContext
-get r6 d0 2
-add sp r6 7
+get r6 d0 24
+add sp r6 29
 get r0 d0 sp
 bgtz r0 BadDirectory
-add sp r6 3
+add sp r6 25
 get r7 d0 sp
-add sp r6 5
+add sp r6 27
 get r8 d0 sp
 clamp r8 r8 0 64
 move r9 0
@@ -76,13 +77,13 @@ move r11 0
 move r15 1
 bnez r1 Loop
 Commit:
-get r0 db 6
+get r0 db 18
 bne r0 r4 Start
-get r0 db 5
+get r0 db 17
 bne r0 r3 Start
-get r0 d0 2
+get r0 d0 24
 bne r0 r6 Start
-add sp r6 3
+add sp r6 25
 get r0 d0 sp
 bne r0 r7 Start
 select r13 r11 r2 0
@@ -107,9 +108,9 @@ poke 8 0
 poke 9 0
 poke 10 r13
 poke 11 0
-get r0 db 6
+get r0 db 18
 poke 13 r0
-get r0 db 5
+get r0 db 17
 poke 14 r0
 get r0 db 12
 add r0 r0 1

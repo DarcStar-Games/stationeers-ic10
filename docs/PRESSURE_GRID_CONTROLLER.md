@@ -72,7 +72,7 @@ The boundaries are deliberate:
 Controller family:
 
 - `ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10`
-- `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` — select `S2=HASH("ControllerPressureTransfer")`, `S3=1` from the shared Input Profile Catalog
+- `ic10/input-profile-catalog/input_profile_view_v5_0.ic10` — select `S8=HASH("ControllerPressureTransfer")`, `S9=1` from the shared Input Profile Catalog
 - `ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10`
 
 Inventory/reservation:
@@ -422,7 +422,7 @@ It is intentionally **not** the activation authority.
 ```text
 S0   magic = 31415937
 S1   ABI = 2
-S7   LeaseTicks
+S11  LeaseTicks
 S8   staged physical-link count
 S9   reserved end-to-end moles summary
 S10  status

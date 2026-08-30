@@ -1,6 +1,7 @@
 # Pressure Medium Purity Guard v1.0: d0 Pipe Analyzer,d1 Resource Profile View.
 poke 0 31415947
 poke 1 1
+poke 2 0
 Loop:
 yield
 bdns d1 ProfileBad
@@ -55,12 +56,12 @@ Fault:
 move r1 0
 move r5 0
 Publish:
-poke 2 r1
-poke 3 r5
-poke 4 r3
-poke 5 r6
-poke 6 r15
-get r0 db 7
+poke 8 r1
+poke 9 r5
+poke 10 r3
+poke 11 r6
+poke 12 r15
+get r0 db 13
 add r0 r0 1
-poke 7 r0
+poke 13 r0
 j Loop

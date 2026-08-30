@@ -1,13 +1,14 @@
 Boot: # Generic Registry Directory Host ABI3: CatalogStoreNode persistent registry.
-yield
 get r0 db 0
 bne r0 31415982 Init
 get r0 db 1
-beq r0 3 Loop
+beq r0 3 Header
 Init:
 clr db
+Header:
 poke 0 31415982
 poke 1 3
+poke 2 1
 Loop:
 yield
 bdns d0 Loop
@@ -37,7 +38,7 @@ get r15 d0 13
 mod r0 r15 2
 bnez r0 SourceBad
 get r14 d0 7
-get r0 db 3
+get r0 db 25
 beq r14 r0 Release
 get r13 d0 12
 get r10 db 23
@@ -101,11 +102,11 @@ poke 16 -1
 j Close
 Publish:
 get r0 d0 3
-poke 2 r0
-poke 3 r14
-get r0 db 4
+poke 3 r0
+poke 25 r14
+get r0 db 26
 add r0 r0 1
-poke 4 r0
+poke 26 r0
 poke 20 6
 poke 21 64
 Close:

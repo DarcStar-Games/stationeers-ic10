@@ -1,9 +1,10 @@
 # Transformer POWER Resource Link ABI1; transformer d0, reservations d1/d2.
 poke 0 31415953
 poke 1 1
-poke 4 4
-poke 5 HASH("Power.Electrical")
-poke 6 2
+poke 2 0
+poke 30 4
+poke 31 HASH("Power.Electrical")
+poke 32 2
 poke 13 3
 Loop:
 yield
@@ -18,9 +19,9 @@ get r0 d1 0
 bne r0 31415950 Bad
 get r0 d2 0
 bne r0 31415950 Bad
-get r0 d1 3
+get r0 d1 33
 bne r0 4 Bad
-get r0 d2 3
+get r0 d2 33
 bne r0 4 Bad
 l r1 d1 ReferenceId
 l r2 d2 ReferenceId
@@ -45,9 +46,9 @@ get r0 d1 12
 bne r0 r14 Loop
 get r0 d2 12
 bne r0 r15 Loop
-poke 2 r1
-poke 3 r2
-poke 7 r3
+poke 28 r1
+poke 29 r2
+poke 33 r3
 get r0 db 21
 max r0 r0 0
 poke 8 r0
@@ -60,7 +61,7 @@ add r0 r0 1
 poke 12 r0
 j Loop
 Bad:
-poke 7 0
+poke 33 0
 poke 9 -1
 get r0 db 12
 add r0 r0 1

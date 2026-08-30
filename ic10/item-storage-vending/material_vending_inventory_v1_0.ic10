@@ -1,11 +1,12 @@
 # Material Vending Inventory: d0 Vending,d1 Resource Profile View -> Endpoint ABI1.
 poke 0 31415949
 poke 1 1
+poke 2 0
 l r0 d1 ReferenceId
 poke 14 r0
 poke 35 HASH("StorageAccess.Vending")
-poke 2 2 # ResourceClass ITEM
-poke 4 7 # export + import + storage
+poke 52 2 # ResourceClass ITEM
+poke 54 7 # export + import + storage
 poke 12 2 # Unit ITEM_QUANTITY
 poke 13 3 # exact export + exact import
 poke 11 0
@@ -84,10 +85,10 @@ and sp r0 9
 select r9 sp 0 r9
 and sp r0 10
 select r10 sp 0 r10
-poke 3 r2
-poke 5 r9
-poke 6 r10
-poke 7 0 # chute throughput unknown here
+poke 53 r2
+poke 55 r9
+poke 56 r10
+poke 57 0 # chute throughput unknown here
 poke 8 1
 poke 9 r1
 add r0 r6 r7
@@ -101,9 +102,9 @@ poke 11 r0
 move r15 r14
 j Start
 Bad:
-poke 5 0
-poke 6 0
-poke 7 0
+poke 55 0
+poke 56 0
+poke 57 0
 poke 8 -1
 get r0 db 11
 add r0 r0 1

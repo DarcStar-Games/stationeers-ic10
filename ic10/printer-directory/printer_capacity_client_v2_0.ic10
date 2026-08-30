@@ -1,18 +1,19 @@
 # Printer Capacity Client ABI2: exact-ref, retry-safe reserve/release.
 poke 0 31415997
 poke 1 2
+poke 2 0
 Loop:
 yield
-get r15 db 5
-get r0 db 6
+get r15 db 15
+get r0 db 16
 beq r15 r0 Loop
-get r0 db 4
+get r0 db 14
 beq r0 1 Reserve
 beq r0 2 Release
 j Bad
 Reserve:
-get r4 db 2
-get r2 db 3
+get r4 db 12
+get r2 db 13
 blez r4 Bad
 blez r15 Bad
 div r0 r2 65536
@@ -115,6 +116,6 @@ j Reply
 Bad:
 move r0 -1
 Reply:
-poke 7 r0
-poke 6 r15
+poke 17 r0
+poke 16 r15
 j Loop

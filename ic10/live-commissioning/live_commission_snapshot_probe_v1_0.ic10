@@ -1,16 +1,17 @@
 # Live Commission Snapshot Probe ABI1. d0..d5 sources; config S32..49, results S64..93.
 poke 0 31416051
 poke 1 1
-poke 3 0
+poke 2 0
+poke 11 0
 Loop:
 yield
-get r15 db 2
-get r0 db 3
+get r15 db 10
+get r0 db 11
 beq r15 r0 Loop
-poke 4 0
-poke 5 0
-poke 9 -1
-get r14 db 6
+poke 12 0
+poke 13 0
+poke 17 -1
+get r14 db 14
 blez r14 ConfigBad
 move r0 0
 move r1 32
@@ -80,22 +81,22 @@ add r2 r2 1
 blez r3 Next
 bgtz r6 Good
 move r13 -2
-get r10 db 9
+get r10 db 17
 bgez r10 Next
-poke 9 r0
+poke 17 r0
 j Next
 Good:
-get r10 db 5
+get r10 db 13
 add r10 r10 1
-poke 5 r10
+poke 13 r10
 Next:
 add r0 r0 1
 blt r0 6 Scan
-get r0 db 6
+get r0 db 14
 bne r0 r14 ConfigChanged
-poke 7 r14
-poke 4 r13
-poke 3 r15
+poke 15 r14
+poke 12 r13
+poke 11 r15
 j Loop
 ConfigBad:
 move r13 -1
@@ -103,6 +104,6 @@ j Fail
 ConfigChanged:
 move r13 -3
 Fail:
-poke 4 r13
-poke 3 r15
+poke 12 r13
+poke 11 r15
 j Loop

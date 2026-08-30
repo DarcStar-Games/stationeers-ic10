@@ -32,7 +32,7 @@ ck(storage_compatible(1,2,1,2) and not storage_compatible(1,1,1,2),'ABI compatib
 
 # Actual Job Store: same magic + incompatible ABI must reset rather than interpret old geometry.
 job=(R/'ic10/generic-jobs/generic_job_store_v1_0.ic10').read_text();vm=IC10(job)
-vm.stack={0:31415984,1:99,2:7,23:55,288:1,289:12,290:44,291:-5}
+vm.stack={0:31415984,1:99,16:7,23:55,288:1,289:12,290:44,291:-5}
 vm.run(1)
 ck(vm.stack.get(0)==31415984 and vm.stack.get(1)==1,'Job Store did not reset incompatible ABI')
 ck(vm.stack.get(2,0)==0 and vm.stack.get(23)==1 and vm.stack.get(288,0)==0,'Job Store interpreted incompatible durable geometry')
@@ -40,12 +40,12 @@ ck(vm.stack.get(2,0)==0 and vm.stack.get(23)==1 and vm.stack.get(288,0)==0,'Job 
 # Actual Config Host: a durable request generation is acknowledged after reflash without recommit.
 host=(R/'ic10/controller-config/generic_persistent_config_host_v1_1.ic10').read_text();vm=IC10(host)
 sig=777;image=[200+i for i in range(8)]
-vm.stack={10:1,12:sig,13:1,6:7,7:6,5:3}
+vm.stack={10:1,12:sig,13:1,52:7,53:6,51:3}
 for i,v in enumerate(image):vm.stack[160+i]=v
 vm.stack.update({224:sig,225:7,226:4})
 vm.run(2)
 ck(vm.stack.get(9)==7,'Config Host did not restore durable config revision')
-ck(vm.stack.get(7)==7 and vm.stack.get(11)==5,'Config Host did not acknowledge already-durable request')
+ck(vm.stack.get(53)==7 and vm.stack.get(11)==5,'Config Host did not acknowledge already-durable request')
 ck(vm.stack.get(25)==4,'Config Host replay acknowledgement performed another bank commit')
 ck([vm.stack.get(96+i,0) for i in range(8)]==image,'Config Host did not republish durable image')
 

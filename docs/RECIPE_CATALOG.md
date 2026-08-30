@@ -85,16 +85,16 @@ It is the compact family/ordinal browser and intentionally does not republish re
 Request:
 
 ```text
-S3 FamilyHash
-S4 maximum RequiredCapability
-S5 FamilyOrdinal
-S6 request generation
+S12 FamilyHash
+S13 maximum RequiredCapability
+S14 FamilyOrdinal
+S15 request generation
 ```
 
 Response:
 
 ```text
-S7  response generation
+S16 response generation
 S8  status: 1 found, -1 bad request, -2 catalog invalid, -3 not found
 S9  eligible recipe count for family/capability
 S10 RecipeHash
@@ -114,7 +114,7 @@ Roadmap item 6 adds `ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10
 Request:
 
 ```text
-S2 RecipeHash
+S10 RecipeHash
 ```
 
 Publication:
@@ -122,17 +122,18 @@ Publication:
 ```text
 S0  31415985
 S1  ABI 1
-S3  FamilyHash
-S4  RequiredCapability
-S5  InputCount
-S6  Store publication generation
-S7  status: 1 ready, -2 invalid catalog, -3 missing
-S8..S39 [ManufacturingReagentHash, Quantity] pairs; unused cells zero
-S40 Coordinator topology generation
-S41 resolved RecipeHash echo
+S2  capability mask = 0
+S11 FamilyHash
+S12 RequiredCapability
+S13 InputCount
+S14 Store publication generation
+S15 status: 1 ready, -2 invalid catalog, -3 missing
+S16..S47 [ManufacturingReagentHash, Quantity] pairs; unused cells zero
+S48 Coordinator topology generation
+S49 resolved RecipeHash echo
 ```
 
-InputCount is bounded to 16 by the generator and View. Consumers must require `S41 == requested RecipeHash` in addition to ready status so a previous request's publication cannot be mistaken for the current recipe.
+InputCount is bounded to 16 by the generator and View. Consumers must require `S49 == requested RecipeHash` in addition to ready status so a previous request's publication cannot be mistaken for the current recipe.
 
 The View does not map reagent names to concrete item PrefabHashes. That mapping is provided by ITEM Resource Profile `ManufacturingReagentHash` metadata and reachable Material Links. See `docs/RESOURCE_PROFILES.md` and `docs/MANUFACTURING_SCHEDULER.md`.
 

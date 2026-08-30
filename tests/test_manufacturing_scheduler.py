@@ -21,7 +21,7 @@ def stage(vm,slot,i):
  vals=[i.job_type,i.required_capability,i.identity,i.input_count,i.output_count,i.requested_quantity,i.priority]
  for n,v in enumerate(vals,1):vm.stack[b+n]=v
 def req(vm,g,cmd,slot,expected=0,newstate=0,err=0):
- vm.stack.update({11:cmd,12:slot,13:expected,14:newstate,15:err,7:g});vm.run(1)
+ vm.stack.update({11:cmd,12:slot,13:expected,14:newstate,15:err,19:g});vm.run(1)
  return int(vm.stack.get(9,0)),int(vm.stack.get(10,0))
 def publish(vm,g,slot,i):
  stage(vm,slot,i);s,j=req(vm,g,1,slot);ck(s==1,f'publish slot {slot} failed');return g+1,j
@@ -37,13 +37,13 @@ g,c=publish(store,g,2,JobIntent(JobType.TRANSFORM,1,103,1,1,1,10))
 for slot in (0,1):
  g=transition(store,g,slot,JobState.PLANNING);g=transition(store,g,slot,JobState.WAIT_PROCESSOR,0)
 sdev=Device(100,store.stack,{'ReferenceId':100});sel=IC10(src('ic10/generic-jobs/generic_job_selector_v3_0.ic10'),{'d0':sdev},self_ref=101);sel.run(1)
-sel.stack.update({2:0,3:1});sel.run(1);ck(sel.stack.get(7)==a,'selector did not choose highest-priority waiter')
-sel.stack.update({2:a,3:2});sel.run(1);ck(sel.stack.get(7)==b,'cursor did not advance past first waiter')
-sel.stack.update({2:b,3:3});sel.run(1);ck(sel.stack.get(7)==c,'two waiters can still starve a runnable lower-priority job')
+sel.stack.update({19:0,20:1});sel.run(1);ck(sel.stack.get(24)==a,'selector did not choose highest-priority waiter')
+sel.stack.update({19:a,20:2});sel.run(1);ck(sel.stack.get(24)==b,'cursor did not advance past first waiter')
+sel.stack.update({19:b,20:3});sel.run(1);ck(sel.stack.get(24)==c,'two waiters can still starve a runnable lower-priority job')
 
 # Router must not mirror stale state until selected driver publishes current request identity.
 tdrv=Device(201,{9:99,10:7,11:0},{'ReferenceId':201});pdrv=Device(202,{}, {'ReferenceId':202})
-ss=Device(203,{7:77,8:1,9:7,10:1111,11:3,12:1,13:2},{'ReferenceId':203})
+ss=Device(203,{24:77,8:1,9:7,10:1111,11:3,12:1,13:2},{'ReferenceId':203})
 router=IC10(src('ic10/manufacturing/manufacturing_driver_router_v2_0.ic10'),{'d0':tdrv,'d1':pdrv,'d2':ss},self_ref=204);router.run(1)
 router.stack[9]=3;router.run(2)
 ck(router.stack.get(10)!=3,'router acknowledged stale previous-driver state as current')

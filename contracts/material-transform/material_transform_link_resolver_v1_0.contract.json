@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-transform/material_transform_link_resolver_v1_0.ic10",
-  "source_sha256": "fcf09ae8ed413a9ea7c6a6bd898d9b7b0a48c9dbd2427b09c1ffabae3113ff22",
+  "source_sha256": "984e4cba59147004cdc73730373f378a5a3150218f788e7ceee849856511cc92",
   "identity": {
     "service_id": "ic10.script.material.transform.link.resolver",
     "implementation_revision": "1.0",
@@ -133,8 +133,8 @@
         "literal_reads": [
           0,
           1,
-          2,
-          9
+          9,
+          24
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -179,11 +179,11 @@
       "literal_reads": [
         0,
         1,
-        2,
-        4,
-        5,
         9,
-        22
+        22,
+        28,
+        30,
+        31
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -200,7 +200,7 @@
           "value": 1
         },
         {
-          "address": 4,
+          "address": 30,
           "operator": "equals",
           "value": 2
         }
@@ -213,11 +213,11 @@
       "literal_reads": [
         0,
         1,
-        3,
-        4,
-        6,
         9,
-        10
+        10,
+        33,
+        34,
+        36
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -234,12 +234,12 @@
           "value": 1
         },
         {
-          "address": 3,
+          "address": 10,
           "operator": "equals",
           "value": 2
         },
         {
-          "address": 10,
+          "address": 33,
           "operator": "equals",
           "value": 2
         }

@@ -85,7 +85,13 @@
     "abi": 1
    }
   ],
-  "ic10/controller-config/generic_config_committer_v1_1.ic10": [],
+  "ic10/controller-config/generic_config_committer_v1_1.ic10": [
+   {
+    "base": 0,
+    "magic": 31416082,
+    "abi": 1
+   }
+  ],
   "ic10/controller-config/generic_config_editor_v1_0.ic10": [
    {
     "base": 0,
@@ -93,7 +99,13 @@
     "abi": 1
    }
   ],
-  "ic10/controller-config/generic_config_loader_v1_2.ic10": [],
+  "ic10/controller-config/generic_config_loader_v1_2.ic10": [
+   {
+    "base": 0,
+    "magic": 31416083,
+    "abi": 1
+   }
+  ],
   "ic10/controller-config/generic_persistent_config_host_v1_1.ic10": [
    {
     "base": 0,
@@ -127,7 +139,13 @@
     "abi": 2
    }
   ],
-  "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10": [],
+  "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10": [
+   {
+    "base": 0,
+    "magic": 31416079,
+    "abi": 1
+   }
+  ],
   "ic10/controller-pi/controller_pi_runtime_v1_1.ic10": [
    {
     "base": 0,
@@ -140,7 +158,13 @@
     "abi": 1
    }
   ],
-  "ic10/controller-pi/pi_config_policy_v1_0.ic10": [],
+  "ic10/controller-pi/pi_config_policy_v1_0.ic10": [
+   {
+    "base": 0,
+    "magic": 31416077,
+    "abi": 1
+   }
+  ],
   "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10": [
    {
     "base": 0,
@@ -153,7 +177,13 @@
     "abi": 1
    }
   ],
-  "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10": [],
+  "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10": [
+   {
+    "base": 0,
+    "magic": 31416078,
+    "abi": 1
+   }
+  ],
   "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10": [
    {
     "base": 0,
@@ -329,7 +359,13 @@
     "abi": 1
    }
   ],
-  "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10": [],
+  "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10": [
+   {
+    "base": 0,
+    "magic": 31416084,
+    "abi": 1
+   }
+  ],
   "ic10/directory-core/generic_registry_directory_host_v2_0.ic10": [
    {
     "base": 0,
@@ -832,7 +868,13 @@
     "abi": 1
    }
   ],
-  "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10": [],
+  "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10": [
+   {
+    "base": 0,
+    "magic": 31416080,
+    "abi": 1
+   }
+  ],
   "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10": [
    {
     "base": 0,
@@ -936,7 +978,13 @@
     "abi": 3
    }
   ],
-  "ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10": [],
+  "ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10": [
+   {
+    "base": 0,
+    "magic": 31416081,
+    "abi": 1
+   }
+  ],
   "ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10": [
    {
     "base": 0,
@@ -1455,7 +1503,7 @@
       "publication_requirements": [
        {
         "kind": "seqlock",
-        "address": 2
+        "address": 16
        }
       ]
      }
@@ -1523,7 +1571,7 @@
       "publication_requirements": [
        {
         "kind": "seqlock",
-        "address": 2
+        "address": 16
        }
       ]
      }
@@ -2100,7 +2148,7 @@
       "publication_requirements": [
        {
         "kind": "seqlock",
-        "address": 2
+        "address": 27
        }
       ]
      }

@@ -17,7 +17,7 @@ sne ra r0 sp
 poke 116 r0
 get r0 d5 8
 blez r0 ConfigBad
-get sp d5 5
+get sp d5 51
 get r0 db 117
 bnez ra Reload
 beq sp r0 Inputs
@@ -32,7 +32,7 @@ bnan rr0 ConfigBad
 add ra ra 1
 add r0 r0 1
 ble r0 8 Load
-get r0 d5 5
+get r0 d5 51
 bne r0 sp Loop
 poke 117 sp
 Inputs:
@@ -55,11 +55,11 @@ beq r2 3 Storage
 bdns d2 ArbiterBad
 get r0 d2 0
 bne r0 31415933 ArbiterBad
-put d2 3 r1
-put d2 4 r2
-put d2 5 r9
+put d2 15 r1
+put d2 16 r2
+put d2 17 r9
 get r10 db 117
-put d2 6 r10
+put d2 18 r10
 get r13 d2 12
 blez r13 NoRequest
 get r0 d2 13

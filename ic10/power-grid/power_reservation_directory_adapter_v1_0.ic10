@@ -32,7 +32,7 @@ getd r0 r1 1
 bne r0 1 Scan
 getd r14 r1 12
 blez r14 Scan
-getd r0 r1 3
+getd r0 r1 33
 bne r0 4 Scan
 getd r0 r1 17
 beqz r0 OwnerOK
@@ -49,7 +49,7 @@ beq r2 2 Consumer
 beq r2 3 Battery
 j Scan
 Producer:
-getd r0 r1 5
+getd r0 r1 35
 blez r0 Scan
 add r4 r5 1000000
 jal Add

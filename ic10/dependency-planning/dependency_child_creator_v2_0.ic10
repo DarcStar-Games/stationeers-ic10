@@ -1,62 +1,63 @@
 # Create one bounded dependency child.
 poke 0 31416006
 poke 1 2
+poke 2 0
 Loop:
 yield
-get r15 db 10
-get r0 db 11
+get r15 db 22
+get r0 db 23
 beq r15 r0 Loop
-get r2 db 2
-get r3 db 3
-get r4 db 4
-get r5 db 5
-get r6 db 6
-get r7 db 7
-get r8 db 8
-get r9 db 9
+get r2 db 14
+get r3 db 15
+get r4 db 16
+get r5 db 17
+get r6 db 18
+get r7 db 19
+get r8 db 20
+get r9 db 21
 blez r2 Bad
 blez r9 Bad
-put d0 2 r8
-put d0 3 r15
+put d0 8 r8
+put d0 9 r15
 WaitP:
 yield
-get r0 d0 4
+get r0 d0 10
 bne r0 r15 WaitP
-get r0 d0 5
+get r0 d0 11
 bne r0 1 NoProducer
-get r10 d0 6
-get r11 d0 7
-put d2 2 r2
-put d2 3 r5
-put d2 4 r6
-put d2 5 r10
-put d2 6 r11
-put d2 7 r15
+get r10 d0 12
+get r11 d0 13
+put d2 10 r2
+put d2 11 r5
+put d2 12 r6
+put d2 13 r10
+put d2 14 r11
+put d2 15 r15
 WaitA:
 yield
-get r0 d2 8
+get r0 d2 16
 bne r0 r15 WaitA
-get r0 d2 9
+get r0 d2 17
 beq r0 -2 Depth
 beq r0 -3 Cycle
 bne r0 1 Bad
-put d1 2 r10
-put d1 3 r11
-put d1 4 1
-put d1 5 -1
-put d1 6 r15
+put d1 15 r10
+put d1 16 r11
+put d1 17 1
+put d1 18 -1
+put d1 19 r15
 WaitR:
 yield
-get r0 d1 7
+get r0 d1 20
 bne r0 r15 WaitR
-get r0 d1 8
+get r0 d1 21
 bne r0 1 NoProducer
-get r12 d1 11
+get r12 d1 24
 bne r12 r8 NoProducer
-get r13 d1 12
+get r13 d1 25
 blez r13 Bad
-get sp d1 9
-get ra d1 10
+get sp d1 22
+get ra d1 23
 div r0 r9 r13
 round r1 r0
 slt r12 r1 r0
@@ -83,11 +84,11 @@ bne r0 r15 WaitG
 get r0 d3 50
 bne r0 1 Bad
 get r0 d3 51
-poke 13 r0
+poke 25 r0
 mul r0 r1 r13
-poke 15 r0
-poke 12 1
-poke 11 r15
+poke 27 r0
+poke 24 1
+poke 23 r15
 j Loop
 NoProducer:
 move r0 -5
@@ -101,6 +102,6 @@ j Fail
 Bad:
 move r0 -1
 Fail:
-poke 12 r0
-poke 11 r15
+poke 24 r0
+poke 23 r15
 j Loop

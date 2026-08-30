@@ -36,8 +36,8 @@ getd r0 r1 1
 bne r0 1 Scan
 getd r15 r1 11
 blez r15 Scan
-getd r2 r1 2
-getd r3 r1 3
+getd r2 r1 52
+getd r3 r1 53
 getd r0 r1 11
 bne r0 r15 Scan
 bge r8 64 Overflow

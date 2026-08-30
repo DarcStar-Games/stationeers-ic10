@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_load_executor_v1_0.ic10",
-  "source_sha256": "2f053e2b71a19f4159f8d7c0d20d81ac1d2974bb81c37d20240fb763c79d68dc",
+  "source_sha256": "045fda0d49b6c1432b28b9515b53a2191e4d7f4d619de8c960c377b512c2e43e",
   "identity": {
     "service_id": "ic10.script.power.load.executor",
     "implementation_revision": "1.0",
@@ -25,9 +25,9 @@
       },
       "stack": {
         "literal_reads": [
-          2,
-          3,
-          4
+          27,
+          28,
+          29
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -46,8 +46,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.204d3b50701c06a2",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.204d3b50701c06a2",
+        "interface_id": "ic10.interface.access.5d806dc5a14bef0a",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.5d806dc5a14bef0a",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -72,9 +72,9 @@
       },
       "stack": {
         "literal_reads": [
-          2,
-          3,
-          4
+          8,
+          9,
+          10
         ],
         "literal_writes": [],
         "dynamic_read": false,
@@ -85,7 +85,7 @@
         "dynamic_write_range_source": "none",
         "constraints": [
           {
-            "address": 4,
+            "address": 10,
             "equals": 1
           }
         ]
@@ -93,8 +93,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.f86235a8cecd0853",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.f86235a8cecd0853",
+        "interface_id": "ic10.interface.access.dff2531591dc6f23",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.dff2531591dc6f23",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -123,13 +123,13 @@
       "reference": "r1",
       "literal_reads": [
         0,
-        2,
-        3,
         17,
         18,
         19,
         28,
-        31
+        31,
+        32,
+        33
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -141,7 +141,7 @@
           "value": 31415950
         },
         {
-          "address": 3,
+          "address": 33,
           "operator": "equals",
           "value": 4
         }
@@ -166,7 +166,8 @@
     "literal_reads": [],
     "literal_writes": [
       0,
-      1
+      1,
+      2
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -199,6 +200,16 @@
           "self-write"
         ],
         "const": 1
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 0
       }
     ],
     "headers": [

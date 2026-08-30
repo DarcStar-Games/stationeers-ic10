@@ -2,21 +2,22 @@
 Boot:
 get r0 db 0
 bne r0 31416028 Init
-get r0 db 2
+get r0 db 27
 and r1 r0 1
 beqz r1 Loop
 # Interrupted COMMIT: invalidate torn plan before making sequence readable again.
-poke 3 0
-poke 4 0
-poke 5 0
-poke 6 0
+poke 28 0
+poke 29 0
+poke 30 0
+poke 31 0
 add r0 r0 1
-poke 2 r0
+poke 27 r0
 j Loop
 Init:
 clr db
 poke 0 31416028
 poke 1 1
+poke 2 0
 Loop:
 yield
 get r15 db 10
@@ -51,9 +52,9 @@ move r0 1
 j Reply
 Commit:
 get r2 db 24
-get r3 db 2
+get r3 db 27
 add r3 r3 1
-poke 2 r3
+poke 27 r3
 move r4 0
 CopyPlan:
 bge r4 64 Header
@@ -64,16 +65,16 @@ poke r5 r0
 add r4 r4 1
 j CopyPlan
 Header:
-poke 4 r2
+poke 29 r2
 get r0 db 14
-poke 5 r0
+poke 30 r0
 get r0 db 15
-poke 6 r0
-get r0 db 3
+poke 31 r0
+get r0 db 28
 add r0 r0 1
-poke 3 r0
+poke 28 r0
 add r3 r3 1
-poke 2 r3
+poke 27 r3
 move r0 1
 j Reply
 Full:

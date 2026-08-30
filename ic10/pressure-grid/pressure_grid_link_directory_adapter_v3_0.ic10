@@ -30,11 +30,11 @@ get r0 d1 9
 bne r0 HASH("DirectorySchema.Controller.v1") Publish
 get r0 d1 11
 bne r0 2 Publish
-get r6 d1 2
-add r0 r6 7
+get r6 d1 24
+add r0 r6 29
 get r0 d1 r0
 bgtz r0 SourceOverflow
-add sp r6 5
+add sp r6 27
 get r10 d1 sp
 clamp r10 r10 0 64
 move r7 0

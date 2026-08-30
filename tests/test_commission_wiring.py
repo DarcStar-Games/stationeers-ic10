@@ -83,7 +83,7 @@ for obligation_id, address, expected in (
         fails.append(f"{obligation_id} did not produce a fenced runtime observation")
     elif observation.get("cells") != [{"address": address, "expected": expected}]:
         fails.append(f"{obligation_id} did not preserve its concrete LogicType expectation")
-    elif [item["address"] for item in observation.get("fences", [])] != [5]:
+    elif [item["address"] for item in observation.get("fences", [])] != [51]:
         fails.append(f"{obligation_id} did not use the Config Host generation fence")
 
 unbound_pi = json.loads(json.dumps(pi))
@@ -208,7 +208,7 @@ link_adapter = wiring("ic10.script.pressure.resource.link.adapter", {
     "d2": script("ic10.script.resource.reservation", "sink reservation", caps(read=["ReferenceId"])),
 })
 link_plan = build_plan(link_adapter, R)
-fenced = next((item for item in link_plan["observations"] if item["id"] == "d1.constraint.s3"), None)
+fenced = next((item for item in link_plan["observations"] if item["id"] == "d1.constraint.s33"), None)
 if not fenced or fenced["tool"] != "snapshot-probe":
     fails.append("fenced runtime constraint did not select the Snapshot Probe")
 elif fenced.get("fences") != [{

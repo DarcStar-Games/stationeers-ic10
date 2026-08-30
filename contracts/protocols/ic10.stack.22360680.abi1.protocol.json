@@ -43,47 +43,6 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 8,
-          "name": "S8",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
             "self-write"
           ]
         },
@@ -212,6 +171,56 @@
           "semantic_source": "unresolved",
           "access": [
             "self-read"
+          ]
+        },
+        {
+          "address": 100,
+          "name": "S100",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 101,
+          "name": "S101",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 102,
+          "name": "S102",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 103,
+          "name": "S103",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 104,
+          "name": "S104",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
           ]
         }
       ],

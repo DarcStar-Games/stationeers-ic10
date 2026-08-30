@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10",
-  "source_sha256": "312ddaa22b18664b5f38378a27b1b57b768f09b6fb5c409d23b2f3f124254b67",
+  "source_sha256": "b1e54958e8583a990dc92d1cb00dff30e4e0431bda02841af562a6fade019d84",
   "identity": {
     "service_id": "ic10.script.catalog.coordinator.recovery",
     "implementation_revision": "2.0",
@@ -81,7 +81,7 @@
         "literal_reads": [
           0,
           1,
-          2,
+          3,
           23
         ],
         "literal_writes": [],
@@ -101,7 +101,7 @@
             "equals": 3
           },
           {
-            "address": 2,
+            "address": 3,
             "equals": "HASH(\"DirectorySchema.CatalogStoreNode.v1\")"
           }
         ]
@@ -120,8 +120,8 @@
       "transport": "reference-id",
       "reference": "r1",
       "literal_reads": [
-        5,
-        12
+        12,
+        14
       ],
       "literal_writes": [
         11,
@@ -146,12 +146,13 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2
+      8
     ],
     "literal_writes": [
       0,
       1,
-      2
+      2,
+      8
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -172,7 +173,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 31415976
       },
       {
         "address": 1,
@@ -181,11 +183,22 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 2,
         "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 0
+      },
+      {
+        "address": 8,
+        "name": "S8",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -208,7 +221,22 @@
       "mode": "preserved-unless-overwritten",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 31415976,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 2,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
     "provides": [

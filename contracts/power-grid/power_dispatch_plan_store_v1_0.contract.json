@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10",
-  "source_sha256": "6bc70a98229d35831bde0c925b19c02c2c257ab41eecfb483a376fce872b3336",
+  "source_sha256": "9b616227dd82f0a3ffb0655270bf308b6ee3127ba895e4e3306eb128a66193eb",
   "identity": {
     "service_id": "ic10.script.power.dispatch.plan.store",
     "implementation_revision": "1.0",
@@ -17,28 +17,29 @@
     "size": 512,
     "literal_reads": [
       0,
-      2,
-      3,
       10,
       11,
       12,
       14,
       15,
-      24
+      24,
+      27,
+      28
     ],
     "literal_writes": [
       0,
       1,
       2,
-      3,
-      4,
-      5,
-      6,
       11,
       13,
       24,
       25,
-      26
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
     ],
     "dynamic_read": true,
     "dynamic_write": true,
@@ -89,44 +90,6 @@
       {
         "address": 2,
         "name": "S2",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -215,6 +178,53 @@
         "access": [
           "self-write"
         ]
+      },
+      {
+        "address": 27,
+        "name": "S27",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 28,
+        "name": "S28",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 29,
+        "name": "S29",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 30,
+        "name": "S30",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 31,
+        "name": "S31",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
       }
     ],
     "headers": [
@@ -229,7 +239,7 @@
     "publication_rules": [
       {
         "kind": "seqlock",
-        "address": 2,
+        "address": 27,
         "description": "Plan publication sequence is odd while mutating and even when stable.",
         "source": "source-fingerprinted-paired-sequence"
       }

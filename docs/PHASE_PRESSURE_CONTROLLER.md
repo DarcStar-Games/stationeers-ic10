@@ -72,9 +72,9 @@ Runtime: `ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.
 
 Policy: `ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10`, with Policy `d0` connected to the same Host.
 
-Optional commissioning Profile View: `ic10/input-profile-catalog/input_profile_view_v5_0.ic10`, connected to the shared Input Profile Catalog Store with `S2=HASH("ControllerPhasePressure")`, `S3=1`.
+Optional commissioning Profile View: `ic10/input-profile-catalog/input_profile_view_v5_0.ic10`, connected to the shared Input Profile Catalog Store with `S8=HASH("ControllerPhasePressure")`, `S9=1`.
 
-The bundled `data/resource_profiles.json` contains Water, Pollutant, Silanol, Nitrous Oxide, Nitrogen, Methane, Carbon Dioxide, Oxygen, and Hydrogen phase-medium records. Select one with a Resource Profile View (`S2=1`, `S3=HASH(<medium>)`) instead of loading a different IC10 program per medium.
+The bundled `data/resource_profiles.json` contains Water, Pollutant, Silanol, Nitrous Oxide, Nitrogen, Methane, Carbon Dioxide, Oxygen, and Hydrogen phase-medium records. Select one with a Resource Profile View (`S26=1`, `S27=HASH(<medium>)`) instead of loading a different IC10 program per medium.
 
 ## Configuration schema
 
@@ -155,7 +155,7 @@ The runtime expects `d1` to be `ic10/resource-profile-catalog/resource_profile_v
 
 ```text
 S0   magic = 31415963
-S5   positive coherent publication generation
+S29  positive coherent publication generation
 S9   MediumType hash
 S11  ProfileKind = 1 PHASE_MEDIUM
 S13  A coefficient
@@ -166,7 +166,7 @@ S17  freezing/minimum liquid temperature, K
 S18  critical/maximum liquid temperature, K
 ```
 
-The runtime captures `S5`, reads the required payload, then requires the same positive `S5` afterward. It also requires the Resource Profile View magic and `ProfileKind=PHASE_MEDIUM`, so an ITEM record cannot be interpreted as thermodynamic coefficients. The View itself validates catalog completeness and clears `S5` whenever its selected record is unavailable.
+The runtime captures `S29`, reads the required payload, then requires the same positive `S29` afterward. It also requires the Resource Profile View magic and `ProfileKind=PHASE_MEDIUM`, so an ITEM record cannot be interpreted as thermodynamic coefficients. The View itself validates catalog completeness and clears `S29` whenever its selected record is unavailable.
 
 See `docs/RESOURCE_PROFILES.md` for the complete View/catalog ABI and `docs/PHASE_MEDIUM_PROFILE.md` for the phase-specific parameter model and selection guidance.
 

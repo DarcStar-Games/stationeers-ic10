@@ -41,57 +41,11 @@
           "address": 2,
           "name": "S2",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "unresolved",
           "access": [
-            "self-read",
             "self-write"
           ],
-          "description": "complete hardware snapshot publishes LAST"
-        },
-        {
-          "address": 3,
-          "name": "S3",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 4,
-          "name": "S4",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 5,
-          "name": "S5",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
+          "const": 0
         },
         {
           "address": 8,
@@ -128,13 +82,69 @@
           "access": [
             "self-write"
           ]
+        },
+        {
+          "address": 12,
+          "name": "S12",
+          "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "description": "complete hardware snapshot publishes LAST"
+        },
+        {
+          "address": 13,
+          "name": "S13",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 14,
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 16,
+          "name": "S16",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 17,
+          "name": "S17",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
         }
       ],
       "behavior": {
         "publication_rules": [
           {
             "kind": "commit-last",
-            "address": 2,
+            "address": 12,
             "description": "complete hardware snapshot publishes LAST",
             "source": "verified-inline-order"
           }

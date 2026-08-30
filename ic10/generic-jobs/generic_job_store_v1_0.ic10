@@ -7,11 +7,12 @@ Reset:
 clr db
 poke 0 31415984
 poke 1 1
-poke 5 32
+poke 2 0
+poke 18 32
 poke 23 1
 j Loop
 Recover:
-get r0 db 2
+get r0 db 16
 and r1 r0 1
 beqz r1 Loop
 get r2 db 25
@@ -21,14 +22,14 @@ seq r5 r3 r4
 get r6 db 24
 select r6 r5 0 r6
 poke 24 r6
-get r6 db 3
+get r6 db 17
 add r6 r6 1
-poke 3 r6
+poke 17 r6
 add r0 r0 1
-poke 2 r0
+poke 16 r0
 Loop:
 yield
-get r15 db 7
+get r15 db 19
 blez r15 Loop
 get r0 db 8
 beq r0 r15 Loop
@@ -91,9 +92,9 @@ poke 9 1
 poke 10 r11
 poke 25 r3
 poke 26 r4
-get r13 db 2
+get r13 db 16
 add r13 r13 1
-poke 2 r13
+poke 16 r13
 poke 24 r15
 poke r5 r9
 add r5 r5 1
@@ -101,15 +102,15 @@ poke r5 r7
 add r5 r5 1
 poke r5 r12
 poke r3 r2
-get r0 db 3
+get r0 db 17
 add r0 r0 1
-poke 3 r0
+poke 17 r0
 add r13 r13 1
-poke 2 r13
+poke 16 r13
 poke 8 r15
 j Loop
 Respond:
-get r0 db 7
+get r0 db 19
 bne r0 r15 Loop
 poke 9 -1
 poke 24 r15

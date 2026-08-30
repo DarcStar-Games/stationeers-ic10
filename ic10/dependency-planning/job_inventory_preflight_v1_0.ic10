@@ -1,37 +1,38 @@
 # Coherent ITEM requirement preflight with six-leg quote fingerprints.
 poke 0 31416005
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 5
-get r0 db 6
+get r15 db 18
+get r0 db 19
 beq r15 r0 Loop
-get r2 db 2
-get r3 db 3
-get r4 db 4
+get r2 db 15
+get r3 db 16
+get r4 db 17
 blez r4 Bad
 move r5 -1
 jal Req
-get r8 d0 10
+get r8 d0 23
 bltz r8 Bad
 move r5 0
 Input:
 bge r5 r8 Ready
 jal Req
-get r9 d0 13
-get r10 d0 14
+get r9 d0 26
+get r10 d0 27
 blez r10 Bad
-put d1 2 r9
-put d1 3 r10
-put d1 4 1
-put d1 5 0
+put d1 11 r9
+put d1 12 r10
+put d1 13 1
+put d1 14 0
 mul r13 r15 64
 add r13 r13 r5
 add r13 r13 32
-put d1 6 r13
+put d1 15 r13
 WaitQ:
 yield
-get r0 d1 7
+get r0 d1 16
 bne r0 r13 WaitQ
 get r0 d1 8
 beq r0 -3 Overflow
@@ -66,46 +67,46 @@ get r0 d1 8
 beq r0 1 Next
 bne r0 -2 Bad
 sub r12 r10 r11
-poke 8 r5
-poke 9 r9
-poke 10 r10
-poke 11 r11
-poke 12 r12
-poke 13 sp
-poke 14 ra
+poke 21 r5
+poke 22 r9
+poke 23 r10
+poke 24 r11
+poke 25 r12
+poke 26 sp
+poke 27 ra
 bnez r7 Probe
-poke 7 3
+poke 20 3
 j Reply
 Probe:
-poke 7 2
+poke 20 2
 j Reply
 Next:
 add r5 r5 1
 j Input
 Ready:
-poke 7 1
+poke 20 1
 j Reply
 Overflow:
-poke 7 -2
+poke 20 -2
 j Reply
 Bad:
-poke 7 -1
+poke 20 -1
 Reply:
-poke 6 r15
+poke 19 r15
 j Loop
 Req:
-put d0 2 r2
-put d0 3 r3
-put d0 4 r4
-put d0 5 r5
+put d0 15 r2
+put d0 16 r3
+put d0 17 r4
+put d0 18 r5
 mul r13 r15 32
 add r13 r13 r5
 add r13 r13 2
-put d0 6 r13
+put d0 19 r13
 WaitR:
 yield
-get r0 d0 7
+get r0 d0 20
 bne r0 r13 WaitR
-get r0 d0 8
+get r0 d0 21
 bne r0 1 Bad
 j ra

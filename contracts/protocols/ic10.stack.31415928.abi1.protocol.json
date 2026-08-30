@@ -22,20 +22,20 @@
       ],
       "writable_ranges": [
         {
-          "start": 2,
-          "end": 4
-        },
-        {
-          "start": 6,
-          "end": 6
-        },
-        {
           "start": 10,
           "end": 21
         },
         {
           "start": 32,
           "end": 47
+        },
+        {
+          "start": 48,
+          "end": 50
+        },
+        {
+          "start": 52,
+          "end": 52
         },
         {
           "start": 128,
@@ -50,7 +50,8 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 31415928
         },
         {
           "address": 1,
@@ -59,36 +60,18 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 1
         },
         {
-          "address": 5,
-          "name": "S5",
+          "address": 2,
+          "name": "S2",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read",
             "self-write"
-          ]
-        },
-        {
-          "address": 6,
-          "name": "S6",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 7,
-          "name": "S7",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
+          ],
+          "const": 0
         },
         {
           "address": 8,
@@ -195,6 +178,35 @@
             "self-read",
             "self-write"
           ]
+        },
+        {
+          "address": 51,
+          "name": "S51",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 52,
+          "name": "S52",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 53,
+          "name": "S53",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
         }
       ],
       "behavior": {
@@ -203,7 +215,22 @@
           "mode": "preserved-unless-overwritten",
           "source": "static-entry-path-analysis"
         },
-        "invariants": []
+        "invariants": [
+          {
+            "id": "header.s0.magic",
+            "kind": "cell-equals",
+            "address": 0,
+            "equals": 31415928,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s0.abi",
+            "kind": "cell-equals",
+            "address": 1,
+            "equals": 1,
+            "source": "generated-protocol-header"
+          }
+        ]
       }
     }
   ],
@@ -218,14 +245,12 @@
       "literal_reads": [
         0,
         1,
-        6,
-        7,
         13,
-        20
+        20,
+        52,
+        53
       ],
       "literal_writes": [
-        2,
-        4,
         10,
         12,
         13,
@@ -243,7 +268,9 @@
         37,
         38,
         39,
-        40
+        40,
+        48,
+        50
       ],
       "dynamic_read_ranges": [
         {
@@ -287,11 +314,11 @@
       "literal_reads": [
         0,
         1,
-        2,
-        4,
-        5,
         8,
-        9
+        9,
+        48,
+        50,
+        51
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [
@@ -315,12 +342,12 @@
           "value": 1
         },
         {
-          "address": 2,
+          "address": 48,
           "operator": "equals",
           "value": "HASH(\"ControllerPI\")"
         },
         {
-          "address": 4,
+          "address": 50,
           "operator": "equals",
           "value": 1
         }
@@ -337,14 +364,12 @@
       "literal_reads": [
         0,
         1,
-        6,
-        7,
         13,
-        20
+        20,
+        52,
+        53
       ],
       "literal_writes": [
-        2,
-        4,
         10,
         12,
         13,
@@ -363,6 +388,8 @@
         43,
         44,
         45,
+        48,
+        50,
         142,
         143
       ],
@@ -408,14 +435,12 @@
       "literal_reads": [
         0,
         1,
-        6,
-        7,
         13,
-        20
+        20,
+        52,
+        53
       ],
       "literal_writes": [
-        2,
-        4,
         10,
         12,
         13,
@@ -432,7 +457,9 @@
         37,
         38,
         39,
-        40
+        40,
+        48,
+        50
       ],
       "dynamic_read_ranges": [
         {
@@ -476,14 +503,12 @@
       "literal_reads": [
         0,
         1,
-        6,
-        7,
         13,
-        20
+        20,
+        52,
+        53
       ],
       "literal_writes": [
-        2,
-        4,
         10,
         12,
         13,
@@ -500,7 +525,9 @@
         36,
         37,
         38,
-        39
+        39,
+        48,
+        50
       ],
       "dynamic_read_ranges": [
         {
@@ -544,14 +571,12 @@
       "literal_reads": [
         0,
         1,
-        6,
-        7,
         13,
-        20
+        20,
+        52,
+        53
       ],
       "literal_writes": [
-        2,
-        4,
         10,
         12,
         13,
@@ -564,7 +589,9 @@
         32,
         33,
         34,
-        35
+        35,
+        48,
+        50
       ],
       "dynamic_read_ranges": [
         {

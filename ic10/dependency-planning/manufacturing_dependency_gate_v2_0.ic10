@@ -1,34 +1,35 @@
 # Dependency Gate ABI2. d0 Planner,d1 DriverRouter,d2 JobSelector.
 poke 0 31416012
 poke 1 2
+poke 2 0
 Loop:
 yield
 get r15 db 9
 get r0 db 10
 beq r15 r0 Loop
-get r0 d2 5
+get r0 d2 22
 bne r0 1 Bad
-get r2 d2 7
-get r3 d2 6
+get r2 d2 24
+get r3 d2 23
 get r4 d2 16
 get r5 d2 8
 get r6 d2 10
 get r7 d2 13
 get r8 d2 14
 blez r2 Bad
-put d0 2 r2
-put d0 3 r3
-put d0 4 r4
-put d0 5 r5
-put d0 6 r6
-put d0 7 r7
-put d0 8 r8
-put d0 9 r15
+put d0 12 r2
+put d0 13 r3
+put d0 14 r4
+put d0 15 r5
+put d0 16 r6
+put d0 17 r7
+put d0 18 r8
+put d0 19 r15
 WaitPlan:
 yield
-get r0 d0 10
+get r0 d0 20
 bne r0 r15 WaitPlan
-get r0 d0 11
+get r0 d0 21
 beq r0 1 Dispatch
 beq r0 2 WaitActive
 beq r0 3 WaitPublish
@@ -41,7 +42,7 @@ beq r0 -31 ChildFail
 beq r0 -32 Cycle
 j Bad
 Dispatch:
-get r0 d2 7
+get r0 d2 24
 bne r0 r2 Loop
 get r0 d2 16
 bne r0 r4 Loop

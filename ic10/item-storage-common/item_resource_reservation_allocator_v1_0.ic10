@@ -1,25 +1,26 @@
 # ITEM Reservation Allocator ABI1: commits one coherent Selector quote.
 poke 0 31415988
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 4
-get r0 db 5
+get r15 db 12
+get r0 db 13
 beq r15 r0 Loop
 bdns d0 Bad
-get r14 db 3
+get r14 db 11
 get r0 d0 0
 bne r0 31415987 Bad
 get r0 d0 1
 bne r0 1 Bad
-get r0 d0 7
+get r0 d0 16
 bne r0 r14 Bad
 get r0 d0 8
 bne r0 1 Bad
 get r8 d0 10
 blt r8 1 Bad
 bgt r8 6 Bad
-get r5 d0 4
+get r5 d0 13
 get r7 d0 9
 move r6 0
 Quote:
@@ -38,11 +39,11 @@ bnez r0 Bad
 getd r0 r1 9
 blez r0 Bad
 beq r5 1 QuoteExport
-getd r0 r1 7
+getd r0 r1 37
 getd r2 r1 15
 j QuoteFree
 QuoteExport:
-getd r0 r1 6
+getd r0 r1 36
 getd r2 r1 14
 QuoteFree:
 sub r0 r0 r2
@@ -50,7 +51,7 @@ blt r0 sp Bad
 add r6 r6 1
 j Quote
 Quoted:
-get r0 d0 7
+get r0 d0 16
 bne r0 r14 Bad
 get r13 db 10
 add r13 r13 1
@@ -88,7 +89,7 @@ putd r1 27 r0
 add r6 r6 1
 j Commit
 Committed:
-poke 7 r13
+poke 15 r13
 poke 8 r7
 poke 9 r8
 move r0 1
@@ -96,6 +97,6 @@ j Reply
 Bad:
 move r0 -1
 Reply:
-poke 6 r0
-poke 5 r15
+poke 14 r0
+poke 13 r15
 j Loop

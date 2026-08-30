@@ -1,20 +1,20 @@
 # Catalog Coordinator Core v3.0: runtime Store claim/topology authority; d0 Directory.
 Boot:
-yield
 get r13 db 14
 get r14 db 15
 get r0 db 0
-beq r0 31415970 Loop
+beq r0 31415970 Header
 clr db
 max r13 r13 1
 max r14 r14 1
-poke 0 31415970
-poke 1 4
-poke 2 0
 poke 14 r13
 poke 15 r14
 poke 18 1
 poke 25 0
+Header:
+poke 0 31415970
+poke 1 4
+poke 2 0
 Loop:
 yield
 bdns d0 Loop
@@ -22,21 +22,21 @@ get r0 d0 0
 bne r0 31415982 Loop
 get r0 d0 1
 bne r0 3 Loop
-get r0 d0 2
+get r0 d0 3
 bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 l r12 d0 ReferenceId
 poke 23 r12
-get r0 d0 6
+get r0 d0 36
 poke 8 r0
-get r0 d0 14
+get r0 d0 44
 poke 9 r0
-get r0 d0 11
+get r0 d0 41
 poke 10 r0
-get r0 d0 9
+get r0 d0 39
 poke 11 r0
-get r0 d0 7
+get r0 d0 37
 poke 12 r0
-get r0 d0 8
+get r0 d0 38
 poke 13 r0
 get r0 db 25
 blez r0 Publish

@@ -1,13 +1,14 @@
 poke 0 31415987
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 6
-get r0 db 7
+get r15 db 15
+get r0 db 16
 beq r15 r0 Loop
-get r2 db 2
-get r3 db 3
-get r4 db 4
+get r2 db 11
+get r3 db 12
+get r4 db 13
 blez r3 Bad
 blt r4 1 Bad
 bgt r4 2 Bad
@@ -16,20 +17,20 @@ get r0 d0 0
 bne r0 31415981 Bad
 get r0 d0 9
 bne r0 HASH("DirectorySchema.ResourceReservation.v1") Bad
-get r12 d0 2
-add r0 r12 7
+get r12 d0 24
+add r0 r12 29
 get r0 d0 r0
 bgtz r0 Overflow
-add r0 r12 3
+add r0 r12 25
 get r11 d0 r0
-add r0 r12 5
+add r0 r12 27
 get r10 d0 r0
 mul r9 r12 192
 add r9 r9 32
 move r6 0
 move r7 0
 move r8 0
-get r14 db 5
+get r14 db 14
 Find:
 bge r6 r10 Quoted
 mul r0 r6 3
@@ -48,7 +49,7 @@ getd r0 ra 9
 blez r0 Find
 getd r0 ra 17
 bnez r0 Find
-getd r0 ra 5
+getd r0 ra 35
 and sp r0 r14
 bne sp r14 Find
 beq r4 1 Export
@@ -57,7 +58,7 @@ beqz r0 Find
 getd r1 ra 11
 and r1 r1 18
 beqz r1 Find
-getd r1 ra 7
+getd r1 ra 37
 getd sp ra 15
 j Free
 Export:
@@ -66,7 +67,7 @@ beqz r0 Find
 getd r1 ra 11
 and r1 r1 9
 beqz r1 Find
-getd r1 ra 6
+getd r1 ra 36
 getd sp ra 14
 Free:
 sub r1 r1 sp
@@ -94,9 +95,9 @@ add r7 r7 sp
 add r8 r8 1
 blt r7 r3 Find
 Quoted:
-get r0 d0 2
+get r0 d0 24
 bne r0 r12 Loop
-add r0 r12 3
+add r0 r12 25
 get r0 d0 r0
 bne r0 r11 Loop
 poke 9 r7
@@ -111,5 +112,5 @@ Bad:
 move r0 -1
 Reply:
 poke 8 r0
-poke 7 r15
+poke 16 r15
 j Loop

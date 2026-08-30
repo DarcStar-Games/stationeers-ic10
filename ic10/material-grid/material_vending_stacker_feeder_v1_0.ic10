@@ -1,11 +1,12 @@
 get r0 db 0
 beq r0 31415961 Init
-poke 6 0
+poke 24 0
 poke 10 0
 poke 20 0
 Init:
 poke 0 31415961
 poke 1 1
+poke 2 0
 Loop:
 yield
 bdns d0 Bad
@@ -22,10 +23,10 @@ beqz r3 Buffer
 ls r4 d1 2 OccupantHash
 ls r5 d1 2 Quantity
 Buffer:
-poke 2 r1
-poke 3 r2
-poke 4 r5
-poke 5 r4
+poke 12 r1
+poke 13 r2
+poke 14 r5
+poke 15 r4
 get r15 db 20
 beqz r15 CheckRequest
 get r0 db 23
@@ -39,7 +40,7 @@ beq r15 4 WaitExport
 j Fail
 CheckRequest:
 get r6 db 18
-get r7 db 7
+get r7 db 25
 beq r6 r7 Publish
 blez r6 Publish
 get r8 db 16
@@ -48,7 +49,7 @@ blez r9 Fail
 beqz r3 Start
 bne r4 r8 Fail
 Start:
-poke 6 0
+poke 24 0
 poke 23 0
 s d2 Mode 1
 clr d2
@@ -59,7 +60,7 @@ s d2 On 1
 s d1 Mode 1
 s d1 On 1
 poke 20 1
-poke 7 r6 # LIVE_CURRENT identity LAST after request-specific reset/init
+poke 25 r6 # LIVE_CURRENT identity LAST after request-specific reset/init
 j Publish
 Fill:
 get r8 db 16
@@ -81,7 +82,7 @@ poke 20 1
 j Publish
 IsReady:
 poke 8 r6
-poke 6 1
+poke 24 1
 poke 20 3
 j Publish
 Ready:
@@ -98,20 +99,20 @@ l r0 d1 ExportCount
 get r1 db 22
 beq r0 r1 Publish
 poke 9 r6
-poke 6 2
+poke 24 2
 poke 20 0
 j Publish
 Bad:
 get r0 db 18
-poke 6 -1
+poke 24 -1
 poke 20 0
-poke 7 r0 # accepted fault publishes current identity LAST
+poke 25 r0 # accepted fault publishes current identity LAST
 j Publish
 Fail:
 s d1 On 0
 s d2 On 0
 get r0 db 18
-poke 6 -1
+poke 24 -1
 poke 20 0
 Publish:
 get r0 db 10

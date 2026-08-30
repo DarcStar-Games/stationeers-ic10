@@ -1,18 +1,19 @@
 # Validate one coherent POWER dispatch plan. d0 PlanStore.
 poke 0 31416035
 poke 1 1
+poke 2 0
 Loop:
 yield
-get r15 db 3
-get r0 db 4
+get r15 db 9
+get r0 db 10
 beq r15 r0 Loop
-get r2 db 2
-get r14 d0 2
+get r2 db 8
+get r14 d0 27
 mod r0 r14 2
 bnez r0 Bad
-get r0 d0 3
+get r0 d0 28
 bne r0 r2 Bad
-get r3 d0 4
+get r3 d0 29
 blt r3 0 Bad
 bgt r3 8 Bad
 move r4 0
@@ -41,9 +42,9 @@ getd r0 r7 0
 bne r0 31415950 Bad
 getd r0 r8 0
 bne r0 31415950 Bad
-getd r0 r7 3
+getd r0 r7 33
 bne r0 4 Bad
-getd r0 r8 3
+getd r0 r8 33
 bne r0 4 Bad
 getd r0 r7 9
 blez r0 Bad
@@ -55,17 +56,17 @@ getd r0 r8 12
 bne r0 r12 Bad
 getd r0 r6 0
 bne r0 31415953 Bad
-getd r0 r6 4
+getd r0 r6 30
 bne r0 4 Bad
-getd r0 r6 2
+getd r0 r6 28
 bne r0 r7 Bad
-getd r0 r6 3
+getd r0 r6 29
 bne r0 r8 Bad
 getd r0 r6 9
 bne r0 1 Bad
 getd r0 r6 12
 bne r0 r13 Bad
-getd r0 r6 6
+getd r0 r6 32
 beq r0 2 Transformer
 bne r10 r9 Bad
 j Direction
@@ -92,12 +93,12 @@ Next:
 add r4 r4 1
 j Flow
 Stable:
-get r0 d0 2
+get r0 d0 27
 bne r0 r14 Bad
-poke 5 1
+poke 11 1
 j Reply
 Bad:
-poke 5 -1
+poke 11 -1
 Reply:
-poke 4 r15
+poke 10 r15
 j Loop

@@ -249,7 +249,7 @@ pi_output = next(item for item in pi_runtime["device_ports"] if item["port"] == 
 ck(pi_input["dynamic_property_sources"] == [{
        "operand": "r12", "source_port": "d2", "address": 107,
        "fence": {
-           "address": 5, "kind": "generation",
+           "address": 51, "kind": "generation",
            "description": "Config Host generation must be positive and unchanged around the LogicType read.",
        },
    }], "PI input LogicType lacks its fenced Config Host provenance")

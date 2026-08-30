@@ -10,17 +10,18 @@ bne r0 22360680 Reset
 get r0 db 1
 beq r0 1 Header
 Reset:
-get r1 db 2
+get r1 db 100
 clr db
-poke 2 r1
+poke 100 r1
 Header:
 poke 0 22360680
 poke 1 1
+poke 2 0
 Loop:
 yield
 get r0 db 16
 s db Setting r0 # housing shows commissioning state/error code
-get selector db 2
+get selector db 100
 blez selector NoSelector
 getd r0 selector 0
 bne r0 17320508 NoSelector
@@ -28,7 +29,7 @@ getd r0 selector 1
 bne r0 2 NoSelector
 getd r0 selector 8
 bne r0 1 NoTarget
-getd r15 selector 5
+getd r15 selector 17
 blez r15 NoTarget
 get r0 db 12
 beq r0 r15 Controls
@@ -43,8 +44,8 @@ move r0 0
 bdnvl SaveField Setting SaveState
 l r0 SaveField Setting
 SaveState:
-get r9 db 6
-poke 6 r0
+get r9 db 101
+poke 101 r0
 blez r0 ReloadButton
 bgtz r9 ReloadButton
 get r9 db 15
@@ -70,8 +71,8 @@ move r0 0
 bdnvl ReloadConfig Setting ReloadState
 l r0 ReloadConfig Setting
 ReloadState:
-get r9 db 7
-poke 7 r0
+get r9 db 102
+poke 102 r0
 blez r0 ApplyButton
 bgtz r9 ApplyButton
 poke 15 0
@@ -81,8 +82,8 @@ ApplyButton:
 move r0 0
 bdnvl ApplyConfig Setting Loop
 l r0 ApplyConfig Setting
-get r9 db 8
-poke 8 r0
+get r9 db 103
+poke 103 r0
 blez r0 Loop
 bgtz r9 Loop
 get r9 db 15
@@ -92,9 +93,9 @@ bne r9 r15 Loop
 get r9 db 11
 poke 13 r9 # capture staging revision
 poke 14 r15 # capture physical controller RefId
-get r9 db 5
+get r9 db 104
 add r9 r9 1
-poke 5 r9
+poke 104 r9
 poke 16 4 # APPLY PENDING publishes request last
 j Loop
 NoSelector:

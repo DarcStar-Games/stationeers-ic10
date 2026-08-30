@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/dependency_plan_store_v2_0.ic10",
-  "source_sha256": "ab2f8377f4856ac052f04a203df80d5639cba6c29fb70d778db56f293f5ba01b",
+  "source_sha256": "6288f1257a2babfa154a8ac31e99c9ddfa463567c5b0bb4a5185157178365cc8",
   "identity": {
     "service_id": "ic10.script.dependency.plan.store",
     "implementation_revision": "2.0",
@@ -27,6 +27,7 @@
     "literal_writes": [
       0,
       1,
+      2,
       10,
       11,
       40
@@ -84,6 +85,15 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
           "self-write"
         ]
       },

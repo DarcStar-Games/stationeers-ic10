@@ -1,4 +1,7 @@
 # Catalog Loader Router v3.0: per-item runtime capacity placement; d0 Coordinator ABI3.
+poke 0 31415971
+poke 1 3
+poke 2 0
 Loop:
 yield
 bdns d0 Loop
@@ -7,11 +10,9 @@ getd r0 r15 0
 bne r0 31415970 Loop
 getd r0 r15 1
 bne r0 4 Loop
-poke 0 31415971
-poke 1 3
-poke 2 0
-poke 3 0
-poke 4 0
+poke 8 0
+poke 9 0
+poke 10 0
 move r7 0
 Scan:
 get r1 db:0 r7
@@ -32,15 +33,15 @@ mul r0 r3 2
 add r0 r0 25
 getd r11 r1 r0
 add r11 r11 2
-get r0 db 2
+get r0 db 8
 add r0 r0 1
-poke 2 r0
-get r6 db 3
+poke 8 r0
+get r6 db 9
 add r6 r6 1
-poke 3 r6
-get r6 db 4
+poke 9 r6
+get r6 db 10
 add r6 r6 r11
-poke 4 r6
+poke 10 r6
 getd r12 r1 11
 getd r13 r1 10
 getd r14 r1 3

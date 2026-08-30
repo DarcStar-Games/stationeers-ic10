@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10",
-  "source_sha256": "8f152dddb603e2703f38e0b9d85d868051e2a2e7f6870166b099a809f3f973b3",
+  "source_sha256": "68930ee573ede32d196370a710d8a6292570ce1d76773799e9f8bb32b347d20b",
   "identity": {
     "service_id": "ic10.script.pressure.grid.link.directory.adapter",
     "implementation_revision": "3.0",
@@ -27,9 +27,9 @@
         "literal_reads": [
           0,
           1,
-          2,
           9,
-          11
+          11,
+          24
         ],
         "literal_writes": [],
         "dynamic_read": true,

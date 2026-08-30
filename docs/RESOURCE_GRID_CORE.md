@@ -64,18 +64,19 @@ Magic: `31415949`
 ```text
 S0   magic = 31415949
 S1   ABI = 1
-S2   ResourceClass
-S3   ResourceType
-S4   role/capability bitmask
-S5   ExportAvailable
-S6   ImportCapacity
-S7   MaxRate; 0 means unknown/not represented at endpoint layer
+S2   capability mask = 0
 S8   status; >0 usable, <0 invalid/unavailable
 S9   NativeProvider ReferenceId
 S10  NativeGeneration / native snapshot identity
 S11  PublicationGeneration; payload written first, generation LAST
 S12  Unit
 S13  precision flags
+S52  ResourceClass
+S53  ResourceType
+S54  role/capability bitmask
+S55  ExportAvailable
+S56  ImportCapacity
+S57  MaxRate; 0 means unknown/not represented at endpoint layer
 ```
 
 Role bits:
@@ -138,12 +139,7 @@ The reservation service mirrors one Generic Resource Endpoint into a stable muta
 ```text
 S0   magic = 31415950
 S1   ABI = 1
-S2   Generic Resource Endpoint ReferenceId
-S3   ResourceClass
-S4   ResourceType
-S5   role/capability bitmask
-S6   ExportAvailable
-S7   ImportCapacity
+S2   capability mask = 0
 S8   MaxRate
 S9   endpoint status
 S10  Unit
@@ -160,6 +156,13 @@ S19  semantic Reservation mirror generation captured by committed ownership
 S20  Endpoint PublicationGeneration represented by the current semantic mirror
 S21..S24  opaque Endpoint action-hint mirror used by ITEM storage
 S25..S27  allocator-committed action hints
+S28..S31  opaque Endpoint slot-hint mirror
+S32  Generic Resource Endpoint ReferenceId
+S33  ResourceClass
+S34  ResourceType
+S35  role/capability bitmask
+S36  ExportAvailable
+S37  ImportCapacity
 ```
 
 `S12` is the Reservation's semantic generation-last publication marker. `ic10/resource-grid-core/resource_reservation_v1_0.ic10` observes Endpoint `S11`, but advances S12 only when reservation-relevant base fields or the mirrored action hints actually change. This prevents harmless identical endpoint republishes from invalidating ownership. A committed Item Storage allocator stores S12 in S19 and snapshots the action hints; movement requires current `S12 == S19`. Native actuators still perform their own final physical checks.
@@ -175,18 +178,19 @@ Magic: `31415953`
 ```text
 S0   magic = 31415953
 S1   ABI = 1
-S2   source Generic Resource Reservation ReferenceId
-S3   sink Generic Resource Reservation ReferenceId
-S4   ResourceClass
-S5   ResourceType
-S6   native route/link class
-S7   current maximum transferable resource units/tick
+S2   capability mask = 0
 S8   generic cost hint; 0 when the specialization has no normalized value
 S9   status
 S10  NativeLink ReferenceId
 S11  NativeLink generation
 S12  PublicationGeneration; written LAST
 S13  link flags
+S28  source Generic Resource Reservation ReferenceId
+S29  sink Generic Resource Reservation ReferenceId
+S30  ResourceClass
+S31  ResourceType
+S32  native route/link class
+S33  current maximum transferable resource units/tick
 ```
 
 `ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10` is the first implementation. It verifies that its generic source/sink Reservations ultimately resolve to the same PressureDomain Inventories used by the native PressureTransfer before publishing the generalized link.

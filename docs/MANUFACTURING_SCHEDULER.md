@@ -72,17 +72,17 @@ Similarly, printing reuses `ic10/material-transform/multi_material_reservation_s
 It accepts:
 
 ```text
-S2 scheduling cursor JobId; skip every eligible JobId <= cursor, 0 = start at head
-S3 request generation
+S19 scheduling cursor JobId; skip every eligible JobId <= cursor, 0 = start at head
+S20 request generation
 ```
 
 It publishes, after revalidating the Job Store queue sequence:
 
 ```text
-S4  response generation
-S5  status: 1 selected, -2 none, -1 invalid Store
-S6  physical Job slot ordinal
-S7  JobId
+S21 response generation
+S22 status: 1 selected, -2 none, -1 invalid Store
+S23 physical Job slot ordinal
+S24 JobId
 S8  JobType
 S9  RequiredCapability
 S10 Identity
@@ -275,17 +275,18 @@ zero padding to 4-cell alignment
 `ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10` resolves an exact RecipeHash and publishes:
 
 ```text
-S3  FamilyHash
-S4  RequiredCapability
-S5  InputCount
-S6  Store publication generation
-S7  status: 1 ready, -2 invalid catalog, -3 missing
-S8..S39 reagent/quantity pairs, up to 16 inputs
-S40 Coordinator topology generation
-S41 resolved RecipeHash echo
+S2  capability mask = 0
+S11 FamilyHash
+S12 RequiredCapability
+S13 InputCount
+S14 Store publication generation
+S15 status: 1 ready, -2 invalid catalog, -3 missing
+S16..S47 reagent/quantity pairs, up to 16 inputs
+S48 Coordinator topology generation
+S49 resolved RecipeHash echo
 ```
 
-The explicit `S41` echo prevents a consumer from accepting a ready response belonging to the previous RecipeHash request.
+The explicit `S49` echo prevents a consumer from accepting a ready response belonging to the previous RecipeHash request.
 
 `ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10` remains the ordinal/browse Lookup ABI3 service. It understands Recipe schema v3 but intentionally returns the same compact family/ordinal result surface.
 
@@ -299,7 +300,7 @@ ITEM Resource Profile `ProfileSchema=2` uses parameter cell 2 as:
 ManufacturingReagentHash
 ```
 
-for printable ingot/material resources. `ic10/material-grid/material_resource_link_v1_0.ic10` republishes that semantic identity in `S27` while retaining the exact concrete ResourceType in `S5`.
+for printable ingot/material resources. `ic10/material-grid/material_resource_link_v1_0.ic10` republishes that semantic identity in `S27` while retaining the exact concrete ResourceType in `S31`.
 
 `ic10/manufacturing/print_material_resolver_v1_0.ic10` therefore matches:
 
