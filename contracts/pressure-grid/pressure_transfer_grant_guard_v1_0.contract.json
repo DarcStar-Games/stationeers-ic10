@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10",
-  "source_sha256": "3ae481d7733c205504fc9811dc553cba9897e2919b6efe8a53992f320b60865c",
+  "source_sha256": "7611bb34ffd553711820a6c3efbd70fab7d457f449c806777c4aaff2fea16815",
   "identity": {
     "service_id": "ic10.script.pressure.transfer.grant.guard",
     "implementation_revision": "1.0",
@@ -90,7 +90,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           14
         ],
         "literal_writes": [],
@@ -104,10 +103,6 @@
           {
             "address": 0,
             "equals": 966379179
-          },
-          {
-            "address": 1,
-            "equals": 2
           }
         ]
       },

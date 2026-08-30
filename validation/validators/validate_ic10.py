@@ -17,28 +17,14 @@ LIMIT_BYTES = 4096
 MAINTAINABILITY_LINES = 120
 # Reviewed spends of the deliberate 120..128 margin. The hard limit still applies.
 SOFT_LIMIT_EXEMPTIONS = {
-    "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10":
-        "capability-fenced transform view publishing the common header above a 60-cell"
-        " resolved-request table",
-    "ic10/material-transform/material_transform_admission_v1_0.ic10":
-        "admission gate re-checking the transform view's echo/status/generation fence after"
-        " every payload read",
-    "ic10/material-transform/material_transform_link_resolver_v1_0.ic10":
-        "link resolver re-checking the transform view's echo/status/generation fence after"
-        " its input-descriptor loop",
     "ic10/manufacturing/print_candidate_executor_v2_0.ic10":
         "four-phase print launch fencing four devices; publishes the common header with its"
         " request mailbox relocated above it",
-    "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10":
-        "operator-facing editor wiring six diagnostic devices; publishes the common header"
-        " with its payload relocated above it",
     "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10":
         "publishes the common S0 header; its Generic Telemetry block stays at S96",
     "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10":
         "publishes the common S0 header; its Generic Telemetry block stays at S96",
     "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10":
-        "publishes the common S0 header; its Generic Telemetry block stays at S96",
-    "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10":
         "publishes the common S0 header; its Generic Telemetry block stays at S96",
     "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10":
         "publishes the common S0 header; its Generic Telemetry block stays at S96",
@@ -50,33 +36,18 @@ SOFT_LIMIT_EXEMPTIONS = {
         "publishes the common S0 header with its Endpoint ABI1 payload relocated above it",
     "ic10/controller-config/generic_persistent_config_host_v1_1.ic10":
         "publishes the common S0 header above its banked A/B config storage",
-    "ic10/controller-config/generic_config_loader_v1_2.ic10":
-        "gains the common S0 header and a newly registered service magic",
     "ic10/printer-directory/printer_execution_bank_v2_0.ic10":
         "publishes the common S0 header above its six-pin ownership arrays",
-    "ic10/printer-directory/printer_capacity_client_v2_0.ic10":
-        "publishes the common S0 header with its request mailbox relocated above it",
     "ic10/generic-jobs/generic_job_store_v1_0.ic10":
         "publishes the common S0 header above its 32-slot durable job records",
     "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10":
         "publishes the common S0 header above its four producer lanes",
-    "ic10/generic-jobs/generic_job_selector_v3_0.ic10":
-        "publishes the common S0 header with its request mailbox relocated above it",
     "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10":
         "publishes the common S0 header with its inventory payload relocated above it",
-    "ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10":
-        "publishes the common S0 header with its request mailbox relocated above it",
-    "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10":
-        "publishes the common S0 header above its candidate-route table",
     "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10":
         "publishes the common S0 header with its request mailbox relocated above it",
-    "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10":
-        "publishes the common S0 header above its dynamic item heap and directory",
     "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10":
         "publishes the common S0 header above its A/B snapshot banks",
-    "ic10/dependency-planning/dependency_claim_view_v1_0.ic10":
-        "claim lookup + shared-claim count pass publishing the common header above its"
-        " relocated request mailbox",
     "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10":
         "existing/new plan orchestration publishing the common header above its relocated"
         " request and cleanup mailboxes",
@@ -202,6 +173,17 @@ def main():
         for failure in failures:
             print(f"     - {failure}")
     print("=" * 100)
+    # An exemption whose program no longer exceeds the soft limit stops meaning anything,
+    # and a stale one hides the next program that genuinely needs review.
+    measured = {name: lines for name, lines, *_ in rows}
+    for name in sorted(SOFT_LIMIT_EXEMPTIONS):
+        if name not in measured:
+            print(f"FAIL exemption names a file that does not exist: {name}")
+            failed = True
+        elif measured[name] <= MAINTAINABILITY_LINES:
+            print(f"FAIL stale exemption: {name} is {measured[name]} lines,"
+                  f" within the {MAINTAINABILITY_LINES}-line soft limit; remove it")
+            failed = True
     print("Result:", "FAIL" if failed else "PASS")
     return 1 if failed else 0
 

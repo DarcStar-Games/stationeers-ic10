@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10",
-  "source_sha256": "9170d99e115b35ef2b313787d1463a631b24d6f23876e8f8f4fad1e606eb3131",
+  "source_sha256": "25e3692b937235861cb5d7e86128afa2f712151effc501387c57683c6ab3eec3",
   "identity": {
     "service_id": "ic10.script.pressure.reservation.allocator",
     "implementation_revision": "3.0",
@@ -107,7 +107,7 @@
       "transport": "reference-id",
       "reference": "sp",
       "literal_reads": [
-        1,
+        0,
         10,
         14,
         15,
@@ -123,9 +123,9 @@
       "dynamic_write": false,
       "constraints": [
         {
-          "address": 1,
+          "address": 0,
           "operator": "equals",
-          "value": 1
+          "value": -920533037
         },
         {
           "address": 10,

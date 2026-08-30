@@ -22,18 +22,12 @@ blez rr7 NoService
 getd r0 rr7 0
 add r8 r7 9
 bne r0 rr8 NoService
-getd r0 rr7 1
-seq r8 r7 2
-select r8 r8 2 1
-bne r0 r8 NoService
 add r7 r7 1
 ble r7 3 ValidateService
 get input db 13
 blez input NoService
 getd r0 input 0
 bne r0 HASH("DiagnosticInputBridge.v1") NoService
-getd r0 input 1
-bne r0 1 NoService
 getd r0 input 10
 bne r0 1 NotReady
 getd r8 input 24

@@ -57,9 +57,10 @@ when:
 - a port whose contract target is a physical device declares a script peer
   (the reverse is legitimate: a stack-shaped port may face a game device with a
   native stack, or an IC housing hosting an arbitrary program);
-- a port checks an `S0` magic (and `S1` ABI) that a declared provider does not
-  publish at `S0` — the mechanical edges and the declared edges must agree; a
-  port pinning only the `S1` ABI is checked the same way;
+- a port checks an `S0` identity that a declared provider does not publish at
+  `S0` — the mechanical edges and the declared edges must agree. The identity is
+  the whole check: the ABI is folded into it, so no port pins a peer's `S1`, and
+  `validation/validators/validate_service_identity.py` rejects one that tries;
 - a magic-checking port's `providers` list omits a registered publisher of that
   magic, so the any-of lists cannot drift as new publishers appear;
 - a `physical-device` declaration sits on a port whose `S0` check names a

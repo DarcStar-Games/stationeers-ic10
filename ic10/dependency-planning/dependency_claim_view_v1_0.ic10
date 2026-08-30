@@ -13,8 +13,6 @@ get r4 db 17
 beqz r2 Bad
 get r0 d0 0
 bne r0 HASH("DependencyPlanStore.v2") Bad
-get r0 d0 1
-bne r0 2 Bad
 get r14 d0 40
 and r0 r14 1
 bnez r0 Loop

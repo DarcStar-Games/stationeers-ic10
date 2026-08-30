@@ -10,8 +10,6 @@ get registry db 9
 blez registry NoRegistry
 getd r0 registry 0
 bne r0 HASH("ConsoleRegistry.v1") NoRegistry
-getd r0 registry 1
-bne r0 1 NoRegistry
 getd r8 registry 8
 add r12 r8 10
 getd r9 registry r12

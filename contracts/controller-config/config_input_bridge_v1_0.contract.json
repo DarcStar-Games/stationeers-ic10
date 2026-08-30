@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-config/config_input_bridge_v1_0.ic10",
-  "source_sha256": "c55be967ce640747805c2c2434e0e28f723a52eaf17fbe5a3d756e9a22c764e6",
+  "source_sha256": "5cc3712ec953490f50a87db2cffe186db2fad9ca74ba8624a6b1202f5f2bbf58",
   "identity": {
     "service_id": "ic10.script.config.input.bridge",
     "implementation_revision": "1.0",
@@ -18,7 +18,6 @@
       "reference": "editor",
       "literal_reads": [
         0,
-        1,
         15,
         17,
         18,
@@ -39,11 +38,6 @@
           "address": 0,
           "operator": "equals",
           "value": -533009584
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 1
         }
       ],
       "accepted": []
@@ -65,7 +59,6 @@
       "reference": "resolver",
       "literal_reads": [
         0,
-        1,
         11,
         12,
         13,
@@ -83,11 +76,6 @@
           "address": 0,
           "operator": "equals",
           "value": 1971762319
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 1
         },
         {
           "address": 11,

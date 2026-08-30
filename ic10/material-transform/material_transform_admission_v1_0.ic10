@@ -14,8 +14,6 @@ get r14 d0 74
 blez r14 Bad
 get r0 d0 0
 bne r0 HASH("ResourceTransformProfileView.v4") Bad
-get r0 d0 1
-bne r0 4 Bad
 get r4 d0 72
 blt r4 1 Bad
 bgt r4 3 Bad
@@ -80,8 +78,6 @@ get r6 d2 12
 blez r6 Bad
 get r0 d2 0
 bne r0 HASH("ResourceReservation.v1") Bad
-get r0 d2 1
-bne r0 1 Bad
 get r0 d2 33
 bne r0 2 Bad
 get r0 d2 34

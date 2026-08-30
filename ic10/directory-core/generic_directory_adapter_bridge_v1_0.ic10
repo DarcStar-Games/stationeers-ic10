@@ -8,14 +8,10 @@ bdns d0 Loop
 bdns d1 Loop
 get r0 d0 0
 bne r0 HASH("DirectoryAdapter.v3") Loop
-get r0 d0 1
-bne r0 3 Loop
 get r0 d0 15
 bne r0 1 Loop
 get r0 d1 0
 bne r0 HASH("GenericSnapshotDirectoryHost.v1") Loop
-get r0 d1 1
-bne r0 1 Loop
 get r11 db 9
 add r11 r11 1
 poke 9 r11

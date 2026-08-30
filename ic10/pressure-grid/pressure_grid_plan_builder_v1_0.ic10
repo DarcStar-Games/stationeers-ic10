@@ -86,13 +86,9 @@ blez r4 Reject
 bdns d0 Reject
 get r0 d0 0
 bne r0 HASH("PressureGridSinglehopBuilder.v1") Reject
-get r0 d0 1
-bne r0 1 Reject
 bdns d1 Reject
 get r0 d1 0
 bne r0 HASH("PressureGridPathAllocator.v1") Reject
-get r0 d1 1
-bne r0 1 Reject
 move r8 0
 move r9 0
 get r13 db 11

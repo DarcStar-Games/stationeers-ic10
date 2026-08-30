@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
-  "source_sha256": "a6d9884325e0b9167e42e95251564b5b4df1a7c1ddd3709fa493023157c1ebdf",
+  "source_sha256": "7621601c8dd9b2417d221b00220810fd18429d804120c215305e1a805a2b03a1",
   "identity": {
     "service_id": "ic10.script.generic.directory.adapter.bridge",
     "implementation_revision": "1.0",
@@ -26,7 +26,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           3,
           7,
           10,
@@ -57,10 +56,6 @@
             "equals": 583163590
           },
           {
-            "address": 1,
-            "equals": 3
-          },
-          {
             "address": 15,
             "equals": 1
           }
@@ -88,7 +83,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           14,
           15,
           20,
@@ -124,10 +118,6 @@
           {
             "address": 0,
             "equals": 891293726
-          },
-          {
-            "address": 1,
-            "equals": 1
           }
         ]
       },

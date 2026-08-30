@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10",
-  "source_sha256": "3a0c92f32a629da7830864622f2d550cb2d528bc9e2085d37c1d9b44c34c3bfd",
+  "source_sha256": "c73ea5eedbf529f23ad7b1cde9aa587825bedc5e1fdcc31bcab81c3382117908",
   "identity": {
     "service_id": "ic10.script.pressure.medium.purity.guard",
     "implementation_revision": "1.0",
@@ -77,7 +77,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           8,
           9,
           11,
@@ -98,10 +97,6 @@
           {
             "address": 0,
             "equals": 2107540686
-          },
-          {
-            "address": 1,
-            "equals": 1
           },
           {
             "address": 8,

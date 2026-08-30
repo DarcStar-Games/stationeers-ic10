@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-config/generic_config_editor_v1_0.ic10",
-  "source_sha256": "0098366cb5aaf7efc1510530d92bb2b9adaee0865e1c816cb50ea6938fb1d852",
+  "source_sha256": "26212cc55666ed7c624006cddda7556741d3601eaf496ae4b6d5c3f1c103bb13",
   "identity": {
     "service_id": "ic10.script.generic.config.editor",
     "implementation_revision": "1.0",
@@ -136,7 +136,6 @@
       "reference": "selector",
       "literal_reads": [
         0,
-        1,
         8,
         17
       ],
@@ -148,11 +147,6 @@
           "address": 0,
           "operator": "equals",
           "value": 1512745005
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 2
         },
         {
           "address": 8,

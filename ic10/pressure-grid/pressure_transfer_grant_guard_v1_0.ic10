@@ -36,8 +36,6 @@ bne r0 r14 Loop
 bdns d1 Fault
 get r0 d1 0
 bne r0 HASH("PressureGridReservationPlanner.v2") Fault
-get r0 d1 1
-bne r0 2 Fault
 l r0 d1 ReferenceId
 bne r8 r0 NoGrant
 get r14 d1 14

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10",
-  "source_sha256": "96efc8847b0e20da2ac1096049a146b3ffa57fe9495b523323d716be41cdc884",
+  "source_sha256": "c88581eeea4296c44fdf5ad02518a8e259b129c01765053b8599885bf8189807",
   "identity": {
     "service_id": "ic10.script.pressure.grid.plan.builder",
     "implementation_revision": "1.0",
@@ -26,7 +26,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           8,
           9,
           10,
@@ -49,10 +48,6 @@
           {
             "address": 0,
             "equals": -590988592
-          },
-          {
-            "address": 1,
-            "equals": 1
           }
         ]
       },
@@ -78,7 +73,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           8,
           9,
           10,
@@ -101,10 +95,6 @@
           {
             "address": 0,
             "equals": 186077248
-          },
-          {
-            "address": 1,
-            "equals": 1
           }
         ]
       },

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10",
-  "source_sha256": "6fed5f783c64b5ba58d748e11b49894c9ae7783613b60d40ffa891bbf00df59f",
+  "source_sha256": "bfdd49acd79683eff8fbcc338d3db753acfb573be9e7327ca83c70da5ed1578c",
   "identity": {
     "service_id": "ic10.script.material.transfer.grant.guard",
     "implementation_revision": "1.0",
@@ -28,7 +28,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           9,
           12,
           15,
@@ -50,10 +49,6 @@
           {
             "address": 0,
             "equals": 1484497288
-          },
-          {
-            "address": 1,
-            "equals": 1
           }
         ]
       },
@@ -81,7 +76,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           14
         ],
         "literal_writes": [],
@@ -95,10 +89,6 @@
           {
             "address": 0,
             "equals": 924888977
-          },
-          {
-            "address": 1,
-            "equals": 2
           }
         ]
       },
@@ -159,7 +149,6 @@
       "reference": "sp",
       "literal_reads": [
         0,
-        1,
         9,
         10,
         12,
@@ -174,11 +163,6 @@
           "address": 0,
           "operator": "equals",
           "value": -1742884202
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 1
         },
         {
           "address": 10,

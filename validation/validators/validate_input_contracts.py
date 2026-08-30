@@ -15,7 +15,7 @@ for name,src in [('Scanner',scanner),('Resolver',resolver)]:
 result.contains(scanner_path,'poke 0 HASH("GenericInputScanner.v1")','poke 1 1','poke 10 r9',rule='Scanner contract')
 result.contains(resolver_path,'poke 0 HASH("GenericInputResolver.v1")','putd scanner 9 r6','poke 13 r9',rule='Resolver contract')
 result.contains(config_path,'getd r12 editor r0','putd editor 20 r12','putd editor 25 1',rule='Config Bridge contract')
-result.contains(view_path,'poke 0 HASH("InputProfileView.v1")','poke 1 1','bne r0 HASH("GenericCatalogStore.v6") Bad','bne r0 6 Bad','bne r0 HASH("CatalogSchema.InputProfile.v3") Bad','poke 11 r14',rule='Input Profile View contract')
+result.contains(view_path,'poke 0 HASH("InputProfileView.v1")','poke 1 1','bne r0 HASH("GenericCatalogStore.v6") Bad','bne r0 HASH("CatalogSchema.InputProfile.v3") Bad','poke 11 r14',rule='Input Profile View contract')
 data=json.loads((R/'data/input_profiles.json').read_text());diag=[p for p in data['profiles'] if p['profile_type']=='DiagnosticMapping']
 if data.get('catalog_schema_version')!=3 or len(diag)!=1 or diag[0]['field_count']!=7:result.fail('Input schema v3 / DiagnosticMapping mismatch')
 loaders=sorted((R/'ic10'/'input-profile-catalog').glob('input_profile_catalog_loader_*_v4_0.ic10'))

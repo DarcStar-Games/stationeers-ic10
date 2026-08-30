@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10",
-  "source_sha256": "61870a17f2e16542663109e9c0b2cf745f1d8a7c8f4dbfa16699fca5ea1407f6",
+  "source_sha256": "227892ba0447a88eebea5a181981735028c3ed4f8c0f69f51853a0ac98ed9bbf",
   "identity": {
     "service_id": "ic10.script.pressure.inventory.reservation",
     "implementation_revision": "1.1",
@@ -28,7 +28,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           8,
           11,
           12,
@@ -50,10 +49,6 @@
           {
             "address": 0,
             "equals": 205841631
-          },
-          {
-            "address": 1,
-            "equals": 2
           }
         ]
       },

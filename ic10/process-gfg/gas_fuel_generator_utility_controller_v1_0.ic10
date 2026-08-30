@@ -14,8 +14,6 @@ bdns d2 Bad
 bdns d3 Bad
 get r0 d1 0
 bne r0 HASH("PowerDispatchPlanStore.v1") Bad
-get r0 d1 1
-bne r0 1 Bad
 l r0 d0 PrefabHash
 bne r0 HASH("StructureGasGenerator") Bad
 get r15 d1 27

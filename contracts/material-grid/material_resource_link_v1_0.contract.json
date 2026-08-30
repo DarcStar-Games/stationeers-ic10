@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-grid/material_resource_link_v1_0.ic10",
-  "source_sha256": "36e8279d876b94df03bd480aee5c7793fa6d980be8d2953c933bd56831ef269d",
+  "source_sha256": "902d3d30937fce9b9630a4a4d567a959dadf6b6bef29a7ddbebc4f1ea88107f1",
   "identity": {
     "service_id": "ic10.script.material.resource.link",
     "implementation_revision": "1.0",
@@ -28,7 +28,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           10,
           12,
           32,
@@ -46,10 +45,6 @@
           {
             "address": 0,
             "equals": -1742884202
-          },
-          {
-            "address": 1,
-            "equals": 1
           },
           {
             "address": 10,
@@ -85,7 +80,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           10,
           12,
           32,
@@ -103,10 +97,6 @@
           {
             "address": 0,
             "equals": -1742884202
-          },
-          {
-            "address": 1,
-            "equals": 1
           },
           {
             "address": 10,
@@ -142,7 +132,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           10,
           11,
           12,
@@ -161,10 +150,6 @@
           {
             "address": 0,
             "equals": 1559898316
-          },
-          {
-            "address": 1,
-            "equals": 1
           }
         ]
       },
@@ -192,7 +177,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           13
         ],
         "literal_writes": [],
@@ -206,10 +190,6 @@
           {
             "address": 0,
             "equals": 754423306
-          },
-          {
-            "address": 1,
-            "equals": 1
           }
         ]
       },
@@ -237,7 +217,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           15,
           16,
           17,
@@ -255,10 +234,6 @@
           {
             "address": 0,
             "equals": -1929928026
-          },
-          {
-            "address": 1,
-            "equals": 1
           }
         ]
       },

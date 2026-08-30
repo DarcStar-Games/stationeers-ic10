@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-grid-core/resource_reservation_v1_0.ic10",
-  "source_sha256": "e49a34a01c6cca1935e6f8b9a236b5afdc6f1b37764ededa1d511cb2da2ae7cf",
+  "source_sha256": "f94c839e15bdf4e3288f4c54224d87c744c3d1b8794b6c1ff014109a8e076946",
   "identity": {
     "service_id": "ic10.script.resource.reservation",
     "implementation_revision": "1.0",
@@ -28,7 +28,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           8,
           11,
           12,
@@ -55,10 +54,6 @@
           {
             "address": 0,
             "equals": 25991561
-          },
-          {
-            "address": 1,
-            "equals": 1
           }
         ]
       },

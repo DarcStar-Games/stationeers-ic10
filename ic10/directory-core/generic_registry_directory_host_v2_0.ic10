@@ -14,8 +14,6 @@ yield
 bdns d0 Loop
 get r0 d0 0
 bne r0 HASH("DirectoryAdapter.v3") Loop
-get r0 d0 1
-bne r0 3 Loop
 get r0 d0 15
 bne r0 2 Loop
 get r11 db 24

@@ -18,8 +18,6 @@ get r14 d0 12
 blez r14 Bad
 get r0 d0 0
 bne r0 HASH("ResourceReservation.v1") Bad
-get r0 d0 1
-bne r0 1 Bad
 get r2 d0 34
 get r0 d0 33
 bne r0 2 Bad
@@ -33,8 +31,6 @@ get r13 d1 12
 blez r13 Bad
 get r0 d1 0
 bne r0 HASH("ResourceReservation.v1") Bad
-get r0 d1 1
-bne r0 1 Bad
 get r0 d1 34
 bne r0 r2 Bad
 get r0 d1 33
@@ -51,8 +47,6 @@ get r14 d2 10
 blez r14 Bad
 get r0 d2 0
 bne r0 HASH("StackerFeeder.v1") Bad
-get r0 d2 1
-bne r0 1 Bad
 l r9 d2 ReferenceId
 get r10 d2 12
 bne r7 r10 Bad
@@ -64,15 +58,11 @@ get r0 d2 10
 bne r0 r14 Loop
 get r0 d3 0
 bne r0 HASH("MaterialTransferGrantGuard.v1") Bad
-get r0 d3 1
-bne r0 1 Bad
 get r0 d3 13
 blez r0 Bad
 l r14 d3 ReferenceId
 get r0 d4 0
 bne r0 HASH("MaterialTransferExecutor.v1") Bad
-get r0 d4 1
-bne r0 1 Bad
 get r0 d4 19
 blez r0 Bad
 l r15 d4 ReferenceId

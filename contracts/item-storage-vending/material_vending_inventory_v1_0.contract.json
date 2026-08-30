@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-vending/material_vending_inventory_v1_0.ic10",
-  "source_sha256": "87ddc11de152245edc2a6161a399d4ee84ecbb9bdcbbffb6beb25c9c2f398bb2",
+  "source_sha256": "afc94a992b3635e109f11390b8f97387c5f03bb69cf3cf6b63f10545e22cb79f",
   "identity": {
     "service_id": "ic10.script.material.vending.inventory",
     "implementation_revision": "1.0",
@@ -107,7 +107,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           8,
           9,
           10,
@@ -127,10 +126,6 @@
           {
             "address": 0,
             "equals": 2107540686
-          },
-          {
-            "address": 1,
-            "equals": 1
           },
           {
             "address": 8,

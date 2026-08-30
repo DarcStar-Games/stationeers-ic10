@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10",
-  "source_sha256": "913f4be25b1db09c06a04846aacf63745c2807338f73821c2c675e40ff38fac2",
+  "source_sha256": "88cb99dc778cf43d7fbed0a5caecba1553e943db0cb81ed7e8cae84face92057",
   "identity": {
     "service_id": "ic10.script.pressure.resource.endpoint.adapter",
     "implementation_revision": "1.0",
@@ -28,7 +28,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           11,
           12,
           14,
@@ -47,10 +46,6 @@
           {
             "address": 0,
             "equals": 205841631
-          },
-          {
-            "address": 1,
-            "equals": 2
           }
         ]
       },

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10",
-  "source_sha256": "2607db0faa3ab790b4f1cf6a376d26b0b9e02a4555b356e57c9f870154c7839e",
+  "source_sha256": "00fb24874cc605c60d08662b399a3777f758ff11f2d645aaa0a2d5117c3f9a49",
   "identity": {
     "service_id": "ic10.script.diagnostic.selector.bridge",
     "implementation_revision": "1.0",
@@ -17,8 +17,7 @@
       "transport": "reference-id",
       "reference": "consoleSelector",
       "literal_reads": [
-        0,
-        1
+        0
       ],
       "literal_writes": [
         12,
@@ -31,11 +30,6 @@
           "address": 0,
           "operator": "equals",
           "value": 1820001013
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 1
         }
       ],
       "accepted": []
@@ -44,8 +38,7 @@
       "transport": "reference-id",
       "reference": "controllerSelector",
       "literal_reads": [
-        0,
-        1
+        0
       ],
       "literal_writes": [
         10,
@@ -59,11 +52,6 @@
           "address": 0,
           "operator": "equals",
           "value": 1512745005
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 2
         }
       ],
       "accepted": []
@@ -73,7 +61,6 @@
       "reference": "input",
       "literal_reads": [
         0,
-        1,
         10,
         16,
         17,
@@ -89,11 +76,6 @@
           "address": 0,
           "operator": "equals",
           "value": 1404237530
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 1
         },
         {
           "address": 10,

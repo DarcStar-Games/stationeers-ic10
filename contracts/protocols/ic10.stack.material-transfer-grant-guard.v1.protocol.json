@@ -250,7 +250,6 @@
       "header_base": 0,
       "literal_reads": [
         0,
-        1,
         13
       ],
       "literal_writes": [],
@@ -263,11 +262,6 @@
           "address": 0,
           "operator": "equals",
           "value": 754423306
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 1
         }
       ],
       "publication_requirements": []
@@ -281,7 +275,6 @@
       "header_base": 0,
       "literal_reads": [
         0,
-        1,
         9,
         10,
         11,
@@ -298,11 +291,6 @@
           "address": 0,
           "operator": "equals",
           "value": 754423306
-        },
-        {
-          "address": 1,
-          "operator": "equals",
-          "value": 1
         },
         {
           "address": 11,

@@ -100,8 +100,8 @@ poke 9 r14
 move r15 r14
 j Loop
 Prep:
-getd r0 sp 1
-bne r0 1 PrepBad
+getd r0 sp 0
+bne r0 HASH("PressureInventoryReservation.v1") PrepBad
 getd r0 sp 10
 bne r0 1 PrepBad
 getd r0 sp 19

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10",
-  "source_sha256": "b0a458f7ddd52806ceec85a500bf9f92bef68f86aef792dc8419b2b9d9ce96af",
+  "source_sha256": "bb0313a627f8afaed06465c49cf1ade93eafe970adc442496845610a8c479b6c",
   "identity": {
     "service_id": "ic10.script.pressure.grid.path.enumerator",
     "implementation_revision": "2.0",
@@ -26,7 +26,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           9,
           24
         ],
@@ -46,10 +45,6 @@
           {
             "address": 0,
             "equals": 891293726
-          },
-          {
-            "address": 1,
-            "equals": 1
           },
           {
             "address": 9,

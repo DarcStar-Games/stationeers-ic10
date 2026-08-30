@@ -87,12 +87,8 @@ bdns d0 Fail
 bdns d1 Fail
 get sp d0 0
 bne sp HASH("PressureGridPathEnumerator.v2") Fail
-get sp d0 1
-bne sp 2 Fail
 get sp d1 0
 bne sp HASH("PressureGridRouteRanker.v2") Fail
-get sp d1 1
-bne sp 2 Fail
 get r4 db 12
 add r4 r4 1
 poke 12 r4

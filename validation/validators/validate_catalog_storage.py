@@ -45,9 +45,9 @@ for p in loader_paths:
 expected=private|prod_loaders
 if actual!=expected: fail(f'clr db ownership changed: expected {sorted(expected)}, got {sorted(actual)}')
 checks={
- 'ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10':['poke 0 HASH("GenericCatalogStore.v6")','poke 1 6','poke 19 32','poke 20 512','poke 29 480','getd r0 r1 1','bne r0 5 Service','poke 27 0'],
+ 'ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10':['poke 0 HASH("GenericCatalogStore.v6")','poke 1 6','poke 19 32','poke 20 512','poke 29 480','bne r0 HASH("CatalogLoader.v5") Service','poke 27 0'],
  'ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10':['poke 0 HASH("CatalogCoordinatorCore.v4")','poke 1 4','poke 2 0','bgt r7 64 ClaimFail','getd r6 r1 16','bne r6 1 Next','getd r0 r1 29','putd r1 16 2'],
- 'ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10':['poke 0 HASH("CatalogLoaderRouter.v3")','poke 1 3','getd r0 r1 1','bne r0 5 Scan','getd r0 r2 29','putd ra 27 r11','putd r1 19 ra'],
+ 'ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10':['poke 0 HASH("CatalogLoaderRouter.v3")','poke 1 3','bne r0 HASH("CatalogLoader.v5") Scan','getd r0 r2 29','putd ra 27 r11','putd r1 19 ra'],
  'ic10/directory-core/generic_registry_directory_host_v2_0.ic10':['poke 0 HASH("GenericRegistryDirectoryHost.v3")','poke 1 3','bne r0 HASH("DirectoryAdapter.v3") Loop','poke 23 r10'],
  'ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10':['poke 1 3','poke 3 HASH("DirectorySchema.CatalogStoreNode.v1")','poke 10 6','poke 11 64','poke 15 2'],
  'ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10':['get r14 d0 15','putd r1 12 r14'],

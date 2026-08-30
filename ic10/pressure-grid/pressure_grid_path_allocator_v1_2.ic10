@@ -20,8 +20,6 @@ get r0 d0 0
 bne r0 HASH("PressureGridRouteSelector.v2") Reject
 get r0 d1 0
 bne r0 HASH("PressureReservationAllocator.v3") Reject
-get r0 d1 1
-bne r0 3 Reject
 get r10 db 12
 add r10 r10 1
 poke 12 r10

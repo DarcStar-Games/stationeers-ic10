@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10",
-  "source_sha256": "dae4441e1355276be5b3ac284485332828c4cac6b7090472c855dcd028ce164c",
+  "source_sha256": "0fccce2ed88ba2ae6486c652667f343979451797af89546920b93f9231d5b5cd",
   "identity": {
     "service_id": "ic10.script.process.pressure.domain.runtime",
     "implementation_revision": "1.0",
@@ -26,7 +26,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           10,
           11,
           12,
@@ -46,10 +45,6 @@
           {
             "address": 0,
             "equals": 1700980279
-          },
-          {
-            "address": 1,
-            "equals": 1
           }
         ]
       },

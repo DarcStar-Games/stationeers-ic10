@@ -12,8 +12,6 @@ blez r1 Bad
 bdns d0 Bad
 get r0 d0 0
 bne r0 HASH("GenericSnapshotDirectoryHost.v1") Bad
-get r0 d0 1
-bne r0 1 Bad
 get r0 d0 9
 bne r0 HASH("DirectorySchema.PressureGridLink.v1") Bad
 get r0 db 35

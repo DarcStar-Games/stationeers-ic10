@@ -16,17 +16,29 @@ exact. A service that changes its contract changes its name, so it changes the
 value it publishes, and every consumer still comparing the old identity stops
 matching and fails closed — it can never silently accept a contract it was not
 written against. That is why a consumer needs only the one comparison, and why
-`S1` is the readable ABI beside the identity rather than a second gate. Programs
-that check `S1` as well are consistent, not wrong; `validation/validators/validate_service_identity.py`
-requires that any such check agree with the ABI folded into the name.
+`S1` is the readable ABI beside the identity rather than a second gate.
 
-Two rules keep the guarantee alive, both enforced by
+**Do not check a peer's `S1`.** Once `S0` has matched, the ABI is already proven,
+so the comparison can never fail — it costs two lines to restate what the
+identity said, and its presence invites the belief that `S0` alone is not enough.
+Removing the 106 such checks that predated the derived identity reclaimed 212
+lines and retired 12 soft-limit exemptions (issue #83).
+
+Three rules keep the guarantee alive, all enforced by
 `validation/validators/validate_service_identity.py`:
 
 - Every publish and every check spells the identity as the `HASH("…")` literal.
   A precomputed numeral would let the name and the value drift apart.
 - No two contracts may collide under CRC32, so one value never names two
   services.
+- No consumer branches on a peer's `S1`. Reading it is fine — the live Stack
+  Header Reader reports it for an unknown target — but branching on it as an
+  acceptance test is not.
+
+A program's check of its **own** `S1` is a different thing and stays. The stack
+survives reflash, so a crash between `poke 0` and `poke 1` leaves a valid
+identity above an unwritten payload; the own-`S1` check is what detects that torn
+image and forces a rebuild. Eight programs rely on it.
 
 **Block headers away from `S0` are deliberately different.** The Generic
 Telemetry block at `S96` keeps a hand-assigned magic (`27182818`) and a separate

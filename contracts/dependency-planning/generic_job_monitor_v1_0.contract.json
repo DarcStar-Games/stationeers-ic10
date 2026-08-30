@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/generic_job_monitor_v1_0.ic10",
-  "source_sha256": "1d4bc0f71bff7bda42ac38a71ce76414f662f8ece28cd2413d377a3d23d8a2a0",
+  "source_sha256": "7f05bc5266ed15a948b29ae55f740fd42b07d20f99e28a558e966d5dede54fcb",
   "identity": {
     "service_id": "ic10.script.generic.job.monitor",
     "implementation_revision": "1.0",
@@ -26,7 +26,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           16
         ],
         "literal_writes": [],
@@ -45,10 +44,6 @@
           {
             "address": 0,
             "equals": -955081679
-          },
-          {
-            "address": 1,
-            "equals": 1
           }
         ]
       },

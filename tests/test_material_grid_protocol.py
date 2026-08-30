@@ -18,7 +18,7 @@ l=text('ic10/material-grid/material_resource_link_v1_0.ic10')
 for s in ('l r3 d0 ReferenceId','l r4 d1 ReferenceId','poke 28 r3','poke 29 r4','poke 32 HASH("MaterialStackerSorter")','poke 19 r10','poke 20 r11','poke 21 r13','poke 22 r8'):need(l,s,'material link')
 # Grant Guard is current-allocator-only and binds exact topology/transaction identity.
 g=text('ic10/material-grid/material_transfer_grant_guard_v1_0.ic10')
-for s in ('poke 0 HASH("MaterialTransferGrantGuard.v1")','bne r0 2 Bad','bne r0 r2 Consume','bne r0 r3 Consume','bne r0 r4 Consume','bne r0 r5 Consume','bne r0 r6 Consume','bne r0 r7 Consume','bne r0 r1 Consume','bne r0 r11 Consume','bne r0 2 ResBad'):need(g,s,'material grant guard')
+for s in ('poke 0 HASH("MaterialTransferGrantGuard.v1")','bne r0 HASH("MultiMaterialReservationAllocator.v2") Bad','bne r0 r2 Consume','bne r0 r3 Consume','bne r0 r4 Consume','bne r0 r5 Consume','bne r0 r6 Consume','bne r0 r7 Consume','bne r0 r1 Consume','bne r0 r11 Consume','bne r0 2 ResBad'):need(g,s,'material grant guard')
 # Feeder/executor exact-batch safety remains unchanged.
 f=text('ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10')
 for s in ('beq r0 HASH("StackerFeeder.v1") Init','s d0 RequestHash r8','s d1 Setting r9','sll r0 r8 8','or r0 r0 1','put d2 0 r0','s d1 On 0','s d2 On 0'):need(f,s,'material feeder')

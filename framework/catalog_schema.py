@@ -157,8 +157,6 @@ blt r1 0 Reset
 add r7 r7 1
 getd r0 r1 0
 bne r0 HASH("CatalogLoader.v5") Service
-getd r0 r1 1
-bne r0 5 Service
 getd r0 r1 18
 bne r0 1 Service
 getd r0 r1 19
@@ -261,8 +259,6 @@ yield
 bdns d0 Loop
 get r0 d0 0
 bne r0 HASH("DirectoryAdapter.v3") Loop
-get r0 d0 1
-bne r0 3 Loop
 get r0 d0 15
 bne r0 2 Loop
 get r11 db 24
@@ -386,8 +382,6 @@ yield
 bdns d0 Loop
 get r0 d0 0
 bne r0 HASH("GenericRegistryDirectoryHost.v3") Loop
-get r0 d0 1
-bne r0 3 Loop
 get r0 d0 3
 bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 l r12 d0 ReferenceId
@@ -490,8 +484,6 @@ bdns d0 Loop
 l r15 d0 ReferenceId
 getd r0 r15 0
 bne r0 HASH("CatalogCoordinatorCore.v4") Loop
-getd r0 r15 1
-bne r0 4 Loop
 poke 8 0
 poke 9 0
 poke 10 0
@@ -502,8 +494,6 @@ blt r1 0 Reset
 add r7 r7 1
 getd r0 r1 0
 bne r0 HASH("CatalogLoader.v5") Scan
-getd r0 r1 1
-bne r0 5 Scan
 getd r0 r1 18
 bne r0 1 Scan
 getd r3 r1 21
@@ -538,8 +528,6 @@ blt r2 0 FindDone
 add r8 r8 1
 getd r0 r2 0
 bne r0 HASH("GenericCatalogStore.v6") Find
-getd r0 r2 1
-bne r0 6 Find
 getd r0 r2 16
 bne r0 2 Find
 getd r0 r2 11
@@ -603,8 +591,6 @@ get r0 d0 0
 bne r0 HASH("CatalogCoordinatorCore.v4") Loop
 get r0 d1 0
 bne r0 HASH("GenericRegistryDirectoryHost.v3") Loop
-get r0 d1 1
-bne r0 3 Loop
 get r0 d1 3
 bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 get r11 d1 23
@@ -663,8 +649,6 @@ get r0 d0 40
 bgtz r0 Loop
 get r0 d1 0
 bne r0 HASH("GenericRegistryDirectoryHost.v3") Loop
-get r0 d1 1
-bne r0 3 Loop
 get r0 d1 3
 bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 get r12 d1 23
@@ -862,8 +846,6 @@ get r0 d0 0
 bne r0 HASH("CatalogCoordinatorCore.v4") Loop
 get r0 d1 0
 bne r0 HASH("GenericRegistryDirectoryHost.v3") Loop
-get r0 d1 1
-bne r0 3 Loop
 get r0 d1 3
 bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 get r11 d1 23
@@ -941,8 +923,6 @@ blt r1 0 Publish
 add r7 r7 1
 getd r0 r1 0
 bne r0 HASH("GenericCatalogStore.v6") Scan
-getd r0 r1 1
-bne r0 6 Scan
 getd r2 r1 18
 blez r2 Scan
 bgt r2 64 Scan
@@ -1007,8 +987,6 @@ yield
 bdns d0 Loop
 get r0 d0 0
 bne r0 HASH("GenericRegistryDirectoryHost.v3") Loop
-get r0 d0 1
-bne r0 3 Loop
 get r0 d0 3
 bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Loop
 get r14 d0 23
@@ -1108,8 +1086,6 @@ bdns d0 Bad
 bdns d1 Bad
 get r0 d0 0
 bne r0 HASH("GenericRegistryDirectoryHost.v3") Bad
-get r0 d0 1
-bne r0 3 Bad
 get r0 d0 3
 bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") Bad
 get r15 d0 23

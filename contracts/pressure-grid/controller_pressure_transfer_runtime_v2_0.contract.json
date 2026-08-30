@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10",
-  "source_sha256": "a90de2dd80a065f50b4e878c376bc6702332fd4f0679b6a4fa118614790eaea6",
+  "source_sha256": "9d7ee173bdc190445f70dfdea1404dc7afba348659abfb3265ae150f3a15cf88",
   "identity": {
     "service_id": "ic10.script.controller.pressure.transfer.runtime",
     "implementation_revision": "2.0",
@@ -28,7 +28,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           8,
           9,
           11,
@@ -47,10 +46,6 @@
           {
             "address": 0,
             "equals": -920533037
-          },
-          {
-            "address": 1,
-            "equals": 1
           }
         ]
       },
@@ -78,7 +73,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           11,
           18,
           19,
@@ -95,10 +89,6 @@
           {
             "address": 0,
             "equals": -920533037
-          },
-          {
-            "address": 1,
-            "equals": 1
           }
         ]
       },
@@ -171,7 +161,6 @@
       "stack": {
         "literal_reads": [
           0,
-          1,
           8,
           15,
           17,
@@ -188,10 +177,6 @@
           {
             "address": 0,
             "equals": 879244561
-          },
-          {
-            "address": 1,
-            "equals": 1
           },
           {
             "address": 15,
@@ -222,7 +207,7 @@
       },
       "stack": {
         "literal_reads": [
-          1,
+          0,
           8,
           51
         ],
@@ -240,16 +225,16 @@
         "dynamic_write_range_source": "none",
         "constraints": [
           {
-            "address": 1,
-            "equals": 1
+            "address": 0,
+            "equals": -759746849
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.edbe9104d707ecb1",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.edbe9104d707ecb1",
+        "interface_id": "ic10.interface.access.53f48707f8e2c951",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.53f48707f8e2c951",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [

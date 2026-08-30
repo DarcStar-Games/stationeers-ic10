@@ -24,8 +24,6 @@ j First
 Store:
 getd r0 r2 0
 bne r0 HASH("GenericCatalogStore.v6") Bad
-getd r0 r2 1
-bne r0 6 Bad
 getd r14 r2 17
 mod r0 r14 2
 bnez r0 Loop

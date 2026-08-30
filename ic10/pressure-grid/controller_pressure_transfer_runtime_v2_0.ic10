@@ -13,8 +13,8 @@ Loop:
 yield
 poke 115 0
 bdns d4 Fault
-get r0 d4 1
-bne r0 1 Fault
+get r0 d4 0
+bne r0 HASH("GenericPersistentConfigHost.v1") Fault
 get r0 d4 8
 blez r0 Fault
 get sp d4 51
@@ -35,8 +35,6 @@ get r15 d0 11
 blez r15 Fault
 get r0 d0 0
 bne r0 HASH("PressureInventoryReservation.v1") Fault
-get r0 d0 1
-bne r0 1 Fault
 get r7 d0 18
 get r9 d0 19
 l r5 d0 ReferenceId
@@ -50,8 +48,6 @@ get r15 d1 11
 blez r15 Fault
 get r0 d1 0
 bne r0 HASH("PressureInventoryReservation.v1") Fault
-get r0 d1 1
-bne r0 1 Fault
 get r8 d1 18
 get r0 d1 19
 bne r0 r9 Fault
@@ -92,8 +88,6 @@ get r15 d3 18
 blez r15 SafeOff
 get r0 d3 0
 bne r0 HASH("PressureTransferGrantGuard.v1") SafeOff
-get r0 d3 1
-bne r0 1 SafeOff
 l r5 db ReferenceId
 get r0 d3 17
 bne r0 r5 SafeOff
