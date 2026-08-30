@@ -10,6 +10,7 @@ import tools.build_release as br
 import tools.run_validation as rv
 from framework.generator_productivity import PRODUCTIVITY_INVENTORY_POLICY
 from framework.repository_inventory import BASE_IGNORED_DIRECTORIES,BASE_IGNORED_SUFFIXES,LOCAL_TOOLING_DIRECTORIES
+from framework.validation_suite import suite_entries
 R=_PROJECT_ROOT;result=Validation(R)
 
 ck=result.check
@@ -55,7 +56,7 @@ try: br.verify_manifest(manifest)
 except RuntimeError as e: result.fail(f'generated in-memory archive manifest does not verify: {e}')
 evidence=br.validation_evidence_files()
 ck(evidence[:3]==[rv.SUMMARY,rv.RUN_LOG,rv.STATE],'release evidence omits a summary, run log, or resume state')
-ck(len(evidence)==3+len(rv.SCRIPTS),'release evidence does not contain one output per validation script')
+ck(len(evidence)==3+len(suite_entries(R)),'release evidence does not contain one output per validation script')
 ck(len(evidence)==len(set(evidence)),'release evidence paths are not unique')
 readme=(R/'README.md').read_text()
 ck('`ARCHIVE_MANIFEST.sha256` exists only inside the resulting ZIP' in readme,'README does not document the release-only manifest location')

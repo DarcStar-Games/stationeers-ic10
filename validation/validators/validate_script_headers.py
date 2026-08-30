@@ -7,15 +7,15 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 from pathlib import Path, PurePosixPath
 import ast
 import sys
-import tools.run_validation as run_validation
+from framework.validation_suite import suite_entries
 
 ROOT = _PROJECT_ROOT
 SHEBANG = "#!/usr/bin/env python3"
 # An entry point is a file something runs, and the repository already says which
 # files those are in two places -- neither of them the shape of a path. tools/ is
 # the command directory: every module there is run by hand or by another command.
-# Under tests/ and validation/, tools/run_validation.py's VALIDATORS + TESTS lists
-# are the release contract for what runs, so appearing in them is what makes a file
+# Under tests/ and validation/, the shared validation suite manifest is the release
+# contract for what runs, so appearing in it is what makes a file
 # there a script. Everything else -- framework/ reference models, package markers,
 # fixture input -- is imported or read, and must not advertise an entry point.
 #
@@ -27,10 +27,9 @@ SHEBANG = "#!/usr/bin/env python3"
 # failure: replacing the rule reclassified nothing, and the summary below prints the
 # two populations separately so a later divergence is visible rather than inferred.
 COMMAND_ROOT = "tools"
-# Importing a command to read its list is safe here for one reason: nothing under
-# tools/ acts at import. That is check_work_in_main's rule, enforced by this file,
-# now also against this import -- run_validation.py does its work in main().
-REGISTERED = frozenset(run_validation.SCRIPTS)
+# The manifest module is deliberately import-safe, and its accessor validates the
+# registration before either this validator or the runner consumes it.
+REGISTERED = frozenset(entry.path for entry in suite_entries(ROOT))
 # The directories the runner actually draws scripts from -- tests/ and
 # validation/validators/ as it stands. unregistered_script() reads a claim only here,
 # and nowhere below: a fixture subtree is where input lives, so nothing about a file
@@ -122,7 +121,7 @@ def unregistered_script(rel: Path, lines, executable, has_bootstrap):
     """A file beside the registered scripts that dresses as one nothing runs.
 
     Registration is not paperwork here: tools/run_validation.py executes the paths in
-    VALIDATORS and TESTS and nothing else, so a checker absent from those lists never
+    the suite manifest and nothing else, so a checker absent from that manifest never
     runs, and the suite reports PASS over the gap it left. CLAUDE.md says as much --
     anything not listed there is not part of the release contract -- and this is the
     check for it, which the old classification could not express because it read
@@ -158,7 +157,7 @@ def unregistered_script(rel: Path, lines, executable, has_bootstrap):
     ) if worn]
     if not marks:
         return None
-    return (f"nothing runs this: tools/run_validation.py lists no VALIDATORS/TESTS entry for it,"
+    return (f"nothing runs this: the validation suite manifest has no entry for it,"
             f" yet it carries {', '.join(marks)}")
 
 
@@ -170,8 +169,8 @@ def shadowable_modules(paths):
     run: `python3 tools/run_validation.py` keeps <root>/tools live on the path.
     So every module beside an entry point answers to two names, and
     `import tools.build_release` and `import build_release` return two distinct
-    module objects loaded from one file -- two copies of ROOT, TOOLING_DIRS,
-    SCRIPTS, with nothing keeping them equal. A divergence would be silent and
+    module objects loaded from one file -- two copies of ROOT and module state,
+    with nothing keeping them equal. A divergence would be silent and
     would land in release inventory or validation scope, so a module gets
     exactly one name: the package form, rooted at the repository root.
 
@@ -879,7 +878,7 @@ def main():
             print(f"     - {failure}")
     for name in missing:
         print(f"FAIL {name:58} {'listed':6} --")
-        print("     - tools/run_validation.py runs this path and no such file exists")
+        print("     - the validation suite manifest registers this path and no such file exists")
     for bare, canonical in alias_conflicts.items():
         print(f"FAIL import alias {bare!r} resolves to multiple in-tree names: {', '.join(canonical)}")
     for failure in regression_failures:
@@ -896,7 +895,7 @@ def main():
     # to contradict the line above it.
     commands = sum(1 for row in rows if row[1] and row[0].startswith(COMMAND_ROOT + "/"))
     print(f"Entry points are the {commands} commands under {COMMAND_ROOT}/ plus the {entries - commands}"
-          f" scripts tools/run_validation.py runs elsewhere; nothing is an entry point by location")
+          f" scripts the validation suite manifest runs elsewhere; nothing is an entry point by location")
     scoped = [row for row in rows if row[0].startswith(COMMAND_ROOT + "/")]
     print(f"No work at import for all {len(scoped)} modules under {COMMAND_ROOT}/,"
           f" and a guard reaches main() in each of the {sum(1 for row in scoped if row[1])} entry points")

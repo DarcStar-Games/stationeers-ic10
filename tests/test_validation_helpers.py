@@ -10,6 +10,16 @@ from pathlib import Path
 import tempfile
 
 from framework.validation import Validation
+from framework.validation_suite import (
+    SuiteEntry,
+    SuiteManifestError,
+    TEST_CATEGORY,
+    VALIDATOR_CATEGORY,
+    suite_entries,
+    test_entries,
+    validate_suite_entries,
+    validator_entries,
+)
 
 
 with tempfile.TemporaryDirectory() as directory:
@@ -74,6 +84,35 @@ with tempfile.TemporaryDirectory() as directory:
         " - cached assertions and reporting are stable\n"
     )
 
+    second = root / "second.py"
+    second.write_text("pass\n")
+    valid_entry = SuiteEntry("example.ic10", VALIDATOR_CATEGORY, "EXAMPLE", 1)
+    assert validate_suite_entries((valid_entry,), root) == (valid_entry,)
+
+    malformed_manifests = (
+        ((SuiteEntry("missing.py", TEST_CATEGORY, "MISSING"),), "registered script does not exist"),
+        ((valid_entry, SuiteEntry("example.ic10", TEST_CATEGORY, "SECOND", 2)), "duplicate path"),
+        ((valid_entry, SuiteEntry("second.py", TEST_CATEGORY, "EXAMPLE", 2)), "duplicate evidence identifier"),
+        ((SuiteEntry("example.ic10", "other", "OTHER"),), "invalid category"),
+        ((SuiteEntry("example.ic10", TEST_CATEGORY, "TIMEOUT", 0),), "timeout must be a positive finite number"),
+    )
+    for entries, expected in malformed_manifests:
+        try:
+            validate_suite_entries(entries, root)
+        except SuiteManifestError as error:
+            assert expected in str(error), (expected, str(error))
+        else:
+            raise AssertionError(f"suite manifest accepted malformed registration: {expected}")
+
+entries = suite_entries(_PROJECT_ROOT)
+validators = validator_entries(_PROJECT_ROOT)
+tests = test_entries(_PROJECT_ROOT)
+assert len(entries) == 71 and len(validators) == 27 and len(tests) == 44
+assert entries == validators + tests
+assert entries[0].evidence_filename == "VALIDATE_ABI_CONTRACTS.txt"
+assert entries[-1].evidence_filename == "TEST_GAME_EXPORT.txt"
+
 print("Validation helper unit tests: PASS")
 print(" - cached source assertions collect precise multi-failure diagnostics")
 print(" - one finalizer preserves executable validator PASS/FAIL and exit behavior")
+print(" - suite manifest rejects missing, duplicate, uncategorized, and invalid-timeout entries")

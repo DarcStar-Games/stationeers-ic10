@@ -20,7 +20,7 @@ Two things follow from that, and they drive almost every convention in the repo:
 Run everything from the repository root (Python 3.10+; `python3` locally).
 
 ```bash
-python3 tools/run_validation.py                   # full suite: 27 validators + 40 protocol/execution tests
+python3 tools/run_validation.py                   # full suite: 27 validators + 44 protocol/execution tests
 python3 tools/run_validation.py --resume          # reuse prior PASSes, only if the input-tree fingerprint matches
 python3 tests/test_job_abi.py                     # run one test  (plain script, exit code = pass/fail)
 python3 validation/validators/validate_ic10.py    # run one validator
@@ -99,14 +99,14 @@ Headers are ordered **shebang, docstring, `__future__`, bootstrap** — the sheb
 or the kernel hands the file to `/bin/sh`, and a docstring below the bootstrap is a dead expression,
 not a docstring. Those three belong to entry points, and what makes a file one is that something
 runs it, not where it sits: every module under `tools/` except a package marker is a command, and
-under `tests/` and `validation/` the entry points are exactly the scripts `tools/run_validation.py`
-lists. Package markers, `framework/` reference models, and any Python fixture *input* under
+under `tests/` and `validation/` the entry points are exactly the scripts registered in
+`framework/validation_suite.py`. Package markers, other `framework/` reference models, and any Python fixture *input* under
 `tests/fixtures/` or `tests/ic10/` are imported or read rather than run, so they carry none of the
 three.
 `validation/validators/validate_script_headers.py` enforces all of it, including the `parents[N]`
 depth, the import form, that work under `tools/` sits in a guarded `main()` — nothing running
 at import, and nothing left unreachable behind a missing guard — and that a file under `tests/` or
-`validation/` dressed as a script is one the runner actually lists.
+`validation/` dressed as a script is registered in the suite manifest.
 
 ## Architecture
 
@@ -227,9 +227,9 @@ Tests and validators are **plain executable scripts, not pytest**: they exit non
 print a `... PASS` summary line. Each file opens with the shebang, then any docstring, then the
 four-line `_ProjectPath` bootstrap that puts the repo root on `sys.path` (needed because they run as
 scripts from `tools/run_validation.py` and import the top-level models). Copy that preamble verbatim
-into new files and make the file executable, and add the script to the
-`VALIDATORS` or `TESTS` list in `tools/run_validation.py` — anything not listed there is not part of the
-release contract. That list is also what makes the file an entry point, so the omission is caught:
+into new files and make the file executable, and add an explicit entry to
+`framework/validation_suite.py` — anything not listed there is not part of the
+release contract. That manifest is also what makes the file an entry point, so the omission is caught:
 a new script sitting beside the registered ones — carrying a shebang, the executable bit, the
 bootstrap, or merely a test_ or validate_ name — fails
 `validation/validators/validate_script_headers.py` until it is listed, and a listed path with no file

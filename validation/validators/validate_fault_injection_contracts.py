@@ -4,16 +4,19 @@ import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from framework.validation import Validation
+from framework.validation_suite import suite_entries
 from pathlib import Path
 import sys
 R=_PROJECT_ROOT
 result=Validation(R)
 need=result.contains
 ordered=result.ordered
+registered={entry.path for entry in suite_entries(R)}
 
 need('framework/fault_injection.py','inject_every_boundary','deepcopy','recover','check')
 need('tests/test_fault_injection.py','ic10/power-grid/power_dispatch_plan_store_v1_0.ic10','allowed_transition','internal_token','LArRE')
-need('tools/run_validation.py','validation/validators/validate_fault_injection_contracts.py','tests/test_fault_injection.py')
+for path in ('validation/validators/validate_fault_injection_contracts.py','tests/test_fault_injection.py'):
+ result.check(path in registered,'fault-injection suite entry is not registered',path=path)
 # Whole-item migration publishes destination generation before source record removal.
 ordered('ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10','putd r2 15 r0','putd r1 9 r0')
 # LArRE client persists origin/quantity before issuing the Storage Service request generation.

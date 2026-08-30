@@ -8,6 +8,7 @@ from pathlib import Path
 import argparse, hashlib, shutil, subprocess, sys, zipfile
 import tools.run_validation as validation
 from framework.repository_inventory import InventoryPolicy,LOCAL_TOOLING_DIRECTORIES,repository_files
+from framework.validation_suite import suite_entries
 
 ROOT=_PROJECT_ROOT
 def sha(path):
@@ -46,7 +47,7 @@ def verify_manifest(manifest):
 def validation_evidence_files():
     """Return every ephemeral validation file required in a release archive."""
     return [validation.SUMMARY,validation.RUN_LOG,validation.STATE]+[
-        validation.EVIDENCE/validation.evidence_name(script) for script in validation.SCRIPTS
+        validation.EVIDENCE/entry.evidence_filename for entry in suite_entries(ROOT)
     ]
 
 def main():
