@@ -3,11 +3,12 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.validation import Validation
 from pathlib import Path
 import json,re,sys,tempfile
 from framework.catalog_test_helpers import generate_recipe_fixture
-R=_PROJECT_ROOT; fails=[]
-def fail(x): fails.append(x)
+R=_PROJECT_ROOT;result=Validation(R)
+fail=result.fail
 manifest_files=['resource_profile_catalog_manifest.json','input_profile_catalog_manifest.json','resource_transform_catalog_manifest.json']
 manifests=[json.loads((R/'data'/f).read_text()) for f in manifest_files]
 loader_paths=[]
@@ -74,10 +75,8 @@ if rp.get('storage_partition')!='resource_class' or rp.get('runtime_min_store_co
 if [p.get('item_count') for p in rp.get('partitions',[])]!=[10,27,1,1]: fail('Resource Profile partition item counts mismatch')
 if (rc.get('catalog_store_abi'),rc.get('catalog_loader_abi'),rc.get('catalog_coordinator_abi'),rc.get('catalog_schema_id'),rc.get('catalog_schema_version'))!=(6,5,4,'CatalogSchema.Recipe',3): fail('Recipe common ABI/schema mismatch')
 if rc.get('storage_partition')!='printer_family' or rc.get('runtime_min_store_count')!=6: fail('Recipe fixture runtime family capacity mismatch')
-if fails:
- print('Catalog coordination/storage invariant validation: FAIL'); [print(' -',x) for x in fails]; sys.exit(1)
-print('Catalog coordination/storage invariant validation: PASS')
-print(f' - {len(loader_paths)} sparse relocatable Loader ABI5 producers are immutable after Ready publication')
-print(' - Coordinator ABI3 performs runtime Store placement with in-flight capacity reservations')
-print(' - Generic Store ABI5 owns a 2-cell item directory plus downward payload heap')
-print(' - item-level migration/compaction moves whole items before empty Store retirement')
+raise SystemExit(result.finish('Catalog coordination/storage invariant validation',[
+ f'{len(loader_paths)} sparse relocatable Loader ABI5 producers are immutable after Ready publication',
+ 'Coordinator ABI3 performs runtime Store placement with in-flight capacity reservations',
+ 'Generic Store ABI5 owns a 2-cell item directory plus downward payload heap',
+ 'item-level migration/compaction moves whole items before empty Store retirement']))

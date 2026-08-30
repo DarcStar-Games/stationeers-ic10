@@ -3,14 +3,12 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.validation import Validation
 from pathlib import Path
 import json,re,sys
-R=_PROJECT_ROOT; fails=[]
-def fail(x): fails.append(x)
-def need(path,*tokens):
-    t=(R/path).read_text()
-    for tok in tokens:
-        if tok not in t: fail(f'{path}: missing {tok!r}')
+R=_PROJECT_ROOT;result=Validation(R)
+fail=result.fail
+need=result.contains
 D=json.loads((R/'data/directory_schemas.json').read_text())
 if D.get('format')!='GENERIC_DIRECTORY_SCHEMAS_V10': fail('schema registry format mismatch')
 a=D.get('adapter_abi',{})
@@ -97,10 +95,8 @@ for f,toks in {
 for legacy in ('14142135','31415939','14142138','14142139','31415973'):
     for p in R.glob('*.ic10'):
         if legacy in p.read_text(): fail(f'legacy directory magic {legacy} remains in {p.name}')
-if fails:
- print('Generic Directory contracts: FAIL'); [print(' -',x) for x in fails]; sys.exit(1)
-print('Generic Directory contracts: PASS')
-print(' - Adapter ABI2 feeds Controller/Pressure/Resource/Reservation/Printer/TransformLane/PrinterExecution snapshots')
-print(' - Printer v2 and TransformLane v1 share ProcessorSpec capability/power/busy/error semantics')
-print(' - PrinterExecution v1 preserves exact PrinterRef and overlays locally verified output capacity')
-print(' - transaction-critical snapshot consumers fail closed on overflow and revalidate active bank/generation')
+raise SystemExit(result.finish('Generic Directory contracts',[
+ 'Adapter ABI2 feeds Controller/Pressure/Resource/Reservation/Printer/TransformLane/PrinterExecution snapshots',
+ 'Printer v2 and TransformLane v1 share ProcessorSpec capability/power/busy/error semantics',
+ 'PrinterExecution v1 preserves exact PrinterRef and overlays locally verified output capacity',
+ 'transaction-critical snapshot consumers fail closed on overflow and revalidate active bank/generation']))

@@ -3,13 +3,14 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.validation import Validation
 from pathlib import Path
 import json,re,sys
 import tools.generate.update_magic_registry as magic_registry
 ROOT=_PROJECT_ROOT
+validation=Validation(ROOT)
 mds=[p for p in ROOT.rglob('*.md') if 'validation' not in p.parts and '.claude' not in p.parts]
 existing={p.name for p in ROOT.iterdir() if p.is_file()}
-fails=[]
 GLOB=set('*{}?[]')
 def referenced_paths(ref):
     """Yield every concrete repo path inside one backtick span.
@@ -30,15 +31,15 @@ for p in mds:
     txt=p.read_text(errors='replace')
     for ref in sorted(set(re.findall(r'`([^`\n]+\.(?:ic10|md|py|json))`',txt))):
         if '/' not in ref:
-            if ref not in existing: fails.append(f'{p.name}: missing referenced file {ref}')
+            if ref not in existing: validation.fail(f'{p.name}: missing referenced file {ref}')
             continue
         for seg in referenced_paths(ref):
-            if not (ROOT/seg).exists(): fails.append(f'{p.name}: missing referenced file {seg}')
+            if not (ROOT/seg).exists(): validation.fail(f'{p.name}: missing referenced file {seg}')
     # A documented command is a promise the operator can paste. Backtick checks
     # above only see a span that *ends* in a path, so `python x.py --resume` and
     # anything inside a fenced block would otherwise never be resolved.
     for cmd in sorted(set(re.findall(r'\bpython3?\s+([\w./-]+\.py)\b',txt))):
-        if not (ROOT/cmd).exists(): fails.append(f'{p.name}: documented command names missing script {cmd}')
+        if not (ROOT/cmd).exists(): validation.fail(f'{p.name}: documented command names missing script {cmd}')
     # A path *operand* is a promise too. --game-data names an in-tree fixture
     # directory that a later move would silently invalidate, because the check
     # above resolves only the script name. Other operands are placeholders
@@ -50,14 +51,14 @@ for p in mds:
     # check, which is exactly the machine-dependence this file exists to prevent.
     for operand in sorted(set(re.findall(r'--game-data\s+([\w./-]+)',txt))):
         if operand.startswith('/') or '..' in Path(operand).parts: continue
-        if not (ROOT/operand).exists(): fails.append(f'{p.name}: documented --game-data path does not exist: {operand}')
+        if not (ROOT/operand).exists(): validation.fail(f'{p.name}: documented --game-data path does not exist: {operand}')
     for target in re.findall(r'\[[^\]]*\]\(([^)]+)\)',txt):
         target=target.strip()
         if target.startswith(('http://','https://','mailto:','#')):
             continue
         local=target.split('#',1)[0]
         if local and not (ROOT/local).exists():
-            fails.append(f'{p.name}: broken local markdown link {target}')
+            validation.fail(f'{p.name}: broken local markdown link {target}')
 
 forbidden={
     'View ABI3':'the Transform Profile View is ABI4 with the S68..S75 resolved-request mailbox',
@@ -162,13 +163,13 @@ forbidden={
 for p in mds:
     txt=p.read_text(errors='replace')
     for phrase,why in forbidden.items():
-        if phrase in txt:fails.append(f'{p.name}: stale phrase {phrase!r} ({why})')
+        if phrase in txt:validation.fail(f'{p.name}: stale phrase {phrase!r} ({why})')
 
 wiring=(ROOT/'data/script_wiring.json').read_text()
 for phrase,why in {
     'Runtime S7 = committed material epoch':'Material Transform Runtime mirrors the committed epoch at S22',
 }.items():
-    if phrase in wiring:fails.append(f'data/script_wiring.json: stale phrase {phrase!r} ({why})')
+    if phrase in wiring:validation.fail(f'data/script_wiring.json: stale phrase {phrase!r} ({why})')
 
 required={
  'ROADMAP.md':['9. Power-management reuse — COMPLETE','10. Broad interruption and fault-injection suite — COMPLETE','11. Cross-domain process & utility orchestration — COMPLETE','12. Live-game commissioning and evidence closure — ACTIVE','Items **1–11 are implemented and automatically validated**','Item **12 is ACTIVE**','docs/LIVE_COMMISSIONING.md','docs/COMPLETED_MILESTONES.md'],
@@ -199,21 +200,21 @@ required={
 }
 for name,needles in required.items():
     p=ROOT/name
-    if not p.exists():fails.append(f'missing required doc {name}');continue
+    if not p.exists():validation.fail(f'missing required doc {name}');continue
     txt=p.read_text()
     for n in needles:
-        if n not in txt:fails.append(f'{name}: missing current documentation marker {n!r}')
+        if n not in txt:validation.fail(f'{name}: missing current documentation marker {n!r}')
 for name in ('docs/PHASE_PRESSURE_CONTROLLER.md','docs/PRESSURE_DOMAIN_CONTROLLER.md'):
     txt=(ROOT/name).read_text()
     if 'S97  2' not in txt and 'S97    2' not in txt:
-        fails.append(f'{name}: telemetry header is not documented as ABI2')
+        validation.fail(f'{name}: telemetry header is not documented as ABI2')
 
 
 
 # Line counts have one generated documentation source: docs/SCRIPT_INDEX.md.
 line_doc=(ROOT/'docs/LINE_COUNT_OPTIMIZATION.md').read_text()
 if 'docs/SCRIPT_INDEX.md' not in line_doc or '117 lines or more' not in line_doc:
-    fails.append('docs/LINE_COUNT_OPTIMIZATION.md: generated SCRIPT_INDEX/line-pressure policy is missing')
+    validation.fail('docs/LINE_COUNT_OPTIMIZATION.md: generated SCRIPT_INDEX/line-pressure policy is missing')
 
 # Manifest-derived synchronization checks. These guard numeric prose that can drift
 # even when filenames/ABI markers remain valid.
@@ -231,23 +232,23 @@ profile_markers={
 for name,markers in profile_markers.items():
     txt=(ROOT/name).read_text()
     for marker in markers:
-        if marker not in txt:fails.append(f'{name}: profile-count prose is not synchronized to manifest profile_count={profile_count} (missing {marker!r})')
+        if marker not in txt:validation.fail(f'{name}: profile-count prose is not synchronized to manifest profile_count={profile_count} (missing {marker!r})')
 
 # Reject the known stale count forms explicitly so a later edit cannot reintroduce them.
 for p in mds:
     txt=p.read_text(errors='replace')
     for stale in ('All seven definitions','current seven profiles','S9=7','Seven self-contained variable-length profiles','seven self-contained schema-v3 profiles'):
-        if stale in txt:fails.append(f'{p.name}: stale Input Profile count phrase {stale!r}; manifest has {profile_count}')
+        if stale in txt:validation.fail(f'{p.name}: stale Input Profile count phrase {stale!r}; manifest has {profile_count}')
 
 arch=(ROOT/'docs/ARCHITECTURE.md').read_text()
 family_names=('ControllerPI','ControllerSequencer','ControllerPhasePressure','ControllerPressureDomain','ControllerPressureTransfer')
 if f'contains five controller families' not in arch:
-    fails.append(f'docs/ARCHITECTURE.md: production family count is not documented as {controller_family_count}')
+    validation.fail(f'docs/ARCHITECTURE.md: production family count is not documented as {controller_family_count}')
 for family in family_names:
     cross=arch.split('## Cross-family proof of the abstraction boundary',1)[-1].split('## Transaction hardening layer',1)[0]
-    if family not in cross:fails.append(f'docs/ARCHITECTURE.md: cross-family table missing {family}')
+    if family not in cross:validation.fail(f'docs/ARCHITECTURE.md: cross-family table missing {family}')
 if 'All five production controller families' not in arch:
-    fails.append('docs/ARCHITECTURE.md: generic-service reuse statement is not synchronized to five production controller families')
+    validation.fail('docs/ARCHITECTURE.md: generic-service reuse statement is not synchronized to five production controller families')
 
 # Catch accidental consecutive duplicate deployment bullets.
 for p in mds:
@@ -255,7 +256,7 @@ for p in mds:
     for i in range(1,len(lines)):
         a,b=lines[i-1].strip(),lines[i].strip()
         if a and a==b and re.match(r'^[-*] `[^`]+`',a):
-            fails.append(f'{p.name}:{i+1}: consecutive duplicate artifact bullet {a!r}')
+            validation.fail(f'{p.name}:{i+1}: consecutive duplicate artifact bullet {a!r}')
 
 # README invariants are a numbered contract: require a contiguous sequence.
 readme=(ROOT/'README.md').read_text()
@@ -263,34 +264,30 @@ if '## Important invariants' in readme:
     block=readme.split('## Important invariants',1)[1].split('## Terminology',1)[0]
     nums=[int(n) for n in re.findall(r'(?m)^(\d+)\. \*\*',block)]
     if nums and nums != list(range(1,max(nums)+1)):
-        fails.append(f'README.md: invariant numbering is not contiguous: {nums}')
+        validation.fail(f'README.md: invariant numbering is not contiguous: {nums}')
 
 count=len(list((ROOT/'ic10').rglob('*.ic10')))
 cat=(ROOT/'docs/SCRIPT_INDEX.md').read_text()
-if str(count) not in cat:fails.append(f'docs/SCRIPT_INDEX.md: does not visibly reflect current {count}-script count')
+if str(count) not in cat:validation.fail(f'docs/SCRIPT_INDEX.md: does not visibly reflect current {count}-script count')
 for name in ('ic10/controller-discovery/controller_directory_adapter_v4_0.ic10','ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/generic-jobs/generic_job_store_v1_0.ic10','ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10','ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10','ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10','ic10/manufacturing/transform_candidate_executor_v2_0.ic10','ic10/manufacturing/print_candidate_executor_v2_0.ic10','ic10/manufacturing/print_material_resolver_v1_0.ic10','ic10/manufacturing/generic_print_runtime_v2_0.ic10','ic10/manufacturing/transform_job_driver_v2_0.ic10','ic10/manufacturing/print_job_driver_v2_0.ic10','ic10/generic-jobs/generic_job_selector_v3_0.ic10','ic10/manufacturing/manufacturing_driver_router_v2_0.ic10','ic10/manufacturing/manufacturing_scheduler_v1_0.ic10','ic10/printer-directory/printer_execution_bank_v2_0.ic10','ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10','ic10/printer-directory/printer_capacity_client_v2_0.ic10'):
-    if name not in cat:fails.append(f'docs/SCRIPT_INDEX.md: missing {name}')
+    if name not in cat:validation.fail(f'docs/SCRIPT_INDEX.md: missing {name}')
 # Every magic a program publishes must be registered. The block is generated, so a
 # new service cannot reach release with its header undocumented.
 reference=(ROOT/'docs'/'ABI_REFERENCE.md').read_text()
 block=re.search(re.escape(magic_registry.START)+r'.*?'+re.escape(magic_registry.END),reference,re.S)
 if not block:
- fails.append('docs/ABI_REFERENCE.md: generated published-header block is missing')
+ validation.fail('docs/ABI_REFERENCE.md: generated published-header block is missing')
 elif block.group(0)!=magic_registry.render(magic_registry.rows()):
- fails.append('docs/ABI_REFERENCE.md: published-header block is stale; run tools/generate/update_magic_registry.py')
+ validation.fail('docs/ABI_REFERENCE.md: published-header block is stale; run tools/generate/update_magic_registry.py')
 registered=set(re.findall(r'`(\d{8})`',reference))
 for source in sorted(ROOT.glob('ic10/*/*.ic10')):
  found=re.search(r'^poke 0 (\d+)$',source.read_text(),re.M)
  if found and found.group(1) not in registered:
-  fails.append(f'docs/ABI_REFERENCE.md: {source.relative_to(ROOT).as_posix()} publishes unregistered magic {found.group(1)}')
-if fails:
-    print('Documentation synchronization validation: FAIL')
-    for f in fails:print(' -',f)
-    sys.exit(1)
-print('Documentation synchronization validation: PASS')
-print(' - local artifact/test references and local Markdown links resolve')
-print(f' - Input Profile prose matches manifest profile_count={profile_count}; production controller-family proof covers {controller_family_count} families')
-print(' - generated script index carries current line counts and README invariants are contiguous')
-print(' - Store ABI6 / Loader ABI5 / Coordinator ABI4 and Material Allocator ABI2 are documented consistently')
-print(' - runtime placement, item migration, Adapter ABI3 freeze, and Registry ABI3 fencing are documented')
-print(f' - script index reflects {count} deployable IC10 programs')
+  validation.fail(f'docs/ABI_REFERENCE.md: {source.relative_to(ROOT).as_posix()} publishes unregistered magic {found.group(1)}')
+raise SystemExit(validation.finish('Documentation synchronization validation',[
+ 'local artifact/test references and local Markdown links resolve',
+ f'Input Profile prose matches manifest profile_count={profile_count}; production controller-family proof covers {controller_family_count} families',
+ 'generated script index carries current line counts and README invariants are contiguous',
+ 'Store ABI6 / Loader ABI5 / Coordinator ABI4 and Material Allocator ABI2 are documented consistently',
+ 'runtime placement, item migration, Adapter ABI3 freeze, and Registry ABI3 fencing are documented',
+ f'script index reflects {count} deployable IC10 programs']))

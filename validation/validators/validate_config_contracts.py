@@ -3,9 +3,10 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.validation import Validation
 from pathlib import Path
 import json,re,sys
-R=_PROJECT_ROOT;fails=[]
+R=_PROJECT_ROOT;validation=Validation(R)
 families={
  'ControllerPI':('ic10/controller-pi/pi_config_policy_v1_0.ic10','ic10/controller-pi/controller_pi_runtime_v1_1.ic10',2,[255,63,0,0],14),
  'ControllerSequencer':('ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10','ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10',2,[255,1,0,0],9),
@@ -19,40 +20,38 @@ def hashtype(t):
  m=re.search(r'HASH\("(Controller[^"|]+)',t);return m.group(1) if m else None
 host=(R/'ic10/controller-config/generic_persistent_config_host_v1_1.ic10').read_text()
 for typ in families:
- if typ in host:fails.append('Generic Host special-cases '+typ)
+ if typ in host:validation.fail('Generic Host special-cases '+typ)
 for pat,label in [(r'add sp sp 226','destination-footer invalidation'),(r'push r13','footer schema'),(r'push r15','footer config revision'),(r'push r11','bank revision LAST')]:
- if not re.search(pat,host,re.M):fails.append('Generic Host missing '+label)
+ if not re.search(pat,host,re.M):validation.fail('Generic Host missing '+label)
 for pat,label in [(r'get r15 db 52','replay request generation'),(r'get r0 db 9','recovered config revision'),(r'bne r15 r0 NoReplay','post-commit replay comparison'),(r'poke 53 r15','post-commit replay acknowledgement')]:
- if not re.search(pat,host,re.M):fails.append('Generic Host missing '+label)
+ if not re.search(pat,host,re.M):validation.fail('Generic Host missing '+label)
 for typ,(pn,rn,blocks,masks,fields) in families.items():
  pol=(R/pn).read_text();run=(R/rn).read_text();prof=profiles.get(typ)
- if hashtype(pol)!=typ or hashtype(run)!=typ:fails.append(typ+': Policy/Runtime type mismatch')
- if not prof or prof['schema']!=1 or prof['field_count']!=fields:fails.append(typ+': Input Profile catalog geometry mismatch')
- if num(pol,r'put Host 10 (\d+)')!=blocks:fails.append(pn+': blockCount mismatch')
+ if hashtype(pol)!=typ or hashtype(run)!=typ:validation.fail(typ+': Policy/Runtime type mismatch')
+ if not prof or prof['schema']!=1 or prof['field_count']!=fields:validation.fail(typ+': Input Profile catalog geometry mismatch')
+ if num(pol,r'put Host 10 (\d+)')!=blocks:validation.fail(pn+': blockCount mismatch')
  active=0
  for i,mask in enumerate(masks):
-  if num(pol,rf'put Host {16+i} (\d+)')!=mask:fails.append(f'{pn}: mask{i} mismatch')
+  if num(pol,rf'put Host {16+i} (\d+)')!=mask:validation.fail(f'{pn}: mask{i} mismatch')
   active+=mask.bit_count()
- if active!=fields:fails.append(typ+': mask field count mismatch')
+ if active!=fields:validation.fail(typ+': mask field count mismatch')
  sig=re.search(r'put Host 12 HASH\("([^"]+)"\)',pol);expected='CFG1|'+typ+'|1|'+str(blocks)+'|'+'|'.join(map(str,masks))
- if not sig or sig.group(1)!=expected:fails.append(pn+': persistence signature mismatch')
+ if not sig or sig.group(1)!=expected:validation.fail(pn+': persistence signature mismatch')
 # ControllerTest remains available only as a test fixture, outside production catalogs.
 test_runtime=R/'tests/ic10/framework_test_controller_v1_0.ic10'
 test_policy=R/'tests/ic10/framework_test_config_policy_v1_0.ic10'
 test_profile=R/'tests/ic10/framework_test_input_profile_fixture_v1_0.ic10'
 for q in (test_runtime,test_policy,test_profile):
- if not q.exists():fails.append('missing test-only ControllerTest fixture: '+str(q.relative_to(R)))
+ if not q.exists():validation.fail('missing test-only ControllerTest fixture: '+str(q.relative_to(R)))
 for q in (test_runtime,test_policy):
- if q.exists() and 'HASH("ControllerTest")' not in q.read_text():fails.append(q.name+': ControllerTest identity missing')
+ if q.exists() and 'HASH("ControllerTest")' not in q.read_text():validation.fail(q.name+': ControllerTest identity missing')
 
 # Input metadata is centralized: production must not reintroduce standalone per-family Input Profile programs.
 for q in R.glob('*.ic10'):
  text=q.read_text()
  if 'poke 0 31415929' in text and q.name!='ic10/input-profile-catalog/input_profile_view_v5_0.ic10':
-  fails.append('standalone production Input Profile program exists: '+q.name)
-if fails:
- print('Config contract validation: FAIL');[print(' -',x) for x in fails];sys.exit(1)
-print('Config contract validation: PASS')
-print(' - Generic Persistent Config Host remains family-neutral')
-print(' - controller masks/signatures agree with centralized Input Profile metadata')
-print(' - no standalone per-family Input Profile ICs remain')
+  validation.fail('standalone production Input Profile program exists: '+q.name)
+raise SystemExit(validation.finish('Config contract validation',[
+ 'Generic Persistent Config Host remains family-neutral',
+ 'controller masks/signatures agree with centralized Input Profile metadata',
+ 'no standalone per-family Input Profile ICs remain']))

@@ -3,13 +3,11 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.validation import Validation
 from pathlib import Path
 import json,sys
-R=_PROJECT_ROOT;fails=[]
-def need(path,*tokens):
- t=(R/path).read_text()
- for x in tokens:
-  if x not in t:fails.append(path+': missing '+repr(x))
+R=_PROJECT_ROOT;result=Validation(R)
+need=result.contains
 # Existing consumer-facing service ABIs.
 for f,toks in {
 'ic10/diagnostics/console_registry_v1_1.ic10':['poke 1 1'],'ic10/controller-discovery/controller_selector_v3_0.ic10':['poke 1 2','HASH("DirectorySchema.Controller.v1")'],'ic10/controller-config/generic_persistent_config_host_v1_1.ic10':['poke 1 1'],'ic10/shared-input/generic_input_resolver_v1_0.ic10':['poke 1 1'],'ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10':['poke 97 2'],'ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10':['poke 97 2'],
@@ -48,8 +46,8 @@ loaders=list(R.glob('*_resource_profile_loader_*_v4_0.ic10'))+list(R.glob('*_inp
 for p in loaders:
  t=p.read_text()
  for x in ('clr db','poke 0 31415969','poke 1 4','poke 12 1'):
-  if x not in t:fails.append(p.name+': missing '+x)
- if 'putd ' in t or 'put d0 ' in t or '\nyield' in t or '\nj ' in t:fails.append(p.name+': Loader ABI4 must be immutable one-shot producer')
+  if x not in t:result.fail(p.name+': missing '+x)
+ if 'putd ' in t or 'put d0 ' in t or '\nyield' in t or '\nj ' in t:result.fail(p.name+': Loader ABI4 must be immutable one-shot producer')
 # A ServiceMagic names one service contract. Programs may share it -- one generic
 # service, many instances -- but they then implement the same contract and publish
 # the same ABI. Two ABIs behind one magic means two different services, and a
@@ -62,14 +60,12 @@ for p in sorted(R.glob('ic10/*/*.ic10')):
 for magic,abis in sorted(published.items()):
  if len(abis)>1:
   detail='; '.join(f"ABI{a}: {', '.join(v)}" for a,v in sorted(abis.items()))
-  fails.append(f'magic {magic} names more than one service contract -> {detail}')
+  result.fail(f'magic {magic} names more than one service contract -> {detail}')
 for name,count,ver in [('resource_profiles.json',39,2),('input_profiles.json',6,3),('resource_transforms.json',17,4)]:
  d=json.loads((R/'data'/name).read_text());rows=d.get('profiles',d.get('transforms',[]))
- if len(rows)!=count or d.get('catalog_schema_version')!=ver:fails.append(name+': cardinality/schema version mismatch')
-if fails:
- print('ABI contract validation: FAIL');[print(' -',x) for x in fails];sys.exit(1)
-print('ABI contract validation: PASS')
-print(' - Store ABI5 / Loader ABI4 / Coordinator ABI3 separate runtime placement from payload schema versions')
-print(' - Directory Adapter ABI2 freezes coherent candidates for Snapshot Host ABI1 or Registry Host ABI3')
-print(' - every ServiceMagic names exactly one service contract: shared magics are generic instances publishing one ABI')
-print(' - Resource/Input consumer ABIs remain ABI1; Transform/Recipe Lookup remain ABI3; manufacturing services use explicit ABI1/ABI2 contracts; changed async-token semantics are ABI2')
+ if len(rows)!=count or d.get('catalog_schema_version')!=ver:result.fail(name+': cardinality/schema version mismatch')
+raise SystemExit(result.finish('ABI contract validation',[
+ 'Store ABI5 / Loader ABI4 / Coordinator ABI3 separate runtime placement from payload schema versions',
+ 'Directory Adapter ABI2 freezes coherent candidates for Snapshot Host ABI1 or Registry Host ABI3',
+ 'every ServiceMagic names exactly one service contract: shared magics are generic instances publishing one ABI',
+ 'Resource/Input consumer ABIs remain ABI1; Transform/Recipe Lookup remain ABI3; manufacturing services use explicit ABI1/ABI2 contracts; changed async-token semantics are ABI2']))
