@@ -1,5 +1,0 @@
-Banked transaction standard validation: PASS
- - REVISION_BANK and SELECTOR_BANK reference profiles are old-or-new at every authority boundary
- - request replay classifies retry / acknowledge-committed / already-acknowledged consistently
- - Job Store rejects incompatible ABI geometry before recovery
- - Config Host acknowledges an already-durable request without a duplicate bank commit

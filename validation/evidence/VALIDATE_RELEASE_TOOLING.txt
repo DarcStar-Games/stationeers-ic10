@@ -1,6 +1,0 @@
-Release tooling validation: PASS
- - in-tree output archive is excluded before manifest and ZIP inventory; the manifest exists only inside the ZIP
- - build ordering removes stale output, refreshes deployment inventory, source index, and script contracts before validation/manifests
- - release inventory and validation fingerprint exclude the same tooling dirs: ['.claude', '.git', '.githooks', '.github']
- - CI runs clean validation with read-only permissions, pinned dependencies, clean-tree enforcement, and failure evidence
- - exclusion matches inside the repository only, and a sweep that finds nothing fails closed

@@ -1,5 +1,0 @@
-Generic Directory contracts: PASS
- - Adapter ABI2 feeds Controller/Pressure/Resource/Reservation/Printer/TransformLane/PrinterExecution snapshots
- - Printer v2 and TransformLane v1 share ProcessorSpec capability/power/busy/error semantics
- - PrinterExecution v1 preserves exact PrinterRef and overlays locally verified output capacity
- - transaction-critical snapshot consumers fail closed on overflow and revalidate active bank/generation

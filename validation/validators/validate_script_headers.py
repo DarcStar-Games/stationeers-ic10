@@ -892,7 +892,7 @@ def main():
           f"{len(DYNAMIC_IMPORT_PROBES)} dynamic loads; ambiguous aliases fail closed")
     # Both counts come from the rows, so they partition `entries` by construction. Taking
     # the second from len(REGISTERED) instead reads the same today and stops summing the
-    # moment a tools/ command is also registered -- committed evidence must not be able
+    # moment a tools/ command is also registered -- generated evidence must not be able
     # to contradict the line above it.
     commands = sum(1 for row in rows if row[1] and row[0].startswith(COMMAND_ROOT + "/"))
     print(f"Entry points are the {commands} commands under {COMMAND_ROOT}/ plus the {entries - commands}"

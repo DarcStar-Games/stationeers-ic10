@@ -38,7 +38,7 @@ If you are new to the framework, read the documents in this order:
 28. **docs/CORRECTNESS_HARDENING.md**, **docs/ADDING_CONTROLLERS.md**, **docs/SCRIPT_INDEX.md**, **docs/SOURCES.md**, and **docs/TEST_CONTROLLER.md** — extension, audit, and provenance material.
 29. **docs/CI.md** — required GitHub validation check, clean-tree policy, failure evidence, and branch-protection setup.
 
-`VALIDATION_SUMMARY.txt` summarizes the latest clean release run; per-script machine evidence is generated under `validation/evidence/`. `docs/FRAMEWORK_HARDENING_TESTS.md` lists the live-game cases that still need physical verification; `docs/LIVE_COMMISSIONING.md` defines how those results are bound to a release and recorded without contaminating automated evidence.
+`VALIDATION_SUMMARY.txt` summarizes the latest local or release validation run; per-script machine evidence is generated under `validation/evidence/`. These outputs are ignored locally and regenerated for release archives. `docs/FRAMEWORK_HARDENING_TESTS.md` lists the live-game cases that still need physical verification; `docs/LIVE_COMMISSIONING.md` defines how those results are bound to a release and recorded without contaminating automated evidence.
 
 
 
@@ -57,7 +57,7 @@ tests/                        executable protocol/model tests
 tests/ic10/                   test-only IC10 fixtures (ControllerTest family)
 tests/fixtures/               non-IC10 fixture input consumed by tests
 validation/validators/        structural and release-contract validators
-validation/evidence/          generated per-check machine evidence
+validation/evidence/          ignored, generated per-check machine evidence
 tools/                        command-line entrypoints
 tools/generate/               code generators driven by data/
 ```
@@ -359,7 +359,7 @@ Run the complete validator/protocol suite from the bundle directory:
 python3 tools/run_validation.py
 ```
 
-This runs the complete validator/test inventory defined in `tools/run_validation.py`, writes per-script machine evidence under `validation/evidence/`, writes the pass/fail inventory to `validation/FULL_VALIDATION_RUN.txt`, and regenerates `VALIDATION_SUMMARY.txt`.
+This runs the complete validator/test inventory defined in `tools/run_validation.py`, writes per-script machine evidence under `validation/evidence/`, writes the pass/fail inventory to `validation/FULL_VALIDATION_RUN.txt`, and regenerates `VALIDATION_SUMMARY.txt`. Those paths plus `validation/VALIDATION_STATE.json` are ignored, ephemeral output; a clean validation run does not modify tracked files.
 
 GitHub Actions runs the same command without `--resume` for every pull request and push to `main`, then requires the checkout to remain clean. Protect `main` with the **Clean validation** status check described in `docs/CI.md`.
 
@@ -375,13 +375,13 @@ during that build; no checkout-level copy is maintained.
 
 These checks validate static contracts, model the important transaction/persistence protocols, and execute selected transaction-critical IC10 source directly through `framework/ic10_harness.py`. They do not replace live-game commissioning tests; see `docs/FRAMEWORK_HARDENING_TESTS.md`.
 
-When working from a git clone, enable the evidence-sync pre-commit hook once per clone:
+When working from a git clone, enable the validation pre-commit hook once per clone:
 
 ```text
 git config core.hooksPath .githooks
 ```
 
-It runs the suite before each commit and stages the refreshed evidence, so committed evidence always matches the source it attests to. Validation hashes the working tree rather than the index, so the hook refuses to run against a tree with unstaged or untracked files; bypass it with `git commit --no-verify`. VCS and automation tooling (`.git`, `.github`, `.claude`, `.githooks`) is excluded from the validation input fingerprint and from release archives, so workflow, hook, or editor configuration never invalidates recorded live commissioning evidence.
+It runs the suite before each commit and leaves its ignored evidence available for local diagnosis and fingerprint-guarded `--resume`; it never stages that output and rejects any evidence path force-added to the index. Validation hashes the working tree rather than the index, so the hook refuses to run against a tree with unstaged or non-ignored untracked files; bypass it with `git commit --no-verify`. VCS and automation tooling (`.git`, `.github`, `.claude`, `.githooks`) is excluded from the validation input fingerprint and from release archives; local `.claude/worktrees/` state is ignored as well, so workflow, hook, or editor configuration never invalidates recorded live commissioning evidence.
 
 
 ## Catalog Coordinator v3

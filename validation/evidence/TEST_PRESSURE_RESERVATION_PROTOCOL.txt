@@ -1,6 +1,0 @@
-Pressure-reservation hardening model: PASS
- - Allocator ABI3 supports non-reserving quote + exact commit
- - staged topology identity precedes staged epoch
- - Path Allocator quotes whole path before committing normalized rate
- - Grant Guard consumes topology-mismatched epochs so they cannot later reactivate
- - Planner remains the commit-last authority

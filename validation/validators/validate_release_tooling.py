@@ -4,7 +4,7 @@ import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from pathlib import Path
-import re,tempfile,sys
+import re,subprocess,tempfile,sys
 import tools.build_release as br
 import tools.run_validation as rv
 R=_PROJECT_ROOT;fails=[]
@@ -37,10 +37,13 @@ try:
  guide=s.index("update_user_deployment_inventory.py")
  gen=s.index("generate_source_catalog.py")
  contracts=s.index("generate_script_contracts.py")
+ validation=s.index("run_validation.py')],cwd=ROOT,check=True")
  manifest=s.index('manifest=archive_manifest(files)')
- ck(unlink<guide<gen<contracts<manifest,'release output / deployment guide / source index / script contract ordering is invalid')
+ ck(unlink<guide<gen<contracts<validation<manifest,'release output / generators / validation / manifest ordering is invalid')
 except ValueError: fails.append('release build ordering markers missing')
+ck("run_validation.py'),'--resume'" not in s,'release build reuses validation evidence instead of regenerating it')
 ck('tracked_files({out})' in s,'ZIP creation does not exclude requested output')
+ck('validation_evidence_files()' in s,'release build does not require the complete validation evidence set')
 ck("z.writestr('ARCHIVE_MANIFEST.sha256',manifest)" in s,'release manifest is not written inside the ZIP')
 ck("(ROOT/'ARCHIVE_MANIFEST.sha256').write_text" not in s,'release build writes a stale-prone repository manifest')
 ck(not (R/'ARCHIVE_MANIFEST.sha256').exists(),'ARCHIVE_MANIFEST.sha256 must be a release artifact, not a repository file')
@@ -48,6 +51,10 @@ manifest=br.archive_manifest(files)
 ck(len(manifest.splitlines())==len(files),'release manifest entry count differs from release inventory')
 try: br.verify_manifest(manifest)
 except RuntimeError as e: fails.append(f'generated in-memory archive manifest does not verify: {e}')
+evidence=br.validation_evidence_files()
+ck(evidence[:3]==[rv.SUMMARY,rv.RUN_LOG,rv.STATE],'release evidence omits a summary, run log, or resume state')
+ck(len(evidence)==3+len(rv.SCRIPTS),'release evidence does not contain one output per validation script')
+ck(len(evidence)==len(set(evidence)),'release evidence paths are not unique')
 readme=(R/'README.md').read_text()
 ck('`ARCHIVE_MANIFEST.sha256` exists only inside the resulting ZIP' in readme,'README does not document the release-only manifest location')
 # Both sweeps carry their own copy of the same exclusion set: build_release keeps
@@ -58,7 +65,7 @@ ck('`ARCHIVE_MANIFEST.sha256` exists only inside the resulting ZIP' in readme,'R
 ck(br.TOOLING_DIRS==rv.TOOLING_DIRS,f'TOOLING_DIRS diverged: build_release {sorted(br.TOOLING_DIRS)} vs run_validation {sorted(rv.TOOLING_DIRS)}')
 ck('.github' in br.TOOLING_DIRS,'.github automation tooling is included in releases or live-evidence fingerprints')
 # CI is the independent release gate: it must run the whole suite from a clean
-# checkout, fail on regenerated tracked/untracked output, and retain diagnostics
+# checkout, fail on tracked/non-ignored output drift, and retain diagnostics
 # without granting a pull request a write-capable token. Keep these as policy
 # checks rather than depending on a contributor to review workflow YAML by eye.
 workflow=R/'.github/workflows/clean-validation.yml';ci_doc=R/'docs/CI.md'
@@ -73,6 +80,7 @@ else:
   'name: Clean validation','runs-on: ubuntu-24.04','timeout-minutes: 20',
   'persist-credentials: false','run: python3 tools/run_validation.py',
   'if: ${{ always() }}','git diff --exit-code --stat',
+  'git ls-files -- VALIDATION_SUMMARY.txt',
   'git status --porcelain=v1 --untracked-files=all','if: ${{ failure() }}',
   'validation/FULL_VALIDATION_RUN.txt','validation/evidence/',
  )
@@ -80,6 +88,7 @@ else:
   ck(marker in w,f'CI workflow is missing policy marker {marker!r}')
  ck('pull_request_target:' not in w,'CI workflow uses privileged pull_request_target')
  ck('--resume' not in w,'CI workflow reuses local validation evidence with --resume')
+ ck('--ignored' not in w,'CI clean-tree check includes intentionally ignored validation output')
  ck(canonical_read_permissions(w),'CI permissions must be exactly one top-level contents: read block')
  for expanded in (
   w.replace('  contents: read','  contents: read\n  actions: write # accidental expansion'),
@@ -105,6 +114,26 @@ else:
                 'Require status checks to pass before merging','python3 tools/run_validation.py',
                 'CI-generated evidence is diagnostic only'):
   ck(marker in d,f'docs/CI.md is missing policy marker {marker!r}')
+gitignore=(R/'.gitignore').read_text()
+for ignored in ('/VALIDATION_SUMMARY.txt','/validation/FULL_VALIDATION_RUN.txt',
+                '/validation/VALIDATION_STATE.json','/validation/evidence/',
+                '/.claude/worktrees/'):
+ ck(ignored in gitignore,f'.gitignore is missing ephemeral validation output {ignored!r}')
+hook=(R/'.githooks/pre-commit').read_text()
+ck('python3 tools/run_validation.py --resume' in hook,'pre-commit hook no longer runs resumable validation')
+ck(not re.search(r'(?m)^\s*git\s+add\b',hook),'pre-commit hook still stages generated output')
+ck('git ls-files -- VALIDATION_SUMMARY.txt' in hook,'pre-commit hook does not reject tracked validation evidence')
+# Gitignore prevents ordinary adds, while this checkout-aware assertion also
+# catches force-added evidence. Release bundles have no .git metadata, so their
+# copy of this validator relies on the reviewed CI/hook policy above.
+if (R/'.git').exists():
+ tracked=subprocess.run([
+  'git','-C',str(R),'ls-files','--','VALIDATION_SUMMARY.txt',
+  'validation/FULL_VALIDATION_RUN.txt','validation/VALIDATION_STATE.json',
+  'validation/evidence',
+ ],text=True,capture_output=True)
+ ck(tracked.returncode==0,f'cannot inspect tracked validation evidence: {tracked.stderr.strip()}')
+ ck(not tracked.stdout.strip(),f'generated validation evidence remains tracked: {tracked.stdout.splitlines()[0] if tracked.stdout else "unknown"}')
 # Both sweeps match on the path *inside* the repository. A tooling-dir name in the
 # absolute path above it must not exclude the repository: without that, a checkout
 # under any .git/.claude/__pycache__ directory sweeps to empty, and an empty sweep
@@ -132,5 +161,6 @@ print('Release tooling validation: PASS')
 print(' - in-tree output archive is excluded before manifest and ZIP inventory; the manifest exists only inside the ZIP')
 print(' - build ordering removes stale output, refreshes deployment inventory, source index, and script contracts before validation/manifests')
 print(f' - release inventory and validation fingerprint exclude the same tooling dirs: {sorted(br.TOOLING_DIRS)}')
-print(' - CI runs clean validation with read-only permissions, pinned dependencies, clean-tree enforcement, and failure evidence')
+print(' - CI runs clean validation with read-only permissions, pinned dependencies, source-tree enforcement, and failure evidence')
+print(' - validation evidence is ignored, never staged by the hook, and regenerated for release archives')
 print(' - exclusion matches inside the repository only, and a sweep that finds nothing fails closed')

@@ -1,6 +1,0 @@
-Printer execution capacity: PASS
- - request/response tokens are separate from persisted exact-printer ownership
- - failed capacity reservations never become fake held reservations
- - fresh banks never clear locks they cannot prove they own
- - reserve/release are acknowledged and requests survive Bank reboot
- - printer swaps between request publication and Bank processing fail closed
