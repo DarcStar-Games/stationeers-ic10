@@ -70,6 +70,24 @@ g0=max(hd.stack.get(3,0),hd.stack.get(4,0))
 for _ in range(80):a.run(1);b.run(1,max_steps=50000);h.run(1,max_steps=50000)
 g1=max(hd.stack.get(3,0),hd.stack.get(4,0))
 if g1!=g0:fails.append('generic Adapter Bridge advanced generation for unchanged snapshot')
+# Power Reservation snapshot: dispatch keys, class filtering, and the S8 allocator owner binding.
+pres=[
+ Device(901,stack={0:31415950,1:1,3:4,5:100,12:1,17:0,28:1,30:601,31:32},props={'ReferenceId':901}),
+ Device(902,stack={0:31415950,1:1,3:4,12:1,17:0,28:2,30:602,31:25},props={'ReferenceId':902}),
+ Device(903,stack={0:31415950,1:1,3:4,12:1,17:0,28:3,30:603,31:48},props={'ReferenceId':903}),
+ Device(904,stack={0:31415950,1:1,3:4,12:1,17:0,28:2,30:604,31:42},props={'ReferenceId':904}),
+ Device(905,stack={0:31415950,1:1,3:9,5:50,12:1,17:0,28:1,30:699,31:16},props={'ReferenceId':905}),
+ Device(906,stack={0:31415950,1:1,3:4,5:80,12:1,17:4242,28:1,30:605,31:16},props={'ReferenceId':906}),
+]
+a,b,h,hd=snapshot((R/'ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10').read_text(),{f'q{i}':d for i,d in enumerate(pres)},150)
+expected_power=[[1000002,601,901],[2000996,603,903],[3000998,602,902],[4000997,604,904],[5000996,603,903]]
+if not adapter_ok(a) or hd.stack.get(9)!='HASH:DirectorySchema.PowerReservation.v1' or records(h)!=expected_power:fails.append('Power Reservation Adapter dispatch-key snapshot mismatch: '+repr(records(h)))
+a.stack[8]=4242
+owned_power=[[1000001,605,906]]+expected_power
+for _ in range(3000):
+ a.run(1,max_steps=50000);b.run(1,max_steps=50000);h.run(1,max_steps=50000)
+ if records(h)==owned_power:break
+if records(h)!=owned_power:fails.append('Power Reservation Adapter did not admit the allocator-owned reservation after S8 binding: '+repr(records(h)))
 # Direct Host overflow keeps whole records.
 hv,hd=host(140);hd.stack.update({9:'HASH:DirectorySchema.Test.v1',11:1,12:64});req=0
 def hcmd(command,candidate=None):
@@ -213,3 +231,4 @@ print(' - exact duplicate at full capacity does not falsely overflow')
 print(' - 128-instruction/8-instruction adversarial scheduler never publishes a torn Adapter generation')
 print(' - freeze request is reasserted and recovers after Adapter reboot')
 print(' - Registry Host rejects wrong schema/version before mutation')
+print(' - Power Reservation Adapter keys producer/consumer/battery dispatch and honors the S8 owner binding')

@@ -29,6 +29,7 @@ PASS tests/test_banked_transaction.py
 PASS tests/test_catalog_schema.py
 PASS tests/test_controller_directory_scale.py
 PASS tests/test_dependency_planning.py
+PASS tests/test_diagnostics_execution.py
 PASS tests/test_generic_directory.py
 PASS tests/test_ic10_execution.py
 PASS tests/test_input_profiles.py
@@ -63,4 +64,4 @@ PASS tests/test_fault_injection.py
 PASS tests/test_process_utility.py
 PASS tests/test_live_commissioning.py
 PASS tests/test_game_export.py
-FULL_SUITE: PASS (65/65 scripts)
+FULL_SUITE: PASS (66/66 scripts)

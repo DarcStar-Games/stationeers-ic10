@@ -36,7 +36,7 @@ getd r0 r1 3
 bne r0 4 Scan
 getd r0 r1 17
 beqz r0 OwnerOK
-get r13 db 14
+get r13 db 8
 bne r0 r13 Scan
 OwnerOK:
 getd r2 r1 28

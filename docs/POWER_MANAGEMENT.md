@@ -119,7 +119,7 @@ Capacity is 64 records. DispatchKey sorts ascending:
 5,000,000 + (999-priority)          battery charge sink
 ```
 
-Thus generation is used before battery discharge; critical loads are considered before sheddable loads; battery charging consumes only surplus after managed loads. A battery may appear once as a source candidate and once as a sink candidate, but the plan builder prevents simultaneous use in both directions. Managed consumers and batteries remain discoverable even when current capacity is zero so a later POWER policy job can resolve a previously SHED/HOLD target; source/sink selectors, not directory membership, reject zero capacity. `S14` binds the adapter to the current Power Reservation Allocator and filters reservations owned by a different authority.
+Thus generation is used before battery discharge; critical loads are considered before sheddable loads; battery charging consumes only surplus after managed loads. A battery may appear once as a source candidate and once as a sink candidate, but the plan builder prevents simultaneous use in both directions. Managed consumers and batteries remain discoverable even when current capacity is zero so a later POWER policy job can resolve a previously SHED/HOLD target; source/sink selectors, not directory membership, reject zero capacity. `S8` binds the adapter to the current Power Reservation Allocator and filters reservations owned by a different authority.
 
 ## 4. Generic Resource Links for electricity
 

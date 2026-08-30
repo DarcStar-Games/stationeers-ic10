@@ -34,7 +34,7 @@ The responsibilities are intentionally split:
 
 Keeping selectors screwless means controller/console discovery and resolution can be reused by configuration or other future UI front ends.
 
-The diagnostic profile is selected through `ic10/input-profile-catalog/input_profile_view_v5_0.ic10`: connect View `d0` to the shared Input Profile Catalog Store, set `S2=HASH("DiagnosticMapping")` and `S3=1`, then attach the View to the Scanner. The catalog Store/loaders are shared with controller configuration profiles; diagnostics does not need a dedicated metadata store.
+The diagnostic profile is selected through `ic10/input-profile-catalog/input_profile_view_v5_0.ic10`: connect View `d0` to the shared Input Profile Catalog Store, set `S8=HASH("DiagnosticMapping")` and `S9=1`, then attach the View to the Scanner. The catalog Store/loaders are shared with controller configuration profiles; diagnostics does not need a dedicated metadata store.
 
 ## Seven logical controls
 
@@ -144,7 +144,7 @@ no framework program participates.
 `ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10` sets Hash Display `Mode` — `HashType.Prefab`
 or `HashType.GasLiquid` — through the logic slot instructions, the mechanism the 2025-03-17 update
 added for exactly this. It reads the slot back with `ls` before writing with `ss`, publishes writes
-issued at `S3`, and counts unreadable records at `S4` instead of faulting. This is the framework's
+issued at `S9`, and counts unreadable records at `S10` instead of faulting. This is the framework's
 only use of `ss`.
 
 Two facts here are **not sourced from game data**: the circuitboard's slot index, and that `Mode` is

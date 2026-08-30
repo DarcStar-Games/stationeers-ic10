@@ -33,6 +33,7 @@ PASS tests/test_catalog_schema.py                               entry  +x
 PASS tests/test_commission_wiring.py                            entry  +x
 PASS tests/test_controller_directory_scale.py                   entry  +x
 PASS tests/test_dependency_planning.py                          entry  +x
+PASS tests/test_diagnostics_execution.py                        entry  +x
 PASS tests/test_fault_injection.py                              entry  +x
 PASS tests/test_game_export.py                                  entry  +x
 PASS tests/test_generator_productivity.py                       entry  +x
@@ -110,9 +111,9 @@ PASS validation/validators/validate_source_catalog.py           entry  +x
 PASS validation/validators/validate_stack_envelopes.py          entry  +x
 PASS validation/validators/validate_user_deployment_guide.py    entry  +x
 ====================================================================================================
-Checked 109 files: 80 entry points, 29 imported modules
-Single import name enforced for 82 modules reachable from a script directory
+Checked 110 files: 81 entry points, 29 imported modules
+Single import name enforced for 83 modules reachable from a script directory
 Import-name regression probes cover 2 namespace spellings and 10 dynamic loads; ambiguous aliases fail closed
-Entry points are the 15 commands under tools/ plus the 65 scripts tools/run_validation.py runs elsewhere; nothing is an entry point by location
+Entry points are the 15 commands under tools/ plus the 66 scripts tools/run_validation.py runs elsewhere; nothing is an entry point by location
 No work at import for all 17 modules under tools/, and a guard reaches main() in each of the 15 entry points
 Result: PASS

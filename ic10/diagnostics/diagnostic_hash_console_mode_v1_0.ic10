@@ -1,5 +1,5 @@
 # Hash Console Mode v1.0: set Console circuitboard Mode from IC via slot set.
-# S2 record count (max 8),S3 writes issued,S4 records skipped as unreadable.
+# S8 record count (max 8),S9 writes issued,S10 records skipped as unreadable.
 # Records S16..S39 as [ConsoleReferenceId,circuitboard slot index,Mode].
 # HashType.Prefab=0,HashType.GasLiquid=1. Mode is durable device state, so this
 # is commissioning-class: reclaim the housing once every board reads correctly.
