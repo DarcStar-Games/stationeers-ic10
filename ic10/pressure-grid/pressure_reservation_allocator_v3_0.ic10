@@ -1,18 +1,19 @@
 poke 0 31415938
 poke 1 3
+poke 2 0
 move r15 -1
 Loop:
 yield
-get r14 db 6
+get r14 db 18
 beq r14 r15 Loop
-get r1 db 2
-get r2 db 3
-get r3 db 4
-get r4 db 5
+get r1 db 13
+get r2 db 14
+get r3 db 15
+get r4 db 17
 get r11 db 10
 get r12 db 11
 get r13 db 16
-get r0 db 6
+get r0 db 18
 bne r0 r14 Loop
 blt r11 1 Reject
 bgt r11 3 Reject
@@ -44,14 +45,14 @@ beqz r0 Reject
 move sp r6
 jal Prep
 beqz r0 Reject
-getd r10 r1 7
+getd r10 r1 21
 blez r10 Reject
-getd r0 r5 6
+getd r0 r5 20
 getd sp r5 12
 sub r0 r0 sp
 div r0 r0 r10
 min r8 r8 r0
-getd r0 r6 7
+getd r0 r6 21
 getd sp r6 13
 sub r0 r0 sp
 div r0 r0 r10
@@ -92,7 +93,7 @@ move r9 0
 move r8 0
 move r0 -1
 Respond:
-poke 7 r9
+poke 19 r9
 poke 8 r0
 poke 12 r8
 poke 9 r14
@@ -103,7 +104,7 @@ getd r0 sp 1
 bne r0 1 PrepBad
 getd r0 sp 10
 bne r0 1 PrepBad
-getd r0 sp 5
+getd r0 sp 19
 bne r0 r3 PrepBad
 getd r0 sp 14
 beq r0 r2 PrepOwner

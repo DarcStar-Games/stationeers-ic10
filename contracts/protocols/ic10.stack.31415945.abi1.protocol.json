@@ -45,11 +45,21 @@
           "access": [
             "self-write"
           ],
+          "const": 0
+        },
+        {
+          "address": 8,
+          "name": "S8",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
           "const": 100
         },
         {
-          "address": 3,
-          "name": "S3",
+          "address": 9,
+          "name": "S9",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -58,8 +68,8 @@
           "const": 25
         },
         {
-          "address": 4,
-          "name": "S4",
+          "address": 10,
+          "name": "S10",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -68,8 +78,8 @@
           "const": 0.01
         },
         {
-          "address": 5,
-          "name": "S5",
+          "address": 11,
+          "name": "S11",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -78,8 +88,8 @@
           "const": 100
         },
         {
-          "address": 6,
-          "name": "S6",
+          "address": 12,
+          "name": "S12",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -124,11 +134,11 @@
       "literal_reads": [
         0,
         1,
-        2,
-        3,
-        4,
-        5,
-        6
+        8,
+        9,
+        10,
+        11,
+        12
       ],
       "literal_writes": [],
       "dynamic_read_ranges": [],

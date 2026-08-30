@@ -1,6 +1,7 @@
 # PressureInventory Reservation v1.1: d0 PressureDomain Inventory.
 poke 0 31415936
 poke 1 1
+poke 2 0
 poke 12 0
 poke 13 0
 poke 14 -1
@@ -16,22 +17,22 @@ bne r0 2 Bad
 get r14 d0 12
 beq r14 r15 Loop
 l r1 d0 ReferenceId
-get r2 d0 2
-get r3 d0 3
-get r4 d0 4
-get r5 d0 5
-get r6 d0 6
-get r7 d0 7
+get r2 d0 13
+get r3 d0 14
+get r4 d0 15
+get r5 d0 16
+get r6 d0 17
+get r7 d0 18
 get r8 d0 8
 get r9 d0 11
 get r0 d0 12
 bne r0 r14 Loop
-poke 2 r1
-poke 3 r2
-poke 4 r3
-poke 5 r4
-poke 6 r5
-poke 7 r6
+poke 16 r1
+poke 17 r2
+poke 18 r3
+poke 19 r4
+poke 20 r5
+poke 21 r6
 poke 8 r7
 poke 9 r8
 poke 10 r9
@@ -41,8 +42,8 @@ poke 11 r0
 move r15 r14
 j Loop
 Bad:
-poke 6 0
-poke 7 0
+poke 20 0
+poke 21 0
 poke 10 -1
 get r0 db 11
 add r0 r0 1

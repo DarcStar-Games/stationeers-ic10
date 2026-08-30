@@ -50,8 +50,8 @@ get r0 d2 34
 bne r0 r5 Bad
 get r0 d2 12
 bne r0 r13 Loop
-getd r11 r7 2
-getd r12 r8 2
+getd r11 r7 16
+getd r12 r8 16
 getd r0 r9 9
 bne r0 r11 Bad
 getd r0 r10 9

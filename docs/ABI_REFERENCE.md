@@ -774,17 +774,18 @@ One Inventory service is paired with one PressureDomain, one Pipe Analyzer, and 
 ```text
 S0   magic = 31415935
 S1   ABI = 2
-S2   PressureDomain ReferenceId
-S3   role: 1 LOW, 2 HIGH, 3 STORAGE
-S4   MediumType hash
-S5   ExportableMoles
-S6   ImportCapacityMoles
-S7   MolesPerKPa = Volume / (8.3144 * Temperature)
+S2   capability mask = 0
 S8   MolesPerLiter = Pressure / (8.3144 * Temperature)
 S9   TotalMoles
 S10  Pressure, kPa
 S11  status: 1 ready; negative fault
 S12  publication generation; written LAST
+S13  PressureDomain ReferenceId
+S14  role: 1 LOW, 2 HIGH, 3 STORAGE
+S15  MediumType hash
+S16  ExportableMoles
+S17  ImportCapacityMoles
+S18  MolesPerKPa = Volume / (8.3144 * Temperature)
 ```
 
 Inventory rejects liquid-bearing buses, invalid numerics, torn PressureDomain telemetry, and failed/mismatched purity. See `docs/PRESSURE_INVENTORY_MODEL.md`.
@@ -796,12 +797,13 @@ One Reservation service wraps one PressureDomain Inventory and provides the muta
 ```text
 S0   magic = 31415936
 S1   ABI = 1
-S2   underlying Inventory ReferenceId
-S3   PressureDomain ReferenceId
-S4   role: 1 LOW, 2 HIGH, 3 STORAGE
-S5   MediumType hash
-S6   ExportableMoles
-S7   ImportCapacityMoles
+S2   capability mask = 0
+S16  underlying Inventory ReferenceId
+S17  PressureDomain ReferenceId
+S18  role: 1 LOW, 2 HIGH, 3 STORAGE
+S19  MediumType hash
+S20  ExportableMoles
+S21  ImportCapacityMoles
 S8   MolesPerKPa
 S9   MolesPerLiter
 S10  mirrored Inventory status
@@ -812,7 +814,7 @@ S14  reservation build epoch      # Allocator-owned
 S15  owning Planner ReferenceId   # Allocator-owned
 ```
 
-The Reservation IC writes `S0..S11`; the paired Pressure Reservation Allocator is the only intended writer of `S12..S15`.
+The Reservation IC writes `S0..S11` and `S16..S21`; the paired Pressure Reservation Allocator is the only intended writer of `S12..S15`.
 
 ## Pressure Reservation Allocator ABI v3
 
@@ -823,17 +825,17 @@ S0   magic = 31415938
 S1   ABI = 3
 
 Request:
-S2   Planner ReferenceId
-S3   build/reservation epoch
-S4   MediumType
-S5   ControllerPressureTransfer ReferenceId
-S6   request generation; written LAST
+S13  Planner ReferenceId
+S14  build/reservation epoch
+S15  MediumType
+S17  ControllerPressureTransfer ReferenceId
+S18  request generation; written LAST
 S10  mode: 1 fallback, 2 direct, 3 path hop
 S11  maximum requested mol/tick
 S16  operation: 1 QUOTE, 0 COMMIT
 
 Response:
-S7   committed lease moles; 0 for QUOTE
+S19  committed lease moles; 0 for QUOTE
 S8   result: 1 admissible/granted, 0 no grant, -1 rejected
 S9   response generation; written LAST
 S12  admissible/committed mol/tick
@@ -873,14 +875,14 @@ S0   magic = 31415940
 S1   ABI = 2
 
 Request:
-S2   Planner ReferenceId
-S3   build epoch
-S4   MediumType
-S5   SearchId
-S6   request generation; written last
+S32  Planner ReferenceId
+S33  build epoch
+S34  MediumType
+S35  SearchId
+S36  request generation; written last
 
 Response:
-S7   path length: 2 or 3; 0 when enumeration is exhausted
+S37  path length: 2 or 3; 0 when enumeration is exhausted
 S8   path bottleneck mol/tick
 S9   status: 1 candidate, 0 none, -1 fault
 S10  response generation; written last
@@ -898,12 +900,13 @@ Repeated requests with the same `SearchId` resume the same bounded-depth DFS. A 
 ```text
 S0   magic = 31415944
 S1   ABI = 2
-S2   Planner ReferenceId
-S3   build epoch
-S4   MediumType
-S5   LeaseTicks
-S6   request generation; written LAST
-S7   selected path length
+S2   capability mask = 0
+S32  Planner ReferenceId
+S33  build epoch
+S34  MediumType
+S35  LeaseTicks
+S36  request generation; written LAST
+S37  selected path length
 S8   selected admissible bottleneck mol/tick
 S9   status: 1 route, 0 none, -1 fault
 S10  response generation; written LAST
@@ -921,11 +924,12 @@ The selector restarts enumeration for each new search while preserving the curre
 ```text
 S0 magic = 31415945
 S1 ABI = 1
-S2 HopWeight = 100
-S3 StorageWeight = 25
-S4 LiftWeightPerKPa = 0.01
-S5 FlowScarcityWeight = 100
-S6 CandidateBudget = 32
+S2 capability mask = 0
+S8 HopWeight = 100
+S9 StorageWeight = 25
+S10 LiftWeightPerKPa = 0.01
+S11 FlowScarcityWeight = 100
+S12 CandidateBudget = 32
 ```
 
 Weights must be non-negative; HopWeight must be positive. The score is dimensionless.
@@ -939,10 +943,10 @@ S0 magic = 31415946
 S1 ABI = 2
 
 Request:
-S2  SearchId
-S3  PathLength
-S4  raw candidate BottleneckMolesPerTick
-S5..S7 Transfer ReferenceIds
+S32 SearchId
+S33 PathLength
+S34 raw candidate BottleneckMolesPerTick
+S35..S37 Transfer ReferenceIds
 S8  RequestToken
 S11 LeaseTicks
 
@@ -968,16 +972,17 @@ The Ranker rejects NaN or invalid policy values and removes routes whose remaini
 ```text
 S0   magic = 31415941
 S1   ABI = 1
+S2   capability mask = 0
 
 Request:
-S2   Planner ReferenceId
-S3   build epoch
-S4   MediumType
-S5   LeaseTicks
-S6   request generation; written LAST
+S14  Planner ReferenceId
+S15  build epoch
+S16  MediumType
+S17  LeaseTicks
+S18  request generation; written LAST
 
 Response:
-S7   end-to-end reserved moles at the exact path rate
+S19  end-to-end reserved moles at the exact path rate
 S8   result: 1 path staged, 0 no path/admission, -1 dependency fault
 S9   response generation; written LAST
 S10  staged path link count
@@ -993,13 +998,14 @@ Path Allocator QUOTEs every hop first, takes the minimum admissible rate, then C
 ```text
 S0   magic = 31415942
 S1   ABI = 1
+S2   capability mask = 0
 
 Request:
-S2   Planner ReferenceId
-S3   build epoch
-S4   MediumType
-S6   mode: 2 direct, 1 fallback
-S7   request generation; written last
+S14  Planner ReferenceId
+S15  build epoch
+S16  MediumType
+S17  mode: 2 direct, 1 fallback
+S18  request generation; written last
 
 Response:
 S8   granted link count
@@ -1017,16 +1023,17 @@ Fallback mode preserves the STORAGE anti-circulation direction check and never a
 ```text
 S0   magic = 31415943
 S1   ABI = 1
+S2   capability mask = 0
 
 Request:
-S2   Planner ReferenceId
-S3   build epoch
-S4   MediumType
-S5   LeaseTicks
-S6   request generation; written last
+S14  Planner ReferenceId
+S15  build epoch
+S16  MediumType
+S17  LeaseTicks
+S18  request generation; written last
 
 Response:
-S7   staged physical-link count
+S19  staged physical-link count
 S8   staged plan reserved-moles summary
 S9   status
 S10  response generation; written last
@@ -1039,7 +1046,8 @@ S10  response generation; written last
 ```text
 S0   magic = 31415937
 S1   ABI = 2
-S7   LeaseTicks = max(64, 4 * linkCount + 16)
+S2   capability mask = 0
+S11  LeaseTicks = max(64, 4 * linkCount + 16)
 S8   staged physical-link count in committed plan
 S9   reserved-moles summary in committed plan
 S10  status: 1 grants, 0 no grants, negative dependency/build fault
@@ -1098,7 +1106,7 @@ S12 Resource Profile View generation used
 S13 publication generation; written LAST
 ```
 
-For a nonempty gas bus, `S3 >= S4` is required. Empty buses are accepted because there is no contaminating inventory.
+For a nonempty gas bus, `S9 >= S10` is required. Empty buses are accepted because there is no contaminating inventory.
 
 ## Pressure Transfer Grant Guard ABI v1
 
@@ -1107,12 +1115,13 @@ For a nonempty gas bus, `S3 >= S4` is required. Empty buses are accepted because
 ```text
 S0  magic = 31415948
 S1  ABI = 1
-S2  active GrantMolesPerTick
-S3  remaining active lease ticks
-S4  status: 1 active, 0 off, -1 fault
-S5  last consumed/accepted committed Planner epoch
-S6  Transfer ReferenceId
-S7  publication generation; written LAST
+S2  capability mask = 0
+S8  active GrantMolesPerTick
+S14 remaining active lease ticks
+S15 status: 1 active, 0 off, -1 fault
+S16 last consumed/accepted committed Planner epoch
+S17 Transfer ReferenceId
+S18 publication generation; written LAST
 S10..S13 active source/sink/medium/route identity snapshot
 ```
 

@@ -1,13 +1,14 @@
 # Grant Guard v1.0: d0 Transfer ABI2,d1 Planner ABI2. One activation per commit epoch.
 poke 0 31415948
 poke 1 1
-poke 4 0
-poke 5 -1
-poke 7 0
+poke 2 0
+poke 15 0
+poke 16 -1
+poke 18 0
 poke 9 0
 Loop:
 yield
-poke 7 0
+poke 18 0
 bdns d0 Fault
 get r14 d0 115
 blez r14 Fault
@@ -41,7 +42,7 @@ l r0 d1 ReferenceId
 bne r8 r0 NoGrant
 get r14 d1 14
 blez r14 NoCommit
-get r0 db 5
+get r0 db 16
 beq r0 r14 ActiveEpoch
 bne r7 r14 Consume
 blez r6 Consume
@@ -50,10 +51,10 @@ bne r4 r10 Consume
 bne r5 r11 Consume
 bne r3 r12 Consume
 bne r2 r13 Consume
-poke 2 r6
-poke 3 r9
-poke 5 r14
-poke 6 r1
+poke 8 r6
+poke 14 r9
+poke 16 r14
+poke 17 r1
 poke 10 r10
 poke 11 r11
 poke 12 r12
@@ -69,44 +70,44 @@ bne r3 r0 Consume
 get r0 db 13
 bne r2 r0 Consume
 Active:
-get r0 db 3
+get r0 db 14
 blez r0 Spent
 sub r0 r0 1
-poke 3 r0
-poke 4 1
+poke 14 r0
+poke 15 1
 j Publish
 Spent:
-poke 2 0
-poke 3 0
-poke 4 0
-poke 6 r1
+poke 8 0
+poke 14 0
+poke 15 0
+poke 17 r1
 j Publish
 Consume:
-poke 5 r14
-poke 2 0
-poke 3 0
-poke 4 0
-poke 6 r1
+poke 16 r14
+poke 8 0
+poke 14 0
+poke 15 0
+poke 17 r1
 j Publish
 NoGrant:
 # A staged grant for another planner must not disturb an already committed active epoch.
-get r0 db 5
+get r0 db 16
 bdns d1 NoCommit
 get r14 d1 14
 beq r0 r14 ActiveEpoch
 NoCommit:
-poke 2 0
-poke 3 0
-poke 4 0
-poke 6 r1
+poke 8 0
+poke 14 0
+poke 15 0
+poke 17 r1
 j Publish
 Fault:
-poke 2 0
-poke 3 0
-poke 4 -1
+poke 8 0
+poke 14 0
+poke 15 -1
 Publish:
 get r0 db 9
 add r0 r0 1
 poke 9 r0
-poke 7 r0
+poke 18 r0
 j Loop

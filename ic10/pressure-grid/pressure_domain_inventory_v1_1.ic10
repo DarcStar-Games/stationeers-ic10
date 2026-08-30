@@ -1,5 +1,6 @@
 poke 0 31415935
 poke 1 2
+poke 2 0
 Loop:
 yield
 bdns d0 DomainBad
@@ -84,12 +85,12 @@ mul r12 r0 r8
 sub r11 r12 r7
 max r11 r11 0
 Publish:
-poke 2 r14
-poke 3 r1
-poke 4 r2
-poke 5 r10
-poke 6 r11
-poke 7 r8
+poke 13 r14
+poke 14 r1
+poke 15 r2
+poke 16 r10
+poke 17 r11
+poke 18 r8
 poke 8 r9
 poke 9 r7
 poke 10 r4
@@ -110,8 +111,8 @@ j Invalid
 PurityBad:
 move r0 -6
 Invalid:
-poke 5 0
-poke 6 0
+poke 16 0
+poke 17 0
 poke 11 r0
 Commit:
 get r0 db 12

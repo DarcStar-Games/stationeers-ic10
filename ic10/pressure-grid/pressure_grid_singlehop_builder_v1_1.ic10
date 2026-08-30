@@ -1,5 +1,6 @@
 poke 0 31415942
 poke 1 1
+poke 2 0
 poke 13 -1
 move r14 0
 Loop:
@@ -33,14 +34,14 @@ Request:
 get r13 db 12
 add r13 r13 1
 poke 12 r13
-put d1 2 r1
-put d1 3 r2
-put d1 4 r3
-put d1 5 r9
+put d1 13 r1
+put d1 14 r2
+put d1 15 r3
+put d1 17 r9
 put d1 10 r4
 put d1 11 pinf
 put d1 16 0
-put d1 6 r13
+put d1 18 r13
 j Loop
 Wait:
 get r0 d1 9
@@ -48,7 +49,7 @@ bne r0 r13 Loop
 get r0 d1 8
 blez r0 Next
 add r10 r10 1
-get r0 d1 7
+get r0 d1 19
 add r11 r11 r0
 Next:
 move r13 0
@@ -56,14 +57,14 @@ Skip:
 add r8 r8 1
 j Loop
 New:
-get r15 db 7
+get r15 db 18
 get r0 db 13
 beq r15 r0 Loop
-get r1 db 2
-get r2 db 3
-get r3 db 4
-get r4 db 6
-get r0 db 7
+get r1 db 14
+get r2 db 15
+get r3 db 16
+get r4 db 17
+get r0 db 18
 bne r0 r15 Loop
 blez r1 Reject
 blt r4 1 Reject

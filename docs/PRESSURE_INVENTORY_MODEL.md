@@ -107,17 +107,18 @@ PressureDomain runtime uses telemetry ABI2. Inventory captures positive `S115`, 
 ```text
 S0   magic = 31415935
 S1   ABI = 2
-S2   PressureDomain RefId
-S3   role
-S4   MediumType
-S5   ExportableMoles
-S6   ImportCapacityMoles
-S7   MolesPerKPa
+S2   capability mask = 0
 S8   MolesPerLiter
 S9   TotalMoles
 S10  Pressure
 S11  status
 S12  publication generation LAST
+S13  PressureDomain RefId
+S14  role
+S15  MediumType
+S16  ExportableMoles
+S17  ImportCapacityMoles
+S18  MolesPerKPa
 ```
 
 Statuses:

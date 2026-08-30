@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10",
-  "source_sha256": "2b1b1b72b8480895fcabf7059d1543df04bbd743f65f48b2010f0d5114feff5f",
+  "source_sha256": "b88572f4bad120902e5b4566bcd68c12a8ac7ec7a3eab5e67efcab71ce9cfb9d",
   "identity": {
     "service_id": "ic10.script.pressure.reservation.allocator",
     "implementation_revision": "3.0",
@@ -17,7 +17,7 @@
       "transport": "reference-id",
       "reference": "r1",
       "literal_reads": [
-        7
+        21
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -77,8 +77,8 @@
       "transport": "reference-id",
       "reference": "r5",
       "literal_reads": [
-        6,
-        12
+        12,
+        20
       ],
       "literal_writes": [
         12
@@ -92,8 +92,8 @@
       "transport": "reference-id",
       "reference": "r6",
       "literal_reads": [
-        7,
-        13
+        13,
+        21
       ],
       "literal_writes": [
         13
@@ -108,10 +108,10 @@
       "reference": "sp",
       "literal_reads": [
         1,
-        5,
         10,
         14,
-        15
+        15,
+        19
       ],
       "literal_writes": [
         12,
@@ -139,22 +139,23 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3,
-      4,
-      5,
-      6,
       10,
       11,
-      16
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
     ],
     "literal_writes": [
       0,
       1,
-      7,
+      2,
       8,
       9,
-      12
+      12,
+      19
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -194,53 +195,9 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
           "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
         "address": 8,
@@ -288,12 +245,66 @@
         ]
       },
       {
+        "address": 13,
+        "name": "S13",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 14,
+        "name": "S14",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 15,
+        "name": "S15",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
         "address": 16,
         "name": "S16",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
           "self-read"
+        ]
+      },
+      {
+        "address": 17,
+        "name": "S17",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 18,
+        "name": "S18",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 19,
+        "name": "S19",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
         ]
       }
     ],

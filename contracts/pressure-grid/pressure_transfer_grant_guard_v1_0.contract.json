@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10",
-  "source_sha256": "3baee478aec8bc83234d6cc59dc8d94136fbd01954b8ce2842b68cdfd7c22e1b",
+  "source_sha256": "fc1afba28dffe8d2a3ae3fbbe24ade61e4aa9a875d975315b7ee6b179bba819d",
   "identity": {
     "service_id": "ic10.script.pressure.transfer.grant.guard",
     "implementation_revision": "1.0",
@@ -124,28 +124,29 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      3,
-      5,
       9,
       10,
       11,
       12,
-      13
+      13,
+      14,
+      16
     ],
     "literal_writes": [
       0,
       1,
       2,
-      3,
-      4,
-      5,
-      6,
-      7,
+      8,
       9,
       10,
       11,
       12,
-      13
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -186,49 +187,12 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 5,
-        "name": "S5",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
+        "address": 8,
+        "name": "S8",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -282,6 +246,53 @@
         "semantic_source": "unresolved",
         "access": [
           "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 14,
+        "name": "S14",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 15,
+        "name": "S15",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 16,
+        "name": "S16",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
+          "self-write"
+        ]
+      },
+      {
+        "address": 17,
+        "name": "S17",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 18,
+        "name": "S18",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
           "self-write"
         ]
       }

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_cost_profile_v1_0.ic10",
-  "source_sha256": "5ffd846bff6737e4c372c2cc4858f2f0dd5cf433c3cc3beecea13cb29a356516",
+  "source_sha256": "2944b40525bf1f437e2d86434cd4b7bedaab5310bf3c948a6a56a2364f878060",
   "identity": {
     "service_id": "ic10.script.pressure.grid.cost.profile",
     "implementation_revision": "1.0",
@@ -20,10 +20,11 @@
       0,
       1,
       2,
-      3,
-      4,
-      5,
-      6
+      8,
+      9,
+      10,
+      11,
+      12
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -65,11 +66,21 @@
         "access": [
           "self-write"
         ],
+        "const": 0
+      },
+      {
+        "address": 8,
+        "name": "S8",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
         "const": 100
       },
       {
-        "address": 3,
-        "name": "S3",
+        "address": 9,
+        "name": "S9",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -78,8 +89,8 @@
         "const": 25
       },
       {
-        "address": 4,
-        "name": "S4",
+        "address": 10,
+        "name": "S10",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -88,8 +99,8 @@
         "const": 0.01
       },
       {
-        "address": 5,
-        "name": "S5",
+        "address": 11,
+        "name": "S11",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
@@ -98,8 +109,8 @@
         "const": 100
       },
       {
-        "address": 6,
-        "name": "S6",
+        "address": 12,
+        "name": "S12",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

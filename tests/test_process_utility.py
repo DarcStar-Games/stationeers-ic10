@@ -27,14 +27,14 @@ pdom=IC10((R/'ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10').r
 ck(pdom.stack.get(96)==27182818 and pdom.stack.get(97)==2 and pdom.stack.get(99)==H('ControllerPressureDomain'),'process pressure projection does not reuse PressureDomain ABI2')
 ck(pdom.stack.get(101)==23500 and pdom.stack.get(102)==24000 and pdom.stack.get(103)==3 and pdom.stack.get(104)==H('Fuel.H2O2') and pdom.stack.get(105)==3,'process PressureDomain bounds/medium/status mismatch')
 # Embedded Advanced Furnace pump acts as an ordinary PressureTransfer under GrantGuard authority.
-src=Device(201,stack={0:31415936,1:1,4:1,5:H('Fuel.H2O2'),6:100,7:0,8:.1,9:1,11:1},props={'ReferenceId':201})
-sink=Device(202,stack={0:31415936,1:1,4:3,5:H('Fuel.H2O2'),6:0,7:100,8:.1,9:1,11:1},props={'ReferenceId':202})
-guard=Device(203,stack={0:31415948,1:1,2:100,4:1,6:249,7:1},props={'ReferenceId':203})
+src=Device(201,stack={0:31415936,1:1,18:1,19:H('Fuel.H2O2'),20:100,21:0,8:.1,9:1,11:1},props={'ReferenceId':201})
+sink=Device(202,stack={0:31415936,1:1,18:3,19:H('Fuel.H2O2'),20:0,21:100,8:.1,9:1,11:1},props={'ReferenceId':202})
+guard=Device(203,stack={0:31415948,1:1,8:100,15:1,17:249,18:1},props={'ReferenceId':203})
 tr=IC10((R/'ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10').read_text(),{'d0':src,'d1':sink,'d2':furnace,'d3':guard},self_ref=249)
 tr.stack.update({16:1,17:1,18:0,19:.1,20:100});tr.run(2)
 ck(tr.stack.get(99)==H('ControllerPressureTransfer') and tr.stack.get(103)==1,'embedded furnace pump not exposed as active PressureTransfer')
 ck(furnace.props.get('SettingInput',0)>0,'Grant-authorized furnace inlet pump did not actuate')
-guard.stack[4]=0;tr.run(1);ck(furnace.props.get('SettingInput')==0,'withdrawn PressureGrid grant did not safe-off embedded furnace pump')
+guard.stack[15]=0;tr.run(1);ck(furnace.props.get('SettingInput')==0,'withdrawn PressureGrid grant did not safe-off embedded furnace pump')
 # Mixture profile purity checks two components under the existing PurityGuard ABI.
 prof=Device(301,stack={0:31415963,1:1,28:1,29:3,8:1,9:H('Fuel.H2O2'),10:1,11:5,12:1,13:'RatioVolatiles',14:2/3,15:'RatioOxygen',16:1/3,17:.005,18:1,19:5000,20:12805,21:1},props={'ReferenceId':301})
 mix=Device(302,props={'ReferenceId':302,'TotalMoles':10,'Temperature':300,'RatioVolatiles':2/3,'RatioOxygen':1/3})
@@ -82,11 +82,11 @@ def to_pc(vm,target,limit=400):
  return vm.pc==target
 # Embedded pump: withdraw GrantGuard immediately before the final guard re-fence.
 af=Device(501,props={'ReferenceId':501,'PrefabHash':H('StructureAdvancedFurnace'),'Power':1,'Error':0,'Maximum':100,'SettingInput':0,'SettingOutput':0})
-asrc=Device(502,stack=dict(src.stack),props={'ReferenceId':502}); asrc.stack[4]=1;asrc.stack[5]=H('Fuel.H2O2');asrc.stack[6]=100;asrc.stack[8]=.1;asrc.stack[9]=1;asrc.stack[11]=1
-asink=Device(503,stack=dict(sink.stack),props={'ReferenceId':503}); asink.stack[4]=3;asink.stack[5]=H('Fuel.H2O2');asink.stack[7]=100;asink.stack[8]=.1;asink.stack[9]=1;asink.stack[11]=1
-ag=Device(504,stack={0:31415948,1:1,2:100,4:1,6:549,7:1},props={'ReferenceId':504})
+asrc=Device(502,stack=dict(src.stack),props={'ReferenceId':502}); asrc.stack[18]=1;asrc.stack[19]=H('Fuel.H2O2');asrc.stack[20]=100;asrc.stack[8]=.1;asrc.stack[9]=1;asrc.stack[11]=1
+asink=Device(503,stack=dict(sink.stack),props={'ReferenceId':503}); asink.stack[18]=3;asink.stack[19]=H('Fuel.H2O2');asink.stack[21]=100;asink.stack[8]=.1;asink.stack[9]=1;asink.stack[11]=1
+ag=Device(504,stack={0:31415948,1:1,8:100,15:1,17:549,18:1},props={'ReferenceId':504})
 at=IC10((R/'ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10').read_text(),{'d0':asrc,'d1':asink,'d2':af,'d3':ag},self_ref=549);at.stack.update({16:1,17:1,18:0,19:.1,20:100});at.run(1)
-ck(to_pc(at,87),'could not reach embedded-pump final authority cut');ag.stack[4]=0;at.run(1)
+ck(to_pc(at,87),'could not reach embedded-pump final authority cut');ag.stack[15]=0;at.run(1)
 ck(af.props.get('SettingInput')==0,'embedded furnace pump actuated after final-cut GrantGuard withdrawal')
 # Composition mixer: change ProcessCondition generation just before its final demand fence.
 miout=Device(511,props={'ReferenceId':511,'TotalMoles':0,'Pressure':0,'RatioVolatiles':0,'RatioOxygen':0});mid=Device(512,stack={0:31416048,1:1,23:H('Fuel.H2O2'),24:100,10:1,11:1,12:1},props={'ReferenceId':512});midev=Device(513,props={'ReferenceId':513,'Setting':0,'On':0})

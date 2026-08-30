@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10",
-  "source_sha256": "d60e74a186b636321831f74ad867a6a8e3152e7cc767dfeac2ec307428cbaa80",
+  "source_sha256": "40f5ba38e8df729db4855f2556a9e447bced81d07a01ebdc08e695107e96ae35",
   "identity": {
     "service_id": "ic10.script.pressure.grid.singlehop.builder",
     "implementation_revision": "1.1",
@@ -85,19 +85,19 @@
         "literal_reads": [
           0,
           1,
-          7,
           8,
-          9
+          9,
+          19
         ],
         "literal_writes": [
-          2,
-          3,
-          4,
-          5,
-          6,
           10,
           11,
-          16
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -157,17 +157,18 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
-      2,
-      3,
-      4,
-      6,
-      7,
       12,
-      13
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
     ],
     "literal_writes": [
       0,
       1,
+      2,
       8,
       9,
       10,
@@ -213,44 +214,9 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 3,
-        "name": "S3",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 4,
-        "name": "S4",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 6,
-        "name": "S6",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 7,
-        "name": "S7",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
+          "self-write"
+        ],
+        "const": 0
       },
       {
         "address": 8,
@@ -306,6 +272,51 @@
         "access": [
           "self-read",
           "self-write"
+        ]
+      },
+      {
+        "address": 14,
+        "name": "S14",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 15,
+        "name": "S15",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 16,
+        "name": "S16",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 17,
+        "name": "S17",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 18,
+        "name": "S18",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
         ]
       }
     ],

@@ -29,10 +29,10 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 133,
-    "legacy_exempt": 41,
-    "backlog_reserved_cell_users": 38,
-    "backlog_dynamic_range_users": 14
+    "migrated_v1": 145,
+    "legacy_exempt": 29,
+    "backlog_reserved_cell_users": 26,
+    "backlog_dynamic_range_users": 11
   },
   "services": [
     {
@@ -11217,7 +11217,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "ee9a8b2be2f704058e95661388d43e516eb404cd7342ff9ec06f52ed1fc862dd",
+          "source_sha256": "7cc7b426ae9738eddf4ee4e457978a2baad4deb6dbf838f77aa4051a068a07c5",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -11246,7 +11246,7 @@
       "source": "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10",
       "service_contract_id": "ic10.script.pressure.domain.inventory",
       "deployment_family": "pressure-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -11288,12 +11288,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 12,
+        "literal_cell_count": 14,
+        "highest_literal_cell": 18,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 120,
-        "line_headroom_120": 0,
+        "line_count": 121,
+        "line_headroom_120": -1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11301,29 +11301,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pressure.domain.inventory",
+        "magic": 31415935,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "071de683f4f22be311c1f54a086e07fd25569923e9dba339da3afe82d8ac65d1",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 18
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "pressure-grid"
       }
     },
     {
       "source": "ic10/pressure-grid/pressure_grid_cost_profile_v1_0.ic10",
       "service_contract_id": "ic10.script.pressure.grid.cost.profile",
       "deployment_family": "pressure-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -11357,12 +11376,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 7,
-        "highest_literal_cell": 6,
+        "literal_cell_count": 8,
+        "highest_literal_cell": 12,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 11,
-        "line_headroom_120": 109,
+        "line_count": 12,
+        "line_headroom_120": 108,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11370,21 +11389,41 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pressure.grid.cost.profile",
+        "magic": 31415945,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "2944b40525bf1f437e2d86434cd4b7bedaab5310bf3c948a6a56a2364f878060",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 12
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "pressure-grid"
       }
     },
     {
@@ -11514,7 +11553,7 @@
       "source": "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10",
       "service_contract_id": "ic10.script.pressure.grid.path.allocator",
       "deployment_family": "pressure-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -11548,12 +11587,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 14,
-        "highest_literal_cell": 13,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 19,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 118,
-        "line_headroom_120": 2,
+        "line_count": 119,
+        "line_headroom_120": 1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11561,29 +11600,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pressure.grid.path.allocator",
+        "magic": 31415941,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "355af023121ba6ae1bbeab3353aae283c34ba8e02d9e6dc2ac82f8da07fc6944",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 19
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "pressure-grid"
       }
     },
     {
       "source": "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10",
       "service_contract_id": "ic10.script.pressure.grid.path.enumerator",
       "deployment_family": "pressure-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -11617,8 +11675,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 24,
+        "literal_cell_count": 14,
+        "highest_literal_cell": 37,
         "dynamic_read_ranges": [
           {
             "start": 0,
@@ -11631,8 +11689,8 @@
             "end": 511
           }
         ],
-        "line_count": 118,
-        "line_headroom_120": 2,
+        "line_count": 119,
+        "line_headroom_120": 1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11640,12 +11698,7 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [
           0,
@@ -11670,17 +11723,54 @@
         "dynamic_read_provenance": "conservative-full-stack",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pressure.grid.path.enumerator",
+        "magic": 31415940,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "253788442acf4f0b2817e3a664c0090f13bd06861fdf42858245b43d43ef83dc",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 11
+            },
+            {
+              "start": 16,
+              "end": 31
+            },
+            {
+              "start": 32,
+              "end": 37
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 16,
+              "end": 31
+            }
+          ]
+        },
+        "pilot_family": "pressure-grid"
       }
     },
     {
       "source": "ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10",
       "service_contract_id": "ic10.script.pressure.grid.plan.builder",
       "deployment_family": "pressure-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -11714,12 +11804,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 14,
-        "highest_literal_cell": 13,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 19,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 120,
-        "line_headroom_120": 0,
+        "line_count": 121,
+        "line_headroom_120": -1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11727,29 +11817,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pressure.grid.plan.builder",
+        "magic": 31415943,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "18e996ee11b6630f45938c09041033a3810e5f9b3cc6da29bfbbeef789ad274d",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 19
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "pressure-grid"
       }
     },
     {
       "source": "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10",
       "service_contract_id": "ic10.script.pressure.grid.reservation.planner",
       "deployment_family": "pressure-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -11783,12 +11892,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 10,
+        "literal_cell_count": 11,
         "highest_literal_cell": 15,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 87,
-        "line_headroom_120": 33,
+        "line_count": 88,
+        "line_headroom_120": 32,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11796,24 +11905,48 @@
         "literal_cells": [
           0,
           1,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pressure.grid.reservation.planner",
+        "magic": 31415937,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "8abbde4bfcde9f2e4aa67192dfb1fc53d0ffa27c03dc72c7a782d18bdc1e3490",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 15
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "pressure-grid"
       }
     },
     {
       "source": "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10",
       "service_contract_id": "ic10.script.pressure.grid.route.ranker",
       "deployment_family": "pressure-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -11847,22 +11980,26 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 16,
-        "highest_literal_cell": 25,
+        "literal_cell_count": 17,
+        "highest_literal_cell": 34,
         "dynamic_read_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 16,
+            "end": 31
+          },
+          {
+            "start": 35,
+            "end": 37
           }
         ],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 16,
+            "end": 31
           }
         ],
-        "line_count": 120,
-        "line_headroom_120": 0,
+        "line_count": 121,
+        "line_headroom_120": -1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11870,44 +12007,61 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4
+          2
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
-        "dynamic_read_provenance": "conservative-full-stack",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_read_cells": [],
+        "dynamic_write_cells": [],
+        "dynamic_read_provenance": "source-fingerprinted-exception",
+        "dynamic_write_provenance": "source-fingerprinted-exception"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pressure.grid.route.ranker",
+        "magic": 31415946,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "7eea5aebbe470b864671ee397df70c651340f5d026848cefcdb3d606a7a0b7eb",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 11
+            },
+            {
+              "start": 16,
+              "end": 31
+            },
+            {
+              "start": 32,
+              "end": 34
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 16,
+              "end": 31
+            }
+          ]
+        },
+        "pilot_family": "pressure-grid"
       }
     },
     {
       "source": "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10",
       "service_contract_id": "ic10.script.pressure.grid.route.selector",
       "deployment_family": "pressure-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -11932,8 +12086,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 14,
-        "highest_literal_cell": 20,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 37,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
@@ -11941,8 +12095,8 @@
             "end": 511
           }
         ],
-        "line_count": 117,
-        "line_headroom_120": 3,
+        "line_count": 118,
+        "line_headroom_120": 2,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -11950,12 +12104,7 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -11971,17 +12120,54 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pressure.grid.route.selector",
+        "magic": 31415944,
+        "service_abi": 2,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "1206854eca08e899c02a10224992a2048c8d612d03870b8d24359d679814191b",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 12
+            },
+            {
+              "start": 16,
+              "end": 31
+            },
+            {
+              "start": 32,
+              "end": 37
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 16,
+              "end": 31
+            }
+          ]
+        },
+        "pilot_family": "pressure-grid"
       }
     },
     {
       "source": "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10",
       "service_contract_id": "ic10.script.pressure.grid.singlehop.builder",
       "deployment_family": "pressure-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -12015,12 +12201,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 13,
+        "literal_cell_count": 14,
+        "highest_literal_cell": 18,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 118,
-        "line_headroom_120": 2,
+        "line_count": 119,
+        "line_headroom_120": 1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12028,28 +12214,48 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pressure.grid.singlehop.builder",
+        "magic": 31415942,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "40f5ba38e8df729db4855f2556a9e447bced81d07a01ebdc08e695107e96ae35",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 18
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "pressure-grid"
       }
     },
     {
       "source": "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10",
       "service_contract_id": "ic10.script.pressure.inventory.reservation",
       "deployment_family": "pressure-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -12091,12 +12297,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 16,
-        "highest_literal_cell": 15,
+        "literal_cell_count": 17,
+        "highest_literal_cell": 21,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 51,
-        "line_headroom_120": 69,
+        "line_count": 52,
+        "line_headroom_120": 68,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12104,22 +12310,41 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pressure.inventory.reservation",
+        "magic": 31415936,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "6e7609bf47c3f070c8c30cc3d18e2128a2715b8281d73bedb1218fd6acdf96d9",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 21
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "pressure-grid"
       }
     },
     {
@@ -12205,7 +12430,7 @@
       "source": "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10",
       "service_contract_id": "ic10.script.pressure.reservation.allocator",
       "deployment_family": "pressure-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -12247,12 +12472,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 14,
-        "highest_literal_cell": 16,
+        "literal_cell_count": 15,
+        "highest_literal_cell": 19,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 120,
-        "line_headroom_120": 0,
+        "line_count": 121,
+        "line_headroom_120": -1,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12260,22 +12485,41 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pressure.reservation.allocator",
+        "magic": 31415938,
+        "service_abi": 3,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "b88572f4bad120902e5b4566bcd68c12a8ac7ec7a3eab5e67efcab71ce9cfb9d",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 19
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "pressure-grid"
       }
     },
     {
@@ -12356,7 +12600,7 @@
       "source": "ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10",
       "service_contract_id": "ic10.script.pressure.transfer.grant.guard",
       "deployment_family": "pressure-grid",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -12390,12 +12634,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 13,
+        "literal_cell_count": 14,
+        "highest_literal_cell": 18,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 112,
-        "line_headroom_120": 8,
+        "line_count": 113,
+        "line_headroom_120": 7,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12403,22 +12647,41 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "none"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.pressure.transfer.grant.guard",
+        "magic": 31415948,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "fc1afba28dffe8d2a3ae3fbbe24ade61e4aa9a875d975315b7ee6b179bba819d",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 18
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "pressure-grid"
       }
     },
     {
@@ -12975,7 +13238,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "a69486ae5e9bc2a294b236a86d102a7892c9bfe45f2f7f7c12e4431a682dc118",
+          "source_sha256": "c7bce23523a524214f354ecd7de8c3fa180ef646a73f4fe4b616d6627835fce1",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -13787,7 +14050,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "a4fa41ae78988959728d7373a154307a4d0addf2f036eca70e4e38adf553fa75",
+          "source_sha256": "20b917c57e6c38bf767153d94c0c94d1bf55906842879493ee1dbba0ea7c6a78",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -13879,7 +14142,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "cc9ad60acba06b04b3e1d4ef77db628825545e59d5686fcd5c213055de554ce7",
+          "source_sha256": "3878b33765144f2fe513e747c1cb3616f98abc50fa5863bfb50df849be509c72",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {

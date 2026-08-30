@@ -34,34 +34,34 @@ for ratio,expect in [(.999,1),(.90,-4)]:
 transfer=Device(300,stack={96:27182818,97:2,99:'HASH:ControllerPressureTransfer',101:1,102:'HASH:Pollutant',106:401,107:402,108:5,109:7,110:500,111:4,115:10,117:401,118:402,119:'HASH:Pollutant',120:1},props={'ReferenceId':300})
 planner=Device(500,stack={0:31415937,1:2,14:7},props={'ReferenceId':500})
 g=IC10((R/'ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10').read_text(),{'d0':transfer,'d1':planner},self_ref=590); g.run(2)
-if g.stack.get(4)!=1 or g.stack.get(2)!=5: fails.append('Grant Guard did not activate matching committed lease')
+if g.stack.get(15)!=1 or g.stack.get(8)!=5: fails.append('Grant Guard did not activate matching committed lease')
 # A next plan may be staged while the current lease is active; it must not cancel the current lease.
 transfer.stack.update({108:7,109:8,110:500,111:4,117:401,118:402,119:'HASH:Pollutant',120:1,115:11})
 g.run(1)
-if g.stack.get(4)!=1 or g.stack.get(5)!=7: fails.append('Staging next epoch disturbed current committed lease')
+if g.stack.get(15)!=1 or g.stack.get(16)!=7: fails.append('Staging next epoch disturbed current committed lease')
 # Commit the staged epoch and verify it becomes the new lease.
 planner.stack[14]=8
 g.run(1)
-if g.stack.get(4)!=1 or g.stack.get(2)!=7 or g.stack.get(5)!=8: fails.append('Grant Guard failed to switch atomically to newly committed epoch')
+if g.stack.get(15)!=1 or g.stack.get(8)!=7 or g.stack.get(16)!=8: fails.append('Grant Guard failed to switch atomically to newly committed epoch')
 # Exhaust the short lease and prove the same committed epoch cannot reactivate itself.
 g.run(4)
-if g.stack.get(4)!=0 or g.stack.get(3)!=0: fails.append('Grant Guard did not expire bounded lease')
+if g.stack.get(15)!=0 or g.stack.get(14)!=0: fails.append('Grant Guard did not expire bounded lease')
 g.run(2)
-if g.stack.get(4)!=0 or g.stack.get(3)!=0 or g.stack.get(5)!=8: fails.append('Expired committed epoch reactivated without a new commit')
+if g.stack.get(15)!=0 or g.stack.get(14)!=0 or g.stack.get(16)!=8: fails.append('Expired committed epoch reactivated without a new commit')
 # A topology mismatch consumes the current epoch; restoring topology cannot restart that same lease.
 transfer.stack.update({108:6,109:9,111:4,117:401,118:402,119:'HASH:Pollutant',120:1,115:12})
 planner.stack[14]=9
 g.run(1)
-if g.stack.get(4)!=1: fails.append('Grant Guard failed to activate epoch used for topology test')
+if g.stack.get(15)!=1: fails.append('Grant Guard failed to activate epoch used for topology test')
 transfer.stack[106]=999; transfer.stack[115]=13
 g.run(1)
-if g.stack.get(4)!=0 or g.stack.get(2)!=0: fails.append('Grant Guard failed to shut off topology-mismatched lease')
+if g.stack.get(15)!=0 or g.stack.get(8)!=0: fails.append('Grant Guard failed to shut off topology-mismatched lease')
 transfer.stack[106]=401; transfer.stack[115]=14
 g.run(2)
-if g.stack.get(4)!=0 or g.stack.get(5)!=9: fails.append('Topology-consumed epoch reactivated after topology restoration')
+if g.stack.get(15)!=0 or g.stack.get(16)!=9: fails.append('Topology-consumed epoch reactivated after topology restoration')
 
 # Generic resource contracts: execute real pressure adapter and material vending inventory.
-inv=Device(610,stack={0:31415935,1:2,3:3,4:'HASH:Pollutant',5:120,6:80,11:1,12:4},props={'ReferenceId':610})
+inv=Device(610,stack={0:31415935,1:2,14:3,15:'HASH:Pollutant',16:120,17:80,11:1,12:4},props={'ReferenceId':610})
 ep=IC10((R/'ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10').read_text(),{'d0':inv},self_ref=600); ep.run(2)
 if ep.stack.get(0)!=31415949 or ep.stack.get(52)!=1 or ep.stack.get(54)!=7 or ep.stack.get(55)!=120 or ep.stack.get(56)!=80: fails.append('Pressure Resource Endpoint adapter publication mismatch')
 profile_item=make_view(2,1758427767,620)
@@ -77,8 +77,8 @@ if rr.stack.get(33)!=2 or rr.stack.get(34)!=1758427767 or rr.stack.get(36)!=70 o
 # Execute Generic Resource Link adapter against topology-consistent pressure/generic reservations.
 src_inv=Device(701,stack={0:31415935,1:2},props={'ReferenceId':701})
 sink_inv=Device(702,stack={0:31415935,1:2},props={'ReferenceId':702})
-src_pres=Device(711,stack={0:31415936,1:1,2:701},props={'ReferenceId':711})
-sink_pres=Device(712,stack={0:31415936,1:1,2:702},props={'ReferenceId':712})
+src_pres=Device(711,stack={0:31415936,1:1,16:701},props={'ReferenceId':711})
+sink_pres=Device(712,stack={0:31415936,1:1,16:702},props={'ReferenceId':712})
 src_ep=Device(721,stack={0:31415949,1:1,52:1,53:'HASH:Pollutant',54:1,55:20,56:0,57:0,8:1,9:701,10:1,11:3,12:1,13:3},props={'ReferenceId':721})
 sink_ep=Device(722,stack={0:31415949,1:1,52:1,53:'HASH:Pollutant',54:2,55:0,56:20,57:0,8:1,9:702,10:1,11:4,12:1,13:3},props={'ReferenceId':722})
 src_gr=Device(731,stack={0:31415950,1:1,32:721,33:1,34:'HASH:Pollutant',35:1,36:20,37:0,8:0,9:1,10:1,11:3,12:2},props={'ReferenceId':731})

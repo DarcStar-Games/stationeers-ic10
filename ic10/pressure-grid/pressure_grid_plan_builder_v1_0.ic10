@@ -1,6 +1,7 @@
 # Grid Plan Builder v1.0: d0 SingleHop Builder,d1 Path Allocator.
 poke 0 31415943
 poke 1 1
+poke 2 0
 poke 13 -1
 move r14 0
 Loop:
@@ -30,7 +31,7 @@ bltz r0 Fail
 beqz r0 AskFallback
 get r0 d1 10
 add r8 r8 r0
-get r0 d1 7
+get r0 d1 19
 add r9 r9 r0
 move r13 0
 j Loop
@@ -38,21 +39,21 @@ AskPath:
 get r13 db 12
 add r13 r13 1
 poke 12 r13
-put d1 2 r1
-put d1 3 r2
-put d1 4 r3
-put d1 5 r4
-put d1 6 r13
+put d1 14 r1
+put d1 15 r2
+put d1 16 r3
+put d1 17 r4
+put d1 18 r13
 j Loop
 AskFallback:
 get r13 db 11
 add r13 r13 1
 poke 11 r13
-put d0 2 r1
-put d0 3 r2
-put d0 4 r3
-put d0 6 1
-put d0 7 r13
+put d0 14 r1
+put d0 15 r2
+put d0 16 r3
+put d0 17 1
+put d0 18 r13
 move r14 3
 j Loop
 WaitFallback:
@@ -64,20 +65,20 @@ get r0 d0 8
 add r8 r8 r0
 get r0 d0 9
 add r9 r9 r0
-poke 7 r8
+poke 19 r8
 poke 8 r9
 select r0 r8 1 0
 poke 9 r0
 j Respond
 New:
-get r15 db 6
+get r15 db 18
 get r0 db 13
 beq r15 r0 Loop
-get r1 db 2
-get r2 db 3
-get r3 db 4
-get r4 db 5
-get r0 db 6
+get r1 db 14
+get r2 db 15
+get r3 db 16
+get r4 db 17
+get r0 db 18
 bne r0 r15 Loop
 blez r1 Reject
 blez r2 Reject
@@ -97,11 +98,11 @@ move r9 0
 get r13 db 11
 add r13 r13 1
 poke 11 r13
-put d0 2 r1
-put d0 3 r2
-put d0 4 r3
-put d0 6 2
-put d0 7 r13
+put d0 14 r1
+put d0 15 r2
+put d0 16 r3
+put d0 17 2
+put d0 18 r13
 move r14 1
 j Loop
 Fail:
@@ -110,7 +111,7 @@ j Error
 Reject:
 move r0 -1
 Error:
-poke 7 0
+poke 19 0
 poke 8 0
 poke 9 r0
 Respond:

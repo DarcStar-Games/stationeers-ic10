@@ -17,10 +17,10 @@ get r0 d0 0
 bne r0 31415935 Bad
 get r0 d0 1
 bne r0 2 Bad
-get r1 d0 3 # role
-get r2 d0 4 # medium
-get r3 d0 5 # exportable mol
-get r4 d0 6 # import capacity mol
+get r1 d0 14 # role
+get r2 d0 15 # medium
+get r3 d0 16 # exportable mol
+get r4 d0 17 # import capacity mol
 get r5 d0 11 # status
 get r0 d0 12
 bne r0 r14 Loop

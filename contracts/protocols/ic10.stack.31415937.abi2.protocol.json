@@ -38,13 +38,14 @@
           "const": 2
         },
         {
-          "address": 7,
-          "name": "S7",
+          "address": 2,
+          "name": "S2",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 0
         },
         {
           "address": 8,
@@ -67,6 +68,15 @@
         {
           "address": 10,
           "name": "S10",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 11,
+          "name": "S11",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [

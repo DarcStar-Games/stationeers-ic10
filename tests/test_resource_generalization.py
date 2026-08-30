@@ -24,7 +24,7 @@ need(r,'poke 12 r0 # semantic mirror generation LAST','generic reservation')
 if '31415935' in r or 'Pressure' in r.split('\n',1)[1]: fails.append('generic reservation leaked pressure-specific dependency')
 # Generic Resource Link view binds pressure topology to the corresponding generic endpoint providers.
 l=(R/'ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10').read_text()
-for n in ('poke 0 31415953','getd r11 r7 2','getd r12 r8 2','getd r0 r9 9','getd r0 r10 9','poke 12 r0'):
+for n in ('poke 0 31415953','getd r11 r7 16','getd r12 r8 16','getd r0 r9 9','getd r0 r10 9','poke 12 r0'):
     need(l,n,'pressure resource link adapter')
 # Resource discovery uses independent 64-entry endpoint/link directories with explicit overflow.
 ed=(R/'ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10').read_text()
