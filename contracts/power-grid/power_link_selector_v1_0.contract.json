@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_link_selector_v1_0.ic10",
-  "source_sha256": "42e580ea36f6405a857f269581c964677568e6fa32d2b26e186cf118c7e9ab34",
+  "source_sha256": "a1e7dc140636917e55dc5fd7af3a8c047bf7e4916c0fe379776a79b1a3cc9deb",
   "identity": {
     "service_id": "ic10.script.power.link.selector",
     "implementation_revision": "1.0",
@@ -27,12 +27,17 @@
         "literal_reads": [
           0,
           9,
+          11,
           24
         ],
         "literal_writes": [],
         "dynamic_read": true,
         "dynamic_write": false,
         "dynamic_read_ranges": [
+          {
+            "start": 27,
+            "end": 30
+          },
           {
             "start": 32,
             "end": 159
@@ -49,14 +54,18 @@
           {
             "address": 9,
             "equals": -1926307111
+          },
+          {
+            "address": 11,
+            "equals": 1
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.5b032c68f6132b34",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.5b032c68f6132b34",
+        "interface_id": "ic10.interface.access.2d115830a49d6845",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.2d115830a49d6845",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

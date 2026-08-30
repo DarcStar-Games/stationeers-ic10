@@ -444,8 +444,8 @@
     "d1": {
      "dynamic_read_ranges": [
       [
-       16,
-       31
+       32,
+       49
       ]
      ]
     }
@@ -498,6 +498,10 @@
     },
     "d1": {
      "dynamic_read_ranges": [
+      [
+       27,
+       30
+      ],
       [
        32,
        415
@@ -562,7 +566,7 @@
    "external_readable_ranges": [
     [
      0,
-     23
+     30
     ],
     [
      32,
@@ -684,12 +688,16 @@
     ],
     [
      32,
-     37
+     49
     ]
    ],
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
+      [
+       25,
+       30
+      ],
       [
        32,
        415
@@ -790,6 +798,10 @@
     "d2": {
      "dynamic_read_ranges": [
       [
+       25,
+       30
+      ],
+      [
        32,
        159
       ]
@@ -854,18 +866,22 @@
     "d0": {
      "dynamic_read_ranges": [
       [
-       16,
-       79
+       32,
+       95
       ]
      ]
     }
    }
   },
   "ic10/power-grid/power_link_selector_v1_0.ic10": {
-   "source_sha256": "42e580ea36f6405a857f269581c964677568e6fa32d2b26e186cf118c7e9ab34",
+   "source_sha256": "a1e7dc140636917e55dc5fd7af3a8c047bf7e4916c0fe379776a79b1a3cc9deb",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
+      [
+       27,
+       30
+      ],
       [
        32,
        159
@@ -880,8 +896,8 @@
     "d0": {
      "dynamic_read_ranges": [
       [
-       16,
-       79
+       32,
+       95
       ]
      ]
     }
@@ -893,8 +909,8 @@
     "d0": {
      "dynamic_read_ranges": [
       [
-       16,
-       79
+       32,
+       95
       ]
      ]
     }
@@ -920,8 +936,8 @@
     "d0": {
      "dynamic_read_ranges": [
       [
-       16,
-       79
+       32,
+       95
       ]
      ]
     }
@@ -942,6 +958,10 @@
     "d0": {
      "dynamic_read_ranges": [
       [
+       27,
+       30
+      ],
+      [
        32,
        415
       ]
@@ -955,6 +975,10 @@
     "d0": {
      "dynamic_read_ranges": [
       [
+       27,
+       30
+      ],
+      [
        32,
        415
       ]
@@ -963,8 +987,8 @@
     "d1": {
      "dynamic_read_ranges": [
       [
-       16,
-       79
+       128,
+       191
       ]
      ]
     }
@@ -988,6 +1012,10 @@
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
+      [
+       27,
+       30
+      ],
       [
        32,
        415
@@ -1042,6 +1070,10 @@
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
+      [
+       25,
+       30
+      ],
       [
        32,
        287
@@ -1166,6 +1198,10 @@
     "d1": {
      "dynamic_read_ranges": [
       [
+       27,
+       30
+      ],
+      [
        32,
        287
       ]
@@ -1198,6 +1234,10 @@
     "d0": {
      "dynamic_read_ranges": [
       [
+       25,
+       30
+      ],
+      [
        32,
        415
       ]
@@ -1211,8 +1251,8 @@
     "d0": {
      "dynamic_read_ranges": [
       [
-       32,
-       415
+       27,
+       30
       ]
      ]
     }
@@ -1267,6 +1307,10 @@
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
+      [
+       25,
+       30
+      ],
       [
        32,
        415
@@ -1337,6 +1381,10 @@
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
+      [
+       25,
+       30
+      ],
       [
        32,
        415

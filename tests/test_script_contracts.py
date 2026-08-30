@@ -22,6 +22,8 @@ from framework.script_contracts import (
     ranges_overlap,
     verify_override_source,
 )
+from framework.script_contracts.address_forms import declared_base_errors, dynamic_access_bases
+from framework.script_contracts.control_flow import writes_register
 from framework.script_contracts.device_ports import (
     analyze_device_ports,
     network_dependencies,
@@ -399,6 +401,45 @@ ck({item["address"] for item in header_invariants(
    )} == {0, 1}, "non-overlapping bounded writes did not restore header invariants")
 ck(all("const" in field for field in bounded_own["fields"] if field["address"] in {0, 1}),
    "non-overlapping bounded writes suppressed header constants")
+
+ck(not writes_register(["bge", "r6", "r12", "Done"], "r6")
+   and not writes_register(["sd", "r5", "On", "r1"], "r5")
+   and not writes_register(["clr", "d0"], "d0")
+   and writes_register(["add", "r0", "r0", "32"], "r0")
+   and writes_register(["pop", "r3"], "r3")
+   and writes_register(["push", "r3"], "sp"),
+   "instruction signatures did not decide which mnemonics assign their first operand")
+
+record_loop_source = (
+    "move r6 0\nRecord:\nbge r6 r12 Done\nmul r0 r6 3\nadd r0 r0 32\n"
+    "get r1 d1 r0\nadd r0 r0 2\nget r2 d1 r0\nadd r6 r6 1\nj Record\nDone:\nyield\n"
+)
+record_loop_rows = parse_rows(record_loop_source)
+record_loop_ports, record_loop_aliases = collect_aliases(record_loop_rows)
+ck([item[:3] for item in dynamic_access_bases(record_loop_source, record_loop_ports, record_loop_aliases)] ==
+   [("d1", "read", 32), ("d1", "read", 34)],
+   "a strided record loop did not reduce to its first-pass base addresses")
+ck(len(declared_base_errors(record_loop_source, record_loop_ports, record_loop_aliases,
+                            {("d1", "read"): [{"start": 16, "end": 31}]})) == 2,
+   "a declared range that omits the record base was accepted")
+ck(not declared_base_errors(record_loop_source, record_loop_ports, record_loop_aliases,
+                            {("d1", "read"): [{"start": 32, "end": 49}]}),
+   "the record window the loop actually reaches was rejected")
+
+peer_based_source = "get r5 d0 24\nadd r0 r5 25\nget r1 d0 r0\n"
+peer_based_rows = parse_rows(peer_based_source)
+peer_based_ports, peer_based_aliases = collect_aliases(peer_based_rows)
+ck(not dynamic_access_bases(peer_based_source, peer_based_ports, peer_based_aliases)
+   and not declared_base_errors(peer_based_source, peer_based_ports, peer_based_aliases,
+                                {("d0", "read"): [{"start": 400, "end": 401}]}),
+   "an address offset by a peer-published value was given a base it cannot be held to")
+
+own_table_source = "move ra 96\nTable:\nget r0 db ra\npoke ra r0\nadd ra ra 1\nblt ra 100 Table\n"
+own_table_rows = parse_rows(own_table_source)
+own_table_ports, own_table_aliases = collect_aliases(own_table_rows)
+ck([item[:3] for item in dynamic_access_bases(own_table_source, own_table_ports, own_table_aliases)] ==
+   [("db", "read", 96), ("db", "write", 96)],
+   "own-stack table accesses were not reduced to their base cell")
 
 conflicting_header_source = bounded_own_source.replace(
     "poke 1 1\n", "poke 1 1\npoke 0 0\n"

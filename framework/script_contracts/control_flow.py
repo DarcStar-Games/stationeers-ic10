@@ -6,7 +6,30 @@ state pairs a node with a bounded jal return stack where calls are followed.
 from __future__ import annotations
 
 from collections import defaultdict
+from functools import lru_cache
+from pathlib import Path
+import json
 from typing import Any
+
+ROOT = Path(__file__).resolve().parents[2]
+
+
+@lru_cache(maxsize=1)
+def assigning_instructions(root: Path = ROOT) -> dict[str, bool]:
+    """Which mnemonics assign their first operand, from the game's own signatures.
+
+    An instruction whose signature starts with a bare `r?` writes that register;
+    one that starts with a named operand -- `bge a(r?|num) ...`, `poke
+    address(r?|num) ...` -- only reads it. Deriving this from the extracted
+    instruction set rather than a hand-kept list of exceptions keeps a branch
+    from being mistaken for an assignment when the game adds one.
+    """
+    table = json.loads((root / "data/ic10_instruction_set.json").read_text())["instructions"]
+    return {
+        name: entry["example"].split()[1] == "r?"
+        for name, entry in table.items()
+        if len(entry["example"].split()) > 1
+    }
 
 
 def writes_register(row: list[str], register: str) -> bool:
@@ -14,10 +37,9 @@ def writes_register(row: list[str], register: str) -> bool:
         return True
     if len(row) < 2 or row[1] != register:
         return False
-    return row[0] not in {
-        "b", "beq", "bne", "beqz", "bnez", "bdns", "bdse", "j", "jal", "jr",
-        "poke", "push", "put", "putd", "s", "sb", "sbn", "sr", "ss",
-    } and not row[0].startswith("bdn")
+    # An unknown mnemonic counts as an assignment: over-approximating stops a
+    # backward seed scan early, which loses a proof rather than inventing one.
+    return assigning_instructions().get(row[0], True)
 
 
 def control_flow_dominators(

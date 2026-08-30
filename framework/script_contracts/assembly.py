@@ -12,6 +12,7 @@ import hashlib
 import json
 from typing import Any
 
+from framework.script_contracts.address_forms import declared_base_errors
 from framework.script_contracts.device_ports import (
     access_provider_obligations,
     analyze_device_ports,
@@ -68,6 +69,15 @@ def build_contract(path: Path, root: Path, manifest: dict[str, Any], declared_he
     for port in ports:
         port["target"] = port_target(port, consumes)
     own_stack, publication_rules = analyze_own_stack(source, rows, integer_aliases, headers, overrides)
+    declared_ranges = {
+        (port["port"], direction): port["stack"][f"dynamic_{direction}_ranges"]
+        for port in ports for direction in ("read", "write")
+    } | {
+        ("db", direction): own_stack[f"dynamic_{direction}_ranges"] for direction in ("read", "write")
+    }
+    base_errors = declared_base_errors(source, port_aliases, integer_aliases, declared_ranges)
+    if base_errors:
+        raise ValueError(f"{rel}: " + "; ".join(base_errors))
     provides = [{
         "protocol_id": protocol_id(header["magic"], header["abi"], header.get("contract")),
         **header,

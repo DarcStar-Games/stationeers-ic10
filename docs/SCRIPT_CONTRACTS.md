@@ -160,6 +160,18 @@ unbounded cases remain explicit `conservative-full-stack` fallbacks unless a
 source-fingerprinted override supplies a reviewed range. `clr db` is a
 source-derived full-stack write rather than an unresolved fallback.
 
+A reviewed override still has to describe the code it stands for. Every dynamic
+address is reduced to `constant + sum(step x loop counter)`, so one built from
+literals and enclosing loop counters alone yields a **base**: the cell the
+access reaches on its first pass, whatever the trip counts turn out to be. The
+generator rejects any declared range that omits a base, which is what stops an
+override from naming a window the program never touches. An address that also
+depends on a value read at runtime -- an A/B bank index, a peer-published record
+pointer -- has no such witness, and neither does the far end of a loop whose
+trip count comes from a peer; both remain review obligations, so widen the range
+to the record window the provider actually publishes rather than to the first
+plausible span.
+
 `data/script_protocol_headers.json` is the authoritative provider and consumer
 header catalog. The generator verifies every declaration against literal source
 writes/checks and never guesses headers from adjacent numeric payload values.
