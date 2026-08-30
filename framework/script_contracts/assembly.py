@@ -107,25 +107,28 @@ def build_contract(path: Path, root: Path, manifest: dict[str, Any], declared_he
     }
 
 
-def build_all(root: Path) -> tuple[dict[str, dict[str, Any]], dict[str, Any], dict[str, Any], dict[str, dict[str, Any]]]:
-    root = Path(root)
-    manifest = load_manifest(root)
+def _load_declarations(root: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], dict[str, Any]]:
+    """Load the authoritative override, protocol-definition, and header declarations."""
     override_path = root / "data" / "script_contract_overrides.json"
     override_data = json.loads(override_path.read_text()) if override_path.exists() else {"scripts": {}}
     if override_data.get("format") != "IC10_SCRIPT_CONTRACT_OVERRIDES_V1":
         raise ValueError("unsupported script contract override format")
-    script_overrides = override_data.get("scripts", {})
-    definitions_path = root / "data" / "script_contract_protocol_definitions.json"
-    definitions_data = json.loads(definitions_path.read_text())
+    definitions_data = json.loads((root / "data" / "script_contract_protocol_definitions.json").read_text())
     if definitions_data.get("format") != "IC10_PROTOCOL_DEFINITIONS_V1":
         raise ValueError("unsupported script contract protocol definition format")
-    definitions = definitions_data.get("protocols", {})
-    header_path = root / "data" / "script_protocol_headers.json"
-    header_data = json.loads(header_path.read_text())
+    header_data = json.loads((root / "data" / "script_protocol_headers.json").read_text())
     if header_data.get("format") != "IC10_PROTOCOL_HEADERS_V1":
         raise ValueError("unsupported script protocol header format")
-    declared_headers = header_data.get("scripts", {})
-    declared_consumers = header_data.get("consumers", {})
+    return (override_data.get("scripts", {}), definitions_data.get("protocols", {}),
+            header_data.get("scripts", {}), header_data.get("consumers", {}))
+
+
+def _build_contracts(
+    root: Path, script_overrides: dict[str, Any],
+    declared_headers: dict[str, Any], declared_consumers: dict[str, Any],
+) -> dict[str, dict[str, Any]]:
+    """Build every deployable contract, enforcing declaration coverage first."""
+    manifest = load_manifest(root)
     source_paths = {source.relative_to(root).as_posix() for source in deployable_scripts(root)}
     if set(declared_headers) != source_paths:
         raise ValueError(f"protocol header coverage mismatch: missing={sorted(source_paths-set(declared_headers))}, stale={sorted(set(declared_headers)-source_paths)}")
@@ -146,7 +149,14 @@ def build_all(root: Path) -> tuple[dict[str, dict[str, Any]], dict[str, Any], di
     stale_overrides = sorted(set(script_overrides) - {contract["source"] for contract in contracts.values()})
     if stale_overrides:
         raise ValueError(f"contract overrides reference missing scripts: {stale_overrides}")
+    return contracts
 
+
+def _protocol_registry(
+    contracts: dict[str, dict[str, Any]], definitions: dict[str, Any],
+    by_source: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    """Derive the protocol registry from every contract's provides/consumes edges."""
     providers: dict[str, list[dict[str, Any]]] = defaultdict(list)
     consumers: dict[str, list[dict[str, Any]]] = defaultdict(list)
     headers: dict[str, tuple[int, int]] = {}
@@ -168,7 +178,6 @@ def build_all(root: Path) -> tuple[dict[str, dict[str, Any]], dict[str, Any], di
     unknown_definitions = sorted(set(definitions) - set(headers))
     if unknown_definitions:
         raise ValueError(f"protocol definitions have no provider or consumer: {unknown_definitions}")
-    by_source = {contract["source"]: contract for contract in contracts.values()}
     protocol_registry = {
         "format": PROTOCOL_FORMAT,
         "protocols": [{
@@ -187,6 +196,11 @@ def build_all(root: Path) -> tuple[dict[str, dict[str, Any]], dict[str, Any], di
             "consumers": sorted(consumers[pid], key=lambda item: (item["source"], item["endpoint"]["kind"], item["endpoint"]["value"], item["header_base"])),
         } for pid in sorted(headers)],
     }
+    return protocol_registry
+
+
+def _protocol_definitions(protocol_registry: dict[str, Any], by_source: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """Expand each registered protocol into its canonical definition document."""
     protocol_definitions: dict[str, dict[str, Any]] = {}
     for protocol in protocol_registry["protocols"]:
         provider_interfaces = []
@@ -249,6 +263,11 @@ def build_all(root: Path) -> tuple[dict[str, dict[str, Any]], dict[str, Any], di
             "provider_interfaces": provider_interfaces,
             "consumer_interfaces": consumer_interfaces,
         }
+    return protocol_definitions
+
+
+def _interface_definitions(contracts: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """Collect the structural access-only interfaces every stack-interface port names."""
     interface_definitions: dict[str, dict[str, Any]] = {}
     for contract in contracts.values():
         for port in contract["device_ports"]:
@@ -267,6 +286,11 @@ def build_all(root: Path) -> tuple[dict[str, dict[str, Any]], dict[str, Any], di
             definition["consumers"].append({"source": contract["source"], "port": port["port"]})
     for definition in interface_definitions.values():
         definition["consumers"].sort(key=lambda item: (item["source"], item["port"]))
+    return interface_definitions
+
+
+def _contract_index(contracts: dict[str, dict[str, Any]], interface_definitions: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    """Summarize contracts, interfaces, and the dynamic own-stack surface in one index."""
     own_stack_range_inventory = []
     for contract in sorted(contracts.values(), key=lambda item: item["source"]):
         own = contract["own_stack"]
@@ -314,6 +338,18 @@ def build_all(root: Path) -> tuple[dict[str, dict[str, Any]], dict[str, Any], di
             ),
         } for rel, contract in sorted(contracts.items())],
     }
+    return index
+
+
+def build_all(root: Path) -> tuple[dict[str, dict[str, Any]], dict[str, Any], dict[str, Any], dict[str, dict[str, Any]]]:
+    root = Path(root)
+    script_overrides, definitions, declared_headers, declared_consumers = _load_declarations(root)
+    contracts = _build_contracts(root, script_overrides, declared_headers, declared_consumers)
+    by_source = {contract["source"]: contract for contract in contracts.values()}
+    protocol_registry = _protocol_registry(contracts, definitions, by_source)
+    protocol_definitions = _protocol_definitions(protocol_registry, by_source)
+    interface_definitions = _interface_definitions(contracts)
+    index = _contract_index(contracts, interface_definitions)
     return contracts, index, protocol_registry, protocol_definitions
 
 

@@ -8,10 +8,24 @@ conservative full-stack fallback -- failing closed on any disagreement.
 from __future__ import annotations
 
 from collections import defaultdict
+from dataclasses import dataclass, field
 from typing import Any
 
 from framework.script_contracts.control_flow import can_reach, control_flow_dominators, writes_register
 from framework.script_contracts.parsing import parse_program, resolve_integer, resolve_port
+
+
+@dataclass
+class RangeProof:
+    """What the linear-loop proof established for one class of dynamic accesses."""
+
+    total: int = 0
+    proved_accesses: int = 0
+    ranges: list[dict[str, int]] = field(default_factory=list)
+
+    @property
+    def all_proven(self) -> bool:
+        return self.total > 0 and self.proved_accesses == self.total
 
 
 def validated_ranges(value: Any) -> list[dict[str, int]]:
@@ -191,31 +205,29 @@ def linear_dynamic_range(
 
 def dynamic_range_proofs(
     source: str, integer_aliases: dict[str, int], accesses: list[tuple[int, Any, str]]
-) -> dict[Any, dict[str, Any]]:
+) -> dict[Any, RangeProof]:
     """Apply the shared strict linear-loop proof to classified dynamic accesses."""
     program = parse_program(source)
     dominators, predecessors, successors, control_flow_complete = control_flow_dominators(program)
-    proofs: dict[Any, dict[str, Any]] = defaultdict(
-        lambda: {"total": 0, "proved_accesses": 0, "ranges": []}
-    )
+    proofs: dict[Any, RangeProof] = defaultdict(RangeProof)
     for index, key, address_token in accesses:
         proof = proofs[key]
-        proof["total"] += 1
+        proof.total += 1
         inferred = linear_dynamic_range(
             program, index, address_token, integer_aliases, dominators, predecessors, successors,
             control_flow_complete
         )
         if inferred is not None:
-            proof["proved_accesses"] += 1
-            proof["ranges"].extend(inferred)
+            proof.proved_accesses += 1
+            proof.ranges.extend(inferred)
     for proof in proofs.values():
-        proof["ranges"] = merge_ranges(proof["ranges"])
+        proof.ranges = merge_ranges(proof.ranges)
     return proofs
 
 
 def dynamic_port_proofs(
     source: str, aliases: dict[str, str], integer_aliases: dict[str, int]
-) -> dict[tuple[str, str], dict[str, Any]]:
+) -> dict[tuple[str, str], RangeProof]:
     accesses: list[tuple[int, tuple[str, str], str]] = []
     for index, entry in enumerate(parse_program(source)):
         row = entry["row"]
@@ -235,22 +247,21 @@ def dynamic_port_proofs(
 
 
 def resolve_dynamic_ranges(
-    dynamic: bool, proof: dict[str, Any], declared_ranges: list[dict[str, int]], context: str,
+    dynamic: bool, proof: RangeProof, declared_ranges: list[dict[str, int]], context: str,
     fallback_full_stack: bool = False,
 ) -> tuple[list[dict[str, int]], str]:
     if not dynamic:
         if declared_ranges:
             raise ValueError(f"{context} declares ranges without a dynamic access")
         return [], "none"
-    inferred_ranges = proof["ranges"]
+    inferred_ranges = proof.ranges
     inferred_cells = {
         address for value in inferred_ranges for address in range(value["start"], value["end"] + 1)
     }
     declared_cells = {
         address for value in declared_ranges for address in range(value["start"], value["end"] + 1)
     }
-    all_proven = proof["total"] > 0 and proof["proved_accesses"] == proof["total"]
-    if all_proven:
+    if proof.all_proven:
         if declared_ranges and declared_cells != inferred_cells:
             raise ValueError(
                 f"{context} range {declared_ranges} disagrees with source-derived {inferred_ranges}"

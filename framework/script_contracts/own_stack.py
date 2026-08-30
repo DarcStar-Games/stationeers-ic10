@@ -10,6 +10,7 @@ from collections import defaultdict
 from typing import Any
 
 from framework.script_contracts.dynamic_ranges import (
+    RangeProof,
     dynamic_range_proofs,
     merge_ranges,
     resolve_dynamic_ranges,
@@ -90,13 +91,13 @@ def analyze_own_stack(source: str, rows: list[list[str]], integer_aliases: dict[
             clears += 1
     proofs = dynamic_range_proofs(source, integer_aliases, accesses)
     for direction in ("read", "write"):
-        proof = proofs.setdefault(direction, {"total": 0, "proved_accesses": 0, "ranges": []})
-        proof["total"] += unproved[direction]
+        proof = proofs.setdefault(direction, RangeProof())
+        proof.total += unproved[direction]
     write_proof = proofs["write"]
-    write_proof["total"] += clears
-    write_proof["proved_accesses"] += clears
+    write_proof.total += clears
+    write_proof.proved_accesses += clears
     if clears:
-        write_proof["ranges"] = merge_ranges(write_proof["ranges"] + [{"start": 0, "end": 511}])
+        write_proof.ranges = merge_ranges(write_proof.ranges + [{"start": 0, "end": 511}])
     dynamic_read_ranges, dynamic_read_range_source = resolve_dynamic_ranges(
         dynamic_read, proofs["read"], validated_ranges(overrides.get("dynamic_read_ranges")),
         "own-stack read", fallback_full_stack=True,
@@ -208,8 +209,8 @@ def analyze_own_stack(source: str, rows: list[list[str]], integer_aliases: dict[
         "dynamic_write": dynamic_write,
         "dynamic_read_ranges": dynamic_read_ranges,
         "dynamic_write_ranges": dynamic_write_ranges,
-        "dynamic_read_proven_ranges": proofs["read"]["ranges"] if dynamic_read else [],
-        "dynamic_write_proven_ranges": proofs["write"]["ranges"] if dynamic_write else [],
+        "dynamic_read_proven_ranges": proofs["read"].ranges if dynamic_read else [],
+        "dynamic_write_proven_ranges": proofs["write"].ranges if dynamic_write else [],
         "dynamic_read_range_source": dynamic_read_range_source,
         "dynamic_write_range_source": dynamic_write_range_source,
         "clears_all": clears_all,

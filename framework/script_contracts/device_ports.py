@@ -19,6 +19,7 @@ from framework.script_contracts.control_flow import (
     paths_preserve_register,
 )
 from framework.script_contracts.dynamic_ranges import (
+    RangeProof,
     dynamic_port_proofs,
     merge_ranges,
     resolve_dynamic_ranges,
@@ -325,7 +326,7 @@ def analyze_device_ports(source: str, rows: list[list[str]], aliases: dict[str, 
             ranges_key = f"dynamic_{direction}_ranges"
             source_key = f"dynamic_{direction}_range_source"
             declared_ranges = stack[ranges_key]
-            proof = proofs.get((port, direction), {"total": 0, "proved_accesses": 0, "ranges": []})
+            proof = proofs.get((port, direction), RangeProof())
             stack[ranges_key], stack[source_key] = resolve_dynamic_ranges(
                 stack[dynamic_key], proof, declared_ranges, f"{port} {direction}"
             )
