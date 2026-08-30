@@ -41,12 +41,21 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 10,
+          "name": "S10",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
             "self-read"
           ]
         },
         {
-          "address": 3,
-          "name": "S3",
+          "address": 11,
+          "name": "S11",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -54,8 +63,8 @@
           ]
         },
         {
-          "address": 4,
-          "name": "S4",
+          "address": 12,
+          "name": "S12",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -63,8 +72,8 @@
           ]
         },
         {
-          "address": 5,
-          "name": "S5",
+          "address": 13,
+          "name": "S13",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -72,8 +81,8 @@
           ]
         },
         {
-          "address": 6,
-          "name": "S6",
+          "address": 14,
+          "name": "S14",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -81,8 +90,8 @@
           ]
         },
         {
-          "address": 7,
-          "name": "S7",
+          "address": 15,
+          "name": "S15",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -90,8 +99,8 @@
           ]
         },
         {
-          "address": 40,
-          "name": "S40",
+          "address": 48,
+          "name": "S48",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -99,8 +108,8 @@
           ]
         },
         {
-          "address": 41,
-          "name": "S41",
+          "address": 49,
+          "name": "S49",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [

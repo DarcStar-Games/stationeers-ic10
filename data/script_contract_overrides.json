@@ -452,7 +452,7 @@
    }
   },
   "ic10/dependency-planning/job_requirement_view_v1_0.ic10": {
-   "source_sha256": "51f338fbf88958e88b0d1e7107a5eede3647f830a4acea98d7e6be10b5133fdc",
+   "source_sha256": "676179977e47817df74af02f2f298faf54c26f4b6e4b2b63e29589893a97600b",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -465,8 +465,8 @@
     "d1": {
      "dynamic_read_ranges": [
       [
-       8,
-       71
+       16,
+       79
       ]
      ]
     }
@@ -734,7 +734,7 @@
    }
   },
   "ic10/manufacturing/print_material_resolver_v1_0.ic10": {
-   "source_sha256": "343aae6c60039cbd19d4ed222381c955e4105db3d3159040b1d4407c4b30ab0e",
+   "source_sha256": "1196d56274c636aea4b62fe73d36adaf4950188d4984ec72958102a966bb4ca3",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [

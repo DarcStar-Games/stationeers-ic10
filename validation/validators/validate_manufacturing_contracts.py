@@ -17,7 +17,7 @@ recipe_tmp=tempfile.TemporaryDirectory();rm=generate_recipe_fixture(Path(recipe_
 if rm.get('catalog_schema_version')!=3 or rm.get('format')!='RECIPE_CATALOG_V6': fail('Recipe catalog is not schema3/format V6')
 if rm.get('item_model')!='header5_plus_reagent_pairs_block_aligned' or rm.get('max_material_inputs')!=16: fail('Recipe execution item model mismatch')
 need('ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10')
-need('ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10','poke 0 31415985','poke 1 1','bgt r4 16 Bad','poke 41 r10')
+need('ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10','poke 0 31415985','poke 1 1','bgt r4 16 Bad','poke 49 r10')
 # Material semantic aliases reuse Resource Profiles.
 profiles=json.loads((R/'data/resource_profiles.json').read_text())['profiles']
 ingots=[p for p in profiles if p['resource_class']==2 and p.get('profile_schema')==2]

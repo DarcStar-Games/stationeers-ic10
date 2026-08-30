@@ -628,18 +628,19 @@ The generator permits up to 16 material inputs. Store capacity is computed from 
 `ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10` publishes magic `31415985`, ABI1 for exact RecipeHash execution planning:
 
 ```text
-S2  requested RecipeHash
-S3  FamilyHash
-S4  RequiredCapability
-S5  InputCount
-S6  Store publication generation
-S7  status: 1 ready, -2 invalid catalog, -3 missing
-S8..S39 [ManufacturingReagentHash, Quantity] pairs
-S40 Coordinator topology generation
-S41 resolved RecipeHash echo
+S10 requested RecipeHash
+S2  capability mask = 0
+S11 FamilyHash
+S12 RequiredCapability
+S13 InputCount
+S14 Store publication generation
+S15 status: 1 ready, -2 invalid catalog, -3 missing
+S16..S47 [ManufacturingReagentHash, Quantity] pairs
+S48 Coordinator topology generation
+S49 resolved RecipeHash echo
 ```
 
-Consumers require S41 to equal the current request before accepting S7=1.
+Consumers require S49 to equal the current request before accepting S15=1.
 
 ## Manufacturing Scheduler ABIs — current
 
@@ -1804,7 +1805,7 @@ Item 9 uses the existing Generic Resource Endpoint, Reservation, Link, Directory
 
 ## Live Commission Snapshot Probe ABI1
 
-`ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` is a read-only on-demand Item-12 field tool. Magic `31416051`, ABI1. `S2 RequestToken` is caller-published last and `S3 ResponseToken` is probe-published last. `S6 DescriptorGeneration` fences the six descriptors at `S32..S49`; `S7` echoes the captured descriptor generation. `S4` reports complete/error state, `S5` is the number of successful observations, and `S9` identifies the first failed ordinal.
+`ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` is a read-only on-demand Item-12 field tool. Magic `31416051`, ABI1. `S10 RequestToken` is caller-published last and `S11 ResponseToken` is probe-published last. `S14 DescriptorGeneration` fences the six descriptors at `S32..S49`; `S15` echoes the captured descriptor generation. `S12` reports complete/error state, `S13` is the number of successful observations, and `S17` identifies the first failed ordinal.
 
 Each descriptor is `[Mode, FieldOrStackCell, FenceStackCell]`: mode 0 disabled, mode 1 dynamic LogicType read, mode 2 stack-cell read with optional positive before/after generation fence. Results at `S64..S93` are six `[ReferenceId, Mode, Status, Value, FenceGeneration]` records. The probe contains no external `s/sd/put/putd` mutation instruction; it is evidence collection only. See `docs/LIVE_COMMISSIONING.md`.
 

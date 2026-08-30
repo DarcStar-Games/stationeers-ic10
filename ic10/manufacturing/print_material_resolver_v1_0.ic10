@@ -12,12 +12,12 @@ get r2 db 16
 get r6 db 17
 blez r2 Bad
 blez r6 Bad
-get r14 d0 6
+get r14 d0 14
 poke 14 r14
 blez r14 Bad
-get r0 d0 7
+get r0 d0 15
 bne r0 1 Bad
-get r8 d0 5
+get r8 d0 13
 blt r8 1 Bad
 bgt r8 16 Bad
 get r0 d1 9
@@ -40,7 +40,7 @@ move r7 0
 Input:
 bge r7 r8 Ready
 mul r0 r7 2
-add r0 r0 8
+add r0 r0 16
 get r9 d0 r0
 add r0 r0 1
 get r12 d0 r0
@@ -92,7 +92,7 @@ move r0 -4
 j Fail
 Ready:
 get r14 db 14
-get r0 d0 6
+get r0 d0 14
 bne r0 r14 Loop
 get r0 d1 24
 beqz r0 GenA

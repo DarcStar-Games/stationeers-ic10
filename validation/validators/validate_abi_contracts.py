@@ -29,7 +29,7 @@ for f,toks in {
 'ic10/catalog-control-plane/catalog_inspector_v4_0.ic10':['poke 0 31415972','poke 1 4','bne r0 6 Bad',],
 'ic10/material-transform/generic_material_transform_runtime_v2_0.ic10':['poke 0 31415980','poke 1 2'],
 'ic10/generic-jobs/generic_job_store_v1_0.ic10':['poke 0 31415984','poke 1 1','poke 18 32','poke 23 1','beq r10 3 Reap','beq r6 7 Respond','bgt r6 10 Respond'],
-'ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10':['poke 0 31415985','poke 1 1','poke 41 r10'],
+'ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10':['poke 0 31415985','poke 1 1','poke 49 r10'],
 'ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10':['poke 0 31416072','poke 1 2'],
 'ic10/manufacturing/transform_candidate_executor_v2_0.ic10':['poke 0 31416073','poke 1 2'],
 'ic10/manufacturing/print_candidate_executor_v2_0.ic10':['poke 0 31416074','poke 1 2'],

@@ -29,10 +29,10 @@
   },
   "totals": {
     "deployable_programs": 174,
-    "migrated_v1": 172,
-    "legacy_exempt": 2,
-    "backlog_reserved_cell_users": 2,
-    "backlog_dynamic_range_users": 2
+    "migrated_v1": 174,
+    "legacy_exempt": 0,
+    "backlog_reserved_cell_users": 0,
+    "backlog_dynamic_range_users": 0
   },
   "services": [
     {
@@ -3571,7 +3571,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "51f338fbf88958e88b0d1e7107a5eede3647f830a4acea98d7e6be10b5133fdc",
+          "source_sha256": "676179977e47817df74af02f2f298faf54c26f4b6e4b2b63e29589893a97600b",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -6983,7 +6983,7 @@
       "source": "ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10",
       "service_contract_id": "ic10.script.live.commission.snapshot.probe",
       "deployment_family": "live-commissioning",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -7008,8 +7008,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 9,
-        "highest_literal_cell": 9,
+        "literal_cell_count": 10,
+        "highest_literal_cell": 17,
         "dynamic_read_ranges": [
           {
             "start": 0,
@@ -7022,8 +7022,8 @@
             "end": 511
           }
         ],
-        "line_count": 108,
-        "line_headroom_120": 12,
+        "line_count": 109,
+        "line_headroom_120": 11,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -7031,12 +7031,7 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [
           0,
@@ -7061,10 +7056,47 @@
         "dynamic_read_provenance": "conservative-full-stack",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.live.commission.snapshot.probe",
+        "magic": 31416051,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "c9c5118682d845826e56e1a5b4756bf78cf2478ee34d656769db67c8678c906e",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 15
+            },
+            {
+              "start": 17,
+              "end": 17
+            },
+            {
+              "start": 64,
+              "end": 93
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 64,
+              "end": 93
+            }
+          ]
+        },
+        "pilot_family": "live-commissioning"
       }
     },
     {
@@ -7736,7 +7768,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "126cdf6aafe9fa702ecb8366066b38052f8df98ad83e04c44eaa5dfcc48a9e21",
+          "source_sha256": "7f9e21341dae6a7e44f306ca89892d3bf96a57c403a597508b91716aafa16ae2",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -7841,7 +7873,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "343aae6c60039cbd19d4ed222381c955e4105db3d3159040b1d4407c4b30ab0e",
+          "source_sha256": "1196d56274c636aea4b62fe73d36adaf4950188d4984ec72958102a966bb4ca3",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -14626,7 +14658,7 @@
       "source": "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10",
       "service_contract_id": "ic10.script.recipe.execution.profile.view",
       "deployment_family": "recipe-catalog",
-      "status": "legacy-exempt",
+      "status": "migrated-v1",
       "current_layout": {
         "headers": [
           {
@@ -14651,8 +14683,8 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 10,
-        "highest_literal_cell": 41,
+        "literal_cell_count": 11,
+        "highest_literal_cell": 49,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
@@ -14660,8 +14692,8 @@
             "end": 511
           }
         ],
-        "line_count": 116,
-        "line_headroom_120": 4,
+        "line_count": 117,
+        "line_headroom_120": 3,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -14669,12 +14701,7 @@
         "literal_cells": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [
@@ -14690,10 +14717,39 @@
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "conservative-full-stack"
       },
-      "legacy_exemption": {
-        "id": "pre-envelope-v1-layout",
-        "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-        "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress."
+      "envelope": {
+        "service_id": "ic10.script.recipe.execution.profile.view",
+        "magic": 31415985,
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "4c9687df73aa2d835902fe7be746dfead87b5d1a3775a53f0812201727df535d",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 49
+            }
+          ],
+          "post_init_dynamic_write_ranges": [
+            {
+              "start": 16,
+              "end": 47
+            }
+          ]
+        },
+        "pilot_family": "recipe-catalog"
       }
     },
     {

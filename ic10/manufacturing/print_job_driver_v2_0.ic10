@@ -14,23 +14,23 @@ poke 10 2
 poke 11 0
 poke 9 r15
 get r0 db 13
-put d1 2 r0
+put d1 10 r0
 poke 23 0
 poke 24 0
 poke 20 1
 j Loop
 Profile:
 get r0 db 13
-get r1 d1 41
+get r1 d1 49
 bne r0 r1 Loop
-get r1 d1 7
+get r1 d1 15
 bne r1 1 Fault
 get r0 db 15
-get r1 d1 5
+get r1 d1 13
 bne r0 r1 Fault
 get r0 db 16
 bne r0 1 Fault
-get r1 d1 3
+get r1 d1 11
 put d0 18 r1
 Select:
 get r0 db 30

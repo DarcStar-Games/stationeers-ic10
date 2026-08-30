@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/print_job_driver_v2_0.ic10",
-  "source_sha256": "126cdf6aafe9fa702ecb8366066b38052f8df98ad83e04c44eaa5dfcc48a9e21",
+  "source_sha256": "7f9e21341dae6a7e44f306ca89892d3bf96a57c403a597508b91716aafa16ae2",
   "identity": {
     "service_id": "ic10.script.print.job.driver",
     "implementation_revision": "2.0",
@@ -75,13 +75,13 @@
       },
       "stack": {
         "literal_reads": [
-          3,
-          5,
-          7,
-          41
+          11,
+          13,
+          15,
+          49
         ],
         "literal_writes": [
-          2
+          10
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -91,7 +91,7 @@
         "dynamic_write_range_source": "none",
         "constraints": [
           {
-            "address": 7,
+            "address": 15,
             "equals": 1
           }
         ]
@@ -99,8 +99,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.be7e31a055e8fa3f",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.be7e31a055e8fa3f",
+        "interface_id": "ic10.interface.access.2aeb176d95f2c7b4",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.2aeb176d95f2c7b4",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

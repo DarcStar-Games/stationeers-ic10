@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
-  "source_sha256": "51f338fbf88958e88b0d1e7107a5eede3647f830a4acea98d7e6be10b5133fdc",
+  "source_sha256": "676179977e47817df74af02f2f298faf54c26f4b6e4b2b63e29589893a97600b",
   "identity": {
     "service_id": "ic10.script.job.requirement.view",
     "implementation_revision": "1.0",
@@ -81,21 +81,21 @@
       },
       "stack": {
         "literal_reads": [
-          4,
-          5,
-          6,
-          7,
-          41
+          12,
+          13,
+          14,
+          15,
+          49
         ],
         "literal_writes": [
-          2
+          10
         ],
         "dynamic_read": true,
         "dynamic_write": false,
         "dynamic_read_ranges": [
           {
-            "start": 8,
-            "end": 71
+            "start": 16,
+            "end": 79
           }
         ],
         "dynamic_write_ranges": [],
@@ -103,7 +103,7 @@
         "dynamic_write_range_source": "none",
         "constraints": [
           {
-            "address": 7,
+            "address": 15,
             "equals": 1
           }
         ]
@@ -111,8 +111,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.cc77e94bf0ae5f99",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.cc77e94bf0ae5f99",
+        "interface_id": "ic10.interface.access.7425b1234e3b1d04",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.7425b1234e3b1d04",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

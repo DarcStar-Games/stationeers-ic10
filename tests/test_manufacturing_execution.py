@@ -25,7 +25,7 @@ ts.stack.update({17:'HASH:DirectorySchema.TransformLane.v1',18:0,19:4,20:1,21:0,
 ck(ts.stack.get(9)==1 and ts.stack.get(10)==601 and ts.stack.get(11)==701,'transform capability candidate selection mismatch')
 
 # Print material resolver maps semantic recipe reagents to concrete MaterialGrid links/resources.
-recipe=Device(200,stack={5:2,6:9,7:1,8:'HASH:Iron',9:30,10:'HASH:Copper',11:10},props={'ReferenceId':200})
+recipe=Device(200,stack={13:2,14:9,15:1,16:'HASH:Iron',17:30,18:'HASH:Copper',19:10},props={'ReferenceId':200})
 # source/sink reservations advertise sufficient exact ITEM capacity.
 sr1=Device(211,stack={36:100},props={'ReferenceId':211});dr1=Device(212,stack={37:100},props={'ReferenceId':212})
 sr2=Device(221,stack={36:100},props={'ReferenceId':221});dr2=Device(222,stack={37:100},props={'ReferenceId':222})
