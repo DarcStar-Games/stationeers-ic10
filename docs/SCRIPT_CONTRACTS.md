@@ -188,7 +188,11 @@ answers one of two things, and `select` holds one arm or the other, never the
 span between them. That is what lets a service which reads its record width from
 a peer be bounded at all: `generic_snapshot_directory_host_v1_0` names no
 address literally, but guards its width to three, its capacity to 64 and their
-product to 192, which places both snapshot banks at `S32..S415`.
+product to 192, which places both snapshot banks at `S32..S415`. Where a `jal`
+has taken the exit test out of the graph, a seed may not cross a loop that
+rewrites its register by anything the loop model does not carry: the guard that
+would have filtered the seed out cannot be read there, and carrying it anyway
+places a record below its own directory base.
 
 `data/script_protocol_headers.json` is the authoritative provider and consumer
 header catalog. The generator verifies every declaration against literal source

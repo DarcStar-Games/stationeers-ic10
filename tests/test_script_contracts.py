@@ -541,6 +541,35 @@ ck([(item[0], item[1], sorted(item[2])) for item in
    [("db", "read", [16]), ("db", "write", [128])],
    "an unmodeled transfer did not stand the branch bounds down to the base rule")
 
+# A subroutine loop walking down from a peer-sized count rebuilds its address
+# each pass, and `blez sp Done` means the zero its seed carries never reaches the
+# body -- but the `jal` has taken that test out of the graph, so the guard cannot
+# be read. Carrying the seed across the loop anyway placed a record two cells
+# below its own directory base.
+clobbered_seed_source = (
+    "get r5 d0 20\nseq r14 r5 0\nmul r10 r14 128\nadd r10 r10 32\nmove sp 0\n"
+    "jal Insert\nyield\nInsert:\nLoop:\nblez sp Done\nsub r0 sp 1\nmul r12 r0 2\n"
+    "add r12 r12 r10\nget r1 db r12\nsub sp sp 1\nj Loop\nDone:\nj ra\n"
+)
+clobbered_seed_rows = parse_rows(clobbered_seed_source)
+clobbered_seed_ports, clobbered_seed_aliases = collect_aliases(clobbered_seed_rows)
+ck(not dynamic_access_cells(
+       clobbered_seed_source, clobbered_seed_ports, clobbered_seed_aliases),
+   "a seed was carried across a loop that rewrites it where no exit test can be read")
+# The same shape with the loop's advance modelled: the seed vouches for the first
+# pass, so both bank bases are reached and neither is invented.
+carried_seed_source = (
+    "get r5 d0 20\nseq r14 r5 0\nmul r10 r14 128\nadd r10 r10 32\nmove r3 0\n"
+    "jal Walk\nyield\nWalk:\nLoop:\nadd r12 r3 r10\nget r1 db r12\nadd r3 r3 1\n"
+    "blt r3 4 Loop\nj ra\n"
+)
+carried_seed_rows = parse_rows(carried_seed_source)
+carried_seed_ports, carried_seed_aliases = collect_aliases(carried_seed_rows)
+ck([(item[0], item[1], sorted(item[2])) for item in dynamic_access_cells(
+       carried_seed_source, carried_seed_ports, carried_seed_aliases
+   )] == [("db", "read", [32, 160])],
+   "a modelled advance was treated as a rewrite the seed cannot vouch for")
+
 peer_based_source = "get r5 d0 24\nadd r0 r5 25\nget r1 d0 r0\n"
 peer_based_rows = parse_rows(peer_based_source)
 peer_based_ports, peer_based_aliases = collect_aliases(peer_based_rows)
