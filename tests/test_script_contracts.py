@@ -567,6 +567,22 @@ ck(projection_complete and projection_successors[0] == {2}
    and projection_successors[6] == {1} and 3 in projection_dominators[4],
    "the index graph did not carry the call, the return, or the callee's own guard")
 
+# Projecting the call states onto indices joins each caller's entry to every
+# caller's return, so `j ra` here reaches both return sites and a path stitched
+# from two callers appears to carry `move r1 32` to an access the other one makes.
+# Seed survival is the one question that would answer too loosely on that graph,
+# so it asks the states, where a return goes back to the site that made it.
+stitched_source = (
+    "get r0 d0 5\nbnez r0 Other\nmove r1 32\njal Helper\nj End\n"
+    "Other:\njal Helper\nget r2 db r1\nj End\nHelper:\nj ra\nEnd:\nyield\n"
+)
+stitched_rows = parse_rows(stitched_source)
+stitched_ports, stitched_aliases = collect_aliases(stitched_rows)
+_, _, stitched_successors, _ = control_flow_dominators(parse_program(stitched_source))
+ck(stitched_successors[10] == {4, 7}
+   and not dynamic_access_cells(stitched_source, stitched_ports, stitched_aliases),
+   "a seed reached an access only along a path stitched from two callers")
+
 # A record loop is exactly the thing a program writes as a subroutine, so a call
 # is followed and the loop's own exit test is read on the far side of it. The
 # same window falls out whether the `jal` stands before the loop or after it.

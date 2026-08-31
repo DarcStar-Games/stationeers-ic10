@@ -28,11 +28,13 @@ Everything rests on the seed the backward scan finds, and a seed is only a seed
 if it can still be in the register when the access runs; see `surviving`.
 Reading a branch as a gate or an exit needs the control-flow graph to be the
 whole graph besides, so a transfer nobody can follow stands both bounds down and
-leaves the program its first pass alone. Calls are not such a transfer:
-`control_flow_dominators` follows them, which is what lets a subroutine's own
-guard be read against an access inside it -- and the guard is usually the whole
-bound, because a record loop is exactly the thing a program writes as a
-subroutine.
+leaves the program its first pass alone. Calls are not such a transfer: one walk
+follows them, which is what lets a subroutine's own guard be read against an
+access inside it -- and the guard is usually the whole bound, because a record
+loop is exactly the thing a program writes as a subroutine. The branch bounds
+read that walk projected onto indices, where merging a subroutine's call strings
+can only weaken them; seed survival reads the states themselves, because there
+the merge would strengthen an answer instead.
 
 A seed is only as good as the arithmetic between it and the access, and that
 arithmetic is enumerated rather than approximated. A cell this module derives is
@@ -47,7 +49,12 @@ from a peer and guard it -- derive nothing at all.
 """
 from __future__ import annotations
 
-from framework.script_contracts.control_flow import control_flow_dominators, writes_register
+from framework.script_contracts.control_flow import (
+    CallState,
+    call_state_graph,
+    project_call_states,
+    writes_register,
+)
 from framework.script_contracts.parsing import parse_program, resolve_integer, resolve_port
 
 STACK_CELLS = 512
@@ -166,7 +173,8 @@ class ValueBounds:
     def __init__(self, source: str, integer_aliases: dict[str, int]) -> None:
         self.program = parse_program(source)
         self.integer_aliases = integer_aliases
-        self.dominators, _, self.successors, self.complete = control_flow_dominators(self.program)
+        self.states, self.complete = call_state_graph(self.program)
+        self.dominators, _, self.successors = project_call_states(self.states)
         self.labels = {entry["label"]: index for index, entry in enumerate(self.program) if entry["label"]}
         self.regions = back_edges(self.program)
         self._sites: dict[int, dict[str, set[int]]] = {}
@@ -399,6 +407,12 @@ class ValueBounds:
         write is having no path to the access at all that another write to the
         same register does not overwrite first: `move r3 64` in a reject block
         that jumps away only rejoins through the read that replaces it.
+
+        This is the one question here that the index graph would answer too
+        loosely rather than too strictly. Merging a subroutine's call strings
+        joins each caller's entry to every caller's return, and a path stitched
+        from two of them carries a value no execution does -- so the walk is over
+        the call states, where a return goes back to the site that made it.
         """
         key = (back, index, token)
         if key not in self._surviving:
@@ -408,16 +422,16 @@ class ValueBounds:
                 and writes_register(entry["row"], token)
                 and node not in sites.get(token, ())
             }
-            seen: set[int] = set()
-            pending = [back]
+            seen: set[CallState] = set()
+            pending = [state for state in self.states if state[0] == back]
             found = False
             while pending and not found:
-                node = pending.pop()
-                if node in seen or (node != back and node in blocked):
+                state = pending.pop()
+                if state in seen or (state[0] != back and state[0] in blocked):
                     continue
-                seen.add(node)
-                found = node == index
-                pending.extend(self.successors.get(node, set()) - seen)
+                seen.add(state)
+                found = state[0] == index
+                pending.extend(self.states.get(state, set()) - seen)
             self._surviving[key] = found
         return self._surviving[key]
 

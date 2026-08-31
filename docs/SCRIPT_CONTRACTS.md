@@ -203,6 +203,14 @@ and it is a `jal` elsewhere in the program that used to hide it. What still
 stands the bounds down is a transfer nothing can name: a return whose `ra` the
 program computed itself, and a branch that links.
 
+The dominance and ordering proofs read those states projected onto plain
+indices, which joins each caller's entry to every caller's return. That only
+weakens them -- a guard surviving the merge really does gate every call -- so the
+projection is where they belong. The exception is asking whether one write's
+value can still be at one access: on the projection a path stitched from two
+callers would carry a value no execution does, so that question is asked of the
+states, where a return goes back to the site that made it.
+
 `data/script_protocol_headers.json` is the authoritative provider and consumer
 header catalog. The generator verifies every declaration against literal source
 writes/checks and never guesses headers from adjacent numeric payload values.

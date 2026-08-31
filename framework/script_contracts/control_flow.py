@@ -136,11 +136,17 @@ def call_state_graph(
     return successors, complete
 
 
-def control_flow_dominators(
-    program: list[dict[str, Any]],
-) -> tuple[dict[int, set[int]], dict[int, set[int]], dict[int, set[int]], bool]:
-    """Return reachable-node dominators, predecessors, and whether all transfers are modeled."""
-    states, complete = call_state_graph(program)
+def project_call_states(
+    states: dict[CallState, set[CallState]],
+) -> tuple[dict[int, set[int]], dict[int, set[int]], dict[int, set[int]]]:
+    """Dominators, predecessors, and successors over plain indices.
+
+    Merging a subroutine's call strings only ever adds edges, so what survives
+    the merge is weaker than the truth and never stronger: dominance and
+    reachability both cost precision here and claim none. A proof that needs the
+    distinction back -- whether one write's value can still be at one access --
+    asks the states instead.
+    """
     successors: dict[int, set[int]] = defaultdict(set)
     for (index, _), outgoing in states.items():
         successors[index].update(target for target, _ in outgoing)
@@ -161,7 +167,15 @@ def control_flow_dominators(
             if updated != dominators[index]:
                 dominators[index] = updated
                 changed = True
-    return dominators, predecessors, successors, complete
+    return dominators, predecessors, successors
+
+
+def control_flow_dominators(
+    program: list[dict[str, Any]],
+) -> tuple[dict[int, set[int]], dict[int, set[int]], dict[int, set[int]], bool]:
+    """Return reachable-node dominators, predecessors, and whether all transfers are modeled."""
+    states, complete = call_state_graph(program)
+    return (*project_call_states(states), complete)
 
 
 def can_reach(start: int, target: int, successors: dict[int, set[int]]) -> bool:
