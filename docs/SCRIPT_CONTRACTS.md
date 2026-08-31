@@ -160,17 +160,25 @@ unbounded cases remain explicit `conservative-full-stack` fallbacks unless a
 source-fingerprinted override supplies a reviewed range. `clr db` is a
 source-derived full-stack write rather than an unresolved fallback.
 
-A reviewed override still has to describe the code it stands for. Every dynamic
-address is reduced to `constant + sum(step x loop counter)`, so one built from
-literals and enclosing loop counters alone yields a **base**: the cell the
-access reaches on its first pass, whatever the trip counts turn out to be. The
-generator rejects any declared range that omits a base, which is what stops an
-override from naming a window the program never touches. An address that also
-depends on a value read at runtime -- an A/B bank index, a peer-published record
-pointer -- has no such witness, and neither does the far end of a loop whose
-trip count comes from a peer; both remain review obligations, so widen the range
-to the record window the provider actually publishes rather than to the first
-plausible span.
+A reviewed override still has to describe the code it stands for, and the
+branches are what say which cells that is. A branch that gates an access says
+what the registers reaching it may hold, so `blt r3 0 Bad` with `bgt r3 8 Bad`
+accepts a count of eight however the peer fills it in; a branch that decides
+whether a loop runs again bounds its trip count, whether it is written at the
+top against the counter or at the bottom against a different one. Between them
+the whole `S32..S95` plan window falls out of a validator that only ever names
+`8` and `32`, and the generator rejects any declared range that omits a cell
+they reach -- a window anchored in the wrong place, and one anchored right and
+cut short.
+
+What that derives is the surface the program *permits*, not what one execution
+performs: a declaration has to cover every cell a legal peer can steer the loop
+to. It is only ever a floor, so a coarser reviewed window stays legal, and an
+address bounded by nothing the branches state -- an A/B bank index, a record
+pointer, a count the consumer never validates -- is held only to the cell its
+first pass reaches and remains a review obligation. Widen such a range to the
+record window the provider actually publishes rather than to the first plausible
+span.
 
 `data/script_protocol_headers.json` is the authoritative provider and consumer
 header catalog. The generator verifies every declaration against literal source

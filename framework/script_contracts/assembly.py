@@ -12,7 +12,6 @@ import hashlib
 import json
 from typing import Any
 
-from framework.script_contracts.address_forms import declared_base_errors
 from framework.script_contracts.device_ports import (
     access_provider_obligations,
     analyze_device_ports,
@@ -28,6 +27,7 @@ from framework.script_contracts.own_stack import (
     verify_declared_headers,
 )
 from framework.script_contracts.parsing import collect_aliases, parse_rows
+from framework.script_contracts.value_bounds import declared_coverage_errors
 from framework.protocol_headers import load_headers
 from framework.source_metadata import deployable_scripts, load_manifest, resolve_script_metadata
 
@@ -75,9 +75,9 @@ def build_contract(path: Path, root: Path, manifest: dict[str, Any], declared_he
     } | {
         ("db", direction): own_stack[f"dynamic_{direction}_ranges"] for direction in ("read", "write")
     }
-    base_errors = declared_base_errors(source, port_aliases, integer_aliases, declared_ranges)
-    if base_errors:
-        raise ValueError(f"{rel}: " + "; ".join(base_errors))
+    coverage_errors = declared_coverage_errors(source, port_aliases, integer_aliases, declared_ranges)
+    if coverage_errors:
+        raise ValueError(f"{rel}: " + "; ".join(coverage_errors))
     provides = [{
         "protocol_id": protocol_id(header["magic"], header["abi"], header.get("contract")),
         **header,
