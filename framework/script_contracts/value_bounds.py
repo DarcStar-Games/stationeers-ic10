@@ -30,7 +30,21 @@ Reading a branch as a gate or an exit needs the control-flow graph to be the
 whole graph besides, and a program with a `jal` in it has no such graph:
 dropping the call and return edges leaves a block with fewer predecessors than
 it really has, which over-states what dominates it. Both bounds stand down on a
-program with an unmodeled transfer, leaving it the first pass alone.
+program with an unmodeled transfer, leaving it the first pass alone. Standing
+them down also takes away the test that would have rejected the seed, so where
+the graph is broken a seed may not cross a loop that rewrites its register by
+anything the loop model does not carry; see `clobbered`.
+
+A seed is only as good as the arithmetic between it and the access, and that
+arithmetic is enumerated rather than approximated. A cell this module derives is
+a cell a declaration is held to, so widening a sum to the interval between its
+ends would claim the gaps between two sparse operands and fail a declaration
+that was right. Enumerating stays exact, and reaches far enough because the
+values that matter are small: a set-instruction answers one of two things, and a
+`select` holds one arm or the other. Those are what carry the bank index a
+service multiplies its published record width by, so without them the programs
+that bound themselves most explicitly -- the generic hosts, which read a width
+from a peer and guard it -- derive nothing at all.
 """
 from __future__ import annotations
 
@@ -51,6 +65,18 @@ AGAINST_ZERO = {"bltz": "blt", "blez": "ble", "bgtz": "bgt", "bgez": "bge"}
 LAST_PASS_CONTINUING = {"ble": 0, "blt": -1}
 LAST_PASS_EXITING = {"bgt": 0, "bge": -1}
 UNBOUNDED: tuple[int | None, int | None] = (None, None)
+# A set-instruction answers a comparison, so it holds one of two values whatever
+# it compared and however little is known about the operands. `sgn` is
+# deliberately absent: its three answers include -1.
+BOOLEAN_RESULTS = {
+    "sap", "sapz", "sdns", "sdse", "seq", "seqz", "sge", "sgez", "sgt", "sgtz",
+    "sle", "slez", "slt", "sltz", "sna", "snan", "snanz", "snaz", "sne", "snez",
+}
+# Operand pairs one arithmetic step may enumerate. Each operand is already
+# capped at `STACK_CELLS` values, so this only bounds the work of combining
+# them; a whole-stack window built from a bank base and a record counter is the
+# widest legitimate combination and needs about 37k.
+PAIR_BUDGET = 1 << 16
 
 
 def back_edges(program: list[dict]) -> list[tuple[int, int]]:
@@ -396,6 +422,29 @@ class ValueBounds:
             self._surviving[key] = found
         return self._surviving[key]
 
+    def clobbered(self, back: int, index: int, token: str, sites) -> bool:
+        """Does a loop around `index` write `token` in a way the loop model does not carry?
+
+        A seed from outside the loop is what the first pass sees, and where the
+        graph is whole the loop's own exit test settles whether that pass reaches
+        the access at all: a body behind `blez sp Done` never runs holding the
+        zero its seed carries, so the guard filters the value out. Where a `jal`
+        has taken that test away, a register the loop rewrites by anything but a
+        modelled advance has no value the seed can vouch for, and reading one
+        anyway places a record two cells below its own directory base.
+        """
+        for start, end in self.regions:
+            if not start <= index <= end or start <= back <= end:
+                continue
+            if any(
+                node != index and self.program[node]["row"]
+                and writes_register(self.program[node]["row"], token)
+                and node not in sites.get(token, ())
+                for node in range(start, end + 1)
+            ):
+                return True
+        return False
+
     def seed_values(self, index: int, token: str, sites, depth: int, seen):
         """The values the nearest earlier write leaves in `token`."""
         for back in range(index - 1, -1, -1):
@@ -406,12 +455,22 @@ class ValueBounds:
                 continue  # a loop step, folded in by the caller once the seed is found
             if self.complete and not self.surviving(back, index, token, sites):
                 return None
+            if not self.complete and self.clobbered(back, index, token, sites):
+                return None
+            if row[0] in BOOLEAN_RESULTS:
+                return {0, 1}
+            if row[0] == "select" and len(row) >= 5:
+                when_true = self.values(back, row[3], sites, depth + 1, seen)
+                when_false = self.values(back, row[4], sites, depth + 1, seen)
+                if when_true is None or when_false is None:
+                    return None
+                return when_true | when_false
             if row[0] == "move" and len(row) >= 3:
                 return self.values(back, row[2], sites, depth + 1, seen)
             if row[0] in {"add", "sub", "mul"} and len(row) >= 4:
                 left = self.values(back, row[2], sites, depth + 1, seen)
                 right = self.values(back, row[3], sites, depth + 1, seen)
-                if left is None or right is None or len(left) * len(right) > STACK_CELLS:
+                if left is None or right is None or len(left) * len(right) > PAIR_BUDGET:
                     return None
                 if row[0] == "add":
                     return {first + second for first in left for second in right}

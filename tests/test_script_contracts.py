@@ -42,6 +42,7 @@ from framework.script_contracts.publication import (
     verified_seqlock_consumer,
 )
 from framework.script_contracts.value_bounds import (
+    BOOLEAN_RESULTS,
     declared_coverage_errors,
     dynamic_access_cells,
 )
@@ -540,6 +541,35 @@ ck([(item[0], item[1], sorted(item[2])) for item in
    [("db", "read", [16]), ("db", "write", [128])],
    "an unmodeled transfer did not stand the branch bounds down to the base rule")
 
+# A subroutine loop walking down from a peer-sized count rebuilds its address
+# each pass, and `blez sp Done` means the zero its seed carries never reaches the
+# body -- but the `jal` has taken that test out of the graph, so the guard cannot
+# be read. Carrying the seed across the loop anyway placed a record two cells
+# below its own directory base.
+clobbered_seed_source = (
+    "get r5 d0 20\nseq r14 r5 0\nmul r10 r14 128\nadd r10 r10 32\nmove sp 0\n"
+    "jal Insert\nyield\nInsert:\nLoop:\nblez sp Done\nsub r0 sp 1\nmul r12 r0 2\n"
+    "add r12 r12 r10\nget r1 db r12\nsub sp sp 1\nj Loop\nDone:\nj ra\n"
+)
+clobbered_seed_rows = parse_rows(clobbered_seed_source)
+clobbered_seed_ports, clobbered_seed_aliases = collect_aliases(clobbered_seed_rows)
+ck(not dynamic_access_cells(
+       clobbered_seed_source, clobbered_seed_ports, clobbered_seed_aliases),
+   "a seed was carried across a loop that rewrites it where no exit test can be read")
+# The same shape with the loop's advance modelled: the seed vouches for the first
+# pass, so both bank bases are reached and neither is invented.
+carried_seed_source = (
+    "get r5 d0 20\nseq r14 r5 0\nmul r10 r14 128\nadd r10 r10 32\nmove r3 0\n"
+    "jal Walk\nyield\nWalk:\nLoop:\nadd r12 r3 r10\nget r1 db r12\nadd r3 r3 1\n"
+    "blt r3 4 Loop\nj ra\n"
+)
+carried_seed_rows = parse_rows(carried_seed_source)
+carried_seed_ports, carried_seed_aliases = collect_aliases(carried_seed_rows)
+ck([(item[0], item[1], sorted(item[2])) for item in dynamic_access_cells(
+       carried_seed_source, carried_seed_ports, carried_seed_aliases
+   )] == [("db", "read", [32, 160])],
+   "a modelled advance was treated as a rewrite the seed cannot vouch for")
+
 peer_based_source = "get r5 d0 24\nadd r0 r5 25\nget r1 d0 r0\n"
 peer_based_rows = parse_rows(peer_based_source)
 peer_based_ports, peer_based_aliases = collect_aliases(peer_based_rows)
@@ -555,6 +585,55 @@ ck([(item[0], item[1], sorted(item[2])) for item in
     dynamic_access_cells(own_table_source, own_table_ports, own_table_aliases)] ==
    [("db", "read", [96, 97, 98, 99]), ("db", "write", [96, 97, 98, 99])],
    "the own-stack table loop was not bounded by its literal exit test")
+
+# A service that reads its record width from a peer instead of hard-coding one
+# computes every address from registers, so nothing follows until the bank index
+# carries a value -- and a comparison answers one of two things whatever it
+# compared. Without that the programs that bound themselves most explicitly are
+# the ones that derive nothing.
+banked_width_source = (
+    "get r2 d0 11\nblt r2 1 Bad\nbgt r2 3 Bad\nget r3 d0 12\nblt r3 1 Bad\nbgt r3 64 Bad\n"
+    "mul r4 r2 r3\nbgt r4 192 Bad\nget r5 d0 24\nseq r6 r5 0\nmul r7 r6 r4\nadd r7 r7 32\n"
+    "move r8 0\nClear:\nadd r9 r7 r8\npoke r9 0\nadd r8 r8 1\nblt r8 r4 Clear\nBad:\nyield\n"
+)
+banked_width_rows = parse_rows(banked_width_source)
+banked_width_ports, banked_width_aliases = collect_aliases(banked_width_rows)
+ck([(item[0], item[1], sorted(item[2])) for item in dynamic_access_cells(
+       banked_width_source, banked_width_ports, banked_width_aliases
+   )] == [("db", "write", list(range(32, 416)))],
+   "a guarded width times a guarded capacity did not bound the banks it addresses")
+ck(len(declared_coverage_errors(banked_width_source, banked_width_ports, banked_width_aliases,
+                                {("db", "write"): [{"start": 32, "end": 223}]})) == 1,
+   "a window covering only the first of two banks was accepted")
+ck(not declared_coverage_errors(banked_width_source, banked_width_ports, banked_width_aliases,
+                                {("db", "write"): [{"start": 32, "end": 415}]}),
+   "both banks of a published-width snapshot were rejected")
+
+# `select` holds one arm or the other, never the span between them; `sgn`
+# answers -1 as readily as 0 or 1, so it is not one of the two-value forms.
+select_arm_source = "get r5 d0 24\nseq r6 r5 0\nselect r0 r6 64 96\nget r1 db r0\n"
+select_arm_rows = parse_rows(select_arm_source)
+select_arm_ports, select_arm_aliases = collect_aliases(select_arm_rows)
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       select_arm_source, select_arm_ports, select_arm_aliases)] == [[64, 96]],
+   "a select was not read as one arm or the other")
+sign_source = "get r5 d0 24\nsgn r6 r5\nadd r0 r6 64\nget r1 db r0\n"
+sign_rows = parse_rows(sign_source)
+sign_ports, sign_aliases = collect_aliases(sign_rows)
+ck(not dynamic_access_cells(sign_source, sign_ports, sign_aliases),
+   "a three-valued sign was read as a two-valued comparison")
+# Which mnemonics answer a comparison is the game's fact, not this module's, so
+# the table is checked against the extracted instruction set: a build that adds
+# one cannot leave it quietly short, and a mnemonic that answers something wider
+# cannot be listed as though it answered 0 or 1.
+instruction_descriptions = {
+    name: item["description"] for name, item in
+    json.loads((ROOT / "data" / "ic10_instruction_set.json").read_text())["instructions"].items()
+}
+ck({name for name, text in instruction_descriptions.items()
+    if ("Register = 1 if" in text and "otherwise 0" in text)
+    or ("Register = 0 if" in text and "otherwise 1" in text)} == BOOLEAN_RESULTS,
+   "the two-value instruction table drifted from the extracted instruction set")
 
 conflicting_header_source = bounded_own_source.replace(
     "poke 1 1\n", "poke 1 1\npoke 0 0\n"
