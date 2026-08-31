@@ -7,6 +7,7 @@ from pathlib import Path
 from framework.ic10_harness import IC10
 from framework.catalog_test_helpers import load_catalog_chain,generate_recipe_fixture
 from framework.generator_productivity import prove_generated_tree_restoration
+from framework.scan_coverage import require_nonempty_glob
 from tools.generate.generate_recipe_catalog import FIXED_OUTPUTS,LOOKUP_FILE
 import json,re,subprocess,tempfile,sys
 R=_PROJECT_ROOT;fails=[];fixture_tmp=tempfile.TemporaryDirectory();fixture=Path(fixture_tmp.name);M=generate_recipe_fixture(fixture)
@@ -64,7 +65,8 @@ with tempfile.TemporaryDirectory() as td:
  subprocess.run([sys.executable,str(R/'tools'/'generate'/'generate_recipe_catalog.py'),'--game-data',str(d),'--output',str(o),'--clean'],check=True,stdout=subprocess.DEVNULL)
  m=json.loads((o/'recipe_catalog_manifest.json').read_text());loader_invariants(o,m)
  if m['recipe_count']!=780 or m['runtime_min_store_count']!=18 or any(f['runtime_min_store_count']!=3 or f['runtime_store_item_counts']!=[48,48,34] for f in m['families']):fails.append('780-recipe runtime capacity estimate mismatch')
- if any(len(p.read_text().splitlines())>120 for p in o.glob('*.ic10')):fails.append('generated Recipe IC exceeds 120-line soft limit')
+ generated_programs=require_nonempty_glob(o/'ic10','*.ic10',recursive=True)
+ if any(len(p.read_text().splitlines())>120 for p in generated_programs):fails.append('generated Recipe IC exceeds 120-line soft limit')
 # Execute the minimum overflowing family plus one item in each other family so runtime cross-Store placement is exercised without redundant interpreter work. The 780-item generator stress above still proves 48+48+34 capacity geometry.
 with tempfile.TemporaryDirectory() as td:
  d=Path(td)/'data';o=Path(td)/'out';d.mkdir()

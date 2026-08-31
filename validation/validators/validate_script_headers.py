@@ -7,6 +7,7 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 from pathlib import Path, PurePosixPath
 import ast
 import sys
+from framework.scan_coverage import require_nonempty, require_nonempty_glob
 from framework.validation_suite import suite_entries
 
 ROOT = _PROJECT_ROOT
@@ -848,9 +849,10 @@ def inspect(path: Path, shadowable, module_paths):
 
 
 def main():
-    paths = sorted(
-        p for p in ROOT.rglob("*.py")
-        if not SKIP_PARTS & set(p.relative_to(ROOT).parts)
+    paths = require_nonempty(
+        (p for p in require_nonempty_glob(ROOT, "*.py", recursive=True)
+         if not SKIP_PARTS & set(p.relative_to(ROOT).parts)),
+        "Python source scan after repository-relative exclusions",
     )
     shadowable, alias_conflicts = shadowable_modules(paths)
     module_paths = importable_module_paths(paths)
