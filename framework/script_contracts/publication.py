@@ -12,8 +12,10 @@ from typing import Any
 
 from framework.ic10_source import IC10Source, parse_ic10
 from framework.script_contracts.control_flow import (
+    CallState,
     all_paths_retain_target,
     branch_rejects_before_success,
+    call_state_graph,
     can_reach_avoiding_calls,
     control_flow_dominators,
     writes_register,
@@ -40,87 +42,45 @@ def stable_cells(
     if not program:
         return set()
 
-    labels = {entry["label"]: index for index, entry in enumerate(program) if entry["label"]}
-    entry = (0, ())
-    reachable: set[tuple[int, tuple[int, ...]]] = set()
-    successors: dict[tuple[int, tuple[int, ...]], set[tuple[int, tuple[int, ...]]]] = defaultdict(set)
-    terminal_states: set[tuple[int, tuple[int, ...]]] = set()
-    pending = [entry]
-    control_flow_complete = True
-    while pending:
-        state = pending.pop()
-        if state in reachable:
-            continue
-        if len(reachable) >= 8192:
-            control_flow_complete = False
-            break
-        reachable.add(state)
-        index, return_stack = state
-        row = program[index]["row"]
-        fallthrough = index + 1 if index + 1 < len(program) else None
-        outgoing: set[tuple[int, tuple[int, ...]]] = set()
-        if return_stack and row and row[0] != "jal" and writes_register(row, "ra"):
-            control_flow_complete = False
-            successors[state] = outgoing
-            continue
-        if not row:
-            if fallthrough is not None:
-                outgoing.add((fallthrough, return_stack))
-        elif row[0] == "jal":
-            target = labels.get(row[-1])
-            if target is None or fallthrough is None or return_stack:
-                control_flow_complete = False
-            else:
-                outgoing.add((target, return_stack + (fallthrough,)))
-        elif row[0] in {"j", "jr"}:
-            if row[-1] == "ra":
-                if return_stack:
-                    outgoing.add((return_stack[-1], return_stack[:-1]))
-            else:
-                target = labels.get(row[-1])
-                if target is None:
-                    control_flow_complete = False
-                else:
-                    outgoing.add((target, return_stack))
-        elif row[0].endswith("al"):
-            control_flow_complete = False
-        elif row[0] == "hcf":
-            pass
-        elif row[0].startswith("b"):
-            if row[-1] == "ra":
-                if return_stack:
-                    outgoing.add((return_stack[-1], return_stack[:-1]))
-                else:
-                    terminal_states.add(state)
-            else:
-                target = labels.get(row[-1])
-                if target is None:
-                    control_flow_complete = False
-                else:
-                    outgoing.add((target, return_stack))
-            if fallthrough is not None:
-                outgoing.add((fallthrough, return_stack))
-        elif fallthrough is not None:
-            outgoing.add((fallthrough, return_stack))
-        successors[state] = outgoing
-        pending.extend(outgoing - reachable)
+    successors, control_flow_complete = call_state_graph(program)
     if not control_flow_complete:
         return set()
+    entry = (0, None)
+    # `ra` is None wherever no call is outstanding, so states need a total order
+    # of their own before the fixpoint below can iterate them in one.
+    reachable = sorted(successors, key=lambda state: (state[0], -1 if state[1] is None else state[1]))
 
-    predecessors: dict[tuple[int, tuple[int, ...]], set[tuple[int, tuple[int, ...]]]] = defaultdict(set)
+    predecessors: dict[CallState, set[CallState]] = defaultdict(set)
     for state, outgoing in successors.items():
         for target in outgoing:
             predecessors[target].add(state)
+
+    def goes_round_again(state: CallState) -> bool:
+        """Does this state transfer backwards without leaving its own context?
+
+        A return transfers backwards too -- to the instruction after its call --
+        but that is the caller carrying on, not the program starting over, and
+        counting it as a boundary would demand a header be published before the
+        first call that helps publish it. A return onto itself is the exception:
+        a second call has overwritten the address this one meant to read, and the
+        program spins there.
+        """
+        row = program[state[0]]["row"]
+        returning = bool(row) and row[-1] == "ra" and (
+            row[0] in {"j", "jr"} or row[0].startswith("b")
+        )
+        return any(
+            target[0] <= state[0] and target[1] == state[1]
+            and not (returning and state[1] == target[0] != state[0])
+            for target in successors.get(state, set())
+        )
+
     observations = {
         state for state in reachable
         if (
             (program[state[0]]["row"] and program[state[0]]["row"][0] in {"yield", "hcf"})
-            or state in terminal_states
             or not successors.get(state, set())
-            or any(
-                target[0] <= state[0] and target[1] == state[1]
-                for target in successors.get(state, set())
-            )
+            or goes_round_again(state)
         )
     }
     if not observations:
@@ -142,8 +102,8 @@ def stable_cells(
         changed = True
         while changed:
             changed = False
-            for state in sorted(reachable):
-                incoming = predecessors.get(state, set()) & reachable
+            for state in reachable:
+                incoming = predecessors.get(state, set())
                 initialized_before = False if state == entry else bool(incoming) and all(
                     initialized_after[parent] for parent in incoming
                 )

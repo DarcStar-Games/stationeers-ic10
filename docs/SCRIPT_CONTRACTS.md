@@ -80,8 +80,8 @@ Each generated per-script contract document is validated by
   and executable header cell-equality invariants emitted only when the matching
   literal initialization is guaranteed before every observable yield,
   termination, or loop backedge and dynamic writes do not overlap either header
-  cell. One-level local calls are followed through `ra`; nested calls, return
-  address mutation, and unresolved transfers fail closed;
+  cell. Local calls are followed through `ra`, and a return is not a loop
+  backedge; a return that reads an address no call left there fails closed;
 - provided stack protocols and consumed literal magic/ABI requirements.
 
 `contracts/index.json` is the complete source-to-contract report and canonical
@@ -188,11 +188,28 @@ answers one of two things, and `select` holds one arm or the other, never the
 span between them. That is what lets a service which reads its record width from
 a peer be bounded at all: `generic_snapshot_directory_host_v1_0` names no
 address literally, but guards its width to three, its capacity to 64 and their
-product to 192, which places both snapshot banks at `S32..S415`. Where a `jal`
-has taken the exit test out of the graph, a seed may not cross a loop that
-rewrites its register by anything the loop model does not carry: the guard that
-would have filtered the seed out cannot be read there, and carrying it anyway
-places a record below its own directory base.
+product to 192, which places both snapshot banks at `S32..S415`.
+
+Reading a branch as a bound needs the whole control-flow graph, and one walk
+produces it for every proof here. Its states pair a program index with the return
+address `ra` holds, because `ra` is one register rather than a stack: `jal`
+overwrites it, so a subroutine is walked once per call site with the edge that
+site really returns along, a second call replaces the first return address
+instead of nesting under it, and a subroutine leaving through a shared error path
+needs no special case. A record loop is exactly the thing a program writes as a
+subroutine, so this is what lets the loop's own exit test be read at all --
+`resource_transform_profile_view_v8_0` clears `S8..S67` behind `blt r9 68 Clear`,
+and it is a `jal` elsewhere in the program that used to hide it. What still
+stands the bounds down is a transfer nothing can name: a return whose `ra` the
+program computed itself, and a branch that links.
+
+The dominance and ordering proofs read those states projected onto plain
+indices, which joins each caller's entry to every caller's return. That only
+weakens them -- a guard surviving the merge really does gate every call -- so the
+projection is where they belong. The exception is asking whether one write's
+value can still be at one access: on the projection a path stitched from two
+callers would carry a value no execution does, so that question is asked of the
+states, where a return goes back to the site that made it.
 
 `data/script_protocol_headers.json` is the authoritative provider and consumer
 header catalog. The generator verifies every declaration against literal source
