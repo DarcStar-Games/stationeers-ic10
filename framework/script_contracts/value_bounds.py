@@ -571,10 +571,6 @@ class ValueBounds:
         inside = {cell for cell in cells if 0 <= cell < STACK_CELLS}
         return (inside, closed and inside == cells) if inside else OPEN
 
-    def access_cells(self, index: int, token: str) -> set[int] | None:
-        """The stack cells one dynamic access reaches, or None when nothing witnesses it."""
-        return self.access_bounds(index, token)[0]
-
 
 def dynamic_access_cells(
     source: str, aliases: dict[str, str], integer_aliases: dict[str, int],
@@ -590,7 +586,7 @@ def dynamic_access_cells(
     for index, target, direction, token, row in dynamic_accesses(
         analyzer.program, aliases, integer_aliases
     ):
-        cells = analyzer.access_cells(index, token)
+        cells, _ = analyzer.access_bounds(index, token)
         if cells is not None:
             found.append((target, direction, cells, " ".join(row)))
     return found
