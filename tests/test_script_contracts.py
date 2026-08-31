@@ -542,6 +542,23 @@ ck([sorted(item[2]) for item in
     dynamic_access_cells(either_source, either_ports, either_aliases)] == [[32]],
    "advances a branch chooses between were summed into a stride no pass makes")
 
+# One advance asks less of the analysis as a stride than as a prefix. Skipping
+# it leaves the register on a cell the stride already names, but a prefix says
+# the access stands behind it, and the pass that took the `bnez` reads S32.
+skipped_advance_source = (
+    "move r1 32\nmove r0 0\nLoop:\nbnez r5 Skip\nadd r1 r1 1\nSkip:\n"
+    "get r2 db r1\nadd r0 r0 1\nblt r0 4 Loop\n"
+)
+skipped_advance_rows = parse_rows(skipped_advance_source)
+skipped_advance_ports, skipped_advance_aliases = collect_aliases(skipped_advance_rows)
+skipped_advance, _ = analyze_own_stack(
+    skipped_advance_source, skipped_advance_rows, skipped_advance_aliases, [], {},
+)
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       skipped_advance_source, skipped_advance_ports, skipped_advance_aliases)] == [[32]] and
+   skipped_advance["dynamic_read_range_source"] == "conservative-full-stack",
+   "an advance the access can be reached without was read as one it stands behind")
+
 # A count checked only from above has a ceiling and no floor, so it never
 # enumerates -- but the ceiling is the whole of what the loop needs.
 ceiling_source = (
@@ -749,11 +766,21 @@ ck([sorted(item[2]) for item in dynamic_access_cells(
    open_arm["dynamic_read_range_source"] == "conservative-full-stack",
    "an unevaluable write cost the join the terms beside it, or was proven whole anyway")
 # Reaching an access with no write at all is not a value a branch here bounds:
-# registers survive a reflash, so nothing names what is in one.
-reflash_source = "move r2 0\nWalk:\nget r3 db r1\nadd r2 r2 1\nblt r2 4 Walk\n"
+# registers survive a reflash, so nothing names what is in one. The path that
+# takes the branch writes nothing, so S32..S35 is what the other path reaches
+# and not the whole of what the access does.
+reflash_source = two_seed_source.replace("move r1 96\n", "")
 reflash_rows = parse_rows(reflash_source)
 reflash_ports, reflash_aliases = collect_aliases(reflash_rows)
-ck(not dynamic_access_cells(reflash_source, reflash_ports, reflash_aliases),
+reflash, _ = analyze_own_stack(reflash_source, reflash_rows, reflash_aliases, [], {})
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       reflash_source, reflash_ports, reflash_aliases)] == [[32, 33, 34, 35]] and
+   reflash["dynamic_read_range_source"] == "conservative-full-stack",
+   "a path carrying no write at all was read as though a write covered it")
+unwritten_source = "move r2 0\nWalk:\nget r3 db r1\nadd r2 r2 1\nblt r2 4 Walk\n"
+unwritten_rows = parse_rows(unwritten_source)
+unwritten_ports, unwritten_aliases = collect_aliases(unwritten_rows)
+ck(not dynamic_access_cells(unwritten_source, unwritten_ports, unwritten_aliases),
    "a register no write reaches was given the cells a reflash left in it")
 
 # Two things count this loop out and they disagree. `blt r2 4` is the tighter,

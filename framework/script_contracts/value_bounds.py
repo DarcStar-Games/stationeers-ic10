@@ -28,10 +28,10 @@ it, which is the second thing a declaration can be held to -- equality rather
 than containment, so a surface nobody declared can publish the derivation as its
 range. That answer is lost by any step that leaves a value out: a write nothing
 evaluates, a register arriving from a reflash instead of a write, a loop nothing
-counts out, an advance a branch chooses between, an enclosing loop that moves
-the register further, or a guard read off a limit never shown whole. Losing it
-costs precision and never soundness, so every one of those is answered no when
-in doubt.
+counts out, advances a branch chooses between, an advance the access can be
+reached without, an enclosing loop that moves the register further, or a guard
+read off a limit never shown whole. Losing it costs precision and never
+soundness, so every one of those is answered no when in doubt.
 
 Which write is in a register is a reaching-definition question and not the
 nearest earlier one: a register holds what the last write on the path that got
@@ -381,6 +381,13 @@ class ValueBounds:
         the other, never their sum, and reading them as a sequence would claim
         cells no execution reaches -- so unless every advance dominates the back
         edge, a register advanced more than once is left at its first pass.
+
+        A prefix asks more of an advance than a stride does. Skipping one only
+        ever leaves the register somewhere the stride already names, but a prefix
+        says the access stands *behind* it, and a pass that reached the access
+        without it reads the cell before -- which the prefix drops off the front
+        of the window. So an advance the access can be reached without is not one
+        it stands behind, however few there are.
         """
         region = None
         for candidate in self.carrying_regions(index, token):
@@ -394,9 +401,14 @@ class ValueBounds:
         )
         if len(updates) > 1 and not every_pass:
             return None
+        standing = [(place, amount) for place, amount in updates if place < index]
+        if standing and not (self.complete and all(
+            place in self.dominators.get(index, ()) for place, _ in standing
+        )):
+            return None
         return (region,
                 sum(amount for _, amount in updates),
-                sum(amount for place, amount in updates if place < index))
+                sum(amount for _, amount in standing))
 
     def interval_of(self, index: int, token: str, sites, depth: int, seen) -> tuple:
         """How far `token` can reach either way, even where its values do not enumerate.
