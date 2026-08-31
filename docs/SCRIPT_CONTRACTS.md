@@ -174,11 +174,21 @@ cut short.
 What that derives is the surface the program *permits*, not what one execution
 performs: a declaration has to cover every cell a legal peer can steer the loop
 to. It is only ever a floor, so a coarser reviewed window stays legal, and an
-address bounded by nothing the branches state -- an A/B bank index, a record
-pointer, a count the consumer never validates -- is held only to the cell its
-first pass reaches and remains a review obligation. Widen such a range to the
-record window the provider actually publishes rather than to the first plausible
-span.
+address bounded by nothing the branches state -- a record pointer, a count the
+consumer never validates -- is held only to the cell its first pass reaches and
+remains a review obligation. Widen such a range to the record window the
+provider actually publishes rather than to the first plausible span.
+
+Because a derived cell is a cell a declaration is held to, the arithmetic
+between a seed and an access is enumerated rather than approximated: widening a
+sum to the interval between its ends would claim the gaps between two sparse
+operands and reject a declaration that was right. Enumerating reaches far enough
+because the values that carry a bank index are small -- a set-instruction
+answers one of two things, and `select` holds one arm or the other, never the
+span between them. That is what lets a service which reads its record width from
+a peer be bounded at all: `generic_snapshot_directory_host_v1_0` names no
+address literally, but guards its width to three, its capacity to 64 and their
+product to 192, which places both snapshot banks at `S32..S415`.
 
 `data/script_protocol_headers.json` is the authoritative provider and consumer
 header catalog. The generator verifies every declaration against literal source
