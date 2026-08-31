@@ -756,6 +756,27 @@ reflash_ports, reflash_aliases = collect_aliases(reflash_rows)
 ck(not dynamic_access_cells(reflash_source, reflash_ports, reflash_aliases),
    "a register no write reaches was given the cells a reflash left in it")
 
+# Two things count this loop out and they disagree. `blt r2 4` is the tighter,
+# so it decides the reach -- but its counter only advances on one arm, so four
+# passes is a floor and not a ceiling, and the guard being trustworthy says
+# nothing about the passes the exit test failed to count. Reading `bgt r1 39` as
+# the closure here would publish S32..S35 as the whole of a loop that reaches
+# S39.
+skipped_counter_source = (
+    "get r5 d0 8\nmove r1 32\nmove r2 0\nLoop:\nbgt r1 39 Done\nget r0 db r1\n"
+    "add r1 r1 1\nbeqz r5 Skip\nadd r2 r2 1\nSkip:\nblt r2 4 Loop\nDone:\nyield\n"
+)
+skipped_counter_rows = parse_rows(skipped_counter_source)
+skipped_counter_ports, skipped_counter_aliases = collect_aliases(skipped_counter_rows)
+skipped_counter, _ = analyze_own_stack(
+    skipped_counter_source, skipped_counter_rows, skipped_counter_aliases, [], {},
+)
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       skipped_counter_source, skipped_counter_ports, skipped_counter_aliases)] ==
+   [[32, 33, 34, 35]] and
+   skipped_counter["dynamic_read_range_source"] == "conservative-full-stack",
+   "a trip count one arm skips was read as the whole of the loop it under-counts")
+
 # A reviewer may name a window wider than a whole derivation on purpose. That is
 # conservatism rather than disagreement, so it stands with the proof as its
 # floor -- but a window that omits a proven cell still fails, proof whole or not.

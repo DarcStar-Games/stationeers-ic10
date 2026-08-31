@@ -446,11 +446,16 @@ class ValueBounds:
             trips, counted = self.trip_bound(region, depth, seen)
             advances = -1 if trips is None else trips - 1
             if high is not None:
-                reachable = (high - min(values)) // stride
-                advances = reachable if advances < 0 else min(advances, reachable)
                 # A guard at the access counts the loop out as well as its own
-                # exit test does, and reads nothing that could under-count.
-                counted = counted or trusted
+                # exit test does. Whichever of the two is tighter is the one that
+                # decides the reach, so it is also the one that has to be sound:
+                # a trusted guard says nothing about a program the exit test
+                # under-counts, and the passes it does not reach are lost.
+                reachable = (high - min(values)) // stride
+                if advances < 0 or reachable < advances:
+                    advances, counted = reachable, trusted
+                elif reachable == advances:
+                    counted = counted or trusted
             if advances >= 0:
                 values = {value + offset * stride for value in values for offset in range(advances + 1)}
             # Otherwise nothing counts the loop out, and the cell the first pass
