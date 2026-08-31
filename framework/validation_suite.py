@@ -54,6 +54,7 @@ SUITE_ENTRIES = (
     SuiteEntry("validation/validators/validate_release_tooling.py", VALIDATOR_CATEGORY, "VALIDATE_RELEASE_TOOLING"),
     SuiteEntry("validation/validators/validate_generated_directory_adapters.py", VALIDATOR_CATEGORY, "VALIDATE_GENERATED_DIRECTORY_ADAPTERS"),
     SuiteEntry("validation/validators/validate_script_headers.py", VALIDATOR_CATEGORY, "VALIDATE_SCRIPT_HEADERS"),
+    SuiteEntry("validation/validators/validate_scan_coverage.py", VALIDATOR_CATEGORY, "VALIDATE_SCAN_COVERAGE"),
     SuiteEntry("validation/validators/validate_source_catalog.py", VALIDATOR_CATEGORY, "VALIDATE_SOURCE_CATALOG"),
     SuiteEntry("validation/validators/validate_script_contracts.py", VALIDATOR_CATEGORY, "VALIDATE_SCRIPT_CONTRACTS"),
     SuiteEntry("validation/validators/validate_script_wiring.py", VALIDATOR_CATEGORY, "VALIDATE_SCRIPT_WIRING"),

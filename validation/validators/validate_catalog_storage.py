@@ -4,6 +4,7 @@ import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from framework.validation import Validation
+from framework.scan_coverage import require_nonempty,require_nonempty_glob
 from pathlib import Path
 import json,re,sys,tempfile
 from framework.catalog_test_helpers import generate_recipe_fixture
@@ -37,7 +38,10 @@ private={
  'ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','ic10/directory-core/generic_registry_directory_host_v2_0.ic10','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/generic-jobs/generic_job_store_v1_0.ic10',
  'ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10','ic10/manufacturing/manufacturing_scheduler_v1_0.ic10','ic10/printer-directory/printer_execution_bank_v2_0.ic10','ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10',
  'ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10','ic10/dependency-planning/item_producer_resolver_v1_0.ic10','ic10/dependency-planning/dependency_plan_store_v2_0.ic10','ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10','ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10','ic10/power-grid/power_dispatch_plan_store_v1_0.ic10'}
-actual={p.relative_to(R).as_posix() for p in (R/'ic10').rglob('*.ic10') if 'clr db' in p.read_text()}
+programs=require_nonempty_glob(R/'ic10','*.ic10',recursive=True)
+actual=set(require_nonempty(
+ (p.relative_to(R).as_posix() for p in programs if 'clr db' in p.read_text()),
+ 'clr db ownership scan after source filtering'))
 prod_loaders=set()
 for p in loader_paths:
     try: prod_loaders.add(p.relative_to(R).as_posix())

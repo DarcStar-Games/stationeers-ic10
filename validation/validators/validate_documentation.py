@@ -4,6 +4,7 @@ import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from framework.validation import Validation
+from framework.scan_coverage import require_nonempty, require_nonempty_glob
 from pathlib import Path
 import json,re,sys
 import tools.generate.update_magic_registry as magic_registry
@@ -12,7 +13,10 @@ validation=Validation(ROOT)
 # Match inside the repository: p.parts carries the absolute path, so a checkout
 # under a directory named .claude (a git worktree lives at .claude/worktrees/<name>)
 # would otherwise exclude every markdown file and pass this validator vacuously.
-mds=[p for p in ROOT.rglob('*.md') if not {'validation','.claude'}&set(p.relative_to(ROOT).parts)]
+markdown_candidates=require_nonempty_glob(ROOT,'*.md',recursive=True)
+mds=require_nonempty(
+ (p for p in markdown_candidates if not {'validation','.claude'}&set(p.relative_to(ROOT).parts)),
+ 'documentation markdown scan after repository-relative exclusions')
 existing={p.name for p in ROOT.iterdir() if p.is_file()}
 GLOB=set('*{}?[]')
 def referenced_paths(ref):

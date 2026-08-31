@@ -21,6 +21,11 @@ from framework.json_schema import (
     _validate_string,
     validate,
 )
+from framework.scan_coverage import (
+    inspect_suite_globs,
+    require_nonempty,
+    require_nonempty_glob,
+)
 from framework.validation import Validation
 from framework.validation_suite import (
     SuiteEntry,
@@ -260,10 +265,68 @@ with tempfile.TemporaryDirectory() as directory:
     else:
         raise AssertionError("JSON Schema validation did not aggregate all failures")
 
+with tempfile.TemporaryDirectory() as directory:
+    root = Path(directory)
+    (root / "present" / "nested").mkdir(parents=True)
+    (root / "root.txt").write_text("root")
+    (root / "present" / "one.txt").write_text("one")
+    (root / "present" / "nested" / "two.cfg").write_text("two")
+
+    source = root / "scan_subject.py"
+    source.write_text(
+        "_PROJECT_ROOT = bootstrap()\n"
+        "ROOT = _PROJECT_ROOT\n"
+        "TREE = ROOT / 'present'\n"
+        "text = list(TREE.glob('*.txt'))\n"
+        "configs = list(ROOT.rglob('*.cfg'))\n"
+        "missing = list(ROOT.glob('missing/*.txt'))\n"
+        "dynamic = list(output.glob('*.dat'))\n"
+        "patterned = list(ROOT.glob(pattern))\n"
+        "filtered = [path for path in ROOT.glob('*.txt') if False]\n"
+        "def shadowed(ROOT):\n"
+        "    return list(ROOT.glob('*.txt'))\n"
+    )
+    scans = inspect_suite_globs(root, (source,))
+    assert len(scans) == 7
+    assert [(scan.method, scan.pattern, scan.match_count) for scan in scans[:3]] == [
+        ("glob", "*.txt", 1),
+        ("rglob", "*.cfg", 1),
+        ("glob", "missing/*.txt", 0),
+    ]
+    assert scans[0].relative_base == Path("present") and scans[0].problem is None
+    assert scans[2].problem == "glob scan matches no paths"
+    assert "base is not a repository-root literal" in scans[3].problem
+    assert "pattern is not a string literal" in scans[4].problem
+    assert "filtered and may iterate zero times" in scans[5].problem
+    assert "base is not a repository-root literal" in scans[6].problem
+
+    assert require_nonempty(
+        (value for value in (1, 2) if value > 1), "filtered values"
+    ) == (2,)
+    try:
+        require_nonempty((value for value in (1, 2) if value > 2), "filtered values")
+    except RuntimeError as error:
+        assert str(error) == "filtered values is empty"
+    else:
+        raise AssertionError("filtered collection helper accepted an empty scan")
+
+    assert require_nonempty_glob(root / "present", "*.txt") == (
+        root / "present" / "one.txt",
+    )
+    assert require_nonempty_glob(root / "present", "*.cfg", recursive=True) == (
+        root / "present" / "nested" / "two.cfg",
+    )
+    try:
+        require_nonempty_glob(root / "present", "*.missing")
+    except RuntimeError as error:
+        assert "matched no paths" in str(error)
+    else:
+        raise AssertionError("dynamic glob helper accepted an empty scan")
+
 entries = suite_entries(_PROJECT_ROOT)
 validators = validator_entries(_PROJECT_ROOT)
 tests = test_entries(_PROJECT_ROOT)
-assert len(entries) == 71 and len(validators) == 27 and len(tests) == 44
+assert len(entries) == 72 and len(validators) == 28 and len(tests) == 44
 assert entries == validators + tests
 assert entries[0].evidence_filename == "VALIDATE_ABI_CONTRACTS.txt"
 assert entries[-1].evidence_filename == "TEST_GAME_EXPORT.txt"
@@ -273,3 +336,4 @@ print(" - cached source assertions collect precise multi-failure diagnostics")
 print(" - one finalizer preserves executable validator PASS/FAIL and exit behavior")
 print(" - suite manifest rejects missing, duplicate, uncategorized, and invalid-timeout entries")
 print(" - JSON Schema keyword handlers preserve paths and isolate combinator branches")
+print(" - literal, dynamic, and filtered filesystem scans fail closed when empty")

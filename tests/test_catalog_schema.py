@@ -4,6 +4,7 @@ import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from framework.ic10_source import game_hash
+from framework.scan_coverage import require_nonempty,require_nonempty_glob
 from pathlib import Path
 from framework.ic10_harness import IC10,Device
 import json,sys
@@ -21,9 +22,10 @@ for f in ('resource_profile_catalog_manifest.json','input_profile_catalog_manife
 # A Loader item is relocatable: the producer leaves runtime assignment zero.
 # Glob under ic10/ -- anchored at the repository root this matched no file, so
 # the check never ran; the cells it named moved to S19/S20 with the S0 header.
-loaders=[q for q in sorted(R.glob('ic10/*/*_loader_*_v4_0.ic10'))+sorted(R.glob('ic10/*/*_loader_*_v6_0.ic10'))
-         if 'HASH("CatalogLoader.v5")' in q.read_text()]
-if not loaders: fails.append('no catalog Loader programs found; the relocatable check is unenforced')
+loader_candidates=require_nonempty_glob(R,'ic10/*/*_loader_*_v4_0.ic10')+require_nonempty_glob(R,'ic10/*/*_loader_*_v6_0.ic10')
+loaders=require_nonempty(
+ (q for q in loader_candidates if 'HASH("CatalogLoader.v5")' in q.read_text()),
+ 'catalog Loader scan after contract filtering')
 for p in loaders:
  for line in p.read_text().splitlines():
   code=line.split('#',1)[0].strip().split()

@@ -20,7 +20,7 @@ Two things follow from that, and they drive almost every convention in the repo:
 Run everything from the repository root (Python 3.10+; `python3` locally).
 
 ```bash
-python3 tools/run_validation.py                   # full suite: 27 validators + 44 protocol/execution tests
+python3 tools/run_validation.py                   # full suite: 28 validators + 44 protocol/execution tests
 python3 tools/run_validation.py --resume          # reuse prior PASSes, only if the input-tree fingerprint matches
 python3 tests/test_job_abi.py                     # run one test  (plain script, exit code = pass/fail)
 python3 validation/validators/validate_ic10.py    # run one validator
@@ -236,6 +236,15 @@ bootstrap, or merely a test_ or validate_ name — fails
 behind it fails there too. Python fixture *input* goes under `tests/fixtures/` or `tests/ic10/`,
 where none of that is read: a fixture is a plain imported module, and nothing about it is inferred
 from what a script looks like.
+
+Every direct `Path.glob`/`rglob` in a registered script must use a literal pattern rooted at
+`_PROJECT_ROOT` (or a simple module-level alias/path derived from it), and it must match at least one
+current path. `validation/validators/validate_scan_coverage.py` intentionally enforces only that
+narrow, locally visible policy; it does not interpret Python data flow. For temporary output or any
+other dynamic base, use `framework.scan_coverage.require_nonempty_glob`, which raises rather than
+letting an empty collection pass vacuously. A scan with exclusions must materialize its final result
+through `framework.scan_coverage.require_nonempty`, so a filter cannot remove every candidate and
+silently disable the check.
 
 `framework/ic10_harness.py` is a tiny deterministic IC10 interpreter (not a Stationeers emulator) supporting only
 the instruction subset the tests exercise; extend it when a test needs a new opcode.
