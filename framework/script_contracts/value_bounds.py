@@ -27,13 +27,12 @@ first pass reaches is witnessed -- which is all a declared range is held to.
 Everything rests on the seed the backward scan finds, and a seed is only a seed
 if it can still be in the register when the access runs; see `surviving`.
 Reading a branch as a gate or an exit needs the control-flow graph to be the
-whole graph besides, and a program with a `jal` in it has no such graph:
-dropping the call and return edges leaves a block with fewer predecessors than
-it really has, which over-states what dominates it. Both bounds stand down on a
-program with an unmodeled transfer, leaving it the first pass alone. Standing
-them down also takes away the test that would have rejected the seed, so where
-the graph is broken a seed may not cross a loop that rewrites its register by
-anything the loop model does not carry; see `clobbered`.
+whole graph besides, so a transfer nobody can follow stands both bounds down and
+leaves the program its first pass alone. Calls are not such a transfer:
+`control_flow_dominators` follows them, which is what lets a subroutine's own
+guard be read against an access inside it -- and the guard is usually the whole
+bound, because a record loop is exactly the thing a program writes as a
+subroutine.
 
 A seed is only as good as the arithmetic between it and the access, and that
 arithmetic is enumerated rather than approximated. A cell this module derives is
@@ -422,29 +421,6 @@ class ValueBounds:
             self._surviving[key] = found
         return self._surviving[key]
 
-    def clobbered(self, back: int, index: int, token: str, sites) -> bool:
-        """Does a loop around `index` write `token` in a way the loop model does not carry?
-
-        A seed from outside the loop is what the first pass sees, and where the
-        graph is whole the loop's own exit test settles whether that pass reaches
-        the access at all: a body behind `blez sp Done` never runs holding the
-        zero its seed carries, so the guard filters the value out. Where a `jal`
-        has taken that test away, a register the loop rewrites by anything but a
-        modelled advance has no value the seed can vouch for, and reading one
-        anyway places a record two cells below its own directory base.
-        """
-        for start, end in self.regions:
-            if not start <= index <= end or start <= back <= end:
-                continue
-            if any(
-                node != index and self.program[node]["row"]
-                and writes_register(self.program[node]["row"], token)
-                and node not in sites.get(token, ())
-                for node in range(start, end + 1)
-            ):
-                return True
-        return False
-
     def seed_values(self, index: int, token: str, sites, depth: int, seen):
         """The values the nearest earlier write leaves in `token`."""
         for back in range(index - 1, -1, -1):
@@ -453,9 +429,7 @@ class ValueBounds:
                 continue
             if back in sites.get(token, ()):
                 continue  # a loop step, folded in by the caller once the seed is found
-            if self.complete and not self.surviving(back, index, token, sites):
-                return None
-            if not self.complete and self.clobbered(back, index, token, sites):
+            if not self.surviving(back, index, token, sites):
                 return None
             if row[0] in BOOLEAN_RESULTS:
                 return {0, 1}

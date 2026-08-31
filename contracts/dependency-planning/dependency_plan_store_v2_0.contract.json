@@ -46,7 +46,12 @@
         "end": 511
       }
     ],
-    "dynamic_read_proven_ranges": [],
+    "dynamic_read_proven_ranges": [
+      {
+        "start": 14,
+        "end": 20
+      }
+    ],
     "dynamic_write_proven_ranges": [
       {
         "start": 0,

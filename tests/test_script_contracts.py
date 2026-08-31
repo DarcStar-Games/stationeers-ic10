@@ -22,7 +22,12 @@ from framework.script_contracts import (
     ranges_overlap,
     verify_override_source,
 )
-from framework.script_contracts.control_flow import writes_register
+from framework.script_contracts.control_flow import (
+    CALL_STATE_LIMIT,
+    call_state_graph,
+    control_flow_dominators,
+    writes_register,
+)
 from framework.script_contracts.device_ports import (
     analyze_device_ports,
     network_dependencies,
@@ -35,7 +40,7 @@ from framework.script_contracts.own_stack import (
     restart_behavior,
     verify_declared_headers,
 )
-from framework.script_contracts.parsing import collect_aliases, parse_rows
+from framework.script_contracts.parsing import collect_aliases, parse_program, parse_rows
 from framework.script_contracts.publication import (
     source_semantics,
     verified_publication_overrides,
@@ -170,6 +175,25 @@ ck(any("unequal=" in error for error in compatibility_errors(wrong_schema)),
 
 ck(index["contract_count"] == len(documents) == len(deployable_scripts(ROOT)),
    "contract inventory does not cover production scripts")
+
+# Every deployable program's control flow is followed end to end, calls included.
+# One that is not loses every branch bound it states -- guards, exit tests, seed
+# survival -- and falls back to the cell its first pass reaches, so the tripwire
+# is worth more here than the analysis quietly degrading. `ra` states stay a
+# small multiple of program length, well inside the cap.
+call_graphs = {
+    path.name: call_state_graph(parse_program(path.read_text()))
+    for path in deployable_scripts(ROOT)
+}
+ck(all(complete for _, complete in call_graphs.values()),
+   "a deployable program has a transfer nothing can follow: "
+   + ", ".join(sorted(name for name, (_, complete) in call_graphs.items() if not complete)))
+ck(max(len(states) for states, _ in call_graphs.values()) < CALL_STATE_LIMIT // 4,
+   "call-string states are approaching the walk's own cap")
+ck(any(
+       any(state[1] is not None for state in states)
+       for states, _ in call_graphs.values()
+   ), "no deployable program exercises the call edges the walk exists to follow")
 ck(any(item["header_base"] == 96 for protocol in protocols["protocols"] for item in protocol["providers"]),
    "nonzero telemetry header bases were not inventoried")
 ck(len(protocol_definitions) == len(protocols["protocols"]),
@@ -531,33 +555,70 @@ ck([sorted(item[2]) for item in
     dynamic_access_cells(stray_seed_source, stray_seed_ports, stray_seed_aliases)] == [[32]],
    "a literal no path to the access assigns was read as the loop's seed")
 
-# Dropping the call and return edges leaves blocks with fewer predecessors than
-# they have, which over-states what dominates them: both bounds stand down.
+# The index graph the ordering proofs read is the call-state graph projected back
+# onto indices, so a callee is reachable, its return lands on the fallthrough of
+# the call, and a guard the callee states dominates what follows it there.
+projection_source = "jal Helper\nyield\nHelper:\nbgtz r0 Done\nget r1 db r0\nDone:\nj ra\n"
+projection_program = parse_program(projection_source)
+projection_dominators, _, projection_successors, projection_complete = control_flow_dominators(
+    projection_program
+)
+ck(projection_complete and projection_successors[0] == {2}
+   and projection_successors[6] == {1} and 3 in projection_dominators[4],
+   "the index graph did not carry the call, the return, or the callee's own guard")
+
+# A record loop is exactly the thing a program writes as a subroutine, so a call
+# is followed and the loop's own exit test is read on the far side of it. The
+# same window falls out whether the `jal` stands before the loop or after it.
 subroutine_source = staging_source + "jal Helper\nj Copy\nHelper:\nj ra\n"
 subroutine_rows = parse_rows(subroutine_source)
 subroutine_ports, subroutine_aliases = collect_aliases(subroutine_rows)
-ck([(item[0], item[1], sorted(item[2])) for item in
-    dynamic_access_cells(subroutine_source, subroutine_ports, subroutine_aliases)] ==
-   [("db", "read", [16]), ("db", "write", [128])],
-   "an unmodeled transfer did not stand the branch bounds down to the base rule")
+called_loop_source = (
+    "move r3 128\nmove r4 16\njal Copy\nyield\nCopy:\nLoop:\nget r0 db r4\npoke r3 r0\n"
+    "add r3 r3 1\nadd r4 r4 1\nble r4 23 Loop\nj ra\n"
+)
+called_loop_rows = parse_rows(called_loop_source)
+called_loop_ports, called_loop_aliases = collect_aliases(called_loop_rows)
+for call_source, call_ports, call_aliases in (
+    (subroutine_source, subroutine_ports, subroutine_aliases),
+    (called_loop_source, called_loop_ports, called_loop_aliases),
+):
+    ck([(item[0], item[1], min(item[2]), max(item[2])) for item in
+        dynamic_access_cells(call_source, call_ports, call_aliases)] ==
+       [("db", "read", 16, 23), ("db", "write", 128, 135)],
+       "a call standing beside a record loop stood its own exit test down")
+
+# A transfer nobody can follow still does stand both bounds down. `ra` is a
+# register like any other, so what fails closed is a return that reads a value no
+# call left there -- and a branch that links, which nothing here models at all.
+for unfollowable_source in (
+    "move r3 128\nmove r4 16\nmove ra 40\nCopy:\nget r0 db r4\npoke r3 r0\n"
+    "add r3 r3 1\nadd r4 r4 1\nble r4 23 Copy\nj ra\n",
+    staging_source + "bgtzal r4 Helper\nyield\nHelper:\nj ra\n",
+):
+    unfollowable_rows = parse_rows(unfollowable_source)
+    unfollowable_ports, unfollowable_aliases = collect_aliases(unfollowable_rows)
+    ck([(item[0], item[1], sorted(item[2])) for item in
+        dynamic_access_cells(unfollowable_source, unfollowable_ports, unfollowable_aliases)] ==
+       [("db", "read", [16]), ("db", "write", [128])],
+       "an unmodeled transfer did not stand the branch bounds down to the base rule")
 
 # A subroutine loop walking down from a peer-sized count rebuilds its address
 # each pass, and `blez sp Done` means the zero its seed carries never reaches the
-# body -- but the `jal` has taken that test out of the graph, so the guard cannot
-# be read. Carrying the seed across the loop anyway placed a record two cells
-# below its own directory base.
-clobbered_seed_source = (
+# body. Reading that guard is what keeps the record off S30, two cells below its
+# own directory base -- and the guard is only readable because the call is.
+guarded_callee_source = (
     "get r5 d0 20\nseq r14 r5 0\nmul r10 r14 128\nadd r10 r10 32\nmove sp 0\n"
     "jal Insert\nyield\nInsert:\nLoop:\nblez sp Done\nsub r0 sp 1\nmul r12 r0 2\n"
     "add r12 r12 r10\nget r1 db r12\nsub sp sp 1\nj Loop\nDone:\nj ra\n"
 )
-clobbered_seed_rows = parse_rows(clobbered_seed_source)
-clobbered_seed_ports, clobbered_seed_aliases = collect_aliases(clobbered_seed_rows)
+guarded_callee_rows = parse_rows(guarded_callee_source)
+guarded_callee_ports, guarded_callee_aliases = collect_aliases(guarded_callee_rows)
 ck(not dynamic_access_cells(
-       clobbered_seed_source, clobbered_seed_ports, clobbered_seed_aliases),
-   "a seed was carried across a loop that rewrites it where no exit test can be read")
-# The same shape with the loop's advance modelled: the seed vouches for the first
-# pass, so both bank bases are reached and neither is invented.
+       guarded_callee_source, guarded_callee_ports, guarded_callee_aliases),
+   "a seed the callee's own guard excludes was still read as an address")
+# The same shape with the loop's advance modelled: both bank bases are reached,
+# and the exit test inside the callee counts the loop out from there.
 carried_seed_source = (
     "get r5 d0 20\nseq r14 r5 0\nmul r10 r14 128\nadd r10 r10 32\nmove r3 0\n"
     "jal Walk\nyield\nWalk:\nLoop:\nadd r12 r3 r10\nget r1 db r12\nadd r3 r3 1\n"
@@ -567,8 +628,8 @@ carried_seed_rows = parse_rows(carried_seed_source)
 carried_seed_ports, carried_seed_aliases = collect_aliases(carried_seed_rows)
 ck([(item[0], item[1], sorted(item[2])) for item in dynamic_access_cells(
        carried_seed_source, carried_seed_ports, carried_seed_aliases
-   )] == [("db", "read", [32, 160])],
-   "a modelled advance was treated as a rewrite the seed cannot vouch for")
+   )] == [("db", "read", [32, 33, 34, 35, 160, 161, 162, 163])],
+   "a record window inside a subroutine was cut back to its first pass")
 
 peer_based_source = "get r5 d0 24\nadd r0 r5 25\nget r1 d0 r0\n"
 peer_based_rows = parse_rows(peer_based_source)
@@ -739,6 +800,9 @@ ck(not header_invariants(
        [{"base": 0, "magic": 31415999, "abi": 1}], conditional_return
    ), "a conditional termination before header initialization produced a false invariant")
 
+# `ra` is one register, so a second call overwrites the address the first one
+# left and the outer return spins on itself, never publishing the header; a
+# program that computes its own return target leaves nothing to follow at all.
 unsafe_call_sources = {
     "nested call": (
         "jal Outer\npoke 0 31415999\npoke 1 1\nyield\n"
@@ -758,7 +822,7 @@ for case, unsafe_call_source in unsafe_call_sources.items():
     )
     ck(not header_invariants(
            [{"base": 0, "magic": 31415999, "abi": 1}], unsafe_call
-       ), f"{case} used an unsound abstract return stack for header initialization")
+       ), f"{case} was credited with header initialization it never reaches")
 
 stack_pointer_sources = {
     "push": "move sp 96\npush 0\nget r0 db sp\n",

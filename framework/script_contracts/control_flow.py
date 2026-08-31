@@ -1,7 +1,19 @@
 """Control-flow graph construction and the reachability and ordering proofs.
 
-Everything here works on the parsed program: nodes are program indices, and a
-state pairs a node with a bounded jal return stack where calls are followed.
+Everything here works on the parsed program, and one walk answers what its
+control flow does. A state pairs a program index with the return address `ra`
+holds there, because `ra` is one register and not a stack: `jal` overwrites it
+with its own fallthrough, so a subroutine is walked once per call site with the
+edge that site really returns along, and a second `jal` reached before a return
+replaces the first return address rather than nesting under it. That is what the
+machine does, so a subroutine that leaves through a shared error path instead of
+through `j ra` needs no special case, and every program in the tree comes out
+with its calls modeled.
+
+`control_flow_dominators` projects those states back onto plain indices for the
+dominance and ordering proofs. Merging a subroutine's call strings only ever
+adds edges, which costs dominators and reachability precision and never claims
+either -- a guard that survives the merge really does gate every call.
 """
 from __future__ import annotations
 
@@ -12,6 +24,14 @@ import json
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
+# A program index paired with the return address `ra` holds there, or None where
+# it holds nothing this analysis can name.
+CallState = tuple[int, "int | None"]
+# States one walk may enumerate. `ra` takes at most one value per call site, so a
+# program stays within a small multiple of its own length; the widest in the tree
+# needs 432, and the cap is only here so a graph nobody anticipated fails closed
+# rather than running away.
+CALL_STATE_LIMIT = 8192
 
 
 @lru_cache(maxsize=1)
@@ -42,56 +62,93 @@ def writes_register(row: list[str], register: str) -> bool:
     return assigning_instructions().get(row[0], True)
 
 
+def program_labels(program: list[dict[str, Any]]) -> dict[str, int]:
+    return {entry["label"]: index for index, entry in enumerate(program) if entry["label"]}
+
+
+def call_state_successors(
+    program: list[dict[str, Any]], labels: dict[str, int], state: CallState
+) -> tuple[set[CallState], bool]:
+    """Where one `(index, ra)` state goes, and whether that is the whole answer.
+
+    A write to `ra` from anything but a call leaves it unknown rather than
+    failing: several programs use it as a sixteenth scratch register and never
+    return through it. What fails closed is a return that reads an unknown `ra`,
+    together with a branch that links, an unresolvable target, and a walk past
+    its own cap -- so an incomplete graph names a transfer nobody can follow, not
+    a register somebody reused.
+
+    The flag and the edges are separate answers. An edge is only ever left out
+    when there is no index to name, so callers reading the edges alone still get
+    every path the program has bar that one, and callers that need a whole graph
+    read the flag.
+    """
+    index, ra = state
+    row = program[index]["row"]
+    fallthrough = index + 1 if index + 1 < len(program) else None
+    if row and row[0] != "jal" and writes_register(row, "ra"):
+        ra = None
+    onward: set[CallState] = {(fallthrough, ra)} if fallthrough is not None else set()
+    if not row:
+        return onward, True
+    if row[0] == "jal":
+        target = labels.get(row[-1])
+        if target is None or fallthrough is None:
+            return set(), False
+        return {(target, fallthrough)}, True
+    if row[0] == "hcf":
+        return set(), True
+    if row[0] not in {"j", "jr"} and not row[0].startswith("b"):
+        return onward, True
+    # A branch that links leaves `ra` pointing somewhere this does not follow,
+    # and only a conditional transfer carries on to the next instruction too.
+    linked = row[0].endswith("al")
+    conditional = row[0].startswith("b")
+    if row[-1] == "ra":
+        # Nothing names where an unknown `ra` goes, so nothing stands in for it.
+        taken: set[CallState] = set() if ra is None else {(ra, ra)}
+    else:
+        target = labels.get(row[-1])
+        taken = set() if target is None else {(target, None if linked else ra)}
+    if linked and fallthrough is not None:
+        onward = {(fallthrough, None)}
+    return taken | (onward if conditional else set()), bool(taken) and not linked
+
+
+def call_state_graph(
+    program: list[dict[str, Any]],
+) -> tuple[dict[CallState, set[CallState]], bool]:
+    """Every `(index, ra)` state the program reaches, and whether all transfers are modeled."""
+    labels = program_labels(program)
+    successors: dict[CallState, set[CallState]] = {}
+    complete = True
+    pending: list[CallState] = [(0, None)] if program else []
+    while pending:
+        state = pending.pop()
+        if state in successors:
+            continue
+        if len(successors) >= CALL_STATE_LIMIT:
+            return successors, False
+        outgoing, modeled = call_state_successors(program, labels, state)
+        complete = complete and modeled
+        successors[state] = outgoing
+        pending.extend(target for target in outgoing if target not in successors)
+    return successors, complete
+
+
 def control_flow_dominators(
     program: list[dict[str, Any]],
 ) -> tuple[dict[int, set[int]], dict[int, set[int]], dict[int, set[int]], bool]:
     """Return reachable-node dominators, predecessors, and whether all transfers are modeled."""
-    labels = {entry["label"]: index for index, entry in enumerate(program) if entry["label"]}
+    states, complete = call_state_graph(program)
     successors: dict[int, set[int]] = defaultdict(set)
-    complete = True
-    for index, entry in enumerate(program):
-        row = entry["row"]
-        fallthrough = index + 1 if index + 1 < len(program) else None
-        if not row:
-            if fallthrough is not None:
-                successors[index].add(fallthrough)
-            continue
-        op = row[0]
-        if op in {"jal", "jr"} or op.endswith("al"):
-            complete = False
-            continue
-        if op == "j":
-            target = labels.get(row[-1])
-            if target is None:
-                complete = False
-            else:
-                successors[index].add(target)
-            continue
-        if op.startswith("b"):
-            target = labels.get(row[-1])
-            if target is None:
-                complete = False
-            else:
-                successors[index].add(target)
-            if fallthrough is not None:
-                successors[index].add(fallthrough)
-            continue
-        if fallthrough is not None:
-            successors[index].add(fallthrough)
-
-    reachable: set[int] = set()
-    pending = [0] if program else []
-    while pending:
-        index = pending.pop()
-        if index in reachable:
-            continue
-        reachable.add(index)
-        pending.extend(successors[index] - reachable)
+    for (index, _), outgoing in states.items():
+        successors[index].update(target for target, _ in outgoing)
+    reachable = {index for index, _ in states}
     predecessors: dict[int, set[int]] = defaultdict(set)
     for source, targets in successors.items():
         for target in targets:
-            if source in reachable and target in reachable:
-                predecessors[target].add(source)
+            predecessors[target].add(source)
     dominators = {index: set(reachable) for index in reachable}
     if reachable:
         dominators[0] = {0}
@@ -124,103 +181,41 @@ def can_reach(start: int, target: int, successors: dict[int, set[int]]) -> bool:
 def can_reach_avoiding_calls(
     start: int, target: int, program: list[dict[str, Any]], blocked: set[int]
 ) -> bool:
-    """Follow local jal/j ra calls while looking for one register-preserving path."""
-    labels = {entry["label"]: index for index, entry in enumerate(program) if entry["label"]}
-    pending: list[tuple[int, tuple[int, ...]]] = [(start, ())]
-    visited: set[tuple[int, tuple[int, ...]]] = set()
+    """Is there one path from `start` to `target` with no blocked node on it?
+
+    Calls are followed, and a transfer the state walk cannot place drops its edge
+    rather than failing: a path this cannot follow is a path it does not claim.
+    """
+    labels = program_labels(program)
+    pending: list[CallState] = [(start, None)]
+    visited: set[CallState] = set()
     while pending:
-        node, return_stack = pending.pop()
-        state = (node, return_stack)
+        state = pending.pop()
         if state in visited:
             continue
         visited.add(state)
-        if node == target and node != start:
+        if state[0] == target and state[0] != start:
             return True
-        if node != start and node in blocked:
+        if state[0] != start and state[0] in blocked:
             continue
-        row = program[node]["row"]
-        fallthrough = node + 1 if node + 1 < len(program) else None
-        if not row:
-            if fallthrough is not None:
-                pending.append((fallthrough, return_stack))
-            continue
-        op = row[0]
-        if op == "jal":
-            call_target = labels.get(row[-1])
-            if call_target is not None and fallthrough is not None and len(return_stack) < 16:
-                pending.append((call_target, return_stack + (fallthrough,)))
-            continue
-        if op in {"j", "jr"}:
-            if row[-1] == "ra":
-                if return_stack:
-                    pending.append((return_stack[-1], return_stack[:-1]))
-            else:
-                jump_target = labels.get(row[-1])
-                if jump_target is not None:
-                    pending.append((jump_target, return_stack))
-            continue
-        if op.startswith("b"):
-            if row[-1] == "ra":
-                if return_stack:
-                    pending.append((return_stack[-1], return_stack[:-1]))
-            else:
-                branch_target = labels.get(row[-1])
-                if branch_target is not None:
-                    pending.append((branch_target, return_stack))
-            if fallthrough is not None:
-                pending.append((fallthrough, return_stack))
-            continue
-        if fallthrough is not None:
-            pending.append((fallthrough, return_stack))
+        outgoing, _ = call_state_successors(program, labels, state)
+        pending.extend(outgoing - visited)
     return False
 
 
 def reachable_states_avoiding_calls(
     start: int, program: list[dict[str, Any]], blocked: set[int]
-) -> set[tuple[int, tuple[int, ...]]]:
-    labels = {entry["label"]: index for index, entry in enumerate(program) if entry["label"]}
-    pending: list[tuple[int, tuple[int, ...]]] = [(start, ())]
-    visited: set[tuple[int, tuple[int, ...]]] = set()
+) -> set[CallState]:
+    labels = program_labels(program)
+    pending: list[CallState] = [(start, None)]
+    visited: set[CallState] = set()
     while pending:
-        node, return_stack = pending.pop()
-        state = (node, return_stack)
-        if state in visited or node in blocked:
+        state = pending.pop()
+        if state in visited or state[0] in blocked:
             continue
         visited.add(state)
-        row = program[node]["row"]
-        fallthrough = node + 1 if node + 1 < len(program) else None
-        if not row:
-            if fallthrough is not None:
-                pending.append((fallthrough, return_stack))
-            continue
-        op = row[0]
-        if op == "jal":
-            target = labels.get(row[-1])
-            if target is not None and fallthrough is not None and len(return_stack) < 16:
-                pending.append((target, return_stack + (fallthrough,)))
-            continue
-        if op in {"j", "jr"}:
-            if row[-1] == "ra":
-                if return_stack:
-                    pending.append((return_stack[-1], return_stack[:-1]))
-            else:
-                target = labels.get(row[-1])
-                if target is not None:
-                    pending.append((target, return_stack))
-            continue
-        if op.startswith("b"):
-            if row[-1] == "ra":
-                if return_stack:
-                    pending.append((return_stack[-1], return_stack[:-1]))
-            else:
-                target = labels.get(row[-1])
-                if target is not None:
-                    pending.append((target, return_stack))
-            if fallthrough is not None:
-                pending.append((fallthrough, return_stack))
-            continue
-        if fallthrough is not None:
-            pending.append((fallthrough, return_stack))
+        outgoing, _ = call_state_successors(program, labels, state)
+        pending.extend(outgoing - visited)
     return visited
 
 
@@ -311,15 +306,15 @@ def first_executable_node(
 
 def fallthrough_spine(
     start: int, program: list[dict[str, Any]], blocked: set[int], reset_floor: int
-) -> set[tuple[int, tuple[int, ...]]]:
-    labels = {entry["label"]: index for index, entry in enumerate(program) if entry["label"]}
-    ordered_states: list[tuple[int, tuple[int, ...]]] = []
+) -> set[CallState]:
+    labels = program_labels(program)
+    ordered_states: list[CallState] = []
     segment_start = 0
     node = start
-    return_stack: tuple[int, ...] = ()
-    visited: set[tuple[int, tuple[int, ...]]] = set()
+    ra: int | None = None
+    visited: set[CallState] = set()
     while 0 <= node < len(program) and node not in blocked:
-        state = (node, return_stack)
+        state = (node, ra)
         if state in visited:
             break
         visited.add(state)
@@ -328,19 +323,21 @@ def fallthrough_spine(
         ordered_states.append(state)
         row = program[node]["row"]
         fallthrough = node + 1
+        if row and row[0] != "jal" and (row[0].endswith("al") or writes_register(row, "ra")):
+            ra = None
         if not row:
             node = fallthrough
         elif row[0] == "jal":
             target = labels.get(row[-1])
-            if target is None or fallthrough >= len(program) or len(return_stack) >= 16:
+            if target is None or fallthrough >= len(program):
                 break
-            return_stack += (fallthrough,)
+            ra = fallthrough
             node = target
         elif row[0] in {"j", "jr"}:
             if row[-1] == "ra":
-                if not return_stack:
+                if ra is None:
                     break
-                node, return_stack = return_stack[-1], return_stack[:-1]
+                node = ra
             else:
                 target = labels.get(row[-1])
                 if target is None:

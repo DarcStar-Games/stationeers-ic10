@@ -3,7 +3,7 @@
   "contract_count": 174,
   "own_stack_range_inventory": {
     "dynamic_script_count": 62,
-    "source_proven_surface_count": 43,
+    "source_proven_surface_count": 44,
     "unresolved_fallback_count": 52,
     "scripts": [
       {
@@ -223,7 +223,12 @@
               "end": 511
             }
           ],
-          "proven_ranges": [],
+          "proven_ranges": [
+            {
+              "start": 14,
+              "end": 20
+            }
+          ],
           "provenance": "conservative-full-stack"
         },
         "write": {

@@ -145,7 +145,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": -1848849874
       },
       {
         "address": 1,
@@ -154,7 +155,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 2,
@@ -191,7 +193,22 @@
       "mode": "preserved-unless-overwritten",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": -1848849874,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
     "provides": [
