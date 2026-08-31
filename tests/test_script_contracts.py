@@ -33,7 +33,11 @@ from framework.script_contracts.device_ports import (
     network_dependencies,
     verify_declared_consumers,
 )
-from framework.script_contracts.dynamic_ranges import validated_ranges
+from framework.script_contracts.dynamic_ranges import (
+    dynamic_range_proofs,
+    resolve_dynamic_ranges,
+    validated_ranges,
+)
 from framework.script_contracts.own_stack import (
     analyze_own_stack,
     header_invariants,
@@ -310,11 +314,19 @@ proven_own_reads = {
     item["source"]: item["read"]["proven_ranges"]
     for item in own_inventory["scripts"] if item["read"]["proven_ranges"]
 }
+# The gateway copies three command lives from three seeds into one loop and
+# replies through a `select` between four mailboxes, so its proven occupancy is
+# neither one window nor a contiguous one.
 ck(proven_own_reads.get("ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10") ==
-   [{"start": 56, "end": 62}],
+   [{"start": 7, "end": 7}, {"start": 11, "end": 15}, {"start": 19, "end": 19},
+    {"start": 32, "end": 32}, {"start": 36, "end": 40}, {"start": 56, "end": 62},
+    {"start": 64, "end": 64}, {"start": 68, "end": 72}],
    "bounded Generic Job gateway own-stack loop is absent from proven occupancy")
+# One loop walking `sp` and `ra` together bounds both: the hint mirror at S21 is
+# read through the register the exit test counts, and the endpoint copy at S28
+# through the one advanced beside it.
 ck(proven_own_reads.get("ic10/resource-grid-core/resource_reservation_v1_0.ic10") ==
-   [{"start": 28, "end": 31}],
+   [{"start": 21, "end": 24}, {"start": 28, "end": 31}],
    "bounded Resource Reservation own-stack loop is absent from proven occupancy")
 ck(sum(len(document["behavior"]["invariants"]) for document in documents) > 0 and
    not any(invariant_errors(document) for document in documents),
@@ -365,8 +377,8 @@ ck(backedge["stack"]["dynamic_read_range_source"] == "source-fingerprinted-excep
    "a label-targeted backedge was accepted as a singleton source-derived range")
 
 bypassed_counter_source = (
-    "move ra 96\nj Loop\nmove rc 0\nLoop:\nget r0 d0 ra\n"
-    "add ra ra 1\nadd rc rc 1\nble rc 3 Loop\n"
+    "move ra 96\nj Loop\nmove r1 0\nLoop:\nget r0 d0 ra\n"
+    "add ra ra 1\nadd r1 r1 1\nble r1 3 Loop\n"
 )
 bypassed_counter_rows = parse_rows(bypassed_counter_source)
 bypassed_counter_ports, bypassed_counter_aliases = collect_aliases(bypassed_counter_rows)
@@ -378,8 +390,8 @@ ck(bypassed_counter["stack"]["dynamic_read_range_source"] == "source-fingerprint
    "a non-dominating loop counter seed was accepted as source-derived")
 
 reentered_loop_source = (
-    "move ra 96\nmove rc 0\nLoop:\nget r0 d0 ra\n"
-    "add ra ra 1\nadd rc rc 1\nble rc 3 Loop\nj Loop\n"
+    "move ra 96\nmove r1 0\nLoop:\nget r0 d0 ra\n"
+    "add ra ra 1\nadd r1 r1 1\nble r1 3 Loop\nj Loop\n"
 )
 reentered_loop_rows = parse_rows(reentered_loop_source)
 reentered_loop_ports, reentered_loop_aliases = collect_aliases(reentered_loop_rows)
@@ -408,8 +420,8 @@ ck("const" not in dynamic_header_fields[0] and dynamic_header_fields[1].get("con
    "dynamic write coverage did not suppress only the affected header constant")
 
 bounded_own_source = (
-    "poke 0 31415999\npoke 1 1\nmove ra 96\nmove rc 0\nLoop:\n"
-    "get r0 db ra\npoke ra r0\nadd ra ra 1\nadd rc rc 1\nble rc 3 Loop\n"
+    "poke 0 31415999\npoke 1 1\nmove ra 96\nmove r1 0\nLoop:\n"
+    "get r0 db ra\npoke ra r0\nadd ra ra 1\nadd r1 r1 1\nble r1 3 Loop\n"
 )
 bounded_own_rows = parse_rows(bounded_own_source)
 _, bounded_own_aliases = collect_aliases(bounded_own_rows)
@@ -712,6 +724,57 @@ ck({name for name, text in instruction_descriptions.items()
     or ("Register = 0 if" in text and "otherwise 1" in text)} == BOOLEAN_RESULTS,
    "the two-value instruction table drifted from the extracted instruction set")
 
+# A register holds what the last write on the path that got here left in it, and
+# two arms of a branch reach the same loop from different bases. The nearer
+# write alone would name half the surface; the two are also not one loop, so
+# nothing runs the stride from one base onto the other.
+two_seed_source = (
+    "get r0 d0 5\nbnez r0 High\nmove r1 32\nj Copy\nHigh:\nmove r1 96\n"
+    "Copy:\nmove r2 0\nWalk:\nget r3 db r1\nadd r1 r1 1\nadd r2 r2 1\nblt r2 4 Walk\n"
+)
+two_seed_rows = parse_rows(two_seed_source)
+two_seed_ports, two_seed_aliases = collect_aliases(two_seed_rows)
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       two_seed_source, two_seed_ports, two_seed_aliases)] ==
+   [[32, 33, 34, 35, 96, 97, 98, 99]],
+   "only the nearer of two writes that both reach an access was read as its base")
+# One arm this cannot evaluate costs the join its closure and not the other
+# arm's cells: those are still cells a declaration has to contain.
+open_arm_source = two_seed_source.replace("move r1 96\n", "get r1 d0 6\n")
+open_arm_rows = parse_rows(open_arm_source)
+open_arm_ports, open_arm_aliases = collect_aliases(open_arm_rows)
+open_arm, _ = analyze_own_stack(open_arm_source, open_arm_rows, open_arm_aliases, [], {})
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       open_arm_source, open_arm_ports, open_arm_aliases)] == [[32, 33, 34, 35]] and
+   open_arm["dynamic_read_range_source"] == "conservative-full-stack",
+   "an unevaluable write cost the join the terms beside it, or was proven whole anyway")
+# Reaching an access with no write at all is not a value a branch here bounds:
+# registers survive a reflash, so nothing names what is in one.
+reflash_source = "move r2 0\nWalk:\nget r3 db r1\nadd r2 r2 1\nblt r2 4 Walk\n"
+reflash_rows = parse_rows(reflash_source)
+reflash_ports, reflash_aliases = collect_aliases(reflash_rows)
+ck(not dynamic_access_cells(reflash_source, reflash_ports, reflash_aliases),
+   "a register no write reaches was given the cells a reflash left in it")
+
+# A reviewer may name a window wider than a whole derivation on purpose. That is
+# conservatism rather than disagreement, so it stands with the proof as its
+# floor -- but a window that omits a proven cell still fails, proof whole or not.
+whole_proof = dynamic_range_proofs(
+    staging_source, staging_aliases, [(3, "read", "r4"), (4, "write", "r3")],
+)["read"]
+ck(whole_proof.all_proven and resolve_dynamic_ranges(
+       True, whole_proof, [{"start": 8, "end": 31}], "wider") ==
+   ([{"start": 8, "end": 31}], "source-fingerprinted-exception"),
+   "a reviewed window wider than a whole proof was read as a disagreement")
+ck(resolve_dynamic_ranges(True, whole_proof, [], "bare") ==
+   ([{"start": 16, "end": 23}], "source-derived"),
+   "an undeclared surface did not publish the derivation as its range")
+try:
+    resolve_dynamic_ranges(True, whole_proof, [{"start": 16, "end": 20}], "short")
+    fails.append("a window omitting a proven cell was accepted beside a whole proof")
+except ValueError:
+    pass
+
 conflicting_header_source = bounded_own_source.replace(
     "poke 1 1\n", "poke 1 1\npoke 0 0\n"
 )
@@ -854,8 +917,8 @@ for operation, stack_pointer_source in stack_pointer_sources.items():
        f"implicit {operation} mutation of sp produced a false source-proven range")
 
 strided_source = (
-    "move ra 96\nmove rc 0\nLoop:\npoke ra 1\n"
-    "add ra ra 2\nadd rc rc 1\nble rc 3 Loop\n"
+    "move ra 96\nmove r1 0\nLoop:\npoke ra 1\n"
+    "add ra ra 2\nadd r1 r1 1\nble r1 3 Loop\n"
 )
 strided_rows = parse_rows(strided_source)
 _, strided_aliases = collect_aliases(strided_rows)
@@ -865,20 +928,31 @@ ck(strided["dynamic_write_ranges"] == [
        {"start": 100, "end": 100}, {"start": 102, "end": 102},
    ] and strided["dynamic_write_proven_ranges"] == strided["dynamic_write_ranges"],
    "non-unit stride was not represented as exact source-proven cells")
+# Two advances every pass makes are the same stride written twice, which is what
+# a record walk reading one cell of two looks like.
+twice_source = strided_source.replace("add ra ra 2\n", "add ra ra 1\nadd ra ra 1\n")
+twice_rows = parse_rows(twice_source)
+_, twice_aliases = collect_aliases(twice_rows)
+twice, _ = analyze_own_stack(twice_source, twice_rows, twice_aliases, [], {})
+ck(twice["dynamic_write_ranges"] == strided["dynamic_write_ranges"] and
+   twice["dynamic_write_range_source"] == "source-derived",
+   "a stride written as two advances of one was not the stride they sum to")
 
 own_negative_sources = {
     "branch bypass": "beqz r5 Seed\nj Access\nSeed:\nmove ra 96\nAccess:\npoke ra 1\n",
-    "multiple mutations": (
-        "move ra 96\nmove rc 0\nLoop:\npoke ra 1\nadd ra ra 1\nadd ra ra 1\n"
-        "add rc rc 1\nble rc 3 Loop\n"
+    # Two advances only sum into one stride when the pass makes both of them.
+    # These are alternatives, so the register moves by one or the other.
+    "mutations a branch chooses between": (
+        "move ra 96\nmove r1 0\nLoop:\npoke ra 1\nbeqz r5 Wide\nadd ra ra 1\nj Step\n"
+        "Wide:\nadd ra ra 2\nStep:\nadd r1 r1 1\nble r1 3 Loop\n"
     ),
     "branch-dependent update": (
-        "move ra 96\nmove rc 0\nLoop:\npoke ra 1\nbeqz r5 SkipCounter\nadd rc rc 1\n"
-        "SkipCounter:\nadd ra ra 1\nble rc 3 Loop\n"
+        "move ra 96\nmove r1 0\nLoop:\npoke ra 1\nbeqz r5 SkipCounter\nadd r1 r1 1\n"
+        "SkipCounter:\nadd ra ra 1\nble r1 3 Loop\n"
     ),
     "non-dominating counter seed": (
-        "move ra 96\nj Loop\nmove rc 0\nLoop:\npoke ra 1\nadd ra ra 1\n"
-        "add rc rc 1\nble rc 3 Loop\n"
+        "move ra 96\nj Loop\nmove r1 0\nLoop:\npoke ra 1\nadd ra ra 1\n"
+        "add r1 r1 1\nble r1 3 Loop\n"
     ),
     "unbounded loop": "move ra 96\nLoop:\npoke ra 1\nadd ra ra 1\nj Loop\n",
 }

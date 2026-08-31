@@ -38,15 +38,15 @@
           }
         ],
         "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-fingerprinted-exception",
+        "dynamic_read_range_source": "source-derived",
         "dynamic_write_range_source": "none",
         "constraints": []
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.6cc2b046c4ebd492",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.6cc2b046c4ebd492",
+        "interface_id": "ic10.interface.access.b01e6cc40b229304",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.b01e6cc40b229304",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [
@@ -306,7 +306,7 @@
     "mode": "static-v2",
     "limitations": [
       "Unproved dynamic own-stack addresses fail closed to the full 512-cell stack.",
-      "Strict literal-seeded linear loops are source-derived; other reviewed bounds are source-fingerprinted overrides.",
+      "An address the branches around it bound whole is source-derived; other reviewed bounds are source-fingerprinted overrides.",
       "Provided and consumed protocols require authoritative declarations verified against source literals.",
       "Field semantics not represented by source comments or literals remain in supplemental canonical data."
     ]

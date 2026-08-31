@@ -1,9 +1,15 @@
-"""Prove and resolve the stack cell ranges dynamic addresses can reach.
+"""Validate, prove, and resolve the stack cell ranges dynamic addresses can reach.
 
-Range lists are validated and merged here, the strict literal-seeded linear
-loop proof turns a computed address into an exact range, and the resolver
-arbitrates between source-derived proofs, fingerprinted overrides, and the
-conservative full-stack fallback -- failing closed on any disagreement.
+Range lists are validated and merged here, and the resolver arbitrates between
+source-derived proofs, fingerprinted overrides, and the conservative full-stack
+fallback -- failing closed on any disagreement.
+
+The proof itself is `framework.script_contracts.value_bounds`, which derives
+what the branches around an access permit and says whether that is all of it.
+A range is source-derived only where every access in its class was proven
+whole, so one address nothing counts out leaves the whole class to review; that
+is the same standard the literal-seeded linear loop proof this replaced held,
+reached by asking the one analysis rather than a second one beside it.
 """
 from __future__ import annotations
 
@@ -11,13 +17,13 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Any
 
-from framework.script_contracts.control_flow import can_reach, control_flow_dominators, writes_register
 from framework.script_contracts.parsing import parse_program, resolve_integer, resolve_port
+from framework.script_contracts.value_bounds import ValueBounds
 
 
 @dataclass
 class RangeProof:
-    """What the linear-loop proof established for one class of dynamic accesses."""
+    """What the branch bounds established for one class of dynamic accesses."""
 
     total: int = 0
     proved_accesses: int = 0
@@ -59,167 +65,20 @@ def expanded_ranges(ranges: list[dict[str, int]]) -> set[int]:
     return {address for item in ranges for address in range(item["start"], item["end"] + 1)}
 
 
-def linear_dynamic_range(
-    program: list[dict[str, Any]], access_index: int, address_register: str, integer_aliases: dict[str, int],
-    dominators: dict[int, set[int]], predecessors: dict[int, set[int]], successors: dict[int, set[int]],
-    control_flow_complete: bool,
-) -> list[dict[str, int]] | None:
-    """Prove a singleton or a simple literal-seeded linear loop address range."""
-    seed_index = None
-    start = None
-    for index in range(access_index - 1, -1, -1):
-        row = program[index]["row"]
-        if not row:
-            continue
-        if writes_register(row, address_register):
-            if row[0] == "move" and len(row) >= 3:
-                start = resolve_integer(row[2], integer_aliases)
-                seed_index = index
-            break
-    if (
-        seed_index is None or start is None or not 0 <= start <= 511
-        or not control_flow_complete or seed_index not in dominators.get(access_index, set())
-    ):
-        return None
-
-    loop_label = None
-    label_index = None
-    for index in range(seed_index + 1, access_index + 1):
-        if program[index]["label"]:
-            loop_label = program[index]["label"]
-            label_index = index
-    if loop_label is None:
-        return [{"start": start, "end": start}]
-
-    branch_index = None
-    branch = None
-    for index in range(access_index + 1, min(len(program), access_index + 80)):
-        row = program[index]["row"]
-        if row and row[0] == "move" and len(row) >= 2 and row[1] == address_register:
-            break
-        if row and row[0] in {"ble", "blt"} and len(row) >= 4 and row[-1] == loop_label:
-            branch_index = index
-            branch = row
-            break
-        if program[index]["label"] and index > access_index + 1:
-            break
-    if branch_index is None or branch is None or label_index is None:
-        if can_reach(access_index, access_index, successors):
-            return None
-        return [{"start": start, "end": start}]
-
-    if label_index not in successors.get(branch_index, set()):
-        return None
-    loop_nodes = set(range(label_index, branch_index + 1))
-    backedges = {
-        (source, target)
-        for source in loop_nodes
-        for target in successors.get(source, set())
-        if label_index <= target <= source
-    }
-    if backedges != {(branch_index, label_index)}:
-        return None
-    allowed_entry = {(label_index - 1, label_index)} if label_index else set()
-    external_entries = {
-        (source, target)
-        for source, targets in successors.items()
-        if source not in loop_nodes
-        for target in targets
-        if target in loop_nodes
-    }
-    if external_entries - allowed_entry:
-        return None
-    if any(successors.get(index, set()) != {index + 1} for index in range(label_index, access_index)):
-        return None
-
-    address_updates = []
-    for index in range(access_index + 1, branch_index):
-        row = program[index]["row"]
-        if row and row[0] == "add" and len(row) >= 4 and row[1] == address_register and row[2] == address_register:
-            address_updates.append((index, resolve_integer(row[3], integer_aliases)))
-    counter = branch[1]
-    if counter == address_register:
-        return None
-    limit = resolve_integer(branch[2], integer_aliases)
-    counter_updates = []
-    for index in range(access_index + 1, branch_index):
-        row = program[index]["row"]
-        if row and row[0] == "add" and len(row) >= 4 and row[1] == counter and row[2] == counter:
-            counter_updates.append((index, resolve_integer(row[3], integer_aliases)))
-    counter_start = None
-    for index in range(label_index - 1, max(-1, seed_index - 40), -1):
-        row = program[index]["row"]
-        if row and writes_register(row, counter):
-            if row[0] == "move" and len(row) >= 3:
-                counter_start = resolve_integer(row[2], integer_aliases)
-            break
-    if (
-        len(address_updates) != 1 or len(counter_updates) != 1
-        or counter_start is None or limit is None
-    ):
-        return None
-    address_update_index, address_step = address_updates[0]
-    counter_update_index, counter_step = counter_updates[0]
-    if address_step is None or counter_step is None or counter_step <= 0:
-        return None
-    if (
-        address_update_index not in dominators.get(branch_index, set())
-        or counter_update_index not in dominators.get(branch_index, set())
-    ):
-        return None
-    counter_seed_index = next(
-        (
-            index for index in range(label_index - 1, max(-1, seed_index - 40), -1)
-            if program[index]["row"] and writes_register(program[index]["row"], counter)
-        ),
-        None,
-    )
-    if counter_seed_index is None or counter_seed_index not in dominators.get(label_index, set()):
-        return None
-    address_writes = [
-        index for index in range(label_index, branch_index)
-        if program[index]["row"] and writes_register(program[index]["row"], address_register)
-    ]
-    counter_writes = [
-        index for index in range(label_index, branch_index)
-        if program[index]["row"] and writes_register(program[index]["row"], counter)
-    ]
-    if address_writes != [address_update_index] or counter_writes != [counter_update_index]:
-        return None
-
-    count = 1
-    current = counter_start
-    while count <= 512:
-        current += counter_step
-        continues = current <= limit if branch[0] == "ble" else current < limit
-        if not continues:
-            break
-        count += 1
-    else:
-        return None
-    addresses = [start + iteration * address_step for iteration in range(count)]
-    if any(not 0 <= address <= 511 for address in addresses):
-        return None
-    return merge_ranges([{"start": address, "end": address} for address in set(addresses)])
-
-
 def dynamic_range_proofs(
     source: str, integer_aliases: dict[str, int], accesses: list[tuple[int, Any, str]]
 ) -> dict[Any, RangeProof]:
-    """Apply the shared strict linear-loop proof to classified dynamic accesses."""
-    program = parse_program(source)
-    dominators, predecessors, successors, control_flow_complete = control_flow_dominators(program)
+    """Bound classified dynamic accesses by the branches around each of them."""
+    analyzer = ValueBounds(source, integer_aliases)
     proofs: dict[Any, RangeProof] = defaultdict(RangeProof)
     for index, key, address_token in accesses:
         proof = proofs[key]
         proof.total += 1
-        inferred = linear_dynamic_range(
-            program, index, address_token, integer_aliases, dominators, predecessors, successors,
-            control_flow_complete
-        )
-        if inferred is not None:
-            proof.proved_accesses += 1
-            proof.ranges.extend(inferred)
+        cells, whole = analyzer.access_bounds(index, address_token)
+        if not whole or cells is None:
+            continue
+        proof.proved_accesses += 1
+        proof.ranges.extend({"start": cell, "end": cell} for cell in sorted(cells))
     for proof in proofs.values():
         proof.ranges = merge_ranges(proof.ranges)
     return proofs
@@ -250,29 +109,30 @@ def resolve_dynamic_ranges(
     dynamic: bool, proof: RangeProof, declared_ranges: list[dict[str, int]], context: str,
     fallback_full_stack: bool = False,
 ) -> tuple[list[dict[str, int]], str]:
+    """Publish one range list and say where it came from, failing closed on drift.
+
+    A declaration has to contain every proven cell whether or not the proof was
+    complete, because a window that omits one is not describing the access. Past
+    that, a declaration wider than a complete proof is a reviewer being
+    deliberately conservative rather than a disagreement -- a record window
+    named whole where the program reads six cells of every eight -- and it
+    stands, with the proof holding its floor and the source fingerprint holding
+    it to this revision. Only an undeclared surface publishes the proof itself.
+    """
     if not dynamic:
         if declared_ranges:
             raise ValueError(f"{context} declares ranges without a dynamic access")
         return [], "none"
-    inferred_ranges = proof.ranges
-    inferred_cells = {
-        address for value in inferred_ranges for address in range(value["start"], value["end"] + 1)
-    }
-    declared_cells = {
-        address for value in declared_ranges for address in range(value["start"], value["end"] + 1)
-    }
-    if proof.all_proven:
-        if declared_ranges and declared_cells != inferred_cells:
-            raise ValueError(
-                f"{context} range {declared_ranges} disagrees with source-derived {inferred_ranges}"
-            )
-        return inferred_ranges, "source-derived"
+    inferred_cells = expanded_ranges(proof.ranges)
+    declared_cells = expanded_ranges(declared_ranges)
+    if declared_ranges and not inferred_cells <= declared_cells:
+        raise ValueError(
+            f"{context} range {declared_ranges} omits source-proven cells "
+            f"{sorted(inferred_cells-declared_cells)}"
+        )
+    if proof.all_proven and (not declared_ranges or declared_cells == inferred_cells):
+        return proof.ranges, "source-derived"
     if declared_ranges:
-        if not inferred_cells <= declared_cells:
-            raise ValueError(
-                f"{context} range {declared_ranges} omits source-proven cells "
-                f"{sorted(inferred_cells-declared_cells)}"
-            )
         return declared_ranges, "source-fingerprinted-exception"
     if fallback_full_stack:
         return [{"start": 0, "end": 511}], "conservative-full-stack"

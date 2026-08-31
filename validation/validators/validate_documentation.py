@@ -166,6 +166,9 @@ forbidden={
  'publishes TransformType S2':'Material Transform Admission publishes TransformType at S14',
  'S2 is requested batch count, S3 request generation':'Material Transform Runtime receives requests at S8/S16',
  'Runtime S7 = committed material epoch':'Material Transform Runtime mirrors the committed epoch at S22',
+ 'literal-seeded':'one branch-bounds proof derives dynamic ranges; the linear loop proof beside it is gone',
+ 'strict linear loop':'one branch-bounds proof derives dynamic ranges; the linear loop proof beside it is gone',
+ 'strict loop proof':'one branch-bounds proof derives dynamic ranges; the linear loop proof beside it is gone',
 }
 for p in mds:
     txt=p.read_text(errors='replace')

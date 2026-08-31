@@ -56,14 +56,14 @@
           }
         ],
         "dynamic_read_range_source": "none",
-        "dynamic_write_range_source": "source-fingerprinted-exception",
+        "dynamic_write_range_source": "source-derived",
         "constraints": []
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.781bd638ebdeba81",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.781bd638ebdeba81",
+        "interface_id": "ic10.interface.access.691599efa6aae66b",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.691599efa6aae66b",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -110,8 +110,36 @@
     "dynamic_write": true,
     "dynamic_read_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 7,
+        "end": 7
+      },
+      {
+        "start": 11,
+        "end": 15
+      },
+      {
+        "start": 19,
+        "end": 19
+      },
+      {
+        "start": 32,
+        "end": 32
+      },
+      {
+        "start": 36,
+        "end": 40
+      },
+      {
+        "start": 56,
+        "end": 62
+      },
+      {
+        "start": 64,
+        "end": 64
+      },
+      {
+        "start": 68,
+        "end": 72
       }
     ],
     "dynamic_write_ranges": [
@@ -122,8 +150,36 @@
     ],
     "dynamic_read_proven_ranges": [
       {
+        "start": 7,
+        "end": 7
+      },
+      {
+        "start": 11,
+        "end": 15
+      },
+      {
+        "start": 19,
+        "end": 19
+      },
+      {
+        "start": 32,
+        "end": 32
+      },
+      {
+        "start": 36,
+        "end": 40
+      },
+      {
         "start": 56,
         "end": 62
+      },
+      {
+        "start": 64,
+        "end": 64
+      },
+      {
+        "start": 68,
+        "end": 72
       }
     ],
     "dynamic_write_proven_ranges": [
@@ -132,8 +188,8 @@
         "end": 511
       }
     ],
-    "dynamic_read_range_source": "conservative-full-stack",
-    "dynamic_write_range_source": "conservative-full-stack",
+    "dynamic_read_range_source": "source-derived",
+    "dynamic_write_range_source": "source-derived",
     "clears_all": true,
     "external_readable_ranges": [],
     "external_writable_ranges": [],
@@ -358,7 +414,7 @@
     "mode": "static-v2",
     "limitations": [
       "Unproved dynamic own-stack addresses fail closed to the full 512-cell stack.",
-      "Strict literal-seeded linear loops are source-derived; other reviewed bounds are source-fingerprinted overrides.",
+      "An address the branches around it bound whole is source-derived; other reviewed bounds are source-fingerprinted overrides.",
       "Provided and consumed protocols require authoritative declarations verified against source literals.",
       "Field semantics not represented by source comments or literals remain in supplemental canonical data."
     ]

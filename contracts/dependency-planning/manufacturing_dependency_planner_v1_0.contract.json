@@ -99,14 +99,14 @@
           }
         ],
         "dynamic_read_range_source": "none",
-        "dynamic_write_range_source": "source-fingerprinted-exception",
+        "dynamic_write_range_source": "source-derived",
         "constraints": []
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.db193478e9f2466f",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.db193478e9f2466f",
+        "interface_id": "ic10.interface.access.8d8471738adae66e",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.8d8471738adae66e",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -195,14 +195,19 @@
     "dynamic_write": false,
     "dynamic_read_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 13,
+        "end": 18
       }
     ],
     "dynamic_write_ranges": [],
-    "dynamic_read_proven_ranges": [],
+    "dynamic_read_proven_ranges": [
+      {
+        "start": 13,
+        "end": 18
+      }
+    ],
     "dynamic_write_proven_ranges": [],
-    "dynamic_read_range_source": "conservative-full-stack",
+    "dynamic_read_range_source": "source-derived",
     "dynamic_write_range_source": "none",
     "clears_all": false,
     "external_readable_ranges": [],
@@ -362,7 +367,7 @@
     "mode": "static-v2",
     "limitations": [
       "Unproved dynamic own-stack addresses fail closed to the full 512-cell stack.",
-      "Strict literal-seeded linear loops are source-derived; other reviewed bounds are source-fingerprinted overrides.",
+      "An address the branches around it bound whole is source-derived; other reviewed bounds are source-fingerprinted overrides.",
       "Provided and consumed protocols require authoritative declarations verified against source literals.",
       "Field semantics not represented by source comments or literals remain in supplemental canonical data."
     ]

@@ -61,7 +61,136 @@
         "end": 511
       }
     ],
-    "dynamic_read_proven_ranges": [],
+    "dynamic_read_proven_ranges": [
+      {
+        "start": 288,
+        "end": 288
+      },
+      {
+        "start": 295,
+        "end": 295
+      },
+      {
+        "start": 302,
+        "end": 302
+      },
+      {
+        "start": 309,
+        "end": 309
+      },
+      {
+        "start": 316,
+        "end": 316
+      },
+      {
+        "start": 323,
+        "end": 323
+      },
+      {
+        "start": 330,
+        "end": 330
+      },
+      {
+        "start": 337,
+        "end": 337
+      },
+      {
+        "start": 344,
+        "end": 344
+      },
+      {
+        "start": 351,
+        "end": 351
+      },
+      {
+        "start": 358,
+        "end": 358
+      },
+      {
+        "start": 365,
+        "end": 365
+      },
+      {
+        "start": 372,
+        "end": 372
+      },
+      {
+        "start": 379,
+        "end": 379
+      },
+      {
+        "start": 386,
+        "end": 386
+      },
+      {
+        "start": 393,
+        "end": 393
+      },
+      {
+        "start": 400,
+        "end": 400
+      },
+      {
+        "start": 407,
+        "end": 407
+      },
+      {
+        "start": 414,
+        "end": 414
+      },
+      {
+        "start": 421,
+        "end": 421
+      },
+      {
+        "start": 428,
+        "end": 428
+      },
+      {
+        "start": 435,
+        "end": 435
+      },
+      {
+        "start": 442,
+        "end": 442
+      },
+      {
+        "start": 449,
+        "end": 449
+      },
+      {
+        "start": 456,
+        "end": 456
+      },
+      {
+        "start": 463,
+        "end": 463
+      },
+      {
+        "start": 470,
+        "end": 470
+      },
+      {
+        "start": 477,
+        "end": 477
+      },
+      {
+        "start": 484,
+        "end": 484
+      },
+      {
+        "start": 491,
+        "end": 491
+      },
+      {
+        "start": 498,
+        "end": 498
+      },
+      {
+        "start": 505,
+        "end": 505
+      }
+    ],
     "dynamic_write_proven_ranges": [
       {
         "start": 0,
@@ -69,7 +198,7 @@
       }
     ],
     "dynamic_read_range_source": "conservative-full-stack",
-    "dynamic_write_range_source": "conservative-full-stack",
+    "dynamic_write_range_source": "source-derived",
     "clears_all": true,
     "external_readable_ranges": [
       {
@@ -305,7 +434,7 @@
     "mode": "static-v2",
     "limitations": [
       "Unproved dynamic own-stack addresses fail closed to the full 512-cell stack.",
-      "Strict literal-seeded linear loops are source-derived; other reviewed bounds are source-fingerprinted overrides.",
+      "An address the branches around it bound whole is source-derived; other reviewed bounds are source-fingerprinted overrides.",
       "Provided and consumed protocols require authoritative declarations verified against source literals.",
       "Field semantics not represented by source comments or literals remain in supplemental canonical data."
     ]

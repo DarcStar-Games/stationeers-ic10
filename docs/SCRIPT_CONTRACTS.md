@@ -62,13 +62,15 @@ Each generated per-script contract document is validated by
   slot selection;
 - `getd`/`putd` ReferenceId dependencies and `db:n` device-index discovery,
   including literal stack cells and accepted network-discovered protocols;
-- literal and dynamic access to the housing's own 512-cell stack. Literal-seeded
-  strict linear loops emit exact source-derived ranges, including disjoint
-  singleton ranges for non-unit address strides. Reviewed bounds that
-  cannot be expressed by that proof are source-fingerprinted exceptions, and
-  every remaining unresolved access fails closed to `S0..S511`. Exact proven
-  subsets are retained even when another access forces the aggregate range to
-  fall back, so analysis never loses known occupancy;
+- literal and dynamic access to the housing's own 512-cell stack. An access the
+  branch bounds derive whole emits an exact source-derived range, including the
+  disjoint singletons a non-unit address stride reaches. A reviewed bound stands
+  where the derivation was left open anywhere, and also where a reviewer named a
+  window wider than the derivation on purpose; either way it is a
+  source-fingerprinted exception that has to contain every proven cell. Every
+  remaining unresolved access fails closed to `S0..S511`. Exact proven subsets
+  are retained even when another access forces the aggregate range to fall back,
+  so analysis never loses known occupancy;
 - source-comment-backed field names, descriptions, semantic value types,
   explicit defaults, enums, reserved markers, explicit cross-program ownership,
   and literal protocol headers at any base address. Unnamed cells are labeled
@@ -118,8 +120,8 @@ accept a version range. Header base is tracked separately either way, so the
 - a canonical generated definition is missing, stale, or schema-invalid;
 - a supplemental JSON definition reference is missing or has a bad pointer;
 - a dynamic wired access lacks an explicit range;
-- a source-derived dynamic range disagrees with its literal-seeded address loop,
-  or an exception omits a statically proven cell;
+- a declared dynamic range omits a cell the branches around the access prove it
+  reaches, whether or not the derivation was whole;
 - an own-stack proven subset falls outside its effective range, a claimed
   source-derived range exceeds its proof, or a conservative fallback is not
   exactly `S0..S511`;
@@ -152,11 +154,13 @@ ranges are declared explicitly and verified against their source checks.
 Access-only stack targets remain explicitly labeled as such and are not
 presented as ABI-verified wiring.
 
-Dynamic own-stack addresses use the same strict loop proof. Address and counter
-seeds must dominate a single-backedge loop, each register must have exactly one
-literal update, and the loop must have no bypass, re-entry, unmodeled transfer,
-or additional mutation. Unknown, branch-dependent, multiply-mutated, and
-unbounded cases remain explicit `conservative-full-stack` fallbacks unless a
+Dynamic own-stack addresses use the same proof, and there is one proof: the
+branch bounds below both derive the cells an address reaches and say whether
+those are all of them. A range is source-derived exactly where nothing along the
+way was left open -- no write the analysis could not evaluate, no register
+arriving from a reflash rather than a write, no loop nothing counts out, no
+limit read off a bound that was never shown whole. An address that fails any of
+those is an explicit `conservative-full-stack` fallback unless a
 source-fingerprinted override supplies a reviewed range. `clr db` is a
 source-derived full-stack write rather than an unresolved fallback.
 
@@ -173,11 +177,16 @@ cut short.
 
 What that derives is the surface the program *permits*, not what one execution
 performs: a declaration has to cover every cell a legal peer can steer the loop
-to. It is only ever a floor, so a coarser reviewed window stays legal, and an
-address bounded by nothing the branches state -- a record pointer, a count the
-consumer never validates -- is held only to the cell its first pass reaches and
-remains a review obligation. Widen such a range to the record window the
-provider actually publishes rather than to the first plausible span.
+to. It is always a floor a declaration must contain, and where the derivation
+was whole it is the ceiling as well, which is what lets an undeclared surface
+publish it as the range rather than as a bound on one. An address bounded by
+nothing the branches state -- a record pointer, a count the consumer never
+validates -- is held only to the cell its first pass reaches and remains a review
+obligation. Widen such a range to the record window the provider actually
+publishes rather than to the first plausible span. A reviewer may also name a
+window wider than a whole derivation on purpose, and that stands: the proof is
+its floor and the source fingerprint holds it to the revision it was reviewed
+against.
 
 Because a derived cell is a cell a declaration is held to, the arithmetic
 between a seed and an access is enumerated rather than approximated: widening a
@@ -206,10 +215,20 @@ program computed itself, and a branch that links.
 The dominance and ordering proofs read those states projected onto plain
 indices, which joins each caller's entry to every caller's return. That only
 weakens them -- a guard surviving the merge really does gate every call -- so the
-projection is where they belong. The exception is asking whether one write's
-value can still be at one access: on the projection a path stitched from two
-callers would carry a value no execution does, so that question is asked of the
+projection is where they belong. The exception is asking which write is still in
+a register when an access runs: on the projection a path stitched from two
+callers would carry a write no execution does, so that question is asked of the
 states, where a return goes back to the site that made it.
+
+That question is a reaching-definition fixpoint over the states rather than a
+backward scan for the nearest earlier write, because a register holds what the
+last write on the path that got here left in it and different paths get here
+from different writes. Every write that arrives is joined: one that nothing can
+evaluate costs the derivation its closure and not the terms beside it, and a
+path that arrives with no write at all costs the closure too, since a reflash
+leaves a register holding something no branch bounds. `generic_persistent_config_host_v1_1`
+copies an image whose base is a persisted bank at boot and the normalized
+candidate at commit, and the nearest write names only the second of those.
 
 `data/script_protocol_headers.json` is the authoritative provider and consumer
 header catalog. The generator verifies every declaration against literal source

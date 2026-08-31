@@ -18,23 +18,33 @@ window falls out of a validator that only ever names `8` and `32`.
 Two things follow from reading a branch as the bound. The derived set is what
 the program *permits*, not what one execution performs -- a declared range has
 to cover every cell a legal peer can steer the loop to, which is the surface a
-declaration exists to state. And the set is only ever a floor: a declared range
-must contain it, never equal it, so a coarser reviewed window stays legal and a
-branch this module cannot read costs a check rather than inventing one. Where a
-loop's count is never validated locally, nothing bounds it and only the cell the
-first pass reaches is witnessed -- which is all a declared range is held to.
+declaration exists to state. And it is a floor first: a declared range must
+contain it, so a branch this module cannot read costs a check rather than
+inventing one, and where a loop's count is never validated locally only the cell
+the first pass reaches is witnessed.
 
-Everything rests on the seed the backward scan finds, and a seed is only a seed
-if it can still be in the register when the access runs; see `surviving`.
-Reading a branch as a gate or an exit needs the control-flow graph to be the
-whole graph besides, so a transfer nobody can follow stands both bounds down and
-leaves the program its first pass alone. Calls are not such a transfer: one walk
-follows them, which is what lets a subroutine's own guard be read against an
-access inside it -- and the guard is usually the whole bound, because a record
-loop is exactly the thing a program writes as a subroutine. The branch bounds
-read that walk projected onto indices, where merging a subroutine's call strings
-can only weaken them; seed survival reads the states themselves, because there
-the merge would strengthen an answer instead.
+Every derivation also carries whether it is the whole set and not just some of
+it, which is the second thing a declaration can be held to -- equality rather
+than containment, so a surface nobody declared can publish the derivation as its
+range. That answer is lost by any step that leaves a value out: a write nothing
+evaluates, a register arriving from a reflash instead of a write, a loop nothing
+counts out, an advance a branch chooses between, an enclosing loop that moves
+the register further, or a guard read off a limit never shown whole. Losing it
+costs precision and never soundness, so every one of those is answered no when
+in doubt.
+
+Which write is in a register is a reaching-definition question and not the
+nearest earlier one: a register holds what the last write on the path that got
+here left in it, and `arriving` joins every write that can. Reading a branch as
+a gate or an exit needs the control-flow graph to be the whole graph besides, so
+a transfer nobody can follow stands the bounds down and leaves the program its
+first pass alone. Calls are not such a transfer: one walk follows them, which is
+what lets a subroutine's own guard be read against an access inside it -- and the
+guard is usually the whole bound, because a record loop is exactly the thing a
+program writes as a subroutine. The branch bounds read that walk projected onto
+indices, where merging a subroutine's call strings can only weaken them; the
+reaching writes read the states themselves, because there the merge would
+strengthen an answer instead.
 
 A seed is only as good as the arithmetic between it and the access, and that
 arithmetic is enumerated rather than approximated. A cell this module derives is
