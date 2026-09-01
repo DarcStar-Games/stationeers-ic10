@@ -386,14 +386,15 @@ the derived one is the ordinary case: a boot `clr db` puts all 512 cells in the
 derived range and none of them are post-init, which is why
 `generic_job_command_gateway_v3_0` declares nine cells against 504. That also
 means the containment rule says something only where the derived range is
-narrower than the whole stack, which is 12 of the 37 declarations that carry one;
-the validator prints both numbers rather than leaving the reader to assume the
-first.
+narrower than the whole stack — a program that clears its stack at boot absorbs
+any claim made against it. The validator prints how many of the declarations it
+can constrain next to how many it checked, rather than leaving the reader to
+assume the first number is the second.
 
 The reviewed bounds are load-bearing beyond their own accuracy, because
 `legacy_owned_ranges` unions them in and an extension may not be placed over an
 owned cell. A post-init range rounded up to the end of the stack therefore
-forecloses every extension base above it — which is what
+forecloses every extension base from its own start onward — which is what
 `item_resource_reservation_selector_v1_0` did with `S32..S511` against six
 three-cell legs behind `bge r8 6 Overflow`, until the check reduced it to the
 `S32..S49` the source reaches.

@@ -57,7 +57,7 @@ from framework.stack_envelope import (
 ROOT = _PROJECT_ROOT
 MONITOR = "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10"
 READER = "ic10/live-commissioning/stack_header_reader_v1_0.ic10"
-# three hop cells behind `bgt r2 3 Bad`: the narrowest proven post-init write window
+# `bgt r2 3 Bad` bounds its Save loop, so its post-init write window is three proven cells
 RANKER = "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10"
 fails: list[str] = []
 
@@ -551,7 +551,7 @@ ck(not post_init_range_errors(
     replace(minimal, post_init_dynamic_write_ranges=(StackRange(0, 7),)),
     windowed_contract, minimal_extension.reserved_cells,
 ), "the containment rule duplicated the reserved-overlap rule on envelope cells")
-extended = replace(minimal, extension_base=64, legacy_owned_ranges=(StackRange(64, 67),))
+extended = replace(minimal, extension_base=64)
 extended_writes = {address: {value} for address, value in expected_envelope_cells(extended).items()}
 extended_writes.update({64: {31416054}, 65: {1}, 66: {4}, 67: {0}})
 extended_reserved = extension_rule_result(extended, extended_writes).reserved_cells
