@@ -108,6 +108,13 @@ resume=IC10(src('ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10'
 resume.stack.update({0:'HASH:GenericJobStoreCommandExecutor.v1',1:1,2:0,31:7,32:99,34:3,23:99,24:0})
 resume.run(4)
 ck(resume.stack.get(31)==7 and resume.stack.get(24)==0,'reflashed Executor settled a pending command against a stranger')
+# The Planner reaches its Existing controller from the plan path and the cleanup path;
+# a cleanup request must not post into a d1 that is not that controller.
+notctl=Device(107,{0:'HASH:DependencyPlanStore.v2'},{'ReferenceId':107})
+planner=IC10(src('ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10'),
+ {'d0':Device(108,{},{'ReferenceId':108}),'d1':notctl,'d2':Device(109,{},{'ReferenceId':109})},self_ref=110)
+planner.stack.update({25:5,26:0,24:7});planner.run(4)
+ck(sorted(notctl.stack)==[0],'Planner cleanup posted to a d1 that is not its Existing controller')
 
 if fails:
  print('Dependency planning: FAIL');[print(' -',x) for x in fails];sys.exit(1)
@@ -118,3 +125,4 @@ print(' - Plan Store 8-cell commit marker survives interrupted odd-sequence reco
 print(' - four-lane Gateway + sole Store executor atomically guards parent generation and allocates child slots')
 print(' - the Gateway writes nothing at all to a d0 that is not its Store Command Executor')
 print(' - a reflashed Executor re-checks the Store identity before resuming a pending command')
+print(' - the Planner names its Existing controller on the cleanup path as well as the plan path')
