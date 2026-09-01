@@ -28,12 +28,13 @@ authority order:
    seqlocks, and
    allocator-owned cells in another
    housing. Every such override is bound to the source SHA-256 so source
-   arithmetic cannot change without an explicit re-review. Literal-seeded
-   linear address loops are derived directly only when address and counter seeds
-   dominate a strict single-backedge loop with exactly one update to each
-   register. The same proof is used for wired-device and own-stack accesses.
-   Source-derived ranges must exactly match any retained override; partially
-   provable exceptions must contain every cell established by the source proof.
+   arithmetic cannot change without an explicit re-review. An address is derived
+   directly where the branches around it bound every value it can hold and say
+   so; the same derivation serves wired-device and own-stack accesses. Every
+   override must contain every cell that derivation proves, whether or not it
+   proved the whole set. An override wider than a whole derivation is a reviewer
+   being deliberately conservative and is kept as the published range; only an
+   undeclared surface publishes the derivation itself as source-derived.
 5. `data/script_contract_protocol_definitions.json` gives shared protocol IDs a
    name and links them to supplemental domain definitions.
 6. `contracts/` is deterministic generated output from those inputs.
