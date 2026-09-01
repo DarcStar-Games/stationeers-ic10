@@ -84,7 +84,7 @@
         "dynamic_write_ranges": {"type": "array", "items": {"$ref": "#/$defs/range"}},
         "line_count": {"type": "integer", "minimum": 1, "maximum": 128},
         "line_headroom_120": {"type": "integer", "minimum": -8},
-        "measured_v1_publication_cost_lines": {"const": 8},
+        "measured_v1_publication_cost_lines": {"type": "integer", "minimum": 3, "maximum": 8},
         "measured_v1_stack_cost_cells": {"const": 8}
       }
     },
@@ -134,7 +134,7 @@
     "migrated": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["service_id", "contract", "magic", "magic_token", "service_abi", "schema_id", "schema_id_hash", "schema_version", "extension_base", "telemetry_base", "publishes_state", "custom_state_bits", "publishes_generation", "standard_capabilities", "capability_mask", "extension_flags", "implementation_id", "implementation_id_hash", "publication_validation", "pilot_family"],
+      "required": ["service_id", "contract", "magic", "magic_token", "service_abi", "schema_id", "schema_id_hash", "schema_version", "schema_assigned_externally", "extension_base", "telemetry_base", "publishes_state", "custom_state_bits", "publishes_generation", "standard_capabilities", "capability_mask", "extension_flags", "implementation_id", "implementation_id_hash", "publication_validation", "pilot_family"],
       "properties": {
         "service_id": {"type": "string", "pattern": "^ic10\\.script\\.[a-z0-9.]+$"},
         "contract": {"type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$"},
@@ -144,6 +144,7 @@
         "schema_id": {"type": ["string", "null"]},
         "schema_id_hash": {"type": ["string", "null"]},
         "schema_version": {"type": "integer", "minimum": 0},
+        "schema_assigned_externally": {"type": "boolean"},
         "extension_base": {"type": "integer", "minimum": 0, "maximum": 508},
         "telemetry_base": {"type": "integer", "minimum": 0, "maximum": 511},
         "publishes_state": {"type": "boolean"},

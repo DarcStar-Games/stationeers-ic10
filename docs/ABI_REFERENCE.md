@@ -1897,9 +1897,11 @@ S11 target ReferenceId
 
 `ic10/live-commissioning/stack_header_reader_v1_0.ic10` is the generic reader for
 the common header. identity `HASH("StackHeaderReader.v1")`. `d0` is the target IC housing and
-optional `d1` mirrors the discovered magic to a `Setting` device. It reads only
-`S0..S7` of the target, validates the shape, and republishes every field the
-target's mask declares. Undeclared fields publish `0`.
+optional `d1` mirrors the discovered magic to a `Setting` device. It reads the
+target's `S0..S7`, validates every declared field, and republishes those fields.
+When `HAS_EXTENSION` is set, it also validates the common four-cell extension
+header and bounds without interpreting family fields. Undeclared fields publish
+`0`.
 
 ```text
 S5  own state: 1 booting, 4 target missing or not a housing, 2 ready
@@ -1918,13 +1920,13 @@ S17 target ReferenceId
 ## Controller runtime identities
 
 The seven Generic Telemetry runtimes each publish their own service magic in the
-common header at `S0`, and point `S7` at the telemetry block that stays at `S96`.
+common header at `S0`, and point `S6` at the telemetry block that stays at `S96`.
 The telemetry magic `27182818` continues to identify that block, not the service:
 its consumers read `S96` exactly as before.
 
 ## Common Stack Header v1
 
-Every service identifies itself in the first five cells:
+Every service identifies itself in the fixed eight-cell header:
 
 ```text
 S0 ServiceMagic — the registered magic below; identity   (always)

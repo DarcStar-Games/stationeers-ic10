@@ -10,7 +10,8 @@ header, at the address 154 of 173 programs already use.
 
 ## Why the first cells
 
-The generated inventory evaluated every one of the 173 deployable programs:
+The initial design inventory evaluated all 173 programs that existed before the
+reference reader was added:
 
 - 154 already publish their magic at `S0` and their ABI at `S1`;
 - the 7 Generic Telemetry runtimes publish at `S96`, and 6 of them touch no cell
@@ -325,9 +326,9 @@ version and is rejected by v1 readers; it may not silently repurpose a v1 cell.
 | | cells | lines | notes |
 | --- | ---: | ---: | --- |
 | Header reservation | 8 | — | costs 3 more programs than reserving 5; deferring costs a second break of ~146 |
-| Mandatory writes | 3 | 3 | `S0`/`S1` already published by 172 programs |
-| Stack Header Reader | 8 | 117 | the reference reader; validates every declared field |
-| Stack Cell Monitor | 8 | 45 | the probe: one cell at a chosen address |
+| Mandatory writes | 3 | 3 | `S0`/`S1` were already published by 154 of the 173 pre-v1 programs; all current programs now publish them |
+| Stack Header Reader | 8 | 118 | the reference reader; validates every declared field |
+| Stack Cell Monitor | 8 | 46 | the probe: one cell at a chosen address |
 | Generic Telemetry family | 8 | +4 each | 7 runtimes migrated; 5 spend reviewed margin, 0 consumers changed |
 | Manufacturing family | 8 | +1 each | 10 migrated; seven move a whole peer-written mailbox, 1 spends reviewed margin |
 | Dependency-planning family | 8 | +1 each | 18 migrated as one cluster; every peer mailbox moves as a contiguous block, 2 spend reviewed margin |
@@ -345,7 +346,7 @@ read `getd r0 ref 96` were untouched.
 Each runtime also gained its own registered magic, because the header identifies
 a service and `27182818` identifies a telemetry block that seven different
 services publish. An operator reading `S0` now learns which runtime is in the
-housing, and `S7` tells the reader where its telemetry lives — the exact question
+housing, and `S6` tells the reader where its telemetry lives — the exact question
 that opened this design.
 
 Five of the seven were at or near the soft ceiling, so they carry reviewed
@@ -355,12 +356,13 @@ everywhere.
 
 ## Machine-readable authority
 
-The generated artifacts keep the `stack_envelope` name: the five-cell header
+The generated artifacts keep the `stack_envelope` name: the eight-cell header
 plus the extension it points at is the envelope a generic reader opens first.
 
 `data/stack_envelope_declarations.json` is the reviewed migration/exemption
-source. `tools/generate/generate_script_contracts.py` combines it with all 173
-per-script contracts and writes `contracts/stack_envelope_inventory.json`.
+source. `tools/generate/generate_script_contracts.py` combines it with every
+per-script contract and writes `contracts/stack_envelope_inventory.json`; its
+validator requires exactly one inventory row for every deployable contract.
 
 Each generated row records current identity/header cells, every directly
 published schema hash, whether a primary stack protocol was declared, payload
@@ -368,7 +370,12 @@ bases, existing consumer checks, literal/dynamic stack pressure, line headroom,
 which of `S0..S7` the program occupies today, and either the v1 header or its
 explicit baseline exemption. Migrated rows also record the reviewed source
 fingerprint, straight-line publication rule, immutable stack ownership outside
-the header, and source-fingerprinted post-initialization dynamic-write bounds.
+the header, whether `S3` is assigned externally, and source-fingerprinted
+post-initialization dynamic-write bounds.
+The recorded publication cost is three mandatory writes plus one for each
+declared optional field the service itself writes; externally assigned fields
+and protocol capability bits add no source lines. Stack cost remains the full
+eight-cell reservation for every service.
 
 `tools/plan_header_migration.py` plans a family's move from those contracts. It
 takes free cells from the analysed footprint rather than the literal one — a
@@ -397,6 +404,6 @@ usable magic; `-6` means a declared field or an extension bound was invalid.
 
 The Stack Cell Monitor stays the probe for reading one chosen cell at an address,
 which is what an operator uses next to inspect a payload the reader identified.
-Splitting them keeps each program small: the reader is 117 lines and the probe
-is 45, where one combined program had reached 121 with 7 lines of hard-limit
-margin left.
+Splitting them keeps each program small; the measured source line counts are in
+the cost table above. One combined program had reached 121 lines with 7 lines of
+hard-limit margin left.

@@ -28,6 +28,9 @@ HAS_EXTENSION = 2
 HAS_STATE = 4
 HAS_TELEMETRY = 8
 HAS_GENERATION = 16
+FIELD_CAPABILITY_BITS_V1 = (
+    HAS_SCHEMA | HAS_EXTENSION | HAS_STATE | HAS_TELEMETRY | HAS_GENERATION
+)
 HAS_ASYNC_REQUEST_V1 = 32
 HAS_BANKED_TRANSACTION_V1 = 64
 HAS_GENERIC_JOB_ABI_V1 = 128
@@ -37,12 +40,7 @@ STANDARD_CAPABILITY_BITS_V1 = {
     "GENERIC_JOB_ABI_V1": HAS_GENERIC_JOB_ABI_V1,
 }
 CAPABILITY_BITS_V1 = (
-    HAS_SCHEMA
-    | HAS_EXTENSION
-    | HAS_STATE
-    | HAS_TELEMETRY
-    | HAS_GENERATION
-    | sum(STANDARD_CAPABILITY_BITS_V1.values())
+    FIELD_CAPABILITY_BITS_V1 | sum(STANDARD_CAPABILITY_BITS_V1.values())
 )
 STATE_VALUES = (0, 1, 2, 3, 4, 5)
 STATE_FIELD_MASK = 0xF          # bits 0..3 carry the state, one value at a time
@@ -69,6 +67,16 @@ def derive_capability_mask(
         | (HAS_GENERATION if publishes_generation else 0)
         | sum(STANDARD_CAPABILITY_BITS_V1[name] for name in standard_capabilities)
     )
+
+
+def publication_cost_lines(
+    capability_mask: int, externally_assigned_fields: int = 0
+) -> int:
+    """Return mandatory writes plus declared optional fields this service writes."""
+    locally_published = (
+        capability_mask & FIELD_CAPABILITY_BITS_V1 & ~externally_assigned_fields
+    )
+    return 3 + locally_published.bit_count()
 
 
 def state_errors(values: set[Any], custom_state_bits: int) -> list[str]:
@@ -1197,6 +1205,26 @@ def build_inventory(
         source = contract["source"]
         own = contract["own_stack"]
         declaration = migrated.get(source)
+        standard_capabilities = participation_by_source.get(source, frozenset())
+        capability_mask = (
+            derive_capability_mask(
+                has_schema=(
+                    declaration["schema_id"] is not None
+                    or declaration.get("schema_assigned_externally", False)
+                ),
+                extension_base=declaration["extension_base"],
+                publishes_state=declaration["publishes_state"],
+                telemetry_base=declaration["telemetry_base"],
+                publishes_generation=declaration["publishes_generation"],
+                standard_capabilities=standard_capabilities,
+            )
+            if declaration else 0
+        )
+        externally_assigned_fields = (
+            HAS_SCHEMA
+            if declaration and declaration.get("schema_assigned_externally", False)
+            else 0
+        )
         literal = sorted(window & (set(own["literal_reads"]) | set(own["literal_writes"])))
         dynamic_read = sorted(window & _range_cells(own["dynamic_read_ranges"]))
         dynamic_write = sorted(window & _range_cells(own["dynamic_write_ranges"]))
@@ -1225,7 +1253,9 @@ def build_inventory(
                 "dynamic_write_ranges": own["dynamic_write_ranges"],
                 "line_count": line_count,
                 "line_headroom_120": 120 - line_count,
-                "measured_v1_publication_cost_lines": LENGTH,
+                "measured_v1_publication_cost_lines": publication_cost_lines(
+                    capability_mask, externally_assigned_fields
+                ),
                 "measured_v1_stack_cost_cells": LENGTH,
             },
             "window_collision": {
@@ -1237,7 +1267,6 @@ def build_inventory(
             },
         }
         if declaration:
-            standard_capabilities = participation_by_source.get(source, frozenset())
             entry["envelope"] = {
                 "service_id": declaration["service_id"],
                 "contract": declaration["contract"],
@@ -1250,23 +1279,16 @@ def build_inventory(
                     else schema_hash_token(declaration["schema_id"], declaration["schema_version"])
                 ),
                 "schema_version": declaration["schema_version"],
+                "schema_assigned_externally": declaration.get(
+                    "schema_assigned_externally", False
+                ),
                 "extension_base": declaration["extension_base"],
                 "telemetry_base": declaration["telemetry_base"],
                 "publishes_state": declaration["publishes_state"],
                 "custom_state_bits": declaration.get("custom_state_bits", 0),
                 "publishes_generation": declaration["publishes_generation"],
                 "standard_capabilities": sorted(standard_capabilities),
-                "capability_mask": derive_capability_mask(
-                    has_schema=(
-                        declaration["schema_id"] is not None
-                        or declaration.get("schema_assigned_externally", False)
-                    ),
-                    extension_base=declaration["extension_base"],
-                    publishes_state=declaration["publishes_state"],
-                    telemetry_base=declaration["telemetry_base"],
-                    publishes_generation=declaration["publishes_generation"],
-                    standard_capabilities=standard_capabilities,
-                ),
+                "capability_mask": capability_mask,
                 "extension_flags": declaration["extension_flags"],
                 "implementation_id": declaration["implementation_id"],
                 "implementation_id_hash": (

@@ -20,6 +20,8 @@ from framework.ic10_source import game_hash
 from framework.stack_envelope import (
     BASE,
     CAPABILITY_BITS_V1,
+    FIELD_CAPABILITY_BITS_V1,
+    HAS_SCHEMA,
     HAS_ASYNC_REQUEST_V1,
     HAS_BANKED_TRANSACTION_V1,
     HAS_GENERIC_JOB_ABI_V1,
@@ -80,6 +82,29 @@ ck(inventory["totals"] == {
     "backlog_dynamic_range_users": 0,
 }, "generated coverage/backlog totals changed without review")
 by_source = {item["source"]: item for item in inventory["services"]}
+
+
+def expected_publication_cost(item):
+    envelope = item.get("envelope", {})
+    mask = envelope.get("capability_mask", 0)
+    externally_assigned = HAS_SCHEMA if envelope.get("schema_assigned_externally") else 0
+    return 3 + (mask & FIELD_CAPABILITY_BITS_V1 & ~externally_assigned).bit_count()
+
+
+ck(all(
+    item["stack_pressure"]["measured_v1_publication_cost_lines"]
+    == expected_publication_cost(item)
+    for item in inventory["services"]
+), "per-service publication costs do not match mandatory and declared field writes")
+for external_schema_source in (
+    "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10",
+    "ic10/directory-core/generic_registry_directory_host_v2_0.ic10",
+):
+    ck(by_source[external_schema_source]["stack_pressure"]
+       ["measured_v1_publication_cost_lines"] == 3,
+       f"{external_schema_source}: externally assigned schema adds a source publication line")
+    ck(by_source[external_schema_source]["envelope"]["schema_assigned_externally"],
+       f"{external_schema_source}: inventory omits external schema ownership")
 job_store = by_source["ic10/generic-jobs/generic_job_store_v1_0.ic10"]["envelope"]
 config_host = by_source["ic10/controller-config/generic_persistent_config_host_v1_1.ic10"]["envelope"]
 directory_adapter = by_source[
@@ -154,7 +179,7 @@ ck(len(telemetry) == 7, "the Generic Telemetry family is not fully migrated")
 for item in telemetry:
     envelope = item["envelope"]
     ck(envelope["telemetry_base"] == 96 and envelope["capability_mask"] == 8,
-       f"{item['source']}: does not advertise its telemetry block through S7")
+       f"{item['source']}: does not advertise its telemetry block through S6")
     runtime = IC10((ROOT / item["source"]).read_text())
     runtime.run(1)
     ck(runtime.stack.get(96) == 27182818,
@@ -635,6 +660,6 @@ if fails:
     [print(" -", failure) for failure in fails]
     sys.exit(1)
 print("Stack header tests: PASS")
-print(" - the reader validates a target from S0..S7 alone and republishes only declared fields")
+print(" - the reader validates the common envelope and republishes only declared fields")
 print(" - schema binding, extension bounds, and the pre-v1 baseline gate fail closed")
 print(f" - migration backlog: {len(backlog)} programs, {inventory['totals']['backlog_reserved_cell_users']} using S2..S7")

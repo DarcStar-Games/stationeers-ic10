@@ -67,6 +67,20 @@ for p in mds:
         if local and not (ROOT/local).exists():
             validation.fail(f'{p.name}: broken local markdown link {target}')
 
+# Issue #29 requires measured costs for the live envelope tools. Keep the design
+# table coupled to the production sources rather than letting those measurements
+# become historical guesses as the reader evolves.
+envelope_doc=(ROOT/'docs/STACK_ABI_ENVELOPE.md').read_text()
+for label,source in {
+    'Stack Header Reader':'ic10/live-commissioning/stack_header_reader_v1_0.ic10',
+    'Stack Cell Monitor':'ic10/live-commissioning/stack_cell_monitor_v1_0.ic10',
+}.items():
+    line_count=len((ROOT/source).read_text().splitlines())
+    if f'| {label} | 8 | {line_count} |' not in envelope_doc:
+        validation.fail(
+            f'STACK_ABI_ENVELOPE.md: {label} cost must match {source} ({line_count} lines)'
+        )
+
 forbidden={
     'View ABI3':'the Transform Profile View is ABI4 with the S68..S75 resolved-request mailbox',
     'View ABI 3':'the Transform Profile View is ABI4 with the S68..S75 resolved-request mailbox',
@@ -158,11 +172,17 @@ forbidden={
     'current 38-profile commissioning estimate':'39 Resource Profiles are current',
     'No numbered roadmap milestone remains active':'Item 12 live commissioning is active',
     'recipe_fixture_data':'Recipe fixture GameData moved to tests/fixtures/recipe_game_data/',
- 'S320':'the common header is S0..S4; no fixed window at S320 exists',
+ 'S320':'the common header is S0..S7; no fixed window at S320 exists',
  'DIRECTORY_ADAPTER_ABI_V2':'Directory Adapter is ABI3; its payload starts at S8 and records at S18',
  'Directory Adapter ABI2':'Directory Adapter is ABI3 since the common header migration',
  '31416053':'the envelope magic was removed with the S320 window; identity is the service magic at S0',
  'PrimaryPayloadBase':'the payload header is the common header, so there is no separate payload base',
+ 'point `S7` at the telemetry block':'TelemetryBase is S6',
+ '`S7` tells the reader where its telemetry lives':'TelemetryBase is S6',
+ 'Every service identifies itself in the first five cells':'the common header spans S0..S7',
+ 'common `S0..S4` header':'the common header spans S0..S7',
+ 'primary payload is at `S0`, `S96`, or another address':'the primary payload header is always S0; S4 and S6 locate optional blocks',
+ 'reads only `S0..S7`':'the reader also validates a declared common extension header',
  'publishes TransformType S2':'Material Transform Admission publishes TransformType at S14',
  'S2 is requested batch count, S3 request generation':'Material Transform Runtime receives requests at S8/S16',
  'Runtime S7 = committed material epoch':'Material Transform Runtime mirrors the committed epoch at S22',

@@ -61,9 +61,6 @@ if actual is not None:
         validation.fail(f"unknown pilot families declared: {sorted(families - PILOT_FAMILIES)}")
     if "stack-monitor" not in families:
         validation.fail("the monitor pilot must stay migrated; it is the reference reader")
-    if any(item["window_collision"]["literal_cells"] for item in migrated
-           if set(item["window_collision"]["literal_cells"]) - set(range(BASE, BASE + LENGTH))):
-        validation.fail("a migrated service uses header cells outside S0..S4 as header cells")
     totals = actual["totals"]
     if totals["deployable_programs"] != len(services):
         validation.fail("deployable total does not match inventory rows")
