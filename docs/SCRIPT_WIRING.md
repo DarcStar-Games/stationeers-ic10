@@ -63,6 +63,10 @@ when:
   `validation/validators/validate_service_identity.py` rejects one that tries;
 - a magic-checking port's `providers` list omits a registered publisher of that
   magic, so the any-of lists cannot drift as new publishers appear;
+- a magic-checking port's `note` never names the identity it pins. A port that
+  checks `S0` has better evidence than the cell-shape correspondence most notes
+  were written against, and a note left alone keeps citing the weaker story for
+  an edge the source now names outright;
 - a `physical-device` declaration sits on a port whose `S0` check names a
   registered script header, or overrides a stack-shaped contract target without
   a `note` saying why the peer is not a script;

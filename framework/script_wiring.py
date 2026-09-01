@@ -179,6 +179,17 @@ def check_port(
         if omitted:
             failures.append(f"{source} {name}: checks S0 magic {magic} but the providers"
                             f" list omits publisher(s) {omitted}")
+        # A note is the reviewed evidence for the edge, and a port that pins the peer's
+        # identity has better evidence than whatever the note was written against. Left
+        # alone the note keeps citing cell-shape coincidence for an edge the source now
+        # names outright, and the next reader trusts the weaker story.
+        identity = next((f"{entry['contract']}.v{entry['abi']}"
+                         for entries in publishers.values() for entry in entries
+                         if entry["base"] == BASE and entry["magic"] == magic
+                         and "contract" in entry), None)
+        if identity is not None and identity not in peer["note"]:
+            failures.append(f"{source} {name}: pins S0 == HASH(\"{identity}\") but the note"
+                            " never says so; say which identity names the peer")
     for provider in peer["providers"]:
         if provider not in ports:
             failures.append(f"{source} {name}: provider {provider} is not a deployable program")

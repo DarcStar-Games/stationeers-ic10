@@ -118,6 +118,15 @@ expect("magic publisher omitted from the providers list fails",
        any("omits publisher" in f
            for f in failing(crowd_wiring, ports=crowd_ports, publishers=crowd)))
 
+named = {PROVIDER: [{"base": 0, "magic": 31410001, "abi": 2, "contract": "TestProvider"}],
+         CONSUMER: []}
+expect("a note that does not name the pinned identity fails",
+       any("never says so" in f for f in failing(publishers=named)))
+told = deepcopy(WIRING)
+told["ports"][CONSUMER]["d0"]["note"] = 'peer named by d0 S0 magic check (TestProvider.v2)'
+expect("naming the identity in the note passes", failing(told, publishers=named) == [])
+expect("a numeric block header exempts the note", failing() == [])
+
 wrong_magic = deepcopy(PORTS)
 wrong_magic[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], constraints={0: 31419999})
 expect("magic the provider never publishes fails",
@@ -264,3 +273,5 @@ print(" - schema, coverage, provider existence, kind agreement, S0 identity cons
 print("   migrated-header guard, reviewed header reads, and inbound-edge listing verified")
 print(" - a port's cells are compared against every declared provider's published/accepted")
 print("   surface, any-of across providers, with reviewed envelopes as the escape hatch")
+print(" - a note must name the contract identity its port pins, so the reviewed evidence")
+print("   cannot keep citing cell shape for an edge the source names outright")
