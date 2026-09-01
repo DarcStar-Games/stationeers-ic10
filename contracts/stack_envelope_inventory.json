@@ -1485,6 +1485,14 @@
                 "header_base": 0
               },
               {
+                "source": "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d3"
+                },
+                "header_base": 0
+              },
+              {
                 "source": "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10",
                 "endpoint": {
                   "kind": "device-port",
@@ -1497,6 +1505,14 @@
                 "endpoint": {
                   "kind": "device-port",
                   "value": "d0"
+                },
+                "header_base": 0
+              },
+              {
+                "source": "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d4"
                 },
                 "header_base": 0
               },
@@ -5224,10 +5240,50 @@
                 "header_base": 0
               },
               {
+                "source": "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              },
+              {
                 "source": "ic10/material-transform/material_transform_link_resolver_v1_0.ic10",
                 "endpoint": {
                   "kind": "device-port",
                   "value": "d2"
+                },
+                "header_base": 0
+              },
+              {
+                "source": "ic10/power-grid/power_link_selector_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              },
+              {
+                "source": "ic10/power-grid/power_sink_selector_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              },
+              {
+                "source": "ic10/power-grid/power_source_selector_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              },
+              {
+                "source": "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
                 },
                 "header_base": 0
               },
@@ -12892,8 +12948,8 @@
         "highest_literal_cell": 19,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 117,
-        "line_headroom_120": 3,
+        "line_count": 118,
+        "line_headroom_120": 2,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12927,7 +12983,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "589cadfd0b11f308380115b9b61dbaef0aee7377c4322e29718f5c229d70b6b6",
+          "source_sha256": "d8e1815fa222766e494fc4e18393f9ea8c89606ac6e8cbb75b84eb351d8af573",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -13297,10 +13353,6 @@
         "highest_literal_cell": 34,
         "dynamic_read_ranges": [
           {
-            "start": 16,
-            "end": 31
-          },
-          {
             "start": 35,
             "end": 37
           }
@@ -13308,7 +13360,7 @@
         "dynamic_write_ranges": [
           {
             "start": 16,
-            "end": 31
+            "end": 18
           }
         ],
         "line_count": 119,
@@ -13324,8 +13376,8 @@
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
-        "dynamic_read_provenance": "source-fingerprinted-exception",
-        "dynamic_write_provenance": "source-fingerprinted-exception"
+        "dynamic_read_provenance": "source-derived",
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.pressure.grid.route.ranker",
@@ -13397,7 +13449,16 @@
             "provider_header_bases": [
               0
             ],
-            "consumers": []
+            "consumers": [
+              {
+                "source": "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              }
+            ]
           }
         ]
       },
@@ -13407,12 +13468,12 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 16,
+            "end": 18
           }
         ],
-        "line_count": 114,
-        "line_headroom_120": 6,
+        "line_count": 115,
+        "line_headroom_120": 5,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -13423,18 +13484,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.pressure.grid.route.selector",
@@ -13455,7 +13507,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "0bfb412f72f466cbc3a99ab3a0a46364b826213e9961fc3b4efd7c7e104d7729",
+          "source_sha256": "7fac98da62392fef837526900c9d4b898c010d545e08f6468c195a6ee443a162",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -13464,7 +13516,11 @@
             },
             {
               "start": 16,
-              "end": 31
+              "end": 18
+            },
+            {
+              "start": 20,
+              "end": 20
             },
             {
               "start": 32,
@@ -13474,7 +13530,7 @@
           "post_init_dynamic_write_ranges": [
             {
               "start": 16,
-              "end": 31
+              "end": 18
             }
           ]
         },

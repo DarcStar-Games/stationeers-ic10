@@ -1418,7 +1418,18 @@
     ]
    }
   ],
-  "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10": [],
+  "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10": [
+   {
+    "port": "d3",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericPersistentConfigHost",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10": [
    {
     "port": "d0",
@@ -1596,7 +1607,18 @@
     ]
    }
   ],
-  "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10": [],
+  "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericSnapshotDirectoryHost",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10": [],
   "ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10": [],
   "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10": [],
@@ -1810,7 +1832,18 @@
   "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10": [],
   "ic10/power-grid/power_dispatch_sweep_v1_0.ic10": [],
   "ic10/power-grid/power_link_executor_v1_0.ic10": [],
-  "ic10/power-grid/power_link_selector_v1_0.ic10": [],
+  "ic10/power-grid/power_link_selector_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericSnapshotDirectoryHost",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/power-grid/power_load_executor_v1_0.ic10": [],
   "ic10/power-grid/power_plan_validator_v1_0.ic10": [],
   "ic10/power-grid/power_producer_endpoint_v1_0.ic10": [],
@@ -1818,8 +1851,30 @@
   "ic10/power-grid/power_reservation_committer_v1_0.ic10": [],
   "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10": [],
   "ic10/power-grid/power_sink_flow_builder_v1_0.ic10": [],
-  "ic10/power-grid/power_sink_selector_v1_0.ic10": [],
-  "ic10/power-grid/power_source_selector_v1_0.ic10": [],
+  "ic10/power-grid/power_sink_selector_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericSnapshotDirectoryHost",
+      "abi": 1
+     }
+    ]
+   }
+  ],
+  "ic10/power-grid/power_source_selector_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericSnapshotDirectoryHost",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/power-grid/power_static_link_v1_0.ic10": [],
   "ic10/power-grid/power_transformer_link_v1_0.ic10": [],
   "ic10/power-jobs/power_job_finalize_v1_0.ic10": [],
@@ -1828,7 +1883,18 @@
   "ic10/power-jobs/power_job_policy_verify_v1_0.ic10": [],
   "ic10/power-jobs/power_job_prepare_v1_0.ic10": [],
   "ic10/power-jobs/power_job_scheduler_v1_0.ic10": [],
-  "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": [],
+  "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericSnapshotDirectoryHost",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": [],
   "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10": [
    {
@@ -1884,6 +1950,16 @@
       "abi": 1
      }
     ]
+   },
+   {
+    "port": "d4",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericPersistentConfigHost",
+      "abi": 1
+     }
+    ]
    }
   ],
   "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10": [
@@ -1912,6 +1988,16 @@
    }
   ],
   "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "PressureGridRouteSelector",
+      "abi": 2
+     }
+    ]
+   },
    {
     "port": "d1",
     "accepted": [

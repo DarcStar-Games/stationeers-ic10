@@ -4219,7 +4219,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "589cadfd0b11f308380115b9b61dbaef0aee7377c4322e29718f5c229d70b6b6",
+   "source_sha256": "d8e1815fa222766e494fc4e18393f9ea8c89606ac6e8cbb75b84eb351d8af573",
    "legacy_owned_ranges": [
     [
      8,
@@ -4288,7 +4288,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "0bfb412f72f466cbc3a99ab3a0a46364b826213e9961fc3b4efd7c7e104d7729",
+   "source_sha256": "7fac98da62392fef837526900c9d4b898c010d545e08f6468c195a6ee443a162",
    "legacy_owned_ranges": [
     [
      8,
@@ -4296,7 +4296,11 @@
     ],
     [
      16,
-     31
+     18
+    ],
+    [
+     20,
+     20
     ],
     [
      32,
@@ -4306,7 +4310,7 @@
    "post_init_dynamic_write_ranges": [
     [
      16,
-     31
+     18
     ]
    ],
    "pilot_family": "pressure-grid"

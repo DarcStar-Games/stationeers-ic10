@@ -15,7 +15,12 @@
     {
       "source": "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10",
       "header_base": 0,
-      "readable_ranges": [],
+      "readable_ranges": [
+        {
+          "start": 16,
+          "end": 18
+        }
+      ],
       "writable_ranges": [],
       "fields": [
         {
@@ -25,7 +30,8 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 2142409287
         },
         {
           "address": 1,
@@ -34,7 +40,8 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 2
         },
         {
           "address": 2,
@@ -43,7 +50,8 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 0
         },
         {
           "address": 8,
@@ -162,9 +170,64 @@
           "mode": "preserved-unless-overwritten",
           "source": "static-entry-path-analysis"
         },
-        "invariants": []
+        "invariants": [
+          {
+            "id": "header.s0.magic",
+            "kind": "cell-equals",
+            "address": 0,
+            "equals": 2142409287,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s0.abi",
+            "kind": "cell-equals",
+            "address": 1,
+            "equals": 2,
+            "source": "generated-protocol-header"
+          }
+        ]
       }
     }
   ],
-  "consumer_interfaces": []
+  "consumer_interfaces": [
+    {
+      "source": "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        8,
+        9,
+        10,
+        37
+      ],
+      "literal_writes": [
+        32,
+        33,
+        34,
+        35,
+        36
+      ],
+      "dynamic_read_ranges": [
+        {
+          "start": 16,
+          "end": 18
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 2142409287
+        }
+      ],
+      "publication_requirements": []
+    }
+  ]
 }

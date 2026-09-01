@@ -54,6 +54,7 @@ beqz r0 None
 get r0 d1 22
 bne r0 r4 Fail
 get r7 d1 19
+bgt r7 3 Fail
 get r8 d1 20
 poke 37 r7
 poke 8 r8

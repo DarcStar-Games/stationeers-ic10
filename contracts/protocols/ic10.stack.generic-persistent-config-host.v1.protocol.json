@@ -409,6 +409,42 @@
       "publication_requirements": []
     },
     {
+      "source": "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d3"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        12,
+        51
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [
+        {
+          "start": 96,
+          "end": 104
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-derived",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": -759746849
+        },
+        {
+          "address": 12,
+          "operator": "equals",
+          "value": 1568849247
+        }
+      ],
+      "publication_requirements": []
+    },
+    {
       "source": "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10",
       "endpoint": {
         "kind": "device-port",
@@ -523,6 +559,37 @@
       ],
       "dynamic_read_range_source": "source-derived",
       "dynamic_write_range_source": "source-derived",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": -759746849
+        }
+      ],
+      "publication_requirements": []
+    },
+    {
+      "source": "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d4"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        8,
+        51
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [
+        {
+          "start": 96,
+          "end": 99
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-derived",
+      "dynamic_write_range_source": "none",
       "constraints": [
         {
           "address": 0,
