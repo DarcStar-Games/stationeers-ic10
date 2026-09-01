@@ -31,7 +31,6 @@ req={
 # Per-file ceilings above the 120-line framework limit; each also carries a reviewed
 # SOFT_LIMIT_EXEMPTIONS entry in validate_ic10.py naming what the margin buys.
 SOFT={'ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10':125,
-'ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10':122,
 'ic10/dependency-planning/dependency_claim_view_v1_0.ic10':121,
 'ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10':123}
 for rel,pats in req.items():

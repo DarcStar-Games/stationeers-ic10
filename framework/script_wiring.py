@@ -64,8 +64,13 @@ def stack_surfaces(contracts: dict[str, dict[str, Any]]) -> dict[str, dict[str, 
 
     A cell the owner writes is one a peer can read, and a cell the owner reads is
     one a peer can write, so most of both surfaces is derived rather than declared.
+    Neither direction can tell a mailbox cell from private state -- a counter the
+    owner writes and reads back looks exactly like a request field -- so the
+    surfaces are an upper bound on what a peer may touch, never a statement that
+    touching it means anything.
+
     The reviewed `external_readable_ranges`/`external_writable_ranges` cover what
-    derivation cannot see: a mailbox one peer posts and a *different* peer
+    derivation cannot see at all: a mailbox one peer posts and a *different* peer
     consumes, which the host itself never touches.
     """
     def cells(ranges: list[dict[str, int]]) -> set[int]:

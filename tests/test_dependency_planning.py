@@ -101,6 +101,13 @@ gw3=IC10(src('ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10'),{'d0':st
 gw3.stack.update({53:parent,54:pgen,55:0,56:1,57:1,58:602,59:1,60:1,61:2,62:21,63:-1,48:12})
 run_round_robin([gw3,exe,store],20)
 ck(sorted(stranger.stack)==[0] and int(store.stack.get(23,0))==before,'Gateway posted a command to a device that is not its Executor')
+# Reflashing with a command in flight must not settle it against whatever d0 now is:
+# the stranger's S8 is allowed to collide with the pending sequence.
+other=Device(105,{0:'HASH:GenericSnapshotDirectoryHost.v1',8:7,9:1,10:55},{'ReferenceId':105})
+resume=IC10(src('ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10'),{'d0':other},self_ref=106)
+resume.stack.update({0:'HASH:GenericJobStoreCommandExecutor.v1',1:1,2:0,31:7,32:99,34:3,23:99,24:0})
+resume.run(4)
+ck(resume.stack.get(31)==7 and resume.stack.get(24)==0,'reflashed Executor settled a pending command against a stranger')
 
 if fails:
  print('Dependency planning: FAIL');[print(' -',x) for x in fails];sys.exit(1)
@@ -110,3 +117,4 @@ print(' - bounded depth/cycle and completed-child inventory liveness semantics a
 print(' - Plan Store 8-cell commit marker survives interrupted odd-sequence recovery')
 print(' - four-lane Gateway + sole Store executor atomically guards parent generation and allocates child slots')
 print(' - the Gateway writes nothing at all to a d0 that is not its Store Command Executor')
+print(' - a reflashed Executor re-checks the Store identity before resuming a pending command')

@@ -93,7 +93,11 @@ contracts:
 
 Effective, not proven: a reviewed range and a fail-closed fallback both stand
 for cells the program may touch, and a consumer comparing against the proven
-subset alone would reject an access the provider is entitled to make.
+subset alone would reject an access the provider is entitled to make. Both
+surfaces are upper bounds for the same reason — neither can tell a mailbox cell
+from a counter the owner writes and reads back — so the check catches a consumer
+reaching outside what its peer touches at all, not a consumer reaching the wrong
+field inside it.
 
 A port passes on the first declared provider that publishes everything it reads
 and accepts everything it writes; a port matching none reports each. Because

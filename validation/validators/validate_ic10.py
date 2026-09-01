@@ -46,9 +46,6 @@ SOFT_LIMIT_EXEMPTIONS = {
         "publishes the common S0 header above its 32-slot durable job records",
     "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10":
         "publishes the common S0 header above its four producer lanes",
-    "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10":
-        "sole physical Job Store writer; checks the Store's S0 identity before it"
-        " touches a durable slot record",
     "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10":
         "publishes the common S0 header with its inventory payload relocated above it",
     "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10":

@@ -30,16 +30,20 @@ validation = Validation(ROOT)
 # wired to it. Each entry says what the port pins instead and what blocks the S0 check.
 UNENFORCED_RANGES = {
     ("ic10/manufacturing/print_material_resolver_v1_0.ic10", "d0"):
-        "pins the Recipe Execution View's S15 ready status; at 120 lines the program has"
-        " no room for a check without restructuring (GitHub issue #90)",
+        "pins the Recipe Execution View's S15 ready status. Not blocked, priced: the"
+        " program sits exactly on the 120-line limit, so checking both its ports takes it"
+        " to 124 and needs a reviewed SOFT_LIMIT_EXEMPTIONS entry of its own (issue #90"
+        " argues the comparison belongs somewhere that costs the consumer no lines)",
     ("ic10/manufacturing/print_material_resolver_v1_0.ic10", "d1"):
         "pins the directory's S9 DirectorySchemaId and S11 record width, which name the"
-        " schema rather than the host; same line budget as d0",
+        " schema the records follow rather than the host publishing them; same price as d0",
     ("ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10", "d0"):
         "any-of by lane: the port accepts the transform Link Resolver or the print"
-        " Material Resolver, so no single S0 equality expresses the edge",
+        " Material Resolver, so no single S0 equality expresses the edge. It pins S12==1"
+        " instead, the admission surface both resolvers publish identically",
     ("ic10/material-transform/multi_material_reservation_stager_v1_0.ic10", "d0"):
-        "any-of by lane, as with the paired Allocator",
+        "any-of by lane, pinning the same shared S12==1 admission surface as the"
+        " paired Allocator",
     ("ic10/live-commissioning/stack_cell_monitor_v1_0.ic10", "d0"):
         "diagnostic: reads one selected cell of whatever IC housing it is wired to, and"
         " rejects non-housings by PrefabHash instead",
