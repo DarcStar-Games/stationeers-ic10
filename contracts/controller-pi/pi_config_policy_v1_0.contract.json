@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-pi/pi_config_policy_v1_0.ic10",
-  "source_sha256": "c05105a2e2eefd37e326529d416ae22d1848c89b0bbf08259bcd52fd7118fbde",
+  "source_sha256": "4c0c3b3505de94a3e6e8ec77f116ce2cf1c0b2b03d7dff25479f772c716b1422",
   "identity": {
     "service_id": "ic10.script.pi.config.policy",
     "implementation_revision": "1.0",
@@ -142,7 +142,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       }
     ],
     "headers": [

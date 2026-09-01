@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10",
-  "source_sha256": "e40af9bff9570a890fe4a87b7ad5c7fff528ab516e67114d47288c0b6b174c67",
+  "source_sha256": "1df9d28dc557388043799f75c191de837ecbb6904150824ebcd5c3e03afb8f90",
   "identity": {
     "service_id": "ic10.script.material.sdb.stacker.feeder",
     "implementation_revision": "1.0",
@@ -259,7 +259,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,

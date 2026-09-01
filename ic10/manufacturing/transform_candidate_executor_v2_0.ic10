@@ -1,7 +1,7 @@
 # Transform Candidate Executor ABI2: d0 Readiness; exact request-token fencing.
 poke 0 HASH("TransformCandidateExecutor.v2")
 poke 1 2
-poke 2 0
+poke 2 32
 poke 11 2
 Loop:
 yield

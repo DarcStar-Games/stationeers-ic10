@@ -3,7 +3,7 @@
 alias registry r1
 poke 0 HASH("ConsoleSelector.v1")
 poke 1 1
-poke 2 0
+poke 2 32
 Loop:
 yield
 get registry db 9

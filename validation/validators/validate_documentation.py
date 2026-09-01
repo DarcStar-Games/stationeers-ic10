@@ -232,6 +232,29 @@ for name,needles in required.items():
     txt=p.read_text()
     for n in needles:
         if n not in txt:validation.fail(f'{name}: missing current documentation marker {n!r}')
+
+# Capability examples are operational ABI documentation, so keep each value in
+# the section that names the service rather than merely requiring it somewhere
+# in the repository.
+for name,heading,marker in (
+ ('docs/ABI_REFERENCE.md','## Generic Job Store ABI v1','capability mask = 224'),
+ ('docs/ABI_REFERENCE.md','## Generic Config Host ABI v1','capability mask = 96'),
+ ('docs/ABI_REFERENCE.md','### Generic Directory Hosts','capability mask = 49'),
+ ('docs/GENERIC_JOB_ABI.md','## 4. Generic Job Store ABI1','capability mask = 224'),
+ ('docs/PRINTER_DIRECTORY.md','## Publication','capability mask = 49'),
+ ('docs/RECIPE_CATALOG.md','## Browse Lookup ABI3','capability mask `32`'),
+ ('docs/ITEM_STORAGE_SYSTEM.md','### 6.2 Allocator','capability mask `32`'),
+):
+    txt=(ROOT/name).read_text()
+    start=txt.find(heading)
+    if start<0:
+        validation.fail(f'{name}: missing capability documentation section {heading!r}')
+        continue
+    section=txt[start+len(heading):]
+    next_heading=re.search(r'\n#{1,6} ',section)
+    if next_heading:section=section[:next_heading.start()]
+    if marker not in section:
+        validation.fail(f'{name}: {heading} missing current {marker!r}')
 for name in ('docs/PHASE_PRESSURE_CONTROLLER.md','docs/PRESSURE_DOMAIN_CONTROLLER.md'):
     txt=(ROOT/name).read_text()
     if 'S97  2' not in txt and 'S97    2' not in txt:

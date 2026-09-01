@@ -1,6 +1,6 @@
 poke 0 HASH("PressureGridPathAllocator.v1")
 poke 1 1
-poke 2 0
+poke 2 32
 move r15 -1
 Loop:
 yield

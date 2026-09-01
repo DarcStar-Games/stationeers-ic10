@@ -93,7 +93,7 @@ Adapter ABI3 publishes:
 ```text
 S0  DirectoryAdapter.v3
 S1  3
-S2  capability mask = 17
+S2  capability mask = 49 (`HAS_SCHEMA` + `HAS_GENERATION` + `HAS_ASYNC_REQUEST_V1`)
 S3  HASH("DirectorySchema.Printer.v2")
 S7  candidate generation; common header fence, written LAST
 S10 entry width = 3

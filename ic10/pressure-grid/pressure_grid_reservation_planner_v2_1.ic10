@@ -1,7 +1,7 @@
 # Grid Reservation Planner v2.1: d0 LinkDir,d1 Medium,d2 Plan Builder.
 poke 0 HASH("PressureGridReservationPlanner.v2")
 poke 1 2
-poke 2 0
+poke 2 32
 move r15 0
 Loop:
 yield

@@ -7,7 +7,7 @@ Reset:
 clr db
 poke 0 HASH("GenericJobStore.v1")
 poke 1 1
-poke 2 0
+poke 2 224
 poke 18 32
 poke 23 1
 j Loop

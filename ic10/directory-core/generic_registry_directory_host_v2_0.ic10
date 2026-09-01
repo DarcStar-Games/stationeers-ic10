@@ -8,7 +8,7 @@ clr db
 Header:
 poke 0 HASH("GenericRegistryDirectoryHost.v3")
 poke 1 3
-poke 2 1
+poke 2 33
 Loop:
 yield
 bdns d0 Loop

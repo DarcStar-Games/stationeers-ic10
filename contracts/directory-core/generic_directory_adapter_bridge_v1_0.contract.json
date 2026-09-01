@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
-  "source_sha256": "db9dc3deb847925362db5569045f2137bdbcc47480319dfeaa58c40e979dc2bf",
+  "source_sha256": "079397d2888ba16f377831a827af0f1a54d58517cf93961ee3a10ca7d45827ec",
   "identity": {
     "service_id": "ic10.script.generic.directory.adapter.bridge",
     "implementation_revision": "1.0",
@@ -191,7 +191,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,

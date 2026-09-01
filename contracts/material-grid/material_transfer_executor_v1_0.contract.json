@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-grid/material_transfer_executor_v1_0.ic10",
-  "source_sha256": "633961dfd2a09b60f2ca99d351f0bb2e31a22bc8655da318c5b082c942512fcf",
+  "source_sha256": "def37b55f860aab3ef226fea166c43f923ce1ed37d4feb6b05087b4cbb7b1710",
   "identity": {
     "service_id": "ic10.script.material.transfer.executor",
     "implementation_revision": "1.0",
@@ -223,7 +223,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,

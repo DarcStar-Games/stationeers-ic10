@@ -37,7 +37,7 @@ program to say what four of its own cells already said.
 | ---: | --- | --- | --- |
 | `S0` | `ServiceMagic` | always | `HASH("<Contract>.v<ABI>")`; the derived service identity |
 | `S1` | `ServiceABI` | always | the same ABI in readable form; `S0` is what pins it |
-| `S2` | `CapabilityMask` | always | which of `S3..S7` this service declares |
+| `S2` | `CapabilityMask` | always | declared header fields and cross-cutting standards |
 | `S3` | `SchemaId` | bit 0 | schema identity **and version**, one exact match |
 | `S4` | `ExtensionBase` | bit 1 | base of a v1 extension, `S8` or later |
 | `S5` | `State` | bit 2 | v1 state value; mutable |
@@ -84,18 +84,25 @@ through the generated contract index.
 | 2 | 4 | `HAS_STATE` — `S5` carries a v1 state value |
 | 3 | 8 | `HAS_TELEMETRY` — `S6` addresses a telemetry block |
 | 4 | 16 | `HAS_GENERATION` — `S7` is a publication fence |
-| 5+ | — | reserved for cross-cutting protocol capabilities; must be zero |
+| 5 | 32 | `HAS_ASYNC_REQUEST_V1` — the service participates in request-identity fencing |
+| 6 | 64 | `HAS_BANKED_TRANSACTION_V1` — durable updates use an old-or-new commit profile |
+| 7 | 128 | `HAS_GENERIC_JOB_ABI_V1` — the service owns and publishes generic job records |
+| 8+ | — | reserved; must be zero |
 
-The mask is **derived, never hand-written**: the generator computes it from the
-reviewed declaration and the validator requires the source to publish exactly
-that value. A bit cannot be set for a field the program does not publish, and a
-field cannot be published without its bit.
+The mask is **derived, never hand-written**: the generator computes field bits
+from each reviewed service declaration and protocol bits from the reviewed
+`standard_participation` lists in `data/stack_envelope_declarations.json`. The
+validator requires the source to publish exactly that result. A bit cannot be
+set for a field or standard the data does not declare, and a declaration cannot
+exist without its bit appearing in `S2`.
 
-Bits 5 and up are reserved for the framework's cross-cutting standards —
-`ASYNC_REQUEST_V1`, `BANKED_TRANSACTION_V1`, `GENERIC_JOB_ABI_V1`, directory
-provider. They stay unallocated until each has a derivable source of truth;
-today those participant lists live as literals inside their validators, and a
-hand-maintained capability bit is exactly the kind of metadata that rots.
+The three allocated protocol bits name versioned framework standards with an
+existing executable conformance validator. `ASYNC_REQUEST_V1` membership covers
+both producers and consumers whose correctness depends on request fencing;
+storage-oriented bits identify the service that owns the durable transaction or
+job record. Catalog and directory contracts remain distinguishable through exact
+`ServiceMagic` and `SchemaId` values; they do not consume a coarse capability bit
+that would erase which ABI or schema a service actually implements.
 
 ### SchemaId carries its version
 

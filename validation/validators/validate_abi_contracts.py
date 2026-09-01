@@ -17,7 +17,7 @@ for f,toks in {
 'ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10':['poke 0 HASH("GenericSnapshotDirectoryHost.v1")','poke 1 1'],
 'ic10/directory-core/generic_registry_directory_host_v2_0.ic10':['poke 0 HASH("GenericRegistryDirectoryHost.v3")','poke 1 3','poke 23 r10'],
 'ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10':['bne r0 HASH("DirectoryAdapter.v3") Loop','put d0 16 r11'],
-'ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10':['poke 0 HASH("DirectoryAdapter.v3")','poke 1 3','poke 2 17','poke 10 6','poke 11 64','poke 15 2'],
+'ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10':['poke 0 HASH("DirectoryAdapter.v3")','poke 1 3','poke 2 49','poke 10 6','poke 11 64','poke 15 2'],
 'ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10':['poke 0 HASH("CatalogCoordinatorDirectoryView.v2")','poke 1 2'],
 'ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10':['poke 0 HASH("CatalogCoordinatorRecovery.v2")','poke 1 2'],
 'ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10':['poke 0 HASH("ResourceProfileView.v1")','poke 1 1','bne r0 HASH("GenericCatalogStore.v6") Bad'],

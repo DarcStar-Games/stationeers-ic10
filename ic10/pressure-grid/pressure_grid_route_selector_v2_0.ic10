@@ -1,7 +1,7 @@
 # Grid Route Selector v2.0: d0 Enumerator,d1 Ranker; reservation-aware ranked path.
 poke 0 HASH("PressureGridRouteSelector.v2")
 poke 1 2
-poke 2 0
+poke 2 32
 poke 12 0
 move r15 -1
 move r14 0

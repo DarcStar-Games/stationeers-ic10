@@ -158,7 +158,7 @@ Returning to `PLANNING` is therefore deliberately conservative. It prevents a sc
 ```text
 S0   magic = GenericJobStore.v1
 S1   ABI = 1
-S2   capability mask = 0
+S2   capability mask = 224 (`HAS_ASYNC_REQUEST_V1` + `HAS_BANKED_TRANSACTION_V1` + `HAS_GENERIC_JOB_ABI_V1`)
 S8   Store response generation
 S9   Store response status; 1 success, <0 rejected
 S10  allocated JobId for PUBLISH_NEW; ignore on other commands

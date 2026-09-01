@@ -6,7 +6,7 @@ poke 31 HASH("MaterialTransferExecutor.v1")
 Init:
 poke 0 HASH("MaterialTransferExecutor.v1")
 poke 1 1
-poke 2 0
+poke 2 32
 poke 19 0
 Loop:
 yield

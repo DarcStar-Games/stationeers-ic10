@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/print_candidate_executor_v2_0.ic10",
-  "source_sha256": "eb49db3ecd9566fe4087092cf2998a1b9bf780fdd76cbf67b8eafaab6ed23057",
+  "source_sha256": "dee52c366d5f8a3695f448d1590e51401f9c0287761ee31996521bce5ecd7b23",
   "identity": {
     "service_id": "ic10.script.print.candidate.executor",
     "implementation_revision": "2.0",
@@ -223,7 +223,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,

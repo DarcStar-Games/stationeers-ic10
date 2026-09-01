@@ -1,7 +1,7 @@
 alias Host d0 # PressureTransfer Policy v1.0.
 poke 0 HASH("PressureTransferConfigPolicy.v1")
 poke 1 1
-poke 2 0
+poke 2 32
 Boot:
 yield
 bdns Host Boot

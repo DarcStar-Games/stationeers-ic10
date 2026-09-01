@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10",
-  "source_sha256": "7fdcd46ae3a83fb7f7f79f40aa7252a145883a9a29e4c79ff6ac7d4443b40bd2",
+  "source_sha256": "e077e115b9ae962db1969b4fe745d4e9d056e84376574d2b53edb93f5a129228",
   "identity": {
     "service_id": "ic10.script.pressure.grid.singlehop.builder",
     "implementation_revision": "1.1",
@@ -211,7 +211,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,

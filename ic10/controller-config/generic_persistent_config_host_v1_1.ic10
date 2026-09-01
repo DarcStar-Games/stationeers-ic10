@@ -1,7 +1,7 @@
 Boot:
 poke 0 HASH("GenericPersistentConfigHost.v1")
 poke 1 1
-poke 2 0
+poke 2 96
 poke 8 0
 yield
 get r14 db 13 # Policy generation; Policy publishes metadata/defaults first

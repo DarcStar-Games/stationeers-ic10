@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/print_job_driver_v2_0.ic10",
-  "source_sha256": "b8f8ce66e12b512eb87d6696989de1331d92540ae4f34f731748cec22106d8d5",
+  "source_sha256": "014464b56b228ef7a7bedb31d213375bbf66fc21afdf370cbe55d2b73caf47d6",
   "identity": {
     "service_id": "ic10.script.print.job.driver",
     "implementation_revision": "2.0",
@@ -275,7 +275,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,

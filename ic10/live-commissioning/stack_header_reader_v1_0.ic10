@@ -40,7 +40,7 @@ get r8 d0 2
 mod r13 r8 1
 bnez r13 Publish
 bltz r8 Publish
-bgt r8 31 Publish
+bgt r8 255 Publish
 and r13 r8 1
 beqz r13 SchemaDone
 get r3 d0 3

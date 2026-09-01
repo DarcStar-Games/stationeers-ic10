@@ -5,7 +5,7 @@ poke 31 HASH("GenericMaterialTransformRuntime.v2")
 Init:
 poke 0 HASH("GenericMaterialTransformRuntime.v2")
 poke 1 2
-poke 2 0
+poke 2 32
 l r0 d0 ReferenceId
 poke 14 r0
 l r0 d4 ReferenceId

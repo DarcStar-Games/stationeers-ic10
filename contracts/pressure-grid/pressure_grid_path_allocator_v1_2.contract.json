@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10",
-  "source_sha256": "d8e1815fa222766e494fc4e18393f9ea8c89606ac6e8cbb75b84eb351d8af573",
+  "source_sha256": "7fe4ed03e051eb3b0ebfe798dd4a5ad7a3b277d19730d7e9ad1a06f5e937aaf8",
   "identity": {
     "service_id": "ic10.script.pressure.grid.path.allocator",
     "implementation_revision": "1.2",
@@ -192,7 +192,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,

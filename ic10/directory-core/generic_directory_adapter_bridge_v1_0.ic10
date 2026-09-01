@@ -1,7 +1,7 @@
 # Generic Directory Adapter Bridge v1.0: d0 Adapter ABI3,d1 Snapshot Host ABI1.
 poke 0 HASH("GenericDirectoryAdapterBridge.v1")
 poke 1 1
-poke 2 0
+poke 2 32
 Loop:
 yield
 bdns d0 Loop

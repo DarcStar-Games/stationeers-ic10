@@ -41,11 +41,18 @@
     "envelope": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["base", "length", "capability_bits_v1", "state_values", "state_field_mask", "state_reserved_mask", "custom_state_shift", "value_bits", "extension_magic", "extension_version", "extension_min_length", "extension_max_length"],
+      "required": ["base", "length", "capability_bits_v1", "standard_capability_bits", "state_values", "state_field_mask", "state_reserved_mask", "custom_state_shift", "value_bits", "extension_magic", "extension_version", "extension_min_length", "extension_max_length"],
       "properties": {
         "base": {"const": 0},
         "length": {"const": 8},
-        "capability_bits_v1": {"const": 31},
+        "capability_bits_v1": {"const": 255},
+        "standard_capability_bits": {
+          "const": {
+            "ASYNC_REQUEST_V1": 32,
+            "BANKED_TRANSACTION_V1": 64,
+            "GENERIC_JOB_ABI_V1": 128
+          }
+        },
         "state_values": {"type": "array", "items": {"type": "integer", "minimum": 0, "maximum": 5}},
         "state_field_mask": {"const": 15},
         "state_reserved_mask": {"const": 240},
@@ -127,7 +134,7 @@
     "migrated": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["service_id", "contract", "magic", "magic_token", "service_abi", "schema_id", "schema_id_hash", "schema_version", "extension_base", "telemetry_base", "publishes_state", "custom_state_bits", "publishes_generation", "capability_mask", "extension_flags", "implementation_id", "implementation_id_hash", "publication_validation", "pilot_family"],
+      "required": ["service_id", "contract", "magic", "magic_token", "service_abi", "schema_id", "schema_id_hash", "schema_version", "extension_base", "telemetry_base", "publishes_state", "custom_state_bits", "publishes_generation", "standard_capabilities", "capability_mask", "extension_flags", "implementation_id", "implementation_id_hash", "publication_validation", "pilot_family"],
       "properties": {
         "service_id": {"type": "string", "pattern": "^ic10\\.script\\.[a-z0-9.]+$"},
         "contract": {"type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$"},
@@ -142,7 +149,12 @@
         "publishes_state": {"type": "boolean"},
         "custom_state_bits": {"type": "integer", "minimum": 0},
         "publishes_generation": {"type": "boolean"},
-        "capability_mask": {"type": "integer", "minimum": 0, "maximum": 31},
+        "standard_capabilities": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"enum": ["ASYNC_REQUEST_V1", "BANKED_TRANSACTION_V1", "GENERIC_JOB_ABI_V1"]}
+        },
+        "capability_mask": {"type": "integer", "minimum": 0, "maximum": 255},
         "extension_flags": {"type": "integer", "minimum": 0, "maximum": 1},
         "implementation_id": {"type": ["string", "null"]},
         "implementation_id_hash": {"type": ["string", "null"]},

@@ -35,7 +35,7 @@ job=(R/'ic10/generic-jobs/generic_job_store_v1_0.ic10').read_text();vm=IC10(job)
 vm.stack={0:'HASH:GenericJobStore.v1',1:99,16:7,23:55,288:1,289:12,290:44,291:-5}
 vm.run(1)
 ck(vm.stack.get(0)=='HASH:GenericJobStore.v1' and vm.stack.get(1)==1,'Job Store did not reset incompatible ABI')
-ck(vm.stack.get(2,0)==0 and vm.stack.get(23)==1 and vm.stack.get(288,0)==0,'Job Store interpreted incompatible durable geometry')
+ck(vm.stack.get(2)==224 and vm.stack.get(23)==1 and vm.stack.get(288,0)==0,'Job Store interpreted incompatible durable geometry')
 
 # Actual Config Host: a durable request generation is acknowledged after reflash without recommit.
 host=(R/'ic10/controller-config/generic_persistent_config_host_v1_1.ic10').read_text();vm=IC10(host)

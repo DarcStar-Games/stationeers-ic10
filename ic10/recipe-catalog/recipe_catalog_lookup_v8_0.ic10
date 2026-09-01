@@ -2,7 +2,7 @@
 # Request S12 Family,S13 Cap,S14 Ordinal,S15 Gen. Response S8..S11,S16 token.
 poke 0 HASH("RecipeCatalogLookup.v3")
 poke 1 3
-poke 2 0
+poke 2 32
 poke 16 0
 Loop:
 yield

@@ -72,7 +72,7 @@ Published Generic Snapshot Directory contract:
 
 ```text
 S0/S1   GenericSnapshotDirectoryHost.v1 / ABI1
-S2      capability mask = 0
+S2      capability mask = 32 (`HAS_ASYNC_REQUEST_V1`)
 S9      HASH("DirectorySchema.PressureGridLink.v1")
 S11/S12 entry width 3 / capacity 64
 S24     active bank

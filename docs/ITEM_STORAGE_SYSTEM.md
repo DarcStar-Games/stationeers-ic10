@@ -176,6 +176,9 @@ The selector never writes a Reservation.
 
 ### 6.2 Allocator — `ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10`
 
+The Selector, Allocator, Releaser, and reserved LArRE move client each publish
+capability mask `32` (`HAS_ASYNC_REQUEST_V1`).
+
 The allocator consumes one exact selector response. Before mutation it revalidates every Reservation and revalidates every quoted semantic Reservation generation. It then commits:
 
 ```text

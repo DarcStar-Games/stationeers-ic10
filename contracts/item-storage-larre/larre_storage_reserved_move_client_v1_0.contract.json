@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10",
-  "source_sha256": "d69982fa64f97810c32cf2ba47e6b46b372070907c5839fdd21315d3ed2cff75",
+  "source_sha256": "0f602283e9d92b8438ccb61f3e78ec8d876ed78ac8759b01983cd072877bbf8f",
   "identity": {
     "service_id": "ic10.script.larre.storage.reserved.move.client",
     "implementation_revision": "1.0",
@@ -250,7 +250,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,

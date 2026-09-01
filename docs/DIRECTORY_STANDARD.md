@@ -39,7 +39,7 @@ and candidate records at `S18`.
 |---:|---|
 | S0 | AdapterMagic = `HASH("DirectoryAdapter.v3")` |
 | S1 | AdapterABI = `3` |
-| S2 | CapabilityMask = `17` (`HAS_SCHEMA` + `HAS_GENERATION`) |
+| S2 | CapabilityMask = `49` (`HAS_SCHEMA` + `HAS_GENERATION` + `HAS_ASYNC_REQUEST_V1`) |
 | S3 | SchemaId = `HASH("<DirectorySchema.X>.v<version>")` |
 | S7 | CandidateGeneration, the common publication fence |
 | S10 | EntryWidth |
@@ -83,7 +83,7 @@ Adapters may reject a source snapshot rather than publish derived records when t
 ```text
 S0      GenericSnapshotDirectoryMagic = GenericSnapshotDirectoryHost.v1
 S1      ABI = 1
-S2      CapabilityMask = 0
+S2      CapabilityMask = 32 (HAS_ASYNC_REQUEST_V1)
 S9      DirectorySchemaId, HASH("<schema>.v<version>")
 S11     EntryWidth
 S12     Capacity
@@ -124,7 +124,7 @@ Consumers then use the schema-defined width/capacity and the ordinary active-ban
 ```text
 S0   GenericRegistryDirectoryMagic = GenericRegistryDirectoryHost.v3
 S1   ABI = 3
-S2   CapabilityMask = 1 (HAS_SCHEMA)
+S2   CapabilityMask = 33 (HAS_SCHEMA + HAS_ASYNC_REQUEST_V1)
 S3   DirectorySchemaId, adapter-assigned folded hash
 S16  status/error
 S20  published record width

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10",
-  "source_sha256": "7675b20d950c10fa9d77ce7a3a9c2492104763c7acfe075dd10ee1ce47ba6fcd",
+  "source_sha256": "20365546a5c6fff23dfeef114332211ced4f30df6c74d1713af6709a065d3ffa",
   "identity": {
     "service_id": "ic10.script.larre.cargo.storage.service",
     "implementation_revision": "1.0",
@@ -170,7 +170,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,

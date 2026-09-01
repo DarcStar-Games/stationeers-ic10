@@ -6,7 +6,7 @@ poke 21 -1
 Init:
 poke 0 HASH("ManufacturingScheduler.v1")
 poke 1 1
-poke 2 0
+poke 2 32
 Loop:
 yield
 get r0 db 20

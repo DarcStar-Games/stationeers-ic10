@@ -1,7 +1,7 @@
 # Multi Reservation Stager ABI1. d0 Resolver,d1 Allocator. No commit.
 poke 0 HASH("MultiMaterialReservationStager.v1")
 poke 1 1
-poke 2 0
+poke 2 32
 poke 13 0
 Loop:
 yield

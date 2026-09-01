@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10",
-  "source_sha256": "f67f0e47ab2a59ab26fd7ccff8cd42dbcc37d8bec15e50fd9c4fffadf387096e",
+  "source_sha256": "c0af69acc33aa2c3f635afeccddd3c5b83f4b5031b22b8b5ca0ccbf4b52eb2b8",
   "identity": {
     "service_id": "ic10.script.diagnostic.mapping.editor",
     "implementation_revision": "1.2",
@@ -170,7 +170,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,

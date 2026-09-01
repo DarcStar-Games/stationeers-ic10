@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10",
-  "source_sha256": "81efcdeda2b069a19376b5ae56bd2aa5ff11ceb3e44ec77b2aac4ce182f42070",
+  "source_sha256": "4d6587aa0fafda860dfb177f1dd6213ce89439abe685c6b2d054e480d1b6e6a3",
   "identity": {
     "service_id": "ic10.script.larre.item.storage.endpoint",
     "implementation_revision": "1.0",
@@ -221,7 +221,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,
