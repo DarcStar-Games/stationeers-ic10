@@ -10,6 +10,8 @@ beq r15 r0 Loop
 get r6 db 11
 bdns d0 Bad
 bdns d1 Bad
+get r0 d1 0
+bne r0 HASH("PowerDispatchPlanStore.v1") Bad
 get r0 d0 0
 bne r0 HASH("GenericSnapshotDirectoryHost.v1") Bad
 get r0 d0 9

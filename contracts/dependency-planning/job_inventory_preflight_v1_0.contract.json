@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10",
-  "source_sha256": "7c89e151c4119517cfef583a06710b0e9231e1702a13bd9d9028f501520b8bbc",
+  "source_sha256": "3057135752cd6f1bcf38c9fcb3933b8f888678c68d2d05339679cbb032b5f151",
   "identity": {
     "service_id": "ic10.script.job.inventory.preflight",
     "implementation_revision": "1.0",
@@ -78,6 +78,7 @@
       },
       "stack": {
         "literal_reads": [
+          0,
           8,
           9,
           10,
@@ -101,20 +102,19 @@
         "dynamic_write_ranges": [],
         "dynamic_read_range_source": "source-fingerprinted-exception",
         "dynamic_write_range_source": "none",
-        "constraints": []
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 1606529514
+          }
+        ]
       },
       "target": {
-        "kind": "stack-interface",
-        "verification": "access-only",
-        "interface_id": "ic10.interface.access.1c808cf3167f4e21",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.1c808cf3167f4e21",
-        "provider_resolution": "deployment-supplied",
-        "assumptions": {
-          "properties_read": [],
-          "properties_written": [],
-          "slot_properties_read": [],
-          "slot_properties_written": []
-        }
+        "kind": "stack-protocol",
+        "verification": "literal-header",
+        "protocol_ids": [
+          "ic10.stack.item-resource-reservation-selector.v1"
+        ]
       }
     }
   ],
@@ -359,7 +359,22 @@
         "source": "literal-own-stack-header"
       }
     ],
-    "consumes": []
+    "consumes": [
+      {
+        "port": "d1",
+        "accepted": [
+          {
+            "protocol_id": "ic10.stack.item-resource-reservation-selector.v1",
+            "header_base": 0,
+            "contract": "ItemResourceReservationSelector",
+            "magic": 1606529514,
+            "abi": 1,
+            "publication_requirements": []
+          }
+        ],
+        "source": "authoritative-literal-header-check"
+      }
+    ]
   },
   "extraction": {
     "mode": "static-v2",

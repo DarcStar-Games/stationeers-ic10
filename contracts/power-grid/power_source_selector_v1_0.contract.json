@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_source_selector_v1_0.ic10",
-  "source_sha256": "9216b9b85d82eb29236e055f35e9444addc601aae649ebd3f4a7a15810c5a9d7",
+  "source_sha256": "af5ba428a68d66d90fd1c2da83a95b944b1d5d0d2df27839694a04880d422ccb",
   "identity": {
     "service_id": "ic10.script.power.source.selector",
     "implementation_revision": "1.0",
@@ -83,6 +83,7 @@
       },
       "stack": {
         "literal_reads": [
+          0,
           24
         ],
         "literal_writes": [],
@@ -97,20 +98,19 @@
         "dynamic_write_ranges": [],
         "dynamic_read_range_source": "source-fingerprinted-exception",
         "dynamic_write_range_source": "none",
-        "constraints": []
+        "constraints": [
+          {
+            "address": 0,
+            "equals": -788162592
+          }
+        ]
       },
       "target": {
-        "kind": "stack-interface",
-        "verification": "access-only",
-        "interface_id": "ic10.interface.access.90abebd9bf6d8559",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.90abebd9bf6d8559",
-        "provider_resolution": "deployment-supplied",
-        "assumptions": {
-          "properties_read": [],
-          "properties_written": [],
-          "slot_properties_read": [],
-          "slot_properties_written": []
-        }
+        "kind": "stack-protocol",
+        "verification": "literal-header",
+        "protocol_ids": [
+          "ic10.stack.power-dispatch-plan-store.v1"
+        ]
       }
     }
   ],
@@ -340,6 +340,20 @@
             "header_base": 0,
             "contract": "GenericSnapshotDirectoryHost",
             "magic": 891293726,
+            "abi": 1,
+            "publication_requirements": []
+          }
+        ],
+        "source": "authoritative-literal-header-check"
+      },
+      {
+        "port": "d1",
+        "accepted": [
+          {
+            "protocol_id": "ic10.stack.power-dispatch-plan-store.v1",
+            "header_base": 0,
+            "contract": "PowerDispatchPlanStore",
+            "magic": -788162592,
             "abi": 1,
             "publication_requirements": []
           }

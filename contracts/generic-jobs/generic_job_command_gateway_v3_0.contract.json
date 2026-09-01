@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10",
-  "source_sha256": "417314e85104d60b6ba6f5e87822ea9d397492498ae384a3ca982bee1a4cad98",
+  "source_sha256": "0a0cb31822214db541af43c44f3f0a8e2eac14815cceaa332444805eda59dff5",
   "identity": {
     "service_id": "ic10.script.generic.job.command.gateway",
     "implementation_revision": "3.0",
@@ -25,6 +25,7 @@
       },
       "stack": {
         "literal_reads": [
+          0,
           24,
           25,
           26,
@@ -57,20 +58,19 @@
         ],
         "dynamic_read_range_source": "none",
         "dynamic_write_range_source": "source-derived",
-        "constraints": []
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 72179439
+          }
+        ]
       },
       "target": {
-        "kind": "stack-interface",
-        "verification": "access-only",
-        "interface_id": "ic10.interface.access.691599efa6aae66b",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.691599efa6aae66b",
-        "provider_resolution": "deployment-supplied",
-        "assumptions": {
-          "properties_read": [],
-          "properties_written": [],
-          "slot_properties_read": [],
-          "slot_properties_written": []
-        }
+        "kind": "stack-protocol",
+        "verification": "literal-header",
+        "protocol_ids": [
+          "ic10.stack.generic-job-store-command-executor.v1"
+        ]
       }
     }
   ],
@@ -408,7 +408,22 @@
         "source": "literal-own-stack-header"
       }
     ],
-    "consumes": []
+    "consumes": [
+      {
+        "port": "d0",
+        "accepted": [
+          {
+            "protocol_id": "ic10.stack.generic-job-store-command-executor.v1",
+            "header_base": 0,
+            "contract": "GenericJobStoreCommandExecutor",
+            "magic": 72179439,
+            "abi": 1,
+            "publication_requirements": []
+          }
+        ],
+        "source": "authoritative-literal-header-check"
+      }
+    ]
   },
   "extraction": {
     "mode": "static-v2",

@@ -78,7 +78,16 @@
     "dynamic_read_range_source": "source-derived",
     "dynamic_write_range_source": "conservative-full-stack",
     "clears_all": true,
-    "external_readable_ranges": [],
+    "external_readable_ranges": [
+      {
+        "start": 32,
+        "end": 95
+      },
+      {
+        "start": 128,
+        "end": 191
+      }
+    ],
     "external_writable_ranges": [],
     "fields": [
       {

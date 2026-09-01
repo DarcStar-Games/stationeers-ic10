@@ -19,6 +19,8 @@ bgtz r0 StoreWait
 get r15 db 23
 get r0 db 24
 beq r15 r0 Loop
+get r0 d0 0
+bne r0 HASH("GenericJobStore.v1") Bad
 get r10 db 35
 blt r10 1 Bad
 bgt r10 3 Bad

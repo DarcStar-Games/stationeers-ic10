@@ -15,7 +15,16 @@
     {
       "source": "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10",
       "header_base": 0,
-      "readable_ranges": [],
+      "readable_ranges": [
+        {
+          "start": 32,
+          "end": 95
+        },
+        {
+          "start": 128,
+          "end": 191
+        }
+      ],
       "writable_ranges": [],
       "fields": [
         {
@@ -195,6 +204,164 @@
     }
   ],
   "consumer_interfaces": [
+    {
+      "source": "ic10/power-grid/power_link_executor_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        27,
+        28,
+        29
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [
+        {
+          "start": 32,
+          "end": 95
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": -788162592
+        }
+      ],
+      "publication_requirements": []
+    },
+    {
+      "source": "ic10/power-grid/power_load_executor_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        27,
+        28,
+        29
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [
+        {
+          "start": 32,
+          "end": 95
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": -788162592
+        }
+      ],
+      "publication_requirements": []
+    },
+    {
+      "source": "ic10/power-grid/power_plan_validator_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        27,
+        28,
+        29
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [
+        {
+          "start": 32,
+          "end": 95
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-derived",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": -788162592
+        }
+      ],
+      "publication_requirements": []
+    },
+    {
+      "source": "ic10/power-grid/power_reservation_committer_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        27,
+        28,
+        29
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [
+        {
+          "start": 32,
+          "end": 95
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": -788162592
+        }
+      ],
+      "publication_requirements": []
+    },
+    {
+      "source": "ic10/power-grid/power_source_selector_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d1"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        24
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [
+        {
+          "start": 128,
+          "end": 191
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": -788162592
+        }
+      ],
+      "publication_requirements": []
+    },
     {
       "source": "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10",
       "endpoint": {

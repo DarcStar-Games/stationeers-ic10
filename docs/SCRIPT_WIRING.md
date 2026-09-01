@@ -105,6 +105,19 @@ statement that the owner accepts the access — including a request field the
 owner publishes but does not currently consume — so a declaration that exists
 only to silence the check is a review finding, not a fix.
 
+The declared consumer edge still matters, for the other half of the problem: it
+is the *runtime* guarantee, because
+`framework/script_contracts.verify_declared_consumers` refuses a declaration the
+source does not back with a literal `S0` check, so an edge exists only where the
+program itself fails closed against a mis-wired peer. That is why the two are
+kept separate — the static comparison runs off the wiring map for every port,
+while `UNENFORCED_RANGES` in
+`validation/validators/validate_script_contracts.py` holds the ports that declare
+a range and still trust whatever is wired to them. Ten remain, each with a
+reviewed reason: eight pin a schema or status cell rather than the peer's
+identity, and the two live-commissioning diagnostics read whatever housing they
+are pointed at by design.
+
 `validation/validators/validate_stack_envelopes.py` keeps its independent,
 source-scan-based guard for magic-checking consumers and reference-register
 reads; its reviewed-read allowlist for device ports is drawn from the wiring

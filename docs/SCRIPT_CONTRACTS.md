@@ -132,7 +132,10 @@ accept a version range. Header base is tracked separately either way, so the
 - a seqlock consumer does not reject odd snapshots and compare a preserved first
   sequence read with a distinct second read;
 - a machine-readable invariant evaluates false;
-- a semantic override's source fingerprint no longer matches.
+- a semantic override's source fingerprint no longer matches;
+- a port declares a dynamic range but no consumer edge, and carries no reviewed
+  `UNENFORCED_RANGES` entry saying what it pins instead and what blocks the `S0`
+  check — or carries an entry that no longer applies.
 
 Access-only interface identities are hashes of their stack and device-assumption
 contracts. Equivalent requirements therefore resolve to one canonical entry in

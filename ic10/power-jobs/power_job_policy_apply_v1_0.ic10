@@ -13,6 +13,8 @@ get r4 db 16
 get r5 db 17
 get r6 db 18
 get r7 db 19
+get r0 d0 0
+bne r0 HASH("GenericJobStore.v1") Bad
 blt r2 0 Bad
 bge r2 32 Bad
 blt r4 0 Bad

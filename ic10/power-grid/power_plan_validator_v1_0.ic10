@@ -8,6 +8,8 @@ get r15 db 9
 get r0 db 10
 beq r15 r0 Loop
 get r2 db 8
+get r0 d0 0
+bne r0 HASH("PowerDispatchPlanStore.v1") Bad
 get r14 d0 27
 mod r0 r14 2
 bnez r0 Bad

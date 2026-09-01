@@ -24,6 +24,40 @@ from framework.script_contracts import (
 ROOT = _PROJECT_ROOT
 validation = Validation(ROOT)
 
+# Ports that declare a dynamic range without a declared consumer edge. The range is
+# still compared -- validate_script_wiring.py checks it against the declared peer's
+# published surface -- but nothing at *runtime* stops the port acting on whatever is
+# wired to it. Each entry says what the port pins instead and what blocks the S0 check.
+UNENFORCED_RANGES = {
+    ("ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10", "d2"):
+        "pins the Config Host's S12 persistence schema signature, which names the exact"
+        " configuration contract but not the Host; 124 of the 128 hard-limit lines are spent",
+    ("ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10", "d5"):
+        "pins the Config Host's S12 persistence schema signature; 124 of the 128"
+        " hard-limit lines are spent",
+    ("ic10/dependency-planning/job_requirement_view_v1_0.ic10", "d0"):
+        "pins the Transform Profile View's S69 resolved-request status",
+    ("ic10/dependency-planning/job_requirement_view_v1_0.ic10", "d1"):
+        "pins the Recipe Execution View's S15 ready status",
+    ("ic10/manufacturing/print_material_resolver_v1_0.ic10", "d0"):
+        "pins the Recipe Execution View's S15 ready status; at 120 lines the program has"
+        " no room for a check without restructuring (GitHub issue #90)",
+    ("ic10/manufacturing/print_material_resolver_v1_0.ic10", "d1"):
+        "pins the directory's S9 DirectorySchemaId and S11 record width, which name the"
+        " schema rather than the host; same line budget as d0",
+    ("ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10", "d0"):
+        "any-of by lane: the port accepts the transform Link Resolver or the print"
+        " Material Resolver, so no single S0 equality expresses the edge",
+    ("ic10/material-transform/multi_material_reservation_stager_v1_0.ic10", "d0"):
+        "any-of by lane, as with the paired Allocator",
+    ("ic10/live-commissioning/stack_cell_monitor_v1_0.ic10", "d0"):
+        "diagnostic: reads one selected cell of whatever IC housing it is wired to, and"
+        " rejects non-housings by PrefabHash instead",
+    ("ic10/live-commissioning/stack_header_reader_v1_0.ic10", "d0"):
+        "diagnostic: reports the header of any header-publishing IC, so pinning one"
+        " identity would defeat its purpose",
+}
+
 
 def check_reference(reference: str) -> None:
     path_text, separator, fragment = reference.partition("#")
@@ -235,8 +269,36 @@ for protocol in expected_protocols["protocols"]:
 
 validation.extend(compatibility_errors(actual_contracts))
 
+unenforced = 0
+for contract in actual_contracts:
+    declared_edges = {item["port"] for item in contract["contracts"]["consumes"]}
+    for port in contract["device_ports"]:
+        stack = port["stack"]
+        if not stack["dynamic_read_ranges"] and not stack["dynamic_write_ranges"]:
+            continue
+        if port["port"] in declared_edges:
+            continue
+        unenforced += 1
+        reason = UNENFORCED_RANGES.get((contract["source"], port["port"]))
+        if reason is None:
+            validation.fail(
+                f"{contract['source']} {port['port']}: declares a dynamic range with no declared"
+                " consumer edge and no reviewed entry in UNENFORCED_RANGES -- add the S0 identity"
+                " check and the edge, or record why the port cannot carry one")
+
+stale = sorted(set(UNENFORCED_RANGES) - {
+    (contract["source"], port["port"]) for contract in actual_contracts
+    for port in contract["device_ports"]
+    if (port["stack"]["dynamic_read_ranges"] or port["stack"]["dynamic_write_ranges"])
+    and port["port"] not in {item["port"] for item in contract["contracts"]["consumes"]}
+})
+for source, name in stale:
+    validation.fail(f"{source} {name}: UNENFORCED_RANGES entry no longer applies")
+
 raise SystemExit(validation.finish("Script contract validation",[
     f"{len(actual_contracts)} deployable scripts have schema-valid, source-current JSON contracts",
     f"{len(expected_protocols['protocols'])} stack protocols have canonical generated field/access definitions",
     "wired and network-discovered dependencies resolve header locations, schema constraints, and access direction",
+    f"every port declaring a dynamic range carries a declared consumer edge, except"
+    f" {unenforced} with a reviewed reason",
 ]))
