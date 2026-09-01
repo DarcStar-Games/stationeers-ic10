@@ -15,7 +15,12 @@
     {
       "source": "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10",
       "header_base": 0,
-      "readable_ranges": [],
+      "readable_ranges": [
+        {
+          "start": 16,
+          "end": 47
+        }
+      ],
       "writable_ranges": [],
       "fields": [
         {
@@ -146,5 +151,47 @@
       }
     }
   ],
-  "consumer_interfaces": []
+  "consumer_interfaces": [
+    {
+      "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d1"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        12,
+        13,
+        14,
+        15,
+        49
+      ],
+      "literal_writes": [
+        10
+      ],
+      "dynamic_read_ranges": [
+        {
+          "start": 16,
+          "end": 47
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-derived",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": -1203210243
+        },
+        {
+          "address": 15,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "publication_requirements": []
+    }
+  ]
 }

@@ -1461,6 +1461,14 @@
             ],
             "consumers": [
               {
+                "source": "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d2"
+                },
+                "header_base": 0
+              },
+              {
                 "source": "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10",
                 "endpoint": {
                   "kind": "device-port",
@@ -1497,6 +1505,14 @@
                 "endpoint": {
                   "kind": "device-port",
                   "value": "d0"
+                },
+                "header_base": 0
+              },
+              {
+                "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d5"
                 },
                 "header_base": 0
               },
@@ -1916,8 +1932,8 @@
         "highest_literal_cell": 119,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 124,
-        "line_headroom_120": -4,
+        "line_count": 126,
+        "line_headroom_120": -6,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -1952,7 +1968,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "b4edd466b76f944583d93df90b415f74c9a3de965dd024c14915c68551a9e391",
+          "source_sha256": "a37edcd855a18f0e7d83b9abcc24ee8d8a8862598f0438568bff308d69ce8fe3",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -3653,8 +3669,8 @@
         "highest_literal_cell": 27,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 99,
-        "line_headroom_120": 21,
+        "line_count": 103,
+        "line_headroom_120": 17,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -3688,7 +3704,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "1b980a346ededcb40c920fbd2e8c1ea3bda808788ed8966b60939c196d7f0af4",
+          "source_sha256": "a8c97008efc0245d620ba58cbcd7123a5ef9e34a5e1bb46fefbbf41887e102d3",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -12305,8 +12321,8 @@
             "end": 511
           }
         ],
-        "line_count": 124,
-        "line_headroom_120": -4,
+        "line_count": 126,
+        "line_headroom_120": -6,
         "measured_v1_publication_cost_lines": 8,
         "measured_v1_stack_cost_cells": 8
       },
@@ -12350,7 +12366,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "f117686bf42e65f0eb91bc3ca0543d964bd242e34c29933f815b25c374374dc6",
+          "source_sha256": "0e829f3a9ef9999c1bdb66f72ff41d46f89a28973258fa759cb6fc28e5309830",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -15443,7 +15459,16 @@
             "provider_header_bases": [
               0
             ],
-            "consumers": []
+            "consumers": [
+              {
+                "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d1"
+                },
+                "header_base": 0
+              }
+            ]
           }
         ]
       },
@@ -18221,6 +18246,14 @@
               0
             ],
             "consumers": [
+              {
+                "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              },
               {
                 "source": "ic10/material-transform/material_transform_admission_v1_0.ic10",
                 "endpoint": {

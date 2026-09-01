@@ -29,16 +29,6 @@ validation = Validation(ROOT)
 # published surface -- but nothing at *runtime* stops the port acting on whatever is
 # wired to it. Each entry says what the port pins instead and what blocks the S0 check.
 UNENFORCED_RANGES = {
-    ("ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10", "d2"):
-        "pins the Config Host's S12 persistence schema signature, which names the exact"
-        " configuration contract but not the Host; 124 of the 128 hard-limit lines are spent",
-    ("ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10", "d5"):
-        "pins the Config Host's S12 persistence schema signature; 124 of the 128"
-        " hard-limit lines are spent",
-    ("ic10/dependency-planning/job_requirement_view_v1_0.ic10", "d0"):
-        "pins the Transform Profile View's S69 resolved-request status",
-    ("ic10/dependency-planning/job_requirement_view_v1_0.ic10", "d1"):
-        "pins the Recipe Execution View's S15 ready status",
     ("ic10/manufacturing/print_material_resolver_v1_0.ic10", "d0"):
         "pins the Recipe Execution View's S15 ready status; at 120 lines the program has"
         " no room for a check without restructuring (GitHub issue #90)",

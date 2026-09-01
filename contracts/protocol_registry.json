@@ -1164,6 +1164,14 @@
       ],
       "consumers": [
         {
+          "source": "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d2"
+          },
+          "header_base": 0
+        },
+        {
           "source": "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10",
           "endpoint": {
             "kind": "device-port",
@@ -1200,6 +1208,14 @@
           "endpoint": {
             "kind": "device-port",
             "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d5"
           },
           "header_base": 0
         },
@@ -2853,7 +2869,16 @@
           "header_base": 0
         }
       ],
-      "consumers": []
+      "consumers": [
+        {
+          "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        }
+      ]
     },
     {
       "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -3092,6 +3117,14 @@
         }
       ],
       "consumers": [
+        {
+          "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
         {
           "source": "ic10/material-transform/material_transform_admission_v1_0.ic10",
           "endpoint": {

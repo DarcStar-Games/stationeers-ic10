@@ -15,6 +15,8 @@ l r0 d5 ReferenceId
 get sp db 116
 sne ra r0 sp
 poke 116 r0
+get r0 d5 0
+bne r0 HASH("GenericPersistentConfigHost.v1") ConfigBad
 get r0 d5 8
 blez r0 ConfigBad
 get sp d5 51

@@ -100,10 +100,11 @@ comparison that was already enforced there passed anyway.
 One vacuity does survive, and the validator counts it rather than hiding it: a
 program that runs `clr db` writes the whole stack, so its published surface is
 all 512 cells and no read of it can fail. 27 of the 108 declared providers are
-in that position, leaving 154 of the 208 edges with at least one direction the
-comparison can actually constrain. Narrowing those means deriving the publish
-surface from what a provider writes *after* initialization rather than from its
-full dynamic write range.
+in that position, and because providers are any-of, one such peer absorbs the
+whole edge however narrow the others are. That leaves 152 of the 208 edges able
+to fail at all. Narrowing the rest means deriving the publish surface from what
+a provider writes *after* initialization rather than from its full dynamic write
+range.
 
 The reviewed envelope stays the escape hatch, for the one thing derivation
 cannot see: a mailbox that one peer posts and a *different* peer consumes, which
@@ -121,10 +122,12 @@ program itself fails closed against a mis-wired peer. That is why the two are
 kept separate — the static comparison runs off the wiring map for every port,
 while `UNENFORCED_RANGES` in
 `validation/validators/validate_script_contracts.py` holds the ports that declare
-a range and still trust whatever is wired to them. Ten remain, each with a
-reviewed reason: eight pin a schema or status cell rather than the peer's
-identity, and the two live-commissioning diagnostics read whatever housing they
-are pointed at by design.
+a range and still trust whatever is wired to them. Six remain, each with a
+reviewed reason: the Print Material Resolver's two ports pin a schema and a
+status cell instead, and at 120 lines it has no room for a check; the Multi
+Reservation Stager and Allocator accept either lane's resolver, so no single
+`S0` equality expresses the edge; and the two live-commissioning diagnostics read
+whatever housing they are pointed at by design.
 
 `validation/validators/validate_stack_envelopes.py` keeps its independent,
 source-scan-based guard for magic-checking consumers and reference-register

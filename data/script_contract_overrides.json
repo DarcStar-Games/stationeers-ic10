@@ -182,7 +182,7 @@
    ]
   },
   "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10": {
-   "source_sha256": "b4edd466b76f944583d93df90b415f74c9a3de965dd024c14915c68551a9e391",
+   "source_sha256": "a37edcd855a18f0e7d83b9abcc24ee8d8a8862598f0438568bff308d69ce8fe3",
    "ports": {
     "d0": {
      "dynamic_property_sources": [
@@ -487,7 +487,7 @@
    }
   },
   "ic10/dependency-planning/job_requirement_view_v1_0.ic10": {
-   "source_sha256": "1b980a346ededcb40c920fbd2e8c1ea3bda808788ed8966b60939c196d7f0af4",
+   "source_sha256": "a8c97008efc0245d620ba58cbcd7123a5ef9e34a5e1bb46fefbbf41887e102d3",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -1076,7 +1076,7 @@
    }
   },
   "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": {
-   "source_sha256": "f117686bf42e65f0eb91bc3ca0543d964bd242e34c29933f815b25c374374dc6",
+   "source_sha256": "0e829f3a9ef9999c1bdb66f72ff41d46f89a28973258fa759cb6fc28e5309830",
    "ports": {
     "d3": {
      "dynamic_property_sources": [
@@ -1578,6 +1578,15 @@
      ]
     }
    }
+  },
+  "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10": {
+   "source_sha256": "6df187ba974b9a7e329addc1cfcd4a6a3f946534df219e48f0f87f13d3fd4681",
+   "external_readable_ranges": [
+    [
+     16,
+     47
+    ]
+   ]
   },
   "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10": {
    "source_sha256": "f0f0b37b230506e945a416dd440616f64bc6b1a722f84a9dc0043aa30f615c0a",

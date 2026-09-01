@@ -3557,80 +3557,6 @@
         }
       ]
     },
-    "ic10.interface.access.1603336c96f1f913": {
-      "stack": {
-        "literal_reads": [
-          33,
-          35,
-          68,
-          69,
-          71,
-          72,
-          74
-        ],
-        "literal_writes": [
-          70
-        ],
-        "dynamic_read": true,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [
-          {
-            "start": 8,
-            "end": 71
-          }
-        ],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-fingerprinted-exception",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 69,
-            "equals": 1
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 8,
-            "end": 72
-          },
-          {
-            "start": 74,
-            "end": 74
-          }
-        ],
-        "stack_writable_ranges": [
-          {
-            "start": 70,
-            "end": 70
-          }
-        ],
-        "constraints": [
-          {
-            "address": 69,
-            "equals": 1
-          }
-        ],
-        "properties_readable": [],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
-          "port": "d0"
-        }
-      ]
-    },
     "ic10.interface.access.17d9ab374ee9cb29": {
       "stack": {
         "literal_reads": [
@@ -4404,81 +4330,6 @@
         {
           "source": "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10",
           "port": "d1"
-        }
-      ]
-    },
-    "ic10.interface.access.2f84668354be2ef7": {
-      "stack": {
-        "literal_reads": [
-          8,
-          12,
-          51
-        ],
-        "literal_writes": [],
-        "dynamic_read": true,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [
-          {
-            "start": 96,
-            "end": 104
-          }
-        ],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-derived",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 12,
-            "equals": 1562221057
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [
-          "ReferenceId"
-        ],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 8,
-            "end": 8
-          },
-          {
-            "start": 12,
-            "end": 12
-          },
-          {
-            "start": 51,
-            "end": 51
-          },
-          {
-            "start": 96,
-            "end": 104
-          }
-        ],
-        "stack_writable_ranges": [],
-        "constraints": [
-          {
-            "address": 12,
-            "equals": 1562221057
-          }
-        ],
-        "properties_readable": [
-          "ReferenceId"
-        ],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10",
-          "port": "d2"
         }
       ]
     },
@@ -6414,81 +6265,6 @@
         }
       ]
     },
-    "ic10.interface.access.7ab6ec53213877db": {
-      "stack": {
-        "literal_reads": [
-          8,
-          12,
-          51
-        ],
-        "literal_writes": [],
-        "dynamic_read": true,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [
-          {
-            "start": 96,
-            "end": 103
-          }
-        ],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-derived",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 12,
-            "equals": 1204547052
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [
-          "ReferenceId"
-        ],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 8,
-            "end": 8
-          },
-          {
-            "start": 12,
-            "end": 12
-          },
-          {
-            "start": 51,
-            "end": 51
-          },
-          {
-            "start": 96,
-            "end": 103
-          }
-        ],
-        "stack_writable_ranges": [],
-        "constraints": [
-          {
-            "address": 12,
-            "equals": 1204547052
-          }
-        ],
-        "properties_readable": [
-          "ReferenceId"
-        ],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
-          "port": "d5"
-        }
-      ]
-    },
     "ic10.interface.access.7cc703645945ed7f": {
       "stack": {
         "literal_reads": [
@@ -7820,78 +7596,6 @@
         {
           "source": "ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10",
           "port": "d0"
-        }
-      ]
-    },
-    "ic10.interface.access.ad252b662fae2066": {
-      "stack": {
-        "literal_reads": [
-          12,
-          13,
-          14,
-          15,
-          49
-        ],
-        "literal_writes": [
-          10
-        ],
-        "dynamic_read": true,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [
-          {
-            "start": 16,
-            "end": 47
-          }
-        ],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-derived",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 15,
-            "equals": 1
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 12,
-            "end": 47
-          },
-          {
-            "start": 49,
-            "end": 49
-          }
-        ],
-        "stack_writable_ranges": [
-          {
-            "start": 10,
-            "end": 10
-          }
-        ],
-        "constraints": [
-          {
-            "address": 15,
-            "equals": 1
-          }
-        ],
-        "properties_readable": [],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
-          "port": "d1"
         }
       ]
     },
@@ -10278,7 +9982,9 @@
         "ic10.stack.controller-phase-pressure-runtime.v1",
         "ic10.stack.27182818.abi2"
       ],
-      "consumes": []
+      "consumes": [
+        "ic10.stack.generic-persistent-config-host.v1"
+      ]
     },
     {
       "source": "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10",
@@ -10471,7 +10177,10 @@
       "provides": [
         "ic10.stack.job-requirement-view.v1"
       ],
-      "consumes": []
+      "consumes": [
+        "ic10.stack.recipe-execution-profile-view.v1",
+        "ic10.stack.resource-transform-profile-view.v4"
+      ]
     },
     {
       "source": "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10",
@@ -11267,7 +10976,9 @@
         "ic10.stack.controller-pressure-domain-runtime.v1",
         "ic10.stack.27182818.abi2"
       ],
-      "consumes": []
+      "consumes": [
+        "ic10.stack.generic-persistent-config-host.v1"
+      ]
     },
     {
       "source": "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10",

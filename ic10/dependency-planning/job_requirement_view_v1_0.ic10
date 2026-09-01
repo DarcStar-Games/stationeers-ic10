@@ -16,6 +16,8 @@ beq r2 1 Transform
 beq r2 2 Print
 j Bad
 Transform:
+get r0 d0 0
+bne r0 HASH("ResourceTransformProfileView.v4") Bad
 put d0 70 r3
 get r14 d0 74
 get r0 d0 68
@@ -48,6 +50,8 @@ get r0 d0 74
 bne r0 r14 Loop
 j Publish
 Print:
+get r0 d1 0
+bne r0 HASH("RecipeExecutionProfileView.v1") Bad
 put d1 10 r3
 get r14 d1 14
 get r0 d1 49

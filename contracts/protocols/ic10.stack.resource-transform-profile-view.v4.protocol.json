@@ -140,6 +140,49 @@
   ],
   "consumer_interfaces": [
     {
+      "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        33,
+        35,
+        68,
+        69,
+        71,
+        72,
+        74
+      ],
+      "literal_writes": [
+        70
+      ],
+      "dynamic_read_ranges": [
+        {
+          "start": 8,
+          "end": 71
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 499210479
+        },
+        {
+          "address": 69,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "publication_requirements": []
+    },
+    {
       "source": "ic10/material-transform/material_transform_admission_v1_0.ic10",
       "endpoint": {
         "kind": "device-port",

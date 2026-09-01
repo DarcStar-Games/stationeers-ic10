@@ -237,6 +237,43 @@
   ],
   "consumer_interfaces": [
     {
+      "source": "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d2"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        8,
+        12,
+        51
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [
+        {
+          "start": 96,
+          "end": 104
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-derived",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": -759746849
+        },
+        {
+          "address": 12,
+          "operator": "equals",
+          "value": 1562221057
+        }
+      ],
+      "publication_requirements": []
+    },
+    {
       "source": "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10",
       "endpoint": {
         "kind": "device-port",
@@ -502,6 +539,43 @@
           "address": 0,
           "operator": "equals",
           "value": -759746849
+        }
+      ],
+      "publication_requirements": []
+    },
+    {
+      "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d5"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        8,
+        12,
+        51
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [
+        {
+          "start": 96,
+          "end": 103
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-derived",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": -759746849
+        },
+        {
+          "address": 12,
+          "operator": "equals",
+          "value": 1204547052
         }
       ],
       "publication_requirements": []

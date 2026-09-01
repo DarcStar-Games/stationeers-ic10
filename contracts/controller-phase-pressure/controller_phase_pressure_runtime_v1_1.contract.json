@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10",
-  "source_sha256": "b4edd466b76f944583d93df90b415f74c9a3de965dd024c14915c68551a9e391",
+  "source_sha256": "a37edcd855a18f0e7d83b9abcc24ee8d8a8862598f0438568bff308d69ce8fe3",
   "identity": {
     "service_id": "ic10.script.controller.phase.pressure.runtime",
     "implementation_revision": "1.1",
@@ -138,6 +138,7 @@
       },
       "stack": {
         "literal_reads": [
+          0,
           8,
           12,
           51
@@ -156,25 +157,21 @@
         "dynamic_write_range_source": "none",
         "constraints": [
           {
+            "address": 0,
+            "equals": -759746849
+          },
+          {
             "address": 12,
             "equals": 1562221057
           }
         ]
       },
       "target": {
-        "kind": "stack-interface",
-        "verification": "access-only",
-        "interface_id": "ic10.interface.access.2f84668354be2ef7",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.2f84668354be2ef7",
-        "provider_resolution": "deployment-supplied",
-        "assumptions": {
-          "properties_read": [
-            "ReferenceId"
-          ],
-          "properties_written": [],
-          "slot_properties_read": [],
-          "slot_properties_written": []
-        }
+        "kind": "stack-protocol",
+        "verification": "literal-header",
+        "protocol_ids": [
+          "ic10.stack.generic-persistent-config-host.v1"
+        ]
       }
     }
   ],
@@ -471,7 +468,22 @@
         "source": "literal-own-stack-header"
       }
     ],
-    "consumes": []
+    "consumes": [
+      {
+        "port": "d2",
+        "accepted": [
+          {
+            "protocol_id": "ic10.stack.generic-persistent-config-host.v1",
+            "header_base": 0,
+            "contract": "GenericPersistentConfigHost",
+            "magic": -759746849,
+            "abi": 1,
+            "publication_requirements": []
+          }
+        ],
+        "source": "authoritative-literal-header-check"
+      }
+    ]
   },
   "extraction": {
     "mode": "static-v2",

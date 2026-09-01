@@ -1381,7 +1381,18 @@
   "ic10/controller-config/generic_persistent_config_host_v1_1.ic10": [],
   "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10": [],
   "ic10/controller-discovery/controller_selector_v3_0.ic10": [],
-  "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10": [],
+  "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10": [
+   {
+    "port": "d2",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericPersistentConfigHost",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10": [
    {
     "port": "d0",
@@ -1534,7 +1545,28 @@
     ]
    }
   ],
-  "ic10/dependency-planning/job_requirement_view_v1_0.ic10": [],
+  "ic10/dependency-planning/job_requirement_view_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "ResourceTransformProfileView",
+      "abi": 4
+     }
+    ]
+   },
+   {
+    "port": "d1",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "RecipeExecutionProfileView",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10": [],
   "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10": [
    {
@@ -2004,7 +2036,18 @@
     ]
    }
   ],
-  "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": [],
+  "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": [
+   {
+    "port": "d5",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericPersistentConfigHost",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10": [
    {
     "port": "d0",
