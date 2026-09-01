@@ -10,7 +10,13 @@ from typing import Any
 
 from framework.ic10_source import game_hash, parse_ic10
 from framework.protocol_headers import header_name, header_token
-from framework.script_contracts.parsing import collect_aliases, resolve_integer, resolve_literal
+from framework.script_contracts.dynamic_ranges import dynamic_range_proofs, merge_ranges
+from framework.script_contracts.parsing import (
+    collect_aliases,
+    parse_program,
+    resolve_integer,
+    resolve_literal,
+)
 from framework.script_contracts.publication import stable_cells
 
 FORMAT = "IC10_STACK_ENVELOPE_INVENTORY_V1"
@@ -417,6 +423,15 @@ def schema_hash(schema_id: str, schema_version: int) -> int:
 
 def _range_cells(ranges: list[dict[str, int]]) -> set[int]:
     return {cell for item in ranges for cell in range(item["start"], item["end"] + 1)}
+
+
+def _spans(cells: set[int]) -> str:
+    """Name a cell set in the inclusive-range form the declarations are written in."""
+    return ", ".join(
+        f"S{item['start']}" if item["start"] == item["end"]
+        else f"S{item['start']}..S{item['end']}"
+        for item in merge_ranges([{"start": cell, "end": cell} for cell in sorted(cells)])
+    )
 
 
 def _schema_fields(
@@ -992,6 +1007,124 @@ def legacy_layout_errors(
             if actual != reviewed else [])
 
 
+def post_init_range_errors(
+    declaration: NormalizedDeclaration,
+    contract: dict[str, Any],
+    extension_cells: frozenset[int],
+) -> list[str]:
+    """A reviewed post-init dynamic write range sits inside the derived one.
+
+    A post-init dynamic write *is* a dynamic write, so the reviewed set is a
+    subset of the contract's -- narrower *in time*, because it excludes whatever
+    ran before the first envelope-bearing yield, never wider in space.
+
+    Only that direction is a contradiction. A reviewed range far tighter than the
+    derived one is the ordinary case and stays unchecked: a boot `clr db` puts all
+    512 cells in the derived range and none of them are post-init, which is why
+    `generic_job_command_gateway_v3_0` declares nine cells against 504.
+
+    Envelope and extension cells are left out because the reserved-overlap rule in
+    `publication_errors` already rejects them, for a better reason than this one.
+    A source with no dynamic write at all is left to that rule for the same reason:
+    "the source has no such writes" names the whole declaration, not a span of it.
+
+    The derived range covers computed-address own-stack writes. A reference-addressed
+    write that named this stack would not be in it, so a program doing that would be
+    rejected here for a claim its source does back; no migrated program is, and the
+    fix would be for the contract layer to see the write, not for this rule to relax.
+    """
+    provenance = contract["own_stack"]["dynamic_write_range_source"]
+    if provenance == "none":
+        return []
+    reserved = set(range(BASE, BASE + LENGTH)) | set(extension_cells)
+    claimed = set().union(*(item.cells() for item in declaration.post_init_dynamic_write_ranges))
+    derived = _range_cells(contract["own_stack"]["dynamic_write_ranges"])
+    unreachable = claimed - reserved - derived
+    if not unreachable:
+        return []
+    return [
+        f"reviewed post-init dynamic write range claims {_spans(unreachable)}, which the "
+        f"{provenance} dynamic write range {_spans(derived)} never reaches"
+    ]
+
+
+def proven_post_init_writes(path: Path) -> frozenset[int]:
+    """Cells a computed own-stack write provably reaches after the first `yield`.
+
+    The first plain `yield` stands in for the publication boundary that
+    `publication_errors` establishes, which its guard cases can move earlier but
+    never later -- so every cell returned here is post-init under either reading.
+    An access the bounds analysis cannot prove contributes nothing, which is what
+    keeps this a floor rather than a derivation.
+    """
+    text = Path(path).read_text()
+    aliases = collect_aliases([list(row.tokens) for row in parse_ic10(text).rows])[1]
+    entries = parse_program(text)
+    first_yield = next(
+        (index for index, item in enumerate(entries) if item["row"][:1] == ["yield"]), None
+    )
+    if first_yield is None:
+        return frozenset()
+    accesses = [
+        (index, "write", item["row"][1]) for index, item in enumerate(entries)
+        if index > first_yield and item["row"][:1] == ["poke"] and len(item["row"]) >= 3
+        and resolve_integer(item["row"][1], aliases) is None
+    ]
+    if not accesses:
+        return frozenset()
+    return frozenset(_range_cells(dynamic_range_proofs(text, aliases, accesses)["write"].ranges))
+
+
+def post_init_coverage_errors(
+    root: Path,
+    declaration: NormalizedDeclaration,
+    extension_cells: frozenset[int],
+) -> list[str]:
+    """A reviewed post-init dynamic write range names every cell the source proves.
+
+    This is the containment rule's other half, and it is the half ownership rests
+    on. `legacy_owned_ranges` is derived from the reviewed set, and an extension
+    may be placed on any cell that set does not name -- so a range that is too
+    small hands a future extension a cell the program overwrites every tick, which
+    is a worse outcome than one that is too large.
+
+    Only *proven* cells are asserted. An unproved computed write is exactly what
+    the reviewed range exists to bound, so demanding coverage of it would be
+    demanding the review the declaration already is. The first plain `yield` also
+    stands in for the publication boundary, which the guard cases in
+    `publication_errors` can move earlier but never later. Both keep this a floor
+    under the declaration rather than a second derivation of it.
+
+    A proven write into the envelope or an extension is reported separately,
+    because naming those cells is what the reserved-overlap rule rejects: the
+    program is wrong there, not the declaration.
+
+    An absent declaration is left to `publication_errors` for the same reason its
+    sibling containment rule leaves an absent dynamic write there. "Post-init
+    dynamic own-stack writes lack reviewed, source-fingerprinted bounds" fires on
+    exactly the condition that reaches here with nothing claimed, and it names the
+    missing declaration; a span measured against a range that does not exist reads
+    as though one does.
+    """
+    if not declaration.post_init_dynamic_write_ranges:
+        return []
+    proven = proven_post_init_writes(Path(root) / declaration.source)
+    reserved = set(range(BASE, BASE + LENGTH)) | set(extension_cells)
+    errors: list[str] = []
+    if proven & reserved:
+        errors.append(
+            f"post-init computed writes provably reach reserved {_spans(proven & reserved)}"
+        )
+    claimed = set().union(*(item.cells() for item in declaration.post_init_dynamic_write_ranges))
+    unnamed = proven - reserved - claimed
+    if unnamed:
+        errors.append(
+            f"post-init computed writes provably reach {_spans(unnamed)}, which the reviewed"
+            " post-init dynamic write range does not name and so does not own"
+        )
+    return errors
+
+
 def publication_rule_errors(
     root: Path,
     declaration: NormalizedDeclaration,
@@ -1169,6 +1302,12 @@ def declaration_errors(
         service.extend(list(extension.errors))
         service.extend(legacy_layout_errors(
             declaration, contract, extension.reserved_cells
+        ))
+        service.extend(post_init_range_errors(
+            declaration, contract, extension.reserved_cells
+        ))
+        service.extend(post_init_coverage_errors(
+            root, declaration, extension.reserved_cells
         ))
         service.extend(publication_rule_errors(
             root,

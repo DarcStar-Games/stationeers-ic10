@@ -115,12 +115,20 @@
     [
      10,
      401
+    ],
+    [
+     448,
+     511
     ]
    ],
    "post_init_dynamic_write_ranges": [
     [
      18,
      401
+    ],
+    [
+     448,
+     511
     ]
    ],
    "pilot_family": "directory"
@@ -1909,7 +1917,7 @@
    ],
    "post_init_dynamic_write_ranges": [
     [
-     8,
+     10,
      21
     ]
    ],
@@ -2679,13 +2687,13 @@
     ],
     [
      32,
-     511
+     49
     ]
    ],
    "post_init_dynamic_write_ranges": [
     [
      32,
-     511
+     49
     ]
    ],
    "pilot_family": "item-storage-common"
@@ -4411,7 +4419,7 @@
     ],
     [
      16,
-     31
+     25
     ],
     [
      32,
@@ -4421,7 +4429,7 @@
    "post_init_dynamic_write_ranges": [
     [
      16,
-     31
+     18
     ]
    ],
    "pilot_family": "pressure-grid"

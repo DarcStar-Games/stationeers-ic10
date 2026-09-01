@@ -42,6 +42,9 @@ from framework.stack_envelope import (
     identity_header_errors,
     legacy_layout_errors,
     normalize_declaration,
+    post_init_coverage_errors,
+    post_init_range_errors,
+    proven_post_init_writes,
     publication_rule_errors,
     schema_capability_errors,
     state_errors,
@@ -56,6 +59,10 @@ from framework.stack_envelope import (
 ROOT = _PROJECT_ROOT
 MONITOR = "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10"
 READER = "ic10/live-commissioning/stack_header_reader_v1_0.ic10"
+# `bgt r2 3 Bad` bounds its Save loop, so its post-init write window is three proven cells
+RANKER = "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10"
+# clears and writes a 64-cell NodeId presence bitmap at S448..S511 on every scan
+ADAPTER = "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10"
 fails: list[str] = []
 
 
@@ -471,6 +478,18 @@ bad["migrated"][MONITOR]["contract"] = "UnpublishedService"
 ck(any("do not publish the declared magic" in error
        for error in declaration_errors(ROOT, contracts, bad)),
    "validator accepted an identity the source never publishes at S0")
+bad = deepcopy(load_declarations(ROOT))
+bad["migrated"][RANKER]["post_init_dynamic_write_ranges"] = [[16, 31]]
+bad["migrated"][RANKER]["legacy_owned_ranges"] = [[8, 11], [16, 31], [32, 34]]
+ck(any("post-init dynamic write range claims S19..S31" in error
+       for error in declaration_errors(ROOT, contracts, bad)),
+   "validator accepted a reviewed post-init range past the source-proven write window")
+bad = deepcopy(load_declarations(ROOT))
+bad["migrated"][ADAPTER]["post_init_dynamic_write_ranges"] = [[18, 401]]
+bad["migrated"][ADAPTER]["legacy_owned_ranges"] = [[10, 401]]
+ck(any("provably reach S448..S511" in error
+       for error in declaration_errors(ROOT, contracts, bad)),
+   "validator accepted a reviewed post-init range omitting cells the source provably writes")
 ck(extension_ownership_errors([{"start": 0, "end": 15}], 12, 4),
    "validator allowed an extension to overwrite established payload cells")
 ck(not extension_ownership_errors([{"start": 0, "end": 15}], 16, 4),
@@ -495,6 +514,7 @@ minimal_contract = {
         "literal_reads": [],
         "literal_writes": [],
         "dynamic_write_ranges": [],
+        "dynamic_write_range_source": "none",
     },
 }
 minimal_writes = {address: {value} for address, value in expected_envelope_cells(minimal).items()}
@@ -509,6 +529,56 @@ ck(not minimal_extension.errors,
    "the extension rule rejected a minimal normalized declaration")
 ck(not legacy_layout_errors(minimal, minimal_contract, minimal_extension.reserved_cells),
    "the legacy-layout rule rejected a minimal normalized declaration")
+ck(not post_init_range_errors(minimal, minimal_contract, minimal_extension.reserved_cells),
+   "the post-init containment rule rejected a minimal normalized declaration")
+
+# A reviewed post-init dynamic write range is narrower than the contract's derived one
+# in time, never wider in space -- and only the wider direction is a contradiction.
+windowed_contract = deepcopy(minimal_contract)
+windowed_contract["own_stack"]["dynamic_write_ranges"] = [{"start": 16, "end": 18}]
+windowed_contract["own_stack"]["dynamic_write_range_source"] = "source-derived"
+overclaiming = replace(minimal, post_init_dynamic_write_ranges=(StackRange(16, 31),))
+overclaim_errors = post_init_range_errors(
+    overclaiming, windowed_contract, minimal_extension.reserved_cells
+)
+ck(overclaim_errors == ["reviewed post-init dynamic write range claims S19..S31, which the"
+                        " source-derived dynamic write range S16..S18 never reaches"],
+   "a reviewed post-init range outside the derived one passed or was misreported")
+# The message has to name every span it objects to, not just the first: a declaration
+# straddling a derived window is corrected by moving both ends, and one span named
+# looks like one span wrong.
+straddling = post_init_range_errors(
+    replace(minimal, post_init_dynamic_write_ranges=(StackRange(14, 20),)),
+    windowed_contract, minimal_extension.reserved_cells,
+)
+ck(straddling == ["reviewed post-init dynamic write range claims S14..S15, S19..S20, which the"
+                  " source-derived dynamic write range S16..S18 never reaches"],
+   "the containment rule reported only part of a range straddling the derived window")
+ck(not post_init_range_errors(
+    replace(minimal, post_init_dynamic_write_ranges=(StackRange(17, 17),)),
+    windowed_contract, minimal_extension.reserved_cells,
+), "the containment rule rejected a reviewed range inside the derived one")
+cleared_contract = deepcopy(minimal_contract)
+cleared_contract["own_stack"]["dynamic_write_ranges"] = [{"start": 0, "end": 511}]
+cleared_contract["own_stack"]["dynamic_write_range_source"] = "source-derived"
+ck(not post_init_range_errors(
+    replace(minimal, post_init_dynamic_write_ranges=(StackRange(9, 17),)),
+    cleared_contract, minimal_extension.reserved_cells,
+), "the containment rule fired on a reviewed range far tighter than a boot clear")
+# Envelope and extension cells belong to the reserved-overlap rule, which rejects them
+# outright; reporting them here as well would name the same cell for a weaker reason.
+ck(not post_init_range_errors(
+    replace(minimal, post_init_dynamic_write_ranges=(StackRange(0, 7),)),
+    windowed_contract, minimal_extension.reserved_cells,
+), "the containment rule duplicated the reserved-overlap rule on envelope cells")
+extended = replace(minimal, extension_base=64)
+extended_writes = {address: {value} for address, value in expected_envelope_cells(extended).items()}
+extended_writes.update({64: {31416054}, 65: {1}, 66: {4}, 67: {0}})
+extended_reserved = extension_rule_result(extended, extended_writes).reserved_cells
+ck(extended_reserved == frozenset(range(64, 68)) and not post_init_range_errors(
+    replace(extended, post_init_dynamic_write_ranges=(StackRange(64, 67),)),
+    windowed_contract, extended_reserved,
+), "the containment rule duplicated the reserved-overlap rule on extension cells")
 ck(StackRange(10, 12).cells() == {10, 11, 12},
    "normalized stack ranges do not retain their inclusive cells")
 ck(any("missing scripts" in error for error in declaration_set_errors(
@@ -524,6 +594,63 @@ with TemporaryDirectory() as temporary:
     ck(not publication_rule_errors(
         temporary_root, publishable, minimal_contract, {}, frozenset()
     ), "the publication rule rejected a minimal normalized declaration")
+    # A source with no dynamic write at all belongs to the publication rule, which
+    # rejects the whole declaration; the containment rule would name a span instead.
+    claiming = replace(publishable, post_init_dynamic_write_ranges=(StackRange(16, 18),))
+    ck(any("source has no such writes" in error for error in publication_rule_errors(
+        temporary_root, claiming, minimal_contract, {}, frozenset()
+    )), "a post-init range against a source with no dynamic write went unreported")
+    ck(not post_init_range_errors(claiming, minimal_contract, frozenset()),
+       "the containment rule restated a claim the no-dynamic-write rule already owns")
+    ck(not post_init_coverage_errors(temporary_root, publishable, frozenset()),
+       "the coverage rule rejected a source with no computed write to cover")
+
+    # The coverage rule holds the reviewed range to what the source proves, and only
+    # to that. This fixture carries all three cases at once: a guarded computed write
+    # before the first yield (S40..S43, which the entry-path rule owns, not this one),
+    # a guarded one after it (S16..S19), and one the analysis cannot bound at all,
+    # which is exactly what the reviewed range exists to state.
+    covered = temporary_root / "covered.ic10"
+    covered.write_text(
+        'poke 0 HASH("Example.v1")\npoke 1 1\npoke 2 0\n'
+        'get r4 db 3\nblt r4 0 Loop\nbgt r4 3 Loop\nadd r5 r4 40\npoke r5 1\n'
+        'Loop:\nyield\n'
+        'get r0 db 9\nblt r0 0 Loop\nbgt r0 3 Loop\nadd r1 r0 16\npoke r1 1\n'
+        'peek r2\nadd r3 r2 200\npoke r3 1\nj Loop\n'
+    )
+    proved = replace(minimal, source=covered.name)
+    ck(proven_post_init_writes(covered) == frozenset({16, 17, 18, 19}),
+       "the post-init write proof did not bound a guarded computed write, bounded an"
+       " unguarded one, or reached back past the first yield")
+    ck(post_init_coverage_errors(
+        temporary_root, replace(proved, post_init_dynamic_write_ranges=(StackRange(16, 17),)),
+        frozenset(),
+    ) == ["post-init computed writes provably reach S18..S19, which the reviewed post-init"
+          " dynamic write range does not name and so does not own"],
+       "the coverage rule missed proven cells the reviewed range leaves unowned")
+    ck(not post_init_coverage_errors(
+        temporary_root, replace(proved, post_init_dynamic_write_ranges=(StackRange(16, 19),)),
+        frozenset(),
+    ), "the coverage rule demanded cells beyond what the source proves")
+    # With nothing declared at all the publication rule already names the missing
+    # declaration, and a span measured against a range that does not exist reads as
+    # though one does.
+    covered_publishable = replace(
+        proved, source_sha256=hashlib.sha256(covered.read_bytes()).hexdigest()
+    )
+    ck(any("lack reviewed, source-fingerprinted bounds" in error
+           for error in publication_rule_errors(
+               temporary_root, covered_publishable, minimal_contract, {}, frozenset())),
+       "an undeclared post-init dynamic write stopped being reported at all")
+    ck(not post_init_coverage_errors(temporary_root, covered_publishable, frozenset()),
+       "the coverage rule measured a span against a declaration that does not exist")
+    # Naming a reserved cell is what the overlap rule rejects, so a proven write into
+    # one is reported as the program's fault rather than as a range that is too small.
+    ck(post_init_coverage_errors(
+        temporary_root, replace(proved, post_init_dynamic_write_ranges=(StackRange(16, 19),)),
+        frozenset({17}),
+    ) == ["post-init computed writes provably reach reserved S17"],
+       "the coverage rule asked a declaration to name a cell the overlap rule forbids")
 
 malformed = deepcopy(load_declarations(ROOT)["migrated"][MONITOR])
 malformed["contract"] = 1
