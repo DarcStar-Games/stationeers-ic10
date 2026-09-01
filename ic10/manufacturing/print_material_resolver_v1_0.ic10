@@ -23,17 +23,18 @@ bgt r8 16 Bad
 get r0 d1 9
 bne r0 HASH("DirectorySchema.ResourceLink.v1") Bad
 get r0 d1 24
-beqz r0 BankA
-get r10 d1 26
-get r11 d1 28
-get r12 d1 30
-move r13 96 # ResourceLink records are one cell, so bank 1 sits at 32 + 1*64
-j Start
-BankA:
-get r10 d1 25
-get r11 d1 27
-get r12 d1 29
-move r13 32
+get r13 d1 11
+bne r13 1 Bad
+get r1 d1 12
+mul r13 r13 r1
+mul r13 r13 r0
+add r13 r13 32
+add r1 r0 25
+get r10 d1 r1
+add r1 r1 2
+get r11 d1 r1
+add r1 r1 2
+get r12 d1 r1
 Start:
 bnez r12 Bad
 move r7 0

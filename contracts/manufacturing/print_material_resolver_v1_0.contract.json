@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/print_material_resolver_v1_0.ic10",
-  "source_sha256": "89f02363b1c63e125a6153dda63dd2a67cae0915e5f0d6fe0627f746cd08d187",
+  "source_sha256": "8692e029cc055c1453057b3f46cdfc797f607a3959935282ff214e42e50a2bee",
   "identity": {
     "service_id": "ic10.script.print.material.resolver",
     "implementation_revision": "1.0",
@@ -76,13 +76,11 @@
       "stack": {
         "literal_reads": [
           9,
+          11,
+          12,
           24,
           25,
-          26,
-          27,
-          28,
-          29,
-          30
+          26
         ],
         "literal_writes": [],
         "dynamic_read": true,
@@ -100,14 +98,18 @@
           {
             "address": 9,
             "equals": -1926307111
+          },
+          {
+            "address": 11,
+            "equals": 1
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.63994959e0beee39",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.63994959e0beee39",
+        "interface_id": "ic10.interface.access.aec585e95d55f5dd",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.aec585e95d55f5dd",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

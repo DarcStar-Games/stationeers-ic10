@@ -32,6 +32,12 @@ cs=[]
 for ref,typ in ((201,'HASH:Z'),(202,'HASH:A'),(203,'HASH:A')):cs.append(Device(ref,stack={96:27182818,97:2,99:typ},props={'ReferenceId':ref,'PrefabHash':-128473777}))
 a,b,h,hd=snapshot((R/'ic10/controller-discovery/controller_directory_adapter_v4_0.ic10').read_text(),{f'c{i}':d for i,d in enumerate(cs)},100)
 if not adapter_ok(a) or hd.stack.get(0)!='HASH:GenericSnapshotDirectoryHost.v1' or hd.stack.get(1)!=1 or hd.stack.get(9)!='HASH:DirectorySchema.Controller.v1' or records(h)!=[['HASH:A',202],['HASH:A',203],['HASH:Z',201]]:fails.append('Controller Adapter ABI/snapshot mismatch')
+# Once initialized, the Bridge must reject live geometry changes instead of combining
+# a new capacity with records and an active-bank selector from the old layout.
+controller_records=records(h);controller_generation=max(hd.stack.get(25,0),hd.stack.get(26,0))
+a.stack[11]=32
+for _ in range(300):a.run(1,max_steps=50000);b.run(1,max_steps=50000);h.run(1,max_steps=50000)
+if hd.stack.get(12)!=64 or records(h)!=controller_records or max(hd.stack.get(25,0),hd.stack.get(26,0))!=controller_generation:fails.append('Snapshot Bridge accepted a live capacity change without Host reinitialization')
 # Endpoint snapshot.
 eps=[Device(301,stack={0:'HASH:ResourceEndpoint.v1',1:1,52:2,53:9,11:1},props={'ReferenceId':301,'PrefabHash':2037291645}),Device(302,stack={0:'HASH:ResourceEndpoint.v1',1:1,52:1,53:7,11:1},props={'ReferenceId':302,'PrefabHash':-128473777})]
 a,b,h,hd=snapshot((R/'ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10').read_text(),{'e0':eps[0],'e1':eps[1]},110)
@@ -226,6 +232,7 @@ if fails:
 print('Generic Directory infrastructure: PASS')
 print(' - DIRECTORY_ADAPTER_ABI_V2 freezes coherent candidate generations across multi-tick consumers')
 print(' - Snapshot Bridge/Host publishes one generic ABI with schema-qualified stable generations')
+print(' - Snapshot Bridge rejects live schema-geometry changes until Host reinitialization')
 print(' - Registry Host ABI3 consumes the same Adapter ABI with S23 transactional publication fencing')
 print(' - 65th snapshot candidate sets overflow without splitting/corrupting a record')
 print(' - exact duplicate at full capacity does not falsely overflow')

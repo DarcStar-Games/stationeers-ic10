@@ -26,17 +26,18 @@ bne r0 r2 Bad
 getd r0 r9 11
 bne r0 3 Bad
 getd r8 r9 24
-beqz r8 BankA
-getd r10 r9 26
-getd r11 r9 28
-getd r12 r9 30
-move r13 224
-j Scan
-BankA:
-getd r10 r9 25
-getd r11 r9 27
-getd r12 r9 29
-move r13 32
+getd r0 r9 11
+bne r0 3 Bad
+getd r13 r9 12
+mul r13 r0 r13
+mul r13 r8 r13
+add r13 r13 32
+add r0 r8 25
+getd r10 r9 r0
+add r0 r0 2
+getd r11 r9 r0
+add r0 r0 2
+getd r12 r9 r0
 Scan:
 bnez r12 Bad
 bge r6 r11 None

@@ -30,6 +30,12 @@ execS=re.sub(r'\bdirectory\b','r1',execS)
 vm=IC10(execS,{'d0':dir});vm.stack[14]=700;vm.stack[10]=2;vm.stack[11]=2;vm.stack[12]=1
 vm.run(3,max_steps=10000)
 if (vm.stack.get(15),vm.stack.get(16),vm.stack.get(17),vm.stack.get(18),vm.stack.get(19),vm.stack.get(8))!=(2,2,202,3,'HASH:ControllerB',1):fails.append('Selector direct type/member resolution failed')
+# A non-default capacity moves bank 1. The consumer must use S11*S12, not 128.
+small=Device(701,stack={0:'HASH:GenericSnapshotDirectoryHost.v1',1:1,24:1,26:10,28:5,30:0,9:'HASH:DirectorySchema.Controller.v1',11:2,12:8})
+for i,(typ,ref) in enumerate(records):small.stack[48+2*i]=typ;small.stack[49+2*i]=ref
+small_vm=IC10(execS,{'d0':small});small_vm.stack[14]=701;small_vm.stack[10]=2;small_vm.stack[11]=2;small_vm.stack[12]=1
+small_vm.run(3,max_steps=10000)
+if (small_vm.stack.get(17),small_vm.stack.get(18),small_vm.stack.get(8))!=(202,3,1):fails.append('Selector ignored published bank stride geometry')
 # Out-of-range type/member clamp to final type/final member.
 vm.stack[10]=99;vm.stack[11]=99;vm.stack[12]=2;vm.run(2,max_steps=10000)
 if (vm.stack.get(15),vm.stack.get(16),vm.stack.get(17),vm.stack.get(19))!=(3,1,301,'HASH:ControllerC'):fails.append('Selector direct clamp failed')

@@ -5,6 +5,7 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from pathlib import Path
 import sys
+from framework.ic10_harness import IC10,Device
 R=_PROJECT_ROOT
 T=(R/'ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10').read_text(); G=(R/'ic10/pressure-grid/pressure_transfer_grant_guard_v1_0.ic10').read_text(); A=(R/'ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10').read_text(); Rank=(R/'ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10').read_text(); LD=(R/'ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10').read_text(); fails=[]
 for n in ('poke 97 2','bdns d3 SafeOff','bne r0 HASH("PressureTransferGrantGuard.v1") SafeOff','get r15 d3 18','bne r6 r15 SafeOff'):
@@ -15,6 +16,17 @@ if 'get r13 db 16' not in A: fails.append('Allocator lacks quote operation')
 if 'getd r13 r11 12' not in Rank: fails.append('Ranker ignores current reservations')
 for n in ('getd r15 r1 115','getd r0 r1 115','bne r0 r15 Scan'):
  if n not in LD: fails.append('Link Directory lacks coherent Transfer snapshot')
+# The enumerator must preserve the selected ordinal while deriving the active bank base.
+source=Device(9201,stack={18:1},props={'ReferenceId':9201})
+junction=Device(9202,stack={18:3},props={'ReferenceId':9202})
+sink=Device(9203,stack={18:2},props={'ReferenceId':9203})
+link_a=Device(9101,stack={100:5,102:77,103:1,109:0},props={'ReferenceId':9101})
+link_b=Device(9102,stack={100:6,102:77,103:1,109:0},props={'ReferenceId':9102})
+directory=Device(9000,stack={0:'HASH:GenericSnapshotDirectoryHost.v1',9:'HASH:DirectorySchema.PressureGridLink.v1',11:3,12:8,24:1,26:7,28:4,30:0,59:9101,60:9201,61:9202,62:9102,63:9202,64:9203},props={'ReferenceId':9000})
+enumerator=IC10((R/'ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10').read_text(),{'d0':directory,'source':source,'junction':junction,'sink':sink,'link_a':link_a,'link_b':link_b})
+enumerator.run(1);enumerator.stack.update({32:9201,33:1,34:77,35:1,36:1});enumerator.run(2,max_steps=10000)
+if enumerator.stack.get(9)!=1 or enumerator.stack.get(37)!=2 or [enumerator.stack.get(16),enumerator.stack.get(17)]!=[9101,9102]:
+ fails.append('Path Enumerator clobbered the selected record ordinal while deriving bank stride')
 if fails:
  print('Pressure-grid hardening model: FAIL'); [print(' -',f) for f in fails]; sys.exit(1)
 print('Pressure-grid hardening model: PASS')

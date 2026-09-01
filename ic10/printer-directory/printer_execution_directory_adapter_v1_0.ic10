@@ -29,7 +29,11 @@ get r12 d0 r0
 add r0 r11 29
 get r0 d0 r0
 bnez r0 Loop
-mul r13 r11 192
+get r0 d0 11
+bne r0 3 Loop
+get r13 d0 12
+mul r13 r0 r13
+mul r13 r11 r13
 add r13 r13 32
 get r15 db 13
 add r15 r15 1

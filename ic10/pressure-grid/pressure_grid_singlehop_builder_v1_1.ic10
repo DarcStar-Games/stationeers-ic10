@@ -13,7 +13,11 @@ get r0 d0 sp
 bne r0 r6 Fail
 bgtz r13 Wait
 bge r8 r7 Done
-mul sp r5 192
+get r0 d0 11
+bne r0 3 Fail
+get sp d0 12
+mul sp r0 sp
+mul sp r5 sp
 add sp sp 32
 mul r0 r8 3
 add sp sp r0

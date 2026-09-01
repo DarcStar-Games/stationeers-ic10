@@ -43,7 +43,11 @@ add r0 r7 r9
 mod r0 r0 r6
 add r9 r9 1
 poke sp r9
-mul sp r4 192
+get sp d0 11
+bne sp 3 Bad
+get r10 d0 12
+mul sp sp r10
+mul sp r4 sp
 add sp sp 32
 mul r0 r0 3
 add sp sp r0

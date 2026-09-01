@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10",
-  "source_sha256": "980322fa0ff06d63de1d8d0e02201bf136c65bc90348a48e39f6b53d3b40b4c4",
+  "source_sha256": "8b30bd32ce0c30685678032849334d6033733493b14b2a438f33e66976528f1c",
   "identity": {
     "service_id": "ic10.script.phase.pressure.request.arbiter",
     "implementation_revision": "1.2",
@@ -27,6 +27,8 @@
         "literal_reads": [
           0,
           9,
+          11,
+          12,
           24
         ],
         "literal_writes": [],
@@ -53,6 +55,10 @@
           {
             "address": 9,
             "equals": 1910152468
+          },
+          {
+            "address": 11,
+            "equals": 2
           }
         ]
       },

@@ -19,7 +19,11 @@ get r0 d0 r0
 bgtz r0 Overflow
 add r0 r5 27
 get r7 d0 r0
-mul r8 r5 192
+get r0 d0 11
+bne r0 3 Bad
+get r8 d0 12
+mul r8 r0 r8
+mul r8 r5 r8
 add r8 r8 32
 Find:
 bge r6 r7 None

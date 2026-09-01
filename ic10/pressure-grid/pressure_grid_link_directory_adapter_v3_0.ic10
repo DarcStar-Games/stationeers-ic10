@@ -38,7 +38,11 @@ clamp r10 r10 0 64
 move r7 0
 Scan:
 bge r7 r10 Publish
-mul sp r6 128
+get r0 d1 11
+bne r0 2 Publish
+get sp d1 12
+mul sp r0 sp
+mul sp r6 sp
 add sp sp 32
 mul r0 r7 2
 add sp sp r0
