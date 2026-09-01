@@ -377,19 +377,26 @@ declared optional field the service itself writes; externally assigned fields
 and protocol capability bits add no source lines. Stack cost remains the full
 eight-cell reservation for every service.
 
-Those post-init bounds are reviewed, but not free-standing: a post-init dynamic
-write is a dynamic write, so the reviewed set has to sit inside the contract's
-derived `dynamic_write_ranges`. The reviewed set is narrower *in time* — it
+The post-initialization dynamic-write bounds are reviewed, but not free-standing:
+a post-init dynamic write is a dynamic write, so the reviewed set has to sit
+inside the contract's derived `dynamic_write_ranges`. The reviewed set is narrower *in time* — it
 excludes whatever ran before the first envelope-bearing yield — never wider in
 space, and only the wider direction is checked. A reviewed range far tighter than
 the derived one is the ordinary case: a boot `clr db` puts all 512 cells in the
 derived range and none of them are post-init, which is why
 `generic_job_command_gateway_v3_0` declares nine cells against 504. That also
 means the containment rule says something only where the derived range is
-narrower than the whole stack — a program that clears its stack at boot absorbs
-any claim made against it. The validator prints how many of the declarations it
-can constrain next to how many it checked, rather than leaving the reader to
-assume the first number is the second.
+narrower than the whole stack, and the validator prints how many of the
+declarations it can constrain next to how many it checked rather than leaving the
+reader to assume the first number is the second.
+
+Two different things put a program in that position, and only one of them is a
+fact about the program. A boot `clr db` really does write every cell, so nothing
+can be claimed outside it. But a computed write the bounds analysis cannot prove,
+with no reviewed `dynamic_write_ranges` override standing in for it, falls back to
+the whole stack as well — and there the whole-stack range is a gap in the analysis
+rather than a statement about the source. That is where a rounded-up post-init
+declaration hides: nothing derived contradicts it, so nothing has ever had to.
 
 Two things the rule does not settle. The derived range is itself the *effective*
 one, so where it comes from a reviewed `dynamic_write_ranges` override the
