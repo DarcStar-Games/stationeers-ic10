@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10",
-  "source_sha256": "b3322c7235f93e3e42f946323f1ad0570fe8b48dc0603a560a498e4ba5341b8f",
+  "source_sha256": "8820b303174f7339ae82f9b75ffa929bcd0530cf2179035e75a9ce3aa24fb27b",
   "identity": {
     "service_id": "ic10.script.multi.material.reservation.stager",
     "implementation_revision": "1.0",
@@ -35,7 +35,7 @@
         "dynamic_read_ranges": [
           {
             "start": 20,
-            "end": 83
+            "end": 29
           }
         ],
         "dynamic_write_ranges": [],
@@ -51,8 +51,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.272534e178453368",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.272534e178453368",
+        "interface_id": "ic10.interface.access.f80d8f16257be6dd",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.f80d8f16257be6dd",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -206,14 +206,19 @@
     ],
     "dynamic_write_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 32,
+        "end": 40
       }
     ],
     "dynamic_read_proven_ranges": [],
-    "dynamic_write_proven_ranges": [],
+    "dynamic_write_proven_ranges": [
+      {
+        "start": 32,
+        "end": 40
+      }
+    ],
     "dynamic_read_range_source": "conservative-full-stack",
-    "dynamic_write_range_source": "conservative-full-stack",
+    "dynamic_write_range_source": "source-derived",
     "clears_all": false,
     "external_readable_ranges": [],
     "external_writable_ranges": [],
@@ -225,7 +230,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1387894212
       },
       {
         "address": 1,
@@ -234,7 +240,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 2,
@@ -243,7 +250,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 32
       },
       {
         "address": 8,
@@ -327,7 +335,22 @@
       "mode": "preserved-unless-overwritten",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 1387894212,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
     "provides": [

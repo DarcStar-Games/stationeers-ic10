@@ -152,7 +152,7 @@ Admission publishes the exact processor identity and transform requirements used
 - Transform Profile View;
 - a Generic Snapshot Directory with `DirectorySchema.ResourceLink`.
 
-It validates the generic directory magic/ABI plus schema ID/version before reading the active bank. For each required input descriptor it chooses a healthy Material Link whose:
+It validates the generic directory magic/ABI plus schema ID/version before reading the active bank, and holds the admitted input count to the same 1..3 the Admission accepts -- the count sizes a record window on the resolver's own stack, so a peer publishing a fourth would be written past the three records it owns. For each required input descriptor it chooses a healthy Material Link whose:
 
 - resource type matches;
 - source Reservation has enough available quantity;
@@ -171,7 +171,7 @@ No domain-specific Resource Link Directory magic is supported.
 
 A transform must never deliver only a subset of its required ingredients.
 
-`ic10/material-transform/multi_material_reservation_stager_v1_0.ic10` prepares every input first. For each resolved Material Link it provisionally stages:
+`ic10/material-transform/multi_material_reservation_stager_v1_0.ic10` prepares every input first. It holds the resolved count to three for the same reason the resolver holds the admitted one. For each resolved Material Link it provisionally stages:
 
 - exact source quantity;
 - exact sink quantity;

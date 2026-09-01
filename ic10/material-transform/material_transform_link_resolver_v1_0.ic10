@@ -15,6 +15,7 @@ bne r0 1 Bad
 get r2 d0 14
 get r3 d0 15
 get r4 d0 16
+bgt r4 3 Bad
 get r13 d0 19
 get r0 d1 0
 bne r0 HASH("ResourceTransformProfileView.v4") Bad

@@ -78,6 +78,26 @@ res_vm.run(2)
 if res_vm.stack.get(12)!=1 or [res_vm.stack.get(20+i*4) for i in range(3)] != [z[0].ref for z in links]:
     fails.append('link resolver failed to publish all three input routes')
 
+# The admitted input count is a peer's number, and the record window each
+# consumer sizes from it is its own stack. A fourth input that resolves as
+# cleanly as the first three would be written past the three records either
+# program owns, so both hold the count to what the Admission accepts.
+over_view=Device(959,dict(view.stack)|{20:2,21:101,22:2,23:1},{'ReferenceId':959})
+over_adm=Device(954,dict(adm_vm.stack)|{16:4},{'ReferenceId':954})
+over_res_vm=IC10(r,{'d0':over_adm,'d1':over_view,'d2':ld,**dyn},self_ref=955)
+over_res_vm.run(2)
+if over_res_vm.stack.get(12)!=-1 or [c for c in over_res_vm.stack if c>31]:
+    fails.append('link resolver accepted an input count above the admitted three')
+
+over_links=Device(956,dict(res_vm.stack)|{9:4,32:res_vm.stack.get(20),33:res_vm.stack.get(21),
+    34:res_vm.stack.get(22),35:res_vm.stack.get(23)},{'ReferenceId':956})
+over_stager_vm=IC10(s,{'d0':over_links,'d1':Device(957,{},{'ReferenceId':957}),**dyn},self_ref=958)
+over_stager_vm.run(1)
+over_stager_vm.stack.update({9:1,10:1,11:1,12:1,14:0})
+over_stager_vm.run(1)
+if over_stager_vm.stack.get(13)!=-1 or [c for c in over_stager_vm.stack if c>14]:
+    fails.append('reservation stager accepted a resolved count above the admitted three')
+
 stager_dev=Device(952,{}, {'ReferenceId':952})
 alloc_dev=Device(953,{}, {'ReferenceId':953})
 stager_vm=IC10(s,{'d0':res_dev,'d1':alloc_dev,**dyn},self_ref=952); stager_dev.stack=stager_vm.stack

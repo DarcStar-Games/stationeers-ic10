@@ -22,6 +22,7 @@ blez r14 Fail
 get r0 d0 12
 bne r0 1 Fail
 get r8 d0 9
+bgt r8 3 Fail
 get r1 db 10
 get r6 db 11
 blez r1 Fail

@@ -9885,12 +9885,12 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 20,
+            "end": 31
           }
         ],
-        "line_count": 117,
-        "line_headroom_120": 3,
+        "line_count": 118,
+        "line_headroom_120": 2,
         "measured_v1_publication_cost_lines": 3,
         "measured_v1_stack_cost_cells": 8
       },
@@ -9901,18 +9901,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.material.transform.link.resolver",
@@ -9935,7 +9926,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "f0d7ff194bd3f399d454d20a4cf374a75d4ad889fac6bf21cec8cc47532cade0",
+          "source_sha256": "04972f960962fcb46030c0e89c3b70e0f4e505415468429751d12dec294efc29",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -9944,13 +9935,13 @@
             },
             {
               "start": 20,
-              "end": 511
+              "end": 31
             }
           ],
           "post_init_dynamic_write_ranges": [
             {
               "start": 20,
-              "end": 511
+              "end": 31
             }
           ]
         },
@@ -10110,12 +10101,12 @@
         ],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 32,
+            "end": 40
           }
         ],
-        "line_count": 119,
-        "line_headroom_120": 1,
+        "line_count": 120,
+        "line_headroom_120": 0,
         "measured_v1_publication_cost_lines": 3,
         "measured_v1_stack_cost_cells": 8
       },
@@ -10135,18 +10126,9 @@
           6,
           7
         ],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "conservative-full-stack",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.multi.material.reservation.stager",
@@ -10171,7 +10153,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "b3322c7235f93e3e42f946323f1ad0570fe8b48dc0603a560a498e4ba5341b8f",
+          "source_sha256": "8820b303174f7339ae82f9b75ffa929bcd0530cf2179035e75a9ce3aa24fb27b",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -10180,13 +10162,13 @@
             },
             {
               "start": 32,
-              "end": 511
+              "end": 40
             }
           ],
           "post_init_dynamic_write_ranges": [
             {
               "start": 32,
-              "end": 511
+              "end": 40
             }
           ]
         },
