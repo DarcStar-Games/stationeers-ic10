@@ -86,9 +86,14 @@ names a peer for **every** port, so the comparison can be total, and
 `framework/script_wiring.stack_surfaces` derives the two sides of it from the
 contracts:
 
-- a program **publishes** the cells it writes — literally or through its own
-  proven dynamic write range — plus any `external_readable_ranges`;
-- a program **accepts** the cells it reads, plus any `external_writable_ranges`.
+- a program **publishes** the cells it writes — literally or through its
+  effective dynamic write range — plus any `external_readable_ranges`;
+- a program **accepts** the cells it reads, on the same terms, plus any
+  `external_writable_ranges`.
+
+Effective, not proven: a reviewed range and a fail-closed fallback both stand
+for cells the program may touch, and a consumer comparing against the proven
+subset alone would reject an access the provider is entitled to make.
 
 A port passes on the first declared provider that publishes everything it reads
 and accepts everything it writes; a port matching none reports each. Because

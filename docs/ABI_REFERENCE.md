@@ -969,10 +969,12 @@ S16..18 selected Transfer ReferenceIds
 The selector restarts enumeration for each new search while preserving the current build epoch and already committed endpoint reservations.
 
 `S16..S18` is the whole hop array on all three of Ranker, Selector, and
-Enumerator. Each reader rejects a path length above three before indexing it —
-the Selector against the Ranker's `S19` BestPathLength, the Path Allocator
-against the Selector's `S37` — so a peer over-reporting its length cannot make a
-reader copy or quote a cell outside the published array.
+Enumerator. Where a reader indexes that array by a length its peer reports, it
+rejects a length above three first — the Selector against the Ranker's `S19`
+BestPathLength, the Path Allocator against the Selector's `S37` — so a peer
+over-reporting its length cannot make a reader copy or quote a cell outside the
+published array. The Selector reads the Enumerator's three hops at fixed
+addresses and needs no such guard.
 
 ## Grid Cost Profile ABI v1
 

@@ -149,12 +149,12 @@ additionally resolve and statically compare concrete script providers.
 
 Dynamic wired addresses fail closed: they contribute their entire declared
 range to compatibility, and a provider must publish or accept every requested
-cell. That comparison happens here only where a consumer edge is declared, which
-is fewer than half the ports carrying a range; `data/script_wiring.json` names a
-peer for every port, and `validation/validators/validate_script_wiring.py` makes
-the same comparison total against what each declared provider's own contract
-writes and reads (`docs/SCRIPT_WIRING.md`). Range provenance distinguishes
-source-derived bounds from explicit,
+cell. That comparison happens here only where a consumer edge is declared;
+`data/script_wiring.json` names a peer for every port, and
+`validation/validators/validate_script_wiring.py` makes the same comparison total
+against what each declared provider's own contract writes and reads
+(`docs/SCRIPT_WIRING.md`).
+Range provenance distinguishes source-derived bounds from explicit,
 source-fingerprinted exceptions. Network discovery is represented separately from wired ports. Consumed
 wired protocols come from authoritative consumer declarations verified against
 literal equality checks; publication requirements additionally require an
