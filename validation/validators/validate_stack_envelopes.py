@@ -61,6 +61,18 @@ if actual is not None:
         validation.fail(f"unknown pilot families declared: {sorted(families - PILOT_FAMILIES)}")
     if "stack-monitor" not in families:
         validation.fail("the monitor pilot must stay migrated; it is the reference reader")
+    # A reviewed post-init range is contained in the contract's derived dynamic write
+    # range, which only says something where that range is narrower than the stack: a
+    # boot `clr db` writes all 512 cells and absorbs any claim made against it.
+    reviewed_post_init = [
+        item for item in migrated
+        if item["envelope"]["publication_validation"]["post_init_dynamic_write_ranges"]
+    ]
+    constrainable = sum(
+        len({cell for span in item["stack_pressure"]["dynamic_write_ranges"]
+             for cell in range(span["start"], span["end"] + 1)}) < 512
+        for item in reviewed_post_init
+    )
     totals = actual["totals"]
     if totals["deployable_programs"] != len(services):
         validation.fail("deployable total does not match inventory rows")
@@ -139,4 +151,5 @@ raise SystemExit(validation.finish("Stack envelope validation",lambda: [
     f"migrated families: {', '.join(sorted(families)) or 'none'}; backlog: {len(legacy)} programs, {actual['totals']['backlog_reserved_cell_users']} using reserved cells",
     "S0..S7 writes, derived capability mask, schema binding, and extension bounds are enforced",
     f"no consumer reads a migrated peer's S2..S7 as payload; {len(HEADER_READS)} reviewed header reads are declared",
+    f"{len(reviewed_post_init)} reviewed post-init write ranges sit inside the contract's derived range; {constrainable} meet a derived range narrower than the whole stack",
 ]))

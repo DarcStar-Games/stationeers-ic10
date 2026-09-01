@@ -377,6 +377,27 @@ declared optional field the service itself writes; externally assigned fields
 and protocol capability bits add no source lines. Stack cost remains the full
 eight-cell reservation for every service.
 
+Those post-init bounds are reviewed, but not free-standing: a post-init dynamic
+write is a dynamic write, so the reviewed set has to sit inside the contract's
+derived `dynamic_write_ranges`. The reviewed set is narrower *in time* — it
+excludes whatever ran before the first envelope-bearing yield — never wider in
+space, and only the wider direction is checked. A reviewed range far tighter than
+the derived one is the ordinary case: a boot `clr db` puts all 512 cells in the
+derived range and none of them are post-init, which is why
+`generic_job_command_gateway_v3_0` declares nine cells against 504. That also
+means the containment rule says something only where the derived range is
+narrower than the whole stack, which is 12 of the 37 declarations that carry one;
+the validator prints both numbers rather than leaving the reader to assume the
+first.
+
+The reviewed bounds are load-bearing beyond their own accuracy, because
+`legacy_owned_ranges` unions them in and an extension may not be placed over an
+owned cell. A post-init range rounded up to the end of the stack therefore
+forecloses every extension base above it — which is what
+`item_resource_reservation_selector_v1_0` did with `S32..S511` against six
+three-cell legs behind `bge r8 6 Overflow`, until the check reduced it to the
+`S32..S49` the source reaches.
+
 `tools/plan_header_migration.py` plans a family's move from those contracts. It
 takes free cells from the analysed footprint rather than the literal one — a
 program that clears a table through a computed address owns those cells even
@@ -389,8 +410,9 @@ port edges are the ones that break a migration: a sibling writing
 
 `validation/validators/validate_stack_envelopes.py` enforces coverage,
 publication before the first yield, post-publication stability, exact source
-writes, schema binding, extension-flag and bounds rules, header/ABI agreement
-with the generated contract, line cost, and generated freshness. A declared
+writes, schema binding, extension-flag and bounds rules, reviewed post-init
+containment, header/ABI agreement with the generated contract, line cost, and
+generated freshness. A declared
 schema must be canonical in the reviewed data files or verified by the source
 itself; a declaration nothing backs is rejected rather than assumed.
 

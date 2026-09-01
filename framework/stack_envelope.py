@@ -10,6 +10,7 @@ from typing import Any
 
 from framework.ic10_source import game_hash, parse_ic10
 from framework.protocol_headers import header_name, header_token
+from framework.script_contracts.dynamic_ranges import merge_ranges
 from framework.script_contracts.parsing import collect_aliases, resolve_integer, resolve_literal
 from framework.script_contracts.publication import stable_cells
 
@@ -417,6 +418,15 @@ def schema_hash(schema_id: str, schema_version: int) -> int:
 
 def _range_cells(ranges: list[dict[str, int]]) -> set[int]:
     return {cell for item in ranges for cell in range(item["start"], item["end"] + 1)}
+
+
+def _spans(cells: set[int]) -> str:
+    """Name a cell set in the inclusive-range form the declarations are written in."""
+    return ", ".join(
+        f"S{item['start']}" if item["start"] == item["end"]
+        else f"S{item['start']}..S{item['end']}"
+        for item in merge_ranges([{"start": cell, "end": cell} for cell in sorted(cells)])
+    )
 
 
 def _schema_fields(
@@ -992,6 +1002,41 @@ def legacy_layout_errors(
             if actual != reviewed else [])
 
 
+def post_init_range_errors(
+    declaration: NormalizedDeclaration,
+    contract: dict[str, Any],
+    extension_cells: frozenset[int],
+) -> list[str]:
+    """A reviewed post-init dynamic write range sits inside the derived one.
+
+    A post-init dynamic write *is* a dynamic write, so the reviewed set is a
+    subset of the contract's -- narrower *in time*, because it excludes whatever
+    ran before the first envelope-bearing yield, never wider in space.
+
+    Only that direction is a contradiction. A reviewed range far tighter than the
+    derived one is the ordinary case and stays unchecked: a boot `clr db` puts all
+    512 cells in the derived range and none of them are post-init, which is why
+    `generic_job_command_gateway_v3_0` declares nine cells against 504.
+
+    Envelope and extension cells are left out because the reserved-overlap rule in
+    `publication_errors` already rejects them, for a better reason than this one.
+    A source with no dynamic write at all is left to that rule for the same reason:
+    "the source has no such writes" names the whole declaration, not a span of it.
+    """
+    provenance = contract["own_stack"]["dynamic_write_range_source"]
+    if provenance == "none":
+        return []
+    reserved = set(range(BASE, BASE + LENGTH)) | set(extension_cells)
+    claimed = set().union(*(item.cells() for item in declaration.post_init_dynamic_write_ranges))
+    unreachable = claimed - reserved - _range_cells(contract["own_stack"]["dynamic_write_ranges"])
+    if not unreachable:
+        return []
+    return [
+        f"reviewed post-init dynamic write range claims {_spans(unreachable)}, which the "
+        f"{provenance} dynamic write range never reaches"
+    ]
+
+
 def publication_rule_errors(
     root: Path,
     declaration: NormalizedDeclaration,
@@ -1168,6 +1213,9 @@ def declaration_errors(
         extension = extension_rule_result(declaration, writes)
         service.extend(list(extension.errors))
         service.extend(legacy_layout_errors(
+            declaration, contract, extension.reserved_cells
+        ))
+        service.extend(post_init_range_errors(
             declaration, contract, extension.reserved_cells
         ))
         service.extend(publication_rule_errors(
