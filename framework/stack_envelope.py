@@ -1098,9 +1098,16 @@ def post_init_coverage_errors(
     A proven write into the envelope or an extension is reported separately,
     because naming those cells is what the reserved-overlap rule rejects: the
     program is wrong there, not the declaration.
+
+    An absent declaration is left to `publication_errors` for the same reason its
+    sibling containment rule leaves an absent dynamic write there. "Post-init
+    dynamic own-stack writes lack reviewed, source-fingerprinted bounds" fires on
+    exactly the condition that reaches here with nothing claimed, and it names the
+    missing declaration; a span measured against a range that does not exist reads
+    as though one does.
     """
     proven = proven_post_init_writes(Path(root) / declaration.source)
-    if not proven:
+    if not proven or not declaration.post_init_dynamic_write_ranges:
         return []
     reserved = set(range(BASE, BASE + LENGTH)) | set(extension_cells)
     errors = []

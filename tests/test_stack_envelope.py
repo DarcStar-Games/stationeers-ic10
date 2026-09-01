@@ -632,6 +632,18 @@ with TemporaryDirectory() as temporary:
         temporary_root, replace(proved, post_init_dynamic_write_ranges=(StackRange(16, 19),)),
         frozenset(),
     ), "the coverage rule demanded cells beyond what the source proves")
+    # With nothing declared at all the publication rule already names the missing
+    # declaration, and a span measured against a range that does not exist reads as
+    # though one does.
+    covered_publishable = replace(
+        proved, source_sha256=hashlib.sha256(covered.read_bytes()).hexdigest()
+    )
+    ck(any("lack reviewed, source-fingerprinted bounds" in error
+           for error in publication_rule_errors(
+               temporary_root, covered_publishable, minimal_contract, {}, frozenset())),
+       "an undeclared post-init dynamic write stopped being reported at all")
+    ck(not post_init_coverage_errors(temporary_root, covered_publishable, frozenset()),
+       "the coverage rule measured a span against a declaration that does not exist")
     # Naming a reserved cell is what the overlap rule rejects, so a proven write into
     # one is reported as the program's fault rather than as a range that is too small.
     ck(post_init_coverage_errors(
