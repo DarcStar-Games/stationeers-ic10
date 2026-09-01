@@ -402,6 +402,40 @@ reentered_loop = analyze_device_ports(
 ck(reentered_loop["stack"]["dynamic_read_range_source"] == "source-fingerprinted-exception",
    "a bounded loop with post-bound re-entry was accepted as source-derived")
 
+# A record scan that restarts from a rejection puts its own back edge *after* the
+# block it runs once it succeeds, so `add r7 r7 1` sits inside the span between
+# the scan's head and its latch while no pass of the scan ever reaches it. The
+# counter belongs to the loop around the scan, and reading the span makes it look
+# like two loops advance it and neither counts it out.
+scan_payload_source = (
+    "move r7 0\nInput:\nbge r7 3 Done\nmove sp 0\nFind:\nbge sp 4 Done\nadd sp sp 1\n"
+    "beqz r5 Skip\nmul r0 r7 2\nadd r0 r0 32\nget r1 db r0\nadd r7 r7 1\nj Input\n"
+    "Skip:\nj Find\nDone:\nyield\n"
+)
+scan_payload_rows = parse_rows(scan_payload_source)
+scan_payload_ports, scan_payload_aliases = collect_aliases(scan_payload_rows)
+scan_payload, _ = analyze_own_stack(
+    scan_payload_source, scan_payload_rows, scan_payload_aliases, [], {},
+)
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       scan_payload_source, scan_payload_ports, scan_payload_aliases)] == [[32, 34, 36]] and
+   scan_payload["dynamic_read_range_source"] == "source-derived",
+   "a counter the scan never advances was read as carried by the scan it stands after")
+
+# Two back edges to one label are two ways around one loop. Counting them as two
+# loops leaves the register each of them advances looking enclosed by the other.
+two_latch_source = (
+    "move r6 0\nScan:\nbge r6 4 Done\nmul r0 r6 2\nadd r0 r0 32\nget r1 db r0\n"
+    "add r6 r6 1\nbeqz r1 Scan\nj Scan\nDone:\nyield\n"
+)
+two_latch_rows = parse_rows(two_latch_source)
+two_latch_ports, two_latch_aliases = collect_aliases(two_latch_rows)
+two_latch, _ = analyze_own_stack(two_latch_source, two_latch_rows, two_latch_aliases, [], {})
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       two_latch_source, two_latch_ports, two_latch_aliases)] == [[32, 34, 36, 38]] and
+   two_latch["dynamic_read_range_source"] == "source-derived",
+   "a loop entered from two rejections was read as two loops around one counter")
+
 conditional_clear = parse_rows("get r0 db 0\nbne r0 1 Reset\nyield\nReset:\nclr db\n")
 ck(restart_behavior(conditional_clear, True)["mode"] == "conditional-reset",
    "a conditional recovery clear was mislabeled as cleared-on-init")

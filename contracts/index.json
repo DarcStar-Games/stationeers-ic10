@@ -3,8 +3,8 @@
   "contract_count": 174,
   "own_stack_range_inventory": {
     "dynamic_script_count": 62,
-    "source_proven_surface_count": 72,
-    "unresolved_fallback_count": 29,
+    "source_proven_surface_count": 73,
+    "unresolved_fallback_count": 22,
     "scripts": [
       {
         "source": "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10",
@@ -235,7 +235,7 @@
               "end": 511
             }
           ],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-derived"
         }
       },
       {
@@ -1699,12 +1699,17 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 20,
+              "end": 83
             }
           ],
-          "proven_ranges": [],
-          "provenance": "conservative-full-stack"
+          "proven_ranges": [
+            {
+              "start": 20,
+              "end": 83
+            }
+          ],
+          "provenance": "source-derived"
         }
       },
       {
@@ -1729,7 +1734,7 @@
               "end": 511
             }
           ],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-derived"
         }
       },
       {
@@ -2052,7 +2057,7 @@
               "end": 511
             }
           ],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-derived"
         }
       },
       {
@@ -2194,7 +2199,7 @@
               "end": 511
             }
           ],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-derived"
         }
       },
       {
@@ -2219,7 +2224,7 @@
               "end": 511
             }
           ],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-derived"
         }
       },
       {
@@ -2244,7 +2249,7 @@
               "end": 511
             }
           ],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-derived"
         }
       },
       {
