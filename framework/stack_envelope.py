@@ -1106,11 +1106,11 @@ def post_init_coverage_errors(
     missing declaration; a span measured against a range that does not exist reads
     as though one does.
     """
-    proven = proven_post_init_writes(Path(root) / declaration.source)
-    if not proven or not declaration.post_init_dynamic_write_ranges:
+    if not declaration.post_init_dynamic_write_ranges:
         return []
+    proven = proven_post_init_writes(Path(root) / declaration.source)
     reserved = set(range(BASE, BASE + LENGTH)) | set(extension_cells)
-    errors = []
+    errors: list[str] = []
     if proven & reserved:
         errors.append(
             f"post-init computed writes provably reach reserved {_spans(proven & reserved)}"
