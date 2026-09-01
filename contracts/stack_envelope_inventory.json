@@ -391,8 +391,8 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 13,
+            "end": 18
           }
         ],
         "line_count": 44,
@@ -407,18 +407,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.catalog.coordinator.directory.view",
@@ -578,8 +569,8 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 20,
+            "end": 25
           }
         ],
         "line_count": 108,
@@ -594,18 +585,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.catalog.inspector",
@@ -1306,7 +1288,7 @@
           7
         ],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.generic.config.editor",
@@ -1540,10 +1522,6 @@
           },
           {
             "start": 128,
-            "end": 159
-          },
-          {
-            "start": 224,
             "end": 229
           }
         ],
@@ -3814,8 +3792,8 @@
         "highest_literal_cell": 27,
         "dynamic_read_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 13,
+            "end": 18
           }
         ],
         "dynamic_write_ranges": [],
@@ -3830,18 +3808,9 @@
           1,
           2
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_read_cells": [],
         "dynamic_write_cells": [],
-        "dynamic_read_provenance": "conservative-full-stack",
+        "dynamic_read_provenance": "source-derived",
         "dynamic_write_provenance": "none"
       },
       "envelope": {
@@ -4387,14 +4356,14 @@
         "highest_literal_cell": 25,
         "dynamic_read_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 16,
+            "end": 17
           }
         ],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 16,
+            "end": 17
           }
         ],
         "line_count": 110,
@@ -4408,28 +4377,10 @@
           1,
           2
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
-        "dynamic_read_provenance": "conservative-full-stack",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_read_cells": [],
+        "dynamic_write_cells": [],
+        "dynamic_read_provenance": "source-derived",
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.diagnostic.input.bridge",
@@ -4897,8 +4848,264 @@
         "highest_literal_cell": 26,
         "dynamic_read_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 64,
+            "end": 65
+          },
+          {
+            "start": 69,
+            "end": 71
+          },
+          {
+            "start": 75,
+            "end": 77
+          },
+          {
+            "start": 81,
+            "end": 83
+          },
+          {
+            "start": 87,
+            "end": 89
+          },
+          {
+            "start": 93,
+            "end": 95
+          },
+          {
+            "start": 99,
+            "end": 101
+          },
+          {
+            "start": 105,
+            "end": 107
+          },
+          {
+            "start": 111,
+            "end": 113
+          },
+          {
+            "start": 117,
+            "end": 119
+          },
+          {
+            "start": 123,
+            "end": 125
+          },
+          {
+            "start": 129,
+            "end": 131
+          },
+          {
+            "start": 135,
+            "end": 137
+          },
+          {
+            "start": 141,
+            "end": 143
+          },
+          {
+            "start": 147,
+            "end": 149
+          },
+          {
+            "start": 153,
+            "end": 155
+          },
+          {
+            "start": 159,
+            "end": 161
+          },
+          {
+            "start": 165,
+            "end": 167
+          },
+          {
+            "start": 171,
+            "end": 173
+          },
+          {
+            "start": 177,
+            "end": 179
+          },
+          {
+            "start": 183,
+            "end": 185
+          },
+          {
+            "start": 189,
+            "end": 191
+          },
+          {
+            "start": 195,
+            "end": 197
+          },
+          {
+            "start": 201,
+            "end": 203
+          },
+          {
+            "start": 207,
+            "end": 209
+          },
+          {
+            "start": 213,
+            "end": 215
+          },
+          {
+            "start": 219,
+            "end": 221
+          },
+          {
+            "start": 225,
+            "end": 227
+          },
+          {
+            "start": 231,
+            "end": 233
+          },
+          {
+            "start": 237,
+            "end": 239
+          },
+          {
+            "start": 243,
+            "end": 245
+          },
+          {
+            "start": 249,
+            "end": 251
+          },
+          {
+            "start": 255,
+            "end": 257
+          },
+          {
+            "start": 261,
+            "end": 263
+          },
+          {
+            "start": 267,
+            "end": 269
+          },
+          {
+            "start": 273,
+            "end": 275
+          },
+          {
+            "start": 279,
+            "end": 281
+          },
+          {
+            "start": 285,
+            "end": 287
+          },
+          {
+            "start": 291,
+            "end": 293
+          },
+          {
+            "start": 297,
+            "end": 299
+          },
+          {
+            "start": 303,
+            "end": 305
+          },
+          {
+            "start": 309,
+            "end": 311
+          },
+          {
+            "start": 315,
+            "end": 317
+          },
+          {
+            "start": 321,
+            "end": 323
+          },
+          {
+            "start": 327,
+            "end": 329
+          },
+          {
+            "start": 333,
+            "end": 335
+          },
+          {
+            "start": 339,
+            "end": 341
+          },
+          {
+            "start": 345,
+            "end": 347
+          },
+          {
+            "start": 351,
+            "end": 353
+          },
+          {
+            "start": 357,
+            "end": 359
+          },
+          {
+            "start": 363,
+            "end": 365
+          },
+          {
+            "start": 369,
+            "end": 371
+          },
+          {
+            "start": 375,
+            "end": 377
+          },
+          {
+            "start": 381,
+            "end": 383
+          },
+          {
+            "start": 387,
+            "end": 389
+          },
+          {
+            "start": 393,
+            "end": 395
+          },
+          {
+            "start": 399,
+            "end": 401
+          },
+          {
+            "start": 405,
+            "end": 407
+          },
+          {
+            "start": 411,
+            "end": 413
+          },
+          {
+            "start": 417,
+            "end": 419
+          },
+          {
+            "start": 423,
+            "end": 425
+          },
+          {
+            "start": 429,
+            "end": 431
+          },
+          {
+            "start": 435,
+            "end": 437
+          },
+          {
+            "start": 441,
+            "end": 443
+          },
+          {
+            "start": 447,
+            "end": 447
           }
         ],
         "dynamic_write_ranges": [
@@ -4919,16 +5126,7 @@
           2,
           3
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_read_cells": [],
         "dynamic_write_cells": [
           0,
           1,
@@ -4939,8 +5137,8 @@
           6,
           7
         ],
-        "dynamic_read_provenance": "conservative-full-stack",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_read_provenance": "source-derived",
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.generic.registry.directory.host",
@@ -5217,8 +5415,36 @@
         "highest_literal_cell": 65,
         "dynamic_read_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 7,
+            "end": 7
+          },
+          {
+            "start": 11,
+            "end": 15
+          },
+          {
+            "start": 19,
+            "end": 19
+          },
+          {
+            "start": 32,
+            "end": 32
+          },
+          {
+            "start": 36,
+            "end": 40
+          },
+          {
+            "start": 56,
+            "end": 62
+          },
+          {
+            "start": 64,
+            "end": 64
+          },
+          {
+            "start": 68,
+            "end": 72
           }
         ],
         "dynamic_write_ranges": [
@@ -5239,13 +5465,6 @@
           2
         ],
         "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
           7
         ],
         "dynamic_write_cells": [
@@ -5258,8 +5477,8 @@
           6,
           7
         ],
-        "dynamic_read_provenance": "conservative-full-stack",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_read_provenance": "source-derived",
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.generic.job.command.gateway",
@@ -5442,8 +5661,8 @@
         "highest_literal_cell": 39,
         "dynamic_read_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 14,
+            "end": 20
           }
         ],
         "dynamic_write_ranges": [
@@ -5463,16 +5682,7 @@
           1,
           2
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_read_cells": [],
         "dynamic_write_cells": [
           0,
           1,
@@ -5483,7 +5693,7 @@
           6,
           7
         ],
-        "dynamic_read_provenance": "conservative-full-stack",
+        "dynamic_read_provenance": "source-derived",
         "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
@@ -5623,7 +5833,7 @@
           7
         ],
         "dynamic_read_provenance": "conservative-full-stack",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.generic.job.store",
@@ -6257,8 +6467,8 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 32,
+            "end": 255
           }
         ],
         "line_count": 109,
@@ -6273,18 +6483,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.input.profile.view",
@@ -6453,8 +6654,8 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 32,
+            "end": 49
           }
         ],
         "line_count": 116,
@@ -6469,18 +6670,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.item.resource.reservation.selector",
@@ -7220,14 +7412,14 @@
         "highest_literal_cell": 17,
         "dynamic_read_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 32,
+            "end": 49
           }
         ],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 64,
+            "end": 93
           }
         ],
         "line_count": 109,
@@ -7241,28 +7433,10 @@
           1,
           2
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
-        "dynamic_read_provenance": "conservative-full-stack",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_read_cells": [],
+        "dynamic_write_cells": [],
+        "dynamic_read_provenance": "source-derived",
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.live.commission.snapshot.probe",
@@ -8110,7 +8284,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "89527113ac129d335e431e69ea78b17f2d84b81785d54a24ea8198704e8150d9",
+          "source_sha256": "89f02363b1c63e125a6153dda63dd2a67cae0915e5f0d6fe0627f746cd08d187",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -9977,8 +10151,12 @@
         "highest_literal_cell": 31,
         "dynamic_read_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 16,
+            "end": 23
+          },
+          {
+            "start": 128,
+            "end": 191
           }
         ],
         "dynamic_write_ranges": [
@@ -9998,16 +10176,7 @@
           1,
           2
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_read_cells": [],
         "dynamic_write_cells": [
           0,
           1,
@@ -10018,7 +10187,7 @@
           6,
           7
         ],
-        "dynamic_read_provenance": "conservative-full-stack",
+        "dynamic_read_provenance": "source-derived",
         "dynamic_write_provenance": "conservative-full-stack"
       },
       "envelope": {
@@ -12641,7 +12810,7 @@
           7
         ],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.pressure.grid.link.directory.adapter",
@@ -14093,8 +14262,24 @@
         "highest_literal_cell": 10,
         "dynamic_read_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 32,
+            "end": 37
+          },
+          {
+            "start": 40,
+            "end": 45
+          },
+          {
+            "start": 56,
+            "end": 61
+          },
+          {
+            "start": 64,
+            "end": 69
+          },
+          {
+            "start": 72,
+            "end": 77
           }
         ],
         "dynamic_write_ranges": [
@@ -14114,16 +14299,7 @@
           1,
           2
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_read_cells": [],
         "dynamic_write_cells": [
           0,
           1,
@@ -14134,8 +14310,8 @@
           6,
           7
         ],
-        "dynamic_read_provenance": "conservative-full-stack",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_read_provenance": "source-derived",
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.printer.execution.bank",
@@ -15139,8 +15315,8 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 16,
+            "end": 47
           }
         ],
         "line_count": 115,
@@ -15155,18 +15331,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.recipe.execution.profile.view",
@@ -15957,8 +16124,8 @@
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
-        "dynamic_read_provenance": "source-fingerprinted-exception",
-        "dynamic_write_provenance": "source-fingerprinted-exception"
+        "dynamic_read_provenance": "source-derived",
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.resource.reservation",
@@ -16997,8 +17164,8 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 10,
+            "end": 21
           }
         ],
         "line_count": 91,
@@ -17013,18 +17180,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.resource.profile.view",

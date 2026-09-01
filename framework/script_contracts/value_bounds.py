@@ -18,23 +18,33 @@ window falls out of a validator that only ever names `8` and `32`.
 Two things follow from reading a branch as the bound. The derived set is what
 the program *permits*, not what one execution performs -- a declared range has
 to cover every cell a legal peer can steer the loop to, which is the surface a
-declaration exists to state. And the set is only ever a floor: a declared range
-must contain it, never equal it, so a coarser reviewed window stays legal and a
-branch this module cannot read costs a check rather than inventing one. Where a
-loop's count is never validated locally, nothing bounds it and only the cell the
-first pass reaches is witnessed -- which is all a declared range is held to.
+declaration exists to state. And it is a floor first: a declared range must
+contain it, so a branch this module cannot read costs a check rather than
+inventing one, and where a loop's count is never validated locally only the cell
+the first pass reaches is witnessed.
 
-Everything rests on the seed the backward scan finds, and a seed is only a seed
-if it can still be in the register when the access runs; see `surviving`.
-Reading a branch as a gate or an exit needs the control-flow graph to be the
-whole graph besides, so a transfer nobody can follow stands both bounds down and
-leaves the program its first pass alone. Calls are not such a transfer: one walk
-follows them, which is what lets a subroutine's own guard be read against an
-access inside it -- and the guard is usually the whole bound, because a record
-loop is exactly the thing a program writes as a subroutine. The branch bounds
-read that walk projected onto indices, where merging a subroutine's call strings
-can only weaken them; seed survival reads the states themselves, because there
-the merge would strengthen an answer instead.
+Every derivation also carries whether it is the whole set and not just some of
+it, which is the second thing a declaration can be held to -- equality rather
+than containment, so a surface nobody declared can publish the derivation as its
+range. That answer is lost by any step that leaves a value out: a write nothing
+evaluates, a register arriving from a reflash instead of a write, a loop nothing
+counts out, advances a branch chooses between, an advance the access can be
+reached without, an enclosing loop that moves the register further, or a guard
+read off a limit never shown whole. Losing it costs precision and never
+soundness, so every one of those is answered no when in doubt.
+
+Which write is in a register is a reaching-definition question and not the
+nearest earlier one: a register holds what the last write on the path that got
+here left in it, and `arriving` joins every write that can. Reading a branch as
+a gate or an exit needs the control-flow graph to be the whole graph besides, so
+a transfer nobody can follow stands the bounds down and leaves the program its
+first pass alone. Calls are not such a transfer: one walk follows them, which is
+what lets a subroutine's own guard be read against an access inside it -- and the
+guard is usually the whole bound, because a record loop is exactly the thing a
+program writes as a subroutine. The branch bounds read that walk projected onto
+indices, where merging a subroutine's call strings can only weaken them; the
+reaching writes read the states themselves, because there the merge would
+strengthen an answer instead.
 
 A seed is only as good as the arithmetic between it and the access, and that
 arithmetic is enumerated rather than approximated. A cell this module derives is
@@ -71,6 +81,10 @@ AGAINST_ZERO = {"bltz": "blt", "blez": "ble", "bgtz": "bgt", "bgez": "bge"}
 LAST_PASS_CONTINUING = {"ble": 0, "blt": -1}
 LAST_PASS_EXITING = {"bgt": 0, "bge": -1}
 UNBOUNDED: tuple[int | None, int | None] = (None, None)
+# What one derivation knows about a token: the values it witnessed, and whether
+# those are all of them. A set nothing witnessed is None, and is never whole.
+Derived = tuple["set[int] | None", bool]
+OPEN: Derived = (None, False)
 # A set-instruction answers a comparison, so it holds one of two values whatever
 # it compared and however little is known about the operands. `sgn` is
 # deliberately absent: its three answers include -1.
@@ -181,7 +195,7 @@ class ValueBounds:
         self._carried: dict[tuple[int, int], dict[str, list[tuple[int, int]]]] = {}
         self._forward: dict[tuple[int, int], set[int]] = {}
         self._backward: dict[tuple[int, int], set[int]] = {}
-        self._surviving: dict[tuple[int, int, str], bool] = {}
+        self._reaching: dict[tuple[str, frozenset[int]], dict[int, frozenset[int | None]]] = {}
 
     def sites(self, index: int) -> dict[str, set[int]]:
         """Every loop advance around `index`, by register -- the writes a seed scan skips."""
@@ -242,10 +256,17 @@ class ValueBounds:
         return (operator, row[1], row[2], target) if len(row) >= 4 else None
 
     def guard_interval(self, access: int, register: str, sites, depth: int, seen) -> tuple:
-        """The interval every branch that gates `access` permits `register` to hold."""
+        """The interval every branch that gates `access` permits `register` to hold.
+
+        The third answer is whether those ends can be trusted not to cut a value
+        the register really reaches. A limit read from a token whose own values
+        were never shown whole may be smaller than the real one, and a bound that
+        is too tight bounds nothing.
+        """
         interval = UNBOUNDED
+        trusted = True
         if not self.complete:
-            return interval
+            return (*interval, trusted)
         for index in self.dominators.get(access, ()):
             compared = self.comparison(index)
             if compared is None or compared[1] != register:
@@ -254,12 +275,17 @@ class ValueBounds:
             table, entered = self.gated_edge(access, index, target)
             if table is None or self.rewritten(entered, index, access, register):
                 continue
-            other = self.interval_of(index, against, sites, depth + 1, seen)
+            other_low, other_high, other_trusted = self.interval_of(
+                index, against, sites, depth + 1, seen
+            )
             low_delta, high_delta = table[operator]
-            low = None if low_delta is None or other[0] is None else other[0] + low_delta
-            high = None if high_delta is None or other[1] is None else other[1] + high_delta
+            low = None if low_delta is None or other_low is None else other_low + low_delta
+            high = None if high_delta is None or other_high is None else other_high + high_delta
+            if low is None and high is None:
+                continue
+            trusted = trusted and other_trusted
             interval = meet(interval, (low, high))
-        return interval
+        return (*interval, trusted)
 
     def gated_edge(self, access: int, index: int, target: int):
         """Which outgoing edge of the branch at `index` every path to `access` takes."""
@@ -281,7 +307,7 @@ class ValueBounds:
             for node in live
         )
 
-    def trip_bound(self, region: tuple[int, int], depth: int, seen) -> int | None:
+    def trip_bound(self, region: tuple[int, int], depth: int, seen) -> tuple[int | None, bool]:
         """Most passes `region` can make, from whatever branch counts it out.
 
         The test may sit at the top and leave when it holds, or at the bottom and
@@ -289,36 +315,57 @@ class ValueBounds:
         advances and the last value whose pass still runs the body. A test some
         path around the loop can skip is not a bound, so only tests that dominate
         the back edge are read.
+
+        Whether the count is also a ceiling is a separate answer, and the
+        tightest count is the one that has to carry it: a looser bound beside it
+        proves nothing about a program the tighter one under-counts. Each of the
+        three inputs can under-count on its own -- a limit that is really higher,
+        a seed that is really lower, and an advance some pass around the loop
+        skips, which makes the step smaller than the sum of its parts.
         """
         if not self.complete:
-            return None
+            return None, False
         head, back = region
         carried = self.region_carried(region)
         sites = {register: {place for place, _ in updates} for register, updates in carried.items()}
-        trips = None
+        trips, counted = None, False
         for index in range(head, back + 1):
             compared = self.comparison(index)
             if compared is None or index not in self.dominators.get(back, ()):
                 continue
             operator, counter, against, target = compared
-            step = sum(amount for _, amount in carried.get(counter, ()))
+            updates = carried.get(counter, ())
+            step = sum(amount for _, amount in updates)
             table = LAST_PASS_CONTINUING if head <= target <= back else LAST_PASS_EXITING
             if not step or operator not in table:
                 continue
-            limit = self.interval_of(index, against, sites, depth + 1, seen)[1]
+            _, limit, limit_trusted = self.interval_of(index, against, sites, depth + 1, seen)
             # The counter enters the loop at its seed: asking for its value here
             # would ask for the trip count that is being derived.
-            entering = self.seed_values(head, counter, sites, depth + 1, seen)
+            entering, entering_whole = self.seed_values(head, counter, sites, depth + 1, seen)
             if limit is None or not entering:
                 continue
             passes = max(0, (limit + table[operator] - min(entering)) // step + 1)
-            trips = passes if trips is None else min(trips, passes)
-        return trips
+            whole = limit_trusted and entering_whole and all(
+                place in self.dominators.get(back, ()) for place, _ in updates
+            )
+            if trips is None or passes < trips:
+                trips, counted = passes, whole
+            elif passes == trips:
+                counted = counted or whole
+        return trips, counted
 
     def region_carried(self, region: tuple[int, int]) -> dict[str, list[tuple[int, int]]]:
         if region not in self._carried:
             self._carried[region] = region_induction(self.program, region)
         return self._carried[region]
+
+    def carrying_regions(self, index: int, token: str) -> list[tuple[int, int]]:
+        """Every loop around `index` that advances `token` and never resets it."""
+        return [
+            region for region in self.regions
+            if region[0] <= index <= region[1] and token in self.region_carried(region)
+        ]
 
     def carried(self, index: int, token: str) -> tuple[tuple[int, int], int, int] | None:
         """`(region, stride, prefix)` for the innermost loop that advances `token`.
@@ -334,11 +381,16 @@ class ValueBounds:
         the other, never their sum, and reading them as a sequence would claim
         cells no execution reaches -- so unless every advance dominates the back
         edge, a register advanced more than once is left at its first pass.
+
+        A prefix asks more of an advance than a stride does. Skipping one only
+        ever leaves the register somewhere the stride already names, but a prefix
+        says the access stands *behind* it, and a pass that reached the access
+        without it reads the cell before -- which the prefix drops off the front
+        of the window. So an advance the access can be reached without is not one
+        it stands behind, however few there are.
         """
         region = None
-        for candidate in self.regions:
-            if not candidate[0] <= index <= candidate[1] or token not in self.region_carried(candidate):
-                continue
+        for candidate in self.carrying_regions(index, token):
             if region is None or candidate[0] > region[0]:
                 region = candidate
         if region is None:
@@ -349,9 +401,14 @@ class ValueBounds:
         )
         if len(updates) > 1 and not every_pass:
             return None
+        standing = [(place, amount) for place, amount in updates if place < index]
+        if standing and not (self.complete and all(
+            place in self.dominators.get(index, ()) for place, _ in standing
+        )):
+            return None
         return (region,
                 sum(amount for _, amount in updates),
-                sum(amount for place, amount in updates if place < index))
+                sum(amount for _, amount in standing))
 
     def interval_of(self, index: int, token: str, sites, depth: int, seen) -> tuple:
         """How far `token` can reach either way, even where its values do not enumerate.
@@ -360,120 +417,171 @@ class ValueBounds:
         never enumerates -- but the ceiling is the whole of what a loop counted
         against it needs.
         """
-        values = self.values(index, token, sites, depth, seen)
+        values, whole = self.values(index, token, sites, depth, seen)
         if values is not None:
-            return (min(values), max(values))
+            return (min(values), max(values), whole)
         return self.guard_interval(index, token, sites, depth, seen)
 
-    def values(self, index: int, token: str, sites, depth: int = 0, seen=frozenset()):
-        """Every value `token` can hold just before `program[index]`; None when open."""
+    def values(self, index: int, token: str, sites, depth: int = 0, seen=frozenset()) -> Derived:
+        """Every value `token` can hold just before `program[index]`, and whether that is all.
+
+        The values are a floor whatever the second answer says, so a consumer
+        asking a declaration to *contain* them reads the first alone. Only a
+        consumer that wants to hold a declaration to this set exactly needs the
+        second, and every step that leaves a value unaccounted for -- a write
+        nothing evaluates, a loop nothing counts out, a guard read off an
+        untrusted limit -- takes it away.
+        """
         literal = resolve_integer(token, self.integer_aliases)
         if literal is not None:
-            return {literal}
+            return {literal}, True
         if depth > MAX_DEPTH or (index, token) in seen:
-            return None
+            return OPEN
         seen = seen | {(index, token)}
-        values = self.seed_values(index, token, sites, depth, seen)
-        low, high = self.guard_interval(index, token, sites, depth, seen)
+        values, whole = self.seed_values(index, token, sites, depth, seen)
+        low, high, trusted = self.guard_interval(index, token, sites, depth, seen)
         if values is None:
             if low is None or high is None or high - low >= STACK_CELLS:
-                return None
-            return set(range(low, high + 1))
+                return OPEN
+            # Nothing named the value, so what the guards permit is both every
+            # cell a peer can steer this to and every cell it can reach at all.
+            return set(range(low, high + 1)), trusted
         carried = self.carried(index, token) if token in sites else None
+        if token in sites:
+            # A loop this cannot read the advances of leaves the register
+            # somewhere past the seed, and an enclosing loop that advances it too
+            # leaves it somewhere past the innermost pass read below.
+            whole = whole and carried is not None and len(self.carrying_regions(index, token)) == 1
         if carried is not None:
             region, stride, prefix = carried
             values = {value + prefix for value in values}
-            trips = self.trip_bound(region, depth, seen)
+            trips, counted = self.trip_bound(region, depth, seen)
             advances = -1 if trips is None else trips - 1
             if high is not None:
+                # A guard at the access counts the loop out as well as its own
+                # exit test does. Whichever of the two is tighter is the one that
+                # decides the reach, so it is also the one that has to be sound:
+                # a trusted guard says nothing about a program the exit test
+                # under-counts, and the passes it does not reach are lost.
                 reachable = (high - min(values)) // stride
-                advances = reachable if advances < 0 else min(advances, reachable)
+                if advances < 0 or reachable < advances:
+                    advances, counted = reachable, trusted
+                elif reachable == advances:
+                    counted = counted or trusted
             if advances >= 0:
                 values = {value + offset * stride for value in values for offset in range(advances + 1)}
             # Otherwise nothing counts the loop out, and the cell the first pass
             # reaches is the only one witnessed.
+            whole = whole and advances >= 0 and counted
         if low is not None:
             values = {value for value in values if value >= low}
         if high is not None:
             values = {value for value in values if value <= high}
-        return values if 0 < len(values) <= STACK_CELLS else None
+        if not 0 < len(values) <= STACK_CELLS:
+            return OPEN
+        return values, whole and trusted
 
-    def surviving(self, back: int, index: int, token: str, sites) -> bool:
-        """Can what `back` writes to `token` still be there when `index` runs?
+    def arriving(self, token: str, transparent: frozenset[int]) -> dict[int, frozenset[int | None]]:
+        """Which write is still in `token` at each index, over the call states.
 
-        Not whether every path runs it -- a loop re-entered from above carries a
-        cursor past its own initializer, and a cell that initializer reaches on
-        the first entry is still a cell the program reads. What disqualifies a
-        write is having no path to the access at all that another write to the
-        same register does not overwrite first: `move r3 64` in a reject block
-        that jumps away only rejoins through the read that replaces it.
+        The nearest write in program order is not the answer: a register holds
+        what the last write on the path that got here left in it, and different
+        paths get here from different writes. `None` stands for arriving with no
+        write at all -- registers survive a reflash, so nothing names what is
+        there then.
 
-        This is the one question here that the index graph would answer too
-        loosely rather than too strictly. Merging a subroutine's call strings
-        joins each caller's entry to every caller's return, and a path stitched
-        from two of them carries a value no execution does -- so the walk is over
-        the call states, where a return goes back to the site that made it.
+        A loop advance is transparent rather than a write, because the caller
+        folds the advance in once it has the seed the loop entered on.
+
+        This is the one question here the index graph would answer too loosely
+        rather than too strictly. Merging a subroutine's call strings joins each
+        caller's entry to every caller's return, and a path stitched from two of
+        them carries a write no execution does -- so the walk is over the call
+        states, where a return goes back to the site that made it.
         """
-        key = (back, index, token)
-        if key not in self._surviving:
-            blocked = {
+        key = (token, transparent)
+        if key not in self._reaching:
+            writers = {
                 node for node, entry in enumerate(self.program)
-                if node not in (back, index) and entry["row"]
-                and writes_register(entry["row"], token)
-                and node not in sites.get(token, ())
-            }
-            seen: set[CallState] = set()
-            pending = [state for state in self.states if state[0] == back]
-            found = False
-            while pending and not found:
+                if entry["row"] and writes_register(entry["row"], token)
+            } - transparent
+            incoming: dict[CallState, frozenset[int | None]] = {state: frozenset() for state in self.states}
+            start: CallState = (0, None)
+            pending: list[CallState] = []
+            if start in incoming:
+                incoming[start] = frozenset({None})
+                pending.append(start)
+            while pending:
                 state = pending.pop()
-                if state in seen or (state[0] != back and state[0] in blocked):
-                    continue
-                seen.add(state)
-                found = state[0] == index
-                pending.extend(self.states.get(state, set()) - seen)
-            self._surviving[key] = found
-        return self._surviving[key]
+                leaving = frozenset({state[0]}) if state[0] in writers else incoming[state]
+                for target in self.states.get(state, ()):
+                    if not leaving <= incoming[target]:
+                        incoming[target] |= leaving
+                        pending.append(target)
+            merged: dict[int, frozenset[int | None]] = {}
+            for state, reaching in incoming.items():
+                merged[state[0]] = merged.get(state[0], frozenset()) | reaching
+            self._reaching[key] = merged
+        return self._reaching[key]
 
-    def seed_values(self, index: int, token: str, sites, depth: int, seen):
-        """The values the nearest earlier write leaves in `token`."""
-        for back in range(index - 1, -1, -1):
-            row = self.program[back]["row"]
-            if not row or not writes_register(row, token):
-                continue
-            if back in sites.get(token, ()):
-                continue  # a loop step, folded in by the caller once the seed is found
-            if not self.surviving(back, index, token, sites):
-                return None
-            if row[0] in BOOLEAN_RESULTS:
-                return {0, 1}
-            if row[0] == "select" and len(row) >= 5:
-                when_true = self.values(back, row[3], sites, depth + 1, seen)
-                when_false = self.values(back, row[4], sites, depth + 1, seen)
-                if when_true is None or when_false is None:
-                    return None
-                return when_true | when_false
-            if row[0] == "move" and len(row) >= 3:
-                return self.values(back, row[2], sites, depth + 1, seen)
-            if row[0] in {"add", "sub", "mul"} and len(row) >= 4:
-                left = self.values(back, row[2], sites, depth + 1, seen)
-                right = self.values(back, row[3], sites, depth + 1, seen)
-                if left is None or right is None or len(left) * len(right) > PAIR_BUDGET:
-                    return None
-                if row[0] == "add":
-                    return {first + second for first in left for second in right}
-                if row[0] == "sub":
-                    return {first - second for first in left for second in right}
-                return {first * second for first in left for second in right}
-            return None
-        return None
+    def seed_values(self, index: int, token: str, sites, depth: int, seen) -> Derived:
+        """The join over every write that can still be in `token` at `index`.
 
-    def access_cells(self, index: int, token: str) -> set[int] | None:
-        """The stack cells one dynamic access reaches, or None when nothing witnesses it."""
-        cells = self.values(index, token, self.sites(index))
+        One write is enough to witness a value, so a write nothing can evaluate
+        costs the join its closure and not its other terms. Arriving with no
+        write at all costs the closure too: what a reflash left in the register
+        is not something a branch here bounds.
+        """
+        reaching = self.arriving(token, frozenset(sites.get(token, ()))).get(index, frozenset())
+        known: set[int] = set()
+        closed = None not in reaching
+        for back in sorted(node for node in reaching if node is not None):
+            values, whole = self.definition_values(back, token, sites, depth, seen)
+            if values is None:
+                closed = False
+            else:
+                known |= values
+                closed = closed and whole
+        return (known, closed) if known else OPEN
+
+    def definition_values(self, back: int, token: str, sites, depth: int, seen) -> Derived:
+        """The values one write leaves in `token`."""
+        row = self.program[back]["row"]
+        if row[0] in BOOLEAN_RESULTS:
+            return {0, 1}, True
+        if row[0] == "select" and len(row) >= 5:
+            when_true, true_whole = self.values(back, row[3], sites, depth + 1, seen)
+            when_false, false_whole = self.values(back, row[4], sites, depth + 1, seen)
+            if when_true is None or when_false is None:
+                return OPEN
+            return when_true | when_false, true_whole and false_whole
+        if row[0] == "move" and len(row) >= 3:
+            return self.values(back, row[2], sites, depth + 1, seen)
+        if row[0] in {"add", "sub", "mul"} and len(row) >= 4:
+            left, left_whole = self.values(back, row[2], sites, depth + 1, seen)
+            right, right_whole = self.values(back, row[3], sites, depth + 1, seen)
+            if left is None or right is None or len(left) * len(right) > PAIR_BUDGET:
+                return OPEN
+            whole = left_whole and right_whole
+            if row[0] == "add":
+                return {first + second for first in left for second in right}, whole
+            if row[0] == "sub":
+                return {first - second for first in left for second in right}, whole
+            return {first * second for first in left for second in right}, whole
+        return OPEN
+
+    def access_bounds(self, index: int, token: str) -> Derived:
+        """The stack cells one dynamic access reaches, and whether that is all of them.
+
+        A derivation that runs off the stack is not a proof about a stack range,
+        however closed each step of it was: the cells inside are still witnessed,
+        but the address the program computes is not one a declared range covers.
+        """
+        cells, closed = self.values(index, token, self.sites(index))
         if cells is None:
-            return None
-        return {cell for cell in cells if 0 <= cell < STACK_CELLS} or None
+            return OPEN
+        inside = {cell for cell in cells if 0 <= cell < STACK_CELLS}
+        return (inside, closed and inside == cells) if inside else OPEN
 
 
 def dynamic_access_cells(
@@ -490,7 +598,7 @@ def dynamic_access_cells(
     for index, target, direction, token, row in dynamic_accesses(
         analyzer.program, aliases, integer_aliases
     ):
-        cells = analyzer.access_cells(index, token)
+        cells, _ = analyzer.access_bounds(index, token)
         if cells is not None:
             found.append((target, direction, cells, " ".join(row)))
     return found

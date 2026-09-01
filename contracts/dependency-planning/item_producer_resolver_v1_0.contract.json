@@ -78,7 +78,76 @@
         "end": 511
       }
     ],
-    "dynamic_read_proven_ranges": [],
+    "dynamic_read_proven_ranges": [
+      {
+        "start": 32,
+        "end": 32
+      },
+      {
+        "start": 34,
+        "end": 34
+      },
+      {
+        "start": 36,
+        "end": 36
+      },
+      {
+        "start": 38,
+        "end": 38
+      },
+      {
+        "start": 40,
+        "end": 40
+      },
+      {
+        "start": 42,
+        "end": 42
+      },
+      {
+        "start": 44,
+        "end": 44
+      },
+      {
+        "start": 46,
+        "end": 46
+      },
+      {
+        "start": 48,
+        "end": 48
+      },
+      {
+        "start": 50,
+        "end": 50
+      },
+      {
+        "start": 52,
+        "end": 52
+      },
+      {
+        "start": 54,
+        "end": 54
+      },
+      {
+        "start": 56,
+        "end": 56
+      },
+      {
+        "start": 58,
+        "end": 58
+      },
+      {
+        "start": 60,
+        "end": 60
+      },
+      {
+        "start": 62,
+        "end": 62
+      },
+      {
+        "start": 64,
+        "end": 64
+      }
+    ],
     "dynamic_write_proven_ranges": [
       {
         "start": 0,
@@ -515,7 +584,7 @@
     "mode": "static-v2",
     "limitations": [
       "Unproved dynamic own-stack addresses fail closed to the full 512-cell stack.",
-      "Strict literal-seeded linear loops are source-derived; other reviewed bounds are source-fingerprinted overrides.",
+      "An address the branches around it bound whole is source-derived; other reviewed bounds are source-fingerprinted overrides.",
       "Provided and consumed protocols require authoritative declarations verified against source literals.",
       "Field semantics not represented by source comments or literals remain in supplemental canonical data."
     ]

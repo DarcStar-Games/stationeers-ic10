@@ -147,8 +147,18 @@
         "end": 31
       }
     ],
-    "dynamic_read_proven_ranges": [],
-    "dynamic_write_proven_ranges": [],
+    "dynamic_read_proven_ranges": [
+      {
+        "start": 35,
+        "end": 37
+      }
+    ],
+    "dynamic_write_proven_ranges": [
+      {
+        "start": 16,
+        "end": 18
+      }
+    ],
     "dynamic_read_range_source": "source-fingerprinted-exception",
     "dynamic_write_range_source": "source-fingerprinted-exception",
     "clears_all": false,
@@ -392,7 +402,7 @@
     "mode": "static-v2",
     "limitations": [
       "Unproved dynamic own-stack addresses fail closed to the full 512-cell stack.",
-      "Strict literal-seeded linear loops are source-derived; other reviewed bounds are source-fingerprinted overrides.",
+      "An address the branches around it bound whole is source-derived; other reviewed bounds are source-fingerprinted overrides.",
       "Provided and consumed protocols require authoritative declarations verified against source literals.",
       "Field semantics not represented by source comments or literals remain in supplemental canonical data."
     ]

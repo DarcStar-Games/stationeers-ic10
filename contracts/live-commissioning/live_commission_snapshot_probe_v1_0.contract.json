@@ -36,20 +36,30 @@
     "dynamic_write": true,
     "dynamic_read_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 32,
+        "end": 49
       }
     ],
     "dynamic_write_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 64,
+        "end": 93
       }
     ],
-    "dynamic_read_proven_ranges": [],
-    "dynamic_write_proven_ranges": [],
-    "dynamic_read_range_source": "conservative-full-stack",
-    "dynamic_write_range_source": "conservative-full-stack",
+    "dynamic_read_proven_ranges": [
+      {
+        "start": 32,
+        "end": 49
+      }
+    ],
+    "dynamic_write_proven_ranges": [
+      {
+        "start": 64,
+        "end": 93
+      }
+    ],
+    "dynamic_read_range_source": "source-derived",
+    "dynamic_write_range_source": "source-derived",
     "clears_all": false,
     "external_readable_ranges": [],
     "external_writable_ranges": [],
@@ -61,7 +71,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": -211474941
       },
       {
         "address": 1,
@@ -70,7 +81,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 2,
@@ -79,7 +91,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
         "address": 10,
@@ -163,7 +176,22 @@
       "mode": "preserved-unless-overwritten",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": -211474941,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
     "provides": [
@@ -182,7 +210,7 @@
     "mode": "static-v2",
     "limitations": [
       "Unproved dynamic own-stack addresses fail closed to the full 512-cell stack.",
-      "Strict literal-seeded linear loops are source-derived; other reviewed bounds are source-fingerprinted overrides.",
+      "An address the branches around it bound whole is source-derived; other reviewed bounds are source-fingerprinted overrides.",
       "Provided and consumed protocols require authoritative declarations verified against source literals.",
       "Field semantics not represented by source comments or literals remain in supplemental canonical data."
     ]

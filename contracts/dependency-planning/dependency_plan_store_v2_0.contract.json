@@ -50,6 +50,134 @@
       {
         "start": 14,
         "end": 20
+      },
+      {
+        "start": 128,
+        "end": 128
+      },
+      {
+        "start": 136,
+        "end": 136
+      },
+      {
+        "start": 144,
+        "end": 144
+      },
+      {
+        "start": 152,
+        "end": 152
+      },
+      {
+        "start": 160,
+        "end": 160
+      },
+      {
+        "start": 168,
+        "end": 168
+      },
+      {
+        "start": 176,
+        "end": 176
+      },
+      {
+        "start": 184,
+        "end": 184
+      },
+      {
+        "start": 192,
+        "end": 192
+      },
+      {
+        "start": 200,
+        "end": 200
+      },
+      {
+        "start": 208,
+        "end": 208
+      },
+      {
+        "start": 216,
+        "end": 216
+      },
+      {
+        "start": 224,
+        "end": 224
+      },
+      {
+        "start": 232,
+        "end": 232
+      },
+      {
+        "start": 240,
+        "end": 240
+      },
+      {
+        "start": 248,
+        "end": 248
+      },
+      {
+        "start": 256,
+        "end": 256
+      },
+      {
+        "start": 264,
+        "end": 264
+      },
+      {
+        "start": 272,
+        "end": 272
+      },
+      {
+        "start": 280,
+        "end": 280
+      },
+      {
+        "start": 288,
+        "end": 288
+      },
+      {
+        "start": 296,
+        "end": 296
+      },
+      {
+        "start": 304,
+        "end": 304
+      },
+      {
+        "start": 312,
+        "end": 312
+      },
+      {
+        "start": 320,
+        "end": 320
+      },
+      {
+        "start": 328,
+        "end": 328
+      },
+      {
+        "start": 336,
+        "end": 336
+      },
+      {
+        "start": 344,
+        "end": 344
+      },
+      {
+        "start": 352,
+        "end": 352
+      },
+      {
+        "start": 360,
+        "end": 360
+      },
+      {
+        "start": 368,
+        "end": 368
+      },
+      {
+        "start": 376,
+        "end": 376
       }
     ],
     "dynamic_write_proven_ranges": [
@@ -200,7 +328,7 @@
     "mode": "static-v2",
     "limitations": [
       "Unproved dynamic own-stack addresses fail closed to the full 512-cell stack.",
-      "Strict literal-seeded linear loops are source-derived; other reviewed bounds are source-fingerprinted overrides.",
+      "An address the branches around it bound whole is source-derived; other reviewed bounds are source-fingerprinted overrides.",
       "Provided and consumed protocols require authoritative declarations verified against source literals.",
       "Field semantics not represented by source comments or literals remain in supplemental canonical data."
     ]

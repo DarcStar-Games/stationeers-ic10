@@ -27,7 +27,7 @@ beqz r0 BankA
 get r10 d1 26
 get r11 d1 28
 get r12 d1 30
-move r13 224
+move r13 96 # ResourceLink records are one cell, so bank 1 sits at 32 + 1*64
 j Start
 BankA:
 get r10 d1 25

@@ -166,6 +166,14 @@ forbidden={
  'publishes TransformType S2':'Material Transform Admission publishes TransformType at S14',
  'S2 is requested batch count, S3 request generation':'Material Transform Runtime receives requests at S8/S16',
  'Runtime S7 = committed material epoch':'Material Transform Runtime mirrors the committed epoch at S22',
+ # Both cases: the phrase opens a sentence in the authority list and appears
+ # mid-sentence elsewhere, and this table is matched literally.
+ 'literal-seeded':'one branch-bounds proof derives dynamic ranges; the linear loop proof beside it is gone',
+ 'Literal-seeded':'one branch-bounds proof derives dynamic ranges; the linear loop proof beside it is gone',
+ 'strict linear loop':'one branch-bounds proof derives dynamic ranges; the linear loop proof beside it is gone',
+ 'strict loop proof':'one branch-bounds proof derives dynamic ranges; the linear loop proof beside it is gone',
+ 'single-backedge loop':'the loop model reads every back edge around an access, not one',
+ 'must exactly match any retained override':'an override wider than a whole derivation is kept as the published range',
 }
 for p in mds:
     txt=p.read_text(errors='replace')

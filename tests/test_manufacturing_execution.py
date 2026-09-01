@@ -40,6 +40,12 @@ ck([rv.stack.get(20+i) for i in range(8)]==[213,30,-1301215609,2,223,10,-4043368
 sr1.stack[36]=1;rv.stack[18]=2;rv.run(1);ck(rv.stack.get(12)==-3,'insufficient reagent was not classified resource wait')
 sr1.stack[36]=100;dr1.stack[37]=1;rv.stack[18]=3;rv.run(1);ck(rv.stack.get(12)==-4,'insufficient sink capacity was not classified capacity wait')
 dr1.stack[37]=100
+# ResourceLink records are one cell, so the Snapshot Host writes bank 1 at
+# 32 + 1*64. The active bank alternates on every commit and only bank 0 was ever
+# exercised here; reading a 192-cell stride finds cleared cells and then faults
+# on a zero ReferenceId.
+ld.stack.update({24:1,26:5,28:2,30:0,96:213,97:223});rv.stack[18]=4;rv.run(1)
+ck(rv.stack.get(12)==1 and rv.stack.get(9)==2,'print resolver missed the second directory bank at its published stride')
 
 # Generic print runtime consumes the same allocator completion contract and native printer instruction stack.
 resolver=Device(300,stack={8:910,9:2,11:1,12:1},props={'ReferenceId':300})

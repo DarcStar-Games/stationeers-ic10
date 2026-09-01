@@ -110,8 +110,264 @@
     "dynamic_write": true,
     "dynamic_read_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 64,
+        "end": 65
+      },
+      {
+        "start": 69,
+        "end": 71
+      },
+      {
+        "start": 75,
+        "end": 77
+      },
+      {
+        "start": 81,
+        "end": 83
+      },
+      {
+        "start": 87,
+        "end": 89
+      },
+      {
+        "start": 93,
+        "end": 95
+      },
+      {
+        "start": 99,
+        "end": 101
+      },
+      {
+        "start": 105,
+        "end": 107
+      },
+      {
+        "start": 111,
+        "end": 113
+      },
+      {
+        "start": 117,
+        "end": 119
+      },
+      {
+        "start": 123,
+        "end": 125
+      },
+      {
+        "start": 129,
+        "end": 131
+      },
+      {
+        "start": 135,
+        "end": 137
+      },
+      {
+        "start": 141,
+        "end": 143
+      },
+      {
+        "start": 147,
+        "end": 149
+      },
+      {
+        "start": 153,
+        "end": 155
+      },
+      {
+        "start": 159,
+        "end": 161
+      },
+      {
+        "start": 165,
+        "end": 167
+      },
+      {
+        "start": 171,
+        "end": 173
+      },
+      {
+        "start": 177,
+        "end": 179
+      },
+      {
+        "start": 183,
+        "end": 185
+      },
+      {
+        "start": 189,
+        "end": 191
+      },
+      {
+        "start": 195,
+        "end": 197
+      },
+      {
+        "start": 201,
+        "end": 203
+      },
+      {
+        "start": 207,
+        "end": 209
+      },
+      {
+        "start": 213,
+        "end": 215
+      },
+      {
+        "start": 219,
+        "end": 221
+      },
+      {
+        "start": 225,
+        "end": 227
+      },
+      {
+        "start": 231,
+        "end": 233
+      },
+      {
+        "start": 237,
+        "end": 239
+      },
+      {
+        "start": 243,
+        "end": 245
+      },
+      {
+        "start": 249,
+        "end": 251
+      },
+      {
+        "start": 255,
+        "end": 257
+      },
+      {
+        "start": 261,
+        "end": 263
+      },
+      {
+        "start": 267,
+        "end": 269
+      },
+      {
+        "start": 273,
+        "end": 275
+      },
+      {
+        "start": 279,
+        "end": 281
+      },
+      {
+        "start": 285,
+        "end": 287
+      },
+      {
+        "start": 291,
+        "end": 293
+      },
+      {
+        "start": 297,
+        "end": 299
+      },
+      {
+        "start": 303,
+        "end": 305
+      },
+      {
+        "start": 309,
+        "end": 311
+      },
+      {
+        "start": 315,
+        "end": 317
+      },
+      {
+        "start": 321,
+        "end": 323
+      },
+      {
+        "start": 327,
+        "end": 329
+      },
+      {
+        "start": 333,
+        "end": 335
+      },
+      {
+        "start": 339,
+        "end": 341
+      },
+      {
+        "start": 345,
+        "end": 347
+      },
+      {
+        "start": 351,
+        "end": 353
+      },
+      {
+        "start": 357,
+        "end": 359
+      },
+      {
+        "start": 363,
+        "end": 365
+      },
+      {
+        "start": 369,
+        "end": 371
+      },
+      {
+        "start": 375,
+        "end": 377
+      },
+      {
+        "start": 381,
+        "end": 383
+      },
+      {
+        "start": 387,
+        "end": 389
+      },
+      {
+        "start": 393,
+        "end": 395
+      },
+      {
+        "start": 399,
+        "end": 401
+      },
+      {
+        "start": 405,
+        "end": 407
+      },
+      {
+        "start": 411,
+        "end": 413
+      },
+      {
+        "start": 417,
+        "end": 419
+      },
+      {
+        "start": 423,
+        "end": 425
+      },
+      {
+        "start": 429,
+        "end": 431
+      },
+      {
+        "start": 435,
+        "end": 437
+      },
+      {
+        "start": 441,
+        "end": 443
+      },
+      {
+        "start": 447,
+        "end": 447
       }
     ],
     "dynamic_write_ranges": [
@@ -120,15 +376,276 @@
         "end": 511
       }
     ],
-    "dynamic_read_proven_ranges": [],
+    "dynamic_read_proven_ranges": [
+      {
+        "start": 64,
+        "end": 65
+      },
+      {
+        "start": 69,
+        "end": 71
+      },
+      {
+        "start": 75,
+        "end": 77
+      },
+      {
+        "start": 81,
+        "end": 83
+      },
+      {
+        "start": 87,
+        "end": 89
+      },
+      {
+        "start": 93,
+        "end": 95
+      },
+      {
+        "start": 99,
+        "end": 101
+      },
+      {
+        "start": 105,
+        "end": 107
+      },
+      {
+        "start": 111,
+        "end": 113
+      },
+      {
+        "start": 117,
+        "end": 119
+      },
+      {
+        "start": 123,
+        "end": 125
+      },
+      {
+        "start": 129,
+        "end": 131
+      },
+      {
+        "start": 135,
+        "end": 137
+      },
+      {
+        "start": 141,
+        "end": 143
+      },
+      {
+        "start": 147,
+        "end": 149
+      },
+      {
+        "start": 153,
+        "end": 155
+      },
+      {
+        "start": 159,
+        "end": 161
+      },
+      {
+        "start": 165,
+        "end": 167
+      },
+      {
+        "start": 171,
+        "end": 173
+      },
+      {
+        "start": 177,
+        "end": 179
+      },
+      {
+        "start": 183,
+        "end": 185
+      },
+      {
+        "start": 189,
+        "end": 191
+      },
+      {
+        "start": 195,
+        "end": 197
+      },
+      {
+        "start": 201,
+        "end": 203
+      },
+      {
+        "start": 207,
+        "end": 209
+      },
+      {
+        "start": 213,
+        "end": 215
+      },
+      {
+        "start": 219,
+        "end": 221
+      },
+      {
+        "start": 225,
+        "end": 227
+      },
+      {
+        "start": 231,
+        "end": 233
+      },
+      {
+        "start": 237,
+        "end": 239
+      },
+      {
+        "start": 243,
+        "end": 245
+      },
+      {
+        "start": 249,
+        "end": 251
+      },
+      {
+        "start": 255,
+        "end": 257
+      },
+      {
+        "start": 261,
+        "end": 263
+      },
+      {
+        "start": 267,
+        "end": 269
+      },
+      {
+        "start": 273,
+        "end": 275
+      },
+      {
+        "start": 279,
+        "end": 281
+      },
+      {
+        "start": 285,
+        "end": 287
+      },
+      {
+        "start": 291,
+        "end": 293
+      },
+      {
+        "start": 297,
+        "end": 299
+      },
+      {
+        "start": 303,
+        "end": 305
+      },
+      {
+        "start": 309,
+        "end": 311
+      },
+      {
+        "start": 315,
+        "end": 317
+      },
+      {
+        "start": 321,
+        "end": 323
+      },
+      {
+        "start": 327,
+        "end": 329
+      },
+      {
+        "start": 333,
+        "end": 335
+      },
+      {
+        "start": 339,
+        "end": 341
+      },
+      {
+        "start": 345,
+        "end": 347
+      },
+      {
+        "start": 351,
+        "end": 353
+      },
+      {
+        "start": 357,
+        "end": 359
+      },
+      {
+        "start": 363,
+        "end": 365
+      },
+      {
+        "start": 369,
+        "end": 371
+      },
+      {
+        "start": 375,
+        "end": 377
+      },
+      {
+        "start": 381,
+        "end": 383
+      },
+      {
+        "start": 387,
+        "end": 389
+      },
+      {
+        "start": 393,
+        "end": 395
+      },
+      {
+        "start": 399,
+        "end": 401
+      },
+      {
+        "start": 405,
+        "end": 407
+      },
+      {
+        "start": 411,
+        "end": 413
+      },
+      {
+        "start": 417,
+        "end": 419
+      },
+      {
+        "start": 423,
+        "end": 425
+      },
+      {
+        "start": 429,
+        "end": 431
+      },
+      {
+        "start": 435,
+        "end": 437
+      },
+      {
+        "start": 441,
+        "end": 443
+      },
+      {
+        "start": 447,
+        "end": 447
+      }
+    ],
     "dynamic_write_proven_ranges": [
       {
         "start": 0,
         "end": 511
       }
     ],
-    "dynamic_read_range_source": "conservative-full-stack",
-    "dynamic_write_range_source": "conservative-full-stack",
+    "dynamic_read_range_source": "source-derived",
+    "dynamic_write_range_source": "source-derived",
     "clears_all": true,
     "external_readable_ranges": [
       {
@@ -317,7 +834,7 @@
     "mode": "static-v2",
     "limitations": [
       "Unproved dynamic own-stack addresses fail closed to the full 512-cell stack.",
-      "Strict literal-seeded linear loops are source-derived; other reviewed bounds are source-fingerprinted overrides.",
+      "An address the branches around it bound whole is source-derived; other reviewed bounds are source-fingerprinted overrides.",
       "Provided and consumed protocols require authoritative declarations verified against source literals.",
       "Field semantics not represented by source comments or literals remain in supplemental canonical data."
     ]

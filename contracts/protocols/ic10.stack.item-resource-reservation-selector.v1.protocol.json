@@ -42,7 +42,8 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 1606529514
         },
         {
           "address": 1,
@@ -51,7 +52,8 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 1
         },
         {
           "address": 2,
@@ -60,7 +62,8 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 0
         },
         {
           "address": 8,
@@ -151,7 +154,22 @@
           "mode": "preserved-unless-overwritten",
           "source": "static-entry-path-analysis"
         },
-        "invariants": []
+        "invariants": [
+          {
+            "id": "header.s0.magic",
+            "kind": "cell-equals",
+            "address": 0,
+            "equals": 1606529514,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s0.abi",
+            "kind": "cell-equals",
+            "address": 1,
+            "equals": 1,
+            "source": "generated-protocol-header"
+          }
+        ]
       }
     }
   ],
@@ -179,7 +197,7 @@
         }
       ],
       "dynamic_write_ranges": [],
-      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_read_range_source": "source-derived",
       "dynamic_write_range_source": "none",
       "constraints": [
         {
