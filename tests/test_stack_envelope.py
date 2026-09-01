@@ -532,8 +532,18 @@ overclaim_errors = post_init_range_errors(
     overclaiming, windowed_contract, minimal_extension.reserved_cells
 )
 ck(overclaim_errors == ["reviewed post-init dynamic write range claims S19..S31, which the"
-                        " source-derived dynamic write range never reaches"],
+                        " source-derived dynamic write range S16..S18 never reaches"],
    "a reviewed post-init range outside the derived one passed or was misreported")
+# The message has to name every span it objects to, not just the first: a declaration
+# straddling a derived window is corrected by moving both ends, and one span named
+# looks like one span wrong.
+straddling = post_init_range_errors(
+    replace(minimal, post_init_dynamic_write_ranges=(StackRange(14, 20),)),
+    windowed_contract, minimal_extension.reserved_cells,
+)
+ck(straddling == ["reviewed post-init dynamic write range claims S14..S15, S19..S20, which the"
+                  " source-derived dynamic write range S16..S18 never reaches"],
+   "the containment rule reported only part of a range straddling the derived window")
 ck(not post_init_range_errors(
     replace(minimal, post_init_dynamic_write_ranges=(StackRange(17, 17),)),
     windowed_contract, minimal_extension.reserved_cells,

@@ -1028,12 +1028,13 @@ def post_init_range_errors(
         return []
     reserved = set(range(BASE, BASE + LENGTH)) | set(extension_cells)
     claimed = set().union(*(item.cells() for item in declaration.post_init_dynamic_write_ranges))
-    unreachable = claimed - reserved - _range_cells(contract["own_stack"]["dynamic_write_ranges"])
+    derived = _range_cells(contract["own_stack"]["dynamic_write_ranges"])
+    unreachable = claimed - reserved - derived
     if not unreachable:
         return []
     return [
         f"reviewed post-init dynamic write range claims {_spans(unreachable)}, which the "
-        f"{provenance} dynamic write range never reaches"
+        f"{provenance} dynamic write range {_spans(derived)} never reaches"
     ]
 
 
