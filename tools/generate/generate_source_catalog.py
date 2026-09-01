@@ -3,16 +3,9 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
-from pathlib import Path
-import re
 from framework.source_metadata import load_manifest,resolve_script_metadata,deployable_scripts
 ROOT=_PROJECT_ROOT
 OUTPUT_FILE='docs/SCRIPT_INDEX.md';FIXED_OUTPUTS=(OUTPUT_FILE,)
-
-def human_name(filename):
-    stem=Path(filename).stem
-    stem=re.sub(r'_v\d+_\d+$','',stem)
-    return ' '.join(w.upper() if w in {'pi','ic10'} else w.capitalize() for w in stem.split('_'))
 
 
 def main():
