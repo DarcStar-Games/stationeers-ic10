@@ -27,15 +27,30 @@ ck(ts.stack.get(9)==1 and ts.stack.get(10)==601 and ts.stack.get(11)==701,'trans
 # Print material resolver maps semantic recipe reagents to concrete MaterialGrid links/resources.
 recipe=Device(200,stack={13:2,14:9,15:1,16:'HASH:Iron',17:30,18:'HASH:Copper',19:10},props={'ReferenceId':200})
 # source/sink reservations advertise sufficient exact ITEM capacity.
-sr1=Device(211,stack={36:100},props={'ReferenceId':211});dr1=Device(212,stack={37:100},props={'ReferenceId':212})
-sr2=Device(221,stack={36:100},props={'ReferenceId':221});dr2=Device(222,stack={37:100},props={'ReferenceId':222})
-l1=Device(213,stack={28:211,29:212,31:-1301215609,9:1,22:900,27:'HASH:Iron'},props={'ReferenceId':213})
-l2=Device(223,stack={28:221,29:222,31:-404336834,9:1,22:900,27:'HASH:Copper'},props={'ReferenceId':223})
+sr1=Device(211,stack={9:1,36:100},props={'ReferenceId':211});dr1=Device(212,stack={9:1,37:100},props={'ReferenceId':212})
+sr2=Device(221,stack={9:1,36:100},props={'ReferenceId':221});dr2=Device(222,stack={9:1,37:100},props={'ReferenceId':222})
+g1=Device(214,props={'ReferenceId':214});g2=Device(224,props={'ReferenceId':224})
+l1=Device(213,stack={9:1,14:214,15:215,16:216,21:701,22:900,27:'HASH:Iron',28:211,29:212,31:-1301215609},props={'ReferenceId':213})
+l2=Device(223,stack={9:1,14:224,15:225,16:226,21:702,22:900,27:'HASH:Copper',28:221,29:222,31:-404336834},props={'ReferenceId':223})
 ld=Device(230,stack={0:'HASH:GenericSnapshotDirectoryHost.v1',1:1,24:1,26:4,28:2,30:0,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:8,13:0,40:213,41:223},props={'ReferenceId':230})
 rv=IC10(src('ic10/manufacturing/print_material_resolver_v1_0.ic10'),{'d0':recipe,'d1':ld,'l1':l1,'l2':l2,'sr1':sr1,'dr1':dr1,'sr2':sr2,'dr2':dr2});rv.run(1)
 rv.stack.update({16:900,17:2,18:1});rv.run(1)
 ck(rv.stack.get(12)==1 and rv.stack.get(9)==2 and rv.stack.get(8)==900,'print material resolver rejected reachable reagents')
 ck([rv.stack.get(20+i) for i in range(8)]==[213,30,-1301215609,2,223,10,-404336834,2],'print resolver did not publish transform-compatible four-cell link records')
+# The deployed print lane wires this resolver to the shared Stager/Allocator.
+# Exercise those real consumers so fixed-cell and record-table drift cannot strand admission.
+resolver_dev=Device(231,rv.stack,{'ReferenceId':231});stager_dev=Device(232,{}, {'ReferenceId':232});alloc_dev=Device(233,{}, {'ReferenceId':233})
+lane={'d0':resolver_dev,'l1':l1,'l2':l2,'sr1':sr1,'dr1':dr1,'sr2':sr2,'dr2':dr2,'g1':g1,'g2':g2}
+stager=IC10(src('ic10/material-transform/multi_material_reservation_stager_v1_0.ic10'),lane|{'d1':alloc_dev},self_ref=232);stager_dev.stack=stager.stack
+allocator=IC10(src('ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10'),lane|{'d1':stager_dev},self_ref=233);alloc_dev.stack=allocator.stack
+stager.run(1);allocator.run(1);allocator.stack.update({8:2,20:300,21:1})
+for _ in range(8):
+ allocator.run(1);stager.run(1)
+ if allocator.stack.get(22)==1:break
+epoch=allocator.stack.get(14,0)
+ck(epoch>0 and allocator.stack.get(22)==1,'print resolver did not admit through shared stager/allocator')
+ck(sr1.stack.get(14)==60 and dr1.stack.get(15)==60 and sr2.stack.get(14)==20 and dr2.stack.get(15)==20,'print lane staged incorrect scaled material quantities')
+ck(g1.stack.get(17)==epoch and g1.stack.get(18)==233 and g2.stack.get(17)==epoch and g2.stack.get(18)==233,'print lane did not publish the common allocator epoch to every guard')
 # Insufficient source resource is classified WAIT_RESOURCE; sink loss is WAIT_CAPACITY.
 sr1.stack[36]=1;rv.stack[18]=2;rv.run(1);ck(rv.stack.get(12)==-3,'insufficient reagent was not classified resource wait')
 sr1.stack[36]=100;dr1.stack[37]=1;rv.stack[18]=3;rv.run(1);ck(rv.stack.get(12)==-4,'insufficient sink capacity was not classified capacity wait')
@@ -74,6 +89,7 @@ if fails:
 print('Manufacturing execution substrate: PASS')
 print(' - candidate selection is schema/version-qualified for Printer v2 and TransformLane v1')
 print(' - print reagents resolve through MaterialGrid links into existing four-cell allocator records')
+print(' - the print resolver fixed-cell surface admits through the shared Stager/Allocator transaction')
 print(' - resource vs capacity shortages remain distinct scheduler wait reasons')
 print(' - Generic Print Runtime reuses Multi Material Allocator completion and confirms exported output')
 print(' - Transform Lane Directory publishes the common ProcessorSpec used by generic selection')

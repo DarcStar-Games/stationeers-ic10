@@ -32,7 +32,7 @@ need('ic10/manufacturing/transform_candidate_executor_v2_0.ic10','poke 1 2','put
 # Dynamic generic candidate selector: one physical instance can serve either schema.
 need('ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10','poke 1 2','get r9 db 16','getd r0 r9 0','bne r0 r2 Bad','getd r0 r9 2','bne r0 r8 Loop')
 # Printing reuses four-cell resolver records + common allocator.
-need('ic10/manufacturing/print_material_resolver_v1_0.ic10','poke 0 HASH("PrintMaterialResolver.v1")','bne r0 HASH("DirectorySchema.ResourceLink.v1") Bad','mul r0 r7 4','poke r0 r1','poke r0 r12','poke r0 r5','poke r0 2')
+need('ic10/manufacturing/print_material_resolver_v1_0.ic10','poke 0 HASH("PrintMaterialResolver.v1")','bne r0 HASH("DirectorySchema.ResourceLink.v1") Bad','mul r0 r7 4','poke r0 r1','poke r0 r12','poke r0 r5','poke r0 2','poke 9 r8','poke 11 r0','poke 12 1')
 need('ic10/manufacturing/generic_print_runtime_v2_0.ic10','poke 1 2','poke 8 2','poke 9 0','poke 15 r15','put d1 8 r4','putd r2 0 3')
 # Async state is fenced by matching request identities across every orchestration boundary.
 need('ic10/manufacturing/transform_job_driver_v2_0.ic10','poke 1 2','poke 10 2','poke 11 0','poke 9 r15','get r1 d1 10','bne r1 r15 Loop','put d0 16 r1')
