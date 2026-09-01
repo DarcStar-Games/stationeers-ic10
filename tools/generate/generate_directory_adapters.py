@@ -3,15 +3,16 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
-from pathlib import Path
-import argparse,json,sys
+import argparse,json
 from framework.protocol_headers import header_token
+from framework.stack_envelope import declared_capability_mask
 R=_PROJECT_ROOT
 SPECS=R/'data/directory_adapter_specs.json'
 
 def render(s):
  fields=s['fields']; w=len(fields); g=s['generation_offset']
- lines=[f"# {s['comment']}",'Boot:','clr db','poke 0 HASH("DirectoryAdapter.v3")','poke 1 3','poke 2 17',f'poke 3 HASH("{s["schema"]}.v1")','poke 10 {}'.format(w),'poke 11 64','poke 15 1']
+ capability_mask=declared_capability_mask(R,s['file'])
+ lines=[f"# {s['comment']}",'Boot:','clr db','poke 0 HASH("DirectoryAdapter.v3")','poke 1 3',f'poke 2 {capability_mask}',f'poke 3 HASH("{s["schema"]}.v1")','poke 10 {}'.format(w),'poke 11 64','poke 15 1']
  lines += ['Loop:','yield','get r0 db 16','beqz r0 ScanStart','poke 17 r0','j Loop','ScanStart:','poke 17 0','get r15 db 13','add r15 r15 1','poke 13 r15','poke 14 0','move r7 0','move r8 0','Scan:','get r1 db:0 r7','blt r1 0 Publish','add r7 r7 1','ld r0 r1 PrefabHash','beq r0 -128473777 Probe','bne r0 2037291645 Scan','Probe:','getd r0 r1 0',f'bne r0 {header_token(s["provider_contract"],s["provider_abi"])} Scan',f'getd r15 r1 {g}','blez r15 Scan']
  for i,f in enumerate(fields):
   if f=='ref': continue

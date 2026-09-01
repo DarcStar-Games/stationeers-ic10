@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/transform_job_driver_v2_0.ic10",
-  "source_sha256": "e186f3d8974250639ea18df97720189589df179b560a7b7e8e81ae16df94e994",
+  "source_sha256": "6aec3a0d9c400abf5f8e62523c4cc2d9a9555ba709b1a8c862e2b52732ede82a",
   "identity": {
     "service_id": "ic10.script.transform.job.driver",
     "implementation_revision": "2.0",
@@ -222,7 +222,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,

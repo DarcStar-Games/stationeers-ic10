@@ -7,7 +7,12 @@
   "extension_version": 1,
   "extension_min_length": 4,
   "extension_max_length": 192,
-  "capability_bits_v1": 31,
+  "capability_bits_v1": 255,
+  "standard_capability_bits": {
+   "ASYNC_REQUEST_V1": 32,
+   "BANKED_TRANSACTION_V1": 64,
+   "GENERIC_JOB_ABI_V1": 128
+  },
   "state_values": [
    0,
    1,
@@ -20,6 +25,76 @@
   "state_reserved_mask": 240,
   "custom_state_shift": 8,
   "value_bits": 53
+ },
+ "standard_participation": {
+  "ASYNC_REQUEST_V1": [
+   "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10",
+   "ic10/controller-config/generic_config_committer_v1_1.ic10",
+   "ic10/controller-config/generic_persistent_config_host_v1_1.ic10",
+   "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10",
+   "ic10/controller-discovery/controller_selector_v3_0.ic10",
+   "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10",
+   "ic10/controller-pi/pi_config_policy_v1_0.ic10",
+   "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10",
+   "ic10/diagnostics/console_selector_v1_1.ic10",
+   "ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10",
+   "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10",
+   "ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10",
+   "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+   "ic10/directory-core/generic_registry_directory_host_v2_0.ic10",
+   "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10",
+   "ic10/generic-jobs/generic_job_store_v1_0.ic10",
+   "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10",
+   "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10",
+   "ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10",
+   "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10",
+   "ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10",
+   "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10",
+   "ic10/manufacturing/generic_print_runtime_v2_0.ic10",
+   "ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10",
+   "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10",
+   "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10",
+   "ic10/manufacturing/print_candidate_executor_v2_0.ic10",
+   "ic10/manufacturing/print_job_driver_v2_0.ic10",
+   "ic10/manufacturing/print_material_resolver_v1_0.ic10",
+   "ic10/manufacturing/transform_candidate_executor_v2_0.ic10",
+   "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10",
+   "ic10/manufacturing/transform_job_driver_v2_0.ic10",
+   "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10",
+   "ic10/material-grid/material_transfer_executor_v1_0.ic10",
+   "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10",
+   "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10",
+   "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10",
+   "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10",
+   "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10",
+   "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10",
+   "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10",
+   "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10",
+   "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10",
+   "ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10",
+   "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10",
+   "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10",
+   "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10",
+   "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10",
+   "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10",
+   "ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10",
+   "ic10/printer-directory/printer_capacity_client_v2_0.ic10",
+   "ic10/printer-directory/printer_directory_adapter_v1_0.ic10",
+   "ic10/printer-directory/printer_execution_bank_v2_0.ic10",
+   "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10",
+   "ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10",
+   "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10",
+   "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10",
+   "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10",
+   "ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10"
+  ],
+  "BANKED_TRANSACTION_V1": [
+   "ic10/controller-config/generic_persistent_config_host_v1_1.ic10",
+   "ic10/generic-jobs/generic_job_store_v1_0.ic10"
+  ],
+  "GENERIC_JOB_ABI_V1": [
+   "ic10/generic-jobs/generic_job_store_v1_0.ic10"
+  ]
  },
  "migrated": {
   "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10": {
@@ -35,7 +110,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "5f7129dae7d5c589b0032349bac138ad193e824c0c7af780dea7cad1820e2856",
+   "source_sha256": "eed4370049cca86ef6d7012b8d4ab2e432193adde97f86100eeb8e936c98ffea",
    "legacy_owned_ranges": [
     [
      10,
@@ -135,7 +210,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "57136d75dcdc6b736d09429452b77df81233be63a51f91f8de632cd775c21797",
+   "source_sha256": "9bf397cc861be46e8d21c91f8a3456b450af205c1c7a667a345e80cd36ebd948",
    "legacy_owned_ranges": [
     [
      10,
@@ -284,7 +359,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "afde2f143599062f4fb16c428977a62604571c3d4725de637054a9a5532a06ba",
+   "source_sha256": "2d14cde9002aa96454149c8b660927c2c6aac6d7b01261d82c2395bc344f75ed",
    "legacy_owned_ranges": [
     [
      8,
@@ -330,7 +405,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "05f18f7d293a0b425b905fcd727ed91004afb57e4ff7436ee6525b61e93b8587",
+   "source_sha256": "571acf2addc910c84ce60511df6a1515051cb07c370452b5afb085efafd9dc25",
    "legacy_owned_ranges": [
     [
      8,
@@ -362,7 +437,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "f67f0e47ab2a59ab26fd7ccff8cd42dbcc37d8bec15e50fd9c4fffadf387096e",
+   "source_sha256": "c0af69acc33aa2c3f635afeccddd3c5b83f4b5031b22b8b5ca0ccbf4b52eb2b8",
    "legacy_owned_ranges": [
     [
      8,
@@ -408,7 +483,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "00fb24874cc605c60d08662b399a3777f758ff11f2d645aaa0a2d5117c3f9a49",
+   "source_sha256": "0dfda7d8d0125d2d1a08c8d12002a05905053c5cf5c12c3fa3555ddb7c162e4c",
    "legacy_owned_ranges": [
     [
      8,
@@ -782,7 +857,7 @@
    "telemetry_base": 0,
    "publishes_state": true,
    "publishes_generation": true,
-   "source_sha256": "7fa52bdcac5acb2f46254e6ccbac8c93eca8c461b56b4db342f6fa1e2de1d202",
+   "source_sha256": "14c91336ca6d86ae9363e18f5b90607f2db7ae73b4dcba5985407d784dedb352",
    "legacy_owned_ranges": [
     [
      8,
@@ -806,7 +881,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "d3a515f5326c6eef35c44eedde73390c2cb583fec416b3d7a9c9a6d8088c4e82",
+   "source_sha256": "ff7b08ed3b265aa0aa88183f70134d2c439fe389af6c54d94a9d2666cbdc20ed",
    "legacy_owned_ranges": [
     [
      10,
@@ -834,7 +909,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "31d3e8fe563c7824b10de6c7d7065b1cd7a2e72eb5c845f2fdb4ee07643781b6",
+   "source_sha256": "5c4438004cc71f68a1755d09d761b6e5bdfdf4335bbd6e8f062f1d6564bfcf2a",
    "legacy_owned_ranges": [
     [
      8,
@@ -916,7 +991,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "f64036d38f0aa74463d2bb41ed4bb4924b3a7ba23bdbe7d75d27ceb39d7f4eba",
+   "source_sha256": "63c8ed0bbb420a2f0dcb806f80f10afd32ee920bc6cc74d26ebef17ca0eebc04",
    "legacy_owned_ranges": [
     [
      8,
@@ -943,7 +1018,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "922ce88dc1275137a0324a38d50e7c2d10323f791d7144e5cc5b7e12cc5dd051",
+   "source_sha256": "b3322c7235f93e3e42f946323f1ad0570fe8b48dc0603a560a498e4ba5341b8f",
    "legacy_owned_ranges": [
     [
      8,
@@ -975,7 +1050,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "c8fc9c83b35199d338a67a15f95f6ce67564a32213062d5892d92cd1334b42ca",
+   "source_sha256": "1c8b4dab5aeea7aa7cbf33a7f5de6d0ed5db358458955788c9fb605bd787949f",
    "legacy_owned_ranges": [
     [
      8,
@@ -1238,7 +1313,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "7ea9be5df5aad2e771025ff39d61c198c19612853c8f07072e700bcad8dda11d",
+   "source_sha256": "7e6be36d138d2ec5da1faf4cd9fb509bc7ea06784ea509c578ea591b41d1c161",
    "legacy_owned_ranges": [
     [
      10,
@@ -1266,7 +1341,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "64dfec26e79829cdbaf2b726134f74eed9099c527c5f53ee0bcffe5804a3eb4a",
+   "source_sha256": "583f7a8f0751a9914e217b88a0fb9e0f381b51c6e5f80a9b02775ba947fd3d40",
    "legacy_owned_ranges": [
     [
      10,
@@ -1294,7 +1369,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "536483929fc29248f1a502c06f11e352e980288b80d44cce1b6c3780703b8d3c",
+   "source_sha256": "d95e36ff6472f3c75e1aad52547aea1aa74ac9af6bb02dd5aa6a9fe957b775cb",
    "legacy_owned_ranges": [
     [
      10,
@@ -1392,7 +1467,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "f0f0b37b230506e945a416dd440616f64bc6b1a722f84a9dc0043aa30f615c0a",
+   "source_sha256": "78499772a9f064834590c34461a5cc0e88f72aebbbae256bb066e8879ea73380",
    "legacy_owned_ranges": [
     [
      10,
@@ -1420,7 +1495,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "0ea6d90e5897d0e02c801a2b60b2cdc62df3987b252adc63c65d1fbd5bd50892",
+   "source_sha256": "369db569874cc32aa558a8f0364094a31bd7fefa464148f2f58c9c97899246ce",
    "legacy_owned_ranges": [
     [
      10,
@@ -1448,7 +1523,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": true,
-   "source_sha256": "7ef808303d6a4af600ffad687680f2d5fdbcde7474efef1590dde3cc83199be9",
+   "source_sha256": "26c14426cdfe286a2e83aa58119cba5a7b4faf40565def6cfc2f4bc02459d889",
    "legacy_owned_ranges": [
     [
      10,
@@ -2124,7 +2199,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "38fe5e6096c126d4c675265c25048054dc9b047af02115975889a58f620d5118",
+   "source_sha256": "67125ece8b7c2b520bf8392a9678f6138e49f72721e8c99018d1b73dfcc52954",
    "legacy_owned_ranges": [
     [
      8,
@@ -2155,7 +2230,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "053b73ba144036d3dea3568917cd8a25b5710ede3b1c3bc72c07348166e3db3a",
+   "source_sha256": "679569991e38d7d0641cf5fdb18d630ee8734145acd63ee812004694684cb9fb",
    "legacy_owned_ranges": [
     [
      8,
@@ -2182,7 +2257,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "02a488005d35f1afcffe2862edbcc533cf8845fb5520de103da38170ec2d40fa",
+   "source_sha256": "6babeaa25b3f02ae146a40d0aad3f87174da1b52b5d9b673580d3da1c4f38036",
    "legacy_owned_ranges": [
     [
      9,
@@ -2205,7 +2280,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "9a66468e94f4f76118108fe0d63120b5cf318ef68bb87c72c88ffe495fb7ea61",
+   "source_sha256": "07b4b18609828c890cc093e95fcacdfc2f281c534efbde14ff8185b8196009fa",
    "legacy_owned_ranges": [
     [
      20,
@@ -2236,7 +2311,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "eb49db3ecd9566fe4087092cf2998a1b9bf780fdd76cbf67b8eafaab6ed23057",
+   "source_sha256": "dee52c366d5f8a3695f448d1590e51401f9c0287761ee31996521bce5ecd7b23",
    "legacy_owned_ranges": [
     [
      8,
@@ -2271,7 +2346,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "8692e029cc055c1453057b3f46cdfc797f607a3959935282ff214e42e50a2bee",
+   "source_sha256": "886d9baeada615bffa74730bd181a6e727b121419a6564c41d01bcbc40aa387d",
    "legacy_owned_ranges": [
     [
      8,
@@ -2307,7 +2382,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "b8f8ce66e12b512eb87d6696989de1331d92540ae4f34f731748cec22106d8d5",
+   "source_sha256": "014464b56b228ef7a7bedb31d213375bbf66fc21afdf370cbe55d2b73caf47d6",
    "legacy_owned_ranges": [
     [
      8,
@@ -2342,7 +2417,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "bace7706fa189c28ce0d8783e44c5eccf48cf687696fcb86130dc1a778a1da0d",
+   "source_sha256": "3aad64f71f884c3593c03a030bd5aa488bab233f8072137156c67a57c58cd3b3",
    "legacy_owned_ranges": [
     [
      8,
@@ -2373,7 +2448,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "e52db81fd47e0045f92b4ab21d6a8d647671e011ed5484f67d74e42e45a2d219",
+   "source_sha256": "21eb2cb4f25a4bac8d74c97155f6ac7bc274a22b1a2cd550e79b1f8c71f57f97",
    "legacy_owned_ranges": [
     [
      8,
@@ -2404,7 +2479,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "e186f3d8974250639ea18df97720189589df179b560a7b7e8e81ae16df94e994",
+   "source_sha256": "6aec3a0d9c400abf5f8e62523c4cc2d9a9555ba709b1a8c862e2b52732ede82a",
    "legacy_owned_ranges": [
     [
      8,
@@ -2435,7 +2510,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "6001a29fb2522b8f3265293b0ba363a18631cda9d598aaf9797467977261b0af",
+   "source_sha256": "879a70739062ac6ba16d4c4ff495f2c39565a35ac4f1f6ce719c6b0a9a4f9579",
    "legacy_owned_ranges": [
     [
      8,
@@ -2481,7 +2556,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "1489459573f7155f97676bee62a04c2191a525cf9342a169593552ff22c52882",
+   "source_sha256": "f9b8dbbae9704adc7d1d6c86b84f976804aeea8b839d732cc99afab2dbd4c4de",
    "legacy_owned_ranges": [
     [
      8,
@@ -2596,7 +2671,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "942ab511f806e19a7f6633d7b24bc19234c970c3a16769ed45cd4c4868f58936",
+   "source_sha256": "f05d8ee99620dc98c19797dd5ef1358ec93bd6b60585dca29a48bd1b45528134",
    "legacy_owned_ranges": [
     [
      8,
@@ -2628,7 +2703,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "e5b21e92ab9556b8b3fddfeb1038597c20b45b80169af08439faf72b95eab576",
+   "source_sha256": "d0881afad3945530d729536c47706fe0efbb0ed12ef2f03914b39f150c679e90",
    "legacy_owned_ranges": [
     [
      8,
@@ -2651,7 +2726,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "7675b20d950c10fa9d77ce7a3a9c2492104763c7acfe075dd10ee1ce47ba6fcd",
+   "source_sha256": "20365546a5c6fff23dfeef114332211ced4f30df6c74d1713af6709a065d3ffa",
    "legacy_owned_ranges": [
     [
      8,
@@ -2674,7 +2749,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "d69982fa64f97810c32cf2ba47e6b46b372070907c5839fdd21315d3ed2cff75",
+   "source_sha256": "0f602283e9d92b8438ccb61f3e78ec8d876ed78ac8759b01983cd072877bbf8f",
    "legacy_owned_ranges": [
     [
      8,
@@ -2728,7 +2803,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "633961dfd2a09b60f2ca99d351f0bb2e31a22bc8655da318c5b082c942512fcf",
+   "source_sha256": "def37b55f860aab3ef226fea166c43f923ce1ed37d4feb6b05087b4cbb7b1710",
    "legacy_owned_ranges": [
     [
      8,
@@ -2855,7 +2930,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "59402ce803ea03b8534e516f4c03a41a65299213174dab26e3e023aa454509a3",
+   "source_sha256": "938094b61ced353ae8c12432e2a9663182b45e56b0371d63235b4e3574703136",
    "legacy_owned_ranges": [
     [
      8,
@@ -2878,7 +2953,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "e40af9bff9570a890fe4a87b7ad5c7fff528ab516e67114d47288c0b6b174c67",
+   "source_sha256": "1df9d28dc557388043799f75c191de837ecbb6904150824ebcd5c3e03afb8f90",
    "legacy_owned_ranges": [
     [
      8,
@@ -3106,7 +3181,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "81efcdeda2b069a19376b5ae56bd2aa5ff11ceb3e44ec77b2aac4ce182f42070",
+   "source_sha256": "4d6587aa0fafda860dfb177f1dd6213ce89439abe685c6b2d054e480d1b6e6a3",
    "legacy_owned_ranges": [
     [
      8,
@@ -3351,7 +3426,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "c05105a2e2eefd37e326529d416ae22d1848c89b0bbf08259bcd52fd7118fbde",
+   "source_sha256": "4c0c3b3505de94a3e6e8ec77f116ce2cf1c0b2b03d7dff25479f772c716b1422",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "controller-pi"
@@ -3369,7 +3444,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "787f6fbda8ac2a1ab20338b1404ec85787ab7cba2a16e50454e119b1d3134859",
+   "source_sha256": "556feb6f1125fda28de3f2d8c5ad6897dccd7376fe4e44596e1280d0523befab",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "controller-sequencer"
@@ -3387,7 +3462,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "d10b69b1841ef39c2c7b6e11732256728c5472bf85907ab7b3e208f73fb8d046",
+   "source_sha256": "5aa28ac69896f516e546a63622b8a55012457c5754b08401038c9cd7d9931664",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "controller-phase-pressure"
@@ -3405,7 +3480,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "650760e74216338847d2758ac7426375303427eeb3cbebe1a1da5242edc05cee",
+   "source_sha256": "19d85a306027490bed7adc9ad9aec8c02e7df3719bb8fe8e1fbb9d589596dfe6",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "pressure-domain"
@@ -3423,7 +3498,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "afa282d359a72d12b366043bae7cd372528a97d3fdf5e19404610f8a7514e3b6",
+   "source_sha256": "ecaad19156315deaa6cdbf7245fdf9e296d15e10b213b0dbcec9ad21772ed2c5",
    "legacy_owned_ranges": [],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "pressure-grid"
@@ -3469,7 +3544,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "ea50a31b9b3e454047b39e8820a19c8160e698189282f96baf1f6b1f8e3fcb46",
+   "source_sha256": "97bc613a04b32444cabde823da9bdb15834e55c1eb715a7cf3d023be6430c797",
    "legacy_owned_ranges": [
     [
      8,
@@ -3492,7 +3567,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "6eecfbc6682545d73daa8d27e40e0ed94e6092fb5673ca147c87f2def9ec6894",
+   "source_sha256": "30c0fe0677890ae7f69a7699a7f181a3318782feb8387dfb9717d1fbbfeb8619",
    "legacy_owned_ranges": [
     [
      8,
@@ -3592,7 +3667,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "42fe723a6f35994f933b1fe3fe103ad1aa590ad823afc6b7b8e149f31909ecda",
+   "source_sha256": "a0493d18d887098172f45280f906d9a52ef5d1f01272d8158795950e9da0c46f",
    "legacy_owned_ranges": [
     [
      8,
@@ -3661,7 +3736,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "2eb0626b5f4c61ac5c26d67d13b746679ceeeb36e3f2011344005935f32d27dc",
+   "source_sha256": "29fb8a18bcafa8e92982f51dce0dcdd8d0dc1d6e338b85382be3e5c717786549",
    "legacy_owned_ranges": [
     [
      8,
@@ -3693,7 +3768,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "73b6a594e48f13ff2e83088448b0e23f92fd23133a92a51998abc82a329a8ced",
+   "source_sha256": "92dd594b725745b602a70016a3bac0a6d27fb772e37c1a216b2e998b47dc0434",
    "legacy_owned_ranges": [
     [
      8,
@@ -3716,7 +3791,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "11540f50a9981a02c2a6aa99e0dcb48ca75864206a2ff0212c4fada14d1842f4",
+   "source_sha256": "38b99687c68cea89821b8b1a41546d708ebd764ee43e81feb8f65eb398c0200b",
    "legacy_owned_ranges": [
     [
      8,
@@ -4219,7 +4294,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "d8e1815fa222766e494fc4e18393f9ea8c89606ac6e8cbb75b84eb351d8af573",
+   "source_sha256": "7fe4ed03e051eb3b0ebfe798dd4a5ad7a3b277d19730d7e9ad1a06f5e937aaf8",
    "legacy_owned_ranges": [
     [
      8,
@@ -4242,7 +4317,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "c88581eeea4296c44fdf5ad02518a8e259b129c01765053b8599885bf8189807",
+   "source_sha256": "77e3132f6d4cfcbf2d5867e5b4e2262b58072f4bca887af634e543e0e6fa1073",
    "legacy_owned_ranges": [
     [
      8,
@@ -4265,7 +4340,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "0355eb71ccb1d4669ac1cd9d762112981a7a7b1b522a5af4d212fd1e9385e0f1",
+   "source_sha256": "a2bbb5e218ddb643ded1915b0c60cd63a9aa5c064a51fa212409d6d96f59698a",
    "legacy_owned_ranges": [
     [
      8,
@@ -4288,7 +4363,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "7fac98da62392fef837526900c9d4b898c010d545e08f6468c195a6ee443a162",
+   "source_sha256": "f6025ef790856266c534f24dfffa7cb8f89b1cfeebc4babd56bdf92d4b2086e3",
    "legacy_owned_ranges": [
     [
      8,
@@ -4328,7 +4403,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "1cff45998808013af3b83fdea975f825d6202821433721b52cd066d94d74a5f2",
+   "source_sha256": "2f10c89df9a0a897dd7eea816ae42c0868cdb574aafa56d97da9ce742cd0fa20",
    "legacy_owned_ranges": [
     [
      8,
@@ -4364,7 +4439,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "7fdcd46ae3a83fb7f7f79f40aa7252a145883a9a29e4c79ff6ac7d4443b40bd2",
+   "source_sha256": "e077e115b9ae962db1969b4fe745d4e9d056e84376574d2b53edb93f5a129228",
    "legacy_owned_ranges": [
     [
      8,
@@ -4410,7 +4485,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "25e3692b937235861cb5d7e86128afa2f712151effc501387c57683c6ab3eec3",
+   "source_sha256": "914455f713c3b12700875b8c7b2387d7c2733839d5c2fd46f7cfa54187c10309",
    "legacy_owned_ranges": [
     [
      8,
@@ -4433,7 +4508,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "f4fc87920a2d5f16fea4c3d2de61655dc74926fbf9aefcf55fb1f04bec65241f",
+   "source_sha256": "3bfebcc4c2c8b153151378ba89788af30dd1e74b5b6e306f43be03a3cda5fbe2",
    "legacy_owned_ranges": [
     [
      8,
@@ -4670,7 +4745,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "b4cfbd2acfd6faf6775d3dce9327427a60432e7d4da75d44d9c5144f65e6b8b1",
+   "source_sha256": "2e3615cbc0a1f39b3b2b81d7bc34e18be8c4382a1deb2b3a38b38af753201b8a",
    "legacy_owned_ranges": [
     [
      11,
@@ -4710,7 +4785,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "51a5ec5cf82dbe72399df36c12e745729c7e71275f7dae271eeefddc506c658e",
+   "source_sha256": "718020ebe4014f4bb1a33c183ef8d99504416d01ff13006929bb57e9eb36c92e",
    "legacy_owned_ranges": [
     [
      16,
@@ -4751,7 +4826,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "db9dc3deb847925362db5569045f2137bdbcc47480319dfeaa58c40e979dc2bf",
+   "source_sha256": "079397d2888ba16f377831a827af0f1a54d58517cf93961ee3a10ca7d45827ec",
    "legacy_owned_ranges": [
     [
      8,

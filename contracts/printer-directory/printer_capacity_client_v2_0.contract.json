@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/printer-directory/printer_capacity_client_v2_0.ic10",
-  "source_sha256": "73b6a594e48f13ff2e83088448b0e23f92fd23133a92a51998abc82a329a8ced",
+  "source_sha256": "92dd594b725745b602a70016a3bac0a6d27fb772e37c1a216b2e998b47dc0434",
   "identity": {
     "service_id": "ic10.script.printer.capacity.client",
     "implementation_revision": "2.0",
@@ -106,7 +106,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,

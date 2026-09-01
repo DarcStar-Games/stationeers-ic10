@@ -28,14 +28,47 @@ HAS_EXTENSION = 2
 HAS_STATE = 4
 HAS_TELEMETRY = 8
 HAS_GENERATION = 16
+HAS_ASYNC_REQUEST_V1 = 32
+HAS_BANKED_TRANSACTION_V1 = 64
+HAS_GENERIC_JOB_ABI_V1 = 128
+STANDARD_CAPABILITY_BITS_V1 = {
+    "ASYNC_REQUEST_V1": HAS_ASYNC_REQUEST_V1,
+    "BANKED_TRANSACTION_V1": HAS_BANKED_TRANSACTION_V1,
+    "GENERIC_JOB_ABI_V1": HAS_GENERIC_JOB_ABI_V1,
+}
 CAPABILITY_BITS_V1 = (
-    HAS_SCHEMA | HAS_EXTENSION | HAS_STATE | HAS_TELEMETRY | HAS_GENERATION
+    HAS_SCHEMA
+    | HAS_EXTENSION
+    | HAS_STATE
+    | HAS_TELEMETRY
+    | HAS_GENERATION
+    | sum(STANDARD_CAPABILITY_BITS_V1.values())
 )
 STATE_VALUES = (0, 1, 2, 3, 4, 5)
 STATE_FIELD_MASK = 0xF          # bits 0..3 carry the state, one value at a time
 STATE_RESERVED_MASK = 0xF0      # bits 4..7 are reserved for future universal flags
 CUSTOM_STATE_SHIFT = 8          # bits 8.. are service-specific and opaque to readers
 VALUE_BITS = 53                 # a stack cell is a double: exact integers to 2**53
+
+
+def derive_capability_mask(
+    *,
+    has_schema: bool = False,
+    extension_base: int = 0,
+    publishes_state: bool = False,
+    telemetry_base: int = 0,
+    publishes_generation: bool = False,
+    standard_capabilities: frozenset[str] = frozenset(),
+) -> int:
+    """Derive every structural and semantic CapabilityMask bit in one place."""
+    return (
+        (HAS_SCHEMA if has_schema else 0)
+        | (HAS_EXTENSION if extension_base else 0)
+        | (HAS_STATE if publishes_state else 0)
+        | (HAS_TELEMETRY if telemetry_base else 0)
+        | (HAS_GENERATION if publishes_generation else 0)
+        | sum(STANDARD_CAPABILITY_BITS_V1[name] for name in standard_capabilities)
+    )
 
 
 def state_errors(values: set[Any], custom_state_bits: int) -> list[str]:
@@ -123,6 +156,7 @@ class NormalizedDeclaration:
     source_sha256: str = ""
     pilot_family: str = ""
     schema_assigned_externally: bool = False
+    standard_capabilities: frozenset[str] = frozenset()
 
     @property
     def magic(self) -> int:
@@ -135,12 +169,13 @@ class NormalizedDeclaration:
 
     @property
     def capability_mask(self) -> int:
-        return (
-            (HAS_SCHEMA if self.schema_id is not None or self.schema_assigned_externally else 0)
-            | (HAS_EXTENSION if self.extension_base else 0)
-            | (HAS_STATE if self.publishes_state else 0)
-            | (HAS_TELEMETRY if self.telemetry_base else 0)
-            | (HAS_GENERATION if self.publishes_generation else 0)
+        return derive_capability_mask(
+            has_schema=self.schema_id is not None or self.schema_assigned_externally,
+            extension_base=self.extension_base,
+            publishes_state=self.publishes_state,
+            telemetry_base=self.telemetry_base,
+            publishes_generation=self.publishes_generation,
+            standard_capabilities=self.standard_capabilities,
         )
 
     def publication_metadata(self) -> dict[str, Any]:
@@ -162,6 +197,103 @@ def load_declarations(root: Path) -> dict[str, Any]:
     if document.get("format") != DECLARATION_FORMAT:
         raise ValueError(f"unsupported stack envelope declaration format: {document.get('format')!r}")
     return document
+
+
+def standard_participation_errors(
+    migrated: dict[str, Any], participation: Any
+) -> list[str]:
+    """Validate the reviewed source lists that drive semantic capability bits."""
+    if not isinstance(participation, dict):
+        return ["standard_participation must be an object keyed by standard name"]
+    errors: list[str] = []
+    expected = set(STANDARD_CAPABILITY_BITS_V1)
+    actual = set(participation)
+    if actual != expected:
+        errors.append(
+            "standard_participation keys differ from the v1 capability registry: "
+            f"expected {sorted(expected)}, got {sorted(actual)}"
+        )
+    for standard, sources in sorted(participation.items()):
+        if standard not in expected:
+            continue
+        if not isinstance(sources, list) or any(not isinstance(source, str) for source in sources):
+            errors.append(f"{standard} participants must be an explicit path list")
+            continue
+        if len(sources) != len(set(sources)):
+            errors.append(f"{standard} participant list contains duplicates")
+        unknown = sorted(set(sources) - set(migrated))
+        if unknown:
+            errors.append(f"{standard} participants are not migrated services: {unknown}")
+        if sources != sorted(sources):
+            errors.append(f"{standard} participant list must be sorted")
+    return errors
+
+
+def standards_by_source(
+    participation: Any, migrated_sources: set[str] | None = None
+) -> dict[str, frozenset[str]]:
+    """Invert every usable membership entry, independent of presentation errors."""
+    result: dict[str, set[str]] = {}
+    if not isinstance(participation, dict):
+        return {}
+    for standard, sources in participation.items():
+        if standard not in STANDARD_CAPABILITY_BITS_V1 or not isinstance(sources, list):
+            continue
+        for source in sources:
+            if not isinstance(source, str):
+                continue
+            if migrated_sources is not None and source not in migrated_sources:
+                continue
+            result.setdefault(source, set()).add(standard)
+    return {source: frozenset(standards) for source, standards in result.items()}
+
+
+def unavailable_standard_capabilities(participation: Any) -> frozenset[str]:
+    """Return standards whose membership cannot be derived from the registry shape."""
+    if not isinstance(participation, dict):
+        return frozenset(STANDARD_CAPABILITY_BITS_V1)
+    return frozenset(
+        standard
+        for standard in STANDARD_CAPABILITY_BITS_V1
+        if standard not in participation
+        or not isinstance(participation[standard], list)
+        or any(not isinstance(source, str) for source in participation[standard])
+    )
+
+
+def capability_mask_for_validation(
+    declaration: NormalizedDeclaration,
+    writes: dict[int, set[Any]],
+    ignored_standard_bits: int = 0,
+) -> int:
+    """Retain unavailable standard bits from one unambiguous source publication."""
+    expected = declaration.capability_mask
+    actual = writes.get(CAPABILITY_MASK_CELL, set())
+    if ignored_standard_bits and len(actual) == 1:
+        published = next(iter(actual))
+        if type(published) is int:
+            return (expected & ~ignored_standard_bits) | (published & ignored_standard_bits)
+    return expected
+
+
+def declared_capability_mask(root: Path, source: str) -> int:
+    """Derive one source's mask directly from the reviewed declaration data."""
+    document = load_declarations(root)
+    declaration = document["migrated"][source]
+    standards = standards_by_source(
+        document["standard_participation"], set(document["migrated"])
+    ).get(source, frozenset())
+    return derive_capability_mask(
+        has_schema=(
+            declaration["schema_id"] is not None
+            or declaration.get("schema_assigned_externally", False)
+        ),
+        extension_base=declaration["extension_base"],
+        publishes_state=declaration["publishes_state"],
+        telemetry_base=declaration["telemetry_base"],
+        publishes_generation=declaration["publishes_generation"],
+        standard_capabilities=standards,
+    )
 
 
 def _parse(path: Path) -> tuple[list[list[str]], dict[str, int]]:
@@ -331,7 +463,7 @@ def _declared_ranges(value: Any) -> list[dict[str, int]]:
 
 
 def normalize_declaration(
-    source: str, value: Any
+    source: str, value: Any, standard_capabilities: frozenset[str] = frozenset()
 ) -> tuple[NormalizedDeclaration | None, list[str]]:
     """Normalize one declaration, returning only precise shape errors on failure."""
     collector = ErrorCollector(source)
@@ -425,6 +557,7 @@ def normalize_declaration(
         source_sha256=source_sha256,
         pilot_family=pilot_family,
         schema_assigned_externally=schema_assigned_externally,
+        standard_capabilities=standard_capabilities,
     ), []
 
 
@@ -607,6 +740,7 @@ def canonical_envelope() -> dict[str, Any]:
         "base": BASE,
         "length": LENGTH,
         "capability_bits_v1": CAPABILITY_BITS_V1,
+        "standard_capability_bits": STANDARD_CAPABILITY_BITS_V1,
         "state_values": list(STATE_VALUES),
         "state_field_mask": STATE_FIELD_MASK,
         "state_reserved_mask": STATE_RESERVED_MASK,
@@ -680,6 +814,7 @@ def schema_capability_errors(
     declaration: NormalizedDeclaration,
     bound_schema_pairs: set[tuple[str, int]],
     writes: dict[int, set[Any]],
+    ignored_standard_bits: int = 0,
 ) -> list[str]:
     """Validate schema bindings, capability pointers, and fixed header writes."""
     errors: list[str] = []
@@ -697,6 +832,9 @@ def schema_capability_errors(
         errors.append("telemetry_base cannot point inside the common header")
 
     expected = expected_envelope_cells(declaration)
+    expected[CAPABILITY_MASK_CELL] = capability_mask_for_validation(
+        declaration, writes, ignored_standard_bits
+    )
     allowed_dynamic = {STATE_CELL, GENERATION_CELL} | (
         {SCHEMA_ID_CELL} if declaration.schema_assigned_externally else set()
     )
@@ -852,9 +990,15 @@ def publication_rule_errors(
     contract: dict[str, Any],
     published_cells: dict[int, Any],
     extension_cells: frozenset[int],
+    writes: dict[int, set[Any]] | None = None,
+    ignored_standard_bits: int = 0,
 ) -> list[str]:
     """Validate entry-path publication, reserved cells, and the line hard limit."""
     expected = expected_envelope_cells(declaration) | published_cells
+    if writes is not None:
+        expected[CAPABILITY_MASK_CELL] = capability_mask_for_validation(
+            declaration, writes, ignored_standard_bits
+        )
     reserved = set(range(BASE, BASE + LENGTH)) | set(extension_cells)
     errors = publication_errors(
         Path(root) / declaration.source,
@@ -971,12 +1115,25 @@ def declaration_errors(
     if migrated_valid and exemption_valid:
         collector.errors.extend(declaration_set_errors(by_source, migrated, exemption))
 
+    participation = declarations.get("standard_participation")
+    participation_errors = (
+        standard_participation_errors(migrated, participation) if migrated_valid else []
+    )
+    collector.errors.extend(participation_errors)
+    participation_by_source = standards_by_source(participation, set(migrated))
+    unavailable_standards = unavailable_standard_capabilities(participation)
+    ignored_standard_bits = sum(
+        STANDARD_CAPABILITY_BITS_V1[standard] for standard in unavailable_standards
+    )
+
     canonical_pairs = canonical_schema_pairs(root)
     service_ids: dict[str, str] = {}
     for source, raw_declaration in sorted(migrated.items()):
         if source not in by_source:
             continue
-        declaration, shape_errors = normalize_declaration(source, raw_declaration)
+        declaration, shape_errors = normalize_declaration(
+            source, raw_declaration, participation_by_source.get(source, frozenset())
+        )
         collector.errors.extend(shape_errors)
         if declaration is None:
             continue
@@ -997,6 +1154,7 @@ def declaration_errors(
             declaration,
             _schema_check_pairs(rows, aliases) | canonical_pairs,
             writes,
+            ignored_standard_bits,
         ))
         service.extend(state_generation_rule_errors(declaration, rows, aliases, writes))
         extension = extension_rule_result(declaration, writes)
@@ -1010,6 +1168,8 @@ def declaration_errors(
             contract,
             extension.published_cells,
             extension.reserved_cells,
+            writes,
+            ignored_standard_bits,
         ))
         collector.errors.extend(service.errors)
     return collector.errors
@@ -1026,6 +1186,9 @@ def build_inventory(
     if errors:
         raise DeclarationError(errors)
     migrated = declarations["migrated"]
+    participation_by_source = standards_by_source(
+        declarations["standard_participation"], set(migrated)
+    )
     exemption = declarations["legacy_exemption"]
     window = set(range(BASE, BASE + LENGTH))
     reservable = set(range(BASE + 2, BASE + LENGTH))
@@ -1074,6 +1237,7 @@ def build_inventory(
             },
         }
         if declaration:
+            standard_capabilities = participation_by_source.get(source, frozenset())
             entry["envelope"] = {
                 "service_id": declaration["service_id"],
                 "contract": declaration["contract"],
@@ -1091,13 +1255,17 @@ def build_inventory(
                 "publishes_state": declaration["publishes_state"],
                 "custom_state_bits": declaration.get("custom_state_bits", 0),
                 "publishes_generation": declaration["publishes_generation"],
-                "capability_mask": (
-                    (HAS_SCHEMA if declaration["schema_id"] is not None
-                     or declaration.get("schema_assigned_externally") else 0)
-                    | (HAS_EXTENSION if declaration["extension_base"] else 0)
-                    | (HAS_STATE if declaration["publishes_state"] else 0)
-                    | (HAS_TELEMETRY if declaration["telemetry_base"] else 0)
-                    | (HAS_GENERATION if declaration["publishes_generation"] else 0)
+                "standard_capabilities": sorted(standard_capabilities),
+                "capability_mask": derive_capability_mask(
+                    has_schema=(
+                        declaration["schema_id"] is not None
+                        or declaration.get("schema_assigned_externally", False)
+                    ),
+                    extension_base=declaration["extension_base"],
+                    publishes_state=declaration["publishes_state"],
+                    telemetry_base=declaration["telemetry_base"],
+                    publishes_generation=declaration["publishes_generation"],
+                    standard_capabilities=standard_capabilities,
                 ),
                 "extension_flags": declaration["extension_flags"],
                 "implementation_id": declaration["implementation_id"],

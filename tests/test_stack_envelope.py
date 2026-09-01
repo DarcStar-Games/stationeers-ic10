@@ -19,6 +19,10 @@ from framework.script_contracts.own_stack import analyze_own_stack
 from framework.ic10_source import game_hash
 from framework.stack_envelope import (
     BASE,
+    CAPABILITY_BITS_V1,
+    HAS_ASYNC_REQUEST_V1,
+    HAS_BANKED_TRANSACTION_V1,
+    HAS_GENERIC_JOB_ABI_V1,
     LENGTH,
     STATE_CELL,
     NormalizedDeclaration,
@@ -40,6 +44,8 @@ from framework.stack_envelope import (
     schema_capability_errors,
     state_errors,
     state_generation_rule_errors,
+    standard_participation_errors,
+    standards_by_source,
     legacy_source_digest,
     load_declarations,
     publication_errors,
@@ -61,6 +67,11 @@ inventory = build_inventory(ROOT, contracts, protocols)
 validate(inventory, json.loads((ROOT / "schemas" / "stack_envelope_inventory.schema.json").read_text()))
 ck(inventory["envelope"]["base"] == 0 and inventory["envelope"]["length"] == 8,
    "the common header is no longer the first eight stack cells")
+ck(CAPABILITY_BITS_V1 == 255 and inventory["envelope"]["standard_capability_bits"] == {
+    "ASYNC_REQUEST_V1": HAS_ASYNC_REQUEST_V1,
+    "BANKED_TRANSACTION_V1": HAS_BANKED_TRANSACTION_V1,
+    "GENERIC_JOB_ABI_V1": HAS_GENERIC_JOB_ABI_V1,
+}, "the v1 standard capability-bit registry changed without review")
 ck(inventory["totals"] == {
     "deployable_programs": 174,
     "migrated_v1": 174,
@@ -69,6 +80,20 @@ ck(inventory["totals"] == {
     "backlog_dynamic_range_users": 0,
 }, "generated coverage/backlog totals changed without review")
 by_source = {item["source"]: item for item in inventory["services"]}
+job_store = by_source["ic10/generic-jobs/generic_job_store_v1_0.ic10"]["envelope"]
+config_host = by_source["ic10/controller-config/generic_persistent_config_host_v1_1.ic10"]["envelope"]
+directory_adapter = by_source[
+    "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10"
+]["envelope"]
+ck(job_store["capability_mask"] == 224 and job_store["standard_capabilities"] == [
+    "ASYNC_REQUEST_V1", "BANKED_TRANSACTION_V1", "GENERIC_JOB_ABI_V1"
+], "Generic Job Store does not publish all three data-derived standard capabilities")
+ck(config_host["capability_mask"] == 96 and config_host["standard_capabilities"] == [
+    "ASYNC_REQUEST_V1", "BANKED_TRANSACTION_V1"
+], "Config Host does not publish its async and banked-transaction capabilities")
+ck(directory_adapter["capability_mask"] == 49 and directory_adapter[
+    "standard_capabilities"
+] == ["ASYNC_REQUEST_V1"], "directory adapter did not preserve field bits with async")
 ck(by_source[MONITOR]["envelope"]["magic"] == game_hash("StackCellMonitor.v1"),
    "the migrated monitor does not carry its registered magic as its on-stack identity")
 ck(all(item["current_layout"]["payload_inventory_status"] ==
@@ -162,7 +187,11 @@ ck([reader.stack.get(cell) for cell in range(12, 17)] == [0, 0, 0, 0, 0],
 target.stack.update({3: float("nan"), 4: 1.5, 5: 99, 6: 4, 7: -3})
 reader.run(1)
 ck(reader.stack.get(8) == 3, "reader read cells the capability mask does not declare")
-target.stack.update({2: 32})
+target.stack.update({2: 224})
+reader.run(1)
+ck(reader.stack.get(8) == 3 and reader.stack.get(11) == 224,
+   "reader rejected allocated cross-cutting standard capabilities")
+target.stack.update({2: 256})
 reader.run(1)
 ck(reader.stack.get(8) == -6, "reader accepted a reserved capability bit")
 
@@ -298,6 +327,48 @@ bad["migrated"][MONITOR]["publishes_state"] = False
 ck(any("reserved unless the service declares HAS_STATE" in error
        for error in declaration_errors(ROOT, contracts, bad)),
    "a source writing S6 passed without declaring HAS_STATE")
+
+# Cross-cutting standard bits come from reviewed data, not validator source text.
+participation = load_declarations(ROOT)["standard_participation"]
+by_participant = standards_by_source(participation)
+ck(by_participant["ic10/generic-jobs/generic_job_store_v1_0.ic10"] == frozenset({
+    "ASYNC_REQUEST_V1", "BANKED_TRANSACTION_V1", "GENERIC_JOB_ABI_V1"
+}), "standard participation did not invert into per-service capabilities")
+ck(not standard_participation_errors(load_declarations(ROOT)["migrated"], participation),
+   "the reviewed standard participation registry failed validation")
+bad_participation = deepcopy(participation)
+bad_participation["ASYNC_REQUEST_V1"].append("ic10/missing.ic10")
+ck(any("not migrated services" in error for error in standard_participation_errors(
+    load_declarations(ROOT)["migrated"], bad_participation
+)), "an unknown standard participant passed validation")
+bad_participation = deepcopy(participation)
+del bad_participation["GENERIC_JOB_ABI_V1"]
+ck(any("keys differ" in error for error in standard_participation_errors(
+    load_declarations(ROOT)["migrated"], bad_participation
+)), "an incomplete v1 standard capability registry passed validation")
+bad = deepcopy(load_declarations(ROOT))
+async_participants = bad["standard_participation"]["ASYNC_REQUEST_V1"]
+async_participants[0], async_participants[1] = async_participants[1], async_participants[0]
+ck(declaration_errors(ROOT, contracts, bad) == [
+    "ASYNC_REQUEST_V1 participant list must be sorted"
+], "a presentation error discarded valid participation and cascaded mask failures")
+bad = deepcopy(load_declarations(ROOT))
+bad["standard_participation"]["ASYNC_REQUEST_V1"] = "not-a-list"
+ck(declaration_errors(ROOT, contracts, bad) == [
+    "ASYNC_REQUEST_V1 participants must be an explicit path list"
+], "an unusable participant list cascaded into false source-mask failures")
+bad = deepcopy(load_declarations(ROOT))
+del bad["standard_participation"]["ASYNC_REQUEST_V1"]
+ck(len(declaration_errors(ROOT, contracts, bad)) == 1 and "keys differ" in
+   declaration_errors(ROOT, contracts, bad)[0],
+   "a missing participant list cascaded into false source-mask failures")
+bad = deepcopy(load_declarations(ROOT))
+bad["standard_participation"]["ASYNC_REQUEST_V1"].remove(
+    "ic10/generic-jobs/generic_job_store_v1_0.ic10"
+)
+ck(any("S2 must be written exactly as 192" in error
+       for error in declaration_errors(ROOT, contracts, bad)),
+   "removing declared standard participation did not change the derived capability mask")
 
 declaration = load_declarations(ROOT)["migrated"][MONITOR]
 mask_expected = {0: game_hash("StackCellMonitor.v1"), 1: 1, 2: 20, 7: 0}

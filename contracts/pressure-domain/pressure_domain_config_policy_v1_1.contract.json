@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10",
-  "source_sha256": "650760e74216338847d2758ac7426375303427eeb3cbebe1a1da5242edc05cee",
+  "source_sha256": "19d85a306027490bed7adc9ad9aec8c02e7df3719bb8fe8e1fbb9d589596dfe6",
   "identity": {
     "service_id": "ic10.script.pressure.domain.config.policy",
     "implementation_revision": "1.1",
@@ -139,7 +139,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       }
     ],
     "headers": [

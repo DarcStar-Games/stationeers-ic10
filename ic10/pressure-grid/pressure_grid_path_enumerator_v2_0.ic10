@@ -1,6 +1,6 @@
 poke 0 HASH("PressureGridPathEnumerator.v2")
 poke 1 2
-poke 2 0
+poke 2 32
 Loop:
 yield
 get r14 db 36

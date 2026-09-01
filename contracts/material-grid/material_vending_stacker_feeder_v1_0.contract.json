@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10",
-  "source_sha256": "59402ce803ea03b8534e516f4c03a41a65299213174dab26e3e023aa454509a3",
+  "source_sha256": "938094b61ced353ae8c12432e2a9663182b45e56b0371d63235b4e3574703136",
   "identity": {
     "service_id": "ic10.script.material.vending.stacker.feeder",
     "implementation_revision": "1.0",
@@ -255,7 +255,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,

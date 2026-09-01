@@ -1,7 +1,7 @@
 # Printer Capacity Client ABI2: exact-ref, retry-safe reserve/release.
 poke 0 HASH("PrinterCapacityClient.v2")
 poke 1 2
-poke 2 0
+poke 2 32
 Loop:
 yield
 get r15 db 15

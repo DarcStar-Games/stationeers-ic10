@@ -43,12 +43,12 @@ for x in D.get('schemas',[]):
         if sid not in expected:
             fail('unexpected snapshot schema '+sid); continue
         f,ver,width=expected[sid]
-        need(f,'poke 0 HASH("DirectoryAdapter.v3")','poke 1 3','poke 2 17',f'poke 3 HASH("{sid}.v{ver}")',f'poke 10 {width}','poke 11 64','poke 15 1','get r0 db 16','poke 17 r0')
+        need(f,'poke 0 HASH("DirectoryAdapter.v3")','poke 1 3','poke 2 49',f'poke 3 HASH("{sid}.v{ver}")',f'poke 10 {width}','poke 11 64','poke 15 1','get r0 db 16','poke 17 r0')
         if width*x['capacity']>192: fail(sid+': A/B bank stride exceeds generic Host geometry')
         if x.get('schema_version')!=ver or x.get('entry_width')!=width: fail(sid+': registry geometry/version mismatch')
     elif sid=='DirectorySchema.CatalogStoreNode':
         if x.get('entry_width')!=6 or x.get('adapter_entry_width')!=6: fail('Catalog Store registry geometry mismatch')
-        need('ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10','poke 0 HASH("DirectoryAdapter.v3")','poke 1 3','poke 2 17','poke 3 HASH("DirectorySchema.CatalogStoreNode.v1")','poke 10 6','poke 11 64','poke 15 2','get r0 db 16','poke 17 r0')
+        need('ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10','poke 0 HASH("DirectoryAdapter.v3")','poke 1 3','poke 2 49','poke 3 HASH("DirectorySchema.CatalogStoreNode.v1")','poke 10 6','poke 11 64','poke 15 2','get r0 db 16','poke 17 r0')
     else: fail('unexpected registry schema '+sid)
 if seen!=set(expected)|{'DirectorySchema.CatalogStoreNode'}: fail('directory schema set mismatch: '+repr(seen))
 

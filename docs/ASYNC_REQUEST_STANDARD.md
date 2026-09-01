@@ -52,7 +52,7 @@ A stale result with a nonmatching token is indistinguishable from no result and 
 
 Transform Profile View is not itself an async-request service; it is a continuously published snapshot. Readiness therefore fences it with the selected `TransformType` echo plus its publication generation before accepting Admission/Resolver generations. Directory snapshot generations, bank revisions, reservation/build epochs, and ownership tokens likewise remain their own authorities rather than being relabeled as async request tokens.
 
-The reference semantics are in `framework/async_request.py`; static conformance checks are in `validation/validators/validate_async_request_contracts.py`; adversarial execution checks are in `tests/test_async_request.py`. The validator is the registry of current request/response services: adding a new request/handled-generation pair should add either a `LIVE_CURRENT` or `TERMINAL_RESPONSE` contract check instead of introducing an unregistered handshake.
+The reference semantics are in `framework/async_request.py`; reviewed membership lives in `data/stack_envelope_declarations.json`; static conformance checks are in `validation/validators/validate_async_request_contracts.py`; adversarial execution checks are in `tests/test_async_request.py`. Adding a new request/handled-generation pair must add both its `LIVE_CURRENT` or `TERMINAL_RESPONSE` contract check and its reviewed participation entry instead of introducing an unregistered handshake.
 
 ### Item storage request chains
 

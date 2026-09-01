@@ -1,7 +1,7 @@
 # Grid Plan Builder v1.0: d0 SingleHop Builder,d1 Path Allocator.
 poke 0 HASH("PressureGridPlanBuilder.v1")
 poke 1 1
-poke 2 0
+poke 2 32
 poke 13 -1
 move r14 0
 Loop:

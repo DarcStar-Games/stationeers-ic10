@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10",
-  "source_sha256": "02a488005d35f1afcffe2862edbcc533cf8845fb5520de103da38170ec2d40fa",
+  "source_sha256": "6babeaa25b3f02ae146a40d0aad3f87174da1b52b5d9b673580d3da1c4f38036",
   "identity": {
     "service_id": "ic10.script.manufacturing.driver.router",
     "implementation_revision": "2.0",
@@ -211,7 +211,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 9,

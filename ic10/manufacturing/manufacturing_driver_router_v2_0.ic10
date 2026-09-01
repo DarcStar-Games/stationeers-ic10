@@ -1,7 +1,7 @@
 # Driver Router ABI2: mirrors only the selected current request.
 poke 0 HASH("ManufacturingDriverRouter.v2")
 poke 1 2
-poke 2 0
+poke 2 32
 poke 11 2
 Loop:
 yield

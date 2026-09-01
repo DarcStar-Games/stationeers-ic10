@@ -64,7 +64,8 @@ Magic: `HASH("ResourceEndpoint.v1")`
 ```text
 S0   magic = ResourceEndpoint.v1
 S1   ABI = 1
-S2   capability mask = 0
+S2   capability mask = implementation-derived; base Endpoint publishers use 0,
+     LArRE ITEM Endpoint uses 32 (`HAS_ASYNC_REQUEST_V1`)
 S8   status; >0 usable, <0 invalid/unavailable
 S9   NativeProvider ReferenceId
 S10  NativeGeneration / native snapshot identity

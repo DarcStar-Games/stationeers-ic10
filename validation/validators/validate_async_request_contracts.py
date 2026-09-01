@@ -3,15 +3,21 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+import json
 from framework.validation import Validation
-from pathlib import Path
-import sys
 R=_PROJECT_ROOT;result=Validation(R)
 
 text=result.source
-need=result.contains
-before=result.ordered
+contains=result.contains
+ordered=result.ordered
+participants=set(json.loads((R/'data/stack_envelope_declarations.json').read_text())['standard_participation']['ASYNC_REQUEST_V1'])
+covered=set()
+def need(f,*tokens):
+ covered.add(f);contains(f,*tokens)
+def before(f,*tokens):
+ covered.add(f);ordered(f,*tokens)
 def fence(f,token_read,cmp_read,state_read):
+ covered.add(f)
  s=text(f);a=s.find(token_read);b=s.find(cmp_read,a+1);c=s.find(state_read,b+1)
  if a<0 or b<0 or c<0 or not (a<b<c):result.fail(f'{f}: expected identity fence before {state_read!r}')
 
@@ -98,7 +104,7 @@ need('ic10/printer-directory/printer_execution_bank_v2_0.ic10','poke r0 r14\nadd
 # Generic Snapshot Directory host uses command request S14 / ack S15; mutation/result precedes ack.
 need('ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','get r15 db 14','poke 23 -1','poke 15 r15');before('ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','poke 23 -1','poke 15 r15')
 # Adapter freeze request S11 / ack S12 is the same terminal-ack profile.
-for f in ('ic10/controller-discovery/controller_directory_adapter_v4_0.ic10','ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10','ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10'):
+for f in ('ic10/controller-discovery/controller_directory_adapter_v4_0.ic10','ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10','ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10','ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10'):
  need(f,'get r0 db 16','poke 17 r0')
 for f in ('ic10/directory-core/generic_registry_directory_host_v2_0.ic10','ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10'):
  need(f,'put d0 16 r11','get r0 d0 17','bne r0 r11 Freeze')
@@ -108,15 +114,28 @@ for f in ('ic10/directory-core/generic_registry_directory_host_v2_0.ic10','ic10/
 need('ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10','Reply:\npoke 9 r0','poke 14 r15');before('ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10','Reply:\npoke 9 r0','poke 14 r15')
 need('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','put d0 22 r2','put d0 8 r7','get r0 d0 14','bne r0 r7 WaitScan','bne r0 r7 WaitMove')
 before('ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10','put d0 22 r2','put d0 8 r7')
+# ITEM split reservation and reserved movement publish complete terminal results before their response token.
+for f,result_marker,token in [
+ ('ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10','poke 8 r0','poke 16 r15'),
+ ('ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10','poke 14 r0','poke 13 r15'),
+ ('ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10','poke 11 r0','poke 10 r15'),
+ ('ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10','poke 18 r0\npoke 19 r6','poke 8 r15')]:
+ need(f,result_marker,token);before(f,result_marker,token)
 
 # Router exposes request-specific state only after selected driver echoes the token.
 need('ic10/manufacturing/manufacturing_driver_router_v2_0.ic10','get r0 d0 9','get r0 d1 9','poke 10 r15')
 need('ic10/manufacturing/manufacturing_scheduler_v1_0.ic10','get r0 d2 10','get r1 db 27','bne r0 r1 Loop')
 # Snapshot identity fencing used by Transform readiness remains separate from async request identity.
-need('ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10','poke 68 r10','poke 69 1','poke 71 -2','poke 71 -3')
+contains('ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10','poke 68 r10','poke 69 1','poke 71 -2','poke 71 -3')
+
+for participant in sorted(participants-covered):
+ result.fail(f'{participant}: ASYNC_REQUEST_V1 capability lacks executable coverage')
+for source in sorted(covered-participants):
+ result.fail(f'{source}: executable ASYNC_REQUEST_V1 checks lack declared capability')
 
 raise SystemExit(result.finish('Async request contracts',[
  'LIVE_CURRENT producers initialize state before current request identity; invalid accepted requests bind identity',
  'diagnostic selector and material-feeder consumers reject stale status/results before exact token equality',
  'pressure, config, recipe, Job Store, print resolver, printer bank, LArRE storage and directory handshakes are registered TERMINAL_RESPONSE users',
+ f'all {len(participants)} declared ASYNC_REQUEST_V1 participants have executable coverage',
  'request payload publication is token-last and transaction/directory/snapshot authorities remain distinct']))

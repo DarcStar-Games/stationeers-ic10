@@ -79,6 +79,7 @@ The generator splits source only between complete recipe items. No generated Loa
 ## Browse Lookup ABI3
 
 `ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10` publishes identity `HASH("RecipeCatalogLookup.v3")`.
+Its common header publishes capability mask `32` (`HAS_ASYNC_REQUEST_V1`).
 
 It is the compact family/ordinal browser and intentionally does not republish reagent arrays.
 

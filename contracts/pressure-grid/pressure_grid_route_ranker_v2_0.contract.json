@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10",
-  "source_sha256": "1cff45998808013af3b83fdea975f825d6202821433721b52cd066d94d74a5f2",
+  "source_sha256": "2f10c89df9a0a897dd7eea816ae42c0868cdb574aafa56d97da9ce742cd0fa20",
   "identity": {
     "service_id": "ic10.script.pressure.grid.route.ranker",
     "implementation_revision": "2.0",
@@ -199,7 +199,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,

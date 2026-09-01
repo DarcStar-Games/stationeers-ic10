@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-config/generic_config_committer_v1_1.ic10",
-  "source_sha256": "42fe723a6f35994f933b1fe3fe103ad1aa590ad823afc6b7b8e149f31909ecda",
+  "source_sha256": "a0493d18d887098172f45280f906d9a52ef5d1f01272d8158795950e9da0c46f",
   "identity": {
     "service_id": "ic10.script.generic.config.committer",
     "implementation_revision": "1.1",
@@ -166,7 +166,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,

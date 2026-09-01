@@ -5,7 +5,7 @@ alias controllerSelector r2
 alias consoleSelector r3
 poke 0 HASH("DiagnosticSelectorBridge.v1")
 poke 1 1
-poke 2 0
+poke 2 32
 Loop:
 yield
 get input db 8

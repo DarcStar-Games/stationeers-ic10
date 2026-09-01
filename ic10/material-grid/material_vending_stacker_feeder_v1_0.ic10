@@ -6,7 +6,7 @@ poke 20 0
 Init:
 poke 0 HASH("StackerFeeder.v1")
 poke 1 1
-poke 2 0
+poke 2 32
 Loop:
 yield
 bdns d0 Bad

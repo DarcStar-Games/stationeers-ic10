@@ -1,7 +1,7 @@
 alias Host d0 # Phase-pressure Policy v1.0: pressure requirement semantics.
 poke 0 HASH("PhasePressureConfigPolicy.v1")
 poke 1 1
-poke 2 0
+poke 2 32
 Boot:
 yield
 bdns Host Boot

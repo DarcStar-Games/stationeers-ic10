@@ -385,7 +385,7 @@ The shared discovery path supports **64 telemetry controllers**. `ic10/controlle
 Controller Directory (Generic Snapshot Host)
 S0      magic = GenericSnapshotDirectoryHost.v1
 S1      ABI = 1
-S2      capability mask = 0
+S2      capability mask = 32 (HAS_ASYNC_REQUEST_V1)
 S9      DirectorySchemaId = HASH("DirectorySchema.Controller.v1")
 S11     entry width = 2
 S12     capacity = 64
@@ -436,7 +436,7 @@ Store header/control cells:
 ```text
 S0   magic = GenericJobStore.v1
 S1   ABI = 1
-S2   capability mask = 0
+S2   capability mask = 224 (HAS_ASYNC_REQUEST_V1 + HAS_BANKED_TRANSACTION_V1 + HAS_GENERIC_JOB_ABI_V1)
 S8   response generation
 S9   response status; 1 success, <0 rejected
 S10  allocated JobId for PUBLISH_NEW
@@ -495,7 +495,7 @@ Block width is fixed at 8. Masks are authoritative schema geometry.
 ```text
 S0       magic = GenericPersistentConfigHost.v1
 S1       ABI = 1
-S2       capability mask = 0
+S2       capability mask = 96 (HAS_ASYNC_REQUEST_V1 + HAS_BANKED_TRANSACTION_V1)
 S8       operational status; >0 ready
 S9       effective config revision
 S10      block count 1..4
@@ -675,7 +675,7 @@ The generator permits up to 16 material inputs. Store capacity is computed from 
 
 ```text
 S10 requested RecipeHash
-S2  capability mask = 0
+S2  capability mask = 32 (HAS_ASYNC_REQUEST_V1)
 S11 FamilyHash
 S12 RequiredCapability
 S13 InputCount
@@ -901,7 +901,7 @@ QUOTE calculates remaining endpoint capacity without mutation. COMMIT reserves e
 ```text
 S0   magic = GenericSnapshotDirectoryHost.v1
 S1   ABI = 1
-S2   capability mask = 0
+S2   capability mask = 32 (HAS_ASYNC_REQUEST_V1)
 S9   DirectorySchemaId = HASH("DirectorySchema.PressureGridLink.v1")
 S11  entry width = 3
 S12  capacity = 64
@@ -951,7 +951,7 @@ Repeated requests with the same `SearchId` resume the same bounded-depth DFS. A 
 ```text
 S0   magic = PressureGridRouteSelector.v2
 S1   ABI = 2
-S2   capability mask = 0
+S2   capability mask = 32 (HAS_ASYNC_REQUEST_V1)
 S32  Planner ReferenceId
 S33  build epoch
 S34  MediumType
@@ -1031,7 +1031,7 @@ The Ranker rejects NaN or invalid policy values and removes routes whose remaini
 ```text
 S0   magic = PressureGridPathAllocator.v1
 S1   ABI = 1
-S2   capability mask = 0
+S2   capability mask = 32 (HAS_ASYNC_REQUEST_V1)
 
 Request:
 S14  Planner ReferenceId
@@ -1057,7 +1057,7 @@ Path Allocator QUOTEs every hop first, takes the minimum admissible rate, then C
 ```text
 S0   magic = PressureGridSinglehopBuilder.v1
 S1   ABI = 1
-S2   capability mask = 0
+S2   capability mask = 32 (HAS_ASYNC_REQUEST_V1)
 
 Request:
 S14  Planner ReferenceId
@@ -1082,7 +1082,7 @@ Fallback mode preserves the STORAGE anti-circulation direction check and never a
 ```text
 S0   magic = PressureGridPlanBuilder.v1
 S1   ABI = 1
-S2   capability mask = 0
+S2   capability mask = 32 (HAS_ASYNC_REQUEST_V1)
 
 Request:
 S14  Planner ReferenceId
@@ -1105,7 +1105,7 @@ S10  response generation; written last
 ```text
 S0   magic = PressureGridReservationPlanner.v2
 S1   ABI = 2
-S2   capability mask = 0
+S2   capability mask = 32 (HAS_ASYNC_REQUEST_V1)
 S11  LeaseTicks = max(64, 4 * linkCount + 16)
 S8   staged physical-link count in committed plan
 S9   reserved-moles summary in committed plan
@@ -1233,7 +1233,7 @@ Both `S14` and `S11` are `TERMINAL_RESPONSE` tokens: resolved ordinal/ReferenceI
 ```text
 S0       magic = DiagnosticInputBridge.v1
 S1       ABI = 1
-S2       capability mask = 0
+S2       capability mask = 32 (HAS_ASYNC_REQUEST_V1)
 S8       Generic Input Resolver RefId
 S9       Diagnostic Input Profile RefId
 S10      status; 1 ready
@@ -1254,7 +1254,7 @@ S25      Console Selector desired-request generation
 ```text
 S0   magic = DiagnosticSelectorBridge.v1
 S1   ABI = 1
-S2   capability mask = 0
+S2   capability mask = 32 (HAS_ASYNC_REQUEST_V1)
 S8   Diagnostic Input Bridge RefId
 S9   Controller Selector RefId
 S10  Console Selector RefId
@@ -1268,7 +1268,7 @@ It writes desired selector values before their request generation, preserving at
 ```text
 S0   magic = DiagnosticMappingEditor.v1
 S1   ABI = 1
-S2   capability mask = 0
+S2   capability mask = 32 (HAS_ASYNC_REQUEST_V1)
 S8   Console Selector RefId
 S9   Controller Selector RefId
 S10  Diagnostic Renderer RefId
@@ -1429,7 +1429,8 @@ The Resource Core is an additive normalization layer above domain-specific imple
 ```text
 S0   magic = ResourceEndpoint.v1
 S1   ABI = 1
-S2   capability mask = 0
+S2   capability mask = implementation-derived; base Endpoint publishers use 0,
+     LArRE ITEM Endpoint uses 32 (HAS_ASYNC_REQUEST_V1)
 S8   status
 S9   NativeProvider ReferenceId
 S10  NativeGeneration
@@ -1514,7 +1515,7 @@ The reusable live-directory infrastructure is defined in `docs/DIRECTORY_STANDAR
 `DIRECTORY_ADAPTER_ABI_V3` uses identity `HASH("DirectoryAdapter.v3")`. Candidate adapters publish:
 
 ```text
-S2 capability mask = 17  S3 folded SchemaId, HASH("<schema>.v<version>")
+S2 capability mask = 49  S3 folded SchemaId, HASH("<schema>.v<version>")
 S7 candidate generation; the common header fence, written LAST
 S10 entry width           S11 capacity
 S12 candidate count       S13 odd/even sequence
@@ -1539,7 +1540,7 @@ The generic Resource Core has its own schemas on the shared Snapshot Host rather
 ```text
 Resource Endpoint Directory
 S0/S1   GenericSnapshotDirectoryHost.v1 / ABI1
-S2      capability mask = 0
+S2      capability mask = 32 (HAS_ASYNC_REQUEST_V1)
 S9      HASH("DirectorySchema.ResourceEndpoint.v1")
 S11/S12 width 3 / capacity 64
 S24     active bank
@@ -1551,7 +1552,7 @@ S224..415  bank B: 64 x [ResourceClass, ResourceType, EndpointRef]
 
 Resource Link Directory
 S0/S1   GenericSnapshotDirectoryHost.v1 / ABI1
-S2      capability mask = 0
+S2      capability mask = 32 (HAS_ASYNC_REQUEST_V1)
 S9      HASH("DirectorySchema.ResourceLink.v1")
 S11/S12 width 1 / capacity 64
 S24     active bank
@@ -1688,7 +1689,7 @@ Observed/public state:
 ```text
 S0   magic
 S1   ABI = 1
-S2   capability mask = 0
+S2   capability mask = 32 (HAS_ASYNC_REQUEST_V1)
 S8   ready epoch
 S9   emitted epoch
 S10  publication generation
@@ -1729,7 +1730,7 @@ d2 Material Grant Guard
 ```text
 S0   magic
 S1   ABI = 1
-S2   capability mask = 0
+S2   capability mask = 32 (HAS_ASYNC_REQUEST_V1)
 S8   granted exact quantity
 S14  active/last accepted epoch
 S15  completed epoch
@@ -1817,6 +1818,8 @@ Schema: `DirectorySchema.ResourceReservation`, width 3, capacity 64:
 Adapter: `ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10`.
 
 ### ITEM reservation services
+
+All four services below publish capability mask `32` (`HAS_ASYNC_REQUEST_V1`).
 
 - `ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10`, identity `HASH("ItemResourceReservationSelector.v1")`: read-only up-to-six-leg export/import quote; request is S11 type, S12 quantity, S13 direction, S14 required capabilities, S15 request generation; response token S16 last.
 - `ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10`, identity `HASH("ItemResourceReservationAllocator.v1")`: coherent quote commit; request is S11 expected Selector token, S12 request generation; response token S13 last; publishes owner ReferenceId/epoch and captured Endpoint generation into each Reservation.
@@ -1926,7 +1929,7 @@ Every service identifies itself in the first five cells:
 ```text
 S0 ServiceMagic — the registered magic below; identity   (always)
 S1 ServiceABI                                            (always)
-S2 CapabilityMask — bits 0..4, 5+ reserved zero          (always)
+S2 CapabilityMask — bits 0..4 fields, 5..7 standards     (always)
 S3 SchemaId — HASH("<schema>.v<version>")      (mask bit 0)
 S4 ExtensionBase                               (mask bit 1)
 S5 State: bits 0..3 field (0 unreported,1 boot,2 ready,3 working,

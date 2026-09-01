@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10",
-  "source_sha256": "1489459573f7155f97676bee62a04c2191a525cf9342a169593552ff22c52882",
+  "source_sha256": "f9b8dbbae9704adc7d1d6c86b84f976804aeea8b839d732cc99afab2dbd4c4de",
   "identity": {
     "service_id": "ic10.script.recipe.catalog.lookup",
     "implementation_revision": "8.0",
@@ -164,7 +164,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,

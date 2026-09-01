@@ -1,7 +1,7 @@
 # SDB+Stacker Feeder ABI1. d0 dedicated SDB,d1 Stacker,d2 ITEM Resource Profile.
 poke 0 HASH("StackerFeeder.v1")
 poke 1 1
-poke 2 0
+poke 2 32
 Loop:
 yield
 bdns d0 Bad

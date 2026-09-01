@@ -4,7 +4,7 @@ alias controller r2
 alias host r3
 poke 0 HASH("GenericConfigCommitter.v1")
 poke 1 1
-poke 2 0
+poke 2 32
 Loop:
 yield
 get editor db 8

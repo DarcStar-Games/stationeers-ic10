@@ -7,7 +7,7 @@ alias display r5
 alias controller r6
 poke 0 HASH("DiagnosticMappingEditor.v1")
 poke 1 1
-poke 2 0
+poke 2 32
 Loop:
 yield
 get consoleSelector db 8

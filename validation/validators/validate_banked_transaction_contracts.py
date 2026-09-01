@@ -12,6 +12,8 @@ std=(R/'docs/BANKED_TRANSACTION_STANDARD.md').read_text()
 for token in ('BANKED_TRANSACTION_V1','REVISION_BANK','SELECTOR_BANK','authority marker LAST','acknowledge committed request','physical Job Store geometry change therefore requires a Store ABI bump'):
     ck(token in std,f'standard missing {token!r}')
 job_path='ic10/generic-jobs/generic_job_store_v1_0.ic10';cfg_path='ic10/controller-config/generic_persistent_config_host_v1_1.ic10'
+participants=set(json.loads((R/'data/stack_envelope_declarations.json').read_text())['standard_participation']['BANKED_TRANSACTION_V1'])
+ck(participants=={job_path,cfg_path},'BANKED_TRANSACTION_V1 capability participants differ from executable coverage')
 job=result.source(job_path);cfg=result.source(cfg_path)
 result.line_limit(job_path,121,rule='Job Store line budget')
 result.line_limit(cfg_path,121,rule='Config Host line budget')

@@ -16,6 +16,7 @@ from pathlib import Path
 
 from framework.ic10_source import game_hash
 from framework.protocol_headers import header_name, header_token
+from framework.stack_envelope import declared_capability_mask
 
 CELL_BLOCK_WIDTH=4
 STORE_CONTRACT='GenericCatalogStore'; STORE_ABI=6
@@ -28,6 +29,7 @@ STORE_HEADER_CELLS=32; STORE_DIR_WIDTH=2; STORE_TOTAL_CELLS=512
 LOADER_HEADER_CELLS=24; LOADER_DIR_WIDTH=2
 COORDINATION_PROGRAM_FILES=('ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10','ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10','ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10','ic10/directory-core/generic_registry_directory_host_v2_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10','ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10','ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10','ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10','ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10')
 GENERIC_STORE_FILE=COORDINATION_PROGRAM_FILES[0]
+PROJECT_ROOT=Path(__file__).resolve().parents[1]
 MAX_LOGICAL_STORES=64
 STORE_UNCLAIMED=1;STORE_ACTIVE=2;STORE_DRAINING=3;STORE_FAULT=4;STORE_RETIRED=5;STORE_MIGRATING=6;STORE_MISSING=7;STORE_DUPLICATE=8
 
@@ -243,7 +245,8 @@ beq r0 2 Service
 j Idle
 '''
 def make_coordinator_directory_host_program():
-    return '''Boot: # Generic Registry Directory Host ABI3: CatalogStoreNode persistent registry.
+    capability_mask=declared_capability_mask(PROJECT_ROOT,COORDINATION_PROGRAM_FILES[3])
+    return f'''Boot: # Generic Registry Directory Host ABI3: CatalogStoreNode persistent registry.
 get r0 db 0
 bne r0 HASH("GenericRegistryDirectoryHost.v3") Init
 get r0 db 1
@@ -253,7 +256,7 @@ clr db
 Header:
 poke 0 HASH("GenericRegistryDirectoryHost.v3")
 poke 1 3
-poke 2 1
+poke 2 {capability_mask}
 Loop:
 yield
 bdns d0 Loop
@@ -888,12 +891,13 @@ add r7 r7 1
 j Scan
 '''
 def make_coordinator_directory_scanner_program():
-    return '''# Catalog Store Directory Adapter v3.0: Adapter ABI3; unique NodeId candidates.
+    capability_mask=declared_capability_mask(PROJECT_ROOT,COORDINATION_PROGRAM_FILES[4])
+    return f'''# Catalog Store Directory Adapter v3.0: Adapter ABI3; unique NodeId candidates.
 Boot:
 clr db
 poke 0 HASH("DirectoryAdapter.v3")
 poke 1 3
-poke 2 17
+poke 2 {capability_mask}
 poke 3 HASH("DirectorySchema.CatalogStoreNode.v1")
 poke 10 6
 poke 11 64

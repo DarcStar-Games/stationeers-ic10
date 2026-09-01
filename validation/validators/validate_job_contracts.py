@@ -10,6 +10,8 @@ from framework.job_abi import JobState,JobType,NORMAL_CHAIN,TERMINAL,WAIT_FROM,W
 R=_PROJECT_ROOT;result=Validation(R)
 ck=result.check
 s=json.loads((R/'data/generic_job_schema.json').read_text())
+participants=set(json.loads((R/'data/stack_envelope_declarations.json').read_text())['standard_participation']['GENERIC_JOB_ABI_V1'])
+ck(participants=={'ic10/generic-jobs/generic_job_store_v1_0.ic10'},'GENERIC_JOB_ABI_V1 capability participants differ from the publishing Store')
 ck(s.get('format')=='GENERIC_JOB_ABI_V1','schema format')
 ck(s.get('magic')==-955081679 and s.get('abi')==1,'schema magic/ABI')
 ck(s.get('capacity')==32,'capacity must be 32')

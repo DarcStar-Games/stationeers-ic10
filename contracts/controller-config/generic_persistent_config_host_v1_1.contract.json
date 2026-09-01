@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-config/generic_persistent_config_host_v1_1.ic10",
-  "source_sha256": "6eecfbc6682545d73daa8d27e40e0ed94e6092fb5673ca147c87f2def9ec6894",
+  "source_sha256": "30c0fe0677890ae7f69a7699a7f181a3318782feb8387dfb9717d1fbbfeb8619",
   "identity": {
     "service_id": "ic10.script.generic.persistent.config.host",
     "implementation_revision": "1.1",
@@ -140,7 +140,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 96
       },
       {
         "address": 8,

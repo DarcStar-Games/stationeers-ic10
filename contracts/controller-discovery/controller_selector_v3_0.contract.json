@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/controller-discovery/controller_selector_v3_0.ic10",
-  "source_sha256": "6001a29fb2522b8f3265293b0ba363a18631cda9d598aaf9797467977261b0af",
+  "source_sha256": "879a70739062ac6ba16d4c4ff495f2c39565a35ac4f1f6ce719c6b0a9a4f9579",
   "identity": {
     "service_id": "ic10.script.controller.selector",
     "implementation_revision": "3.0",
@@ -109,7 +109,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 32
       },
       {
         "address": 8,

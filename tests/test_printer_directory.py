@@ -49,7 +49,7 @@ expected=[
 if r!=expected:fails.append('family/capability mapping or Fabricator exclusion mismatch')
 if hd.stack.get(0)!='HASH:GenericSnapshotDirectoryHost.v1' or hd.stack.get(1)!=1 or hd.stack.get(9)!='HASH:DirectorySchema.Printer.v2' or hd.stack.get(11)!=3 or hd.stack.get(12)!=64:
     fails.append('Generic Snapshot Printer schema header mismatch')
-if av.stack.get(0)!='HASH:DirectoryAdapter.v3' or av.stack.get(1)!=3 or av.stack.get(2)!=17 or av.stack.get(3)!='HASH:DirectorySchema.Printer.v2' or av.stack.get(10)!=3 or av.stack.get(11)!=64:
+if av.stack.get(0)!='HASH:DirectoryAdapter.v3' or av.stack.get(1)!=3 or av.stack.get(2)!=49 or av.stack.get(3)!='HASH:DirectorySchema.Printer.v2' or av.stack.get(10)!=3 or av.stack.get(11)!=64:
     fails.append('Printer Adapter ABI3 header mismatch')
 
 # Every packed operational flag and capability survives publication; changed state advances snapshot generation.
