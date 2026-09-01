@@ -14,7 +14,13 @@ from framework.ic10_source import game_hash
 from framework.json_schema import SchemaValidationError, validate
 from framework.protocol_headers import load_headers
 from framework.script_contracts import build_all
-from framework.stack_envelope import BASE, LENGTH, DeclarationError, build_inventory
+from framework.stack_envelope import (
+    BASE,
+    LENGTH,
+    DeclarationError,
+    build_inventory,
+    proven_post_init_writes,
+)
 
 ROOT = _PROJECT_ROOT
 HASH_LITERAL = re.compile(r'^HASH\("([^"\n]+)"\)$')
@@ -71,6 +77,12 @@ if actual is not None:
     constrainable = sum(
         len({cell for span in item["stack_pressure"]["dynamic_write_ranges"]
              for cell in range(span["start"], span["end"] + 1)}) < 512
+        for item in reviewed_post_init
+    )
+    # The coverage rule runs the other way -- every cell the source proves it writes
+    # after publication has to be named -- and is a floor only where a proof exists.
+    floored = sum(
+        bool(proven_post_init_writes(ROOT / item["source"]) - set(range(BASE, BASE + LENGTH)))
         for item in reviewed_post_init
     )
     totals = actual["totals"]
@@ -151,5 +163,6 @@ raise SystemExit(validation.finish("Stack envelope validation",lambda: [
     f"migrated families: {', '.join(sorted(families)) or 'none'}; backlog: {len(legacy)} programs, {actual['totals']['backlog_reserved_cell_users']} using reserved cells",
     "S0..S7 writes, derived capability mask, schema binding, and extension bounds are enforced",
     f"no consumer reads a migrated peer's S2..S7 as payload; {len(HEADER_READS)} reviewed header reads are declared",
-    f"{len(reviewed_post_init)} reviewed post-init write ranges sit inside the contract's derived range; {constrainable} meet a derived range narrower than the whole stack",
+    f"{len(reviewed_post_init)} reviewed post-init write ranges sit inside the contract's derived range, {constrainable} of them against a range narrower than the whole stack",
+    f"the same {len(reviewed_post_init)} name every cell a computed write provably reaches after publication; {floored} carry a proof to hold them to",
 ]))

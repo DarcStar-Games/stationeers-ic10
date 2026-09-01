@@ -42,7 +42,9 @@ from framework.stack_envelope import (
     identity_header_errors,
     legacy_layout_errors,
     normalize_declaration,
+    post_init_coverage_errors,
     post_init_range_errors,
+    proven_post_init_writes,
     publication_rule_errors,
     schema_capability_errors,
     state_errors,
@@ -59,6 +61,8 @@ MONITOR = "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10"
 READER = "ic10/live-commissioning/stack_header_reader_v1_0.ic10"
 # `bgt r2 3 Bad` bounds its Save loop, so its post-init write window is three proven cells
 RANKER = "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10"
+# clears and writes a 64-cell NodeId presence bitmap at S448..S511 on every scan
+ADAPTER = "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10"
 fails: list[str] = []
 
 
@@ -480,6 +484,12 @@ bad["migrated"][RANKER]["legacy_owned_ranges"] = [[8, 11], [16, 31], [32, 34]]
 ck(any("post-init dynamic write range claims S19..S31" in error
        for error in declaration_errors(ROOT, contracts, bad)),
    "validator accepted a reviewed post-init range past the source-proven write window")
+bad = deepcopy(load_declarations(ROOT))
+bad["migrated"][ADAPTER]["post_init_dynamic_write_ranges"] = [[18, 401]]
+bad["migrated"][ADAPTER]["legacy_owned_ranges"] = [[10, 401]]
+ck(any("provably reach S448..S511" in error
+       for error in declaration_errors(ROOT, contracts, bad)),
+   "validator accepted a reviewed post-init range omitting cells the source provably writes")
 ck(extension_ownership_errors([{"start": 0, "end": 15}], 12, 4),
    "validator allowed an extension to overwrite established payload cells")
 ck(not extension_ownership_errors([{"start": 0, "end": 15}], 16, 4),
@@ -592,6 +602,43 @@ with TemporaryDirectory() as temporary:
     )), "a post-init range against a source with no dynamic write went unreported")
     ck(not post_init_range_errors(claiming, minimal_contract, frozenset()),
        "the containment rule restated a claim the no-dynamic-write rule already owns")
+    ck(not post_init_coverage_errors(temporary_root, publishable, frozenset()),
+       "the coverage rule rejected a source with no computed write to cover")
+
+    # The coverage rule holds the reviewed range to what the source proves, and only
+    # to that. This fixture carries all three cases at once: a guarded computed write
+    # before the first yield (S40..S43, which the entry-path rule owns, not this one),
+    # a guarded one after it (S16..S19), and one the analysis cannot bound at all,
+    # which is exactly what the reviewed range exists to state.
+    covered = temporary_root / "covered.ic10"
+    covered.write_text(
+        'poke 0 HASH("Example.v1")\npoke 1 1\npoke 2 0\n'
+        'get r4 db 3\nblt r4 0 Loop\nbgt r4 3 Loop\nadd r5 r4 40\npoke r5 1\n'
+        'Loop:\nyield\n'
+        'get r0 db 9\nblt r0 0 Loop\nbgt r0 3 Loop\nadd r1 r0 16\npoke r1 1\n'
+        'peek r2\nadd r3 r2 200\npoke r3 1\nj Loop\n'
+    )
+    proved = replace(minimal, source=covered.name)
+    ck(proven_post_init_writes(covered) == frozenset({16, 17, 18, 19}),
+       "the post-init write proof did not bound a guarded computed write, bounded an"
+       " unguarded one, or reached back past the first yield")
+    ck(post_init_coverage_errors(
+        temporary_root, replace(proved, post_init_dynamic_write_ranges=(StackRange(16, 17),)),
+        frozenset(),
+    ) == ["post-init computed writes provably reach S18..S19, which the reviewed post-init"
+          " dynamic write range does not name and so does not own"],
+       "the coverage rule missed proven cells the reviewed range leaves unowned")
+    ck(not post_init_coverage_errors(
+        temporary_root, replace(proved, post_init_dynamic_write_ranges=(StackRange(16, 19),)),
+        frozenset(),
+    ), "the coverage rule demanded cells beyond what the source proves")
+    # Naming a reserved cell is what the overlap rule rejects, so a proven write into
+    # one is reported as the program's fault rather than as a range that is too small.
+    ck(post_init_coverage_errors(
+        temporary_root, replace(proved, post_init_dynamic_write_ranges=(StackRange(16, 19),)),
+        frozenset({17}),
+    ) == ["post-init computed writes provably reach reserved S17"],
+       "the coverage rule asked a declaration to name a cell the overlap rule forbids")
 
 malformed = deepcopy(load_declarations(ROOT)["migrated"][MONITOR])
 malformed["contract"] = 1
