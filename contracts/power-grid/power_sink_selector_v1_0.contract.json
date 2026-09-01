@@ -63,17 +63,11 @@
         ]
       },
       "target": {
-        "kind": "stack-interface",
-        "verification": "access-only",
-        "interface_id": "ic10.interface.access.684d99d65315163c",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.684d99d65315163c",
-        "provider_resolution": "deployment-supplied",
-        "assumptions": {
-          "properties_read": [],
-          "properties_written": [],
-          "slot_properties_read": [],
-          "slot_properties_written": []
-        }
+        "kind": "stack-protocol",
+        "verification": "literal-header",
+        "protocol_ids": [
+          "ic10.stack.generic-snapshot-directory-host.v1"
+        ]
       }
     }
   ],
@@ -303,7 +297,22 @@
         "source": "literal-own-stack-header"
       }
     ],
-    "consumes": []
+    "consumes": [
+      {
+        "port": "d0",
+        "accepted": [
+          {
+            "protocol_id": "ic10.stack.generic-snapshot-directory-host.v1",
+            "header_base": 0,
+            "contract": "GenericSnapshotDirectoryHost",
+            "magic": 891293726,
+            "abi": 1,
+            "publication_requirements": []
+          }
+        ],
+        "source": "authoritative-literal-header-check"
+      }
+    ]
   },
   "extraction": {
     "mode": "static-v2",

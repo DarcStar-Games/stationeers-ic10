@@ -686,7 +686,9 @@ S48 Coordinator topology generation
 S49 resolved RecipeHash echo
 ```
 
-Consumers require S49 to equal the current request before accepting S15=1.
+Consumers require S49 to equal the current request before accepting S15=1, and
+reject an S13 InputCount above 16 before indexing the pair array, so a reader can
+never walk past S47.
 
 ## Manufacturing Scheduler ABIs — current
 
@@ -965,6 +967,14 @@ S16..18 selected Transfer ReferenceIds
 ```
 
 The selector restarts enumeration for each new search while preserving the current build epoch and already committed endpoint reservations.
+
+`S16..S18` is the whole hop array on all three of Ranker, Selector, and
+Enumerator. Where a reader indexes that array by a length its peer reports, it
+rejects a length above three first — the Selector against the Ranker's `S19`
+BestPathLength, the Path Allocator against the Selector's `S37` — so a peer
+over-reporting its length cannot make a reader copy or quote a cell outside the
+published array. The Selector reads the Enumerator's three hops at fixed
+addresses and needs no such guard.
 
 ## Grid Cost Profile ABI v1
 

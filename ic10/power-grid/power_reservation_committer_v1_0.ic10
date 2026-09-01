@@ -11,6 +11,8 @@ get r2 db 8
 get r3 db 9
 blez r2 Bad
 blez r3 Bad
+get r0 d0 0
+bne r0 HASH("PowerDispatchPlanStore.v1") Bad
 get r14 d0 27
 mod r0 r14 2
 bnez r0 Bad

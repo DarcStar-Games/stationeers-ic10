@@ -23,11 +23,13 @@ SOFT_LIMIT_EXEMPTIONS = {
         "four-phase print launch fencing four devices; publishes the common header with its"
         " request mailbox relocated above it",
     "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10":
-        "publishes the common S0 header; its Generic Telemetry block stays at S96",
+        "publishes the common S0 header; its Generic Telemetry block stays at S96, and it"
+        " checks the paired Config Host's S0 identity as well as its S12 schema signature",
     "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10":
         "publishes the common S0 header; its Generic Telemetry block stays at S96",
     "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10":
-        "publishes the common S0 header; its Generic Telemetry block stays at S96",
+        "publishes the common S0 header; its Generic Telemetry block stays at S96, and it"
+        " checks the paired Config Host's S0 identity as well as its S12 schema signature",
     "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10":
         "publishes the common S0 header; its Generic Telemetry block stays at S96",
     "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10":

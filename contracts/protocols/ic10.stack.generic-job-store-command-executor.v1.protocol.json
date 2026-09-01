@@ -16,7 +16,12 @@
       "source": "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10",
       "header_base": 0,
       "readable_ranges": [],
-      "writable_ranges": [],
+      "writable_ranges": [
+        {
+          "start": 12,
+          "end": 23
+        }
+      ],
       "fields": [
         {
           "address": 0,
@@ -216,5 +221,54 @@
       }
     }
   ],
-  "consumer_interfaces": []
+  "consumer_interfaces": [
+    {
+      "source": "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        24,
+        25,
+        26,
+        27
+      ],
+      "literal_writes": [
+        12,
+        13,
+        21,
+        22,
+        23,
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
+      "dynamic_read_ranges": [],
+      "dynamic_write_ranges": [
+        {
+          "start": 14,
+          "end": 20
+        },
+        {
+          "start": 35,
+          "end": 39
+        }
+      ],
+      "dynamic_read_range_source": "none",
+      "dynamic_write_range_source": "source-derived",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 72179439
+        }
+      ],
+      "publication_requirements": []
+    }
+  ]
 }

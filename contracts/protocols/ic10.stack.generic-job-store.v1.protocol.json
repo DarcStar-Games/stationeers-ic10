@@ -27,7 +27,12 @@
           "end": 511
         }
       ],
-      "writable_ranges": [],
+      "writable_ranges": [
+        {
+          "start": 32,
+          "end": 511
+        }
+      ],
       "fields": [
         {
           "address": 0,
@@ -298,6 +303,79 @@
           "address": 16
         }
       ]
+    },
+    {
+      "source": "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        8,
+        9,
+        10
+      ],
+      "literal_writes": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        19
+      ],
+      "dynamic_read_ranges": [
+        {
+          "start": 32,
+          "end": 511
+        }
+      ],
+      "dynamic_write_ranges": [
+        {
+          "start": 32,
+          "end": 511
+        }
+      ],
+      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_write_range_source": "source-fingerprinted-exception",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": -955081679
+        }
+      ],
+      "publication_requirements": []
+    },
+    {
+      "source": "ic10/power-jobs/power_job_policy_apply_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [
+        {
+          "start": 32,
+          "end": 511
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": -955081679
+        }
+      ],
+      "publication_requirements": []
     }
   ]
 }

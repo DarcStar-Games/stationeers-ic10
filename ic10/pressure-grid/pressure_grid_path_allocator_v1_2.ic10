@@ -36,6 +36,7 @@ get r0 d0 9
 bltz r0 Reject
 beqz r0 None
 get r5 d0 37
+bge r5 4 Reject
 get r6 d0 8
 move r7 0
 move r8 r6

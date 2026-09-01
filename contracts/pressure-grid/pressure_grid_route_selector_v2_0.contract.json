@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10",
-  "source_sha256": "0bfb412f72f466cbc3a99ab3a0a46364b826213e9961fc3b4efd7c7e104d7729",
+  "source_sha256": "7fac98da62392fef837526900c9d4b898c010d545e08f6468c195a6ee443a162",
   "identity": {
     "service_id": "ic10.script.pressure.grid.route.selector",
     "implementation_revision": "2.0",
@@ -100,11 +100,11 @@
         "dynamic_read_ranges": [
           {
             "start": 16,
-            "end": 31
+            "end": 18
           }
         ],
         "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-fingerprinted-exception",
+        "dynamic_read_range_source": "source-derived",
         "dynamic_write_range_source": "none",
         "constraints": [
           {
@@ -151,16 +151,26 @@
     "dynamic_read_ranges": [],
     "dynamic_write_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 16,
+        "end": 18
       }
     ],
     "dynamic_read_proven_ranges": [],
-    "dynamic_write_proven_ranges": [],
+    "dynamic_write_proven_ranges": [
+      {
+        "start": 16,
+        "end": 18
+      }
+    ],
     "dynamic_read_range_source": "none",
-    "dynamic_write_range_source": "conservative-full-stack",
+    "dynamic_write_range_source": "source-derived",
     "clears_all": false,
-    "external_readable_ranges": [],
+    "external_readable_ranges": [
+      {
+        "start": 16,
+        "end": 18
+      }
+    ],
     "external_writable_ranges": [],
     "fields": [
       {
@@ -170,7 +180,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2142409287
       },
       {
         "address": 1,
@@ -179,7 +190,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 2,
@@ -188,7 +200,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
         "address": 8,
@@ -316,7 +329,22 @@
       "mode": "preserved-unless-overwritten",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 2142409287,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 2,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
     "provides": [

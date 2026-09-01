@@ -11,6 +11,8 @@ Loop:
 yield
 poke 115 0
 bdnvl d5 ReferenceId ConfigBad
+get r0 d5 0
+bne r0 HASH("GenericPersistentConfigHost.v1") ConfigBad
 l r0 d5 ReferenceId
 get sp db 116
 sne ra r0 sp

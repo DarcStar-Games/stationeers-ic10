@@ -3,6 +3,8 @@ poke 1 1
 poke 2 0
 Loop:
 yield
+get r0 d1 0
+bne r0 HASH("ExistingDependencyPlanController.v1") Loop
 get r15 db 25
 get r0 db 26
 bne r15 r0 Cleanup

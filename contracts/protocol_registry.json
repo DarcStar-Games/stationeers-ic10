@@ -845,7 +845,16 @@
           "header_base": 0
         }
       ],
-      "consumers": []
+      "consumers": [
+        {
+          "source": "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        }
+      ]
     },
     {
       "protocol_id": "ic10.stack.gas-mixer-utility-controller.v1",
@@ -1058,7 +1067,16 @@
           "header_base": 0
         }
       ],
-      "consumers": []
+      "consumers": [
+        {
+          "source": "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
     },
     {
       "protocol_id": "ic10.stack.generic-job-store.v1",
@@ -1088,6 +1106,22 @@
         },
         {
           "source": "ic10/generic-jobs/generic_job_selector_v3_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/power-jobs/power_job_policy_apply_v1_0.ic10",
           "endpoint": {
             "kind": "device-port",
             "value": "d0"
@@ -1130,6 +1164,14 @@
       ],
       "consumers": [
         {
+          "source": "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d2"
+          },
+          "header_base": 0
+        },
+        {
           "source": "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10",
           "endpoint": {
             "kind": "device-port",
@@ -1154,6 +1196,14 @@
           "header_base": 0
         },
         {
+          "source": "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d3"
+          },
+          "header_base": 0
+        },
+        {
           "source": "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10",
           "endpoint": {
             "kind": "device-port",
@@ -1162,10 +1212,26 @@
           "header_base": 0
         },
         {
+          "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d5"
+          },
+          "header_base": 0
+        },
+        {
           "source": "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10",
           "endpoint": {
             "kind": "device-port",
             "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d4"
           },
           "header_base": 0
         },
@@ -1291,10 +1357,50 @@
           "header_base": 0
         },
         {
+          "source": "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
           "source": "ic10/material-transform/material_transform_link_resolver_v1_0.ic10",
           "endpoint": {
             "kind": "device-port",
             "value": "d2"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/power-grid/power_link_selector_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/power-grid/power_sink_selector_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/power-grid/power_source_selector_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
           },
           "header_base": 0
         },
@@ -1417,6 +1523,14 @@
         }
       ],
       "consumers": [
+        {
+          "source": "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        },
         {
           "source": "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10",
           "endpoint": {
@@ -1882,6 +1996,46 @@
         }
       ],
       "consumers": [
+        {
+          "source": "ic10/power-grid/power_link_executor_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/power-grid/power_load_executor_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/power-grid/power_plan_validator_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/power-grid/power_reservation_committer_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/power-grid/power_source_selector_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        },
         {
           "source": "ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10",
           "endpoint": {
@@ -2403,7 +2557,16 @@
           "header_base": 0
         }
       ],
-      "consumers": []
+      "consumers": [
+        {
+          "source": "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
     },
     {
       "protocol_id": "ic10.stack.pressure-grid-singlehop-builder.v1",
@@ -2706,7 +2869,16 @@
           "header_base": 0
         }
       ],
-      "consumers": []
+      "consumers": [
+        {
+          "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        }
+      ]
     },
     {
       "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -2945,6 +3117,14 @@
         }
       ],
       "consumers": [
+        {
+          "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
         {
           "source": "ic10/material-transform/material_transform_admission_v1_0.ic10",
           "endpoint": {

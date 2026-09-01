@@ -97,6 +97,22 @@ Core scans the 64-node Registry for an UNCLAIMED Store whose S29 free cells sati
 
 The request contains no generator-defined physical ReferenceId.
 
+### Migration handoff mailbox
+
+Core hosts, but never reads, the pending migration at S40..S42:
+
+```text
+S40  source StoreRef of the pending move, or 0 when idle
+S41  destination StoreRef of the pending move
+S42  plan counter; advanced by the Planner
+```
+
+`ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10` posts a
+move only while S40 is zero; `ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10`
+consumes S40/S41 and clears both when the move finishes or is abandoned. The
+mailbox lives on Core's stack because Core is the one service both parties
+already resolve, not because Core participates in the move.
+
 ## Loader Router ABI3
 
 The Router discovers Ready Loader ABI5 producers. For the Loader's current `S15` item index it reads that item's size from the Loader item directory and computes:

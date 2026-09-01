@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10",
-  "source_sha256": "d0042d8a76357dbadf23d1d57bd650c90178786a8be5022ce29fdb3398e51fad",
+  "source_sha256": "b47723d5304bd0a4ff98577e8ccb46d8c274e16c333b8033c4e5c967437606ea",
   "identity": {
     "service_id": "ic10.script.generic.job.store.command.executor",
     "implementation_revision": "1.0",
@@ -25,6 +25,7 @@
       },
       "stack": {
         "literal_reads": [
+          0,
           8,
           9,
           10
@@ -41,19 +42,11 @@
         "dynamic_write": true,
         "dynamic_read_ranges": [
           {
-            "start": 14,
-            "end": 22
-          },
-          {
             "start": 32,
             "end": 511
           }
         ],
         "dynamic_write_ranges": [
-          {
-            "start": 14,
-            "end": 22
-          },
           {
             "start": 32,
             "end": 511
@@ -61,20 +54,19 @@
         ],
         "dynamic_read_range_source": "source-fingerprinted-exception",
         "dynamic_write_range_source": "source-fingerprinted-exception",
-        "constraints": []
+        "constraints": [
+          {
+            "address": 0,
+            "equals": -955081679
+          }
+        ]
       },
       "target": {
-        "kind": "stack-interface",
-        "verification": "access-only",
-        "interface_id": "ic10.interface.access.1548df53c9ae812e",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.1548df53c9ae812e",
-        "provider_resolution": "deployment-supplied",
-        "assumptions": {
-          "properties_read": [],
-          "properties_written": [],
-          "slot_properties_read": [],
-          "slot_properties_written": []
-        }
+        "kind": "stack-protocol",
+        "verification": "literal-header",
+        "protocol_ids": [
+          "ic10.stack.generic-job-store.v1"
+        ]
       }
     }
   ],
@@ -142,7 +134,12 @@
     "dynamic_write_range_source": "source-derived",
     "clears_all": true,
     "external_readable_ranges": [],
-    "external_writable_ranges": [],
+    "external_writable_ranges": [
+      {
+        "start": 12,
+        "end": 23
+      }
+    ],
     "fields": [
       {
         "address": 0,
@@ -360,7 +357,22 @@
         "source": "literal-own-stack-header"
       }
     ],
-    "consumes": []
+    "consumes": [
+      {
+        "port": "d0",
+        "accepted": [
+          {
+            "protocol_id": "ic10.stack.generic-job-store.v1",
+            "header_base": 0,
+            "contract": "GenericJobStore",
+            "magic": -955081679,
+            "abi": 1,
+            "publication_requirements": []
+          }
+        ],
+        "source": "authoritative-literal-header-check"
+      }
+    ]
   },
   "extraction": {
     "mode": "static-v2",

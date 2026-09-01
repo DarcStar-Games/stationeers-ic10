@@ -11,6 +11,8 @@ get r2 db 15
 get r3 db 16
 get r4 db 17
 blez r4 Bad
+get r0 d1 0
+bne r0 HASH("ItemResourceReservationSelector.v1") Bad
 move r5 -1
 jal Req
 get r8 d0 23

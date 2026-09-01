@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10",
-  "source_sha256": "589cadfd0b11f308380115b9b61dbaef0aee7377c4322e29718f5c229d70b6b6",
+  "source_sha256": "d8e1815fa222766e494fc4e18393f9ea8c89606ac6e8cbb75b84eb351d8af573",
   "identity": {
     "service_id": "ic10.script.pressure.grid.path.allocator",
     "implementation_revision": "1.2",
@@ -43,7 +43,7 @@
         "dynamic_read_ranges": [
           {
             "start": 16,
-            "end": 31
+            "end": 18
           }
         ],
         "dynamic_write_ranges": [],
@@ -57,17 +57,11 @@
         ]
       },
       "target": {
-        "kind": "stack-interface",
-        "verification": "access-only",
-        "interface_id": "ic10.interface.access.d5b44f3ca40ba619",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.d5b44f3ca40ba619",
-        "provider_resolution": "deployment-supplied",
-        "assumptions": {
-          "properties_read": [],
-          "properties_written": [],
-          "slot_properties_read": [],
-          "slot_properties_written": []
-        }
+        "kind": "stack-protocol",
+        "verification": "literal-header",
+        "protocol_ids": [
+          "ic10.stack.pressure-grid-route-selector.v2"
+        ]
       }
     },
     {
@@ -355,6 +349,20 @@
       }
     ],
     "consumes": [
+      {
+        "port": "d0",
+        "accepted": [
+          {
+            "protocol_id": "ic10.stack.pressure-grid-route-selector.v2",
+            "header_base": 0,
+            "contract": "PressureGridRouteSelector",
+            "magic": 2142409287,
+            "abi": 2,
+            "publication_requirements": []
+          }
+        ],
+        "source": "authoritative-literal-header-check"
+      },
       {
         "port": "d1",
         "accepted": [

@@ -93,6 +93,28 @@ ck(int(store.stack.get(23,0))==before,'same-stack Gateway replay duplicated comm
 gw2.stack.update({53:parent,54:pgen-1,55:0,56:1,57:1,58:601,59:1,60:1,61:1,62:21,63:-1,48:11})
 run_round_robin([gw2,exe,store],30)
 ck(gw2.stack.get(49)==11 and gw2.stack.get(50)!=1,'stale parent generation created a child')
+# The Gateway is the sole mutation path, so it must name its Executor rather than
+# post commands to whatever occupies d0.
+before=int(store.stack.get(23,0))
+stranger=Device(103,{0:'HASH:GenericJobStore.v1'},{'ReferenceId':103})
+gw3=IC10(src('ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10'),{'d0':stranger},self_ref=104);gw3.run(1)
+gw3.stack.update({53:parent,54:pgen,55:0,56:1,57:1,58:602,59:1,60:1,61:2,62:21,63:-1,48:12})
+run_round_robin([gw3,exe,store],20)
+ck(sorted(stranger.stack)==[0] and int(store.stack.get(23,0))==before,'Gateway posted a command to a device that is not its Executor')
+# Reflashing with a command in flight must not settle it against whatever d0 now is:
+# the stranger's S8 is allowed to collide with the pending sequence.
+other=Device(105,{0:'HASH:GenericSnapshotDirectoryHost.v1',8:7,9:1,10:55},{'ReferenceId':105})
+resume=IC10(src('ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10'),{'d0':other},self_ref=106)
+resume.stack.update({0:'HASH:GenericJobStoreCommandExecutor.v1',1:1,2:0,31:7,32:99,34:3,23:99,24:0})
+resume.run(4)
+ck(resume.stack.get(31)==7 and resume.stack.get(24)==0,'reflashed Executor settled a pending command against a stranger')
+# The Planner reaches its Existing controller from the plan path and the cleanup path;
+# a cleanup request must not post into a d1 that is not that controller.
+notctl=Device(107,{0:'HASH:DependencyPlanStore.v2'},{'ReferenceId':107})
+planner=IC10(src('ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10'),
+ {'d0':Device(108,{},{'ReferenceId':108}),'d1':notctl,'d2':Device(109,{},{'ReferenceId':109})},self_ref=110)
+planner.stack.update({25:5,26:0,24:7});planner.run(4)
+ck(sorted(notctl.stack)==[0],'Planner cleanup posted to a d1 that is not its Existing controller')
 
 if fails:
  print('Dependency planning: FAIL');[print(' -',x) for x in fails];sys.exit(1)
@@ -101,3 +123,6 @@ print(' - future-output sharing accounts for aggregate claims and never reuses c
 print(' - bounded depth/cycle and completed-child inventory liveness semantics are covered')
 print(' - Plan Store 8-cell commit marker survives interrupted odd-sequence recovery')
 print(' - four-lane Gateway + sole Store executor atomically guards parent generation and allocates child slots')
+print(' - the Gateway writes nothing at all to a d0 that is not its Store Command Executor')
+print(' - a reflashed Executor re-checks the Store identity before resuming a pending command')
+print(' - the Planner names its Existing controller on the cleanup path as well as the plan path')

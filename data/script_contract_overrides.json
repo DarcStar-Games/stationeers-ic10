@@ -3,6 +3,18 @@
  "scripts": {
   "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10": {
    "source_sha256": "b73fc379b277fbcdb3156f354625d307c90f7dd258507077fc1d3472b78409ef",
+   "external_readable_ranges": [
+    [
+     40,
+     42
+    ]
+   ],
+   "external_writable_ranges": [
+    [
+     40,
+     42
+    ]
+   ],
    "publication_rules": [
     {
      "kind": "seqlock",
@@ -170,7 +182,7 @@
    ]
   },
   "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10": {
-   "source_sha256": "b4edd466b76f944583d93df90b415f74c9a3de965dd024c14915c68551a9e391",
+   "source_sha256": "95e6e0b18945cd2b2488904526c8e5472c5ee4ebb10f6daab0a2c2fb98097059",
    "ports": {
     "d0": {
      "dynamic_property_sources": [
@@ -400,6 +412,24 @@
     }
    }
   },
+  "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10": {
+   "source_sha256": "17cd799479e1a0d2df67de0c055061f8c70192da92046ad98cd15bc651059845",
+   "external_writable_ranges": [
+    [
+     19,
+     30
+    ]
+   ]
+  },
+  "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10": {
+   "source_sha256": "88df87a9d57b46c613e9af16de821cf3dd9b974a6997c66a54d752e9206d4449",
+   "external_writable_ranges": [
+    [
+     20,
+     29
+    ]
+   ]
+  },
   "ic10/dependency-planning/dependency_plan_store_v2_0.ic10": {
    "source_sha256": "45b2df22309b90253281494fb3b7bb0622598c20caf7dbd92a2601d3b5738637",
    "publication_rules": [
@@ -421,6 +451,15 @@
     ]
    ]
   },
+  "ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10": {
+   "source_sha256": "e8cd467b2773d6568cc8d2c349a513760bc449597e90725b5a24388edef4e134",
+   "external_writable_ranges": [
+    [
+     12,
+     20
+    ]
+   ]
+  },
   "ic10/dependency-planning/generic_job_monitor_v1_0.ic10": {
    "source_sha256": "7f05bc5266ed15a948b29ae55f740fd42b07d20f99e28a558e966d5dede54fcb",
    "ports": {
@@ -435,7 +474,7 @@
    }
   },
   "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10": {
-   "source_sha256": "7c89e151c4119517cfef583a06710b0e9231e1702a13bd9d9028f501520b8bbc",
+   "source_sha256": "3057135752cd6f1bcf38c9fcb3933b8f888678c68d2d05339679cbb032b5f151",
    "ports": {
     "d1": {
      "dynamic_read_ranges": [
@@ -448,7 +487,7 @@
    }
   },
   "ic10/dependency-planning/job_requirement_view_v1_0.ic10": {
-   "source_sha256": "6291c24006dfd3a16ad47fc30a9eb3a8005f02685642fdc9ffadd953afb51a22",
+   "source_sha256": "a8c97008efc0245d620ba58cbcd7123a5ef9e34a5e1bb46fefbbf41887e102d3",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -457,19 +496,11 @@
        71
       ]
      ]
-    },
-    "d1": {
-     "dynamic_read_ranges": [
-      [
-       16,
-       79
-      ]
-     ]
     }
    }
   },
   "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10": {
-   "source_sha256": "d0fcc096faa07ed6654087e17e9765e5c3da774f3ac17ef51c099804bf687599",
+   "source_sha256": "1cc7edc87513b76010a0671d21b95310d35ce6e3313e5671649f5c8e2cfc2885",
    "ports": {
     "d1": {
      "dynamic_write_ranges": [
@@ -577,7 +608,7 @@
    ]
   },
   "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10": {
-   "source_sha256": "417314e85104d60b6ba6f5e87822ea9d397492498ae384a3ca982bee1a4cad98",
+   "source_sha256": "0a0cb31822214db541af43c44f3f0a8e2eac14815cceaa332444805eda59dff5",
    "ports": {
     "d0": {
      "dynamic_write_ranges": [
@@ -607,24 +638,22 @@
    }
   },
   "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10": {
-   "source_sha256": "d0042d8a76357dbadf23d1d57bd650c90178786a8be5022ce29fdb3398e51fad",
+   "source_sha256": "b47723d5304bd0a4ff98577e8ccb46d8c274e16c333b8033c4e5c967437606ea",
+   "external_writable_ranges": [
+    [
+     12,
+     23
+    ]
+   ],
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
-      [
-       14,
-       22
-      ],
       [
        32,
        511
       ]
      ],
      "dynamic_write_ranges": [
-      [
-       14,
-       22
-      ],
       [
        32,
        511
@@ -635,14 +664,6 @@
   },
   "ic10/generic-jobs/generic_job_store_v1_0.ic10": {
    "source_sha256": "11540f50a9981a02c2a6aa99e0dcb48ca75864206a2ff0212c4fada14d1842f4",
-   "publication_rules": [
-    {
-     "kind": "seqlock",
-     "address": 16,
-     "verification": "paired-sequence",
-     "description": "Queue sequence is odd while mutating and even when stable."
-    }
-   ],
    "external_readable_ranges": [
     [
      0,
@@ -652,6 +673,20 @@
      32,
      511
     ]
+   ],
+   "external_writable_ranges": [
+    [
+     32,
+     511
+    ]
+   ],
+   "publication_rules": [
+    {
+     "kind": "seqlock",
+     "address": 16,
+     "verification": "paired-sequence",
+     "description": "Queue sequence is odd while mutating and even when stable."
+    }
    ]
   },
   "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10": {
@@ -737,17 +772,27 @@
     }
    }
   },
+  "ic10/manufacturing/print_candidate_executor_v2_0.ic10": {
+   "source_sha256": "eb49db3ecd9566fe4087092cf2998a1b9bf780fdd76cbf67b8eafaab6ed23057",
+   "external_writable_ranges": [
+    [
+     13,
+     19
+    ]
+   ]
+  },
+  "ic10/manufacturing/print_job_driver_v2_0.ic10": {
+   "source_sha256": "b8f8ce66e12b512eb87d6696989de1331d92540ae4f34f731748cec22106d8d5",
+   "external_writable_ranges": [
+    [
+     12,
+     17
+    ]
+   ]
+  },
   "ic10/manufacturing/print_material_resolver_v1_0.ic10": {
    "source_sha256": "8692e029cc055c1453057b3f46cdfc797f607a3959935282ff214e42e50a2bee",
    "ports": {
-    "d0": {
-     "dynamic_read_ranges": [
-      [
-       16,
-       79
-      ]
-     ]
-    },
     "d1": {
      "dynamic_read_ranges": [
       [
@@ -847,6 +892,16 @@
   },
   "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10": {
    "source_sha256": "dc541e69043742b00c10dcc0acc53d9f0309d18968cdb9d97fcd72f6e6481351",
+   "external_readable_ranges": [
+    [
+     32,
+     95
+    ],
+    [
+     128,
+     191
+    ]
+   ],
    "publication_rules": [
     {
      "kind": "seqlock",
@@ -857,7 +912,7 @@
    ]
   },
   "ic10/power-grid/power_link_executor_v1_0.ic10": {
-   "source_sha256": "c89d2d445affeabcaef9bf738a99972b9005ae8356c8b99b67595898cdafc739",
+   "source_sha256": "b9fe9dc6a8f2cce868823b77f88b69325e737bba5e0cf6d8602cf5117a785212",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -887,7 +942,7 @@
    }
   },
   "ic10/power-grid/power_load_executor_v1_0.ic10": {
-   "source_sha256": "734d376a678ae364b4678c5adff0892e0f3dac6ea9597f17aba08570259f6b5d",
+   "source_sha256": "841a519942815f6c0dd7baf0e7ad42de144a45973c78ccccf1c32c233a38baed",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -900,7 +955,7 @@
    }
   },
   "ic10/power-grid/power_plan_validator_v1_0.ic10": {
-   "source_sha256": "4243e27cd724956bd4441b31ac0d54e7dfe17e1cb3ab39023e769afd4ad9c3bb",
+   "source_sha256": "41eecff035efb38f12865ba9192eecc5db1582d0d12d897427489e8351fb3b94",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -927,7 +982,7 @@
    }
   },
   "ic10/power-grid/power_reservation_committer_v1_0.ic10": {
-   "source_sha256": "fcff32a398c057f59772e5c297d5a5f612209dbaf8d0e8cbec12aa0d60c1fe1f",
+   "source_sha256": "a5cd68bd099cfd06d5e6a0f0321329dc77a52a598683470b014cfa8fa3beb2dd",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -966,7 +1021,7 @@
    }
   },
   "ic10/power-grid/power_source_selector_v1_0.ic10": {
-   "source_sha256": "9216b9b85d82eb29236e055f35e9444addc601aae649ebd3f4a7a15810c5a9d7",
+   "source_sha256": "af5ba428a68d66d90fd1c2da83a95b944b1d5d0d2df27839694a04880d422ccb",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -991,7 +1046,7 @@
    }
   },
   "ic10/power-jobs/power_job_policy_apply_v1_0.ic10": {
-   "source_sha256": "409c6485a66d5bf534b22d2780b1189158b26a56df96b066b60d826f9e38a9eb",
+   "source_sha256": "21ba6dfa3701a2d6b371f5bdea1f713a0abf126c470ceaaed49ca20b2df32f98",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -1021,7 +1076,7 @@
    }
   },
   "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": {
-   "source_sha256": "f117686bf42e65f0eb91bc3ca0543d964bd242e34c29933f815b25c374374dc6",
+   "source_sha256": "4851dad74f03c0a8f273c11a804e8cb9a7c20a34c3fb6128055dd7c336b80949",
    "ports": {
     "d3": {
      "dynamic_property_sources": [
@@ -1206,13 +1261,13 @@
    }
   },
   "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10": {
-   "source_sha256": "589cadfd0b11f308380115b9b61dbaef0aee7377c4322e29718f5c229d70b6b6",
+   "source_sha256": "d8e1815fa222766e494fc4e18393f9ea8c89606ac6e8cbb75b84eb351d8af573",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
       [
        16,
-       31
+       18
       ]
      ]
     }
@@ -1258,8 +1313,8 @@
    "source_sha256": "1cff45998808013af3b83fdea975f825d6202821433721b52cd066d94d74a5f2",
    "external_readable_ranges": [
     [
-     0,
-     31
+     16,
+     18
     ]
    ],
    "external_writable_ranges": [
@@ -1267,36 +1322,16 @@
      32,
      37
     ]
-   ],
-   "dynamic_read_ranges": [
-    [
-     16,
-     31
-    ],
-    [
-     35,
-     37
-    ]
-   ],
-   "dynamic_write_ranges": [
-    [
-     16,
-     31
-    ]
    ]
   },
   "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10": {
-   "source_sha256": "0bfb412f72f466cbc3a99ab3a0a46364b826213e9961fc3b4efd7c7e104d7729",
-   "ports": {
-    "d1": {
-     "dynamic_read_ranges": [
-      [
-       16,
-       31
-      ]
-     ]
-    }
-   }
+   "source_sha256": "7fac98da62392fef837526900c9d4b898c010d545e08f6468c195a6ee443a162",
+   "external_readable_ranges": [
+    [
+     16,
+     18
+    ]
+   ]
   },
   "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10": {
    "source_sha256": "7fdcd46ae3a83fb7f7f79f40aa7252a145883a9a29e4c79ff6ac7d4443b40bd2",
@@ -1543,6 +1578,15 @@
      ]
     }
    }
+  },
+  "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10": {
+   "source_sha256": "6df187ba974b9a7e329addc1cfcd4a6a3f946534df219e48f0f87f13d3fd4681",
+   "external_readable_ranges": [
+    [
+     16,
+     47
+    ]
+   ]
   },
   "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10": {
    "source_sha256": "f0f0b37b230506e945a416dd440616f64bc6b1a722f84a9dc0043aa30f615c0a",

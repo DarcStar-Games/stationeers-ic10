@@ -35,9 +35,13 @@ ck(rrvm.stack.get(36)==321 and rrvm.stack.get(37)==123 and rrvm.stack.get(35)==3
 src=Device(1201,stack={0:'HASH:ResourceReservation.v1',1:1,32:1100,33:4,34:'HASH:Power.Electrical',35:1,36:100,37:0,9:1,12:5,17:0,28:1,30:101,31:16},props={'ReferenceId':1201})
 sink=Device(1202,stack={0:'HASH:ResourceReservation.v1',1:1,32:1101,33:4,34:'HASH:Power.Electrical',35:2,36:0,37:80,9:1,12:6,17:0,28:2,30:201,31:14410},props={'ReferenceId':1202})
 pdir=Device(1300,stack={0:'HASH:GenericSnapshotDirectoryHost.v1',1:1,24:0,27:2,29:0,9:'HASH:DirectorySchema.PowerReservation.v1',11:3,12:64,32:1000001,33:101,34:1201,35:3000099,36:201,37:1202},props={'ReferenceId':1300})
-plan=Device(1301,stack={24:0},props={'ReferenceId':1301})
+plan=Device(1301,stack={0:'HASH:PowerDispatchPlanStore.v1',24:0},props={'ReferenceId':1301})
 sv=IC10((R/'ic10/power-grid/power_source_selector_v1_0.ic10').read_text(),{'d0':pdir,'d1':plan,'x0':src,'x1':sink},self_ref=228)
 sv.stack.update({11:0,12:1});sv.run(3);ck(sv.stack.get(14)==1 and sv.stack.get(16)==100,'source selector did not use Reservation S6 export')
+# A port declaring a dynamic range must name its peer, or it reads a stranger's cells.
+stranger=Device(1302,stack={0:'HASH:GenericJobStore.v1',24:0},props={'ReferenceId':1302})
+sw=IC10((R/'ic10/power-grid/power_source_selector_v1_0.ic10').read_text(),{'d0':pdir,'d1':stranger,'x0':src,'x1':sink},self_ref=231)
+sw.stack.update({11:0,12:1});sw.run(3);ck(sw.stack.get(14)==-1,'source selector staged against a device that is not the Plan Store')
 kv=IC10((R/'ic10/power-grid/power_sink_selector_v1_0.ic10').read_text(),{'d0':pdir,'x0':src,'x1':sink},self_ref=230)
 kv.stack.update({12:0,13:1});kv.run(3);ck(kv.stack.get(15)==1 and kv.stack.get(17)==80,'sink selector did not use Reservation S7 import')
 # Transformer overhead link selector.
@@ -158,6 +162,7 @@ if fails:
 print('Power management protocol: PASS')
 print(' - live producer/consumer/battery endpoints and Reservation mirror')
 print(' - live source/sink/link selectors use correct generic offsets')
+print(' - source selector rejects a d1 that is not the Plan Store before staging against it')
 print(' - live PlanStore coherent transaction and transformer overhead')
 print(' - priority/load-shed/battery-charge reference model')
 print(' - POWER Job Gateway lane-D generation contract')

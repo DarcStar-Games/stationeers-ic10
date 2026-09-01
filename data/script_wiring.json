@@ -175,7 +175,7 @@
     "providers": [
      "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
     ],
-    "note": "docs/PHASE_PRESSURE_CONTROLLER.md:71: \"| `d2` | paired Generic Persistent Config Host | Supplies coherent accepted controller configuration. |\" [Corroborated: consumer requires d2 cell 12 == HASH(\"CFG1|ControllerPhasePressure|...\"); the Host holds the 'persistence schema signature supplied by Policy' at its S12 (generic_persistent_config_host_v1_1.ic10 line 11).]"
+    "note": "Peer named by d2 S0 magic check (HASH(\"GenericPersistentConfigHost.v1\")). docs/PHASE_PRESSURE_CONTROLLER.md:71: \"| `d2` | paired Generic Persistent Config Host | Supplies coherent accepted controller configuration. |\" [Corroborated: consumer requires d2 cell 12 == HASH(\"CFG1|ControllerPhasePressure|...\"); the Host holds the 'persistence schema signature supplied by Policy' at its S12 (generic_persistent_config_host_v1_1.ic10 line 11).]"
    }
   },
   "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10": {
@@ -451,7 +451,7 @@
     "providers": [
      "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"job_inventory_preflight_v1_0.ic10 quotes Item-7 DirectorySchema.ResourceReservation through the existing six-leg selector\" [Selector cells match: request S11 resource, S12 qty, S13 direction, S14 mask, S15 token; response S16 token, S8 status (-2 lower-bound, -3 overflow), S9 known, S10 leg count, per-leg records at S32+3i for the six quoted legs (S32..S49, Reservation ref + generation) which preflight folds into its rolling fingerprints.]"
+    "note": "Peer named by d1 S0 magic check (HASH(\"ItemResourceReservationSelector.v1\")). docs/DEPENDENCY_PLANNING.md: \"job_inventory_preflight_v1_0.ic10 quotes Item-7 DirectorySchema.ResourceReservation through the existing six-leg selector\" [Selector cells match: request S11 resource, S12 qty, S13 direction, S14 mask, S15 token; response S16 token, S8 status (-2 lower-bound, -3 overflow), S9 known, S10 leg count, per-leg records at S32+3i for the six quoted legs (S32..S49, Reservation ref + generation) which preflight folds into its rolling fingerprints.]"
    }
   },
   "ic10/dependency-planning/job_requirement_view_v1_0.ic10": {
@@ -460,14 +460,14 @@
     "providers": [
      "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"Transform requirements come from Transform Profile ABI4\"; consumer uses the S68..S75 resolved-request mailbox of the v8 view"
+    "note": "Peer named by d0 S0 magic check (HASH(\"ResourceTransformProfileView.v4\")). docs/DEPENDENCY_PLANNING.md: \"Transform requirements come from Transform Profile ABI4\"; consumer uses the S68..S75 resolved-request mailbox of the v8 view"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"Print requirements come from Recipe execution metadata\"; provider header: \"Recipe Execution Profile View ABI1 ... request S10 RecipeHash\" [No pin comment, but cells match exactly and uniquely: consumer writes S10 RecipeHash and reads S49 request echo, S15 status==1, S14 generation fence, S12/S13 counts, reagent pairs at S16+2i - precisely the cells recipe_execution_profile_view pokes (49, 15, 14, 11/12/13, dynamic pairs).]"
+    "note": "Peer named by d1 S0 magic check (HASH(\"RecipeExecutionProfileView.v1\")). docs/DEPENDENCY_PLANNING.md: \"Print requirements come from Recipe execution metadata\"; provider header: \"Recipe Execution Profile View ABI1 ... request S10 RecipeHash\" [Also cells match exactly and uniquely: consumer writes S10 RecipeHash and reads S49 request echo, S15 status==1, S14 generation fence, S12/S13 counts, reagent pairs at S16+2i - precisely the cells recipe_execution_profile_view pokes (49, 15, 14, 11/12/13, dynamic pairs).]"
    },
    "d2": {
     "kind": "script",
@@ -513,7 +513,7 @@
     "providers": [
      "ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md control-flow diagram: \"208 Dependency Planner -> 217 Existing-plan controller\" [Existing controller cells match: request S2 parent, S3..S8 copied job metadata (planner's CopyExisting loop = the dynamic write), S9 mode (0 evaluate / 1 cleanup), S10 token; response S11 token, S12 result, S13 cleared flag.]"
+    "note": "Peer named by d1 S0 magic check (HASH(\"ExistingDependencyPlanController.v1\")). docs/DEPENDENCY_PLANNING.md control-flow diagram: \"208 Dependency Planner -> 217 Existing-plan controller\" [Existing controller cells match: request S2 parent, S3..S8 copied job metadata (planner's CopyExisting loop = the dynamic write), S9 mode (0 evaluate / 1 cleanup), S10 token; response S11 token, S12 result, S13 cleared flag.]"
    },
    "d2": {
     "kind": "script",
@@ -612,7 +612,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10"
     ],
-    "note": "docs/GENERIC_JOB_ABI.md:379: \"Both serialize mutations through the Job Gateway and sole physical Store command executor\"; USER_DEPLOYMENT_GUIDE.md:1086 chain Store -> Gateway -> Executor. [No literal 'Gateway d0 -> X' line, but the correspondence is cell-exact: Gateway writes d0 cells 7..20/22 (payload), handshakes via d0 2 vs 3, and reads replies at d0 3,4,5,6; the Executor reads its own db 2,7..22 and replies at db 3,4,5,6 (poke 3/4/5/6). No other program has that mailbox shape.]"
+    "note": "Peer named by d0 S0 magic check (HASH(\"GenericJobStoreCommandExecutor.v1\")). docs/GENERIC_JOB_ABI.md:379: \"Both serialize mutations through the Job Gateway and sole physical Store command executor\"; USER_DEPLOYMENT_GUIDE.md:1086 chain Store -> Gateway -> Executor. [Also the correspondence is cell-exact: Gateway writes d0 cells 7..20/22 (payload), handshakes via d0 2 vs 3, and reads replies at d0 3,4,5,6; the Executor reads its own db 2,7..22 and replies at db 3,4,5,6 (poke 3/4/5/6). No other program has that mailbox shape.]"
    }
   },
   "ic10/generic-jobs/generic_job_selector_v3_0.ic10": {
@@ -630,7 +630,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_store_v1_0.ic10"
     ],
-    "note": "docs/GENERIC_JOB_ABI.md:383: \"generic_job_store_command_executor_v1_0.ic10 remains the sole physical Job Store mailbox writer\" (executor's only port is d0). [Corroborated cell-exact: Executor writes d0 7 (command seq) and 11..15 (payload), reads replies d0 8,9,10; generic_job_store_v1_0 reads db 7, db 11..15 and pokes 8,9,10. Executor also walks the Store's slot directory at 288+7*slot and record bank at 32/33+8*slot.]"
+    "note": "Peer named by d0 S0 magic check (HASH(\"GenericJobStore.v1\")). docs/GENERIC_JOB_ABI.md:383: \"generic_job_store_command_executor_v1_0.ic10 remains the sole physical Job Store mailbox writer\" (executor's only port is d0). [Corroborated cell-exact: Executor writes d0 7 (command seq) and 11..15 (payload), reads replies d0 8,9,10; generic_job_store_v1_0 reads db 7, db 11..15 and pokes 8,9,10. Executor also walks the Store's slot directory at 288+7*slot and record bank at 32/33+8*slot.]"
    }
   },
   "ic10/generic-jobs/generic_job_store_v1_0.ic10": {},
@@ -1266,7 +1266,7 @@
     "providers": [
      "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_link_executor_v1_0.ic10: '# Break-before-make Transformer Setting/On executor. d0 PlanStore,d1 Allocator.' [Reads d0 S27/S28/S29 (sequence/PlanGeneration/count) plus the committed flow records at S32+8i for eight flows (S32..S95; data/script_contract_overrides.json dynamic_read_ranges [[32,95]]); tests/test_fault_injection.py wires a plan-store-shaped device to d0.]"
+    "note": "Peer named by d0 S0 magic check (HASH(\"PowerDispatchPlanStore.v1\")). ic10/power-grid/power_link_executor_v1_0.ic10: '# Break-before-make Transformer Setting/On executor. d0 PlanStore,d1 Allocator.' [Reads d0 S27/S28/S29 (sequence/PlanGeneration/count) plus the committed flow records at S32+8i for eight flows (S32..S95; data/script_contract_overrides.json dynamic_read_ranges [[32,95]]); tests/test_fault_injection.py wires a plan-store-shaped device to d0.]"
    },
    "d1": {
     "kind": "script",
@@ -1291,7 +1291,7 @@
     "providers": [
      "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_load_executor_v1_0.ic10: '# Break-before-make managed POWER load/battery On executor. d0 PlanStore,d1 Allocator.' [Reads d0 S27/S28/S29 (sequence/PlanGeneration/count) plus the committed flow records at S32..S95; tests/test_fault_injection.py wires plan-store-shaped device 'pl' (stack {27:2,28:5,29:1,...}) to d0.]"
+    "note": "Peer named by d0 S0 magic check (HASH(\"PowerDispatchPlanStore.v1\")). ic10/power-grid/power_load_executor_v1_0.ic10: '# Break-before-make managed POWER load/battery On executor. d0 PlanStore,d1 Allocator.' [Reads d0 S27/S28/S29 (sequence/PlanGeneration/count) plus the committed flow records at S32..S95; tests/test_fault_injection.py wires plan-store-shaped device 'pl' (stack {27:2,28:5,29:1,...}) to d0.]"
    },
    "d1": {
     "kind": "script",
@@ -1307,7 +1307,7 @@
     "providers": [
      "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_plan_validator_v1_0.ic10: '# Validate one coherent POWER dispatch plan. d0 PlanStore.' [Reads d0 S27 (even sequence check: mod r0 r14 2), S28 (exact PlanGeneration), S29 (flow count) plus the committed flow records at S32..S95 - docs/POWER_MANAGEMENT.md section 6: validator rechecks 'exact PlanGeneration and even publication sequence'.]"
+    "note": "Peer named by d0 S0 magic check (HASH(\"PowerDispatchPlanStore.v1\")). ic10/power-grid/power_plan_validator_v1_0.ic10: '# Validate one coherent POWER dispatch plan. d0 PlanStore.' [Reads d0 S27 (even sequence check: mod r0 r14 2), S28 (exact PlanGeneration), S29 (flow count) plus the committed flow records at S32..S95 - docs/POWER_MANAGEMENT.md section 6: validator rechecks 'exact PlanGeneration and even publication sequence'.]"
    }
   },
   "ic10/power-grid/power_producer_endpoint_v1_0.ic10": {
@@ -1353,7 +1353,7 @@
     "providers": [
      "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_reservation_committer_v1_0.ic10: '# Commit POWER Reservation ownership for one plan. d0 PlanStore,d1 Allocator owner.' [Reads d0 S27 (even sequence: mod r14 2), S28 (exact PlanGeneration), S29 (count) plus the committed flow records at S32..S95 - the Plan Store read surface.]"
+    "note": "Peer named by d0 S0 magic check (HASH(\"PowerDispatchPlanStore.v1\")). ic10/power-grid/power_reservation_committer_v1_0.ic10: '# Commit POWER Reservation ownership for one plan. d0 PlanStore,d1 Allocator owner.' [Reads d0 S27 (even sequence: mod r14 2), S28 (exact PlanGeneration), S29 (count) plus the committed flow records at S32..S95 - the Plan Store read surface.]"
    },
    "d1": {
     "kind": "physical-device",
@@ -1407,7 +1407,7 @@
     "providers": [
      "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_source_selector_v1_0.ic10: '# POWER source selector. d0 PowerReservation directory,d1 PlanStore.' [Reads d1 S24 (staged-flow count) and the staged records at S128+8i (S128..S191) to subtract source watts already staged in the same plan - docs/POWER_MANAGEMENT.md: 'It subtracts source watts already staged in the same plan.' tests/test_power_management.py wires the plan device (stack {24:0}) to d1.]"
+    "note": "Peer named by d1 S0 magic check (HASH(\"PowerDispatchPlanStore.v1\")). ic10/power-grid/power_source_selector_v1_0.ic10: '# POWER source selector. d0 PowerReservation directory,d1 PlanStore.' [Reads d1 S24 (staged-flow count) and the staged records at S128+8i (S128..S191) to subtract source watts already staged in the same plan - docs/POWER_MANAGEMENT.md: 'It subtracts source watts already staged in the same plan.' tests/test_power_management.py wires the plan device (stack {24:0}) to d1.]"
    }
   },
   "ic10/power-grid/power_static_link_v1_0.ic10": {
@@ -1485,7 +1485,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_store_v1_0.ic10"
     ],
-    "note": "ic10/power-jobs/power_job_policy_apply_v1_0.ic10: '# Apply guarded POWER policy while exact job remains READY. d0 JobStore,d1 Resolver.' [Purely dynamic reads of job-record cells (get r1 d0 r0) to revalidate exact READY JobId/generation/type/PolicyId - docs/POWER_MANAGEMENT.md: 'revalidates the exact READY JobId/generation/type/PolicyId before writing Endpoint override cells'. The Generic Job Store (magic GenericJobStore.v1) is the only physical job store.]"
+    "note": "Peer named by d0 S0 magic check (HASH(\"GenericJobStore.v1\")). ic10/power-jobs/power_job_policy_apply_v1_0.ic10: '# Apply guarded POWER policy while exact job remains READY. d0 JobStore,d1 Resolver.' [Purely dynamic reads of job-record cells (get r1 d0 r0) to revalidate exact READY JobId/generation/type/PolicyId - docs/POWER_MANAGEMENT.md: 'revalidates the exact READY JobId/generation/type/PolicyId before writing Endpoint override cells'. The Generic Job Store (magic GenericJobStore.v1) is the only physical job store.]"
    },
    "d1": {
     "kind": "script",
@@ -1572,7 +1572,7 @@
     "providers": [
      "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
     ],
-    "note": "docs/PRESSURE_DOMAIN_CONTROLLER.md:196: \"| `d5` | Generic Persistent Config Host | Supplies the accepted PressureDomain configuration. |\" [Corroborated: consumer requires d5 cell 12 == HASH(\"CFG1|ControllerPressureDomain|...\") matching the Host's S12 persistence schema signature.]"
+    "note": "Peer named by d5 S0 magic check (HASH(\"GenericPersistentConfigHost.v1\")). docs/PRESSURE_DOMAIN_CONTROLLER.md:196: \"| `d5` | Generic Persistent Config Host | Supplies the accepted PressureDomain configuration. |\" [Corroborated: consumer requires d5 cell 12 == HASH(\"CFG1|ControllerPressureDomain|...\") matching the Host's S12 persistence schema signature.]"
    }
   },
   "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10": {

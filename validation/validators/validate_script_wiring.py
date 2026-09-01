@@ -11,7 +11,13 @@ import sys
 from framework.json_schema import SchemaValidationError
 from framework.protocol_headers import load_headers
 from framework.script_contracts import build_all
-from framework.script_wiring import check_wiring, inbound_edges, load_wiring, port_index
+from framework.script_wiring import (
+    check_wiring,
+    inbound_edges,
+    load_wiring,
+    port_index,
+    stack_surfaces,
+)
 
 ROOT = _PROJECT_ROOT
 
@@ -30,9 +36,10 @@ except Exception as error:
     raise SystemExit(1)
 
 ports = port_index(contracts)
+surfaces = stack_surfaces(contracts)
 publishers = load_headers(ROOT)[0]
 migrated = set(json.loads((ROOT / "data/stack_envelope_declarations.json").read_text())["migrated"])
-failures = check_wiring(wiring, ports, publishers, migrated)
+failures = check_wiring(wiring, ports, publishers, migrated, surfaces)
 
 if failures:
     print("Script wiring validation: FAIL")
@@ -50,5 +57,27 @@ print(f" - all {total} device ports across {len(wiring['ports'])} programs decla
       f" ({len(script_edges)} script edges, {physical} physical devices)")
 print(f" - every declared provider exists, matches its port's target kind, and publishes"
       " any S0 identity the port checks")
+print(f" - every one of the {len(script_edges)} script edges touches only cells a declared"
+      " provider publishes or accepts")
+# A provider that clears its whole stack publishes every cell, so a read of it can
+# never fail; report how many edges the comparison can actually constrain. Providers
+# are any-of, so one peer offering the whole stack in every direction the port uses
+# absorbs the edge however narrow the others are.
+constrained = 0
+for source, entries in wiring["ports"].items():
+    for name, peer in entries.items():
+        if peer["kind"] != "script":
+            continue
+        port = ports[source][name]
+        offered = [surfaces[item] for item in peer["providers"] if item in surfaces]
+        reads = bool(port["reads"] or port["read_ranges"])
+        writes = bool(port["writes"] or port["write_ranges"])
+        constrained += (reads or writes) and not any(
+            (not reads or len(item["published"]) >= 512)
+            and (not writes or len(item["accepted"]) >= 512)
+            for item in offered
+        )
+print(f" - {constrained} of them can actually fail; on the rest some declared provider"
+      " clears its own stack, so it offers every cell the port could ask for")
 print(f" - {guarded} edges into migrated programs touch no S2..S7 header cell;"
       f" {reviewed} reviewed header reads are declared in the map")

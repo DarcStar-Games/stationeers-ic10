@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
-  "source_sha256": "6291c24006dfd3a16ad47fc30a9eb3a8005f02685642fdc9ffadd953afb51a22",
+  "source_sha256": "a8c97008efc0245d620ba58cbcd7123a5ef9e34a5e1bb46fefbbf41887e102d3",
   "identity": {
     "service_id": "ic10.script.job.requirement.view",
     "implementation_revision": "1.0",
@@ -25,6 +25,7 @@
       },
       "stack": {
         "literal_reads": [
+          0,
           33,
           35,
           68,
@@ -49,23 +50,21 @@
         "dynamic_write_range_source": "none",
         "constraints": [
           {
+            "address": 0,
+            "equals": 499210479
+          },
+          {
             "address": 69,
             "equals": 1
           }
         ]
       },
       "target": {
-        "kind": "stack-interface",
-        "verification": "access-only",
-        "interface_id": "ic10.interface.access.1603336c96f1f913",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.1603336c96f1f913",
-        "provider_resolution": "deployment-supplied",
-        "assumptions": {
-          "properties_read": [],
-          "properties_written": [],
-          "slot_properties_read": [],
-          "slot_properties_written": []
-        }
+        "kind": "stack-protocol",
+        "verification": "literal-header",
+        "protocol_ids": [
+          "ic10.stack.resource-transform-profile-view.v4"
+        ]
       }
     },
     {
@@ -81,6 +80,7 @@
       },
       "stack": {
         "literal_reads": [
+          0,
           12,
           13,
           14,
@@ -95,13 +95,17 @@
         "dynamic_read_ranges": [
           {
             "start": 16,
-            "end": 79
+            "end": 47
           }
         ],
         "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-fingerprinted-exception",
+        "dynamic_read_range_source": "source-derived",
         "dynamic_write_range_source": "none",
         "constraints": [
+          {
+            "address": 0,
+            "equals": -1203210243
+          },
           {
             "address": 15,
             "equals": 1
@@ -109,17 +113,11 @@
         ]
       },
       "target": {
-        "kind": "stack-interface",
-        "verification": "access-only",
-        "interface_id": "ic10.interface.access.7425b1234e3b1d04",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.7425b1234e3b1d04",
-        "provider_resolution": "deployment-supplied",
-        "assumptions": {
-          "properties_read": [],
-          "properties_written": [],
-          "slot_properties_read": [],
-          "slot_properties_written": []
-        }
+        "kind": "stack-protocol",
+        "verification": "literal-header",
+        "protocol_ids": [
+          "ic10.stack.recipe-execution-profile-view.v1"
+        ]
       }
     },
     {
@@ -399,7 +397,36 @@
         "source": "literal-own-stack-header"
       }
     ],
-    "consumes": []
+    "consumes": [
+      {
+        "port": "d0",
+        "accepted": [
+          {
+            "protocol_id": "ic10.stack.resource-transform-profile-view.v4",
+            "header_base": 0,
+            "contract": "ResourceTransformProfileView",
+            "magic": 499210479,
+            "abi": 4,
+            "publication_requirements": []
+          }
+        ],
+        "source": "authoritative-literal-header-check"
+      },
+      {
+        "port": "d1",
+        "accepted": [
+          {
+            "protocol_id": "ic10.stack.recipe-execution-profile-view.v1",
+            "header_base": 0,
+            "contract": "RecipeExecutionProfileView",
+            "magic": -1203210243,
+            "abi": 1,
+            "publication_requirements": []
+          }
+        ],
+        "source": "authoritative-literal-header-check"
+      }
+    ]
   },
   "extraction": {
     "mode": "static-v2",

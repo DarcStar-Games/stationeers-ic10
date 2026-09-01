@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_load_executor_v1_0.ic10",
-  "source_sha256": "734d376a678ae364b4678c5adff0892e0f3dac6ea9597f17aba08570259f6b5d",
+  "source_sha256": "841a519942815f6c0dd7baf0e7ad42de144a45973c78ccccf1c32c233a38baed",
   "identity": {
     "service_id": "ic10.script.power.load.executor",
     "implementation_revision": "1.0",
@@ -25,6 +25,7 @@
       },
       "stack": {
         "literal_reads": [
+          0,
           27,
           28,
           29
@@ -41,20 +42,19 @@
         "dynamic_write_ranges": [],
         "dynamic_read_range_source": "source-fingerprinted-exception",
         "dynamic_write_range_source": "none",
-        "constraints": []
+        "constraints": [
+          {
+            "address": 0,
+            "equals": -788162592
+          }
+        ]
       },
       "target": {
-        "kind": "stack-interface",
-        "verification": "access-only",
-        "interface_id": "ic10.interface.access.cf6174a2203face2",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.cf6174a2203face2",
-        "provider_resolution": "deployment-supplied",
-        "assumptions": {
-          "properties_read": [],
-          "properties_written": [],
-          "slot_properties_read": [],
-          "slot_properties_written": []
-        }
+        "kind": "stack-protocol",
+        "verification": "literal-header",
+        "protocol_ids": [
+          "ic10.stack.power-dispatch-plan-store.v1"
+        ]
       }
     },
     {
@@ -255,7 +255,22 @@
         "source": "literal-own-stack-header"
       }
     ],
-    "consumes": []
+    "consumes": [
+      {
+        "port": "d0",
+        "accepted": [
+          {
+            "protocol_id": "ic10.stack.power-dispatch-plan-store.v1",
+            "header_base": 0,
+            "contract": "PowerDispatchPlanStore",
+            "magic": -788162592,
+            "abi": 1,
+            "publication_requirements": []
+          }
+        ],
+        "source": "authoritative-literal-header-check"
+      }
+    ]
   },
   "extraction": {
     "mode": "static-v2",

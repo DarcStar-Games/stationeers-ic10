@@ -1381,7 +1381,18 @@
   "ic10/controller-config/generic_persistent_config_host_v1_1.ic10": [],
   "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10": [],
   "ic10/controller-discovery/controller_selector_v3_0.ic10": [],
-  "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10": [],
+  "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10": [
+   {
+    "port": "d2",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericPersistentConfigHost",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10": [
    {
     "port": "d0",
@@ -1418,7 +1429,18 @@
     ]
    }
   ],
-  "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10": [],
+  "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10": [
+   {
+    "port": "d3",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericPersistentConfigHost",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10": [
    {
     "port": "d0",
@@ -1511,10 +1533,53 @@
    }
   ],
   "ic10/dependency-planning/item_producer_resolver_v1_0.ic10": [],
-  "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10": [],
-  "ic10/dependency-planning/job_requirement_view_v1_0.ic10": [],
+  "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10": [
+   {
+    "port": "d1",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "ItemResourceReservationSelector",
+      "abi": 1
+     }
+    ]
+   }
+  ],
+  "ic10/dependency-planning/job_requirement_view_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "ResourceTransformProfileView",
+      "abi": 4
+     }
+    ]
+   },
+   {
+    "port": "d1",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "RecipeExecutionProfileView",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10": [],
-  "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10": [],
+  "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10": [
+   {
+    "port": "d1",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "ExistingDependencyPlanController",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10": [],
   "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10": [],
   "ic10/diagnostics/console_registry_v1_1.ic10": [],
@@ -1559,7 +1624,18 @@
    }
   ],
   "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10": [],
-  "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10": [],
+  "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericJobStoreCommandExecutor",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/generic-jobs/generic_job_selector_v3_0.ic10": [
    {
     "port": "d0",
@@ -1578,7 +1654,18 @@
     ]
    }
   ],
-  "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10": [],
+  "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericJobStore",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/generic-jobs/generic_job_store_v1_0.ic10": [],
   "ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10": [],
   "ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10": [],
@@ -1596,7 +1683,18 @@
     ]
    }
   ],
-  "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10": [],
+  "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericSnapshotDirectoryHost",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/item-storage-direct/direct_item_storage_endpoint_v1_0.ic10": [],
   "ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10": [],
   "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10": [],
@@ -1809,27 +1907,147 @@
   "ic10/power-grid/power_dispatch_cycle_v1_0.ic10": [],
   "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10": [],
   "ic10/power-grid/power_dispatch_sweep_v1_0.ic10": [],
-  "ic10/power-grid/power_link_executor_v1_0.ic10": [],
-  "ic10/power-grid/power_link_selector_v1_0.ic10": [],
-  "ic10/power-grid/power_load_executor_v1_0.ic10": [],
-  "ic10/power-grid/power_plan_validator_v1_0.ic10": [],
+  "ic10/power-grid/power_link_executor_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "PowerDispatchPlanStore",
+      "abi": 1
+     }
+    ]
+   }
+  ],
+  "ic10/power-grid/power_link_selector_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericSnapshotDirectoryHost",
+      "abi": 1
+     }
+    ]
+   }
+  ],
+  "ic10/power-grid/power_load_executor_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "PowerDispatchPlanStore",
+      "abi": 1
+     }
+    ]
+   }
+  ],
+  "ic10/power-grid/power_plan_validator_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "PowerDispatchPlanStore",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/power-grid/power_producer_endpoint_v1_0.ic10": [],
   "ic10/power-grid/power_reservation_allocator_v1_0.ic10": [],
-  "ic10/power-grid/power_reservation_committer_v1_0.ic10": [],
+  "ic10/power-grid/power_reservation_committer_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "PowerDispatchPlanStore",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10": [],
   "ic10/power-grid/power_sink_flow_builder_v1_0.ic10": [],
-  "ic10/power-grid/power_sink_selector_v1_0.ic10": [],
-  "ic10/power-grid/power_source_selector_v1_0.ic10": [],
+  "ic10/power-grid/power_sink_selector_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericSnapshotDirectoryHost",
+      "abi": 1
+     }
+    ]
+   }
+  ],
+  "ic10/power-grid/power_source_selector_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericSnapshotDirectoryHost",
+      "abi": 1
+     }
+    ]
+   },
+   {
+    "port": "d1",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "PowerDispatchPlanStore",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/power-grid/power_static_link_v1_0.ic10": [],
   "ic10/power-grid/power_transformer_link_v1_0.ic10": [],
   "ic10/power-jobs/power_job_finalize_v1_0.ic10": [],
   "ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10": [],
-  "ic10/power-jobs/power_job_policy_apply_v1_0.ic10": [],
+  "ic10/power-jobs/power_job_policy_apply_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericJobStore",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/power-jobs/power_job_policy_verify_v1_0.ic10": [],
   "ic10/power-jobs/power_job_prepare_v1_0.ic10": [],
   "ic10/power-jobs/power_job_scheduler_v1_0.ic10": [],
-  "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": [],
-  "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": [],
+  "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericSnapshotDirectoryHost",
+      "abi": 1
+     }
+    ]
+   }
+  ],
+  "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10": [
+   {
+    "port": "d5",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericPersistentConfigHost",
+      "abi": 1
+     }
+    ]
+   }
+  ],
   "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10": [
    {
     "port": "d0",
@@ -1884,6 +2102,16 @@
       "abi": 1
      }
     ]
+   },
+   {
+    "port": "d4",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "GenericPersistentConfigHost",
+      "abi": 1
+     }
+    ]
    }
   ],
   "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10": [
@@ -1912,6 +2140,16 @@
    }
   ],
   "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10": [
+   {
+    "port": "d0",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "PressureGridRouteSelector",
+      "abi": 2
+     }
+    ]
+   },
    {
     "port": "d1",
     "accepted": [

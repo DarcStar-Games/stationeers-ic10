@@ -10,6 +10,8 @@ poke 1 3
 poke 2 0
 Loop:
 yield
+get r0 d0 0
+bne r0 HASH("GenericJobStoreCommandExecutor.v1") Loop
 get r6 db 24
 bgtz r6 Wait
 get r15 db 19

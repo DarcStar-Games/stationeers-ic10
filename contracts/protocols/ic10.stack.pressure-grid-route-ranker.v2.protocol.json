@@ -17,8 +17,8 @@
       "header_base": 0,
       "readable_ranges": [
         {
-          "start": 0,
-          "end": 31
+          "start": 16,
+          "end": 18
         }
       ],
       "writable_ranges": [
@@ -248,11 +248,11 @@
       "dynamic_read_ranges": [
         {
           "start": 16,
-          "end": 31
+          "end": 18
         }
       ],
       "dynamic_write_ranges": [],
-      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_read_range_source": "source-derived",
       "dynamic_write_range_source": "none",
       "constraints": [
         {

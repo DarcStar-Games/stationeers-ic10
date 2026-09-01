@@ -16,7 +16,12 @@
       "source": "ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10",
       "header_base": 0,
       "readable_ranges": [],
-      "writable_ranges": [],
+      "writable_ranges": [
+        {
+          "start": 12,
+          "end": 20
+        }
+      ],
       "fields": [
         {
           "address": 0,
@@ -156,5 +161,42 @@
       }
     }
   ],
-  "consumer_interfaces": []
+  "consumer_interfaces": [
+    {
+      "source": "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d1"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        21,
+        22,
+        23
+      ],
+      "literal_writes": [
+        12,
+        19,
+        20
+      ],
+      "dynamic_read_ranges": [],
+      "dynamic_write_ranges": [
+        {
+          "start": 13,
+          "end": 18
+        }
+      ],
+      "dynamic_read_range_source": "none",
+      "dynamic_write_range_source": "source-derived",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 1736671601
+        }
+      ],
+      "publication_requirements": []
+    }
+  ]
 }

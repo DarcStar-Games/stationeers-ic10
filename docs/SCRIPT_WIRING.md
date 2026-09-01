@@ -18,7 +18,7 @@ a satisfied read of the CapabilityMask. Six such edges survived the Common Stack
 Header migration; two left a program completely non-functional (GitHub issue #42).
 
 A consumer that compares a peer's `S0` against a literal names that peer
-exactly — but only 97 of 264 ports do. The wiring map names the rest.
+exactly — but only 113 of 264 ports do. The wiring map names the rest.
 
 ## What it declares, and what it does not
 
@@ -63,6 +63,10 @@ when:
   `validation/validators/validate_service_identity.py` rejects one that tries;
 - a magic-checking port's `providers` list omits a registered publisher of that
   magic, so the any-of lists cannot drift as new publishers appear;
+- a magic-checking port's `note` never names the identity it pins. A port that
+  checks `S0` has better evidence than the cell-shape correspondence most notes
+  were written against, and a note left alone keeps citing the weaker story for
+  an edge the source now names outright;
 - a `physical-device` declaration sits on a port whose `S0` check names a
   registered script header, or overrides a stack-shaped contract target without
   a `note` saying why the peer is not a script;
@@ -71,7 +75,72 @@ when:
   that provider's `S0..S7` envelope at all: only the owner publishes envelope
   cells;
 - a `header_reads` declaration names a cell outside `S2..S7` or one the port
-  never reaches.
+  never reaches;
+- a port reads a cell no declared provider publishes, or writes a cell no
+  declared provider accepts. See below.
+
+## Every declared range is compared against something
+
+A port's declared dynamic range used to be compared against a provider only
+where `data/script_protocol_headers.json` declared a consumer edge — 29 of the
+57 ports that carry one. Everywhere else the range was carried into `contracts/`,
+into the interface identity, and into the commissioning plan's provider
+obligations without ever meeting a provider (GitHub issue #92). The wiring map
+names a peer for **every** port, so the comparison can be total, and
+`framework/script_wiring.stack_surfaces` derives the two sides of it from the
+contracts:
+
+- a program **publishes** the cells it writes — literally or through its
+  effective dynamic write range — plus any `external_readable_ranges`;
+- a program **accepts** the cells it reads, on the same terms, plus any
+  `external_writable_ranges`.
+
+Effective, not proven: a reviewed range and a fail-closed fallback both stand
+for cells the program may touch, and a consumer comparing against the proven
+subset alone would reject an access the provider is entitled to make. Both
+surfaces are upper bounds for the same reason — neither can tell a mailbox cell
+from a counter the owner writes and reads back — so the check catches a consumer
+reaching outside what its peer touches at all, not a consumer reaching the wrong
+field inside it.
+
+A port passes on the first declared provider that publishes everything it reads
+and accepts everything it writes; a port matching none reports each. Because
+both sides are derived, a padded envelope on one end cannot make the comparison
+vacuous the way two rounded-up declarations could: the pressure-grid route stack
+declared a 16-cell hop window on both sides of a three-cell array, and the
+comparison that was already enforced there passed anyway.
+
+One vacuity does survive, and the validator counts it rather than hiding it: a
+program that runs `clr db` writes the whole stack, so its published surface is
+all 512 cells and no read of it can fail. 27 of the 108 declared providers are
+in that position, and because providers are any-of, one such peer absorbs the
+whole edge however narrow the others are. That leaves 152 of the 208 edges able
+to fail at all. Narrowing the rest means deriving the publish surface from what
+a provider writes *after* initialization rather than from its full dynamic write
+range.
+
+The reviewed envelope stays the escape hatch, for the one thing derivation
+cannot see: a mailbox that one peer posts and a *different* peer consumes, which
+the host itself never touches. `catalog_coordinator_core_v3_0` hosts exactly that
+at `S40..S42` for the migration Planner and Worker. Declaring an envelope is a
+statement that the owner accepts the access — including a request field the
+owner publishes but does not currently consume — so a declaration that exists
+only to silence the check is a review finding, not a fix.
+
+The declared consumer edge still matters, for the other half of the problem: it
+is the *runtime* guarantee, because
+`framework/script_contracts.verify_declared_consumers` refuses a declaration the
+source does not back with a literal `S0` check, so an edge exists only where the
+program itself fails closed against a mis-wired peer. That is why the two are
+kept separate — the static comparison runs off the wiring map for every port,
+while `UNENFORCED_RANGES` in
+`validation/validators/validate_script_contracts.py` holds the ports that declare
+a range and still trust whatever is wired to them. Six remain, each with a
+reviewed reason: the Print Material Resolver's two ports pin a schema and a
+status cell instead, and at 120 lines it has no room for a check; the Multi
+Reservation Stager and Allocator accept either lane's resolver, so no single
+`S0` equality expresses the edge; and the two live-commissioning diagnostics read
+whatever housing they are pointed at by design.
 
 `validation/validators/validate_stack_envelopes.py` keeps its independent,
 source-scan-based guard for magic-checking consumers and reference-register

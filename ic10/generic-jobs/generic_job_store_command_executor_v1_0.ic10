@@ -4,8 +4,6 @@ get r0 db 0
 bne r0 HASH("GenericJobStoreCommandExecutor.v1") Init
 get r0 db 1
 bne r0 1 Init
-get r0 db 31
-bgtz r0 StoreWait
 j Loop
 Init:
 clr db
@@ -14,6 +12,8 @@ poke 1 1
 poke 2 0
 Loop:
 yield
+get r0 d0 0
+bne r0 HASH("GenericJobStore.v1") Loop
 get r0 db 31
 bgtz r0 StoreWait
 get r15 db 23

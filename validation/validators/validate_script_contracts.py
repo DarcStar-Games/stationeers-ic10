@@ -24,6 +24,34 @@ from framework.script_contracts import (
 ROOT = _PROJECT_ROOT
 validation = Validation(ROOT)
 
+# Ports that declare a dynamic range without a declared consumer edge. The range is
+# still compared -- validate_script_wiring.py checks it against the declared peer's
+# published surface -- but nothing at *runtime* stops the port acting on whatever is
+# wired to it. Each entry says what the port pins instead and what blocks the S0 check.
+UNENFORCED_RANGES = {
+    ("ic10/manufacturing/print_material_resolver_v1_0.ic10", "d0"):
+        "pins the Recipe Execution View's S15 ready status. Not blocked, priced: the"
+        " program sits exactly on the 120-line limit, so checking both its ports takes it"
+        " to 124 and needs a reviewed SOFT_LIMIT_EXEMPTIONS entry of its own (issue #90"
+        " argues the comparison belongs somewhere that costs the consumer no lines)",
+    ("ic10/manufacturing/print_material_resolver_v1_0.ic10", "d1"):
+        "pins the directory's S9 DirectorySchemaId and S11 record width, which name the"
+        " schema the records follow rather than the host publishing them; same price as d0",
+    ("ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10", "d0"):
+        "any-of by lane: the port accepts the transform Link Resolver or the print"
+        " Material Resolver, so no single S0 equality expresses the edge. It pins S12==1"
+        " instead, the admission surface both resolvers publish identically",
+    ("ic10/material-transform/multi_material_reservation_stager_v1_0.ic10", "d0"):
+        "any-of by lane, pinning the same shared S12==1 admission surface as the"
+        " paired Allocator",
+    ("ic10/live-commissioning/stack_cell_monitor_v1_0.ic10", "d0"):
+        "diagnostic: reads one selected cell of whatever IC housing it is wired to, and"
+        " rejects non-housings by PrefabHash instead",
+    ("ic10/live-commissioning/stack_header_reader_v1_0.ic10", "d0"):
+        "diagnostic: reports the header of any header-publishing IC, so pinning one"
+        " identity would defeat its purpose",
+}
+
 
 def check_reference(reference: str) -> None:
     path_text, separator, fragment = reference.partition("#")
@@ -235,8 +263,36 @@ for protocol in expected_protocols["protocols"]:
 
 validation.extend(compatibility_errors(actual_contracts))
 
+unenforced = 0
+for contract in actual_contracts:
+    declared_edges = {item["port"] for item in contract["contracts"]["consumes"]}
+    for port in contract["device_ports"]:
+        stack = port["stack"]
+        if not stack["dynamic_read_ranges"] and not stack["dynamic_write_ranges"]:
+            continue
+        if port["port"] in declared_edges:
+            continue
+        unenforced += 1
+        reason = UNENFORCED_RANGES.get((contract["source"], port["port"]))
+        if reason is None:
+            validation.fail(
+                f"{contract['source']} {port['port']}: declares a dynamic range with no declared"
+                " consumer edge and no reviewed entry in UNENFORCED_RANGES -- add the S0 identity"
+                " check and the edge, or record why the port cannot carry one")
+
+stale = sorted(set(UNENFORCED_RANGES) - {
+    (contract["source"], port["port"]) for contract in actual_contracts
+    for port in contract["device_ports"]
+    if (port["stack"]["dynamic_read_ranges"] or port["stack"]["dynamic_write_ranges"])
+    and port["port"] not in {item["port"] for item in contract["contracts"]["consumes"]}
+})
+for source, name in stale:
+    validation.fail(f"{source} {name}: UNENFORCED_RANGES entry no longer applies")
+
 raise SystemExit(validation.finish("Script contract validation",[
     f"{len(actual_contracts)} deployable scripts have schema-valid, source-current JSON contracts",
     f"{len(expected_protocols['protocols'])} stack protocols have canonical generated field/access definitions",
     "wired and network-discovered dependencies resolve header locations, schema constraints, and access direction",
+    f"every port declaring a dynamic range carries a declared consumer edge, except"
+    f" {unenforced} with a reviewed reason",
 ]))
