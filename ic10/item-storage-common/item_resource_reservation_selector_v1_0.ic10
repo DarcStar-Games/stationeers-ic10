@@ -25,7 +25,11 @@ add r0 r12 25
 get r11 d0 r0
 add r0 r12 27
 get r10 d0 r0
-mul r9 r12 192
+get r0 d0 11
+bne r0 3 Bad
+get r9 d0 12
+mul r9 r0 r9
+mul r9 r12 r9
 add r9 r9 32
 move r6 0
 move r7 0

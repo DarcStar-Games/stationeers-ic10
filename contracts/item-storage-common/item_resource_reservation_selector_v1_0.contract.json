@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10",
-  "source_sha256": "d4383c4a42a56794d8e55896536f043b8023c9b1c7acdfd6f8dec4edd065c548",
+  "source_sha256": "942ab511f806e19a7f6633d7b24bc19234c970c3a16769ed45cd4c4868f58936",
   "identity": {
     "service_id": "ic10.script.item.resource.reservation.selector",
     "implementation_revision": "1.0",
@@ -27,6 +27,8 @@
         "literal_reads": [
           0,
           9,
+          11,
+          12,
           24
         ],
         "literal_writes": [],
@@ -53,14 +55,18 @@
           {
             "address": 9,
             "equals": 1963598151
+          },
+          {
+            "address": 11,
+            "equals": 3
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.cb15ff54deb923eb",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.cb15ff54deb923eb",
+        "interface_id": "ic10.interface.access.9f675f9e9362efe2",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.9f675f9e9362efe2",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

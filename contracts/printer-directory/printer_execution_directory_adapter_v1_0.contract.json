@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10",
-  "source_sha256": "b0cf62fadebe8684a149151fad89ccc3cc59174d3d093a87abacdae5b2f3b311",
+  "source_sha256": "536483929fc29248f1a502c06f11e352e980288b80d44cce1b6c3780703b8d3c",
   "identity": {
     "service_id": "ic10.script.printer.execution.directory.adapter",
     "implementation_revision": "1.0",
@@ -28,6 +28,7 @@
           0,
           9,
           11,
+          12,
           24
         ],
         "literal_writes": [],

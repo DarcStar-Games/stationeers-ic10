@@ -2904,6 +2904,107 @@
         }
       ]
     },
+    "ic10.interface.access.06f941df393c54f8": {
+      "stack": {
+        "literal_reads": [
+          0,
+          9,
+          11,
+          12,
+          24
+        ],
+        "literal_writes": [],
+        "dynamic_read": true,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [
+          {
+            "start": 27,
+            "end": 30
+          },
+          {
+            "start": 32,
+            "end": 159
+          }
+        ],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "source-fingerprinted-exception",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 891293726
+          },
+          {
+            "address": 9,
+            "equals": -1926307111
+          },
+          {
+            "address": 11,
+            "equals": 1
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 0,
+            "end": 0
+          },
+          {
+            "start": 9,
+            "end": 9
+          },
+          {
+            "start": 11,
+            "end": 12
+          },
+          {
+            "start": 24,
+            "end": 24
+          },
+          {
+            "start": 27,
+            "end": 30
+          },
+          {
+            "start": 32,
+            "end": 159
+          }
+        ],
+        "stack_writable_ranges": [],
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 891293726
+          },
+          {
+            "address": 9,
+            "equals": -1926307111
+          },
+          {
+            "address": 11,
+            "equals": 1
+          }
+        ],
+        "properties_readable": [],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/power-grid/power_link_selector_v1_0.ic10",
+          "port": "d0"
+        }
+      ]
+    },
     "ic10.interface.access.0c14163b2b57758f": {
       "stack": {
         "literal_reads": [
@@ -4236,101 +4337,6 @@
         }
       ]
     },
-    "ic10.interface.access.23e6e26af1f3f8a0": {
-      "stack": {
-        "literal_reads": [
-          0,
-          9,
-          24
-        ],
-        "literal_writes": [],
-        "dynamic_read": true,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [
-          {
-            "start": 27,
-            "end": 30
-          },
-          {
-            "start": 32,
-            "end": 415
-          }
-        ],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-fingerprinted-exception",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 0,
-            "equals": 891293726
-          },
-          {
-            "address": 9,
-            "equals": 730796175
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 0,
-            "end": 0
-          },
-          {
-            "start": 9,
-            "end": 9
-          },
-          {
-            "start": 24,
-            "end": 24
-          },
-          {
-            "start": 27,
-            "end": 30
-          },
-          {
-            "start": 32,
-            "end": 415
-          }
-        ],
-        "stack_writable_ranges": [],
-        "constraints": [
-          {
-            "address": 0,
-            "equals": 891293726
-          },
-          {
-            "address": 9,
-            "equals": 730796175
-          }
-        ],
-        "properties_readable": [],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/power-grid/power_sink_selector_v1_0.ic10",
-          "port": "d0"
-        },
-        {
-          "source": "ic10/power-grid/power_source_selector_v1_0.ic10",
-          "port": "d0"
-        },
-        {
-          "source": "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10",
-          "port": "d0"
-        }
-      ]
-    },
     "ic10.interface.access.24c921d6af1797fe": {
       "stack": {
         "literal_reads": [
@@ -4626,106 +4632,6 @@
         {
           "source": "ic10/manufacturing/print_job_driver_v2_0.ic10",
           "port": "d1"
-        }
-      ]
-    },
-    "ic10.interface.access.2d115830a49d6845": {
-      "stack": {
-        "literal_reads": [
-          0,
-          9,
-          11,
-          24
-        ],
-        "literal_writes": [],
-        "dynamic_read": true,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [
-          {
-            "start": 27,
-            "end": 30
-          },
-          {
-            "start": 32,
-            "end": 159
-          }
-        ],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-fingerprinted-exception",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 0,
-            "equals": 891293726
-          },
-          {
-            "address": 9,
-            "equals": -1926307111
-          },
-          {
-            "address": 11,
-            "equals": 1
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 0,
-            "end": 0
-          },
-          {
-            "start": 9,
-            "end": 9
-          },
-          {
-            "start": 11,
-            "end": 11
-          },
-          {
-            "start": 24,
-            "end": 24
-          },
-          {
-            "start": 27,
-            "end": 30
-          },
-          {
-            "start": 32,
-            "end": 159
-          }
-        ],
-        "stack_writable_ranges": [],
-        "constraints": [
-          {
-            "address": 0,
-            "equals": 891293726
-          },
-          {
-            "address": 9,
-            "equals": -1926307111
-          },
-          {
-            "address": 11,
-            "equals": 1
-          }
-        ],
-        "properties_readable": [],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/power-grid/power_link_selector_v1_0.ic10",
-          "port": "d0"
         }
       ]
     },
@@ -6157,78 +6063,6 @@
         }
       ]
     },
-    "ic10.interface.access.63994959e0beee39": {
-      "stack": {
-        "literal_reads": [
-          9,
-          24,
-          25,
-          26,
-          27,
-          28,
-          29,
-          30
-        ],
-        "literal_writes": [],
-        "dynamic_read": true,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [
-          {
-            "start": 32,
-            "end": 159
-          }
-        ],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-fingerprinted-exception",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 9,
-            "equals": -1926307111
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 9,
-            "end": 9
-          },
-          {
-            "start": 24,
-            "end": 30
-          },
-          {
-            "start": 32,
-            "end": 159
-          }
-        ],
-        "stack_writable_ranges": [],
-        "constraints": [
-          {
-            "address": 9,
-            "equals": -1926307111
-          }
-        ],
-        "properties_readable": [],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/manufacturing/print_material_resolver_v1_0.ic10",
-          "port": "d1"
-        }
-      ]
-    },
     "ic10.interface.access.66385da53b3514da": {
       "stack": {
         "literal_reads": [
@@ -6294,6 +6128,115 @@
         {
           "source": "ic10/dependency-planning/dependency_child_creator_v2_0.ic10",
           "port": "d1"
+        }
+      ]
+    },
+    "ic10.interface.access.684d99d65315163c": {
+      "stack": {
+        "literal_reads": [
+          0,
+          9,
+          11,
+          12,
+          24
+        ],
+        "literal_writes": [],
+        "dynamic_read": true,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [
+          {
+            "start": 27,
+            "end": 30
+          },
+          {
+            "start": 32,
+            "end": 415
+          }
+        ],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "source-fingerprinted-exception",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 891293726
+          },
+          {
+            "address": 9,
+            "equals": 730796175
+          },
+          {
+            "address": 11,
+            "equals": 3
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 0,
+            "end": 0
+          },
+          {
+            "start": 9,
+            "end": 9
+          },
+          {
+            "start": 11,
+            "end": 12
+          },
+          {
+            "start": 24,
+            "end": 24
+          },
+          {
+            "start": 27,
+            "end": 30
+          },
+          {
+            "start": 32,
+            "end": 415
+          }
+        ],
+        "stack_writable_ranges": [],
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 891293726
+          },
+          {
+            "address": 9,
+            "equals": 730796175
+          },
+          {
+            "address": 11,
+            "equals": 3
+          }
+        ],
+        "properties_readable": [],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/power-grid/power_sink_selector_v1_0.ic10",
+          "port": "d0"
+        },
+        {
+          "source": "ic10/power-grid/power_source_selector_v1_0.ic10",
+          "port": "d0"
+        },
+        {
+          "source": "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10",
+          "port": "d0"
         }
       ]
     },
@@ -8382,6 +8325,103 @@
         }
       ]
     },
+    "ic10.interface.access.9f675f9e9362efe2": {
+      "stack": {
+        "literal_reads": [
+          0,
+          9,
+          11,
+          12,
+          24
+        ],
+        "literal_writes": [],
+        "dynamic_read": true,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [
+          {
+            "start": 25,
+            "end": 30
+          },
+          {
+            "start": 32,
+            "end": 415
+          }
+        ],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "source-fingerprinted-exception",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 891293726
+          },
+          {
+            "address": 9,
+            "equals": 1963598151
+          },
+          {
+            "address": 11,
+            "equals": 3
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 0,
+            "end": 0
+          },
+          {
+            "start": 9,
+            "end": 9
+          },
+          {
+            "start": 11,
+            "end": 12
+          },
+          {
+            "start": 24,
+            "end": 30
+          },
+          {
+            "start": 32,
+            "end": 415
+          }
+        ],
+        "stack_writable_ranges": [],
+        "constraints": [
+          {
+            "address": 0,
+            "equals": 891293726
+          },
+          {
+            "address": 9,
+            "equals": 1963598151
+          },
+          {
+            "address": 11,
+            "equals": 3
+          }
+        ],
+        "properties_readable": [],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10",
+          "port": "d0"
+        }
+      ]
+    },
     "ic10.interface.access.a1319f89e5941eeb": {
       "stack": {
         "literal_reads": [
@@ -8692,6 +8732,88 @@
       "consumers": [
         {
           "source": "ic10/material-grid/material_transfer_executor_v1_0.ic10",
+          "port": "d1"
+        }
+      ]
+    },
+    "ic10.interface.access.aec585e95d55f5dd": {
+      "stack": {
+        "literal_reads": [
+          9,
+          11,
+          12,
+          24,
+          25,
+          26
+        ],
+        "literal_writes": [],
+        "dynamic_read": true,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [
+          {
+            "start": 32,
+            "end": 159
+          }
+        ],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "source-fingerprinted-exception",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 9,
+            "equals": -1926307111
+          },
+          {
+            "address": 11,
+            "equals": 1
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 9,
+            "end": 9
+          },
+          {
+            "start": 11,
+            "end": 12
+          },
+          {
+            "start": 24,
+            "end": 26
+          },
+          {
+            "start": 32,
+            "end": 159
+          }
+        ],
+        "stack_writable_ranges": [],
+        "constraints": [
+          {
+            "address": 9,
+            "equals": -1926307111
+          },
+          {
+            "address": 11,
+            "equals": 1
+          }
+        ],
+        "properties_readable": [],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/manufacturing/print_material_resolver_v1_0.ic10",
           "port": "d1"
         }
       ]
@@ -9451,89 +9573,6 @@
         {
           "source": "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10",
           "port": "d2"
-        }
-      ]
-    },
-    "ic10.interface.access.cb15ff54deb923eb": {
-      "stack": {
-        "literal_reads": [
-          0,
-          9,
-          24
-        ],
-        "literal_writes": [],
-        "dynamic_read": true,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [
-          {
-            "start": 25,
-            "end": 30
-          },
-          {
-            "start": 32,
-            "end": 415
-          }
-        ],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-fingerprinted-exception",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 0,
-            "equals": 891293726
-          },
-          {
-            "address": 9,
-            "equals": 1963598151
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 0,
-            "end": 0
-          },
-          {
-            "start": 9,
-            "end": 9
-          },
-          {
-            "start": 24,
-            "end": 30
-          },
-          {
-            "start": 32,
-            "end": 415
-          }
-        ],
-        "stack_writable_ranges": [],
-        "constraints": [
-          {
-            "address": 0,
-            "equals": 891293726
-          },
-          {
-            "address": 9,
-            "equals": 1963598151
-          }
-        ],
-        "properties_readable": [],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10",
-          "port": "d0"
         }
       ]
     },

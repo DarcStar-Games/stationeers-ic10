@@ -50,6 +50,8 @@ lv.stack.update({12:1201,13:1202,14:80,15:1});lv.run(3);ck(lv.stack.get(17)==1 a
 ldirb=Device(1402,stack={0:'HASH:GenericSnapshotDirectoryHost.v1',1:1,24:1,28:1,30:0,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:64,96:1401},props={'ReferenceId':1402})
 lvb=IC10((R/'ic10/power-grid/power_link_selector_v1_0.ic10').read_text(),{'d0':ldirb,'x0':link},self_ref=231)
 lvb.stack.update({12:1201,13:1202,14:80,15:1});lvb.run(3);ck(lvb.stack.get(17)==1 and lvb.stack.get(8)==1401,'link selector did not find the record in directory bank 1')
+ldirb.stack[11]=2;lvb.stack[15]=2;lvb.run(3)
+ck(lvb.stack.get(17)==-1,'link selector did not fail closed on incompatible record width')
 # Live coherent PlanStore BEGIN/ADD/COMMIT.
 ps=IC10((R/'ic10/power-grid/power_dispatch_plan_store_v1_0.ic10').read_text(),{},self_ref=227);ps.run(1)
 ps.stack.update({12:1,10:1});ps.run(2)
@@ -129,7 +131,7 @@ ck(lc.stack.get(8)==1 and lc.stack.get(9)==8,'lifecycle client did not return ex
 # exactly one live Reservation through the relocated request/reply cells S8..S15.
 res_a=Device(2500,stack={0:'HASH:ResourceReservation.v1',1:1,32:2600,33:4,12:9,17:0,28:2,30:501,31:0},props={'ReferenceId':2500})
 res_b=Device(2501,stack={0:'HASH:ResourceReservation.v1',1:1,32:2601,33:4,12:4,17:0,28:3,30:502,31:0},props={'ReferenceId':2501})
-pdir2=Device(2400,stack={0:'HASH:GenericSnapshotDirectoryHost.v1',24:0,27:2,29:0,9:'HASH:DirectorySchema.PowerReservation.v1',32:1000001,33:501,34:2500,35:2000002,36:502,37:2501},props={'ReferenceId':2400})
+pdir2=Device(2400,stack={0:'HASH:GenericSnapshotDirectoryHost.v1',24:0,27:2,29:0,9:'HASH:DirectorySchema.PowerReservation.v1',11:3,12:64,32:1000001,33:501,34:2500,35:2000002,36:502,37:2501},props={'ReferenceId':2400})
 tr=IC10((R/'ic10/power-jobs/power_policy_target_resolver_v1_0.ic10').read_text(),{'d0':pdir2,'x0':res_a,'x1':res_b},self_ref=2410)
 tr.stack.update({10:501,11:1});tr.run(2)
 ck(tr.stack.get(13)==1 and tr.stack.get(14)==2500 and tr.stack.get(15)==2600 and tr.stack.get(8)==2 and tr.stack.get(9)==9 and tr.stack.get(12)==1,'policy target resolver did not bind the unique POWER reservation')

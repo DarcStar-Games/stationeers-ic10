@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_source_selector_v1_0.ic10",
-  "source_sha256": "48048cdc739dc6daca73da2af4310f43240492a53097e48af38fd5cef3127292",
+  "source_sha256": "9216b9b85d82eb29236e055f35e9444addc601aae649ebd3f4a7a15810c5a9d7",
   "identity": {
     "service_id": "ic10.script.power.source.selector",
     "implementation_revision": "1.0",
@@ -27,6 +27,8 @@
         "literal_reads": [
           0,
           9,
+          11,
+          12,
           24
         ],
         "literal_writes": [],
@@ -53,14 +55,18 @@
           {
             "address": 9,
             "equals": 730796175
+          },
+          {
+            "address": 11,
+            "equals": 3
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.23e6e26af1f3f8a0",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.23e6e26af1f3f8a0",
+        "interface_id": "ic10.interface.access.684d99d65315163c",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.684d99d65315163c",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

@@ -29,9 +29,21 @@ beq r10 r14 Release
 get r2 d0 10
 get r3 d0 11
 get r0 d0 3
+get r1 d1 9
+beqz r1 Configure
+bne r1 r0 Release
+get r1 d1 11
+beqz r1 Configure
+bne r1 r2 Release
+get r1 d1 12
+beqz r1 Configure
+bne r1 r3 Release
+j Begin
+Configure:
 put d1 9 r0
 put d1 11 r2
 put d1 12 r3
+Begin:
 move r6 1
 jal Send
 get r0 d0 14

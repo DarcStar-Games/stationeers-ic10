@@ -37,7 +37,11 @@ round r14 r14
 round r15 r15
 max r14 r14 1
 max r15 r15 1
-mul r8 r10 128
+get r0 directory 11
+bne r0 2 NoDirectory
+get r8 directory 12
+mul r8 r0 r8
+mul r8 r10 r8
 add r8 r8 32
 move r2 -1
 move r3 0

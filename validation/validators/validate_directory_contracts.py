@@ -4,6 +4,7 @@ import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from framework.validation import Validation
+from framework.scan_coverage import require_nonempty,require_nonempty_glob
 from pathlib import Path
 import json,re,sys
 R=_PROJECT_ROOT;result=Validation(R)
@@ -21,7 +22,7 @@ if sh.get('boot_marker_slot')!=31 or 'generic_magic_slot' in sh: fail('snapshot 
 if rh.get('publication_sequence_slot')!=23 or 'generic_magic_slot' in rh: fail('registry publication metadata mismatch')
 need('ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','poke 0 HASH("GenericSnapshotDirectoryHost.v1")','poke 1 1','bgt r2 3 Error','bgt r3 64 Error','poke 22 1','poke 24 r6','poke 15 r15','Shift:\nbge r6 r3 Full','Insert:\nbge r6 r3 Full')
 need('ic10/directory-core/generic_registry_directory_host_v2_0.ic10','poke 0 HASH("GenericRegistryDirectoryHost.v3")','poke 1 3','put d0 16 r11','get r0 d0 17','bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") SourceBad','bne r0 6 SourceBad','get r10 db 23','poke 23 r10','put d0 16 0')
-need('ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10','bne r0 HASH("DirectoryAdapter.v3") Loop','put d0 16 r11','get r0 d0 17','get r15 d0 13','get r10 d0 7','bne r0 r15 Release','bne r0 r10 Release','put d0 16 0')
+need('ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10','bne r0 HASH("DirectoryAdapter.v3") Loop','put d0 16 r11','get r0 d0 17','get r15 d0 13','get r10 d0 7','bne r0 r15 Release','bne r0 r10 Release','get r1 d1 9\nbeqz r1 Configure\nbne r1 r0 Release','get r1 d1 11\nbeqz r1 Configure\nbne r1 r2 Release','get r1 d1 12\nbeqz r1 Configure\nbne r1 r3 Release','Configure:\nput d1 9 r0\nput d1 11 r2\nput d1 12 r3\nBegin:','put d0 16 0')
 expected={
  'DirectorySchema.Controller':('ic10/controller-discovery/controller_directory_adapter_v4_0.ic10',1,2),
  'DirectorySchema.PressureGridLink':('ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10',1,3),
@@ -51,6 +52,62 @@ for x in D.get('schemas',[]):
     else: fail('unexpected registry schema '+sid)
 if seen!=set(expected)|{'DirectorySchema.CatalogStoreNode'}: fail('directory schema set mismatch: '+repr(seen))
 
+# Snapshot records begin at S32 plus active-bank * (published width * capacity).
+# Consumers must derive that stride from the Host instead of baking in today's schemas.
+snapshot_stride_consumers={
+ 'ic10/controller-discovery/controller_selector_v3_0.ic10':'get r0 directory 11\nbne r0 2 NoDirectory\nget r8 directory 12\nmul r8 r0 r8\nmul r8 r10 r8\nadd r8 r8 32',
+ 'ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10':'get r0 d0 11\nbne r0 3 Bad\nget r9 d0 12\nmul r9 r0 r9\nmul r9 r12 r9\nadd r9 r9 32',
+ 'ic10/material-transform/material_transform_link_resolver_v1_0.ic10':'get r0 d2 11\nbne r0 1 Bad\nget r9 d2 12\nmul r9 r0 r9\nmul r9 r12 r9\nadd r9 r9 32',
+ 'ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10':'getd r0 r9 11\nbne r0 3 Bad\ngetd r13 r9 12\nmul r13 r0 r13\nmul r13 r8 r13\nadd r13 r13 32',
+ 'ic10/manufacturing/print_material_resolver_v1_0.ic10':'get r13 d1 11\nbne r13 1 Bad\nget r1 d1 12\nmul r13 r13 r1\nmul r13 r13 r0\nadd r13 r13 32',
+ 'ic10/power-grid/power_link_selector_v1_0.ic10':'get r0 d0 11\nbne r0 1 Bad\nget r10 d0 12\nmul r10 r0 r10\nmul r10 r8 r10\nadd r10 r10 32',
+ 'ic10/power-grid/power_sink_selector_v1_0.ic10':'get r0 d0 11\nbne r0 3 Bad\nget r8 d0 12\nmul r8 r0 r8\nmul r8 r5 r8\nadd r8 r8 32',
+ 'ic10/power-grid/power_source_selector_v1_0.ic10':'get r0 d0 11\nbne r0 3 Bad\nget r8 d0 12\nmul r8 r0 r8\nmul r8 r5 r8\nadd r8 r8 32',
+ 'ic10/power-jobs/power_policy_target_resolver_v1_0.ic10':'get r0 d0 11\nbne r0 3 Bad\nget r10 d0 12\nmul r10 r0 r10\nmul r10 r8 r10\nadd r10 r10 32',
+ 'ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10':'get r0 d0 11\nbne r0 2 BadDirectory\nget sp d0 12\nmul sp r0 sp\nmul sp r6 sp\nadd sp sp 32',
+ 'ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10':'get r0 d1 11\nbne r0 2 Publish\nget sp d1 12\nmul sp r0 sp\nmul sp r6 sp\nadd sp sp 32',
+ 'ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10':'get sp d0 11\nbne sp 3 Bad\nget r10 d0 12\nmul sp sp r10\nmul sp r4 sp\nadd sp sp 32',
+ 'ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10':'get r0 d0 11\nbne r0 3 Fail\nget sp d0 12\nmul sp r0 sp\nmul sp r5 sp\nadd sp sp 32',
+ 'ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10':'get r0 d0 11\nbne r0 3 Loop\nget r13 d0 12\nmul r13 r0 r13\nmul r13 r11 r13\nadd r13 r13 32',
+}
+snapshot_width_checks={
+ 'ic10/controller-discovery/controller_selector_v3_0.ic10':'get r0 directory 11\nbne r0 2 NoDirectory',
+ 'ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10':'get r0 d0 11\nbne r0 3 Bad',
+ 'ic10/material-transform/material_transform_link_resolver_v1_0.ic10':'get r0 d2 11\nbne r0 1 Bad',
+ 'ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10':'getd r0 r9 11\nbne r0 3 Bad',
+ 'ic10/manufacturing/print_material_resolver_v1_0.ic10':'get r13 d1 11\nbne r13 1 Bad',
+ 'ic10/power-grid/power_link_selector_v1_0.ic10':'get r0 d0 11\nbne r0 1 Bad',
+ 'ic10/power-grid/power_sink_selector_v1_0.ic10':'get r0 d0 11\nbne r0 3 Bad',
+ 'ic10/power-grid/power_source_selector_v1_0.ic10':'get r0 d0 11\nbne r0 3 Bad',
+ 'ic10/power-jobs/power_policy_target_resolver_v1_0.ic10':'get r0 d0 11\nbne r0 3 Bad',
+ 'ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10':'get r0 d0 11\nbne r0 2 BadDirectory',
+ 'ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10':'get r0 d1 11\nbne r0 2 Publish',
+ 'ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10':'get sp d0 11\nbne sp 3 Bad',
+ 'ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10':'get r0 d0 11\nbne r0 3 Fail',
+ 'ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10':'get r0 d0 11\nbne r0 3 Loop',
+}
+snapshot_host='ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10'
+wiring=json.loads((R/'data/script_wiring.json').read_text())['ports']
+wired={f for f,ports in wiring.items() for port in ports.values()
+       if snapshot_host in port.get('providers',[])}
+production_sources=require_nonempty_glob(R,'ic10/*/*.ic10')
+identified=set(require_nonempty(
+ (p.relative_to(R).as_posix() for p in production_sources
+  if 'HASH("GenericSnapshotDirectoryHost.v1")' in p.read_text()),
+ 'Snapshot Directory identity consumers'))
+metadata_only={snapshot_host,'ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10',
+               'ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10'}
+discovered=(wired|identified)-metadata_only
+if discovered!=set(snapshot_stride_consumers):
+    fail('Snapshot Directory record-consumer inventory mismatch: '+repr(sorted(discovered^set(snapshot_stride_consumers))))
+for f,derivation in snapshot_stride_consumers.items():
+    need(f,derivation,snapshot_width_checks[f])
+    source=(R/f).read_text()
+    if re.search(r'(?m)^mul\s+\S+\s+\S+\s+(?:64|128|192)(?:\s|$)',source):
+        fail(f+': hard-coded Snapshot Directory bank stride remains')
+    if re.search(r'(?m)^move\s+\S+\s+(?:96|160|224)(?:\s|$)',source):
+        fail(f+': hard-coded Snapshot Directory bank base remains')
+
 # Printer v2 exposes one common ProcessorSpec shared with TransformLane selection.
 ps=next((x for x in D['schemas'] if x['schema_id']=='DirectorySchema.Printer'),None)
 if not ps or ps.get('fields')!=['ReferenceId','FamilyHash','ProcessorSpec']: fail('Printer v2 record geometry mismatch')
@@ -78,8 +135,8 @@ for f,toks in {
  'ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10':['add sp r4 29','bgtz r0 Bad','get r0 d0 2','bne r0 r4 Bad'],
  'ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10':['add sp r5 29','bgtz r0 Reject'],
  'ic10/material-transform/material_transform_link_resolver_v1_0.ic10':['add r0 r12 29','bgtz r0 Bad','get r0 d2 2','bne r0 r12 Loop'],
- 'ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10':['get r9 db 16','getd r12 r9 29','getd r12 r9 30','bnez r12 Bad','getd r0 r9 24','bne r0 r8 Loop'],
- 'ic10/manufacturing/print_material_resolver_v1_0.ic10':['get r12 d1 29','get r12 d1 30','bnez r12 Bad'],
+ 'ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10':['get r9 db 16','add r0 r8 25','getd r12 r9 r0','bnez r12 Bad','getd r0 r9 24','bne r0 r8 Loop'],
+ 'ic10/manufacturing/print_material_resolver_v1_0.ic10':['add r1 r0 25','get r12 d1 r1','bnez r12 Bad'],
 }.items(): need(f,*toks)
 # Registry readers that can expose state or trigger side effects fence S23 and require the
 # Registry Host identity, which carries ABI3 in its hashed name.
@@ -94,13 +151,15 @@ for f,toks in {
 }.items(): need(f,*toks)
 # Domain directory magic numbers must not survive in current IC10 code. Glob under
 # ic10/, where the programs live -- anchored at the root this matched nothing.
-sources={p:p.read_text() for p in sorted(R.glob('ic10/*/*.ic10'))}
+sources={p:p.read_text() for p in production_sources}
 if not sources: fail('no production IC10 sources found; the legacy-magic sweep is unchecked')
 for legacy in ('14142135','31415939','14142138','14142139','31415973'):
     for p,text in sources.items():
         if legacy in text: fail(f'legacy directory magic {legacy} remains in {p.relative_to(R).as_posix()}')
 raise SystemExit(result.finish('Generic Directory contracts',[
  'Adapter ABI3 feeds Controller/Pressure/Resource/Reservation/Printer/TransformLane/PrinterExecution snapshots',
+ 'Snapshot Directory consumers derive each bank stride from the Host width and capacity',
+ 'Snapshot Bridge treats nonzero Host schema geometry as immutable until reinitialization',
  'Printer v2 and TransformLane v1 share ProcessorSpec capability/power/busy/error semantics',
  'PrinterExecution v1 preserves exact PrinterRef and overlays locally verified output capacity',
  'transaction-critical snapshot consumers fail closed on overflow and revalidate active bank/generation']))

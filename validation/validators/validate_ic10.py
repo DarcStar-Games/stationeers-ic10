@@ -17,6 +17,8 @@ LIMIT_BYTES = 4096
 MAINTAINABILITY_LINES = 120
 # Reviewed spends of the deliberate 120..128 margin. The hard limit still applies.
 SOFT_LIMIT_EXEMPTIONS = {
+    "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10":
+        "three-hop path search with fail-closed dynamic Snapshot Directory geometry",
     "ic10/manufacturing/print_candidate_executor_v2_0.ic10":
         "four-phase print launch fencing four devices; publishes the common header with its"
         " request mailbox relocated above it",

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10",
-  "source_sha256": "5cf1e0332bf596f7ab3eaf3b03cc3f74f1587bff580da34bd5cd2c141b0d78ee",
+  "source_sha256": "1cd925d9eadffb3983b7a36c3a97e43e67a57affa90c3732275952a940f937b7",
   "identity": {
     "service_id": "ic10.script.power.policy.target.resolver",
     "implementation_revision": "1.0",
@@ -27,6 +27,8 @@
         "literal_reads": [
           0,
           9,
+          11,
+          12,
           24
         ],
         "literal_writes": [],
@@ -53,14 +55,18 @@
           {
             "address": 9,
             "equals": 730796175
+          },
+          {
+            "address": 11,
+            "equals": 3
           }
         ]
       },
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.23e6e26af1f3f8a0",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.23e6e26af1f3f8a0",
+        "interface_id": "ic10.interface.access.684d99d65315163c",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.684d99d65315163c",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

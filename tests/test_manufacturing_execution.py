@@ -12,8 +12,8 @@ def ck(x,m):
 def src(n):return (R/n).read_text()
 
 # Generic candidate selection is schema-qualified and works for both processor families.
-printer_dir=Device(100,stack={0:'HASH:GenericSnapshotDirectoryHost.v1',1:1,24:0,25:5,27:2,29:0,9:'HASH:DirectorySchema.Printer.v2',11:3,12:64,
- 32:501,33:'HASH:Printer.Autolathe',34:257,35:502,36:'HASH:Printer.Autolathe',37:258},props={'ReferenceId':100})
+printer_dir=Device(100,stack={0:'HASH:GenericSnapshotDirectoryHost.v1',1:1,24:1,26:5,28:2,30:0,9:'HASH:DirectorySchema.Printer.v2',11:3,12:8,
+ 56:501,57:'HASH:Printer.Autolathe',58:257,59:502,60:'HASH:Printer.Autolathe',61:258},props={'ReferenceId':100})
 sel=IC10(src('ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10'),{'d0':printer_dir});sel.run(1)
 sel.stack.update({17:'HASH:DirectorySchema.Printer.v2',18:'HASH:Printer.Autolathe',19:2,20:2,21:0,22:1,15:2,16:100});sel.run(1)
 ck(sel.stack.get(9)==1 and sel.stack.get(10)==502 and sel.stack.get(13)==2,'printer tier candidate selection mismatch')
@@ -31,7 +31,7 @@ sr1=Device(211,stack={36:100},props={'ReferenceId':211});dr1=Device(212,stack={3
 sr2=Device(221,stack={36:100},props={'ReferenceId':221});dr2=Device(222,stack={37:100},props={'ReferenceId':222})
 l1=Device(213,stack={28:211,29:212,31:-1301215609,9:1,22:900,27:'HASH:Iron'},props={'ReferenceId':213})
 l2=Device(223,stack={28:221,29:222,31:-404336834,9:1,22:900,27:'HASH:Copper'},props={'ReferenceId':223})
-ld=Device(230,stack={0:'HASH:GenericSnapshotDirectoryHost.v1',1:1,24:0,25:4,27:2,29:0,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:64,13:0,32:213,33:223},props={'ReferenceId':230})
+ld=Device(230,stack={0:'HASH:GenericSnapshotDirectoryHost.v1',1:1,24:1,26:4,28:2,30:0,9:'HASH:DirectorySchema.ResourceLink.v1',11:1,12:8,13:0,40:213,41:223},props={'ReferenceId':230})
 rv=IC10(src('ic10/manufacturing/print_material_resolver_v1_0.ic10'),{'d0':recipe,'d1':ld,'l1':l1,'l2':l2,'sr1':sr1,'dr1':dr1,'sr2':sr2,'dr2':dr2});rv.run(1)
 rv.stack.update({16:900,17:2,18:1});rv.run(1)
 ck(rv.stack.get(12)==1 and rv.stack.get(9)==2 and rv.stack.get(8)==900,'print material resolver rejected reachable reagents')

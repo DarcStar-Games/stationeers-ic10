@@ -14,7 +14,11 @@ add sp r6 25
 get r0 d0 sp
 bne r0 r7 Start
 bge r9 r8 Commit
-mul sp r6 128
+get r0 d0 11
+bne r0 2 BadDirectory
+get sp d0 12
+mul sp r0 sp
+mul sp r6 sp
 add sp sp 32
 mul r0 r9 2
 add sp sp r0

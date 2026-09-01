@@ -205,6 +205,9 @@
       "header_base": 0,
       "literal_reads": [
         0,
+        9,
+        11,
+        12,
         14,
         15,
         20,
@@ -257,6 +260,8 @@
       "literal_reads": [
         0,
         9,
+        11,
+        12,
         24
       ],
       "literal_writes": [],
@@ -283,6 +288,11 @@
           "address": 9,
           "operator": "equals",
           "value": -1926307111
+        },
+        {
+          "address": 11,
+          "operator": "equals",
+          "value": 1
         }
       ],
       "publication_requirements": []
@@ -297,6 +307,8 @@
       "literal_reads": [
         0,
         9,
+        11,
+        12,
         24
       ],
       "literal_writes": [],
@@ -323,6 +335,11 @@
           "address": 9,
           "operator": "equals",
           "value": 1910152468
+        },
+        {
+          "address": 11,
+          "operator": "equals",
+          "value": 2
         }
       ],
       "publication_requirements": []
@@ -338,6 +355,7 @@
         0,
         9,
         11,
+        12,
         24
       ],
       "literal_writes": [],
@@ -383,6 +401,8 @@
       "literal_reads": [
         0,
         9,
+        11,
+        12,
         24
       ],
       "literal_writes": [],
@@ -409,6 +429,11 @@
           "address": 9,
           "operator": "equals",
           "value": -821773385
+        },
+        {
+          "address": 11,
+          "operator": "equals",
+          "value": 3
         }
       ],
       "publication_requirements": []
@@ -466,6 +491,7 @@
         0,
         9,
         11,
+        12,
         24
       ],
       "literal_writes": [],
@@ -512,6 +538,7 @@
         0,
         9,
         11,
+        12,
         24
       ],
       "literal_writes": [],
