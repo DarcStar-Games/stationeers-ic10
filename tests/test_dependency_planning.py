@@ -93,6 +93,14 @@ ck(int(store.stack.get(23,0))==before,'same-stack Gateway replay duplicated comm
 gw2.stack.update({53:parent,54:pgen-1,55:0,56:1,57:1,58:601,59:1,60:1,61:1,62:21,63:-1,48:11})
 run_round_robin([gw2,exe,store],30)
 ck(gw2.stack.get(49)==11 and gw2.stack.get(50)!=1,'stale parent generation created a child')
+# The Gateway is the sole mutation path, so it must name its Executor rather than
+# post commands to whatever occupies d0.
+before=int(store.stack.get(23,0))
+stranger=Device(103,{0:'HASH:GenericJobStore.v1'},{'ReferenceId':103})
+gw3=IC10(src('ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10'),{'d0':stranger},self_ref=104);gw3.run(1)
+gw3.stack.update({53:parent,54:pgen,55:0,56:1,57:1,58:602,59:1,60:1,61:2,62:21,63:-1,48:12})
+run_round_robin([gw3,exe,store],20)
+ck(sorted(stranger.stack)==[0] and int(store.stack.get(23,0))==before,'Gateway posted a command to a device that is not its Executor')
 
 if fails:
  print('Dependency planning: FAIL');[print(' -',x) for x in fails];sys.exit(1)
@@ -101,3 +109,4 @@ print(' - future-output sharing accounts for aggregate claims and never reuses c
 print(' - bounded depth/cycle and completed-child inventory liveness semantics are covered')
 print(' - Plan Store 8-cell commit marker survives interrupted odd-sequence recovery')
 print(' - four-lane Gateway + sole Store executor atomically guards parent generation and allocates child slots')
+print(' - the Gateway writes nothing at all to a d0 that is not its Store Command Executor')

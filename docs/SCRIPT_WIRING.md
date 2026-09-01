@@ -18,7 +18,7 @@ a satisfied read of the CapabilityMask. Six such edges survived the Common Stack
 Header migration; two left a program completely non-functional (GitHub issue #42).
 
 A consumer that compares a peer's `S0` against a literal names that peer
-exactly — but only 97 of 264 ports do. The wiring map names the rest.
+exactly — but only 113 of 264 ports do. The wiring map names the rest.
 
 ## What it declares, and what it does not
 
