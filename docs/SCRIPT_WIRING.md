@@ -97,6 +97,14 @@ vacuous the way two rounded-up declarations could: the pressure-grid route stack
 declared a 16-cell hop window on both sides of a three-cell array, and the
 comparison that was already enforced there passed anyway.
 
+One vacuity does survive, and the validator counts it rather than hiding it: a
+program that runs `clr db` writes the whole stack, so its published surface is
+all 512 cells and no read of it can fail. 27 of the 108 declared providers are
+in that position, leaving 154 of the 208 edges with at least one direction the
+comparison can actually constrain. Narrowing those means deriving the publish
+surface from what a provider writes *after* initialization rather than from its
+full dynamic write range.
+
 The reviewed envelope stays the escape hatch, for the one thing derivation
 cannot see: a mailbox that one peer posts and a *different* peer consumes, which
 the host itself never touches. `catalog_coordinator_core_v3_0` hosts exactly that

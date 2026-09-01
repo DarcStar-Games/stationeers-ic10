@@ -68,17 +68,16 @@ def stack_surfaces(contracts: dict[str, dict[str, Any]]) -> dict[str, dict[str, 
     derivation cannot see: a mailbox one peer posts and a *different* peer
     consumes, which the host itself never touches.
     """
+    def cells(ranges: list[dict[str, int]]) -> set[int]:
+        return ranged([(item["start"], item["end"]) for item in ranges], STACK_CELLS)
+
     surfaces: dict[str, dict[str, frozenset[int]]] = {}
     for contract in contracts.values():
         own = contract["own_stack"]
-
-        def cells(key: str) -> set[int]:
-            return ranged([(item["start"], item["end"]) for item in own[key]], STACK_CELLS)
-
-        published = set(own["literal_writes"]) | cells("dynamic_write_ranges")
-        published |= cells("external_readable_ranges")
-        accepted = set(own["literal_reads"]) | cells("dynamic_read_ranges")
-        accepted |= cells("external_writable_ranges")
+        published = set(own["literal_writes"]) | cells(own["dynamic_write_ranges"])
+        published |= cells(own["external_readable_ranges"])
+        accepted = set(own["literal_reads"]) | cells(own["dynamic_read_ranges"])
+        accepted |= cells(own["external_writable_ranges"])
         for field in own["fields"]:
             if "external-read" in field["access"]:
                 published.add(field["address"])
