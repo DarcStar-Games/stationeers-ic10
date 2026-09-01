@@ -35,11 +35,11 @@
         "dynamic_read_ranges": [
           {
             "start": 16,
-            "end": 79
+            "end": 47
           }
         ],
         "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-fingerprinted-exception",
+        "dynamic_read_range_source": "source-derived",
         "dynamic_write_range_source": "none",
         "constraints": [
           {
@@ -51,8 +51,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.f5584873aecdb745",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.f5584873aecdb745",
+        "interface_id": "ic10.interface.access.662ad11c5d325964",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.662ad11c5d325964",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

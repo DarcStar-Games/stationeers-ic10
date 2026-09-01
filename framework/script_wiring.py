@@ -19,6 +19,7 @@ from framework.stack_envelope import BASE, LENGTH
 FORMAT = "IC10_SCRIPT_WIRING_V1"
 HEADER_CELLS = frozenset(range(BASE + 2, BASE + LENGTH))
 ENVELOPE_CELLS = frozenset(range(BASE, BASE + LENGTH))
+STACK_CELLS = frozenset(range(512))
 
 
 def load_wiring(root: Path) -> dict[str, Any]:
@@ -58,17 +59,50 @@ def port_index(contracts: dict[str, dict[str, Any]]) -> dict[str, dict[str, dict
     return index
 
 
+def stack_surfaces(contracts: dict[str, dict[str, Any]]) -> dict[str, dict[str, frozenset[int]]]:
+    """Per program: the cells peers may read, and the cells peers may write.
+
+    A cell the owner writes is one a peer can read, and a cell the owner reads is
+    one a peer can write, so most of both surfaces is derived rather than declared.
+    The reviewed `external_readable_ranges`/`external_writable_ranges` cover what
+    derivation cannot see: a mailbox one peer posts and a *different* peer
+    consumes, which the host itself never touches.
+    """
+    surfaces: dict[str, dict[str, frozenset[int]]] = {}
+    for contract in contracts.values():
+        own = contract["own_stack"]
+
+        def cells(key: str) -> set[int]:
+            return ranged([(item["start"], item["end"]) for item in own[key]], STACK_CELLS)
+
+        published = set(own["literal_writes"]) | cells("dynamic_write_ranges")
+        published |= cells("external_readable_ranges")
+        accepted = set(own["literal_reads"]) | cells("dynamic_read_ranges")
+        accepted |= cells("external_writable_ranges")
+        for field in own["fields"]:
+            if "external-read" in field["access"]:
+                published.add(field["address"])
+            if "external-write" in field["access"]:
+                accepted.add(field["address"])
+        surfaces[contract["source"]] = {
+            "published": frozenset(published), "accepted": frozenset(accepted),
+        }
+    return surfaces
+
+
 def check_wiring(
     wiring: dict[str, Any],
     ports: dict[str, dict[str, dict[str, Any]]],
     publishers: dict[str, list[dict[str, Any]]],
     migrated: set[str],
+    surfaces: dict[str, dict[str, frozenset[int]]],
 ) -> list[str]:
     """Every failure the wiring map can carry, as one message per defect.
 
     `ports` comes from `port_index` over the built contracts, `publishers` is the
-    `scripts` section of `data/script_protocol_headers.json`, and `migrated` is
-    the set of sources with a Common Stack Header v1 declaration.
+    `scripts` section of `data/script_protocol_headers.json`, `migrated` is the
+    set of sources with a Common Stack Header v1 declaration, and `surfaces`
+    comes from `stack_surfaces` over the same contracts.
     """
     failures: list[str] = []
     declared = wiring["ports"]
@@ -86,7 +120,7 @@ def check_wiring(
             failures.append(f"{source} {name}: declared peer for a port the program does not use")
         for name in sorted(set(wired_ports) & set(contract_ports)):
             failures.extend(check_port(source, name, wired_ports[name], contract_ports[name],
-                                       ports, publishers, migrated))
+                                       ports, publishers, migrated, surfaces))
     return failures
 
 
@@ -98,6 +132,7 @@ def check_port(
     ports: dict[str, dict[str, dict[str, Any]]],
     publishers: dict[str, list[dict[str, Any]]],
     migrated: set[str],
+    surfaces: dict[str, dict[str, frozenset[int]]],
 ) -> list[str]:
     failures: list[str] = []
     # S0 is the only identity constraint a port can carry: the ABI is folded into the
@@ -165,6 +200,48 @@ def check_port(
     if unused:
         failures.append(f"{source} {name}: header_reads declares S{sorted(unused)}"
                         " which the port never reads")
+    failures.extend(surface_failures(source, name, peer, port, surfaces))
+    return failures
+
+
+def surface_failures(
+    source: str,
+    name: str,
+    peer: dict[str, Any],
+    port: dict[str, Any],
+    surfaces: dict[str, dict[str, frozenset[int]]],
+) -> list[str]:
+    """Compare what the port touches against what its declared peers offer.
+
+    This is the check a declared dynamic range would otherwise escape: the
+    protocol registry only compares a range where a consumer edge is declared,
+    which is fewer than half the ports that carry one. The wiring map names a
+    peer for every port, so the comparison can be total. Providers are any-of --
+    a deployment wires one of them -- so a port passes on the first peer that
+    offers everything it touches, and a port that matches none reports each.
+    """
+    wanted_reads = port["reads"] | ranged(port["read_ranges"], STACK_CELLS)
+    wanted_writes = port["writes"] | ranged(port["write_ranges"], STACK_CELLS)
+    unmatched: list[tuple[str, list[int], list[int]]] = []
+    for provider in peer["providers"]:
+        surface = surfaces.get(provider)
+        if surface is None:
+            continue
+        unpublished = sorted(wanted_reads - surface["published"])
+        unaccepted = sorted(wanted_writes - surface["accepted"])
+        if not unpublished and not unaccepted:
+            return []
+        unmatched.append((provider, unpublished, unaccepted))
+    failures: list[str] = []
+    for provider, unpublished, unaccepted in unmatched:
+        if unpublished:
+            failures.append(
+                f"{source} {name}: reads S{unpublished} of {provider} -- the provider"
+                " neither writes those cells nor declares them externally readable")
+        if unaccepted:
+            failures.append(
+                f"{source} {name}: writes S{unaccepted} of {provider} -- the provider"
+                " neither reads those cells nor declares them externally writable")
     return failures
 
 

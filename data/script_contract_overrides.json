@@ -3,6 +3,18 @@
  "scripts": {
   "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10": {
    "source_sha256": "b73fc379b277fbcdb3156f354625d307c90f7dd258507077fc1d3472b78409ef",
+   "external_readable_ranges": [
+    [
+     40,
+     42
+    ]
+   ],
+   "external_writable_ranges": [
+    [
+     40,
+     42
+    ]
+   ],
    "publication_rules": [
     {
      "kind": "seqlock",
@@ -400,6 +412,24 @@
     }
    }
   },
+  "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10": {
+   "source_sha256": "17cd799479e1a0d2df67de0c055061f8c70192da92046ad98cd15bc651059845",
+   "external_writable_ranges": [
+    [
+     19,
+     30
+    ]
+   ]
+  },
+  "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10": {
+   "source_sha256": "88df87a9d57b46c613e9af16de821cf3dd9b974a6997c66a54d752e9206d4449",
+   "external_writable_ranges": [
+    [
+     20,
+     29
+    ]
+   ]
+  },
   "ic10/dependency-planning/dependency_plan_store_v2_0.ic10": {
    "source_sha256": "45b2df22309b90253281494fb3b7bb0622598c20caf7dbd92a2601d3b5738637",
    "publication_rules": [
@@ -418,6 +448,15 @@
     [
      128,
      383
+    ]
+   ]
+  },
+  "ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10": {
+   "source_sha256": "e8cd467b2773d6568cc8d2c349a513760bc449597e90725b5a24388edef4e134",
+   "external_writable_ranges": [
+    [
+     12,
+     20
     ]
    ]
   },
@@ -448,21 +487,13 @@
    }
   },
   "ic10/dependency-planning/job_requirement_view_v1_0.ic10": {
-   "source_sha256": "6291c24006dfd3a16ad47fc30a9eb3a8005f02685642fdc9ffadd953afb51a22",
+   "source_sha256": "1b980a346ededcb40c920fbd2e8c1ea3bda808788ed8966b60939c196d7f0af4",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
       [
        8,
        71
-      ]
-     ]
-    },
-    "d1": {
-     "dynamic_read_ranges": [
-      [
-       16,
-       79
       ]
      ]
     }
@@ -608,6 +639,12 @@
   },
   "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10": {
    "source_sha256": "d0042d8a76357dbadf23d1d57bd650c90178786a8be5022ce29fdb3398e51fad",
+   "external_writable_ranges": [
+    [
+     12,
+     23
+    ]
+   ],
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -737,17 +774,27 @@
     }
    }
   },
+  "ic10/manufacturing/print_candidate_executor_v2_0.ic10": {
+   "source_sha256": "eb49db3ecd9566fe4087092cf2998a1b9bf780fdd76cbf67b8eafaab6ed23057",
+   "external_writable_ranges": [
+    [
+     13,
+     19
+    ]
+   ]
+  },
+  "ic10/manufacturing/print_job_driver_v2_0.ic10": {
+   "source_sha256": "b8f8ce66e12b512eb87d6696989de1331d92540ae4f34f731748cec22106d8d5",
+   "external_writable_ranges": [
+    [
+     12,
+     17
+    ]
+   ]
+  },
   "ic10/manufacturing/print_material_resolver_v1_0.ic10": {
    "source_sha256": "8692e029cc055c1453057b3f46cdfc797f607a3959935282ff214e42e50a2bee",
    "ports": {
-    "d0": {
-     "dynamic_read_ranges": [
-      [
-       16,
-       79
-      ]
-     ]
-    },
     "d1": {
      "dynamic_read_ranges": [
       [

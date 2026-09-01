@@ -16,7 +16,12 @@
       "source": "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10",
       "header_base": 0,
       "readable_ranges": [],
-      "writable_ranges": [],
+      "writable_ranges": [
+        {
+          "start": 20,
+          "end": 29
+        }
+      ],
       "fields": [
         {
           "address": 0,

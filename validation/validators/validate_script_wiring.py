@@ -11,7 +11,13 @@ import sys
 from framework.json_schema import SchemaValidationError
 from framework.protocol_headers import load_headers
 from framework.script_contracts import build_all
-from framework.script_wiring import check_wiring, inbound_edges, load_wiring, port_index
+from framework.script_wiring import (
+    check_wiring,
+    inbound_edges,
+    load_wiring,
+    port_index,
+    stack_surfaces,
+)
 
 ROOT = _PROJECT_ROOT
 
@@ -30,9 +36,10 @@ except Exception as error:
     raise SystemExit(1)
 
 ports = port_index(contracts)
+surfaces = stack_surfaces(contracts)
 publishers = load_headers(ROOT)[0]
 migrated = set(json.loads((ROOT / "data/stack_envelope_declarations.json").read_text())["migrated"])
-failures = check_wiring(wiring, ports, publishers, migrated)
+failures = check_wiring(wiring, ports, publishers, migrated, surfaces)
 
 if failures:
     print("Script wiring validation: FAIL")
@@ -50,5 +57,7 @@ print(f" - all {total} device ports across {len(wiring['ports'])} programs decla
       f" ({len(script_edges)} script edges, {physical} physical devices)")
 print(f" - every declared provider exists, matches its port's target kind, and publishes"
       " any S0 identity the port checks")
+print(f" - every one of the {len(script_edges)} script edges touches only cells a declared"
+      " provider publishes or accepts")
 print(f" - {guarded} edges into migrated programs touch no S2..S7 header cell;"
       f" {reviewed} reviewed header reads are declared in the map")

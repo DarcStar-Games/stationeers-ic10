@@ -16,7 +16,12 @@
       "source": "ic10/manufacturing/print_job_driver_v2_0.ic10",
       "header_base": 0,
       "readable_ranges": [],
-      "writable_ranges": [],
+      "writable_ranges": [
+        {
+          "start": 12,
+          "end": 17
+        }
+      ],
       "fields": [
         {
           "address": 0,

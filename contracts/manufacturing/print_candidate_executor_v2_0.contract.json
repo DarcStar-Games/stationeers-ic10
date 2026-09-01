@@ -188,7 +188,12 @@
     "dynamic_write_range_source": "none",
     "clears_all": false,
     "external_readable_ranges": [],
-    "external_writable_ranges": [],
+    "external_writable_ranges": [
+      {
+        "start": 13,
+        "end": 19
+      }
+    ],
     "fields": [
       {
         "address": 0,

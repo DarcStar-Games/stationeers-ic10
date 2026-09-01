@@ -71,7 +71,39 @@ when:
   that provider's `S0..S7` envelope at all: only the owner publishes envelope
   cells;
 - a `header_reads` declaration names a cell outside `S2..S7` or one the port
-  never reaches.
+  never reaches;
+- a port reads a cell no declared provider publishes, or writes a cell no
+  declared provider accepts. See below.
+
+## Every declared range is compared against something
+
+A port's declared dynamic range used to be compared against a provider only
+where `data/script_protocol_headers.json` declared a consumer edge — 29 of the
+57 ports that carry one. Everywhere else the range was carried into `contracts/`,
+into the interface identity, and into the commissioning plan's provider
+obligations without ever meeting a provider (GitHub issue #92). The wiring map
+names a peer for **every** port, so the comparison can be total, and
+`framework/script_wiring.stack_surfaces` derives the two sides of it from the
+contracts:
+
+- a program **publishes** the cells it writes — literally or through its own
+  proven dynamic write range — plus any `external_readable_ranges`;
+- a program **accepts** the cells it reads, plus any `external_writable_ranges`.
+
+A port passes on the first declared provider that publishes everything it reads
+and accepts everything it writes; a port matching none reports each. Because
+both sides are derived, a padded envelope on one end cannot make the comparison
+vacuous the way two rounded-up declarations could: the pressure-grid route stack
+declared a 16-cell hop window on both sides of a three-cell array, and the
+comparison that was already enforced there passed anyway.
+
+The reviewed envelope stays the escape hatch, for the one thing derivation
+cannot see: a mailbox that one peer posts and a *different* peer consumes, which
+the host itself never touches. `catalog_coordinator_core_v3_0` hosts exactly that
+at `S40..S42` for the migration Planner and Worker. Declaring an envelope is a
+statement that the owner accepts the access — including a request field the
+owner publishes but does not currently consume — so a declaration that exists
+only to silence the check is a review finding, not a fix.
 
 `validation/validators/validate_stack_envelopes.py` keeps its independent,
 source-scan-based guard for magic-checking consumers and reference-register

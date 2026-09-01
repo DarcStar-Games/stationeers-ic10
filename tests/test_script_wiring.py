@@ -9,7 +9,7 @@ from copy import deepcopy
 import json
 
 from framework.json_schema import SchemaValidationError, validate
-from framework.script_wiring import check_wiring, inbound_edges
+from framework.script_wiring import check_wiring, inbound_edges, stack_surfaces
 
 ROOT = _PROJECT_ROOT
 SCHEMA = json.loads((ROOT / "schemas/script_wiring.schema.json").read_text())
@@ -26,6 +26,16 @@ PORTS = {
     },
 }
 PUBLISHERS = {PROVIDER: [{"base": 0, "magic": 31410001, "abi": 2}], CONSUMER: []}
+# Wide enough that the structural cases below turn on what they mean to test; the
+# surface rule itself is exercised against NARROW.
+SURFACES = {
+    PROVIDER: {"published": frozenset(range(16)), "accepted": frozenset(range(16))},
+    CONSUMER: {"published": frozenset(), "accepted": frozenset()},
+}
+NARROW = {
+    PROVIDER: {"published": frozenset({0, 1, 9}), "accepted": frozenset({10})},
+    CONSUMER: {"published": frozenset(), "accepted": frozenset()},
+}
 WIRING = {
     "$schema": "../schemas/script_wiring.schema.json",
     "format": "IC10_SCRIPT_WIRING_V1",
@@ -48,8 +58,9 @@ def expect(label, condition):
         print(f"FAIL {label}")
 
 
-def failing(wiring=None, ports=None, publishers=None, migrated=frozenset()):
-    return check_wiring(wiring or WIRING, ports or PORTS, publishers or PUBLISHERS, set(migrated))
+def failing(wiring=None, ports=None, publishers=None, migrated=frozenset(), surfaces=None):
+    return check_wiring(wiring or WIRING, ports or PORTS, publishers or PUBLISHERS,
+                        set(migrated), surfaces or SURFACES)
 
 
 validate(WIRING, SCHEMA)
@@ -173,6 +184,64 @@ abi_only[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], constraints={1: 3})
 expect("an S1-only constraint identifies nothing, so the edge stays unconstrained here",
        failing(ports=abi_only) == [])
 
+surface = stack_surfaces({"any-key": {"source": PROVIDER, "own_stack": {
+    "literal_reads": [32], "literal_writes": [0, 1],
+    "dynamic_read_ranges": [{"start": 40, "end": 41}],
+    "dynamic_write_ranges": [{"start": 16, "end": 18}],
+    "external_readable_ranges": [{"start": 60, "end": 60}],
+    "external_writable_ranges": [{"start": 70, "end": 70}],
+    "fields": [{"address": 80, "access": ["external-read"]},
+               {"address": 81, "access": ["external-write"]}],
+}}})[PROVIDER]
+expect("a peer may read what the owner writes or declares readable",
+       sorted(surface["published"]) == [0, 1, 16, 17, 18, 60, 80])
+expect("a peer may write what the owner reads or declares writable",
+       sorted(surface["accepted"]) == [32, 40, 41, 70, 81])
+
+expect("a port touching only what the provider offers passes",
+       failing(surfaces=NARROW) == [])
+
+unpublished = deepcopy(PORTS)
+unpublished[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], reads={0, 1, 9, 11})
+expect("reading a cell the provider never writes fails",
+       any("nor declares them externally readable" in f
+           for f in failing(ports=unpublished, surfaces=NARROW)))
+
+unaccepted = deepcopy(PORTS)
+unaccepted[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], writes={10, 12})
+expect("writing a cell the provider never reads fails",
+       any("nor declares them externally writable" in f
+           for f in failing(ports=unaccepted, surfaces=NARROW)))
+
+ranged_surface = deepcopy(PORTS)
+ranged_surface[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], read_ranges=[(9, 11)])
+expect("a dynamic range reaching past the provider's surface fails",
+       any("nor declares them externally readable" in f
+           for f in failing(ports=ranged_surface, surfaces=NARROW)))
+
+declared = {PROVIDER: {"published": NARROW[PROVIDER]["published"] | {11},
+                       "accepted": NARROW[PROVIDER]["accepted"]},
+            CONSUMER: NARROW[CONSUMER]}
+expect("a reviewed readable declaration covers a cell the provider never writes",
+       failing(ports=unpublished, surfaces=declared) == [])
+
+RIVAL = "ic10/test-family/rival_v1_0.ic10"
+any_of_ports = deepcopy(PORTS)
+any_of_ports[RIVAL] = {}
+any_of_wiring = deepcopy(WIRING)
+any_of_wiring["ports"][RIVAL] = {}
+any_of_wiring["ports"][CONSUMER]["d0"]["providers"] = [RIVAL, PROVIDER]
+any_of_publishers = dict(PUBLISHERS, **{RIVAL: [{"base": 0, "magic": 31410001, "abi": 2}]})
+any_of_surfaces = dict(NARROW, **{RIVAL: {"published": frozenset(), "accepted": frozenset()}})
+expect("any-of providers pass on the one that offers the cells",
+       failing(any_of_wiring, ports=any_of_ports, publishers=any_of_publishers,
+               surfaces=any_of_surfaces) == [])
+any_of_surfaces[PROVIDER] = {"published": frozenset(), "accepted": frozenset()}
+expect("a port matching no declared provider reports each of them",
+       sum("nor declares them" in f
+           for f in failing(any_of_wiring, ports=any_of_ports, publishers=any_of_publishers,
+                            surfaces=any_of_surfaces)) == 4)
+
 malformed = deepcopy(WIRING)
 malformed["ports"][CONSUMER]["d0"]["header_reads"] = {"S3": "SchemaId"}
 expect("check flags a non-numeric header_reads key",
@@ -193,3 +262,5 @@ if failures:
 print("Script wiring model: PASS")
 print(" - schema, coverage, provider existence, kind agreement, S0 identity consistency,")
 print("   migrated-header guard, reviewed header reads, and inbound-edge listing verified")
+print(" - a port's cells are compared against every declared provider's published/accepted")
+print("   surface, any-of across providers, with reviewed envelopes as the escape hatch")
