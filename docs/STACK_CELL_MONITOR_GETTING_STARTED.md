@@ -79,8 +79,10 @@ housing and screw `d0` to the target. No address selector is needed.
    SchemaId, ExtensionBase, State, TelemetryBase, and Generation — each `0`
    unless the mask declares it.
 
-The reader reads only `S0..S7`. It validates a usable magic, a positive ABI, a
-mask with no reserved bit set, and then only the fields that mask declares.
+The reader starts with `S0..S7`. It validates a usable magic, a positive ABI, a
+mask with no reserved bit set, and then only the fields that mask declares. When
+`HAS_EXTENSION` is set, it follows `S4` only far enough to validate the common
+four-cell extension header and its bounds; it does not interpret family fields.
 Because the header is the payload header, there is no separate payload address
 to chase; use the monitor below to read any cell the reader points you at.
 
@@ -96,9 +98,11 @@ For example, setting `Stack Address` to `6` reads `S6` from the housing connecte
 to `d0`. A captured NaN is displayed as NaN rather than being replaced with a
 plausible number.
 
-Legacy-exempt targets still require their ABI documentation. For migrated
-targets, discovery reports whether the primary payload is at `S0`, `S96`, or
-another address. Controller runtimes commonly use Generic Telemetry at `S96`.
+The common header at `S0` is the primary payload header for every migrated
+target. When the mask declares one, `S4` locates a bounded metadata extension
+and `S6` locates a separate telemetry block; controller runtimes commonly point
+`S6` at Generic Telemetry at `S96`. Family-specific payload cells remain defined
+by the service contract named by `ServiceMagic`.
 
 The monitor publishes this diagnostic state in its own stack:
 

@@ -115,11 +115,12 @@ IC10 currently supports register-addressed stack reads and device/LogicType indi
 `ic10/live-commissioning/stack_cell_monitor_v1_0.ic10` is the smaller tool for
 interactive commissioning. It reads one selected `S0..S511` cell from a standard
 or compact IC housing and mirrors the result to its own housing `Setting` and an
-optional Logic Memory. Selector value `-1` instead reads and validates only the
-common `S0..S4` header, publishing the target's registered magic without prior
-family knowledge. It never writes the target or
-selector. Separate samples are not a coherent multi-cell snapshot. Use the
-Snapshot Probe above when generation fencing matters. See
+optional Logic Memory. Header discovery uses the separate
+`ic10/live-commissioning/stack_header_reader_v1_0.ic10`, which validates the
+common `S0..S7` header and publishes the target's registered magic without prior
+family knowledge. Neither tool writes the target or selector. Separate monitor
+samples are not a coherent multi-cell snapshot. Use the Snapshot Probe above
+when generation fencing matters. See
 `docs/STACK_CELL_MONITOR_GETTING_STARTED.md` for the in-world setup and
 `docs/STACK_ABI_ENVELOPE.md` for the fixed contract.
 

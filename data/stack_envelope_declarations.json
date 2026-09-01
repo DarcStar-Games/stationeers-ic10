@@ -5371,7 +5371,7 @@
  "legacy_exemption": {
   "id": "pre-envelope-v1-layout",
   "reason": "Program predates the common S0 header; its cells and consumers are unchanged until its family migrates.",
-  "migration_rule": "Every program added after the baseline must publish S0..S4. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress.",
+  "migration_rule": "Every program added after the baseline must publish mandatory S0..S2 and may use S3..S7 only as declared by its capability mask. Baseline paths stay listed as they migrate, so the digest records the pre-v1 set rather than migration progress.",
   "sources": [
    "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10",
    "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10",
