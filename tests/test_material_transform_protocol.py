@@ -98,19 +98,39 @@ over_stager_vm.run(1)
 if over_stager_vm.stack.get(13)!=-1 or [c for c in over_stager_vm.stack if c>14]:
     fails.append('reservation stager accepted a resolved count above the admitted three')
 
-# S8 survives a reflash, so a clean arriving first walks whatever the housing already held.
-# Only our own S0 makes that count ours; a foreign stack must be disowned, not swept.
+# A reflash preserves the whole stack, so a housing that last ran something else hands
+# the stager both a staged count at S8 and an unread request at S9..S12/S14. Only its own
+# S0 makes any of that its own, so boot disowns every other stack rather than acting on it.
+# The count first: a clean walks S8 records over its own window, releasing reservations a
+# previous occupant staged. Zeroing S8 unconditionally would close that by destroying the
+# crash recovery the incremental `poke 8 r12` exists for, so both directions are pinned.
 def reflash_clean(boot):
     a=Device(801,{13:77,14:250,16:1},{'ReferenceId':801})
     b=Device(802,{13:77,15:250,16:2},{'ReferenceId':802})
     vm=IC10(s,{'x801':a,'x802':b},self_ref=805)
     vm.stack.update({8:1,9:2,12:7,14:0,32:700,33:801,34:802}|boot)
     vm.run(2)
-    return a.stack.get(14),b.stack.get(15),vm.stack.get(8),vm.stack.get(13)
-if reflash_clean({})!=(250,250,0,2):
+    return a.stack.get(14),b.stack.get(15),vm.stack.get(8,0),vm.stack.get(13,0)
+if reflash_clean({})!=(250,250,0,0):
     fails.append('reflashed stager released reservations a previous occupant of the housing staged')
 if reflash_clean({0:'HASH:MultiMaterialReservationStager.v1'})!=(0,0,0,2):
     fails.append('reflashed stager lost the records it staged itself before the reflash')
+
+# Then the request. An inherited S12 != S14 with an inherited S9 == 1 dispatches against
+# whatever the live Resolver currently publishes -- reserving material on both sides and
+# arming a Grant Guard with an inherited job id, which is what lets material move. The
+# same stack under this program's own S0 is its own unfinished request and must still run.
+def reflash_stage(boot):
+    ghosts={k:Device(d.ref,dict(d.stack),dict(d.props)) for k,d in dyn.items()}
+    vm=IC10(s,{'d0':res_dev,'d1':Device(957,{},{'ReferenceId':957}),**ghosts},self_ref=958)
+    vm.stack.update({9:1,10:77,11:3,12:7,14:0}|boot)
+    vm.run(2)
+    return ([k for k,d in ghosts.items() if d.stack!=dyn[k].stack],
+            vm.stack.get(13,0),vm.stack.get(14,0))
+if reflash_stage({})!=([],0,0):
+    fails.append('reflashed stager staged a request the previous occupant of the housing left behind')
+if reflash_stage({0:'HASH:MultiMaterialReservationStager.v1'})==([],0,0):
+    fails.append('stager ignored an unfinished request on the stack it published itself')
 
 stager_dev=Device(952,{}, {'ReferenceId':952})
 alloc_dev=Device(953,{}, {'ReferenceId':953})
