@@ -76,9 +76,18 @@ if actual is not None:
         item for item in migrated
         if item["envelope"]["publication_validation"]["post_init_dynamic_write_ranges"]
     ]
-    constrainable = sum(
-        len({cell for span in item["stack_pressure"]["dynamic_write_ranges"]
-             for cell in range(span["start"], span["end"] + 1)}) < 512
+    def bounded(item):
+        return len({cell for span in item["stack_pressure"]["dynamic_write_ranges"]
+                    for cell in range(span["start"], span["end"] + 1)}) < 512
+
+    constrainable = sum(bounded(item) for item in reviewed_post_init)
+    # A ceiling that is itself a reviewed override makes the comparison two
+    # declarations agreeing rather than one meeting a proof, so count separately the
+    # ones a derivation holds up. Both are worth knowing; only the second is a proof.
+    by_source = {contract["source"]: contract for contract in contracts.values()}
+    proved = sum(
+        bounded(item)
+        and by_source[item["source"]]["own_stack"]["dynamic_write_range_source"] == "source-derived"
         for item in reviewed_post_init
     )
     # The coverage rule runs the other way -- every cell the source proves it writes
@@ -165,6 +174,6 @@ raise SystemExit(validation.finish("Stack envelope validation",lambda: [
     f"migrated families: {', '.join(sorted(families)) or 'none'}; backlog: {len(legacy)} programs, {actual['totals']['backlog_reserved_cell_users']} using reserved cells",
     "S0..S7 writes, derived capability mask, schema binding, and extension bounds are enforced",
     f"no consumer reads a migrated peer's S2..S7 as payload; {len(HEADER_READS)} reviewed header reads are declared",
-    f"{len(reviewed_post_init)} reviewed post-init write ranges sit inside the contract's derived range, {constrainable} of them against a range narrower than the whole stack",
+    f"{len(reviewed_post_init)} reviewed post-init write ranges sit inside the contract's derived range, {constrainable} of them against a range narrower than the whole stack, {proved} of those against a derivation rather than a second declaration",
     f"the same {len(reviewed_post_init)} name every cell a computed write provably reaches after publication; {floored} carry a proof to hold them to",
 ]))

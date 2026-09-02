@@ -395,7 +395,9 @@ that reason alone. But a clear on the entry path writes those cells *before* the
 first yield makes any of them readable, so none of them is a post-init write and
 the range it produced never described one. The contract layer now counts a clear
 only where the control-flow graph can still reach it from a yield, which leaves
-27 of the 37 declarations held against a range narrower than the stack.
+27 of the 37 declarations held against a range narrower than the stack — 23 of
+them against a derivation, and the other four against a second reviewed
+declaration, which the validator prints as two numbers rather than one.
 
 One thing still puts a program there, and it is a gap in the analysis rather than
 a fact about the source: a computed write the bounds analysis cannot prove, with
@@ -405,7 +407,9 @@ derived contradicts it, so nothing has ever had to.
 
 Two things the rule does not settle. The derived range is itself the *effective*
 one, so where it comes from a reviewed `dynamic_write_ranges` override the
-comparison is two declarations agreeing rather than one meeting a proof.
+comparison is two declarations agreeing rather than one meeting a proof — and
+where a reviewer has written the same window into both files, as all four
+current cases have, it cannot fail at all until one of them moves.
 `generic_persistent_config_host_v1_1` is an override because the proof machinery
 cannot follow `push` past an assigned `sp`; `generic_job_store_v1_0`,
 `generic_registry_directory_host_v2_0` and `printer_execution_bank_v2_0` are

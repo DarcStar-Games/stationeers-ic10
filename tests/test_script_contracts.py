@@ -40,6 +40,7 @@ from framework.script_contracts.dynamic_ranges import (
 )
 from framework.script_contracts.own_stack import (
     analyze_own_stack,
+    clear_exposed_cells,
     header_invariants,
     post_publication_clears,
     restart_behavior,
@@ -514,6 +515,30 @@ ck(post_publication_clears(parse_program(wrapped_clear_source)) == 1 and
 # And a transfer the graph cannot follow counts every clear rather than none.
 ck(post_publication_clears(parse_program(unmodeled_clear_source)) == 1,
    "an unfollowable transfer did not fail the boot-clear test closed")
+# Taking the clear out of the write range takes with it the thing that used to keep
+# a constant honest across it, so the cells it strands have to be named directly: a
+# cell written before a clear and never after holds zero at the first yield, whatever
+# single literal the source pokes into it.
+stranded_payload_source = (
+    "poke 40 7\nget r0 db 0\nbeq r0 31415999 Init\nclr db\n"
+    "Init:\npoke 0 31415999\npoke 1 1\nLoop:\nyield\nj Loop\n"
+)
+stranded_payload = own_stack_of(stranded_payload_source)
+ck(clear_exposed_cells(parse_program(stranded_payload_source), {}) == {40} and
+   {field["address"] for field in stranded_payload["fields"] if "const" in field} == {0, 1},
+   "a cell the boot clear zeroes after its only write was still published as a constant")
+
+stranded_header_source = "poke 0 31415999\npoke 1 1\nclr db\nLoop:\nyield\nj Loop\n"
+stranded_header = own_stack_of(stranded_header_source)
+ck(clear_exposed_cells(parse_program(stranded_header_source), {}) == {0, 1} and
+   not any("const" in field for field in stranded_header["fields"]) and
+   header_invariants([{"base": 0, "magic": 31415999, "abi": 1}], stranded_header) == [],
+   "a header the clear zeroes after publication still generated its invariant")
+
+# The loaders' shape: the clear runs first and everything it zeroes is written again.
+ck(clear_exposed_cells(parse_program("clr db\npoke 0 31415999\npoke 1 1\npoke 40 7\n"), {}) == set(),
+   "a clear that precedes every write stranded a cell it cannot reach")
+
 # A clear on its own is not a computed write, so nothing is left to bound.
 bare_clear = own_stack_of("clr db\npoke 0 31415999\npoke 1 1\nLoop:\nyield\nj Loop\n")
 ck(not bare_clear["dynamic_write"] and bare_clear["dynamic_write_ranges"] == [] and
