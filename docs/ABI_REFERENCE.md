@@ -212,7 +212,7 @@ appear nowhere below.
 | `HASH("GenericDirectoryAdapterBridge.v1")` | `-1784275788` | 1 | `S0` | `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` | Consumes frozen Adapter ABI2 snapshots and drives Generic Snapshot Host BEGIN/ADD/COMMIT. |
 | `HASH("GenericInputResolver.v1")` | `1971762319` | 1 | `S0` | `ic10/shared-input/generic_input_resolver_v1_0.ic10` | Resolves logical commissioning controls from Scanner + Profile metadata. |
 | `HASH("GenericInputScanner.v1")` | `-1082737849` | 1 | `S0` | `ic10/shared-input/generic_input_scanner_v1_1.ic10` | Discovers/classifies physical commissioning controls. |
-| `HASH("GenericJobCommandGateway.v4")` | `-518617346` | 4 | `S0` | `ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10` | Five-lane Job command arbiter adding sequence-fenced stock-target root publication to manufacturing, dependency, and POWER requests. |
+| `HASH("GenericJobCommandGateway.v5")` | `-1777224088` | 5 | `S0` | `ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10` | Six-lane Job command arbiter with independent sequence-fenced stock-target and operator-order root publishers. |
 | `HASH("GenericJobMonitor.v1")` | `-586766854` | 1 | `S0` | `ic10/dependency-planning/generic_job_monitor_v1_0.ic10` | Coherently resolves one exact JobId and its current state/generation from Generic Job Store. |
 | `HASH("GenericJobSelector.v3")` | `-1379351542` | 3 | `S0` | `ic10/generic-jobs/generic_job_selector_v3_0.ic10` | Read-only coherent Job Store selector: default TRANSFORM/PRINT mode or exact JobType mode, Priority descending, JobId cursor fairness. |
 | `HASH("GenericJobStore.v1")` | `-955081679` | 1 | `S0` | `ic10/generic-jobs/generic_job_store_v1_0.ic10` | BANKED_TRANSACTION SELECTOR_BANK store: 32 Generic Job ABI1 records with Store-owned JobIds, optimistic generation, ABI-gated recovery, and crash-safe publication. |
@@ -246,6 +246,9 @@ appear nowhere below.
 | `HASH("MultiMaterialReservationAllocator.v2")` | `924888977` | 2 | `S0` | `ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10` | Allocator ABI2 atomically commits one common epoch after every input is staged. |
 | `HASH("MultiMaterialReservationStager.v1")` | `1387894212` | 1 | `S0` | `ic10/material-transform/multi_material_reservation_stager_v1_0.ic10` | Stages 1..3 input reservations and Guard payloads without publishing the commit epoch. |
 | `HASH("NewDependencyPlanController.v1")` | `724160220` | 1 | `S0` | `ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10` | New-plan controller: orchestrates bounded plan construction and returns mutation intent to the sole Planner. |
+| `HASH("OperatorOrderEditor.v1")` | `595279945` | 1 | `S0` | `ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10` | Stages shared-input recipe family, ordinal, quantity, and priority values and emits one request per commit edge. |
+| `HASH("OperatorOrderJobIngress.v1")` | `845546194` | 1 | `S0` | `ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10` | Publishes one recipe-validated PRINT root through dedicated Gateway lane F with restart-safe request identity. |
+| `HASH("OperatorOrderRecipeView.v1")` | `-1303120629` | 1 | `S0` | `ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10` | Resolves a family/ordinal selection through Recipe Lookup and revalidates exact execution metadata. |
 | `HASH("PhasePressureConfigPolicy.v1")` | `2059523732` | 1 | `S0` | `ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10` | PhasePressure bounds/factors/mode validation and signature. |
 | `HASH("PhasePressureRequestArbiter.v1")` | `424300757` | 1 | `S0` | `ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10` | Reduces coherent PhasePressure ABI2 requests for one LOW/HIGH domain; rejects directory overflow. |
 | `HASH("PiConfigPolicy.v1")` | `-2022911923` | 1 | `S0` | `ic10/controller-pi/pi_config_policy_v1_0.ic10` | PI defaults, masks, validation, normalization, signature. |
@@ -747,7 +750,7 @@ identity `HASH("GenericPrintRuntime.v2")`. `ic10/manufacturing/generic_print_run
 183 Scheduler            magic ManufacturingScheduler.v1 ABI1
 ```
 
-Generic Job Selector ABI3 uses S19 as a JobId cursor and skips every eligible JobId `<= cursor`, guaranteeing progress before wrap. Its request generation is S20 and its response token S21; status S22, selected slot S23, selected JobId S24. S18=0 selects the manufacturing TRANSFORM/PRINT state policy; S18>0 selects that exact JobType and its nonterminal lifecycle states. Manufacturing and POWER schedulers own domain lifecycle policy, while all physical Job Store mutation is serialized through Gateway ABI4 and `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10`.
+Generic Job Selector ABI3 uses S19 as a JobId cursor and skips every eligible JobId `<= cursor`, guaranteeing progress before wrap. Its request generation is S20 and its response token S21; status S22, selected slot S23, selected JobId S24. S18=0 selects the manufacturing TRANSFORM/PRINT state policy; S18>0 selects that exact JobType and its nonterminal lifecycle states. Manufacturing and POWER schedulers own domain lifecycle policy, while all physical Job Store mutation is serialized through Gateway ABI5 and `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10`.
 
 ### Printer Execution Bank ABI2
 
@@ -1872,7 +1875,7 @@ S26/S27 minimum/maximum temperature K
 
 Item 9 uses the existing Generic Resource Endpoint, Reservation, Link, Directory, and Job ABIs. `DirectorySchema.PowerReservation` v1 records `[DispatchKey,PolicyId,ReservationReferenceId]`. For Generic Resource Reservation ABI1, `S36` mirrors Endpoint `ExportAvailable` and `S37` mirrors Endpoint `ImportCapacity`; `S35` remains the role bitmap.
 
-`ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10` is Job Command Gateway ABI4 with five independent producer lanes: A manufacturing lifecycle, B dependency cancellation, C dependency child creation, D POWER lifecycle, and E stock-target root ingress. `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` remains the sole physical Job Store command writer. See `docs/POWER_MANAGEMENT.md` and `docs/STOCK_TARGET_INGRESS.md`.
+`ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10` is Job Command Gateway ABI5 with six independent producer lanes: A manufacturing lifecycle, B dependency cancellation, C dependency child creation, D POWER lifecycle, E stock-target root ingress, and F operator-order root ingress. `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` remains the sole physical Job Store command writer. See `docs/POWER_MANAGEMENT.md`, `docs/STOCK_TARGET_INGRESS.md`, and `docs/OPERATOR_ORDER_INGRESS.md`.
 
 ## Live Commission Snapshot Probe ABI1
 

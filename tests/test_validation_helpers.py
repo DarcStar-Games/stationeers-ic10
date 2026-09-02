@@ -326,7 +326,7 @@ with tempfile.TemporaryDirectory() as directory:
 entries = suite_entries(_PROJECT_ROOT)
 validators = validator_entries(_PROJECT_ROOT)
 tests = test_entries(_PROJECT_ROOT)
-assert len(entries) == 74 and len(validators) == 29 and len(tests) == 45
+assert len(entries) == 76 and len(validators) == 30 and len(tests) == 46
 assert entries == validators + tests
 assert entries[0].evidence_filename == "VALIDATE_ABI_CONTRACTS.txt"
 assert entries[-1].evidence_filename == "TEST_GAME_EXPORT.txt"

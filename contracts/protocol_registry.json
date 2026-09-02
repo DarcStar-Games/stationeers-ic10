@@ -672,6 +672,14 @@
           "header_base": 0
         },
         {
+          "source": "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d3"
+          },
+          "header_base": 0
+        },
+        {
           "source": "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10",
           "endpoint": {
             "kind": "device-port",
@@ -1007,7 +1015,16 @@
           "header_base": 0
         }
       ],
-      "consumers": []
+      "consumers": [
+        {
+          "source": "ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
     },
     {
       "protocol_id": "ic10.stack.generic-input-scanner.v1",
@@ -1027,21 +1044,29 @@
       "consumers": []
     },
     {
-      "protocol_id": "ic10.stack.generic-job-command-gateway.v4",
+      "protocol_id": "ic10.stack.generic-job-command-gateway.v5",
       "transport": "ic-housing-stack",
       "contract": "GenericJobCommandGateway",
-      "magic": -518617346,
-      "abi": 4,
-      "name": "GenericJobCommandGateway v4",
-      "definition_ref": "contracts/protocols/ic10.stack.generic-job-command-gateway.v4.protocol.json",
+      "magic": -1777224088,
+      "abi": 5,
+      "name": "GenericJobCommandGateway v5",
+      "definition_ref": "contracts/protocols/ic10.stack.generic-job-command-gateway.v5.protocol.json",
       "canonical_refs": [],
       "providers": [
         {
-          "source": "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10",
+          "source": "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10",
           "header_base": 0
         }
       ],
       "consumers": [
+        {
+          "source": "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
         {
           "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
           "endpoint": {
@@ -1103,7 +1128,7 @@
       ],
       "consumers": [
         {
-          "source": "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10",
+          "source": "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10",
           "endpoint": {
             "kind": "device-port",
             "value": "d0"
@@ -1151,6 +1176,14 @@
           "endpoint": {
             "kind": "device-port",
             "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d2"
           },
           "header_base": 0
         },
@@ -2003,6 +2036,75 @@
         }
       ],
       "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.operator-order-editor.v1",
+      "transport": "ic-housing-stack",
+      "contract": "OperatorOrderEditor",
+      "magic": 595279945,
+      "abi": 1,
+      "name": "OperatorOrderEditor v1",
+      "definition_ref": "contracts/protocols/ic10.stack.operator-order-editor.v1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.operator-order-job-ingress.v1",
+      "transport": "ic-housing-stack",
+      "contract": "OperatorOrderJobIngress",
+      "magic": 845546194,
+      "abi": 1,
+      "name": "OperatorOrderJobIngress v1",
+      "definition_ref": "contracts/protocols/ic10.stack.operator-order-job-ingress.v1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.operator-order-recipe-view.v1",
+      "transport": "ic-housing-stack",
+      "contract": "OperatorOrderRecipeView",
+      "magic": -1303120629,
+      "abi": 1,
+      "name": "OperatorOrderRecipeView v1",
+      "definition_ref": "contracts/protocols/ic10.stack.operator-order-recipe-view.v1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        }
+      ]
     },
     {
       "protocol_id": "ic10.stack.phase-pressure-config-policy.v1",
@@ -2944,7 +3046,16 @@
           "header_base": 0
         }
       ],
-      "consumers": []
+      "consumers": [
+        {
+          "source": "ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
     },
     {
       "protocol_id": "ic10.stack.recipe-execution-profile-view.v1",
@@ -2964,6 +3075,14 @@
       "consumers": [
         {
           "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10",
           "endpoint": {
             "kind": "device-port",
             "value": "d1"

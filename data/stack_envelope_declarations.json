@@ -50,6 +50,9 @@
    "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10",
    "ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10",
    "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10",
+   "ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10",
+   "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10",
+   "ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10",
    "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10",
    "ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10",
    "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10",
@@ -3859,10 +3862,10 @@
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "generic-jobs"
   },
-  "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10": {
+  "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10": {
    "service_id": "ic10.script.generic.job.command.gateway",
    "contract": "GenericJobCommandGateway",
-   "service_abi": 4,
+   "service_abi": 5,
    "schema_id": null,
    "schema_version": 0,
    "extension_base": 0,
@@ -3872,7 +3875,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "7245ad0930493629e30495eba53c0cbf5e77fb11fe1f9160d8322fc07a2cc585",
+   "source_sha256": "8d9b3d469c36182b2c7b1373ec3bbdaa5fc110259b4537d3c657e893878acc99",
    "legacy_owned_ranges": [
     [
      8,
@@ -3884,23 +3887,27 @@
     ],
     [
      24,
-     25
+     26
     ],
     [
-     32,
+     33,
      35
     ],
     [
-     48,
+     49,
      55
     ],
     [
-     64,
+     65,
      67
     ],
     [
-     80,
-     86
+     81,
+     84
+    ],
+    [
+     97,
+     100
     ]
    ],
    "post_init_dynamic_write_ranges": [
@@ -3923,9 +3930,67 @@
     [
      81,
      84
+    ],
+    [
+     97,
+     100
     ]
    ],
    "pilot_family": "generic-jobs"
+  },
+  "ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10": {
+   "service_id": "ic10.script.operator.order.editor",
+   "contract": "OperatorOrderEditor",
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "53c5ff55853affdeaabb0ee8131211f361a411be91519e6fbb1be1e124e8ac3a",
+   "legacy_owned_ranges": [[8, 8], [11, 13], [26, 26], [28, 28], [30, 30], [40, 43]],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing-ingress"
+  },
+  "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10": {
+   "service_id": "ic10.script.operator.order.job.ingress",
+   "contract": "OperatorOrderJobIngress",
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "e036716c9a7c1ad845cb75e9fff0f51c6bee113e0380154e98d81b076ae7f3c8",
+   "legacy_owned_ranges": [[15, 23], [30, 31]],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing-ingress"
+  },
+  "ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10": {
+   "service_id": "ic10.script.operator.order.recipe.view",
+   "contract": "OperatorOrderRecipeView",
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "37c3eaa49c4aa53425d549ca2975e9d35563bb26919f86d7404addf9cec5ab68",
+   "legacy_owned_ranges": [[15, 16], [19, 24]],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing-ingress"
   },
   "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10": {
    "service_id": "ic10.script.stock.target.config.policy",
@@ -4030,7 +4095,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "27356b11fc00159b1332097a0ac1ebab28a5fc12069deac3a0f6f460e1d9a43e",
+   "source_sha256": "ebb1b84f96033992c6b46de40229154080db6a86b8f4240b39c69c130ec60bc7",
    "legacy_owned_ranges": [[15, 22], [24, 32]],
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "manufacturing-ingress"

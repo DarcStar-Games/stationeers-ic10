@@ -1,10 +1,10 @@
 {
   "format": "IC10_SCRIPT_CONTRACT_INDEX_V1",
-  "contract_count": 181,
+  "contract_count": 184,
   "own_stack_range_inventory": {
     "dynamic_script_count": 42,
-    "source_proven_surface_count": 50,
-    "unresolved_fallback_count": 20,
+    "source_proven_surface_count": 49,
+    "unresolved_fallback_count": 21,
     "scripts": [
       {
         "source": "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10",
@@ -1182,15 +1182,11 @@
         }
       },
       {
-        "source": "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10",
+        "source": "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10",
         "read": {
           "dynamic": true,
           "ranges": [
             {
-              "start": 7,
-              "end": 7
-            },
-            {
               "start": 11,
               "end": 15
             },
@@ -1200,7 +1196,7 @@
             },
             {
               "start": 32,
-              "end": 32
+              "end": 33
             },
             {
               "start": 36,
@@ -1208,15 +1204,11 @@
             },
             {
               "start": 48,
-              "end": 48
-            },
-            {
-              "start": 56,
               "end": 62
             },
             {
               "start": 64,
-              "end": 64
+              "end": 65
             },
             {
               "start": 68,
@@ -1224,108 +1216,55 @@
             },
             {
               "start": 80,
-              "end": 80
+              "end": 81
             },
             {
-              "start": 87,
+              "start": 85,
               "end": 93
+            },
+            {
+              "start": 96,
+              "end": 97
+            },
+            {
+              "start": 101,
+              "end": 109
             }
           ],
           "proven_ranges": [
             {
-              "start": 7,
-              "end": 7
-            },
-            {
-              "start": 11,
-              "end": 15
-            },
-            {
-              "start": 19,
-              "end": 19
-            },
-            {
               "start": 32,
-              "end": 32
-            },
-            {
-              "start": 36,
-              "end": 40
+              "end": 33
             },
             {
               "start": 48,
-              "end": 48
-            },
-            {
-              "start": 56,
-              "end": 62
+              "end": 49
             },
             {
               "start": 64,
-              "end": 64
-            },
-            {
-              "start": 68,
-              "end": 72
+              "end": 65
             },
             {
               "start": 80,
-              "end": 80
+              "end": 81
             },
             {
-              "start": 87,
-              "end": 93
+              "start": 96,
+              "end": 97
             }
           ],
-          "provenance": "source-derived"
+          "provenance": "source-fingerprinted-exception"
         },
         "write": {
           "dynamic": true,
           "ranges": [
             {
-              "start": 8,
-              "end": 10
-            },
-            {
-              "start": 33,
-              "end": 35
-            },
-            {
-              "start": 49,
-              "end": 52
-            },
-            {
-              "start": 65,
-              "end": 67
-            },
-            {
-              "start": 81,
-              "end": 84
+              "start": 0,
+              "end": 511
             }
           ],
-          "proven_ranges": [
-            {
-              "start": 8,
-              "end": 10
-            },
-            {
-              "start": 33,
-              "end": 35
-            },
-            {
-              "start": 49,
-              "end": 52
-            },
-            {
-              "start": 65,
-              "end": 67
-            },
-            {
-              "start": 81,
-              "end": 84
-            }
-          ],
-          "provenance": "source-derived"
+          "proven_ranges": [],
+          "provenance": "conservative-full-stack"
         }
       },
       {
@@ -10066,11 +10005,11 @@
       "consumes": []
     },
     {
-      "source": "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10",
-      "contract": "contracts/generic-jobs/generic_job_command_gateway_v4_0.contract.json",
+      "source": "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10",
+      "contract": "contracts/generic-jobs/generic_job_command_gateway_v5_0.contract.json",
       "service_id": "ic10.script.generic.job.command.gateway",
       "provides": [
-        "ic10.stack.generic-job-command-gateway.v4"
+        "ic10.stack.generic-job-command-gateway.v5"
       ],
       "consumes": [
         "ic10.stack.generic-job-store-command-executor.v1"
@@ -10259,6 +10198,44 @@
       "consumes": []
     },
     {
+      "source": "ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10",
+      "contract": "contracts/manufacturing-ingress/operator_order_editor_v1_0.contract.json",
+      "service_id": "ic10.script.operator.order.editor",
+      "provides": [
+        "ic10.stack.operator-order-editor.v1"
+      ],
+      "consumes": [
+        "ic10.stack.generic-input-resolver.v1",
+        "ic10.stack.operator-order-job-ingress.v1"
+      ]
+    },
+    {
+      "source": "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10",
+      "contract": "contracts/manufacturing-ingress/operator_order_job_ingress_v1_0.contract.json",
+      "service_id": "ic10.script.operator.order.job.ingress",
+      "provides": [
+        "ic10.stack.operator-order-job-ingress.v1"
+      ],
+      "consumes": [
+        "ic10.stack.dependency-plan-store.v2",
+        "ic10.stack.generic-job-command-gateway.v5",
+        "ic10.stack.generic-job-store.v1",
+        "ic10.stack.operator-order-recipe-view.v1"
+      ]
+    },
+    {
+      "source": "ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10",
+      "contract": "contracts/manufacturing-ingress/operator_order_recipe_view_v1_0.contract.json",
+      "service_id": "ic10.script.operator.order.recipe.view",
+      "provides": [
+        "ic10.stack.operator-order-recipe-view.v1"
+      ],
+      "consumes": [
+        "ic10.stack.recipe-catalog-lookup.v3",
+        "ic10.stack.recipe-execution-profile-view.v1"
+      ]
+    },
+    {
       "source": "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10",
       "contract": "contracts/manufacturing-ingress/stock_target_config_policy_v1_0.contract.json",
       "service_id": "ic10.script.stock.target.config.policy",
@@ -10327,7 +10304,7 @@
         "ic10.stack.stock-target-job-ingress.v1"
       ],
       "consumes": [
-        "ic10.stack.generic-job-command-gateway.v4",
+        "ic10.stack.generic-job-command-gateway.v5",
         "ic10.stack.generic-persistent-config-host.v1",
         "ic10.stack.stock-target-demand-view.v1",
         "ic10.stack.stock-target-producer-view.v1"

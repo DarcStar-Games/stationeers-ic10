@@ -8,7 +8,7 @@ from pathlib import Path
 import re,sys
 R=_PROJECT_ROOT;validation=Validation(R)
 req={
-'ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10':['poke 1 4','get r15 db 48','get r15 db 64','put d0 21 r6'],
+'ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10':['poke 1 5','get r15 db r7','ble r7 96 Scan','put d0 21 r6'],
 'ic10/dependency-planning/job_requirement_view_v1_0.ic10':['poke 0 HASH("JobRequirementView.v1")','put d2 8 r10'],
 'ic10/dependency-planning/item_producer_resolver_v1_0.ic10':['poke 0 HASH("ItemProducerResolver.v1")','Table:'],
 'ic10/dependency-planning/generic_job_monitor_v1_0.ic10':['poke 0 HASH("GenericJobMonitor.v1")'],
@@ -30,7 +30,7 @@ req={
 'ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10':['poke 0 HASH("NewDependencyPlanController.v1")']}
 # Per-file ceilings above the 120-line framework limit; each also carries a reviewed
 # SOFT_LIMIT_EXEMPTIONS entry in validate_ic10.py naming what the margin buys.
-SOFT={'ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10':128,
+SOFT={'ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10':120,
 'ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10':128,
 'ic10/dependency-planning/dependency_claim_view_v1_0.ic10':121,
 'ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10':123}
@@ -55,6 +55,6 @@ if len(writers)!=1:validation.fail(f'expected one physical Job Store command wri
 for rel in ('ic10/dependency-planning/dependency_child_creator_v1_0.ic10','ic10/dependency-planning/dependency_plan_builder_v1_0.ic10','ic10/dependency-planning/manufacturing_dependency_gate_v1_0.ic10'):
  if (R/rel).exists():validation.fail(f'stale implementation remains: {rel}')
 raise SystemExit(validation.finish('Dependency planning contracts',[
- 'dependency lanes share one five-lane Gateway and one Store executor',
+ 'dependency lanes share one six-lane Gateway and one Store executor',
  '8-cell commit-last plans, active-only claims, surplus accounting, bounded depth and quote overflow are enforced',
  'scheduler routes lifecycle through Gateway and execution through Dependency Gate']))

@@ -33,8 +33,8 @@
     "implementation_id": "optional extension field; never derived from a versioned filename"
   },
   "totals": {
-    "deployable_programs": 181,
-    "migrated_v1": 181,
+    "deployable_programs": 184,
+    "migrated_v1": 184,
     "legacy_exempt": 0,
     "backlog_reserved_cell_users": 0,
     "backlog_dynamic_range_users": 0
@@ -3260,6 +3260,14 @@
                 "header_base": 0
               },
               {
+                "source": "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d3"
+                },
+                "header_base": 0
+              },
+              {
                 "source": "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10",
                 "endpoint": {
                   "kind": "device-port",
@@ -5623,7 +5631,7 @@
       }
     },
     {
-      "source": "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10",
+      "source": "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10",
       "service_contract_id": "ic10.script.generic.job.command.gateway",
       "deployment_family": "generic-jobs",
       "status": "migrated-v1",
@@ -5632,8 +5640,8 @@
           {
             "base": 0,
             "contract": "GenericJobCommandGateway",
-            "magic": -518617346,
-            "abi": 4
+            "magic": -1777224088,
+            "abi": 5
           }
         ],
         "schema_fields": [],
@@ -5643,11 +5651,19 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.generic-job-command-gateway.v4",
+            "protocol_id": "ic10.stack.generic-job-command-gateway.v5",
             "provider_header_bases": [
               0
             ],
             "consumers": [
+              {
+                "source": "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              },
               {
                 "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
                 "endpoint": {
@@ -5661,13 +5677,9 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 20,
-        "highest_literal_cell": 86,
+        "literal_cell_count": 11,
+        "highest_literal_cell": 55,
         "dynamic_read_ranges": [
-          {
-            "start": 7,
-            "end": 7
-          },
           {
             "start": 11,
             "end": 15
@@ -5678,7 +5690,7 @@
           },
           {
             "start": 32,
-            "end": 32
+            "end": 33
           },
           {
             "start": 36,
@@ -5686,15 +5698,11 @@
           },
           {
             "start": 48,
-            "end": 48
-          },
-          {
-            "start": 56,
             "end": 62
           },
           {
             "start": 64,
-            "end": 64
+            "end": 65
           },
           {
             "start": 68,
@@ -5702,37 +5710,29 @@
           },
           {
             "start": 80,
-            "end": 80
+            "end": 81
           },
           {
-            "start": 87,
+            "start": 85,
             "end": 93
+          },
+          {
+            "start": 96,
+            "end": 97
+          },
+          {
+            "start": 101,
+            "end": 109
           }
         ],
         "dynamic_write_ranges": [
           {
-            "start": 8,
-            "end": 10
-          },
-          {
-            "start": 33,
-            "end": 35
-          },
-          {
-            "start": 49,
-            "end": 52
-          },
-          {
-            "start": 65,
-            "end": 67
-          },
-          {
-            "start": 81,
-            "end": 84
+            "start": 0,
+            "end": 511
           }
         ],
-        "line_count": 128,
-        "line_headroom_120": -8,
+        "line_count": 120,
+        "line_headroom_120": 0,
         "measured_v1_publication_cost_lines": 3,
         "measured_v1_stack_cost_cells": 8
       },
@@ -5742,19 +5742,26 @@
           1,
           2
         ],
-        "dynamic_read_cells": [
+        "dynamic_read_cells": [],
+        "dynamic_write_cells": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
           7
         ],
-        "dynamic_write_cells": [],
-        "dynamic_read_provenance": "source-derived",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_read_provenance": "source-fingerprinted-exception",
+        "dynamic_write_provenance": "conservative-full-stack"
       },
       "envelope": {
         "service_id": "ic10.script.generic.job.command.gateway",
         "contract": "GenericJobCommandGateway",
-        "magic": -518617346,
-        "magic_token": "HASH(\"GenericJobCommandGateway.v4\")",
-        "service_abi": 4,
+        "magic": -1777224088,
+        "magic_token": "HASH(\"GenericJobCommandGateway.v5\")",
+        "service_abi": 5,
         "schema_id": null,
         "schema_id_hash": null,
         "schema_version": 0,
@@ -5770,7 +5777,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "7245ad0930493629e30495eba53c0cbf5e77fb11fe1f9160d8322fc07a2cc585",
+          "source_sha256": "8d9b3d469c36182b2c7b1373ec3bbdaa5fc110259b4537d3c657e893878acc99",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -5783,23 +5790,27 @@
             },
             {
               "start": 24,
-              "end": 25
+              "end": 26
             },
             {
-              "start": 32,
+              "start": 33,
               "end": 35
             },
             {
-              "start": 48,
+              "start": 49,
               "end": 55
             },
             {
-              "start": 64,
+              "start": 65,
               "end": 67
             },
             {
-              "start": 80,
-              "end": 86
+              "start": 81,
+              "end": 84
+            },
+            {
+              "start": 97,
+              "end": 100
             }
           ],
           "post_init_dynamic_write_ranges": [
@@ -5822,6 +5833,10 @@
             {
               "start": 81,
               "end": 84
+            },
+            {
+              "start": 97,
+              "end": 100
             }
           ]
         },
@@ -5939,7 +5954,7 @@
             ],
             "consumers": [
               {
-                "source": "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10",
+                "source": "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10",
                 "endpoint": {
                   "kind": "device-port",
                   "value": "d0"
@@ -6065,6 +6080,14 @@
                 "endpoint": {
                   "kind": "device-port",
                   "value": "d0"
+                },
+                "header_base": 0
+              },
+              {
+                "source": "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d2"
                 },
                 "header_base": 0
               },
@@ -7969,6 +7992,310 @@
       }
     },
     {
+      "source": "ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10",
+      "service_contract_id": "ic10.script.operator.order.editor",
+      "deployment_family": "manufacturing-ingress",
+      "status": "migrated-v1",
+      "current_layout": {
+        "headers": [
+          {
+            "base": 0,
+            "contract": "OperatorOrderEditor",
+            "magic": 595279945,
+            "abi": 1
+          }
+        ],
+        "schema_fields": [],
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.operator-order-editor.v1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": []
+          }
+        ]
+      },
+      "stack_pressure": {
+        "literal_cell_count": 14,
+        "highest_literal_cell": 43,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "line_count": 120,
+        "line_headroom_120": 0,
+        "measured_v1_publication_cost_lines": 3,
+        "measured_v1_stack_cost_cells": 8
+      },
+      "window_collision": {
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
+        "dynamic_read_cells": [],
+        "dynamic_write_cells": [],
+        "dynamic_read_provenance": "none",
+        "dynamic_write_provenance": "none"
+      },
+      "envelope": {
+        "service_id": "ic10.script.operator.order.editor",
+        "contract": "OperatorOrderEditor",
+        "magic": 595279945,
+        "magic_token": "HASH(\"OperatorOrderEditor.v1\")",
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "schema_assigned_externally": false,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "standard_capabilities": [
+          "ASYNC_REQUEST_V1"
+        ],
+        "capability_mask": 32,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "53c5ff55853affdeaabb0ee8131211f361a411be91519e6fbb1be1e124e8ac3a",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 8
+            },
+            {
+              "start": 11,
+              "end": 13
+            },
+            {
+              "start": 26,
+              "end": 26
+            },
+            {
+              "start": 28,
+              "end": 28
+            },
+            {
+              "start": 30,
+              "end": 30
+            },
+            {
+              "start": 40,
+              "end": 43
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing-ingress"
+      }
+    },
+    {
+      "source": "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10",
+      "service_contract_id": "ic10.script.operator.order.job.ingress",
+      "deployment_family": "manufacturing-ingress",
+      "status": "migrated-v1",
+      "current_layout": {
+        "headers": [
+          {
+            "base": 0,
+            "contract": "OperatorOrderJobIngress",
+            "magic": 845546194,
+            "abi": 1
+          }
+        ],
+        "schema_fields": [],
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.operator-order-job-ingress.v1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": [
+              {
+                "source": "ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d1"
+                },
+                "header_base": 0
+              }
+            ]
+          }
+        ]
+      },
+      "stack_pressure": {
+        "literal_cell_count": 14,
+        "highest_literal_cell": 31,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "line_count": 115,
+        "line_headroom_120": 5,
+        "measured_v1_publication_cost_lines": 3,
+        "measured_v1_stack_cost_cells": 8
+      },
+      "window_collision": {
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
+        "dynamic_read_cells": [],
+        "dynamic_write_cells": [],
+        "dynamic_read_provenance": "none",
+        "dynamic_write_provenance": "none"
+      },
+      "envelope": {
+        "service_id": "ic10.script.operator.order.job.ingress",
+        "contract": "OperatorOrderJobIngress",
+        "magic": 845546194,
+        "magic_token": "HASH(\"OperatorOrderJobIngress.v1\")",
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "schema_assigned_externally": false,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "standard_capabilities": [
+          "ASYNC_REQUEST_V1"
+        ],
+        "capability_mask": 32,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "e036716c9a7c1ad845cb75e9fff0f51c6bee113e0380154e98d81b076ae7f3c8",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 15,
+              "end": 23
+            },
+            {
+              "start": 30,
+              "end": 31
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing-ingress"
+      }
+    },
+    {
+      "source": "ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10",
+      "service_contract_id": "ic10.script.operator.order.recipe.view",
+      "deployment_family": "manufacturing-ingress",
+      "status": "migrated-v1",
+      "current_layout": {
+        "headers": [
+          {
+            "base": 0,
+            "contract": "OperatorOrderRecipeView",
+            "magic": -1303120629,
+            "abi": 1
+          }
+        ],
+        "schema_fields": [],
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.operator-order-recipe-view.v1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": [
+              {
+                "source": "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d1"
+                },
+                "header_base": 0
+              }
+            ]
+          }
+        ]
+      },
+      "stack_pressure": {
+        "literal_cell_count": 11,
+        "highest_literal_cell": 24,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "line_count": 82,
+        "line_headroom_120": 38,
+        "measured_v1_publication_cost_lines": 3,
+        "measured_v1_stack_cost_cells": 8
+      },
+      "window_collision": {
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
+        "dynamic_read_cells": [],
+        "dynamic_write_cells": [],
+        "dynamic_read_provenance": "none",
+        "dynamic_write_provenance": "none"
+      },
+      "envelope": {
+        "service_id": "ic10.script.operator.order.recipe.view",
+        "contract": "OperatorOrderRecipeView",
+        "magic": -1303120629,
+        "magic_token": "HASH(\"OperatorOrderRecipeView.v1\")",
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "schema_assigned_externally": false,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "standard_capabilities": [
+          "ASYNC_REQUEST_V1"
+        ],
+        "capability_mask": 32,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "37c3eaa49c4aa53425d549ca2975e9d35563bb26919f86d7404addf9cec5ab68",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 15,
+              "end": 16
+            },
+            {
+              "start": 19,
+              "end": 24
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing-ingress"
+      }
+    },
+    {
       "source": "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10",
       "service_contract_id": "ic10.script.stock.target.config.policy",
       "deployment_family": "manufacturing-ingress",
@@ -8524,7 +8851,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "27356b11fc00159b1332097a0ac1ebab28a5fc12069deac3a0f6f460e1d9a43e",
+          "source_sha256": "ebb1b84f96033992c6b46de40229154080db6a86b8f4240b39c69c130ec60bc7",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -16363,7 +16690,16 @@
             "provider_header_bases": [
               0
             ],
-            "consumers": []
+            "consumers": [
+              {
+                "source": "ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              }
+            ]
           }
         ]
       },
@@ -16452,6 +16788,14 @@
             "consumers": [
               {
                 "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d1"
+                },
+                "header_base": 0
+              },
+              {
+                "source": "ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10",
                 "endpoint": {
                   "kind": "device-port",
                   "value": "d1"
@@ -18318,7 +18662,16 @@
             "provider_header_bases": [
               0
             ],
-            "consumers": []
+            "consumers": [
+              {
+                "source": "ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              }
+            ]
           }
         ]
       },

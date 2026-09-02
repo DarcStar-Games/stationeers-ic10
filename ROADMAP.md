@@ -69,13 +69,15 @@ Maintain declared on-hand quantities: keep 50 steel sheets available. Reads cohe
 
 This is the cheapest layer and the one with the most operational value: a reader over surfaces that are already published, plus one lane-style writer. Targets are ordinary Config Policy schema, so the existing Host/Editor/Policy pipeline configures them without new UI.
 
-The implementation is under `ic10/manufacturing-ingress/` and is documented in `docs/STOCK_TARGET_INGRESS.md`. Four disabled-by-default persistent targets share coherent exact inventory, active unclaimed output, and sequence-fenced Gateway ABI4 lane-E root publication. Automated coverage is complete; optional live case `LG-STOCK-TARGET-INGRESS` remains pending and activation stays gated on Item 12.
+The implementation is under `ic10/manufacturing-ingress/` and is documented in `docs/STOCK_TARGET_INGRESS.md`. Four disabled-by-default persistent targets share coherent exact inventory, active unclaimed output, and sequence-fenced Gateway ABI5 lane-E root publication. Automated coverage is complete; optional live case `LG-STOCK-TARGET-INGRESS` remains pending and activation stays gated on Item 12.
 
-### 13.2 Operator order ingress
+### 13.2 Operator order ingress — IMPLEMENTED, LIVE ACCEPTANCE PENDING
 
 Explicit one-shot requests: make ten of this now, at this priority. Selects a RecipeHash through the existing Recipe Catalog Lookup, sets quantity and priority, and publishes one root job. Commissioning-class, and a shared-input panel problem rather than a scheduling problem — the Generic Input Scanner/Resolver/Editor pipeline already solves that shape.
 
 Kept distinct from 13.1 because an operator order is satisfied once and then forgotten, while a stock target is continuously re-evaluated. The two must not share one requirement record.
+
+The implementation stages four shared-input values, resolves and revalidates the selected RecipeHash, and publishes one ordinary PRINT root through dedicated Gateway ABI5 lane F. It is documented in `docs/OPERATOR_ORDER_INGRESS.md`; automated coverage is complete and optional live case `LG-OPERATOR-ORDER-INGRESS` remains pending behind Item 12.
 
 ### 13.3 Consumption-rate demand
 
@@ -85,7 +87,7 @@ Materially harder than the other two and the least certain to be worth building.
 
 ## Current milestone status
 
-Items **1–11 are implemented and automatically validated**; detailed completion records are preserved in `docs/COMPLETED_MILESTONES.md`. Item **12 is ACTIVE** and is intentionally not complete until the required live-game evidence is recorded against the current release fingerprint. Item **13 is IN PROGRESS**: 13.1 is implemented but disabled by default and awaits Item-12 closure plus its own live acceptance; 13.2 and 13.3 remain planned.
+Items **1–11 are implemented and automatically validated**; detailed completion records are preserved in `docs/COMPLETED_MILESTONES.md`. Item **12 is ACTIVE** and is intentionally not complete until the required live-game evidence is recorded against the current release fingerprint. Item **13 is IN PROGRESS**: 13.1 and 13.2 are implemented and await Item-12 closure plus their own live acceptance; 13.3 remains planned.
 
 ## Transaction substrate note
 

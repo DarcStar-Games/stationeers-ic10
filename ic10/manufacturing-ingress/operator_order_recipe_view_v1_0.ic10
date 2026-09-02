@@ -1,0 +1,82 @@
+# d0 Recipe Lookup,d1 Execution View. Request S15 Family,S16 Ordinal,S19 token.
+poke 0 HASH("OperatorOrderRecipeView.v1")
+poke 1 1
+poke 2 32
+Loop:
+yield
+get r15 db 19
+get r0 db 20
+beq r15 r0 Loop
+get r3 db 15
+get r4 db 16
+blez r15 Bad
+beqz r3 Bad
+bltz r4 Bad
+round r0 r3
+bne r0 r3 Bad
+round r0 r4
+bne r0 r4 Bad
+get r0 d0 0
+bne r0 HASH("RecipeCatalogLookup.v3") Bad
+get r14 d0 16
+add r14 r14 1
+bgtz r14 Token
+move r14 1
+Token:
+put d0 12 r3
+put d0 13 255
+put d0 14 r4
+put d0 15 r14
+LookupWait:
+yield
+get r0 d0 16
+bne r0 r14 LookupWait
+get r0 d0 8
+bne r0 1 LookupFail
+get r7 d0 10
+get r8 d0 11
+beqz r7 Missing
+get r0 d1 0
+bne r0 HASH("RecipeExecutionProfileView.v1") Bad
+put d1 10 r7
+ProfileWait:
+yield
+get r0 d1 49
+bne r0 r7 ProfileWait
+get r0 d1 15
+bne r0 1 ProfileFail
+get r0 d1 11
+bne r0 r3 ProfileBad
+get r0 d1 12
+bne r0 r8 ProfileBad
+get r9 d1 13
+bltz r9 ProfileBad
+bgt r9 16 ProfileBad
+poke 21 1
+poke 22 r7
+poke 23 r8
+poke 24 r9
+j Reply
+LookupFail:
+get r0 d0 8
+j Fail
+ProfileFail:
+get r0 d1 15
+sub r0 r0 10
+j Fail
+ProfileBad:
+move r0 -12
+j Fail
+Missing:
+move r0 -3
+j Fail
+Bad:
+move r0 -1
+Fail:
+poke 21 r0
+poke 22 0
+poke 23 0
+poke 24 0
+Reply:
+poke 20 r15
+j Loop

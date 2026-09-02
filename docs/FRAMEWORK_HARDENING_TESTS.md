@@ -401,7 +401,7 @@ For the Item-6 Manufacturing Scheduler, perform these live-game Generic Job chec
 4. Complete, fault, and cancel separate jobs; confirm none can transition back to a nonterminal state and all can be reaped.
 5. Reuse a reaped slot and confirm the new JobId differs from the prior occupant even though the physical slot is identical.
 6. Scan all slots while another job is changing state; fence the read with `S2` and reject/retry if the sequence is odd or changes.
-7. Route every lifecycle mutation and root publication through Gateway ABI4; `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` is the sole physical Job Store mailbox writer. Do not wire Scheduler, dependency, POWER, or ingress producers directly to Store request cells.
+7. Route every lifecycle mutation and root publication through Gateway ABI5; `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` is the sole physical Job Store mailbox writer. Do not wire Scheduler, dependency, POWER, or ingress producers directly to Store request cells.
 
 
 ## Manufacturing Scheduler hardening

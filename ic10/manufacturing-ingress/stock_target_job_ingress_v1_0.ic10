@@ -83,7 +83,7 @@ get r14 d2 30
 get r0 d3 51
 bne r0 r12 Bad
 get r0 d0 0
-bne r0 HASH("GenericJobCommandGateway.v4") Bad
+bne r0 HASH("GenericJobCommandGateway.v5") Bad
 put d0 85 r13
 put d0 86 r14
 put d0 87 r3
@@ -99,7 +99,7 @@ GatewayWait:
 yield
 get r15 db 30
 get r0 d0 0
-bne r0 HASH("GenericJobCommandGateway.v4") GatewayWait
+bne r0 HASH("GenericJobCommandGateway.v5") GatewayWait
 put d0 80 r15
 get r0 d0 81
 bne r0 r15 GatewayWait

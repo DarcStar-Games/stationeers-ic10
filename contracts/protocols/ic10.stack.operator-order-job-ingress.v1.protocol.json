@@ -1,32 +1,22 @@
 {
   "$schema": "../../schemas/protocol_definition.schema.json",
   "format": "IC10_PROTOCOL_DEFINITION_V1",
-  "protocol_id": "ic10.stack.generic-job-command-gateway.v4",
-  "name": "GenericJobCommandGateway v4",
+  "protocol_id": "ic10.stack.operator-order-job-ingress.v1",
+  "name": "OperatorOrderJobIngress v1",
   "transport": "ic-housing-stack",
-  "contract": "GenericJobCommandGateway",
-  "magic": -518617346,
-  "abi": 4,
+  "contract": "OperatorOrderJobIngress",
+  "magic": 845546194,
+  "abi": 1,
   "header_bases": [
     0
   ],
   "canonical_refs": [],
   "provider_interfaces": [
     {
-      "source": "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10",
+      "source": "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10",
       "header_base": 0,
-      "readable_ranges": [
-        {
-          "start": 81,
-          "end": 84
-        }
-      ],
-      "writable_ranges": [
-        {
-          "start": 87,
-          "end": 93
-        }
-      ],
+      "readable_ranges": [],
+      "writable_ranges": [],
       "fields": [
         {
           "address": 0,
@@ -56,11 +46,38 @@
           "access": [
             "self-write"
           ],
-          "const": 0
+          "const": 32
         },
         {
-          "address": 8,
-          "name": "S8",
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 16,
+          "name": "S16",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 17,
+          "name": "S17",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 18,
+          "name": "S18",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -77,8 +94,8 @@
           ]
         },
         {
-          "address": 24,
-          "name": "S24",
+          "address": 20,
+          "name": "S20",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -87,8 +104,35 @@
           ]
         },
         {
-          "address": 25,
-          "name": "S25",
+          "address": 21,
+          "name": "S21",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 22,
+          "name": "S22",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 23,
+          "name": "S23",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 30,
+          "name": "S30",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -97,120 +141,13 @@
           ]
         },
         {
-          "address": 32,
-          "name": "S32",
+          "address": 31,
+          "name": "S31",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 33,
-          "name": "S33",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 48,
-          "name": "S48",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 49,
-          "name": "S49",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 53,
-          "name": "S53",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 54,
-          "name": "S54",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 55,
-          "name": "S55",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 64,
-          "name": "S64",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 65,
-          "name": "S65",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 80,
-          "name": "S80",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 81,
-          "name": "S81",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 85,
-          "name": "S85",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 86,
-          "name": "S86",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
+            "self-read",
+            "self-write"
           ]
         }
       ],
@@ -226,30 +163,25 @@
   ],
   "consumer_interfaces": [
     {
-      "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
+      "source": "ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10",
       "endpoint": {
         "kind": "device-port",
-        "value": "d0"
+        "value": "d1"
       },
       "header_base": 0,
       "literal_reads": [
         0,
-        81,
-        82,
-        83,
-        84
+        20,
+        21,
+        22,
+        23
       ],
       "literal_writes": [
-        80,
-        85,
-        86,
-        87,
-        88,
-        89,
-        90,
-        91,
-        92,
-        93
+        15,
+        16,
+        17,
+        18,
+        19
       ],
       "dynamic_read_ranges": [],
       "dynamic_write_ranges": [],
@@ -259,7 +191,7 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": -518617346
+          "value": 845546194
         }
       ],
       "publication_requirements": []

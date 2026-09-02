@@ -109,7 +109,7 @@ executor = IC10(
 executor.run(1)
 edev = Device(102, executor.stack, {"ReferenceId": 102})
 gateway = IC10(
-    src("ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10"),
+    src("ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10"),
     {"d0": edev}, self_ref=103,
 )
 gateway.run(1)
@@ -145,13 +145,13 @@ executor2 = IC10(
 )
 executor2.run(1)
 edev2 = Device(112, executor2.stack)
-gateway2 = IC10(src("ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10"),
+gateway2 = IC10(src("ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10"),
                 {"d0": edev2}, self_ref=113)
 gateway2.run(1)
 gateway2.stack.update({85: 0, 86: 0, 87: 2, 88: 0, 89: 888,
                        90: 1, 91: 1, 92: 2, 93: 1, 80: 20})
 gateway2.run(2)
-resumed = IC10(src("ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10"),
+resumed = IC10(src("ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10"),
                {"d0": edev2}, self_ref=113)
 resumed.stack.update(gateway2.stack)
 resumed.run(1)
@@ -291,7 +291,7 @@ j Loop
     )
     live_executor.run(1)
     live_gateway = IC10(
-        src("ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10"),
+        src("ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10"),
         {"d0": Device(212, live_executor.stack)}, self_ref=213,
     )
     live_gateway.run(1)

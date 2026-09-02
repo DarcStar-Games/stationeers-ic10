@@ -2,7 +2,7 @@
 
 Generated from the deployable `ic10/` inventory. Semantic paths plus version suffixes are the executable source identity; historical numeric source ordinals are intentionally not part of filenames. Deployment family/class metadata is resolved from `data/source_manifest.json`.
 
-Production IC10 programs: 181
+Production IC10 programs: 184
 
 ## Script index
 
@@ -60,7 +60,7 @@ Production IC10 programs: 181
 | `ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10` | 118 | Directory infrastructure | `directory-core` | `conditional-resident` | Consumes frozen Adapter ABI2 snapshots and drives Generic Snapshot Host BEGIN/ADD/COMMIT. |
 | `ic10/directory-core/generic_registry_directory_host_v2_0.ic10` | 115 | Directory infrastructure | `directory-core` | `conditional-resident` | Generic Registry Directory Host ABI3; consumes Adapter ABI2 and persists NodeId-indexed membership. |
 | `ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10` | 121 | Directory infrastructure | `directory-core` | `conditional-resident` | Generic sorted A/B Snapshot Directory Host: width 1..3, capacity 64, dedupe/overflow/generation. |
-| `ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10` | 128 | Generic job control | `generic-jobs` | `conditional-resident` | Five-lane Job command arbiter adding sequence-fenced stock-target root publication to manufacturing, dependency, and POWER requests. |
+| `ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10` | 120 | Generic job control | `generic-jobs` | `conditional-resident` | Six-lane Job command arbiter with independent sequence-fenced stock-target and operator-order root publishers. |
 | `ic10/generic-jobs/generic_job_selector_v3_0.ic10` | 119 | Generic job scheduling | `generic-jobs` | `conditional-resident` | Read-only coherent Job Store selector: default TRANSFORM/PRINT mode or exact JobType mode, Priority descending, JobId cursor fairness. |
 | `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` | 126 | Generic job mutation | `generic-jobs` | `conditional-resident` | Sole Job Store mailbox writer; atomically allocates child/root slots and fences parent or Job/Plan snapshot identity. |
 | `ic10/generic-jobs/generic_job_store_v1_0.ic10` | 121 | Generic job substrate | `generic-jobs` | `conditional-resident` | BANKED_TRANSACTION SELECTOR_BANK store: 32 Generic Job ABI1 records with Store-owned JobIds, optimistic generation, ABI-gated recovery, and crash-safe publication. |
@@ -80,6 +80,9 @@ Production IC10 programs: 181
 | `ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10` | 109 | On-demand commissioning | `live-commissioning` | `on-demand` | Read-only six-source live commissioning snapshot probe with optional stack-generation fencing. |
 | `ic10/live-commissioning/stack_cell_monitor_v1_0.ic10` | 46 | On-demand commissioning | `live-commissioning` | `on-demand` | Read-only target IC stack-cell probe with a Logic Memory address selector and visible value mirror. |
 | `ic10/live-commissioning/stack_header_reader_v1_0.ic10` | 118 | On-demand commissioning | `live-commissioning` | `on-demand` | Read-only common stack header reader: reports a target's identity, ABI, capabilities, and declared fields. |
+| `ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10` | 120 | Manufacturing job ingress | `manufacturing-ingress` | `commissioning` | Stages shared-input recipe family, ordinal, quantity, and priority values and emits one request per commit edge. |
+| `ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10` | 115 | Manufacturing job ingress | `manufacturing-ingress` | `commissioning` | Publishes one recipe-validated PRINT root through dedicated Gateway lane F with restart-safe request identity. |
+| `ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10` | 82 | Manufacturing job ingress | `manufacturing-ingress` | `commissioning` | Resolves a family/ordinal selection through Recipe Lookup and revalidates exact execution metadata. |
 | `ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10` | 83 | Manufacturing ingress configuration | `manufacturing-ingress` | `conditional-resident` | Validates and canonicalizes four persistent ResourceType/target/hysteresis/priority stock declarations. |
 | `ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10` | 77 | Manufacturing demand evaluation | `manufacturing-ingress` | `conditional-resident` | Combines exact stock and unclaimed active output, applies hysteresis, and computes bounded root batches. |
 | `ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10` | 106 | Manufacturing demand observation | `manufacturing-ingress` | `conditional-resident` | Scans active matching jobs and counts roots at full output or dependency children at unclaimed surplus. |

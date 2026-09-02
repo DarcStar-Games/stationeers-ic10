@@ -265,7 +265,7 @@ The job completes after the endpoint accepts the override and the ordinary Gener
 - `ic10/power-jobs/power_job_finalize_v1_0.ic10` verifies the Resource Reservation mirror and advances `RUNNING -> VERIFYING -> COMPLETE`; an incomplete mirror returns pending so selector cursor fairness can service another POWER job.
 - `ic10/power-jobs/power_job_scheduler_v1_0.ic10` coordinates selection, prepare/apply and verify/finalize.
 
-`ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10` retains the POWER lifecycle contract on lane D and adds stock-target root ingress on lane E. `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` remains the sole physical Generic Job Store mailbox writer.
+`ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10` retains the POWER lifecycle contract on lane D alongside stock-target lane E and operator-order lane F root ingress. `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` remains the sole physical Generic Job Store mailbox writer.
 
 ## 8. Correctness boundaries
 

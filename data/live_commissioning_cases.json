@@ -113,6 +113,16 @@
       "probe_recommended": true
     },
     {
+      "id": "LG-OPERATOR-ORDER-INGRESS",
+      "category": "manufacturing",
+      "title": "Operator one-shot recipe-order ingress",
+      "required": false,
+      "source_doc": "docs/OPERATOR_ORDER_INGRESS.md",
+      "section": "Live commissioning case",
+      "acceptance": "One commit publishes one recipe-resolved PRINT root with quantity and priority intact; held commit, invalid recipes, and service reflashes cannot duplicate or create an unsatisfiable job.",
+      "probe_recommended": true
+    },
+    {
       "id": "LG-STOCK-TARGET-INGRESS",
       "category": "manufacturing",
       "title": "Stock-target demand and root-job ingress",

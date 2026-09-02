@@ -1,11 +1,11 @@
 {
   "$schema": "../../schemas/protocol_definition.schema.json",
   "format": "IC10_PROTOCOL_DEFINITION_V1",
-  "protocol_id": "ic10.stack.recipe-execution-profile-view.v1",
-  "name": "RecipeExecutionProfileView v1",
+  "protocol_id": "ic10.stack.operator-order-recipe-view.v1",
+  "name": "OperatorOrderRecipeView v1",
   "transport": "ic-housing-stack",
-  "contract": "RecipeExecutionProfileView",
-  "magic": -1203210243,
+  "contract": "OperatorOrderRecipeView",
+  "magic": -1303120629,
   "abi": 1,
   "header_bases": [
     0
@@ -13,14 +13,9 @@
   "canonical_refs": [],
   "provider_interfaces": [
     {
-      "source": "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10",
+      "source": "ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10",
       "header_base": 0,
-      "readable_ranges": [
-        {
-          "start": 16,
-          "end": 47
-        }
-      ],
+      "readable_ranges": [],
       "writable_ranges": [],
       "fields": [
         {
@@ -31,7 +26,7 @@
           "access": [
             "self-write"
           ],
-          "const": -1203210243
+          "const": -1303120629
         },
         {
           "address": 1,
@@ -51,52 +46,7 @@
           "access": [
             "self-write"
           ],
-          "const": 0
-        },
-        {
-          "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
+          "const": 32
         },
         {
           "address": 15,
@@ -104,12 +54,40 @@
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 16,
+          "name": "S16",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 19,
+          "name": "S19",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 20,
+          "name": "S20",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
             "self-write"
           ]
         },
         {
-          "address": 48,
-          "name": "S48",
+          "address": 21,
+          "name": "S21",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -117,8 +95,26 @@
           ]
         },
         {
-          "address": 49,
-          "name": "S49",
+          "address": 22,
+          "name": "S22",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 23,
+          "name": "S23",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 24,
+          "name": "S24",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -137,7 +133,7 @@
             "id": "header.s0.magic",
             "kind": "cell-equals",
             "address": 0,
-            "equals": -1203210243,
+            "equals": -1303120629,
             "source": "generated-protocol-header"
           },
           {
@@ -153,7 +149,7 @@
   ],
   "consumer_interfaces": [
     {
-      "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
+      "source": "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10",
       "endpoint": {
         "kind": "device-port",
         "value": "d1"
@@ -161,55 +157,16 @@
       "header_base": 0,
       "literal_reads": [
         0,
-        12,
-        13,
-        14,
-        15,
-        49
+        20,
+        21,
+        22,
+        23,
+        24
       ],
       "literal_writes": [
-        10
-      ],
-      "dynamic_read_ranges": [
-        {
-          "start": 16,
-          "end": 47
-        }
-      ],
-      "dynamic_write_ranges": [],
-      "dynamic_read_range_source": "source-derived",
-      "dynamic_write_range_source": "none",
-      "constraints": [
-        {
-          "address": 0,
-          "operator": "equals",
-          "value": -1203210243
-        },
-        {
-          "address": 15,
-          "operator": "equals",
-          "value": 1
-        }
-      ],
-      "publication_requirements": []
-    },
-    {
-      "source": "ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10",
-      "endpoint": {
-        "kind": "device-port",
-        "value": "d1"
-      },
-      "header_base": 0,
-      "literal_reads": [
-        0,
-        11,
-        12,
-        13,
         15,
-        49
-      ],
-      "literal_writes": [
-        10
+        16,
+        19
       ],
       "dynamic_read_ranges": [],
       "dynamic_write_ranges": [],
@@ -219,10 +176,10 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": -1203210243
+          "value": -1303120629
         },
         {
-          "address": 15,
+          "address": 21,
           "operator": "equals",
           "value": 1
         }

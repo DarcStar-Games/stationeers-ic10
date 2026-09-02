@@ -40,7 +40,7 @@ need('ic10/power-grid/power_reservation_allocator_v1_0.ic10','poke 8 0','WaitV:'
 need('ic10/power-grid/power_load_executor_v1_0.ic10','Set:','get r0 d1 10','get r0 d1 8','get r0 d1 9','Write:','sd r3 On r4','getd r5 r1 17','getd r5 r1 18','getd r5 r1 19')
 need('ic10/power-grid/power_link_executor_v1_0.ic10','Set:','get r0 d1 10','get r0 d1 8','get r0 d1 9','Write:','getd r0 r14 17','getd r0 r15 17','getd r0 r14 19','getd r0 r15 19','sd r3 Setting r4','sd r3 On r5','bne r0 2 Scan')
 # POWER jobs and Gateway lane D.
-need('ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10','poke 1 4','get r15 db 64','move r6 4','move r8 68')
+need('ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10','poke 1 5','get r15 db r7','select r6 r0 2 4','add r8 r7 4')
 need('ic10/generic-jobs/generic_job_selector_v3_0.ic10','poke 1 3','get r10 db 18','bne r5 r10 Next','beq r2 7 Next','bge r2 11 Next')
 if (R/'239_power_job_selector_v1_0.ic10').exists():result.fail('duplicate POWER Job selector must not exist')
 need('ic10/power-jobs/power_policy_target_resolver_v1_0.ic10','HASH("DirectorySchema.PowerReservation.v1")','getd r5 r7 28')

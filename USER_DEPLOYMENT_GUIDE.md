@@ -1073,7 +1073,7 @@ This family contains the deployment classes shown in its generated program inven
 <!-- FAMILY_PROGRAMS:generic-jobs START -->
 | Program | Deployment class | Purpose |
 |---|---|---|
-| `ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10` | `conditional-resident` | Five-lane Job command arbiter adding sequence-fenced stock-target root publication to manufacturing, dependency, and POWER requests. |
+| `ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10` | `conditional-resident` | Six-lane Job command arbiter with independent sequence-fenced stock-target and operator-order root publishers. |
 | `ic10/generic-jobs/generic_job_selector_v3_0.ic10` | `conditional-resident` | Read-only coherent Job Store selector: default TRANSFORM/PRINT mode or exact JobType mode, Priority descending, JobId cursor fairness. |
 | `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` | `conditional-resident` | Sole Job Store mailbox writer; atomically allocates child/root slots and fences parent or Job/Plan snapshot identity. |
 | `ic10/generic-jobs/generic_job_store_v1_0.ic10` | `conditional-resident` | BANKED_TRANSACTION SELECTOR_BANK store: 32 Generic Job ABI1 records with Store-owned JobIds, optimistic generation, ABI-gated recovery, and crash-safe publication. |
@@ -1083,7 +1083,7 @@ This family contains the deployment classes shown in its generated program inven
 One Generic Job Store and the domain scheduler(s) that will consume it.
 
 ### Wiring and configuration
-`ic10/generic-jobs/generic_job_store_v1_0.ic10` is the 32-slot durable Store. `ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10` is the sole production command-mailbox serializer/arbiter. `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` executes Store mutations. `ic10/generic-jobs/generic_job_selector_v3_0.ic10` is the coherent selector used by manufacturing and POWER selection modes.
+`ic10/generic-jobs/generic_job_store_v1_0.ic10` is the 32-slot durable Store. `ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10` is the sole production command-mailbox serializer/arbiter. `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` executes Store mutations. `ic10/generic-jobs/generic_job_selector_v3_0.ic10` is the coherent selector used by manufacturing and POWER selection modes.
 
 ### Deployment procedure
 Start Store, then Gateway/Executor, then selectors/schedulers. Publish a test job through the proper command lane; verify monotonic JobId, state generation, legal lifecycle edges, terminal immutability and reap.
@@ -1098,7 +1098,7 @@ QueueSequence is coherent/even, stale ExpectedGeneration is rejected, terminal j
 Stuck job: inspect lifecycle state/wait reason and Gateway lane. Duplicate mutation after reflash is a release blocker.
 
 ### Reflash / replacement
-Store/Gateway recovery must replay deterministic request identity without applying a committed mutation twice.
+Same-ABI Store/Gateway recovery must replay deterministic request identity without applying a committed mutation twice. Before replacing Gateway ABI4 with ABI5, suppress new work, let every producer consume its final response and reach idle, then stop the producer ICs. Recheck Gateway `S24=0` and request equals response on every ABI4 lane: `S19=S8`, `S32=S33`, `S48=S49`, `S64=S65`, and `S80=S81`. Load ABI5, verify its header, then resume producers.
 
 ### What can be removed
 Keep only if queued jobs are used. Controller-only deployments do not need Generic Jobs.
@@ -1166,22 +1166,25 @@ Conditional-resident while automated manufacturing is enabled.
 
 ---
 
-## Stock-Target Manufacturing Ingress
+## Manufacturing Demand and Order Ingress
 <!-- DEPLOYMENT_FAMILY:manufacturing-ingress -->
 
 ### Purpose
-Maintain up to four declared ITEM quantities by publishing ordinary Generic Job roots for coherent deficits.
+Maintain declared ITEM stock and place explicit one-shot printer-recipe orders through ordinary Generic Job roots.
 
 ### Use this when
-Item 12 field evidence is complete and automated manufacturing should replenish exact on-hand stock without manual job staging.
+Item 12 field evidence is complete and the base needs automatic stock replenishment or an operator-facing one-shot order panel.
 
 ### Deployment class
-Conditional-resident and disabled by default; every target has `ResourceType=0` until explicitly configured.
+Stock targets are conditional-resident and disabled by default. Operator-order programs are commissioning-class and may be reclaimed between order-entry sessions.
 
 ### Programs
 <!-- FAMILY_PROGRAMS:manufacturing-ingress START -->
 | Program | Deployment class | Purpose |
 |---|---|---|
+| `ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10` | `commissioning` | Stages shared-input recipe family, ordinal, quantity, and priority values and emits one request per commit edge. |
+| `ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10` | `commissioning` | Publishes one recipe-validated PRINT root through dedicated Gateway lane F with restart-safe request identity. |
+| `ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10` | `commissioning` | Resolves a family/ordinal selection through Recipe Lookup and revalidates exact execution metadata. |
 | `ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10` | `conditional-resident` | Validates and canonicalizes four persistent ResourceType/target/hysteresis/priority stock declarations. |
 | `ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10` | `conditional-resident` | Combines exact stock and unclaimed active output, applies hysteresis, and computes bounded root batches. |
 | `ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10` | `conditional-resident` | Scans active matching jobs and counts roots at full output or dependency children at unclaimed surplus. |
@@ -1192,31 +1195,31 @@ Conditional-resident and disabled by default; every target has `ResourceType=0` 
 <!-- FAMILY_PROGRAMS:manufacturing-ingress END -->
 
 ### Prerequisites
-Generic Config Host, ITEM Reservation Selector, Job Store/Gateway/Executor, Dependency Plan Store/Claim View, Producer Resolver, Requirement View, and healthy Transform/Print execution.
+Job Store/Gateway ABI5/Executor, Dependency Plan Store, and healthy Transform/Print execution. Stock targets also need Config Host, ITEM Reservation Selector, Claim View, Producer Resolver, and Requirement View. Operator orders need Generic Input Scanner/Resolver, a dedicated Recipe Lookup, a dedicated Recipe Execution Profile View, and a commit Switch.
 
 ### Wiring and configuration
-Follow `docs/STOCK_TARGET_INGRESS.md`. Producer View has evaluator and mutation-time lanes. Job Ingress is the only Gateway lane-E writer and wires `d2` to Demand View plus `d3` to Config Host. Executor `d1` points to Dependency Plan Store.
+Follow `docs/STOCK_TARGET_INGRESS.md` for continuous targets and `docs/OPERATOR_ORDER_INGRESS.md` for one-shot orders. Stock Job Ingress exclusively owns Gateway lane E. Operator Order Ingress exclusively owns lane F and wires its Recipe View to dedicated Lookup and exact Execution Profile service instances; do not share those request mailboxes with the resident print pipeline. Executor `d1` points to Dependency Plan Store.
 
 ### Deployment procedure
-Keep all four targets disabled while wiring and identity checks settle. After Item 12 required evidence passes, enable one target, verify sufficient-stock suppression, then lower inventory past hysteresis and confirm exactly one ordinary Generic Job root is published.
+Keep all four targets disabled while wiring and identity checks settle. After Item 12 required evidence passes, test one stock deficit. For operator orders, stage all four panel fields, commit one known recipe, verify one root, then hold/release/recommit and test an unknown ordinal.
 
 ### Healthy state
-Sufficient stock and hysteresis-bound deficits allocate no job. A proven deficit allocates one root; duplicate targets count its active unclaimed output.
+Sufficient stock and hysteresis-bound deficits allocate no job. A proven deficit allocates one root; duplicate targets count its active unclaimed output. An operator commit allocates exactly one PRINT root and reports its JobId/slot.
 
 ### Commissioning proof
-Optional `LG-STOCK-TARGET-INGRESS`, only after Item 12 required suites pass.
+Optional `LG-STOCK-TARGET-INGRESS` and `LG-OPERATOR-ORDER-INGRESS`, only after Item 12 required suites pass.
 
 ### Common failures
-Status `-2` means lower-bound ambiguity. Status `2` means the atomic publication snapshot changed and will be re-evaluated. Status `-1` means config/service/metadata failure.
+For stock targets, `-2` means lower-bound ambiguity and `2` means the atomic snapshot changed. For operator orders, `-3` means the recipe selection was not found, `-4` means not all panel fields were staged, and `-5` means a Store/Plan sequence was busy. `-1` is a service/metadata failure.
 
 ### Reflash / replacement
-Keep Job Store and Plan Store intact. Evaluator restarts evaluation; Ingress and Gateway replay one pending token without allocating a second root.
+Keep Job Store and Plan Store intact. Stock evaluation restarts safely. Operator Editor preserves the held-switch edge state; both ingress writers and Gateway replay one pending token without allocating a second root.
 
 ### What can be removed
-All family programs may be reclaimed when automatic stock replenishment is disabled and every target is zeroed.
+Reclaim the three operator-order programs and shared panel when no order is being placed. Reclaim stock programs only after automatic replenishment is disabled and every target is zeroed.
 
 ### Technical references
-`docs/STOCK_TARGET_INGRESS.md`, `docs/GENERIC_JOB_ABI.md`, `docs/DEPENDENCY_PLANNING.md`
+`docs/STOCK_TARGET_INGRESS.md`, `docs/OPERATOR_ORDER_INGRESS.md`, `docs/GENERIC_JOB_ABI.md`, `docs/DEPENDENCY_PLANNING.md`
 
 ---
 
