@@ -81,7 +81,7 @@
       }
     ],
     "dynamic_read_range_source": "none",
-    "dynamic_write_range_source": "conservative-full-stack",
+    "dynamic_write_range_source": "source-derived",
     "clears_all": true,
     "external_readable_ranges": [
       {

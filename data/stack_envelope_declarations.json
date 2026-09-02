@@ -967,7 +967,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "f0d7ff194bd3f399d454d20a4cf374a75d4ad889fac6bf21cec8cc47532cade0",
+   "source_sha256": "04972f960962fcb46030c0e89c3b70e0f4e505415468429751d12dec294efc29",
    "legacy_owned_ranges": [
     [
      8,
@@ -975,13 +975,13 @@
     ],
     [
      20,
-     511
+     31
     ]
    ],
    "post_init_dynamic_write_ranges": [
     [
      20,
-     511
+     31
     ]
    ],
    "pilot_family": "material-transform"
@@ -1026,7 +1026,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "b3322c7235f93e3e42f946323f1ad0570fe8b48dc0603a560a498e4ba5341b8f",
+   "source_sha256": "8820b303174f7339ae82f9b75ffa929bcd0530cf2179035e75a9ce3aa24fb27b",
    "legacy_owned_ranges": [
     [
      8,
@@ -1034,13 +1034,13 @@
     ],
     [
      32,
-     511
+     40
     ]
    ],
    "post_init_dynamic_write_ranges": [
     [
      32,
-     511
+     40
     ]
    ],
    "pilot_family": "material-transform"
@@ -2366,13 +2366,13 @@
     ],
     [
      20,
-     511
+     83
     ]
    ],
    "post_init_dynamic_write_ranges": [
     [
      20,
-     511
+     83
     ]
    ],
    "pilot_family": "manufacturing"

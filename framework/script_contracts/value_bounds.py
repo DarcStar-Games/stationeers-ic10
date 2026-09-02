@@ -99,21 +99,37 @@ BOOLEAN_RESULTS = {
 PAIR_BUDGET = 1 << 16
 
 
-def back_edges(program: list[dict]) -> list[tuple[int, int]]:
-    """Loop regions [target, source] for every branch or jump that goes backwards."""
+def back_edges(program: list[dict]) -> dict[int, tuple[int, ...]]:
+    """Every backward branch or jump, as the latches returning to each loop header.
+
+    Two back edges to one label are two ways around one loop and not two loops.
+    A record scan that restarts from each of three rejections has three, and
+    counting them separately would read one register the scan advances as
+    advanced by three enclosing loops at once.
+    """
     labels = {entry["label"]: index for index, entry in enumerate(program) if entry["label"]}
-    regions = []
+    latches: dict[int, list[int]] = {}
     for index, entry in enumerate(program):
         row = entry["row"]
         if not row or not (row[0] == "j" or row[0].startswith("b")):
             continue
         target = labels.get(row[-1])
         if target is not None and target <= index:
-            regions.append((target, index))
-    return regions
+            latches.setdefault(target, []).append(index)
+    return {header: tuple(found) for header, found in sorted(latches.items())}
 
 
-def region_induction(program: list[dict], region: tuple[int, int]) -> dict[str, list[tuple[int, int]]]:
+def advance_amount(row: list[str]) -> int | None:
+    """How far one row moves its own register, when that is all it does to it."""
+    if (row[0] == "add" and len(row) >= 4 and row[1] == row[2]
+            and row[3].lstrip("-").isdigit() and int(row[3]) > 0):
+        return int(row[3])
+    return None
+
+
+def region_induction(
+    program: list[dict], nodes: set[int], advancing: set[int],
+) -> dict[str, list[tuple[int, int]]]:
     """Registers one loop carries, each as the `(index, amount)` of every advance.
 
     A register is loop-carried only when every write to it inside the loop
@@ -122,24 +138,27 @@ def region_induction(program: list[dict], region: tuple[int, int]) -> dict[str, 
     back edge and the seed scan already sees it. A register advanced more than
     once per pass keeps every advance, because how far it moves in a pass is
     their sum and where it stands at an access is the sum of those before it.
+
+    An advance the pass does not make is not one it carries. The span between a
+    header and its latch is not the pass: a record scan that restarts from a
+    rejection puts its latch above the block it runs once it *succeeds*, and the
+    counter that block advances belongs to the loop around the scan, not to the
+    scan. So the writes are looked for wherever the loop runs, and the advances
+    counted only where a pass really reaches them.
     """
-    start, end = region
     registers = ("sp", "ra", *(f"r{number}" for number in range(16)))
     written: dict[str, list[tuple[int, list[str]]]] = {}
-    for index in range(start, end + 1):
+    for index in sorted(nodes | advancing):
         row = program[index]["row"]
         for register in registers:
             if row and writes_register(row, register):
                 written.setdefault(register, []).append((index, row))
-    return {
-        register: [(index, int(row[3])) for index, row in updates]
+    carried = {
+        register: [(index, advance_amount(row)) for index, row in updates if index in advancing]
         for register, updates in written.items()
-        if all(
-            row[0] == "add" and len(row) >= 4 and row[1] == row[2]
-            and row[3].lstrip("-").isdigit() and int(row[3]) > 0
-            for _, row in updates
-        )
+        if all(advance_amount(row) is not None for _, row in updates)
     }
+    return {register: updates for register, updates in carried.items() if updates}
 
 
 def dynamic_accesses(
@@ -192,18 +211,21 @@ class ValueBounds:
         self.labels = {entry["label"]: index for index, entry in enumerate(self.program) if entry["label"]}
         self.regions = back_edges(self.program)
         self._sites: dict[int, dict[str, set[int]]] = {}
-        self._carried: dict[tuple[int, int], dict[str, list[tuple[int, int]]]] = {}
+        self._carried: dict[int, dict[str, list[tuple[int, int]]]] = {}
         self._forward: dict[tuple[int, int], set[int]] = {}
         self._backward: dict[tuple[int, int], set[int]] = {}
+        self._pass_nodes: dict[int, set[int]] = {}
+        self._span: dict[int, set[int]] = {}
+        self._state_predecessors: dict[CallState, set[CallState]] | None = None
         self._reaching: dict[tuple[str, frozenset[int]], dict[int, frozenset[int | None]]] = {}
 
     def sites(self, index: int) -> dict[str, set[int]]:
         """Every loop advance around `index`, by register -- the writes a seed scan skips."""
         if index not in self._sites:
             found: dict[str, set[int]] = {}
-            for region in self.regions:
-                if region[0] <= index <= region[1]:
-                    for register, updates in self.region_carried(region).items():
+            for header in self.regions:
+                if index in self.region_span(header):
+                    for register, updates in self.region_carried(header).items():
                         found.setdefault(register, set()).update(place for place, _ in updates)
             self._sites[index] = found
         return self._sites[index]
@@ -241,6 +263,62 @@ class ValueBounds:
                 pending.extend(reverse.get(node, set()) - seen)
             self._backward[key] = seen
         return self._backward[key]
+
+    def state_predecessors(self) -> dict[CallState, set[CallState]]:
+        if self._state_predecessors is None:
+            reverse: dict[CallState, set[CallState]] = {}
+            for state, outgoing in self.states.items():
+                for target in outgoing:
+                    reverse.setdefault(target, set()).add(state)
+            self._state_predecessors = reverse
+        return self._state_predecessors
+
+    def pass_nodes(self, header: int) -> set[int]:
+        """What one pass runs: the header, and whatever gets back to a latch.
+
+        A branch or jump backwards names a loop, but not which instructions the
+        loop is made of, and the span between the two is the wrong answer. A
+        record scan that restarts from a rejection puts its latch above the
+        block it runs once it *succeeds*, so that block lies inside the span
+        while no path from it reaches the latch except by entering the loop
+        again -- and reading the span makes the success block's own counter look
+        like something the scan advances.
+
+        The walk is over the call states rather than their projection for the
+        reason `arriving` is: merging call strings joins each caller's entry to
+        every caller's return, and a pass stitched from two of them collects an
+        advance from a second loop that shares the subroutine, which lands in
+        this loop's stride as if one pass made both.
+        """
+        if header not in self._pass_nodes:
+            latches = set(self.regions[header])
+            reverse = self.state_predecessors()
+            seen: set[CallState] = set()
+            pending = [state for state in self.states if state[0] in latches]
+            while pending:
+                state = pending.pop()
+                if state in seen or state[0] == header:
+                    continue
+                seen.add(state)
+                pending.extend(reverse.get(state, set()) - seen)
+            self._pass_nodes[header] = {header} | {index for index, _ in seen}
+        return self._pass_nodes[header]
+
+    def region_span(self, header: int) -> set[int]:
+        """Everywhere the loop at `header` can run, over-counted as a plain span.
+
+        The pass is the precise answer and this is not it: this is the wider net
+        the disqualifying scan is cast over, because a write that resets a
+        register the loop would otherwise carry has to be found wherever it
+        stands, including on a path that leaves the loop rather than returning.
+        """
+        if header not in self._span:
+            self._span[header] = set(range(header, max(self.regions[header]) + 1))
+        return self._span[header]
+
+    def every_latch(self, header: int, place: int) -> bool:
+        """Does `place` stand on every way around the loop at `header`?"""
+        return all(place in self.dominators.get(latch, ()) for latch in self.regions[header])
 
     def comparison(self, index: int) -> tuple[str, str, str, int] | None:
         """`(operator, register, compared token, branch target)` for an ordering test."""
@@ -307,14 +385,14 @@ class ValueBounds:
             for node in live
         )
 
-    def trip_bound(self, region: tuple[int, int], depth: int, seen) -> tuple[int | None, bool]:
-        """Most passes `region` can make, from whatever branch counts it out.
+    def trip_bound(self, header: int, depth: int, seen) -> tuple[int | None, bool]:
+        """Most passes the loop at `header` can make, from whatever branch counts it out.
 
         The test may sit at the top and leave when it holds, or at the bottom and
         return to the head when it holds; either way it names a counter the loop
         advances and the last value whose pass still runs the body. A test some
         path around the loop can skip is not a bound, so only tests that dominate
-        the back edge are read.
+        every latch are read.
 
         Whether the count is also a ceiling is a separate answer, and the
         tightest count is the one that has to carry it: a looser bound beside it
@@ -322,32 +400,40 @@ class ValueBounds:
         three inputs can under-count on its own -- a limit that is really higher,
         a seed that is really lower, and an advance some pass around the loop
         skips, which makes the step smaller than the sum of its parts.
+
+        A fourth thing can take the ceiling away, and it is not about counting at
+        all: the edge the test declines has to leave. A loop whose bounded exit
+        falls straight into an unconditional jump back to the head never stops,
+        and its counter runs on past the value the test named -- so the count
+        stands as a floor there and never as the whole of it.
         """
         if not self.complete:
             return None, False
-        head, back = region
-        carried = self.region_carried(region)
+        span = self.region_span(header)
+        pass_nodes = self.pass_nodes(header)
+        carried = self.region_carried(header)
         sites = {register: {place for place, _ in updates} for register, updates in carried.items()}
         trips, counted = None, False
-        for index in range(head, back + 1):
+        for index in sorted(span):
             compared = self.comparison(index)
-            if compared is None or index not in self.dominators.get(back, ()):
+            if compared is None or not self.every_latch(header, index):
                 continue
             operator, counter, against, target = compared
             updates = carried.get(counter, ())
             step = sum(amount for _, amount in updates)
-            table = LAST_PASS_CONTINUING if head <= target <= back else LAST_PASS_EXITING
+            table = LAST_PASS_CONTINUING if target in pass_nodes else LAST_PASS_EXITING
             if not step or operator not in table:
                 continue
+            leaving = target if table is LAST_PASS_EXITING else index + 1
             _, limit, limit_trusted = self.interval_of(index, against, sites, depth + 1, seen)
             # The counter enters the loop at its seed: asking for its value here
             # would ask for the trip count that is being derived.
-            entering, entering_whole = self.seed_values(head, counter, sites, depth + 1, seen)
+            entering, entering_whole = self.seed_values(header, counter, sites, depth + 1, seen)
             if limit is None or not entering:
                 continue
             passes = max(0, (limit + table[operator] - min(entering)) // step + 1)
-            whole = limit_trusted and entering_whole and all(
-                place in self.dominators.get(back, ()) for place, _ in updates
+            whole = leaving not in pass_nodes and limit_trusted and entering_whole and all(
+                self.every_latch(header, place) for place, _ in updates
             )
             if trips is None or passes < trips:
                 trips, counted = passes, whole
@@ -355,19 +441,21 @@ class ValueBounds:
                 counted = counted or whole
         return trips, counted
 
-    def region_carried(self, region: tuple[int, int]) -> dict[str, list[tuple[int, int]]]:
-        if region not in self._carried:
-            self._carried[region] = region_induction(self.program, region)
-        return self._carried[region]
+    def region_carried(self, header: int) -> dict[str, list[tuple[int, int]]]:
+        if header not in self._carried:
+            self._carried[header] = region_induction(
+                self.program, self.region_span(header), self.pass_nodes(header)
+            )
+        return self._carried[header]
 
-    def carrying_regions(self, index: int, token: str) -> list[tuple[int, int]]:
+    def carrying_regions(self, index: int, token: str) -> list[int]:
         """Every loop around `index` that advances `token` and never resets it."""
         return [
-            region for region in self.regions
-            if region[0] <= index <= region[1] and token in self.region_carried(region)
+            header for header in self.regions
+            if index in self.region_span(header) and token in self.region_carried(header)
         ]
 
-    def carried(self, index: int, token: str) -> tuple[tuple[int, int], int, int] | None:
+    def carried(self, index: int, token: str) -> tuple[int, int, int] | None:
         """`(region, stride, prefix)` for the innermost loop that advances `token`.
 
         `stride` is how far one whole pass moves the register, `prefix` how far
@@ -379,8 +467,8 @@ class ValueBounds:
         Several advances only sum into one stride when the pass really makes all
         of them. Two that a branch chooses between move the register by one or
         the other, never their sum, and reading them as a sequence would claim
-        cells no execution reaches -- so unless every advance dominates the back
-        edge, a register advanced more than once is left at its first pass.
+        cells no execution reaches -- so unless every advance dominates every
+        latch, a register advanced more than once is left at its first pass.
 
         A prefix asks more of an advance than a stride does. Skipping one only
         ever leaves the register somewhere the stride already names, but a prefix
@@ -388,24 +476,33 @@ class ValueBounds:
         without it reads the cell before -- which the prefix drops off the front
         of the window. So an advance the access can be reached without is not one
         it stands behind, however few there are.
+
+        Which advances those are is a question about the pass and not about where
+        they are written. An advance below the access still runs before it when
+        the pass reaches the access through it, and reading the prefix off the
+        text there anchors the window one whole stride low -- claiming the cell
+        before the first read and dropping the last. So an advance counts into
+        the prefix when it dominates the access, is ignored when no pass reaches
+        the access from it at all, and stands the derivation down in between,
+        where some passes run it first and others do not.
         """
-        region = None
-        for candidate in self.carrying_regions(index, token):
-            if region is None or candidate[0] > region[0]:
-                region = candidate
-        if region is None:
+        around = self.carrying_regions(index, token)
+        if not around:
             return None
+        region = max(around)
         updates = self.region_carried(region)[token]
         every_pass = self.complete and all(
-            place in self.dominators.get(region[1], ()) for place, _ in updates
+            self.every_latch(region, place) for place, _ in updates
         )
         if len(updates) > 1 and not every_pass:
             return None
-        standing = [(place, amount) for place, amount in updates if place < index]
-        if standing and not (self.complete and all(
-            place in self.dominators.get(index, ()) for place, _ in standing
-        )):
-            return None
+        standing = []
+        for place, amount in updates:
+            if place == index or index not in self.forward(place, region):
+                continue
+            if not (self.complete and place in self.dominators.get(index, ())):
+                return None
+            standing.append((place, amount))
         return (region,
                 sum(amount for _, amount in updates),
                 sum(amount for _, amount in standing))
@@ -447,15 +544,21 @@ class ValueBounds:
             # cell a peer can steer this to and every cell it can reach at all.
             return set(range(low, high + 1)), trusted
         carried = self.carried(index, token) if token in sites else None
+        alone = carried is not None and len(self.carrying_regions(index, token)) == 1
         if token in sites:
             # A loop this cannot read the advances of leaves the register
             # somewhere past the seed, and an enclosing loop that advances it too
             # leaves it somewhere past the innermost pass read below.
-            whole = whole and carried is not None and len(self.carrying_regions(index, token)) == 1
+            whole = whole and alone
         if carried is not None:
             region, stride, prefix = carried
             values = {value + prefix for value in values}
-            trips, counted = self.trip_bound(region, depth, seen)
+            # One loop's passes only count a register out when that loop is the
+            # only one advancing it. An enclosing loop that advances it too
+            # re-enters the inner one, so the inner count bounds a pass and not
+            # the register, and what the register can hold is then whatever the
+            # guards at the access permit.
+            trips, counted = self.trip_bound(region, depth, seen) if alone else (None, False)
             advances = -1 if trips is None else trips - 1
             if high is not None:
                 # A guard at the access counts the loop out as well as its own
