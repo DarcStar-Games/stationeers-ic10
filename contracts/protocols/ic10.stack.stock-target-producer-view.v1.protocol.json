@@ -1,0 +1,343 @@
+{
+  "$schema": "../../schemas/protocol_definition.schema.json",
+  "format": "IC10_PROTOCOL_DEFINITION_V1",
+  "protocol_id": "ic10.stack.stock-target-producer-view.v1",
+  "name": "StockTargetProducerView v1",
+  "transport": "ic-housing-stack",
+  "contract": "StockTargetProducerView",
+  "magic": 1786703937,
+  "abi": 1,
+  "header_bases": [
+    0
+  ],
+  "canonical_refs": [],
+  "provider_interfaces": [
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10",
+      "header_base": 0,
+      "readable_ranges": [],
+      "writable_ranges": [],
+      "fields": [
+        {
+          "address": 0,
+          "name": "Header@S0.Magic",
+          "value_type": "hash",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ],
+          "const": 1786703937
+        },
+        {
+          "address": 1,
+          "name": "Header@S0.ABI",
+          "value_type": "integer",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 2,
+          "name": "S2",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 32
+        },
+        {
+          "address": 15,
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 18,
+          "name": "S18",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 19,
+          "name": "S19",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 20,
+          "name": "S20",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 21,
+          "name": "S21",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 22,
+          "name": "S22",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 23,
+          "name": "S23",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 24,
+          "name": "S24",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 25,
+          "name": "S25",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 26,
+          "name": "S26",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 32,
+          "name": "S32",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 33,
+          "name": "S33",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 34,
+          "name": "S34",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
+        },
+        {
+          "address": 35,
+          "name": "S35",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 36,
+          "name": "S36",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 37,
+          "name": "S37",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 38,
+          "name": "S38",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 39,
+          "name": "S39",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 40,
+          "name": "S40",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 41,
+          "name": "S41",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        }
+      ],
+      "behavior": {
+        "publication_rules": [],
+        "restart": {
+          "mode": "preserved-unless-overwritten",
+          "source": "static-entry-path-analysis"
+        },
+        "invariants": [
+          {
+            "id": "header.s0.magic",
+            "kind": "cell-equals",
+            "address": 0,
+            "equals": 1786703937,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s0.abi",
+            "kind": "cell-equals",
+            "address": 1,
+            "equals": 1,
+            "source": "generated-protocol-header"
+          }
+        ]
+      }
+    }
+  ],
+  "consumer_interfaces": [
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d1"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "literal_writes": [
+        15,
+        18
+      ],
+      "dynamic_read_ranges": [],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "none",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 1786703937
+        },
+        {
+          "address": 20,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "publication_requirements": []
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d1"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41
+      ],
+      "literal_writes": [
+        32,
+        33
+      ],
+      "dynamic_read_ranges": [],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "none",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 1786703937
+        },
+        {
+          "address": 35,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "publication_requirements": []
+    }
+  ]
+}

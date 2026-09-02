@@ -2,7 +2,7 @@
 
 This roadmap tracks the remaining major milestones after completion of the generic catalog/storage/discovery substrate, manufacturing scheduler, physical ITEM inventory/storage layer, bounded dependency planner, and power-management generalization. Detailed records for completed Items 1–11 live in `docs/COMPLETED_MILESTONES.md`.
 
-Items 1–11 are implemented and automatically validated. Item 12 is the active field-validation milestone: it closes the remaining gap between deterministic/model evidence and real Stationeers device, network, timing, and reflash behavior without changing the authority model merely to make commissioning easier. Item 13 is planned behind it and supplies the missing demand/ingress layer above manufacturing.
+Items 1–11 are implemented and automatically validated. Item 12 is the active field-validation milestone: it closes the remaining gap between deterministic/model evidence and real Stationeers device, network, timing, and reflash behavior without changing the authority model merely to make commissioning easier. Item 13 is in progress behind it: stock-target ingress is implemented inert-by-default, while live activation and later ingress layers remain gated.
 
 ## Cross-cutting invariants
 
@@ -53,7 +53,7 @@ Acceptance requires:
 
 See `docs/LIVE_COMMISSIONING.md` and `docs/FRAMEWORK_HARDENING_TESTS.md`.
 
-## 13. Manufacturing demand and job ingress — PLANNED
+## 13. Manufacturing demand and job ingress — IN PROGRESS
 
 Nothing in the framework decides that a job is needed. `docs/MANUFACTURING_SCHEDULER.md` records the boundary: "The scheduler does not submit jobs. Job ingress may be manual or provided by a later UI/control service." Exactly one program issues Job Store `PUBLISH_NEW` today — `ic10/dependency-planning/dependency_child_creator_v2_0.ic10` on Gateway lane C — and it only creates children of a job that already exists. Item 8 answers "given that X is needed, what else must be made"; no component answers "X is needed".
 
@@ -61,13 +61,15 @@ Root job intent therefore has to be staged into a free Job Store slot by hand. T
 
 Item 13 adds no second job lifecycle, queue, or reservation ledger. Ingress publishes ordinary `GENERIC_JOB_ABI_V1` intent through the existing Gateway/Command Executor serialization, and `ic10/manufacturing/manufacturing_scheduler_v1_0.ic10` continues to own every lifecycle edge after publication.
 
-**Sequencing.** No layer starts before Item 12 closes. Ingress that publishes into an execution path with no field evidence produces live failures with more machinery standing in front of them.
+**Sequencing.** Live activation starts only after Item 12 closes. Item 13.1 is implemented inert-by-default so its contracts and optional field case can be reviewed without publishing into an execution path that still lacks complete Item-12 evidence.
 
-### 13.1 Stock-target ingress
+### 13.1 Stock-target ingress — IMPLEMENTED, LIVE ACCEPTANCE PENDING
 
 Maintain declared on-hand quantities: keep 50 steel sheets available. Reads coherent ITEM inventory from Generic Resource Endpoints, subtracts active future-output claims through `ic10/dependency-planning/dependency_claim_view_v1_0.ic10` so one shortfall is not ordered twice, and publishes a single root job when the deficit exceeds a configured hysteresis band. Coherent requirement quoting already exists in `ic10/dependency-planning/job_inventory_preflight_v1_0.ic10`.
 
 This is the cheapest layer and the one with the most operational value: a reader over surfaces that are already published, plus one lane-style writer. Targets are ordinary Config Policy schema, so the existing Host/Editor/Policy pipeline configures them without new UI.
+
+The implementation is under `ic10/manufacturing-ingress/` and is documented in `docs/STOCK_TARGET_INGRESS.md`. Four disabled-by-default persistent targets share coherent exact inventory, active unclaimed output, and sequence-fenced Gateway ABI4 lane-E root publication. Automated coverage is complete; optional live case `LG-STOCK-TARGET-INGRESS` remains pending and activation stays gated on Item 12.
 
 ### 13.2 Operator order ingress
 
@@ -83,7 +85,7 @@ Materially harder than the other two and the least certain to be worth building.
 
 ## Current milestone status
 
-Items **1–11 are implemented and automatically validated**; detailed completion records are preserved in `docs/COMPLETED_MILESTONES.md`. Item **12 is ACTIVE** and is intentionally not complete until the required live-game evidence is recorded against the current release fingerprint. Item **13 is PLANNED** and is gated on Item 12: its three ingress layers publish into the manufacturing execution path, and building them before that path carries field evidence would only add machinery in front of untested behaviour.
+Items **1–11 are implemented and automatically validated**; detailed completion records are preserved in `docs/COMPLETED_MILESTONES.md`. Item **12 is ACTIVE** and is intentionally not complete until the required live-game evidence is recorded against the current release fingerprint. Item **13 is IN PROGRESS**: 13.1 is implemented but disabled by default and awaits Item-12 closure plus its own live acceptance; 13.2 and 13.3 remain planned.
 
 ## Transaction substrate note
 

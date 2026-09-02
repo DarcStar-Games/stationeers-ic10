@@ -1,12 +1,12 @@
 Boot:
 get r0 db 0
-bne r0 HASH("GenericJobCommandGateway.v3") Init
+bne r0 HASH("GenericJobCommandGateway.v4") Init
 get r0 db 1
-beq r0 3 Loop
+beq r0 4 Loop
 Init:
 clr db
-poke 0 HASH("GenericJobCommandGateway.v3")
-poke 1 3
+poke 0 HASH("GenericJobCommandGateway.v4")
+poke 1 4
 poke 2 0
 Loop:
 yield
@@ -26,25 +26,23 @@ bne r15 r0 C
 get r15 db 64
 get r0 db 65
 bne r15 r0 D
+get r15 db 80
+get r0 db 81
+bne r15 r0 E
 j Loop
 A:
 move r6 1
-move r7 7
 move r8 11
 j Life
 B:
 move r6 2
-move r7 32
 move r8 36
 j Life
 D:
 move r6 4
-move r7 64
 move r8 68
 Life:
 blez r15 Loop
-poke 24 r6
-poke 25 r15
 move r9 35
 CopyLife:
 get r0 db r8
@@ -58,49 +56,62 @@ put d0 22 -1
 j Send
 C:
 move r6 3
-poke 24 r6
-poke 25 r15
-put d0 35 1
-get r0 db 63
-put d0 36 r0
-put d0 37 0
-put d0 38 0
-put d0 39 0
+move r8 56
 get r0 db 53
 put d0 12 r0
 get r0 db 54
 put d0 13 r0
 get r0 db 55
 put d0 22 r0
-move r8 56
+j Create
+E:
+move r6 5
+move r8 87
+get r0 db 85
+put d0 28 r0
+get r0 db 86
+put d0 29 r0
+put d0 12 0
+put d0 13 0
+put d0 22 -1
+Create:
+put d0 35 1
+put d0 36 -1
 move r9 14
-CopyC:
+CopyCreate:
 get r0 db r8
 put d0 r9 r0
 add r8 r8 1
 add r9 r9 1
-ble r9 20 CopyC
+ble r9 20 CopyCreate
 Send:
-put d0 21 r6
-mul r0 r15 5
-add r0 r0 r6
-put d0 23 r0
-j Wait
+poke 25 r15
+poke 24 r6
 Wait:
 get r15 db 25
 get r6 db 24
-mul r0 r15 5
+mul r0 r15 6
 add r0 r0 r6
+put d0 21 r6
+put d0 23 r0
 get r1 d0 24
 bne r1 r0 Loop
 get r2 d0 25
 get r3 d0 26
 get r4 d0 27
-beq r6 3 ReplyC
+beq r6 3 CreateReply
+beq r6 5 CreateReply
 seq r0 r6 1
 select r7 r0 7 32
 seq r0 r6 4
 select r7 r0 64 r7
+j Reply
+CreateReply:
+seq r0 r6 3
+select r7 r0 48 80
+add r8 r7 4
+poke r8 r4
+Reply:
 add r8 r7 2
 poke r8 r2
 add r8 r7 3
@@ -111,14 +122,6 @@ get r0 db r9
 bne r0 r15 Done
 add r7 r7 1
 poke r7 r15
-j Done
-ReplyC:
-poke 50 r2
-poke 51 r3
-poke 52 r4
-get r0 db 48
-bne r0 r15 Done
-poke 49 r15
 Done:
 poke 24 0
 poke 25 0

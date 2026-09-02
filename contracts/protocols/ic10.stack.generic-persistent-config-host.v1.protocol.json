@@ -544,6 +544,129 @@
       "publication_requirements": []
     },
     {
+      "source": "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        13,
+        20,
+        52,
+        53
+      ],
+      "literal_writes": [
+        10,
+        12,
+        13,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        48,
+        50
+      ],
+      "dynamic_read_ranges": [
+        {
+          "start": 128,
+          "end": 143
+        }
+      ],
+      "dynamic_write_ranges": [
+        {
+          "start": 32,
+          "end": 47
+        },
+        {
+          "start": 128,
+          "end": 143
+        }
+      ],
+      "dynamic_read_range_source": "source-derived",
+      "dynamic_write_range_source": "source-derived",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": -759746849
+        }
+      ],
+      "publication_requirements": []
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        8,
+        12,
+        51
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [
+        {
+          "start": 96,
+          "end": 111
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": -759746849
+        },
+        {
+          "address": 12,
+          "operator": "equals",
+          "value": -2029967823
+        }
+      ],
+      "publication_requirements": []
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d3"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        8,
+        12,
+        51
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "none",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": -759746849
+        },
+        {
+          "address": 12,
+          "operator": "equals",
+          "value": -2029967823
+        }
+      ],
+      "publication_requirements": []
+    },
+    {
       "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
       "endpoint": {
         "kind": "device-port",

@@ -1,0 +1,84 @@
+# Two-lane ITEM target -> canonical root manufacturing intent resolver.
+poke 0 HASH("StockTargetProducerView.v1")
+poke 1 1
+poke 2 32
+Loop:
+yield
+get r15 db 18
+get r0 db 19
+bne r15 r0 A
+get r15 db 33
+get r0 db 34
+bne r15 r0 B
+j Loop
+A:
+move r14 1
+get r2 db 15
+j Resolve
+B:
+move r14 2
+get r2 db 32
+Resolve:
+beqz r2 Bad
+get r0 d0 0
+bne r0 HASH("ItemProducerResolver.v1") Bad
+get r0 d1 0
+bne r0 HASH("JobRequirementView.v1") Bad
+mul r13 r15 3
+add r13 r13 r14
+put d0 8 r2
+put d0 9 r13
+WaitProducer:
+yield
+get r0 d0 10
+bne r0 r13 WaitProducer
+get r0 d0 11
+bne r0 1 Bad
+get r3 d0 12
+get r4 d0 13
+put d1 15 r3
+put d1 16 r4
+put d1 17 1
+put d1 18 -1
+put d1 19 r13
+WaitRequirement:
+yield
+get r0 d1 20
+bne r0 r13 WaitRequirement
+get r0 d1 21
+bne r0 1 Bad
+get r5 d1 22
+get r6 d1 23
+get r7 d1 24
+get r8 d1 25
+bne r7 r2 Bad
+blez r8 Bad
+beq r14 2 PublishB
+poke 21 r3
+poke 22 r5
+poke 23 r4
+poke 24 r6
+poke 25 1
+poke 26 r8
+poke 20 1
+poke 19 r15
+j Loop
+PublishB:
+poke 36 r3
+poke 37 r5
+poke 38 r4
+poke 39 r6
+poke 40 1
+poke 41 r8
+poke 35 1
+poke 34 r15
+j Loop
+Bad:
+beq r14 2 BadB
+poke 20 -1
+poke 19 r15
+j Loop
+BadB:
+poke 35 -1
+poke 34 r15
+j Loop

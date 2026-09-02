@@ -50,6 +50,12 @@
    "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10",
    "ic10/item-storage-larre/larre_storage_reserved_move_client_v1_0.ic10",
    "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10",
+   "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10",
+   "ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10",
+   "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10",
+   "ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10",
+   "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
+   "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10",
    "ic10/manufacturing/generic_print_runtime_v2_0.ic10",
    "ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10",
    "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10",
@@ -3835,18 +3841,14 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "b47723d5304bd0a4ff98577e8ccb46d8c274e16c333b8033c4e5c967437606ea",
+   "source_sha256": "96d4ec9373baa0eb31f1905f7b95e666bb9f9887d745826e14e14d679b446f07",
    "legacy_owned_ranges": [
     [
      12,
      13
     ],
     [
-     22,
-     27
-    ],
-    [
-     30,
+     21,
      32
     ],
     [
@@ -3857,10 +3859,10 @@
    "post_init_dynamic_write_ranges": [],
    "pilot_family": "generic-jobs"
   },
-  "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10": {
+  "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10": {
    "service_id": "ic10.script.generic.job.command.gateway",
    "contract": "GenericJobCommandGateway",
-   "service_abi": 3,
+   "service_abi": 4,
    "schema_id": null,
    "schema_version": 0,
    "extension_base": 0,
@@ -3870,7 +3872,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "0a0cb31822214db541af43c44f3f0a8e2eac14815cceaa332444805eda59dff5",
+   "source_sha256": "7245ad0930493629e30495eba53c0cbf5e77fb11fe1f9160d8322fc07a2cc585",
    "legacy_owned_ranges": [
     [
      8,
@@ -3893,8 +3895,12 @@
      55
     ],
     [
-     63,
+     64,
      67
+    ],
+    [
+     80,
+     86
     ]
    ],
    "post_init_dynamic_write_ranges": [
@@ -3907,11 +3913,145 @@
      35
     ],
     [
+     49,
+     52
+    ],
+    [
      65,
      67
+    ],
+    [
+     81,
+     84
     ]
    ],
    "pilot_family": "generic-jobs"
+  },
+  "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10": {
+   "service_id": "ic10.script.stock.target.config.policy",
+   "contract": "StockTargetConfigPolicy",
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "e8e4a176362fc813d8b8f1bfe7991ca4131c3fe216e950ec1938db2ecac5cf30",
+   "legacy_owned_ranges": [],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing-ingress"
+  },
+  "ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10": {
+   "service_id": "ic10.script.stock.target.demand.view",
+   "contract": "StockTargetDemandView",
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "ee2eea27295cc8c8115b35a840762f78470c99cca72385a78f7bc6943a8582f2",
+   "legacy_owned_ranges": [[15, 20], [23, 30]],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing-ingress"
+  },
+  "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10": {
+   "service_id": "ic10.script.stock.target.future.view",
+   "contract": "StockTargetFutureView",
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "66d56b02bb3d29abcdc1cfecb6056f1ac4e862531c40c1c022eac62e8af28925",
+   "legacy_owned_ranges": [[15, 24]],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing-ingress"
+  },
+  "ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10": {
+   "service_id": "ic10.script.stock.target.inventory.view",
+   "contract": "StockTargetInventoryView",
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "43ec95175c4e51a61501719034d58c5bc507344fc7aa150ca1bce2ff7cefa32c",
+   "legacy_owned_ranges": [[15, 16], [18, 22]],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing-ingress"
+  },
+  "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10": {
+   "service_id": "ic10.script.stock.target.job.evaluator",
+   "contract": "StockTargetJobEvaluator",
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "dbbd8b357f60ce36a473a9052ddf1f6961dc7129df6f9f0756ebaa6e4b3afac5",
+   "legacy_owned_ranges": [[8, 8], [14, 14], [29, 30]],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing-ingress"
+  },
+  "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10": {
+   "service_id": "ic10.script.stock.target.job.ingress",
+   "contract": "StockTargetJobIngress",
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "27356b11fc00159b1332097a0ac1ebab28a5fc12069deac3a0f6f460e1d9a43e",
+   "legacy_owned_ranges": [[15, 22], [24, 32]],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing-ingress"
+  },
+  "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10": {
+   "service_id": "ic10.script.stock.target.producer.view",
+   "contract": "StockTargetProducerView",
+   "service_abi": 1,
+   "schema_id": null,
+   "schema_version": 0,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "9a346b091b9fe7c416aa93ecbbc4e6c8c16dc9b70a58bbce554ff9be9b5958b9",
+   "legacy_owned_ranges": [[15, 15], [18, 26], [32, 41]],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "manufacturing-ingress"
   },
   "ic10/generic-jobs/generic_job_selector_v3_0.ic10": {
    "service_id": "ic10.script.generic.job.selector",
@@ -4903,7 +5043,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "6edf07edddfb850d95d988ce89e44cdb9d150a44fa9a92d7bd2203bb962a0620",
+   "source_sha256": "d926efbd05c801be2f206035c816390b5eb2d39cd7bee1411c7e4dd151de5b09",
    "legacy_owned_ranges": [
     [
      14,

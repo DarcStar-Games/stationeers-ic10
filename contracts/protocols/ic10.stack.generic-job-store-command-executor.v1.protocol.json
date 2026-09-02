@@ -71,6 +71,15 @@
           ]
         },
         {
+          "address": 21,
+          "name": "S21",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
           "address": 22,
           "name": "S22",
           "value_type": "number",
@@ -123,6 +132,24 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
+          ]
+        },
+        {
+          "address": 28,
+          "name": "S28",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 29,
+          "name": "S29",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read"
           ]
         },
         {
@@ -223,7 +250,7 @@
   ],
   "consumer_interfaces": [
     {
-      "source": "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10",
+      "source": "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10",
       "endpoint": {
         "kind": "device-port",
         "value": "d0"
@@ -242,11 +269,10 @@
         21,
         22,
         23,
+        28,
+        29,
         35,
-        36,
-        37,
-        38,
-        39
+        36
       ],
       "dynamic_read_ranges": [],
       "dynamic_write_ranges": [

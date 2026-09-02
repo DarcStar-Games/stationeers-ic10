@@ -1,9 +1,9 @@
 {
   "format": "IC10_SCRIPT_CONTRACT_INDEX_V1",
-  "contract_count": 174,
+  "contract_count": 181,
   "own_stack_range_inventory": {
-    "dynamic_script_count": 62,
-    "source_proven_surface_count": 75,
+    "dynamic_script_count": 64,
+    "source_proven_surface_count": 77,
     "unresolved_fallback_count": 20,
     "scripts": [
       {
@@ -1218,7 +1218,7 @@
         }
       },
       {
-        "source": "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10",
+        "source": "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10",
         "read": {
           "dynamic": true,
           "ranges": [
@@ -1243,6 +1243,10 @@
               "end": 40
             },
             {
+              "start": 48,
+              "end": 48
+            },
+            {
               "start": 56,
               "end": 62
             },
@@ -1253,6 +1257,14 @@
             {
               "start": 68,
               "end": 72
+            },
+            {
+              "start": 80,
+              "end": 80
+            },
+            {
+              "start": 87,
+              "end": 93
             }
           ],
           "proven_ranges": [
@@ -1277,6 +1289,10 @@
               "end": 40
             },
             {
+              "start": 48,
+              "end": 48
+            },
+            {
               "start": 56,
               "end": 62
             },
@@ -1287,6 +1303,14 @@
             {
               "start": 68,
               "end": 72
+            },
+            {
+              "start": 80,
+              "end": 80
+            },
+            {
+              "start": 87,
+              "end": 93
             }
           ],
           "provenance": "source-derived"
@@ -1657,6 +1681,56 @@
             {
               "start": 64,
               "end": 93
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "provenance": "source-derived"
+        }
+      },
+      {
+        "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
+        "read": {
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
+        },
+        "write": {
+          "dynamic": true,
+          "ranges": [
+            {
+              "start": 0,
+              "end": 511
+            }
+          ],
+          "proven_ranges": [
+            {
+              "start": 0,
+              "end": 511
             }
           ],
           "provenance": "source-derived"
@@ -6707,6 +6781,81 @@
         }
       ]
     },
+    "ic10.interface.access.850823b41f026e23": {
+      "stack": {
+        "literal_reads": [
+          49,
+          50,
+          51
+        ],
+        "literal_writes": [
+          48,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62
+        ],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": [
+          {
+            "address": 50,
+            "equals": 1
+          }
+        ]
+      },
+      "assumptions": {
+        "properties_read": [],
+        "properties_written": [],
+        "slot_properties_read": [],
+        "slot_properties_written": []
+      },
+      "provider_obligations": {
+        "verification": "commissioning-required",
+        "stack_readable_ranges": [
+          {
+            "start": 49,
+            "end": 51
+          }
+        ],
+        "stack_writable_ranges": [
+          {
+            "start": 48,
+            "end": 48
+          },
+          {
+            "start": 53,
+            "end": 62
+          }
+        ],
+        "constraints": [
+          {
+            "address": 50,
+            "equals": 1
+          }
+        ],
+        "properties_readable": [],
+        "properties_writable": [],
+        "slot_properties_readable": [],
+        "slot_properties_writable": []
+      },
+      "consumers": [
+        {
+          "source": "ic10/dependency-planning/dependency_child_creator_v2_0.ic10",
+          "port": "d3"
+        }
+      ]
+    },
     "ic10.interface.access.8a989a765c37f701": {
       "stack": {
         "literal_reads": [
@@ -8838,82 +8987,6 @@
         }
       ]
     },
-    "ic10.interface.access.dcd15409082fa7f9": {
-      "stack": {
-        "literal_reads": [
-          49,
-          50,
-          51
-        ],
-        "literal_writes": [
-          48,
-          53,
-          54,
-          55,
-          56,
-          57,
-          58,
-          59,
-          60,
-          61,
-          62,
-          63
-        ],
-        "dynamic_read": false,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "none",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 50,
-            "equals": 1
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 49,
-            "end": 51
-          }
-        ],
-        "stack_writable_ranges": [
-          {
-            "start": 48,
-            "end": 48
-          },
-          {
-            "start": 53,
-            "end": 63
-          }
-        ],
-        "constraints": [
-          {
-            "address": 50,
-            "equals": 1
-          }
-        ],
-        "properties_readable": [],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/dependency-planning/dependency_child_creator_v2_0.ic10",
-          "port": "d3"
-        }
-      ]
-    },
     "ic10.interface.access.dff2531591dc6f23": {
       "stack": {
         "literal_reads": [
@@ -10394,11 +10467,11 @@
       "consumes": []
     },
     {
-      "source": "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10",
-      "contract": "contracts/generic-jobs/generic_job_command_gateway_v3_0.contract.json",
+      "source": "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10",
+      "contract": "contracts/generic-jobs/generic_job_command_gateway_v4_0.contract.json",
       "service_id": "ic10.script.generic.job.command.gateway",
       "provides": [
-        "ic10.stack.generic-job-command-gateway.v3"
+        "ic10.stack.generic-job-command-gateway.v4"
       ],
       "consumes": [
         "ic10.stack.generic-job-store-command-executor.v1"
@@ -10423,6 +10496,7 @@
         "ic10.stack.generic-job-store-command-executor.v1"
       ],
       "consumes": [
+        "ic10.stack.dependency-plan-store.v2",
         "ic10.stack.generic-job-store.v1"
       ]
     },
@@ -10584,6 +10658,93 @@
         "ic10.stack.stack-header-reader.v1"
       ],
       "consumes": []
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10",
+      "contract": "contracts/manufacturing-ingress/stock_target_config_policy_v1_0.contract.json",
+      "service_id": "ic10.script.stock.target.config.policy",
+      "provides": [
+        "ic10.stack.stock-target-config-policy.v1"
+      ],
+      "consumes": [
+        "ic10.stack.generic-persistent-config-host.v1"
+      ]
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10",
+      "contract": "contracts/manufacturing-ingress/stock_target_demand_view_v1_0.contract.json",
+      "service_id": "ic10.script.stock.target.demand.view",
+      "provides": [
+        "ic10.stack.stock-target-demand-view.v1"
+      ],
+      "consumes": [
+        "ic10.stack.stock-target-future-view.v1",
+        "ic10.stack.stock-target-inventory-view.v1"
+      ]
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10",
+      "contract": "contracts/manufacturing-ingress/stock_target_future_view_v1_0.contract.json",
+      "service_id": "ic10.script.stock.target.future.view",
+      "provides": [
+        "ic10.stack.stock-target-future-view.v1"
+      ],
+      "consumes": [
+        "ic10.stack.dependency-claim-view.v1",
+        "ic10.stack.dependency-plan-store.v2",
+        "ic10.stack.generic-job-store.v1"
+      ]
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10",
+      "contract": "contracts/manufacturing-ingress/stock_target_inventory_view_v1_0.contract.json",
+      "service_id": "ic10.script.stock.target.inventory.view",
+      "provides": [
+        "ic10.stack.stock-target-inventory-view.v1"
+      ],
+      "consumes": [
+        "ic10.stack.item-resource-reservation-selector.v1"
+      ]
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
+      "contract": "contracts/manufacturing-ingress/stock_target_job_evaluator_v1_0.contract.json",
+      "service_id": "ic10.script.stock.target.job.evaluator",
+      "provides": [
+        "ic10.stack.stock-target-job-evaluator.v1"
+      ],
+      "consumes": [
+        "ic10.stack.generic-persistent-config-host.v1",
+        "ic10.stack.stock-target-demand-view.v1",
+        "ic10.stack.stock-target-job-ingress.v1",
+        "ic10.stack.stock-target-producer-view.v1"
+      ]
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
+      "contract": "contracts/manufacturing-ingress/stock_target_job_ingress_v1_0.contract.json",
+      "service_id": "ic10.script.stock.target.job.ingress",
+      "provides": [
+        "ic10.stack.stock-target-job-ingress.v1"
+      ],
+      "consumes": [
+        "ic10.stack.generic-job-command-gateway.v4",
+        "ic10.stack.generic-persistent-config-host.v1",
+        "ic10.stack.stock-target-demand-view.v1",
+        "ic10.stack.stock-target-producer-view.v1"
+      ]
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10",
+      "contract": "contracts/manufacturing-ingress/stock_target_producer_view_v1_0.contract.json",
+      "service_id": "ic10.script.stock.target.producer.view",
+      "provides": [
+        "ic10.stack.stock-target-producer-view.v1"
+      ],
+      "consumes": [
+        "ic10.stack.item-producer-resolver.v1",
+        "ic10.stack.job-requirement-view.v1"
+      ]
     },
     {
       "source": "ic10/manufacturing/generic_print_runtime_v2_0.ic10",

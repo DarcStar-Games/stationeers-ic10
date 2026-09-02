@@ -312,9 +312,9 @@
    "d3": {
     "kind": "script",
     "providers": [
-     "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10"
+     "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"submits child intent through Gateway lane C\"; docs/DEPLOYMENT.md: \"lane C Child Creator\" [Gateway lane C cells confirmed in gateway source: lane C token S48/response S49 (get r15 db 48 / get r0 db 49), request payload S53..S63, reply pokes 50,51,52. Creator writes d3 53..63 + token 48, reads 49,50(status==1),51 (child JobId).]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"submits child intent through Gateway lane C\"; docs/DEPLOYMENT.md: \"lane C Child Creator\" [Gateway lane C cells confirmed in gateway source: lane C token S48/response S49 (get r15 db 48 / get r0 db 49), request payload S53..S62, reply pokes 50,51,52. Creator writes d3 53..62 + token 48, reads 49,50(status==1),51 (child JobId).]"
    }
   },
   "ic10/dependency-planning/dependency_child_validity_v1_0.ic10": {
@@ -423,7 +423,7 @@
    "d3": {
     "kind": "script",
     "providers": [
-     "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10"
+     "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10"
     ],
     "note": "docs/DEPENDENCY_PLANNING.md: \"Planner may request cancellation through Gateway lane B\"; docs/DEPLOYMENT.md: \"lane B dependency Planner cancellation\" [Gateway lane B cells confirmed in gateway source: token S32/response S33 (get r15 db 32 / get r0 db 33), lifecycle payload copied from S36..S40. Controller writes d3 36=2 (SET_STATE), 37 child JobId, 38 generation, 39=12, 40=-20, token 32; reads 33. Docs attribute lane B to \"Planner cancellation\"; the existing-plan controller is the component that physically writes it on the planner's behalf.]"
    }
@@ -606,7 +606,7 @@
    }
   },
   "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10": {},
-  "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10": {
+  "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10": {
    "d0": {
     "kind": "script",
     "providers": [
@@ -630,7 +630,14 @@
     "providers": [
      "ic10/generic-jobs/generic_job_store_v1_0.ic10"
     ],
-    "note": "Peer named by d0 S0 magic check (HASH(\"GenericJobStore.v1\")). docs/GENERIC_JOB_ABI.md:383: \"generic_job_store_command_executor_v1_0.ic10 remains the sole physical Job Store mailbox writer\" (executor's only port is d0). [Corroborated cell-exact: Executor writes d0 7 (command seq) and 11..15 (payload), reads replies d0 8,9,10; generic_job_store_v1_0 reads db 7, db 11..15 and pokes 8,9,10. Executor also walks the Store's slot directory at 288+7*slot and record bank at 32/33+8*slot.]"
+    "note": "Peer named by d0 S0 magic check (HASH(\"GenericJobStore.v1\")). Executor writes the Store request mailbox and reads coherent job slots."
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/dependency-planning/dependency_plan_store_v2_0.ic10"
+    ],
+    "note": "Root publication names DependencyPlanStore.v2 and requires its exact even S40 sequence; child/lifecycle requests do not consume this pin."
    }
   },
   "ic10/generic-jobs/generic_job_store_v1_0.ic10": {},
@@ -845,9 +852,9 @@
    "d0": {
     "kind": "script",
     "providers": [
-     "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10"
+     "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:269: \"manufacturing_scheduler_v1_0.ic10 (`d0 -> Job Gateway`, `d1 -> Job Selector`, `d2 -> Dependency Gate`)\"; source pin comment: \"d0 Job Gateway\"; docs/DEPENDENCY_PLANNING.md:175: \"generic_job_command_gateway_v3_0.ic10 arbitrates independent command producers\" (Scheduler = lane A) [docs/MANUFACTURING_SCHEDULER.md:426 still says `d0 -> Job Store` \u2014 that is the pre-Item-8 wiring; DEPLOYMENT.md, the source pin comment, and DEPENDENCY_PLANNING.md (Scheduler publishes through Gateway lane A rather than writing the Job Store directly) supersede it.]"
+    "note": "docs/DEPLOYMENT.md:269: \"manufacturing_scheduler_v1_0.ic10 (`d0 -> Job Gateway`, `d1 -> Job Selector`, `d2 -> Dependency Gate`)\"; source pin comment: \"d0 Job Gateway\"; docs/DEPENDENCY_PLANNING.md:175: \"generic_job_command_gateway_v4_0.ic10 arbitrates independent command producers\" (Scheduler = lane A) [docs/MANUFACTURING_SCHEDULER.md:426 still says `d0 -> Job Store` \u2014 that is the pre-Item-8 wiring; DEPLOYMENT.md, the source pin comment, and DEPENDENCY_PLANNING.md (Scheduler publishes through Gateway lane A rather than writing the Job Store directly) supersede it.]"
    },
    "d1": {
     "kind": "script",
@@ -963,6 +970,37 @@
    }
   },
   "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10": {},
+  "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10": {
+   "d0": {"kind": "script", "providers": ["ic10/controller-config/generic_persistent_config_host_v1_1.ic10"], "note": "Policy names GenericPersistentConfigHost.v1 before publishing the ManufacturingStockTarget schema."}
+  },
+  "ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10": {
+   "d0": {"kind": "script", "providers": ["ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10"], "note": "Exact/lower-bound stock classification consumes ItemResourceReservationSelector.v1 quotes."}
+  },
+  "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10": {
+   "d0": {"kind": "script", "providers": ["ic10/generic-jobs/generic_job_store_v1_0.ic10"], "note": "Active producer jobs are read under GenericJobStore.v1 QueueSequence."},
+   "d1": {"kind": "script", "providers": ["ic10/dependency-planning/dependency_claim_view_v1_0.ic10"], "note": "DependencyClaimView.v1 distinguishes root output from claimed child output."},
+   "d2": {"kind": "script", "providers": ["ic10/dependency-planning/dependency_plan_store_v2_0.ic10"], "note": "DependencyPlanStore.v2 S40 fences the complete future-output scan."}
+  },
+  "ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10": {
+   "d0": {"kind": "script", "providers": ["ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10"], "note": "StockTargetInventoryView.v1 supplies exact stock or explicit ambiguity."},
+   "d1": {"kind": "script", "providers": ["ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10"], "note": "StockTargetFutureView.v1 supplies coherent unclaimed active output and snapshot sequences."}
+  },
+  "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10": {
+   "d0": {"kind": "script", "providers": ["ic10/dependency-planning/item_producer_resolver_v1_0.ic10"], "note": "ItemProducerResolver.v1 maps target ResourceType to TRANSFORM or PRINT identity."},
+   "d1": {"kind": "script", "providers": ["ic10/dependency-planning/job_requirement_view_v1_0.ic10"], "note": "JobRequirementView.v1 supplies capability, input count, and output-per-batch metadata."}
+  },
+  "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10": {
+   "d0": {"kind": "script", "providers": ["ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10"], "note": "Peer named by d0 S0 magic check (GenericJobCommandGateway.v4, ABI 4); StockTargetJobIngress.v1 is its sole lane-E producer."},
+   "d1": {"kind": "script", "providers": ["ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10"], "note": "StockTargetProducerView.v1 lane B revalidates identity and output-per-batch at mutation time."},
+   "d2": {"kind": "script", "providers": ["ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10"], "note": "StockTargetDemandView.v1 reruns exact stock and active-output demand immediately before lane-E staging."},
+   "d3": {"kind": "script", "providers": ["ic10/controller-config/generic_persistent_config_host_v1_1.ic10"], "note": "GenericPersistentConfigHost.v1 generation fences the configured target across mutation-time revalidation."}
+  },
+  "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10": {
+   "d0": {"kind": "script", "providers": ["ic10/controller-config/generic_persistent_config_host_v1_1.ic10"], "note": "Evaluator reads the coherent ManufacturingStockTarget effective image from GenericPersistentConfigHost.v1."},
+   "d1": {"kind": "script", "providers": ["ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10"], "note": "StockTargetProducerView.v1 lane A resolves target metadata; its lane B serves the ingress writer."},
+   "d2": {"kind": "script", "providers": ["ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10"], "note": "StockTargetDemandView.v1 returns no-need, ambiguity, or one bounded deficit."},
+   "d3": {"kind": "script", "providers": ["ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10"], "note": "StockTargetJobIngress.v1 serializes the proven root intent through lane E."}
+  },
   "ic10/material-grid/material_export_slot_endpoint_v1_0.ic10": {
    "d0": {
     "kind": "physical-device",
@@ -1474,7 +1512,7 @@
    "d0": {
     "kind": "script",
     "providers": [
-     "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10"
+     "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10"
     ],
     "note": "docs/POWER_MANAGEMENT.md: 'power_job_lifecycle_client_v1_0.ic10 uses Job Gateway lane D.' + docs/DEPLOYMENT.md: 'lane D Power Scheduler. Do not connect two writers to one lane.' [Client writes d0 S68-S72 (command 2 + params) and S64 token, reads S65 ack / S66 status==1 - exactly gateway v3's lane-D window (gateway: get r15 db 64 / get r0 db 65; lane base registers 64/68). Header: '# Lane-D POWER lifecycle client'.]"
    }

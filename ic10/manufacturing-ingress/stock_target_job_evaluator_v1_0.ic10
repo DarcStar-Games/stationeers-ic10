@@ -1,0 +1,119 @@
+# d0 Host,d1 Producer View,d2 Demand View,d3 Lane-E ingress writer.
+Boot:
+get r0 db 0
+bne r0 HASH("StockTargetJobEvaluator.v1") Init
+get r0 db 1
+beq r0 1 Loop
+Init:
+clr db
+poke 0 HASH("StockTargetJobEvaluator.v1")
+poke 1 1
+poke 2 0
+Loop:
+yield
+get r0 d0 0
+bne r0 HASH("GenericPersistentConfigHost.v1") Fault
+get r0 d0 8
+blez r0 Fault
+get r0 d0 12
+bne r0 HASH("CFG1|ManufacturingStockTarget|1|2|255|255|0|0") Fault
+get r15 d0 51
+get r14 db 29
+mul r0 r14 4
+add r0 r0 96
+get r2 d0 r0
+add r0 r0 1
+get r3 d0 r0
+add r0 r0 1
+get r4 d0 r0
+add r0 r0 1
+get r5 d0 r0
+get r0 d0 51
+bne r0 r15 Loop
+beqz r2 NoNeed
+get r1 db 30
+add r1 r1 1
+poke 30 r1
+get r0 d1 0
+bne r0 HASH("StockTargetProducerView.v1") Fault
+put d1 15 r2
+put d1 18 r1
+WaitProducer:
+yield
+get r0 d1 19
+bne r0 r1 WaitProducer
+get r0 d1 20
+bne r0 1 Fault
+get r6 d1 21
+get r7 d1 22
+get r8 d1 23
+get r9 d1 24
+get r10 d1 25
+get r11 d1 26
+get r0 d2 0
+bne r0 HASH("StockTargetDemandView.v1") Fault
+mul r13 r1 3
+add r13 r13 1
+put d2 15 r2
+put d2 16 r3
+put d2 17 r4
+put d2 18 r6
+put d2 19 r8
+put d2 20 r11
+put d2 23 r13
+WaitDemand:
+yield
+get r0 d2 24
+bne r0 r13 WaitDemand
+get r0 d2 25
+beq r0 2 NoNeed
+beq r0 3 Ambiguous
+bne r0 1 Fault
+get r12 d2 26
+get r13 d2 29
+get r14 d2 30
+get r0 d0 51
+bne r0 r15 Loop
+get r0 d3 0
+bne r0 HASH("StockTargetJobIngress.v1") Fault
+put d3 15 r2
+put d3 16 r3
+put d3 17 r4
+put d3 18 r6
+put d3 19 r7
+put d3 20 r8
+put d3 21 r9
+put d3 22 r10
+put d3 24 r5
+put d3 31 r11
+put d3 32 r15
+put d3 25 r1
+WaitPublish:
+yield
+get r0 d3 26
+bne r0 r1 WaitPublish
+get r0 d3 27
+bne r0 1 Retry
+get r0 d3 28
+poke 14 r0
+poke 8 1
+j Next
+Retry:
+poke 8 2
+j Next
+Ambiguous:
+poke 8 -2
+j Next
+NoNeed:
+poke 8 0
+j Next
+Fault:
+poke 8 -1
+Next:
+get r0 db 29
+add r0 r0 1
+blt r0 4 Save
+move r0 0
+Save:
+poke 29 r0
+j Loop
