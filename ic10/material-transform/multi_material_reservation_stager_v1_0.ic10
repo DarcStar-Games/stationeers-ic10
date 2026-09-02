@@ -1,7 +1,7 @@
 # Multi Reservation Stager ABI1. d0 Resolver,d1 Allocator. No commit.
 get r0 db 0
 beq r0 HASH("MultiMaterialReservationStager.v1") Init
-poke 8 0
+clr db
 Init:
 poke 0 HASH("MultiMaterialReservationStager.v1")
 poke 1 1

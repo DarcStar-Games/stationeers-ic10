@@ -10101,8 +10101,8 @@
         ],
         "dynamic_write_ranges": [
           {
-            "start": 32,
-            "end": 40
+            "start": 0,
+            "end": 511
           }
         ],
         "line_count": 120,
@@ -10126,7 +10126,16 @@
           6,
           7
         ],
-        "dynamic_write_cells": [],
+        "dynamic_write_cells": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
         "dynamic_read_provenance": "conservative-full-stack",
         "dynamic_write_provenance": "source-derived"
       },
@@ -10153,7 +10162,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "8c441a157737a1146c5201c96f5db66a489fa115f2884d5a8ff5bf01a828a04a",
+          "source_sha256": "c459656f07e05d4265e2a2c76db02a8c9db373b6a1f7be229d85bbc79b4274b8",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
