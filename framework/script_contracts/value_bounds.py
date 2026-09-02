@@ -476,6 +476,15 @@ class ValueBounds:
         without it reads the cell before -- which the prefix drops off the front
         of the window. So an advance the access can be reached without is not one
         it stands behind, however few there are.
+
+        Which advances those are is a question about the pass and not about where
+        they are written. An advance below the access still runs before it when
+        the pass reaches the access through it, and reading the prefix off the
+        text there anchors the window one whole stride low -- claiming the cell
+        before the first read and dropping the last. So an advance counts into
+        the prefix when it dominates the access, is ignored when no pass reaches
+        the access from it at all, and stands the derivation down in between,
+        where some passes run it first and others do not.
         """
         around = self.carrying_regions(index, token)
         if not around:
@@ -487,11 +496,13 @@ class ValueBounds:
         )
         if len(updates) > 1 and not every_pass:
             return None
-        standing = [(place, amount) for place, amount in updates if place < index]
-        if standing and not (self.complete and all(
-            place in self.dominators.get(index, ()) for place, _ in standing
-        )):
-            return None
+        standing = []
+        for place, amount in updates:
+            if place == index or index not in self.forward(place, region):
+                continue
+            if not (self.complete and place in self.dominators.get(index, ())):
+                return None
+            standing.append((place, amount))
         return (region,
                 sum(amount for _, amount in updates),
                 sum(amount for _, amount in standing))

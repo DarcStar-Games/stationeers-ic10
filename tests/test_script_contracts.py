@@ -436,6 +436,22 @@ ck([sorted(item[2]) for item in dynamic_access_cells(
    two_latch["dynamic_read_range_source"] == "source-derived",
    "a loop entered from two rejections was read as two loops around one counter")
 
+# Whether an access stands behind an advance is a question about the pass, not
+# about which is written first. Every pass here reaches the read through
+# `add r0 r0 2`, so the reads are S34..S40; anchoring on the text instead puts
+# the window a whole stride low, claiming S32 and dropping S40 -- and calling it
+# whole, which publishes a range the program never reads.
+below_advance_source = (
+    "move r0 32\nmove r6 0\nHead:\nbge r6 4 Done\nj Advance\n"
+    "Access:\nget r1 db r0\nadd r6 r6 1\nj Head\n"
+    "Advance:\nadd r0 r0 2\nj Access\nDone:\nyield\n"
+)
+below_advance_rows = parse_rows(below_advance_source)
+below_advance_ports, below_advance_aliases = collect_aliases(below_advance_rows)
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       below_advance_source, below_advance_ports, below_advance_aliases)] == [[34, 36, 38, 40]],
+   "an advance written below the access it always runs before was read as standing after it")
+
 conditional_clear = parse_rows("get r0 db 0\nbne r0 1 Reset\nyield\nReset:\nclr db\n")
 ck(restart_behavior(conditional_clear, True)["mode"] == "conditional-reset",
    "a conditional recovery clear was mislabeled as cleared-on-init")
