@@ -18,6 +18,7 @@ from framework.script_contracts.control_flow import (
     call_state_graph,
     can_reach_avoiding_calls,
     control_flow_dominators,
+    control_flow_with_wrap,
     writes_register,
 )
 from framework.script_contracts.parsing import (
@@ -37,7 +38,12 @@ SEMANTIC_WORDS = re.compile(
 def stable_cells(
     source: str, integer_aliases: dict[str, int], expected: dict[int, Any]
 ) -> set[int]:
-    """Find cells initialized to an expected value before every observable control-flow boundary."""
+    """Find cells initialized to an expected value before every observable control-flow boundary.
+
+    `clr db` de-initializes: it costs a cell whatever it held and hands a cell
+    that expects zero the value it wants, so a clear is a write of 0 to all 512
+    rather than an instruction the walk steps over.
+    """
     program = parse_program(source)
     if not program:
         return set()
@@ -86,6 +92,10 @@ def stable_cells(
     if not observations:
         return set()
 
+    clearing = {
+        state for state in reachable if program[state[0]]["row"][:2] == ["clr", "db"]
+    }
+
     stable: set[int] = set()
     for address, value in expected.items():
         matching_writes = {
@@ -107,13 +117,80 @@ def stable_cells(
                 initialized_before = False if state == entry else bool(incoming) and all(
                     initialized_after[parent] for parent in incoming
                 )
-                updated = initialized_before or state in matching_writes
+                updated = state in matching_writes or (
+                    value == 0 if state in clearing else initialized_before
+                )
                 if updated != initialized_after[state]:
                     initialized_after[state] = updated
                     changed = True
         if all(initialized_after[state] for state in observations):
             stable.add(address)
     return stable
+
+
+def _reaches_observation(
+    start: int, successors: dict[int, set[int]], observations: set[int], republished: set[int]
+) -> bool:
+    """Can a walk from `start` reach somewhere observable without rewriting the cell?"""
+    pending = list(successors.get(start, set()))
+    visited: set[int] = set()
+    while pending:
+        node = pending.pop()
+        if node in visited or node in republished:
+            continue
+        visited.add(node)
+        if node in observations:
+            return True
+        pending.extend(successors.get(node, set()) - visited)
+    return False
+
+
+def cells_erased_by_clear(
+    source: str, integer_aliases: dict[str, int], expected: dict[int, Any]
+) -> set[int]:
+    """Expected cells a `clr db` can leave at zero somewhere a consumer reads them.
+
+    `clr db` zeroes all 512 cells, so it de-publishes every expected cell whose
+    value is not itself zero -- and the boot idiom is safe only because the
+    publication that follows the clear puts them all back before anything can
+    look. That is what this asks, one cell at a time: walk forward from each
+    clear and see whether anywhere observable is reachable without passing a
+    literal write of the expected value. Only a literal write counts, because a
+    computed one proves nothing about what lands in the cell.
+
+    A graph with a transfer nobody can follow answers with every erasable cell:
+    a re-publication this cannot trace is not a re-publication it can vouch for.
+    """
+    program = parse_program(source)
+    clears = [index for index, entry in enumerate(program) if entry["row"][:2] == ["clr", "db"]]
+    if not clears:
+        return set()
+    erasable = {address for address, value in expected.items() if value != 0}
+    successors, complete = control_flow_with_wrap(program)
+    if not complete:
+        return erasable
+    # Anywhere the stack is readable: a yield, a halt, and a transfer that starts
+    # the program over -- including the tail's own edge back to the entry, which
+    # is the only way a graph this complete has of running out of instructions.
+    observations = {
+        node for node, entry in enumerate(program)
+        if entry["row"][:1] in (["yield"], ["hcf"])
+        or any(target <= node for target in successors.get(node, set()))
+    }
+    erased: set[int] = set()
+    for address in sorted(erasable):
+        republished = {
+            node for node, entry in enumerate(program)
+            if entry["row"][:1] == ["poke"] and len(entry["row"]) >= 3
+            and resolve_integer(entry["row"][1], integer_aliases) == address
+            and resolve_literal(entry["row"][2], integer_aliases) == expected[address]
+        }
+        if any(
+            _reaches_observation(clear, successors, observations, republished)
+            for clear in clears
+        ):
+            erased.add(address)
+    return erased
 
 
 def semantic_name(comment: str) -> str | None:

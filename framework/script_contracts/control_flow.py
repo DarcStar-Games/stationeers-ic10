@@ -178,6 +178,21 @@ def control_flow_dominators(
     return (*project_call_states(states), complete)
 
 
+def control_flow_with_wrap(
+    program: list[dict[str, Any]],
+) -> tuple[dict[int, set[int]], bool]:
+    """The control-flow graph with the tail's edge back to the entry, and whether it is whole.
+
+    Running past the last line puts the machine back on the first, so a tail that
+    does not transfer somewhere itself falls through to the entry.
+    """
+    _, _, successors, complete = control_flow_dominators(program)
+    tail = program[-1]["row"]
+    if not tail or tail[0] not in {"hcf", "j", "jr"}:
+        successors[len(program) - 1].add(0)
+    return successors, complete
+
+
 def can_reach(start: int, target: int, successors: dict[int, set[int]]) -> bool:
     pending = list(successors.get(start, set()))
     visited: set[int] = set()

@@ -10,7 +10,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Any
 
-from framework.script_contracts.control_flow import can_reach, control_flow_dominators
+from framework.script_contracts.control_flow import can_reach, control_flow_with_wrap
 from framework.script_contracts.dynamic_ranges import (
     RangeProof,
     dynamic_range_proofs,
@@ -67,19 +67,6 @@ def _clear_nodes(program: list[dict[str, Any]]) -> list[int]:
     return [index for index, entry in enumerate(program) if entry["row"][:2] == ["clr", "db"]]
 
 
-def _control_flow_with_wrap(program: list[dict[str, Any]]) -> tuple[dict[int, set[int]], bool]:
-    """The control-flow graph with the tail's edge back to the entry, and whether it is whole.
-
-    Running past the last line puts the machine back on the first, so a tail that
-    does not transfer somewhere itself falls through to the entry.
-    """
-    _, _, successors, complete = control_flow_dominators(program)
-    tail = program[-1]["row"]
-    if not tail or tail[0] not in {"hcf", "j", "jr"}:
-        successors[len(program) - 1].add(0)
-    return successors, complete
-
-
 def post_publication_clears(program: list[dict[str, Any]]) -> int:
     """How many `clr db` instructions can still run after the program has published.
 
@@ -92,13 +79,13 @@ def post_publication_clears(program: list[dict[str, Any]]) -> int:
 
     Both ways of not knowing cost the narrowing rather than claiming it: a
     transfer the graph cannot follow counts every clear, and the tail carries an
-    edge back to the entry, which is what `_control_flow_with_wrap` is for.
+    edge back to the entry, which is what `control_flow_with_wrap` is for.
     """
     clears = _clear_nodes(program)
     yields = [index for index, entry in enumerate(program) if entry["row"][:1] == ["yield"]]
     if not clears or not yields:
         return 0
-    successors, complete = _control_flow_with_wrap(program)
+    successors, complete = control_flow_with_wrap(program)
     if not complete:
         return len(clears)
     return sum(1 for clear in clears if any(can_reach(node, clear, successors) for node in yields))
@@ -126,7 +113,7 @@ def clear_exposed_cells(program: list[dict[str, Any]], integer_aliases: dict[str
             address = resolve_integer(row[1], integer_aliases)
             if address is not None:
                 writes[address].append(index)
-    successors, complete = _control_flow_with_wrap(program)
+    successors, complete = control_flow_with_wrap(program)
     if not complete:
         return set(writes)
     return {
