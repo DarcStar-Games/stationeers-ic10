@@ -24,6 +24,7 @@
           "value_type": "hash",
           "semantic_source": "protocol-header",
           "access": [
+            "self-read",
             "self-write"
           ],
           "const": 1387894212
