@@ -545,6 +545,12 @@
   },
   "ic10/directory-core/generic_registry_directory_host_v2_0.ic10": {
    "source_sha256": "718020ebe4014f4bb1a33c183ef8d99504416d01ff13006929bb57e9eb36c92e",
+   "dynamic_write_ranges": [
+    [
+     58,
+     447
+    ]
+   ],
    "publication_rules": [
     {
      "kind": "seqlock",
@@ -689,6 +695,12 @@
   },
   "ic10/generic-jobs/generic_job_store_v1_0.ic10": {
    "source_sha256": "38b99687c68cea89821b8b1a41546d708ebd764ee43e81feb8f65eb398c0200b",
+   "dynamic_write_ranges": [
+    [
+     32,
+     511
+    ]
+   ],
    "external_readable_ranges": [
     [
      0,
@@ -1439,6 +1451,15 @@
     [
      0,
      209
+    ]
+   ]
+  },
+  "ic10/printer-directory/printer_execution_bank_v2_0.ic10": {
+   "source_sha256": "29fb8a18bcafa8e92982f51dce0dcdd8d0dc1d6e338b85382be3e5c717786549",
+   "dynamic_write_ranges": [
+    [
+     16,
+     79
     ]
    ]
   },

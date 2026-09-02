@@ -10,6 +10,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Any
 
+from framework.script_contracts.control_flow import can_reach, control_flow_dominators
 from framework.script_contracts.dynamic_ranges import (
     RangeProof,
     dynamic_range_proofs,
@@ -62,7 +63,86 @@ class StackScan:
     clears_all: bool = False
 
 
-def _scan_literal_accesses(rows: list[list[str]], integer_aliases: dict[str, int]) -> StackScan:
+def _clear_nodes(program: list[dict[str, Any]]) -> list[int]:
+    return [index for index, entry in enumerate(program) if entry["row"][:2] == ["clr", "db"]]
+
+
+def _control_flow_with_wrap(program: list[dict[str, Any]]) -> tuple[dict[int, set[int]], bool]:
+    """The control-flow graph with the tail's edge back to the entry, and whether it is whole.
+
+    Running past the last line puts the machine back on the first, so a tail that
+    does not transfer somewhere itself falls through to the entry.
+    """
+    _, _, successors, complete = control_flow_dominators(program)
+    tail = program[-1]["row"]
+    if not tail or tail[0] not in {"hcf", "j", "jr"}:
+        successors[len(program) - 1].add(0)
+    return successors, complete
+
+
+def post_publication_clears(program: list[dict[str, Any]]) -> int:
+    """How many `clr db` instructions can still run after the program has published.
+
+    A boot clear is initialization, not a write anyone can observe: it zeroes the
+    housing before the first yield makes any of it readable, so the 512 cells it
+    touches are not cells a consumer of this contract ever sees it write. What
+    `clears_all` and the restart classification already say about it is the whole
+    of what it does. A clear the control-flow graph can reach from a yield is a
+    real post-publication total write and keeps every one of those cells.
+
+    Both ways of not knowing cost the narrowing rather than claiming it: a
+    transfer the graph cannot follow counts every clear, and the tail carries an
+    edge back to the entry, which is what `_control_flow_with_wrap` is for.
+    """
+    clears = _clear_nodes(program)
+    yields = [index for index, entry in enumerate(program) if entry["row"][:1] == ["yield"]]
+    if not clears or not yields:
+        return 0
+    successors, complete = _control_flow_with_wrap(program)
+    if not complete:
+        return len(clears)
+    return sum(1 for clear in clears if any(can_reach(node, clear, successors) for node in yields))
+
+
+def clear_exposed_cells(program: list[dict[str, Any]], integer_aliases: dict[str, int]) -> set[int]:
+    """Cells a `clr db` zeroes with nothing writing them again.
+
+    A constant says the cell holds one value wherever a peer can look, and the
+    write range is what usually keeps that claim honest -- so taking the entry
+    clear out of the range takes this with it unless the cells it strands are
+    named here. A cell written before a clear and never after holds zero at the
+    first yield, whatever single literal the source pokes into it.
+
+    A clear the graph cannot place strands everything, for the same reason it
+    counts as post-publication above: not knowing costs the constant.
+    """
+    clears = _clear_nodes(program)
+    if not clears:
+        return set()
+    writes: dict[int, list[int]] = defaultdict(list)
+    for index, entry in enumerate(program):
+        row = entry["row"]
+        if row[:1] == ["poke"] and len(row) >= 3:
+            address = resolve_integer(row[1], integer_aliases)
+            if address is not None:
+                writes[address].append(index)
+    successors, complete = _control_flow_with_wrap(program)
+    if not complete:
+        return set(writes)
+    return {
+        address for address, nodes in writes.items()
+        if any(
+            any(can_reach(node, clear, successors) for node in nodes)
+            and not any(can_reach(clear, node, successors) for node in nodes)
+            for clear in clears
+        )
+    }
+
+
+def _scan_literal_accesses(
+    rows: list[list[str]], integer_aliases: dict[str, int], clears: int
+) -> StackScan:
+    """Scan the literal accesses; `clears` is the `post_publication_clears` count."""
     scan = StackScan()
     for row in rows:
         if row[0] == "get" and len(row) >= 4 and row[2] == "db":
@@ -87,15 +167,21 @@ def _scan_literal_accesses(rows: list[list[str]], integer_aliases: dict[str, int
             scan.dynamic_write = True
         elif row[0] == "clr" and len(row) >= 2 and row[1] == "db":
             scan.clears_all = True
-            scan.dynamic_write = True
+            scan.dynamic_write |= clears > 0
     return scan
 
 
-def _own_stack_proofs(source: str, integer_aliases: dict[str, int]) -> dict[str, RangeProof]:
-    """Prove the dynamic own-stack accesses; peek/push/pop stay unproved, clears are total."""
+def _own_stack_proofs(
+    source: str, integer_aliases: dict[str, int], clears: int
+) -> dict[str, RangeProof]:
+    """Prove the dynamic own-stack accesses; peek/push/pop stay unproved, clears are total.
+
+    `clears` counts only the clears that survive the boot test in
+    `post_publication_clears`; a clear that cannot run after publication proves
+    nothing about what this program writes where a consumer can see it.
+    """
     accesses: list[tuple[int, str, str]] = []
     unproved = {"read": 0, "write": 0}
-    clears = 0
     for index, entry in enumerate(parse_program(source)):
         row = entry["row"]
         if row and row[0] == "get" and len(row) >= 4 and row[2] == "db" and resolve_integer(row[3], integer_aliases) is None:
@@ -107,8 +193,6 @@ def _own_stack_proofs(source: str, integer_aliases: dict[str, int]) -> dict[str,
         elif row and row[0] in {"push", "pop"}:
             unproved["read"] += 1
             unproved["write"] += 1
-        elif row and row[0] == "clr" and len(row) >= 2 and row[1] == "db":
-            clears += 1
     proofs = dynamic_range_proofs(source, integer_aliases, accesses)
     for direction in ("read", "write"):
         proof = proofs.setdefault(direction, RangeProof())
@@ -223,10 +307,12 @@ def _extension_readable_ranges(
 
 
 def analyze_own_stack(source: str, rows: list[list[str]], integer_aliases: dict[str, int], headers: list[dict[str, int]], overrides: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, Any]]]:
-    scan = _scan_literal_accesses(rows, integer_aliases)
+    program = parse_program(source)
+    clears = post_publication_clears(program)
+    scan = _scan_literal_accesses(rows, integer_aliases, clears)
     annotations, publication_rules = source_semantics(source, integer_aliases)
     publication_rules.extend(verified_publication_overrides(source, rows, integer_aliases, overrides))
-    proofs = _own_stack_proofs(source, integer_aliases)
+    proofs = _own_stack_proofs(source, integer_aliases, clears)
     dynamic_read_ranges, dynamic_read_range_source = resolve_dynamic_ranges(
         scan.dynamic_read, proofs["read"], validated_ranges(overrides.get("dynamic_read_ranges")),
         "own-stack read", fallback_full_stack=True,
@@ -247,7 +333,13 @@ def analyze_own_stack(source: str, rows: list[list[str]], integer_aliases: dict[
         address for item in validated_ranges(overrides.get("external_writable_ranges"))
         for address in range(item["start"], item["end"] + 1)
     }
-    fields = _synthesize_fields(scan, annotations, headers, stable, dynamic_write_cells | external_write_cells, overrides)
+    # A cell an entry clear zeroes and nothing writes again holds zero at the first
+    # yield, so it is no more a constant than a cell a computed write can reach.
+    fields = _synthesize_fields(
+        scan, annotations, headers, stable,
+        dynamic_write_cells | external_write_cells | clear_exposed_cells(program, integer_aliases),
+        overrides,
+    )
     external_readable_ranges = _extension_readable_ranges(
         headers, scan.write_values, validated_ranges(overrides.get("external_readable_ranges"))
     )

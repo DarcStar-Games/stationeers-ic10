@@ -381,28 +381,41 @@ The post-initialization dynamic-write bounds are reviewed, but not free-standing
 a post-init dynamic write is a dynamic write, so the reviewed set has to sit
 inside the contract's derived `dynamic_write_ranges`. The reviewed set is narrower *in time* — it
 excludes whatever ran before the first envelope-bearing yield — never wider in
-space, and only the wider direction is checked. A reviewed range far tighter than
-the derived one is the ordinary case: a boot `clr db` puts all 512 cells in the
-derived range and none of them are post-init, which is why
-`generic_job_command_gateway_v4_0` declares its lane cells against the remaining stack. That also
-means the containment rule says something only where the derived range is
-narrower than the whole stack, and the validator prints how many of the
-declarations it can constrain next to how many it checked rather than leaving the
-reader to assume the first number is the second.
+space, and only the wider direction is checked. A reviewed range tighter than the
+derived one is the ordinary case, because the derived range covers the whole run.
+The containment rule says something only where the derived range is narrower than
+the whole stack, and the validator prints how many of the declarations it can
+constrain next to how many it checked rather than leaving the reader to assume
+the first number is the second.
 
-Two different things put a program in that position, and only one of them is a
-fact about the program. A boot `clr db` really does write every cell, so nothing
-can be claimed outside it. But a computed write the bounds analysis cannot prove,
-with no reviewed `dynamic_write_ranges` override standing in for it, falls back to
-the whole stack as well — and there the whole-stack range is a gap in the analysis
-rather than a statement about the source. That is where a rounded-up post-init
-declaration hides: nothing derived contradicts it, so nothing has ever had to.
+What used to put a program outside that reach was a boot `clr db`. A clear does
+write every cell, so folding it into the derived range left nothing that could be
+claimed outside it — and 19 of the 37 reviewed declarations were unconstrained for
+that reason alone. But a clear on the entry path writes those cells *before* the
+first yield makes any of them readable, so none of them is a post-init write and
+the range it produced never described one. The contract layer now counts a clear
+only where the control-flow graph can still reach it from a yield, which leaves
+27 of the 37 declarations held against a range narrower than the stack — 23 of
+them against a derivation, and the other four against a second reviewed
+declaration, which the validator prints as two numbers rather than one.
+
+One thing still puts a program there, and it is a gap in the analysis rather than
+a fact about the source: a computed write the bounds analysis cannot prove, with
+no reviewed `dynamic_write_ranges` override standing in for it, falls back to the
+whole stack. That is where a rounded-up post-init declaration hides — nothing
+derived contradicts it, so nothing has ever had to.
 
 Two things the rule does not settle. The derived range is itself the *effective*
 one, so where it comes from a reviewed `dynamic_write_ranges` override the
-comparison is two declarations agreeing rather than one meeting a proof —
-`generic_persistent_config_host_v1_1` is the single case, and it is an override
-because the proof machinery cannot follow `push` past an assigned `sp`. And the
+comparison is two declarations agreeing rather than one meeting a proof — and
+where a reviewer has written the same window into both files, as all four
+current cases have, it cannot fail at all until one of them moves.
+`generic_persistent_config_host_v1_1` is an override because the proof machinery
+cannot follow `push` past an assigned `sp`; `generic_job_store_v1_0`,
+`generic_registry_directory_host_v2_0` and `printer_execution_bank_v2_0` are
+overrides because each names a record window whole — a reserved slot-0 hole, an
+eight-cell slot whose body its command executor writes, an eight-cell record with
+six cells written — where the proof sees only the cells this program pokes. And the
 derived range covers computed-address own-stack writes; a reference-addressed
 write that named this stack would not appear in it. No migrated program is in
 that position — the one whose `putd` target could reach a sub-512 derived range,

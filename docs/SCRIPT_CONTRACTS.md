@@ -170,8 +170,11 @@ way was left open -- no write the analysis could not evaluate, no register
 arriving from a reflash rather than a write, no loop nothing counts out, no
 limit read off a bound that was never shown whole. An address that fails any of
 those is an explicit `conservative-full-stack` fallback unless a
-source-fingerprinted override supplies a reviewed range. `clr db` is a
-source-derived full-stack write rather than an unresolved fallback.
+source-fingerprinted override supplies a reviewed range. A `clr db` the graph can
+still reach from a yield is a source-derived full-stack write rather than an
+unresolved fallback; one on the boot path is not in the range at all, because it
+writes every cell before the first yield makes any of them readable, and
+`clears_all` with the restart classification beside it already says what it does.
 
 A reviewed override still has to describe the code it stands for, and the
 branches are what say which cells that is. A branch that gates an access says

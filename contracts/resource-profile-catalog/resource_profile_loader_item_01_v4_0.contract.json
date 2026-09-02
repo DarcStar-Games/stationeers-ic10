@@ -132,23 +132,13 @@
       503
     ],
     "dynamic_read": false,
-    "dynamic_write": true,
+    "dynamic_write": false,
     "dynamic_read_ranges": [],
-    "dynamic_write_ranges": [
-      {
-        "start": 0,
-        "end": 511
-      }
-    ],
+    "dynamic_write_ranges": [],
     "dynamic_read_proven_ranges": [],
-    "dynamic_write_proven_ranges": [
-      {
-        "start": 0,
-        "end": 511
-      }
-    ],
+    "dynamic_write_proven_ranges": [],
     "dynamic_read_range_source": "none",
-    "dynamic_write_range_source": "source-derived",
+    "dynamic_write_range_source": "none",
     "clears_all": true,
     "external_readable_ranges": [],
     "external_writable_ranges": [],
@@ -160,7 +150,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": -284599001
       },
       {
         "address": 1,
@@ -169,7 +160,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 5
       },
       {
         "address": 2,
@@ -178,7 +170,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 3,
@@ -187,7 +180,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": -118800371
       },
       {
         "address": 10,
@@ -196,7 +190,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": -2092815670
       },
       {
         "address": 11,
@@ -205,7 +200,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 12,
@@ -214,7 +210,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 417763707
       },
       {
         "address": 13,
@@ -223,7 +220,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 14,
@@ -232,7 +230,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 10
       },
       {
         "address": 15,
@@ -241,7 +240,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 24
       },
       {
         "address": 16,
@@ -250,7 +250,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 160
       },
       {
         "address": 17,
@@ -259,7 +260,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 721208220
       },
       {
         "address": 18,
@@ -269,6 +271,7 @@
         "access": [
           "self-write"
         ],
+        "const": 1,
         "description": "immutable candidate publication LAST"
       },
       {
@@ -278,7 +281,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 496
       },
       {
         "address": 25,
@@ -287,7 +291,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 16
       },
       {
         "address": 26,
@@ -296,7 +301,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 480
       },
       {
         "address": 27,
@@ -305,7 +311,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 16
       },
       {
         "address": 28,
@@ -314,7 +321,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 464
       },
       {
         "address": 29,
@@ -323,7 +331,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 16
       },
       {
         "address": 30,
@@ -332,7 +341,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 448
       },
       {
         "address": 31,
@@ -341,7 +351,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 16
       },
       {
         "address": 32,
@@ -350,7 +361,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 432
       },
       {
         "address": 33,
@@ -359,7 +371,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 16
       },
       {
         "address": 34,
@@ -368,7 +381,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 416
       },
       {
         "address": 35,
@@ -377,7 +391,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 16
       },
       {
         "address": 36,
@@ -386,7 +401,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 400
       },
       {
         "address": 37,
@@ -395,7 +411,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 16
       },
       {
         "address": 38,
@@ -404,7 +421,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 384
       },
       {
         "address": 39,
@@ -413,7 +431,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 16
       },
       {
         "address": 40,
@@ -422,7 +441,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 368
       },
       {
         "address": 41,
@@ -431,7 +451,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 16
       },
       {
         "address": 42,
@@ -440,7 +461,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 352
       },
       {
         "address": 43,
@@ -449,7 +471,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 16
       },
       {
         "address": 352,
@@ -459,6 +482,7 @@
         "access": [
           "self-write"
         ],
+        "const": -82508479,
         "description": "Ingot (Solder)"
       },
       {
@@ -468,7 +492,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 354,
@@ -477,7 +502,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 355,
@@ -486,7 +512,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 356,
@@ -495,7 +522,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 357,
@@ -504,7 +532,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 500
       },
       {
         "address": 358,
@@ -513,7 +542,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 19
       },
       {
         "address": 359,
@@ -522,7 +552,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": -1206542381
       },
       {
         "address": 368,
@@ -532,6 +563,7 @@
         "access": [
           "self-write"
         ],
+        "const": -297990285,
         "description": "Ingot (Invar)"
       },
       {
@@ -541,7 +573,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 370,
@@ -550,7 +583,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 371,
@@ -559,7 +593,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 372,
@@ -568,7 +603,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 373,
@@ -577,7 +613,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 500
       },
       {
         "address": 374,
@@ -586,7 +623,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 19
       },
       {
         "address": 375,
@@ -595,7 +633,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": -626453759
       },
       {
         "address": 384,
@@ -605,6 +644,7 @@
         "access": [
           "self-write"
         ],
+        "const": 502280180,
         "description": "Ingot (Electrum)"
       },
       {
@@ -614,7 +654,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 386,
@@ -623,7 +664,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 387,
@@ -632,7 +674,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 388,
@@ -641,7 +684,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 389,
@@ -650,7 +694,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 50
       },
       {
         "address": 390,
@@ -659,7 +704,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 19
       },
       {
         "address": 391,
@@ -668,7 +714,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 478264742
       },
       {
         "address": 400,
@@ -678,6 +725,7 @@
         "access": [
           "self-write"
         ],
+        "const": 1058547521,
         "description": "Ingot (Constantan)"
       },
       {
@@ -687,7 +735,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 402,
@@ -696,7 +745,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 403,
@@ -705,7 +755,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 404,
@@ -714,7 +765,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 405,
@@ -723,7 +775,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 500
       },
       {
         "address": 406,
@@ -732,7 +785,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 19
       },
       {
         "address": 407,
@@ -741,7 +795,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1731241392
       },
       {
         "address": 416,
@@ -751,6 +806,7 @@
         "access": [
           "self-write"
         ],
+        "const": -929742000,
         "description": "Ingot (Silver)"
       },
       {
@@ -760,7 +816,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 418,
@@ -769,7 +826,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 419,
@@ -778,7 +836,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 420,
@@ -787,7 +846,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 421,
@@ -796,7 +856,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 500
       },
       {
         "address": 422,
@@ -805,7 +866,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 19
       },
       {
         "address": 423,
@@ -814,7 +876,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 687283565
       },
       {
         "address": 432,
@@ -824,6 +887,7 @@
         "access": [
           "self-write"
         ],
+        "const": -290196476,
         "description": "Ingot (Silicon)"
       },
       {
@@ -833,7 +897,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 434,
@@ -842,7 +907,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 435,
@@ -851,7 +917,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 436,
@@ -860,7 +927,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 437,
@@ -869,7 +937,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 500
       },
       {
         "address": 438,
@@ -878,7 +947,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 19
       },
       {
         "address": 439,
@@ -887,7 +957,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": -1195893171
       },
       {
         "address": 448,
@@ -897,6 +968,7 @@
         "access": [
           "self-write"
         ],
+        "const": -1406385572,
         "description": "Ingot (Nickel)"
       },
       {
@@ -906,7 +978,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 450,
@@ -915,7 +988,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 451,
@@ -924,7 +998,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 452,
@@ -933,7 +1008,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 453,
@@ -942,7 +1018,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 500
       },
       {
         "address": 454,
@@ -951,7 +1028,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 19
       },
       {
         "address": 455,
@@ -960,7 +1038,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 556601662
       },
       {
         "address": 464,
@@ -970,6 +1049,7 @@
         "access": [
           "self-write"
         ],
+        "const": 2134647745,
         "description": "Ingot (Lead)"
       },
       {
@@ -979,7 +1059,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 466,
@@ -988,7 +1069,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 467,
@@ -997,7 +1079,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 468,
@@ -1006,7 +1089,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 469,
@@ -1015,7 +1099,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 500
       },
       {
         "address": 470,
@@ -1024,7 +1109,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 19
       },
       {
         "address": 471,
@@ -1033,7 +1119,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": -2002530571
       },
       {
         "address": 480,
@@ -1043,6 +1130,7 @@
         "access": [
           "self-write"
         ],
+        "const": -1301215609,
         "description": "Ingot (Iron)"
       },
       {
@@ -1052,7 +1140,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 482,
@@ -1061,7 +1150,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 483,
@@ -1070,7 +1160,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 484,
@@ -1079,7 +1170,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 485,
@@ -1088,7 +1180,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 500
       },
       {
         "address": 486,
@@ -1097,7 +1190,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 19
       },
       {
         "address": 487,
@@ -1106,7 +1200,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": -666742878
       },
       {
         "address": 496,
@@ -1116,6 +1211,7 @@
         "access": [
           "self-write"
         ],
+        "const": 226410516,
         "description": "Ingot (Gold)"
       },
       {
@@ -1125,7 +1221,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 498,
@@ -1134,7 +1231,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 499,
@@ -1143,7 +1241,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 500,
@@ -1152,7 +1251,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 501,
@@ -1161,7 +1261,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 500
       },
       {
         "address": 502,
@@ -1170,7 +1271,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 19
       },
       {
         "address": 503,
@@ -1179,7 +1281,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": -409226641
       }
     ],
     "headers": [
@@ -1204,7 +1307,22 @@
       "mode": "cleared-on-init",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": -284599001,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 5,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
     "provides": [

@@ -55,8 +55,8 @@
     ],
     "dynamic_write_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 16,
+        "end": 79
       }
     ],
     "dynamic_read_proven_ranges": [
@@ -83,12 +83,32 @@
     ],
     "dynamic_write_proven_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 16,
+        "end": 21
+      },
+      {
+        "start": 24,
+        "end": 29
+      },
+      {
+        "start": 48,
+        "end": 53
+      },
+      {
+        "start": 56,
+        "end": 61
+      },
+      {
+        "start": 64,
+        "end": 69
+      },
+      {
+        "start": 72,
+        "end": 77
       }
     ],
     "dynamic_read_range_source": "source-derived",
-    "dynamic_write_range_source": "source-derived",
+    "dynamic_write_range_source": "source-fingerprinted-exception",
     "clears_all": true,
     "external_readable_ranges": [],
     "external_writable_ranges": [],
@@ -101,7 +121,8 @@
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "const": -1743126326
       },
       {
         "address": 1,
@@ -111,7 +132,8 @@
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 2,
@@ -120,7 +142,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 32
       },
       {
         "address": 8,
@@ -167,7 +190,22 @@
       "mode": "conditional-reset",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": -1743126326,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 2,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
     "provides": [

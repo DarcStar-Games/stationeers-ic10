@@ -128,23 +128,13 @@
       509
     ],
     "dynamic_read": false,
-    "dynamic_write": true,
+    "dynamic_write": false,
     "dynamic_read_ranges": [],
-    "dynamic_write_ranges": [
-      {
-        "start": 0,
-        "end": 511
-      }
-    ],
+    "dynamic_write_ranges": [],
     "dynamic_read_proven_ranges": [],
-    "dynamic_write_proven_ranges": [
-      {
-        "start": 0,
-        "end": 511
-      }
-    ],
+    "dynamic_write_proven_ranges": [],
     "dynamic_read_range_source": "none",
-    "dynamic_write_range_source": "source-derived",
+    "dynamic_write_range_source": "none",
     "clears_all": true,
     "external_readable_ranges": [],
     "external_writable_ranges": [],
@@ -156,7 +146,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": -284599001
       },
       {
         "address": 1,
@@ -165,7 +156,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 5
       },
       {
         "address": 2,
@@ -174,7 +166,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 3,
@@ -183,7 +176,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": -118800371
       },
       {
         "address": 10,
@@ -192,7 +186,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": -2092815670
       },
       {
         "address": 11,
@@ -201,7 +196,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 12,
@@ -210,7 +206,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 263276886
       },
       {
         "address": 13,
@@ -219,7 +216,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 14,
@@ -228,7 +226,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 6
       },
       {
         "address": 15,
@@ -237,7 +236,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 24
       },
       {
         "address": 16,
@@ -246,7 +246,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 96
       },
       {
         "address": 17,
@@ -255,7 +256,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 414478154
       },
       {
         "address": 18,
@@ -265,6 +267,7 @@
         "access": [
           "self-write"
         ],
+        "const": 1,
         "description": "immutable candidate publication LAST"
       },
       {
@@ -274,7 +277,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 496
       },
       {
         "address": 25,
@@ -283,7 +287,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 16
       },
       {
         "address": 26,
@@ -292,7 +297,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 480
       },
       {
         "address": 27,
@@ -301,7 +307,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 16
       },
       {
         "address": 28,
@@ -310,7 +317,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 464
       },
       {
         "address": 29,
@@ -319,7 +327,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 16
       },
       {
         "address": 30,
@@ -328,7 +337,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 448
       },
       {
         "address": 31,
@@ -337,7 +347,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 16
       },
       {
         "address": 32,
@@ -346,7 +357,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 432
       },
       {
         "address": 33,
@@ -355,7 +367,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 16
       },
       {
         "address": 34,
@@ -364,7 +377,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 416
       },
       {
         "address": 35,
@@ -373,7 +387,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 16
       },
       {
         "address": 416,
@@ -383,6 +398,7 @@
         "access": [
           "self-write"
         ],
+        "const": -1644511708,
         "description": "Methane"
       },
       {
@@ -392,7 +408,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 418,
@@ -401,7 +418,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 419,
@@ -410,7 +428,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 420,
@@ -419,7 +438,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 421,
@@ -428,7 +448,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 5.863496734e-15
       },
       {
         "address": 422,
@@ -437,7 +458,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 7.8643601035
       },
       {
         "address": 423,
@@ -446,7 +468,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 6.3
       },
       {
         "address": 424,
@@ -455,7 +478,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 6000
       },
       {
         "address": 425,
@@ -464,7 +488,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 81.6
       },
       {
         "address": 426,
@@ -473,7 +498,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 195
       },
       {
         "address": 427,
@@ -491,7 +517,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0.995
       },
       {
         "address": 429,
@@ -500,7 +527,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1000
       },
       {
         "address": 432,
@@ -510,6 +538,7 @@
         "access": [
           "self-write"
         ],
+        "const": -924380235,
         "description": "Nitrogen"
       },
       {
@@ -519,7 +548,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 434,
@@ -528,7 +558,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 435,
@@ -537,7 +568,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 436,
@@ -546,7 +578,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 437,
@@ -555,7 +588,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 5.5757107833e-07
       },
       {
         "address": 438,
@@ -564,7 +598,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 4.40221368946
       },
       {
         "address": 439,
@@ -573,7 +608,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 6.3
       },
       {
         "address": 440,
@@ -582,7 +618,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 6000
       },
       {
         "address": 441,
@@ -591,7 +628,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 40.01
       },
       {
         "address": 442,
@@ -600,7 +638,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 190
       },
       {
         "address": 443,
@@ -618,7 +657,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0.995
       },
       {
         "address": 445,
@@ -627,7 +667,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 500
       },
       {
         "address": 448,
@@ -637,6 +678,7 @@
         "access": [
           "self-write"
         ],
+        "const": -1650230711,
         "description": "NitrousOxide"
       },
       {
@@ -646,7 +688,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 450,
@@ -655,7 +698,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 451,
@@ -664,7 +708,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 452,
@@ -673,7 +718,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 453,
@@ -682,7 +728,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0.065353501531
       },
       {
         "address": 454,
@@ -691,7 +738,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1.70297431874
       },
       {
         "address": 455,
@@ -700,7 +748,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 800
       },
       {
         "address": 456,
@@ -709,7 +758,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2000
       },
       {
         "address": 457,
@@ -718,7 +768,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 252.1
       },
       {
         "address": 458,
@@ -727,7 +778,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 430.6
       },
       {
         "address": 459,
@@ -745,7 +797,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0.995
       },
       {
         "address": 461,
@@ -754,7 +807,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 4000
       },
       {
         "address": 464,
@@ -764,6 +818,7 @@
         "access": [
           "self-write"
         ],
+        "const": -1680161571,
         "description": "Silanol"
       },
       {
@@ -773,7 +828,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 466,
@@ -782,7 +838,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 467,
@@ -791,7 +848,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 468,
@@ -800,7 +858,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 469,
@@ -809,7 +868,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0.48388429552357676
       },
       {
         "address": 470,
@@ -818,7 +878,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1.4041336082044964
       },
       {
         "address": 471,
@@ -827,7 +888,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 516
       },
       {
         "address": 472,
@@ -836,7 +898,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 6000
       },
       {
         "address": 473,
@@ -845,7 +908,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 143.35886137639
       },
       {
         "address": 474,
@@ -854,7 +918,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 822.72854867724
       },
       {
         "address": 475,
@@ -872,7 +937,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0.995
       },
       {
         "address": 477,
@@ -881,7 +947,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 10000
       },
       {
         "address": 480,
@@ -891,6 +958,7 @@
         "access": [
           "self-write"
         ],
+        "const": -1629748208,
         "description": "Pollutant"
       },
       {
@@ -900,7 +968,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 482,
@@ -909,7 +978,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 483,
@@ -918,7 +988,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 484,
@@ -927,7 +998,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 485,
@@ -936,7 +1008,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2.079033884
       },
       {
         "address": 486,
@@ -945,7 +1018,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1.31202194555
       },
       {
         "address": 487,
@@ -954,7 +1028,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1800
       },
       {
         "address": 488,
@@ -963,7 +1038,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 6000
       },
       {
         "address": 489,
@@ -972,7 +1048,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 173.32
       },
       {
         "address": 490,
@@ -981,7 +1058,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 425
       },
       {
         "address": 491,
@@ -999,7 +1077,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0.995
       },
       {
         "address": 493,
@@ -1008,7 +1087,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2000
       },
       {
         "address": 496,
@@ -1018,6 +1098,7 @@
         "access": [
           "self-write"
         ],
+        "const": 988953566,
         "description": "Water"
       },
       {
@@ -1027,7 +1108,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 498,
@@ -1036,7 +1118,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 499,
@@ -1045,7 +1128,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 500,
@@ -1054,7 +1138,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 501,
@@ -1063,7 +1148,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 3.8782059839e-19
       },
       {
         "address": 502,
@@ -1072,7 +1158,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 7.90030107708
       },
       {
         "address": 503,
@@ -1081,7 +1168,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 6.3
       },
       {
         "address": 504,
@@ -1090,7 +1178,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 6000
       },
       {
         "address": 505,
@@ -1099,7 +1188,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 273.15
       },
       {
         "address": 506,
@@ -1108,7 +1198,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 643
       },
       {
         "address": 507,
@@ -1126,7 +1217,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0.995
       },
       {
         "address": 509,
@@ -1135,7 +1227,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 8000
       }
     ],
     "headers": [
@@ -1160,7 +1253,22 @@
       "mode": "cleared-on-init",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": -284599001,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 5,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
     "provides": [

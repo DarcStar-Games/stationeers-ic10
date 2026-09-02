@@ -25,7 +25,8 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": -968216424
         },
         {
           "address": 1,
@@ -34,7 +35,8 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 1
         },
         {
           "address": 2,
@@ -43,7 +45,8 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 8
         },
         {
           "address": 6,
@@ -52,7 +55,8 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 96
         },
         {
           "address": 96,
@@ -61,7 +65,8 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 27182818
         },
         {
           "address": 97,
@@ -70,7 +75,8 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 2
         },
         {
           "address": 98,
@@ -79,7 +85,8 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 126
         },
         {
           "address": 99,
@@ -88,7 +95,8 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 1770891776
         },
         {
           "address": 100,
@@ -190,7 +198,36 @@
           "mode": "cleared-on-init",
           "source": "static-entry-path-analysis"
         },
-        "invariants": []
+        "invariants": [
+          {
+            "id": "header.s0.magic",
+            "kind": "cell-equals",
+            "address": 0,
+            "equals": -968216424,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s96.magic",
+            "kind": "cell-equals",
+            "address": 96,
+            "equals": 27182818,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s0.abi",
+            "kind": "cell-equals",
+            "address": 1,
+            "equals": 1,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s96.abi",
+            "kind": "cell-equals",
+            "address": 97,
+            "equals": 2,
+            "source": "generated-protocol-header"
+          }
+        ]
       }
     }
   ],
