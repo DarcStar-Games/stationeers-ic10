@@ -180,6 +180,8 @@ A transform must never deliver only a subset of its required ingredients.
 
 If any input cannot be staged, the Stager cleans up every partial reservation and reports failure.
 
+The staged count at S8 is published after each record rather than once at the end, so a Stager interrupted mid-staging restarts holding the number of records it actually wrote, and a later clean undoes exactly those. That only holds while the stack is its own: S8 survives a reflash, but so does whatever a previous occupant of the housing left there. Boot therefore admits an inherited count only behind the `MultiMaterialReservationStager.v1` identity it publishes at S0, and zeroes it on any stack that identity does not claim — a housing that last ran something else cleans nothing rather than releasing reservations it never staged.
+
 `ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10` is the sole current material commit authority. Only after all inputs stage successfully does it publish the common active epoch at **S14 last**.
 
 That commit-last rule means a Grant Guard cannot activate from merely provisional state.

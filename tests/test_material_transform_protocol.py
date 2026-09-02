@@ -98,6 +98,20 @@ over_stager_vm.run(1)
 if over_stager_vm.stack.get(13)!=-1 or [c for c in over_stager_vm.stack if c>14]:
     fails.append('reservation stager accepted a resolved count above the admitted three')
 
+# S8 survives a reflash, so a clean arriving first walks whatever the housing already held.
+# Only our own S0 makes that count ours; a foreign stack must be disowned, not swept.
+def reflash_clean(boot):
+    a=Device(801,{13:77,14:250,16:1},{'ReferenceId':801})
+    b=Device(802,{13:77,15:250,16:2},{'ReferenceId':802})
+    vm=IC10(s,{'x801':a,'x802':b},self_ref=805)
+    vm.stack.update({8:1,9:2,12:7,14:0,32:700,33:801,34:802}|boot)
+    vm.run(2)
+    return a.stack.get(14),b.stack.get(15),vm.stack.get(8),vm.stack.get(13)
+if reflash_clean({})!=(250,250,0,2):
+    fails.append('reflashed stager released reservations a previous occupant of the housing staged')
+if reflash_clean({0:'HASH:MultiMaterialReservationStager.v1'})!=(0,0,0,2):
+    fails.append('reflashed stager lost the records it staged itself before the reflash')
+
 stager_dev=Device(952,{}, {'ReferenceId':952})
 alloc_dev=Device(953,{}, {'ReferenceId':953})
 stager_vm=IC10(s,{'d0':res_dev,'d1':alloc_dev,**dyn},self_ref=952); stager_dev.stack=stager_vm.stack
