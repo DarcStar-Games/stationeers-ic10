@@ -1,0 +1,75 @@
+# Exact ITEM stock view over the bounded Resource Reservation Selector.
+poke 0 HASH("StockTargetInventoryView.v1")
+poke 1 1
+poke 2 32
+Loop:
+yield
+get r15 db 18
+get r0 db 19
+beq r15 r0 Loop
+get r2 db 15
+get r3 db 16
+beqz r2 Bad
+blez r3 Bad
+get r0 d0 0
+bne r0 HASH("ItemResourceReservationSelector.v1") Bad
+Retry:
+get r13 db 22
+add r13 r13 1
+poke 22 r13
+put d0 11 r2
+put d0 12 r3
+put d0 13 1
+put d0 14 0
+put d0 15 r13
+Wait:
+yield
+get r0 d0 16
+bne r0 r13 Wait
+get r0 d0 8
+beq r0 1 Enough
+beq r0 -3 Overflow
+bne r0 -2 Bad
+get r6 d0 9
+get r7 d0 10
+move r8 0
+move r9 0
+Precision:
+bge r8 r7 Exact
+mul r0 r8 3
+add r0 r0 32
+get r10 d0 r0
+add r0 r0 2
+get r11 d0 r0
+getd r12 r10 11
+and r12 r12 8
+or r9 r9 r12
+getd r12 r10 12
+bne r12 r11 Retry
+add r8 r8 1
+j Precision
+Exact:
+bnez r9 Ambiguous
+move r4 1
+move r5 r6
+j Reply
+Enough:
+move r4 1
+move r5 r3
+j Reply
+Ambiguous:
+move r4 2
+move r5 r6
+j Reply
+Overflow:
+move r4 -3
+move r5 0
+j Reply
+Bad:
+move r4 -1
+move r5 0
+Reply:
+poke 20 r4
+poke 21 r5
+poke 19 r15
+j Loop

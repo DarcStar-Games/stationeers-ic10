@@ -24,7 +24,7 @@ from framework.stack_envelope import (
 
 ROOT = _PROJECT_ROOT
 HASH_LITERAL = re.compile(r'^HASH\("([^"\n]+)"\)$')
-PILOT_FAMILIES = {"stack-monitor", "generic-telemetry", "directory", "catalog", "catalog-control-plane", "diagnostics", "power-jobs", "material-transform", "catalog-loader", "input-profile-catalog", "resource-profile-catalog", "transform-catalog", "transaction", "manufacturing", "controller-discovery", "pressure-domain", "recipe-catalog", "shared-input", "process-gas-preparation", "item-storage-common", "item-storage-larre", "material-grid", "process-furnace", "process-gfg", "pressure-grid", "item-storage-sdb", "power-grid", "resource-grid-core", "item-storage-direct", "item-storage-vending", "controller-pi", "controller-sequencer", "controller-phase-pressure", "controller-config", "printer-directory", "generic-jobs", "directory-core", "dependency-planning", "live-commissioning"}
+PILOT_FAMILIES = {"stack-monitor", "generic-telemetry", "directory", "catalog", "catalog-control-plane", "diagnostics", "power-jobs", "material-transform", "catalog-loader", "input-profile-catalog", "resource-profile-catalog", "transform-catalog", "transaction", "manufacturing", "manufacturing-ingress", "controller-discovery", "pressure-domain", "recipe-catalog", "shared-input", "process-gas-preparation", "item-storage-common", "item-storage-larre", "material-grid", "process-furnace", "process-gfg", "pressure-grid", "item-storage-sdb", "power-grid", "resource-grid-core", "item-storage-direct", "item-storage-vending", "controller-pi", "controller-sequencer", "controller-phase-pressure", "controller-config", "printer-directory", "generic-jobs", "directory-core", "dependency-planning", "live-commissioning"}
 validation = Validation(ROOT)
 
 try:

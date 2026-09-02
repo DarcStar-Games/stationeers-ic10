@@ -381,4 +381,8 @@ The **Manufacturing Scheduler** in roadmap item 6 is the first production owner 
 
 ## Item 9 POWER-job integration
 
-Item 9 reuses `GENERIC_JOB_ABI_V1` without adding power-specific fields. `Identity=PolicyId`, `RequiredCapability=PowerMode`, and `RequestedQuantity` is an optional watt cap. `ic10/generic-jobs/generic_job_selector_v3_0.ic10` plus the `ic10/power-jobs/` policy-resolution/apply/verify/lifecycle services resolve one managed endpoint, apply the requested policy, and complete only after Generic Resource Reservation coherently mirrors the new semantics. Job Gateway ABI3 adds lane D for the Power Scheduler; `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` remains the sole physical Job Store mailbox writer. See `docs/POWER_MANAGEMENT.md`.
+Item 9 reuses `GENERIC_JOB_ABI_V1` without adding power-specific fields. `Identity=PolicyId`, `RequiredCapability=PowerMode`, and `RequestedQuantity` is an optional watt cap. `ic10/generic-jobs/generic_job_selector_v3_0.ic10` plus the `ic10/power-jobs/` policy-resolution/apply/verify/lifecycle services resolve one managed endpoint, apply the requested policy, and complete only after Generic Resource Reservation coherently mirrors the new semantics. Job Gateway lane D serves the Power Scheduler; `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` remains the sole physical Job Store mailbox writer. See `docs/POWER_MANAGEMENT.md`.
+
+## Item 13.1 stock-target ingress
+
+Job Gateway ABI4 retains lanes A-D and adds lane E for stock-target root publication. The request carries the exact even Job Store QueueSequence and Dependency Plan Store sequence observed while inventory and active unclaimed output were evaluated. The Executor rechecks both before staging a free slot; stale requests fail and re-evaluate. The Store still assigns JobId and publishes ordinary `QUEUED/Generation=1/ErrorStatus=0` state. See `docs/STOCK_TARGET_INGRESS.md`.

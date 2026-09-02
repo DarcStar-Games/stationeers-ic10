@@ -1,0 +1,106 @@
+# Coherent unclaimed future output across active producer jobs.
+poke 0 HASH("StockTargetFutureView.v1")
+poke 1 1
+poke 2 32
+Loop:
+yield
+get r15 db 19
+get r0 db 20
+beq r15 r0 Loop
+get r2 db 15
+get r3 db 16
+get r4 db 17
+get r5 db 18
+beqz r2 Bad
+blt r3 1 Bad
+bgt r3 2 Bad
+beqz r4 Bad
+blez r5 Bad
+get r0 d0 0
+bne r0 HASH("GenericJobStore.v1") Bad
+get r0 d1 0
+bne r0 HASH("DependencyClaimView.v1") Bad
+get r0 d2 0
+bne r0 HASH("DependencyPlanStore.v2") Bad
+get r14 d0 16
+and r0 r14 1
+bnez r0 Loop
+get sp d2 40
+and r0 sp 1
+bnez r0 Loop
+move r6 0
+move r7 0
+Scan:
+bge r6 32 Done
+mul r0 r6 7
+add r0 r0 288
+get r1 d0 r0
+mul r1 r1 3
+add r1 r1 r0
+add r1 r1 1
+get r8 d0 r1
+beqz r8 Next
+beq r8 7 Next
+bge r8 11 Next
+mul r9 r6 8
+add r9 r9 32
+add r0 r9 1
+get r0 d0 r0
+bne r0 r3 Next
+add r0 r9 3
+get r0 d0 r0
+bne r0 r4 Next
+get r8 d0 r9
+add r0 r9 6
+get r9 d0 r0
+bnan r9 Bad
+blez r9 Bad
+put d1 15 r2
+put d1 16 0
+put d1 17 r8
+mul r13 r15 64
+add r13 r13 r6
+add r13 r13 1
+put d1 18 r13
+WaitClaim:
+yield
+get r0 d1 19
+bne r0 r13 WaitClaim
+get r0 d0 16
+bne r0 r14 Loop
+get r0 d2 40
+bne r0 sp Loop
+get r0 d1 20
+beq r0 -2 Root
+bne r0 1 Bad
+get r0 d1 21
+bne r0 r8 Bad
+get r0 d1 25
+bne r0 r2 Bad
+get r0 d1 22
+get r1 d1 27
+sub r0 r0 r1
+max r0 r0 0
+j Add
+Root:
+mul r0 r9 r5
+Add:
+add r7 r7 r0
+Next:
+add r6 r6 1
+j Scan
+Done:
+get r0 d0 16
+bne r0 r14 Loop
+get r0 d2 40
+bne r0 sp Loop
+poke 22 r7
+poke 23 r14
+poke 24 sp
+poke 21 1
+poke 20 r15
+j Loop
+Bad:
+poke 21 -1
+poke 20 r15
+j Loop

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/dependency_child_creator_v2_0.ic10",
-  "source_sha256": "6edf07edddfb850d95d988ce89e44cdb9d150a44fa9a92d7bd2203bb962a0620",
+  "source_sha256": "d926efbd05c801be2f206035c816390b5eb2d39cd7bee1411c7e4dd151de5b09",
   "identity": {
     "service_id": "ic10.script.dependency.child.creator",
     "implementation_revision": "2.0",
@@ -189,8 +189,7 @@
           59,
           60,
           61,
-          62,
-          63
+          62
         ],
         "dynamic_read": false,
         "dynamic_write": false,
@@ -208,8 +207,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.dcd15409082fa7f9",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.dcd15409082fa7f9",
+        "interface_id": "ic10.interface.access.850823b41f026e23",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.850823b41f026e23",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

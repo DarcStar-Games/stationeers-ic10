@@ -561,7 +561,16 @@
           "header_base": 0
         }
       ],
-      "consumers": []
+      "consumers": [
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        }
+      ]
     },
     {
       "protocol_id": "ic10.stack.dependency-plan-builder.v2",
@@ -651,6 +660,22 @@
           "endpoint": {
             "kind": "device-port",
             "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d2"
           },
           "header_base": 0
         }
@@ -1002,21 +1027,30 @@
       "consumers": []
     },
     {
-      "protocol_id": "ic10.stack.generic-job-command-gateway.v3",
+      "protocol_id": "ic10.stack.generic-job-command-gateway.v4",
       "transport": "ic-housing-stack",
       "contract": "GenericJobCommandGateway",
-      "magic": 2138182493,
-      "abi": 3,
-      "name": "GenericJobCommandGateway v3",
-      "definition_ref": "contracts/protocols/ic10.stack.generic-job-command-gateway.v3.protocol.json",
+      "magic": -518617346,
+      "abi": 4,
+      "name": "GenericJobCommandGateway v4",
+      "definition_ref": "contracts/protocols/ic10.stack.generic-job-command-gateway.v4.protocol.json",
       "canonical_refs": [],
       "providers": [
         {
-          "source": "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10",
+          "source": "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10",
           "header_base": 0
         }
       ],
-      "consumers": []
+      "consumers": [
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
     },
     {
       "protocol_id": "ic10.stack.generic-job-monitor.v1",
@@ -1069,7 +1103,7 @@
       ],
       "consumers": [
         {
-          "source": "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10",
+          "source": "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10",
           "endpoint": {
             "kind": "device-port",
             "value": "d0"
@@ -1114,6 +1148,14 @@
         },
         {
           "source": "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10",
           "endpoint": {
             "kind": "device-port",
             "value": "d0"
@@ -1208,6 +1250,30 @@
           "endpoint": {
             "kind": "device-port",
             "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d3"
           },
           "header_base": 0
         },
@@ -1488,7 +1554,16 @@
           "header_base": 0
         }
       ],
-      "consumers": []
+      "consumers": [
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
     },
     {
       "protocol_id": "ic10.stack.item-resource-reservation-allocator.v1",
@@ -1538,6 +1613,14 @@
             "value": "d0"
           },
           "header_base": 0
+        },
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
         }
       ]
     },
@@ -1573,7 +1656,16 @@
           "header_base": 0
         }
       ],
-      "consumers": []
+      "consumers": [
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        }
+      ]
     },
     {
       "protocol_id": "ic10.stack.larre-cargo-storage-service.v1",
@@ -3227,6 +3319,186 @@
           "endpoint": {
             "kind": "device-port",
             "value": "d2"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.stock-target-config-policy.v1",
+      "transport": "ic-housing-stack",
+      "contract": "StockTargetConfigPolicy",
+      "magic": -1843977788,
+      "abi": 1,
+      "name": "StockTargetConfigPolicy v1",
+      "definition_ref": "contracts/protocols/ic10.stack.stock-target-config-policy.v1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.stock-target-demand-view.v1",
+      "transport": "ic-housing-stack",
+      "contract": "StockTargetDemandView",
+      "magic": 211698585,
+      "abi": 1,
+      "name": "StockTargetDemandView v1",
+      "definition_ref": "contracts/protocols/ic10.stack.stock-target-demand-view.v1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d2"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d2"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.stock-target-future-view.v1",
+      "transport": "ic-housing-stack",
+      "contract": "StockTargetFutureView",
+      "magic": 494563593,
+      "abi": 1,
+      "name": "StockTargetFutureView v1",
+      "definition_ref": "contracts/protocols/ic10.stack.stock-target-future-view.v1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.stock-target-inventory-view.v1",
+      "transport": "ic-housing-stack",
+      "contract": "StockTargetInventoryView",
+      "magic": 951890762,
+      "abi": 1,
+      "name": "StockTargetInventoryView v1",
+      "definition_ref": "contracts/protocols/ic10.stack.stock-target-inventory-view.v1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d0"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.stock-target-job-evaluator.v1",
+      "transport": "ic-housing-stack",
+      "contract": "StockTargetJobEvaluator",
+      "magic": -932134222,
+      "abi": 1,
+      "name": "StockTargetJobEvaluator v1",
+      "definition_ref": "contracts/protocols/ic10.stack.stock-target-job-evaluator.v1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": []
+    },
+    {
+      "protocol_id": "ic10.stack.stock-target-job-ingress.v1",
+      "transport": "ic-housing-stack",
+      "contract": "StockTargetJobIngress",
+      "magic": 1900036040,
+      "abi": 1,
+      "name": "StockTargetJobIngress v1",
+      "definition_ref": "contracts/protocols/ic10.stack.stock-target-job-ingress.v1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d3"
+          },
+          "header_base": 0
+        }
+      ]
+    },
+    {
+      "protocol_id": "ic10.stack.stock-target-producer-view.v1",
+      "transport": "ic-housing-stack",
+      "contract": "StockTargetProducerView",
+      "magic": 1786703937,
+      "abi": 1,
+      "name": "StockTargetProducerView v1",
+      "definition_ref": "contracts/protocols/ic10.stack.stock-target-producer-view.v1.protocol.json",
+      "canonical_refs": [],
+      "providers": [
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10",
+          "header_base": 0
+        }
+      ],
+      "consumers": [
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
+          },
+          "header_base": 0
+        },
+        {
+          "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
+          "endpoint": {
+            "kind": "device-port",
+            "value": "d1"
           },
           "header_base": 0
         }

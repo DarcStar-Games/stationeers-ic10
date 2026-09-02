@@ -313,9 +313,9 @@
    "deployment_family": "directory-core",
    "deployment_class": "conditional-resident"
   },
-  "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10": {
+  "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10": {
    "layer": "Generic job control",
-   "purpose": "Four-lane Job command arbiter for manufacturing lifecycle, dependency cancellation/creation, and POWER lifecycle requests.",
+   "purpose": "Five-lane Job command arbiter adding sequence-fenced stock-target root publication to manufacturing, dependency, and POWER requests.",
    "deployment_family": "generic-jobs",
    "deployment_class": "conditional-resident"
   },
@@ -327,7 +327,7 @@
   },
   "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10": {
    "layer": "Generic job mutation",
-   "purpose": "Sole Item-8 Job Store mailbox writer; atomically allocates child slots and checks parent JobId/generation/state.",
+   "purpose": "Sole Job Store mailbox writer; atomically allocates child/root slots and fences parent or Job/Plan snapshot identity.",
    "deployment_family": "generic-jobs",
    "deployment_class": "conditional-resident"
   },
@@ -497,6 +497,48 @@
    "layer": "Manufacturing discovery",
    "purpose": "Publishes schema-qualified TransformLane Adapter ABI2 candidates with processor identity and common ProcessorSpec.",
    "deployment_family": "manufacturing",
+   "deployment_class": "conditional-resident"
+  },
+  "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10": {
+   "layer": "Manufacturing ingress configuration",
+   "purpose": "Validates and canonicalizes four persistent ResourceType/target/hysteresis/priority stock declarations.",
+   "deployment_family": "manufacturing-ingress",
+   "deployment_class": "conditional-resident"
+  },
+  "ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10": {
+   "layer": "Manufacturing demand evaluation",
+   "purpose": "Combines exact stock and unclaimed active output, applies hysteresis, and computes bounded root batches.",
+   "deployment_family": "manufacturing-ingress",
+   "deployment_class": "conditional-resident"
+  },
+  "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10": {
+   "layer": "Manufacturing demand observation",
+   "purpose": "Scans active matching jobs and counts roots at full output or dependency children at unclaimed surplus.",
+   "deployment_family": "manufacturing-ingress",
+   "deployment_class": "conditional-resident"
+  },
+  "ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10": {
+   "layer": "Manufacturing demand observation",
+   "purpose": "Quotes coherent ITEM stock and distinguishes exact deficits from lower-bound ambiguity and overflow.",
+   "deployment_family": "manufacturing-ingress",
+   "deployment_class": "conditional-resident"
+  },
+  "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10": {
+   "layer": "Manufacturing demand control",
+   "purpose": "Round-robins four configured stock targets and submits one root intent only for a proven deficit.",
+   "deployment_family": "manufacturing-ingress",
+   "deployment_class": "conditional-resident"
+  },
+  "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10": {
+   "layer": "Manufacturing job ingress",
+   "purpose": "Revalidates producer metadata, demand, and config generation before restart-safe Gateway lane-E root publication.",
+   "deployment_family": "manufacturing-ingress",
+   "deployment_class": "conditional-resident"
+  },
+  "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10": {
+   "layer": "Manufacturing demand metadata",
+   "purpose": "Serializes evaluation and mutation-time resolution of target ITEMs to canonical root intent and output-per-batch metadata.",
+   "deployment_family": "manufacturing-ingress",
    "deployment_class": "conditional-resident"
   },
   "ic10/material-grid/material_export_slot_endpoint_v1_0.ic10": {
@@ -1225,6 +1267,16 @@
    ],
    "live_cases": [
     "LG-MANUFACTURING"
+   ]
+  },
+  "manufacturing-ingress": {
+   "title": "Stock-Target Manufacturing Ingress",
+   "docs": [
+    "docs/STOCK_TARGET_INGRESS.md",
+    "docs/GENERIC_JOB_ABI.md"
+   ],
+   "live_cases": [
+    "LG-STOCK-TARGET-INGRESS"
    ]
   },
   "dependency-planning": {

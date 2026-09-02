@@ -315,7 +315,8 @@
         0,
         8,
         9,
-        10
+        10,
+        16
       ],
       "literal_writes": [
         11,
@@ -347,6 +348,41 @@
         }
       ],
       "publication_requirements": []
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        16
+      ],
+      "literal_writes": [],
+      "dynamic_read_ranges": [
+        {
+          "start": 32,
+          "end": 511
+        }
+      ],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "source-fingerprinted-exception",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": -955081679
+        }
+      ],
+      "publication_requirements": [
+        {
+          "kind": "seqlock",
+          "address": 16
+        }
+      ]
     },
     {
       "source": "ic10/power-jobs/power_job_policy_apply_v1_0.ic10",

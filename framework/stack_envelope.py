@@ -1021,7 +1021,7 @@ def post_init_range_errors(
     Only that direction is a contradiction. A reviewed range far tighter than the
     derived one is the ordinary case and stays unchecked: a boot `clr db` puts all
     512 cells in the derived range and none of them are post-init, which is why
-    `generic_job_command_gateway_v3_0` declares nine cells against 504.
+    `generic_job_command_gateway_v4_0` declares its lane cells against the remaining stack.
 
     Envelope and extension cells are left out because the reserved-overlap rule in
     `publication_errors` already rejects them, for a better reason than this one.

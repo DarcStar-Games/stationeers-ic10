@@ -8,12 +8,12 @@ from pathlib import Path
 import re,sys
 R=_PROJECT_ROOT;validation=Validation(R)
 req={
-'ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10':['poke 1 3','get r15 db 48','get r15 db 64','put d0 21 r6'],
+'ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10':['poke 1 4','get r15 db 48','get r15 db 64','put d0 21 r6'],
 'ic10/dependency-planning/job_requirement_view_v1_0.ic10':['poke 0 HASH("JobRequirementView.v1")','put d2 8 r10'],
 'ic10/dependency-planning/item_producer_resolver_v1_0.ic10':['poke 0 HASH("ItemProducerResolver.v1")','Table:'],
 'ic10/dependency-planning/generic_job_monitor_v1_0.ic10':['poke 0 HASH("GenericJobMonitor.v1")'],
 'ic10/dependency-planning/job_inventory_preflight_v1_0.ic10':['poke 0 HASH("JobInventoryPreflight.v1")','bne r0 -2 Bad'],
-'ic10/dependency-planning/dependency_child_creator_v2_0.ic10':['poke 1 2','put d3 63 -1','put d3 48 r15'],
+'ic10/dependency-planning/dependency_child_creator_v2_0.ic10':['poke 1 2','put d3 62 r0','put d3 48 r15'],
 'ic10/dependency-planning/dependency_plan_store_v2_0.ic10':['poke 1 2','poke r0 0','poke r0 r3'],
 'ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10':['poke 1 2','get r0 db 27','bne r11 r0 Replan','bne r12 r0 Replan'],
 'ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10':['poke 0 HASH("DependencyAncestryGuard.v1")','beq r11 r8 TooDeep'],
@@ -30,7 +30,8 @@ req={
 'ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10':['poke 0 HASH("NewDependencyPlanController.v1")']}
 # Per-file ceilings above the 120-line framework limit; each also carries a reviewed
 # SOFT_LIMIT_EXEMPTIONS entry in validate_ic10.py naming what the margin buys.
-SOFT={'ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10':125,
+SOFT={'ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10':128,
+'ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10':128,
 'ic10/dependency-planning/dependency_claim_view_v1_0.ic10':121,
 'ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10':123}
 for rel,pats in req.items():
@@ -54,6 +55,6 @@ if len(writers)!=1:validation.fail(f'expected one physical Job Store command wri
 for rel in ('ic10/dependency-planning/dependency_child_creator_v1_0.ic10','ic10/dependency-planning/dependency_plan_builder_v1_0.ic10','ic10/dependency-planning/manufacturing_dependency_gate_v1_0.ic10'):
  if (R/rel).exists():validation.fail(f'stale implementation remains: {rel}')
 raise SystemExit(validation.finish('Dependency planning contracts',[
- 'dependency lanes share one four-lane Gateway and one Store executor',
+ 'dependency lanes share one five-lane Gateway and one Store executor',
  '8-cell commit-last plans, active-only claims, surplus accounting, bounded depth and quote overflow are enforced',
  'scheduler routes lifecycle through Gateway and execution through Dependency Gate']))

@@ -607,8 +607,20 @@
     ]
    ]
   },
-  "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10": {
-   "source_sha256": "0a0cb31822214db541af43c44f3f0a8e2eac14815cceaa332444805eda59dff5",
+  "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10": {
+   "source_sha256": "7245ad0930493629e30495eba53c0cbf5e77fb11fe1f9160d8322fc07a2cc585",
+   "external_readable_ranges": [
+    [
+     81,
+     84
+    ]
+   ],
+   "external_writable_ranges": [
+    [
+     87,
+     93
+    ]
+   ],
    "ports": {
     "d0": {
      "dynamic_write_ranges": [
@@ -619,6 +631,19 @@
       [
        35,
        39
+      ]
+     ]
+    }
+   }
+  },
+  "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10": {
+   "source_sha256": "dbbd8b357f60ce36a473a9052ddf1f6961dc7129df6f9f0756ebaa6e4b3afac5",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [
+      [
+       96,
+       111
       ]
      ]
     }
@@ -638,7 +663,7 @@
    }
   },
   "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10": {
-   "source_sha256": "b47723d5304bd0a4ff98577e8ccb46d8c274e16c333b8033c4e5c967437606ea",
+   "source_sha256": "96d4ec9373baa0eb31f1905f7b95e666bb9f9887d745826e14e14d679b446f07",
    "external_writable_ranges": [
     [
      12,
@@ -688,6 +713,22 @@
      "description": "Queue sequence is odd while mutating and even when stable."
     }
    ]
+  },
+  "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10": {
+   "source_sha256": "66d56b02bb3d29abcdc1cfecb6056f1ac4e862531c40c1c022eac62e8af28925",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [[32, 511]]
+    }
+   }
+  },
+  "ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10": {
+   "source_sha256": "43ec95175c4e51a61501719034d58c5bc507344fc7aa150ca1bce2ff7cefa32c",
+   "ports": {
+    "d0": {
+     "dynamic_read_ranges": [[32, 49]]
+    }
+   }
   },
   "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10": {
    "source_sha256": "d0881afad3945530d729536c47706fe0efbb0ed12ef2f03914b39f150c679e90",

@@ -113,6 +113,16 @@
       "probe_recommended": true
     },
     {
+      "id": "LG-STOCK-TARGET-INGRESS",
+      "category": "manufacturing",
+      "title": "Stock-target demand and root-job ingress",
+      "required": false,
+      "source_doc": "docs/STOCK_TARGET_INGRESS.md",
+      "section": "Live commissioning case",
+      "acceptance": "Sufficient stock stays idle; an exact deficit publishes one root; duplicate targets share active output; lower-bound/stale views suppress publication; and evaluator, publisher, or Gateway reflash never duplicates the root.",
+      "probe_recommended": true
+    },
+    {
       "id": "LG-ITEM-STORAGE",
       "category": "storage",
       "title": "ITEM storage, LArRE, SDB and reservation movement",
