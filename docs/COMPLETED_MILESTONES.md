@@ -183,7 +183,7 @@ Item 8 adds bounded dependency expansion above Generic Job Store and the Item-7 
 
 Implemented:
 
-- `ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10` is the current four-lane Gateway; Item 8 consumes lanes A/B/C for Scheduler lifecycle, Planner cancellation, and Child creation, while Item 9 later adds independent POWER lane D;
+- Gateway ABI3 was the four-lane completion state for Items 8/9; current `ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10` preserves lanes A/B/C/D and adds Item-13.1 root-ingress lane E;
 - `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` is the sole physical Job Store mailbox writer and atomically validates parent JobId, JobGeneration, and `PLANNING` state before allocating/publishing a child;
 - `ic10/dependency-planning/job_requirement_view_v1_0.ic10`, `ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10`, and generated `ic10/dependency-planning/item_producer_resolver_v1_0.ic10` normalize TRANSFORM/PRINT requirements and producers;
 - `ic10/dependency-planning/job_inventory_preflight_v1_0.ic10` consumes Item-7 coherent quotes, preserves exact/lower-bound precision, rejects quote overflow, and publishes two ordered quote fingerprints for liveness;
@@ -213,7 +213,7 @@ Implemented:
 - the Power Plan Store, selectors/builders, sweep, and dispatch-cycle services implement bounded coherent critical-first dispatch planning, alternative-source/link retry, load shedding, and surplus battery charging;
 - the Power Plan Validator, Reservation Committer, and Reservation Allocator implement full-plan revalidation, aggregate Generic Resource Reservation commit, common allocator epoch, old/new-epoch cleanup, and fail-closed publication;
 - `ic10/power-grid/power_load_executor_v1_0.ic10` and `ic10/power-grid/power_link_executor_v1_0.ic10` provide break-before-make consumer/battery and transformer actuation with exact plan, Reservation owner/epoch/generation, and Link-generation authority;
-- `ic10/generic-jobs/generic_job_selector_v3_0.ic10` plus the semantic `ic10/power-jobs/` services implement finite `JobType.POWER` policy transactions using `Identity=PolicyId`, `RequiredCapability=PowerMode`, optional watt cap, Gateway ABI3 lane D, and Generic Reservation mirror verification before COMPLETE.
+- `ic10/generic-jobs/generic_job_selector_v3_0.ic10` plus the semantic `ic10/power-jobs/` services implement finite `JobType.POWER` policy transactions using `Identity=PolicyId`, `RequiredCapability=PowerMode`, optional watt cap, Gateway lane D, and Generic Reservation mirror verification before COMPLETE.
 
 Review fixes included the Generic Reservation `S6 ExportAvailable` / `S7 ImportCapacity` offset distinction, battery self-lock avoidance, foreign reservation ownership, partial-commit epoch cleanup, exact transformer source+sink authority, allocator reflash reacquisition, final-write authority re-fencing, Generic Job Selector reuse/cursor fairness, WAIT/FAULT termination, and corrected POWER job intent mapping.
 

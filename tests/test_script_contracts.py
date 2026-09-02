@@ -317,10 +317,11 @@ proven_own_reads = {
 # The gateway copies three command lives from three seeds into one loop and
 # replies through a `select` between four mailboxes, so its proven occupancy is
 # neither one window nor a contiguous one.
-ck(proven_own_reads.get("ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10") ==
+ck(proven_own_reads.get("ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10") ==
    [{"start": 7, "end": 7}, {"start": 11, "end": 15}, {"start": 19, "end": 19},
-    {"start": 32, "end": 32}, {"start": 36, "end": 40}, {"start": 56, "end": 62},
-    {"start": 64, "end": 64}, {"start": 68, "end": 72}],
+    {"start": 32, "end": 32}, {"start": 36, "end": 40}, {"start": 48, "end": 48},
+    {"start": 56, "end": 62}, {"start": 64, "end": 64}, {"start": 68, "end": 72},
+    {"start": 80, "end": 80}, {"start": 87, "end": 93}],
    "bounded Generic Job gateway own-stack loop is absent from proven occupancy")
 # One loop walking `sp` and `ra` together bounds both: the hint mirror at S21 is
 # read through the register the exit test counts, and the endpoint copy at S28

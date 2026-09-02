@@ -408,8 +408,8 @@ Deploy the manufacturing control plane only after Generic Job Store, ITEM Resour
 Recommended resident chain:
 
 1. `ic10/generic-jobs/generic_job_store_v1_0.ic10` Generic Job Store.
-2. `ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10` four-lane command arbiter.
-3. `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10`, the sole physical Job Store mailbox writer for Scheduler/Planner/Child/Power commands.
+2. `ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10` five-lane command arbiter.
+3. `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10`, the sole physical Job Store mailbox writer for Scheduler/Planner/Child/Power/stock-ingress commands.
 4. Dependency-planning services under `ic10/dependency-planning/`, plus the shared Generic Job Gateway/Store Executor.
 5. `ic10/generic-jobs/generic_job_selector_v3_0.ic10` (default manufacturing mode) and `ic10/manufacturing/manufacturing_scheduler_v1_0.ic10`.
 6. `ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10` between Scheduler and `ic10/manufacturing/manufacturing_driver_router_v2_0.ic10`.
@@ -417,7 +417,9 @@ Recommended resident chain:
 
 Printer execution still uses `ic10/printer-directory/printer_execution_bank_v2_0.ic10` as the exact local capacity/ownership authority. Dependency planning never substitutes its logical future-output claims for Item-7 or printer physical reservations.
 
-The Gateway lanes must have one producer each: lane A Scheduler, lane B dependency Planner cancellation, lane C Child Creator, lane D Power Scheduler. Do not connect two writers to one lane.
+The Gateway lanes must have one producer each: lane A Scheduler, lane B dependency Planner cancellation, lane C Child Creator, lane D Power Scheduler, lane E Stock Target Job Ingress. Do not connect two writers to one lane. When stock ingress is enabled, Executor `d1` points to Dependency Plan Store so root publication can recheck its exact claim snapshot.
+
+See `docs/STOCK_TARGET_INGRESS.md` for the disabled-by-default Item-13.1 deployment chain and Config Host schema.
 
 
 ## Cross-domain process utility deployment

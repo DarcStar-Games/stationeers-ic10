@@ -87,6 +87,19 @@ need('ic10/controller-config/generic_persistent_config_host_v1_1.ic10','poke 11 
 for f in ('ic10/controller-pi/pi_config_policy_v1_0.ic10','ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10','ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10','ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10','ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10'):
  need(f,'put Host 21 sp','put Host 20 r15');before(f,'put Host 21 sp','put Host 20 r15')
 
+# Stock-target ingress services publish complete result/status payloads before
+# their response token. Producer View has two independently fenced lanes.
+for f,result_marker,token in [
+ ('ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10','put Host 21 sp','put Host 20 r15'),
+ ('ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10','poke 25 r13','poke 24 r15'),
+ ('ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10','poke 21 1','poke 20 r15'),
+ ('ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10','poke 21 r5','poke 19 r15'),
+ ('ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10','poke 29 r4','poke 26 r15')]:
+ need(f,result_marker,token);before(f,result_marker,token)
+for result_marker,token in [('poke 20 1','poke 19 r15'),('poke 35 1','poke 34 r15')]:
+ need('ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10',result_marker,token)
+ before('ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10',result_marker,token)
+
 # Other existing terminal-response services.
 for f,result_marker,token in [
  ('ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10','poke 8 1','poke 16 r15'),

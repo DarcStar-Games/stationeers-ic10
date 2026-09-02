@@ -192,5 +192,47 @@
       }
     }
   ],
-  "consumer_interfaces": []
+  "consumer_interfaces": [
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d1"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "literal_writes": [
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "dynamic_read_ranges": [],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "none",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": -530644456
+        },
+        {
+          "address": 21,
+          "operator": "equals",
+          "value": 1
+        }
+      ],
+      "publication_requirements": []
+    }
+  ]
 }

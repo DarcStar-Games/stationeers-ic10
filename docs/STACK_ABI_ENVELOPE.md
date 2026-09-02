@@ -384,7 +384,7 @@ excludes whatever ran before the first envelope-bearing yield — never wider in
 space, and only the wider direction is checked. A reviewed range far tighter than
 the derived one is the ordinary case: a boot `clr db` puts all 512 cells in the
 derived range and none of them are post-init, which is why
-`generic_job_command_gateway_v3_0` declares nine cells against 504. That also
+`generic_job_command_gateway_v4_0` declares its lane cells against the remaining stack. That also
 means the containment rule says something only where the derived range is
 narrower than the whole stack, and the validator prints how many of the
 declarations it can constrain next to how many it checked rather than leaving the

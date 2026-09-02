@@ -1,0 +1,120 @@
+# Lane-E publisher. d1 Producer,d2 Demand,d3 Config Host.
+Boot:
+get r0 db 0
+bne r0 HASH("StockTargetJobIngress.v1") Init
+get r0 db 1
+bne r0 1 Init
+get r0 db 2
+bne r0 32 Init
+get r0 db 30
+bgtz r0 GatewayWait
+j Loop
+Init:
+clr db
+poke 0 HASH("StockTargetJobIngress.v1")
+poke 1 1
+poke 2 32
+Loop:
+yield
+get r15 db 25
+get r0 db 26
+beq r15 r0 Loop
+blez r15 Bad
+get r2 db 15
+get r3 db 18
+get r4 db 19
+get r5 db 20
+get r6 db 21
+get r7 db 22
+get r9 db 16
+get r10 db 17
+get r11 db 31
+get r12 db 32
+get r0 d1 0
+bne r0 HASH("StockTargetProducerView.v1") Bad
+put d1 32 r2
+put d1 33 r15
+WaitProducer:
+yield
+get r0 d1 34
+bne r0 r15 WaitProducer
+get r0 d1 35
+bne r0 1 Bad
+get r0 d1 36
+bne r0 r3 Bad
+get r0 d1 37
+bne r0 r4 Bad
+get r0 d1 38
+bne r0 r5 Bad
+get r0 d1 39
+bne r0 r6 Bad
+get r0 d1 40
+bne r0 r7 Bad
+get r0 d1 41
+bne r0 r11 Bad
+get r0 d3 0
+bne r0 HASH("GenericPersistentConfigHost.v1") Bad
+get r0 d3 8
+blez r0 Bad
+get r0 d3 12
+bne r0 HASH("CFG1|ManufacturingStockTarget|1|2|255|255|0|0") Bad
+get r0 d3 51
+bne r0 r12 Bad
+get r0 d2 0
+bne r0 HASH("StockTargetDemandView.v1") Bad
+mul r14 r15 3
+add r14 r14 2
+put d2 15 r2
+put d2 16 r9
+put d2 17 r10
+put d2 18 r3
+put d2 19 r5
+put d2 20 r11
+put d2 23 r14
+WaitDemand:
+yield
+get r0 d2 24
+bne r0 r14 WaitDemand
+get r0 d2 25
+bne r0 1 Bad
+get r8 d2 26
+get r13 d2 29
+get r14 d2 30
+get r0 d3 51
+bne r0 r12 Bad
+get r0 d0 0
+bne r0 HASH("GenericJobCommandGateway.v4") Bad
+put d0 85 r13
+put d0 86 r14
+put d0 87 r3
+put d0 88 r4
+put d0 89 r5
+put d0 90 r6
+put d0 91 r7
+put d0 92 r8
+get r0 db 24
+put d0 93 r0
+poke 30 r15
+GatewayWait:
+yield
+get r15 db 30
+get r0 d0 0
+bne r0 HASH("GenericJobCommandGateway.v4") GatewayWait
+put d0 80 r15
+get r0 d0 81
+bne r0 r15 GatewayWait
+get r2 d0 82
+get r3 d0 83
+get r4 d0 84
+poke 27 r2
+poke 28 r3
+poke 29 r4
+poke 26 r15
+poke 30 0
+j Loop
+Bad:
+poke 27 -1
+poke 28 0
+poke 29 -1
+poke 26 r15
+j Loop

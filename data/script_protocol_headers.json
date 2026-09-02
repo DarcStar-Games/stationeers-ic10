@@ -380,11 +380,11 @@
     "abi": 1
    }
   ],
-  "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10": [
+  "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10": [
    {
     "base": 0,
     "contract": "GenericJobCommandGateway",
-    "abi": 3
+    "abi": 4
    }
   ],
   "ic10/generic-jobs/generic_job_selector_v3_0.ic10": [
@@ -1253,6 +1253,55 @@
     "contract": "ResourceTransformProfileView",
     "abi": 4
    }
+  ],
+  "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10": [
+   {
+    "base": 0,
+    "contract": "StockTargetConfigPolicy",
+    "abi": 1
+   }
+  ],
+  "ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10": [
+   {
+    "base": 0,
+    "contract": "StockTargetDemandView",
+    "abi": 1
+   }
+  ],
+  "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10": [
+   {
+    "base": 0,
+    "contract": "StockTargetFutureView",
+    "abi": 1
+   }
+  ],
+  "ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10": [
+   {
+    "base": 0,
+    "contract": "StockTargetInventoryView",
+    "abi": 1
+   }
+  ],
+  "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10": [
+   {
+    "base": 0,
+    "contract": "StockTargetJobEvaluator",
+    "abi": 1
+   }
+  ],
+  "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10": [
+   {
+    "base": 0,
+    "contract": "StockTargetJobIngress",
+    "abi": 1
+   }
+  ],
+  "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10": [
+   {
+    "base": 0,
+    "contract": "StockTargetProducerView",
+    "abi": 1
+   }
   ]
  },
  "consumers": {
@@ -1624,7 +1673,7 @@
    }
   ],
   "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10": [],
-  "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10": [
+  "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10": [
    {
     "port": "d0",
     "accepted": [
@@ -1662,6 +1711,16 @@
       "header_base": 0,
       "contract": "GenericJobStore",
       "abi": 1
+     }
+    ]
+   },
+   {
+    "port": "d1",
+    "accepted": [
+     {
+      "header_base": 0,
+      "contract": "DependencyPlanStore",
+      "abi": 2
      }
     ]
    }
@@ -2482,6 +2541,90 @@
   "ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10": [],
   "ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10": [],
   "ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10": [],
-  "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": []
+  "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": [],
+  "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [{"header_base": 0, "contract": "GenericPersistentConfigHost", "abi": 1}]
+   }
+  ],
+  "ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [{"header_base": 0, "contract": "ItemResourceReservationSelector", "abi": 1}]
+   }
+  ],
+  "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [{"header_base": 0, "contract": "GenericJobStore", "abi": 1,
+      "publication_requirements": [{"kind": "seqlock", "address": 16}]}]
+   },
+   {
+    "port": "d1",
+    "accepted": [{"header_base": 0, "contract": "DependencyClaimView", "abi": 1}]
+   },
+   {
+    "port": "d2",
+    "accepted": [{"header_base": 0, "contract": "DependencyPlanStore", "abi": 2,
+      "publication_requirements": [{"kind": "seqlock", "address": 40}]}]
+   }
+  ],
+  "ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [{"header_base": 0, "contract": "StockTargetInventoryView", "abi": 1}]
+   },
+   {
+    "port": "d1",
+    "accepted": [{"header_base": 0, "contract": "StockTargetFutureView", "abi": 1}]
+   }
+  ],
+  "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [{"header_base": 0, "contract": "ItemProducerResolver", "abi": 1}]
+   },
+   {
+    "port": "d1",
+    "accepted": [{"header_base": 0, "contract": "JobRequirementView", "abi": 1}]
+   }
+  ],
+  "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [{"header_base": 0, "contract": "GenericJobCommandGateway", "abi": 4}]
+   },
+   {
+    "port": "d1",
+    "accepted": [{"header_base": 0, "contract": "StockTargetProducerView", "abi": 1}]
+   },
+   {
+    "port": "d2",
+    "accepted": [{"header_base": 0, "contract": "StockTargetDemandView", "abi": 1}]
+   },
+   {
+    "port": "d3",
+    "accepted": [{"header_base": 0, "contract": "GenericPersistentConfigHost", "abi": 1}]
+   }
+  ],
+  "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [{"header_base": 0, "contract": "GenericPersistentConfigHost", "abi": 1}]
+   },
+   {
+    "port": "d1",
+    "accepted": [{"header_base": 0, "contract": "StockTargetProducerView", "abi": 1}]
+   },
+   {
+    "port": "d2",
+    "accepted": [{"header_base": 0, "contract": "StockTargetDemandView", "abi": 1}]
+   },
+   {
+    "port": "d3",
+    "accepted": [{"header_base": 0, "contract": "StockTargetJobIngress", "abi": 1}]
+   }
+  ]
  }
 }

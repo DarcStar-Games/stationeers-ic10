@@ -37,7 +37,7 @@ private={
  'ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10','ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10','ic10/material-transform/generic_material_transform_runtime_v2_0.ic10',
  'ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','ic10/directory-core/generic_registry_directory_host_v2_0.ic10','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/generic-jobs/generic_job_store_v1_0.ic10',
  'ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10','ic10/manufacturing/manufacturing_scheduler_v1_0.ic10','ic10/printer-directory/printer_execution_bank_v2_0.ic10','ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10',
- 'ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10','ic10/dependency-planning/item_producer_resolver_v1_0.ic10','ic10/dependency-planning/dependency_plan_store_v2_0.ic10','ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10','ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10','ic10/power-grid/power_dispatch_plan_store_v1_0.ic10'}
+ 'ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10','ic10/dependency-planning/item_producer_resolver_v1_0.ic10','ic10/dependency-planning/dependency_plan_store_v2_0.ic10','ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10','ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10','ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10','ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10','ic10/power-grid/power_dispatch_plan_store_v1_0.ic10'}
 programs=require_nonempty_glob(R/'ic10','*.ic10',recursive=True)
 actual=set(require_nonempty(
  (p.relative_to(R).as_posix() for p in programs if 'clr db' in p.read_text()),

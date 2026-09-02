@@ -33,8 +33,8 @@
     "implementation_id": "optional extension field; never derived from a versioned filename"
   },
   "totals": {
-    "deployable_programs": 174,
-    "migrated_v1": 174,
+    "deployable_programs": 181,
+    "migrated_v1": 181,
     "legacy_exempt": 0,
     "backlog_reserved_cell_users": 0,
     "backlog_dynamic_range_users": 0
@@ -1556,6 +1556,30 @@
                 "header_base": 0
               },
               {
+                "source": "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              },
+              {
+                "source": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              },
+              {
+                "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d3"
+                },
+                "header_base": 0
+              },
+              {
                 "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
                 "endpoint": {
                   "kind": "device-port",
@@ -2718,8 +2742,8 @@
         "highest_literal_cell": 27,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 107,
-        "line_headroom_120": 13,
+        "line_count": 106,
+        "line_headroom_120": 14,
         "measured_v1_publication_cost_lines": 3,
         "measured_v1_stack_cost_cells": 8
       },
@@ -2755,7 +2779,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "6edf07edddfb850d95d988ce89e44cdb9d150a44fa9a92d7bd2203bb962a0620",
+          "source_sha256": "d926efbd05c801be2f206035c816390b5eb2d39cd7bee1411c7e4dd151de5b09",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -2881,7 +2905,16 @@
             "provider_header_bases": [
               0
             ],
-            "consumers": []
+            "consumers": [
+              {
+                "source": "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d1"
+                },
+                "header_base": 0
+              }
+            ]
           }
         ]
       },
@@ -3249,6 +3282,22 @@
                   "value": "d0"
                 },
                 "header_base": 0
+              },
+              {
+                "source": "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d1"
+                },
+                "header_base": 0
+              },
+              {
+                "source": "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d2"
+                },
+                "header_base": 0
               }
             ]
           }
@@ -3564,7 +3613,16 @@
             "provider_header_bases": [
               0
             ],
-            "consumers": []
+            "consumers": [
+              {
+                "source": "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              }
+            ]
           }
         ]
       },
@@ -3764,7 +3822,16 @@
             "provider_header_bases": [
               0
             ],
-            "consumers": []
+            "consumers": [
+              {
+                "source": "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d1"
+                },
+                "header_base": 0
+              }
+            ]
           }
         ]
       },
@@ -5611,7 +5678,7 @@
       }
     },
     {
-      "source": "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10",
+      "source": "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10",
       "service_contract_id": "ic10.script.generic.job.command.gateway",
       "deployment_family": "generic-jobs",
       "status": "migrated-v1",
@@ -5620,8 +5687,8 @@
           {
             "base": 0,
             "contract": "GenericJobCommandGateway",
-            "magic": 2138182493,
-            "abi": 3
+            "magic": -518617346,
+            "abi": 4
           }
         ],
         "schema_fields": [],
@@ -5631,17 +5698,26 @@
         "payload_inventory_status": "declared-stack-protocol",
         "existing_consumer_checks": [
           {
-            "protocol_id": "ic10.stack.generic-job-command-gateway.v3",
+            "protocol_id": "ic10.stack.generic-job-command-gateway.v4",
             "provider_header_bases": [
               0
             ],
-            "consumers": []
+            "consumers": [
+              {
+                "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              }
+            ]
           }
         ]
       },
       "stack_pressure": {
         "literal_cell_count": 20,
-        "highest_literal_cell": 65,
+        "highest_literal_cell": 86,
         "dynamic_read_ranges": [
           {
             "start": 7,
@@ -5664,6 +5740,10 @@
             "end": 40
           },
           {
+            "start": 48,
+            "end": 48
+          },
+          {
             "start": 56,
             "end": 62
           },
@@ -5674,6 +5754,14 @@
           {
             "start": 68,
             "end": 72
+          },
+          {
+            "start": 80,
+            "end": 80
+          },
+          {
+            "start": 87,
+            "end": 93
           }
         ],
         "dynamic_write_ranges": [
@@ -5682,8 +5770,8 @@
             "end": 511
           }
         ],
-        "line_count": 125,
-        "line_headroom_120": -5,
+        "line_count": 128,
+        "line_headroom_120": -8,
         "measured_v1_publication_cost_lines": 3,
         "measured_v1_stack_cost_cells": 8
       },
@@ -5712,9 +5800,9 @@
       "envelope": {
         "service_id": "ic10.script.generic.job.command.gateway",
         "contract": "GenericJobCommandGateway",
-        "magic": 2138182493,
-        "magic_token": "HASH(\"GenericJobCommandGateway.v3\")",
-        "service_abi": 3,
+        "magic": -518617346,
+        "magic_token": "HASH(\"GenericJobCommandGateway.v4\")",
+        "service_abi": 4,
         "schema_id": null,
         "schema_id_hash": null,
         "schema_version": 0,
@@ -5730,7 +5818,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "0a0cb31822214db541af43c44f3f0a8e2eac14815cceaa332444805eda59dff5",
+          "source_sha256": "7245ad0930493629e30495eba53c0cbf5e77fb11fe1f9160d8322fc07a2cc585",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -5754,8 +5842,12 @@
               "end": 55
             },
             {
-              "start": 63,
+              "start": 64,
               "end": 67
+            },
+            {
+              "start": 80,
+              "end": 86
             }
           ],
           "post_init_dynamic_write_ranges": [
@@ -5768,8 +5860,16 @@
               "end": 35
             },
             {
+              "start": 49,
+              "end": 52
+            },
+            {
               "start": 65,
               "end": 67
+            },
+            {
+              "start": 81,
+              "end": 84
             }
           ]
         },
@@ -5887,7 +5987,7 @@
             ],
             "consumers": [
               {
-                "source": "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10",
+                "source": "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10",
                 "endpoint": {
                   "kind": "device-port",
                   "value": "d0"
@@ -5899,7 +5999,7 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 20,
+        "literal_cell_count": 23,
         "highest_literal_cell": 39,
         "dynamic_read_ranges": [
           {
@@ -5913,8 +6013,8 @@
             "end": 511
           }
         ],
-        "line_count": 120,
-        "line_headroom_120": 0,
+        "line_count": 126,
+        "line_headroom_120": -6,
         "measured_v1_publication_cost_lines": 3,
         "measured_v1_stack_cost_cells": 8
       },
@@ -5959,7 +6059,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "b47723d5304bd0a4ff98577e8ccb46d8c274e16c333b8033c4e5c967437606ea",
+          "source_sha256": "96d4ec9373baa0eb31f1905f7b95e666bb9f9887d745826e14e14d679b446f07",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -5967,11 +6067,7 @@
               "end": 13
             },
             {
-              "start": 22,
-              "end": 27
-            },
-            {
-              "start": 30,
+              "start": 21,
               "end": 32
             },
             {
@@ -6028,6 +6124,14 @@
               },
               {
                 "source": "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              },
+              {
+                "source": "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10",
                 "endpoint": {
                   "kind": "device-port",
                   "value": "d0"
@@ -6924,6 +7028,14 @@
               },
               {
                 "source": "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              },
+              {
+                "source": "ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10",
                 "endpoint": {
                   "kind": "device-port",
                   "value": "d0"
@@ -7967,6 +8079,718 @@
           "post_init_dynamic_write_ranges": []
         },
         "pilot_family": "stack-monitor"
+      }
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10",
+      "service_contract_id": "ic10.script.stock.target.config.policy",
+      "deployment_family": "manufacturing-ingress",
+      "status": "migrated-v1",
+      "current_layout": {
+        "headers": [
+          {
+            "base": 0,
+            "contract": "StockTargetConfigPolicy",
+            "magic": -1843977788,
+            "abi": 1
+          }
+        ],
+        "schema_fields": [],
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.stock-target-config-policy.v1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": []
+          }
+        ]
+      },
+      "stack_pressure": {
+        "literal_cell_count": 3,
+        "highest_literal_cell": 2,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "line_count": 83,
+        "line_headroom_120": 37,
+        "measured_v1_publication_cost_lines": 3,
+        "measured_v1_stack_cost_cells": 8
+      },
+      "window_collision": {
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
+        "dynamic_read_cells": [],
+        "dynamic_write_cells": [],
+        "dynamic_read_provenance": "none",
+        "dynamic_write_provenance": "none"
+      },
+      "envelope": {
+        "service_id": "ic10.script.stock.target.config.policy",
+        "contract": "StockTargetConfigPolicy",
+        "magic": -1843977788,
+        "magic_token": "HASH(\"StockTargetConfigPolicy.v1\")",
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "schema_assigned_externally": false,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "standard_capabilities": [
+          "ASYNC_REQUEST_V1"
+        ],
+        "capability_mask": 32,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "e8e4a176362fc813d8b8f1bfe7991ca4131c3fe216e950ec1938db2ecac5cf30",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing-ingress"
+      }
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10",
+      "service_contract_id": "ic10.script.stock.target.demand.view",
+      "deployment_family": "manufacturing-ingress",
+      "status": "migrated-v1",
+      "current_layout": {
+        "headers": [
+          {
+            "base": 0,
+            "contract": "StockTargetDemandView",
+            "magic": 211698585,
+            "abi": 1
+          }
+        ],
+        "schema_fields": [],
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.stock-target-demand-view.v1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": [
+              {
+                "source": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d2"
+                },
+                "header_base": 0
+              },
+              {
+                "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d2"
+                },
+                "header_base": 0
+              }
+            ]
+          }
+        ]
+      },
+      "stack_pressure": {
+        "literal_cell_count": 17,
+        "highest_literal_cell": 30,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "line_count": 77,
+        "line_headroom_120": 43,
+        "measured_v1_publication_cost_lines": 3,
+        "measured_v1_stack_cost_cells": 8
+      },
+      "window_collision": {
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
+        "dynamic_read_cells": [],
+        "dynamic_write_cells": [],
+        "dynamic_read_provenance": "none",
+        "dynamic_write_provenance": "none"
+      },
+      "envelope": {
+        "service_id": "ic10.script.stock.target.demand.view",
+        "contract": "StockTargetDemandView",
+        "magic": 211698585,
+        "magic_token": "HASH(\"StockTargetDemandView.v1\")",
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "schema_assigned_externally": false,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "standard_capabilities": [
+          "ASYNC_REQUEST_V1"
+        ],
+        "capability_mask": 32,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "ee2eea27295cc8c8115b35a840762f78470c99cca72385a78f7bc6943a8582f2",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 15,
+              "end": 20
+            },
+            {
+              "start": 23,
+              "end": 30
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing-ingress"
+      }
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10",
+      "service_contract_id": "ic10.script.stock.target.future.view",
+      "deployment_family": "manufacturing-ingress",
+      "status": "migrated-v1",
+      "current_layout": {
+        "headers": [
+          {
+            "base": 0,
+            "contract": "StockTargetFutureView",
+            "magic": 494563593,
+            "abi": 1
+          }
+        ],
+        "schema_fields": [],
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.stock-target-future-view.v1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": [
+              {
+                "source": "ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d1"
+                },
+                "header_base": 0
+              }
+            ]
+          }
+        ]
+      },
+      "stack_pressure": {
+        "literal_cell_count": 13,
+        "highest_literal_cell": 24,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "line_count": 106,
+        "line_headroom_120": 14,
+        "measured_v1_publication_cost_lines": 3,
+        "measured_v1_stack_cost_cells": 8
+      },
+      "window_collision": {
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
+        "dynamic_read_cells": [],
+        "dynamic_write_cells": [],
+        "dynamic_read_provenance": "none",
+        "dynamic_write_provenance": "none"
+      },
+      "envelope": {
+        "service_id": "ic10.script.stock.target.future.view",
+        "contract": "StockTargetFutureView",
+        "magic": 494563593,
+        "magic_token": "HASH(\"StockTargetFutureView.v1\")",
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "schema_assigned_externally": false,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "standard_capabilities": [
+          "ASYNC_REQUEST_V1"
+        ],
+        "capability_mask": 32,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "66d56b02bb3d29abcdc1cfecb6056f1ac4e862531c40c1c022eac62e8af28925",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 15,
+              "end": 24
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing-ingress"
+      }
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10",
+      "service_contract_id": "ic10.script.stock.target.inventory.view",
+      "deployment_family": "manufacturing-ingress",
+      "status": "migrated-v1",
+      "current_layout": {
+        "headers": [
+          {
+            "base": 0,
+            "contract": "StockTargetInventoryView",
+            "magic": 951890762,
+            "abi": 1
+          }
+        ],
+        "schema_fields": [],
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.stock-target-inventory-view.v1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": [
+              {
+                "source": "ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              }
+            ]
+          }
+        ]
+      },
+      "stack_pressure": {
+        "literal_cell_count": 10,
+        "highest_literal_cell": 22,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "line_count": 75,
+        "line_headroom_120": 45,
+        "measured_v1_publication_cost_lines": 3,
+        "measured_v1_stack_cost_cells": 8
+      },
+      "window_collision": {
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
+        "dynamic_read_cells": [],
+        "dynamic_write_cells": [],
+        "dynamic_read_provenance": "none",
+        "dynamic_write_provenance": "none"
+      },
+      "envelope": {
+        "service_id": "ic10.script.stock.target.inventory.view",
+        "contract": "StockTargetInventoryView",
+        "magic": 951890762,
+        "magic_token": "HASH(\"StockTargetInventoryView.v1\")",
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "schema_assigned_externally": false,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "standard_capabilities": [
+          "ASYNC_REQUEST_V1"
+        ],
+        "capability_mask": 32,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "43ec95175c4e51a61501719034d58c5bc507344fc7aa150ca1bce2ff7cefa32c",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 15,
+              "end": 16
+            },
+            {
+              "start": 18,
+              "end": 22
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing-ingress"
+      }
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
+      "service_contract_id": "ic10.script.stock.target.job.evaluator",
+      "deployment_family": "manufacturing-ingress",
+      "status": "migrated-v1",
+      "current_layout": {
+        "headers": [
+          {
+            "base": 0,
+            "contract": "StockTargetJobEvaluator",
+            "magic": -932134222,
+            "abi": 1
+          }
+        ],
+        "schema_fields": [],
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.stock-target-job-evaluator.v1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": []
+          }
+        ]
+      },
+      "stack_pressure": {
+        "literal_cell_count": 7,
+        "highest_literal_cell": 30,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [
+          {
+            "start": 0,
+            "end": 511
+          }
+        ],
+        "line_count": 119,
+        "line_headroom_120": 1,
+        "measured_v1_publication_cost_lines": 3,
+        "measured_v1_stack_cost_cells": 8
+      },
+      "window_collision": {
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
+        "dynamic_read_cells": [],
+        "dynamic_write_cells": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "dynamic_read_provenance": "none",
+        "dynamic_write_provenance": "source-derived"
+      },
+      "envelope": {
+        "service_id": "ic10.script.stock.target.job.evaluator",
+        "contract": "StockTargetJobEvaluator",
+        "magic": -932134222,
+        "magic_token": "HASH(\"StockTargetJobEvaluator.v1\")",
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "schema_assigned_externally": false,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "standard_capabilities": [],
+        "capability_mask": 0,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "dbbd8b357f60ce36a473a9052ddf1f6961dc7129df6f9f0756ebaa6e4b3afac5",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 8,
+              "end": 8
+            },
+            {
+              "start": 14,
+              "end": 14
+            },
+            {
+              "start": 29,
+              "end": 30
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing-ingress"
+      }
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
+      "service_contract_id": "ic10.script.stock.target.job.ingress",
+      "deployment_family": "manufacturing-ingress",
+      "status": "migrated-v1",
+      "current_layout": {
+        "headers": [
+          {
+            "base": 0,
+            "contract": "StockTargetJobIngress",
+            "magic": 1900036040,
+            "abi": 1
+          }
+        ],
+        "schema_fields": [],
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.stock-target-job-ingress.v1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": [
+              {
+                "source": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d3"
+                },
+                "header_base": 0
+              }
+            ]
+          }
+        ]
+      },
+      "stack_pressure": {
+        "literal_cell_count": 20,
+        "highest_literal_cell": 32,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [
+          {
+            "start": 0,
+            "end": 511
+          }
+        ],
+        "line_count": 120,
+        "line_headroom_120": 0,
+        "measured_v1_publication_cost_lines": 3,
+        "measured_v1_stack_cost_cells": 8
+      },
+      "window_collision": {
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
+        "dynamic_read_cells": [],
+        "dynamic_write_cells": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "dynamic_read_provenance": "none",
+        "dynamic_write_provenance": "source-derived"
+      },
+      "envelope": {
+        "service_id": "ic10.script.stock.target.job.ingress",
+        "contract": "StockTargetJobIngress",
+        "magic": 1900036040,
+        "magic_token": "HASH(\"StockTargetJobIngress.v1\")",
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "schema_assigned_externally": false,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "standard_capabilities": [
+          "ASYNC_REQUEST_V1"
+        ],
+        "capability_mask": 32,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "27356b11fc00159b1332097a0ac1ebab28a5fc12069deac3a0f6f460e1d9a43e",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 15,
+              "end": 22
+            },
+            {
+              "start": 24,
+              "end": 32
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing-ingress"
+      }
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10",
+      "service_contract_id": "ic10.script.stock.target.producer.view",
+      "deployment_family": "manufacturing-ingress",
+      "status": "migrated-v1",
+      "current_layout": {
+        "headers": [
+          {
+            "base": 0,
+            "contract": "StockTargetProducerView",
+            "magic": 1786703937,
+            "abi": 1
+          }
+        ],
+        "schema_fields": [],
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.stock-target-producer-view.v1",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": [
+              {
+                "source": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d1"
+                },
+                "header_base": 0
+              },
+              {
+                "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d1"
+                },
+                "header_base": 0
+              }
+            ]
+          }
+        ]
+      },
+      "stack_pressure": {
+        "literal_cell_count": 23,
+        "highest_literal_cell": 41,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "line_count": 84,
+        "line_headroom_120": 36,
+        "measured_v1_publication_cost_lines": 3,
+        "measured_v1_stack_cost_cells": 8
+      },
+      "window_collision": {
+        "literal_cells": [
+          0,
+          1,
+          2
+        ],
+        "dynamic_read_cells": [],
+        "dynamic_write_cells": [],
+        "dynamic_read_provenance": "none",
+        "dynamic_write_provenance": "none"
+      },
+      "envelope": {
+        "service_id": "ic10.script.stock.target.producer.view",
+        "contract": "StockTargetProducerView",
+        "magic": 1786703937,
+        "magic_token": "HASH(\"StockTargetProducerView.v1\")",
+        "service_abi": 1,
+        "schema_id": null,
+        "schema_id_hash": null,
+        "schema_version": 0,
+        "schema_assigned_externally": false,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "standard_capabilities": [
+          "ASYNC_REQUEST_V1"
+        ],
+        "capability_mask": 32,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "9a346b091b9fe7c416aa93ecbbc4e6c8c16dc9b70a58bbce554ff9be9b5958b9",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 15,
+              "end": 15
+            },
+            {
+              "start": 18,
+              "end": 26
+            },
+            {
+              "start": 32,
+              "end": 41
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "manufacturing-ingress"
       }
     },
     {

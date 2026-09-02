@@ -1,0 +1,206 @@
+{
+  "$schema": "../../schemas/script_contract_v2.schema.json",
+  "format": "IC10_SCRIPT_CONTRACT_V2",
+  "source": "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10",
+  "source_sha256": "e8e4a176362fc813d8b8f1bfe7991ca4131c3fe216e950ec1938db2ecac5cf30",
+  "identity": {
+    "service_id": "ic10.script.stock.target.config.policy",
+    "implementation_revision": "1.0",
+    "deployment_family": "manufacturing-ingress",
+    "deployment_class": "conditional-resident",
+    "layer": "Manufacturing ingress configuration",
+    "purpose": "Validates and canonicalizes four persistent ResourceType/target/hysteresis/priority stock declarations."
+  },
+  "device_ports": [
+    {
+      "port": "d0",
+      "role": "Host",
+      "aliases": [
+        "Host"
+      ],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [],
+        "writes": [],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [
+          0,
+          13,
+          20,
+          52,
+          53
+        ],
+        "literal_writes": [
+          10,
+          12,
+          13,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          48,
+          50
+        ],
+        "dynamic_read": true,
+        "dynamic_write": true,
+        "dynamic_read_ranges": [
+          {
+            "start": 128,
+            "end": 143
+          }
+        ],
+        "dynamic_write_ranges": [
+          {
+            "start": 32,
+            "end": 47
+          },
+          {
+            "start": 128,
+            "end": 143
+          }
+        ],
+        "dynamic_read_range_source": "source-derived",
+        "dynamic_write_range_source": "source-derived",
+        "constraints": [
+          {
+            "address": 0,
+            "equals": -759746849
+          }
+        ]
+      },
+      "target": {
+        "kind": "stack-protocol",
+        "verification": "literal-header",
+        "protocol_ids": [
+          "ic10.stack.generic-persistent-config-host.v1"
+        ]
+      }
+    }
+  ],
+  "network_dependencies": [],
+  "own_stack": {
+    "size": 512,
+    "literal_reads": [],
+    "literal_writes": [
+      0,
+      1,
+      2
+    ],
+    "dynamic_read": false,
+    "dynamic_write": false,
+    "dynamic_read_ranges": [],
+    "dynamic_write_ranges": [],
+    "dynamic_read_proven_ranges": [],
+    "dynamic_write_proven_ranges": [],
+    "dynamic_read_range_source": "none",
+    "dynamic_write_range_source": "none",
+    "clears_all": false,
+    "external_readable_ranges": [],
+    "external_writable_ranges": [],
+    "fields": [
+      {
+        "address": 0,
+        "name": "Header@S0.Magic",
+        "value_type": "hash",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": -1843977788
+      },
+      {
+        "address": 1,
+        "name": "Header@S0.ABI",
+        "value_type": "integer",
+        "semantic_source": "protocol-header",
+        "access": [
+          "self-write"
+        ],
+        "const": 1
+      },
+      {
+        "address": 2,
+        "name": "S2",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-write"
+        ],
+        "const": 32
+      }
+    ],
+    "headers": [
+      {
+        "base": 0,
+        "contract": "StockTargetConfigPolicy",
+        "magic": -1843977788,
+        "abi": 1
+      }
+    ]
+  },
+  "behavior": {
+    "publication_rules": [],
+    "restart": {
+      "mode": "preserved-unless-overwritten",
+      "source": "static-entry-path-analysis"
+    },
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": -1843977788,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
+  },
+  "contracts": {
+    "provides": [
+      {
+        "protocol_id": "ic10.stack.stock-target-config-policy.v1",
+        "base": 0,
+        "contract": "StockTargetConfigPolicy",
+        "magic": -1843977788,
+        "abi": 1,
+        "source": "literal-own-stack-header"
+      }
+    ],
+    "consumes": [
+      {
+        "port": "d0",
+        "accepted": [
+          {
+            "protocol_id": "ic10.stack.generic-persistent-config-host.v1",
+            "header_base": 0,
+            "contract": "GenericPersistentConfigHost",
+            "magic": -759746849,
+            "abi": 1,
+            "publication_requirements": []
+          }
+        ],
+        "source": "authoritative-literal-header-check"
+      }
+    ]
+  },
+  "extraction": {
+    "mode": "static-v2",
+    "limitations": [
+      "Unproved dynamic own-stack addresses fail closed to the full 512-cell stack.",
+      "An address the branches around it bound whole is source-derived; other reviewed bounds are source-fingerprinted overrides.",
+      "Provided and consumed protocols require authoritative declarations verified against source literals.",
+      "Field semantics not represented by source comments or literals remain in supplemental canonical data."
+    ]
+  }
+}

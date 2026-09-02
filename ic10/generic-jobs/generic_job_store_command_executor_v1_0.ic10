@@ -1,10 +1,7 @@
-# Sole Job Store command writer; create supports atomic free-slot allocation.
-Boot:
 get r0 db 0
 bne r0 HASH("GenericJobStoreCommandExecutor.v1") Init
 get r0 db 1
-bne r0 1 Init
-j Loop
+beq r0 1 Loop
 Init:
 clr db
 poke 0 HASH("GenericJobStoreCommandExecutor.v1")
@@ -28,7 +25,10 @@ blt r11 0 Bad
 bge r11 32 Bad
 j Issue
 CreateSlot:
-bgez r11 Create
+get r5 db 21
+beq r5 3 FindStart
+bne r5 5 Bad
+FindStart:
 move r11 0
 FindFree:
 bge r11 32 Bad
@@ -43,9 +43,9 @@ beqz r3 Create
 add r11 r11 1
 j FindFree
 Create:
-bge r11 32 Bad
 get r6 db 22
-blt r6 0 Bad
+beq r5 5 Root
+bltz r6 Bad
 bge r6 32 Bad
 mul r0 r6 8
 add r1 r0 32
@@ -64,14 +64,21 @@ add r2 r2 1
 get r3 d0 r2
 get r9 db 13
 bne r3 r9 Bad
-mul r0 r11 7
-add r1 r0 288
-get r2 d0 r1
-mul r2 r2 3
-add r2 r2 r1
-add r2 r2 1
-get r3 d0 r2
-bnez r3 Bad
+j StageSlot
+Root:
+bne r6 -1 Bad
+get r0 d1 0
+bne r0 HASH("DependencyPlanStore.v2") Bad
+get r0 d0 16
+get r1 d1 40
+or r2 r0 r1
+and r2 r2 1
+bnez r2 Bad
+get r2 db 28
+bne r0 r2 Bad
+get r2 db 29
+bne r1 r2 Bad
+StageSlot:
 mul r0 r11 8
 add r1 r0 33
 move r2 14
@@ -97,7 +104,6 @@ put d0 14 r1
 get r1 db 39
 put d0 15 r1
 put d0 19 r0
-j StoreWait
 StoreWait:
 get r0 db 31
 get r1 d0 8

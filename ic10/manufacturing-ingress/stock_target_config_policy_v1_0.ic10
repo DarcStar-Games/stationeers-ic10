@@ -1,0 +1,83 @@
+alias Host d0 # Four stock targets: ResourceType,Target,Hysteresis,Priority.
+poke 0 HASH("StockTargetConfigPolicy.v1")
+poke 1 1
+poke 2 32
+Boot:
+yield
+bdns Host Boot
+get r0 Host 0
+bne r0 HASH("GenericPersistentConfigHost.v1") Boot
+put Host 48 HASH("ManufacturingStockTarget")
+put Host 50 1
+put Host 10 2
+put Host 16 255
+put Host 17 255
+put Host 18 0
+put Host 19 0
+put Host 12 HASH("CFG1|ManufacturingStockTarget|1|2|255|255|0|0")
+move r0 32
+Zero:
+put Host r0 0
+add r0 r0 1
+blt r0 48 Zero
+get r0 Host 53
+put Host 20 r0
+get r0 Host 13
+add r0 r0 1
+put Host 13 r0 # metadata/defaults publish LAST
+Loop:
+yield
+get r15 Host 52
+get r0 Host 20
+beq r15 r0 Loop
+move r6 128
+move r7 0
+Validate:
+get r2 Host r6
+add r0 r6 1
+get r3 Host r0
+add r0 r6 2
+get r4 Host r0
+add r0 r6 3
+get r5 Host r0
+bnan r2 Malformed
+bnan r3 Malformed
+bnan r4 Malformed
+bnan r5 Malformed
+beqz r2 Disabled
+round sp r2
+bna r2 sp 0 Discrete
+round sp r5
+bna r5 sp 0 Discrete
+blez r3 Bounds
+bltz r4 Bounds
+bge r4 r3 Bounds
+put Host r6 r2
+add r0 r6 3
+put Host r0 sp
+j Next
+Disabled:
+move r0 0
+Clear:
+add sp r6 r0
+put Host sp 0
+add r0 r0 1
+blt r0 4 Clear
+Next:
+add r6 r6 4
+add r7 r7 1
+blt r7 4 Validate
+move sp 5
+j Respond
+Malformed:
+move sp -5
+j Respond
+Discrete:
+move sp -101
+j Respond
+Bounds:
+move sp -102
+Respond:
+put Host 21 sp
+put Host 20 r15
+j Loop

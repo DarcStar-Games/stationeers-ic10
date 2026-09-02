@@ -1,15 +1,15 @@
 {
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
-  "source": "ic10/generic-jobs/generic_job_command_gateway_v3_0.ic10",
-  "source_sha256": "0a0cb31822214db541af43c44f3f0a8e2eac14815cceaa332444805eda59dff5",
+  "source": "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10",
+  "source_sha256": "7245ad0930493629e30495eba53c0cbf5e77fb11fe1f9160d8322fc07a2cc585",
   "identity": {
     "service_id": "ic10.script.generic.job.command.gateway",
-    "implementation_revision": "3.0",
+    "implementation_revision": "4.0",
     "deployment_family": "generic-jobs",
     "deployment_class": "conditional-resident",
     "layer": "Generic job control",
-    "purpose": "Four-lane Job command arbiter for manufacturing lifecycle, dependency cancellation/creation, and POWER lifecycle requests."
+    "purpose": "Five-lane Job command arbiter adding sequence-fenced stock-target root publication to manufacturing, dependency, and POWER requests."
   },
   "device_ports": [
     {
@@ -37,11 +37,10 @@
           21,
           22,
           23,
+          28,
+          29,
           35,
-          36,
-          37,
-          38,
-          39
+          36
         ],
         "dynamic_read": false,
         "dynamic_write": true,
@@ -91,20 +90,19 @@
       53,
       54,
       55,
-      63,
       64,
-      65
+      65,
+      80,
+      81,
+      85,
+      86
     ],
     "literal_writes": [
       0,
       1,
       2,
       24,
-      25,
-      49,
-      50,
-      51,
-      52
+      25
     ],
     "dynamic_read": true,
     "dynamic_write": true,
@@ -130,6 +128,10 @@
         "end": 40
       },
       {
+        "start": 48,
+        "end": 48
+      },
+      {
         "start": 56,
         "end": 62
       },
@@ -140,6 +142,14 @@
       {
         "start": 68,
         "end": 72
+      },
+      {
+        "start": 80,
+        "end": 80
+      },
+      {
+        "start": 87,
+        "end": 93
       }
     ],
     "dynamic_write_ranges": [
@@ -170,6 +180,10 @@
         "end": 40
       },
       {
+        "start": 48,
+        "end": 48
+      },
+      {
         "start": 56,
         "end": 62
       },
@@ -180,6 +194,14 @@
       {
         "start": 68,
         "end": 72
+      },
+      {
+        "start": 80,
+        "end": 80
+      },
+      {
+        "start": 87,
+        "end": 93
       }
     ],
     "dynamic_write_proven_ranges": [
@@ -191,8 +213,18 @@
     "dynamic_read_range_source": "source-derived",
     "dynamic_write_range_source": "source-derived",
     "clears_all": true,
-    "external_readable_ranges": [],
-    "external_writable_ranges": [],
+    "external_readable_ranges": [
+      {
+        "start": 81,
+        "end": 84
+      }
+    ],
+    "external_writable_ranges": [
+      {
+        "start": 87,
+        "end": 93
+      }
+    ],
     "fields": [
       {
         "address": 0,
@@ -294,35 +326,7 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 50,
-        "name": "S50",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 51,
-        "name": "S51",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 52,
-        "name": "S52",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
+          "self-read"
         ]
       },
       {
@@ -353,15 +357,6 @@
         ]
       },
       {
-        "address": 63,
-        "name": "S63",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
         "address": 64,
         "name": "S64",
         "value_type": "number",
@@ -378,14 +373,50 @@
         "access": [
           "self-read"
         ]
+      },
+      {
+        "address": 80,
+        "name": "S80",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 81,
+        "name": "S81",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 85,
+        "name": "S85",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
+      },
+      {
+        "address": 86,
+        "name": "S86",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read"
+        ]
       }
     ],
     "headers": [
       {
         "base": 0,
         "contract": "GenericJobCommandGateway",
-        "magic": 2138182493,
-        "abi": 3
+        "magic": -518617346,
+        "abi": 4
       }
     ]
   },
@@ -400,11 +431,11 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.generic-job-command-gateway.v3",
+        "protocol_id": "ic10.stack.generic-job-command-gateway.v4",
         "base": 0,
         "contract": "GenericJobCommandGateway",
-        "magic": 2138182493,
-        "abi": 3,
+        "magic": -518617346,
+        "abi": 4,
         "source": "literal-own-stack-header"
       }
     ],
