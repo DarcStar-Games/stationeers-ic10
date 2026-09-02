@@ -1018,10 +1018,15 @@ def post_init_range_errors(
     subset of the contract's -- narrower *in time*, because it excludes whatever
     ran before the first envelope-bearing yield, never wider in space.
 
-    Only that direction is a contradiction. A reviewed range far tighter than the
-    derived one is the ordinary case and stays unchecked: a boot `clr db` puts all
-    512 cells in the derived range and none of them are post-init, which is why
-    `generic_job_command_gateway_v4_0` declares its lane cells against the remaining stack.
+    Only that direction is a contradiction. A reviewed range tighter than the
+    derived one is the ordinary case and stays unchecked, because the derived
+    range covers the whole run and the reviewed one only what follows
+    publication. What used to make the rule say nothing at all was a boot
+    `clr db`: it put every cell in the derived range and none of them were
+    post-init. The contract layer no longer counts a clear it can prove cannot
+    run after the first yield, so the comparison is against the computed writes
+    the source actually proves -- or against a reviewed window where a record is
+    named whole and only part of it is written.
 
     Envelope and extension cells are left out because the reserved-overlap rule in
     `publication_errors` already rejects them, for a better reason than this one.
@@ -1147,14 +1152,9 @@ def publication_rule_errors(
         declaration.publication_metadata(),
         reserved,
         # A boot-only `clr db` is the entry clear the publication scan already
-        # validates; it is not evidence that reference-addressed writes can name
-        # this stack. Computed own pokes still flag themselves directly.
-        reference_writes_own_stack=bool(
-            contract["own_stack"]["dynamic_write_ranges"]
-            and not (contract["own_stack"]["clears_all"]
-                     and contract["own_stack"]["dynamic_write_proven_ranges"]
-                     == [{"start": 0, "end": 511}])
-        ),
+        # validates, and no longer reaches the derived write range at all, so
+        # what is left there is the computed own pokes that flag themselves.
+        reference_writes_own_stack=bool(contract["own_stack"]["dynamic_write_ranges"]),
         mutable_cells=frozenset(
             ({STATE_CELL} if declaration.publishes_state else set())
             | ({GENERATION_CELL} if declaration.publishes_generation else set())

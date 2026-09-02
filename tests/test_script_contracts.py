@@ -41,6 +41,7 @@ from framework.script_contracts.dynamic_ranges import (
 from framework.script_contracts.own_stack import (
     analyze_own_stack,
     header_invariants,
+    post_publication_clears,
     restart_behavior,
     verify_declared_headers,
 )
@@ -458,6 +459,66 @@ ck(restart_behavior(conditional_clear, True)["mode"] == "conditional-reset",
    "a conditional recovery clear was mislabeled as cleared-on-init")
 ck(restart_behavior(parse_rows("clr db\nyield\n"), True)["mode"] == "cleared-on-init",
    "an unconditional entry-path clear was not recognized")
+
+# A `clr db` writes all 512 cells, but a boot clear writes them before the first
+# yield makes any of them readable, so no consumer of the published contract can
+# ever observe it -- and folding it into the derived write range costs every
+# constant on the stack and leaves the post-init containment ceiling vacuous.
+# Only a clear the control-flow graph can still reach after a yield keeps them.
+boot_clear_source = (
+    "get r0 db 0\nbeq r0 31415999 Init\nclr db\nInit:\npoke 0 31415999\npoke 1 1\n"
+    "move r5 32\nmove r6 0\nLoop:\nyield\npoke r5 7\nadd r5 r5 1\nadd r6 r6 1\n"
+    "ble r6 3 Loop\nDone:\nj Done\n"
+)
+recovery_clear_source = boot_clear_source.replace(
+    "poke r5 7\n", "poke r5 7\nbnez r6 Skip\nclr db\nSkip:\n"
+)
+wrapped_clear_source = boot_clear_source.replace("Done:\nj Done\n", "")
+unmodeled_clear_source = boot_clear_source.replace("Init:\n", "Init:\nj ra\n")
+
+
+def own_stack_of(text, overrides=None):
+    text_rows = parse_rows(text)
+    _, text_aliases = collect_aliases(text_rows)
+    payload, _ = analyze_own_stack(
+        text, text_rows, text_aliases, [{"base": 0, "magic": 31415999, "abi": 1}],
+        overrides or {},
+    )
+    return payload
+
+
+boot_clear = own_stack_of(boot_clear_source)
+ck(post_publication_clears(parse_program(boot_clear_source)) == 0 and
+   boot_clear["dynamic_write_ranges"] == [{"start": 32, "end": 35}] and
+   boot_clear["dynamic_write_range_source"] == "source-derived" and
+   boot_clear["clears_all"] and boot_clear["dynamic_write"],
+   "a boot clear widened the derived own-stack write range past the computed pokes")
+ck({field["address"] for field in boot_clear["fields"] if "const" in field} == {0, 1} and
+   {item["address"] for item in header_invariants(
+       [{"base": 0, "magic": 31415999, "abi": 1}], boot_clear
+   )} == {0, 1},
+   "a boot clear erased the header constants and the invariants derived from them")
+
+recovery_clear = own_stack_of(recovery_clear_source)
+ck(post_publication_clears(parse_program(recovery_clear_source)) == 1 and
+   recovery_clear["dynamic_write_ranges"] == [{"start": 0, "end": 511}] and
+   recovery_clear["dynamic_write_range_source"] == "source-derived" and
+   not any("const" in field for field in recovery_clear["fields"]),
+   "a clear reachable after the first yield lost its total write")
+
+# Running off the last line puts the machine back on the first, so a clear the
+# entry path reaches that way is reachable after the yield too.
+ck(post_publication_clears(parse_program(wrapped_clear_source)) == 1 and
+   own_stack_of(wrapped_clear_source)["dynamic_write_ranges"] == [{"start": 0, "end": 511}],
+   "a clear reached by running off the last line was treated as boot-only")
+# And a transfer the graph cannot follow counts every clear rather than none.
+ck(post_publication_clears(parse_program(unmodeled_clear_source)) == 1,
+   "an unfollowable transfer did not fail the boot-clear test closed")
+# A clear on its own is not a computed write, so nothing is left to bound.
+bare_clear = own_stack_of("clr db\npoke 0 31415999\npoke 1 1\nLoop:\nyield\nj Loop\n")
+ck(not bare_clear["dynamic_write"] and bare_clear["dynamic_write_ranges"] == [] and
+   bare_clear["dynamic_write_range_source"] == "none" and bare_clear["clears_all"],
+   "a program whose only dynamic write is a boot clear still declared a dynamic write")
 
 dynamic_header_source = "poke 0 31415999\npoke 1 1\nmove ra 0\npoke ra 5\n"
 dynamic_header_rows = parse_rows(dynamic_header_source)

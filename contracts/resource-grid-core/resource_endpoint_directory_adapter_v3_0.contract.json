@@ -71,15 +71,15 @@
     "dynamic_read_ranges": [],
     "dynamic_write_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 18,
+        "end": 209
       }
     ],
     "dynamic_read_proven_ranges": [],
     "dynamic_write_proven_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 18,
+        "end": 209
       }
     ],
     "dynamic_read_range_source": "none",
@@ -100,7 +100,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 583163590
       },
       {
         "address": 1,
@@ -109,7 +110,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 3
       },
       {
         "address": 2,
@@ -118,7 +120,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 49
       },
       {
         "address": 3,
@@ -127,7 +130,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 831802781
       },
       {
         "address": 7,
@@ -146,7 +150,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 3
       },
       {
         "address": 11,
@@ -155,7 +160,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 64
       },
       {
         "address": 12,
@@ -192,7 +198,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 16,
@@ -228,7 +235,22 @@
       "mode": "cleared-on-init",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 583163590,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 3,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
     "provides": [

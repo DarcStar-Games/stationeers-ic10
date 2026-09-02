@@ -73,12 +73,7 @@
         "literal_cell_count": 26,
         "highest_literal_cell": 32,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 112,
         "line_headroom_120": 8,
         "measured_v1_publication_cost_lines": 3,
@@ -91,18 +86,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.catalog.coordinator.core",
@@ -1304,8 +1290,8 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 32,
+            "end": 63
           }
         ],
         "line_count": 108,
@@ -1320,16 +1306,7 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
@@ -1778,8 +1755,8 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 18,
+            "end": 145
           }
         ],
         "line_count": 58,
@@ -1796,16 +1773,7 @@
           7
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
@@ -3635,12 +3603,7 @@
             "end": 511
           }
         ],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 78,
         "line_headroom_120": 42,
         "measured_v1_publication_cost_lines": 3,
@@ -3662,18 +3625,9 @@
           6,
           7
         ],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "conservative-full-stack",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.item.producer.resolver",
@@ -5358,8 +5312,8 @@
         ],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 58,
+            "end": 447
           }
         ],
         "line_count": 115,
@@ -5375,18 +5329,9 @@
           3
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "source-derived",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
         "service_id": "ic10.script.generic.registry.directory.host",
@@ -5766,8 +5711,24 @@
         ],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 8,
+            "end": 10
+          },
+          {
+            "start": 33,
+            "end": 35
+          },
+          {
+            "start": 49,
+            "end": 52
+          },
+          {
+            "start": 65,
+            "end": 67
+          },
+          {
+            "start": 81,
+            "end": 84
           }
         ],
         "line_count": 128,
@@ -5784,16 +5745,7 @@
         "dynamic_read_cells": [
           7
         ],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "source-derived",
         "dynamic_write_provenance": "source-derived"
       },
@@ -6007,12 +5959,7 @@
             "end": 20
           }
         ],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 126,
         "line_headroom_120": -6,
         "measured_v1_publication_cost_lines": 3,
@@ -6025,18 +5972,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "source-derived",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.generic.job.store.command.executor",
@@ -6161,7 +6099,7 @@
         ],
         "dynamic_write_ranges": [
           {
-            "start": 0,
+            "start": 32,
             "end": 511
           }
         ],
@@ -6186,18 +6124,9 @@
           6,
           7
         ],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "conservative-full-stack",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
         "service_id": "ic10.script.generic.job.store",
@@ -6294,12 +6223,7 @@
         "literal_cell_count": 107,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 109,
         "line_headroom_120": 11,
         "measured_v1_publication_cost_lines": 4,
@@ -6313,18 +6237,9 @@
           3
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.input.profile.catalog.loader.00",
@@ -6476,12 +6391,7 @@
         "literal_cell_count": 80,
         "highest_literal_cell": 509,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 82,
         "line_headroom_120": 38,
         "measured_v1_publication_cost_lines": 4,
@@ -6495,18 +6405,9 @@
           3
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.input.profile.catalog.loader.01",
@@ -6630,12 +6531,7 @@
         "literal_cell_count": 110,
         "highest_literal_cell": 509,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 112,
         "line_headroom_120": 8,
         "measured_v1_publication_cost_lines": 4,
@@ -6649,18 +6545,9 @@
           3
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.input.profile.catalog.loader.02",
@@ -8496,12 +8383,7 @@
         "literal_cell_count": 7,
         "highest_literal_cell": 30,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 119,
         "line_headroom_120": 1,
         "measured_v1_publication_cost_lines": 3,
@@ -8514,18 +8396,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.stock.target.job.evaluator",
@@ -8611,12 +8484,7 @@
         "literal_cell_count": 20,
         "highest_literal_cell": 32,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 120,
         "line_headroom_120": 0,
         "measured_v1_publication_cost_lines": 3,
@@ -8629,18 +8497,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.stock.target.job.ingress",
@@ -9096,12 +8955,7 @@
         "literal_cell_count": 13,
         "highest_literal_cell": 31,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 120,
         "line_headroom_120": 0,
         "measured_v1_publication_cost_lines": 3,
@@ -9114,18 +8968,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.manufacturing.scheduler",
@@ -9811,8 +9656,8 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 18,
+            "end": 209
           }
         ],
         "line_count": 76,
@@ -9829,16 +9674,7 @@
           7
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
@@ -10510,12 +10346,7 @@
         "literal_cell_count": 19,
         "highest_literal_cell": 31,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 120,
         "line_headroom_120": 0,
         "measured_v1_publication_cost_lines": 3,
@@ -10528,18 +10359,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.generic.material.transform.runtime",
@@ -10814,12 +10636,7 @@
         "literal_cell_count": 20,
         "highest_literal_cell": 31,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 115,
         "line_headroom_120": 5,
         "measured_v1_publication_cost_lines": 3,
@@ -10832,18 +10649,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.multi.material.reservation.allocator",
@@ -10925,8 +10733,8 @@
         ],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 32,
+            "end": 40
           }
         ],
         "line_count": 120,
@@ -10950,16 +10758,7 @@
           6,
           7
         ],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "conservative-full-stack",
         "dynamic_write_provenance": "source-derived"
       },
@@ -13453,12 +13252,7 @@
         "literal_cell_count": 18,
         "highest_literal_cell": 119,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 126,
         "line_headroom_120": -6,
         "measured_v1_publication_cost_lines": 4,
@@ -13472,18 +13266,9 @@
           6
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.controller.pressure.domain.runtime",
@@ -14087,8 +13872,8 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 18,
+            "end": 209
           }
         ],
         "line_count": 88,
@@ -14105,16 +13890,7 @@
           7
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
@@ -15516,8 +15292,8 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 18,
+            "end": 209
           }
         ],
         "line_count": 117,
@@ -15534,16 +15310,7 @@
           7
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
@@ -15644,8 +15411,8 @@
         ],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 16,
+            "end": 79
           }
         ],
         "line_count": 121,
@@ -15660,18 +15427,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "source-derived",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
         "service_id": "ic10.script.printer.execution.bank",
@@ -17021,8 +16779,8 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 18,
+            "end": 209
           }
         ],
         "line_count": 62,
@@ -17039,16 +16797,7 @@
           7
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
@@ -17151,8 +16900,8 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 18,
+            "end": 81
           }
         ],
         "line_count": 55,
@@ -17169,16 +16918,7 @@
           7
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
@@ -17281,8 +17021,8 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 18,
+            "end": 209
           }
         ],
         "line_count": 62,
@@ -17299,16 +17039,7 @@
           7
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
         "dynamic_write_provenance": "source-derived"
       },
@@ -17627,12 +17358,7 @@
         "literal_cell_count": 20,
         "highest_literal_cell": 500,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 22,
         "line_headroom_120": 98,
         "measured_v1_publication_cost_lines": 4,
@@ -17646,18 +17372,9 @@
           3
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.resource.profile.loader.energy.00",
@@ -17745,12 +17462,7 @@
         "literal_cell_count": 109,
         "highest_literal_cell": 509,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 111,
         "line_headroom_120": 9,
         "measured_v1_publication_cost_lines": 4,
@@ -17764,18 +17476,9 @@
           3
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.resource.profile.loader.fluid.00",
@@ -17883,12 +17586,7 @@
         "literal_cell_count": 77,
         "highest_literal_cell": 509,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 79,
         "line_headroom_120": 41,
         "measured_v1_publication_cost_lines": 4,
@@ -17902,18 +17600,9 @@
           3
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.resource.profile.loader.fluid.01",
@@ -18013,12 +17702,7 @@
         "literal_cell_count": 113,
         "highest_literal_cell": 502,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 115,
         "line_headroom_120": 5,
         "measured_v1_publication_cost_lines": 4,
@@ -18032,18 +17716,9 @@
           3
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.resource.profile.loader.item.00",
@@ -18171,12 +17846,7 @@
         "literal_cell_count": 113,
         "highest_literal_cell": 503,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 115,
         "line_headroom_120": 5,
         "measured_v1_publication_cost_lines": 4,
@@ -18190,18 +17860,9 @@
           3
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.resource.profile.loader.item.01",
@@ -18325,12 +17986,7 @@
         "literal_cell_count": 73,
         "highest_literal_cell": 503,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 75,
         "line_headroom_120": 45,
         "measured_v1_publication_cost_lines": 4,
@@ -18344,18 +18000,9 @@
           3
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.resource.profile.loader.item.02",
@@ -18463,12 +18110,7 @@
         "literal_cell_count": 20,
         "highest_literal_cell": 500,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 22,
         "line_headroom_120": 98,
         "measured_v1_publication_cost_lines": 4,
@@ -18482,18 +18124,9 @@
           3
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.resource.profile.loader.power.00",
@@ -18872,12 +18505,7 @@
         "literal_cell_count": 107,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 109,
         "line_headroom_120": 11,
         "measured_v1_publication_cost_lines": 4,
@@ -18891,18 +18519,9 @@
           3
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.resource.transform.catalog.loader.00",
@@ -19014,12 +18633,7 @@
         "literal_cell_count": 96,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 98,
         "line_headroom_120": 22,
         "measured_v1_publication_cost_lines": 4,
@@ -19033,18 +18647,9 @@
           3
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.resource.transform.catalog.loader.01",
@@ -19152,12 +18757,7 @@
         "literal_cell_count": 108,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 110,
         "line_headroom_120": 10,
         "measured_v1_publication_cost_lines": 4,
@@ -19171,18 +18771,9 @@
           3
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.resource.transform.catalog.loader.02",
@@ -19290,12 +18881,7 @@
         "literal_cell_count": 93,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 95,
         "line_headroom_120": 25,
         "measured_v1_publication_cost_lines": 4,
@@ -19309,18 +18895,9 @@
           3
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.resource.transform.catalog.loader.03",
@@ -19424,12 +19001,7 @@
         "literal_cell_count": 39,
         "highest_literal_cell": 511,
         "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [
-          {
-            "start": 0,
-            "end": 511
-          }
-        ],
+        "dynamic_write_ranges": [],
         "line_count": 41,
         "line_headroom_120": 79,
         "measured_v1_publication_cost_lines": 4,
@@ -19443,18 +19015,9 @@
           3
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-derived"
+        "dynamic_write_provenance": "none"
       },
       "envelope": {
         "service_id": "ic10.script.resource.transform.catalog.loader.04",

@@ -59,10 +59,12 @@ print(f" - every declared provider exists, matches its port's target kind, and p
       " any S0 identity the port checks")
 print(f" - every one of the {len(script_edges)} script edges touches only cells a declared"
       " provider publishes or accepts")
-# A provider that clears its whole stack publishes every cell, so a read of it can
-# never fail; report how many edges the comparison can actually constrain. Providers
-# are any-of, so one peer offering the whole stack in every direction the port uses
-# absorbs the edge however narrow the others are.
+# A provider whose dynamic write range is the whole stack publishes every cell, so a
+# read of it can never fail; report how many edges the comparison can actually
+# constrain. Providers are any-of, so one peer offering the whole stack in every
+# direction the port uses absorbs the edge however narrow the others are. A boot
+# `clr db` no longer puts a provider there -- what is left is a computed write the
+# bounds analysis could not follow.
 constrained = 0
 for source, entries in wiring["ports"].items():
     for name, peer in entries.items():
@@ -78,6 +80,6 @@ for source, entries in wiring["ports"].items():
             for item in offered
         )
 print(f" - {constrained} of them can actually fail; on the rest some declared provider"
-      " clears its own stack, so it offers every cell the port could ask for")
+      " has an unproven computed write, so it offers every cell the port could ask for")
 print(f" - {guarded} edges into migrated programs touch no S2..S7 header cell;"
       f" {reviewed} reviewed header reads are declared in the map")

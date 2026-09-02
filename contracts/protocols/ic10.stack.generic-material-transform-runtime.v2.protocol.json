@@ -25,7 +25,8 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": -1443322424
         },
         {
           "address": 1,
@@ -34,7 +35,8 @@
           "semantic_source": "protocol-header",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 2
         },
         {
           "address": 2,
@@ -43,7 +45,8 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ]
+          ],
+          "const": 32
         },
         {
           "address": 8,
@@ -192,7 +195,8 @@
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "const": -1443322424
         }
       ],
       "behavior": {
@@ -201,7 +205,22 @@
           "mode": "conditional-reset",
           "source": "static-entry-path-analysis"
         },
-        "invariants": []
+        "invariants": [
+          {
+            "id": "header.s0.magic",
+            "kind": "cell-equals",
+            "address": 0,
+            "equals": -1443322424,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s0.abi",
+            "kind": "cell-equals",
+            "address": 1,
+            "equals": 2,
+            "source": "generated-protocol-header"
+          }
+        ]
       }
     }
   ],

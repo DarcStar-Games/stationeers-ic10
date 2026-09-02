@@ -111,13 +111,14 @@ declared a 16-cell hop window on both sides of a three-cell array, and the
 comparison that was already enforced there passed anyway.
 
 One vacuity does survive, and the validator counts it rather than hiding it: a
-program that runs `clr db` writes the whole stack, so its published surface is
-all 512 cells and no read of it can fail. 27 of the 108 declared providers are
-in that position, and because providers are any-of, one such peer absorbs the
-whole edge however narrow the others are. That leaves 152 of the 208 edges able
-to fail at all. Narrowing the rest means deriving the publish surface from what
-a provider writes *after* initialization rather than from its full dynamic write
-range.
+provider whose published surface is all 512 cells cannot fail a read, and because
+providers are any-of, one such peer absorbs the whole edge however narrow the
+others are. That used to be mostly boot clears — a `clr db` writes every cell, so
+every program with one offered the whole stack — and taking the entry clear out of
+the derived write range dropped it from 26 of the 113 declared providers to 9,
+which lifted the edges that can fail at all from 170 to 186 of 226. What is left
+is the providers whose computed writes the bounds analysis cannot follow, where
+the whole-stack surface is a gap in the proof rather than a fact about the source.
 
 The reviewed envelope stays the escape hatch, for the one thing derivation
 cannot see: a mailbox that one peer posts and a *different* peer consumes, which

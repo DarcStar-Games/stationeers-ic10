@@ -194,6 +194,8 @@ forbidden={
  'strict loop proof':'one branch-bounds proof derives dynamic ranges; the linear loop proof beside it is gone',
  'single-backedge loop':'the loop model reads every back edge around an access, not one',
  'must exactly match any retained override':'an override wider than a whole derivation is kept as the published range',
+ 'a boot `clr db` puts all 512 cells in the':'a boot clear is not in the derived write range; only a clear reachable after a yield is',
+ 'a program that runs `clr db` writes the whole stack':'a boot clear is not in the derived write range; what is left there is an unproven computed write',
 }
 for p in mds:
     txt=p.read_text(errors='replace')

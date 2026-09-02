@@ -2,35 +2,10 @@
   "format": "IC10_SCRIPT_CONTRACT_INDEX_V1",
   "contract_count": 181,
   "own_stack_range_inventory": {
-    "dynamic_script_count": 64,
-    "source_proven_surface_count": 77,
+    "dynamic_script_count": 42,
+    "source_proven_surface_count": 50,
     "unresolved_fallback_count": 20,
     "scripts": [
-      {
-        "source": "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
       {
         "source": "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10",
         "read": {
@@ -59,7 +34,11 @@
           ],
           "proven_ranges": [
             {
-              "start": 0,
+              "start": 18,
+              "end": 401
+            },
+            {
+              "start": 448,
               "end": 511
             }
           ],
@@ -132,12 +111,7 @@
               "end": 511
             }
           ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
+          "proven_ranges": [],
           "provenance": "conservative-full-stack"
         }
       },
@@ -153,14 +127,14 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 32,
+              "end": 63
             }
           ],
           "proven_ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 32,
+              "end": 63
             }
           ],
           "provenance": "source-derived"
@@ -225,14 +199,14 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 18,
+              "end": 145
             }
           ],
           "proven_ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 18,
+              "end": 145
             }
           ],
           "provenance": "source-derived"
@@ -394,8 +368,8 @@
           ],
           "proven_ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 32,
+              "end": 39
             }
           ],
           "provenance": "conservative-full-stack"
@@ -484,20 +458,10 @@
           "provenance": "conservative-full-stack"
         },
         "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
         }
       },
       {
@@ -1169,17 +1133,17 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 58,
+              "end": 447
             }
           ],
           "proven_ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 64,
+              "end": 447
             }
           ],
-          "provenance": "source-derived"
+          "provenance": "source-fingerprinted-exception"
         }
       },
       {
@@ -1210,8 +1174,8 @@
           ],
           "proven_ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 32,
+              "end": 415
             }
           ],
           "provenance": "conservative-full-stack"
@@ -1319,14 +1283,46 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 8,
+              "end": 10
+            },
+            {
+              "start": 33,
+              "end": 35
+            },
+            {
+              "start": 49,
+              "end": 52
+            },
+            {
+              "start": 65,
+              "end": 67
+            },
+            {
+              "start": 81,
+              "end": 84
             }
           ],
           "proven_ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 8,
+              "end": 10
+            },
+            {
+              "start": 33,
+              "end": 35
+            },
+            {
+              "start": 49,
+              "end": 52
+            },
+            {
+              "start": 65,
+              "end": 67
+            },
+            {
+              "start": 81,
+              "end": 84
             }
           ],
           "provenance": "source-derived"
@@ -1351,20 +1347,10 @@
           "provenance": "source-derived"
         },
         "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
+          "dynamic": false,
+          "ranges": [],
+          "proven_ranges": [],
+          "provenance": "none"
         }
       },
       {
@@ -1513,92 +1499,145 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
+              "start": 32,
               "end": 511
             }
           ],
           "proven_ranges": [
             {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
-        "source": "ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
+              "start": 32,
+              "end": 32
+            },
             {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
+              "start": 40,
+              "end": 40
+            },
             {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
-        "source": "ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
+              "start": 48,
+              "end": 48
+            },
             {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
+              "start": 56,
+              "end": 56
+            },
             {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
-        "source": "ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
+              "start": 64,
+              "end": 64
+            },
             {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
+              "start": 72,
+              "end": 72
+            },
             {
-              "start": 0,
+              "start": 80,
+              "end": 80
+            },
+            {
+              "start": 88,
+              "end": 88
+            },
+            {
+              "start": 96,
+              "end": 96
+            },
+            {
+              "start": 104,
+              "end": 104
+            },
+            {
+              "start": 112,
+              "end": 112
+            },
+            {
+              "start": 120,
+              "end": 120
+            },
+            {
+              "start": 128,
+              "end": 128
+            },
+            {
+              "start": 136,
+              "end": 136
+            },
+            {
+              "start": 144,
+              "end": 144
+            },
+            {
+              "start": 152,
+              "end": 152
+            },
+            {
+              "start": 160,
+              "end": 160
+            },
+            {
+              "start": 168,
+              "end": 168
+            },
+            {
+              "start": 176,
+              "end": 176
+            },
+            {
+              "start": 184,
+              "end": 184
+            },
+            {
+              "start": 192,
+              "end": 192
+            },
+            {
+              "start": 200,
+              "end": 200
+            },
+            {
+              "start": 208,
+              "end": 208
+            },
+            {
+              "start": 216,
+              "end": 216
+            },
+            {
+              "start": 224,
+              "end": 224
+            },
+            {
+              "start": 232,
+              "end": 232
+            },
+            {
+              "start": 240,
+              "end": 240
+            },
+            {
+              "start": 248,
+              "end": 248
+            },
+            {
+              "start": 256,
+              "end": 256
+            },
+            {
+              "start": 264,
+              "end": 264
+            },
+            {
+              "start": 272,
+              "end": 272
+            },
+            {
+              "start": 280,
+              "end": 280
+            },
+            {
+              "start": 288,
               "end": 511
             }
           ],
-          "provenance": "source-derived"
+          "provenance": "source-fingerprinted-exception"
         }
       },
       {
@@ -1687,81 +1726,6 @@
         }
       },
       {
-        "source": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
-        "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
-        "source": "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
         "source": "ic10/manufacturing/print_material_resolver_v1_0.ic10",
         "read": {
           "dynamic": false,
@@ -1798,39 +1762,14 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 18,
+              "end": 209
             }
           ],
           "proven_ranges": [
             {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
-        "source": "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
+              "start": 18,
+              "end": 209
             }
           ],
           "provenance": "source-derived"
@@ -1862,31 +1801,6 @@
         }
       },
       {
-        "source": "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
         "source": "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10",
         "read": {
           "dynamic": true,
@@ -1903,14 +1817,14 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 32,
+              "end": 40
             }
           ],
           "proven_ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 32,
+              "end": 40
             }
           ],
           "provenance": "source-derived"
@@ -1952,8 +1866,8 @@
           ],
           "proven_ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 32,
+              "end": 95
             }
           ],
           "provenance": "conservative-full-stack"
@@ -1975,38 +1889,8 @@
               "end": 511
             }
           ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "conservative-full-stack"
-        }
-      },
-      {
-        "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
           "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
+          "provenance": "conservative-full-stack"
         }
       },
       {
@@ -2021,14 +1905,14 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 18,
+              "end": 209
             }
           ],
           "proven_ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 18,
+              "end": 209
             }
           ],
           "provenance": "source-derived"
@@ -2131,14 +2015,14 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 18,
+              "end": 209
             }
           ],
           "proven_ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 18,
+              "end": 209
             }
           ],
           "provenance": "source-derived"
@@ -2198,17 +2082,37 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 16,
+              "end": 79
             }
           ],
           "proven_ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 16,
+              "end": 21
+            },
+            {
+              "start": 24,
+              "end": 29
+            },
+            {
+              "start": 48,
+              "end": 53
+            },
+            {
+              "start": 56,
+              "end": 61
+            },
+            {
+              "start": 64,
+              "end": 69
+            },
+            {
+              "start": 72,
+              "end": 77
             }
           ],
-          "provenance": "source-derived"
+          "provenance": "source-fingerprinted-exception"
         }
       },
       {
@@ -2227,12 +2131,7 @@
               "end": 511
             }
           ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
+          "proven_ranges": [],
           "provenance": "conservative-full-stack"
         }
       },
@@ -2273,14 +2172,14 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 18,
+              "end": 209
             }
           ],
           "proven_ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 18,
+              "end": 209
             }
           ],
           "provenance": "source-derived"
@@ -2298,14 +2197,14 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 18,
+              "end": 81
             }
           ],
           "proven_ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 18,
+              "end": 81
             }
           ],
           "provenance": "source-derived"
@@ -2323,14 +2222,14 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 18,
+              "end": 209
             }
           ],
           "proven_ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 18,
+              "end": 209
             }
           ],
           "provenance": "source-derived"
@@ -2380,181 +2279,6 @@
         }
       },
       {
-        "source": "ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
-        "source": "ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
-        "source": "ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
-        "source": "ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
-        "source": "ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
-        "source": "ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
-        "source": "ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
         "source": "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10",
         "read": {
           "dynamic": false,
@@ -2574,131 +2298,6 @@
             {
               "start": 10,
               "end": 21
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
-        "source": "ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
-        "source": "ic10/transform-catalog/resource_transform_catalog_loader_01_v6_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
-        "source": "ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
-        "source": "ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "provenance": "source-derived"
-        }
-      },
-      {
-        "source": "ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10",
-        "read": {
-          "dynamic": false,
-          "ranges": [],
-          "proven_ranges": [],
-          "provenance": "none"
-        },
-        "write": {
-          "dynamic": true,
-          "ranges": [
-            {
-              "start": 0,
-              "end": 511
-            }
-          ],
-          "proven_ranges": [
-            {
-              "start": 0,
-              "end": 511
             }
           ],
           "provenance": "source-derived"

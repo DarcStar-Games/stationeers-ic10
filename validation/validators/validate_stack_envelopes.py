@@ -68,8 +68,10 @@ if actual is not None:
     if "stack-monitor" not in families:
         validation.fail("the monitor pilot must stay migrated; it is the reference reader")
     # A reviewed post-init range is contained in the contract's derived dynamic write
-    # range, which only says something where that range is narrower than the stack: a
-    # boot `clr db` writes all 512 cells and absorbs any claim made against it.
+    # range, which only says something where that range is narrower than the stack.
+    # A boot `clr db` no longer puts it there -- what remains is a computed write the
+    # bounds analysis could not follow, which is a gap in the proof rather than a fact
+    # about the program.
     reviewed_post_init = [
         item for item in migrated
         if item["envelope"]["publication_validation"]["post_init_dynamic_write_ranges"]
