@@ -100,6 +100,16 @@ for result_marker,token in [('poke 20 1','poke 19 r15'),('poke 35 1','poke 34 r1
  need('ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10',result_marker,token)
  before('ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10',result_marker,token)
 
+# Operator-order staging and both terminal services bind complete payloads to
+# exact request identities. Editor also rejects a stale ingress result.
+need('ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10',
+ 'put d1 18 r0','put d1 19 r15','get r0 d1 20','bne r0 r15 Loop','get r0 d1 21')
+before('ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10','put d1 18 r0','put d1 19 r15')
+for f,result_marker,token in [
+ ('ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10','poke 24 r9','poke 20 r15'),
+ ('ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10','poke 23 r3','poke 20 r15')]:
+ need(f,result_marker,token);before(f,result_marker,token)
+
 # Other existing terminal-response services.
 for f,result_marker,token in [
  ('ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10','poke 8 1','poke 16 r15'),

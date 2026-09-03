@@ -82,8 +82,8 @@ ck(CAPABILITY_BITS_V1 == 255 and inventory["envelope"]["standard_capability_bits
     "GENERIC_JOB_ABI_V1": HAS_GENERIC_JOB_ABI_V1,
 }, "the v1 standard capability-bit registry changed without review")
 ck(inventory["totals"] == {
-    "deployable_programs": 181,
-    "migrated_v1": 181,
+    "deployable_programs": 184,
+    "migrated_v1": 184,
     "legacy_exempt": 0,
     "backlog_reserved_cell_users": 0,
     "backlog_dynamic_range_users": 0,

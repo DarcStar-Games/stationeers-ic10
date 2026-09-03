@@ -486,7 +486,7 @@ Item 6 plus its hardening pass adds 16 production source programs, ordinals 172 
 
 ## Item 8 dependency-planner integration
 
-Item 8 preserves the Scheduler's queue/lifecycle policy while removing direct multiwriter access to the Generic Job Store command mailbox. Current `ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10` has five independent producer lanes: Scheduler lifecycle, Planner cancellation, Child creation, POWER lifecycle, and stock-target root ingress. `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` is the **sole physical Job Store mailbox writer** for those production paths.
+Item 8 preserves the Scheduler's queue/lifecycle policy while removing direct multiwriter access to the Generic Job Store command mailbox. Current `ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10` has six independent producer lanes: Scheduler lifecycle, Planner cancellation, Child creation, POWER lifecycle, stock-target root ingress, and operator-order root ingress. `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` is the **sole physical Job Store mailbox writer** for those production paths.
 
 The scheduler's execution boundary is now:
 
@@ -499,6 +499,6 @@ The scheduler's execution boundary is now:
 
 While a job is `PLANNING`, the Dependency Gate asks the Item-8 Planner whether existing inventory is sufficient or a bounded dependency plan must run. Only a dependency-ready response reaches the existing Driver Router. TRANSFORM/PRINT driver semantics, candidate selection, physical resource reservations, pressure/temperature enforcement, and printer capacity ownership remain unchanged.
 
-`ic10/manufacturing/manufacturing_scheduler_v1_0.ic10` remains the manufacturing lifecycle-policy owner: it decides legal Job ABI edges and wait/fault outcomes. It publishes those decisions through Job Command Gateway ABI4 lane A rather than writing `ic10/generic-jobs/generic_job_store_v1_0.ic10` directly. Planner cancellation uses lane B; Child Creator uses lane C; power uses lane D; stock-target ingress publishes only new roots through lane E. `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` serializes all five into the one Job Store request mailbox.
+`ic10/manufacturing/manufacturing_scheduler_v1_0.ic10` remains the manufacturing lifecycle-policy owner: it decides legal Job ABI edges and wait/fault outcomes. It publishes those decisions through Job Command Gateway ABI5 lane A rather than writing `ic10/generic-jobs/generic_job_store_v1_0.ic10` directly. Planner cancellation uses lane B; Child Creator uses lane C; power uses lane D; stock-target ingress uses lane E; operator-order ingress uses lane F. `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` serializes all six into the one Job Store request mailbox.
 
 See `docs/DEPENDENCY_PLANNING.md` for bounded depth, future-output claims, Plan Store ABI2, cancellation, and restart semantics.

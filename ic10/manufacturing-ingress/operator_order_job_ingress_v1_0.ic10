@@ -1,0 +1,115 @@
+# d0 Gateway,d1 Recipe View,d2 Job Store,d3 Plan Store.
+Boot:
+get r0 db 0
+bne r0 HASH("OperatorOrderJobIngress.v1") Init
+get r0 db 1
+bne r0 1 Init
+get r0 db 30
+bgtz r0 GatewayWait
+j Loop
+Init:
+clr db
+poke 0 HASH("OperatorOrderJobIngress.v1")
+poke 1 1
+poke 2 32
+Loop:
+yield
+get r15 db 19
+get r0 db 20
+beq r15 r0 Loop
+blez r15 Bad
+get r3 db 15
+get r4 db 16
+get r5 db 17
+get r6 db 18
+beqz r3 Bad
+bltz r4 Bad
+blez r5 Bad
+round r0 r3
+bne r0 r3 Bad
+round r0 r4
+bne r0 r4 Bad
+round r0 r5
+bne r0 r5 Bad
+round r0 r6
+bne r0 r6 Bad
+get r0 d1 0
+bne r0 HASH("OperatorOrderRecipeView.v1") Bad
+get r14 d1 20
+add r14 r14 1
+bgtz r14 RecipeToken
+move r14 1
+RecipeToken:
+put d1 15 r3
+put d1 16 r4
+put d1 19 r14
+RecipeWait:
+yield
+get r0 d1 20
+bne r0 r14 RecipeWait
+get r0 d1 21
+bne r0 1 RecipeFail
+get r7 d1 22
+get r8 d1 23
+get r9 d1 24
+get r0 d2 0
+bne r0 HASH("GenericJobStore.v1") Bad
+get r10 d2 16
+mod r0 r10 2
+bnez r0 Busy
+get r0 d3 0
+bne r0 HASH("DependencyPlanStore.v2") Bad
+get r11 d3 40
+mod r0 r11 2
+bnez r0 Busy
+get r0 d0 0
+bne r0 HASH("GenericJobCommandGateway.v5") Bad
+get r14 d0 97
+add r14 r14 1
+bgtz r14 GatewayToken
+move r14 1
+GatewayToken:
+put d0 101 r10
+put d0 102 r11
+put d0 103 2
+put d0 104 r8
+put d0 105 r7
+put d0 106 r9
+put d0 107 1
+put d0 108 r5
+put d0 109 r6
+poke 31 r15
+poke 30 r14
+GatewayWait:
+yield
+get r14 db 30
+get r0 d0 0
+bne r0 HASH("GenericJobCommandGateway.v5") GatewayWait
+put d0 96 r14
+get r0 d0 97
+bne r0 r14 GatewayWait
+get r1 d0 98
+get r2 d0 99
+get r3 d0 100
+get r15 db 31
+poke 21 r1
+poke 22 r2
+poke 23 r3
+poke 30 0
+poke 31 0
+j Reply
+RecipeFail:
+get r0 d1 21
+j Fail
+Busy:
+move r0 -5
+j Fail
+Bad:
+move r0 -1
+Fail:
+poke 21 r0
+poke 22 0
+poke 23 -1
+Reply:
+poke 20 r15
+j Loop

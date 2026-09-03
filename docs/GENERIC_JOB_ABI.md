@@ -385,4 +385,4 @@ Item 9 reuses `GENERIC_JOB_ABI_V1` without adding power-specific fields. `Identi
 
 ## Item 13.1 stock-target ingress
 
-Job Gateway ABI4 retains lanes A-D and adds lane E for stock-target root publication. The request carries the exact even Job Store QueueSequence and Dependency Plan Store sequence observed while inventory and active unclaimed output were evaluated. The Executor rechecks both before staging a free slot; stale requests fail and re-evaluate. The Store still assigns JobId and publishes ordinary `QUEUED/Generation=1/ErrorStatus=0` state. See `docs/STOCK_TARGET_INGRESS.md`.
+Job Gateway ABI5 retains lanes A-D, lane E for stock-target root publication, and lane F for operator-order roots. Each root request carries the exact even Job Store QueueSequence and Dependency Plan Store sequence observed before publication. The Executor rechecks both before staging a free slot; stale requests fail closed. The Store still assigns JobId and publishes ordinary `QUEUED/Generation=1/ErrorStatus=0` state. See `docs/STOCK_TARGET_INGRESS.md` and `docs/OPERATOR_ORDER_INGRESS.md`.

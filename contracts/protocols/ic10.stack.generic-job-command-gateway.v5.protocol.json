@@ -1,27 +1,48 @@
 {
   "$schema": "../../schemas/protocol_definition.schema.json",
   "format": "IC10_PROTOCOL_DEFINITION_V1",
-  "protocol_id": "ic10.stack.recipe-execution-profile-view.v1",
-  "name": "RecipeExecutionProfileView v1",
+  "protocol_id": "ic10.stack.generic-job-command-gateway.v5",
+  "name": "GenericJobCommandGateway v5",
   "transport": "ic-housing-stack",
-  "contract": "RecipeExecutionProfileView",
-  "magic": -1203210243,
-  "abi": 1,
+  "contract": "GenericJobCommandGateway",
+  "magic": -1777224088,
+  "abi": 5,
   "header_bases": [
     0
   ],
   "canonical_refs": [],
   "provider_interfaces": [
     {
-      "source": "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10",
+      "source": "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10",
       "header_base": 0,
       "readable_ranges": [
         {
-          "start": 16,
-          "end": 47
+          "start": 81,
+          "end": 84
+        },
+        {
+          "start": 97,
+          "end": 100
         }
       ],
-      "writable_ranges": [],
+      "writable_ranges": [
+        {
+          "start": 80,
+          "end": 80
+        },
+        {
+          "start": 85,
+          "end": 93
+        },
+        {
+          "start": 96,
+          "end": 96
+        },
+        {
+          "start": 101,
+          "end": 109
+        }
+      ],
       "fields": [
         {
           "address": 0,
@@ -29,9 +50,9 @@
           "value_type": "hash",
           "semantic_source": "protocol-header",
           "access": [
+            "self-read",
             "self-write"
-          ],
-          "const": -1203210243
+          ]
         },
         {
           "address": 1,
@@ -39,9 +60,9 @@
           "value_type": "integer",
           "semantic_source": "protocol-header",
           "access": [
+            "self-read",
             "self-write"
-          ],
-          "const": 1
+          ]
         },
         {
           "address": 2,
@@ -50,12 +71,11 @@
           "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "const": 0
+          ]
         },
         {
-          "address": 10,
-          "name": "S10",
+          "address": 8,
+          "name": "S8",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
@@ -63,153 +83,108 @@
           ]
         },
         {
-          "address": 11,
-          "name": "S11",
+          "address": 19,
+          "name": "S19",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
+            "self-read"
+          ]
+        },
+        {
+          "address": 24,
+          "name": "S24",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
             "self-write"
           ]
         },
         {
-          "address": 12,
-          "name": "S12",
+          "address": 25,
+          "name": "S25",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
+            "self-read",
             "self-write"
           ]
         },
         {
-          "address": 13,
-          "name": "S13",
+          "address": 26,
+          "name": "S26",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
+            "self-read",
             "self-write"
           ]
         },
         {
-          "address": 14,
-          "name": "S14",
+          "address": 53,
+          "name": "S53",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-write"
+            "self-read"
           ]
         },
         {
-          "address": 15,
-          "name": "S15",
+          "address": 54,
+          "name": "S54",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-write"
+            "self-read"
           ]
         },
         {
-          "address": 48,
-          "name": "S48",
+          "address": 55,
+          "name": "S55",
           "value_type": "number",
           "semantic_source": "unresolved",
           "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 49,
-          "name": "S49",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
+            "self-read"
           ]
         }
       ],
       "behavior": {
         "publication_rules": [],
         "restart": {
-          "mode": "preserved-unless-overwritten",
+          "mode": "conditional-reset",
           "source": "static-entry-path-analysis"
         },
-        "invariants": [
-          {
-            "id": "header.s0.magic",
-            "kind": "cell-equals",
-            "address": 0,
-            "equals": -1203210243,
-            "source": "generated-protocol-header"
-          },
-          {
-            "id": "header.s0.abi",
-            "kind": "cell-equals",
-            "address": 1,
-            "equals": 1,
-            "source": "generated-protocol-header"
-          }
-        ]
+        "invariants": []
       }
     }
   ],
   "consumer_interfaces": [
     {
-      "source": "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
+      "source": "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10",
       "endpoint": {
         "kind": "device-port",
-        "value": "d1"
+        "value": "d0"
       },
       "header_base": 0,
       "literal_reads": [
         0,
-        12,
-        13,
-        14,
-        15,
-        49
+        97,
+        98,
+        99,
+        100
       ],
       "literal_writes": [
-        10
-      ],
-      "dynamic_read_ranges": [
-        {
-          "start": 16,
-          "end": 47
-        }
-      ],
-      "dynamic_write_ranges": [],
-      "dynamic_read_range_source": "source-derived",
-      "dynamic_write_range_source": "none",
-      "constraints": [
-        {
-          "address": 0,
-          "operator": "equals",
-          "value": -1203210243
-        },
-        {
-          "address": 15,
-          "operator": "equals",
-          "value": 1
-        }
-      ],
-      "publication_requirements": []
-    },
-    {
-      "source": "ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10",
-      "endpoint": {
-        "kind": "device-port",
-        "value": "d1"
-      },
-      "header_base": 0,
-      "literal_reads": [
-        0,
-        11,
-        12,
-        13,
-        15,
-        49
-      ],
-      "literal_writes": [
-        10
+        96,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109
       ],
       "dynamic_read_ranges": [],
       "dynamic_write_ranges": [],
@@ -219,12 +194,46 @@
         {
           "address": 0,
           "operator": "equals",
-          "value": -1203210243
-        },
+          "value": -1777224088
+        }
+      ],
+      "publication_requirements": []
+    },
+    {
+      "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        81,
+        82,
+        83,
+        84
+      ],
+      "literal_writes": [
+        80,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93
+      ],
+      "dynamic_read_ranges": [],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "none",
+      "dynamic_write_range_source": "none",
+      "constraints": [
         {
-          "address": 15,
+          "address": 0,
           "operator": "equals",
-          "value": 1
+          "value": -1777224088
         }
       ],
       "publication_requirements": []

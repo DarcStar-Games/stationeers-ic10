@@ -313,9 +313,9 @@
    "deployment_family": "directory-core",
    "deployment_class": "conditional-resident"
   },
-  "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10": {
+  "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10": {
    "layer": "Generic job control",
-   "purpose": "Five-lane Job command arbiter adding sequence-fenced stock-target root publication to manufacturing, dependency, and POWER requests.",
+   "purpose": "Six-lane Job command arbiter with independent sequence-fenced stock-target and operator-order root publishers.",
    "deployment_family": "generic-jobs",
    "deployment_class": "conditional-resident"
   },
@@ -498,6 +498,24 @@
    "purpose": "Publishes schema-qualified TransformLane Adapter ABI2 candidates with processor identity and common ProcessorSpec.",
    "deployment_family": "manufacturing",
    "deployment_class": "conditional-resident"
+  },
+  "ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10": {
+   "layer": "Manufacturing job ingress",
+   "purpose": "Stages shared-input recipe family, ordinal, quantity, and priority values and emits one request per commit edge.",
+   "deployment_family": "manufacturing-ingress",
+   "deployment_class": "commissioning"
+  },
+  "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10": {
+   "layer": "Manufacturing job ingress",
+   "purpose": "Publishes one recipe-validated PRINT root through dedicated Gateway lane F with restart-safe request identity.",
+   "deployment_family": "manufacturing-ingress",
+   "deployment_class": "commissioning"
+  },
+  "ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10": {
+   "layer": "Manufacturing job ingress",
+   "purpose": "Resolves a family/ordinal selection through Recipe Lookup and revalidates exact execution metadata.",
+   "deployment_family": "manufacturing-ingress",
+   "deployment_class": "commissioning"
   },
   "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10": {
    "layer": "Manufacturing ingress configuration",
@@ -1270,12 +1288,14 @@
    ]
   },
   "manufacturing-ingress": {
-   "title": "Stock-Target Manufacturing Ingress",
+   "title": "Manufacturing Demand and Order Ingress",
    "docs": [
+    "docs/OPERATOR_ORDER_INGRESS.md",
     "docs/STOCK_TARGET_INGRESS.md",
     "docs/GENERIC_JOB_ABI.md"
    ],
    "live_cases": [
+    "LG-OPERATOR-ORDER-INGRESS",
     "LG-STOCK-TARGET-INGRESS"
    ]
   },

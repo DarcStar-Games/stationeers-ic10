@@ -183,7 +183,7 @@ Item 8 adds bounded dependency expansion above Generic Job Store and the Item-7 
 
 Implemented:
 
-- Gateway ABI3 was the four-lane completion state for Items 8/9; current `ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10` preserves lanes A/B/C/D and adds Item-13.1 root-ingress lane E;
+- Gateway ABI3 was the four-lane completion state for Items 8/9; current `ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10` preserves lanes A/B/C/D and adds Item-13.1 root lane E plus Item-13.2 operator-order lane F;
 - `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` is the sole physical Job Store mailbox writer and atomically validates parent JobId, JobGeneration, and `PLANNING` state before allocating/publishing a child;
 - `ic10/dependency-planning/job_requirement_view_v1_0.ic10`, `ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10`, and generated `ic10/dependency-planning/item_producer_resolver_v1_0.ic10` normalize TRANSFORM/PRINT requirements and producers;
 - `ic10/dependency-planning/job_inventory_preflight_v1_0.ic10` consumes Item-7 coherent quotes, preserves exact/lower-bound precision, rejects quote overflow, and publishes two ordered quote fingerprints for liveness;

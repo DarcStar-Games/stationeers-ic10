@@ -44,7 +44,7 @@ The split is by authority and replay boundary, not by domain duplication: views 
 
 ## Gateway lane E
 
-`ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10` retains lanes A-D and adds lane E:
+`ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10` retains lanes A-D and adds lane E:
 
 ```text
 S80  request token, written last
@@ -83,7 +83,7 @@ Demand View d0 -> Inventory View
             d1 -> Future View
 Producer View d0 -> Item Producer Resolver
               d1 -> Job Requirement View
-Job Ingress d0 -> Job Gateway ABI4 lane E
+Job Ingress d0 -> Job Gateway ABI5 lane E
             d1 -> Producer View lane B
             d2 -> Demand View
             d3 -> Config Host

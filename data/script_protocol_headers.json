@@ -380,11 +380,11 @@
     "abi": 1
    }
   ],
-  "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10": [
+  "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10": [
    {
     "base": 0,
     "contract": "GenericJobCommandGateway",
-    "abi": 4
+    "abi": 5
    }
   ],
   "ic10/generic-jobs/generic_job_selector_v3_0.ic10": [
@@ -1254,6 +1254,27 @@
     "abi": 4
    }
   ],
+  "ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10": [
+   {
+    "base": 0,
+    "contract": "OperatorOrderEditor",
+    "abi": 1
+   }
+  ],
+  "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10": [
+   {
+    "base": 0,
+    "contract": "OperatorOrderJobIngress",
+    "abi": 1
+   }
+  ],
+  "ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10": [
+   {
+    "base": 0,
+    "contract": "OperatorOrderRecipeView",
+    "abi": 1
+   }
+  ],
   "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10": [
    {
     "base": 0,
@@ -1673,7 +1694,7 @@
    }
   ],
   "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10": [],
-  "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10": [
+  "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10": [
    {
     "port": "d0",
     "accepted": [
@@ -2542,6 +2563,44 @@
   "ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10": [],
   "ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10": [],
   "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": [],
+  "ic10/manufacturing-ingress/operator_order_editor_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [{"header_base": 0, "contract": "GenericInputResolver", "abi": 1}]
+   },
+   {
+    "port": "d1",
+    "accepted": [{"header_base": 0, "contract": "OperatorOrderJobIngress", "abi": 1}]
+   }
+  ],
+  "ic10/manufacturing-ingress/operator_order_job_ingress_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [{"header_base": 0, "contract": "GenericJobCommandGateway", "abi": 5}]
+   },
+   {
+    "port": "d1",
+    "accepted": [{"header_base": 0, "contract": "OperatorOrderRecipeView", "abi": 1}]
+   },
+   {
+    "port": "d2",
+    "accepted": [{"header_base": 0, "contract": "GenericJobStore", "abi": 1}]
+   },
+   {
+    "port": "d3",
+    "accepted": [{"header_base": 0, "contract": "DependencyPlanStore", "abi": 2}]
+   }
+  ],
+  "ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10": [
+   {
+    "port": "d0",
+    "accepted": [{"header_base": 0, "contract": "RecipeCatalogLookup", "abi": 3}]
+   },
+   {
+    "port": "d1",
+    "accepted": [{"header_base": 0, "contract": "RecipeExecutionProfileView", "abi": 1}]
+   }
+  ],
   "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10": [
    {
     "port": "d0",
@@ -2593,7 +2652,7 @@
   "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10": [
    {
     "port": "d0",
-    "accepted": [{"header_base": 0, "contract": "GenericJobCommandGateway", "abi": 4}]
+    "accepted": [{"header_base": 0, "contract": "GenericJobCommandGateway", "abi": 5}]
    },
    {
     "port": "d1",

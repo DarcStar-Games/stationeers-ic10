@@ -33,11 +33,11 @@ need("ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
      "mul r13 r1 3", "put d3 31 r11", "put d3 32 r15")
 need("ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
      'HASH("StockTargetProducerView.v1")', 'HASH("StockTargetDemandView.v1")',
-     'HASH("GenericPersistentConfigHost.v1")', 'HASH("GenericJobCommandGateway.v4")',
+     'HASH("GenericPersistentConfigHost.v1")', 'HASH("GenericJobCommandGateway.v5")',
      "get r0 d1 41", "bne r0 r11 Bad", "mul r14 r15 3", "get r0 d3 51",
      "put d0 80 r15")
-need("ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10",
-     'HASH("GenericJobCommandGateway.v4")', "get r15 db 80", "put d0 28 r0", "put d0 29 r0")
+need("ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10",
+     'HASH("GenericJobCommandGateway.v5")', "ble r7 96 Scan", "put d0 28 r0", "put d0 29 r0")
 need("ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10",
      "beq r5 3 FindStart", "bne r5 5 Bad", "beq r5 5 Root", "bne r6 -1 Bad",
      'HASH("DependencyPlanStore.v2")', "get r2 db 28", "get r2 db 29")

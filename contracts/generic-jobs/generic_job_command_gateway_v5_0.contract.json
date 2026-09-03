@@ -1,15 +1,15 @@
 {
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
-  "source": "ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10",
-  "source_sha256": "7245ad0930493629e30495eba53c0cbf5e77fb11fe1f9160d8322fc07a2cc585",
+  "source": "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10",
+  "source_sha256": "8d9b3d469c36182b2c7b1373ec3bbdaa5fc110259b4537d3c657e893878acc99",
   "identity": {
     "service_id": "ic10.script.generic.job.command.gateway",
-    "implementation_revision": "4.0",
+    "implementation_revision": "5.0",
     "deployment_family": "generic-jobs",
     "deployment_class": "conditional-resident",
     "layer": "Generic job control",
-    "purpose": "Five-lane Job command arbiter adding sequence-fenced stock-target root publication to manufacturing, dependency, and POWER requests."
+    "purpose": "Six-lane Job command arbiter with independent sequence-fenced stock-target and operator-order root publishers."
   },
   "device_ports": [
     {
@@ -83,35 +83,23 @@
       19,
       24,
       25,
-      32,
-      33,
-      48,
-      49,
+      26,
       53,
       54,
-      55,
-      64,
-      65,
-      80,
-      81,
-      85,
-      86
+      55
     ],
     "literal_writes": [
       0,
       1,
       2,
       24,
-      25
+      25,
+      26
     ],
     "dynamic_read": true,
     "dynamic_write": true,
     "dynamic_read_ranges": [
       {
-        "start": 7,
-        "end": 7
-      },
-      {
         "start": 11,
         "end": 15
       },
@@ -121,7 +109,7 @@
       },
       {
         "start": 32,
-        "end": 32
+        "end": 33
       },
       {
         "start": 36,
@@ -129,15 +117,11 @@
       },
       {
         "start": 48,
-        "end": 48
-      },
-      {
-        "start": 56,
         "end": 62
       },
       {
         "start": 64,
-        "end": 64
+        "end": 65
       },
       {
         "start": 68,
@@ -145,116 +129,79 @@
       },
       {
         "start": 80,
-        "end": 80
+        "end": 81
       },
       {
-        "start": 87,
+        "start": 85,
         "end": 93
+      },
+      {
+        "start": 96,
+        "end": 97
+      },
+      {
+        "start": 101,
+        "end": 109
       }
     ],
     "dynamic_write_ranges": [
       {
-        "start": 8,
-        "end": 10
-      },
-      {
-        "start": 33,
-        "end": 35
-      },
-      {
-        "start": 49,
-        "end": 52
-      },
-      {
-        "start": 65,
-        "end": 67
-      },
-      {
-        "start": 81,
-        "end": 84
+        "start": 0,
+        "end": 511
       }
     ],
     "dynamic_read_proven_ranges": [
       {
-        "start": 7,
-        "end": 7
-      },
-      {
-        "start": 11,
-        "end": 15
-      },
-      {
-        "start": 19,
-        "end": 19
-      },
-      {
         "start": 32,
-        "end": 32
-      },
-      {
-        "start": 36,
-        "end": 40
+        "end": 33
       },
       {
         "start": 48,
-        "end": 48
-      },
-      {
-        "start": 56,
-        "end": 62
+        "end": 49
       },
       {
         "start": 64,
-        "end": 64
-      },
-      {
-        "start": 68,
-        "end": 72
+        "end": 65
       },
       {
         "start": 80,
-        "end": 80
+        "end": 81
       },
       {
-        "start": 87,
-        "end": 93
+        "start": 96,
+        "end": 97
       }
     ],
-    "dynamic_write_proven_ranges": [
-      {
-        "start": 8,
-        "end": 10
-      },
-      {
-        "start": 33,
-        "end": 35
-      },
-      {
-        "start": 49,
-        "end": 52
-      },
-      {
-        "start": 65,
-        "end": 67
-      },
-      {
-        "start": 81,
-        "end": 84
-      }
-    ],
-    "dynamic_read_range_source": "source-derived",
-    "dynamic_write_range_source": "source-derived",
+    "dynamic_write_proven_ranges": [],
+    "dynamic_read_range_source": "source-fingerprinted-exception",
+    "dynamic_write_range_source": "conservative-full-stack",
     "clears_all": true,
     "external_readable_ranges": [
       {
         "start": 81,
         "end": 84
+      },
+      {
+        "start": 97,
+        "end": 100
       }
     ],
     "external_writable_ranges": [
       {
-        "start": 87,
+        "start": 80,
+        "end": 80
+      },
+      {
+        "start": 85,
         "end": 93
+      },
+      {
+        "start": 96,
+        "end": 96
+      },
+      {
+        "start": 101,
+        "end": 109
       }
     ],
     "fields": [
@@ -285,8 +232,7 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "const": 0
+        ]
       },
       {
         "address": 8,
@@ -327,39 +273,13 @@
         ]
       },
       {
-        "address": 32,
-        "name": "S32",
+        "address": 26,
+        "name": "S26",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 33,
-        "name": "S33",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 48,
-        "name": "S48",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 49,
-        "name": "S49",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
+          "self-read",
+          "self-write"
         ]
       },
       {
@@ -388,68 +308,14 @@
         "access": [
           "self-read"
         ]
-      },
-      {
-        "address": 64,
-        "name": "S64",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 65,
-        "name": "S65",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 80,
-        "name": "S80",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 81,
-        "name": "S81",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 85,
-        "name": "S85",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 86,
-        "name": "S86",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
       }
     ],
     "headers": [
       {
         "base": 0,
         "contract": "GenericJobCommandGateway",
-        "magic": -518617346,
-        "abi": 4
+        "magic": -1777224088,
+        "abi": 5
       }
     ]
   },
@@ -464,11 +330,11 @@
   "contracts": {
     "provides": [
       {
-        "protocol_id": "ic10.stack.generic-job-command-gateway.v4",
+        "protocol_id": "ic10.stack.generic-job-command-gateway.v5",
         "base": 0,
         "contract": "GenericJobCommandGateway",
-        "magic": -518617346,
-        "abi": 4,
+        "magic": -1777224088,
+        "abi": 5,
         "source": "literal-own-stack-header"
       }
     ],

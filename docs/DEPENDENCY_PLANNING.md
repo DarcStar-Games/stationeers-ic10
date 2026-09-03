@@ -24,7 +24,7 @@ Planning uses coherent Item-7 inventory **quotes**, not long-lived planner-owned
 213 Generic Job Store Command Executor
         ^
         |
-199 Job Command Gateway ABI4
+199 Job Command Gateway ABI5
    | Scheduler lane A
    | Planner-cancel lane B
    ` Child-create lane C
@@ -172,7 +172,7 @@ The important authorities are intentionally separate:
 
 - `ic10/generic-jobs/generic_job_store_v1_0.ic10` owns durable JobId/state storage mechanics;
 - `ic10/manufacturing/manufacturing_scheduler_v1_0.ic10` owns manufacturing lifecycle-edge **policy**;
-- `ic10/generic-jobs/generic_job_command_gateway_v4_0.ic10` arbitrates independent command producers, including Item-13.1 root ingress on lane E;
+- `ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10` arbitrates independent command producers, including Item-13.1 root ingress on lane E;
 - `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` alone writes the Job Store command mailbox for Item-8 production paths;
 - `ic10/dependency-planning/dependency_plan_store_v2_0.ic10` owns persistent dependency plan records;
 - `ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10` alone mutates Plan Store through its request interface;
