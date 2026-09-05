@@ -985,6 +985,34 @@ ck(not header_invariants(
        [{"base": 0, "magic": 31415999, "abi": 1}], conditional_header
    ), "conditionally skipped header initialization produced a false invariant")
 
+# An identity guard is the one branch a header may be skipped behind: the edge it
+# takes only when S0 already holds this magic runs over a stack this contract
+# published, and the header there is the one this source writes. The same skip
+# behind any other test proves nothing about what the cells hold.
+guarded_header_source = (
+    "get r0 db 0\nbne r0 31415999 Init\nget r0 db 1\nbeq r0 1 Loop\n"
+    "Init:\nclr db\npoke 0 31415999\npoke 1 1\nLoop:\nyield\nj Loop\n"
+)
+guarded_header_rows = parse_rows(guarded_header_source)
+_, guarded_header_aliases = collect_aliases(guarded_header_rows)
+guarded_header, _ = analyze_own_stack(
+    guarded_header_source, guarded_header_rows, guarded_header_aliases,
+    [{"base": 0, "magic": 31415999, "abi": 1}], {},
+)
+ck({item["address"] for item in header_invariants(
+       [{"base": 0, "magic": 31415999, "abi": 1}], guarded_header
+   )} == {0, 1}, "a header an identity guard branches past published no invariant")
+unguarded_header_source = guarded_header_source.replace("bne r0 31415999 Init", "bnez r5 Init", 1)
+unguarded_header_rows = parse_rows(unguarded_header_source)
+_, unguarded_header_aliases = collect_aliases(unguarded_header_rows)
+unguarded_header, _ = analyze_own_stack(
+    unguarded_header_source, unguarded_header_rows, unguarded_header_aliases,
+    [{"base": 0, "magic": 31415999, "abi": 1}], {},
+)
+ck(not header_invariants(
+       [{"base": 0, "magic": 31415999, "abi": 1}], unguarded_header
+   ), "a header an unguarded branch skips produced a false invariant")
+
 delayed_header_source = "yield\npoke 0 31415999\npoke 1 1\n"
 delayed_header_rows = parse_rows(delayed_header_source)
 _, delayed_header_aliases = collect_aliases(delayed_header_rows)

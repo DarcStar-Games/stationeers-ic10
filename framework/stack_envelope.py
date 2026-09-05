@@ -624,28 +624,11 @@ def publication_errors(
             break
         if op in {"j", "jal", "jr"} or op.startswith("b"):
             # a reflash-marker guard branches before publishing; the contract layer proves
-            # whether every expected cell still holds its value at every observation point
+            # whether every expected cell still holds its value at every observation
+            # point, and the same-image induction that lets an identity guard speak
+            # for the skip path lives in that proof, so both layers answer with one rule
             stable = stable_cells(path.read_text(), aliases, expected)
             missing = sorted(set(expected) - stable)
-            if missing:
-                # Same-image induction: when the entry guard compares S0 against this
-                # contract's magic before branching, the skip path runs only over a
-                # stack the same contract published -- so a cell whose every literal
-                # write in this source is the expected constant already holds it
-                # there. Dynamic writes into the envelope are rejected below.
-                guard_rows = rows[:index + 1]
-                reads_magic = any(r[0] == "get" and len(r) >= 4 and r[2] == "db"
-                                  and resolve_integer(r[3], aliases) == 0 for r in guard_rows)
-                compares_magic = any(r[0].startswith("b") and any(
-                    resolve_literal(token, aliases) == expected.get(0)
-                    for token in r[1:-1]) for r in guard_rows)
-                if reads_magic and compares_magic:
-                    for address in list(missing):
-                        writes = [r for r in rows if r[0] == "poke" and len(r) >= 3
-                                  and resolve_integer(r[1], aliases) == address]
-                        if writes and all(
-                                resolve_literal(r[2], aliases) == expected[address] for r in writes):
-                            missing.remove(address)
             if missing:
                 errors.append("control transfer occurs before the first envelope-bearing yield")
             branch_proved = not missing
