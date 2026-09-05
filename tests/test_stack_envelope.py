@@ -35,6 +35,7 @@ from framework.stack_envelope import (
     schema_hash_token,
     build_inventory,
     canonical_schema_pairs,
+    clears_before_yield,
     declaration_errors,
     declaration_set_errors,
     expected_envelope_cells,
@@ -524,7 +525,7 @@ ck(not identity_header_errors(minimal, minimal_contract),
    "the identity/header rule rejected a minimal normalized declaration")
 ck(not schema_capability_errors(minimal, set(), minimal_writes),
    "the schema/capability rule rejected a minimal normalized declaration")
-ck(not state_generation_rule_errors(minimal, [["yield"]], {}, minimal_writes),
+ck(not state_generation_rule_errors(minimal, [["yield"]], {}, minimal_writes, "yield\n"),
    "the state/generation rule rejected a minimal normalized declaration")
 minimal_extension = extension_rule_result(minimal, minimal_writes)
 ck(not minimal_extension.errors,
@@ -724,7 +725,7 @@ for range_field in ("legacy_owned_ranges", "post_init_dynamic_write_ranges"):
 
 invalid_custom_mask = replace(minimal, custom_state_bits=-1)
 ck(state_generation_rule_errors(
-    invalid_custom_mask, [["yield"]], {}, {}
+    invalid_custom_mask, [["yield"]], {}, {}, "yield\n"
 ) == ["custom_state_bits must fit the service-specific state range"],
    "an invalid custom-state mask cascaded into a HAS_STATE error")
 invalid_custom_mask = replace(minimal, publishes_state=True, custom_state_bits=-1)
@@ -733,6 +734,7 @@ invalid_state_errors = state_generation_rule_errors(
     [["poke", str(STATE_CELL), "18"], ["yield"]],
     {},
     {STATE_CELL: {18}},
+    f"poke {STATE_CELL} 18\nyield\n",
 )
 ck(any("custom_state_bits must fit" in error for error in invalid_state_errors)
    and any("reserved bit" in error for error in invalid_state_errors),
@@ -904,6 +906,56 @@ ck(stable_cells(ERASING, guard_aliases(ERASING), guard_expected) == {2},
 ZEROED = f"clr db\npoke 0 {GUARD_MAGIC}\nLoop:\nyield\nj Loop\n"
 ck(stable_cells(ZEROED, guard_aliases(ZEROED), {0: GUARD_MAGIC, 9: 0}) == {0, 9},
    "stable_cells did not credit the boot clear with initializing a cell that expects zero")
+
+# A boot `clr db` stands in for a literal zero of the generation only where the
+# entry can reach it before a yield. The rule asks the control-flow graph, over
+# the call states rather than their projection, so a clear the entry jumps over
+# zeroes nothing while one behind a reflash guard still counts: the defect was
+# reachability, not conditionality.
+generation_declaration = replace(minimal, publishes_generation=True)
+SKIPPED_CLEAR = "j Init\nclr db\nInit:\npoke 7 r0\nLoop:\nyield\nj Loop\n"
+BOOT_CLEAR = "clr db\npoke 7 r0\nLoop:\nyield\nj Loop\n"
+GUARDED_CLEAR = (
+    f"get r0 db 0\nbeq r0 {GUARD_MAGIC} Init\nclr db\n"
+    "Init:\npoke 7 r0\nLoop:\nyield\nj Loop\n"
+)
+LATE_CLEAR = "poke 7 r0\nLoop:\nyield\nclr db\nj Loop\n"
+CALLED_CLEAR = "jal Clear\npoke 7 r0\nLoop:\nyield\nj Loop\nClear:\nclr db\nj ra\n"
+LATE_CALL = "poke 7 r0\nLoop:\nyield\njal Clear\nj Loop\nClear:\nclr db\nj ra\n"
+SHARED_RETURN = "jal Nop\npoke 7 r0\nLoop:\nyield\njal Nop\nclr db\nj Loop\nNop:\nj ra\n"
+ENTRY_YIELD = "yield\nclr db\npoke 7 r0\n"
+
+
+def generation_rule_errors(text, writes=None):
+    rows = [list(row.tokens) for row in parse_ic10(text).rows]
+    return state_generation_rule_errors(
+        generation_declaration, rows, {}, {7: {None}} if writes is None else writes, text
+    )
+
+
+ck(clears_before_yield(GUARDED_CLEAR),
+   "a `clr db` behind a reflash guard no longer counts as a boot clear")
+ck(not clears_before_yield(SKIPPED_CLEAR),
+   "a `clr db` the entry jumps over still counts as a boot clear")
+ck(any("initialized to 0" in error for error in generation_rule_errors(SKIPPED_CLEAR)),
+   "an unreachable `clr db` satisfied the generation-initialization rule")
+ck(not generation_rule_errors(BOOT_CLEAR),
+   "the entry clear the directory adapters rely on was rejected")
+ck(not generation_rule_errors(GUARDED_CLEAR),
+   "a `clr db` behind a reflash guard was rejected as generation initialization")
+ck(any("initialized to 0" in error for error in generation_rule_errors(LATE_CLEAR)),
+   "a `clr db` after the first yield satisfied the generation-initialization rule")
+ck(not generation_rule_errors(CALLED_CLEAR),
+   "a `clr db` in a routine called before the first yield was rejected")
+ck(any("initialized to 0" in error for error in generation_rule_errors(LATE_CALL)),
+   "a `clr db` in a routine called only after the first yield was accepted")
+ck(any("initialized to 0" in error for error in generation_rule_errors(SHARED_RETURN)),
+   "a return was allowed to land at another call site's continuation and reach a late clear")
+ck(any("initialized to 0" in error for error in generation_rule_errors(ENTRY_YIELD)),
+   "a `clr db` behind a yield on the entry line satisfied the generation-initialization rule")
+ck(not generation_rule_errors(
+    "poke 7 0\nLoop:\nyield\npoke 7 r0\nj Loop\n", {7: {0, None}}
+), "an explicit literal zero of the generation was rejected")
 
 if fails:
     print("Stack header tests: FAIL")

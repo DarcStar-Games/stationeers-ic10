@@ -10,6 +10,7 @@ from typing import Any
 
 from framework.ic10_source import game_hash, parse_ic10
 from framework.protocol_headers import header_name, header_token
+from framework.script_contracts.control_flow import can_reach_avoiding_calls
 from framework.script_contracts.dynamic_ranges import dynamic_range_proofs, merge_ranges
 from framework.script_contracts.parsing import (
     collect_aliases,
@@ -721,14 +722,32 @@ def publication_errors(
     return errors
 
 
-def clears_before_yield(rows: list[list[str]]) -> bool:
-    """A boot-time `clr db` deterministically zeroes every cell, initializers included."""
-    for row in rows:
-        if row[0] == "yield":
-            return False
-        if row[0] == "clr" and len(row) >= 2 and row[1] == "db":
-            return True
-    return False
+def clears_before_yield(source: str) -> bool:
+    """Can a `clr db` run before the first yield makes any cell readable?
+
+    A clear that runs at boot zeroes every cell, the generation included, so it
+    stands in for a literal zero of `S7`. What makes it stand in is that it runs,
+    not where it sits: a clear the entry jumps over zeroes nothing on any housing,
+    while one behind a reflash guard zeroes a foreign or stale housing and lets a
+    same-image reflash carry its generation forward, which is what a durable
+    generation is for. So the question is reachability over the control-flow
+    graph -- the same graph the contract layer reads for the neighbouring
+    question of whether a clear runs *after* publication -- with every yield a
+    barrier, and it is asked over the call states rather than their projection,
+    so a return can only land where its own call site continues. A transfer the
+    walk cannot place drops its edge, and a dropped edge never puts a clear on a
+    path, so an incomplete graph vouches for exactly the clears it can reach.
+    """
+    program = parse_program(source)
+    clears = [index for index, entry in enumerate(program) if entry["row"][:2] == ["clr", "db"]]
+    if not clears:
+        return False
+    yields = {index for index, entry in enumerate(program) if entry["row"][:1] == ["yield"]}
+    if 0 in yields:
+        return False
+    return any(
+        clear == 0 or can_reach_avoiding_calls(0, clear, program, yields) for clear in clears
+    )
 
 
 def generation_errors(
@@ -886,12 +905,18 @@ def state_generation_rule_errors(
     rows: list[list[str]],
     aliases: dict[str, int],
     writes: dict[int, set[Any]],
+    source: str,
 ) -> list[str]:
-    """Validate declared state values and generation publication semantics."""
+    """Validate declared state values and generation publication semantics.
+
+    `rows` is the token view of `source`; the generation rule needs the source
+    itself because whether a boot clear initializes the generation is a question
+    about the control-flow graph, which the rows have lost.
+    """
     errors = generation_errors(rows, aliases, declaration.publishes_generation)
     if declaration.publishes_generation:
         written = writes.get(GENERATION_CELL, set())
-        initialized = 0 in written or clears_before_yield(rows)
+        initialized = 0 in written or clears_before_yield(source)
         if not initialized or any(other is not None for other in written - {0}):
             errors.append(
                 f"S{GENERATION_CELL} must be initialized to 0 and only advanced dynamically"
@@ -1298,6 +1323,7 @@ def declaration_errors(
             service_ids[declaration.service_id] = source
 
         contract = by_source[source]
+        text = (root / source).read_text()
         rows, aliases = _parse(root / source)
         writes = _writes(rows, aliases)
         service.extend(identity_header_errors(declaration, contract))
@@ -1307,7 +1333,7 @@ def declaration_errors(
             writes,
             ignored_standard_bits,
         ))
-        service.extend(state_generation_rule_errors(declaration, rows, aliases, writes))
+        service.extend(state_generation_rule_errors(declaration, rows, aliases, writes, text))
         extension = extension_rule_result(declaration, writes)
         service.extend(list(extension.errors))
         service.extend(legacy_layout_errors(
