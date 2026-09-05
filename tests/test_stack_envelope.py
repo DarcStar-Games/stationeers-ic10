@@ -861,6 +861,42 @@ ck(cells_erased_by_clear(WRAPPING, guard_aliases(WRAPPING), {0: GUARD_MAGIC}) ==
 TAIL_WRITE = f"get r0 db 0\nbeq r0 {GUARD_MAGIC} Skip\nhcf\nSkip:\nclr db\npoke 0 {GUARD_MAGIC}\n"
 ck(cells_erased_by_clear(TAIL_WRITE, guard_aliases(TAIL_WRITE), {0: GUARD_MAGIC}) == set(),
    "the republication the program wraps around was read as a boundary it never reaches")
+# A call and a return go backwards without the program starting over, so neither
+# is a boundary -- but the walk carries on through them and still finds the yield.
+SUBROUTINE = (
+    f"get r0 db 0\nbeq r0 {GUARD_MAGIC} Wipe\nj Pub\n"
+    "Wipe:\njal Clear\n"
+    f"Pub:\npoke 0 {GUARD_MAGIC}\npoke 1 1\nj Loop\n"
+    "Clear:\nclr db\nj ra\n"
+    "Loop:\nyield\nj Loop\n"
+)
+ck(cells_erased_by_clear(SUBROUTINE, guard_aliases(SUBROUTINE), guard_expected) == set(),
+   "a return to the caller that republishes was read as the program starting over")
+BACKWARD_CALL = (
+    "j Boot\n"
+    f"Pub:\npoke 0 {GUARD_MAGIC}\npoke 1 1\nj ra\n"
+    f"Boot:\nget r0 db 0\nbeq r0 {GUARD_MAGIC} Wipe\njal Pub\nj Loop\n"
+    "Wipe:\nclr db\njal Pub\n"
+    "Loop:\nyield\nj Loop\n"
+)
+ck(cells_erased_by_clear(BACKWARD_CALL, guard_aliases(BACKWARD_CALL), guard_expected) == set(),
+   "a call into a subroutine defined earlier was read as the program starting over")
+SILENT_CALL = BACKWARD_CALL.replace(f"Pub:\npoke 0 {GUARD_MAGIC}\npoke 1 1\n", "Pub:\npoke 9 4\n", 1)
+ck(cells_erased_by_clear(SILENT_CALL, guard_aliases(SILENT_CALL), guard_expected) == {0, 1},
+   "excusing the call also excused the erasure it calls past")
+SPINNING_RETURN = (
+    f"poke 0 {GUARD_MAGIC}\nget r0 db 0\nbeq r0 {GUARD_MAGIC} Wipe\nj Loop\n"
+    "Wipe:\nclr db\njal Outer\n"
+    "Outer:\njal Inner\nInner:\nj ra\n"
+    "Loop:\nyield\nj Loop\n"
+)
+ck(cells_erased_by_clear(SPINNING_RETURN, guard_aliases(SPINNING_RETURN), {0: GUARD_MAGIC}) == {0},
+   "a program spinning between a call and its return went unread with S0 erased")
+# `resolve_literal` says None for a computed operand, so an expected None must not
+# be met by the very writes that cannot be shown to carry it.
+COMPUTED_ONLY = IDIOM.replace(f"poke 2 0\n", "poke 2 r1\n", 1)
+ck(cells_erased_by_clear(COMPUTED_ONLY, guard_aliases(COMPUTED_ONLY), {0: GUARD_MAGIC, 2: None}) == {2},
+   "a computed write satisfied an expected value that resolves to nothing either")
 
 # `clr db` de-initializes: it costs a cell its nonzero value and establishes a zero one.
 ck(stable_cells(ERASING, guard_aliases(ERASING), guard_expected) == {2},

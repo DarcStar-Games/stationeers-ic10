@@ -131,17 +131,33 @@ def stable_cells(
 def _reaches_observation(
     start: int, successors: dict[int, set[int]], observations: set[int], republished: set[int]
 ) -> bool:
-    """Can a walk from `start` reach somewhere observable without rewriting the cell?"""
-    pending = list(successors.get(start, set()))
-    visited: set[int] = set()
-    while pending:
-        node = pending.pop()
-        if node in visited or node in republished:
+    """Can a walk from `start` reach somewhere observable without rewriting the cell?
+
+    Somewhere observable is a yield, a halt, or any cycle at all: a program that
+    can go round with the cell still zeroed can be read with it zeroed, and it
+    makes no difference whether it goes round through a branch, through a call
+    and its return, or through the tail's own edge back to the entry. Asking for
+    the cycle rather than for a backward edge is what lets this stay silent about
+    which of the three a transfer was -- the distinction `goes_round_again` needs
+    the call states to draw, and that a graph of plain indices has already lost.
+    """
+    stack: list[tuple[int, list[int]]] = [(start, sorted(successors.get(start, ())))]
+    on_path = {start}
+    settled: set[int] = set()
+    while stack:
+        node, pending = stack[-1]
+        if not pending:
+            stack.pop()
+            on_path.discard(node)
+            settled.add(node)
             continue
-        visited.add(node)
-        if node in observations:
+        target = pending.pop()
+        if target in republished or target in settled:
+            continue
+        if target in observations or target in on_path:
             return True
-        pending.extend(successors.get(node, set()) - visited)
+        stack.append((target, sorted(successors.get(target, ()))))
+        on_path.add(target)
     return False
 
 
@@ -169,13 +185,9 @@ def cells_erased_by_clear(
     successors, complete = control_flow_with_wrap(program)
     if not complete:
         return erasable
-    # Anywhere the stack is readable: a yield, a halt, and a transfer that starts
-    # the program over -- including the tail's own edge back to the entry, which
-    # is the only way a graph this complete has of running out of instructions.
     observations = {
         node for node, entry in enumerate(program)
         if entry["row"][:1] in (["yield"], ["hcf"])
-        or any(target <= node for target in successors.get(node, set()))
     }
     erased: set[int] = set()
     for address in sorted(erasable):
@@ -183,6 +195,9 @@ def cells_erased_by_clear(
             node for node, entry in enumerate(program)
             if entry["row"][:1] == ["poke"] and len(entry["row"]) >= 3
             and resolve_integer(entry["row"][1], integer_aliases) == address
+            # `resolve_literal` says None for a computed operand, so an expected
+            # value of None would otherwise be met by any write at all.
+            and resolve_literal(entry["row"][2], integer_aliases) is not None
             and resolve_literal(entry["row"][2], integer_aliases) == expected[address]
         }
         if any(

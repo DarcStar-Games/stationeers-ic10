@@ -688,9 +688,9 @@ def publication_errors(
         erased = cells_erased_by_clear(path.read_text(), aliases, expected)
         if erased:
             errors.append(
-                "clr db behind the reflash guard leaves "
+                "clr db leaves "
                 + ", ".join(f"S{address}" for address in sorted(erased))
-                + " at zero with nothing republishing them"
+                + " at zero where a consumer can read them; nothing republishes them"
             )
     if first_yield is not None:
         for row in rows[first_yield + 1:]:
