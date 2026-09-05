@@ -18,6 +18,7 @@ from framework.script_contracts.control_flow import (
     call_state_graph,
     can_reach_avoiding_calls,
     control_flow_dominators,
+    control_flow_with_wrap,
     writes_register,
 )
 from framework.script_contracts.parsing import (
@@ -37,7 +38,12 @@ SEMANTIC_WORDS = re.compile(
 def stable_cells(
     source: str, integer_aliases: dict[str, int], expected: dict[int, Any]
 ) -> set[int]:
-    """Find cells initialized to an expected value before every observable control-flow boundary."""
+    """Find cells initialized to an expected value before every observable control-flow boundary.
+
+    `clr db` de-initializes: it costs a cell whatever it held and hands a cell
+    that expects zero the value it wants, so a clear is a write of 0 to all 512
+    rather than an instruction the walk steps over.
+    """
     program = parse_program(source)
     if not program:
         return set()
@@ -86,6 +92,10 @@ def stable_cells(
     if not observations:
         return set()
 
+    clearing = {
+        state for state in reachable if program[state[0]]["row"][:2] == ["clr", "db"]
+    }
+
     stable: set[int] = set()
     for address, value in expected.items():
         matching_writes = {
@@ -107,13 +117,95 @@ def stable_cells(
                 initialized_before = False if state == entry else bool(incoming) and all(
                     initialized_after[parent] for parent in incoming
                 )
-                updated = initialized_before or state in matching_writes
+                updated = state in matching_writes or (
+                    value == 0 if state in clearing else initialized_before
+                )
                 if updated != initialized_after[state]:
                     initialized_after[state] = updated
                     changed = True
         if all(initialized_after[state] for state in observations):
             stable.add(address)
     return stable
+
+
+def _reaches_observation(
+    start: int, successors: dict[int, set[int]], observations: set[int], republished: set[int]
+) -> bool:
+    """Can a walk from `start` reach somewhere observable without rewriting the cell?
+
+    Somewhere observable is a yield, a halt, or any cycle at all: a program that
+    can go round with the cell still zeroed can be read with it zeroed, and it
+    makes no difference whether it goes round through a branch, through a call
+    and its return, or through the tail's own edge back to the entry. Asking for
+    the cycle rather than for a backward edge is what lets this stay silent about
+    which of the three a transfer was -- the distinction `goes_round_again` needs
+    the call states to draw, and that a graph of plain indices has already lost.
+    """
+    stack: list[tuple[int, list[int]]] = [(start, sorted(successors.get(start, ())))]
+    on_path = {start}
+    settled: set[int] = set()
+    while stack:
+        node, pending = stack[-1]
+        if not pending:
+            stack.pop()
+            on_path.discard(node)
+            settled.add(node)
+            continue
+        target = pending.pop()
+        if target in republished or target in settled:
+            continue
+        if target in observations or target in on_path:
+            return True
+        stack.append((target, sorted(successors.get(target, ()))))
+        on_path.add(target)
+    return False
+
+
+def cells_erased_by_clear(
+    source: str, integer_aliases: dict[str, int], expected: dict[int, Any]
+) -> set[int]:
+    """Expected cells a `clr db` can leave at zero somewhere a consumer reads them.
+
+    `clr db` zeroes all 512 cells, so it de-publishes every expected cell whose
+    value is not itself zero -- and the boot idiom is safe only because the
+    publication that follows the clear puts them all back before anything can
+    look. That is what this asks, one cell at a time: walk forward from each
+    clear and see whether anywhere observable is reachable without passing a
+    literal write of the expected value. Only a literal write counts, because a
+    computed one proves nothing about what lands in the cell.
+
+    A graph with a transfer nobody can follow answers with every erasable cell:
+    a re-publication this cannot trace is not a re-publication it can vouch for.
+    """
+    program = parse_program(source)
+    clears = [index for index, entry in enumerate(program) if entry["row"][:2] == ["clr", "db"]]
+    if not clears:
+        return set()
+    erasable = {address for address, value in expected.items() if value != 0}
+    successors, complete = control_flow_with_wrap(program)
+    if not complete:
+        return erasable
+    observations = {
+        node for node, entry in enumerate(program)
+        if entry["row"][:1] in (["yield"], ["hcf"])
+    }
+    erased: set[int] = set()
+    for address in sorted(erasable):
+        republished = {
+            node for node, entry in enumerate(program)
+            if entry["row"][:1] == ["poke"] and len(entry["row"]) >= 3
+            and resolve_integer(entry["row"][1], integer_aliases) == address
+            # `resolve_literal` says None for a computed operand, so an expected
+            # value of None would otherwise be met by any write at all.
+            and resolve_literal(entry["row"][2], integer_aliases) is not None
+            and resolve_literal(entry["row"][2], integer_aliases) == expected[address]
+        }
+        if any(
+            _reaches_observation(clear, successors, observations, republished)
+            for clear in clears
+        ):
+            erased.add(address)
+    return erased
 
 
 def semantic_name(comment: str) -> str | None:

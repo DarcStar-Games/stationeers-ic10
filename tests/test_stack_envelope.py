@@ -16,7 +16,9 @@ from framework.ic10_harness import Device, IC10
 from framework.json_schema import validate
 from framework.script_contracts import build_all
 from framework.script_contracts.own_stack import analyze_own_stack
-from framework.ic10_source import game_hash
+from framework.ic10_source import game_hash, parse_ic10
+from framework.script_contracts.parsing import collect_aliases
+from framework.script_contracts.publication import cells_erased_by_clear, stable_cells
 from framework.stack_envelope import (
     BASE,
     CAPABILITY_BITS_V1,
@@ -781,6 +783,127 @@ with TemporaryDirectory() as temporary:
     ck(any("does not retain S400" in error for error in publication_errors(
         delayed, extension_expected, mutated, set(range(BASE, BASE + LENGTH)) | set(range(400, 404))
     )), "publication validator accepted an extension initialized after the first yield")
+
+
+# A `clr db` behind a proven reflash guard is initialization only where the
+# publication that follows puts back everything it zeroed. The induction that
+# proves the guard speaks for the skip path, over a stack this contract already
+# published; the path that clears is asked separately, and by the graph.
+GUARD_MAGIC = game_hash("StackCellMonitor.v1")
+guard_expected = {0: GUARD_MAGIC, 1: 1, 2: 0}
+ERASING = (
+    f"poke 0 {GUARD_MAGIC}\npoke 1 1\npoke 2 0\n"
+    f"get r0 db 0\nbeq r0 {GUARD_MAGIC} Wipe\nj Loop\n"
+    "Wipe:\nclr db\n"
+    "Loop:\nyield\nj Loop\n"
+)
+IDIOM = (
+    f"get r0 db 0\nbeq r0 {GUARD_MAGIC} Init\nclr db\n"
+    f"Init:\npoke 0 {GUARD_MAGIC}\npoke 1 1\npoke 2 0\n"
+    "Loop:\nyield\nj Loop\n"
+)
+REPUBLISHING = ERASING.replace(
+    "Wipe:\nclr db\n", f"Wipe:\nclr db\npoke 0 {GUARD_MAGIC}\npoke 1 1\npoke 2 0\n", 1
+)
+CONDITIONAL = ERASING.replace(
+    "Wipe:\nclr db\n", f"Wipe:\nclr db\nbnez r1 Loop\npoke 0 {GUARD_MAGIC}\npoke 1 1\n", 1
+)
+UNMODELED = ERASING.replace("Wipe:\nclr db\n", "Wipe:\nclr db\nj ra\n", 1)
+
+
+def guard_aliases(text):
+    return collect_aliases([list(row.tokens) for row in parse_ic10(text).rows])[1]
+
+
+def guard_publication_errors(text, expected=None):
+    with TemporaryDirectory() as temporary:
+        case = _ProjectPath(temporary) / "guarded-clear.ic10"
+        case.write_text(text)
+        digest = {"source_sha256": hashlib.sha256(case.read_bytes()).hexdigest()}
+        return publication_errors(case, dict(expected or guard_expected), digest)
+
+
+erasing_errors = guard_publication_errors(ERASING)
+ck(any("leaves S0, S1 at zero" in error for error in erasing_errors),
+   f"publication validator accepted an envelope erased behind the reflash guard: {erasing_errors}")
+ck(not guard_publication_errors(IDIOM),
+   "publication validator rejected the clear-then-publish reflash idiom")
+ck(not guard_publication_errors(REPUBLISHING),
+   "publication validator rejected a guarded clear that republishes the whole envelope")
+ck(any("leaves S0, S1 at zero" in error for error in guard_publication_errors(CONDITIONAL)),
+   "publication validator accepted a guarded clear whose republication one path skips")
+
+ck(cells_erased_by_clear(ERASING, guard_aliases(ERASING), guard_expected) == {0, 1},
+   "the erasure proof did not name S0 and S1, and S2 expects the zero the clear leaves")
+ck(cells_erased_by_clear(IDIOM, guard_aliases(IDIOM), guard_expected) == set(),
+   "the erasure proof blamed a clear the following publication undoes")
+ck(cells_erased_by_clear(REPUBLISHING, guard_aliases(REPUBLISHING), guard_expected) == set(),
+   "the erasure proof blamed a clear that republishes the envelope behind the guard")
+ck(cells_erased_by_clear(UNMODELED, guard_aliases(UNMODELED), guard_expected) == {0, 1},
+   "a republication the graph cannot follow was taken on trust")
+# Only a literal write of the expected value republishes, and the boundary the
+# clear has to beat is anywhere readable, not only a `yield`.
+COMPUTED = ERASING.replace("Wipe:\nclr db\n", "Wipe:\nclr db\npoke 0 r1\npoke 1 r1\n", 1)
+ck(cells_erased_by_clear(COMPUTED, guard_aliases(COMPUTED), guard_expected) == {0, 1},
+   "a computed write was credited with republishing the value it cannot be shown to carry")
+HALTING = ERASING.replace("j Loop\n", "j Done\n", 1).replace("Loop:\nyield\nj Loop\n", "Done:\nhcf\n", 1)
+ck(cells_erased_by_clear(HALTING, guard_aliases(HALTING), guard_expected) == {0, 1},
+   "an envelope erased on the way to `hcf` was not counted, because nothing yields")
+SPINNING = ERASING.replace("j Loop\n", "j Spin\n", 1).replace("Loop:\nyield\nj Loop\n", "Spin:\nj Spin\n", 1)
+ck(cells_erased_by_clear(SPINNING, guard_aliases(SPINNING), guard_expected) == {0, 1},
+   "a loop going round again over an erased envelope was not counted, because nothing yields")
+WRAPPING = (
+    f"Loop:\nyield\npoke 0 {GUARD_MAGIC}\nget r0 db 0\nbeq r0 {GUARD_MAGIC} Wipe\nj Loop\n"
+    "Wipe:\nclr db\n"
+)
+ck(cells_erased_by_clear(WRAPPING, guard_aliases(WRAPPING), {0: GUARD_MAGIC}) == {0},
+   "a clear that reaches the entry yield by running off the end was not followed there")
+TAIL_WRITE = f"get r0 db 0\nbeq r0 {GUARD_MAGIC} Skip\nhcf\nSkip:\nclr db\npoke 0 {GUARD_MAGIC}\n"
+ck(cells_erased_by_clear(TAIL_WRITE, guard_aliases(TAIL_WRITE), {0: GUARD_MAGIC}) == set(),
+   "the republication the program wraps around was read as a boundary it never reaches")
+# A call and a return go backwards without the program starting over, so neither
+# is a boundary -- but the walk carries on through them and still finds the yield.
+SUBROUTINE = (
+    f"get r0 db 0\nbeq r0 {GUARD_MAGIC} Wipe\nj Pub\n"
+    "Wipe:\njal Clear\n"
+    f"Pub:\npoke 0 {GUARD_MAGIC}\npoke 1 1\nj Loop\n"
+    "Clear:\nclr db\nj ra\n"
+    "Loop:\nyield\nj Loop\n"
+)
+ck(cells_erased_by_clear(SUBROUTINE, guard_aliases(SUBROUTINE), guard_expected) == set(),
+   "a return to the caller that republishes was read as the program starting over")
+BACKWARD_CALL = (
+    "j Boot\n"
+    f"Pub:\npoke 0 {GUARD_MAGIC}\npoke 1 1\nj ra\n"
+    f"Boot:\nget r0 db 0\nbeq r0 {GUARD_MAGIC} Wipe\njal Pub\nj Loop\n"
+    "Wipe:\nclr db\njal Pub\n"
+    "Loop:\nyield\nj Loop\n"
+)
+ck(cells_erased_by_clear(BACKWARD_CALL, guard_aliases(BACKWARD_CALL), guard_expected) == set(),
+   "a call into a subroutine defined earlier was read as the program starting over")
+SILENT_CALL = BACKWARD_CALL.replace(f"Pub:\npoke 0 {GUARD_MAGIC}\npoke 1 1\n", "Pub:\npoke 9 4\n", 1)
+ck(cells_erased_by_clear(SILENT_CALL, guard_aliases(SILENT_CALL), guard_expected) == {0, 1},
+   "excusing the call also excused the erasure it calls past")
+SPINNING_RETURN = (
+    f"poke 0 {GUARD_MAGIC}\nget r0 db 0\nbeq r0 {GUARD_MAGIC} Wipe\nj Loop\n"
+    "Wipe:\nclr db\njal Outer\n"
+    "Outer:\njal Inner\nInner:\nj ra\n"
+    "Loop:\nyield\nj Loop\n"
+)
+ck(cells_erased_by_clear(SPINNING_RETURN, guard_aliases(SPINNING_RETURN), {0: GUARD_MAGIC}) == {0},
+   "a program spinning between a call and its return went unread with S0 erased")
+# `resolve_literal` says None for a computed operand, so an expected None must not
+# be met by the very writes that cannot be shown to carry it.
+COMPUTED_ONLY = IDIOM.replace(f"poke 2 0\n", "poke 2 r1\n", 1)
+ck(cells_erased_by_clear(COMPUTED_ONLY, guard_aliases(COMPUTED_ONLY), {0: GUARD_MAGIC, 2: None}) == {2},
+   "a computed write satisfied an expected value that resolves to nothing either")
+
+# `clr db` de-initializes: it costs a cell its nonzero value and establishes a zero one.
+ck(stable_cells(ERASING, guard_aliases(ERASING), guard_expected) == {2},
+   "stable_cells still reads `clr db` as leaving the cells it zeroes alone")
+ZEROED = f"clr db\npoke 0 {GUARD_MAGIC}\nLoop:\nyield\nj Loop\n"
+ck(stable_cells(ZEROED, guard_aliases(ZEROED), {0: GUARD_MAGIC, 9: 0}) == {0, 9},
+   "stable_cells did not credit the boot clear with initializing a cell that expects zero")
 
 if fails:
     print("Stack header tests: FAIL")

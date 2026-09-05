@@ -443,6 +443,28 @@ cases can move earlier but never later. Both keep the rule a floor under the
 declaration rather than a second derivation of it, and the validator prints how
 many declarations have a proof to be held to.
 
+Publication itself is proved on the entry path, and the reflash guard is where
+that path forks. A program that reads `S0`, compares it against its own magic and
+branches has published nothing yet, so the proof carries on past the branch: the
+skip path runs over a stack this contract already wrote, and the taken path runs
+the `clr db` that makes a foreign or stale housing safe to publish into. That
+second path is what the clear exemption is for, and it reaches exactly as far as
+the graph does. A clear behind the guard is initialization where every envelope
+cell it zeroes is written again -- with its literal value, on every path out --
+before anything can look: another `yield`, an `hcf`, or any cycle at all, since a
+program that can go round with the cell still zeroed can be read with it zeroed.
+Asking for the cycle rather than for a backward edge is what lets the rule stay
+silent about whether a transfer was a loop, a call, or a return -- a distinction
+the stability proof needs its call states to draw, and one a graph of plain
+indices has already lost. Anywhere else the clear is erasure, and the error names
+the cells it leaves at zero. The exemption used to be
+unconditional, which let the induction that clears the guard's own missing set --
+sound about the skip path, where the stack already holds what this contract
+published -- speak for the path that erases too. Every migrated program clears
+first and publishes after, so nothing had ever forced the two apart. The stability
+proof underneath reads the instruction the same way: `clr db` costs a cell its
+value, and earns a cell that expects zero the one it wants.
+
 `tools/plan_header_migration.py` plans a family's move from those contracts. It
 takes free cells from the analysed footprint rather than the literal one — a
 program that clears a table through a computed address owns those cells even
