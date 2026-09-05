@@ -311,10 +311,13 @@ def declared_capability_mask(root: Path, source: str) -> int:
     )
 
 
-def _parse(path: Path) -> tuple[list[list[str]], dict[str, int]]:
-    source = parse_ic10(Path(path).read_text())
-    rows = [list(row.tokens) for row in source.rows]
+def _parse_source(text: str) -> tuple[list[list[str]], dict[str, int]]:
+    rows = [list(row.tokens) for row in parse_ic10(text).rows]
     return rows, collect_aliases(rows)[1]
+
+
+def _parse(path: Path) -> tuple[list[list[str]], dict[str, int]]:
+    return _parse_source(Path(path).read_text())
 
 
 def _writes(rows: list[list[str]], aliases: dict[str, int]) -> dict[int, set[Any]]:
@@ -1324,7 +1327,7 @@ def declaration_errors(
 
         contract = by_source[source]
         text = (root / source).read_text()
-        rows, aliases = _parse(root / source)
+        rows, aliases = _parse_source(text)
         writes = _writes(rows, aliases)
         service.extend(identity_header_errors(declaration, contract))
         service.extend(schema_capability_errors(
