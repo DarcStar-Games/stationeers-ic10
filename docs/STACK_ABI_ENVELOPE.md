@@ -148,7 +148,13 @@ today.
 
 The validator proves the shape it can prove statically: a literal zero
 initializer, at least one later write, and the generation `poke` last in source
-order among all writes.
+order among all writes. A boot `clr db` is a zero initializer too, because it
+zeroes the generation along with every other cell — but only where the entry can
+reach it before the first yield, which the validator asks of the control-flow
+graph rather than of the file. A clear the entry jumps over zeroes nothing on any
+housing, and does not count. A clear behind a reflash guard does: on a foreign or
+stale housing the guard fails and the clear runs, and on a same-image reflash the
+generation carries forward, which is what a durable generation is for.
 
 ### State
 
