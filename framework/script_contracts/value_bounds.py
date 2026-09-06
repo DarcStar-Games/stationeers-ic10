@@ -300,12 +300,33 @@ class ValueBounds:
         return, and a guard one caller placed before its call would look
         bypassed by the path stitched through the other.
         """
-        reachable = set(self._by_index)
-        dominators = {index: {index} for index in reachable}
-        for blocked in reachable:
-            reached = self.walk([(0, None)], blocked, self.states)
-            for index in reachable - reached:
-                dominators[index].add(blocked)
+        # One must-pass dataflow over the states, with the index sets as bit
+        # masks: what every path to a state has passed is that state's own
+        # index and whatever every predecessor's path had passed. Asking one
+        # walk per index instead costs the whole graph again for each of them.
+        entry: CallState = (0, None)
+        passed = {state: -1 for state in self.states}
+        if entry in passed:
+            passed[entry] = 1
+        changed = bool(passed)
+        while changed:
+            changed = False
+            for state in self.states:
+                if state == entry:
+                    continue
+                incoming = -1
+                for parent in self._state_predecessors.get(state, ()):
+                    incoming &= passed[parent]
+                updated = incoming | (1 << state[0])
+                if updated != passed[state]:
+                    passed[state] = updated
+                    changed = True
+        dominators: dict[int, set[int]] = {}
+        for index, states in self._by_index.items():
+            mask = -1
+            for state in states:
+                mask &= passed[state]
+            dominators[index] = {other for other in self._by_index if mask >> other & 1}
         return dominators
 
     def state_predecessors(self) -> dict[CallState, set[CallState]]:
@@ -623,11 +644,12 @@ class ValueBounds:
         values, whole = self.seed_values(index, token, sites, depth, seen)
         low, high, trusted = self.guard_interval(index, token, sites, depth, seen)
         pinned, excluded = self.equality_constraints(index, token)
-        if pinned is not None:
+        if pinned is not None and (values is None or not whole):
             # An equality guard on the only edge that reaches here names the
-            # value outright, whatever wrote the register and however little was
-            # known about that write; the ordering guards can only agree or
-            # leave the access unreachable.
+            # value outright, however little is known about what wrote the
+            # register. Seeds that were shown whole are the one thing that can
+            # answer back: the value they never hold is one the guard's edge
+            # never sees, and the access behind it is dead, not pinned.
             values = {value for value in pinned - excluded
                       if (low is None or value >= low) and (high is None or value <= high)}
             return (values, trusted) if values else OPEN
@@ -676,6 +698,8 @@ class ValueBounds:
         if high is not None:
             values = {value for value in values if value <= high}
         values -= excluded
+        if pinned is not None:
+            values &= pinned
         if not 0 < len(values) <= STACK_CELLS:
             return OPEN
         return values, whole and trusted

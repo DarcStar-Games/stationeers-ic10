@@ -798,6 +798,13 @@ pinned, _ = analyze_own_stack(pinned_source, pinned_rows, pinned_aliases, [], {}
 ck(pinned["dynamic_write_range_source"] == "source-derived"
    and pinned["dynamic_write_ranges"] == [{"start": 32, "end": 32}],
    "a register an equality guard pins to one value was not derived whole")
+# Seeds shown whole answer a pin back: a value they never hold is one the guard's
+# edge never sees, so the write behind it is dead and witnesses nothing.
+dead_pin_source = "move r0 5\nbne r0 2 Skip\nadd r1 r0 30\npoke r1 1\nSkip:\nyield\n"
+dead_pin_rows = parse_rows(dead_pin_source)
+dead_pin_ports, dead_pin_aliases = collect_aliases(dead_pin_rows)
+ck(not dynamic_access_cells(dead_pin_source, dead_pin_ports, dead_pin_aliases),
+   "a write behind a pin the whole seeds contradict was witnessed")
 
 # A loop advance read from outside the loop is not one step past the seed: the
 # copy below always runs seven passes, so its address is never 121 when the
