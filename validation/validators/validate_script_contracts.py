@@ -207,6 +207,15 @@ for rel, generated in sorted(expected.items()):
             validation.fail(f"{actual['source']}: dynamic own {direction} lacks range provenance")
         if provenance == "conservative-full-stack" and ranges != [{"start": 0, "end": 511}]:
             validation.fail(f"{actual['source']}: own {direction} fallback is not the full stack")
+        # A write range that fell back to the whole stack publishes every cell, so
+        # every peer reading this program passes whatever it asks for and every
+        # header constant is withheld. That is a gap in the proof, not a fact
+        # about the source: prove the address, or review a window for it.
+        if direction == "write" and provenance == "conservative-full-stack":
+            validation.fail(
+                f"{actual['source']}: a computed own-stack write the branch bounds cannot follow"
+                " publishes the whole stack; declare a reviewed dynamic_write_ranges window"
+            )
         effective_cells = {cell for item in ranges for cell in range(item["start"], item["end"] + 1)}
         proven_cells = {cell for item in proven_ranges for cell in range(item["start"], item["end"] + 1)}
         if not proven_cells <= effective_cells:

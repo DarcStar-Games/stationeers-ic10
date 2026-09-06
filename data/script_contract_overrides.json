@@ -26,6 +26,16 @@
   },
   "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10": {
    "source_sha256": "eed4370049cca86ef6d7012b8d4ab2e432193adde97f86100eeb8e936c98ffea",
+   "dynamic_write_ranges": [
+    [
+     18,
+     401
+    ],
+    [
+     448,
+     511
+    ]
+   ],
    "external_readable_ranges": [
     [
      0,
@@ -97,6 +107,12 @@
   },
   "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10": {
    "source_sha256": "ea80215e8aac9b58e9d06b1310f504f22131cc6c3c132b9d9476df3fad15a87f",
+   "dynamic_write_ranges": [
+    [
+     32,
+     511
+    ]
+   ],
    "publication_rules": [
     {
      "kind": "seqlock",
@@ -432,6 +448,16 @@
   },
   "ic10/dependency-planning/dependency_plan_store_v2_0.ic10": {
    "source_sha256": "45b2df22309b90253281494fb3b7bb0622598c20caf7dbd92a2601d3b5738637",
+   "dynamic_write_ranges": [
+    [
+     32,
+     39
+    ],
+    [
+     128,
+     383
+    ]
+   ],
    "publication_rules": [
     {
      "kind": "seqlock",
@@ -511,6 +537,19 @@
      ]
     }
    }
+  },
+  "ic10/diagnostics/console_registry_v1_1.ic10": {
+   "source_sha256": "86ffe67bc81551e81a8e4918187bdc7d7c40e70616d58c0cd706f3c372fe5a88",
+   "dynamic_write_ranges": [
+    [
+     10,
+     13
+    ],
+    [
+     32,
+     287
+    ]
+   ]
   },
   "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10": {
    "source_sha256": "079397d2888ba16f377831a827af0f1a54d58517cf93961ee3a10ca7d45827ec",
@@ -596,6 +635,16 @@
   },
   "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10": {
    "source_sha256": "2e3615cbc0a1f39b3b2b81d7bc34e18be8c4382a1deb2b3a38b38af753201b8a",
+   "dynamic_write_ranges": [
+    [
+     25,
+     30
+    ],
+    [
+     32,
+     415
+    ]
+   ],
    "external_readable_ranges": [
     [
      0,
@@ -615,6 +664,9 @@
   },
   "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10": {
    "source_sha256": "e95d386c114a95346460a3c4bd999e29e41754b9f02f776b9b56cba717dff515",
+   "dynamic_write_ranges": [
+    [8, 10], [33, 35], [49, 52], [65, 67], [81, 84], [97, 100]
+   ],
    "dynamic_read_ranges": [
     [11, 15], [19, 19], [32, 33], [36, 40], [48, 62],
     [64, 65], [68, 72], [80, 81], [85, 93], [96, 97], [101, 109]
@@ -965,6 +1017,16 @@
   },
   "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10": {
    "source_sha256": "dc541e69043742b00c10dcc0acc53d9f0309d18968cdb9d97fcd72f6e6481351",
+   "dynamic_write_ranges": [
+    [
+     32,
+     95
+    ],
+    [
+     128,
+     191
+    ]
+   ],
    "external_readable_ranges": [
     [
      32,
@@ -1069,6 +1131,12 @@
   },
   "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10": {
    "source_sha256": "1c8b4dab5aeea7aa7cbf33a7f5de6d0ed5db358458955788c9fb605bd787949f",
+   "dynamic_write_ranges": [
+    [
+     18,
+     209
+    ]
+   ],
    "external_readable_ranges": [
     [
      0,
@@ -1348,6 +1416,12 @@
   },
   "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10": {
    "source_sha256": "3bfebcc4c2c8b153151378ba89788af30dd1e74b5b6e306f43be03a3cda5fbe2",
+   "dynamic_write_ranges": [
+    [
+     16,
+     31
+    ]
+   ],
    "external_readable_ranges": [
     [
      0,
@@ -1485,6 +1559,12 @@
   },
   "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10": {
    "source_sha256": "d95e36ff6472f3c75e1aad52547aea1aa74ac9af6bb02dd5aa6a9fe957b775cb",
+   "dynamic_write_ranges": [
+    [
+     18,
+     209
+    ]
+   ],
    "external_readable_ranges": [
     [
      0,
@@ -1708,6 +1788,12 @@
   },
   "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": {
    "source_sha256": "684f8545b583e37e0e11862e58df68bebb810c961e6d6840b448a2cde786fa4d",
+   "dynamic_write_ranges": [
+    [
+     8,
+     67
+    ]
+   ],
    "external_readable_ranges": [
     [
      0,

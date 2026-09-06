@@ -92,7 +92,11 @@
     ],
     "dynamic_write_ranges": [
       {
-        "start": 0,
+        "start": 18,
+        "end": 401
+      },
+      {
+        "start": 448,
         "end": 511
       }
     ],
@@ -113,7 +117,7 @@
       }
     ],
     "dynamic_read_range_source": "conservative-full-stack",
-    "dynamic_write_range_source": "conservative-full-stack",
+    "dynamic_write_range_source": "source-fingerprinted-exception",
     "clears_all": true,
     "external_readable_ranges": [
       {
@@ -130,7 +134,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 583163590
       },
       {
         "address": 1,
@@ -139,7 +144,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 3
       },
       {
         "address": 2,
@@ -148,7 +154,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 49
       },
       {
         "address": 3,
@@ -157,7 +164,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": -698837900
       },
       {
         "address": 7,
@@ -176,7 +184,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 6
       },
       {
         "address": 11,
@@ -185,7 +194,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 64
       },
       {
         "address": 12,
@@ -222,7 +232,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 2
       },
       {
         "address": 16,
@@ -258,7 +269,22 @@
       "mode": "cleared-on-init",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": 583163590,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 3,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
     "provides": [

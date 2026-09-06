@@ -4,7 +4,7 @@
   "own_stack_range_inventory": {
     "dynamic_script_count": 42,
     "source_proven_surface_count": 49,
-    "unresolved_fallback_count": 21,
+    "unresolved_fallback_count": 10,
     "scripts": [
       {
         "source": "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10",
@@ -28,7 +28,11 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
+              "start": 18,
+              "end": 401
+            },
+            {
+              "start": 448,
               "end": 511
             }
           ],
@@ -42,7 +46,7 @@
               "end": 511
             }
           ],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-fingerprinted-exception"
         }
       },
       {
@@ -107,12 +111,12 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
+              "start": 32,
               "end": 511
             }
           ],
           "proven_ranges": [],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-fingerprinted-exception"
         }
       },
       {
@@ -362,8 +366,12 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 32,
+              "end": 39
+            },
+            {
+              "start": 128,
+              "end": 383
             }
           ],
           "proven_ranges": [
@@ -372,7 +380,7 @@
               "end": 39
             }
           ],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-fingerprinted-exception"
         }
       },
       {
@@ -511,8 +519,12 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 10,
+              "end": 13
+            },
+            {
+              "start": 32,
+              "end": 287
             }
           ],
           "proven_ranges": [
@@ -521,7 +533,7 @@
               "end": 13
             }
           ],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-fingerprinted-exception"
         }
       },
       {
@@ -1168,8 +1180,12 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 25,
+              "end": 30
+            },
+            {
+              "start": 32,
+              "end": 415
             }
           ],
           "proven_ranges": [
@@ -1178,7 +1194,7 @@
               "end": 415
             }
           ],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-fingerprinted-exception"
         }
       },
       {
@@ -1259,12 +1275,32 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 8,
+              "end": 10
+            },
+            {
+              "start": 33,
+              "end": 35
+            },
+            {
+              "start": 49,
+              "end": 52
+            },
+            {
+              "start": 65,
+              "end": 67
+            },
+            {
+              "start": 81,
+              "end": 84
+            },
+            {
+              "start": 97,
+              "end": 100
             }
           ],
           "proven_ranges": [],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-fingerprinted-exception"
         }
       },
       {
@@ -1799,8 +1835,12 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 32,
+              "end": 95
+            },
+            {
+              "start": 128,
+              "end": 191
             }
           ],
           "proven_ranges": [
@@ -1809,7 +1849,7 @@
               "end": 95
             }
           ],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-fingerprinted-exception"
         }
       },
       {
@@ -1824,12 +1864,12 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 18,
+              "end": 209
             }
           ],
           "proven_ranges": [],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-fingerprinted-exception"
         }
       },
       {
@@ -1874,12 +1914,12 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 16,
+              "end": 31
             }
           ],
           "proven_ranges": [],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-fingerprinted-exception"
         }
       },
       {
@@ -2066,12 +2106,12 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 18,
+              "end": 209
             }
           ],
           "proven_ranges": [],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-fingerprinted-exception"
         }
       },
       {
@@ -2254,8 +2294,8 @@
           "dynamic": true,
           "ranges": [
             {
-              "start": 0,
-              "end": 511
+              "start": 8,
+              "end": 67
             }
           ],
           "proven_ranges": [
@@ -2264,7 +2304,7 @@
               "end": 67
             }
           ],
-          "provenance": "conservative-full-stack"
+          "provenance": "source-fingerprinted-exception"
         }
       }
     ]
