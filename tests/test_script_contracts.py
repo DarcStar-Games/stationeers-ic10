@@ -747,6 +747,76 @@ ck(stitched_successors[10] == {4, 7}
    and not dynamic_access_cells(stitched_source, stitched_ports, stitched_aliases),
    "a seed reached an access only along a path stitched from two callers")
 
+# A guard placed before a call still gates what follows the return, whichever
+# other site calls the same subroutine. Projected onto indices the second call's
+# return lands on the first call's fallthrough and the guard looks bypassed, so
+# dominance and reachability are asked of the call states instead.
+shared_guard_source = (
+    "get r7 db 8\nbltz r7 Skip\nbgt r7 3 Skip\njal Sub\nmul r0 r7 8\nadd r0 r0 128\n"
+    "poke r0 1\nSkip:\njal Sub\nyield\nj Skip\nSub:\nj ra\n"
+)
+shared_guard_rows = parse_rows(shared_guard_source)
+_, shared_guard_aliases = collect_aliases(shared_guard_rows)
+shared_guard, _ = analyze_own_stack(shared_guard_source, shared_guard_rows, shared_guard_aliases, [], {})
+ck(shared_guard["dynamic_write_range_source"] == "source-derived"
+   and shared_guard["dynamic_write_ranges"] == [{"start": cell, "end": cell} for cell in (128, 136, 144, 152)],
+   "a guard before a shared subroutine call was lost to the other caller's return")
+# The same guards say nothing about a write inside the subroutine, which the
+# other caller reaches with a register the guards never saw.
+shared_write_source = (
+    "get r7 db 8\nbltz r7 Skip\nbgt r7 3 Skip\njal Write\nSkip:\nmove r7 40\njal Write\n"
+    "yield\nj Skip\nWrite:\nmul r0 r7 8\nadd r0 r0 128\npoke r0 1\nj ra\n"
+)
+shared_write_rows = parse_rows(shared_write_source)
+shared_write_ports, shared_write_aliases = collect_aliases(shared_write_rows)
+shared_write, _ = analyze_own_stack(shared_write_source, shared_write_rows, shared_write_aliases, [], {})
+ck(shared_write["dynamic_write_range_source"] == "conservative-full-stack"
+   and any(448 in item[2] for item in
+           dynamic_access_cells(shared_write_source, shared_write_ports, shared_write_aliases)),
+   "a guard on one caller was read against a write the other caller reaches unguarded")
+
+# An equality test is a constraint too: on the edge it guards the register is
+# the compared value, or it is anything but. Neither adds a value, and the one
+# it rules out would otherwise be witnessed -- a depth counter `beqz` sends away
+# at zero never steps down from zero, so S15 is not a cell this program writes.
+equality_source = (
+    "move r8 0\nLoop:\nyield\nget r1 db 9\nbeqz r1 Down\nbge r8 2 Loop\nadd r8 r8 1\n"
+    "add r0 r8 16\npoke r0 1\nj Loop\nDown:\nbeqz r8 Loop\nsub r8 r8 1\nadd r0 r8 16\n"
+    "poke r0 1\nj Loop\n"
+)
+equality_rows = parse_rows(equality_source)
+equality_ports, equality_aliases = collect_aliases(equality_rows)
+ck(all(item[2] <= {16, 17, 18} for item in
+       dynamic_access_cells(equality_source, equality_ports, equality_aliases))
+   and not declared_coverage_errors(equality_source, equality_ports, equality_aliases,
+                                    {("db", "write"): [{"start": 16, "end": 18}]}),
+   "a value an equality guard rules out was witnessed as a written cell")
+pinned_source = "get r0 db 8\nbne r0 2 Skip\nadd r1 r0 30\npoke r1 1\nSkip:\nyield\n"
+pinned_rows = parse_rows(pinned_source)
+_, pinned_aliases = collect_aliases(pinned_rows)
+pinned, _ = analyze_own_stack(pinned_source, pinned_rows, pinned_aliases, [], {})
+ck(pinned["dynamic_write_range_source"] == "source-derived"
+   and pinned["dynamic_write_ranges"] == [{"start": 32, "end": 32}],
+   "a register an equality guard pins to one value was not derived whole")
+
+# A loop advance read from outside the loop is not one step past the seed: the
+# copy below always runs seven passes, so its address is never 121 when the
+# record head is rewritten. Witnessing 121 would reject the window that is right.
+after_loop_source = (
+    "move r0 128\nmove r6 0\nCopy:\npoke r0 1\nadd r0 r0 1\nadd r6 r6 1\nblt r6 7 Copy\n"
+    "sub r0 r0 8\npoke r0 2\nyield\n"
+)
+after_loop_rows = parse_rows(after_loop_source)
+after_loop_ports, after_loop_aliases = collect_aliases(after_loop_rows)
+after_loop, _ = analyze_own_stack(
+    after_loop_source, after_loop_rows, after_loop_aliases, [], {"dynamic_write_ranges": [[127, 134]]},
+)
+ck(after_loop["dynamic_write_range_source"] == "source-fingerprinted-exception"
+   and after_loop["dynamic_write_proven_ranges"] == [{"start": 128, "end": 134}]
+   and not declared_coverage_errors(after_loop_source, after_loop_ports, after_loop_aliases,
+                                    {("db", "write"): [{"start": 127, "end": 134}]}),
+   "a loop advance read after the loop witnessed the value after one pass")
+
 # A record loop is exactly the thing a program writes as a subroutine, so a call
 # is followed and the loop's own exit test is read on the far side of it. The
 # same window falls out whether the `jal` stands before the loop or after it.

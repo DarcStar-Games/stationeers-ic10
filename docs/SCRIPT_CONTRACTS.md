@@ -193,6 +193,17 @@ the whole `S32..S95` plan window falls out of a validator that only ever names
 they reach -- a window anchored in the wrong place, and one anchored right and
 cut short.
 
+Because a declared range is rejected for omitting any derived cell, the
+derivation may witness only cells the program can really compute, and three
+readings that would witness one it cannot are closed. A guard placed before a
+call still gates what follows the return whichever other site calls the same
+subroutine, because dominance and reachability are read off the call states
+rather than their projection onto indices, where every return lands on every
+caller's fallthrough. An equality test rules its value out -- or pins it -- on
+the edge it guards, so a counter `beqz` sends away at zero never steps down from
+zero. And a loop advance read from outside the loop witnesses nothing, because
+the value the loop leaves behind is the seed plus every pass it ran, not one.
+
 What that derives is the surface the program *permits*, not what one execution
 performs: a declaration has to cover every cell a legal peer can steer the loop
 to. It is always a floor a declaration must contain, and where the derivation
