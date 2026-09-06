@@ -60,6 +60,7 @@ SUITE_ENTRIES = (
     SuiteEntry("validation/validators/validate_stock_target_ingress_contracts.py", VALIDATOR_CATEGORY, "VALIDATE_STOCK_TARGET_INGRESS_CONTRACTS"),
     SuiteEntry("validation/validators/validate_script_contracts.py", VALIDATOR_CATEGORY, "VALIDATE_SCRIPT_CONTRACTS"),
     SuiteEntry("validation/validators/validate_script_wiring.py", VALIDATOR_CATEGORY, "VALIDATE_SCRIPT_WIRING"),
+    SuiteEntry("validation/validators/validate_mailbox_arbitration.py", VALIDATOR_CATEGORY, "VALIDATE_MAILBOX_ARBITRATION"),
     SuiteEntry("validation/validators/validate_service_identity.py", VALIDATOR_CATEGORY, "VALIDATE_SERVICE_IDENTITY"),
     SuiteEntry("validation/validators/validate_stack_envelopes.py", VALIDATOR_CATEGORY, "VALIDATE_STACK_ENVELOPES"),
     SuiteEntry("validation/validators/validate_user_deployment_guide.py", VALIDATOR_CATEGORY, "VALIDATE_USER_DEPLOYMENT_GUIDE"),
