@@ -789,8 +789,12 @@ with TemporaryDirectory() as temporary:
 
 # A `clr db` behind a proven reflash guard is initialization only where the
 # publication that follows puts back everything it zeroed. The induction that
-# proves the guard speaks for the skip path, over a stack this contract already
-# published; the path that clears is asked separately, and by the graph.
+# proves the guard speaks for the skip path alone, so the stability proof holds
+# the path that clears to account itself; the erasure proof behind it asks the
+# same of the projected graph and fails closed where that projection invents a
+# path. A program that publishes first and then reads its own magic back has
+# satisfied its own guard, so neither shape below is a guard at all, and the
+# stability proof is what rejects them.
 GUARD_MAGIC = game_hash("StackCellMonitor.v1")
 guard_expected = {0: GUARD_MAGIC, 1: 1, 2: 0}
 ERASING = (
@@ -826,13 +830,13 @@ def guard_publication_errors(text, expected=None):
 
 
 erasing_errors = guard_publication_errors(ERASING)
-ck(any("leaves S0, S1 at zero" in error for error in erasing_errors),
+ck(any("control transfer occurs before" in error for error in erasing_errors),
    f"publication validator accepted an envelope erased behind the reflash guard: {erasing_errors}")
 ck(not guard_publication_errors(IDIOM),
    "publication validator rejected the clear-then-publish reflash idiom")
 ck(not guard_publication_errors(REPUBLISHING),
    "publication validator rejected a guarded clear that republishes the whole envelope")
-ck(any("leaves S0, S1 at zero" in error for error in guard_publication_errors(CONDITIONAL)),
+ck(any("control transfer occurs before" in error for error in guard_publication_errors(CONDITIONAL)),
    "publication validator accepted a guarded clear whose republication one path skips")
 
 ck(cells_erased_by_clear(ERASING, guard_aliases(ERASING), guard_expected) == {0, 1},
@@ -906,6 +910,74 @@ ck(stable_cells(ERASING, guard_aliases(ERASING), guard_expected) == {2},
 ZEROED = f"clr db\npoke 0 {GUARD_MAGIC}\nLoop:\nyield\nj Loop\n"
 ck(stable_cells(ZEROED, guard_aliases(ZEROED), {0: GUARD_MAGIC, 9: 0}) == {0, 9},
    "stable_cells did not credit the boot clear with initializing a cell that expects zero")
+
+# Same-image induction. The edge an identity guard takes only when `S0` already
+# holds this contract's magic runs over a stack this exact contract published, so
+# a cell written literally with nothing but its expected value holds it there.
+# The hypothesis is confined to that one edge: the path the guard rejects is a
+# fresh or foreign housing and has to publish the cell itself, the guard has to
+# compare the register `get` loaded from `S0` against this contract's own magic,
+# and a program that poked its magic a line before reading it back has satisfied
+# its own guard and proved nothing about the previous image.
+GUARDED_HEADER = (
+    f"get r0 db 0\nbne r0 {GUARD_MAGIC} Reset\nget r0 db 1\nbeq r0 1 Recover\n"
+    f"Reset:\nclr db\npoke 0 {GUARD_MAGIC}\npoke 1 1\npoke 2 0\nj Loop\n"
+    "Recover:\nget r1 db 16\npoke 16 r1\n"
+    "Loop:\nyield\nj Loop\n"
+)
+TABLE_GUARD = (
+    f"get r0 db 0\nbeq r0 {GUARD_MAGIC} Table\nclr db\npoke 0 {GUARD_MAGIC}\npoke 1 1\npoke 2 0\n"
+    "Table:\npoke 32 5\nLoop:\nyield\nj Loop\n"
+)
+UNGUARDED_HEADER = GUARDED_HEADER.replace(f"bne r0 {GUARD_MAGIC} Reset", "bnez r5 Reset", 1)
+FOREIGN_GUARD = GUARDED_HEADER.replace(
+    f"bne r0 {GUARD_MAGIC} Reset", f"bne r0 {game_hash('StackHeaderReader.v1')} Reset", 1
+)
+OTHER_REGISTER = GUARDED_HEADER.replace(f"bne r0 {GUARD_MAGIC} Reset", f"bne r1 {GUARD_MAGIC} Reset", 1)
+ORDERED_GUARD = GUARDED_HEADER.replace(f"bne r0 {GUARD_MAGIC} Reset", f"bgt r0 {GUARD_MAGIC} Reset", 1)
+CLOBBERED_GUARD = GUARDED_HEADER.replace("get r0 db 0\n", "get r0 db 0\nmove r0 0\n", 1)
+SELF_SATISFIED = (
+    f"poke 0 {GUARD_MAGIC}\nget r0 db 0\nbeq r0 {GUARD_MAGIC} Skip\npoke 1 1\n"
+    "Skip:\npoke 2 0\nLoop:\nyield\nj Loop\n"
+)
+ONE_TARGET = f"get r0 db 0\nbne r0 {GUARD_MAGIC} Init\nInit:\npoke 5 1\nLoop:\nyield\npoke 0 {GUARD_MAGIC}\nj Loop\n"
+LATE_HEADER = GUARDED_HEADER.replace("Loop:\nyield\nj Loop\n", "Loop:\nyield\npoke 3 9\nj Loop\n", 1)
+DIVERGENT_HEADER = GUARDED_HEADER.replace("Loop:\nyield\nj Loop\n", "Loop:\nyield\npoke 2 5\nj Loop\n", 1)
+COMPUTED_HEADER = GUARDED_HEADER.replace("Loop:\nyield\nj Loop\n", "Loop:\nyield\npoke 1 r3\nj Loop\n", 1)
+ck(stable_cells(GUARDED_HEADER, guard_aliases(GUARDED_HEADER), guard_expected) == {0, 1, 2},
+   "a header an identity guard branches past was not stable on the skip path")
+ck(stable_cells(TABLE_GUARD, guard_aliases(TABLE_GUARD), guard_expected) == {0, 1, 2},
+   "a `beq` guard jumping past the publication was not read as the same-image edge")
+ck(stable_cells(UNGUARDED_HEADER, guard_aliases(UNGUARDED_HEADER), guard_expected) == set(),
+   "a header an unguarded branch skips was taken as stable")
+ck(stable_cells(FOREIGN_GUARD, guard_aliases(FOREIGN_GUARD), guard_expected) == set(),
+   "a guard comparing S0 against another contract's magic spoke for this contract's image")
+ck(stable_cells(OTHER_REGISTER, guard_aliases(OTHER_REGISTER), guard_expected) == set(),
+   "a guard that read S0 but compared a register never loaded from it was taken as an identity guard")
+ck(stable_cells(CLOBBERED_GUARD, guard_aliases(CLOBBERED_GUARD), guard_expected) == set(),
+   "a guard whose S0 register was overwritten before the compare was taken as an identity guard")
+ck(stable_cells(ORDERED_GUARD, guard_aliases(ORDERED_GUARD), guard_expected) == set(),
+   "an ordering test against the magic was read as an equality guard")
+ck(stable_cells(SELF_SATISFIED, guard_aliases(SELF_SATISFIED), guard_expected) == {0, 2},
+   "a program that wrote its own magic before reading it back was credited with a guard it always passes")
+ck(stable_cells(ONE_TARGET, guard_aliases(ONE_TARGET), {0: GUARD_MAGIC}) == set(),
+   "a branch whose two edges land on one instruction was read as a guard")
+ck(stable_cells(LATE_HEADER, guard_aliases(LATE_HEADER), {**guard_expected, 3: 9}) == {0, 1, 2},
+   "a cell the fresh housing never publishes before its first yield was stable on the same-image edge's word")
+ck(stable_cells(DIVERGENT_HEADER, guard_aliases(DIVERGENT_HEADER), guard_expected) == {0, 1},
+   "a cell this source also writes with another literal was assumed to hold its expected value")
+ck(stable_cells(COMPUTED_HEADER, guard_aliases(COMPUTED_HEADER), guard_expected) == {0, 2},
+   "a cell a computed write can reach was assumed to hold its expected value")
+# The envelope layer reads the same proof, so it accepts the guarded header, and
+# no longer excuses a cell the graph could not prove just because every literal
+# write of it is the expected value.
+ck(not guard_publication_errors(GUARDED_HEADER),
+   "publication validator rejected a header an identity guard branches past")
+ck(any("control transfer occurs before" in error
+       for error in guard_publication_errors(LATE_HEADER, {**guard_expected, 3: 9})),
+   "publication validator took the same-image edge's word for a cell the fresh housing never publishes")
+ck(any("control transfer occurs before" in error for error in guard_publication_errors(SELF_SATISFIED)),
+   "publication validator let a program vouch for a header by reading back the magic it had just written")
 
 # A boot `clr db` stands in for a literal zero of the generation only where the
 # entry can reach it before a yield. The rule asks the control-flow graph, over

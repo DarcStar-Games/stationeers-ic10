@@ -84,7 +84,13 @@ Each generated per-script contract document is validated by
   literal initialization is guaranteed before every observable yield,
   termination, or loop backedge and dynamic writes do not overlap either header
   cell. Local calls are followed through `ra`, and a return is not a loop
-  backedge; a return that reads an address no call left there fails closed;
+  backedge; a return that reads an address no call left there fails closed. One
+  edge is taken on hypothesis: where the entry guard reads `S0` and branches on
+  whether it equals the header's own magic before writing anything, the edge it
+  takes only when they are equal runs over a stack the same contract published,
+  so a header cell this source writes with no other literal already holds its
+  value there (same-image induction, the rule `docs/STACK_ABI_ENVELOPE.md`
+  describes for the envelope). The path the guard rejects still has to publish;
 - provided stack protocols and consumed literal magic/ABI requirements.
 
 `contracts/index.json` is the complete source-to-contract report and canonical

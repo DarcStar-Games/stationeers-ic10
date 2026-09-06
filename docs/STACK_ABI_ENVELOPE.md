@@ -453,9 +453,22 @@ Publication itself is proved on the entry path, and the reflash guard is where
 that path forks. A program that reads `S0`, compares it against its own magic and
 branches has published nothing yet, so the proof carries on past the branch: the
 skip path runs over a stack this contract already wrote, and the taken path runs
-the `clr db` that makes a foreign or stale housing safe to publish into. That
-second path is what the clear exemption is for, and it reaches exactly as far as
-the graph does. A clear behind the guard is initialization where every envelope
+the `clr db` that makes a foreign or stale housing safe to publish into. The
+skip path is where same-image induction applies, and it is one edge of the
+stability proof rather than a rule beside it: on the edge the guard takes only
+when `S0` already equals this contract's magic, a cell whose every literal write
+in the source is its expected value counts as initialized, because the previous
+image of this exact contract left it so -- identity is `HASH("<Contract>.v<ABI>")`,
+so an equal `S0` names the contract and its ABI both. Nothing else is assumed.
+The path the guard rejects is a fresh or foreign housing and has to publish every
+cell before anything can look, a guard has to compare the register `get` loaded
+from `S0` against this contract's own magic, and a program that poked its magic
+a line before reading it back has satisfied its own guard and proved nothing.
+The contract layer's header constants read the same proof, so a header an
+identity guard branches past is a constant a consumer's constraint is checked
+against, and the two layers cannot disagree about one program. The taken path
+is what the clear exemption is for, and it reaches exactly as far as the graph
+does. A clear behind the guard is initialization where every envelope
 cell it zeroes is written again -- with its literal value, on every path out --
 before anything can look: another `yield`, an `hcf`, or any cycle at all, since a
 program that can go round with the cell still zeroed can be read with it zeroed.
@@ -464,12 +477,14 @@ silent about whether a transfer was a loop, a call, or a return -- a distinction
 the stability proof needs its call states to draw, and one a graph of plain
 indices has already lost. Anywhere else the clear is erasure, and the error names
 the cells it leaves at zero. The exemption used to be
-unconditional, which let the induction that clears the guard's own missing set --
-sound about the skip path, where the stack already holds what this contract
-published -- speak for the path that erases too. Every migrated program clears
-first and publishes after, so nothing had ever forced the two apart. The stability
-proof underneath reads the instruction the same way: `clr db` costs a cell its
-value, and earns a cell that expects zero the one it wants.
+unconditional, and the induction used to be a second rule in the envelope layer
+that cleared the guard's own missing set -- sound about the skip path, where the
+stack already holds what this contract published -- and so spoke for the path
+that erases too. Every migrated program clears first and publishes after, so
+nothing had ever forced the two apart; as one edge of the stability proof the
+induction cannot reach the other path at all. The stability proof reads the
+instruction the same way the erasure proof does: `clr db` costs a cell its value,
+and earns a cell that expects zero the one it wants.
 
 `tools/plan_header_migration.py` plans a family's move from those contracts. It
 takes free cells from the analysed footprint rather than the literal one — a

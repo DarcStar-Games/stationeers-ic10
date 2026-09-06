@@ -19,6 +19,7 @@ from framework.script_contracts.control_flow import (
     can_reach_avoiding_calls,
     control_flow_dominators,
     control_flow_with_wrap,
+    program_labels,
     writes_register,
 )
 from framework.script_contracts.parsing import (
@@ -35,6 +36,61 @@ SEMANTIC_WORDS = re.compile(
 )
 
 
+_OWN_STACK_WRITES = {"poke", "push", "clrd", "putd"}
+
+
+def same_image_edge(
+    program: list[dict[str, Any]], integer_aliases: dict[str, int], magic: Any
+) -> tuple[CallState, CallState] | None:
+    """The edge the entry guard takes only over a stack this contract already published.
+
+    An identity guard reads `S0` into a register and, before anything is written,
+    branches on whether it equals this contract's magic: `bne r0 MAGIC Init`
+    carries on past `Init` only when it does, and `beq r0 MAGIC Table` jumps to
+    `Table` only when it does. Identity is `HASH("<Contract>.v<ABI>")`, so the
+    stack on that edge was last published by this exact contract, and a cell it
+    only ever writes with one value already holds it there. That is the whole
+    hypothesis, and it is named as one edge rather than as a fact about the
+    program, so the fixpoint that walks it still holds every other path to
+    account -- a fresh housing takes the other edge, and has to publish.
+
+    Nothing is a guard once the program has written its own stack: a magic it
+    poked itself a line earlier is always there, and the branch tells nothing
+    about the previous image. Only the first transfer is asked, and only when the
+    compared register still holds what `get` loaded from `S0`.
+    """
+    if magic is None:
+        return None
+    labels = program_labels(program)
+    loaded: set[str] = set()
+    for index, entry in enumerate(program):
+        row = entry["row"]
+        if not row:
+            continue
+        if row[0] in _OWN_STACK_WRITES or (row[0] in {"clr", "put"} and len(row) >= 2 and row[1] == "db"):
+            return None
+        if row[0] in {"j", "jal", "jr", "yield", "hcf"} or (
+            row[0].startswith("b") and row[0] not in {"beq", "bne"}
+        ):
+            return None
+        if row[0] in {"beq", "bne"}:
+            if len(row) != 4 or not any(
+                register in loaded and resolve_literal(other, integer_aliases) == magic
+                for register, other in ((row[1], row[2]), (row[2], row[1]))
+            ):
+                return None
+            target = labels.get(row[3])
+            fallthrough = index + 1
+            if target is None or fallthrough >= len(program) or target == fallthrough:
+                return None
+            return (index, None), (target if row[0] == "beq" else fallthrough, None)
+        if row[0] == "get" and len(row) >= 4 and row[2] == "db" and resolve_integer(row[3], integer_aliases) == 0:
+            loaded.add(row[1])
+        else:
+            loaded = {register for register in loaded if not writes_register(row, register)}
+    return None
+
+
 def stable_cells(
     source: str, integer_aliases: dict[str, int], expected: dict[int, Any]
 ) -> set[int]:
@@ -43,6 +99,13 @@ def stable_cells(
     `clr db` de-initializes: it costs a cell whatever it held and hands a cell
     that expects zero the value it wants, so a clear is a write of 0 to all 512
     rather than an instruction the walk steps over.
+
+    Same-image induction: on the edge an identity guard takes only when `S0`
+    already holds this contract's magic, a cell whose every literal write in the
+    source is its expected value counts as initialized, because the previous
+    image of this same contract left it so. The hypothesis is confined to that
+    edge; the path the guard rejects is a fresh or foreign housing and has to
+    publish the cell itself before anything can look.
     """
     program = parse_program(source)
     if not program:
@@ -52,6 +115,7 @@ def stable_cells(
     if not control_flow_complete:
         return set()
     entry = (0, None)
+    guard = same_image_edge(program, integer_aliases, expected.get(0))
     # `ra` is None wherever no call is outstanding, so states need a total order
     # of their own before the fixpoint below can iterate them in one.
     reachable = sorted(successors, key=lambda state: (state[0], -1 if state[1] is None else state[1]))
@@ -108,6 +172,15 @@ def stable_cells(
                 and resolve_literal(program[state[0]]["row"][2], integer_aliases) == value
             )
         }
+        literal_writes = [
+            entry["row"] for entry in program
+            if entry["row"][:1] == ["poke"] and len(entry["row"]) >= 3
+            and resolve_integer(entry["row"][1], integer_aliases) == address
+        ]
+        assumed = {guard} if (
+            guard is not None and value is not None and literal_writes
+            and all(resolve_literal(row[2], integer_aliases) == value for row in literal_writes)
+        ) else set()
         initialized_after = {state: True for state in reachable}
         changed = True
         while changed:
@@ -115,7 +188,7 @@ def stable_cells(
             for state in reachable:
                 incoming = predecessors.get(state, set())
                 initialized_before = False if state == entry else bool(incoming) and all(
-                    initialized_after[parent] for parent in incoming
+                    initialized_after[parent] or (parent, state) in assumed for parent in incoming
                 )
                 updated = state in matching_writes or (
                     value == 0 if state in clearing else initialized_before
