@@ -26,7 +26,7 @@ add r7 r7 16
 ble r7 96 Scan
 j Loop
 A:
-move r7 8
+move r7 7
 move r6 1
 move r8 11
 j Life

@@ -107,6 +107,16 @@ gw3=IC10(src('ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10'),{'d0':st
 gw3.stack.update({53:parent,54:pgen,55:0,56:1,57:1,58:602,59:1,60:1,61:2,62:21,63:-1,48:12})
 run_round_robin([gw3,exe,store],20)
 ck(sorted(stranger.stack)==[0] and int(store.stack.get(23,0))==before,'Gateway posted a command to a device that is not its Executor')
+# Lane A is the Scheduler's: request payload S11..S15 with the nonce at S19, and the
+# reply lands where the Scheduler waits for it -- acknowledgement S8, status S9,
+# second word S10 -- leaving the payload it just copied untouched. ABI5 briefly put
+# the lane one cell high, which acknowledged into S9 and overwrote S11.
+pst,pgen=state(store,0);ck(pst==2,'parent left PLANNING before the lane A edge')
+gw.stack.update({11:2,12:0,13:pgen,14:3,15:0,19:13})
+run_round_robin([gw,exe,store],40)
+ck(gw.stack.get(8)==13 and gw.stack.get(9)==1,'Gateway lane A did not acknowledge on S8 with status on S9')
+ck(gw.stack.get(11)==2 and gw.stack.get(24)==0,'Gateway lane A reply overwrote the request payload or left the lane busy')
+ck(state(store,0)[0]==3,'lane A lifecycle edge did not reach the Store')
 # Reflashing with a command in flight must not settle it against whatever d0 now is:
 # the stranger's S8 is allowed to collide with the pending sequence.
 other=Device(105,{0:'HASH:GenericSnapshotDirectoryHost.v1',8:7,9:1,10:55},{'ReferenceId':105})
@@ -130,5 +140,6 @@ print(' - bounded depth/cycle and completed-child inventory liveness semantics a
 print(' - Plan Store 8-cell commit marker survives interrupted odd-sequence recovery')
 print(' - six-lane Gateway + sole Store executor atomically guards parent generation and allocates child slots')
 print(' - the Gateway writes nothing at all to a d0 that is not its Store Command Executor')
+print(' - Gateway lane A acknowledges on S8 and replies on S9..S10 without touching the request payload')
 print(' - a reflashed Executor re-checks the Store identity before resuming a pending command')
 print(' - the Planner names its Existing controller on the cleanup path as well as the plan path')
