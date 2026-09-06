@@ -1,0 +1,384 @@
+{
+ "$schema": "../schemas/mailbox_arbitration.schema.json",
+ "format": "IC10_MAILBOX_ARBITRATION_V1",
+ "mailboxes": {
+  "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10": {
+   "arbitration": "operator",
+   "writers": [
+    "ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10",
+    "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10",
+    "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10",
+    "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10",
+    "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10"
+   ],
+   "note": "Five on-demand control-plane tools post commands at S21/S22, the migration pair also at S40..S42. An operator runs one of them at a time against a claimed Coordinator and none is resident, so nothing posts while another tool waits."
+  },
+  "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10": {
+   "arbitration": "alternatives",
+   "writers": [
+    "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+    "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
+   ],
+   "note": "The freeze/ack cell S16 is driven by whichever publisher the adapter is wired to: a Bridge feeding a Snapshot Host, or a Registry Host directly. One adapter has one publisher; the two are alternative directory topologies, never both on one adapter."
+  },
+  "ic10/controller-config/generic_persistent_config_host_v1_1.ic10": {
+   "arbitration": "alternatives",
+   "writers": [
+    "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10",
+    "ic10/controller-pi/pi_config_policy_v1_0.ic10",
+    "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10",
+    "ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10",
+    "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10",
+    "ic10/pressure-grid/pressure_transfer_config_policy_v1_0.ic10"
+   ],
+   "note": "A Config Host pairs with exactly one Config Policy, which is what gives its records a meaning. The six policies are the alternative meanings a host can be given; a deployment wires one per host instance and a second policy on the same host is a wiring error, not a race."
+  },
+  "ic10/controller-discovery/controller_directory_adapter_v4_0.ic10": {
+   "arbitration": "alternatives",
+   "writers": [
+    "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+    "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
+   ],
+   "note": "The freeze/ack cell S16 is driven by whichever publisher the adapter is wired to: a Bridge feeding a Snapshot Host, or a Registry Host directly. One adapter has one publisher; the two are alternative directory topologies, never both on one adapter."
+  },
+  "ic10/dependency-planning/dependency_child_validity_v1_0.ic10": {
+   "arbitration": "serial",
+   "writers": [
+    "ic10/dependency-planning/dependency_claim_view_v1_0.ic10",
+    "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10",
+    "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10"
+   ],
+   "serialized_by": "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10",
+   "note": "All three post from inside the Planner's call tree and each waits for its response before returning, and the Planner serves one Gate or cleanup request at a time. The stock-target Future View reaches Child Validity only through its own dedicated Claim View, which brings a dedicated Child Validity and Job Monitor with it (see dependency_claim_view)."
+  },
+  "ic10/dependency-planning/dependency_claim_view_v1_0.ic10": {
+   "arbitration": "dedicated",
+   "writers": [
+    "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10",
+    "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10",
+    "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10"
+   ],
+   "instances": [
+    {
+     "writers": [
+      "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10",
+      "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10"
+     ],
+     "serialized_by": "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10",
+     "documented_in": "docs/DEPENDENCY_PLANNING.md"
+    },
+    {
+     "writers": [
+      "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10"
+     ],
+     "documented_in": "docs/STOCK_TARGET_INGRESS.md"
+    }
+   ],
+   "note": "Plan Builder and Release Advisor post under the Planner. The Future View posts once per active matching job from an independent loop; on one shared instance its next request lands before the callee latches the Planner-side request and strands it (tests/test_mailbox_arbitration.py). The stock-target deployment therefore runs its own Claim View, and with it its own Child Validity and Job Monitor."
+  },
+  "ic10/dependency-planning/dependency_plan_store_v2_0.ic10": {
+   "arbitration": "serial",
+   "writers": [
+    "ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10",
+    "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10"
+   ],
+   "serialized_by": "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10",
+   "note": "The Existing controller looks a plan up while the Planner waits on it; upsert and clear are the Planner's own requests. One call tree, one request at a time."
+  },
+  "ic10/dependency-planning/generic_job_monitor_v1_0.ic10": {
+   "arbitration": "dedicated",
+   "writers": [
+    "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10",
+    "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10",
+    "ic10/dependency-planning/dependency_child_validity_v1_0.ic10",
+    "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10"
+   ],
+   "instances": [
+    {
+     "writers": [
+      "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10"
+     ],
+     "documented_in": "docs/DEPENDENCY_PLANNING.md"
+    },
+    {
+     "writers": [
+      "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10",
+      "ic10/dependency-planning/dependency_child_validity_v1_0.ic10",
+      "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10"
+     ],
+     "serialized_by": "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10",
+     "documented_in": "docs/DEPENDENCY_PLANNING.md"
+    }
+   ],
+   "note": "The Cancellation Guard scans plan records on its own loop and monitors each parent it finds; the Planner's tree monitors children while a plan is built or evaluated. Neither waits on the other, so the Guard is wired to a Job Monitor of its own. The Monitor only reads the Job Store, so both instances share it."
+  },
+  "ic10/dependency-planning/item_producer_resolver_v1_0.ic10": {
+   "arbitration": "dedicated",
+   "writers": [
+    "ic10/dependency-planning/dependency_child_creator_v2_0.ic10",
+    "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10"
+   ],
+   "instances": [
+    {
+     "writers": [
+      "ic10/dependency-planning/dependency_child_creator_v2_0.ic10"
+     ],
+     "documented_in": "docs/DEPENDENCY_PLANNING.md"
+    },
+    {
+     "writers": [
+      "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10"
+     ],
+     "documented_in": "docs/STOCK_TARGET_INGRESS.md"
+    }
+   ],
+   "note": "Child Creator posts under the Planner; Producer View posts under the stock-target Evaluator. The resolver is a generated table with no downstream mailbox, so the second instance is one housing."
+  },
+  "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10": {
+   "arbitration": "serial",
+   "writers": [
+    "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10",
+    "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10"
+   ],
+   "serialized_by": "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10",
+   "note": "The Existing controller's evaluator and the New controller both post under the Planner, which runs one of them per request and waits on it."
+  },
+  "ic10/dependency-planning/job_requirement_view_v1_0.ic10": {
+   "arbitration": "dedicated",
+   "writers": [
+    "ic10/dependency-planning/dependency_child_creator_v2_0.ic10",
+    "ic10/dependency-planning/dependency_child_validity_v1_0.ic10",
+    "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10",
+    "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10"
+   ],
+   "instances": [
+    {
+     "writers": [
+      "ic10/dependency-planning/dependency_child_creator_v2_0.ic10",
+      "ic10/dependency-planning/dependency_child_validity_v1_0.ic10",
+      "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10"
+     ],
+     "serialized_by": "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10",
+     "documented_in": "docs/DEPENDENCY_PLANNING.md"
+    },
+    {
+     "writers": [
+      "ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10"
+     ],
+     "documented_in": "docs/STOCK_TARGET_INGRESS.md"
+    }
+   ],
+   "note": "Three planning clients post under the Planner. Producer View posts under the stock-target Evaluator, and the stock-target Child Validity posts to that same dedicated instance under the same root. A Requirement View instance brings its Reagent Resolver with it; the two profile views it selects are re-validated snapshots (reselect) and stay shared."
+  },
+  "ic10/generic-jobs/generic_job_selector_v3_0.ic10": {
+   "arbitration": "dedicated",
+   "writers": [
+    "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10",
+    "ic10/power-jobs/power_job_scheduler_v1_0.ic10"
+   ],
+   "instances": [
+    {
+     "writers": [
+      "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10"
+     ],
+     "documented_in": "docs/MANUFACTURING_SCHEDULER.md"
+    },
+    {
+     "writers": [
+      "ic10/power-jobs/power_job_scheduler_v1_0.ic10"
+     ],
+     "documented_in": "docs/POWER_MANAGEMENT.md"
+    }
+   ],
+   "note": "Each scheduler boots its selector into its own mode (S18 = 0 manufacturing, 4 exact JobType.POWER) and owns the cursor at S19/S20; the two domains deploy separate selector instances over the one Job Store, which the selector only reads."
+  },
+  "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10": {
+   "arbitration": "dedicated",
+   "writers": [
+    "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10",
+    "ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10"
+   ],
+   "instances": [
+    {
+     "writers": [
+      "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10"
+     ],
+     "documented_in": "docs/DEPENDENCY_PLANNING.md"
+    },
+    {
+     "writers": [
+      "ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10"
+     ],
+     "documented_in": "docs/STOCK_TARGET_INGRESS.md"
+    }
+   ],
+   "note": "Preflight quotes under the Planner; Inventory View quotes under the stock-target Evaluator. The Selector only reads its Snapshot Host and the endpoints it quotes, so a second instance shares those. The Allocator never posts: it reads a quote fenced on the response token it was handed and re-checks that token after reading."
+  },
+  "ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10": {
+   "arbitration": "serial",
+   "writers": [
+    "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
+    "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10"
+   ],
+   "serialized_by": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
+   "note": "The Evaluator posts its evaluation request, then hands the target to the Ingress and waits on it; the Ingress posts the mutation-time request while the Evaluator waits. One root, blocking at every hop. An Evaluator reflash while the Ingress is mid-request reopens a one-tick window, which is tracked as its own issue."
+  },
+  "ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10": {
+   "arbitration": "serial",
+   "writers": [
+    "ic10/manufacturing/print_job_driver_v2_0.ic10",
+    "ic10/manufacturing/transform_job_driver_v2_0.ic10"
+   ],
+   "serialized_by": "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10",
+   "note": "docs/MANUFACTURING_SCHEDULER.md deploys one dynamic selector for both domains because the manufacturing control plane is serial: the Scheduler drives one driver at a time through the Driver Router and each driver posts one selection request and waits on it."
+  },
+  "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10": {
+   "arbitration": "alternatives",
+   "writers": [
+    "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+    "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
+   ],
+   "note": "The freeze/ack cell S16 is driven by whichever publisher the adapter is wired to: a Bridge feeding a Snapshot Host, or a Registry Host directly. One adapter has one publisher; the two are alternative directory topologies, never both on one adapter."
+  },
+  "ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10": {
+   "arbitration": "dedicated",
+   "writers": [
+    "ic10/manufacturing/generic_print_runtime_v2_0.ic10",
+    "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10"
+   ],
+   "instances": [
+    {
+     "writers": [
+      "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10"
+     ],
+     "documented_in": "docs/MATERIAL_GRID_FOUNDATION.md"
+    },
+    {
+     "writers": [
+      "ic10/manufacturing/generic_print_runtime_v2_0.ic10"
+     ],
+     "documented_in": "docs/MANUFACTURING_SCHEDULER.md"
+    }
+   ],
+   "note": "Transform lanes keep their own Resolver/Stager/Allocator instances and printing runs a separate print reservation lane over the same protocol; the mutable reservation instances are never multiplexed across domains (docs/MANUFACTURING_SCHEDULER.md)."
+  },
+  "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10": {
+   "arbitration": "serial",
+   "writers": [
+    "ic10/power-grid/power_dispatch_cycle_v1_0.ic10",
+    "ic10/power-grid/power_dispatch_sweep_v1_0.ic10",
+    "ic10/power-grid/power_sink_flow_builder_v1_0.ic10"
+   ],
+   "serialized_by": "ic10/power-grid/power_dispatch_cycle_v1_0.ic10",
+   "note": "The Cycle owns the BEGIN/COMMIT boundaries and waits on the Sweep, which waits on each Flow Builder; one dispatch transaction at a time."
+  },
+  "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10": {
+   "arbitration": "alternatives",
+   "writers": [
+    "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+    "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
+   ],
+   "note": "The freeze/ack cell S16 is driven by whichever publisher the adapter is wired to: a Bridge feeding a Snapshot Host, or a Registry Host directly. One adapter has one publisher; the two are alternative directory topologies, never both on one adapter."
+  },
+  "ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10": {
+   "arbitration": "serial",
+   "writers": [
+    "ic10/power-jobs/power_job_finalize_v1_0.ic10",
+    "ic10/power-jobs/power_job_prepare_v1_0.ic10"
+   ],
+   "serialized_by": "ic10/power-jobs/power_job_scheduler_v1_0.ic10",
+   "unmapped": [
+    "ic10/power-jobs/power_job_finalize_v1_0.ic10",
+    "ic10/power-jobs/power_job_prepare_v1_0.ic10"
+   ],
+   "note": "The POWER Scheduler drives Prepare and Finalize one step at a time through register-indexed port dr9 (its d1 and d2) and waits on each step's response; the wiring map cannot carry a dr port, so both are listed as unmapped."
+  },
+  "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": {
+   "arbitration": "serial",
+   "writers": [
+    "ic10/power-jobs/power_job_finalize_v1_0.ic10",
+    "ic10/power-jobs/power_job_policy_apply_v1_0.ic10",
+    "ic10/power-jobs/power_job_prepare_v1_0.ic10"
+   ],
+   "serialized_by": "ic10/power-jobs/power_job_scheduler_v1_0.ic10",
+   "unmapped": [
+    "ic10/power-jobs/power_job_finalize_v1_0.ic10",
+    "ic10/power-jobs/power_job_prepare_v1_0.ic10"
+   ],
+   "note": "Prepare and Finalize run one step at a time under the POWER Scheduler through register-indexed port dr9, and Policy Apply posts while Prepare waits on it."
+  },
+  "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10": {
+   "arbitration": "alternatives",
+   "writers": [
+    "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+    "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
+   ],
+   "note": "The freeze/ack cell S16 is driven by whichever publisher the adapter is wired to: a Bridge feeding a Snapshot Host, or a Registry Host directly. One adapter has one publisher; the two are alternative directory topologies, never both on one adapter."
+  },
+  "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10": {
+   "arbitration": "serial",
+   "writers": [
+    "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10",
+    "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10"
+   ],
+   "serialized_by": "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10",
+   "note": "Both post under the Reservation Planner's plan build, which waits on each; one plan at a time."
+  },
+  "ic10/printer-directory/printer_directory_adapter_v1_0.ic10": {
+   "arbitration": "alternatives",
+   "writers": [
+    "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+    "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
+   ],
+   "note": "The freeze/ack cell S16 is driven by whichever publisher the adapter is wired to: a Bridge feeding a Snapshot Host, or a Registry Host directly. One adapter has one publisher; the two are alternative directory topologies, never both on one adapter."
+  },
+  "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10": {
+   "arbitration": "alternatives",
+   "writers": [
+    "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+    "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
+   ],
+   "note": "The freeze/ack cell S16 is driven by whichever publisher the adapter is wired to: a Bridge feeding a Snapshot Host, or a Registry Host directly. One adapter has one publisher; the two are alternative directory topologies, never both on one adapter."
+  },
+  "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10": {
+   "arbitration": "reselect",
+   "writers": [
+    "ic10/dependency-planning/job_requirement_view_v1_0.ic10",
+    "ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10",
+    "ic10/manufacturing/print_job_driver_v2_0.ic10"
+   ],
+   "note": "A selected snapshot, not a token mailbox: each consumer writes the RecipeHash to S10, then requires the S49 echo and an unchanged S14 generation around its reads, so a competing selection costs a retry and never a wrong read. Operator orders deploy a dedicated instance regardless (docs/OPERATOR_ORDER_INGRESS.md)."
+  },
+  "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10": {
+   "arbitration": "alternatives",
+   "writers": [
+    "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+    "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
+   ],
+   "note": "The freeze/ack cell S16 is driven by whichever publisher the adapter is wired to: a Bridge feeding a Snapshot Host, or a Registry Host directly. One adapter has one publisher; the two are alternative directory topologies, never both on one adapter."
+  },
+  "ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10": {
+   "arbitration": "alternatives",
+   "writers": [
+    "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+    "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
+   ],
+   "note": "The freeze/ack cell S16 is driven by whichever publisher the adapter is wired to: a Bridge feeding a Snapshot Host, or a Registry Host directly. One adapter has one publisher; the two are alternative directory topologies, never both on one adapter."
+  },
+  "ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10": {
+   "arbitration": "alternatives",
+   "writers": [
+    "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10",
+    "ic10/directory-core/generic_registry_directory_host_v2_0.ic10"
+   ],
+   "note": "The freeze/ack cell S16 is driven by whichever publisher the adapter is wired to: a Bridge feeding a Snapshot Host, or a Registry Host directly. One adapter has one publisher; the two are alternative directory topologies, never both on one adapter."
+  },
+  "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": {
+   "arbitration": "reselect",
+   "writers": [
+    "ic10/dependency-planning/job_requirement_view_v1_0.ic10"
+   ],
+   "note": "One writer program today; declared so that a dedicated Requirement View instance does not drag a profile view with it. The Requirement View selects S70 and re-checks the S68 echo, S69 status, and S74 generation after reading, so two instances selecting at once cost each other a retry."
+  }
+ }
+}

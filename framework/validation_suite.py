@@ -97,6 +97,7 @@ SUITE_ENTRIES = (
     SuiteEntry("tests/test_pressure_route_cost.py", TEST_CATEGORY, "TEST_PRESSURE_ROUTE_COST"),
     SuiteEntry("tests/test_printer_directory.py", TEST_CATEGORY, "TEST_PRINTER_DIRECTORY"),
     SuiteEntry("tests/test_script_wiring.py", TEST_CATEGORY, "TEST_SCRIPT_WIRING"),
+    SuiteEntry("tests/test_mailbox_arbitration.py", TEST_CATEGORY, "TEST_MAILBOX_ARBITRATION"),
     SuiteEntry("tests/test_stack_envelope.py", TEST_CATEGORY, "TEST_STACK_ENVELOPE"),
     SuiteEntry("tests/test_printer_execution_capacity.py", TEST_CATEGORY, "TEST_PRINTER_EXECUTION_CAPACITY"),
     SuiteEntry("tests/test_recipe_catalog.py", TEST_CATEGORY, "TEST_RECIPE_CATALOG"),
