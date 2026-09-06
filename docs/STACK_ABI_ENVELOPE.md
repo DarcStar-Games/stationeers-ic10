@@ -400,16 +400,23 @@ claimed outside it — and 19 of the 37 reviewed declarations were unconstrained
 that reason alone. But a clear on the entry path writes those cells *before* the
 first yield makes any of them readable, so none of them is a post-init write and
 the range it produced never described one. The contract layer now counts a clear
-only where the control-flow graph can still reach it from a yield, which leaves
-27 of the 37 declarations held against a range narrower than the stack — 23 of
-them against a derivation, and the other four against a second reviewed
-declaration, which the validator prints as two numbers rather than one.
+only where the control-flow graph can still reach it from a yield, and every
+computed write the graph cannot bound carries a reviewed window, which leaves all
+37 declarations held against a range narrower than the stack — 22 of them
+against a derivation, and the other 15 against a second reviewed declaration,
+which the validator prints as two numbers rather than one.
 
-One thing still puts a program there, and it is a gap in the analysis rather than
-a fact about the source: a computed write the bounds analysis cannot prove, with
-no reviewed `dynamic_write_ranges` override standing in for it, falls back to the
-whole stack. That is where a rounded-up post-init declaration hides — nothing
-derived contradicts it, so nothing has ever had to.
+Nothing puts a program outside that reach any more. A computed write the bounds
+analysis could not prove used to fall back to the whole stack when no reviewed
+`dynamic_write_ranges` override stood in for it, and that is where a rounded-up
+post-init declaration hid — nothing derived contradicted it, so nothing ever had
+to. The contract validator now refuses a deployable program whose own-stack write
+range is that fallback, and the first pass over the eleven programs that had one
+found three declarations their windows contradicted: the Catalog Store claimed
+`S24..S31` for an index and heap that begin at `S32`, the Snapshot Directory Host
+omitted the `S25`/`S26` bank generation its commit writes, and the Job Command
+Gateway named lane A's reply at `S8..S10` while the ABI5 source had moved it one
+cell high — and there the declaration was right and the source was wrong.
 
 Two things the rule does not settle. The derived range is itself the *effective*
 one, so where it comes from a reviewed `dynamic_write_ranges` override the

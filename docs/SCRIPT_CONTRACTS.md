@@ -69,7 +69,10 @@ Each generated per-script contract document is validated by
   where the derivation was left open anywhere, and also where a reviewer named a
   window wider than the derivation on purpose; either way it is a
   source-fingerprinted exception that has to contain every proven cell. Every
-  remaining unresolved access fails closed to `S0..S511`. Exact proven subsets
+  remaining unresolved read fails closed to `S0..S511`; an unresolved own-stack
+  write fails validation instead, because a whole-stack write range would
+  publish every cell to every peer and withhold every header constant, so it is
+  proved or reviewed before the program builds. Exact proven subsets
   are retained even when another access forces the aggregate range to fall back,
   so analysis never loses known occupancy;
 - source-comment-backed field names, descriptions, semantic value types,
@@ -132,6 +135,8 @@ accept a version range. Header base is tracked separately either way, so the
 - an own-stack proven subset falls outside its effective range, a claimed
   source-derived range exceeds its proof, or a conservative fallback is not
   exactly `S0..S511`;
+- an own-stack computed write falls back to the whole stack, with no reviewed
+  `dynamic_write_ranges` window standing in for the proof;
 - stack ranges overlap within one access class;
 - a required publication rule is absent from every compatible provider;
 - a commit-last consumer neither checks nor double-reads its publication cell;
@@ -176,7 +181,9 @@ way was left open -- no write the analysis could not evaluate, no register
 arriving from a reflash rather than a write, no loop nothing counts out, no
 limit read off a bound that was never shown whole. An address that fails any of
 those is an explicit `conservative-full-stack` fallback unless a
-source-fingerprinted override supplies a reviewed range. A `clr db` the graph can
+source-fingerprinted override supplies a reviewed range -- and for an own-stack
+write the fallback is itself a validation failure, so the override is the only
+way such a write builds. A `clr db` the graph can
 still reach from a yield is a source-derived full-stack write rather than an
 unresolved fallback; one on the boot path is not in the range at all, because it
 writes every cell before the first yield makes any of them readable, and
@@ -192,6 +199,17 @@ the whole `S32..S95` plan window falls out of a validator that only ever names
 `8` and `32`, and the generator rejects any declared range that omits a cell
 they reach -- a window anchored in the wrong place, and one anchored right and
 cut short.
+
+Because a declared range is rejected for omitting any derived cell, the
+derivation may witness only cells the program can really compute, and three
+readings that would witness one it cannot are closed. A guard placed before a
+call still gates what follows the return whichever other site calls the same
+subroutine, because dominance and reachability are read off the call states
+rather than their projection onto indices, where every return lands on every
+caller's fallthrough. An equality test rules its value out -- or pins it -- on
+the edge it guards, so a counter `beqz` sends away at zero never steps down from
+zero. And a loop advance read from outside the loop witnesses nothing, because
+the value the loop leaves behind is the seed plus every pass it ran, not one.
 
 What that derives is the surface the program *permits*, not what one execution
 performs: a declaration has to cover every cell a legal peer can steer the loop

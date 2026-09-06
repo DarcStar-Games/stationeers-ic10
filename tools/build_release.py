@@ -22,9 +22,12 @@ def clean_transients():
     legacy=ROOT/'recipe_catalog_fixture_generated'
     if legacy.exists(): shutil.rmtree(legacy)
 
-def write_deployment_baseline():
+def deployment_baseline_text():
     files=sorted((ROOT/'ic10').rglob('*.ic10'),key=lambda p:p.relative_to(ROOT).as_posix())
-    (ROOT/'DEPLOYMENT_BASELINE.sha256').write_text(''.join(f'{sha(p)}  {p.relative_to(ROOT).as_posix()}\n' for p in files))
+    return ''.join(f'{sha(p)}  {p.relative_to(ROOT).as_posix()}\n' for p in files)
+
+def write_deployment_baseline():
+    (ROOT/'DEPLOYMENT_BASELINE.sha256').write_text(deployment_baseline_text())
 
 def release_inventory_policy():
     return InventoryPolicy(

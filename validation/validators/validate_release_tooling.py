@@ -58,6 +58,11 @@ evidence=br.validation_evidence_files()
 ck(evidence[:3]==[rv.SUMMARY,rv.RUN_LOG,rv.STATE],'release evidence omits a summary, run log, or resume state')
 ck(len(evidence)==3+len(suite_entries(R)),'release evidence does not contain one output per validation script')
 ck(len(evidence)==len(set(evidence)),'release evidence paths are not unique')
+# The baseline is tracked and only a release build rewrites it, so a program edited
+# between releases leaves it naming a source that no longer exists.
+baseline=R/'DEPLOYMENT_BASELINE.sha256'
+ck(baseline.exists() and baseline.read_text()==br.deployment_baseline_text(),
+   'DEPLOYMENT_BASELINE.sha256 does not match the IC10 sources; regenerate it with tools.build_release.write_deployment_baseline')
 readme=(R/'README.md').read_text()
 ck('`ARCHIVE_MANIFEST.sha256` exists only inside the resulting ZIP' in readme,'README does not document the release-only manifest location')
 # Release and validation intentionally share the local-tooling layer, while the
@@ -174,4 +179,5 @@ raise SystemExit(result.finish('Release tooling validation',[
  f'release and validation compose the shared local-tooling policy: {sorted(LOCAL_TOOLING_DIRECTORIES)}',
  'CI runs clean validation with read-only permissions, pinned dependencies, source-tree enforcement, and failure evidence',
  'validation evidence is ignored, never staged by the hook, and regenerated for release archives',
+ 'the tracked deployment baseline hashes every IC10 source as it stands',
  'exclusion matches inside the repository only, and a sweep that finds nothing fails closed']))

@@ -115,10 +115,19 @@ provider whose published surface is all 512 cells cannot fail a read, and becaus
 providers are any-of, one such peer absorbs the whole edge however narrow the
 others are. That used to be mostly boot clears — a `clr db` writes every cell, so
 every program with one offered the whole stack — and taking the entry clear out of
-the derived write range dropped it from 26 of the 113 declared providers to 9,
-which lifted the edges that can fail at all from 170 to 186 of 226. What is left
-is the providers whose computed writes the bounds analysis cannot follow, where
-the whole-stack surface is a gap in the proof rather than a fact about the source.
+the derived write range dropped it from 26 of the 113 declared providers to 9.
+The rest were providers whose computed writes the bounds analysis could not
+follow, where the whole-stack surface was a gap in the proof rather than a fact
+about the source. Each of those now carries a reviewed, source-fingerprinted
+`dynamic_write_ranges` window in `data/script_contract_overrides.json`, and
+`validation/validators/validate_script_contracts.py` refuses a deployable program
+whose own-stack write range falls back to the whole stack, so the gap cannot
+reopen silently: a new computed write is proved by the branches around it or
+reviewed into a window before the program builds. What still absorbs an edge is a
+reviewed `external_readable_ranges` naming the whole stack — the Generic Catalog
+Store declares its heap that way — which leaves 228 of 234 edges able to fail.
+The first edge the narrowing exposed was a real one: the Manufacturing Scheduler
+waits on Gateway `S8`, and Gateway ABI5 had moved lane A's reply one cell high.
 
 The reviewed envelope stays the escape hatch, for the one thing derivation
 cannot see: a mailbox that one peer posts and a *different* peer consumes, which

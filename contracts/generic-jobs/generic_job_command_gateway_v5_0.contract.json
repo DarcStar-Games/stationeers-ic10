@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10",
-  "source_sha256": "8d9b3d469c36182b2c7b1373ec3bbdaa5fc110259b4537d3c657e893878acc99",
+  "source_sha256": "e95d386c114a95346460a3c4bd999e29e41754b9f02f776b9b56cba717dff515",
   "identity": {
     "service_id": "ic10.script.generic.job.command.gateway",
     "implementation_revision": "5.0",
@@ -146,8 +146,28 @@
     ],
     "dynamic_write_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 8,
+        "end": 10
+      },
+      {
+        "start": 33,
+        "end": 35
+      },
+      {
+        "start": 49,
+        "end": 52
+      },
+      {
+        "start": 65,
+        "end": 67
+      },
+      {
+        "start": 81,
+        "end": 84
+      },
+      {
+        "start": 97,
+        "end": 100
       }
     ],
     "dynamic_read_proven_ranges": [
@@ -174,7 +194,7 @@
     ],
     "dynamic_write_proven_ranges": [],
     "dynamic_read_range_source": "source-fingerprinted-exception",
-    "dynamic_write_range_source": "conservative-full-stack",
+    "dynamic_write_range_source": "source-fingerprinted-exception",
     "clears_all": true,
     "external_readable_ranges": [
       {
@@ -213,7 +233,8 @@
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "const": -1777224088
       },
       {
         "address": 1,
@@ -223,7 +244,8 @@
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "const": 5
       },
       {
         "address": 2,
@@ -232,7 +254,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
         "address": 8,
@@ -325,7 +348,22 @@
       "mode": "conditional-reset",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": -1777224088,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 5,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
     "provides": [

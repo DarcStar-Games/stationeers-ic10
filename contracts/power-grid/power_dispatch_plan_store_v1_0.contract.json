@@ -55,8 +55,12 @@
     ],
     "dynamic_write_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 32,
+        "end": 95
+      },
+      {
+        "start": 128,
+        "end": 191
       }
     ],
     "dynamic_read_proven_ranges": [
@@ -76,7 +80,7 @@
       }
     ],
     "dynamic_read_range_source": "source-derived",
-    "dynamic_write_range_source": "conservative-full-stack",
+    "dynamic_write_range_source": "source-fingerprinted-exception",
     "clears_all": true,
     "external_readable_ranges": [
       {
@@ -98,7 +102,8 @@
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "const": -788162592
       },
       {
         "address": 1,
@@ -107,7 +112,8 @@
         "semantic_source": "protocol-header",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 1
       },
       {
         "address": 2,
@@ -116,7 +122,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
         "address": 10,
@@ -190,7 +197,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
         "address": 26,
@@ -199,7 +207,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 0
       },
       {
         "address": 27,
@@ -271,7 +280,22 @@
       "mode": "conditional-reset",
       "source": "static-entry-path-analysis"
     },
-    "invariants": []
+    "invariants": [
+      {
+        "id": "header.s0.magic",
+        "kind": "cell-equals",
+        "address": 0,
+        "equals": -788162592,
+        "source": "generated-protocol-header"
+      },
+      {
+        "id": "header.s0.abi",
+        "kind": "cell-equals",
+        "address": 1,
+        "equals": 1,
+        "source": "generated-protocol-header"
+      }
+    ]
   },
   "contracts": {
     "provides": [

@@ -195,7 +195,11 @@
         ],
         "dynamic_write_ranges": [
           {
-            "start": 0,
+            "start": 18,
+            "end": 401
+          },
+          {
+            "start": 448,
             "end": 511
           }
         ],
@@ -222,18 +226,9 @@
           6,
           7
         ],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "conservative-full-stack",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
         "service_id": "ic10.script.catalog.coordinator.directory.adapter",
@@ -1004,7 +999,7 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
+            "start": 32,
             "end": 511
           }
         ],
@@ -1021,18 +1016,9 @@
           3
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
         "service_id": "ic10.script.generic.catalog.store",
@@ -1072,12 +1058,20 @@
             },
             {
               "start": 22,
+              "end": 23
+            },
+            {
+              "start": 27,
+              "end": 29
+            },
+            {
+              "start": 32,
               "end": 511
             }
           ],
           "post_init_dynamic_write_ranges": [
             {
-              "start": 24,
+              "start": 32,
               "end": 511
             }
           ]
@@ -3290,8 +3284,12 @@
         ],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 32,
+            "end": 39
+          },
+          {
+            "start": 128,
+            "end": 383
           }
         ],
         "line_count": 116,
@@ -3315,18 +3313,9 @@
           6,
           7
         ],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "conservative-full-stack",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
         "service_id": "ic10.script.dependency.plan.store",
@@ -4245,8 +4234,12 @@
         ],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 10,
+            "end": 13
+          },
+          {
+            "start": 32,
+            "end": 287
           }
         ],
         "line_count": 85,
@@ -4270,18 +4263,9 @@
           6,
           7
         ],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "conservative-full-stack",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
         "service_id": "ic10.script.console.registry",
@@ -5539,8 +5523,12 @@
         ],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 25,
+            "end": 30
+          },
+          {
+            "start": 32,
+            "end": 415
           }
         ],
         "line_count": 121,
@@ -5564,18 +5552,9 @@
           6,
           7
         ],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "conservative-full-stack",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
         "service_id": "ic10.script.generic.snapshot.directory.host",
@@ -5618,7 +5597,7 @@
           ],
           "post_init_dynamic_write_ranges": [
             {
-              "start": 27,
+              "start": 25,
               "end": 30
             },
             {
@@ -5727,8 +5706,28 @@
         ],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 8,
+            "end": 10
+          },
+          {
+            "start": 33,
+            "end": 35
+          },
+          {
+            "start": 49,
+            "end": 52
+          },
+          {
+            "start": 65,
+            "end": 67
+          },
+          {
+            "start": 81,
+            "end": 84
+          },
+          {
+            "start": 97,
+            "end": 100
           }
         ],
         "line_count": 120,
@@ -5743,18 +5742,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "source-fingerprinted-exception",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
         "service_id": "ic10.script.generic.job.command.gateway",
@@ -5777,7 +5767,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "8d9b3d469c36182b2c7b1373ec3bbdaa5fc110259b4537d3c657e893878acc99",
+          "source_sha256": "e95d386c114a95346460a3c4bd999e29e41754b9f02f776b9b56cba717dff515",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -11533,8 +11523,12 @@
         ],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 32,
+            "end": 95
+          },
+          {
+            "start": 128,
+            "end": 191
           }
         ],
         "line_count": 88,
@@ -11549,18 +11543,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "source-derived",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
         "service_id": "ic10.script.power.dispatch.plan.store",
@@ -12374,8 +12359,8 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 18,
+            "end": 209
           }
         ],
         "line_count": 101,
@@ -12392,18 +12377,9 @@
           7
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
         "service_id": "ic10.script.power.reservation.directory.adapter",
@@ -14406,8 +14382,8 @@
         ],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 16,
+            "end": 31
           }
         ],
         "line_count": 121,
@@ -14431,18 +14407,9 @@
           6,
           7
         ],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "conservative-full-stack",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
         "service_id": "ic10.script.pressure.grid.path.enumerator",
@@ -15861,8 +15828,8 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 18,
+            "end": 209
           }
         ],
         "line_count": 118,
@@ -15879,18 +15846,9 @@
           7
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
         "service_id": "ic10.script.printer.execution.directory.adapter",
@@ -19490,8 +19448,8 @@
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 8,
+            "end": 67
           }
         ],
         "line_count": 116,
@@ -19506,18 +19464,9 @@
           2
         ],
         "dynamic_read_cells": [],
-        "dynamic_write_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "conservative-full-stack"
+        "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
         "service_id": "ic10.script.resource.transform.profile.view",

@@ -41,10 +41,23 @@ a transfer nobody can follow stands the bounds down and leaves the program its
 first pass alone. Calls are not such a transfer: one walk follows them, which is
 what lets a subroutine's own guard be read against an access inside it -- and the
 guard is usually the whole bound, because a record loop is exactly the thing a
-program writes as a subroutine. The branch bounds read that walk projected onto
-indices, where merging a subroutine's call strings can only weaken them; the
-reaching writes read the states themselves, because there the merge would
-strengthen an answer instead.
+program writes as a subroutine. Every question here is asked of the call states
+themselves and never of their projection onto indices: projected, a return lands
+on every caller's fallthrough, so a guard one caller placed before its call
+looked bypassed by the path stitched through the other caller. Dominance is
+asked of indices over those states -- every path to the access passes *some*
+state at the guard -- which is what a guard needs, since either caller's copy of
+it tests the register.
+
+The set itself is held to a stricter standard than the flag beside it, because a
+declared range is rejected for omitting any cell in it: a value in the set has
+to be one the program can really compute, not one an approximation let in. Two
+readings would let one in. An equality test that sends a register elsewhere at
+one value rules that value out on the edge it guards, so `beqz r8 Back` before
+`sub r8 r8 1` never steps down from zero. And an advance inside a loop, read
+from outside the loop, is not one step past the seed but the seed plus however
+many passes ran, which nothing counts from out there -- so it witnesses nothing,
+rather than witnessing a cell the loop never leaves its address on.
 
 A seed is only as good as the arithmetic between it and the access, and that
 arithmetic is enumerated rather than approximated. A cell this module derives is
@@ -59,12 +72,9 @@ from a peer and guard it -- derive nothing at all.
 """
 from __future__ import annotations
 
-from framework.script_contracts.control_flow import (
-    CallState,
-    call_state_graph,
-    project_call_states,
-    writes_register,
-)
+from typing import Iterable
+
+from framework.script_contracts.control_flow import CallState, call_state_graph, writes_register
 from framework.script_contracts.parsing import parse_program, resolve_integer, resolve_port
 
 STACK_CELLS = 512
@@ -81,6 +91,10 @@ AGAINST_ZERO = {"bltz": "blt", "blez": "ble", "bgtz": "bgt", "bgez": "bge"}
 LAST_PASS_CONTINUING = {"ble": 0, "blt": -1}
 LAST_PASS_EXITING = {"bgt": 0, "bge": -1}
 UNBOUNDED: tuple[int | None, int | None] = (None, None)
+# `beq a b Label` holds `a == b` on its taken edge and `a != b` on the fallthrough;
+# `bne` the other way round. Either only ever takes values away from a set.
+EQUAL_WHEN_TAKEN = {"beq": True, "bne": False}
+EQUALITY_AGAINST_ZERO = {"beqz": "beq", "bnez": "bne"}
 # What one derivation knows about a token: the values it witnessed, and whether
 # those are all of them. A set nothing witnessed is None, and is never whole.
 Derived = tuple["set[int] | None", bool]
@@ -207,16 +221,22 @@ class ValueBounds:
         self.program = parse_program(source)
         self.integer_aliases = integer_aliases
         self.states, self.complete = call_state_graph(self.program)
-        self.dominators, _, self.successors = project_call_states(self.states)
         self.labels = {entry["label"]: index for index, entry in enumerate(self.program) if entry["label"]}
         self.regions = back_edges(self.program)
-        self._sites: dict[int, dict[str, set[int]]] = {}
-        self._carried: dict[int, dict[str, list[tuple[int, int]]]] = {}
+        self._by_index: dict[int, list[CallState]] = {}
+        for state in self.states:
+            self._by_index.setdefault(state[0], []).append(state)
+        self._state_predecessors: dict[CallState, set[CallState]] = {}
+        for state, outgoing in self.states.items():
+            for target in outgoing:
+                self._state_predecessors.setdefault(target, set()).add(state)
         self._forward: dict[tuple[int, int], set[int]] = {}
         self._backward: dict[tuple[int, int], set[int]] = {}
+        self.dominators = self.index_dominators()
+        self._sites: dict[int, dict[str, set[int]]] = {}
+        self._carried: dict[int, dict[str, list[tuple[int, int]]]] = {}
         self._pass_nodes: dict[int, set[int]] = {}
         self._span: dict[int, set[int]] = {}
-        self._state_predecessors: dict[CallState, set[CallState]] | None = None
         self._reaching: dict[tuple[str, frozenset[int]], dict[int, frozenset[int | None]]] = {}
 
     def sites(self, index: int) -> dict[str, set[int]]:
@@ -230,47 +250,86 @@ class ValueBounds:
             self._sites[index] = found
         return self._sites[index]
 
+    def walk(
+        self, origins: Iterable[CallState], blocked: int, edges: dict[CallState, set[CallState]],
+    ) -> set[int]:
+        """Indices of the states `edges` lead to from `origins`, never entering index `blocked`.
+
+        The walk is over states rather than their projection because a return
+        goes back to the site that made the call. Projected, `j ra` leads to
+        every caller's fallthrough, and a guard on one side of a shared
+        subroutine looked bypassed by the path stitched through the other side.
+        """
+        seen: set[CallState] = set()
+        pending = [state for state in origins if state[0] != blocked]
+        while pending:
+            state = pending.pop()
+            if state in seen:
+                continue
+            seen.add(state)
+            pending.extend(
+                target for target in edges.get(state, ()) if target[0] != blocked and target not in seen
+            )
+        return {index for index, _ in seen}
+
     def forward(self, start: int, blocked: int) -> set[int]:
-        """Nodes reachable from `start` without re-entering `blocked`."""
+        """Indices reachable from `start` without re-entering `blocked`."""
         key = (start, blocked)
         if key not in self._forward:
-            seen: set[int] = set()
-            pending = [start]
-            while pending:
-                node = pending.pop()
-                if node in seen or node == blocked:
-                    continue
-                seen.add(node)
-                pending.extend(self.successors.get(node, set()) - seen)
-            self._forward[key] = seen
+            self._forward[key] = self.walk(self._by_index.get(start, ()), blocked, self.states)
         return self._forward[key]
 
     def backward(self, target: int, blocked: int) -> set[int]:
-        """Nodes that can reach `target` without passing through `blocked`."""
+        """Indices that can reach `target` without passing through `blocked`."""
         key = (target, blocked)
         if key not in self._backward:
-            reverse: dict[int, set[int]] = {}
-            for source, targets in self.successors.items():
-                for node in targets:
-                    reverse.setdefault(node, set()).add(source)
-            seen: set[int] = set()
-            pending = [target]
-            while pending:
-                node = pending.pop()
-                if node in seen or node == blocked:
-                    continue
-                seen.add(node)
-                pending.extend(reverse.get(node, set()) - seen)
-            self._backward[key] = seen
+            self._backward[key] = self.walk(
+                self._by_index.get(target, ()), blocked, self._state_predecessors
+            )
         return self._backward[key]
 
+    def index_dominators(self) -> dict[int, set[int]]:
+        """Which indices every execution reaching an index has already passed through.
+
+        Dominance is asked of indices over the state graph: `d` dominates `a`
+        when no state at `a` can be reached from the entry without passing some
+        state at `d`. That is weaker than one state dominating another -- two
+        callers may each pass their own copy of a guard -- and exactly what a
+        guard needs, since either copy tests the register. Asking it of the
+        projection instead would join each caller's entry to every caller's
+        return, and a guard one caller placed before its call would look
+        bypassed by the path stitched through the other.
+        """
+        # One must-pass dataflow over the states, with the index sets as bit
+        # masks: what every path to a state has passed is that state's own
+        # index and whatever every predecessor's path had passed. Asking one
+        # walk per index instead costs the whole graph again for each of them.
+        entry: CallState = (0, None)
+        passed = {state: -1 for state in self.states}
+        if entry in passed:
+            passed[entry] = 1
+        changed = bool(passed)
+        while changed:
+            changed = False
+            for state in self.states:
+                if state == entry:
+                    continue
+                incoming = -1
+                for parent in self._state_predecessors.get(state, ()):
+                    incoming &= passed[parent]
+                updated = incoming | (1 << state[0])
+                if updated != passed[state]:
+                    passed[state] = updated
+                    changed = True
+        dominators: dict[int, set[int]] = {}
+        for index, states in self._by_index.items():
+            mask = -1
+            for state in states:
+                mask &= passed[state]
+            dominators[index] = {other for other in self._by_index if mask >> other & 1}
+        return dominators
+
     def state_predecessors(self) -> dict[CallState, set[CallState]]:
-        if self._state_predecessors is None:
-            reverse: dict[CallState, set[CallState]] = {}
-            for state, outgoing in self.states.items():
-                for target in outgoing:
-                    reverse.setdefault(target, set()).add(state)
-            self._state_predecessors = reverse
         return self._state_predecessors
 
     def pass_nodes(self, header: int) -> set[int]:
@@ -332,6 +391,53 @@ class ValueBounds:
         if row[0] in AGAINST_ZERO:
             return (operator, row[1], "0", target) if len(row) >= 3 else None
         return (operator, row[1], row[2], target) if len(row) >= 4 else None
+
+    def equality(self, index: int) -> tuple[str, int, int, bool] | None:
+        """`(register, compared value, branch target, equal when taken)` for an equality test."""
+        row = self.program[index]["row"]
+        if not row:
+            return None
+        operator = EQUALITY_AGAINST_ZERO.get(row[0], row[0])
+        target = self.labels.get(row[-1])
+        if operator not in EQUAL_WHEN_TAKEN or target is None:
+            return None
+        if row[0] in EQUALITY_AGAINST_ZERO:
+            operands = ((row[1], "0"),) if len(row) >= 3 else ()
+        else:
+            operands = ((row[1], row[2]), (row[2], row[1])) if len(row) >= 4 else ()
+        for register, against in operands:
+            value = resolve_integer(against, self.integer_aliases)
+            if value is not None and resolve_integer(register, self.integer_aliases) is None:
+                return register, value, target, EQUAL_WHEN_TAKEN[operator]
+        return None
+
+    def equality_constraints(self, access: int, register: str) -> tuple[set[int] | None, set[int]]:
+        """What the equality tests gating `access` pin `register` to, and what they rule out.
+
+        A test against a literal says one of two things on the edge every path
+        to the access takes: the register is that value, or it is not. Neither
+        adds a value, so the ordering bounds stay the ceiling; both take values
+        away that an enumeration would otherwise witness, and a witness is a
+        cell a declaration is held to. A counter that `beqz` sends elsewhere at
+        zero does not step down from zero on the path it guards.
+        """
+        pinned: set[int] | None = None
+        excluded: set[int] = set()
+        if not self.complete:
+            return pinned, excluded
+        for index in self.dominators.get(access, ()):
+            compared = self.equality(index)
+            if compared is None or compared[0] != register:
+                continue
+            _, value, target, equal_when_taken = compared
+            table, entered = self.gated_edge(access, index, target)
+            if table is None or self.rewritten(entered, index, access, register):
+                continue
+            if (table is TAKEN) == equal_when_taken:
+                pinned = {value} if pinned is None else pinned & {value}
+            else:
+                excluded.add(value)
+        return pinned, excluded
 
     def guard_interval(self, access: int, register: str, sites, depth: int, seen) -> tuple:
         """The interval every branch that gates `access` permits `register` to hold.
@@ -537,12 +643,23 @@ class ValueBounds:
         seen = seen | {(index, token)}
         values, whole = self.seed_values(index, token, sites, depth, seen)
         low, high, trusted = self.guard_interval(index, token, sites, depth, seen)
+        pinned, excluded = self.equality_constraints(index, token)
+        if pinned is not None and (values is None or not whole):
+            # An equality guard on the only edge that reaches here names the
+            # value outright, however little is known about what wrote the
+            # register. Seeds that were shown whole are the one thing that can
+            # answer back: the value they never hold is one the guard's edge
+            # never sees, and the access behind it is dead, not pinned.
+            values = {value for value in pinned - excluded
+                      if (low is None or value >= low) and (high is None or value <= high)}
+            return (values, trusted) if values else OPEN
         if values is None:
             if low is None or high is None or high - low >= STACK_CELLS:
                 return OPEN
             # Nothing named the value, so what the guards permit is both every
             # cell a peer can steer this to and every cell it can reach at all.
-            return set(range(low, high + 1)), trusted
+            values = set(range(low, high + 1)) - excluded
+            return (values, trusted) if values else OPEN
         carried = self.carried(index, token) if token in sites else None
         alone = carried is not None and len(self.carrying_regions(index, token)) == 1
         if token in sites:
@@ -580,6 +697,9 @@ class ValueBounds:
             values = {value for value in values if value >= low}
         if high is not None:
             values = {value for value in values if value <= high}
+        values -= excluded
+        if pinned is not None:
+            values &= pinned
         if not 0 < len(values) <= STACK_CELLS:
             return OPEN
         return values, whole and trusted
@@ -639,6 +759,9 @@ class ValueBounds:
         known: set[int] = set()
         closed = None not in reaching
         for back in sorted(node for node in reaching if node is not None):
+            if self.leaves_loop(back, index, token):
+                closed = False
+                continue
             values, whole = self.definition_values(back, token, sites, depth, seen)
             if values is None:
                 closed = False
@@ -646,6 +769,25 @@ class ValueBounds:
                 known |= values
                 closed = closed and whole
         return (known, closed) if known else OPEN
+
+    def leaves_loop(self, back: int, index: int, token: str) -> bool:
+        """Is `back` an advance of a loop whose passes `index` stands outside of?
+
+        Read from inside the pass, an advance is transparent and the caller
+        folds the trip count in. Read from outside -- after the loop has left, or
+        from an enclosing loop the inner one returns to -- the advance would be
+        evaluated as one step past the seed, which is the value after the
+        *first* pass and not what the loop leaves behind: a copy that always
+        runs seven passes never leaves its address one past the seed. That
+        reading would put a cell the program never writes in the witness set,
+        and a declaration is held to every cell in it, so from out here the
+        advance witnesses nothing.
+        """
+        return any(
+            index not in self.pass_nodes(header)
+            and any(place == back for place, _ in self.region_carried(header).get(token, ()))
+            for header in self.regions
+        )
 
     def definition_values(self, back: int, token: str, sites, depth: int, seen) -> Derived:
         """The values one write leaves in `token`."""
