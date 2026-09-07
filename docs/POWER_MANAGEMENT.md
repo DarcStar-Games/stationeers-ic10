@@ -201,7 +201,7 @@ Planning is read-only until the complete plan validates.
 - transformer overhead arithmetic;
 - no Reservation is simultaneously a source and sink.
 
-`ic10/power-grid/power_reservation_committer_v1_0.ic10` writes one common allocator epoch. When one source feeds multiple flows, its ReservedExport is the **sum** of all SourceW entries; a later flow never overwrites an earlier source reservation.
+`ic10/power-grid/power_reservation_committer_v1_0.ic10` writes one common allocator epoch. When one source feeds multiple flows, its ReservedExport is the **sum** of all SourceW entries; a later flow never overwrites an earlier source reservation. A sink fed by several sources likewise carries ReservedImport as the **sum** of their SinkW entries. Both sums walk the plan's records from each record's base, testing the source reference against SourceW and the sink reference against SinkW; the validator forbids one Reservation being both, so at most one test matches per record.
 
 `ic10/power-grid/power_reservation_allocator_v1_0.ic10` performs:
 

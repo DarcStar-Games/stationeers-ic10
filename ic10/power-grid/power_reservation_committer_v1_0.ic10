@@ -31,11 +31,7 @@ add r0 r5 1
 get r7 d0 r0
 add r0 r0 1
 get r8 d0 r0
-add r0 r0 1
-get r9 d0 r0
-add r0 r0 1
-get r10 d0 r0
-add r0 r0 1
+add r0 r0 3
 get r11 d0 r0
 add r0 r0 1
 get r13 d0 r0
@@ -57,18 +53,19 @@ move r1 0
 Sum:
 bge r1 r6 Write
 mul r0 r1 8
-add r0 r0 33
-get r5 d0 r0
+add r0 r0 32
+add r9 r0 1
+get r5 d0 r9
 bne r5 r7 SumSink
-add r0 r0 3
-get r5 d0 r0
+add r9 r0 4
+get r5 d0 r9
 add sp sp r5
 SumSink:
-add r0 r0 1
-get r5 d0 r0
+add r9 r0 2
+get r5 d0 r9
 bne r5 r8 SumNext
-sub r0 r0 2
-get r5 d0 r0
+add r9 r0 3
+get r5 d0 r9
 add ra ra r5
 SumNext:
 add r1 r1 1

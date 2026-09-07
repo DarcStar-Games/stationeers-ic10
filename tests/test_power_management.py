@@ -213,6 +213,23 @@ committer='ic10/power-grid/power_reservation_committer_v1_0.ic10'
 ck(committed(without_guard(committer,'blt r6 0 Bad','bgt r6 8 Bad'))==(1,130),
    'witness: the unguarded committer did not reserve export for thirteen records')
 ck(committed((R/committer).read_text())==(-1,None),'committer reserved export from a window that holds eight records')
+# A sink's ReservedImport is the sum of SinkW over every committed flow into it, read from
+# each record's own base; the sum once compared the source generation against the sink
+# reference and, for a foreign source, added the Link reference as watts (#150).
+def imported(source,flows):
+ res={ref:Device(ref,stack={12:gen,17:0},props={'ReferenceId':ref}) for ref,gen in ((3602,5),(3603,6),(3604,7))}
+ stack={0:'HASH:PowerDispatchPlanStore.v1',27:2,28:5,29:len(flows)}
+ for n,(link,src,sink,sinkw,sourcew) in enumerate(flows):
+  for i,v in enumerate([link,src,sink,sinkw,sourcew,res[src].stack[12],res[sink].stack[12],9]):stack[32+8*n+i]=v
+ pl=Device(3600,stack=stack,props={'ReferenceId':3600})
+ screws={'d0':pl,'d1':Device(3601,props={'ReferenceId':3601})}|{f'x{i}':d for i,d in enumerate(res.values())}
+ vm=IC10(source,screws,self_ref=2393)
+ vm.run(1);vm.stack.update({8:5,9:11,10:1});vm.run(2)
+ return vm.stack.get(12),res[3602].stack.get(14),res[3604].stack.get(14),res[3603].stack.get(15)
+ck(imported((R/committer).read_text(),[(3304,3602,3603,80,85)])==(1,85,None,80),
+   'committer did not reserve the single flow\'s SinkW as the sink\'s import')
+ck(imported((R/committer).read_text(),[(3304,3602,3603,80,85),(3305,3604,3603,20,25)])==(1,85,25,100),
+   'committer did not reserve the summed SinkW of two sources feeding one sink')
 def source_quote(source):
  plan=Device(1303,stack={0:'HASH:PowerDispatchPlanStore.v1',24:9,193:1201,196:40},props={'ReferenceId':1303})
  vm=IC10(source,{'d0':pdir,'d1':plan,'x0':src,'x1':sink},self_ref=232)
@@ -234,3 +251,4 @@ print(' - POWER Job Gateway lane-D generation contract')
 print(' - live policy target resolver binds unique Reservations and rejects ambiguity')
 print(' - live policy verify settles consumer/battery modes through the bound pair')
 print(' - every Plan Store reader bounds the published flow count at eight before walking the window')
+print(' - live committer reserves a sink\'s import as the sum of SinkW over the flows into it')
