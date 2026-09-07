@@ -68,11 +68,12 @@ Each generated per-script contract document is validated by
   disjoint singletons a non-unit address stride reaches. A reviewed bound stands
   where the derivation was left open anywhere, and also where a reviewer named a
   window wider than the derivation on purpose; either way it is a
-  source-fingerprinted exception that has to contain every proven cell. Every
-  remaining unresolved read fails closed to `S0..S511`; an unresolved own-stack
-  write fails validation instead, because a whole-stack write range would
-  publish every cell to every peer and withhold every header constant, so it is
-  proved or reviewed before the program builds. Exact proven subsets
+  source-fingerprinted exception that has to contain every proven cell. An
+  unresolved access falls back to `S0..S511` and fails validation, because a
+  whole-stack write range would publish every cell to every peer and withhold
+  every header constant, and a whole-stack read range would accept a write to
+  every cell from every peer, so either is proved or reviewed before the program
+  builds. Exact proven subsets
   are retained even when another access forces the aggregate range to fall back,
   so analysis never loses known occupancy;
 - source-comment-backed field names, descriptions, semantic value types,
@@ -135,8 +136,9 @@ accept a version range. Header base is tracked separately either way, so the
 - an own-stack proven subset falls outside its effective range, a claimed
   source-derived range exceeds its proof, or a conservative fallback is not
   exactly `S0..S511`;
-- an own-stack computed write falls back to the whole stack, with no reviewed
-  `dynamic_write_ranges` window standing in for the proof;
+- an own-stack computed read or write falls back to the whole stack, with no
+  reviewed `dynamic_read_ranges` or `dynamic_write_ranges` window standing in for
+  the proof;
 - stack ranges overlap within one access class;
 - a required publication rule is absent from every compatible provider;
 - a commit-last consumer neither checks nor double-reads its publication cell;
@@ -182,8 +184,10 @@ arriving from a reflash rather than a write, no loop nothing counts out, no
 limit read off a bound that was never shown whole. An address that fails any of
 those is an explicit `conservative-full-stack` fallback unless a
 source-fingerprinted override supplies a reviewed range -- and for an own-stack
-write the fallback is itself a validation failure, so the override is the only
-way such a write builds. A `clr db` the graph can
+access in either direction the fallback is itself a validation failure, so the
+override is the only way such an access builds: a write that fell back would
+publish every cell, and a read that fell back would accept every cell a peer
+could write. A `clr db` the graph can
 still reach from a yield is a source-derived full-stack write rather than an
 unresolved fallback; one on the boot path is not in the range at all, because it
 writes every cell before the first yield makes any of them readable, and

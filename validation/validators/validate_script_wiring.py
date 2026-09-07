@@ -63,10 +63,10 @@ print(f" - every one of the {len(script_edges)} script edges touches only cells 
 # how many edges the comparison can actually constrain. Providers are any-of, so
 # one peer offering the whole stack in every direction the port uses absorbs the
 # edge however narrow the others are. Neither a boot `clr db` nor an unproven
-# computed write puts a provider there any more -- the first is not a published
-# write, the second is a contract validation failure until a window is reviewed --
-# so what is left is a reviewed `external_readable_ranges` naming the whole
-# stack, or a computed *read* the bounds analysis could not follow.
+# computed access puts a provider there any more -- the first is not a published
+# write, and a computed read or write the bounds cannot follow is a contract
+# validation failure until a window is reviewed -- so what is left is a reviewed
+# `external_readable_ranges` naming the whole stack.
 constrained = 0
 for source, entries in wiring["ports"].items():
     for name, peer in entries.items():
@@ -82,7 +82,6 @@ for source, entries in wiring["ports"].items():
             for item in offered
         )
 print(f" - {constrained} of them can actually fail; on the rest a declared provider offers"
-      " every cell the port could ask for, by a reviewed whole-stack readable range or an"
-      " unproven computed read")
+      " every cell the port could ask for, by a reviewed whole-stack readable range")
 print(f" - {guarded} edges into migrated programs touch no S2..S7 header cell;"
       f" {reviewed} reviewed header reads are declared in the map")

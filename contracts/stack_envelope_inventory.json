@@ -189,7 +189,11 @@
         "highest_literal_cell": 17,
         "dynamic_read_ranges": [
           {
-            "start": 0,
+            "start": 18,
+            "end": 401
+          },
+          {
+            "start": 448,
             "end": 511
           }
         ],
@@ -216,18 +220,9 @@
           3,
           7
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_read_cells": [],
         "dynamic_write_cells": [],
-        "dynamic_read_provenance": "conservative-full-stack",
+        "dynamic_read_provenance": "source-fingerprinted-exception",
         "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
@@ -3278,8 +3273,12 @@
         "highest_literal_cell": 40,
         "dynamic_read_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 14,
+            "end": 20
+          },
+          {
+            "start": 128,
+            "end": 383
           }
         ],
         "dynamic_write_ranges": [
@@ -3303,18 +3302,9 @@
           1,
           2
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_read_cells": [],
         "dynamic_write_cells": [],
-        "dynamic_read_provenance": "conservative-full-stack",
+        "dynamic_read_provenance": "source-fingerprinted-exception",
         "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
@@ -3596,8 +3586,8 @@
         "highest_literal_cell": 65,
         "dynamic_read_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 32,
+            "end": 65
           }
         ],
         "dynamic_write_ranges": [],
@@ -3612,18 +3602,9 @@
           1,
           2
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_read_cells": [],
         "dynamic_write_cells": [],
-        "dynamic_read_provenance": "conservative-full-stack",
+        "dynamic_read_provenance": "source-fingerprinted-exception",
         "dynamic_write_provenance": "none"
       },
       "envelope": {
@@ -4228,8 +4209,12 @@
         "highest_literal_cell": 9,
         "dynamic_read_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 10,
+            "end": 11
+          },
+          {
+            "start": 32,
+            "end": 287
           }
         ],
         "dynamic_write_ranges": [
@@ -4253,18 +4238,9 @@
           1,
           2
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_read_cells": [],
         "dynamic_write_cells": [],
-        "dynamic_read_provenance": "conservative-full-stack",
+        "dynamic_read_provenance": "source-fingerprinted-exception",
         "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
@@ -4434,8 +4410,8 @@
         "highest_literal_cell": 10,
         "dynamic_read_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 16,
+            "end": 39
           }
         ],
         "dynamic_write_ranges": [],
@@ -4450,18 +4426,9 @@
           1,
           2
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_read_cells": [],
         "dynamic_write_cells": [],
-        "dynamic_read_provenance": "conservative-full-stack",
+        "dynamic_read_provenance": "source-fingerprinted-exception",
         "dynamic_write_provenance": "none"
       },
       "envelope": {
@@ -4723,8 +4690,8 @@
         "highest_literal_cell": 9,
         "dynamic_read_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 64,
+            "end": 383
           }
         ],
         "dynamic_write_ranges": [],
@@ -4739,18 +4706,9 @@
           1,
           2
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_read_cells": [],
         "dynamic_write_cells": [],
-        "dynamic_read_provenance": "conservative-full-stack",
+        "dynamic_read_provenance": "source-fingerprinted-exception",
         "dynamic_write_provenance": "none"
       },
       "envelope": {
@@ -5517,8 +5475,12 @@
         "highest_literal_cell": 31,
         "dynamic_read_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 17,
+            "end": 19
+          },
+          {
+            "start": 32,
+            "end": 415
           }
         ],
         "dynamic_write_ranges": [
@@ -5542,18 +5504,9 @@
           1,
           2
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_read_cells": [],
         "dynamic_write_cells": [],
-        "dynamic_read_provenance": "conservative-full-stack",
+        "dynamic_read_provenance": "source-fingerprinted-exception",
         "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
@@ -6106,7 +6059,7 @@
         "highest_literal_cell": 26,
         "dynamic_read_ranges": [
           {
-            "start": 0,
+            "start": 288,
             "end": 511
           }
         ],
@@ -6127,18 +6080,9 @@
           1,
           2
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_read_cells": [],
         "dynamic_write_cells": [],
-        "dynamic_read_provenance": "conservative-full-stack",
+        "dynamic_read_provenance": "source-fingerprinted-exception",
         "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {
@@ -11044,8 +10988,8 @@
         "highest_literal_cell": 14,
         "dynamic_read_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 32,
+            "end": 40
           }
         ],
         "dynamic_write_ranges": [
@@ -11065,18 +11009,9 @@
           1,
           2
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_read_cells": [],
         "dynamic_write_cells": [],
-        "dynamic_read_provenance": "conservative-full-stack",
+        "dynamic_read_provenance": "source-fingerprinted-exception",
         "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
@@ -14376,8 +14311,8 @@
         "highest_literal_cell": 37,
         "dynamic_read_ranges": [
           {
-            "start": 0,
-            "end": 511
+            "start": 16,
+            "end": 31
           }
         ],
         "dynamic_write_ranges": [
@@ -14397,18 +14332,9 @@
           1,
           2
         ],
-        "dynamic_read_cells": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "dynamic_read_cells": [],
         "dynamic_write_cells": [],
-        "dynamic_read_provenance": "conservative-full-stack",
+        "dynamic_read_provenance": "source-fingerprinted-exception",
         "dynamic_write_provenance": "source-fingerprinted-exception"
       },
       "envelope": {

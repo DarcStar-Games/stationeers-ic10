@@ -311,7 +311,22 @@ ck(own_inventory["dynamic_script_count"] == sum(
 ck(own_inventory["unresolved_fallback_count"] == sum(
        document["own_stack"][f"dynamic_{direction}_range_source"] == "conservative-full-stack"
        for document in documents for direction in ("read", "write")
-   ) > 0, "own-stack range inventory does not explicitly report unresolved fallbacks")
+   ), "own-stack range inventory does not explicitly report unresolved fallbacks")
+# No deployable program falls back to the whole stack in either direction: a
+# computed write that escaped the branch bounds would publish every cell (#108),
+# a computed read would accept every cell (#138), and each carries a reviewed
+# window instead. The validator refuses either fallback, so the count stays zero.
+ck(own_inventory["unresolved_fallback_count"] == 0,
+   "a deployable program's own-stack range fell back to the whole stack")
+# The window is held from below by the proof, and it is a claim about the whole
+# program: the accepted surface a peer may write into is bounded for every one.
+ck(all(len(set(document["own_stack"]["literal_reads"])
+           | {cell for item in document["own_stack"]["dynamic_read_ranges"]
+              for cell in range(item["start"], item["end"] + 1)}
+           | {cell for item in document["own_stack"]["external_writable_ranges"]
+              for cell in range(item["start"], item["end"] + 1)}) < 512
+       for document in documents),
+   "a deployable program accepts every one of its 512 cells")
 proven_own_reads = {
     item["source"]: item["read"]["proven_ranges"]
     for item in own_inventory["scripts"] if item["read"]["proven_ranges"]
@@ -1261,6 +1276,41 @@ exception, _ = analyze_own_stack(
 ck(exception["dynamic_write_range_source"] == "source-fingerprinted-exception" and
    exception["dynamic_write_ranges"] == [{"start": 96, "end": 111}],
    "reviewed own-stack range exception was not distinguished from source proof and fallback")
+# The read side takes the same window with the same floor: an unbounded read
+# falls back to the whole stack, a reviewed window stands in for the proof, and
+# a window that omits a cell the branches witness is refused.
+read_exception_source = "move ra 96\nLoop:\nget r1 db ra\nadd ra ra 1\nj Loop\n"
+read_exception_rows = parse_rows(read_exception_source)
+_, read_exception_aliases = collect_aliases(read_exception_rows)
+read_fallback, _ = analyze_own_stack(read_exception_source, read_exception_rows, read_exception_aliases, [], {})
+ck(read_fallback["dynamic_read_ranges"] == [{"start": 0, "end": 511}] and
+   read_fallback["dynamic_read_range_source"] == "conservative-full-stack",
+   "an unbounded own-stack read did not fail closed")
+read_exception, _ = analyze_own_stack(
+    read_exception_source, read_exception_rows, read_exception_aliases, [],
+    {"dynamic_read_ranges": [[96, 111]]},
+)
+ck(read_exception["dynamic_read_range_source"] == "source-fingerprinted-exception" and
+   read_exception["dynamic_read_ranges"] == [{"start": 96, "end": 111}],
+   "reviewed own-stack read window was not distinguished from source proof and fallback")
+partially_read_source = "move r2 40\nget r3 db r2\n" + read_exception_source
+partially_read_rows = parse_rows(partially_read_source)
+_, partially_read_aliases = collect_aliases(partially_read_rows)
+try:
+    analyze_own_stack(
+        partially_read_source, partially_read_rows, partially_read_aliases, [],
+        {"dynamic_read_ranges": [[96, 111]]},
+    )
+    fails.append("own-stack read window omitted a cell from its source-proven subset")
+except ValueError:
+    pass
+partially_read, _ = analyze_own_stack(
+    partially_read_source, partially_read_rows, partially_read_aliases, [],
+    {"dynamic_read_ranges": [[40, 40], [96, 111]]},
+)
+ck(partially_read["dynamic_read_range_source"] == "source-fingerprinted-exception" and
+   partially_read["dynamic_read_proven_ranges"] == [{"start": 40, "end": 40}],
+   "a read window containing its proven subset was not accepted with the proof beside it")
 try:
     analyze_own_stack(
         bounded_own_source, bounded_own_rows, bounded_own_aliases, [],

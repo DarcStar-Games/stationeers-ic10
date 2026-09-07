@@ -129,6 +129,19 @@ Store declares its heap that way — which leaves 228 of 234 edges able to fail.
 The first edge the narrowing exposed was a real one: the Manufacturing Scheduler
 waits on Gateway `S8`, and Gateway ABI5 had moved lane A's reply one cell high.
 
+The accepted surface had the mirror-image gap. A provider's own computed *reads*
+are the cells a peer may write into it, so a program whose read range fell back
+to the whole stack accepted every cell, and every port writing into it — ten of
+them, mostly request mailboxes — passed whatever it posted. Each of those ten
+programs now carries a reviewed `dynamic_read_ranges` window beside the write
+window, held from below by the same proof, and the validator refuses the read
+fallback exactly as it refuses the write one. A read window is a claim about what
+the owner reads: for a record scan it is the record block, and for a request
+mailbox it is the request cells the owner names in its own
+`external_writable_ranges`, so the two declarations describe one layout. No
+deployable program accepts all 512 cells, and every one of the 117 writing ports
+can fail.
+
 The reviewed envelope stays the escape hatch, for the one thing derivation
 cannot see: a mailbox that one peer posts and a *different* peer consumes, which
 the host itself never touches. `catalog_coordinator_core_v3_0` hosts exactly that
