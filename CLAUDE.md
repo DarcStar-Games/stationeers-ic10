@@ -20,7 +20,7 @@ Two things follow from that, and they drive almost every convention in the repo:
 Run everything from the repository root (Python 3.10+; `python3` locally).
 
 ```bash
-python3 tools/run_validation.py                   # full suite: 31 validators + 47 protocol/execution tests
+python3 tools/run_validation.py                   # full suite: 31 validators + 48 protocol/execution tests
 python3 tools/run_validation.py --resume          # reuse prior PASSes, only if the input-tree fingerprint matches
 python3 tests/test_job_abi.py                     # run one test  (plain script, exit code = pass/fail)
 python3 validation/validators/validate_ic10.py    # run one validator
@@ -169,6 +169,10 @@ revisions establish *durability*, reservation epochs/ownership tokens authorize 
 - registers `r0..r15` only (plus `sp`/`ra`), device pins `d0..d5` only, literal stack addresses `0..511`
 - named labels only — **no relative `br*` branches**; no duplicate labels; every `j`/`jal`/`b*` target must resolve
 - no `db` as a direct operand to `add/sub/mul/div/min/max/pow/and/or/sll`
+- **no register written but never read** — a load or result that no instruction in the file consumes
+  is a wasted line (issue #160). Operand roles come from the instruction-set signatures
+  (`framework/ic10_registers.py`); an alias counts as its register and one `rrN` read makes every
+  register live. A hit kept on purpose needs a `DEAD_WRITE_EXEMPTIONS` entry with its reason
 
 `validation/validators/validate_ic10_opcodes.py` separately checks every mnemonic and operand count
 against `data/ic10_instruction_set.json`, which is extracted from game data rather than wiki prose. Treat
@@ -176,7 +180,7 @@ that file as authoritative for whether an instruction exists; the community wiki
 Minimum compatible game build is 2026-07-02 (`clamp`); the target is 0.2.6428.27798 (2026-08-13),
 not the 2026-08-12 build it patches — see `docs/SOURCES.md` for why that matters to Item 12.
 
-37 of 174 programs sit at ≥117 lines and 16 hold a reviewed `SOFT_LIMIT_EXEMPTIONS` entry in
+45 of 184 programs sit at ≥117 lines and 16 hold a reviewed `SOFT_LIMIT_EXEMPTIONS` entry in
 `validation/validators/validate_ic10.py`; an exemption whose program drops back under 120 fails
 validation, so the list cannot go stale. Do **not** merge adjacent services just to reduce IC count:
 the split boundaries exist to keep transactional ownership explicit and stay under the ceiling. See

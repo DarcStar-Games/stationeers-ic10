@@ -78,6 +78,7 @@ SUITE_ENTRIES = (
     SuiteEntry("tests/test_generic_directory.py", TEST_CATEGORY, "TEST_GENERIC_DIRECTORY"),
     SuiteEntry("tests/test_ic10_execution.py", TEST_CATEGORY, "TEST_IC10_EXECUTION"),
     SuiteEntry("tests/test_ic10_opcode_handlers.py", TEST_CATEGORY, "TEST_IC10_OPCODE_HANDLERS"),
+    SuiteEntry("tests/test_ic10_register_liveness.py", TEST_CATEGORY, "TEST_IC10_REGISTER_LIVENESS"),
     SuiteEntry("tests/test_input_profiles.py", TEST_CATEGORY, "TEST_INPUT_PROFILES"),
     SuiteEntry("tests/test_job_abi.py", TEST_CATEGORY, "TEST_JOB_ABI"),
     SuiteEntry("tests/test_manufacturing_execution.py", TEST_CATEGORY, "TEST_MANUFACTURING_EXECUTION"),

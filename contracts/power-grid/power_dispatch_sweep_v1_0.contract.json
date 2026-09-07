@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_dispatch_sweep_v1_0.ic10",
-  "source_sha256": "812d40bfc6d2f4a4f08c9c0d440e56ef9050fef05350305fdf7f98d6a11a56f5",
+  "source_sha256": "fc3816f3de2f1708e81a50879f6176ae7f69ee3d299249b7b2ebfcc66e70a87d",
   "identity": {
     "service_id": "ic10.script.power.dispatch.sweep",
     "implementation_revision": "1.0",
@@ -79,7 +79,6 @@
         "literal_writes": [
           11,
           12,
-          13,
           14,
           15
         ],
@@ -94,8 +93,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.a1319f89e5941eeb",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.a1319f89e5941eeb",
+        "interface_id": "ic10.interface.access.05694f915de9bd6e",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.05694f915de9bd6e",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],

@@ -14,7 +14,6 @@ get r0 db 16
 beq r15 r0 Loop
 get r2 db 11
 get r3 db 12
-get r4 db 13
 get r5 db 14
 blez r2 Bad
 blez r3 Bad

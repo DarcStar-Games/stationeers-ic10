@@ -1303,7 +1303,7 @@
     "providers": [
      "ic10/power-grid/power_sink_flow_builder_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_dispatch_sweep_v1_0.ic10: '# Sweep priority-ordered POWER sinks. d0 SinkSelector,d1 FlowBuilder,d2 PlanStore.' [Flow builder request surface: S2-S5 params, S6 incoming token, S7 ack, S8 status - matches sweep's d1 access [writes 2..6; reads 7,8].]"
+    "note": "ic10/power-grid/power_dispatch_sweep_v1_0.ic10: '# Sweep priority-ordered POWER sinks. d0 SinkSelector,d1 FlowBuilder,d2 PlanStore.' [Flow builder request surface: S11 sink Reservation, S12 watts, S14 partial-allowed flag, S15 incoming token; S16 ack, S8 status - matches sweep's d1 access [writes 11,12,14,15; reads 8,16]. S13 is a reserved hole: the builder never read the sink's priority key the sweep used to mirror there (issue #160).]"
    },
    "d2": {
     "kind": "script",

@@ -10,7 +10,6 @@ poke 54 7 # export + import + storage
 poke 12 2 # Unit ITEM_QUANTITY
 poke 13 3 # exact export + exact import
 poke 11 0
-move r15 0
 Start:
 yield
 bdns d0 Bad
@@ -97,7 +96,6 @@ poke 40 r13
 get r0 db 11
 add r0 r0 1
 poke 11 r0
-move r15 r14
 j Start
 Bad:
 poke 55 0
@@ -107,5 +105,4 @@ poke 8 -1
 get r0 db 11
 add r0 r0 1
 poke 11 r0
-move r15 0
 j Start

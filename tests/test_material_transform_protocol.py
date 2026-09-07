@@ -185,6 +185,35 @@ for _ in range(40):
 if rt_vm.stack.get(21)!=3 or rt_vm.stack.get(20)!=1 or proc.props.get('Activate')!=0:
     fails.append('generic transform runtime failed 3-input transaction/output confirmation')
 
+# Completion is growth against the output Reservation snapshot the runtime takes at
+# activation (S11 quantity, S12 generation). Before issue #160 the two reads at activation
+# landed in registers nothing consumed and S11/S12 were never written, so the check
+# compared the Reservation's absolute quantity against one job's output: a Reservation
+# already holding 50 units "completed" on its next generation without producing anything.
+snap_out=Device(961,stack={0:'HASH:ResourceReservation.v1',1:1,12:7,36:50},props={'ReferenceId':961})
+snap_proc=Device(962,props={'ReferenceId':962,'Error':0,'Activate':0})
+snap_adm=Device(963,stack={8:1,17:1,19:5},props={'ReferenceId':963})
+snap_res=Device(964,stack={11:5,12:1},props={'ReferenceId':964})
+snap_alloc=Device(965,stack={16:3,22:2},props={'ReferenceId':965})
+snap_vm=IC10(x,{'d0':snap_proc,'d1':snap_adm,'d2':snap_res,'d3':snap_alloc,'d4':snap_out},self_ref=966)
+snap_vm.run(1)
+snap_vm.stack.update({8:2,9:5,10:5,16:3,19:2,21:3})
+snap_vm.run(1)
+if snap_proc.props.get('Activate')!=1 or snap_vm.stack.get(19)!=3 or (snap_vm.stack.get(11),snap_vm.stack.get(12))!=(50,7):
+    fails.append('runtime did not snapshot the output Reservation quantity/generation at activation')
+snap_out.stack[12]=8
+snap_vm.run(2)
+if snap_vm.stack.get(19)!=3 or snap_proc.props.get('Activate')!=1:
+    fails.append('runtime completed on a new output generation with no growth past the snapshot')
+snap_out.stack[36]=51
+snap_vm.run(1)
+if snap_vm.stack.get(19)!=3:
+    fails.append('runtime completed on output growth short of the declared quantity')
+snap_out.stack[36]=52
+snap_vm.run(1)
+if snap_vm.stack.get(19)!=0 or snap_vm.stack.get(20)!=1 or snap_proc.props.get('Activate')!=0:
+    fails.append('runtime did not complete once output grew by the declared quantity past the snapshot')
+
 if fails:
     print('Generic Material Transform protocol: FAIL')
     for f in fails: print(' -',f)

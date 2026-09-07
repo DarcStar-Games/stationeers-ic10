@@ -69,8 +69,10 @@ bne r0 r15 Fault
 get r0 d3 22
 bltz r0 Fault
 bne r0 2 Publish
-get r11 d4 36
-get r12 d4 12
+get r0 d4 36
+poke 11 r0
+get r0 d4 12
+poke 12 r0
 s d0 Activate 1
 poke 13 0
 poke 19 3
@@ -105,8 +107,6 @@ mul r1 r1 r2
 blt r0 r1 Publish
 s d0 Activate 0
 poke 19 0
-poke 20 1
-j Publish
 Idle:
 poke 20 1
 j Publish

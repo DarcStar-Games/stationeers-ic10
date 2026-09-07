@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-grid/power_sink_flow_builder_v1_0.ic10",
-  "source_sha256": "d6a34a127cf497cc08b2a693bca1381b0b8137de593c7394043c741680085fd6",
+  "source_sha256": "4e28968fb976cf3ea61f86dbfa08e866848b13a53e322076ce01ac77646f613d",
   "identity": {
     "service_id": "ic10.script.power.sink.flow.builder",
     "implementation_revision": "1.0",
@@ -178,7 +178,6 @@
       8,
       11,
       12,
-      13,
       14,
       15,
       16,
@@ -276,15 +275,6 @@
       {
         "address": 12,
         "name": "S12",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 13,
-        "name": "S13",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
