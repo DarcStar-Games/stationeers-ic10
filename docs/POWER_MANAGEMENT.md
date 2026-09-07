@@ -186,6 +186,8 @@ PlanStore COMMIT
 
 `ic10/power-grid/power_dispatch_plan_store_v1_0.ic10` uses an odd/even publication sequence. Readers consume only an even stable sequence and exact PlanGeneration. On boot, an odd sequence means COMMIT was interrupted; the Store invalidates PlanGeneration/flow-count/status headers and advances the sequence to even before accepting another request. It does not expose the torn payload as the prior plan.
 
+The Store holds at most eight flows, and its published flow count is a peer value that every reader bounds again before walking the window: the Validator, the Committer, both executors, and the Source Selector's walk over the staged flows each reject a count outside `0..8` where they first read it. A count past eight would otherwise carry a reader past `S95`, through unowned cells and into the staging area at `S128`, where the next plan's first flow sits uncommitted. The Validator and the Committer answer `-1`, the executors go safe-off, and the Source Selector answers `-1` (#95).
+
 ## 6. Reservation commit and execution authority
 
 Planning is read-only until the complete plan validates.

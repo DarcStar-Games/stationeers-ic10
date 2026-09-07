@@ -49,6 +49,8 @@ blez r0 Find
 getd r11 r10 36
 blez r11 Find
 get r12 d1 24
+blt r12 0 Bad
+bgt r12 8 Bad
 move r13 0
 move r1 0
 Used:

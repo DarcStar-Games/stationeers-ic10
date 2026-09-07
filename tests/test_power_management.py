@@ -157,6 +157,71 @@ pvv2.stack.update({9:2511,10:5,11:3,12:1});pvv2.run(2)
 ck(pvv2.stack.get(8)==0 and pvv2.stack.get(13)==1,'policy verify settled a battery with outstanding export')
 vres.stack[0]=1;pvv.stack[12]=2;pvv.run(1)
 ck(pvv.stack.get(8)==-1 and pvv.stack.get(13)==2,'policy verify accepted a non-Reservation target')
+
+# The Plan Store's flow count is a peer-published value. Every reader bounds it at the
+# Store's eight-flow capacity before walking the window, because a count of 13 would
+# carry the walk past S95 into the staging area at S128, where the next plan's first
+# flow sits uncommitted. Each scenario runs the production program and the same
+# program with its guard removed, so the guard is shown to be what stops the walk.
+def without_guard(path,*lines):
+ text=(R/path).read_text()
+ for line in lines:
+  ck(line+'\n' in text,f'{path} lost its count guard `{line}`');text=text.replace(line+'\n','')
+ return text
+def torn_plan(staged):
+ stack={0:'HASH:PowerDispatchPlanStore.v1',27:2,28:5,29:13}
+ stack.update({128+i:v for i,v in enumerate(staged)})
+ return stack
+def transformer_after(source):
+ alloc=Device(3300,stack={8:5,9:10,10:1},props={'ReferenceId':3300})
+ # The transformer starts energized so the guarded program's safe-off is a write that
+ # is observed, not an initial state that a program never reaching Write would leave.
+ xf=Device(3301,props={'ReferenceId':3301,'Setting':55,'On':1})
+ sr=Device(3302,stack={17:3300,18:10,19:5},props={'ReferenceId':3302})
+ kr=Device(3303,stack={17:3300,18:10,19:6},props={'ReferenceId':3303})
+ link=Device(3304,stack={0:'HASH:ResourceLink.v1',30:4,32:2,10:3301,12:9},props={'ReferenceId':3304})
+ pl=Device(3305,stack=torn_plan([3304,3302,3303,80,85,5,6,9]),props={'ReferenceId':3305})
+ vm=IC10(source,{'d0':pl,'d1':alloc,'x0':link,'x1':sr,'x2':kr,'x3':xf},self_ref=2390);vm.run(2)
+ return xf.props.get('Setting'),xf.props.get('On')
+link_executor='ic10/power-grid/power_link_executor_v1_0.ic10'
+ck(transformer_after(without_guard(link_executor,'blt r10 0 Set','bgt r10 8 Set'))==(80,1),
+   'witness: the unguarded transformer executor did not actuate the staged flow')
+ck(transformer_after((R/link_executor).read_text())==(0,0),'transformer executor actuated a flow past the eight-record plan window')
+def load_after(source):
+ alloc=Device(3400,stack={8:5,9:10,10:1},props={'ReferenceId':3400})
+ load=Device(3401,props={'ReferenceId':3401,'On':1})
+ endpoint=Device(3402,stack={9:3401},props={'ReferenceId':3402})
+ res=Device(3403,stack={0:'HASH:ResourceReservation.v1',32:3402,33:4,17:3400,18:10,19:6,28:2,31:8},props={'ReferenceId':3403})
+ pl=Device(3404,stack=torn_plan([0,0,3403,0,0,0,6,0]),props={'ReferenceId':3404})
+ vm=IC10(source,{'d0':pl,'d1':alloc,'x0':res,'x1':endpoint,'x2':load},self_ref=2391);vm.run(2)
+ return load.props.get('On')
+load_executor='ic10/power-grid/power_load_executor_v1_0.ic10'
+ck(load_after(without_guard(load_executor,'blt r10 0 Set','bgt r10 8 Set'))==1,
+   'witness: the unguarded load executor did not energize the staged flow')
+ck(load_after((R/load_executor).read_text())==0,'load executor energized a flow past the eight-record plan window')
+def committed(source):
+ src_res=Device(3502,stack={12:5,17:0},props={'ReferenceId':3502})
+ sink_res=Device(3503,stack={12:6,17:0},props={'ReferenceId':3503})
+ stack={0:'HASH:PowerDispatchPlanStore.v1',27:2,28:5,29:13}
+ for n in range(13):
+  for i,v in enumerate([3304,3502,3503,10,10,5,6,9]):stack[32+8*n+i]=v
+ pl=Device(3500,stack=stack,props={'ReferenceId':3500})
+ vm=IC10(source,{'d0':pl,'d1':Device(3501,props={'ReferenceId':3501}),'x0':src_res,'x1':sink_res},self_ref=2392)
+ vm.run(1);vm.stack.update({8:5,9:11,10:1});vm.run(2)
+ return vm.stack.get(12),src_res.stack.get(14)
+committer='ic10/power-grid/power_reservation_committer_v1_0.ic10'
+ck(committed(without_guard(committer,'blt r6 0 Bad','bgt r6 8 Bad'))==(1,130),
+   'witness: the unguarded committer did not reserve export for thirteen records')
+ck(committed((R/committer).read_text())==(-1,None),'committer reserved export from a window that holds eight records')
+def source_quote(source):
+ plan=Device(1303,stack={0:'HASH:PowerDispatchPlanStore.v1',24:9,193:1201,196:40},props={'ReferenceId':1303})
+ vm=IC10(source,{'d0':pdir,'d1':plan,'x0':src,'x1':sink},self_ref=232)
+ vm.stack.update({11:0,12:1});vm.run(3)
+ return vm.stack.get(14),vm.stack.get(16,0)
+source_selector='ic10/power-grid/power_source_selector_v1_0.ic10'
+ck(source_quote(without_guard(source_selector,'blt r12 0 Bad','bgt r12 8 Bad'))==(1,60),
+   'witness: the unguarded source selector did not charge the phantom staged usage')
+ck(source_quote((R/source_selector).read_text())==(-1,0),'source selector walked staged usage past the eight-record staging window')
 if fails:
  print('Power management protocol: FAIL');[print(' -',x) for x in fails];sys.exit(1)
 print('Power management protocol: PASS')
@@ -168,3 +233,4 @@ print(' - priority/load-shed/battery-charge reference model')
 print(' - POWER Job Gateway lane-D generation contract')
 print(' - live policy target resolver binds unique Reservations and rejects ambiguity')
 print(' - live policy verify settles consumer/battery modes through the bound pair')
+print(' - every Plan Store reader bounds the published flow count at eight before walking the window')

@@ -12,7 +12,7 @@ req={
 'ic10/dependency-planning/job_requirement_view_v1_0.ic10':['poke 0 HASH("JobRequirementView.v1")','put d2 8 r10'],
 'ic10/dependency-planning/item_producer_resolver_v1_0.ic10':['poke 0 HASH("ItemProducerResolver.v1")','Table:'],
 'ic10/dependency-planning/generic_job_monitor_v1_0.ic10':['poke 0 HASH("GenericJobMonitor.v1")'],
-'ic10/dependency-planning/job_inventory_preflight_v1_0.ic10':['poke 0 HASH("JobInventoryPreflight.v1")','bne r0 -2 Bad'],
+'ic10/dependency-planning/job_inventory_preflight_v1_0.ic10':['poke 0 HASH("JobInventoryPreflight.v1")','bne r0 -2 Bad','get r12 d1 10','bgt r12 6 Bad'],
 'ic10/dependency-planning/dependency_child_creator_v2_0.ic10':['poke 1 2','put d3 62 r0','put d3 48 r15'],
 'ic10/dependency-planning/dependency_plan_store_v2_0.ic10':['poke 1 2','poke r0 0','poke r0 r3'],
 'ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10':['poke 1 2','get r0 db 27','bne r11 r0 Replan','bne r12 r0 Replan'],

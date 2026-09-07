@@ -1549,6 +1549,28 @@ with tempfile.TemporaryDirectory() as directory_name:
     except ValueError:
         pass
 
+# A consumer that bounds the count it loops on makes its declared window provable
+# to the far end (#95). Each of these programs reads a peer-published count and
+# guards it at the provider's capacity, so cutting the declared window one record
+# short is rejected at the last record rather than accepted on the first pass.
+for far_end_source, far_end_port, far_end_short, far_end_cell in (
+    ("ic10/power-grid/power_link_executor_v1_0.ic10", "d0", [[32, 87]], "S88"),
+    ("ic10/power-grid/power_load_executor_v1_0.ic10", "d0", [[32, 87]], "S89"),
+    ("ic10/power-grid/power_reservation_committer_v1_0.ic10", "d0", [[32, 87]], "S88"),
+    ("ic10/power-grid/power_source_selector_v1_0.ic10", "d1", [[128, 183]], "S185"),
+    ("ic10/dependency-planning/job_inventory_preflight_v1_0.ic10", "d1", [[32, 46]], "S47"),
+    ("ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10", "d0", [[32, 46]], "S47"),
+):
+    far_end_text = (_PROJECT_ROOT / far_end_source).read_text()
+    far_end_ports, far_end_aliases = collect_aliases(parse_rows(far_end_text))
+    far_end_errors = declared_coverage_errors(
+        far_end_text, far_end_ports, far_end_aliases,
+        {(far_end_port, "read"): [{"start": s, "end": e} for s, e in far_end_short]},
+    )
+    ck(far_end_errors and any(far_end_cell in error for error in far_end_errors),
+       f"{far_end_source} {far_end_port} window cut short at {far_end_short} was not rejected "
+       f"at {far_end_cell}: {far_end_errors}")
+
 if fails:
     print("Script contract tests: FAIL")
     for failure in fails:

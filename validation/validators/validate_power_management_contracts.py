@@ -25,7 +25,7 @@ need('ic10/power-grid/power_producer_endpoint_v1_0.ic10','poke 52 4','poke 55 r3
 need('ic10/power-grid/power_consumer_endpoint_v1_0.ic10','poke 56 r3','poke 35 2','get r4 db 50','beq r4 2 Shed')
 need('ic10/power-grid/power_battery_endpoint_v1_0.ic10','poke 55 r9','poke 56 r10','poke 35 3','get r0 db 23','get r13 db 50','beq r13 5 Hold')
 need('ic10/resource-grid-core/resource_reservation_v1_0.ic10','get r5 d0 55','get r6 d0 56','poke 36 r5','poke 37 r6','poke 28 r0','poke 31 r0')
-need('ic10/power-grid/power_source_selector_v1_0.ic10','getd r11 r10 36','add r13 r13 r4','getd r0 r10 28')
+need('ic10/power-grid/power_source_selector_v1_0.ic10','getd r11 r10 36','add r13 r13 r4','getd r0 r10 28','get r12 d1 24','bgt r12 8 Bad')
 need('ic10/power-grid/power_sink_selector_v1_0.ic10','getd r11 r10 37','slt r12 r9 5000000','seq r12 r12 0')
 # Generic links + transformer overhead.
 need('ic10/power-grid/power_static_link_v1_0.ic10','poke 0 HASH("ResourceLink.v1")','poke 30 4','poke 32 1')
@@ -35,10 +35,10 @@ need('ic10/power-grid/power_link_selector_v1_0.ic10','HASH("DirectorySchema.Reso
 need('ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10','HASH("DirectorySchema.PowerReservation.v1")','poke 10 3','poke 11 64','getd r0 r1 17','get r13 db 8','1000000','5000000')
 need('ic10/power-grid/power_dispatch_plan_store_v1_0.ic10','poke 0 HASH("PowerDispatchPlanStore.v1")','bge r2 8 Full','add r3 r3 1','poke 28 r0','poke 27 r3')
 need('ic10/power-grid/power_plan_validator_v1_0.ic10','bgt r3 8 Bad','getd r0 r7 12','getd r0 r8 12','getd r0 r6 12','getd r0 r6 14')
-need('ic10/power-grid/power_reservation_committer_v1_0.ic10','getd r0 r7 17','bne r0 r12 Bad','add sp sp r5','putd r7 14 sp','putd r8 15 ra','putd r7 17 r12')
+need('ic10/power-grid/power_reservation_committer_v1_0.ic10','get r6 d0 29','bgt r6 8 Bad','getd r0 r7 17','bne r0 r12 Bad','add sp sp r5','putd r7 14 sp','putd r8 15 ra','putd r7 17 r12')
 need('ic10/power-grid/power_reservation_allocator_v1_0.ic10','poke 8 0','WaitV:','WaitC:','WaitR:','CleanupNew:','WaitCleanup:','poke 8 r0','poke 9 r0','poke 10 1')
-need('ic10/power-grid/power_load_executor_v1_0.ic10','Set:','get r0 d1 10','get r0 d1 8','get r0 d1 9','Write:','sd r3 On r4','getd r5 r1 17','getd r5 r1 18','getd r5 r1 19')
-need('ic10/power-grid/power_link_executor_v1_0.ic10','Set:','get r0 d1 10','get r0 d1 8','get r0 d1 9','Write:','getd r0 r14 17','getd r0 r15 17','getd r0 r14 19','getd r0 r15 19','sd r3 Setting r4','sd r3 On r5','bne r0 2 Scan')
+need('ic10/power-grid/power_load_executor_v1_0.ic10','get r10 d0 29','bgt r10 8 Set','Set:','get r0 d1 10','get r0 d1 8','get r0 d1 9','Write:','sd r3 On r4','getd r5 r1 17','getd r5 r1 18','getd r5 r1 19')
+need('ic10/power-grid/power_link_executor_v1_0.ic10','get r10 d0 29','bgt r10 8 Set','Set:','get r0 d1 10','get r0 d1 8','get r0 d1 9','Write:','getd r0 r14 17','getd r0 r15 17','getd r0 r14 19','getd r0 r15 19','sd r3 Setting r4','sd r3 On r5','bne r0 2 Scan')
 # POWER jobs and Gateway lane D.
 need('ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10','poke 1 5','get r15 db r7','select r6 r0 2 4','add r8 r7 4')
 need('ic10/generic-jobs/generic_job_selector_v3_0.ic10','poke 1 3','get r10 db 18','bne r5 r10 Next','beq r2 7 Next','bge r2 11 Next')

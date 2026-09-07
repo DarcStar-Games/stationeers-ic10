@@ -132,6 +132,27 @@ planner=IC10(src('ic10/dependency-planning/manufacturing_dependency_planner_v1_0
 planner.stack.update({25:5,26:0,24:7});planner.run(4)
 ck(sorted(notctl.stack)==[0],'Planner cleanup posted to a d1 that is not its Existing controller')
 
+# The Selector publishes at most six legs, and Preflight bounds the count it
+# publishes before folding legs into its fingerprints: a count of seven would
+# read S50 and S52, past the quote table the Selector's contract declares, and
+# fingerprint whatever sat there as a seventh leg.
+def without_guard(path,*lines):
+ text=src(path)
+ for line in lines:
+  ck(line+'\n' in text,f'{path} lost its count guard `{line}`');text=text.replace(line+'\n','')
+ return text
+def preflight_status(source):
+ requirement=IC10("Loop:\nyield\nget r15 db 19\nget r0 db 20\nbeq r15 r0 Loop\npoke 21 1\npoke 23 1\npoke 26 777\npoke 27 5\npoke 20 r15\nj Loop\n");requirement.run(1)
+ selector=IC10('poke 0 HASH("ItemResourceReservationSelector.v1")\nLoop:\nyield\nget r15 db 15\nget r0 db 16\nbeq r15 r0 Loop\npoke 8 -2\npoke 9 3\npoke 10 7\npoke 16 r15\nj Loop\n');selector.run(1)
+ for leg in range(7):selector.stack[32+3*leg]=601+leg;selector.stack[34+3*leg]=1
+ legs={f'x{leg}':Device(601+leg,stack={11:0},props={'ReferenceId':601+leg}) for leg in range(7)}
+ vm=IC10(source,{'d0':Device(600,requirement.stack),'d1':Device(599,selector.stack),**legs},self_ref=598)
+ vm.run(1);vm.stack.update({15:41,16:1,17:1,18:9});run_round_robin([vm,requirement,selector],40)
+ return vm.stack.get(20)
+preflight='ic10/dependency-planning/job_inventory_preflight_v1_0.ic10'
+ck(preflight_status(without_guard(preflight,'blt r12 0 Bad','bgt r12 6 Bad'))==3,
+   'witness: the unguarded Preflight did not fingerprint a seventh leg as a deficit quote')
+ck(preflight_status(src(preflight))==-1,'Preflight folded a leg past the six-leg quote table into its fingerprints')
 if fails:
  print('Dependency planning: FAIL');[print(' -',x) for x in fails];sys.exit(1)
 print('Dependency planning: PASS')
@@ -143,3 +164,4 @@ print(' - the Gateway writes nothing at all to a d0 that is not its Store Comman
 print(' - Gateway lane A acknowledges on S8 and replies on S9..S10 without touching the request payload')
 print(' - a reflashed Executor re-checks the Store identity before resuming a pending command')
 print(' - the Planner names its Existing controller on the cleanup path as well as the plan path')
+print(' - Preflight bounds the Selector leg count at six before walking the quote table')

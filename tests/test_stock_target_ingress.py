@@ -79,6 +79,44 @@ ck(inventory.stack.get(19) == 7 and inventory.stack.get(20) == 2,
 ck(selector_stub.stack.get(15) == 401,
    "Inventory View selector token was derived from a collision-prone outer token")
 
+# The selector's leg count is a peer-published value bounded at six by the
+# selector's own contract; the Inventory View bounds it again before walking
+# the quote table, because a count of seven would read S50 and S52, past the
+# table, and sum whatever sat there as a seventh leg.
+
+
+def without_guard(path, *lines):
+    text = src(path)
+    for line in lines:
+        ck(line + "\n" in text, f"{path} lost its count guard `{line}`")
+        text = text.replace(line + "\n", "")
+    return text
+
+
+def seven_leg_quote(source):
+    stub = IC10(
+        'poke 0 HASH("ItemResourceReservationSelector.v1")\nLoop:\nyield\nget r15 db 15\n'
+        "get r0 db 16\nbeq r15 r0 Loop\npoke 8 -2\npoke 9 6\npoke 10 7\npoke 16 r15\nj Loop\n"
+    )
+    stub.run(1)
+    for leg in range(7):
+        stub.stack[32 + 3 * leg] = 511 + leg
+        stub.stack[34 + 3 * leg] = 1
+    legs = {f"x{leg}": Device(511 + leg, {11: 0, 12: 1}, {"ReferenceId": 511 + leg})
+            for leg in range(7)}
+    view = IC10(source, {"d0": Device(510, stub.stack), **legs}, self_ref=509)
+    view.run(1)
+    view.stack.update({15: 321, 16: 10, 18: 7, 22: 400})
+    run_round_robin([view, stub], 30)
+    return view.stack.get(20)
+
+
+inventory_view = "ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10"
+ck(seven_leg_quote(without_guard(inventory_view, "blt r7 0 Bad", "bgt r7 6 Bad")) == 1,
+   "witness: the unguarded Inventory View did not accept a seven-leg quote as exact")
+ck(seven_leg_quote(src(inventory_view)) == -1,
+   "Inventory View walked a quote past the six-leg table the selector publishes")
+
 
 def boot_store():
     vm = IC10(src("ic10/generic-jobs/generic_job_store_v1_0.ic10"))
@@ -491,3 +529,4 @@ print(" - a job counts as a root only when the real Claim View proves no active 
       " an unverifiable child makes the scan ambiguous")
 print(" - production evaluator-to-Store flow revalidates demand and output metadata at mutation time")
 print(" - an Evaluator reflashed mid-Ingress waits for it instead of displacing its Demand View request")
+print(" - the Inventory View bounds the selector leg count at six before walking the quote table")

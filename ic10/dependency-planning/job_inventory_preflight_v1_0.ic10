@@ -40,6 +40,8 @@ get r0 d1 8
 beq r0 -3 Overflow
 get r11 d1 9
 get r12 d1 10
+blt r12 0 Bad
+bgt r12 6 Bad
 move sp 17
 move ra 29
 move r6 0
