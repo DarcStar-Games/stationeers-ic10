@@ -1626,7 +1626,7 @@ This family contains the deployment classes shown in its generated program inven
 Generic Job family, healthy POWER endpoints/reservations and Power dispatcher.
 
 ### Wiring and configuration
-The POWER policy target resolver resolves PolicyId to exactly one target; the apply/verify services revalidate Reservation semantics; the lifecycle client advances through Gateway; and the prepare/finalize/scheduler services coordinate execution. Generic selector `ic10/generic-jobs/generic_job_selector_v3_0.ic10` is configured for exact `JobType.POWER`.
+The POWER policy target resolver resolves PolicyId to exactly one target; the apply/verify services revalidate Reservation semantics; the lifecycle client advances through Gateway; and the prepare/finalize/scheduler services coordinate execution. Generic selector `ic10/generic-jobs/generic_job_selector_v3_0.ic10` is configured for exact `JobType.POWER`. Wire the Scheduler's `d0` to that selector, `d1` to `ic10/power-jobs/power_job_prepare_v1_0.ic10` and `d2` to `ic10/power-jobs/power_job_finalize_v1_0.ic10`; it posts each selected job to one of the two through `dr9` at their `S14..S19` and reads the result back at `S10..S13`.
 
 ### Deployment procedure
 Queue one reversible low-risk POWER policy job. Verify READY -> RUNNING -> VERIFYING -> COMPLETE, then a missing target yields `WAIT_RESOURCE` and invalid/ambiguous target yields `FAULT` without starving other jobs.
@@ -1638,7 +1638,7 @@ Policy Job cannot mutate a different endpoint after replacement; scheduler curso
 `LG-POWER` and `LG-JOB-STORE`.
 
 ### Common failures
-Permanent retry of one bad high-priority job indicates incorrect WAIT/FAULT mapping or selector cursor regression.
+Permanent retry of one bad high-priority job indicates incorrect WAIT/FAULT mapping or selector cursor regression. Every step of every job going to FAULT with Prepare or Finalize seeing a job state of zero means the Scheduler's record is not landing at `S14..S19`: check that `d1`/`d2` face Prepare and Finalize and that the Scheduler is the revision from #163 or later.
 
 ### Reflash / replacement
 Reflash scheduler/client and resume from durable Job state; endpoint policy must be revalidated before further lifecycle advancement.

@@ -316,7 +316,11 @@ versioned filename.
    ABI range when discovery accepts more than one ABI at a block header away from `S0`.
 4. Add narrow public/dynamic ranges or externally owned fields to
    `data/script_contract_overrides.json` when source inspection cannot prove
-   the cross-program bound, then record the reviewed source SHA-256.
+   the cross-program bound, then record the reviewed source SHA-256. A port
+   addressed through a register (`dr<n>`) needs a `register_ports` entry there
+   naming its pins unless the branches around every access bound the register
+   whole, and a pin the program tolerates unconnected needs
+   `ports.<pin>.requirement: "optional"`, or a commissioning plan fails on it.
 5. Declare each device port's canonical peer in `data/script_wiring.json`
    (`docs/SCRIPT_WIRING.md`).
 6. Regenerate contracts and run the full validation suite.
