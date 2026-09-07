@@ -246,7 +246,7 @@ ck(source_quote((R/source_selector).read_text())==(-1,0),'source selector walked
 # step went to Bad (#163). This runs the real Scheduler against the real Prepare and
 # Finalize, whose own stacks are the devices on the Scheduler's d1/d2, with the
 # selector and the three request/response peers of each step answered by hand.
-def scheduler_step(state,gen=3,ticks=12):
+def scheduler_step(state,gen=3,ticks=40):
  selector=Device(3001,props={'ReferenceId':3001})
  life_p,res_p,apply_p=(Device(r,props={'ReferenceId':r}) for r in (3010,3011,3012))
  life_f,res_f,verify_f=(Device(r,props={'ReferenceId':r}) for r in (3020,3021,3022))
@@ -266,6 +266,8 @@ def scheduler_step(state,gen=3,ticks=12):
   for res in (res_p,res_f):answer(res,11,('res',res.ref),lambda t:{12:t,13:1,14:999})
   answer(apply_p,8,'apply',lambda t:{9:t,10:1})
   answer(verify_f,12,'verify',lambda t:{13:t,8:1})
+  # Stop at the first step the Scheduler reports (S31 status, back in state 0), before it selects again.
+  if sched.stack.get(20)==0 and 31 in sched.stack:break
  return sched,prep,fin,life_p,life_f
 sched,prep,fin,life_p,life_f=scheduler_step(4)
 ck(sched.stack.get(21)==1 and [prep.stack.get(i) for i in range(14,20)]==[2,77,4,3,100,1] and prep.stack.get(8)==900,

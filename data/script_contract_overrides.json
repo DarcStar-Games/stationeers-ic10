@@ -801,6 +801,7 @@
    "source_sha256": "19e4dcee73711c58ef1a5865dfb9a2d1c4178d2eebbbeb1700385c6b21146e91",
    "ports": {
     "d0": {
+     "requirement": "optional",
      "dynamic_property_sources": [
       {
        "operand": "r4",
@@ -816,6 +817,7 @@
      ]
     },
     "d1": {
+     "requirement": "optional",
      "dynamic_property_sources": [
       {
        "operand": "r4",
@@ -831,6 +833,7 @@
      ]
     },
     "d2": {
+     "requirement": "optional",
      "dynamic_property_sources": [
       {
        "operand": "r4",
@@ -846,6 +849,7 @@
      ]
     },
     "d3": {
+     "requirement": "optional",
      "dynamic_property_sources": [
       {
        "operand": "r4",
@@ -861,6 +865,7 @@
      ]
     },
     "d4": {
+     "requirement": "optional",
      "dynamic_property_sources": [
       {
        "operand": "r4",
@@ -876,6 +881,7 @@
      ]
     },
     "d5": {
+     "requirement": "optional",
      "dynamic_property_sources": [
       {
        "operand": "r4",
@@ -1773,6 +1779,26 @@
   },
   "ic10/printer-directory/printer_execution_bank_v2_0.ic10": {
    "source_sha256": "29fb8a18bcafa8e92982f51dce0dcdd8d0dc1d6e338b85382be3e5c717786549",
+   "ports": {
+    "d0": {
+     "requirement": "optional"
+    },
+    "d1": {
+     "requirement": "optional"
+    },
+    "d2": {
+     "requirement": "optional"
+    },
+    "d3": {
+     "requirement": "optional"
+    },
+    "d4": {
+     "requirement": "optional"
+    },
+    "d5": {
+     "requirement": "optional"
+    }
+   },
    "dynamic_write_ranges": [
     [
      16,
@@ -2008,6 +2034,29 @@
      23
     ]
    ]
+  },
+  "ic10/shared-input/generic_input_scanner_v1_1.ic10": {
+   "source_sha256": "bf2cc54785887e86a7f07021bc231cff5d4c4db5fbae0751ab8238e06d2380ea",
+   "ports": {
+    "d0": {
+     "requirement": "optional"
+    },
+    "d1": {
+     "requirement": "optional"
+    },
+    "d2": {
+     "requirement": "optional"
+    },
+    "d3": {
+     "requirement": "optional"
+    },
+    "d4": {
+     "requirement": "optional"
+    },
+    "d5": {
+     "requirement": "optional"
+    }
+   }
   },
   "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": {
    "source_sha256": "684f8545b583e37e0e11862e58df68bebb810c961e6d6840b448a2cde786fa4d",

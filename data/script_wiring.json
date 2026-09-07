@@ -782,32 +782,32 @@
    "d0": {
     "kind": "physical-device",
     "role": "observed device or IC housing",
-    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs (issue #163)."
+    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs. Optional: `bdns dr0 Missing` records an unconnected pin as -1 and moves on (issue #163)."
    },
    "d1": {
     "kind": "physical-device",
     "role": "observed device or IC housing",
-    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs (issue #163)."
+    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs. Optional: `bdns dr0 Missing` records an unconnected pin as -1 and moves on (issue #163)."
    },
    "d2": {
     "kind": "physical-device",
     "role": "observed device or IC housing",
-    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs (issue #163)."
+    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs. Optional: `bdns dr0 Missing` records an unconnected pin as -1 and moves on (issue #163)."
    },
    "d3": {
     "kind": "physical-device",
     "role": "observed device or IC housing",
-    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs (issue #163)."
+    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs. Optional: `bdns dr0 Missing` records an unconnected pin as -1 and moves on (issue #163)."
    },
    "d4": {
     "kind": "physical-device",
     "role": "observed device or IC housing",
-    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs (issue #163)."
+    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs. Optional: `bdns dr0 Missing` records an unconnected pin as -1 and moves on (issue #163)."
    },
    "d5": {
     "kind": "physical-device",
     "role": "observed device or IC housing",
-    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs (issue #163)."
+    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs. Optional: `bdns dr0 Missing` records an unconnected pin as -1 and moves on (issue #163)."
    }
   },
   "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10": {
@@ -1919,32 +1919,32 @@
    "d0": {
     "kind": "physical-device",
     "role": "printer",
-    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself (issue #163)."
+    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself. Optional: `bdns dr7 Request` skips an empty slot and the bank publishes the count it found (issue #163)."
    },
    "d1": {
     "kind": "physical-device",
     "role": "printer",
-    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself (issue #163)."
+    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself. Optional: `bdns dr7 Request` skips an empty slot and the bank publishes the count it found (issue #163)."
    },
    "d2": {
     "kind": "physical-device",
     "role": "printer",
-    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself (issue #163)."
+    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself. Optional: `bdns dr7 Request` skips an empty slot and the bank publishes the count it found (issue #163)."
    },
    "d3": {
     "kind": "physical-device",
     "role": "printer",
-    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself (issue #163)."
+    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself. Optional: `bdns dr7 Request` skips an empty slot and the bank publishes the count it found (issue #163)."
    },
    "d4": {
     "kind": "physical-device",
     "role": "printer",
-    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself (issue #163)."
+    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself. Optional: `bdns dr7 Request` skips an empty slot and the bank publishes the count it found (issue #163)."
    },
    "d5": {
     "kind": "physical-device",
     "role": "printer",
-    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself (issue #163)."
+    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself. Optional: `bdns dr7 Request` skips an empty slot and the bank publishes the count it found (issue #163)."
    }
   },
   "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10": {
@@ -2219,32 +2219,32 @@
    "d0": {
     "kind": "physical-device",
     "role": "commissioning screw",
-    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here (issue #163)."
+    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here. Optional: `sdse r0 dr2` / `beqz r0 Next` skips an empty screw and S8 publishes the populated mask (issue #163)."
    },
    "d1": {
     "kind": "physical-device",
     "role": "commissioning screw",
-    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here (issue #163)."
+    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here. Optional: `sdse r0 dr2` / `beqz r0 Next` skips an empty screw and S8 publishes the populated mask (issue #163)."
    },
    "d2": {
     "kind": "physical-device",
     "role": "commissioning screw",
-    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here (issue #163)."
+    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here. Optional: `sdse r0 dr2` / `beqz r0 Next` skips an empty screw and S8 publishes the populated mask (issue #163)."
    },
    "d3": {
     "kind": "physical-device",
     "role": "commissioning screw",
-    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here (issue #163)."
+    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here. Optional: `sdse r0 dr2` / `beqz r0 Next` skips an empty screw and S8 publishes the populated mask (issue #163)."
    },
    "d4": {
     "kind": "physical-device",
     "role": "commissioning screw",
-    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here (issue #163)."
+    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here. Optional: `sdse r0 dr2` / `beqz r0 Next` skips an empty screw and S8 publishes the populated mask (issue #163)."
    },
    "d5": {
     "kind": "physical-device",
     "role": "commissioning screw",
-    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here (issue #163)."
+    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here. Optional: `sdse r0 dr2` / `beqz r0 Next` skips an empty screw and S8 publishes the populated mask (issue #163)."
    }
   },
   "ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10": {},
