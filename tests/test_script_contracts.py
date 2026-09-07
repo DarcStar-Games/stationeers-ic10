@@ -324,7 +324,9 @@ ck(all(len(set(document["own_stack"]["literal_reads"])
            | {cell for item in document["own_stack"]["dynamic_read_ranges"]
               for cell in range(item["start"], item["end"] + 1)}
            | {cell for item in document["own_stack"]["external_writable_ranges"]
-              for cell in range(item["start"], item["end"] + 1)}) < 512
+              for cell in range(item["start"], item["end"] + 1)}
+           | {field["address"] for field in document["own_stack"]["fields"]
+              if "external-write" in field["access"]}) < 512
        for document in documents),
    "a deployable program accepts every one of its 512 cells")
 proven_own_reads = {
