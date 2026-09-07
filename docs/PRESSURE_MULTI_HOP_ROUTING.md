@@ -128,6 +128,7 @@ S10  response generation; written last
 S16  hop 1 PressureTransfer ReferenceId
 S17  hop 2 PressureTransfer ReferenceId
 S18  hop 3 PressureTransfer ReferenceId when length=3
+S11  SearchId of the search in progress; a request repeating it resumes that search
 ```
 
 `ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10` drives the Enumerator, passes each complete candidate to `ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10`, and returns the lowest-cost candidate examined. `ic10/pressure-grid/pressure_grid_cost_profile_v1_0.ic10` supplies the weights and candidate budget.

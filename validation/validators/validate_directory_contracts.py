@@ -131,8 +131,8 @@ need('ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10','bne
 
 # Incomplete snapshots are unusable on transaction-critical paths.
 for f,toks in {
- 'ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10':['get r0 d0 2','add sp r0 29','bgtz r1 LinkBad'],
- 'ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10':['add sp r4 29','bgtz r0 Bad','get r0 d0 2','bne r0 r4 Bad'],
+ 'ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10':['get r0 d0 24','add sp r0 29','bgtz r1 LinkBad'],
+ 'ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10':['add sp r4 29','bgtz r0 Bad','get r0 d0 24','bne r0 r4 Bad'],
  'ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10':['add sp r5 29','bgtz r0 Reject'],
  'ic10/material-transform/material_transform_link_resolver_v1_0.ic10':['add r0 r12 29','bgtz r0 Bad','get r0 d2 2','bne r0 r12 Loop'],
  'ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10':['get r9 db 16','add r0 r8 25','getd r12 r9 r0','bnez r12 Bad','getd r0 r9 24','bne r0 r8 Loop'],
