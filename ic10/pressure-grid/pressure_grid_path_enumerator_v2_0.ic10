@@ -1,6 +1,7 @@
 get r0 db 0
 beq r0 HASH("PressureGridPathEnumerator.v2") Header
 clr db
+move r15 0
 Header:
 poke 0 HASH("PressureGridPathEnumerator.v2")
 poke 1 2
