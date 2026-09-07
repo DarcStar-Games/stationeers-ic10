@@ -198,6 +198,63 @@ ck(future.stack.get(20) == 30 and future.stack.get(21) == 1,
    "future-output scan did not complete")
 ck(future.stack.get(22) == 11, "future-output scan double-counted claimed child output")
 
+# A job is a root only when the real Claim View proves no active claim names it.
+# A plan record that names the job as a child but whose child cannot be validated
+# is not a root: Claim View answers -3 rather than the no-record -2, and the scan
+# reports itself ambiguous instead of counting the full requested output (#122).
+RESOURCE = 999
+
+
+def validity_stub(*replies):
+    lines = ['poke 0 HASH("DependencyChildValidity.v1")', "Loop:", "yield",
+             "get r15 db 15", "get r0 db 16", "beq r15 r0 Loop"]
+    lines += [f"poke {cell} {value}" for cell, value in replies]
+    lines += ["poke 16 r15", "j Loop"]
+    vm = IC10("\n".join(lines) + "\n", self_ref=132)
+    vm.run(1)
+    return vm
+
+
+def claim_scan(child_record, validity, token):
+    """Real Job Store, Plan Store, Claim View, and Future View; only Child Validity is a stub."""
+    store = boot_store()
+    job = publish(store, 1, 2, RESOURCE, 5)
+    plan = IC10(src("ic10/dependency-planning/dependency_plan_store_v2_0.ic10"), self_ref=131)
+    plan.run(1)
+    if child_record:
+        # [ParentJobId, ChildJobId, ResourceType, RequiredTotal, BaselineKnown, FutureQty, fpA, fpB]
+        record = (9, job, RESOURCE, 6, 2, 8, 0, 0)
+        plan.stack.update({128 + offset: value for offset, value in enumerate(record)})
+    claim = IC10(src("ic10/dependency-planning/dependency_claim_view_v1_0.ic10"),
+                 {"d0": Device(131, plan.stack), "d1": Device(132, validity.stack)}, self_ref=133)
+    claim.run(1)
+    future = IC10(src("ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10"),
+                  {"d0": Device(130, store.stack), "d1": Device(133, claim.stack),
+                   "d2": Device(131, plan.stack)}, self_ref=134)
+    future.run(1)
+    future.stack.update({15: RESOURCE, 16: 2, 17: RESOURCE, 18: 2, 19: token})
+    run_round_robin([future, claim, validity, plan, store], 120)
+    return claim, future
+
+
+claim, future = claim_scan(False, validity_stub((17, 1)), 40)
+ck(future.stack.get(20) == 40 and future.stack.get(21) == 1 and future.stack.get(22) == 10,
+   "a job no plan record names was not counted as a root at full output")
+ck(claim.stack.get(20) == -2, "Claim View did not report a proven absence as -2")
+claim, future = claim_scan(True, validity_stub((17, 1), (19, 2), (20, RESOURCE)), 41)
+ck(future.stack.get(20) == 41 and future.stack.get(21) == 1 and future.stack.get(22) == 4,
+   "a validated child was not counted at FutureQty minus the other parents' claims")
+claim, future = claim_scan(True, validity_stub((17, 1), (19, 7), (20, RESOURCE)), 42)
+ck(claim.stack.get(20) == -2, "a validated terminal child was not reported as no active claim")
+for status in (-1, -2, -3):
+    claim, future = claim_scan(True, validity_stub((17, status)), 50 + status)
+    ck(claim.stack.get(20) == -3,
+       f"Claim View collapsed an unverifiable child (Child Validity {status}) into the no-record answer")
+    ck(future.stack.get(20) == 50 + status and future.stack.get(21) == -3,
+       f"Future View did not report an unverifiable child (Child Validity {status}) as ambiguous")
+    ck(future.stack.get(22, 0) == 0,
+       f"Future View counted root output for an unverifiable child (Child Validity {status})")
+
 
 def pipeline(inventory_changes=False, output_changes=False):
     """Run the production target-to-Store path with only leaf services stubbed."""
@@ -363,4 +420,6 @@ print(" - sufficient stock, hysteresis, deficit refill, and future-output subtra
 print(" - production Config Policy canonicalizes disabled stock-target records")
 print(" - lane E atomically rejects stale Job/Plan snapshots and survives Gateway reflash")
 print(" - active root output and only unclaimed child surplus contribute to stock targets")
+print(" - a job counts as a root only when the real Claim View proves no active claim names it;"
+      " an unverifiable child makes the scan ambiguous")
 print(" - production evaluator-to-Store flow revalidates demand and output metadata at mutation time")

@@ -72,6 +72,7 @@ get r0 d2 40
 bne r0 sp Loop
 get r0 d1 20
 beq r0 -2 Root
+beq r0 -3 Unverified
 bne r0 1 Bad
 get r0 d1 21
 bne r0 r8 Bad
@@ -98,6 +99,10 @@ poke 22 r7
 poke 23 r14
 poke 24 sp
 poke 21 1
+poke 20 r15
+j Loop
+Unverified:
+poke 21 -3
 poke 20 r15
 j Loop
 Bad:

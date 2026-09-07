@@ -117,6 +117,14 @@ availableFuture = FutureQty - aggregateClaims
 
 `ic10/dependency-planning/dependency_plan_builder_v2_0.ic10` reuses the child only when `availableFuture >= newDeficit`; otherwise it creates another child. This prevents several parents from each treating the child's full promised output as independently available.
 
+Claim View answers a lookup one of three ways, and the difference between the two negative answers matters:
+
+- `1` -- a matching record names a child that Child Validity confirmed still exists, still promises the ResourceType under current catalog metadata, and is still active. The response carries the child, its FutureQty, and the other parents' aggregate claims.
+- `-2` -- no record names an active child for the resource. Either no record matched the request, or every matching record was validated and its child found terminal (a COMPLETE child is inventory, not future work). This is a proven absence.
+- `-3` -- at least one matching record could not be validated: Child Validity reported the child missing, stale, or invalid. Claim View skips such a record while it looks for another that validates, and when none does it reports `-3` rather than `-2`, so a caller cannot mistake a record that merely failed to verify for proof that no claim exists.
+
+The Plan Builder and the Release Advisor act the same way on both negative answers (create another child; check the child themselves), so the split changes nothing for them. The stock-target Future View is the caller that acts on the difference: a job with no active claim is a root and counts at its full requested output, which is only right when the absence is proven. An unverifiable child made it count that output as unclaimed root supply (GitHub issue #122); it now reports the scan ambiguous instead.
+
 ## Child creation and atomic Job Store publication
 
 `ic10/dependency-planning/dependency_child_creator_v2_0.ic10` validates producer identity, ancestry/depth, current output semantics, and bounded quantity, then submits child intent through Gateway lane C.

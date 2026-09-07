@@ -23,7 +23,7 @@ req={
 'ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10':['poke 0 HASH("DependencyCancellationGuard.v1")'],
 'ic10/dependency-planning/dependency_child_validity_v1_0.ic10':['poke 0 HASH("DependencyChildValidity.v1")'],
 'ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10':['poke 0 HASH("GenericJobStoreCommandExecutor.v1")','FindFree:','put d0 11 r10'],
-'ic10/dependency-planning/dependency_claim_view_v1_0.ic10':['poke 0 HASH("DependencyClaimView.v1")','poke 27 r4'],
+'ic10/dependency-planning/dependency_claim_view_v1_0.ic10':['poke 0 HASH("DependencyClaimView.v1")','poke 27 r4','bne r0 1 Unverified','move r1 -3','poke 20 r1'],
 'ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10':['poke 0 HASH("ManufacturingReagentResolver.v1")'],
 'ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10':['poke 0 HASH("DependencyPlanReleaseAdvisor.v1")'],
 'ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10':['poke 0 HASH("ExistingDependencyPlanController.v1")','beq r0 5 Replan','put d3 32 r15'],
@@ -32,7 +32,6 @@ req={
 # SOFT_LIMIT_EXEMPTIONS entry in validate_ic10.py naming what the margin buys.
 SOFT={'ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10':120,
 'ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10':128,
-'ic10/dependency-planning/dependency_claim_view_v1_0.ic10':121,
 'ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10':123}
 for rel,pats in req.items():
  p=R/rel
