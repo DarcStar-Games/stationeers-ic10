@@ -11,6 +11,11 @@ poke 1 1
 poke 2 0
 Loop:
 yield
+get r0 d3 0
+bne r0 HASH("StockTargetJobIngress.v1") Fault
+get r0 d3 25
+get r1 d3 26
+bne r0 r1 Loop
 get r0 d0 0
 bne r0 HASH("GenericPersistentConfigHost.v1") Fault
 get r0 d0 8
@@ -74,8 +79,6 @@ get r13 d2 29
 get r14 d2 30
 get r0 d0 51
 bne r0 r15 Loop
-get r0 d3 0
-bne r0 HASH("StockTargetJobIngress.v1") Fault
 put d3 15 r2
 put d3 16 r3
 put d3 17 r4
@@ -112,8 +115,6 @@ poke 8 -1
 Next:
 get r0 db 29
 add r0 r0 1
-blt r0 4 Save
-move r0 0
-Save:
+mod r0 r0 4
 poke 29 r0
 j Loop

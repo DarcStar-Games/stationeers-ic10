@@ -15,7 +15,12 @@
     {
       "source": "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
       "header_base": 0,
-      "readable_ranges": [],
+      "readable_ranges": [
+        {
+          "start": 25,
+          "end": 25
+        }
+      ],
       "writable_ranges": [],
       "fields": [
         {
@@ -242,6 +247,7 @@
       "header_base": 0,
       "literal_reads": [
         0,
+        25,
         26,
         27,
         28

@@ -1014,7 +1014,7 @@
    "d0": {"kind": "script", "providers": ["ic10/controller-config/generic_persistent_config_host_v1_1.ic10"], "note": "Evaluator reads the coherent ManufacturingStockTarget effective image from GenericPersistentConfigHost.v1."},
    "d1": {"kind": "script", "providers": ["ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10"], "note": "StockTargetProducerView.v1 lane A resolves target metadata; its lane B serves the ingress writer."},
    "d2": {"kind": "script", "providers": ["ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10"], "note": "StockTargetDemandView.v1 returns no-need, ambiguity, or one bounded deficit."},
-   "d3": {"kind": "script", "providers": ["ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10"], "note": "StockTargetJobIngress.v1 serializes the proven root intent through lane E."}
+   "d3": {"kind": "script", "providers": ["ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10"], "note": "StockTargetJobIngress.v1 serializes the proven root intent through lane E; the Evaluator also reads back the request token S25 beside the response S26 to start no evaluation while the Ingress is mid-request."}
   },
   "ic10/material-grid/material_export_slot_endpoint_v1_0.ic10": {
    "d0": {
