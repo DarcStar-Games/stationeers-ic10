@@ -1,7 +1,6 @@
 get r0 db 0
 beq r0 HASH("PressureGridPathEnumerator.v2") Header
 clr db
-move r15 0
 Header:
 poke 0 HASH("PressureGridPathEnumerator.v2")
 poke 1 2
@@ -9,7 +8,8 @@ poke 2 32
 Loop:
 yield
 get r14 db 36
-beq r14 r15 Loop
+get r0 db 10
+beq r14 r0 Loop
 get r1 db 32
 get r2 db 33
 get r3 db 34
@@ -114,11 +114,11 @@ None:
 poke 9 0
 j Empty
 Bad:
+poke 11 0
 poke 9 -1
 Empty:
 poke 37 0
 poke 8 0
 Respond:
 poke 10 r14
-move r15 r14
 j Loop
