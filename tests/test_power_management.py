@@ -174,7 +174,9 @@ def torn_plan(staged):
  return stack
 def transformer_after(source):
  alloc=Device(3300,stack={8:5,9:10,10:1},props={'ReferenceId':3300})
- xf=Device(3301,props={'ReferenceId':3301,'Setting':0,'On':0})
+ # The transformer starts energized so the guarded program's safe-off is a write that
+ # is observed, not an initial state that a program never reaching Write would leave.
+ xf=Device(3301,props={'ReferenceId':3301,'Setting':55,'On':1})
  sr=Device(3302,stack={17:3300,18:10,19:5},props={'ReferenceId':3302})
  kr=Device(3303,stack={17:3300,18:10,19:6},props={'ReferenceId':3303})
  link=Device(3304,stack={0:'HASH:ResourceLink.v1',30:4,32:2,10:3301,12:9},props={'ReferenceId':3304})
@@ -187,7 +189,7 @@ ck(transformer_after(without_guard(link_executor,'blt r10 0 Set','bgt r10 8 Set'
 ck(transformer_after((R/link_executor).read_text())==(0,0),'transformer executor actuated a flow past the eight-record plan window')
 def load_after(source):
  alloc=Device(3400,stack={8:5,9:10,10:1},props={'ReferenceId':3400})
- load=Device(3401,props={'ReferenceId':3401,'On':0})
+ load=Device(3401,props={'ReferenceId':3401,'On':1})
  endpoint=Device(3402,stack={9:3401},props={'ReferenceId':3402})
  res=Device(3403,stack={0:'HASH:ResourceReservation.v1',32:3402,33:4,17:3400,18:10,19:6,28:2,31:8},props={'ReferenceId':3403})
  pl=Device(3404,stack=torn_plan([0,0,3403,0,0,0,6,0]),props={'ReferenceId':3404})
