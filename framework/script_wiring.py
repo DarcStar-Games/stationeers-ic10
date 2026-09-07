@@ -9,9 +9,11 @@ silently strand a consumer that still reads the old address.
 """
 from __future__ import annotations
 
+from collections.abc import Callable, Iterable
 from pathlib import Path
 from typing import Any
 import json
+import re
 
 from framework.json_schema import validate
 from framework.stack_envelope import BASE, LENGTH
@@ -289,3 +291,243 @@ def inbound_edges(
                                  if cell.isdigit()},
             })
     return edges
+
+
+# --- Mailbox arbitration -------------------------------------------------------
+#
+# A request/response mailbox on one program instance has room for one request:
+# the caller writes its payload and then the token, and the callee answers the
+# token it finds. Two callers posting to the same instance with no ordering
+# between them can displace each other before the callee latches the request,
+# which strands the displaced caller forever (it waits for a response token that
+# was never served) or, when a post straddles a tick, hands the callee a payload
+# assembled from both. `ASYNC_REQUEST_V1` fences observation of a response; it
+# does not serialize requests. So every mailbox with more than one writer
+# program needs an arbitration the tree can name, and
+# `data/mailbox_arbitration.json` is where that review lives. What the map can
+# derive on its own is *laned* sharing: writers whose write cells never overlap
+# post into separate request lanes the callee serves one at a time, as the Job
+# Command Gateway does.
+
+ARBITRATION_FORMAT = "IC10_MAILBOX_ARBITRATION_V1"
+RESIDENT_CLASSES = frozenset({"resident", "conditional-resident"})
+REGISTER_PORT_RE = re.compile(r"\bdr(?:[0-9]|1[0-5])\b")
+
+
+def load_arbitration(root: Path) -> dict[str, Any]:
+    root = Path(root)
+    value = json.loads((root / "data/mailbox_arbitration.json").read_text())
+    schema = json.loads((root / "schemas/mailbox_arbitration.schema.json").read_text())
+    validate(value, schema)
+    return value
+
+
+def writer_edges(
+    wiring: dict[str, Any],
+    ports: dict[str, dict[str, dict[str, Any]]],
+) -> dict[str, dict[str, dict[str, set[int]]]]:
+    """Per provider: every program whose declared port writes it, with the cells touched.
+
+    A port that only reads a peer consumes a publication; the mailboxes this is
+    about are the cells a port *writes*. Providers are any-of, so a writer is
+    recorded against every provider its port may face.
+    """
+    edges: dict[str, dict[str, dict[str, set[int]]]] = {}
+    for source, entries in wiring["ports"].items():
+        for name, peer in entries.items():
+            if peer["kind"] != "script":
+                continue
+            port = ports.get(source, {}).get(name)
+            if port is None:
+                continue
+            writes = set(port["writes"]) | ranged(port["write_ranges"], STACK_CELLS)
+            if not writes:
+                continue
+            reads = set(port["reads"]) | ranged(port["read_ranges"], STACK_CELLS)
+            for provider in peer["providers"]:
+                slot = edges.setdefault(provider, {}).setdefault(
+                    source, {"writes": set(), "reads": set()})
+                slot["writes"] |= writes
+                slot["reads"] |= reads
+    return edges
+
+
+def contended_pairs(writers: dict[str, dict[str, set[int]]]) -> list[tuple[str, str]]:
+    """Writer pairs whose write cells overlap; none among several writers means laned."""
+    names = sorted(writers)
+    return [(a, b) for i, a in enumerate(names) for b in names[i + 1:]
+            if writers[a]["writes"] & writers[b]["writes"]]
+
+
+def downstream(edges: dict[str, dict[str, dict[str, set[int]]]]) -> dict[str, set[str]]:
+    """Per program: the providers whose mailboxes it writes."""
+    out: dict[str, set[str]] = {}
+    for provider, sources in edges.items():
+        for source in sources:
+            out.setdefault(source, set()).add(provider)
+    return out
+
+
+def reachable(edges: dict[str, dict[str, dict[str, set[int]]]], origins: Iterable[str]) -> set[str]:
+    """Programs reached from `origins` by following mailbox writes downstream."""
+    out = downstream(edges)
+    seen = set(origins)
+    todo = list(seen)
+    while todo:
+        current = todo.pop()
+        for nxt in out.get(current, ()):
+            if nxt not in seen:
+                seen.add(nxt)
+                todo.append(nxt)
+    return seen
+
+
+def dedicated_closure(
+    edges: dict[str, dict[str, dict[str, set[int]]]],
+    declarations: dict[str, Any],
+    provider: str,
+) -> set[str]:
+    """The mailboxes a dedicated instance of `provider` brings with it.
+
+    An instance kept apart from another call tree must keep the request
+    mailboxes it reaches downstream apart too, or the sharing moves one hop.
+    The walk stops at `reselect` surfaces: a selected snapshot whose consumers
+    read nothing until the selection echoes back tolerates any number of
+    selectors, so it needs no instance of its own.
+    """
+    reselect = {p for p, d in declarations.items() if d["arbitration"] == "reselect"}
+    out = downstream(edges)
+    seen = {provider}
+    todo = [provider]
+    while todo:
+        current = todo.pop()
+        for nxt in out.get(current, ()):
+            if nxt in reselect or nxt in seen:
+                continue
+            seen.add(nxt)
+            todo.append(nxt)
+    return seen
+
+
+def _serial_failures(
+    provider: str,
+    label: str,
+    group: list[str],
+    root: str | None,
+    unmapped: list[str],
+    edges: dict[str, dict[str, dict[str, set[int]]]],
+    wiring: dict[str, Any],
+    source: Callable[[str], str],
+) -> list[str]:
+    """A serial group is one call tree: every writer posts only while the root waits on it.
+
+    The map proves the shape -- each writer sits downstream of the root through
+    declared mailbox writes -- and the review vouches for the blocking. A
+    register-indexed port (`dr<n>`) has no `d<n>` for the map to key on, so a
+    writer reached that way is listed under `unmapped`; the only check the tree
+    can make of that claim is that the root does address a device by register.
+    """
+    failures: list[str] = []
+    if root is None:
+        failures.append(f"{provider}: {label} has {len(group)} writers and names no serialized_by")
+        return failures
+    if root not in wiring["ports"]:
+        failures.append(f"{provider}: {label} serialized_by {root} is not a deployable program")
+        return failures
+    stray = sorted(set(unmapped) - set(group))
+    if stray:
+        failures.append(f"{provider}: {label} lists unmapped programs that are not writers: {stray}")
+    if unmapped and not REGISTER_PORT_RE.search(source(root)):
+        failures.append(
+            f"{provider}: {label} claims {root} reaches {sorted(unmapped)} through a"
+            " register-indexed port, but its source has no dr<n> operand")
+    reached = reachable(edges, [root, *unmapped])
+    missing = sorted(w for w in group if w not in reached)
+    if missing:
+        failures.append(
+            f"{provider}: {label} serialized_by {root} does not reach {missing} through"
+            " declared mailbox writes -- they post from an independent loop")
+    return failures
+
+
+def arbitration_failures(
+    wiring: dict[str, Any],
+    ports: dict[str, dict[str, dict[str, Any]]],
+    declarations: dict[str, Any],
+    classes: dict[str, str],
+    source: Callable[[str], str],
+) -> list[str]:
+    """Every defect in the reviewed mailbox arbitration, one message each.
+
+    `declarations` is the `mailboxes` section of `data/mailbox_arbitration.json`,
+    `classes` maps each deployable program to its deployment class, and
+    `source(path)` returns a program's or document's text.
+    """
+    failures: list[str] = []
+    edges = writer_edges(wiring, ports)
+    contended = {p for p, w in edges.items() if len(w) > 1 and contended_pairs(w)}
+    for provider in sorted(contended - set(declarations)):
+        writers = sorted(edges[provider])
+        failures.append(
+            f"{provider}: {len(writers)} programs write overlapping request cells"
+            f" ({writers}) and data/mailbox_arbitration.json does not say what keeps"
+            " them from posting at once")
+    for provider, entry in sorted(declarations.items()):
+        kind = entry["arbitration"]
+        if provider not in wiring["ports"]:
+            failures.append(f"{provider}: arbitration declared for a program with no wiring entry")
+            continue
+        writers = sorted(edges.get(provider, {}))
+        if provider not in contended and kind != "reselect":
+            why = "one writer" if len(writers) < 2 else "laned writers (write cells never overlap)"
+            failures.append(f"{provider}: arbitration declared for a mailbox with {why}; remove it")
+            continue
+        declared = sorted(entry["writers"])
+        if declared != writers:
+            failures.append(
+                f"{provider}: declared writers {declared} differ from the wiring map's {writers}")
+            continue
+        shape = {"serial": {"serialized_by", "unmapped"}, "dedicated": {"instances"}}.get(kind, set())
+        stray = sorted({"serialized_by", "unmapped", "instances"} & set(entry) - shape)
+        if stray:
+            failures.append(f"{provider}: {kind} arbitration does not take {stray}")
+            continue
+        if kind == "dedicated" and "instances" not in entry:
+            failures.append(f"{provider}: dedicated arbitration names no instances")
+            continue
+        if kind == "serial":
+            failures.extend(_serial_failures(
+                provider, "serial group", writers, entry.get("serialized_by"),
+                entry.get("unmapped", []), edges, wiring, source))
+        elif kind == "dedicated":
+            claimed: list[str] = []
+            closure = sorted(dedicated_closure(edges, declarations, provider))
+            for index, instance in enumerate(entry["instances"]):
+                label = f"instance {index + 1}"
+                group = sorted(instance["writers"])
+                repeated = sorted(set(group) & set(claimed))
+                if repeated:
+                    failures.append(f"{provider}: {label} repeats writers {repeated}")
+                claimed.extend(group)
+                if len(group) > 1:
+                    failures.extend(_serial_failures(
+                        provider, label, group, instance.get("serialized_by"),
+                        instance.get("unmapped", []), edges, wiring, source))
+                doc = instance["documented_in"]
+                text = source(doc)
+                unnamed = [item for item in closure if item not in text]
+                if unnamed:
+                    failures.append(
+                        f"{provider}: {label} is documented in {doc}, which does not name"
+                        f" {unnamed} -- a dedicated instance brings every request mailbox"
+                        " it reaches, and the deployment text has to list them")
+            left = sorted(set(writers) - set(claimed))
+            if left:
+                failures.append(f"{provider}: no instance claims writers {left}")
+        elif kind == "operator":
+            resident = sorted(w for w in writers if classes.get(w, "resident") in RESIDENT_CLASSES)
+            if len(resident) > 1:
+                failures.append(
+                    f"{provider}: operator arbitration with {len(resident)} resident writers"
+                    f" {resident}; only tools an operator runs one at a time qualify")
+    return failures

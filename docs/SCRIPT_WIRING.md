@@ -165,6 +165,56 @@ accesses (`getd`/`putd` through a resolved ReferenceId) have no port for the map
 to key on, so the planner still scans the family and its magic-namers and lists
 those separately for manual confirmation.
 
+## Mailbox arbitration
+
+The map also says who *writes* each program. A port that writes a peer's cells
+posts a request, and a request/response mailbox on one instance holds one
+request. `ASYNC_REQUEST_V1` fences what a caller may read of the response; it
+does not order who may post. Two programs posting to one instance with nothing
+ordering them displace each other before the callee latches the request: the
+callee answers whichever token it finds when it polls, and the other caller
+waits forever for a response that was never served. A post that straddles a
+tick can also hand the callee a payload assembled from both. The Job Command
+Gateway exists so that six producers never do this to the Job Store; the same
+question has to be answered for every other mailbox.
+
+`framework/script_wiring.writer_edges` derives the writers of every program
+from the map and the contracts, and `data/mailbox_arbitration.json` carries a
+reviewed answer for every mailbox whose writers overlap on a cell:
+
+- `serial` -- the writers are one call tree: a named root posts and waits at
+  every hop, so no two of them are ever mid-request at once. The map proves
+  the shape (each writer sits downstream of the root through declared mailbox
+  writes) and the review vouches for the blocking. A root that drives a peer
+  through a register-indexed port (`dr9`) has no `d<n>` for the map to key
+  on; such writers are listed under `unmapped`, and the check confirms the
+  root does address a device by register.
+- `dedicated` -- the writers are independent loops, and each gets its own
+  instance of the program. An instance brings every request mailbox it reaches
+  downstream, or the sharing moves one hop, so each instance cites the
+  document that must name the whole closure by path.
+- `alternatives` -- the writers are alternative peers for one role (a Config
+  Host and its Policy, an adapter and its Bridge or Registry Host); a
+  deployment wires one of them per instance.
+- `operator` -- on-demand tools an operator runs one at a time; at most one
+  writer may be resident.
+- `reselect` -- not a token mailbox but a selected snapshot whose consumers
+  read nothing until the selection echoes back, and re-check the generation
+  when their reads span a tick, so competing selections cost a retry. A
+  `reselect` surface also stops a dedicated closure.
+
+Writers whose write cells never overlap are *laned* -- the Gateway, the
+Dependency Planner's plan and cleanup lanes, the stock-target Producer View --
+and need no entry. The validator refuses an entry for a laned or single-writer
+mailbox as stale, as it refuses one whose writer list no longer matches the
+map. `validation/validators/validate_mailbox_arbitration.py` runs all of it;
+`tests/test_mailbox_arbitration.py` exercises the checks on a synthetic map and
+then shows the race on the production programs: one Claim View shared by the
+stock-target Future View and the Plan Builder strands one of them, and one per
+caller answers both. Thirty mailboxes carry an entry. The deployment
+consequences are in `docs/STOCK_TARGET_INGRESS.md` (seven dedicated instances)
+and `docs/DEPENDENCY_PLANNING.md` (the Cancellation Guard's own Job Monitor).
+
 ## Maintenance
 
 When adding a program (see `docs/ADDING_CONTROLLERS.md`), add a wiring entry for
@@ -172,4 +222,6 @@ each of its device ports, and extend the `providers` list of any generic service
 whose peer class the new program joins. When a port's magic check names its peer,
 say so in the `note`; otherwise cite the deployment documentation that fixes the
 edge. When retiring a program, validation fails until its entry and every edge
-naming it are removed.
+naming it are removed. When a new program writes a mailbox another program
+already writes, `validation/validators/validate_mailbox_arbitration.py` fails
+until `data/mailbox_arbitration.json` says what keeps the two apart.

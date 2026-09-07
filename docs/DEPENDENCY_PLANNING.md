@@ -182,6 +182,17 @@ The important authorities are intentionally separate:
 
 Async request tokens fence observation. They do not replace JobGeneration, Plan Store sequence, Resource Reservation generation, ownership epochs, or catalog generations.
 
+### Request mailboxes with more than one writer
+
+Every service above is a `TERMINAL_RESPONSE` mailbox with room for one request, and a token fences what a caller reads, not who may post: a second caller can replace an unlatched request and strand the first. `data/mailbox_arbitration.json` records, for every mailbox more than one program writes, what keeps the writers from posting at once, and `validation/validators/validate_mailbox_arbitration.py` checks the record against the wiring map (`docs/SCRIPT_WIRING.md`). Inside this family the answer is the Planner: Child Validity, Preflight, the Plan Store's lookup, and the planning-side Claim View, Requirement View, Reagent Resolver, Producer Resolver, Reservation Selector, and Job Monitor are all posted to from inside the Planner's call tree, each caller waiting on its response before returning, and the Planner serves one Gate request or one cleanup request at a time -- its plan lane and cleanup lane never share a cell.
+
+Two callers sit outside that tree and get instances of their own:
+
+- `ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10` scans committed plans on its own loop and monitors each parent it finds. Its `d1` is a `ic10/dependency-planning/generic_job_monitor_v1_0.ic10` of its own, not the one the Planner's tree reaches through Child Validity, the Ancestry Guard, and the New controller. The Monitor only reads the Job Store, so both instances read the same Store.
+- The stock-target family (`docs/STOCK_TARGET_INGRESS.md`) runs on its own loop and deploys its own Item Producer Resolver, Job Requirement View with Reagent Resolver, Claim View with Child Validity and Job Monitor, and `ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10`. `ic10/dependency-planning/job_inventory_preflight_v1_0.ic10` keeps the planning-side Selector.
+
+The Transform and Recipe Execution Profile Views stay shared: the Requirement View selects, then re-checks the echo and generation around its reads, so a competing selection costs a retry and never a wrong read.
+
 ## Failure behavior
 
 Dependency planning fails closed on:

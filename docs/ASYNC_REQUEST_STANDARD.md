@@ -43,6 +43,7 @@ A stale result with a nonmatching token is indistinguishable from no result and 
 6. A token identifies one logical request. Retries may reassert the same payload/token when the service contract is idempotent; a new logical request uses a new token.
 7. Transaction commit tokens remain separate authority. `ASYNC_REQUEST_V1` fences observation; it does not replace `BANKED_TRANSACTION_V1`, reservation epochs, directory generations, or ownership tokens.
 8. Field locations are service-specific. The protocol standardizes semantics and ordering, not absolute stack addresses.
+9. A mailbox instance has one writer at a time. Token identity fences what a caller reads; it does not order who posts, and a second caller can replace an unlatched request and strand the first. Independent callers use separate lanes (disjoint request cells the callee serves one at a time) or separate instances. `data/mailbox_arbitration.json` records the arbitration of every mailbox more than one program writes, and `validation/validators/validate_mailbox_arbitration.py` checks it against the wiring map (`docs/SCRIPT_WIRING.md`).
 
 ## Current framework users
 

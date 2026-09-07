@@ -1,0 +1,78 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://github.com/DarcStar-Games/stationeers-ic10/schemas/mailbox_arbitration.schema.json",
+ "title": "Reviewed arbitration of every request mailbox with more than one writer program",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "$schema",
+  "format",
+  "mailboxes"
+ ],
+ "properties": {
+  "$schema": {
+   "const": "../schemas/mailbox_arbitration.schema.json"
+  },
+  "format": {
+   "const": "IC10_MAILBOX_ARBITRATION_V1"
+  },
+  "mailboxes": {
+   "type": "object",
+   "additionalProperties": {
+    "$ref": "#/$defs/mailbox"
+   }
+  }
+ },
+ "$defs": {
+  "program": {
+   "type": "string",
+   "pattern": "^ic10/[a-z0-9-]+/[a-z0-9_]+\\.ic10$"
+  },
+  "programs": {
+   "type": "array",
+   "minItems": 1,
+   "uniqueItems": true,
+   "items": {"$ref": "#/$defs/program"}
+  },
+  "mailbox": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "arbitration",
+    "writers",
+    "note"
+   ],
+   "properties": {
+    "arbitration": {
+     "enum": ["serial", "dedicated", "alternatives", "operator", "reselect"]
+    },
+    "writers": {"$ref": "#/$defs/programs"},
+    "serialized_by": {"$ref": "#/$defs/program"},
+    "unmapped": {"$ref": "#/$defs/programs"},
+    "instances": {
+     "type": "array",
+     "minItems": 2,
+     "items": {"$ref": "#/$defs/instance"}
+    },
+    "note": {"type": "string", "minLength": 1}
+   }
+  },
+  "instance": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "writers",
+    "documented_in"
+   ],
+   "properties": {
+    "writers": {"$ref": "#/$defs/programs"},
+    "serialized_by": {"$ref": "#/$defs/program"},
+    "unmapped": {"$ref": "#/$defs/programs"},
+    "documented_in": {
+     "type": "string",
+     "pattern": "^docs/[A-Z0-9_]+\\.md$"
+    }
+   }
+  }
+ }
+}
