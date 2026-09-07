@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-jobs/power_job_finalize_v1_0.ic10",
-  "source_sha256": "b9368bee03f073422a79bd990db37d517b0a702a8b084f2f61dc9a8f9e25cecf",
+  "source_sha256": "64d93c3cf66953aa47e4d50009c3a1991ddddfc4181a98b6312029dcd5547286",
   "identity": {
     "service_id": "ic10.script.power.job.finalize",
     "implementation_revision": "1.0",
@@ -164,7 +164,6 @@
       9,
       10,
       14,
-      15,
       16,
       17,
       18,
@@ -281,15 +280,6 @@
       {
         "address": 14,
         "name": "S14",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 15,
-        "name": "S15",
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [

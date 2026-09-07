@@ -34,13 +34,11 @@ get r2 d0 16
 get r3 d0 17
 get r0 d0 8
 poke 22 r0
-get r4 d0 10
 get r5 d0 11
 get r0 d0 9
 poke 25 r0
 put d1 11 r2
 put d1 12 r3
-put d1 13 r4
 put d1 14 r5
 put d1 15 r15
 poke 20 2

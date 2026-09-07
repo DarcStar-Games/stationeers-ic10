@@ -17,7 +17,6 @@ poke 11 2
 poke 12 0
 poke 10 r15
 get r1 db 14
-get r2 db 15
 get r6 db 19
 blez r6 Bad
 floor r0 r6

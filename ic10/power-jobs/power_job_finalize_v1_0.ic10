@@ -13,7 +13,6 @@ get r15 db 9
 get r0 db 10
 beq r15 r0 Loop
 get r2 db 14
-get r3 db 15
 get r4 db 16
 get r5 db 17
 get r6 db 18

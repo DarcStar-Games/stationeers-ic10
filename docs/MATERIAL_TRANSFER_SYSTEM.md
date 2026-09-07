@@ -284,7 +284,7 @@ Allocator ABI2 watches every resolved Link for `S23 == common epoch`. It does no
 
 After completion—or after cancellation/failure—the Allocator clears its active `S14` before commanding the Stager to clean the provisional reservation cells. The completed epoch is recorded separately in Allocator `S15`.
 
-The transform Runtime does not activate the processor until the material allocation has committed and every required input Link has completed the common epoch.
+The transform Runtime does not activate the processor until the material allocation has committed and every required input Link has completed the common epoch. At activation it snapshots the output Reservation's quantity and generation into its own `S11`/`S12`, and it completes only when a newer output generation shows growth of at least the declared output quantity **past that snapshot**: an output Reservation that already held stock before the job started does not complete it. (Before issue #160 the two snapshot reads landed in registers nothing consumed, so the comparison was against zero.)
 
 ## 10. Failure behavior
 

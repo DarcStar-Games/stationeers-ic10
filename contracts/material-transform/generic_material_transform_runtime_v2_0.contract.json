@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10",
-  "source_sha256": "5c4438004cc71f68a1755d09d761b6e5bdfdf4335bbd6e8f062f1d6564bfcf2a",
+  "source_sha256": "0328feff66c65747137b216f03c18bbd7c63b15f7dfccd9df54a3e6d8a57c73f",
   "identity": {
     "service_id": "ic10.script.generic.material.transform.runtime",
     "implementation_revision": "2.0",
@@ -261,6 +261,8 @@
       2,
       9,
       10,
+      11,
+      12,
       13,
       14,
       15,
@@ -348,7 +350,8 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
+          "self-read",
+          "self-write"
         ]
       },
       {
@@ -357,7 +360,8 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
-          "self-read"
+          "self-read",
+          "self-write"
         ]
       },
       {

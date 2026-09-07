@@ -23,9 +23,7 @@ get r2 d0 r1
 bne r2 r10 Next
 add r1 r1 1
 get r7 d0 r1
-add r1 r1 1
-get r8 d0 r1
-add r1 r1 1
+add r1 r1 2
 get r9 d0 r1
 add r1 r1 3
 get r11 d0 r1

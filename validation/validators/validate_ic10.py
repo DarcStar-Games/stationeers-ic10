@@ -8,9 +8,11 @@ from pathlib import Path
 import re
 import sys
 
+from framework.ic10_registers import dead_register_writes, load_instruction_signatures
 from framework.ic10_source import parse_ic10
 
 ROOT = _PROJECT_ROOT
+SIGNATURES = load_instruction_signatures(ROOT)
 LIMIT_LINES = 128
 LIMIT_CHARS = 90
 LIMIT_BYTES = 4096
@@ -19,9 +21,6 @@ MAINTAINABILITY_LINES = 120
 SOFT_LIMIT_EXEMPTIONS = {
     "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10":
         "three-hop path search with fail-closed dynamic Snapshot Directory geometry",
-    "ic10/manufacturing/print_candidate_executor_v2_0.ic10":
-        "four-phase print launch fencing four devices; publishes the common header with its"
-        " request mailbox relocated above it",
     "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10":
         "publishes the common S0 header; its Generic Telemetry block stays at S96, and it"
         " checks the paired Config Host's S0 identity as well as its S12 schema signature",
@@ -56,11 +55,24 @@ SOFT_LIMIT_EXEMPTIONS = {
         "existing/new plan orchestration publishing the common header above its relocated"
         " request and cleanup mailboxes",
 }
+# A register written by an instruction that nothing in the file reads is a line the
+# program pays for and gets nothing from (issue #160). The analysis is whole-file and
+# conservative -- framework/ic10_registers.py -- so every hit is real. A hit that is kept
+# on purpose (a load wanted only for the device access it performs, say) is listed here
+# as (path, exact instruction text) with the reason; an entry no hit matches fails.
+DEAD_WRITE_EXEMPTIONS: dict[tuple[str, str], str] = {}
 
 
 def inspect(path: Path):
     text = path.read_text()
     parsed = parse_ic10(text)
+    dead_writes = [
+        (write.line_number, write.code_text) for write in dead_register_writes(text, SIGNATURES)
+    ]
+    unexempt_dead_writes = [
+        (n, code) for n, code in dead_writes
+        if (str(path.relative_to(ROOT)), code) not in DEAD_WRITE_EXEMPTIONS
+    ]
     lines = [line.raw_text for line in parsed.lines]
     max_len = max((len(line) for line in lines), default=0)
     crlf_bytes = len(("\r\n".join(lines) + "\r\n").encode())
@@ -153,8 +165,10 @@ def inspect(path: Path):
         failures.append(f"invalid literal stack addresses: {invalid_stack_addresses}")
     if invalid_direct_stack_operands:
         failures.append(f"direct db stack operand in arithmetic: {invalid_direct_stack_operands}")
+    if unexempt_dead_writes:
+        failures.append(f"register written but never read: {unexempt_dead_writes}")
 
-    return len(lines), max_len, crlf_bytes, comment_lines, failures
+    return len(lines), max_len, crlf_bytes, comment_lines, failures, dead_writes
 
 
 def main():
@@ -163,11 +177,11 @@ def main():
     for path in sorted((ROOT/"ic10").rglob("*.ic10")):
         result = inspect(path)
         rows.append((path.relative_to(ROOT).as_posix(), *result))
-        failed |= bool(result[-1])
+        failed |= bool(result[4])
 
     print("IC10 static validation")
     print("=" * 100)
-    for name, lines, chars, size, comments, failures in rows:
+    for name, lines, chars, size, comments, failures, _dead_writes in rows:
         state = "FAIL" if failures else "PASS"
         print(
             f"{state:4} {name:42} lines={lines:3} "
@@ -188,6 +202,16 @@ def main():
             print(f"FAIL stale exemption: {name} is {measured[name]} lines,"
                   f" within the {MAINTAINABILITY_LINES}-line soft limit; remove it")
             failed = True
+    # Same rule for reviewed dead writes: an exemption no hit matches is a line that was
+    # removed or made live, and the entry would silently cover a future hit of the same text.
+    dead_writes_seen = {(name, code) for name, *_, dead in rows for _n, code in dead}
+    for name, code in sorted(DEAD_WRITE_EXEMPTIONS):
+        if (name, code) not in dead_writes_seen:
+            print(f"FAIL stale dead-write exemption: {name} has no unread write {code!r}; remove it")
+            failed = True
+    dead_write_count = sum(len(dead) for *_, dead in rows)
+    print(f"Registers written but never read: {dead_write_count}"
+          f" ({len(DEAD_WRITE_EXEMPTIONS)} reviewed exemptions)")
     print("Result:", "FAIL" if failed else "PASS")
     return 1 if failed else 0
 
