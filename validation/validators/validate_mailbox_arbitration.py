@@ -54,8 +54,10 @@ edges = writer_edges(wiring, ports)
 shared = {provider: writers for provider, writers in edges.items() if len(writers) > 1}
 laned = sorted(provider for provider, writers in shared.items() if not contended_pairs(writers))
 kinds = {}
-for entry in declarations.values():
-    kinds[entry["arbitration"]] = kinds.get(entry["arbitration"], 0) + 1
+for provider, entry in declarations.items():
+    if provider in shared and provider not in laned:
+        kinds[entry["arbitration"]] = kinds.get(entry["arbitration"], 0) + 1
+extra = sum(1 for provider in declarations if provider not in shared)
 instances = sum(len(entry["instances"]) for entry in declarations.values()
                 if entry["arbitration"] == "dedicated")
 print("Mailbox arbitration validation: PASS")
@@ -64,7 +66,9 @@ print(f" - {len(edges)} programs have their request cells written by a declared 
 print(f" - {len(laned)} are laned (writers never overlap a cell): "
       + ", ".join(item.split('/')[-1] for item in laned))
 print(f" - the other {len(shared) - len(laned)} carry a reviewed arbitration whose writer set matches"
-      " the map: " + ", ".join(f"{count} {kind}" for kind, count in sorted(kinds.items())))
+      " the map: " + ", ".join(f"{count} {kind}" for kind, count in sorted(kinds.items()))
+      + f"; {extra} more single-writer selection surface(s) are declared reselect so a dedicated"
+      " closure stops there")
 print(f" - every serial group sits downstream of its root through declared mailbox writes;"
       f" {instances} dedicated instances are named in the deployment text they cite, with"
       " every request mailbox the instance brings:")

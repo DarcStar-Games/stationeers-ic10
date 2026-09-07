@@ -199,8 +199,9 @@ reviewed answer for every mailbox whose writers overlap on a cell:
 - `operator` -- on-demand tools an operator runs one at a time; at most one
   writer may be resident.
 - `reselect` -- not a token mailbox but a selected snapshot whose consumers
-  re-validate the echo and generation after reading, so competing selections
-  cost a retry. A `reselect` surface also stops a dedicated closure.
+  read nothing until the selection echoes back, and re-check the generation
+  when their reads span a tick, so competing selections cost a retry. A
+  `reselect` surface also stops a dedicated closure.
 
 Writers whose write cells never overlap are *laned* -- the Gateway, the
 Dependency Planner's plan and cleanup lanes, the stock-target Producer View --

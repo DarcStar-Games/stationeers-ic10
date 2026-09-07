@@ -347,7 +347,7 @@
     "ic10/manufacturing-ingress/operator_order_recipe_view_v1_0.ic10",
     "ic10/manufacturing/print_job_driver_v2_0.ic10"
    ],
-   "note": "A selected snapshot, not a token mailbox: each consumer writes the RecipeHash to S10, then requires the S49 echo and an unchanged S14 generation around its reads, so a competing selection costs a retry and never a wrong read. Operator orders deploy a dedicated instance regardless (docs/OPERATOR_ORDER_INGRESS.md)."
+   "note": "A selected snapshot, not a token mailbox: each consumer writes the RecipeHash to S10 and reads nothing until S49 echoes it. The Print Job Driver and the Operator Recipe View read the rest in the same slice as that check; the Requirement View's reads can span a tick, so it also requires S14 unchanged afterwards. A competing selection costs a retry, never a wrong read. Operator orders deploy a dedicated instance regardless (docs/OPERATOR_ORDER_INGRESS.md)."
   },
   "ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10": {
    "arbitration": "alternatives",

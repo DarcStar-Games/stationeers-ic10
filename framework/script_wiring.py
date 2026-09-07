@@ -310,7 +310,6 @@ def inbound_edges(
 # Command Gateway does.
 
 ARBITRATION_FORMAT = "IC10_MAILBOX_ARBITRATION_V1"
-ARBITRATION_KINDS = ("serial", "dedicated", "alternatives", "operator", "reselect")
 RESIDENT_CLASSES = frozenset({"resident", "conditional-resident"})
 REGISTER_PORT_RE = re.compile(r"\bdr(?:[0-9]|1[0-5])\b")
 
@@ -393,8 +392,8 @@ def dedicated_closure(
     An instance kept apart from another call tree must keep the request
     mailboxes it reaches downstream apart too, or the sharing moves one hop.
     The walk stops at `reselect` surfaces: a selected snapshot whose consumers
-    re-validate the echo and generation tolerates any number of selectors, so
-    it needs no instance of its own.
+    read nothing until the selection echoes back tolerates any number of
+    selectors, so it needs no instance of its own.
     """
     reselect = {p for p, d in declarations.items() if d["arbitration"] == "reselect"}
     out = downstream(edges)
