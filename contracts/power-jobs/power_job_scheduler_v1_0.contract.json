@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/power-jobs/power_job_scheduler_v1_0.ic10",
-  "source_sha256": "7856108ac5e5948a7ea03c906d5c2e2f72660b7bf5e6262d9bcb999bb6f51cb6",
+  "source_sha256": "88fd20209fbd5221ea9bc396d8fabf686aa0981bd9f96e8baa18ee6df4b7558f",
   "identity": {
     "service_id": "ic10.script.power.job.scheduler",
     "implementation_revision": "1.0",
@@ -66,8 +66,122 @@
           "slot_properties_written": []
         }
       }
+    },
+    {
+      "port": "d1",
+      "role": "d1",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [],
+        "writes": [],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [
+          10,
+          11,
+          12,
+          13
+        ],
+        "literal_writes": [
+          8,
+          9,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": []
+      },
+      "target": {
+        "kind": "stack-interface",
+        "verification": "access-only",
+        "interface_id": "ic10.interface.access.7f719c76f2dccfed",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.7f719c76f2dccfed",
+        "provider_resolution": "deployment-supplied",
+        "assumptions": {
+          "properties_read": [],
+          "properties_written": [],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
+    },
+    {
+      "port": "d2",
+      "role": "d2",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [],
+        "writes": [],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [
+          10,
+          11,
+          12,
+          13
+        ],
+        "literal_writes": [
+          8,
+          9,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": []
+      },
+      "target": {
+        "kind": "stack-interface",
+        "verification": "access-only",
+        "interface_id": "ic10.interface.access.7f719c76f2dccfed",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.7f719c76f2dccfed",
+        "provider_resolution": "deployment-supplied",
+        "assumptions": {
+          "properties_read": [],
+          "properties_written": [],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
     }
   ],
+  "register_ports": {
+    "dr9": {
+      "register": "r9",
+      "pins": [
+        "d1",
+        "d2"
+      ],
+      "proven_pins": [
+        "d1",
+        "d2"
+      ],
+      "source": "source-fingerprinted-exception"
+    }
+  },
   "network_dependencies": [],
   "own_stack": {
     "size": 512,

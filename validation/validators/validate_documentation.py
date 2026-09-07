@@ -157,6 +157,8 @@ forbidden={
     'Item **9 is next**':'Power management is complete',
     'Items **1–9 are implemented and validated**':'Items 1–11 are current',
     'Item **10 is next**':'fault-injection milestone is complete',
+    'listed under `unmapped`':'register-indexed ports resolve to declared pins, so every serial writer is mapped (#163)',
+    'the wiring map cannot carry a dr port':'register-indexed ports resolve to declared pins (#163)',
     '10. Broad interruption and fault-injection suite — NEXT':'fault-injection milestone is complete',
     '36 Resource Profiles':'39 Resource Profiles are current',
     '32 six-cell parent/child plan records':'Plan Store ABI2 uses eight-cell records',

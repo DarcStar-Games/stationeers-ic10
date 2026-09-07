@@ -455,7 +455,7 @@ Static and model tests require:
 
 ## Power-management evidence
 
-`validation/validators/validate_power_management_contracts.py` protects PowerGrid structural/ABI invariants and `tests/test_power_management.py` exercises endpoint capacity, Reservation mirroring, source/sink/link selection, coherent power plans, load shedding/battery behavior, allocator authority, break-before-make execution, and POWER Job policy completion.
+`validation/validators/validate_power_management_contracts.py` protects PowerGrid structural/ABI invariants and `tests/test_power_management.py` exercises endpoint capacity, Reservation mirroring, source/sink/link selection, coherent power plans, load shedding/battery behavior, allocator authority, break-before-make execution, POWER Job policy completion, and the Scheduler's register-indexed hand-off to the real Prepare and Finalize through their `S14..S19` mailbox (#163).
 
 
 ## Item 11 cross-domain process utility hardening

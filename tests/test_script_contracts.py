@@ -38,6 +38,7 @@ from framework.script_contracts.dynamic_ranges import (
     resolve_dynamic_ranges,
     validated_ranges,
 )
+from framework.script_contracts.register_ports import analyze_register_ports
 from framework.script_contracts.own_stack import (
     analyze_own_stack,
     clear_exposed_cells,
@@ -1623,12 +1624,79 @@ for far_end_source, far_end_port, far_end_short, far_end_cell in (
        f"{far_end_source} {far_end_port} window cut short at {far_end_short} was not rejected "
        f"at {far_end_cell}: {far_end_errors}")
 
+# A register-indexed port (`dr<n>`) is resolved to the pins its register can hold,
+# the way a computed address is resolved to cells: proven from the branches where
+# they bound the register whole at every access, declared and fingerprinted where
+# they do not, and refused with neither (#163). The accesses made through it land
+# on every resolved pin, so the wiring map has an edge to compare them against.
+def register_ports_of(text, declared=None):
+    _, integers = collect_aliases(parse_rows(text))
+    return analyze_register_ports(text, integers, declared)
+
+
+def ports_of(text, overrides=None):
+    rows = parse_rows(text)
+    port_aliases, integers = collect_aliases(rows)
+    return {port["port"]: port for port in analyze_device_ports(text, rows, port_aliases, integers, overrides or {})}
+
+
+scan = "move r7 0\nPins:\nbge r7 6 Publish\nl r1 dr7 ReferenceId\ns dr7 Lock 1\nadd r7 r7 1\nj Pins\nPublish:\nyield\nj Pins\n"
+scanned = register_ports_of(scan)
+ck(scanned == {"dr7": {"register": "r7", "pins": [f"d{i}" for i in range(6)],
+                       "proven_pins": [f"d{i}" for i in range(6)], "source": "source-derived"}},
+   f"a pin loop the exit test counts out was not derived whole: {scanned}")
+scanned_ports = ports_of(scan)
+ck(sorted(scanned_ports) == [f"d{i}" for i in range(6)]
+   and all(p["device_properties"]["reads"] == ["ReferenceId"] and p["device_properties"]["writes"] == ["Lock"]
+           for p in scanned_ports.values()),
+   "accesses through a register-indexed port were not attributed to every pin it can name")
+
+selected = "select r9 r0 2 1\nput dr9 14 r2\nyield\nget r9 db 21\nget r0 dr9 10\nj 0\n"
+try:
+    register_ports_of(selected)
+    fails.append("a register reloaded from the stack was resolved without a declaration")
+except ValueError as error:
+    ck("declare a reviewed register_ports entry" in str(error), f"wrong refusal for an unbounded register: {error}")
+try:
+    register_ports_of(selected, {"dr9": ["d1"]})
+    fails.append("a register_ports declaration omitting a source-proven pin was accepted")
+except ValueError as error:
+    ck("omits source-proven pins ['d2']" in str(error), f"wrong refusal for a short declaration: {error}")
+declared = register_ports_of(selected, {"dr9": ["d2", "d1"]})
+ck(declared["dr9"] == {"register": "r9", "pins": ["d1", "d2"], "proven_pins": ["d1", "d2"],
+                       "source": "source-fingerprinted-exception"},
+   f"a reviewed register_ports declaration was not published as the fingerprinted exception: {declared}")
+declared_ports = ports_of(selected, {"register_ports": {"dr9": ["d1", "d2"]}})
+ck(sorted(declared_ports) == ["d1", "d2"]
+   and all(p["stack"]["literal_writes"] == [14] and p["stack"]["literal_reads"] == [10] for p in declared_ports.values()),
+   "a declared register-indexed port did not carry its reads and writes on both pins")
+try:
+    register_ports_of(selected, {"dr9": ["d1", "d2"], "dr3": ["d0"]})
+    fails.append("a register_ports declaration for an operand the source never uses was accepted")
+except ValueError as error:
+    ck("never addresses" in str(error), f"wrong refusal for a stale declaration: {error}")
+try:
+    register_ports_of("move r1 7\nl r0 dr1 On\nyield\nj 0\n")
+    fails.append("a register proven to name a pin that does not exist was accepted")
+except ValueError as error:
+    ck("name no device pin" in str(error), f"wrong refusal for an out-of-range pin: {error}")
+ck(register_ports_of("l r0 d0 On\nyield\nj 0\n") == {}, "a program with no dr<n> operand reported register ports")
+# The tree's one declared register port is the POWER Scheduler's, and the three pin
+# scanners derive theirs; every pin reached that way is a port the wiring map names.
+scheduler = json.loads((ROOT / "contracts/power-jobs/power_job_scheduler_v1_0.contract.json").read_text())
+ck(scheduler["register_ports"] == {"dr9": {"register": "r9", "pins": ["d1", "d2"], "proven_pins": ["d1", "d2"],
+                                           "source": "source-fingerprinted-exception"}}
+   and [p["port"] for p in scheduler["device_ports"]] == ["d0", "d1", "d2"]
+   and all(p["stack"]["literal_writes"] == [8, 9, 14, 15, 16, 17, 18, 19] for p in scheduler["device_ports"][1:]),
+   "the Scheduler's contract does not carry its dr9 mailbox on d1 and d2")
+
 if fails:
     print("Script contract tests: FAIL")
     for failure in fails:
         print(" -", failure)
     raise SystemExit(1)
 print("Script contract tests: PASS")
+print(" - register-indexed ports resolve to proven or reviewed pins, and their accesses land on every pin")
 print(" - JSON Schema, overlap, authoritative-header, and source-fingerprint failures are enforced")
 print(" - missing providers, wrong layouts, publication rules, and access direction fail compatibility")
 print(" - all deployable scripts, explicit port targets, and semantic protocol definitions are inventoried")

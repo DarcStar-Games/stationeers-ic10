@@ -48,7 +48,6 @@
     },
     "writers": {"$ref": "#/$defs/programs"},
     "serialized_by": {"$ref": "#/$defs/program"},
-    "unmapped": {"$ref": "#/$defs/programs"},
     "instances": {
      "type": "array",
      "minItems": 2,
@@ -67,7 +66,6 @@
    "properties": {
     "writers": {"$ref": "#/$defs/programs"},
     "serialized_by": {"$ref": "#/$defs/program"},
-    "unmapped": {"$ref": "#/$defs/programs"},
     "documented_in": {
      "type": "string",
      "pattern": "^docs/[A-Z0-9_]+\\.md$"

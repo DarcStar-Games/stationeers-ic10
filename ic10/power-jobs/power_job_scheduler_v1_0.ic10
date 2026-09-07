@@ -35,12 +35,12 @@ seq r1 r7 5
 seq r0 r7 6
 or r1 r1 r0
 select r9 r1 2 1
-put dr9 2 r2
-put dr9 3 r3
-put dr9 4 r7
-put dr9 5 r8
-put dr9 6 r6
-put dr9 7 r4
+put dr9 14 r2
+put dr9 15 r3
+put dr9 16 r7
+put dr9 17 r8
+put dr9 18 r6
+put dr9 19 r4
 put dr9 8 r5
 put dr9 9 r15
 poke 21 r9

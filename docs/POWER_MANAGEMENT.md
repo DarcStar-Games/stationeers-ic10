@@ -265,7 +265,7 @@ The job completes after the endpoint accepts the override and the ordinary Gener
 - `ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10` uses Job Gateway lane D. On successful `SET_STATE`, it returns `ExpectedJobGeneration + 1`; it does not reinterpret the Job Store's PUBLISH_NEW-only return cell as a lifecycle generation.
 - `ic10/power-jobs/power_job_prepare_v1_0.ic10` advances `QUEUED/WAIT -> PLANNING -> RESERVING -> READY`, maps a temporarily missing target to `WAIT_RESOURCE`, faults invalid/ambiguous policy intent, applies the policy, then advances to RUNNING.
 - `ic10/power-jobs/power_job_finalize_v1_0.ic10` verifies the Resource Reservation mirror and advances `RUNNING -> VERIFYING -> COMPLETE`; an incomplete mirror returns pending so selector cursor fairness can service another POWER job.
-- `ic10/power-jobs/power_job_scheduler_v1_0.ic10` coordinates selection, prepare/apply and verify/finalize.
+- `ic10/power-jobs/power_job_scheduler_v1_0.ic10` coordinates selection, prepare/apply and verify/finalize. It hands the selected job to Prepare (`d1`) or Finalize (`d2`) through register-indexed `dr9`, writing the record the two programs read at `S14..S19` (slot, JobId, state, JobGeneration, RequestedQuantity, RequiredCapability), the Identity at `S8` and the token at `S9`, and reads back the token at `S10`, status at `S11`, new state at `S12` and generation at `S13`. The pins `dr9` can name are a reviewed `register_ports` declaration in `data/script_contract_overrides.json`, so the wiring map carries both edges and compares the writes against the peers' surfaces; until #163 the six fields went to `S2..S7`, the peers' header cells, and every step faulted.
 
 `ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10` retains the POWER lifecycle contract on lane D alongside stock-target lane E and operator-order lane F root ingress. `ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10` remains the sole physical Generic Job Store mailbox writer.
 
@@ -303,7 +303,8 @@ Power management deliberately retains these boundaries:
 - foreign Reservation ownership rejection and source aggregation within a plan;
 - committed load/transformer actuation;
 - orphan-epoch cleanup plus break-before-make safe-off on stale plan authority;
-- POWER Job SHED through Job Store, Gateway lane D, exact `Identity=PolicyId` / `RequiredCapability=PowerMode` / watt-cap mapping, WAIT-state resumption, endpoint apply, Reservation verification and COMPLETE.
+- POWER Job SHED through Job Store, Gateway lane D, exact `Identity=PolicyId` / `RequiredCapability=PowerMode` / watt-cap mapping, WAIT-state resumption, endpoint apply, Reservation verification and COMPLETE;
+- the real Scheduler driving the real Prepare and Finalize through its `dr9` mailbox: a READY job reaches RUNNING and a RUNNING job reaches VERIFYING with the six fields at `S14..S19` and nothing in the peers' `S2..S7`. The two older scenarios poke the fields into Prepare and Finalize directly, which is the one surface a mailbox defect cannot show through.
 
 Item 10 broad interruption testing is complete and now includes allocator reflash reacquisition plus direct interleaving tests that revoke allocator authority between executor validation and the final load/transformer write.
 

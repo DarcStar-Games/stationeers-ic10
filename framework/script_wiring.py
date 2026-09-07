@@ -13,7 +13,6 @@ from collections.abc import Callable, Iterable
 from pathlib import Path
 from typing import Any
 import json
-import re
 
 from framework.json_schema import validate
 from framework.stack_envelope import BASE, LENGTH
@@ -311,7 +310,6 @@ def inbound_edges(
 
 ARBITRATION_FORMAT = "IC10_MAILBOX_ARBITRATION_V1"
 RESIDENT_CLASSES = frozenset({"resident", "conditional-resident"})
-REGISTER_PORT_RE = re.compile(r"\bdr(?:[0-9]|1[0-5])\b")
 
 
 def load_arbitration(root: Path) -> dict[str, Any]:
@@ -414,18 +412,16 @@ def _serial_failures(
     label: str,
     group: list[str],
     root: str | None,
-    unmapped: list[str],
     edges: dict[str, dict[str, dict[str, set[int]]]],
     wiring: dict[str, Any],
-    source: Callable[[str], str],
 ) -> list[str]:
     """A serial group is one call tree: every writer posts only while the root waits on it.
 
     The map proves the shape -- each writer sits downstream of the root through
-    declared mailbox writes -- and the review vouches for the blocking. A
-    register-indexed port (`dr<n>`) has no `d<n>` for the map to key on, so a
-    writer reached that way is listed under `unmapped`; the only check the tree
-    can make of that claim is that the root does address a device by register.
+    declared mailbox writes -- and the review vouches for the blocking. A root
+    that drives a peer through a register-indexed port (`dr<n>`) reaches it the
+    same way: the contract resolves the register to its pins, so the edge is a
+    declared `d<n>` like any other (issue #163).
     """
     failures: list[str] = []
     if root is None:
@@ -434,14 +430,7 @@ def _serial_failures(
     if root not in wiring["ports"]:
         failures.append(f"{provider}: {label} serialized_by {root} is not a deployable program")
         return failures
-    stray = sorted(set(unmapped) - set(group))
-    if stray:
-        failures.append(f"{provider}: {label} lists unmapped programs that are not writers: {stray}")
-    if unmapped and not REGISTER_PORT_RE.search(source(root)):
-        failures.append(
-            f"{provider}: {label} claims {root} reaches {sorted(unmapped)} through a"
-            " register-indexed port, but its source has no dr<n> operand")
-    reached = reachable(edges, [root, *unmapped])
+    reached = reachable(edges, [root])
     missing = sorted(w for w in group if w not in reached)
     if missing:
         failures.append(
@@ -487,7 +476,7 @@ def arbitration_failures(
             failures.append(
                 f"{provider}: declared writers {declared} differ from the wiring map's {writers}")
             continue
-        shape = {"serial": {"serialized_by", "unmapped"}, "dedicated": {"instances"}}.get(kind, set())
+        shape = {"serial": {"serialized_by"}, "dedicated": {"instances"}}.get(kind, set())
         stray = sorted({"serialized_by", "unmapped", "instances"} & set(entry) - shape)
         if stray:
             failures.append(f"{provider}: {kind} arbitration does not take {stray}")
@@ -497,8 +486,7 @@ def arbitration_failures(
             continue
         if kind == "serial":
             failures.extend(_serial_failures(
-                provider, "serial group", writers, entry.get("serialized_by"),
-                entry.get("unmapped", []), edges, wiring, source))
+                provider, "serial group", writers, entry.get("serialized_by"), edges, wiring))
         elif kind == "dedicated":
             claimed: list[str] = []
             closure = sorted(dedicated_closure(edges, declarations, provider))
@@ -511,8 +499,7 @@ def arbitration_failures(
                 claimed.extend(group)
                 if len(group) > 1:
                     failures.extend(_serial_failures(
-                        provider, label, group, instance.get("serialized_by"),
-                        instance.get("unmapped", []), edges, wiring, source))
+                        provider, label, group, instance.get("serialized_by"), edges, wiring))
                 doc = instance["documented_in"]
                 text = source(doc)
                 unnamed = [item for item in closure if item not in text]

@@ -222,7 +222,10 @@ validation passes. Add its exact semantic path to `data/source_manifest.json` (o
 `tools/generate/generate_source_catalog.py`, and the `validation/validators/validate_source_catalog.py` and
 `validation/validators/validate_user_deployment_guide.py` validators. Declare each device port's
 canonical peer in `data/script_wiring.json` (`docs/SCRIPT_WIRING.md`) — every port must name what
-it points at before `validation/validators/validate_script_wiring.py` passes. A program with no deployment family is an incomplete
+it points at before `validation/validators/validate_script_wiring.py` passes. A register-indexed
+port (`dr9`) is resolved to the pins its register can hold, proven from the branches around each
+access or declared in a reviewed `register_ports` override, and every pin it reaches is a port like
+any other (issue #163). A program with no deployment family is an incomplete
 feature even if its tests pass. Full walkthrough: `docs/ADDING_CONTROLLERS.md`.
 
 ### A new test or validator

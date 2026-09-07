@@ -46,6 +46,25 @@ Each port entry is one of:
   peer's `S2..S7` header cells (for example reading `S3` as SchemaId). Anything
   not declared there is treated as a stranded payload read and fails validation.
 
+### Register-indexed ports
+
+A port operand can be a register: `put dr9 14 r2` writes whichever pin `r9`
+names when the instruction runs. The map keys on `d0..d5`, so the contract
+resolves every `dr<n>` to the pins its register can hold before the map is
+checked, and each of those pins is an ordinary port entry here with the
+accesses made through the register attributed to it. The pins come from the
+same branch-bounds derivation that bounds a computed stack address: a scanner
+walking `move r7 0 .. blt r7 6 Pins` proves `d0..d5` on its own, while a
+register the program reads back from its own stack proves nothing at that
+access and needs a reviewed `register_ports` entry in
+`data/script_contract_overrides.json` (`{"dr9": ["d1", "d2"]}`), fingerprinted
+to the source and required to contain every pin the branches did prove. A
+`dr<n>` with neither does not build, so a program cannot reach a pin the map
+never names. The POWER Scheduler is why: it wrote Prepare's and Finalize's job
+fields through `dr9` at the peers' header cells for the life of the header
+migration, and nothing compared the write against anything until the port
+existed (issue #163).
+
 ## Enforcement
 
 `validation/validators/validate_script_wiring.py` (model:
@@ -199,9 +218,9 @@ reviewed answer for every mailbox whose writers overlap on a cell:
   every hop, so no two of them are ever mid-request at once. The map proves
   the shape (each writer sits downstream of the root through declared mailbox
   writes) and the review vouches for the blocking. A root that drives a peer
-  through a register-indexed port (`dr9`) has no `d<n>` for the map to key
-  on; such writers are listed under `unmapped`, and the check confirms the
-  root does address a device by register.
+  through a register-indexed port (the POWER Scheduler's `dr9`) reaches it
+  through a declared `d<n>` like any other, because the contract resolves the
+  register to its pins (see *Register-indexed ports* above).
 - `dedicated` -- the writers are independent loops, and each gets its own
   instance of the program. An instance brings every request mailbox it reaches
   downstream, or the sharing moves one hop, so each instance cites the

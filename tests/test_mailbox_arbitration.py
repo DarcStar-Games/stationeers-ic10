@@ -99,17 +99,13 @@ del loose_ports[ROOT_P]["d1"]
 ck(mentions(failing(serial, loose_wiring, loose_ports), "does not reach"),
    "a writer the root does not reach was accepted as serial")
 
+# A root reaching a writer through a register-indexed port is no exception: the
+# contract resolves `dr<n>` to its pins, so the edge is in the map or the group
+# is not serial. The old `unmapped` escape hatch is refused as a stray key.
 unmapped = deepcopy(serial)
 unmapped[P]["unmapped"] = [B]
-ck(mentions(failing(unmapped, loose_wiring, loose_ports), "no dr<n> operand"),
-   "an unmapped writer was accepted without a register-indexed port in the root")
-by_register = lambda path: "put dr3 10 r1\n" if path == ROOT_P else text(path)
-ck(failing(unmapped, loose_wiring, loose_ports, source=by_register) == [],
-   "an unmapped writer behind a dr port was rejected")
-stray = deepcopy(unmapped)
-stray[P]["unmapped"] = [Q]
-ck(mentions(failing(stray, source=by_register), "not writers"),
-   "unmapped named a program that is not a writer and passed")
+ck(mentions(failing(unmapped, loose_wiring, loose_ports), "does not take ['unmapped']"),
+   "a serial group listed an unmapped writer and the claim was not refused")
 
 stale = deepcopy(serial)
 stale[P]["writers"] = [A]

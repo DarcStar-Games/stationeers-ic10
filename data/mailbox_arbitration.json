@@ -287,11 +287,7 @@
     "ic10/power-jobs/power_job_prepare_v1_0.ic10"
    ],
    "serialized_by": "ic10/power-jobs/power_job_scheduler_v1_0.ic10",
-   "unmapped": [
-    "ic10/power-jobs/power_job_finalize_v1_0.ic10",
-    "ic10/power-jobs/power_job_prepare_v1_0.ic10"
-   ],
-   "note": "The POWER Scheduler drives Prepare and Finalize one step at a time through register-indexed port dr9 (its d1 and d2) and waits on each step's response; the wiring map cannot carry a dr port, so both are listed as unmapped."
+   "note": "The POWER Scheduler drives Prepare and Finalize one step at a time through register-indexed port dr9, resolved to its d1 and d2 by the reviewed register_ports override, and waits on each step's response before selecting the next job."
   },
   "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": {
    "arbitration": "serial",
@@ -301,11 +297,7 @@
     "ic10/power-jobs/power_job_prepare_v1_0.ic10"
    ],
    "serialized_by": "ic10/power-jobs/power_job_scheduler_v1_0.ic10",
-   "unmapped": [
-    "ic10/power-jobs/power_job_finalize_v1_0.ic10",
-    "ic10/power-jobs/power_job_prepare_v1_0.ic10"
-   ],
-   "note": "Prepare and Finalize run one step at a time under the POWER Scheduler through register-indexed port dr9, and Policy Apply posts while Prepare waits on it."
+   "note": "Prepare and Finalize run one step at a time under the POWER Scheduler through register-indexed port dr9 (its d1 and d2), and Policy Apply posts while Prepare waits on it."
   },
   "ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10": {
    "arbitration": "alternatives",

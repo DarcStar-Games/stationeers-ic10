@@ -1,8 +1,9 @@
 """Extract deterministic machine-readable contracts from deployable IC10 programs.
 
 The analysis lives in focused phase modules -- parsing, control_flow,
-dynamic_ranges, value_bounds, publication, own_stack, device_ports, naming,
-assembly, checks -- and this facade re-exports the stable public API unchanged.
+dynamic_ranges, value_bounds, register_ports, publication, own_stack,
+device_ports, naming, assembly, checks -- and this facade re-exports the stable
+public API unchanged.
 """
 from framework.script_contracts.assembly import (
     FORMAT,

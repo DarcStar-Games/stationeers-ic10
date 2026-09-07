@@ -34,7 +34,12 @@ authority order:
    override must contain every cell that derivation proves, whether or not it
    proved the whole set. An override wider than a whole derivation is a reviewer
    being deliberately conservative and is kept as the published range; only an
-   undeclared surface publishes the derivation itself as source-derived.
+   undeclared surface publishes the derivation itself as source-derived. The
+   same rule resolves a register-indexed port: `register_ports` names the pins a
+   `dr<n>` operand's register can hold (`{"dr9": ["d1", "d2"]}`) where the
+   branches do not bound it at every access, must contain every pin they do
+   prove, and is unnecessary where they prove the whole set, as a `d0..d5` pin
+   scan does. A `dr<n>` with neither does not build.
 5. `data/script_contract_protocol_definitions.json` gives shared protocol IDs a
    name and links them to supplemental domain definitions.
 6. `contracts/` is deterministic generated output from those inputs.
@@ -53,7 +58,12 @@ Each generated per-script contract document is validated by
   deployment class, layer, and purpose;
 - the exact source path and SHA-256, making stale output detectable;
 - used `d0..d5` ports, source aliases, required/optional status, device-property
-  reads/writes, bounded external stack reads/writes, and literal constraints;
+  reads/writes, bounded external stack reads/writes, and literal constraints. A
+  pin reached through a register-indexed operand (`put dr9 14 r2`) is one of
+  these ports too, carrying every access made through the register, and a
+  `register_ports` block records each such operand with the pins it resolved
+  to, the pins the branches proved, and whether the set is source-derived or a
+  fingerprinted declaration;
 - an explicit target classification for every port: literal-header-verified
   stack protocol, access-only stack interface, or physical-device assumptions.
   Each access-only interface has a content-derived identity shared by equivalent
@@ -306,7 +316,11 @@ versioned filename.
    ABI range when discovery accepts more than one ABI at a block header away from `S0`.
 4. Add narrow public/dynamic ranges or externally owned fields to
    `data/script_contract_overrides.json` when source inspection cannot prove
-   the cross-program bound, then record the reviewed source SHA-256.
+   the cross-program bound, then record the reviewed source SHA-256. A port
+   addressed through a register (`dr<n>`) needs a `register_ports` entry there
+   naming its pins unless the branches around every access bound the register
+   whole, and a pin the program tolerates unconnected needs
+   `ports.<pin>.requirement: "optional"`, or a commissioning plan fails on it.
 5. Declare each device port's canonical peer in `data/script_wiring.json`
    (`docs/SCRIPT_WIRING.md`).
 6. Regenerate contracts and run the full validation suite.
