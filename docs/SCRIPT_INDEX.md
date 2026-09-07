@@ -123,7 +123,7 @@ Production IC10 programs: 184
 | `ic10/power-grid/power_plan_validator_v1_0.ic10` | 106 | Power safety | `power-grid` | `conditional-resident` | Revalidates a complete power plan against exact Reservation and Link generations before mutation. |
 | `ic10/power-grid/power_producer_endpoint_v1_0.ic10` | 64 | Power resource | `power-grid` | `conditional-resident` | Publishes one exact POWER producer/aggregate supply as a Generic Resource Endpoint. |
 | `ic10/power-grid/power_reservation_allocator_v1_0.ic10` | 85 | Power allocation | `power-grid` | `conditional-resident` | Validates, commits, cleans old/orphan epochs, and publishes the active power allocator authority. |
-| `ic10/power-grid/power_reservation_committer_v1_0.ic10` | 102 | Power allocation | `power-grid` | `conditional-resident` | Commits one common POWER reservation epoch with shared-source aggregation and foreign-owner protection. |
+| `ic10/power-grid/power_reservation_committer_v1_0.ic10` | 99 | Power allocation | `power-grid` | `conditional-resident` | Commits one common POWER reservation epoch with shared-source aggregation and foreign-owner protection. |
 | `ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10` | 101 | Power discovery | `power-grid` | `conditional-resident` | Publishes priority-ordered PowerReservation candidates through Generic Directory Adapter ABI3. |
 | `ic10/power-grid/power_sink_flow_builder_v1_0.ic10` | 98 | Power planning | `power-grid` | `conditional-resident` | Builds one sink flow, retrying later sources until a compatible physical path is found. |
 | `ic10/power-grid/power_sink_selector_v1_0.ic10` | 73 | Power planning | `power-grid` | `conditional-resident` | Selects managed POWER sinks in critical/sheddable/charge dispatch order. |
