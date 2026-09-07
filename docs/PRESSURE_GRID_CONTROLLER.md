@@ -365,6 +365,8 @@ LOW -> STORAGE A -> STORAGE B -> HIGH
 
 The Path Enumerator requires the correct medium and valid current Transfer candidate status. It also ignores any link already staged by the same Planner/build epoch, which makes the set of routed paths edge-disjoint within one plan.
 
+A search resumes across requests from register state, so the Enumerator resumes only on a stack its own image published: a boot that finds any other `S0` clears the housing before publishing its header, and the next request starts a fresh search (issue #142; `docs/PRESSURE_MULTI_HOP_ROUTING.md`).
+
 Multiple paths may still share endpoint domains if molar reservation capacity remains.
 
 ## Path reservation and rate normalization

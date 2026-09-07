@@ -100,6 +100,8 @@ The generic bridge commits a new bank only when the transfer topology actually c
 
 `ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10` is now a resumable candidate enumerator rather than a first-match Pathfinder. It keeps bounded-depth DFS state across request/response calls and yields one currently usable LOW-to-HIGH route at a time.
 
+That state lives in registers `r4`..`r8` and `sp` as well as in the stack, and a request that names the SearchId of the previous one (`S35 == S11`) resumes from it without reseeding. Registers survive a reflash, so the resume is a same-image continuation and nothing more: at boot the program reads its own `S0` and trusts `S11` only when the cell already holds `HASH("PressureGridPathEnumerator.v2")`. Any other housing -- fresh, or left by a different program whose `S11` happens to equal the consumer's `S35` -- is cleared with `clr db` before the header is published, so the first request takes the new-key path, which seeds every register the search reads (issue #142). A reflash in the middle of a search step, rather than while the program waits at `yield`, is not distinguished from one between requests.
+
 Enumerator wiring:
 
 ```text

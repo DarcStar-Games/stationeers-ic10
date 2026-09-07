@@ -66,7 +66,7 @@ snapshot_stride_consumers={
  'ic10/power-jobs/power_policy_target_resolver_v1_0.ic10':'get r0 d0 11\nbne r0 3 Bad\nget r10 d0 12\nmul r10 r0 r10\nmul r10 r8 r10\nadd r10 r10 32',
  'ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10':'get r0 d0 11\nbne r0 2 BadDirectory\nget sp d0 12\nmul sp r0 sp\nmul sp r6 sp\nadd sp sp 32',
  'ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10':'get r0 d1 11\nbne r0 2 Publish\nget sp d1 12\nmul sp r0 sp\nmul sp r6 sp\nadd sp sp 32',
- 'ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10':'get sp d0 11\nbne sp 3 Bad\nget r10 d0 12\nmul sp sp r10\nmul sp r4 sp\nadd sp sp 32',
+ 'ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10':'get sp d0 11\nbne sp 3 Bad\nget r10 d0 12\nmul r10 r10 r4\nadd r10 r10 r0\nmul sp sp r10\nadd sp sp 32',
  'ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10':'get r0 d0 11\nbne r0 3 Fail\nget sp d0 12\nmul sp r0 sp\nmul sp r5 sp\nadd sp sp 32',
  'ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10':'get r0 d0 11\nbne r0 3 Loop\nget r13 d0 12\nmul r13 r0 r13\nmul r13 r11 r13\nadd r13 r13 32',
 }

@@ -20,7 +20,8 @@ MAINTAINABILITY_LINES = 120
 # Reviewed spends of the deliberate 120..128 margin. The hard limit still applies.
 SOFT_LIMIT_EXEMPTIONS = {
     "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10":
-        "three-hop path search with fail-closed dynamic Snapshot Directory geometry",
+        "three-hop path search with fail-closed dynamic Snapshot Directory geometry behind a"
+        " reflash guard that clears a foreign housing before the search can resume",
     "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10":
         "publishes the common S0 header; its Generic Telemetry block stays at S96, and it"
         " checks the paired Config Host's S0 identity as well as its S12 schema signature",

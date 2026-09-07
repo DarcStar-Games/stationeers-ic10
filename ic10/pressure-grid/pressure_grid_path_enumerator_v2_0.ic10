@@ -1,3 +1,7 @@
+get r0 db 0
+beq r0 HASH("PressureGridPathEnumerator.v2") Header
+clr db
+Header:
 poke 0 HASH("PressureGridPathEnumerator.v2")
 poke 1 2
 poke 2 32
@@ -46,11 +50,10 @@ poke sp r9
 get sp d0 11
 bne sp 3 Bad
 get r10 d0 12
+mul r10 r10 r4
+add r10 r10 r0
 mul sp sp r10
-mul sp r4 sp
 add sp sp 32
-mul r0 r0 3
-add sp sp r0
 get r10 d0 sp
 add sp sp 1
 get r11 d0 sp
@@ -75,8 +78,6 @@ j Store
 Root:
 getd r0 r11 18
 bne r0 1 Search
-getd r0 r12 18
-bne r0 3 Search
 Store:
 add r0 r8 16
 poke r0 r10
@@ -98,6 +99,7 @@ add sp r8 24
 poke sp 0
 j Search
 Found:
+beqz r8 Search
 add r0 r8 1
 poke 37 r0
 poke 8 r13

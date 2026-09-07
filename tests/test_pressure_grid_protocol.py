@@ -27,6 +27,41 @@ enumerator=IC10((R/'ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10')
 enumerator.run(1);enumerator.stack.update({32:9201,33:1,34:77,35:1,36:1});enumerator.run(2,max_steps=10000)
 if enumerator.stack.get(9)!=1 or enumerator.stack.get(37)!=2 or [enumerator.stack.get(16),enumerator.stack.get(17)]!=[9101,9102]:
  fails.append('Path Enumerator clobbered the selected record ordinal while deriving bank stride')
+# Issue #142: the same-key resume (S35 == S11) trusts r4..r8 and sp, so the enumerator may
+# take it only on a stack its own image published. A boot onto anything else clears first.
+E=(R/'ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10').read_text()
+link_c=Device(9103,stack={100:9,102:77,103:1,109:0},props={'ReferenceId':9103})
+def grid(direct=False):
+ links={56:9101,57:9201,58:9202,59:9102,60:9202,61:9203}
+ if direct: links.update({62:9103,63:9201,64:9203})
+ directory=Device(9000,stack={0:'HASH:GenericSnapshotDirectoryHost.v1',9:'HASH:DirectorySchema.PressureGridLink.v1',11:3,12:8,24:1,26:7,28:len(links)//3,30:0,**links},props={'ReferenceId':9000})
+ return {'d0':directory,'source':source,'junction':junction,'sink':sink,'link_a':link_a,'link_b':link_b,'link_c':link_c}
+def ask(vm,key,token):
+ vm.stack.update({32:9201,33:1,34:77,35:key,36:token}); vm.run(2,max_steps=10000)
+ return [vm.stack.get(k,0) for k in (9,10,37,16,17)]
+CANDIDATE=[1,100,2,9101,9102]; EXHAUSTED=[0,101,0,9101,9102]
+# A foreign image left S11 equal to the consumer's S35, and its registers are whatever it used.
+vm=IC10(E,grid()); vm.stack.update({0:'HASH:SomeOtherContract.v1',11:1,35:1,36:100,32:9201,33:1,34:77})
+vm.reg.update({'r4':1.0,'r5':7.0,'r6':2.0,'r7':0.0,'r8':10.0,'r15':5.0,'sp':3.0}); vm.run(1)
+if [vm.stack.get(k,0) for k in (11,35,36)]!=[0,0,0]:
+ fails.append('Path Enumerator kept a foreign image\'s resume key across boot')
+vm.run(1,max_steps=10000)
+if vm.stack.get(9)!=-1 or vm.stack.get(10)!=0:
+ fails.append('Path Enumerator did not fail closed on the cleared request surface')
+if {k for k,v in vm.stack.items() if v}-{0,1,2,9}:
+ fails.append('Path Enumerator wrote through stale registers on a foreign boot')
+if ask(vm,1,100)!=CANDIDATE or vm.stack.get(33)!=1:
+ fails.append('Path Enumerator did not take the new-key path after a foreign boot')
+# The same image reflashed between requests finds its own S0 and resumes where it stopped.
+vm=IC10(E,grid()); vm.run(1)
+if ask(vm,1,100)!=CANDIDATE: fails.append('Path Enumerator missed the two-hop candidate')
+again=IC10(E,grid()); again.stack=vm.stack; again.reg=dict(vm.reg); again.run(1)
+if again.stack.get(11)!=1 or ask(again,1,101)!=EXHAUSTED:
+ fails.append('Path Enumerator restarted a same-image search instead of resuming it')
+# A direct LOW->HIGH link belongs to the Singlehop Builder and is never a one-hop candidate.
+vm=IC10(E,grid(direct=True)); vm.run(1)
+if ask(vm,1,100)!=CANDIDATE or ask(vm,1,101)!=EXHAUSTED or vm.stack.get(24)!=3:
+ fails.append('Path Enumerator emitted or skipped a one-hop LOW->HIGH link')
 if fails:
  print('Pressure-grid hardening model: FAIL'); [print(' -',f) for f in fails]; sys.exit(1)
 print('Pressure-grid hardening model: PASS')
@@ -35,3 +70,4 @@ print(' - GrantGuard binds lease to coherent topology and Planner commit')
 print(' - Allocator supports quote and topology-bound staging')
 print(' - Route Ranker uses remaining reserved capacity')
 print(' - Link Directory snapshots Transfer topology coherently')
+print(' - Path Enumerator clears a foreign housing before it can resume and resumes only its own image')
