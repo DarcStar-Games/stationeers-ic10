@@ -1,6 +1,6 @@
 # Diagnostic Renderer v1.1: render committed, fully resolved mappings only.
 # It has no Registry dependency and consumes no device screws.
-# S2 record count,S3 refresh quota (default 2,range 1..4).
+# S8 record count,S9 refresh quota (default 2,range 1..4).
 # Records S64..383: [displayRef,controllerRef,channel,Mode,Color], max 64.
 alias display r1
 alias controller r2

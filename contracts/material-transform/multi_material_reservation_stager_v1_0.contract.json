@@ -201,8 +201,8 @@
     "dynamic_write": true,
     "dynamic_read_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 32,
+        "end": 40
       }
     ],
     "dynamic_write_ranges": [
@@ -218,7 +218,7 @@
         "end": 40
       }
     ],
-    "dynamic_read_range_source": "conservative-full-stack",
+    "dynamic_read_range_source": "source-fingerprinted-exception",
     "dynamic_write_range_source": "source-derived",
     "clears_all": true,
     "external_readable_ranges": [],

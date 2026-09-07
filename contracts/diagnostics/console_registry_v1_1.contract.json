@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/diagnostics/console_registry_v1_1.ic10",
-  "source_sha256": "86ffe67bc81551e81a8e4918187bdc7d7c40e70616d58c0cd706f3c372fe5a88",
+  "source_sha256": "ff2f46623bff0c3cd3d958ec47177b4d2ea9079008df81fb3523a971f2320f46",
   "identity": {
     "service_id": "ic10.script.console.registry",
     "implementation_revision": "1.1",
@@ -40,8 +40,12 @@
     "dynamic_write": true,
     "dynamic_read_ranges": [
       {
-        "start": 0,
-        "end": 511
+        "start": 10,
+        "end": 11
+      },
+      {
+        "start": 32,
+        "end": 287
       }
     ],
     "dynamic_write_ranges": [
@@ -66,7 +70,7 @@
         "end": 13
       }
     ],
-    "dynamic_read_range_source": "conservative-full-stack",
+    "dynamic_read_range_source": "source-fingerprinted-exception",
     "dynamic_write_range_source": "source-fingerprinted-exception",
     "clears_all": false,
     "external_readable_ranges": [],

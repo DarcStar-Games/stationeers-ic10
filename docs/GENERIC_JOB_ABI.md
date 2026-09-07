@@ -253,6 +253,8 @@ StateBase(slot) = 288 + 7*slot
 
 The logical eleven-field record is reconstructed from the intent slot plus the active state triplet.
 
+Ownership follows the regions. The Command Executor stages a job by writing intent cells `+1..+7` of one slot in `S32..S287` directly, which is what the Store declares externally writable; `JobId` at `+0` and the whole state region `S288..S511` are written only by the Store. The Store's reviewed stack windows rest on that: its computed state reads take the active-bank bit from the slot's `+0` state cell, so a peer that wrote the state region would break the premise the address is derived from.
+
 This layout is why capacity is 32. The capacity is a physical Job Store ABI property, not a Job schema version. A future larger queue may shard jobs across several Stores without changing the eleven-field logical record.
 
 ## 6. Transactional publication and reflash recovery

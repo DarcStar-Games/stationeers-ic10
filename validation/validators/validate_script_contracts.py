@@ -209,12 +209,16 @@ for rel, generated in sorted(expected.items()):
             validation.fail(f"{actual['source']}: own {direction} fallback is not the full stack")
         # A write range that fell back to the whole stack publishes every cell, so
         # every peer reading this program passes whatever it asks for and every
-        # header constant is withheld. That is a gap in the proof, not a fact
-        # about the source: prove the address, or review a window for it.
-        if direction == "write" and provenance == "conservative-full-stack":
+        # header constant is withheld; a read range that fell back accepts every
+        # cell, so every peer writing this program passes whatever it posts. Either
+        # is a gap in the proof, not a fact about the source: prove the address, or
+        # review a window for it.
+        if provenance == "conservative-full-stack":
+            surface = "publishes" if direction == "write" else "accepts"
             validation.fail(
-                f"{actual['source']}: a computed own-stack write the branch bounds cannot follow"
-                " publishes the whole stack; declare a reviewed dynamic_write_ranges window"
+                f"{actual['source']}: a computed own-stack {direction} the branch bounds cannot"
+                f" follow {surface} the whole stack; declare a reviewed"
+                f" dynamic_{direction}_ranges window"
             )
         effective_cells = {cell for item in ranges for cell in range(item["start"], item["end"] + 1)}
         proven_cells = {cell for item in proven_ranges for cell in range(item["start"], item["end"] + 1)}

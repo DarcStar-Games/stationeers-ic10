@@ -26,6 +26,16 @@
   },
   "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10": {
    "source_sha256": "eed4370049cca86ef6d7012b8d4ab2e432193adde97f86100eeb8e936c98ffea",
+   "dynamic_read_ranges": [
+    [
+     18,
+     401
+    ],
+    [
+     448,
+     511
+    ]
+   ],
    "dynamic_write_ranges": [
     [
      18,
@@ -448,6 +458,16 @@
   },
   "ic10/dependency-planning/dependency_plan_store_v2_0.ic10": {
    "source_sha256": "45b2df22309b90253281494fb3b7bb0622598c20caf7dbd92a2601d3b5738637",
+   "dynamic_read_ranges": [
+    [
+     14,
+     20
+    ],
+    [
+     128,
+     383
+    ]
+   ],
    "dynamic_write_ranges": [
     [
      32,
@@ -474,6 +494,15 @@
     [
      128,
      383
+    ]
+   ]
+  },
+  "ic10/dependency-planning/item_producer_resolver_v1_0.ic10": {
+   "source_sha256": "f228093388bad95bb6772754fba4776684afe33140b8f85dc2928865a49ec1a2",
+   "dynamic_read_ranges": [
+    [
+     32,
+     65
     ]
    ]
   },
@@ -539,7 +568,17 @@
    }
   },
   "ic10/diagnostics/console_registry_v1_1.ic10": {
-   "source_sha256": "86ffe67bc81551e81a8e4918187bdc7d7c40e70616d58c0cd706f3c372fe5a88",
+   "source_sha256": "ff2f46623bff0c3cd3d958ec47177b4d2ea9079008df81fb3523a971f2320f46",
+   "dynamic_read_ranges": [
+    [
+     10,
+     11
+    ],
+    [
+     32,
+     287
+    ]
+   ],
    "dynamic_write_ranges": [
     [
      10,
@@ -548,6 +587,24 @@
     [
      32,
      287
+    ]
+   ]
+  },
+  "ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10": {
+   "source_sha256": "16d5cd1fef43830934d5ac553267bc6fa0fe89f94628f4d80a61c049587ce6a6",
+   "dynamic_read_ranges": [
+    [
+     16,
+     39
+    ]
+   ]
+  },
+  "ic10/diagnostics/diagnostic_renderer_v1_1.ic10": {
+   "source_sha256": "4eb6aaa100314c46049a6c43a2506c75e2dcba412078bb205fdf4f8cf71ecc02",
+   "dynamic_read_ranges": [
+    [
+     64,
+     383
     ]
    ]
   },
@@ -635,6 +692,16 @@
   },
   "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10": {
    "source_sha256": "2e3615cbc0a1f39b3b2b81d7bc34e18be8c4382a1deb2b3a38b38af753201b8a",
+   "dynamic_read_ranges": [
+    [
+     17,
+     19
+    ],
+    [
+     32,
+     415
+    ]
+   ],
    "dynamic_write_ranges": [
     [
      25,
@@ -658,6 +725,22 @@
    "external_writable_ranges": [
     [
      9,
+     9
+    ],
+    [
+     11,
+     12
+    ],
+    [
+     14,
+     14
+    ],
+    [
+     16,
+     19
+    ],
+    [
+     22,
      22
     ]
    ]
@@ -768,7 +851,7 @@
      "dynamic_write_ranges": [
       [
        32,
-       511
+       287
       ]
      ]
     }
@@ -776,6 +859,12 @@
   },
   "ic10/generic-jobs/generic_job_store_v1_0.ic10": {
    "source_sha256": "38b99687c68cea89821b8b1a41546d708ebd764ee43e81feb8f65eb398c0200b",
+   "dynamic_read_ranges": [
+    [
+     288,
+     511
+    ]
+   ],
    "dynamic_write_ranges": [
     [
      32,
@@ -795,7 +884,7 @@
    "external_writable_ranges": [
     [
      32,
-     511
+     287
     ]
    ],
    "publication_rules": [
@@ -999,6 +1088,12 @@
   },
   "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10": {
    "source_sha256": "c459656f07e05d4265e2a2c76db02a8c9db373b6a1f7be229d85bbc79b4274b8",
+   "dynamic_read_ranges": [
+    [
+     32,
+     40
+    ]
+   ],
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -1425,6 +1520,12 @@
   },
   "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10": {
    "source_sha256": "3bfebcc4c2c8b153151378ba89788af30dd1e74b5b6e306f43be03a3cda5fbe2",
+   "dynamic_read_ranges": [
+    [
+     16,
+     31
+    ]
+   ],
    "dynamic_write_ranges": [
     [
      16,

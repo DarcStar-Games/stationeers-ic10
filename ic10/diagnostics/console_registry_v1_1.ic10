@@ -1,5 +1,5 @@
 # Console Registry v1.1: sort diagnostic LED displays and mirror sinks.
-# Enrolled devices use NameHash S7 (0 defaults to HASH("DiagAuto")).
+# Enrolled devices use NameHash S9 (0 defaults to HASH("DiagAuto")).
 # S8 active bank,S10/11 generation A/B,S12/13 console count A/B.
 # Console A=S32..159/B=S160..287 as [PrefabHash,ReferenceId].
 alias ref r1
