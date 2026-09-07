@@ -123,7 +123,7 @@ S36 request generation; written last
 Response surface:
 
 ```text
-S37  path length: 2 or 3; 0 when enumeration is exhausted
+S37  path length: 2 or 3; 0 when enumeration is exhausted or the request faulted
 S8   bottleneck candidate mol/tick
 S9   status: 1 candidate, 0 none, -1 dependency/topology fault
 S10  response generation; written last
