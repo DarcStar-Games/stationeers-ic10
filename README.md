@@ -132,7 +132,7 @@ This distinction matters: configuration *values* live in a Host instance, while 
 
 ### Deployment classes
 
-The source bundle contains **173 production-capable IC10 programs**, but they are not all resident services. `USER_DEPLOYMENT_GUIDE.md` maps every one to exactly one operational family and deployment class; release validation rejects undocumented programs. Treat them as five deployment classes:
+The source bundle contains **184 production-capable IC10 programs**, but they are not all resident services. `USER_DEPLOYMENT_GUIDE.md` maps every one to exactly one operational family and deployment class; release validation rejects undocumented programs. Treat them as five deployment classes:
 
 - **resident runtime/control-plane** — controller Runtime/Host/Policy that normally stays powered whenever its family is installed;
 - **conditional resident** — resource, directory, scheduler, and domain services that stay powered only while their optional subsystem/live consumer is enabled;
