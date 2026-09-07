@@ -76,6 +76,18 @@ if ask(vm,1,101)!=[-1,101,0,9101,9102] or vm.stack.get(11)!=0:
  fails.append('Path Enumerator did not fault and drop the resume key when the snapshot changed')
 if ask(vm,1,102)!=[1,102,2,9101,9102] or vm.stack.get(11)!=1:
  fails.append('Path Enumerator kept faulting on a SearchId it had already faulted')
+# Exhaustion is not a fault: the key stays and a repeat answers 0 again.
+if ask(vm,1,103)!=[0,103,0,9101,9102] or ask(vm,1,104)!=[0,104,0,9101,9102] or vm.stack.get(11)!=1:
+ fails.append('Path Enumerator dropped or resumed past an exhausted search on a repeated SearchId')
+# The writer-flag fault on the new-key path fires after the key is stored and before the count and
+# cursors are seeded. A key kept there resumed over whatever the registers held: on a fresh boot
+# r6 == 0, so the retry backed off at once and answered 0 for a snapshot holding a candidate.
+g=grid(); vm=IC10(E,g); vm.run(1); g['d0'].stack[30]=1
+if ask(vm,1,100)!=[-1,100,0,0,0] or vm.stack.get(11)!=0:
+ fails.append('Path Enumerator kept a key it had not finished seeding after a writer-flag fault')
+g['d0'].stack[30]=0
+if ask(vm,1,101)!=[1,101,2,9101,9102]:
+ fails.append('Path Enumerator answered a half-seeded resume instead of searching the snapshot')
 if fails:
  print('Pressure-grid hardening model: FAIL'); [print(' -',f) for f in fails]; sys.exit(1)
 print('Pressure-grid hardening model: PASS')
