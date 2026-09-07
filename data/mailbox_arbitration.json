@@ -221,7 +221,7 @@
     "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10"
    ],
    "serialized_by": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
-   "note": "The Evaluator posts its evaluation request, then hands the target to the Ingress and waits on it; the Ingress posts the mutation-time request while the Evaluator waits. One root, blocking at every hop. An Evaluator reflash while the Ingress is mid-request reopens a one-tick window, which is tracked as its own issue."
+   "note": "The Evaluator posts its evaluation request, then hands the target to the Ingress and waits on it; the Ingress posts the mutation-time request while the Evaluator waits. One root, blocking at every hop. The Evaluator starts no evaluation while the Ingress holds an unanswered request (S25 != S26), so an Evaluator reflashed mid-request waits for the Ingress instead of posting beside it."
   },
   "ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10": {
    "arbitration": "serial",

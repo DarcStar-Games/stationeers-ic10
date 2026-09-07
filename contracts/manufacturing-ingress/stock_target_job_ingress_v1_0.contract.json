@@ -256,7 +256,12 @@
     "dynamic_read_range_source": "none",
     "dynamic_write_range_source": "none",
     "clears_all": true,
-    "external_readable_ranges": [],
+    "external_readable_ranges": [
+      {
+        "start": 25,
+        "end": 25
+      }
+    ],
     "external_writable_ranges": [],
     "fields": [
       {

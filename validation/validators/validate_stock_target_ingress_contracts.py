@@ -31,7 +31,7 @@ need("ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10",
      'HASH("ItemProducerResolver.v1")', 'HASH("JobRequirementView.v1")')
 need("ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
      'HASH("StockTargetDemandView.v1")', 'HASH("StockTargetJobIngress.v1")',
-     "mul r13 r1 3", "put d3 31 r11", "put d3 32 r15")
+     "mul r13 r1 3", "put d3 31 r11", "put d3 32 r15", "get r1 d3 26", "bne r0 r1 Loop")
 need("ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10",
      'HASH("StockTargetProducerView.v1")', 'HASH("StockTargetDemandView.v1")',
      'HASH("GenericPersistentConfigHost.v1")', 'HASH("GenericJobCommandGateway.v5")',

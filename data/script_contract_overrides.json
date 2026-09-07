@@ -715,7 +715,7 @@
    }
   },
   "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10": {
-   "source_sha256": "dbbd8b357f60ce36a473a9052ddf1f6961dc7129df6f9f0756ebaa6e4b3afac5",
+   "source_sha256": "9f22d954fe401e7fd186351009cdb7d9856d3de9f80cada396f73c6df2c43682",
    "ports": {
     "d0": {
      "dynamic_read_ranges": [
@@ -726,6 +726,15 @@
      ]
     }
    }
+  },
+  "ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10": {
+   "source_sha256": "ebb1b84f96033992c6b46de40229154080db6a86b8f4240b39c69c130ec60bc7",
+   "external_readable_ranges": [
+    [
+     25,
+     25
+    ]
+   ]
   },
   "ic10/generic-jobs/generic_job_selector_v3_0.ic10": {
    "source_sha256": "701a44969f730d6c701b71e1fc536ff1fc1b091f78a0700c3d7634f31077c234",

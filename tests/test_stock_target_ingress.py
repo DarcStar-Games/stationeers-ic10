@@ -256,8 +256,8 @@ for status in (-1, -2, -3):
        f"Future View counted root output for an unverifiable child (Child Validity {status})")
 
 
-def pipeline(inventory_changes=False, output_changes=False):
-    """Run the production target-to-Store path with only leaf services stubbed."""
+def build_pipeline(inventory_changes=False, output_changes=False, evaluator_source=None):
+    """Build the production target-to-Store path with only leaf services stubbed."""
     host = Device(200, {
         0: "HASH:GenericPersistentConfigHost.v1", 8: 1,
         12: "HASH:CFG1|ManufacturingStockTarget|1|2|255|255|0|0", 51: 7,
@@ -377,7 +377,7 @@ j Loop
     )
     ingress.run(1)
     evaluator = IC10(
-        src("ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10"),
+        evaluator_source or src("ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10"),
         {"d0": host, "d1": Device(216, producer.stack),
          "d2": Device(220, demand.stack), "d3": Device(221, ingress.stack)},
         self_ref=222,
@@ -386,8 +386,15 @@ j Loop
     actors = [evaluator, ingress, producer, demand, future_view, live_gateway,
               live_executor, live_store, live_plan, resolver, requirement,
               inventory_leaf, claim]
-    run_round_robin(actors, 500)
-    return live_store, evaluator
+    return {"actors": actors, "store": live_store, "evaluator": evaluator,
+            "ingress": ingress, "producer": producer, "demand": demand}
+
+
+def pipeline(**kwargs):
+    """Run the production target-to-Store path to completion."""
+    built = build_pipeline(**kwargs)
+    run_round_robin(built["actors"], 500)
+    return built["store"], built["evaluator"]
 
 
 # The complete production chain creates exactly one root with the fresh deficit.
@@ -409,6 +416,66 @@ changed_output_store, _ = pipeline(output_changes=True)
 ck(changed_output_store.stack.get(23) == 1,
    "changed output-per-batch metadata still published a root")
 
+
+# The Demand View holds one request. An Evaluator reflashed while the Ingress
+# sits between its lane-B reply and the Demand View's latch used to start a
+# fresh evaluation at once and could post into that mailbox in the same tick,
+# displacing the Ingress's token: the Demand View served the Evaluator, the
+# Ingress waited forever for its reply, and the Evaluator then waited forever
+# on the Ingress. The Evaluator now starts no evaluation until the Ingress is
+# idle (S25 == S26), so the reflash waits instead of racing (#145).
+def reflash_during_ingress(evaluator_source):
+    built = build_pipeline(evaluator_source=evaluator_source)
+    evaluator, ingress, producer, demand = (built[key] for key in
+                                           ("evaluator", "ingress", "producer", "demand"))
+    others = built["actors"][4:]
+    # Run until the Ingress holds its lane-B reply and will post to the Demand View next.
+    for _ in range(200):
+        run_round_robin(built["actors"], 1)
+        token = ingress.stack.get(25)
+        if token and token != ingress.stack.get(26) and producer.stack.get(34) == token:
+            break
+    else:
+        ck(False, "pipeline never reached the Ingress's window before its Demand View post")
+        return built, 0, False
+    # Reflash the Evaluator over its own stack: same image, so it boots straight to Loop.
+    fresh = IC10(evaluator_source, evaluator.screws, self_ref=evaluator.self_ref)
+    fresh.stack = evaluator.stack
+    fresh.run(1)
+    # With the Ingress held, let the fresh Evaluator reach the point of posting to the
+    # Demand View: its lane-A reply is ready. A guarded Evaluator never gets there.
+    for _ in range(20):
+        run_round_robin([fresh, producer, *others], 1)
+        if producer.stack.get(19) == fresh.stack.get(30) and fresh.stack.get(30) != token:
+            break
+    # One tick: the Ingress posts, the Evaluator's slice runs, then the Demand View latches.
+    run_round_robin([ingress, fresh, demand, producer, *others], 1)
+    displaced = demand.stack.get(23) != 3 * token + 2
+    run_round_robin([fresh, ingress, producer, demand, *others], 500)
+    built["evaluator"] = fresh
+    return built, token, displaced
+
+
+guarded, guarded_token, guarded_displaced = reflash_during_ingress(
+    src("ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10"))
+ck(not guarded_displaced,
+   "a reflashed Evaluator posted into the Demand View beside the Ingress's request")
+ck(guarded["ingress"].stack.get(26) == guarded_token and guarded["ingress"].stack.get(27) == 1,
+   "the Ingress did not complete its request after the Evaluator reflash")
+ck(guarded["store"].stack.get(23) == 2,
+   "the Evaluator reflash lost the root or published a duplicate")
+ck(guarded["evaluator"].stack.get(8) == 0,
+   "the reflashed Evaluator did not complete an evaluation once the Ingress was idle")
+# The same program without its idle check is the race: the Ingress never gets its
+# reply, and the root it was about to publish never reaches the Store.
+unguarded_source = src("ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10")
+ck("bne r0 r1 Loop\n" in unguarded_source, "the Evaluator's idle check is not where the test expects")
+unguarded, unguarded_token, unguarded_displaced = reflash_during_ingress(
+    unguarded_source.replace("bne r0 r1 Loop\n", ""))
+ck(unguarded_displaced and unguarded["ingress"].stack.get(26) != unguarded_token
+   and unguarded["store"].stack.get(23) == 1,
+   "without the idle check the Evaluator reflash did not strand the Ingress")
+
 if fails:
     print("Stock-target ingress: FAIL")
     for failure in fails:
@@ -423,3 +490,4 @@ print(" - active root output and only unclaimed child surplus contribute to stoc
 print(" - a job counts as a root only when the real Claim View proves no active claim names it;"
       " an unverifiable child makes the scan ambiguous")
 print(" - production evaluator-to-Store flow revalidates demand and output metadata at mutation time")
+print(" - an Evaluator reflashed mid-Ingress waits for it instead of displacing its Demand View request")

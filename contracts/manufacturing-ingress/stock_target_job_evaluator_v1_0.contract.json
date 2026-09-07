@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10",
-  "source_sha256": "dbbd8b357f60ce36a473a9052ddf1f6961dc7129df6f9f0756ebaa6e4b3afac5",
+  "source_sha256": "9f22d954fe401e7fd186351009cdb7d9856d3de9f80cada396f73c6df2c43682",
   "identity": {
     "service_id": "ic10.script.stock.target.job.evaluator",
     "implementation_revision": "1.0",
@@ -177,6 +177,7 @@
       "stack": {
         "literal_reads": [
           0,
+          25,
           26,
           27,
           28
