@@ -35,7 +35,7 @@ The read path is split to keep every Item-13 program below the 120-line maintain
 
 - `ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10` quotes the existing ITEM Resource Reservation Selector. A sufficient quote proves no job is needed. An insufficient quote is usable only when every returned Reservation is exact; lower-bound inventory and directory overflow suppress publication.
 - `ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10` serializes two client lanes over Item Producer Resolver and Job Requirement View. Lane A serves evaluation; lane B re-resolves the same ResourceType at the mutation boundary.
-- `ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10` scans active matching jobs under one even Job Store QueueSequence and one even Dependency Plan Store sequence. A root contributes its full requested output. A dependency child contributes only `FutureQty - aggregateClaims` from Dependency Claim View.
+- `ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10` scans active matching jobs under one even Job Store QueueSequence and one even Dependency Plan Store sequence. A root contributes its full requested output. A dependency child contributes only `FutureQty - aggregateClaims` from Dependency Claim View. A job is a root only when Claim View proves no active claim names it (status `-2`). A plan record that names the job as a child but that Claim View cannot validate (status `-3`) proves nothing either way, so the view reports `-3` and no evaluation publishes on it (GitHub issue #122).
 - `ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10` combines exact stock, unclaimed future output, and hysteresis into one bounded batch decision.
 - `ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10` round-robins the four persistent records and submits at most one proven root per evaluation.
 - `ic10/manufacturing-ingress/stock_target_job_ingress_v1_0.ic10` is the sole Gateway lane-E producer. It revalidates producer identity and output-per-batch, reruns exact demand, and fences the Config Host generation immediately before mutation. It also preserves an in-flight request token across same-stack reflash.
@@ -116,7 +116,7 @@ Inside the family, Producer View's two lanes keep the Evaluator (lane A) and the
 
 ## Failure and restart behavior
 
-Publication is suppressed on invalid or generation-changed config, missing/mismatched service identity, lower-bound inventory deficit, selector overflow, odd or changed Job/Plan sequences, stale Claim View results, mutation-time sufficient stock, changed producer/output-per-batch metadata, or full Job Store capacity.
+Publication is suppressed on invalid or generation-changed config, missing/mismatched service identity, lower-bound inventory deficit, selector overflow, odd or changed Job/Plan sequences, stale Claim View results, a dependency child Claim View cannot validate, mutation-time sufficient stock, changed producer/output-per-batch metadata, or full Job Store capacity.
 
 An evaluator reflash before publication simply starts a new coherent evaluation. Once the ingress writer records a pending token, it keeps replaying the same lane-E token until the Gateway returns the matching response. Gateway and Executor replay markers make that retry idempotent. If the response was committed before a reflash, the active root is visible to Future View and subsequent evaluations subtract it.
 

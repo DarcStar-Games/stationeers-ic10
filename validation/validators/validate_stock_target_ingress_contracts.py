@@ -23,7 +23,8 @@ need("ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10",
      'HASH("ItemResourceReservationSelector.v1")', "and r12 r12 8", "get r13 db 22",
      "move r4 2")
 need("ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10",
-     'HASH("DependencyClaimView.v1")', 'HASH("DependencyPlanStore.v2")', "get r1 d1 27")
+     'HASH("DependencyClaimView.v1")', 'HASH("DependencyPlanStore.v2")', "get r1 d1 27",
+     "beq r0 -2 Root", "beq r0 -3 Unverified", "poke 21 -3")
 need("ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10",
      "sub r0 r0 r9", "ble r0 r4 NoNeed", "slt r0 r12 sp")
 need("ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10",

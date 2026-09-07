@@ -16,20 +16,17 @@ bne r0 HASH("DependencyPlanStore.v2") Bad
 get r14 d0 40
 and r0 r14 1
 bnez r0 Loop
-move r7 0
+move r1 -2
+move r7 128
 Find:
-bge r7 32 Missing
-mul r0 r7 8
-add r0 r0 128
-get r8 d0 r0
+bge r7 384 Missing
+get r8 d0 r7
 beqz r8 Next
 beq r8 r3 Next
-add r0 r0 1
+add r0 r7 1
 get r9 d0 r0
 beqz r9 Next
-bgtz r4 CheckChild
-j CheckResource
-CheckChild:
+blez r4 CheckResource
 bne r9 r4 Next
 CheckResource:
 add r0 r0 1
@@ -42,7 +39,7 @@ get r0 d0 40
 bne r0 r14 Loop
 put d1 13 r9
 put d1 14 r2
-mul r13 r15 64
+mul r13 r15 512
 add r13 r13 r7
 add r13 r13 1
 put d1 15 r13
@@ -53,7 +50,7 @@ bne r0 r13 WaitC
 get r0 d0 40
 bne r0 r14 Loop
 get r0 d1 17
-bne r0 1 Next
+bne r0 1 Unverified
 get r12 d1 19
 get r13 d1 18
 beq r12 7 Next
@@ -62,21 +59,21 @@ move r5 r9
 move r6 r11
 get sp d1 20
 j Count
+Unverified:
+move r1 -3
 Next:
-add r7 r7 1
+add r7 r7 8
 j Find
 Count:
-move r7 0
+move r7 128
 move ra 0
 move r4 0
 CountLoop:
-bge r7 32 CountDone
-mul r0 r7 8
-add r0 r0 128
-get r8 d0 r0
+bge r7 384 CountDone
+get r8 d0 r7
 beqz r8 CountNext
 beq r8 r3 CountNext
-add r0 r0 1
+add r0 r7 1
 get r9 d0 r0
 bne r9 r5 CountNext
 add r0 r0 1
@@ -91,7 +88,7 @@ sub r1 r1 r0
 max r1 r1 0
 add r4 r4 r1
 CountNext:
-add r7 r7 1
+add r7 r7 8
 j CountLoop
 CountDone:
 get r0 d0 40
@@ -107,7 +104,7 @@ poke 20 1
 poke 19 r15
 j Loop
 Missing:
-poke 20 -2
+poke 20 r1
 poke 21 0
 poke 22 0
 poke 23 0
