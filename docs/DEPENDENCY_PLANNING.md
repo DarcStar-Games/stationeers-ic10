@@ -68,6 +68,8 @@ The generator rejects duplicate transform producers for the same ITEM ResourceTy
 
 Planning therefore never manufactures a dependency merely because an eligible seventh storage source was outside the bounded quote.
 
+The leg count the selector publishes is a peer value, and Preflight bounds it again where it first reads it: a count outside `0..6` fails the request rather than folding cells past the six-leg quote table into the fingerprints (#95).
+
 For liveness after a child completes, Preflight computes two ordered rolling fingerprints over the selected Reservation references and semantic generations. These fingerprints are **not reservation authority**. They only distinguish an unchanged short inventory publication from a materially changed quote that requires replanning.
 
 ## Dependency Plan Store

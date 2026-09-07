@@ -32,6 +32,8 @@ beq r0 -3 Overflow
 bne r0 -2 Bad
 get r6 d0 9
 get r7 d0 10
+blt r7 0 Bad
+bgt r7 6 Bad
 move r8 0
 move r9 0
 Precision:

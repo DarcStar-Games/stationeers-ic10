@@ -21,7 +21,7 @@ need("ic10/manufacturing-ingress/stock_target_config_policy_v1_0.ic10",
      'HASH("CFG1|ManufacturingStockTarget|1|2|255|255|0|0")', "bge r4 r3 Bounds")
 need("ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10",
      'HASH("ItemResourceReservationSelector.v1")', "and r12 r12 8", "get r13 db 22",
-     "move r4 2")
+     "move r4 2", "get r7 d0 10", "bgt r7 6 Bad")
 need("ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10",
      'HASH("DependencyClaimView.v1")', 'HASH("DependencyPlanStore.v2")', "get r1 d1 27",
      "beq r0 -2 Root", "beq r0 -3 Unverified", "poke 21 -3")

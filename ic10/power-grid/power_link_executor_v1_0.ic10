@@ -32,6 +32,8 @@ bnez r0 Set
 get r0 d0 28
 bne r0 r7 Set
 get r10 d0 29
+blt r10 0 Set
+bgt r10 8 Set
 l r11 d1 ReferenceId
 move r12 0
 Find:

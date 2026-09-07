@@ -19,6 +19,8 @@ bnez r0 Bad
 get r0 d0 28
 bne r0 r2 Bad
 get r6 d0 29
+blt r6 0 Bad
+bgt r6 8 Bad
 l r12 d1 ReferenceId
 move r4 0
 Flow:
