@@ -8,6 +8,12 @@ The framework keeps production IC10 programs at or below a **120-line maintainab
 
 For review, treat programs at **117 lines or more** as tight: they have at most three lines of framework headroom. The release evidence under `validation/evidence/` captures the validator result for the exact packaged source.
 
+The three inventory figures quoted in prose are defined once, in `framework/ic10_line_budget.py`, and `validation/validators/validate_documentation.py` fails any sentence in `CLAUDE.md`, `README.md`, or `docs/DEPLOYMENT.md` that quotes a different number (issue #164):
+
+- **programs** — every IC10 source file under `ic10/`. Release validation requires each to resolve to exactly one deployment family, so this is also the deployable-program count. It is larger than the explicit `scripts` list in `data/source_manifest.json`, whose generated-deployment rules cover whole generated families without naming their files.
+- **tight programs** — programs at 117 lines or more.
+- **soft-limit exemptions** — programs above the 120-line ceiling. `validation/validators/validate_ic10.py` rejects both an unexempted program over the ceiling and an exemption whose program is within it, so this count is the size of `SOFT_LIMIT_EXEMPTIONS` on any tree that validates.
+
 ## Shared-input consolidation results
 
 Physical-resolution logic exists once in `ic10/shared-input/generic_input_resolver_v1_0.ic10`; configuration adds the 61-line `ic10/controller-config/config_input_bridge_v1_0.ic10` for ordinal-to-physical-slot publication.

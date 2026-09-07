@@ -270,5 +270,11 @@ maintained blocklist of **stale terminology**
 program, update the prose everywhere and add the old phrasing to that blocklist. `docs/ABI_REFERENCE.md`
 is the magic-value/ABI registry; keep it in sync with any new service.
 
+The counts written into this file, `README.md`, and `docs/DEPLOYMENT.md` (programs, programs at
+≥117 lines, soft-limit exemptions, suite scripts) are held to the tree by the same validator, with
+one definition per figure in `framework/ic10_line_budget.py` (issue #164). Adding a program, a program
+crossing 117 lines, a new exemption, or a new suite script fails validation until the sentence that
+quotes the figure moves with it; the failure names the phrase it expected.
+
 `ROADMAP.md` tracks milestones — Items 1–11 are complete (records in `docs/COMPLETED_MILESTONES.md`);
 Item 12 (live-game commissioning evidence) is the only active one.

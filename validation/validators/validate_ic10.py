@@ -8,15 +8,16 @@ from pathlib import Path
 import re
 import sys
 
+from framework.ic10_line_budget import CEILING_LINES, HARD_LIMIT_LINES
 from framework.ic10_registers import dead_register_writes, load_instruction_signatures
 from framework.ic10_source import parse_ic10
 
 ROOT = _PROJECT_ROOT
 SIGNATURES = load_instruction_signatures(ROOT)
-LIMIT_LINES = 128
+LIMIT_LINES = HARD_LIMIT_LINES
 LIMIT_CHARS = 90
 LIMIT_BYTES = 4096
-MAINTAINABILITY_LINES = 120
+MAINTAINABILITY_LINES = CEILING_LINES
 # Reviewed spends of the deliberate 120..128 margin. The hard limit still applies.
 SOFT_LIMIT_EXEMPTIONS = {
     "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10":
