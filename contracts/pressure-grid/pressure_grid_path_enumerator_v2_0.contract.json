@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10",
-  "source_sha256": "3bfebcc4c2c8b153151378ba89788af30dd1e74b5b6e306f43be03a3cda5fbe2",
+  "source_sha256": "b7df4d7d030225a26cf574201a8566bbe69afd25501d89792afddc66401547dd",
   "identity": {
     "service_id": "ic10.script.pressure.grid.path.enumerator",
     "implementation_revision": "2.0",
@@ -121,19 +121,14 @@
       "literal_writes": [],
       "dynamic_read": false,
       "dynamic_write": false,
-      "constraints": [
-        {
-          "address": 18,
-          "operator": "equals",
-          "value": 3
-        }
-      ],
+      "constraints": [],
       "accepted": []
     }
   ],
   "own_stack": {
     "size": 512,
     "literal_reads": [
+      0,
       11,
       32,
       33,
@@ -170,7 +165,7 @@
     "dynamic_write_proven_ranges": [],
     "dynamic_read_range_source": "source-fingerprinted-exception",
     "dynamic_write_range_source": "source-fingerprinted-exception",
-    "clears_all": false,
+    "clears_all": true,
     "external_readable_ranges": [
       {
         "start": 0,
@@ -185,6 +180,7 @@
         "value_type": "hash",
         "semantic_source": "protocol-header",
         "access": [
+          "self-read",
           "self-write"
         ],
         "const": -2010415833
@@ -322,7 +318,7 @@
   "behavior": {
     "publication_rules": [],
     "restart": {
-      "mode": "preserved-unless-overwritten",
+      "mode": "conditional-reset",
       "source": "static-entry-path-analysis"
     },
     "invariants": [

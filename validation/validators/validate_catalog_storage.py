@@ -32,7 +32,7 @@ for p in loader_paths:
 # Programs that legitimately own/initialize their own stacks. Generated loaders are included above.
 private={
  'ic10/controller-discovery/controller_directory_adapter_v4_0.ic10','ic10/controller-config/generic_config_editor_v1_0.ic10','ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10',
- 'ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10',
+ 'ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10','ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10','ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_reservation_directory_adapter_v1_0.ic10',
 'ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10','ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10',
  'ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10','ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10','ic10/material-transform/generic_material_transform_runtime_v2_0.ic10',
  'ic10/material-transform/multi_material_reservation_stager_v1_0.ic10',

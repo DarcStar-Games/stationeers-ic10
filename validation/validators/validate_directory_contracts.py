@@ -66,7 +66,7 @@ snapshot_stride_consumers={
  'ic10/power-jobs/power_policy_target_resolver_v1_0.ic10':'get r0 d0 11\nbne r0 3 Bad\nget r10 d0 12\nmul r10 r0 r10\nmul r10 r8 r10\nadd r10 r10 32',
  'ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10':'get r0 d0 11\nbne r0 2 BadDirectory\nget sp d0 12\nmul sp r0 sp\nmul sp r6 sp\nadd sp sp 32',
  'ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10':'get r0 d1 11\nbne r0 2 Publish\nget sp d1 12\nmul sp r0 sp\nmul sp r6 sp\nadd sp sp 32',
- 'ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10':'get sp d0 11\nbne sp 3 Bad\nget r10 d0 12\nmul sp sp r10\nmul sp r4 sp\nadd sp sp 32',
+ 'ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10':'get sp d0 11\nbne sp 3 Bad\nget r10 d0 12\nmul r10 r10 r4\nadd r10 r10 r0\nmul sp sp r10\nadd sp sp 32',
  'ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10':'get r0 d0 11\nbne r0 3 Fail\nget sp d0 12\nmul sp r0 sp\nmul sp r5 sp\nadd sp sp 32',
  'ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10':'get r0 d0 11\nbne r0 3 Loop\nget r13 d0 12\nmul r13 r0 r13\nmul r13 r11 r13\nadd r13 r13 32',
 }
@@ -131,8 +131,8 @@ need('ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10','bne
 
 # Incomplete snapshots are unusable on transaction-critical paths.
 for f,toks in {
- 'ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10':['get r0 d0 2','add sp r0 29','bgtz r1 LinkBad'],
- 'ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10':['add sp r4 29','bgtz r0 Bad','get r0 d0 2','bne r0 r4 Bad'],
+ 'ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10':['get r0 d0 24','add sp r0 29','bgtz r1 LinkBad'],
+ 'ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10':['add sp r4 29','bgtz r0 Bad','get r0 d0 24','bne r0 r4 Bad'],
  'ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10':['add sp r5 29','bgtz r0 Reject'],
  'ic10/material-transform/material_transform_link_resolver_v1_0.ic10':['add r0 r12 29','bgtz r0 Bad','get r0 d2 2','bne r0 r12 Loop'],
  'ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10':['get r9 db 16','add r0 r8 25','getd r12 r9 r0','bnez r12 Bad','getd r0 r9 24','bne r0 r8 Loop'],

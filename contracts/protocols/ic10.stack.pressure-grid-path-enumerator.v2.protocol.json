@@ -29,6 +29,7 @@
           "value_type": "hash",
           "semantic_source": "protocol-header",
           "access": [
+            "self-read",
             "self-write"
           ],
           "const": -2010415833
@@ -157,7 +158,7 @@
       "behavior": {
         "publication_rules": [],
         "restart": {
-          "mode": "preserved-unless-overwritten",
+          "mode": "conditional-reset",
           "source": "static-entry-path-analysis"
         },
         "invariants": [
