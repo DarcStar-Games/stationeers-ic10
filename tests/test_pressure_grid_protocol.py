@@ -42,7 +42,7 @@ def ask(vm,key,token):
 CANDIDATE=[1,100,2,9101,9102]; EXHAUSTED=[0,101,0,9101,9102]
 # A foreign image left S11 equal to the consumer's S35, and its registers are whatever it used.
 FOREIGN={0:'HASH:SomeOtherContract.v1',11:1,35:1,36:100,32:9201,33:1,34:77}
-STALE={'r4':1.0,'r5':7.0,'r6':2.0,'r7':0.0,'r8':10.0,'r15':5.0,'sp':3.0}
+STALE={'r4':1.0,'r5':7.0,'r6':2.0,'r7':0.0,'r8':10.0,'sp':3.0}
 vm=IC10(E,grid()); vm.stack.update(FOREIGN); vm.reg.update(STALE); vm.run(1)
 if [vm.stack.get(k,0) for k in (11,35,36)]!=[0,0,0]:
  fails.append('Path Enumerator kept a foreign image\'s resume key across boot')
@@ -51,9 +51,9 @@ if {k for k,v in vm.stack.items() if v}-{0,1,2}:
  fails.append('Path Enumerator answered or wrote through stale registers on a foreign boot with no request')
 if ask(vm,1,100)!=CANDIDATE or vm.stack.get(33)!=1:
  fails.append('Path Enumerator did not take the new-key path after a foreign boot')
-# clr db leaves registers alone, so the token echo is reseeded too: a foreign r15 that happens to
-# equal the first token must not make the enumerator treat that request as already answered.
-vm=IC10(E,grid()); vm.stack.update(FOREIGN); vm.reg.update(STALE|{'r15':100.0}); vm.run(1)
+# The answered-token echo is read back from S10, so the clear reseeds it with the stack: a foreign
+# echo that happens to equal the first token must not make that request look already answered.
+vm=IC10(E,grid()); vm.stack.update(FOREIGN|{10:100}); vm.reg.update(STALE); vm.run(1)
 if ask(vm,1,100)!=CANDIDATE:
  fails.append('Path Enumerator let a foreign token echo swallow the first request after boot')
 # The same image reflashed between requests finds its own S0 and resumes where it stopped.
@@ -66,6 +66,28 @@ if again.stack.get(11)!=1 or ask(again,1,101)!=EXHAUSTED:
 vm=IC10(E,grid(direct=True)); vm.run(1)
 if ask(vm,1,100)!=CANDIDATE or ask(vm,1,101)!=EXHAUSTED or vm.stack.get(24)!=3:
  fails.append('Path Enumerator emitted or skipped a one-hop LOW->HIGH link')
+# Issue #169: a fault ends the resume key. The directory republishes into its other bank between
+# requests, so the cursors index a snapshot that is gone: the same SearchId answers -1 once, and
+# the next request under it starts over on the new snapshot instead of faulting forever.
+g=grid(); vm=IC10(E,g); vm.run(1)
+if ask(vm,1,100)!=CANDIDATE: fails.append('Path Enumerator missed the candidate before the bank switch')
+g['d0'].stack.update({24:0,25:8,27:2,29:0,32:9101,33:9201,34:9202,35:9102,36:9202,37:9203})
+if ask(vm,1,101)!=[-1,101,0,9101,9102] or vm.stack.get(11)!=0:
+ fails.append('Path Enumerator did not fault and drop the resume key when the snapshot changed')
+if ask(vm,1,102)!=[1,102,2,9101,9102] or vm.stack.get(11)!=1:
+ fails.append('Path Enumerator kept faulting on a SearchId it had already faulted')
+# Exhaustion is not a fault: the key stays and a repeat answers 0 again.
+if ask(vm,1,103)!=[0,103,0,9101,9102] or ask(vm,1,104)!=[0,104,0,9101,9102] or vm.stack.get(11)!=1:
+ fails.append('Path Enumerator dropped or resumed past an exhausted search on a repeated SearchId')
+# The writer-flag fault on the new-key path fires after the key is stored and before the count and
+# cursors are seeded. A key kept there resumed over whatever the registers held: on a fresh boot
+# r6 == 0, so the retry backed off at once and answered 0 for a snapshot holding a candidate.
+g=grid(); vm=IC10(E,g); vm.run(1); g['d0'].stack[30]=1
+if ask(vm,1,100)!=[-1,100,0,0,0] or vm.stack.get(11)!=0:
+ fails.append('Path Enumerator kept a key it had not finished seeding after a writer-flag fault')
+g['d0'].stack[30]=0
+if ask(vm,1,101)!=[1,101,2,9101,9102]:
+ fails.append('Path Enumerator answered a half-seeded resume instead of searching the snapshot')
 if fails:
  print('Pressure-grid hardening model: FAIL'); [print(' -',f) for f in fails]; sys.exit(1)
 print('Pressure-grid hardening model: PASS')
@@ -75,3 +97,4 @@ print(' - Allocator supports quote and topology-bound staging')
 print(' - Route Ranker uses remaining reserved capacity')
 print(' - Link Directory snapshots Transfer topology coherently')
 print(' - Path Enumerator clears a foreign housing before it can resume and resumes only its own image')
+print(' - Path Enumerator drops its resume key on a fault so the same SearchId searches the new snapshot')
