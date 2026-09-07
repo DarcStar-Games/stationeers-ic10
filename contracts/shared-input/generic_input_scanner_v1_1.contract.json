@@ -11,7 +11,312 @@
     "layer": "Shared input",
     "purpose": "Discovers/classifies physical commissioning controls."
   },
-  "device_ports": [],
+  "device_ports": [
+    {
+      "port": "d0",
+      "role": "d0",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [
+          "Open",
+          "Ratio",
+          "ReferenceId",
+          "Setting"
+        ],
+        "writes": [
+          "Mode"
+        ],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": []
+      },
+      "target": {
+        "kind": "physical-device",
+        "verification": "device-properties",
+        "assumptions": {
+          "properties_read": [
+            "Open",
+            "Ratio",
+            "ReferenceId",
+            "Setting"
+          ],
+          "properties_written": [
+            "Mode"
+          ],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
+    },
+    {
+      "port": "d1",
+      "role": "d1",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [
+          "Open",
+          "Ratio",
+          "ReferenceId",
+          "Setting"
+        ],
+        "writes": [
+          "Mode"
+        ],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": []
+      },
+      "target": {
+        "kind": "physical-device",
+        "verification": "device-properties",
+        "assumptions": {
+          "properties_read": [
+            "Open",
+            "Ratio",
+            "ReferenceId",
+            "Setting"
+          ],
+          "properties_written": [
+            "Mode"
+          ],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
+    },
+    {
+      "port": "d2",
+      "role": "d2",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [
+          "Open",
+          "Ratio",
+          "ReferenceId",
+          "Setting"
+        ],
+        "writes": [
+          "Mode"
+        ],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": []
+      },
+      "target": {
+        "kind": "physical-device",
+        "verification": "device-properties",
+        "assumptions": {
+          "properties_read": [
+            "Open",
+            "Ratio",
+            "ReferenceId",
+            "Setting"
+          ],
+          "properties_written": [
+            "Mode"
+          ],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
+    },
+    {
+      "port": "d3",
+      "role": "d3",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [
+          "Open",
+          "Ratio",
+          "ReferenceId",
+          "Setting"
+        ],
+        "writes": [
+          "Mode"
+        ],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": []
+      },
+      "target": {
+        "kind": "physical-device",
+        "verification": "device-properties",
+        "assumptions": {
+          "properties_read": [
+            "Open",
+            "Ratio",
+            "ReferenceId",
+            "Setting"
+          ],
+          "properties_written": [
+            "Mode"
+          ],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
+    },
+    {
+      "port": "d4",
+      "role": "d4",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [
+          "Open",
+          "Ratio",
+          "ReferenceId",
+          "Setting"
+        ],
+        "writes": [
+          "Mode"
+        ],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": []
+      },
+      "target": {
+        "kind": "physical-device",
+        "verification": "device-properties",
+        "assumptions": {
+          "properties_read": [
+            "Open",
+            "Ratio",
+            "ReferenceId",
+            "Setting"
+          ],
+          "properties_written": [
+            "Mode"
+          ],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
+    },
+    {
+      "port": "d5",
+      "role": "d5",
+      "aliases": [],
+      "requirement": "required",
+      "device_properties": {
+        "reads": [
+          "Open",
+          "Ratio",
+          "ReferenceId",
+          "Setting"
+        ],
+        "writes": [
+          "Mode"
+        ],
+        "slot_reads": [],
+        "slot_writes": []
+      },
+      "stack": {
+        "literal_reads": [],
+        "literal_writes": [],
+        "dynamic_read": false,
+        "dynamic_write": false,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "dynamic_read_range_source": "none",
+        "dynamic_write_range_source": "none",
+        "constraints": []
+      },
+      "target": {
+        "kind": "physical-device",
+        "verification": "device-properties",
+        "assumptions": {
+          "properties_read": [
+            "Open",
+            "Ratio",
+            "ReferenceId",
+            "Setting"
+          ],
+          "properties_written": [
+            "Mode"
+          ],
+          "slot_properties_read": [],
+          "slot_properties_written": []
+        }
+      }
+    }
+  ],
+  "register_ports": {
+    "dr2": {
+      "register": "r2",
+      "pins": [
+        "d0",
+        "d1",
+        "d2",
+        "d3",
+        "d4",
+        "d5"
+      ],
+      "proven_pins": [
+        "d0",
+        "d1",
+        "d2",
+        "d3",
+        "d4",
+        "d5"
+      ],
+      "source": "source-derived"
+    }
+  },
   "network_dependencies": [
     {
       "transport": "reference-id",

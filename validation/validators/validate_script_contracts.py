@@ -50,6 +50,13 @@ UNENFORCED_RANGES = {
     ("ic10/live-commissioning/stack_header_reader_v1_0.ic10", "d0"):
         "diagnostic: reports the header of any header-publishing IC, so pinning one"
         " identity would defeat its purpose",
+    **{
+        ("ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10", f"d{pin}"):
+            "diagnostic: reads the operator-configured cell of whatever device or service sits"
+            " on the pin, reached through register-indexed `dr0` over all six pins, so the"
+            " range is the whole stack and no one identity names the peer"
+        for pin in range(6)
+    },
 }
 
 

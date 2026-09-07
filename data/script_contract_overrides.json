@@ -797,6 +797,101 @@
     }
    }
   },
+  "ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10": {
+   "source_sha256": "19e4dcee73711c58ef1a5865dfb9a2d1c4178d2eebbbeb1700385c6b21146e91",
+   "ports": {
+    "d0": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r4",
+       "source_port": "self",
+       "address": 33
+      }
+     ],
+     "dynamic_read_ranges": [
+      [
+       0,
+       511
+      ]
+     ]
+    },
+    "d1": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r4",
+       "source_port": "self",
+       "address": 33
+      }
+     ],
+     "dynamic_read_ranges": [
+      [
+       0,
+       511
+      ]
+     ]
+    },
+    "d2": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r4",
+       "source_port": "self",
+       "address": 33
+      }
+     ],
+     "dynamic_read_ranges": [
+      [
+       0,
+       511
+      ]
+     ]
+    },
+    "d3": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r4",
+       "source_port": "self",
+       "address": 33
+      }
+     ],
+     "dynamic_read_ranges": [
+      [
+       0,
+       511
+      ]
+     ]
+    },
+    "d4": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r4",
+       "source_port": "self",
+       "address": 33
+      }
+     ],
+     "dynamic_read_ranges": [
+      [
+       0,
+       511
+      ]
+     ]
+    },
+    "d5": {
+     "dynamic_property_sources": [
+      {
+       "operand": "r4",
+       "source_port": "self",
+       "address": 33
+      }
+     ],
+     "dynamic_read_ranges": [
+      [
+       0,
+       511
+      ]
+     ]
+    }
+   }
+  },
   "ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10": {
    "source_sha256": "54ec167ec4aa01d9edc506773257f7c02315fa0910d15032a462ce6adb8cf606",
    "ports": {
@@ -1290,6 +1385,15 @@
     }
    }
   },
+  "ic10/power-jobs/power_job_finalize_v1_0.ic10": {
+   "source_sha256": "64d93c3cf66953aa47e4d50009c3a1991ddddfc4181a98b6312029dcd5547286",
+   "external_writable_ranges": [
+    [
+     15,
+     15
+    ]
+   ]
+  },
   "ic10/power-jobs/power_job_policy_apply_v1_0.ic10": {
    "source_sha256": "21ba6dfa3701a2d6b371f5bdea1f713a0abf126c470ceaaed49ca20b2df32f98",
    "ports": {
@@ -1301,6 +1405,15 @@
       ]
      ]
     }
+   }
+  },
+  "ic10/power-jobs/power_job_scheduler_v1_0.ic10": {
+   "source_sha256": "88fd20209fbd5221ea9bc396d8fabf686aa0981bd9f96e8baa18ee6df4b7558f",
+   "register_ports": {
+    "dr9": [
+     "d1",
+     "d2"
+    ]
    }
   },
   "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": {

@@ -778,7 +778,38 @@
     "note": "peer named by S0 magic check (ResourceProfileView.v1, ABI 1)"
    }
   },
-  "ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10": {},
+  "ic10/live-commissioning/live_commission_snapshot_probe_v1_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "observed device or IC housing",
+    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs (issue #163)."
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "observed device or IC housing",
+    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs (issue #163)."
+   },
+   "d2": {
+    "kind": "physical-device",
+    "role": "observed device or IC housing",
+    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs (issue #163)."
+   },
+   "d3": {
+    "kind": "physical-device",
+    "role": "observed device or IC housing",
+    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs (issue #163)."
+   },
+   "d4": {
+    "kind": "physical-device",
+    "role": "observed device or IC housing",
+    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs (issue #163)."
+   },
+   "d5": {
+    "kind": "physical-device",
+    "role": "observed device or IC housing",
+    "note": "docs/LIVE_COMMISSIONING.md: 'It observes up to six devices/services connected on d0..d5.' Reached through register-indexed dr0 over the pin loop (move r0 0 .. blt r0 6 Scan), so the contract resolves the same six pins the doc names. Read-only: one configured LogicType or one generation-fenced stack cell of whatever is wired there, so the peer is any device or IC housing under commissioning, never one script; the stack-shaped port carries the whole-stack read range that a cell chosen by the operator needs (issue #163)."
+   }
+  },
   "ic10/live-commissioning/stack_cell_monitor_v1_0.ic10": {
    "d0": {
     "kind": "physical-device",
@@ -1579,6 +1610,20 @@
      "ic10/generic-jobs/generic_job_selector_v3_0.ic10"
     ],
     "note": "USER_DEPLOYMENT_GUIDE.md (power-jobs chapter): 'Generic selector `ic10/generic-jobs/generic_job_selector_v3_0.ic10` is configured for exact `JobType.POWER`.' + pin comment '# POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.' [Scheduler boot-writes d0 S18=4 (exact JobType.POWER mode) - the selector's mode cell driven identically in tests/test_power_management.py (gsel.stack.update({...,18:4})); request/ack/result cells (writes 2,3; reads 4..7 etc.) match selector v3's cursor/token/result surface. docs/POWER_MANAGEMENT.md: 'generic_job_selector_v3_0.ic10 is the shared coherent Job selector. POWER Scheduler configures exact JobType.POWER mode.']"
+   },
+   "d1": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-jobs/power_job_prepare_v1_0.ic10"
+    ],
+    "note": "pin comment '# POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.' [Reached through register-indexed dr9: `select r9 r1 2 1` picks 1 (this pin) unless the selected job is RUNNING or VERIFYING, and the reviewed register_ports override resolves dr9 to d1/d2 because WaitWork reloads r9 from own S21. Request surface: S14 slot, S15 JobId, S16 state, S17 JobGeneration, S18 RequestedQuantity, S19 RequiredCapability, S8 Identity, S9 token - matches Prepare's own reads (get r2..r7 db 14..19, get r8 db 8, get r15 db 9); reply S10 token, S11 status, S12 new state, S13 generation. Until #163 the six fields went to S2..S7, Prepare's header cells; tests/test_power_management.py now drives the real Scheduler through this mailbox.]"
+   },
+   "d2": {
+    "kind": "script",
+    "providers": [
+     "ic10/power-jobs/power_job_finalize_v1_0.ic10"
+    ],
+    "note": "pin comment '# POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.' [Reached through register-indexed dr9: `select r9 r1 2 1` picks 2 (this pin) when the selected job is RUNNING (5) or VERIFYING (6), and the reviewed register_ports override resolves dr9 to d1/d2 because WaitWork reloads r9 from own S21. Same request surface as d1 - S14..S19 fields, S8 Identity, S9 token - matches Finalize's own reads (get r2,r4..r7 db 14,16..19, get r8 db 8, get r15 db 9); S15 JobId is part of the shared record layout that Finalize stopped reading in #160 and accepts through a reviewed external_writable_ranges entry; reply S10 token, S11 status, S12 new state, S13 generation (issue #163).]"
    }
   },
   "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": {
@@ -1870,7 +1915,38 @@
   },
   "ic10/printer-directory/printer_capacity_client_v2_0.ic10": {},
   "ic10/printer-directory/printer_directory_adapter_v1_0.ic10": {},
-  "ic10/printer-directory/printer_execution_bank_v2_0.ic10": {},
+  "ic10/printer-directory/printer_execution_bank_v2_0.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "printer",
+    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself (issue #163)."
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "printer",
+    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself (issue #163)."
+   },
+   "d2": {
+    "kind": "physical-device",
+    "role": "printer",
+    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself (issue #163)."
+   },
+   "d3": {
+    "kind": "physical-device",
+    "role": "printer",
+    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself (issue #163)."
+   },
+   "d4": {
+    "kind": "physical-device",
+    "role": "printer",
+    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself (issue #163)."
+   },
+   "d5": {
+    "kind": "physical-device",
+    "role": "printer",
+    "note": "docs/PRINTER_DIRECTORY.md execution bank: six printer slots. Reached through register-indexed dr7 over the pin loop (move r7 0 .. bge r7 6 Publish); reads ReferenceId, slot 1 Occupied, Power, Error, Activate, Lock and sets Lock on a physical printer, no stack access, so the pin faces the game device itself (issue #163)."
+   }
+  },
   "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10": {
    "d0": {
     "kind": "script",
@@ -2139,7 +2215,38 @@
    }
   },
   "ic10/shared-input/generic_input_resolver_v1_0.ic10": {},
-  "ic10/shared-input/generic_input_scanner_v1_1.ic10": {},
+  "ic10/shared-input/generic_input_scanner_v1_1.ic10": {
+   "d0": {
+    "kind": "physical-device",
+    "role": "commissioning screw",
+    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here (issue #163)."
+   },
+   "d1": {
+    "kind": "physical-device",
+    "role": "commissioning screw",
+    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here (issue #163)."
+   },
+   "d2": {
+    "kind": "physical-device",
+    "role": "commissioning screw",
+    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here (issue #163)."
+   },
+   "d3": {
+    "kind": "physical-device",
+    "role": "commissioning screw",
+    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here (issue #163)."
+   },
+   "d4": {
+    "kind": "physical-device",
+    "role": "commissioning screw",
+    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here (issue #163)."
+   },
+   "d5": {
+    "kind": "physical-device",
+    "role": "commissioning screw",
+    "note": "docs/SHARED_INPUT_SYSTEM.md: 'The Scanner loops all six screws.' Reached through register-indexed dr2 (move r2 0 .. blt r2 6 Scan); classifies each screw by its Setting/Mode/Ratio/Open properties. An Input Profile View housing is recognised by PrefabHash and a getd S0 read on its ReferenceId, which is a network dependency rather than a port stack access, so every pin stays a physical device here (issue #163)."
+   }
+  },
   "ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10": {},
   "ic10/transform-catalog/resource_transform_catalog_loader_01_v6_0.ic10": {},
   "ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10": {},

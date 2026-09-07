@@ -239,6 +239,45 @@ source_selector='ic10/power-grid/power_source_selector_v1_0.ic10'
 ck(source_quote(without_guard(source_selector,'blt r12 0 Bad','bgt r12 8 Bad'))==(1,60),
    'witness: the unguarded source selector did not charge the phantom staged usage')
 ck(source_quote((R/source_selector).read_text())==(-1,0),'source selector walked staged usage past the eight-record staging window')
+# The Scheduler hands a selected job to Prepare or Finalize through register-indexed dr9,
+# and the two scenarios above poke the job fields into S14..S19 themselves, which is the
+# one surface a mailbox test has to leave alone: the Scheduler wrote those six fields at
+# S2..S7 -- the peers' header cells -- for the life of the header migration and every
+# step went to Bad (#163). This runs the real Scheduler against the real Prepare and
+# Finalize, whose own stacks are the devices on the Scheduler's d1/d2, with the
+# selector and the three request/response peers of each step answered by hand.
+def scheduler_step(state,gen=3,ticks=12):
+ selector=Device(3001,props={'ReferenceId':3001})
+ life_p,res_p,apply_p=(Device(r,props={'ReferenceId':r}) for r in (3010,3011,3012))
+ life_f,res_f,verify_f=(Device(r,props={'ReferenceId':r}) for r in (3020,3021,3022))
+ prep=IC10((R/'ic10/power-jobs/power_job_prepare_v1_0.ic10').read_text(),{'d0':life_p,'d1':res_p,'d2':apply_p},self_ref=3002)
+ fin=IC10((R/'ic10/power-jobs/power_job_finalize_v1_0.ic10').read_text(),{'d0':life_f,'d1':res_f,'d2':verify_f},self_ref=3003)
+ sched=IC10((R/'ic10/power-jobs/power_job_scheduler_v1_0.ic10').read_text(),{'d0':selector,'d1':Device(3002,prep.stack,{'ReferenceId':3002}),'d2':Device(3003,fin.stack,{'ReferenceId':3003})},self_ref=3004)
+ for vm in (prep,fin,sched):vm.run(1)
+ served={}
+ def answer(dev,token_cell,key,reply):
+  token=dev.stack.get(token_cell,0)
+  if token and served.get(key)!=token:served[key]=token;dev.stack.update(reply(token))
+ for _ in range(ticks):
+  sched.run(1);prep.run(1);fin.run(1)
+  # Selector v3 surface: token echo S21, status S22, slot S23, JobId S24, record mirror S8..S14, state S15, generation S16.
+  answer(selector,20,'sel',lambda t:{21:t,22:1,23:2,24:77,9:1,10:900,13:100,15:state,16:gen})
+  for life in (life_p,life_f):answer(life,14,('life',life.ref),lambda t,life=life:{15:t,8:1,9:life.stack.get(11,0)+1})
+  for res in (res_p,res_f):answer(res,11,('res',res.ref),lambda t:{12:t,13:1,14:999})
+  answer(apply_p,8,'apply',lambda t:{9:t,10:1})
+  answer(verify_f,12,'verify',lambda t:{13:t,8:1})
+ return sched,prep,fin,life_p,life_f
+sched,prep,fin,life_p,life_f=scheduler_step(4)
+ck(sched.stack.get(21)==1 and [prep.stack.get(i) for i in range(14,20)]==[2,77,4,3,100,1] and prep.stack.get(8)==900,
+   'scheduler did not post the READY job record at Prepare S14..S19 / S8 through dr9')
+ck(all(prep.stack.get(i,0)==0 for i in range(2,8)),'scheduler wrote into Prepare header cells S2..S7')
+ck(life_p.stack.get(12)==5 and sched.stack.get(20)==0 and sched.stack.get(31)==1 and sched.stack.get(32)==5 and sched.stack.get(33)==4,
+   f'READY step through the real mailbox did not reach RUNNING: lifecycle S12={life_p.stack.get(12)}, scheduler S31..S33={[sched.stack.get(i) for i in (31,32,33)]}')
+sched,prep,fin,life_p,life_f=scheduler_step(5)
+ck(sched.stack.get(21)==2 and fin.stack.get(16)==5 and fin.stack.get(8)==900 and all(fin.stack.get(i,0)==0 for i in range(2,8)),
+   'scheduler did not post the RUNNING job record at Finalize S14..S19 / S8 through dr9')
+ck(life_f.stack.get(12)==6 and sched.stack.get(31)==1 and sched.stack.get(32)==6,
+   f'RUNNING step through the real mailbox did not reach VERIFYING: lifecycle S12={life_f.stack.get(12)}, scheduler S32={sched.stack.get(32)}')
 if fails:
  print('Power management protocol: FAIL');[print(' -',x) for x in fails];sys.exit(1)
 print('Power management protocol: PASS')
@@ -252,3 +291,4 @@ print(' - live policy target resolver binds unique Reservations and rejects ambi
 print(' - live policy verify settles consumer/battery modes through the bound pair')
 print(' - every Plan Store reader bounds the published flow count at eight before walking the window')
 print(' - live committer reserves a sink\'s import as the sum of SinkW over the flows into it')
+print(' - live Scheduler drives the real Prepare and Finalize through its dr9 mailbox at S14..S19, never their header cells')

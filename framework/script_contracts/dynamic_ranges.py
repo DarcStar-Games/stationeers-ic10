@@ -17,7 +17,12 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Any
 
-from framework.script_contracts.parsing import parse_program, resolve_integer, resolve_port
+from framework.script_contracts.parsing import (
+    RegisterPorts,
+    parse_program,
+    resolve_integer,
+    resolve_ports,
+)
 from framework.script_contracts.value_bounds import ValueBounds
 
 
@@ -85,23 +90,26 @@ def dynamic_range_proofs(
 
 
 def dynamic_port_proofs(
-    source: str, aliases: dict[str, str], integer_aliases: dict[str, int]
+    source: str, aliases: dict[str, str], integer_aliases: dict[str, int],
+    register_ports: RegisterPorts | None = None,
 ) -> dict[tuple[str, str], RangeProof]:
     accesses: list[tuple[int, tuple[str, str], str]] = []
     for index, entry in enumerate(parse_program(source)):
         row = entry["row"]
-        port = direction = address_token = None
+        ports: tuple[str, ...] = ()
+        direction = address_token = None
         if row and row[0] == "get" and len(row) >= 4:
-            port = resolve_port(row[2], aliases)
+            ports = resolve_ports(row[2], aliases, register_ports)
             direction = "read"
             address_token = row[3]
         elif row and row[0] == "put" and len(row) >= 4:
-            port = resolve_port(row[1], aliases)
+            ports = resolve_ports(row[1], aliases, register_ports)
             direction = "write"
             address_token = row[2]
-        if port is None or direction is None or address_token is None or resolve_integer(address_token, integer_aliases) is not None:
+        if not ports or direction is None or address_token is None or resolve_integer(address_token, integer_aliases) is not None:
             continue
-        accesses.append((index, (port, direction), address_token))
+        for port in ports:
+            accesses.append((index, (port, direction), address_token))
     return dynamic_range_proofs(source, integer_aliases, accesses)
 
 

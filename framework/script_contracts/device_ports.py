@@ -27,19 +27,23 @@ from framework.script_contracts.dynamic_ranges import (
 )
 from framework.script_contracts.naming import protocol_id
 from framework.script_contracts.parsing import (
+    RegisterPorts,
     parse_program,
     resolve_integer,
     resolve_literal,
     resolve_port,
+    resolve_ports,
     row_nodes,
 )
 from framework.script_contracts.publication import verified_seqlock_consumer
+from framework.script_contracts.register_ports import analyze_register_ports, register_port_pins
 
 DYNAMIC_PROPERTY_RE = re.compile(r"^(?:r(?:1[0-7]|[0-9])|ra|sp)$")
 
 
 def external_equality_checks(
-    source: str, rows: list[list[str]], aliases: dict[str, str], integer_aliases: dict[str, int]
+    source: str, rows: list[list[str]], aliases: dict[str, str], integer_aliases: dict[str, int],
+    register_ports: RegisterPorts | None = None,
 ) -> dict[str, dict[int, set[Any]]]:
     program = parse_program(source)
     nodes = row_nodes(program)
@@ -49,9 +53,9 @@ def external_equality_checks(
     for index, row in enumerate(rows):
         if len(row) < 4 or row[0] != "get":
             continue
-        port = resolve_port(row[2], aliases)
+        ports = resolve_ports(row[2], aliases, register_ports)
         cell = resolve_integer(row[3], integer_aliases)
-        if port is None or cell is None or not 0 <= cell <= 511:
+        if not ports or cell is None or not 0 <= cell <= 511:
             continue
         register = row[1]
         for later_index, later in enumerate(rows[index + 1:index + 6], index + 1):
@@ -70,7 +74,8 @@ def external_equality_checks(
                         side_effect_barriers=True,
                     )
                 ):
-                    checks[port][cell].add(expected)
+                    for port in ports:
+                        checks[port][cell].add(expected)
                 break
             if len(later) >= 2 and later[1] == register and later[0] not in {"beq", "bne", "beqz", "bnez"}:
                 break
@@ -205,56 +210,56 @@ def _optional_ports(source: str) -> set[str]:
     return optional_ports
 
 
-def _scan_port_accesses(rows: list[list[str]], aliases: dict[str, str], integer_aliases: dict[str, int], ensure) -> None:
-    """Record every stack, property, and slot access each instruction makes on a port."""
+def _scan_port_accesses(
+    rows: list[list[str]], aliases: dict[str, str], integer_aliases: dict[str, int], ensure,
+    register_ports: RegisterPorts | None = None,
+) -> None:
+    """Record every stack, property, and slot access each instruction makes on a port.
+
+    A register-indexed operand records the access on every pin its register can
+    name: the contract is an upper bound on what the port may touch, and which
+    pin one execution picks is not a fact the source carries.
+    """
     for row in rows:
         if row[0] == "alias":
             continue
-        referenced = {resolve_port(token, aliases) for token in row}
-        for port in referenced - {None}:
-            ensure(port)
+        for token in row:
+            for port in resolve_ports(token, aliases, register_ports):
+                ensure(port)
         op = row[0]
         if op == "get" and len(row) >= 4:
-            port = resolve_port(row[2], aliases)
-            if port:
-                address = resolve_integer(row[3], integer_aliases)
+            address = resolve_integer(row[3], integer_aliases)
+            for port in resolve_ports(row[2], aliases, register_ports):
                 target = ensure(port)["stack"]
                 target["dynamic_read"] |= address is None
                 if address is not None:
                     target["literal_reads"].add(address)
         elif op == "put" and len(row) >= 4:
-            port = resolve_port(row[1], aliases)
-            if port:
-                address = resolve_integer(row[2], integer_aliases)
+            address = resolve_integer(row[2], integer_aliases)
+            for port in resolve_ports(row[1], aliases, register_ports):
                 target = ensure(port)["stack"]
                 target["dynamic_write"] |= address is None
                 if address is not None:
                     target["literal_writes"].add(address)
         elif op in {"l", "lr"} and len(row) >= 4:
-            port = resolve_port(row[2], aliases)
-            if port:
+            for port in resolve_ports(row[2], aliases, register_ports):
                 ensure(port)["device_properties"]["reads"].add(row[3])
         elif op in {"s", "sr"} and len(row) >= 4:
-            port = resolve_port(row[1], aliases)
-            if port:
+            for port in resolve_ports(row[1], aliases, register_ports):
                 ensure(port)["device_properties"]["writes"].add(row[2])
         elif op == "ls" and len(row) >= 5:
-            port = resolve_port(row[2], aliases)
-            if port:
-                slot = resolve_integer(row[3], integer_aliases)
+            slot = resolve_integer(row[3], integer_aliases)
+            for port in resolve_ports(row[2], aliases, register_ports):
                 ensure(port)["device_properties"]["slot_reads"].add((slot if slot is not None else "dynamic", row[4]))
         elif op == "ss" and len(row) >= 5:
-            port = resolve_port(row[1], aliases)
-            if port:
-                slot = resolve_integer(row[2], integer_aliases)
+            slot = resolve_integer(row[2], integer_aliases)
+            for port in resolve_ports(row[1], aliases, register_ports):
                 ensure(port)["device_properties"]["slot_writes"].add((slot if slot is not None else "dynamic", row[3]))
         elif op == "bdnvl" and len(row) >= 3:
-            port = resolve_port(row[1], aliases)
-            if port:
+            for port in resolve_ports(row[1], aliases, register_ports):
                 ensure(port)["device_properties"]["reads"].add(row[2])
         elif op == "bdnvs" and len(row) >= 3:
-            port = resolve_port(row[1], aliases)
-            if port:
+            for port in resolve_ports(row[1], aliases, register_ports):
                 ensure(port)["device_properties"]["writes"].add(row[2])
 
 
@@ -312,7 +317,18 @@ def _finalize_port(
         )
 
 
-def analyze_device_ports(source: str, rows: list[list[str]], aliases: dict[str, str], integer_aliases: dict[str, int], overrides: dict[str, Any]) -> list[dict[str, Any]]:
+def analyze_device_ports(
+    source: str, rows: list[list[str]], aliases: dict[str, str], integer_aliases: dict[str, int],
+    overrides: dict[str, Any], register_ports: RegisterPorts | None = None,
+) -> list[dict[str, Any]]:
+    """Every device port the program uses, with what it does through each.
+
+    `register_ports` is the resolved pin set of every `dr<n>` operand; left out,
+    it is derived here from the source and the `register_ports` override.
+    """
+    if register_ports is None:
+        register_ports = register_port_pins(
+            analyze_register_ports(source, integer_aliases, overrides.get("register_ports")))
     state: dict[str, dict[str, Any]] = {}
     alias_names: dict[str, list[str]] = defaultdict(list)
     for name, port in aliases.items():
@@ -330,8 +346,8 @@ def analyze_device_ports(source: str, rows: list[list[str]], aliases: dict[str, 
                       "dynamic_write_range_source": "none", "constraints": []},
         })
 
-    _scan_port_accesses(rows, aliases, integer_aliases, ensure)
-    for port, cells in external_equality_checks(source, rows, aliases, integer_aliases).items():
+    _scan_port_accesses(rows, aliases, integer_aliases, ensure, register_ports)
+    for port, cells in external_equality_checks(source, rows, aliases, integer_aliases, register_ports).items():
         target = ensure(port)["stack"]["constraints"]
         for address, values in sorted(cells.items()):
             for value in sorted(values, key=lambda item: (type(item).__name__, str(item))):
@@ -344,7 +360,7 @@ def analyze_device_ports(source: str, rows: list[list[str]], aliases: dict[str, 
             ensure(port)["role"] = declared["role"]
         if "requirement" in declared:
             ensure(port)["requirement"] = declared["requirement"]
-    proofs = dynamic_port_proofs(source, aliases, integer_aliases)
+    proofs = dynamic_port_proofs(source, aliases, integer_aliases, register_ports)
     optional_ports = _optional_ports(source)
     for port, item in state.items():
         _finalize_port(port, item, optional_ports, overrides, proofs)

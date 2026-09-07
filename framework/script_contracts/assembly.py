@@ -27,6 +27,7 @@ from framework.script_contracts.own_stack import (
     verify_declared_headers,
 )
 from framework.script_contracts.parsing import collect_aliases, parse_rows
+from framework.script_contracts.register_ports import analyze_register_ports, register_port_pins
 from framework.script_contracts.value_bounds import declared_coverage_errors
 from framework.protocol_headers import load_headers
 from framework.source_metadata import deployable_scripts, load_manifest, resolve_script_metadata
@@ -65,7 +66,11 @@ def build_contract(path: Path, root: Path, manifest: dict[str, Any], declared_he
     overrides = overrides or {}
     headers = verify_declared_headers(rows, integer_aliases, declared_headers)
     consumes = verify_declared_consumers(source, rows, port_aliases, integer_aliases, declared_consumers)
-    ports = analyze_device_ports(source, rows, port_aliases, integer_aliases, overrides)
+    # A `dr<n>` operand is a port like any other once its register's pins are
+    # known; every scan below attributes its accesses to each pin it can name.
+    register_ports = analyze_register_ports(source, integer_aliases, overrides.get("register_ports"))
+    pins = register_port_pins(register_ports)
+    ports = analyze_device_ports(source, rows, port_aliases, integer_aliases, overrides, pins)
     for port in ports:
         port["target"] = port_target(port, consumes)
     own_stack, publication_rules = analyze_own_stack(source, rows, integer_aliases, headers, overrides)
@@ -75,7 +80,7 @@ def build_contract(path: Path, root: Path, manifest: dict[str, Any], declared_he
     } | {
         ("db", direction): own_stack[f"dynamic_{direction}_ranges"] for direction in ("read", "write")
     }
-    coverage_errors = declared_coverage_errors(source, port_aliases, integer_aliases, declared_ranges)
+    coverage_errors = declared_coverage_errors(source, port_aliases, integer_aliases, declared_ranges, pins)
     if coverage_errors:
         raise ValueError(f"{rel}: " + "; ".join(coverage_errors))
     provides = [{
@@ -98,6 +103,7 @@ def build_contract(path: Path, root: Path, manifest: dict[str, Any], declared_he
             "purpose": metadata["purpose"],
         },
         "device_ports": ports,
+        **({"register_ports": register_ports} if register_ports else {}),
         "network_dependencies": network_dependencies(source, rows, integer_aliases, overrides),
         "own_stack": {**own_stack, "headers": headers},
         "behavior": {

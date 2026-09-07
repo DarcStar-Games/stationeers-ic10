@@ -75,7 +75,12 @@ from __future__ import annotations
 from typing import Iterable
 
 from framework.script_contracts.control_flow import CallState, call_state_graph, writes_register
-from framework.script_contracts.parsing import parse_program, resolve_integer, resolve_port
+from framework.script_contracts.parsing import (
+    RegisterPorts,
+    parse_program,
+    resolve_integer,
+    resolve_ports,
+)
 
 STACK_CELLS = 512
 MAX_DEPTH = 12
@@ -177,12 +182,14 @@ def region_induction(
 
 def dynamic_accesses(
     program: list[dict], aliases: dict[str, str], integer_aliases: dict[str, int],
+    register_ports: RegisterPorts | None = None,
 ) -> list[tuple[int, str, str, str, list[str]]]:
     """`(index, target, direction, address token, row)` for every computed access.
 
     `target` is a device port name or `db` for the program's own housing stack;
     an access through an unresolvable port token is not one this analysis can
-    attribute to anything, so it is left out.
+    attribute to anything, so it is left out. A register-indexed port yields one
+    entry per pin its register can name.
     """
     found = []
     for index, entry in enumerate(program):
@@ -190,20 +197,21 @@ def dynamic_accesses(
         if not row:
             continue
         if row[0] == "get" and len(row) >= 4:
-            target, direction, token = resolve_port(row[2], aliases), "read", row[3]
+            targets, direction, token = resolve_ports(row[2], aliases, register_ports), "read", row[3]
             if row[2] == "db":
-                target = "db"
+                targets = ("db",)
         elif row[0] == "put" and len(row) >= 4:
-            target, direction, token = resolve_port(row[1], aliases), "write", row[2]
+            targets, direction, token = resolve_ports(row[1], aliases, register_ports), "write", row[2]
             if row[1] == "db":
-                target = "db"
+                targets = ("db",)
         elif row[0] == "poke" and len(row) >= 3:
-            target, direction, token = "db", "write", row[1]
+            targets, direction, token = ("db",), "write", row[1]
         else:
             continue
-        if target is None or resolve_integer(token, integer_aliases) is not None:
+        if resolve_integer(token, integer_aliases) is not None:
             continue
-        found.append((index, target, direction, token, row))
+        for target in targets:
+            found.append((index, target, direction, token, row))
     return found
 
 
@@ -831,6 +839,7 @@ class ValueBounds:
 
 def dynamic_access_cells(
     source: str, aliases: dict[str, str], integer_aliases: dict[str, int],
+    register_ports: RegisterPorts | None = None,
 ) -> list[tuple[str, str, set[int], str]]:
     """`(target, direction, cells, instruction)` for every witnessed dynamic access.
 
@@ -841,7 +850,7 @@ def dynamic_access_cells(
     analyzer = ValueBounds(source, integer_aliases)
     found = []
     for index, target, direction, token, row in dynamic_accesses(
-        analyzer.program, aliases, integer_aliases
+        analyzer.program, aliases, integer_aliases, register_ports
     ):
         cells, _ = analyzer.access_bounds(index, token)
         if cells is not None:
@@ -852,11 +861,12 @@ def dynamic_access_cells(
 def declared_coverage_errors(
     source: str, aliases: dict[str, str], integer_aliases: dict[str, int],
     declared: dict[tuple[str, str], list[dict[str, int]]],
+    register_ports: RegisterPorts | None = None,
 ) -> list[str]:
     """Report every dynamic access reaching cells no declared range covers."""
     errors = []
     for target, direction, cells, instruction in dynamic_access_cells(
-        source, aliases, integer_aliases
+        source, aliases, integer_aliases, register_ports
     ):
         ranges = declared.get((target, direction))
         if ranges is None:
