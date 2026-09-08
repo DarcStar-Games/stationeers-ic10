@@ -18,7 +18,7 @@ a satisfied read of the CapabilityMask. Six such edges survived the Common Stack
 Header migration; two left a program completely non-functional (GitHub issue #42).
 
 A consumer that compares a peer's `S0` against a literal names that peer
-exactly — but only 113 of 264 ports do. The wiring map names the rest.
+exactly — but only 139 of 311 ports do. The wiring map names the rest.
 
 A literal check names the peer only on the paths that pass it. Two consumers
 reached a port's stack around a check that sat on their main path — a boot

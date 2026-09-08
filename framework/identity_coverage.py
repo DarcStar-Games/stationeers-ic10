@@ -69,7 +69,6 @@ from typing import Any
 from framework.register_seeding import BootPaths, Environment
 from framework.script_contracts.control_flow import (
     CallState,
-    call_state_graph,
     call_state_successors,
 )
 from framework.script_contracts.device_ports import equality_check_sites
@@ -132,8 +131,7 @@ class IdentityCoverage:
         # The states a check's rejection leads to, per port: a guard before the
         # check that branches to the same place settles the reads before it.
         self.rejections: dict[CallState, set[str]] = {}
-        states, _ = call_state_graph(self.paths.program)
-        for state in states:
+        for state in self.paths.states:
             ports = self.checks.get(state[0])
             if not ports:
                 continue

@@ -385,7 +385,7 @@ class BootPaths:
         self.private_cells = private_cells
         self.labels = program_labels(self.program)
         self.assigning = assigning_instructions()
-        _states, self.complete = call_state_graph(self.program)
+        self.states, self.complete = call_state_graph(self.program)
         magic = None
         for entry in self.program:
             row = entry["row"]
