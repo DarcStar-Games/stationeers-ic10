@@ -2,8 +2,7 @@
 poke 0 HASH("ResourceEndpoint.v1")
 poke 1 1
 poke 2 0
-l r0 d1 ReferenceId
-poke 14 r0
+poke 14 0
 poke 35 HASH("StorageAccess.Vending")
 poke 52 2 # ResourceClass ITEM
 poke 54 7 # export + import + storage
@@ -16,6 +15,8 @@ bdns d0 Bad
 bdns d1 Bad
 get r0 d1 0
 bne r0 HASH("ResourceProfileView.v1") Bad
+l r0 d1 ReferenceId
+poke 14 r0
 get r14 d1 29
 blez r14 Bad
 get r0 d1 28

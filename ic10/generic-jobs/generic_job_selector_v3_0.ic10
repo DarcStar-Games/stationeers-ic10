@@ -116,4 +116,5 @@ poke 21 r15
 j Loop
 Bad:
 poke 22 -1
-j Publish
+poke 21 r15
+j Loop

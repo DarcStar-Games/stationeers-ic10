@@ -2,8 +2,7 @@
 poke 0 HASH("ResourceEndpoint.v1")
 poke 1 1
 poke 2 0
-l r0 d1 ReferenceId
-poke 14 r0
+poke 14 0
 poke 52 2
 poke 54 2
 poke 55 0
@@ -19,6 +18,8 @@ get r14 d1 29
 blez r14 Bad
 get r0 d1 0
 bne r0 HASH("ResourceProfileView.v1") Bad
+l r0 d1 ReferenceId
+poke 14 r0
 get r0 d1 28
 blez r0 Bad
 get r0 d1 8

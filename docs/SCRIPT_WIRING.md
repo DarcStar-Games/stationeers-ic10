@@ -20,6 +20,18 @@ Header migration; two left a program completely non-functional (GitHub issue #42
 A consumer that compares a peer's `S0` against a literal names that peer
 exactly — but only 113 of 264 ports do. The wiring map names the rest.
 
+A literal check names the peer only on the paths that pass it. Two consumers
+reached a port's stack around a check that sat on their main path — a boot
+fast-path into a resume block, a sibling branch at the top of a loop — and
+acted on whatever was wired (issue #109).
+`validation/validators/validate_identity_coverage.py` walks every path from
+the entry and refuses an access to a declared consumer port on a path that
+never passed the port's check. A state register or private state cell armed
+after the check gates the accesses of later ticks, so the ordinary cross-tick
+state machine proves; a read taken before the check is fine while nothing acts
+on it; a check the previous image passed over a reflash guard counts for
+nothing, because the pin is wiring and a reflash preserves none of it.
+
 ## What it declares, and what it does not
 
 The map names **identity only**. It is not a fifth protocol authority: async

@@ -14,6 +14,8 @@ poke 117 -1
 Loop:
 yield
 bdnvl ConfigHost ReferenceId ConfigBad
+get r0 ConfigHost 0
+bne r0 HASH("GenericPersistentConfigHost.v1") ConfigBad
 l r0 ConfigHost ReferenceId
 get sp db 116
 sne ra r0 sp # host identity change also forces static validation/reload
@@ -26,8 +28,6 @@ get r0 db 117
 bnez ra ValidateHost
 beq r15 r0 Control
 ValidateHost:
-get r0 ConfigHost 0
-bne r0 HASH("GenericPersistentConfigHost.v1") ConfigBad
 get r0 ConfigHost 48
 bne r0 HASH("ControllerPI") ConfigBad
 get r0 ConfigHost 50
