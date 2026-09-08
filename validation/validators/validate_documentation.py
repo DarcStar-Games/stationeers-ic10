@@ -7,6 +7,8 @@ from framework.validation import Validation
 from framework.scan_coverage import require_nonempty, require_nonempty_glob
 from pathlib import Path
 import json,re,sys
+from framework.ic10_line_budget import CEILING_LINES, TIGHT_LINES, line_pressure
+from framework.validation_suite import test_entries, validator_entries
 import tools.generate.update_magic_registry as magic_registry
 ROOT=_PROJECT_ROOT
 validation=Validation(ROOT)
@@ -290,7 +292,7 @@ for name in ('docs/PHASE_PRESSURE_CONTROLLER.md','docs/PRESSURE_DOMAIN_CONTROLLE
 
 # Line counts have one generated documentation source: docs/SCRIPT_INDEX.md.
 line_doc=(ROOT/'docs/LINE_COUNT_OPTIMIZATION.md').read_text()
-if 'docs/SCRIPT_INDEX.md' not in line_doc or '117 lines or more' not in line_doc:
+if 'docs/SCRIPT_INDEX.md' not in line_doc or f'{TIGHT_LINES} lines or more' not in line_doc:
     validation.fail('docs/LINE_COUNT_OPTIMIZATION.md: generated SCRIPT_INDEX/line-pressure policy is missing')
 
 # Manifest-derived synchronization checks. These guard numeric prose that can drift
@@ -342,8 +344,48 @@ if '## Important invariants' in readme:
     nums=[int(n) for n in re.findall(r'(?m)^(\d+)\. \*\*',block)]
     if nums and nums != list(range(1,max(nums)+1)):
         validation.fail(f'README.md: invariant numbering is not contiguous: {nums}')
+    claude=(ROOT/'CLAUDE.md').read_text()
+    if f'`README.md` has the full {len(nums)}-item list' not in claude:
+        validation.fail(f'CLAUDE.md: invariant count is not synchronized to README.md ({len(nums)} numbered invariants)')
+    for found in re.finditer(r'\b(\d+)-item list',claude):
+        if int(found.group(1))!=len(nums):
+            validation.fail(f'CLAUDE.md: invariant count {found.group(0)!r} disagrees with README.md ({len(nums)})')
+else:
+    validation.fail('README.md: the "## Important invariants" section is missing, so its numbering and the count CLAUDE.md quotes cannot be checked')
 
-count=len(list((ROOT/'ic10').rglob('*.ic10')))
+# Hand-written counts are held to the tree (issue #164). Each figure has one definition
+# in framework/ic10_line_budget.py; the suite figures come from the manifest. The
+# sentence has to be present with the current number, and the same phrase forms with any
+# other number fail wherever they appear, so an added program, a program crossing the
+# tight line, a new exemption, or a new suite script fails until the prose moves.
+pressure=line_pressure(ROOT)
+count=pressure.programs
+validator_count=len(validator_entries(ROOT));test_count=len(test_entries(ROOT))
+count_markers={
+    'CLAUDE.md':[f'**{count} Stationeers IC10 assembly programs**',
+        f'the product: {count} production IC10 programs',
+        f'{pressure.tight} of {count} programs sit at ≥{TIGHT_LINES} lines and {pressure.exempt} hold a reviewed `SOFT_LIMIT_EXEMPTIONS` entry',
+        f'an exemption whose program drops back under {CEILING_LINES} fails',
+        f'full suite: {validator_count} validators + {test_count} protocol/execution tests'],
+    'README.md':[f'**{count} production-capable IC10 programs**'],
+    'docs/DEPLOYMENT.md':[f'The production source inventory is **{count} IC10 programs**'],
+}
+for name,markers in count_markers.items():
+    txt=(ROOT/name).read_text()
+    for marker in markers:
+        if marker not in txt:validation.fail(f'{name}: count prose is not synchronized to the tree (missing {marker!r})')
+count_forms=(
+    (r'\b(\d+) (?:Stationeers IC10 assembly|production IC10|production-capable IC10|deployable IC10|IC10) programs\b',(count,),'production program count'),
+    (r'\b(\d+) of (\d+) programs sit at',(pressure.tight,count),f'>={TIGHT_LINES}-line program count'),
+    (r'\b(\d+) hold a reviewed `SOFT_LIMIT_EXEMPTIONS`',(pressure.exempt,),'soft-limit exemption count'),
+    (r'\b(\d+) validators \+ (\d+) protocol/execution tests',(validator_count,test_count),'suite script count'),
+)
+for p in mds:
+    txt=p.read_text(errors='replace')
+    for pattern,expected,label in count_forms:
+        for found in re.finditer(pattern,txt):
+            if tuple(int(g) for g in found.groups())!=expected:
+                validation.fail(f'{p.relative_to(ROOT).as_posix()}: {label} {found.group(0)!r} disagrees with the tree ({expected})')
 cat=(ROOT/'docs/SCRIPT_INDEX.md').read_text()
 if str(count) not in cat:validation.fail(f'docs/SCRIPT_INDEX.md: does not visibly reflect current {count}-script count')
 for name in ('ic10/controller-discovery/controller_directory_adapter_v4_0.ic10','ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_endpoint_directory_adapter_v3_0.ic10','ic10/resource-grid-core/resource_link_directory_adapter_v3_0.ic10','ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/generic-jobs/generic_job_store_v1_0.ic10','ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10','ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10','ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10','ic10/manufacturing/transform_candidate_executor_v2_0.ic10','ic10/manufacturing/print_candidate_executor_v2_0.ic10','ic10/manufacturing/print_material_resolver_v1_0.ic10','ic10/manufacturing/generic_print_runtime_v2_0.ic10','ic10/manufacturing/transform_job_driver_v2_0.ic10','ic10/manufacturing/print_job_driver_v2_0.ic10','ic10/generic-jobs/generic_job_selector_v3_0.ic10','ic10/manufacturing/manufacturing_driver_router_v2_0.ic10','ic10/manufacturing/manufacturing_scheduler_v1_0.ic10','ic10/printer-directory/printer_execution_bank_v2_0.ic10','ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10','ic10/printer-directory/printer_capacity_client_v2_0.ic10'):
@@ -367,4 +409,4 @@ raise SystemExit(validation.finish('Documentation synchronization validation',[
  'generated script index carries current line counts and README invariants are contiguous',
  'Store ABI6 / Loader ABI5 / Coordinator ABI4 and Material Allocator ABI2 are documented consistently',
  'runtime placement, item migration, Adapter ABI3 freeze, and Registry ABI3 fencing are documented',
- f'script index reflects {count} deployable IC10 programs']))
+ f'script index reflects {count} deployable IC10 programs; hand-written counts ({count} programs, {pressure.tight} at >={TIGHT_LINES} lines, {pressure.exempt} exemptions, {validator_count}+{test_count} suite scripts) match the tree']))

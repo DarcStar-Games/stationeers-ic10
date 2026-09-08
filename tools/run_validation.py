@@ -6,6 +6,7 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from pathlib import Path
 import argparse,hashlib,json,shutil,subprocess,sys
+from framework.ic10_line_budget import CEILING_LINES,TIGHT_LINES,line_pressure
 from framework.repository_inventory import InventoryPolicy,LOCAL_TOOLING_DIRECTORIES,repository_files
 from framework.validation_suite import SuiteEntry,TEST_CATEGORY,VALIDATOR_CATEGORY,suite_entries
 
@@ -77,14 +78,13 @@ def finalize(results,entries):
         if code:failed.append(script)
     run.append(f"FULL_SUITE: {'PASS' if not failed else 'FAIL'} ({len(entries)-len(failed)}/{len(entries)} scripts)")
     RUN_LOG.parent.mkdir(exist_ok=True);RUN_LOG.write_text('\n'.join(run)+'\n')
-    production=sorted((ROOT/'ic10').rglob('*.ic10'));counts={p.relative_to(ROOT).as_posix():len(p.read_text().splitlines()) for p in production}
-    max_lines=max(counts.values(),default=0);tight=[n for n,c in counts.items() if c>=117]
+    pressure=line_pressure(ROOT)
     summary=['Stationeers IC10 Framework — Clean Release Validation','=====================================================','',
         f"Overall: {'PASS' if not failed else 'FAIL'} ({len(entries)-len(failed)}/{len(entries)} validation/test scripts)",
         f'Validators: {len(validators)-sum(e.path in failed for e in validators)}/{len(validators)} PASS',
         f'Execution/protocol tests: {len(tests)-sum(e.path in failed for e in tests)}/{len(tests)} PASS',
-        f'Production IC10 programs: {len(production)}',f'Maximum production line count: {max_lines}/120',
-        f'Tight programs (>=117 lines): {len(tight)}','', 'Release hygiene','---------------',
+        f'Production IC10 programs: {pressure.programs}',f'Maximum production line count: {pressure.max_lines}/{CEILING_LINES}',
+        f'Tight programs (>={TIGHT_LINES} lines): {pressure.tight}','', 'Release hygiene','---------------',
         '- docs/SCRIPT_INDEX.md is generated from deployable IC10 source plus data/source_manifest.json metadata.',
         '- contracts/ contains one schema-validated, source-fingerprinted contract per deployable IC10 program plus a provider/consumer protocol registry.',
         '- USER_DEPLOYMENT_GUIDE.md program inventories are machine-linked to data/source_manifest.json deployment-family/class metadata.',
