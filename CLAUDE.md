@@ -20,7 +20,7 @@ Two things follow from that, and they drive almost every convention in the repo:
 Run everything from the repository root (Python 3.10+; `python3` locally).
 
 ```bash
-python3 tools/run_validation.py                   # full suite: 31 validators + 48 protocol/execution tests
+python3 tools/run_validation.py                   # full suite: 32 validators + 49 protocol/execution tests
 python3 tools/run_validation.py --resume          # reuse prior PASSes, only if the input-tree fingerprint matches
 python3 tests/test_job_abi.py                     # run one test  (plain script, exit code = pass/fail)
 python3 validation/validators/validate_ic10.py    # run one validator
@@ -158,7 +158,11 @@ revisions establish *durability*, reservation epochs/ownership tokens authorize 
 - **Fail closed.** Missing capacity, stale generations, duplicate identities, overflowed directories
   (controller 65+), and torn publication found after reflash must block execution, not degrade.
 - **IC10 registers and stack survive reflash and power loss.** Explicitly initialize any persistent
-  register or stack cell whose starting value matters; do not assume zeroes.
+  register or stack cell whose starting value matters; do not assume zeroes. The boot clear and the
+  reflash guard cover the stack; `validation/validators/validate_register_seeding.py` walks every
+  boot path and refuses a register read before that path wrote it (issue #168). A carry that is
+  deliberate needs a `SEEDING_EXEMPTIONS` entry with its reason; a read that is unwritten only over
+  a reflash guard's same-image edge is reported as a carry, not a failure.
 
 ## IC10 source constraints
 
@@ -180,7 +184,7 @@ that file as authoritative for whether an instruction exists; the community wiki
 Minimum compatible game build is 2026-07-02 (`clamp`); the target is 0.2.6428.27798 (2026-08-13),
 not the 2026-08-12 build it patches — see `docs/SOURCES.md` for why that matters to Item 12.
 
-45 of 184 programs sit at ≥117 lines and 16 hold a reviewed `SOFT_LIMIT_EXEMPTIONS` entry in
+47 of 184 programs sit at ≥117 lines and 17 hold a reviewed `SOFT_LIMIT_EXEMPTIONS` entry in
 `validation/validators/validate_ic10.py`; an exemption whose program drops back under 120 fails
 validation, so the list cannot go stale. Do **not** merge adjacent services just to reduce IC count:
 the split boundaries exist to keep transactional ownership explicit and stay under the ceiling. See

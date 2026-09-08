@@ -1,4 +1,8 @@
 # Transform Candidate Readiness ABI1: d0 selected Runtime dependencies.
+get r0 db 0
+beq r0 HASH("TransformCandidateReadiness.v1") Init
+poke 20 0
+Init:
 poke 0 HASH("TransformCandidateReadiness.v1")
 poke 1 1
 poke 2 32

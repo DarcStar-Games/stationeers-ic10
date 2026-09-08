@@ -20,6 +20,7 @@ bne r0 HASH("GenericSnapshotDirectoryHost.v1") Bad
 get r0 d0 9
 bne r0 HASH("DirectorySchema.PressureGridLink.v1") Bad
 get r0 db 35
+blez r0 Bad
 get sp db 11
 beq r0 sp Search
 poke 11 r0
@@ -31,10 +32,11 @@ get r0 d0 sp
 bgtz r0 Bad
 add sp r4 27
 get r6 d0 sp
-beqz r6 None
-mod r7 r2 r6
+move r7 0
 move r8 0
 poke 24 0
+beqz r6 None
+mod r7 r2 r6
 Search:
 get r0 d0 24
 bne r0 r4 Bad

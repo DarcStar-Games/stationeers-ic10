@@ -2,6 +2,8 @@
 poke 0 HASH("MediumPurityGuard.v1")
 poke 1 1
 poke 2 0
+move r6 0
+move r15 0
 Loop:
 yield
 bdns d1 ProfileBad

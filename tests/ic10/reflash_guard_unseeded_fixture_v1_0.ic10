@@ -1,0 +1,19 @@
+# Test fixture: a reflash guard whose clear path never seeds the echo register.
+get r0 db 0
+beq r0 HASH("ReflashGuardUnseededFixture.v1") Header
+clr db
+Header:
+poke 0 HASH("ReflashGuardUnseededFixture.v1")
+poke 1 1
+poke 2 0
+Loop:
+yield
+get r14 db 8
+get r1 db 9
+beq r14 r1 Loop
+beq r14 r15 Loop
+get r4 db 10
+poke 11 r4
+poke 9 r14
+move r15 r14
+j Loop

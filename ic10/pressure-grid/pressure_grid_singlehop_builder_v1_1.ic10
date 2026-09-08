@@ -95,6 +95,7 @@ clamp r7 r7 0 64
 move r8 0
 move r10 0
 move r11 0
+move r13 0
 move r14 1
 j Loop
 Done:

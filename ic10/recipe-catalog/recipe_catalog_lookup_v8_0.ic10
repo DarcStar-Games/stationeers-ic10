@@ -4,6 +4,7 @@ poke 0 HASH("RecipeCatalogLookup.v3")
 poke 1 3
 poke 2 32
 poke 16 0
+move r8 0
 Loop:
 yield
 get r15 db 15

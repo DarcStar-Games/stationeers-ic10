@@ -1,6 +1,7 @@
 poke 0 HASH("LarreStorageReservedMoveClient.v1")
 poke 1 1
 poke 2 32
+move r6 0
 Loop:
 yield
 get r15 db 17

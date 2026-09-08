@@ -1,6 +1,7 @@
 poke 0 HASH("PhasePressureRequestArbiter.v1")
 poke 1 1
 poke 2 0
+move r15 0
 Loop:
 yield
 beqz r15 Start

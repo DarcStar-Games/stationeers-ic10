@@ -141,6 +141,7 @@ poke 19 32
 poke 20 512
 poke 22 32
 poke 29 480
+move r7 0
 Header:
 poke 0 HASH("GenericCatalogStore.v6")
 poke 1 6

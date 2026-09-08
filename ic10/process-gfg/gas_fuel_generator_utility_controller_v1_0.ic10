@@ -4,6 +4,9 @@ poke 0 HASH("ProcessCondition.v1")
 poke 1 1
 poke 2 0
 poke 11 0
+move r2 0
+move r13 0
+move r14 0
 Loop:
 yield
 get r0 db 20

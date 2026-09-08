@@ -468,7 +468,15 @@ in the source is its expected value counts as initialized, because the previous
 image of this exact contract left it so -- identity is `HASH("<Contract>.v<ABI>")`,
 so an equal `S0` names the contract and its ABI both. Nothing else is assumed.
 The path the guard rejects is a fresh or foreign housing and has to publish every
-cell before anything can look, a guard has to compare the register `get` loaded
+cell before anything can look -- and to write every *register* it will read, which is
+the other half of the same rule: registers survive a reflash exactly as the stack does,
+so a register the clear path never seeds holds whatever the previous occupant left, and
+`validation/validators/validate_register_seeding.py` walks every boot path to refuse a
+read of one (issue #168). The skip edge is the one place a register may carry, for
+the reason a cell may: the previous image of this exact contract left it, and a program
+that resumes over it re-validates it against the stack it kept (the Path Enumerator's
+cursors behind its `S11` key). Such a read is reported as a same-image carry, not a
+failure. Also on that path, a guard has to compare the register `get` loaded
 from `S0` against this contract's own magic, and a program that poked its magic
 a line before reading it back has satisfied its own guard and proved nothing.
 The contract layer's header constants read the same proof, so a header an

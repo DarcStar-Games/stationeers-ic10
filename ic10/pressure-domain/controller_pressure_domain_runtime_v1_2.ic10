@@ -7,6 +7,7 @@ poke 96 27182818
 poke 97 2
 poke 98 126
 poke 99 HASH("ControllerPressureDomain")
+move r9 0
 Loop:
 yield
 poke 115 0
@@ -20,6 +21,7 @@ poke 116 r0
 get r0 d5 8
 blez r0 ConfigBad
 get sp d5 51
+blez sp ConfigBad
 get r0 db 117
 bnez ra Reload
 beq sp r0 Inputs

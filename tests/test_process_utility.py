@@ -95,17 +95,17 @@ ck(af.props.get('SettingInput')==0,'embedded furnace pump actuated after final-c
 # Composition mixer: change ProcessCondition generation just before its final demand fence.
 miout=Device(511,props={'ReferenceId':511,'TotalMoles':0,'Pressure':0,'RatioVolatiles':0,'RatioOxygen':0});mid=Device(512,stack={0:'HASH:ProcessCondition.v1',1:1,23:H('Fuel.H2O2'),24:100,10:1,11:1,12:1},props={'ReferenceId':512});midev=Device(513,props={'ReferenceId':513,'Setting':0,'On':0})
 mi=IC10((R/'ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10').read_text(),{'d0':in1,'d1':in2,'d2':miout,'d3':midev,'d4':prof,'d5':mid},self_ref=551);mi.run(1)
-ck(to_pc(mi,88,'get r0 d5 11'),'could not reach composition-mixer final demand cut');mid.stack[11]=2;mi.run(1)
+ck(to_pc(mi,89,'get r0 d5 11'),'could not reach composition-mixer final demand cut');mid.stack[11]=2;mi.run(1)
 ck(midev.props.get('On')==0,'composition mixer actuated on stale ProcessCondition generation')
 # Thermal mixer: same stale ProcessCondition cut.
 thout=Device(521,props={'ReferenceId':521,'Temperature':400,'Pressure':0});thdev=Device(522,props={'ReferenceId':522,'Setting':0,'On':0});threq=Device(523,stack={0:'HASH:ProcessCondition.v1',1:1,24:500,26:600,27:700,10:1,11:1,12:1},props={'ReferenceId':523})
 th=IC10((R/'ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10').read_text(),{'d0':hot,'d1':cold,'d2':thout,'d3':thdev,'d4':threq},self_ref=552);th.run(1)
-ck(to_pc(th,54,'get r0 d4 11'),'could not reach thermal-mixer final demand cut');threq.stack[11]=2;th.run(1)
+ck(to_pc(th,56,'get r0 d4 11'),'could not reach thermal-mixer final demand cut');threq.stack[11]=2;th.run(1)
 ck(thdev.props.get('On')==0,'thermal mixer actuated on stale ProcessCondition generation')
 # GFG: replace PowerPlan sequence immediately before final plan/mixture re-fence.
 gf=Device(531,props={'ReferenceId':531,'PrefabHash':H('StructureGasGenerator'),'Pressure':.5,'Temperature':300,'Error':0,'On':0});pl=Device(532,stack={0:'HASH:PowerDispatchPlanStore.v1',1:1,27:2,30:5000,31:0},props={'ReferenceId':532});amb=Device(533,props={'ReferenceId':533,'Pressure':100,'Temperature':300});mg=Device(534,stack={11:1,13:2},props={'ReferenceId':534})
 gv=IC10((R/'ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10').read_text(),{'d0':gf,'d1':pl,'d2':amb,'d3':mg},self_ref=553);gv.stack.update({16:H('Fuel.H2O2'),17:.1,18:1,19:1000,20:1});gv.run(1)
-ck(to_pc(gv,55,'get r0 d1 27'),'could not reach GFG final PowerPlan cut');pl.stack.update({27:4,30:0,31:0});gv.run(1)
+ck(to_pc(gv,58,'get r0 d1 27'),'could not reach GFG final PowerPlan cut');pl.stack.update({27:4,30:0,31:0});gv.run(1)
 ck(gf.props.get('On')==0,'GFG started from stale/replaced PowerPlan shortage')
 if fails:
  print('Cross-domain process utility protocol: FAIL');[print(' -',x) for x in fails];sys.exit(1)

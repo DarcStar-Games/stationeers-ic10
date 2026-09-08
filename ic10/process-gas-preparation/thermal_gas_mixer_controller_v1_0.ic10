@@ -2,6 +2,8 @@
 poke 0 HASH("ThermalGasMixerController.v1")
 poke 1 1
 poke 2 0
+move r6 0
+move r10 0
 Loop:
 yield
 bdns d4 Bad
