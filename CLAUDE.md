@@ -20,7 +20,7 @@ Two things follow from that, and they drive almost every convention in the repo:
 Run everything from the repository root (Python 3.10+; `python3` locally).
 
 ```bash
-python3 tools/run_validation.py                   # full suite: 32 validators + 49 protocol/execution tests
+python3 tools/run_validation.py                   # full suite: 33 validators + 50 protocol/execution tests
 python3 tools/run_validation.py --resume          # reuse prior PASSes, only if the input-tree fingerprint matches
 python3 tests/test_job_abi.py                     # run one test  (plain script, exit code = pass/fail)
 python3 validation/validators/validate_ic10.py    # run one validator
@@ -152,7 +152,13 @@ revisions establish *durability*, reservation epochs/ownership tokens authorize 
   never fire; a program's check of its *own* `S1` is a torn-image guard and stays.
   `validation/validators/validate_service_identity.py` is authoritative. Block headers away
   from `S0` (Generic Telemetry at `S96`) keep an assigned magic and a separate version cell, because
-  their consumers deliberately accept a version range.
+  their consumers deliberately accept a version range. **The check is worth only the paths it
+  covers**: `validation/validators/validate_identity_coverage.py` walks every path from the entry
+  and refuses an access to a declared consumer port on a path that never passed the port's check
+  (issue #109). A state register or private state cell armed after the check gates later ticks; a
+  read before the check is fine while nothing acts on it; a check the previous image passed over a
+  reflash guard counts for nothing, since the pin is wiring. A reviewed carve-out needs an
+  `IDENTITY_EXEMPTIONS` entry with its reason.
 - **Physical slots are never repurposed.** Removed config fields become reserved holes. "Physical slot"
   (stable 0..31 address) and "active ordinal" (contiguous 1..N UI number) are different concepts.
 - **Fail closed.** Missing capacity, stale generations, duplicate identities, overflowed directories

@@ -14,12 +14,12 @@ move r14 -1 # effective generation
 Loop:
 yield
 bdnvl d3 ReferenceId ConfigBad
+get r0 d3 0
+bne r0 HASH("GenericPersistentConfigHost.v1") ConfigBad
 l r0 d3 ReferenceId
 sne sp r0 r13
 move r13 r0
 poke 116 r0
-get r0 d3 0
-bne r0 HASH("GenericPersistentConfigHost.v1") ConfigBad
 get r15 d3 51
 blez r15 ConfigBad
 bnez sp Reload

@@ -59,6 +59,7 @@ which is the defect the rule exists to catch.
 """
 from __future__ import annotations
 
+from collections.abc import Callable, Iterator
 from dataclasses import dataclass, replace
 import re
 from typing import Any
@@ -86,6 +87,29 @@ ENVIRONMENT_CAP = 32
 REGISTERS = tuple(f"r{number}" for number in range(16)) + ("sp", "ra")
 FRESH = "fresh"
 SAME_IMAGE = "same-image"
+# Own-stack cells only the program writes, with what each holds, so a walk may
+# read a boot-path literal back from them: a state kept in `S20` prunes exactly
+# as one kept in a register does. A reviewed claim, held to the tree by
+# `validation/validators/validate_register_seeding.py`: no wired peer's
+# contract writes the cell and no network write pinned to the program's `S0`
+# identity does.
+PRIVATE_STATE_CELLS: dict[str, dict[int, str]] = {
+    "ic10/power-jobs/power_job_prepare_v1_0.ic10": {20: "step of the prepare request; 0 at boot"},
+    "ic10/power-jobs/power_job_finalize_v1_0.ic10": {20: "step of the finalize request; 0 at boot"},
+    "ic10/power-grid/power_sink_flow_builder_v1_0.ic10": {20: "step of the flow request; 0 at boot"},
+    "ic10/manufacturing/generic_print_runtime_v2_0.ic10": {20: "print job phase; 0 at boot"},
+    "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10": {20: "readiness phase; 0 at boot"},
+    "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10": {20: "feeder phase; 0 on a fresh housing"},
+    "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10": {20: "feeder phase; 0 on a fresh housing"},
+    "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10":
+        {117: "generation of the loaded config; -1 at boot, so the first tick reloads"},
+    "ic10/controller-pi/controller_pi_runtime_v1_1.ic10":
+        {117: "generation of the loaded config; -1 at boot, so the first tick reloads"},
+    "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10":
+        {117: "generation of the loaded config; cleared to 0 at boot, so the first tick reloads"},
+    "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10":
+        {11: "SearchId of the search in progress; cleared to 0, which no request may carry"},
+}
 
 _INDIRECT_REGISTER = re.compile(r"^rr(\d+)$")
 _INDIRECT_DEVICE = re.compile(r"^dr(\d+)$")
@@ -176,10 +200,17 @@ def join(first: Range, second: Range) -> Range:
 
 
 def join_environments(first: Environment, second: Environment) -> Environment:
-    """What both environments agree on: the join of every value known to both."""
+    """What both environments agree on: the join of every value known to both.
+
+    A set-valued entry is a may-fact -- something one of the paths did -- so
+    it joins by union and survives from either side.
+    """
     joined: Environment = {}
     for key, value in first.items():
         other = second.get(key)
+        if isinstance(value, frozenset):
+            joined[key] = value | other if isinstance(other, frozenset) else value
+            continue
         if other is None:
             continue
         if isinstance(value, Range) and isinstance(other, Range):
@@ -187,6 +218,9 @@ def join_environments(first: Environment, second: Environment) -> Environment:
             if not widened.unknown:
                 joined[key] = widened
         elif value == other:
+            joined[key] = value
+    for key, value in second.items():
+        if isinstance(value, frozenset) and key not in joined:
             joined[key] = value
     return joined
 
@@ -351,7 +385,7 @@ class BootPaths:
         self.private_cells = private_cells
         self.labels = program_labels(self.program)
         self.assigning = assigning_instructions()
-        _states, self.complete = call_state_graph(self.program)
+        self.states, self.complete = call_state_graph(self.program)
         magic = None
         for entry in self.program:
             row = entry["row"]
@@ -544,7 +578,7 @@ class BootPaths:
         """The edges a conditional branch can take -- `(taken, environment on that edge)`."""
         op = row[0]
         operator = _AGAINST_ZERO.get(op, op)
-        if operator not in _COMPARISONS or self.labels.get(row[-1]) is None:
+        if operator not in _COMPARISONS or (row[-1] != "ra" and self.labels.get(row[-1]) is None):
             return [(True, env), (False, env)]
         if op in _AGAINST_ZERO:
             if len(row) != 3:
@@ -577,22 +611,33 @@ class BootPaths:
 
     # -- the walk ------------------------------------------------------------
 
-    def unwritten_reads(
-        self, register: str, blocked: tuple[CallState, CallState] | None, tracked: bool = True,
-    ) -> set[int]:
-        """Indices where `register` is read on a path from the entry that never wrote it.
+    def walk(
+        self, blocked: tuple[CallState, CallState] | None = None, tracked: bool = True,
+        stop: Callable[[int, list[str], Environment], bool] | None = None,
+        mark: Callable[[CallState, bool | None, Environment], Environment] | None = None,
+        partition: Callable[[Environment], Any] | None = None,
+    ) -> Iterator[tuple[int, list[str], Environment]]:
+        """Every state a path from the entry reaches, with what that path knows there.
 
-        `blocked` is one edge of the state graph no path may take, which is how
-        the guard's two edges are told apart. An untracked walk knows nothing
-        and decides nothing, so it is the cheap superset a tracked walk is only
-        run to narrow.
+        Yields `(index, row, environment)` on arrival. `stop` ends the path at a
+        state once it has been yielded; `mark` is applied to what a path knows
+        on each edge it leaves a state by, with `taken` naming a branch's edge
+        and None any other. `blocked` is one edge of the state graph no path may take,
+        which is how the guard's two edges are told apart. An untracked walk
+        knows nothing and decides nothing, so it is the cheap superset a
+        tracked walk is only run to narrow.
+
+        Past `ENVIRONMENT_CAP` arrivals at one instruction the walk widens, and
+        `partition` keeps the widening from merging what the question turns on:
+        arrivals are joined only with others in the same partition of their
+        environment, so a distinction the caller names survives however many
+        paths carry it.
         """
         if not self.program:
-            return set()
-        found: set[int] = set()
+            return
         visited: set[tuple[CallState, EnvironmentKey]] = set()
-        arrivals: dict[int, set[EnvironmentKey]] = {}
-        widened: dict[int, Environment] = {}
+        arrivals: dict[tuple[int, Any], set[EnvironmentKey]] = {}
+        widened: dict[tuple[int, Any], Environment] = {}
         pending: list[tuple[CallState, EnvironmentKey]] = [((0, None), ())]
         while pending:
             state, env_key = pending.pop()
@@ -602,42 +647,59 @@ class BootPaths:
             env: Environment = dict(env_key)
             index = state[0]
             row = self.program[index]["row"]
+            yield index, row, env
+            if stop is not None and stop(index, row, env):
+                continue
+            outgoing, _ = call_state_successors(self.program, self.labels, state)
+            edges: list[tuple[CallState, bool | None, Environment]] = []
+            after = self.step(row, env) if tracked else env
+            target = (state[1] if row[-1] == "ra" else self.labels.get(row[-1])) if row else None
+            if tracked and row and row[0].startswith("b") and len(outgoing) == 2 and target is not None:
+                for taken, refined in self.branch(row, after):
+                    wanted = target if taken else index + 1
+                    edges.extend((next_state, taken, refined) for next_state in outgoing if next_state[0] == wanted)
+            else:
+                edges.extend((next_state, None, after) for next_state in outgoing)
+            for next_state, taken, next_env in edges:
+                if blocked is not None and state == blocked[0] and next_state == blocked[1]:
+                    continue
+                if mark is not None:
+                    next_env = mark(state, taken, next_env)
+                # Past the cap, everything arriving here is walked under the
+                # join of all of it: what every path agreed on survives, and
+                # the join only ever widens, so it settles.
+                arrival = (next_state[0], partition(next_env) if partition is not None else None)
+                seen = arrivals.setdefault(arrival, set())
+                if arrival in widened:
+                    next_env = join_environments(widened[arrival], next_env)
+                    widened[arrival] = next_env
+                key: EnvironmentKey = tuple(sorted(next_env.items()))
+                if key not in seen:
+                    seen.add(key)
+                    if len(seen) > ENVIRONMENT_CAP and arrival not in widened:
+                        joined = dict(seen.pop())
+                        for other in seen:
+                            joined = join_environments(joined, dict(other))
+                        widened[arrival] = joined
+                        key = tuple(sorted(joined.items()))
+                pending.append((next_state, key))
+
+    def unwritten_reads(
+        self, register: str, blocked: tuple[CallState, CallState] | None, tracked: bool = True,
+    ) -> set[int]:
+        """Indices where `register` is read on a path from the entry that never wrote it.
+
+        Once a path writes the register nothing further along it can be its
+        first read, so the path ends there.
+        """
+        found: set[int] = set()
+        for index, row, env in self.walk(
+            blocked, tracked, stop=lambda _index, row, env: bool(row) and register in self.writes(row, env),
+        ):
             if row:
                 reads = self.reads(row, env)
                 if register in reads or "*" in reads:
                     found.add(index)
-                if register in self.writes(row, env):
-                    continue
-            outgoing, _ = call_state_successors(self.program, self.labels, state)
-            edges: list[tuple[CallState, Environment]] = []
-            after = self.step(row, env) if tracked else env
-            target = self.labels.get(row[-1]) if row else None
-            if tracked and row and row[0].startswith("b") and len(outgoing) == 2 and target is not None:
-                for taken, refined in self.branch(row, after):
-                    wanted = target if taken else index + 1
-                    edges.extend((next_state, refined) for next_state in outgoing if next_state[0] == wanted)
-            else:
-                edges.extend((next_state, after) for next_state in outgoing)
-            for next_state, next_env in edges:
-                if blocked is not None and state == blocked[0] and next_state == blocked[1]:
-                    continue
-                # Past the cap, everything arriving here is walked under the
-                # join of all of it: what every path agreed on survives, and
-                # the join only ever widens, so it settles.
-                seen = arrivals.setdefault(next_state[0], set())
-                if next_state[0] in widened:
-                    next_env = join_environments(widened[next_state[0]], next_env)
-                    widened[next_state[0]] = next_env
-                key: EnvironmentKey = tuple(sorted(next_env.items()))
-                if key not in seen:
-                    seen.add(key)
-                    if len(seen) > ENVIRONMENT_CAP and next_state[0] not in widened:
-                        joined = dict(seen.pop())
-                        for other in seen:
-                            joined = join_environments(joined, dict(other))
-                        widened[next_state[0]] = joined
-                        key = tuple(sorted(joined.items()))
-                pending.append((next_state, key))
         return found
 
     def findings(self) -> list[UnseededRead]:

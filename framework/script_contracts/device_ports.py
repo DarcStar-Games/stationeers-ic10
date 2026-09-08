@@ -7,6 +7,7 @@ checks before they are believed, and each port resolves to a typed target.
 from __future__ import annotations
 
 from collections import defaultdict
+from dataclasses import dataclass
 import hashlib
 import json
 import re
@@ -41,15 +42,36 @@ from framework.script_contracts.register_ports import analyze_register_ports, re
 DYNAMIC_PROPERTY_RE = re.compile(r"^(?:r(?:1[0-7]|[0-9])|ra|sp)$")
 
 
-def external_equality_checks(
+@dataclass(frozen=True, slots=True)
+class EqualityCheckSite:
+    """One literal stack-cell check in the source: `get rX <port> <cell>` then `bne rX <literal>`.
+
+    `read_node` and `compare_node` are program indices; the check holds on the
+    compare's fallthrough edge. A register-indexed port records one site per
+    pin its register can name.
+    """
+
+    port: str
+    cell: int
+    expected: Any
+    read_node: int
+    compare_node: int
+
+
+def equality_check_sites(
     source: str, rows: list[list[str]], aliases: dict[str, str], integer_aliases: dict[str, int],
     register_ports: RegisterPorts | None = None,
-) -> dict[str, dict[int, set[Any]]]:
+) -> list[EqualityCheckSite]:
+    """Every check a port's declared consumer edge may rest on, in source order.
+
+    A site counts only when the read must reach the compare with the register
+    untouched and the branch rejects before anything succeeds -- the same
+    proof `verify_declared_consumers` believes.
+    """
     program = parse_program(source)
     nodes = row_nodes(program)
-    labels = {entry["label"]: index for index, entry in enumerate(program) if entry["label"]}
     _, _, successors, _ = control_flow_dominators(program)
-    checks: dict[str, dict[int, set[Any]]] = defaultdict(lambda: defaultdict(set))
+    sites: list[EqualityCheckSite] = []
     for index, row in enumerate(rows):
         if len(row) < 4 or row[0] != "get":
             continue
@@ -74,11 +96,22 @@ def external_equality_checks(
                         side_effect_barriers=True,
                     )
                 ):
-                    for port in ports:
-                        checks[port][cell].add(expected)
+                    sites.extend(
+                        EqualityCheckSite(port, cell, expected, read_node, compare_node) for port in ports
+                    )
                 break
             if len(later) >= 2 and later[1] == register and later[0] not in {"beq", "bne", "beqz", "bnez"}:
                 break
+    return sites
+
+
+def external_equality_checks(
+    source: str, rows: list[list[str]], aliases: dict[str, str], integer_aliases: dict[str, int],
+    register_ports: RegisterPorts | None = None,
+) -> dict[str, dict[int, set[Any]]]:
+    checks: dict[str, dict[int, set[Any]]] = defaultdict(lambda: defaultdict(set))
+    for site in equality_check_sites(source, rows, aliases, integer_aliases, register_ports):
+        checks[site.port][site.cell].add(site.expected)
     return checks
 
 

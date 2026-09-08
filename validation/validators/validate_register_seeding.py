@@ -10,13 +10,14 @@ housing path (`fresh`) or only over the same-image edge of a reflash guard
 (`same-image`, a carry the guard exists to allow, reported for the record).
 
 A `fresh` read fails unless `SEEDING_EXEMPTIONS` names it with the reason the
-carry is safe. `PRIVATE_STATE_CELLS` is the reviewed claim that lets the walk
-read a program's own state back from its stack: a cell nothing but the program
-writes, so a value the boot path poked there is the value the next tick reads.
-The claim is checked as far as the tree can see -- no wired peer's contract
-writes the cell, and no network write that pins this program's `S0` identity
-writes it -- and the residue it accepts is a network write with no identity
-check, which nothing in the tree attributes to a target.
+carry is safe. `framework.register_seeding.PRIVATE_STATE_CELLS` is the reviewed
+claim that lets the walk read a program's own state back from its stack: a
+cell nothing but the program writes, so a value the boot path poked there is
+the value the next tick reads. This validator checks the claim as far as the
+tree can see -- no wired peer's contract writes the cell, and no network write
+that pins this program's `S0` identity writes it -- and the residue it accepts
+is a network write with no identity check, which nothing in the tree
+attributes to a target.
 """
 from pathlib import Path as _ProjectPath
 import sys as _project_sys
@@ -24,32 +25,12 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 import sys
 
-from framework.register_seeding import FRESH, BootPaths, peer_written_cells
+from framework.register_seeding import FRESH, PRIVATE_STATE_CELLS, BootPaths, peer_written_cells
 from framework.scan_coverage import require_nonempty
 from framework.script_contracts import build_all
 from framework.script_wiring import load_wiring
 
 ROOT = _PROJECT_ROOT
-# Own-stack cells only the program writes, with what each holds, so the walk
-# may read a boot-path literal back from them. Checked against the wiring and
-# the identity-pinned network writes below; see the module docstring.
-PRIVATE_STATE_CELLS: dict[str, dict[int, str]] = {
-    "ic10/power-jobs/power_job_prepare_v1_0.ic10": {20: "step of the prepare request; 0 at boot"},
-    "ic10/power-jobs/power_job_finalize_v1_0.ic10": {20: "step of the finalize request; 0 at boot"},
-    "ic10/power-grid/power_sink_flow_builder_v1_0.ic10": {20: "step of the flow request; 0 at boot"},
-    "ic10/manufacturing/generic_print_runtime_v2_0.ic10": {20: "print job phase; 0 at boot"},
-    "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10": {20: "readiness phase; 0 at boot"},
-    "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10": {20: "feeder phase; 0 on a fresh housing"},
-    "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10": {20: "feeder phase; 0 on a fresh housing"},
-    "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10":
-        {117: "generation of the loaded config; -1 at boot, so the first tick reloads"},
-    "ic10/controller-pi/controller_pi_runtime_v1_1.ic10":
-        {117: "generation of the loaded config; -1 at boot, so the first tick reloads"},
-    "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10":
-        {117: "generation of the loaded config; cleared to 0 at boot, so the first tick reloads"},
-    "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10":
-        {11: "SearchId of the search in progress; cleared to 0, which no request may carry"},
-}
 # (path, register) -> why the register may be read on a fresh housing before
 # the boot path writes it. An entry no finding matches fails as stale.
 SEEDING_EXEMPTIONS: dict[tuple[str, str], str] = {}

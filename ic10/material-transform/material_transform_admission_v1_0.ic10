@@ -2,8 +2,7 @@
 poke 0 HASH("MaterialTransformAdmission.v1")
 poke 1 1
 poke 2 0
-l r0 d0 ReferenceId
-poke 13 r0
+poke 13 0
 poke 8 0
 Loop:
 yield
@@ -14,6 +13,8 @@ get r14 d0 74
 blez r14 Bad
 get r0 d0 0
 bne r0 HASH("ResourceTransformProfileView.v4") Bad
+l r0 d0 ReferenceId
+poke 13 r0
 get r4 d0 72
 blt r4 1 Bad
 bgt r4 3 Bad
