@@ -350,6 +350,8 @@ if '## Important invariants' in readme:
     for found in re.finditer(r'\b(\d+)-item list',claude):
         if int(found.group(1))!=len(nums):
             validation.fail(f'CLAUDE.md: invariant count {found.group(0)!r} disagrees with README.md ({len(nums)})')
+else:
+    validation.fail('README.md: the "## Important invariants" section is missing, so its numbering and the count CLAUDE.md quotes cannot be checked')
 
 # Hand-written counts are held to the tree (issue #164). Each figure has one definition
 # in framework/ic10_line_budget.py; the suite figures come from the manifest. The
