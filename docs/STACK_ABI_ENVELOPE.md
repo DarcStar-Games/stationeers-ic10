@@ -476,8 +476,8 @@ read of one (issue #168). The skip edge is the one place a register may carry, f
 the reason a cell may: the previous image of this exact contract left it, and a program
 that resumes over it re-validates it against the stack it kept (the Path Enumerator's
 cursors behind its `S11` key). Such a read is reported as a same-image carry, not a
-failure. Also on that path, a guard has to compare the register `get` loaded
-from `S0` against this contract's own magic, and a program that poked its magic
+failure. A guard has to compare the register `get` loaded from `S0` against
+this contract's own magic, and a program that poked its magic
 a line before reading it back has satisfied its own guard and proved nothing.
 The contract layer's header constants read the same proof, so a header an
 identity guard branches past is a constant a consumer's constraint is checked
