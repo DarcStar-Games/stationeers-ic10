@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10",
-  "source_sha256": "21eb2cb4f25a4bac8d74c97155f6ac7bc274a22b1a2cd550e79b1f8c71f57f97",
+  "source_sha256": "5d40e58c3f1e1d4c8d66f10e547a1d141d1452be5424678b4bee17803bde569d",
   "identity": {
     "service_id": "ic10.script.transform.candidate.readiness",
     "implementation_revision": "1.0",
@@ -120,6 +120,7 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
+      0,
       8,
       10,
       11,
@@ -160,6 +161,7 @@
         "value_type": "hash",
         "semantic_source": "protocol-header",
         "access": [
+          "self-read",
           "self-write"
         ],
         "const": 1038073891

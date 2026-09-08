@@ -22,6 +22,7 @@ poke 116 r0
 get r0 d2 8
 blez r0 ConfigBad
 get sp d2 51
+blez sp ConfigBad
 get r0 db 117
 bnez ra Reload
 beq sp r0 Profile

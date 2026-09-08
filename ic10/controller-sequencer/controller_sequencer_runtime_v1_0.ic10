@@ -21,6 +21,7 @@ poke 116 r0
 get r0 d3 0
 bne r0 HASH("GenericPersistentConfigHost.v1") ConfigBad
 get r15 d3 51
+blez r15 ConfigBad
 bnez sp Reload
 beq r15 r14 Control
 Reload:
@@ -92,6 +93,7 @@ move r11 0
 SafeActuate:
 move sp 0
 move ra 0
+bltz r14 End
 j Write
 Actuate:
 seq sp r10 0

@@ -102,7 +102,7 @@ The generic bridge commits a new bank only when the transfer topology actually c
 
 That state lives in registers `r4`..`r8` and `sp` as well as in the stack, and a request that names the SearchId of the previous one (`S35 == S11`) resumes from it without reseeding. Registers survive a reflash, so the resume is a same-image continuation and nothing more: at boot the program reads its own `S0` and trusts `S11` only when the cell already holds `HASH("PressureGridPathEnumerator.v2")`. Any other housing -- fresh, or left by a different program whose `S11` happens to equal the consumer's `S35` -- is cleared with `clr db` before the header is published, so the first request takes the new-key path, which seeds every register the search reads (issue #142). The answered-token echo is compared from `S10` rather than a register, so the clear reseeds it with everything else. A reflash in the middle of a search step, rather than while the program waits at `yield`, is not distinguished from one between requests.
 
-A fault ends the resume key. The bank, generation, and record-width checks that answer `S9 = -1` mid-search say the snapshot the cursors index is gone, and a resume over it could only fault again, so the `Bad` path also zeroes `S11`: the next request under the same SearchId takes the new-key path and searches the current snapshot from the start, re-emitting any candidate it had already answered (issue #169). The same rule covers the writer-flag fault on the new-key path, which fires after the key is stored but before the count and cursors are seeded: a key kept there would resume over unseeded registers and could answer `0` for a snapshot that holds a candidate. An exhausted search (`S9 = 0`) keeps its key and answers `0` again on a repeat.
+A fault ends the resume key. The bank, generation, and record-width checks that answer `S9 = -1` mid-search say the snapshot the cursors index is gone, and a resume over it could only fault again, so the `Bad` path also zeroes `S11`: the next request under the same SearchId takes the new-key path and searches the current snapshot from the start, re-emitting any candidate it had already answered (issue #169). The same rule covers the writer-flag fault on the new-key path, which fires after the key is stored but before the count and cursors are seeded: a key kept there would resume over unseeded registers and could answer `0` for a snapshot that holds a candidate. An exhausted search (`S9 = 0`) keeps its key and answers `0` again on a repeat, which is why the new-key path seeds the cursors before it can answer `0` for an empty directory: the key is already stored, and a repeat resumes into `Search` over them. A SearchId must be positive; the key cell is `0` after the clear, and a request carrying `0` would resume a search that never started, so it faults instead (issue #168).
 
 Enumerator wiring:
 
@@ -116,7 +116,7 @@ Enumerator request surface:
 S32 Planner ReferenceId
 S33 reservation build epoch
 S34 MediumType
-S35 SearchId
+S35 SearchId; positive, a request carrying 0 or less faults
 S36 request generation; written last
 ```
 

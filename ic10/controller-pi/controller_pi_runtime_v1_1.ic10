@@ -21,6 +21,7 @@ poke 116 r0
 get r0 ConfigHost 8
 blez r0 ConfigBad
 get r15 ConfigHost 51
+blez r15 ConfigBad
 get r0 db 117
 bnez ra ValidateHost
 beq r15 r0 Control

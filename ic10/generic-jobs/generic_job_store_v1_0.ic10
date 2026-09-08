@@ -69,6 +69,7 @@ New:
 bgtz r6 Respond
 get r11 db 23
 poke r1 r11
+poke 10 r11
 add r0 r11 1
 poke 23 r0
 move r9 1
@@ -89,7 +90,6 @@ mul r5 r2 3
 add r5 r5 r3
 add r5 r5 1
 poke 9 1
-poke 10 r11
 poke 25 r3
 poke 26 r4
 get r13 db 16

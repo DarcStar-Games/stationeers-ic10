@@ -1,3 +1,7 @@
+get r0 db 0
+beq r0 HASH("GenericPrintRuntime.v2") Init
+poke 20 0
+Init:
 poke 0 HASH("GenericPrintRuntime.v2")
 poke 1 2
 poke 2 32

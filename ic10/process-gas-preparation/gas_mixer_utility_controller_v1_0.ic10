@@ -2,6 +2,7 @@
 poke 0 HASH("GasMixerUtilityController.v1")
 poke 1 1
 poke 2 0
+move r12 0
 Loop:
 yield
 bdns d4 Bad

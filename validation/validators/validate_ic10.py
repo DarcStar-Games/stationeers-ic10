@@ -56,6 +56,9 @@ SOFT_LIMIT_EXEMPTIONS = {
     "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10":
         "existing/new plan orchestration publishing the common header above its relocated"
         " request and cleanup mailboxes",
+    "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10":
+        "seeds the phase register its loop dispatches on at boot (issue #168) on top of a"
+        " scan that already filled the ceiling",
 }
 # A register written by an instruction that nothing in the file reads is a line the
 # program pays for and gets nothing from (issue #160). The analysis is whole-file and

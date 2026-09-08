@@ -1,4 +1,10 @@
 # SDB+Stacker Feeder ABI1. d0 dedicated SDB,d1 Stacker,d2 ITEM Resource Profile.
+get r0 db 0
+beq r0 HASH("StackerFeeder.v1") Init
+poke 24 0
+poke 10 0
+poke 20 0
+Init:
 poke 0 HASH("StackerFeeder.v1")
 poke 1 1
 poke 2 32

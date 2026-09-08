@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/generic_print_runtime_v2_0.ic10",
-  "source_sha256": "67125ece8b7c2b520bf8392a9678f6138e49f72721e8c99018d1b73dfcc52954",
+  "source_sha256": "eb49ddea049294c9e6bcce2e9caf57802f4e13456d9e0c2550c7f05cd7e713ed",
   "identity": {
     "service_id": "ic10.script.generic.print.runtime",
     "implementation_revision": "2.0",
@@ -118,6 +118,7 @@
   "own_stack": {
     "size": 512,
     "literal_reads": [
+      0,
       10,
       11,
       12,
@@ -161,6 +162,7 @@
         "value_type": "hash",
         "semantic_source": "protocol-header",
         "access": [
+          "self-read",
           "self-write"
         ],
         "const": -602030102
