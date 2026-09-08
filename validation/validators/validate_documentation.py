@@ -344,6 +344,12 @@ if '## Important invariants' in readme:
     nums=[int(n) for n in re.findall(r'(?m)^(\d+)\. \*\*',block)]
     if nums and nums != list(range(1,max(nums)+1)):
         validation.fail(f'README.md: invariant numbering is not contiguous: {nums}')
+    claude=(ROOT/'CLAUDE.md').read_text()
+    if f'`README.md` has the full {len(nums)}-item list' not in claude:
+        validation.fail(f'CLAUDE.md: invariant count is not synchronized to README.md ({len(nums)} numbered invariants)')
+    for found in re.finditer(r'\b(\d+)-item list',claude):
+        if int(found.group(1))!=len(nums):
+            validation.fail(f'CLAUDE.md: invariant count {found.group(0)!r} disagrees with README.md ({len(nums)})')
 
 # Hand-written counts are held to the tree (issue #164). Each figure has one definition
 # in framework/ic10_line_budget.py; the suite figures come from the manifest. The

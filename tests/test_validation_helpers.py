@@ -9,6 +9,13 @@ from io import StringIO
 from pathlib import Path
 import tempfile
 
+from framework.ic10_line_budget import (
+    CEILING_LINES,
+    TIGHT_LINES,
+    LinePressure,
+    line_pressure,
+    production_line_counts,
+)
 from framework.json_schema import (
     SchemaValidationError,
     ValidationContext,
@@ -323,6 +330,37 @@ with tempfile.TemporaryDirectory() as directory:
     else:
         raise AssertionError("dynamic glob helper accepted an empty scan")
 
+# The inventory figures the prose quotes are measured at their boundaries: a program
+# one line under TIGHT_LINES is not tight, one at it is; one at CEILING_LINES needs no
+# exemption, one above it does. Nested families count like any other.
+with tempfile.TemporaryDirectory() as directory:
+    root = Path(directory)
+    (root / "ic10" / "family" / "deep").mkdir(parents=True)
+    for name, lines in (
+        ("family/under.ic10", TIGHT_LINES - 1),
+        ("family/tight.ic10", TIGHT_LINES),
+        ("family/deep/ceiling.ic10", CEILING_LINES),
+        ("family/deep/over.ic10", CEILING_LINES + 1),
+    ):
+        (root / "ic10" / name).write_text("yield\n" * lines)
+    (root / "ic10" / "family" / "notes.txt").write_text("not a program\n")
+    assert production_line_counts(root) == {
+        "ic10/family/deep/ceiling.ic10": CEILING_LINES,
+        "ic10/family/deep/over.ic10": CEILING_LINES + 1,
+        "ic10/family/tight.ic10": TIGHT_LINES,
+        "ic10/family/under.ic10": TIGHT_LINES - 1,
+    }
+    assert line_pressure(root) == LinePressure(
+        programs=4, tight=3, exempt=1, max_lines=CEILING_LINES + 1
+    )
+    (root / "empty" / "ic10").mkdir(parents=True)
+    try:
+        line_pressure(root / "empty")
+    except RuntimeError as error:
+        assert "matched no paths" in str(error)
+    else:
+        raise AssertionError("line pressure was measured on a tree with no programs")
+
 entries = suite_entries(_PROJECT_ROOT)
 validators = validator_entries(_PROJECT_ROOT)
 tests = test_entries(_PROJECT_ROOT)
@@ -337,3 +375,4 @@ print(" - one finalizer preserves executable validator PASS/FAIL and exit behavi
 print(" - suite manifest rejects missing, duplicate, uncategorized, and invalid-timeout entries")
 print(" - JSON Schema keyword handlers preserve paths and isolate combinator branches")
 print(" - literal, dynamic, and filtered filesystem scans fail closed when empty")
+print(" - line-budget figures count tight and exempt programs at their boundaries and fail closed on an empty tree")
