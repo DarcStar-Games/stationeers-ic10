@@ -8,12 +8,13 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 from pathlib import Path
 import argparse, glob, json, re
 
+from framework.ic10_line_budget import CEILING_LINES, HARD_LIMIT_LINES
 from framework.script_wiring import inbound_edges, load_wiring, port_index
 
 ROOT = _PROJECT_ROOT
 INVENTORY = ROOT / 'contracts/stack_envelope_inventory.json'
-SOFT_LIMIT = 120
-HARD_LIMIT = 128
+SOFT_LIMIT = CEILING_LINES
+HARD_LIMIT = HARD_LIMIT_LINES
 COMPUTED_WRITE = r'^poke (r[0-9]+|ra|sp) '
 REF_ACCESS = r'^getd \S+ \S+ (\d+)\b|^putd \S+ (\d+)\b'
 SELF_OFFSET = r'^add (r[0-9]+|ra|sp) \1 (\d+)$'
