@@ -30,6 +30,13 @@ def invariant_errors(contract: dict[str, Any]) -> list[str]:
     return errors
 
 
+def _readable(own: dict[str, Any]) -> set[int]:
+    """The cells a provider publishes: written, ranged, or declared external-read."""
+    readable = set(own["literal_writes"]) | expanded_ranges(own["external_readable_ranges"])
+    readable |= {field["address"] for field in own["fields"] if "external-read" in field["access"]}
+    return readable
+
+
 def _writable(own: dict[str, Any]) -> set[int]:
     """The cells a provider accepts a write into: read back, ranged, or declared external-write."""
     writable = set(own["literal_reads"]) | expanded_ranges(own["external_writable_ranges"])
@@ -98,13 +105,7 @@ def compatibility_errors(contracts: list[dict[str, Any]]) -> list[str]:
                 failures = []
                 for provider in candidates:
                     own = provider["own_stack"]
-                    readable = set(own["literal_writes"]) | expanded_ranges(own["external_readable_ranges"])
-                    writable = set(own["literal_reads"]) | expanded_ranges(own["external_writable_ranges"])
-                    for field in own["fields"]:
-                        if "external-read" in field["access"]:
-                            readable.add(field["address"])
-                        if "external-write" in field["access"]:
-                            writable.add(field["address"])
+                    readable, writable = _readable(own), _writable(own)
                     requested_reads = set(port["stack"]["literal_reads"]) | expanded_ranges(port["stack"]["dynamic_read_ranges"])
                     requested_writes = set(port["stack"]["literal_writes"]) | expanded_ranges(port["stack"]["dynamic_write_ranges"])
                     missing_reads = requested_reads - readable
