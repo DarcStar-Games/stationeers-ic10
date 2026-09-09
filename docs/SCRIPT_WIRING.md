@@ -158,7 +158,7 @@ whose own-stack write range falls back to the whole stack, so the gap cannot
 reopen silently: a new computed write is proved by the branches around it or
 reviewed into a window before the program builds. What still absorbs an edge is a
 reviewed `external_readable_ranges` naming the whole stack — the Generic Catalog
-Store declares its heap that way — which leaves 228 of 234 edges able to fail.
+Store declares its heap that way — which leaves 230 of 236 edges able to fail.
 The first edge the narrowing exposed was a real one: the Manufacturing Scheduler
 waits on Gateway `S8`, and Gateway ABI5 had moved lane A's reply one cell high.
 
@@ -172,7 +172,7 @@ fallback exactly as it refuses the write one. A read window is a claim about wha
 the owner reads: for a record scan it is the record block, and for a request
 mailbox it is the request cells the owner names in its own
 `external_writable_ranges`, so the two declarations describe one layout. No
-deployable program accepts all 512 cells, and every one of the 117 writing ports
+deployable program accepts all 512 cells, and every one of the 119 writing ports
 can fail.
 
 A window counts on the same terms as a literal access, and for every check.

@@ -8,6 +8,7 @@ import json
 import re
 
 from framework.script_contracts.checks import accepted_cells, published_cells
+from framework.script_contracts.dynamic_ranges import expanded_ranges
 
 
 DYNAMIC_PROPERTY = re.compile(r"^(?:r(?:1[0-7]|[0-9])|ra|sp)$")
@@ -133,17 +134,8 @@ def wiring_sha256(wiring: dict[str, Any]) -> str:
     return hashlib.sha256(canonical).hexdigest()
 
 
-def _expanded(ranges: list[dict[str, int]]) -> set[int]:
-    return {cell for item in ranges for cell in range(item["start"], item["end"] + 1)}
-
-
 def _requested_cells(stack: dict[str, Any], direction: str) -> set[int]:
-    return set(stack[f"literal_{direction}s"]) | _expanded(stack[f"dynamic_{direction}_ranges"])
-
-
-def _provider_cells(contract: dict[str, Any], direction: str) -> set[int]:
-    own = contract["own_stack"]
-    return published_cells(own) if direction == "read" else accepted_cells(own)
+    return set(stack[f"literal_{direction}s"]) | expanded_ranges(stack[f"dynamic_{direction}_ranges"])
 
 
 def _missing_ranges(cells: set[int]) -> str:
@@ -248,9 +240,9 @@ def validate_capabilities(
 
 def validate_stack_coverage(name: str, stack: dict[str, Any], provider: dict[str, Any]) -> ValidationBatch:
     obligations = []
-    for direction in ("read", "write"):
+    for direction, provider_cells in (("read", published_cells), ("write", accepted_cells)):
         requested = _requested_cells(stack, direction)
-        missing = requested - _provider_cells(provider, direction)
+        missing = requested - provider_cells(provider["own_stack"])
         obligations.append(static_obligation(
             obligation_id(name, f"stack-{direction}"),
             "FAIL" if missing else "PASS",

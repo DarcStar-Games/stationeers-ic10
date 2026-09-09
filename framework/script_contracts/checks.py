@@ -126,14 +126,13 @@ def compatibility_errors(contracts: list[dict[str, Any]]) -> list[str]:
                 if not candidates:
                     errors.append(f"{consumer['source']} {requirement['port']}: no provider for {key[0]} at S{key[1]}")
                     continue
+                requested_reads = set(port["stack"]["literal_reads"]) | expanded_ranges(port["stack"]["dynamic_read_ranges"])
+                requested_writes = set(port["stack"]["literal_writes"]) | expanded_ranges(port["stack"]["dynamic_write_ranges"])
                 failures = []
                 for provider in candidates:
                     own = provider["own_stack"]
-                    readable, writable = published_cells(own), accepted_cells(own)
-                    requested_reads = set(port["stack"]["literal_reads"]) | expanded_ranges(port["stack"]["dynamic_read_ranges"])
-                    requested_writes = set(port["stack"]["literal_writes"]) | expanded_ranges(port["stack"]["dynamic_write_ranges"])
-                    missing_reads = requested_reads - readable
-                    missing_writes = requested_writes - writable
+                    missing_reads = requested_reads - published_cells(own)
+                    missing_writes = requested_writes - accepted_cells(own)
                     constants = {field["address"]: field["const"] for field in own["fields"] if "const" in field}
                     wrong_values = [
                         (constraint["address"], constraint["equals"], constants[constraint["address"]])
