@@ -119,7 +119,9 @@ into the interface identity, and into the commissioning plan's provider
 obligations without ever meeting a provider (GitHub issue #92). The wiring map
 names a peer for **every** port, so the comparison can be total, and
 `framework/script_wiring.stack_surfaces` derives the two sides of it from the
-contracts:
+contracts, through the one pair of functions (`published_cells` and
+`accepted_cells` in `framework/script_contracts/checks.py`) that every check
+comparing a peer's access against a program's own stack uses (issue #155):
 
 - a program **publishes** the cells it writes — literally or through its
   effective dynamic write range — plus any `external_readable_ranges`;
@@ -156,7 +158,7 @@ whose own-stack write range falls back to the whole stack, so the gap cannot
 reopen silently: a new computed write is proved by the branches around it or
 reviewed into a window before the program builds. What still absorbs an edge is a
 reviewed `external_readable_ranges` naming the whole stack — the Generic Catalog
-Store declares its heap that way — which leaves 228 of 234 edges able to fail.
+Store declares its heap that way — which leaves 230 of 236 edges able to fail.
 The first edge the narrowing exposed was a real one: the Manufacturing Scheduler
 waits on Gateway `S8`, and Gateway ABI5 had moved lane A's reply one cell high.
 
@@ -170,8 +172,24 @@ fallback exactly as it refuses the write one. A read window is a claim about wha
 the owner reads: for a record scan it is the record block, and for a request
 mailbox it is the request cells the owner names in its own
 `external_writable_ranges`, so the two declarations describe one layout. No
-deployable program accepts all 512 cells, and every one of the 117 writing ports
+deployable program accepts all 512 cells, and every one of the 119 writing ports
 can fail.
+
+A window counts on the same terms as a literal access, and for every check.
+Since #137 and #138 no deployable program's range is the fallback, so a window is
+a proven or reviewed claim about the cells the owner touches — exactly what a
+literal is — and the declared-consumer-edge check in
+`framework/script_contracts/checks.py`, the network-target check that holds an
+attributed network write to its target, and the commissioning stack-coverage
+obligations all compare against the same two surfaces. Until #155 the contract
+check left the effective ranges out, so a read window counted for the wiring map
+and not for a declared edge: seven wired write edges — the request lanes into
+the Job Command Gateway from the Child Creator, the Existing Plan Controller,
+the Scheduler, and the Lifecycle Client, the Planner's request into the plan
+store, the Gate's into the Planner, and the Sink Flow Builder's into the
+dispatch plan store — landed only in their provider's read window, and seven
+read edges only in a write window, and each would have failed the day it was
+declared, until an envelope duplicating the window silenced the check.
 
 The reviewed envelope stays the escape hatch, for the one thing derivation
 cannot see: a mailbox that one peer posts and a *different* peer consumes, which

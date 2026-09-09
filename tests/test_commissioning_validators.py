@@ -84,6 +84,8 @@ provider = {
     "own_stack": {
         "literal_reads": [3],
         "literal_writes": [2],
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
         "external_readable_ranges": [],
         "external_writable_ranges": [],
         "fields": [],

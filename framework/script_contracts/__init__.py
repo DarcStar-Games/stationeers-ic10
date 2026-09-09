@@ -16,7 +16,7 @@ from framework.script_contracts.assembly import (
     json_text,
     verify_override_source,
 )
-from framework.script_contracts.checks import compatibility_errors, invariant_errors
+from framework.script_contracts.checks import accepted_cells, compatibility_errors, invariant_errors, published_cells
 from framework.script_contracts.device_ports import (
     DYNAMIC_PROPERTY_RE,
     access_interface_id,
@@ -32,6 +32,7 @@ __all__ = [
     "PORTS",
     "PROTOCOL_DEFINITION_FORMAT",
     "PROTOCOL_FORMAT",
+    "accepted_cells",
     "access_interface_id",
     "access_provider_obligations",
     "build_all",
@@ -40,6 +41,7 @@ __all__ = [
     "generated_artifact_paths",
     "invariant_errors",
     "json_text",
+    "published_cells",
     "ranges_overlap",
     "verify_override_source",
 ]

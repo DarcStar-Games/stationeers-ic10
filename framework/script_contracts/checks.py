@@ -30,18 +30,42 @@ def invariant_errors(contract: dict[str, Any]) -> list[str]:
     return errors
 
 
-def _readable(own: dict[str, Any]) -> set[int]:
-    """The cells a provider publishes: written, ranged, or declared external-read."""
-    readable = set(own["literal_writes"]) | expanded_ranges(own["external_readable_ranges"])
-    readable |= {field["address"] for field in own["fields"] if "external-read" in field["access"]}
-    return readable
+def published_cells(own: dict[str, Any]) -> set[int]:
+    """The cells of a program's own stack a peer may read.
+
+    A cell the owner writes -- literally or through its effective dynamic write
+    range -- is one a peer can read, plus the reviewed `external_readable_ranges`
+    and the fields declared external-read. This is the one definition of the
+    published surface (issue #155): the declared-consumer-edge check here, the
+    wiring map's total comparison in `framework.script_wiring`, and the
+    commissioning stack-coverage obligations all compare against it. The range
+    counts on the same terms as a literal write, because no deployable program's
+    own-stack range is the whole-stack fallback: each is proven by the branches
+    around the access or reviewed into a source-fingerprinted window, so it is a
+    claim about the cells the owner touches, and the same claim a literal makes.
+    Both surfaces are upper bounds -- neither can tell a mailbox cell from private
+    state the owner writes and reads back.
+    """
+    published = set(own["literal_writes"]) | expanded_ranges(own["dynamic_write_ranges"])
+    published |= expanded_ranges(own["external_readable_ranges"])
+    published |= {field["address"] for field in own["fields"] if "external-read" in field["access"]}
+    return published
 
 
-def _writable(own: dict[str, Any]) -> set[int]:
-    """The cells a provider accepts a write into: read back, ranged, or declared external-write."""
-    writable = set(own["literal_reads"]) | expanded_ranges(own["external_writable_ranges"])
-    writable |= {field["address"] for field in own["fields"] if "external-write" in field["access"]}
-    return writable
+def accepted_cells(own: dict[str, Any]) -> set[int]:
+    """The cells of a program's own stack a peer may write into.
+
+    The mirror of `published_cells`: a cell the owner reads -- literally or
+    through its effective dynamic read range -- is one a peer can write, plus the
+    reviewed `external_writable_ranges` and the fields declared external-write. A
+    request mailbox is accepted by the read that consumes it, so the envelope is
+    for what derivation cannot see: a mailbox one peer posts and a different
+    peer consumes, which the host itself never touches.
+    """
+    accepted = set(own["literal_reads"]) | expanded_ranges(own["dynamic_read_ranges"])
+    accepted |= expanded_ranges(own["external_writable_ranges"])
+    accepted |= {field["address"] for field in own["fields"] if "external-write" in field["access"]}
+    return accepted
 
 
 def network_target_errors(contracts: list[dict[str, Any]]) -> list[str]:
@@ -73,8 +97,8 @@ def network_target_errors(contracts: list[dict[str, Any]]) -> list[str]:
                         )
                     continue
                 requested = set(dependency["literal_writes"])
-                if not any(requested <= _writable(provider["own_stack"]) for provider in candidates):
-                    rejected = sorted(requested - set.union(*(_writable(provider["own_stack"]) for provider in candidates)))
+                if not any(requested <= accepted_cells(provider["own_stack"]) for provider in candidates):
+                    rejected = sorted(requested - set.union(*(accepted_cells(provider["own_stack"]) for provider in candidates)))
                     errors.append(
                         f"{consumer['source']} network {dependency['reference']}: {target} accepts no write at"
                         f" S{', S'.join(str(cell) for cell in rejected)}"
@@ -102,14 +126,13 @@ def compatibility_errors(contracts: list[dict[str, Any]]) -> list[str]:
                 if not candidates:
                     errors.append(f"{consumer['source']} {requirement['port']}: no provider for {key[0]} at S{key[1]}")
                     continue
+                requested_reads = set(port["stack"]["literal_reads"]) | expanded_ranges(port["stack"]["dynamic_read_ranges"])
+                requested_writes = set(port["stack"]["literal_writes"]) | expanded_ranges(port["stack"]["dynamic_write_ranges"])
                 failures = []
                 for provider in candidates:
                     own = provider["own_stack"]
-                    readable, writable = _readable(own), _writable(own)
-                    requested_reads = set(port["stack"]["literal_reads"]) | expanded_ranges(port["stack"]["dynamic_read_ranges"])
-                    requested_writes = set(port["stack"]["literal_writes"]) | expanded_ranges(port["stack"]["dynamic_write_ranges"])
-                    missing_reads = requested_reads - readable
-                    missing_writes = requested_writes - writable
+                    missing_reads = requested_reads - published_cells(own)
+                    missing_writes = requested_writes - accepted_cells(own)
                     constants = {field["address"]: field["const"] for field in own["fields"] if "const" in field}
                     wrong_values = [
                         (constraint["address"], constraint["equals"], constants[constraint["address"]])
@@ -142,8 +165,8 @@ def compatibility_errors(contracts: list[dict[str, Any]]) -> list[str]:
                 requested_reads = set(dependency["literal_reads"])
                 requested_writes = set(dependency["literal_writes"])
                 if not any(
-                    not (requested_reads - (set(provider["own_stack"]["literal_writes"]) | expanded_ranges(provider["own_stack"]["external_readable_ranges"])))
-                    and not (requested_writes - (set(provider["own_stack"]["literal_reads"]) | expanded_ranges(provider["own_stack"]["external_writable_ranges"])))
+                    requested_reads <= published_cells(provider["own_stack"])
+                    and requested_writes <= accepted_cells(provider["own_stack"])
                     for provider in candidates
                 ):
                     errors.append(f"{consumer['source']} network {dependency['reference']}: {key[0]} at S{key[1]} has no access-compatible provider")
