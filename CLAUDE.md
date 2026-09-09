@@ -172,7 +172,9 @@ revisions establish *durability*, reservation epochs/ownership tokens authorize 
   reflash guard cover the stack; `validation/validators/validate_register_seeding.py` walks every
   boot path and refuses a register read before that path wrote it (issue #168). A carry that is
   deliberate needs a `SEEDING_EXEMPTIONS` entry with its reason; a read that is unwritten only over
-  a reflash guard's same-image edge is reported as a carry, not a failure.
+  a reflash guard's same-image edge is reported as a carry, not a failure. That edge proves the
+  contract, not the program, so a carry under an identity two or more programs publish must be
+  declared once for the identity in `SHARED_IMAGE_CARRIES` (issue #175).
 
 ## IC10 source constraints
 

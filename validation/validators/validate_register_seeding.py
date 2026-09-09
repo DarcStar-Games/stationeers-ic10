@@ -19,6 +19,14 @@ attributed to this program's identity writes it. Every network write has an
 attributed target since issue #174 (`framework.network_provenance`, held by
 `validate_network_provenance.py`), so there is no residue the check has to
 accept.
+
+The same-image edge proves the contract, not the program: a housing reflashed
+between two programs publishing one `S0` identity takes the skip edge over the
+other program's registers and private cells. So a carry under an identity two or
+more programs publish is admissible only as the identity's
+`framework.register_seeding.SHARED_IMAGE_CARRIES` entry declares it, once for
+every program behind the identity, and the members must declare the same private
+cells (issue #175).
 """
 from pathlib import Path as _ProjectPath
 import sys as _project_sys
@@ -27,7 +35,16 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 import sys
 
 from framework.network_provenance import attributed_network_writes
-from framework.register_seeding import FRESH, PRIVATE_STATE_CELLS, BootPaths, peer_written_cells
+from framework.register_seeding import (
+    FRESH,
+    PRIVATE_STATE_CELLS,
+    SHARED_IMAGE_CARRIES,
+    BootPaths,
+    ImageState,
+    image_identity,
+    peer_written_cells,
+    shared_identity_errors,
+)
 from framework.scan_coverage import require_nonempty
 from framework.script_contracts import build_all
 from framework.script_wiring import load_wiring
@@ -75,11 +92,14 @@ def main() -> int:
                 failed = True
     fresh_seen: set[tuple[str, str]] = set()
     fresh_total = carried_total = unexempt_total = 0
+    states: dict[str, ImageState] = {}
     for path in require_nonempty(sorted(by_source), "deployable programs with a contract"):
         private = frozenset(PRIVATE_STATE_CELLS.get(path, {})) - peer_written[path]
         findings = BootPaths((ROOT / path).read_text(), private).findings()
         fresh = [item for item in findings if item.edge == FRESH]
         carried = [item for item in findings if item.edge != FRESH]
+        states[path] = ImageState(image_identity(by_source[path]), frozenset(PRIVATE_STATE_CELLS.get(path, {})),
+                                  frozenset(item.register for item in carried))
         unexempt = [item for item in fresh if (path, item.register) not in SEEDING_EXEMPTIONS]
         fresh_seen.update((path, item.register) for item in fresh)
         fresh_total += len(fresh)
@@ -101,9 +121,27 @@ def main() -> int:
             print(f"FAIL stale seeding exemption: {path} reads {register} on no fresh path"
                   f" before writing it; remove the entry")
             failed = True
+    shared, shared_errors = shared_identity_errors(states)
+    print("Identities published by two or more programs (the same-image edge proves the contract):")
+    for identity, members in shared.items():
+        entry = SHARED_IMAGE_CARRIES.get(identity, {})
+        carried_registers = sorted({register for path in members for register in states[path].carries},
+                                   key=lambda name: (len(name), name))
+        cells = sorted({cell for path in members for cell in states[path].private_cells})
+        declared = "yes" if entry else "MISSING" if carried_registers or cells else "none needed"
+        print(f"  {identity:28} {len(members):2} programs  carries={carried_registers}  private cells={cells}"
+              f"  declared={declared}")
+        for register, meaning in entry.get("registers", {}).items():
+            print(f"     - {register:3} {meaning}")
+        for cell, meaning in entry.get("cells", {}).items():
+            print(f"     - S{cell:<2} {meaning}")
+    for error in shared_errors:
+        print(f"FAIL {error}")
+    failed |= bool(shared_errors)
     print(f"Registers read before written on a fresh housing: {fresh_total}"
           f" ({fresh_total - unexempt_total} reviewed exemptions);"
-          f" carried over a same-image reflash guard: {carried_total}")
+          f" carried over a same-image reflash guard: {carried_total};"
+          f" shared identities: {len(shared)} ({len(SHARED_IMAGE_CARRIES)} with a carry declaration)")
     print("Result:", "FAIL" if failed else "PASS")
     return 1 if failed else 0
 
