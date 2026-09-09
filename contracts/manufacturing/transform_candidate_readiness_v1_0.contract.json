@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10",
-  "source_sha256": "5d40e58c3f1e1d4c8d66f10e547a1d141d1452be5424678b4bee17803bde569d",
+  "source_sha256": "b96cfd152902ecfc960d5f7eaf48d711eac4379d21dc41518d780b828303b897",
   "identity": {
     "service_id": "ic10.script.transform.candidate.readiness",
     "implementation_revision": "1.0",
@@ -13,21 +13,6 @@
   },
   "device_ports": [],
   "network_dependencies": [
-    {
-      "transport": "reference-id",
-      "reference": "r0",
-      "literal_reads": [
-        14
-      ],
-      "literal_writes": [
-        2,
-        3
-      ],
-      "dynamic_read": false,
-      "dynamic_write": false,
-      "constraints": [],
-      "accepted": []
-    },
     {
       "transport": "reference-id",
       "reference": "r1",
@@ -66,8 +51,7 @@
       "transport": "reference-id",
       "reference": "r11",
       "literal_reads": [
-        2,
-        7
+        37
       ],
       "literal_writes": [],
       "dynamic_read": false,
@@ -79,7 +63,6 @@
       "transport": "reference-id",
       "reference": "r12",
       "literal_reads": [
-        33,
         35,
         68,
         69,
@@ -94,7 +77,30 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r12",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r9",
+            "cells": [
+              13
+            ]
+          },
+          "targets": [
+            "ResourceTransformProfileView"
+          ],
+          "reason": "r9 is the Runtime's Admission (Runtime S17, the d1 ReferenceId it publishes at boot), and Admission S13 is the Transform Profile View ReferenceId it publishes once the view's identity check has passed; Readiness posts the TransformType request into the view's S70"
+        }
+      ],
+      "origins": [
+        "ref:r9:13"
+      ],
+      "targets": [
+        "ResourceTransformProfileView"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",

@@ -71,7 +71,32 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r4",
+          "origin": {
+            "kind": "own-cell",
+            "cells": [
+              17
+            ],
+            "filled_by": "peer"
+          },
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ],
+          "reason": "S17 is the PressureTransfer ReferenceId of the request, posted by the Path Allocator and the Single-hop Builder; the Allocator pins its S99 kind tag, which both transfer runtimes publish, before staging the grant into S108..S120"
+        }
+      ],
+      "origins": [
+        "own:17"
+      ],
+      "targets": [
+        "ControllerPressureTransferRuntime",
+        "EmbeddedPressureTransferRuntime"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -86,7 +111,30 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r5",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r4",
+            "cells": [
+              106
+            ]
+          },
+          "targets": [
+            "PressureInventoryReservation"
+          ],
+          "reason": "Transfer S106 is the SourceReservationRef (docs/PRESSURE_GRID_CONTROLLER.md); Prep checks its identity through sp, and CommitRate adds the granted rate to its ReservedExportMoles (S12)"
+        }
+      ],
+      "origins": [
+        "ref:r4:106"
+      ],
+      "targets": [
+        "PressureInventoryReservation"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -101,7 +149,30 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r6",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r4",
+            "cells": [
+              107
+            ]
+          },
+          "targets": [
+            "PressureInventoryReservation"
+          ],
+          "reason": "Transfer S107 is the SinkReservationRef (docs/PRESSURE_GRID_CONTROLLER.md); Prep checks its identity through sp, and CommitRate adds the granted rate to its ReservedImportMoles (S13)"
+        }
+      ],
+      "origins": [
+        "ref:r4:107"
+      ],
+      "targets": [
+        "PressureInventoryReservation"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -133,7 +204,16 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:-920533037",
+        "ref:r4:106",
+        "ref:r4:107"
+      ],
+      "targets": [
+        "PressureInventoryReservation"
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

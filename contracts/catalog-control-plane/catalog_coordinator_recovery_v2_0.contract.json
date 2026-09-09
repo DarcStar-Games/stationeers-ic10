@@ -125,7 +125,28 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r1",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "GenericRegistryDirectoryHost.v3",
+            "cells": "any"
+          },
+          "targets": [
+            "GenericCatalogStore"
+          ],
+          "reason": "a Registry record slot (S58 + 6k) holds the ReferenceId of a Store the Catalog Store Directory Adapter registered after checking its S0 against GenericCatalogStore.v6; Recovery re-stamps each claimed Store's Coordinator identity (S11) and epoch (S12) on takeover"
+        }
+      ],
+      "origins": [
+        "cell:-1822968058:*"
+      ],
+      "targets": [
+        "GenericCatalogStore"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",

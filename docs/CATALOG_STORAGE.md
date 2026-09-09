@@ -43,7 +43,7 @@ Every physical catalog data node runs `ic10/catalog-control-plane/generic_catalo
 | S11 | CoordinatorRef |
 | S12 | CoordinatorEpoch |
 | S13 | CatalogInstanceId; assigned by the Coordinator |
-| S14 | reserved |
+| S14 | CoordinatorId of the claiming Coordinator; written at claim, never read by the Store |
 | S15 | committed item-import generation/count |
 | S16 | StoreState |
 | S17 | Store data seqlock; odd while mutating, even stable |

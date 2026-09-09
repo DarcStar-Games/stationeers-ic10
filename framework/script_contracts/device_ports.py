@@ -36,6 +36,7 @@ from framework.script_contracts.parsing import (
     resolve_ports,
     row_nodes,
 )
+from framework.script_contracts.provenance_declarations import validate_provenance
 from framework.script_contracts.publication import verified_seqlock_consumer
 from framework.script_contracts.register_ports import analyze_register_ports, register_port_pins
 
@@ -214,6 +215,15 @@ def network_dependencies(
                 "abi": abi,
                 "publication_requirements": declaration.get("publication_requirements", []),
             })
+
+    # Where a written reference came from and what it names, reviewed (issue
+    # #174). The shape is checked here; `framework.network_provenance` holds
+    # each declaration to the loads the walk actually sees at the write sites.
+    declarations = overrides.get("network_provenance", [])
+    written = {reference for (transport, reference), item in dependencies.items()
+               if transport == "reference-id" and (item["literal_writes"] or item["dynamic_write"])}
+    for declaration in validate_provenance(declarations, written):
+        dependencies[("reference-id", declaration["reference"])].setdefault("provenance", []).append(declaration)
 
     result = []
     for key in sorted(dependencies):

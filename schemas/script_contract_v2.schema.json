@@ -364,7 +364,67 @@
           "type": "array",
           "uniqueItems": true,
           "items": {"$ref": "#/$defs/acceptedProtocol"}
+        },
+        "origins": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "targets": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "devices": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "unattributed": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "provenance": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/networkProvenance"}
         }
+      }
+    },
+    "networkProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference", "origin", "targets", "reason"],
+      "properties": {
+        "reference": {"type": "string", "minLength": 1},
+        "origin": {
+          "type": "object",
+          "required": ["kind"],
+          "properties": {
+            "kind": {"enum": ["peer-cell", "own-cell", "reference-cell", "port-cell", "port-device", "index-cell"]},
+            "identity": {"type": "string", "minLength": 1},
+            "cells": {
+              "oneOf": [
+                {"const": "any"},
+                {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 511}}
+              ]
+            },
+            "filled_by": {"enum": ["self", "peer"]},
+            "via": {"type": "string", "minLength": 1},
+            "port": {"type": "string", "pattern": "^d[0-5]$"},
+            "index": {"type": "integer", "minimum": 0}
+          },
+          "additionalProperties": false
+        },
+        "targets": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "device": {"type": "string", "minLength": 1},
+        "reason": {"type": "string", "minLength": 1}
       }
     },
     "cellRange": {

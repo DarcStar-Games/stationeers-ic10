@@ -213,7 +213,7 @@ Busy state includes both live `Activate` and a Runtime request that has not yet 
 
 `ic10/manufacturing/transform_candidate_readiness_v1_0.ic10` owns planning readiness for one selected Transform Runtime. It requires Transform Profile View ABI4 to echo the requested TransformType (`S68`) with ready status (`S69`), then waits for **new Admission and Resolver publication generations**. There is no fixed tick timeout: a valid three-input route may scan a full 64-link directory under automatic IC10 preemption.
 
-Readiness classifies failures at their authoritative layer: Admission rejection => `WAIT_PROCESSOR`, Resolver rejection => `WAIT_RESOURCE`, and output shortfall => `WAIT_CAPACITY`.
+Readiness classifies failures at their authoritative layer: Admission rejection => `WAIT_PROCESSOR`, Resolver rejection => `WAIT_RESOURCE`, and output shortfall => `WAIT_CAPACITY`. The shortfall test reads the output Reservation's mirrored ImportCapacity (`S37`) against the profile's OutputQuantity times the requested BatchCount, the same sink test the Stager applies; before issue #174 it read the Reservation's constant `S2` as an Endpoint reference and re-pointed that endpoint's Resource Profile View through request cells the view had since moved.
 
 `ic10/manufacturing/transform_candidate_executor_v2_0.ic10` is consequently small: it delegates readiness to `ic10/manufacturing/transform_candidate_readiness_v1_0.ic10`, launches the exact selected Runtime only after readiness succeeds, and mirrors Runtime progress only when Runtime ABI2 publishes the matching current request token.
 

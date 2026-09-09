@@ -99,7 +99,15 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:-284599001",
+        "index:0:*"
+      ],
+      "targets": [
+        "CatalogLoader"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -126,7 +134,15 @@
           "value": 4515138
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:4515138",
+        "device:d0"
+      ],
+      "targets": [
+        "CatalogCoordinatorCore"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -169,7 +185,15 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:875310516",
+        "index:0:*"
+      ],
+      "targets": [
+        "GenericCatalogStore"
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

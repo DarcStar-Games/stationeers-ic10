@@ -119,6 +119,6 @@ Consumers therefore do not need to know how many Stores the Coordinator selected
 2. Add at least five `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` nodes for the current 39-profile commissioning estimate. Give each a unique S18 NodeId 1..64; leave them UNCLAIMED.
 3. Program the generated `ic10/resource-profile-catalog/resource_profile_loader_*_v4_0.ic10` set anywhere on the discoverable network. They need no Store screw.
 4. Wait for runtime placement to produce one FLUID Store, two ITEM Stores, one POWER Store, and one ENERGY Store with all 39 items committed.
-5. Point the Resource Profile View at any Store in the catalog and select class/type through S2/S3.
+5. Point the Resource Profile View at any Store in the catalog and select class/type through S26/S27.
 
 Extra unclaimed Store capacity may remain available for later catalog growth.

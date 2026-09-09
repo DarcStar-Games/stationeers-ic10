@@ -215,7 +215,12 @@
     "dynamic_write_range_source": "source-derived",
     "clears_all": true,
     "external_readable_ranges": [],
-    "external_writable_ranges": [],
+    "external_writable_ranges": [
+      {
+        "start": 32,
+        "end": 99
+      }
+    ],
     "fields": [
       {
         "address": 0,
@@ -331,6 +336,17 @@
         ]
       },
       {
+        "address": 17,
+        "name": "ActiveFieldCount",
+        "value_type": "integer",
+        "semantic_source": "override",
+        "access": [
+          "external-read",
+          "external-write"
+        ],
+        "description": "Written by the Config Loader with the loaded image."
+      },
+      {
         "address": 18,
         "name": "S18",
         "value_type": "number",
@@ -338,6 +354,17 @@
         "access": [
           "self-read"
         ]
+      },
+      {
+        "address": 19,
+        "name": "ControllerConfigSchema",
+        "value_type": "hash",
+        "semantic_source": "override",
+        "access": [
+          "external-read",
+          "external-write"
+        ],
+        "description": "Written by the Config Loader with the loaded image."
       },
       {
         "address": 20,
@@ -359,6 +386,17 @@
         ]
       },
       {
+        "address": 22,
+        "name": "BridgeInputKind",
+        "value_type": "enum",
+        "semantic_source": "override",
+        "access": [
+          "external-read",
+          "external-write"
+        ],
+        "description": "Written by the Config Input Bridge with a resolved value."
+      },
+      {
         "address": 25,
         "name": "S25",
         "value_type": "number",
@@ -377,6 +415,50 @@
         "access": [
           "self-read"
         ]
+      },
+      {
+        "address": 27,
+        "name": "ValidatedProfileRef",
+        "value_type": "reference-id",
+        "semantic_source": "override",
+        "access": [
+          "external-read",
+          "external-write"
+        ],
+        "description": "Loader-validated Profile ReferenceId."
+      },
+      {
+        "address": 28,
+        "name": "ValidatedProfileAbi",
+        "value_type": "number",
+        "semantic_source": "override",
+        "access": [
+          "external-read",
+          "external-write"
+        ],
+        "description": "Loader-validated Profile ABI."
+      },
+      {
+        "address": 29,
+        "name": "ValidatedProfileGeneration",
+        "value_type": "integer",
+        "semantic_source": "override",
+        "access": [
+          "external-read",
+          "external-write"
+        ],
+        "description": "Loader-validated Profile generation."
+      },
+      {
+        "address": 30,
+        "name": "LoadedBlockCount",
+        "value_type": "integer",
+        "semantic_source": "override",
+        "access": [
+          "external-read",
+          "external-write"
+        ],
+        "description": "Written by the Config Loader with the loaded image."
       },
       {
         "address": 100,

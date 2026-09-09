@@ -76,7 +76,15 @@
           "value": 4
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:-533009584",
+        "own:8"
+      ],
+      "targets": [
+        "GenericConfigEditor"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -113,7 +121,15 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "cell:27182818:116",
+        "checked:0:-759746849"
+      ],
+      "targets": [
+        "GenericPersistentConfigHost"
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

@@ -21,7 +21,12 @@
           "end": 511
         }
       ],
-      "writable_ranges": [],
+      "writable_ranges": [
+        {
+          "start": 32,
+          "end": 511
+        }
+      ],
       "fields": [
         {
           "address": 0,
@@ -65,6 +70,17 @@
           ]
         },
         {
+          "address": 8,
+          "name": "StoreOrdinal",
+          "value_type": "number",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ],
+          "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it."
+        },
+        {
           "address": 9,
           "name": "S9",
           "value_type": "number",
@@ -85,6 +101,28 @@
           "const": 32
         },
         {
+          "address": 11,
+          "name": "CoordinatorRef",
+          "value_type": "number",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ],
+          "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it."
+        },
+        {
+          "address": 12,
+          "name": "CoordinatorEpoch",
+          "value_type": "integer",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ],
+          "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it."
+        },
+        {
           "address": 13,
           "name": "S13",
           "value_type": "number",
@@ -92,6 +130,17 @@
           "access": [
             "self-read"
           ]
+        },
+        {
+          "address": 14,
+          "name": "ClaimCoordinatorId",
+          "value_type": "number",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ],
+          "description": "Listed reserved in the Store ABI6 table; Claim writes the Coordinator's CoordinatorId here and the Store does not read it."
         },
         {
           "address": 15,
@@ -154,6 +203,17 @@
           ]
         },
         {
+          "address": 21,
+          "name": "PreviousStoreRef",
+          "value_type": "number",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ],
+          "description": "Topology chain link written by Claim and unlinked by the Retirement Manager; the Store does not read it."
+        },
+        {
           "address": 22,
           "name": "S22",
           "value_type": "number",
@@ -173,14 +233,39 @@
           ]
         },
         {
-          "address": 27,
-          "name": "S27",
+          "address": 24,
+          "name": "NextStoreRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "override",
           "access": [
+            "external-read",
+            "external-write"
+          ],
+          "description": "Topology chain link written by Claim and unlinked by the Retirement Manager; the Store does not read it."
+        },
+        {
+          "address": 26,
+          "name": "AssignmentEpoch",
+          "value_type": "integer",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ],
+          "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it."
+        },
+        {
+          "address": 27,
+          "name": "InFlightReservationCells",
+          "value_type": "integer",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write",
             "self-write"
           ],
-          "const": 0
+          "const": 0,
+          "description": "Capacity promised to an in-flight Loader placement or migration; the Router, Planner, and Worker write it, the Store resets it."
         },
         {
           "address": 28,
@@ -201,6 +286,17 @@
             "self-read",
             "self-write"
           ]
+        },
+        {
+          "address": 31,
+          "name": "CommittedAssignmentEpoch",
+          "value_type": "integer",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ],
+          "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it."
         }
       ],
       "behavior": {

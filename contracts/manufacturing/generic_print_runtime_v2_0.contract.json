@@ -112,7 +112,30 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r2",
+          "origin": {
+            "kind": "own-cell",
+            "cells": [
+              10
+            ],
+            "filled_by": "peer"
+          },
+          "targets": [],
+          "device": "the printer named by the request's PrinterRef, whose native stack the runtime programs (S0 job kind, S1 packed recipe and count) before switching it On",
+          "reason": "S10 PrinterRef is posted by the Print Candidate Executor with the request (docs/ABI_REFERENCE.md); the target is a fabricator, not a program, so no contract accepts the write"
+        }
+      ],
+      "origins": [
+        "own:10"
+      ],
+      "targets": [],
+      "devices": [
+        "the printer named by the request's PrinterRef, whose native stack the runtime programs (S0 job kind, S1 packed recipe and count) before switching it On"
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

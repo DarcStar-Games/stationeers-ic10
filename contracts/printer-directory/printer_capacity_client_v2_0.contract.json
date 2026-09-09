@@ -39,7 +39,32 @@
           "value": -1743126326
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r1",
+          "origin": {
+            "kind": "own-cell",
+            "cells": [
+              9
+            ],
+            "filled_by": "self"
+          },
+          "targets": [
+            "PrinterExecutionBank"
+          ],
+          "reason": "S9 holds the Execution Bank ReferenceId this program stored in Reserve after checking its S0; Release reloads it to hand the reserved capacity back"
+        }
+      ],
+      "origins": [
+        "checked:0:-1743126326",
+        "index:0:*",
+        "own:9"
+      ],
+      "targets": [
+        "PrinterExecutionBank"
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

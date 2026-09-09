@@ -115,7 +115,28 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r7",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "PowerDispatchPlanStore.v1",
+            "cells": "any"
+          },
+          "targets": [
+            "ResourceReservation"
+          ],
+          "reason": "a plan flow record (S32 + 8k) holds the source POWER Reservation ReferenceId at +1; Write commits ownership, epoch, and the aggregated reserved export into it"
+        }
+      ],
+      "origins": [
+        "cell:-788162592:*"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -136,7 +157,28 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r8",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "PowerDispatchPlanStore.v1",
+            "cells": "any"
+          },
+          "targets": [
+            "ResourceReservation"
+          ],
+          "reason": "a plan flow record (S32 + 8k) holds the sink POWER Reservation ReferenceId at +2; Write commits ownership, epoch, and the aggregated reserved import into it"
+        }
+      ],
+      "origins": [
+        "cell:-788162592:*"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

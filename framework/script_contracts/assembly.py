@@ -164,6 +164,12 @@ def _build_contracts(
     stale_overrides = sorted(set(script_overrides) - {contract["source"] for contract in contracts.values()})
     if stale_overrides:
         raise ValueError(f"contract overrides reference missing scripts: {stale_overrides}")
+    # What each network write can reach is a question over every contract at
+    # once (the providers) and over the source's paths (the walk), so it is
+    # answered after the per-program phases. The walk is a client of this
+    # package, which is why the import sits here rather than at the top.
+    from framework.network_provenance import attribute_network_writes
+    attribute_network_writes(contracts, root)
     return contracts
 
 
@@ -307,7 +313,7 @@ def _interface_definitions(contracts: dict[str, dict[str, Any]]) -> dict[str, di
 
 
 def _contract_index(contracts: dict[str, dict[str, Any]], interface_definitions: dict[str, dict[str, Any]]) -> dict[str, Any]:
-    """Summarize contracts, interfaces, and the dynamic own-stack surface in one index."""
+    """Summarize contracts, interfaces, the dynamic own-stack surface, and the network writes in one index."""
     own_stack_range_inventory = []
     for contract in sorted(contracts.values(), key=lambda item: item["source"]):
         own = contract["own_stack"]
@@ -328,6 +334,18 @@ def _contract_index(contracts: dict[str, dict[str, Any]], interface_definitions:
                 "provenance": own["dynamic_write_range_source"],
             },
         })
+    network_writes = [
+        {
+            "source": contract["source"],
+            "reference": dependency["reference"],
+            "targets": dependency["targets"],
+            **({"devices": dependency["devices"]} if dependency.get("devices") else {}),
+            "unattributed": dependency["unattributed"],
+        }
+        for contract in sorted(contracts.values(), key=lambda item: item["source"])
+        for dependency in contract["network_dependencies"]
+        if dependency["literal_writes"] or dependency["dynamic_write"]
+    ]
     index = {
         "format": INDEX_FORMAT,
         "contract_count": len(contracts),
@@ -342,6 +360,15 @@ def _contract_index(contracts: dict[str, dict[str, Any]], interface_definitions:
                 for item in own_stack_range_inventory for direction in ("read", "write")
             ),
             "scripts": own_stack_range_inventory,
+        },
+        "network_write_inventory": {
+            "writing_dependency_count": len(network_writes),
+            "declared_provenance_count": sum(
+                len(dependency.get("provenance", ()))
+                for contract in contracts.values() for dependency in contract["network_dependencies"]
+            ),
+            "unattributed_count": sum(bool(item["unattributed"]) for item in network_writes),
+            "writes": network_writes,
         },
         "interfaces": {key: interface_definitions[key] for key in sorted(interface_definitions)},
         "contracts": [{
