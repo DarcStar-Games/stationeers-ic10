@@ -7,6 +7,8 @@ import hashlib
 import json
 import re
 
+from framework.script_contracts.checks import accepted_cells, published_cells
+
 
 DYNAMIC_PROPERTY = re.compile(r"^(?:r(?:1[0-7]|[0-9])|ra|sp)$")
 
@@ -141,14 +143,7 @@ def _requested_cells(stack: dict[str, Any], direction: str) -> set[int]:
 
 def _provider_cells(contract: dict[str, Any], direction: str) -> set[int]:
     own = contract["own_stack"]
-    if direction == "read":
-        cells = set(own["literal_writes"]) | _expanded(own["external_readable_ranges"])
-        access = "external-read"
-    else:
-        cells = set(own["literal_reads"]) | _expanded(own["external_writable_ranges"])
-        access = "external-write"
-    cells.update(field["address"] for field in own["fields"] if access in field["access"])
-    return cells
+    return published_cells(own) if direction == "read" else accepted_cells(own)
 
 
 def _missing_ranges(cells: set[int]) -> str:

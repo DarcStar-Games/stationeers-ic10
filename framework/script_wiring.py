@@ -15,6 +15,7 @@ from typing import Any
 import json
 
 from framework.json_schema import validate
+from framework.script_contracts.checks import accepted_cells, published_cells
 from framework.stack_envelope import BASE, LENGTH
 
 FORMAT = "IC10_SCRIPT_WIRING_V1"
@@ -73,26 +74,19 @@ def stack_surfaces(contracts: dict[str, dict[str, Any]]) -> dict[str, dict[str, 
     The reviewed `external_readable_ranges`/`external_writable_ranges` cover what
     derivation cannot see at all: a mailbox one peer posts and a *different* peer
     consumes, which the host itself never touches.
-    """
-    def cells(ranges: list[dict[str, int]]) -> set[int]:
-        return ranged([(item["start"], item["end"]) for item in ranges], STACK_CELLS)
 
-    surfaces: dict[str, dict[str, frozenset[int]]] = {}
-    for contract in contracts.values():
-        own = contract["own_stack"]
-        published = set(own["literal_writes"]) | cells(own["dynamic_write_ranges"])
-        published |= cells(own["external_readable_ranges"])
-        accepted = set(own["literal_reads"]) | cells(own["dynamic_read_ranges"])
-        accepted |= cells(own["external_writable_ranges"])
-        for field in own["fields"]:
-            if "external-read" in field["access"]:
-                published.add(field["address"])
-            if "external-write" in field["access"]:
-                accepted.add(field["address"])
-        surfaces[contract["source"]] = {
-            "published": frozenset(published), "accepted": frozenset(accepted),
+    The definition is `framework.script_contracts.checks.published_cells` and
+    `accepted_cells`, the same pair the declared-consumer-edge check compares
+    against, so a port promoted to a declared edge keeps the verdict the wiring
+    map gave it (issue #155).
+    """
+    return {
+        contract["source"]: {
+            "published": frozenset(published_cells(contract["own_stack"])),
+            "accepted": frozenset(accepted_cells(contract["own_stack"])),
         }
-    return surfaces
+        for contract in contracts.values()
+    }
 
 
 def check_wiring(

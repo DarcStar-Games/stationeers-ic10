@@ -13,6 +13,7 @@ import tempfile
 from framework.json_schema import SchemaValidationError, validate
 from framework.ic10_source import parse_ic10
 from framework.script_contracts import (
+    accepted_cells,
     access_interface_id,
     access_provider_obligations,
     build_all,
@@ -185,6 +186,16 @@ reservation["access"] = [access for access in reservation["access"] if access !=
 ck(any("GenericCatalogStore accepts no write at S27" in error for error in compatibility_errors(unaccepted_cell)),
    "a network write to a cell its target does not accept was not rejected")
 
+# The network-discovered branch compares against the same published surface: the
+# Controller Directory Adapter reads the Telemetry block at S96.. through r1, and a
+# read one cell below the block finds no provider that publishes it.
+telemetry_read = deepcopy(documents)
+adapter = next(item for item in telemetry_read if item["source"].endswith("controller_directory_adapter_v4_0.ic10"))
+telemetry = next(item for item in adapter["network_dependencies"] if item["reference"] == "r1")
+telemetry["literal_reads"] = sorted(set(telemetry["literal_reads"]) | {95})
+ck(any("has no access-compatible provider" in error for error in compatibility_errors(telemetry_read)),
+   "a network-discovered read of a cell no provider publishes was accepted")
+
 wrong_schema = deepcopy(documents)
 for provider in wrong_schema:
     for field in provider["own_stack"]["fields"]:
@@ -334,14 +345,7 @@ ck(own_inventory["unresolved_fallback_count"] == 0,
    "a deployable program's own-stack range fell back to the whole stack")
 # The window is held from below by the proof, and it is a claim about the whole
 # program: the accepted surface a peer may write into is bounded for every one.
-ck(all(len(set(document["own_stack"]["literal_reads"])
-           | {cell for item in document["own_stack"]["dynamic_read_ranges"]
-              for cell in range(item["start"], item["end"] + 1)}
-           | {cell for item in document["own_stack"]["external_writable_ranges"]
-              for cell in range(item["start"], item["end"] + 1)}
-           | {field["address"] for field in document["own_stack"]["fields"]
-              if "external-write" in field["access"]}) < 512
-       for document in documents),
+ck(all(len(accepted_cells(document["own_stack"])) < 512 for document in documents),
    "a deployable program accepts every one of its 512 cells")
 proven_own_reads = {
     item["source"]: item["read"]["proven_ranges"]

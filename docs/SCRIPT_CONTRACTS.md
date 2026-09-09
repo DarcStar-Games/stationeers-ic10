@@ -179,11 +179,14 @@ additionally resolve and statically compare concrete script providers.
 
 Dynamic wired addresses fail closed: they contribute their entire declared
 range to compatibility, and a provider must publish or accept every requested
-cell. That comparison happens here only where a consumer edge is declared;
-`data/script_wiring.json` names a peer for every port, and
-`validation/validators/validate_script_wiring.py` makes the same comparison total
-against what each declared provider's own contract writes and reads
-(`docs/SCRIPT_WIRING.md`).
+cell. What a provider publishes and accepts has one definition,
+`published_cells` and `accepted_cells` in `framework/script_contracts/checks.py`:
+the cells it writes or reads, literally or through its effective dynamic range,
+plus its reviewed envelopes and external fields (issue #155). That comparison
+happens here only where a consumer edge is declared; `data/script_wiring.json`
+names a peer for every port, and
+`validation/validators/validate_script_wiring.py` makes the same comparison,
+against the same surfaces, total (`docs/SCRIPT_WIRING.md`).
 Range provenance distinguishes source-derived bounds from explicit,
 source-fingerprinted exceptions. Network discovery is represented separately from wired ports. Consumed
 wired protocols come from authoritative consumer declarations verified against

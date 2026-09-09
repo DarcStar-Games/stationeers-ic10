@@ -9,7 +9,8 @@ from copy import deepcopy
 import json
 
 from framework.json_schema import SchemaValidationError, validate
-from framework.script_wiring import check_wiring, inbound_edges, stack_surfaces
+from framework.script_contracts import compatibility_errors
+from framework.script_wiring import check_wiring, inbound_edges, port_index, stack_surfaces
 
 ROOT = _PROJECT_ROOT
 SCHEMA = json.loads((ROOT / "schemas/script_wiring.schema.json").read_text())
@@ -266,6 +267,48 @@ expect("inbound edges name the consumer, port, cells, and ranges",
                   "read_ranges": [], "write_ranges": [], "header_reads": {}}])
 expect("no edges into an unreferenced family", inbound_edges(WIRING, PORTS, {CONSUMER}) == [])
 
+
+# The declared-consumer-edge check and the wiring check compare against one
+# surface (#155): a consumer writing into its provider's read window, or reading
+# its write window, with no envelope declared, gets the same verdict from both.
+def contract(source, own_stack, ports=(), consumes=(), provides=()):
+    return {"source": source, "own_stack": own_stack, "device_ports": list(ports),
+            "network_dependencies": [],
+            "contracts": {"provides": list(provides), "consumes": list(consumes)},
+            "behavior": {"publication_rules": []}}
+
+
+WINDOWED = contract(PROVIDER, {
+    "literal_reads": [], "literal_writes": [0, 1],
+    "dynamic_read_ranges": [{"start": 40, "end": 41}],
+    "dynamic_write_ranges": [{"start": 16, "end": 18}],
+    "external_readable_ranges": [], "external_writable_ranges": [], "fields": [],
+}, provides=[{"protocol_id": "ic10.stack.31410001.abi2", "base": 0}])
+EDGE = {"format": "IC10_SCRIPT_WIRING_V1", "ports": {
+    PROVIDER: {}, CONSUMER: {"d0": {"kind": "script", "providers": [PROVIDER], "note": "test edge"}},
+}}
+
+
+def verdicts(read, write):
+    consumer = contract(CONSUMER, WINDOWED["own_stack"], ports=[{
+        "port": "d0", "target": {"kind": "stack-protocol"},
+        "stack": {"literal_reads": [0, 1, read], "literal_writes": [write],
+                  "dynamic_read": False, "dynamic_write": False,
+                  "dynamic_read_ranges": [], "dynamic_write_ranges": [],
+                  "constraints": [{"address": 0, "equals": 31410001}, {"address": 1, "equals": 2}]},
+    }], consumes=[{"port": "d0", "accepted": [
+        {"protocol_id": "ic10.stack.31410001.abi2", "header_base": 0, "publication_requirements": []}]}])
+    documents = {PROVIDER: WINDOWED, CONSUMER: consumer}
+    declared = compatibility_errors(list(documents.values()))
+    wired = check_wiring(EDGE, port_index(documents), PUBLISHERS, set(), stack_surfaces(documents))
+    return bool(declared), bool(wired)
+
+
+expect("a write into the read window and a read of the write window pass both checks",
+       verdicts(read=16, write=40) == (False, False))
+expect("a write one cell past the read window fails both checks", verdicts(read=16, write=42) == (True, True))
+expect("a read one cell past the write window fails both checks", verdicts(read=19, write=40) == (True, True))
+
 if failures:
     raise SystemExit(1)
 print("Script wiring model: PASS")
@@ -273,5 +316,6 @@ print(" - schema, coverage, provider existence, kind agreement, S0 identity cons
 print("   migrated-header guard, reviewed header reads, and inbound-edge listing verified")
 print(" - a port's cells are compared against every declared provider's published/accepted")
 print("   surface, any-of across providers, with reviewed envelopes as the escape hatch")
+print(" - the declared-consumer-edge check gives a windowed access the same verdict")
 print(" - a note must name the contract identity its port pins, so the reviewed evidence")
 print("   cannot keep citing cell shape for an edge the source names outright")
