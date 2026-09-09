@@ -33,7 +33,28 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r0",
+          "origin": {
+            "kind": "own-cell",
+            "cells": "any",
+            "filled_by": "self"
+          },
+          "targets": [
+            "GenericCatalogStore"
+          ],
+          "reason": "the adapter's own candidate table (S18 + 6k, ReferenceId at +1) holds Stores this scan registered after checking their S0; Duplicate faults the earlier registrant of a NodeId through it"
+        }
+      ],
+      "origins": [
+        "own:*"
+      ],
+      "targets": [
+        "GenericCatalogStore"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -58,7 +79,15 @@
           "value": 875310516
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:875310516",
+        "index:0:*"
+      ],
+      "targets": [
+        "GenericCatalogStore"
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

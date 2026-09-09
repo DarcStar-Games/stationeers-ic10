@@ -53,13 +53,7 @@ bne r0 r4 Bad
 get r5 db 15
 getd r0 r12 73
 bne r0 r5 Bad
-getd r0 r11 2
-getd r0 r0 14
-blez r0 Processor
-putd r0 2 2
-getd r13 r12 33
-putd r0 3 r13
-getd r0 r11 7
+getd r0 r11 37
 getd r13 r12 35
 get r6 db 16
 mul r13 r13 r6

@@ -93,7 +93,28 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r1",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "GenericRegistryDirectoryHost.v3",
+            "cells": "any"
+          },
+          "targets": [
+            "GenericCatalogStore"
+          ],
+          "reason": "a Registry record slot (S58 + 6k) holds the ReferenceId of a Store the Catalog Store Directory Adapter registered after checking its S0 against GenericCatalogStore.v6; Claim takes an UNCLAIMED one by writing its topology cells (S3..S31)"
+        }
+      ],
+      "origins": [
+        "cell:-1822968058:*"
+      ],
+      "targets": [
+        "GenericCatalogStore"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -117,7 +138,30 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r2",
+          "origin": {
+            "kind": "own-cell",
+            "cells": [
+              30
+            ],
+            "filled_by": "peer"
+          },
+          "targets": [
+            "GenericCatalogStore"
+          ],
+          "reason": "S30 is the capacity request's previous/tail StoreRef (docs/CATALOG_COORDINATION.md), posted by the Loader Router and the Migration Planner from a Registry record; Claim links the new Store behind it through the tail's NextStoreRef (S24)"
+        }
+      ],
+      "origins": [
+        "own:30"
+      ],
+      "targets": [
+        "GenericCatalogStore"
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

@@ -172,6 +172,19 @@ config_port["stack"]["dynamic_read_ranges"] = [{"start": 511, "end": 511}]
 ck(any("unreadable=[511]" in error for error in compatibility_errors(out_of_range)),
    "dynamic provider access incorrectly authorized an out-of-range PI config read")
 
+unknown_target = deepcopy(documents)
+router = next(item for item in unknown_target if item["source"].endswith("catalog_loader_router_v3_0.ic10"))
+next(item for item in router["network_dependencies"] if item["reference"] == "ra")["targets"] = ["NoSuchContract"]
+ck(any("no program provides target NoSuchContract" in error for error in compatibility_errors(unknown_target)),
+   "a network write attributed to a contract nothing provides was accepted")
+
+unaccepted_cell = deepcopy(documents)
+store = next(item for item in unaccepted_cell if item["source"].endswith("generic_catalog_store_v3_0.ic10"))
+reservation = next(item for item in store["own_stack"]["fields"] if item["address"] == 27)
+reservation["access"] = [access for access in reservation["access"] if access != "external-write"]
+ck(any("GenericCatalogStore accepts no write at S27" in error for error in compatibility_errors(unaccepted_cell)),
+   "a network write to a cell its target does not accept was not rejected")
+
 wrong_schema = deepcopy(documents)
 for provider in wrong_schema:
     for field in provider["own_stack"]["fields"]:

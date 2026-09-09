@@ -13,11 +13,12 @@ A `fresh` read fails unless `SEEDING_EXEMPTIONS` names it with the reason the
 carry is safe. `framework.register_seeding.PRIVATE_STATE_CELLS` is the reviewed
 claim that lets the walk read a program's own state back from its stack: a
 cell nothing but the program writes, so a value the boot path poked there is
-the value the next tick reads. This validator checks the claim as far as the
-tree can see -- no wired peer's contract writes the cell, and no network write
-that pins this program's `S0` identity writes it -- and the residue it accepts
-is a network write with no identity check, which nothing in the tree
-attributes to a target.
+the value the next tick reads. This validator checks the claim against the
+tree: no wired peer's contract writes the cell, and no network write
+attributed to this program's identity writes it. Every network write has an
+attributed target since issue #174 (`framework.network_provenance`, held by
+`validate_network_provenance.py`), so there is no residue the check has to
+accept.
 """
 from pathlib import Path as _ProjectPath
 import sys as _project_sys
@@ -25,6 +26,7 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 import sys
 
+from framework.network_provenance import attributed_network_writes
 from framework.register_seeding import FRESH, PRIVATE_STATE_CELLS, BootPaths, peer_written_cells
 from framework.scan_coverage import require_nonempty
 from framework.script_contracts import build_all
@@ -43,21 +45,6 @@ def identity_magic(contract: dict) -> int | None:
     return None
 
 
-def identity_pinned_network_writes(contracts: dict) -> dict[int, set[int]]:
-    """Cells written through a reference id whose `S0` the writer pinned, by that magic."""
-    pinned: dict[int, set[int]] = {}
-    for contract in contracts.values():
-        for dependency in contract["network_dependencies"]:
-            magics = [c["value"] for c in dependency["constraints"]
-                      if c["address"] == 0 and c["operator"] == "equals"]
-            cells = set(dependency["literal_writes"])
-            if dependency["dynamic_write"]:
-                cells = set(range(512))
-            for magic in magics:
-                pinned.setdefault(magic, set()).update(cells)
-    return pinned
-
-
 def main() -> int:
     print("IC10 register seeding")
     print("=" * 100)
@@ -69,7 +56,7 @@ def main() -> int:
     wiring = load_wiring(ROOT)
     peer_written = peer_written_cells(contracts, wiring)
     by_source = {contract["source"]: contract for contract in contracts.values()}
-    pinned = identity_pinned_network_writes(contracts)
+    reached = attributed_network_writes(contracts)
     failed = False
     for path, cells in sorted(PRIVATE_STATE_CELLS.items()):
         contract = by_source.get(path)
@@ -82,8 +69,8 @@ def main() -> int:
             if cell in peer_written[path]:
                 print(f"FAIL {path}: S{cell} is declared private but a wired peer's contract writes it")
                 failed = True
-            elif magic is not None and cell in pinned.get(magic, ()):
-                print(f"FAIL {path}: S{cell} is declared private but a network write pinned to"
+            elif magic is not None and cell in reached.get(magic, ()):
+                print(f"FAIL {path}: S{cell} is declared private but a network write attributed to"
                       f" this program's S0 identity writes it")
                 failed = True
     fresh_seen: set[tuple[str, str]] = set()

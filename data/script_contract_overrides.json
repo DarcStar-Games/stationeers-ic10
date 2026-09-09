@@ -22,6 +22,34 @@
      "verification": "paired-sequence",
      "description": "Topology sequence is odd while mutating and even when stable."
     }
+   ],
+   "network_provenance": [
+    {
+     "reference": "r1",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "GenericRegistryDirectoryHost.v3",
+      "cells": "any"
+     },
+     "targets": [
+      "GenericCatalogStore"
+     ],
+     "reason": "a Registry record slot (S58 + 6k) holds the ReferenceId of a Store the Catalog Store Directory Adapter registered after checking its S0 against GenericCatalogStore.v6; Claim takes an UNCLAIMED one by writing its topology cells (S3..S31)"
+    },
+    {
+     "reference": "r2",
+     "origin": {
+      "kind": "own-cell",
+      "cells": [
+       30
+      ],
+      "filled_by": "peer"
+     },
+     "targets": [
+      "GenericCatalogStore"
+     ],
+     "reason": "S30 is the capacity request's previous/tail StoreRef (docs/CATALOG_COORDINATION.md), posted by the Loader Router and the Migration Planner from a Registry record; Claim links the new Store behind it through the tail's NextStoreRef (S24)"
+    }
    ]
   },
   "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10": {
@@ -51,6 +79,20 @@
      0,
      401
     ]
+   ],
+   "network_provenance": [
+    {
+     "reference": "r0",
+     "origin": {
+      "kind": "own-cell",
+      "cells": "any",
+      "filled_by": "self"
+     },
+     "targets": [
+      "GenericCatalogStore"
+     ],
+     "reason": "the adapter's own candidate table (S18 + 6k, ReferenceId at +1) holds Stores this scan registered after checking their S0; Duplicate faults the earlier registrant of a NodeId through it"
+    }
    ]
   },
   "ic10/catalog-control-plane/catalog_coordinator_directory_telemetry_v2_0.ic10": {
@@ -100,7 +142,21 @@
       ]
      ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "r2",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "GenericRegistryDirectoryHost.v3",
+      "cells": "any"
+     },
+     "targets": [
+      "GenericCatalogStore"
+     ],
+     "reason": "a Registry record slot (S58 + 6k) holds the ReferenceId of a Store the Catalog Store Directory Adapter registered after checking its S0 against GenericCatalogStore.v6 (DirRef); the Planner reserves the destination Store's capacity in its S27"
+    }
+   ]
   },
   "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10": {
    "source_sha256": "81ff9000b6221f3c76745a8b3231413cd468850acc7634b8524ed5c9f51a8f76",
@@ -113,7 +169,49 @@
       ]
      ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "r1",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "GenericRegistryDirectoryHost.v3",
+      "cells": "any"
+     },
+     "targets": [
+      "GenericCatalogStore"
+     ],
+     "reason": "a Registry record slot (S58 + 6k) holds the ReferenceId of a Store the Catalog Store Directory Adapter registered after checking its S0 against GenericCatalogStore.v6; the Manager retires a DRAINING Store that holds no items (S16 = 5)"
+    },
+    {
+     "reference": "r2",
+     "origin": {
+      "kind": "reference-cell",
+      "via": "r1",
+      "cells": [
+       21
+      ]
+     },
+     "targets": [
+      "GenericCatalogStore"
+     ],
+     "reason": "Store S21 is its PrevStoreRef in the topology chain Claim links (S21/S24); the Manager points the neighbour's NextStoreRef past the retiring Store"
+    },
+    {
+     "reference": "r3",
+     "origin": {
+      "kind": "reference-cell",
+      "via": "r1",
+      "cells": [
+       24
+      ]
+     },
+     "targets": [
+      "GenericCatalogStore"
+     ],
+     "reason": "Store S24 is its NextStoreRef in the topology chain Claim links (S21/S24); the Manager points the neighbour's PrevStoreRef past the retiring Store"
+    }
+   ]
   },
   "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10": {
    "source_sha256": "abccb20313cec0b2d5ce50ed176af77e6f13d42a0124126a5dbd1e9c319b83e9",
@@ -136,6 +234,95 @@
      0,
      511
     ]
+   ],
+   "external_writable_ranges": [
+    [
+     32,
+     511
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 8,
+     "name": "StoreOrdinal",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it."
+    },
+    {
+     "address": 11,
+     "name": "CoordinatorRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it."
+    },
+    {
+     "address": 12,
+     "name": "CoordinatorEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it."
+    },
+    {
+     "address": 14,
+     "name": "ClaimCoordinatorId",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Listed reserved in the Store ABI6 table; Claim writes the Coordinator's CoordinatorId here and the Store does not read it."
+    },
+    {
+     "address": 21,
+     "name": "PreviousStoreRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Topology chain link written by Claim and unlinked by the Retirement Manager; the Store does not read it."
+    },
+    {
+     "address": 24,
+     "name": "NextStoreRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Topology chain link written by Claim and unlinked by the Retirement Manager; the Store does not read it."
+    },
+    {
+     "address": 26,
+     "name": "AssignmentEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it."
+    },
+    {
+     "address": 27,
+     "name": "InFlightReservationCells",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Capacity promised to an in-flight Loader placement or migration; the Router, Planner, and Worker write it, the Store resets it."
+    },
+    {
+     "address": 31,
+     "name": "CommittedAssignmentEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it."
+    }
    ]
   },
   "ic10/controller-config/generic_persistent_config_host_v1_1.ic10": {
@@ -1024,7 +1211,21 @@
       ]
      ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "r1",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "ItemResourceReservationSelector.v1",
+      "cells": "any"
+     },
+     "targets": [
+      "ResourceReservation"
+     ],
+     "reason": "the Selector's quote table (S32 + 3k) holds the Reservation ReferenceId of each aggregated source or destination; Commit writes owner, epoch, direction, and action hints into each (S13..S19, S25..S27)"
+    }
+   ]
   },
   "ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10": {
    "source_sha256": "f05d8ee99620dc98c19797dd5ef1358ec93bd6b60585dca29a48bd1b45528134",
@@ -1204,7 +1405,75 @@
       ]
      ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "r2",
+     "origin": {
+      "kind": "reference-cell",
+      "via": "r9",
+      "cells": [
+       28
+      ]
+     },
+     "targets": [
+      "ResourceReservation"
+     ],
+     "reason": "r9 is a Material Link from the Resolver's candidate table (d0, S20 + 4k); Link S28/S29 are the source and sink Reservation ReferenceIds (docs/MATERIAL_TRANSFER_SYSTEM.md); Stage writes epoch, reserved export, and direction into the source"
+    },
+    {
+     "reference": "r2",
+     "origin": {
+      "kind": "own-cell",
+      "cells": "any",
+      "filled_by": "self"
+     },
+     "targets": [
+      "ResourceReservation"
+     ],
+     "reason": "Clean re-reads the source Reservation ReferenceIds this program poked into its own staged table (S32 + 3k) at Stage"
+    },
+    {
+     "reference": "r3",
+     "origin": {
+      "kind": "reference-cell",
+      "via": "r9",
+      "cells": [
+       29
+      ]
+     },
+     "targets": [
+      "ResourceReservation"
+     ],
+     "reason": "r9 is a Material Link from the Resolver's candidate table (d0, S20 + 4k); Link S28/S29 are the source and sink Reservation ReferenceIds (docs/MATERIAL_TRANSFER_SYSTEM.md); Stage writes epoch, reserved import, and direction into the sink"
+    },
+    {
+     "reference": "r3",
+     "origin": {
+      "kind": "own-cell",
+      "cells": "any",
+      "filled_by": "self"
+     },
+     "targets": [
+      "ResourceReservation"
+     ],
+     "reason": "Clean re-reads the sink Reservation ReferenceIds this program poked into its own staged table (S32 + 3k) at Stage"
+    },
+    {
+     "reference": "r4",
+     "origin": {
+      "kind": "reference-cell",
+      "via": "r9",
+      "cells": [
+       14
+      ]
+     },
+     "targets": [
+      "MaterialTransferGrantGuard"
+     ],
+     "reason": "Link S14 is the Material Grant Guard ReferenceId (docs/MATERIAL_TRANSFER_SYSTEM.md); Stage writes the Guard's staged payload (S16..S26)"
+    }
+   ]
   },
   "ic10/power-grid/power_consumer_endpoint_v1_0.ic10": {
    "source_sha256": "11cc6057c9ee6cd0a8c9e8cf75b66b71c03592ccbda959d22b7e8f3a3e8d8e63",
@@ -1332,7 +1601,33 @@
       ]
      ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "r7",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "PowerDispatchPlanStore.v1",
+      "cells": "any"
+     },
+     "targets": [
+      "ResourceReservation"
+     ],
+     "reason": "a plan flow record (S32 + 8k) holds the source POWER Reservation ReferenceId at +1; Write commits ownership, epoch, and the aggregated reserved export into it"
+    },
+    {
+     "reference": "r8",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "PowerDispatchPlanStore.v1",
+      "cells": "any"
+     },
+     "targets": [
+      "ResourceReservation"
+     ],
+     "reason": "a plan flow record (S32 + 8k) holds the sink POWER Reservation ReferenceId at +2; Write commits ownership, epoch, and the aggregated reserved import into it"
+    }
+   ]
   },
   "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10": {
    "source_sha256": "1c8b4dab5aeea7aa7cbf33a7f5de6d0ed5db358458955788c9fb605bd787949f",
@@ -1411,7 +1706,23 @@
       ]
      ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "r13",
+     "origin": {
+      "kind": "port-cell",
+      "port": "d1",
+      "cells": [
+       15
+      ]
+     },
+     "targets": [
+      "ResourceEndpoint"
+     ],
+     "reason": "d1 is the Power Policy Target Resolver, an access-only port this program fences by response token rather than identity; its S15 is the ReferenceId of the managed POWER Endpoint the PolicyId resolved to, and Apply writes that endpoint's policy override (S50) and watt cap (S51)"
+    }
+   ]
   },
   "ic10/power-jobs/power_job_scheduler_v1_0.ic10": {
    "source_sha256": "88fd20209fbd5221ea9bc396d8fabf686aa0981bd9f96e8baa18ee6df4b7558f",
@@ -1635,7 +1946,22 @@
       ]
      ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "r9",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "PressureGridRouteSelector.v2",
+      "cells": "any"
+     },
+     "targets": [
+      "ControllerPressureTransferRuntime",
+      "EmbeddedPressureTransferRuntime"
+     ],
+     "reason": "the Route Selector's selected path (S16 + k) lists the PressureTransfer ReferenceId of each hop; Cleanup resets a hop's staged grant (S108/S109) after a later hop refused the common rate"
+    }
+   ]
   },
   "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10": {
    "source_sha256": "2064997d223dd0190782e5407982c718cf3cf16496e0c432607d0f3a316f926d",
@@ -2100,6 +2426,870 @@
      25,
      27
     ]
+   ]
+  },
+  "ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10": {
+   "source_sha256": "e856344c13f86ed2e6c19920376c8816dd23f58c1fc3e58695f28a9907bf5519",
+   "network_provenance": [
+    {
+     "reference": "r1",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "GenericRegistryDirectoryHost.v3",
+      "cells": "any"
+     },
+     "targets": [
+      "GenericCatalogStore"
+     ],
+     "reason": "a Registry record slot (S58 + 6k) holds the ReferenceId of a Store the Catalog Store Directory Adapter registered after checking its S0 against GenericCatalogStore.v6; Recovery re-stamps each claimed Store's Coordinator identity (S11) and epoch (S12) on takeover"
+    }
+   ]
+  },
+  "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10": {
+   "source_sha256": "de287688f01201bc05c82c2f721406d563072ab48e7b6a9e0b46a83e9b65e385",
+   "network_provenance": [
+    {
+     "reference": "r1",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "CatalogCoordinatorCore.v4",
+      "cells": [
+       40
+      ]
+     },
+     "targets": [
+      "GenericCatalogStore"
+     ],
+     "reason": "Core S40 is the source Store ReferenceId the Migration Planner published from a Registry record; the Worker pops the moved item from it"
+    },
+    {
+     "reference": "r2",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "CatalogCoordinatorCore.v4",
+      "cells": [
+       41
+      ]
+     },
+     "targets": [
+      "GenericCatalogStore"
+     ],
+     "reason": "Core S41 is the destination Store ReferenceId the Migration Planner published from a Registry record; the Worker copies the item into it and releases the S27 reservation"
+    }
+   ]
+  },
+  "ic10/manufacturing/generic_print_runtime_v2_0.ic10": {
+   "source_sha256": "eb49ddea049294c9e6bcce2e9caf57802f4e13456d9e0c2550c7f05cd7e713ed",
+   "network_provenance": [
+    {
+     "reference": "r2",
+     "origin": {
+      "kind": "own-cell",
+      "cells": [
+       10
+      ],
+      "filled_by": "peer"
+     },
+     "targets": [],
+     "device": "the printer named by the request's PrinterRef, whose native stack the runtime programs (S0 job kind, S1 packed recipe and count) before switching it On",
+     "reason": "S10 PrinterRef is posted by the Print Candidate Executor with the request (docs/ABI_REFERENCE.md); the target is a fabricator, not a program, so no contract accepts the write"
+    }
+   ]
+  },
+  "ic10/manufacturing/transform_candidate_executor_v2_0.ic10": {
+   "source_sha256": "3aad64f71f884c3593c03a030bd5aa488bab233f8072137156c67a57c58cd3b3",
+   "network_provenance": [
+    {
+     "reference": "r1",
+     "origin": {
+      "kind": "own-cell",
+      "cells": [
+       21
+      ],
+      "filled_by": "peer"
+     },
+     "targets": [
+      "GenericMaterialTransformRuntime"
+     ],
+     "reason": "S21 is the exact Runtime ReferenceId the Transform Job Driver posts with the request; Launch writes the Runtime's TransformType (S8) and request token (S16)"
+    }
+   ]
+  },
+  "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10": {
+   "source_sha256": "b96cfd152902ecfc960d5f7eaf48d711eac4379d21dc41518d780b828303b897",
+   "network_provenance": [
+    {
+     "reference": "r12",
+     "origin": {
+      "kind": "reference-cell",
+      "via": "r9",
+      "cells": [
+       13
+      ]
+     },
+     "targets": [
+      "ResourceTransformProfileView"
+     ],
+     "reason": "r9 is the Runtime's Admission (Runtime S17, the d1 ReferenceId it publishes at boot), and Admission S13 is the Transform Profile View ReferenceId it publishes once the view's identity check has passed; Readiness posts the TransformType request into the view's S70"
+    }
+   ]
+  },
+  "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10": {
+   "source_sha256": "914455f713c3b12700875b8c7b2387d7c2733839d5c2fd46f7cfa54187c10309",
+   "network_provenance": [
+    {
+     "reference": "r4",
+     "origin": {
+      "kind": "own-cell",
+      "cells": [
+       17
+      ],
+      "filled_by": "peer"
+     },
+     "targets": [
+      "ControllerPressureTransferRuntime",
+      "EmbeddedPressureTransferRuntime"
+     ],
+     "reason": "S17 is the PressureTransfer ReferenceId of the request, posted by the Path Allocator and the Single-hop Builder; the Allocator pins its S99 kind tag, which both transfer runtimes publish, before staging the grant into S108..S120"
+    },
+    {
+     "reference": "r5",
+     "origin": {
+      "kind": "reference-cell",
+      "via": "r4",
+      "cells": [
+       106
+      ]
+     },
+     "targets": [
+      "PressureInventoryReservation"
+     ],
+     "reason": "Transfer S106 is the SourceReservationRef (docs/PRESSURE_GRID_CONTROLLER.md); Prep checks its identity through sp, and CommitRate adds the granted rate to its ReservedExportMoles (S12)"
+    },
+    {
+     "reference": "r6",
+     "origin": {
+      "kind": "reference-cell",
+      "via": "r4",
+      "cells": [
+       107
+      ]
+     },
+     "targets": [
+      "PressureInventoryReservation"
+     ],
+     "reason": "Transfer S107 is the SinkReservationRef (docs/PRESSURE_GRID_CONTROLLER.md); Prep checks its identity through sp, and CommitRate adds the granted rate to its ReservedImportMoles (S13)"
+    }
+   ]
+  },
+  "ic10/printer-directory/printer_capacity_client_v2_0.ic10": {
+   "source_sha256": "92dd594b725745b602a70016a3bac0a6d27fb772e37c1a216b2e998b47dc0434",
+   "network_provenance": [
+    {
+     "reference": "r1",
+     "origin": {
+      "kind": "own-cell",
+      "cells": [
+       9
+      ],
+      "filled_by": "self"
+     },
+     "targets": [
+      "PrinterExecutionBank"
+     ],
+     "reason": "S9 holds the Execution Bank ReferenceId this program stored in Reserve after checking its S0; Release reloads it to hand the reserved capacity back"
+    }
+   ]
+  },
+  "ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10": {
+   "source_sha256": "43029418f7ad7aa95b8428e3148ba5608db2f8d04376fcc6bac20ac431214979",
+   "external_writable_ranges": [
+    [
+     19,
+     21
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 19,
+     "name": "TargetStoreRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+    },
+    {
+     "address": 20,
+     "name": "AssignmentEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime assignment token from the Router."
+    },
+    {
+     "address": 21,
+     "name": "ImportedItemIndex",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Next item index already imported, advanced by the Store."
+    }
+   ]
+  },
+  "ic10/input-profile-catalog/input_profile_catalog_loader_01_v4_0.ic10": {
+   "source_sha256": "654a997ba0c41ed955c7fdf6b984bf33eae76a228cede93bec68fdf8aaf9d952",
+   "external_writable_ranges": [
+    [
+     19,
+     21
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 19,
+     "name": "TargetStoreRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+    },
+    {
+     "address": 20,
+     "name": "AssignmentEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime assignment token from the Router."
+    },
+    {
+     "address": 21,
+     "name": "ImportedItemIndex",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Next item index already imported, advanced by the Store."
+    }
+   ]
+  },
+  "ic10/input-profile-catalog/input_profile_catalog_loader_02_v4_0.ic10": {
+   "source_sha256": "f4ffc2305b20e4dc0a190b0ab6e25f529f6737e011d30cd5bcfc15009020db48",
+   "external_writable_ranges": [
+    [
+     19,
+     21
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 19,
+     "name": "TargetStoreRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+    },
+    {
+     "address": 20,
+     "name": "AssignmentEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime assignment token from the Router."
+    },
+    {
+     "address": 21,
+     "name": "ImportedItemIndex",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Next item index already imported, advanced by the Store."
+    }
+   ]
+  },
+  "ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10": {
+   "source_sha256": "1a931f422ebd880467aebe7e5e5db2232785b5717452ddf95082a1bde99603e1",
+   "external_writable_ranges": [
+    [
+     19,
+     21
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 19,
+     "name": "TargetStoreRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+    },
+    {
+     "address": 20,
+     "name": "AssignmentEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime assignment token from the Router."
+    },
+    {
+     "address": 21,
+     "name": "ImportedItemIndex",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Next item index already imported, advanced by the Store."
+    }
+   ]
+  },
+  "ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10": {
+   "source_sha256": "b177a4b41e6986d282a5875b07b3cfbc13c75a20319dd507561362b33852a42b",
+   "external_writable_ranges": [
+    [
+     19,
+     21
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 19,
+     "name": "TargetStoreRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+    },
+    {
+     "address": 20,
+     "name": "AssignmentEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime assignment token from the Router."
+    },
+    {
+     "address": 21,
+     "name": "ImportedItemIndex",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Next item index already imported, advanced by the Store."
+    }
+   ]
+  },
+  "ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10": {
+   "source_sha256": "b07e0c9f0c40b4c30355f9fda5a6cac504a95315a7e88715e0aa3e78ffc16604",
+   "external_writable_ranges": [
+    [
+     19,
+     21
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 19,
+     "name": "TargetStoreRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+    },
+    {
+     "address": 20,
+     "name": "AssignmentEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime assignment token from the Router."
+    },
+    {
+     "address": 21,
+     "name": "ImportedItemIndex",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Next item index already imported, advanced by the Store."
+    }
+   ]
+  },
+  "ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10": {
+   "source_sha256": "7a7e39b5d17522d0c1a6f18e30f2e73a9fc7c870a1d1c75d432dc058513ec4b9",
+   "external_writable_ranges": [
+    [
+     19,
+     21
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 19,
+     "name": "TargetStoreRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+    },
+    {
+     "address": 20,
+     "name": "AssignmentEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime assignment token from the Router."
+    },
+    {
+     "address": 21,
+     "name": "ImportedItemIndex",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Next item index already imported, advanced by the Store."
+    }
+   ]
+  },
+  "ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10": {
+   "source_sha256": "c989941e24ac9f3639a77ff107b30e252594f9565d7eb302ff116b60d5820431",
+   "external_writable_ranges": [
+    [
+     19,
+     21
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 19,
+     "name": "TargetStoreRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+    },
+    {
+     "address": 20,
+     "name": "AssignmentEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime assignment token from the Router."
+    },
+    {
+     "address": 21,
+     "name": "ImportedItemIndex",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Next item index already imported, advanced by the Store."
+    }
+   ]
+  },
+  "ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10": {
+   "source_sha256": "3d8807fcc03bd3d2e94654c04924b2c6fb6dc0b250b629469c1dd3f42a98b972",
+   "external_writable_ranges": [
+    [
+     19,
+     21
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 19,
+     "name": "TargetStoreRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+    },
+    {
+     "address": 20,
+     "name": "AssignmentEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime assignment token from the Router."
+    },
+    {
+     "address": 21,
+     "name": "ImportedItemIndex",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Next item index already imported, advanced by the Store."
+    }
+   ]
+  },
+  "ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10": {
+   "source_sha256": "5f91cbfe8a8d10481917fe8eb75516467bba2b0034dbb236cfcc7229c3ca180b",
+   "external_writable_ranges": [
+    [
+     19,
+     21
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 19,
+     "name": "TargetStoreRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+    },
+    {
+     "address": 20,
+     "name": "AssignmentEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime assignment token from the Router."
+    },
+    {
+     "address": 21,
+     "name": "ImportedItemIndex",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Next item index already imported, advanced by the Store."
+    }
+   ]
+  },
+  "ic10/transform-catalog/resource_transform_catalog_loader_00_v6_0.ic10": {
+   "source_sha256": "4df9ca67e8557591783b8cb05916a58a8e0124f8de85b36d86ddfbcfeae167f9",
+   "external_writable_ranges": [
+    [
+     19,
+     21
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 19,
+     "name": "TargetStoreRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+    },
+    {
+     "address": 20,
+     "name": "AssignmentEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime assignment token from the Router."
+    },
+    {
+     "address": 21,
+     "name": "ImportedItemIndex",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Next item index already imported, advanced by the Store."
+    }
+   ]
+  },
+  "ic10/transform-catalog/resource_transform_catalog_loader_01_v6_0.ic10": {
+   "source_sha256": "e375b2cdd91f8c2d9a763a58aecf9e2524e439269663cbf701672d6214ec3dec",
+   "external_writable_ranges": [
+    [
+     19,
+     21
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 19,
+     "name": "TargetStoreRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+    },
+    {
+     "address": 20,
+     "name": "AssignmentEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime assignment token from the Router."
+    },
+    {
+     "address": 21,
+     "name": "ImportedItemIndex",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Next item index already imported, advanced by the Store."
+    }
+   ]
+  },
+  "ic10/transform-catalog/resource_transform_catalog_loader_02_v6_0.ic10": {
+   "source_sha256": "ca5760af24b24b4abcc0ec51d8fc52f67c27ef44f580049617c9799453d81f77",
+   "external_writable_ranges": [
+    [
+     19,
+     21
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 19,
+     "name": "TargetStoreRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+    },
+    {
+     "address": 20,
+     "name": "AssignmentEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime assignment token from the Router."
+    },
+    {
+     "address": 21,
+     "name": "ImportedItemIndex",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Next item index already imported, advanced by the Store."
+    }
+   ]
+  },
+  "ic10/transform-catalog/resource_transform_catalog_loader_03_v6_0.ic10": {
+   "source_sha256": "95a68ad1b0e99cc41c6755adc134d8bd66a60f832319d366d6f8101810a81ba7",
+   "external_writable_ranges": [
+    [
+     19,
+     21
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 19,
+     "name": "TargetStoreRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+    },
+    {
+     "address": 20,
+     "name": "AssignmentEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime assignment token from the Router."
+    },
+    {
+     "address": 21,
+     "name": "ImportedItemIndex",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Next item index already imported, advanced by the Store."
+    }
+   ]
+  },
+  "ic10/transform-catalog/resource_transform_catalog_loader_04_v6_0.ic10": {
+   "source_sha256": "4bc3113f3e63b6c2157e88f9c70e37f0eb881d682767b110e0822c1b088e5995",
+   "external_writable_ranges": [
+    [
+     19,
+     21
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 19,
+     "name": "TargetStoreRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+    },
+    {
+     "address": 20,
+     "name": "AssignmentEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Runtime assignment token from the Router."
+    },
+    {
+     "address": 21,
+     "name": "ImportedItemIndex",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Next item index already imported, advanced by the Store."
+    }
+   ]
+  },
+  "ic10/controller-config/generic_config_editor_v1_0.ic10": {
+   "source_sha256": "26212cc55666ed7c624006cddda7556741d3601eaf496ae4b6d5c3f1c103bb13",
+   "external_writable_ranges": [
+    [
+     32,
+     99
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 17,
+     "name": "ActiveFieldCount",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Written by the Config Loader with the loaded image."
+    },
+    {
+     "address": 19,
+     "name": "ControllerConfigSchema",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Written by the Config Loader with the loaded image."
+    },
+    {
+     "address": 22,
+     "name": "BridgeInputKind",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Written by the Config Input Bridge with a resolved value."
+    },
+    {
+     "address": 27,
+     "name": "ValidatedProfileRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Loader-validated Profile ReferenceId."
+    },
+    {
+     "address": 28,
+     "name": "ValidatedProfileAbi",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Loader-validated Profile ABI."
+    },
+    {
+     "address": 29,
+     "name": "ValidatedProfileGeneration",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Loader-validated Profile generation."
+    },
+    {
+     "address": 30,
+     "name": "LoadedBlockCount",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Written by the Config Loader with the loaded image."
+    }
+   ]
+  },
+  "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10": {
+   "source_sha256": "227892ba0447a88eebea5a181981735028c3ed4f8c0f69f51853a0ac98ed9bbf",
+   "external_writable_ranges": [
+    [
+     12,
+     15
+    ]
+   ],
+   "stack_fields": [
+    {
+     "address": 12,
+     "name": "ReservedExportMoles",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Allocator-owned."
+    },
+    {
+     "address": 13,
+     "name": "ReservedImportMoles",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Allocator-owned."
+    },
+    {
+     "address": 14,
+     "name": "BuildEpoch",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Allocator-owned."
+    },
+    {
+     "address": 15,
+     "name": "OwningPlannerRef",
+     "access": [
+      "external-read",
+      "external-write"
+     ],
+     "description": "Allocator-owned."
+    }
    ]
   }
  }

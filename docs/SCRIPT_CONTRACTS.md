@@ -72,7 +72,14 @@ Each generated per-script contract document is validated by
 - ordinary and slot-scoped device properties, including literal versus dynamic
   slot selection;
 - `getd`/`putd` ReferenceId dependencies and `db:n` device-index discovery,
-  including literal stack cells and accepted network-discovered protocols;
+  including literal stack cells and accepted network-discovered protocols. A
+  dependency that writes also records where its reference came from at every
+  write site (`origins`), the contracts the writes are attributed to
+  (`targets`: the identity the path checked, or a reviewed `network_provenance`
+  declaration of what the reference's source cell holds), and anything neither
+  covers (`unattributed`), which `contracts/index.json` counts and
+  `validation/validators/validate_network_provenance.py` refuses (issue #174,
+  `docs/SCRIPT_WIRING.md`);
 - literal and dynamic access to the housing's own 512-cell stack. An access the
   branch bounds derive whole emits an exact source-derived range, including the
   disjoint singletons a non-unit address stride reaches. A reviewed bound stands
@@ -314,6 +321,9 @@ versioned filename.
 3. Check a wired dependency with one literal `S0` identity comparison — the ABI is
    folded into it, so do not also check the peer's `S1`. Declare an explicit network
    ABI range when discovery accepts more than one ABI at a block header away from `S0`.
+   A `putd` through a reference needs the same check on every path that reaches it,
+   or a `network_provenance` entry in `data/script_contract_overrides.json` naming
+   what a ReferenceId in the cell it was loaded from points at.
 4. Add narrow public/dynamic ranges or externally owned fields to
    `data/script_contract_overrides.json` when source inspection cannot prove
    the cross-program bound, then record the reviewed source SHA-256. A port

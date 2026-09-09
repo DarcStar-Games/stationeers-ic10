@@ -309,5 +309,39 @@
       }
     }
   ],
-  "consumer_interfaces": []
+  "consumer_interfaces": [
+    {
+      "source": "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10",
+      "endpoint": {
+        "kind": "device-port",
+        "value": "d0"
+      },
+      "header_base": 0,
+      "literal_reads": [
+        0,
+        21,
+        22,
+        40,
+        41
+      ],
+      "literal_writes": [
+        21,
+        22,
+        40,
+        41
+      ],
+      "dynamic_read_ranges": [],
+      "dynamic_write_ranges": [],
+      "dynamic_read_range_source": "none",
+      "dynamic_write_range_source": "none",
+      "constraints": [
+        {
+          "address": 0,
+          "operator": "equals",
+          "value": 4515138
+        }
+      ],
+      "publication_requirements": []
+    }
+  ]
 }

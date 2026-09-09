@@ -126,7 +126,30 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r9",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "PressureGridRouteSelector.v2",
+            "cells": "any"
+          },
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ],
+          "reason": "the Route Selector's selected path (S16 + k) lists the PressureTransfer ReferenceId of each hop; Cleanup resets a hop's staged grant (S108/S109) after a later hop refused the common rate"
+        }
+      ],
+      "origins": [
+        "cell:2142409287:*"
+      ],
+      "targets": [
+        "ControllerPressureTransferRuntime",
+        "EmbeddedPressureTransferRuntime"
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

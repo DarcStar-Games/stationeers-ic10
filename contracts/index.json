@@ -2325,6 +2325,360 @@
       }
     ]
   },
+  "network_write_inventory": {
+    "writing_dependency_count": 43,
+    "declared_provenance_count": 27,
+    "unattributed_count": 0,
+    "writes": [
+      {
+        "source": "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10",
+        "reference": "r1",
+        "targets": [
+          "GenericCatalogStore"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10",
+        "reference": "r2",
+        "targets": [
+          "GenericCatalogStore"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10",
+        "reference": "r0",
+        "targets": [
+          "GenericCatalogStore"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10",
+        "reference": "r1",
+        "targets": [
+          "GenericCatalogStore"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/catalog-control-plane/catalog_coordinator_recovery_v2_0.ic10",
+        "reference": "r1",
+        "targets": [
+          "GenericCatalogStore"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10",
+        "reference": "r2",
+        "targets": [
+          "GenericCatalogStore"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10",
+        "reference": "r1",
+        "targets": [
+          "GenericCatalogStore"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10",
+        "reference": "r2",
+        "targets": [
+          "GenericCatalogStore"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10",
+        "reference": "r1",
+        "targets": [
+          "CatalogLoader"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10",
+        "reference": "r15",
+        "targets": [
+          "CatalogCoordinatorCore"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10",
+        "reference": "ra",
+        "targets": [
+          "GenericCatalogStore"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10",
+        "reference": "r1",
+        "targets": [
+          "GenericCatalogStore"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10",
+        "reference": "r2",
+        "targets": [
+          "GenericCatalogStore"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10",
+        "reference": "r3",
+        "targets": [
+          "GenericCatalogStore"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10",
+        "reference": "r1",
+        "targets": [
+          "CatalogLoader"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/controller-config/config_input_bridge_v1_0.ic10",
+        "reference": "editor",
+        "targets": [
+          "GenericConfigEditor"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/controller-config/config_input_bridge_v1_0.ic10",
+        "reference": "resolver",
+        "targets": [
+          "GenericInputResolver"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/controller-config/generic_config_committer_v1_1.ic10",
+        "reference": "editor",
+        "targets": [
+          "GenericConfigEditor"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/controller-config/generic_config_committer_v1_1.ic10",
+        "reference": "host",
+        "targets": [
+          "GenericPersistentConfigHost"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/controller-config/generic_config_loader_v1_2.ic10",
+        "reference": "editor",
+        "targets": [
+          "GenericConfigEditor"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/diagnostics/diagnostic_input_bridge_v1_0.ic10",
+        "reference": "resolver",
+        "targets": [
+          "GenericInputResolver"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10",
+        "reference": "consoleSelector",
+        "targets": [
+          "ConsoleSelector"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10",
+        "reference": "renderer",
+        "targets": [
+          "DiagnosticRenderer"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10",
+        "reference": "consoleSelector",
+        "targets": [
+          "ConsoleSelector"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10",
+        "reference": "controllerSelector",
+        "targets": [
+          "ControllerSelector"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10",
+        "reference": "r1",
+        "targets": [
+          "ResourceReservation"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/manufacturing/generic_print_runtime_v2_0.ic10",
+        "reference": "r2",
+        "targets": [],
+        "devices": [
+          "the printer named by the request's PrinterRef, whose native stack the runtime programs (S0 job kind, S1 packed recipe and count) before switching it On"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/manufacturing/transform_candidate_executor_v2_0.ic10",
+        "reference": "r1",
+        "targets": [
+          "GenericMaterialTransformRuntime"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10",
+        "reference": "r12",
+        "targets": [
+          "ResourceTransformProfileView"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10",
+        "reference": "r2",
+        "targets": [
+          "ResourceReservation"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10",
+        "reference": "r3",
+        "targets": [
+          "ResourceReservation"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10",
+        "reference": "r4",
+        "targets": [
+          "MaterialTransferGrantGuard"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/power-grid/power_reservation_committer_v1_0.ic10",
+        "reference": "r7",
+        "targets": [
+          "ResourceReservation"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/power-grid/power_reservation_committer_v1_0.ic10",
+        "reference": "r8",
+        "targets": [
+          "ResourceReservation"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/power-jobs/power_job_policy_apply_v1_0.ic10",
+        "reference": "r13",
+        "targets": [
+          "ResourceEndpoint"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10",
+        "reference": "r9",
+        "targets": [
+          "ControllerPressureTransferRuntime",
+          "EmbeddedPressureTransferRuntime"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10",
+        "reference": "r4",
+        "targets": [
+          "ControllerPressureTransferRuntime",
+          "EmbeddedPressureTransferRuntime"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10",
+        "reference": "r5",
+        "targets": [
+          "PressureInventoryReservation"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10",
+        "reference": "r6",
+        "targets": [
+          "PressureInventoryReservation"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10",
+        "reference": "sp",
+        "targets": [
+          "PressureInventoryReservation"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/printer-directory/printer_capacity_client_v2_0.ic10",
+        "reference": "r1",
+        "targets": [
+          "PrinterExecutionBank"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10",
+        "reference": "r1",
+        "targets": [
+          "ResourceReservation"
+        ],
+        "unattributed": []
+      },
+      {
+        "source": "ic10/shared-input/generic_input_resolver_v1_0.ic10",
+        "reference": "scanner",
+        "targets": [
+          "GenericInputScanner"
+        ],
+        "unattributed": []
+      }
+    ]
+  },
   "interfaces": {
     "ic10.interface.access.009cc1cb218b0894": {
       "stack": {
@@ -7932,84 +8286,6 @@
         }
       ]
     },
-    "ic10.interface.access.b3e4b92a714756eb": {
-      "stack": {
-        "literal_reads": [
-          0,
-          21,
-          22,
-          40,
-          41
-        ],
-        "literal_writes": [
-          21,
-          22,
-          40,
-          41
-        ],
-        "dynamic_read": false,
-        "dynamic_write": false,
-        "dynamic_read_ranges": [],
-        "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "none",
-        "dynamic_write_range_source": "none",
-        "constraints": [
-          {
-            "address": 0,
-            "equals": 4515138
-          }
-        ]
-      },
-      "assumptions": {
-        "properties_read": [],
-        "properties_written": [],
-        "slot_properties_read": [],
-        "slot_properties_written": []
-      },
-      "provider_obligations": {
-        "verification": "commissioning-required",
-        "stack_readable_ranges": [
-          {
-            "start": 0,
-            "end": 0
-          },
-          {
-            "start": 21,
-            "end": 22
-          },
-          {
-            "start": 40,
-            "end": 41
-          }
-        ],
-        "stack_writable_ranges": [
-          {
-            "start": 21,
-            "end": 22
-          },
-          {
-            "start": 40,
-            "end": 41
-          }
-        ],
-        "constraints": [
-          {
-            "address": 0,
-            "equals": 4515138
-          }
-        ],
-        "properties_readable": [],
-        "properties_writable": [],
-        "slot_properties_readable": [],
-        "slot_properties_writable": []
-      },
-      "consumers": [
-        {
-          "source": "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10",
-          "port": "d0"
-        }
-      ]
-    },
     "ic10.interface.access.b444e2044473da16": {
       "stack": {
         "literal_reads": [
@@ -9763,7 +10039,9 @@
       "provides": [
         "ic10.stack.catalog-item-migration-worker.v1"
       ],
-      "consumes": []
+      "consumes": [
+        "ic10.stack.catalog-coordinator-core.v4"
+      ]
     },
     {
       "source": "ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10",

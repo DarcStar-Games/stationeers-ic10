@@ -117,7 +117,30 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r13",
+          "origin": {
+            "kind": "port-cell",
+            "port": "d1",
+            "cells": [
+              15
+            ]
+          },
+          "targets": [
+            "ResourceEndpoint"
+          ],
+          "reason": "d1 is the Power Policy Target Resolver, an access-only port this program fences by response token rather than identity; its S15 is the ReferenceId of the managed POWER Endpoint the PolicyId resolved to, and Apply writes that endpoint's policy override (S50) and watt cap (S51)"
+        }
+      ],
+      "origins": [
+        "port:d1:15"
+      ],
+      "targets": [
+        "ResourceEndpoint"
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

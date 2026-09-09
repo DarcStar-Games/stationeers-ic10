@@ -75,7 +75,30 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r1",
+          "origin": {
+            "kind": "own-cell",
+            "cells": [
+              21
+            ],
+            "filled_by": "peer"
+          },
+          "targets": [
+            "GenericMaterialTransformRuntime"
+          ],
+          "reason": "S21 is the exact Runtime ReferenceId the Transform Job Driver posts with the request; Launch writes the Runtime's TransformType (S8) and request token (S16)"
+        }
+      ],
+      "origins": [
+        "own:21"
+      ],
+      "targets": [
+        "GenericMaterialTransformRuntime"
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

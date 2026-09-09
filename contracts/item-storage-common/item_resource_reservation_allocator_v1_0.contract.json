@@ -95,7 +95,28 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r1",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "ItemResourceReservationSelector.v1",
+            "cells": "any"
+          },
+          "targets": [
+            "ResourceReservation"
+          ],
+          "reason": "the Selector's quote table (S32 + 3k) holds the Reservation ReferenceId of each aggregated source or destination; Commit writes owner, epoch, direction, and action hints into each (S13..S19, S25..S27)"
+        }
+      ],
+      "origins": [
+        "cell:1606529514:*"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

@@ -96,7 +96,12 @@
     "dynamic_write_range_source": "none",
     "clears_all": false,
     "external_readable_ranges": [],
-    "external_writable_ranges": [],
+    "external_writable_ranges": [
+      {
+        "start": 12,
+        "end": 15
+      }
+    ],
     "fields": [
       {
         "address": 0,
@@ -167,43 +172,51 @@
       },
       {
         "address": 12,
-        "name": "S12",
+        "name": "ReservedExportMoles",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "override",
         "access": [
+          "external-read",
+          "external-write",
           "self-write"
         ],
-        "const": 0
+        "description": "Allocator-owned."
       },
       {
         "address": 13,
-        "name": "S13",
+        "name": "ReservedImportMoles",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "override",
         "access": [
+          "external-read",
+          "external-write",
           "self-write"
         ],
-        "const": 0
+        "description": "Allocator-owned."
       },
       {
         "address": 14,
-        "name": "S14",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "BuildEpoch",
+        "value_type": "integer",
+        "semantic_source": "override",
         "access": [
+          "external-read",
+          "external-write",
           "self-write"
         ],
-        "const": -1
+        "description": "Allocator-owned."
       },
       {
         "address": 15,
-        "name": "S15",
+        "name": "OwningPlannerRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "override",
         "access": [
+          "external-read",
+          "external-write",
           "self-write"
         ],
-        "const": 0
+        "description": "Allocator-owned."
       },
       {
         "address": 16,

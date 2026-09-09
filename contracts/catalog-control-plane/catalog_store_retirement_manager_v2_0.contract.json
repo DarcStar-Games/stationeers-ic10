@@ -131,7 +131,28 @@
           "value": 3
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r1",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "GenericRegistryDirectoryHost.v3",
+            "cells": "any"
+          },
+          "targets": [
+            "GenericCatalogStore"
+          ],
+          "reason": "a Registry record slot (S58 + 6k) holds the ReferenceId of a Store the Catalog Store Directory Adapter registered after checking its S0 against GenericCatalogStore.v6; the Manager retires a DRAINING Store that holds no items (S16 = 5)"
+        }
+      ],
+      "origins": [
+        "cell:-1822968058:*"
+      ],
+      "targets": [
+        "GenericCatalogStore"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -143,7 +164,30 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r2",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r1",
+            "cells": [
+              21
+            ]
+          },
+          "targets": [
+            "GenericCatalogStore"
+          ],
+          "reason": "Store S21 is its PrevStoreRef in the topology chain Claim links (S21/S24); the Manager points the neighbour's NextStoreRef past the retiring Store"
+        }
+      ],
+      "origins": [
+        "ref:r1:21"
+      ],
+      "targets": [
+        "GenericCatalogStore"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -155,7 +199,30 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r3",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r1",
+            "cells": [
+              24
+            ]
+          },
+          "targets": [
+            "GenericCatalogStore"
+          ],
+          "reason": "Store S24 is its NextStoreRef in the topology chain Claim links (S21/S24); the Manager points the neighbour's PrevStoreRef past the retiring Store"
+        }
+      ],
+      "origins": [
+        "ref:r1:24"
+      ],
+      "targets": [
+        "GenericCatalogStore"
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

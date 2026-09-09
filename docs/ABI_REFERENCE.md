@@ -718,7 +718,7 @@ identity `HASH("ManufacturingCandidateSelector.v2")`. `ic10/manufacturing/manufa
 
 ### Transform Candidate Readiness ABI1
 
-identity `HASH("TransformCandidateReadiness.v1")`. `ic10/manufacturing/transform_candidate_readiness_v1_0.ic10` owns generation-qualified Transform planning. It requires Transform Profile View ABI4 `S68 == requested TransformType` and `S69 == 1`, then waits for new Admission and Resolver publication generations. It reports `1 ready`, `-2 processor`, `-3 resource`, `-4 capacity`, `-1 invalid` in S9 and publishes response token S10. There is no fixed planning tick timeout.
+identity `HASH("TransformCandidateReadiness.v1")`. `ic10/manufacturing/transform_candidate_readiness_v1_0.ic10` owns generation-qualified Transform planning. It requires Transform Profile View ABI4 `S68 == requested TransformType` and `S69 == 1`, then waits for new Admission and Resolver publication generations. It reports `1 ready`, `-2 processor`, `-3 resource`, `-4 capacity` (the output Reservation's mirrored ImportCapacity `S37` below OutputQuantity times BatchCount), `-1 invalid` in S9 and publishes response token S10. There is no fixed planning tick timeout.
 
 ### Transform Candidate Executor ABI2
 

@@ -209,6 +209,50 @@ accesses (`getd`/`putd` through a resolved ReferenceId) have no port for the map
 to key on, so the planner still scans the family and its magic-namers and lists
 those separately for manual confirmation.
 
+## Network writes
+
+A `putd` lands on whatever housing its reference register names, and the map
+has no port to key it on. The rule that attributes it is the port rule carried
+one transport over (issue #174): at every write, on every path from the entry,
+the reference must be one the path has identity-checked -- a `getd rX rR 0`
+followed by an equality branch against a magic some program publishes, with
+`rR` unchanged since; a `move` carries the check with the value, and a check
+that fails takes it back -- or one loaded from a place whose meaning a reviewer
+has declared. `framework/network_provenance.py` walks the paths with the same
+machinery as the register and identity rules and records, on each contract's
+`network_dependencies` entry, where the reference came from (`origins`), the
+contracts the writes reach (`targets`), and anything neither covers
+(`unattributed`); `contracts/index.json` counts the unattributed writes and
+`validation/validators/validate_network_provenance.py` fails on any.
+
+Where the reference came from is what the walk knows: a cell of an identified
+peer (`cell`), one of the program's own cells (`own`), a cell of another
+reference (`ref`), a cell of a port with no declared identity (`port`). What a
+ReferenceId *in that place* names is a fact about the peer's layout, declared
+once per writing reference in `data/script_contract_overrides.json`:
+
+```json
+"network_provenance": [
+  {
+    "reference": "r7",
+    "origin": {"kind": "peer-cell", "identity": "PowerDispatchPlanStore.v1", "cells": "any"},
+    "targets": ["ResourceReservation"],
+    "reason": "a plan flow record holds the source POWER Reservation ReferenceId at +1; ..."
+  }
+]
+```
+
+Origins are `peer-cell` (identity, cells), `own-cell` (cells, and who fills
+them: `self`, `peer`, or `operator`, each held to the contracts), `reference-cell`
+(via another reference register, cells), `port-cell`, `port-device`, and
+`index-cell`; `cells` is a list of addresses or `any`. A declaration no write
+site loads from fails the build, a target no program provides or one that
+accepts none of the cells written fails compatibility, and a write to a device
+that is not a program names the device instead of a target. The same
+attribution is what lets `validation/validators/validate_register_seeding.py` hold a private state
+cell against the network: a cell some attributed write reaches is not the
+program's alone.
+
 ## Mailbox arbitration
 
 The map also says who *writes* each program. A port that writes a peer's cells

@@ -177,7 +177,28 @@
           "value": 2
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r2",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "GenericRegistryDirectoryHost.v3",
+            "cells": "any"
+          },
+          "targets": [
+            "GenericCatalogStore"
+          ],
+          "reason": "a Registry record slot (S58 + 6k) holds the ReferenceId of a Store the Catalog Store Directory Adapter registered after checking its S0 against GenericCatalogStore.v6 (DirRef); the Planner reserves the destination Store's capacity in its S27"
+        }
+      ],
+      "origins": [
+        "cell:-1822968058:*"
+      ],
+      "targets": [
+        "GenericCatalogStore"
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

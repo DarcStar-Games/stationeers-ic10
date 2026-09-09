@@ -108,7 +108,12 @@
     "dynamic_write_range_source": "none",
     "clears_all": true,
     "external_readable_ranges": [],
-    "external_writable_ranges": [],
+    "external_writable_ranges": [
+      {
+        "start": 19,
+        "end": 21
+      }
+    ],
     "fields": [
       {
         "address": 0,
@@ -230,6 +235,39 @@
         ],
         "const": 1,
         "description": "immutable candidate publication LAST"
+      },
+      {
+        "address": 19,
+        "name": "TargetStoreRef",
+        "value_type": "reference-id",
+        "semantic_source": "override",
+        "access": [
+          "external-read",
+          "external-write"
+        ],
+        "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+      },
+      {
+        "address": 20,
+        "name": "AssignmentEpoch",
+        "value_type": "integer",
+        "semantic_source": "override",
+        "access": [
+          "external-read",
+          "external-write"
+        ],
+        "description": "Runtime assignment token from the Router."
+      },
+      {
+        "address": 21,
+        "name": "ImportedItemIndex",
+        "value_type": "number",
+        "semantic_source": "override",
+        "access": [
+          "external-read",
+          "external-write"
+        ],
+        "description": "Next item index already imported, advanced by the Store."
       },
       {
         "address": 24,

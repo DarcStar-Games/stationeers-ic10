@@ -35,7 +35,15 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:1820001013",
+        "own:8"
+      ],
+      "targets": [
+        "ConsoleSelector"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -99,7 +107,15 @@
       "dynamic_read": true,
       "dynamic_write": true,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:-1074177220",
+        "own:10"
+      ],
+      "targets": [
+        "DiagnosticRenderer"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",

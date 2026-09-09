@@ -30,13 +30,58 @@ def invariant_errors(contract: dict[str, Any]) -> list[str]:
     return errors
 
 
+def _writable(own: dict[str, Any]) -> set[int]:
+    """The cells a provider accepts a write into: read back, ranged, or declared external-write."""
+    writable = set(own["literal_reads"]) | expanded_ranges(own["external_writable_ranges"])
+    writable |= {field["address"] for field in own["fields"] if "external-write" in field["access"]}
+    return writable
+
+
+def network_target_errors(contracts: list[dict[str, Any]]) -> list[str]:
+    """A network write attributed to a contract must land on cells some program publishing it accepts.
+
+    The targets come from `framework.network_provenance`: the programs whose
+    identity the writer checked on the path, or the contracts a reviewed
+    provenance declaration names. A target no program provides, or one that
+    accepts none of the cells written, is a declaration that is wrong.
+    """
+    by_name: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for contract in contracts:
+        for provided in contract["contracts"]["provides"]:
+            by_name[provided.get("contract") or provided["protocol_id"]].append(contract)
+    errors = []
+    for consumer in contracts:
+        for dependency in consumer["network_dependencies"]:
+            for target in dependency.get("targets", ()):
+                candidates = by_name.get(target)
+                if not candidates:
+                    errors.append(f"{consumer['source']} network {dependency['reference']}: no program provides target {target}")
+                    continue
+                if dependency["dynamic_write"]:
+                    if not any(provider["own_stack"]["external_writable_ranges"] or provider["own_stack"]["dynamic_read"]
+                               for provider in candidates):
+                        errors.append(
+                            f"{consumer['source']} network {dependency['reference']}: dynamic write to {target},"
+                            f" which accepts no ranged write"
+                        )
+                    continue
+                requested = set(dependency["literal_writes"])
+                if not any(requested <= _writable(provider["own_stack"]) for provider in candidates):
+                    rejected = sorted(requested - set.union(*(_writable(provider["own_stack"]) for provider in candidates)))
+                    errors.append(
+                        f"{consumer['source']} network {dependency['reference']}: {target} accepts no write at"
+                        f" S{', S'.join(str(cell) for cell in rejected)}"
+                    )
+    return errors
+
+
 def compatibility_errors(contracts: list[dict[str, Any]]) -> list[str]:
     """Return provider/consumer header, cell, and access-direction incompatibilities."""
     providers: dict[tuple[str, int], list[dict[str, Any]]] = defaultdict(list)
     for contract in contracts:
         for provided in contract["contracts"]["provides"]:
             providers[(provided["protocol_id"], provided["base"])].append(contract)
-    errors = []
+    errors = network_target_errors(contracts)
     for consumer in contracts:
         ports = {item["port"]: item for item in consumer["device_ports"]}
         for requirement in consumer["contracts"]["consumes"]:

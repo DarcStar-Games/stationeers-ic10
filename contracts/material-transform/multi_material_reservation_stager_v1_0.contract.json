@@ -116,7 +116,43 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r2",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r9",
+            "cells": [
+              28
+            ]
+          },
+          "targets": [
+            "ResourceReservation"
+          ],
+          "reason": "r9 is a Material Link from the Resolver's candidate table (d0, S20 + 4k); Link S28/S29 are the source and sink Reservation ReferenceIds (docs/MATERIAL_TRANSFER_SYSTEM.md); Stage writes epoch, reserved export, and direction into the source"
+        },
+        {
+          "reference": "r2",
+          "origin": {
+            "kind": "own-cell",
+            "cells": "any",
+            "filled_by": "self"
+          },
+          "targets": [
+            "ResourceReservation"
+          ],
+          "reason": "Clean re-reads the source Reservation ReferenceIds this program poked into its own staged table (S32 + 3k) at Stage"
+        }
+      ],
+      "origins": [
+        "own:*",
+        "ref:r9:28"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -133,7 +169,43 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r3",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r9",
+            "cells": [
+              29
+            ]
+          },
+          "targets": [
+            "ResourceReservation"
+          ],
+          "reason": "r9 is a Material Link from the Resolver's candidate table (d0, S20 + 4k); Link S28/S29 are the source and sink Reservation ReferenceIds (docs/MATERIAL_TRANSFER_SYSTEM.md); Stage writes epoch, reserved import, and direction into the sink"
+        },
+        {
+          "reference": "r3",
+          "origin": {
+            "kind": "own-cell",
+            "cells": "any",
+            "filled_by": "self"
+          },
+          "targets": [
+            "ResourceReservation"
+          ],
+          "reason": "Clean re-reads the sink Reservation ReferenceIds this program poked into its own staged table (S32 + 3k) at Stage"
+        }
+      ],
+      "origins": [
+        "own:*",
+        "ref:r9:29"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -155,7 +227,30 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r4",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r9",
+            "cells": [
+              14
+            ]
+          },
+          "targets": [
+            "MaterialTransferGrantGuard"
+          ],
+          "reason": "Link S14 is the Material Grant Guard ReferenceId (docs/MATERIAL_TRANSFER_SYSTEM.md); Stage writes the Guard's staged payload (S16..S26)"
+        }
+      ],
+      "origins": [
+        "ref:r9:14"
+      ],
+      "targets": [
+        "MaterialTransferGrantGuard"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",

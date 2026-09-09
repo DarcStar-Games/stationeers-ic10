@@ -15,13 +15,15 @@ def src(n):return (R/n).read_text()
 profile=Device(501,stack={70:111,71:2,72:2,73:1,74:5,33:9001,35:2,68:111,69:1},props={'ReferenceId':501})
 adm=Device(502,stack={13:501,9:7,8:1,14:111},props={'ReferenceId':502})
 res=Device(503,stack={13:9,12:1,8:111},props={'ReferenceId':503})
-rpv=Device(506,stack={},props={'ReferenceId':506});ep=Device(505,stack={14:506},props={'ReferenceId':505})
-out=Device(504,stack={2:505,7:100},props={'ReferenceId':504})
+# The output Reservation mirrors its Endpoint's ImportCapacity at S37 (docs/RESOURCE_GRID_CORE.md);
+# before issue #174 this fixture carried an Endpoint reference at S2 and a capacity at S7, a
+# layout the Reservation never had, which is what let Readiness's old capacity block pass here.
+out=Device(504,stack={37:100},props={'ReferenceId':504})
 runtime=Device(500,stack={17:502,18:503,15:504},props={'ReferenceId':500})
-ready=IC10(src('ic10/manufacturing/transform_candidate_readiness_v1_0.ic10'),{'p':profile,'a':adm,'r':res,'o':out,'e':ep,'rp':rpv},self_ref=507)
+ready=IC10(src('ic10/manufacturing/transform_candidate_readiness_v1_0.ic10'),{'p':profile,'a':adm,'r':res,'o':out},self_ref=507)
 ready.stack.update({11:500,12:222,13:2,14:2,15:1,16:1,8:44})
 # expose all refs for getd through screws
-ready.screws.update({'rt':runtime,'profile':profile,'adm':adm,'res':res,'out':out,'ep':ep,'rpv':rpv})
+ready.screws.update({'rt':runtime,'profile':profile,'adm':adm,'res':res,'out':out})
 ready.run(30)
 ck(ready.stack.get(10)!=44,'stale transform profile completed a new readiness request')
 profile.stack.update({70:222,71:2,72:2,73:1,74:6,33:9001,35:2,68:222,69:1})

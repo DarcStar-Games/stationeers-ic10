@@ -65,7 +65,16 @@
             "provider_header_bases": [
               0
             ],
-            "consumers": []
+            "consumers": [
+              {
+                "source": "ic10/catalog-control-plane/catalog_item_migration_worker_v1_0.ic10",
+                "endpoint": {
+                  "kind": "device-port",
+                  "value": "d0"
+                },
+                "header_base": 0
+              }
+            ]
           }
         ]
       },
@@ -1258,7 +1267,12 @@
             "abi": 1
           }
         ],
-        "schema_fields": [],
+        "schema_fields": [
+          {
+            "address": 19,
+            "name": "ControllerConfigSchema"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -9705,8 +9719,8 @@
         "highest_literal_cell": 31,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 113,
-        "line_headroom_120": 7,
+        "line_count": 107,
+        "line_headroom_120": 13,
         "measured_v1_publication_cost_lines": 3,
         "measured_v1_stack_cost_cells": 8
       },
@@ -9744,7 +9758,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "5d40e58c3f1e1d4c8d66f10e547a1d141d1452be5424678b4bee17803bde569d",
+          "source_sha256": "b96cfd152902ecfc960d5f7eaf48d711eac4379d21dc41518d780b828303b897",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {

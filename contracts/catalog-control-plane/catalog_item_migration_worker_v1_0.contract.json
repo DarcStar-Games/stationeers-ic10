@@ -51,17 +51,11 @@
         ]
       },
       "target": {
-        "kind": "stack-interface",
-        "verification": "access-only",
-        "interface_id": "ic10.interface.access.b3e4b92a714756eb",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.b3e4b92a714756eb",
-        "provider_resolution": "deployment-supplied",
-        "assumptions": {
-          "properties_read": [],
-          "properties_written": [],
-          "slot_properties_read": [],
-          "slot_properties_written": []
-        }
+        "kind": "stack-protocol",
+        "verification": "literal-header",
+        "protocol_ids": [
+          "ic10.stack.catalog-coordinator-core.v4"
+        ]
       }
     }
   ],
@@ -87,7 +81,30 @@
       "dynamic_read": true,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r1",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "CatalogCoordinatorCore.v4",
+            "cells": [
+              40
+            ]
+          },
+          "targets": [
+            "GenericCatalogStore"
+          ],
+          "reason": "Core S40 is the source Store ReferenceId the Migration Planner published from a Registry record; the Worker pops the moved item from it"
+        }
+      ],
+      "origins": [
+        "cell:4515138:40"
+      ],
+      "targets": [
+        "GenericCatalogStore"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -112,7 +129,30 @@
       "dynamic_read": false,
       "dynamic_write": true,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r2",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "CatalogCoordinatorCore.v4",
+            "cells": [
+              41
+            ]
+          },
+          "targets": [
+            "GenericCatalogStore"
+          ],
+          "reason": "Core S41 is the destination Store ReferenceId the Migration Planner published from a Registry record; the Worker copies the item into it and releases the S27 reservation"
+        }
+      ],
+      "origins": [
+        "cell:4515138:41"
+      ],
+      "targets": [
+        "GenericCatalogStore"
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {
@@ -209,7 +249,22 @@
         "source": "literal-own-stack-header"
       }
     ],
-    "consumes": []
+    "consumes": [
+      {
+        "port": "d0",
+        "accepted": [
+          {
+            "protocol_id": "ic10.stack.catalog-coordinator-core.v4",
+            "header_base": 0,
+            "contract": "CatalogCoordinatorCore",
+            "magic": 4515138,
+            "abi": 4,
+            "publication_requirements": []
+          }
+        ],
+        "source": "authoritative-literal-header-check"
+      }
+    ]
   },
   "extraction": {
     "mode": "static-v2",

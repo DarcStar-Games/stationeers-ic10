@@ -20,7 +20,7 @@ Two things follow from that, and they drive almost every convention in the repo:
 Run everything from the repository root (Python 3.10+; `python3` locally).
 
 ```bash
-python3 tools/run_validation.py                   # full suite: 33 validators + 50 protocol/execution tests
+python3 tools/run_validation.py                   # full suite: 34 validators + 51 protocol/execution tests
 python3 tools/run_validation.py --resume          # reuse prior PASSes, only if the input-tree fingerprint matches
 python3 tests/test_job_abi.py                     # run one test  (plain script, exit code = pass/fail)
 python3 validation/validators/validate_ic10.py    # run one validator
@@ -158,7 +158,11 @@ revisions establish *durability*, reservation epochs/ownership tokens authorize 
   (issue #109). A state register or private state cell armed after the check gates later ticks; a
   read before the check is fine while nothing acts on it; a check the previous image passed over a
   reflash guard counts for nothing, since the pin is wiring. A reviewed carve-out needs an
-  `IDENTITY_EXEMPTIONS` entry with its reason.
+  `IDENTITY_EXEMPTIONS` entry with its reason. A network write (`putd` through a ReferenceId)
+  answers to the same rule one transport over: `validation/validators/validate_network_provenance.py`
+  attributes every write to the identity the path checked on the reference, carried through
+  `move`, or to a reviewed `network_provenance` declaration of what the cell the reference was
+  loaded from holds (issue #174). A write with neither fails.
 - **Physical slots are never repurposed.** Removed config fields become reserved holes. "Physical slot"
   (stable 0..31 address) and "active ordinal" (contiguous 1..N UI number) are different concepts.
 - **Fail closed.** Missing capacity, stale generations, duplicate identities, overflowed directories

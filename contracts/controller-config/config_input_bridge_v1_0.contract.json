@@ -40,7 +40,15 @@
           "value": -533009584
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:-533009584",
+        "own:8"
+      ],
+      "targets": [
+        "GenericConfigEditor"
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -83,7 +91,15 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:1971762319",
+        "own:9"
+      ],
+      "targets": [
+        "GenericInputResolver"
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {
