@@ -357,6 +357,11 @@ class ImageState:
     carries: frozenset[str]
 
 
+def image_header(contract: dict[str, Any]) -> dict[str, Any] | None:
+    """The `provides` entry for a program's literal `S0` header, or None when its contract has none."""
+    return next((item for item in contract["contracts"]["provides"] if item["base"] == 0), None)
+
+
 def image_identity(contract: dict[str, Any]) -> str | None:
     """The `<Contract>.v<ABI>` token a program's `S0` header publishes, from its contract.
 
@@ -364,7 +369,7 @@ def image_identity(contract: dict[str, Any]) -> str | None:
     shares an identity it does not publish, so such a program is outside the
     grouping (every deployable program publishes one today).
     """
-    header = next((item for item in contract["contracts"]["provides"] if item["base"] == 0), None)
+    header = image_header(contract)
     if header is None or not header.get("contract"):
         return None
     return f"{header['contract']}.v{header['abi']}"

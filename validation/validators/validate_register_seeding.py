@@ -41,6 +41,7 @@ from framework.register_seeding import (
     SHARED_IMAGE_CARRIES,
     BootPaths,
     ImageState,
+    image_header,
     image_identity,
     peer_written_cells,
     shared_identity_errors,
@@ -53,13 +54,6 @@ ROOT = _PROJECT_ROOT
 # (path, register) -> why the register may be read on a fresh housing before
 # the boot path writes it. An entry no finding matches fails as stale.
 SEEDING_EXEMPTIONS: dict[tuple[str, str], str] = {}
-
-
-def identity_magic(contract: dict) -> int | None:
-    for field in contract["own_stack"]["fields"]:
-        if field["address"] == 0 and isinstance(field.get("const"), int):
-            return field["const"]
-    return None
 
 
 def main() -> int:
@@ -81,7 +75,8 @@ def main() -> int:
             print(f"FAIL {path}: private state cells declared for a program with no contract")
             failed = True
             continue
-        magic = identity_magic(contract)
+        header = image_header(contract)
+        magic = header["magic"] if header is not None else None
         for cell in sorted(cells):
             if cell in peer_written[path]:
                 print(f"FAIL {path}: S{cell} is declared private but a wired peer's contract writes it")

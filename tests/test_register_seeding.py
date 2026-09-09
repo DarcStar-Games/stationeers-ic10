@@ -30,6 +30,7 @@ from framework.register_seeding import (
     Range,
     decide,
     exact,
+    image_header,
     image_identity,
     join_environments,
     peer_written_cells,
@@ -304,6 +305,7 @@ for path in FEEDERS:
     contract_path = ROOT / "contracts" / path[len("ic10/"):].replace(".ic10", ".contract.json")
     contract = json.loads(contract_path.read_text())
     ck(image_identity(contract) == "StackerFeeder.v1", f"{path} publishes {image_identity(contract)}")
+    ck(image_header(contract)["magic"] == 1559898316, f"{path}: the S0 header entry carries the feeder magic")
     carried = {register for edge, register in reads((ROOT / path).read_text(), PRIVATE_STATE_CELLS[path])
                if edge == SAME_IMAGE}
     ck(carried == set(declared["registers"]),
