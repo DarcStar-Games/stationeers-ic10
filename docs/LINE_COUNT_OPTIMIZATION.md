@@ -1,6 +1,6 @@
 # Line Count Optimization
 
-The framework keeps production IC10 programs at or below a **120-line maintainability ceiling**, leaving at least eight lines of margin under the game's 128-line program limit. This document is a current line-pressure inventory, not a historical snapshot of only the original shared-input modules.
+The framework keeps production IC10 programs at or below a **120-line maintainability ceiling**, eight lines under the game's 128-line program limit; a program above the ceiling carries a reviewed exemption that says why, and one within two lines of the limit states its count. This document is a current line-pressure inventory, not a historical snapshot of only the original shared-input modules.
 
 ## Current line-pressure inventory
 
