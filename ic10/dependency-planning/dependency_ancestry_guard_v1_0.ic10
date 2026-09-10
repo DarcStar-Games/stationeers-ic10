@@ -2,12 +2,11 @@
 poke 0 HASH("DependencyAncestryGuard.v1")
 poke 1 1
 poke 2 0
-move r12 0
 Loop:
 yield
 get r15 db 15
 get r0 db 16
-beq r15 r0 Loop
+beq r15 r0 Reply
 get r2 db 10
 get r3 db 11
 get r4 db 12
@@ -44,8 +43,10 @@ j DepthScan
 ParentCheck:
 get r0 d0 40
 bne r0 r14 Loop
+get r12 db 18
 add r12 r12 1
 bge r12 512 Bad
+poke 18 r12
 put d1 13 r8
 mul r13 r15 512
 add r13 r13 r12
@@ -77,6 +78,6 @@ j Reply
 Bad:
 poke 17 -1
 Reply:
-move r12 0
 poke 16 r15
+poke 18 0
 j Loop

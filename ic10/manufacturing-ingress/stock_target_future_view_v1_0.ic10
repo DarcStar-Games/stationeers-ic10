@@ -2,12 +2,11 @@
 poke 0 HASH("StockTargetFutureView.v1")
 poke 1 1
 poke 2 32
-move r10 0
 Loop:
 yield
 get r15 db 19
 get r0 db 20
-beq r15 r0 Loop
+beq r15 r0 Reply
 get r2 db 15
 get r3 db 16
 get r4 db 17
@@ -56,8 +55,10 @@ add r0 r9 6
 get r9 d0 r0
 bnan r9 Bad
 blez r9 Bad
+get r10 db 25
 add r10 r10 1
 bge r10 512 Bad
+poke 25 r10
 put d1 15 r2
 put d1 16 0
 put d1 17 r8
@@ -108,6 +109,6 @@ j Reply
 Bad:
 poke 21 -1
 Reply:
-move r10 0
 poke 20 r15
+poke 25 0
 j Loop

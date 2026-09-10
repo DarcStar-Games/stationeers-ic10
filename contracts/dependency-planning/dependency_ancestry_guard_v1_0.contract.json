@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10",
-  "source_sha256": "35cd49a0b615cc978e8d988192df2af828d27fd460999407f98b87bea3f083d8",
+  "source_sha256": "2dfd2cad2ca1360e3f1755b82f6cf59c357f14fbac325d38abcb43737d03fc61",
   "identity": {
     "service_id": "ic10.script.dependency.ancestry.guard",
     "implementation_revision": "1.0",
@@ -115,14 +115,16 @@
       13,
       14,
       15,
-      16
+      16,
+      18
     ],
     "literal_writes": [
       0,
       1,
       2,
       16,
-      17
+      17,
+      18
     ],
     "dynamic_read": false,
     "dynamic_write": false,
@@ -236,6 +238,16 @@
         "value_type": "number",
         "semantic_source": "unresolved",
         "access": [
+          "self-write"
+        ]
+      },
+      {
+        "address": 18,
+        "name": "S18",
+        "value_type": "number",
+        "semantic_source": "unresolved",
+        "access": [
+          "self-read",
           "self-write"
         ]
       }

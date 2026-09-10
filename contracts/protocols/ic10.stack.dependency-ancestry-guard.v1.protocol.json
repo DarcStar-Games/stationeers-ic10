@@ -120,6 +120,16 @@
           "access": [
             "self-write"
           ]
+        },
+        {
+          "address": 18,
+          "name": "S18",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
         }
       ],
       "behavior": {
