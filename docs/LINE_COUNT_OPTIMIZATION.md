@@ -14,6 +14,8 @@ The three inventory figures quoted in prose are defined once, in `framework/ic10
 - **tight programs** — programs at 117 lines or more.
 - **soft-limit exemptions** — programs above the 120-line ceiling. `validation/validators/validate_ic10.py` rejects both an unexempted program over the ceiling and an exemption whose program is within it, so this count is the size of `SOFT_LIMIT_EXEMPTIONS` on any tree that validates.
 
+An exemption says why its program is over the ceiling, not how close to the game's 128-line limit it sits, and the first edit to find out was the one that spent the last line (issue #176). The validator now prints each exempt program's headroom under 128 beside it, and an exemption within two lines of the limit states the count in its reason (`126 of 128 lines`); a stated count the tree no longer matches fails, so every edit that moves one of those programs moves the statement with it. `framework/ic10_line_budget.py` defines the margin and the rule.
+
 ## Shared-input consolidation results
 
 Physical-resolution logic exists once in `ic10/shared-input/generic_input_resolver_v1_0.ic10`; configuration adds the 61-line `ic10/controller-config/config_input_bridge_v1_0.ic10` for ordinal-to-physical-slot publication.
