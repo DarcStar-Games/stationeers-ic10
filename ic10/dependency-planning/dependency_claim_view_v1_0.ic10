@@ -2,6 +2,7 @@
 poke 0 HASH("DependencyClaimView.v1")
 poke 1 1
 poke 2 0
+move r5 0
 Loop:
 yield
 get r15 db 18
@@ -37,11 +38,12 @@ get r11 d0 r0
 blez r11 Next
 get r0 d0 40
 bne r0 r14 Loop
+add r5 r5 1
+bge r5 512 Bad
 put d1 13 r9
 put d1 14 r2
 mul r13 r15 512
-add r13 r13 r7
-add r13 r13 1
+add r13 r13 r5
 put d1 15 r13
 WaitC:
 yield
@@ -55,8 +57,6 @@ get r12 d1 19
 get r13 d1 18
 beq r12 7 Next
 bge r12 11 Next
-move r5 r9
-move r6 r11
 get sp d1 20
 j Count
 Unverified:
@@ -74,8 +74,8 @@ get r8 d0 r7
 beqz r8 CountNext
 beq r8 r3 CountNext
 add r0 r7 1
-get r9 d0 r0
-bne r9 r5 CountNext
+get r8 d0 r0
+bne r8 r9 CountNext
 add r0 r0 1
 get r10 d0 r0
 bne r10 r2 CountNext
@@ -93,24 +93,24 @@ j CountLoop
 CountDone:
 get r0 d0 40
 bne r0 r14 Loop
-poke 21 r5
-poke 22 r6
+poke 21 r9
+poke 22 r11
 poke 23 ra
 poke 24 r12
 poke 25 sp
 poke 26 r13
 poke 27 r4
 poke 20 1
-poke 19 r15
-j Loop
+j Reply
 Missing:
 poke 20 r1
 poke 21 0
 poke 22 0
 poke 23 0
-poke 19 r15
-j Loop
+j Reply
 Bad:
 poke 20 -1
+Reply:
+move r5 0
 poke 19 r15
 j Loop

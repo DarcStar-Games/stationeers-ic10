@@ -143,7 +143,9 @@ revisions establish *durability*, reservation epochs/ownership tokens authorize 
 `README.md` has the full 25-item list. The ones that bite hardest:
 
 - **Publish the generation/token last.** Payload cells first, the marker that makes them readable last.
-  Consumers snapshot the generation, read, and re-check the same positive generation afterward.
+  Consumers snapshot the generation, read, and re-check the same positive generation afterward. A scan
+  that re-check restarts posts downstream again under a new token, because the reply fence tells
+  replies apart by token alone (issue #148).
 - **ABI versions are exact, and `S0` carries the ABI.** A service publishes
   `HASH("<Contract>.v<ABI>")`, so one `S0` equality check pins the exact contract and an ABI bump
   changes the value every consumer compares; identity is derived from the name, never hand-allocated.
