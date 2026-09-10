@@ -91,8 +91,13 @@ mx.run(1)
 ck(mx.stack.get(9)==2 and feeder.stack.get(19)==41,'Executor did not advance after Feeder CurrentToken matched')
 
 # Generic TERMINAL_RESPONSE semantics reject request N while N+1 is expected.
-from framework.async_request import terminal,consume_terminal
+from framework.async_request import POSTING_SPAN,consume_terminal,posting_token,terminal
 ck(consume_terminal(102,terminal(101,1)) is None,'stale TERMINAL_RESPONSE result was accepted for a newer request')
+# A scanning caller's postings under one request differ from each other and from the next
+# request's, and the counter is refused before it could reach that request's tokens.
+ck(posting_token(7,1)!=posting_token(7,2) and posting_token(7,POSTING_SPAN-1)<posting_token(8,1),'posting tokens under one request collided or reached the next request')
+try:posting_token(7,POSTING_SPAN);ck(False,'the span-th posting was given a token')
+except ValueError:pass
 
 if fails:
  print('Async request execution: FAIL');[print(' -',x) for x in fails];sys.exit(1)
@@ -101,3 +106,4 @@ print(' - stale Transform profile/admission/resolver publications cannot satisfy
 print(' - diagnostic selector results and console auto-advance are fenced by exact response identity')
 print(' - stale Feeder failure cannot terminate a newer transfer request')
 print(' - invalid LIVE_CURRENT requests publish identity; stale TERMINAL_RESPONSE results are ignored')
+print(' - a posting counter keeps a restarted scan from inheriting the reply to its earlier posting')

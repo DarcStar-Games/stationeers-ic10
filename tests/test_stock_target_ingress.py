@@ -7,6 +7,7 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 import math
 import sys
 
+from framework.async_request import posting_token
 from framework.ic10_harness import Device, IC10, run_round_robin
 
 R = _PROJECT_ROOT
@@ -294,6 +295,89 @@ for status in (-1, -2, -3):
        f"Future View counted root output for an unverifiable child (Child Validity {status})")
 
 
+# A Plan Store change after Child Validity has answered restarts the Claim View's
+# scan, and the restart posts for the same record again. The token used to be
+# derived from the record's address, so the repost carried the token Child Validity
+# had already answered: its gate saw request and response equal and never latched,
+# the Claim View's wait passed on its first poll, and the Claim View consumed the
+# reply from before the change. Each posting under one request now carries a
+# counter, so the repost is served on its own (#148). Child Validity here answers
+# valid once and invalid afterwards, and counts its requests in S30.
+def counting_validity(first, later):
+    lines = ['poke 0 HASH("DependencyChildValidity.v1")', "Loop:", "yield", "get r15 db 15",
+             "get r0 db 16", "beq r15 r0 Loop", "get r0 db 30", "add r0 r0 1", "poke 30 r0",
+             f"poke 17 {later}", "bgt r0 1 Answer", f"poke 17 {first}", "poke 19 2",
+             f"poke 20 {RESOURCE}", "Answer:", "poke 16 r15", "j Loop"]
+    vm = IC10("\n".join(lines) + "\n", self_ref=142)
+    vm.run(1)
+    return vm
+
+
+def restarted_claim_scan(source, validity, token):
+    """One plan record naming child 3; the Plan Store moves by one mutation after the first reply."""
+    plan = Device(141, {0: "HASH:DependencyPlanStore.v2", 40: 0,
+                        128: 9, 129: 3, 130: RESOURCE, 131: 6, 132: 2, 133: 8, 134: 0, 135: 0})
+    claim = IC10(source, {"d0": plan, "d1": Device(142, validity.stack)}, self_ref=143)
+    claim.run(1)
+    claim.stack.update({15: RESOURCE, 16: 1, 17: 0, 18: token})
+    for _ in range(40):
+        run_round_robin([claim, validity], 1)
+        if validity.stack.get(30) == 1:
+            break
+    first_token = validity.stack.get(15)
+    plan.stack[40] += 2
+    run_round_robin([claim, validity], 60)
+    return claim, first_token
+
+
+claim_view = "ic10/dependency-planning/dependency_claim_view_v1_0.ic10"
+COUNTED_POST = "add r5 r5 1\nbge r5 512 Bad\nput d1 13 r9\nput d1 14 r2\nmul r13 r15 512\nadd r13 r13 r5\n"
+POSITIONAL_POST = "put d1 13 r9\nput d1 14 r2\nmul r13 r15 512\nadd r13 r13 r7\nadd r13 r13 1\n"
+ck(COUNTED_POST in src(claim_view), "the Claim View's posting counter is not where the test expects")
+validity = counting_validity(1, -1)
+claim, first_token = restarted_claim_scan(src(claim_view), validity, 7)
+ck(first_token == posting_token(7, 1) and validity.stack.get(15) == posting_token(7, 2),
+   "the Claim View's postings under one request did not carry the first and second posting tokens")
+ck(validity.stack.get(30) == 2, "Child Validity did not latch the Claim View's posting after the restart")
+ck(claim.stack.get(19) == 7 and claim.stack.get(20) == -3,
+   "the Claim View did not answer from Child Validity's reply to the restarted posting")
+claim.stack[18] = 8
+run_round_robin([claim, validity], 60)
+ck(claim.stack.get(19) == 8 and validity.stack.get(15) == posting_token(8, 1),
+   "the Claim View's posting counter did not restart with the next request")
+validity = counting_validity(1, -1)
+claim, first_token = restarted_claim_scan(src(claim_view).replace(COUNTED_POST, POSITIONAL_POST), validity, 7)
+ck(first_token == 3713 and validity.stack.get(30) == 1 and claim.stack.get(20) == 1,
+   "witness: under the positional token the restarted Claim View did not consume the earlier reply")
+
+# The Future View restarts the same way on a Plan Store change and reposts the same
+# job to the Claim View; the repost is latched and answered too.
+store4 = boot_store()
+publish(store4, 1, 2, RESOURCE, 4)
+counting_claim = IC10("\n".join([
+    'poke 0 HASH("DependencyClaimView.v1")', "Loop:", "yield", "get r15 db 18", "get r0 db 19",
+    "beq r15 r0 Loop", "get r0 db 30", "add r0 r0 1", "poke 30 r0", "poke 20 -2", "poke 19 r15",
+    "j Loop"]) + "\n", self_ref=151)
+counting_claim.run(1)
+plan4 = Device(152, {0: "HASH:DependencyPlanStore.v2", 40: 0})
+future = IC10(src("ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10"),
+              {"d0": Device(150, store4.stack), "d1": Device(151, counting_claim.stack), "d2": plan4},
+              self_ref=153)
+future.run(1)
+future.stack.update({15: RESOURCE, 16: 2, 17: RESOURCE, 18: 2, 19: 30})
+for _ in range(40):
+    run_round_robin([future, counting_claim], 1)
+    if counting_claim.stack.get(30) == 1:
+        break
+plan4.stack[40] += 2
+run_round_robin([future, counting_claim], 80)
+ck(counting_claim.stack.get(30) == 2 and counting_claim.stack.get(18) == posting_token(30, 2),
+   "the Claim View did not latch the Future View's posting after the restart")
+ck(future.stack.get(20) == 30 and future.stack.get(21) == 1 and future.stack.get(22) == 8
+   and future.stack.get(24) == 2,
+   "the restarted Future View did not complete against the moved Plan Store sequence")
+
+
 def build_pipeline(inventory_changes=False, output_changes=False, evaluator_source=None):
     """Build the production target-to-Store path with only leaf services stubbed."""
     host = Device(200, {
@@ -530,3 +614,4 @@ print(" - a job counts as a root only when the real Claim View proves no active 
 print(" - production evaluator-to-Store flow revalidates demand and output metadata at mutation time")
 print(" - an Evaluator reflashed mid-Ingress waits for it instead of displacing its Demand View request")
 print(" - the Inventory View bounds the selector leg count at six before walking the quote table")
+print(" - a scan the Plan Store restarts posts again under a new token; the callee latches and answers the repost")

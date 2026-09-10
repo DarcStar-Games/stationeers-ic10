@@ -7,6 +7,9 @@ from framework.validation import Validation
 from pathlib import Path
 import re,sys
 R=_PROJECT_ROOT;validation=Validation(R)
+# Scanning callers that a Plan Store change restarts derive each downstream posting's token
+# from a per-request counter, never the scan position alone, so a repost after a restart is
+# latched rather than answered by the earlier reply (#148).
 req={
 'ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10':['poke 1 5','get r15 db r7','ble r7 96 Scan','put d0 21 r6'],
 'ic10/dependency-planning/job_requirement_view_v1_0.ic10':['poke 0 HASH("JobRequirementView.v1")','put d2 8 r10'],
@@ -16,14 +19,14 @@ req={
 'ic10/dependency-planning/dependency_child_creator_v2_0.ic10':['poke 1 2','put d3 62 r0','put d3 48 r15'],
 'ic10/dependency-planning/dependency_plan_store_v2_0.ic10':['poke 1 2','poke r0 0','poke r0 r3'],
 'ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10':['poke 1 2','get r0 db 27','bne r11 r0 Replan','bne r12 r0 Replan'],
-'ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10':['poke 0 HASH("DependencyAncestryGuard.v1")','beq r11 r8 TooDeep'],
+'ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10':['poke 0 HASH("DependencyAncestryGuard.v1")','beq r11 r8 TooDeep','add r12 r12 1','bge r12 512 Bad','add r13 r13 r12','move r12 0'],
 'ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10':['poke 0 HASH("ManufacturingDependencyPlanner.v1")','put d0 12 2','put d0 12 3'],
 'ic10/dependency-planning/dependency_plan_builder_v2_0.ic10':['poke 1 2','get sp d0 27'],
 'ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10':['poke 1 2','put d0 19 r15','put d1 9 r15'],
 'ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10':['poke 0 HASH("DependencyCancellationGuard.v1")'],
 'ic10/dependency-planning/dependency_child_validity_v1_0.ic10':['poke 0 HASH("DependencyChildValidity.v1")'],
 'ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10':['poke 0 HASH("GenericJobStoreCommandExecutor.v1")','FindFree:','put d0 11 r10'],
-'ic10/dependency-planning/dependency_claim_view_v1_0.ic10':['poke 0 HASH("DependencyClaimView.v1")','poke 27 r4','bne r0 1 Unverified','move r1 -3','poke 20 r1'],
+'ic10/dependency-planning/dependency_claim_view_v1_0.ic10':['poke 0 HASH("DependencyClaimView.v1")','poke 27 r4','bne r0 1 Unverified','move r1 -3','poke 20 r1','add r5 r5 1','bge r5 512 Bad','add r13 r13 r5','move r5 0'],
 'ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10':['poke 0 HASH("ManufacturingReagentResolver.v1")'],
 'ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10':['poke 0 HASH("DependencyPlanReleaseAdvisor.v1")'],
 'ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10':['poke 0 HASH("ExistingDependencyPlanController.v1")','beq r0 5 Replan','put d3 32 r15'],
