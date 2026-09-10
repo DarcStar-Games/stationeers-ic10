@@ -137,7 +137,7 @@ Production IC10 programs: 184
 | `ic10/power-jobs/power_job_prepare_v1_0.ic10` | 105 | Power jobs | `power-jobs` | `conditional-resident` | Prepares POWER jobs through READY, applies policy, and advances to RUNNING. |
 | `ic10/power-jobs/power_job_scheduler_v1_0.ic10` | 75 | Power jobs | `power-jobs` | `conditional-resident` | Coordinates selection, prepare/apply, and verify/finalize for finite POWER policy jobs. |
 | `ic10/power-jobs/power_policy_target_resolver_v1_0.ic10` | 77 | Power jobs | `power-jobs` | `conditional-resident` | Resolves one PolicyId to exactly one current managed POWER Reservation/Endpoint. |
-| `ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10` | 128 | Runtime / pressure grid | `pressure-domain` | `resident` | Owns LOW/HIGH target or passive STORAGE envelope; telemetry ABI2. |
+| `ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10` | 126 | Runtime / pressure grid | `pressure-domain` | `resident` | Owns LOW/HIGH target or passive STORAGE envelope; telemetry ABI2. |
 | `ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10` | 121 | Pressure-grid service | `pressure-domain` | `conditional-resident` | Reduces coherent PhasePressure ABI2 requests for one LOW/HIGH domain; rejects directory overflow. |
 | `ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10` | 79 | Family semantics | `pressure-domain` | `resident` | PressureDomain role/bounds validation and signature. |
 | `ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10` | 118 | Runtime / pressure grid | `pressure-grid` | `conditional-resident` | One physical pump edge; publishes coherent candidate topology and executes only Guard-authorized leases. |

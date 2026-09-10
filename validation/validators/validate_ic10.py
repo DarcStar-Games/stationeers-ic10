@@ -8,7 +8,7 @@ from pathlib import Path
 import re
 import sys
 
-from framework.ic10_line_budget import CEILING_LINES, HARD_LIMIT_LINES
+from framework.ic10_line_budget import CEILING_LINES, HARD_LIMIT_LINES, hard_limit_margin_failures
 from framework.ic10_registers import dead_register_writes, load_instruction_signatures
 from framework.ic10_source import parse_ic10
 
@@ -18,25 +18,33 @@ LIMIT_LINES = HARD_LIMIT_LINES
 LIMIT_CHARS = 90
 LIMIT_BYTES = 4096
 MAINTAINABILITY_LINES = CEILING_LINES
-# Reviewed spends of the deliberate 120..128 margin. The hard limit still applies.
+# Reviewed spends of the deliberate 120..128 margin. The hard limit still applies. An
+# exemption within HARD_LIMIT_MARGIN_LINES of it states the program's count as
+# "<lines> of 128 lines", and a stated count the tree no longer matches fails, so the
+# margin is reviewed by the edit that moves it, not discovered by the one that spends it
+# (issue #176).
 SOFT_LIMIT_EXEMPTIONS = {
     "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10":
         "three-hop path search with fail-closed dynamic Snapshot Directory geometry behind a"
-        " reflash guard that clears a foreign housing before the search can resume",
+        " reflash guard that clears a foreign housing before the search can resume;"
+        " 126 of 128 lines",
     "ic10/controller-phase-pressure/controller_phase_pressure_runtime_v1_1.ic10":
         "publishes the common S0 header; its Generic Telemetry block stays at S96, and it"
-        " checks the paired Config Host's S0 identity as well as its S12 schema signature",
+        " checks the paired Config Host's S0 identity as well as its S12 schema signature;"
+        " 127 of 128 lines",
     "ic10/controller-sequencer/controller_sequencer_runtime_v1_0.ic10":
         "publishes the common S0 header; its Generic Telemetry block stays at S96",
     "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10":
         "publishes the common S0 header; its Generic Telemetry block stays at S96, and it"
-        " checks the paired Config Host's S0 identity as well as its S12 schema signature",
+        " checks the paired Config Host's S0 identity as well as its S12 schema signature;"
+        " 126 of 128 lines",
     "ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10":
         "publishes the common S0 header; its Generic Telemetry block stays at S96",
     "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10":
         "publishes the common S0 header with its Feeder ABI1 payload relocated above it",
     "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10":
-        "publishes the common S0 header with its Feeder ABI1 payload relocated above it",
+        "publishes the common S0 header with its Feeder ABI1 payload relocated above it;"
+        " 127 of 128 lines",
     "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10":
         "publishes the common S0 header with its Endpoint ABI1 payload relocated above it",
     "ic10/controller-config/generic_persistent_config_host_v1_1.ic10":
@@ -46,7 +54,8 @@ SOFT_LIMIT_EXEMPTIONS = {
     "ic10/generic-jobs/generic_job_store_v1_0.ic10":
         "publishes the common S0 header above its 32-slot durable job records",
     "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10":
-        "atomically allocates child or root slots and fences root Job/Plan snapshots",
+        "atomically allocates child or root slots and fences root Job/Plan snapshots;"
+        " 126 of 128 lines",
     "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10":
         "publishes the common S0 header with its inventory payload relocated above it",
     "ic10/pressure-grid/pressure_reservation_allocator_v3_0.ic10":
@@ -207,6 +216,13 @@ def main():
             print(f"FAIL stale exemption: {name} is {measured[name]} lines,"
                   f" within the {MAINTAINABILITY_LINES}-line soft limit; remove it")
             failed = True
+        else:
+            print(f"exempt {name}: {measured[name]} lines,"
+                  f" {LIMIT_LINES - measured[name]} under the {LIMIT_LINES}-line hard limit")
+    # The margin under the hard limit is stated by the exemptions closest to it (issue #176).
+    for failure in hard_limit_margin_failures(SOFT_LIMIT_EXEMPTIONS, measured):
+        print(f"FAIL {failure}")
+        failed = True
     # Same rule for reviewed dead writes: an exemption no hit matches is a line that was
     # removed or made live, and the entry would silently cover a future hit of the same text.
     dead_writes_seen = {(name, code) for name, *_, dead in rows for _n, code in dead}

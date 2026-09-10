@@ -75,7 +75,7 @@ get r12 d2 9
 get r14 d2 10
 get r0 d2 12
 bne r0 r13 NoRequest
-bltz r14 SafeFault
+bltz r14 Idle
 beqz r12 NoRequest
 slt sp r11 r3
 sgt ra r11 r4
@@ -90,9 +90,10 @@ move r12 r4
 select r14 r1 3 0
 j Publish
 NoRequest:
+move r14 0
+Idle:
 move r11 r5
 move r12 0
-move r14 0
 Publish:
 poke 101 r11
 poke 102 r12
@@ -108,13 +109,10 @@ s d4 r7 r11
 j Commit
 ProfileBad:
 move r14 -6
-j SafeFault
+j Idle
 ArbiterBad:
 move r14 -7
-SafeFault:
-move r11 r5
-move r12 0
-j Publish
+j Idle
 OutputBad:
 poke 105 -2
 j Commit

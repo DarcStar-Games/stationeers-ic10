@@ -11,8 +11,12 @@ import tempfile
 
 from framework.ic10_line_budget import (
     CEILING_LINES,
+    HARD_LIMIT_LINES,
+    HARD_LIMIT_MARGIN_LINES,
     TIGHT_LINES,
     LinePressure,
+    hard_limit_margin_failures,
+    hard_limit_note,
     line_pressure,
     production_line_counts,
 )
@@ -361,6 +365,25 @@ with tempfile.TemporaryDirectory() as directory:
     else:
         raise AssertionError("line pressure was measured on a tree with no programs")
 
+# An exemption within HARD_LIMIT_MARGIN_LINES of the hard limit states its program's count;
+# a stated count that no longer matches fails wherever the program sits, a program outside
+# the margin may stay silent, and a program the counts lack is the caller's to report.
+edge = HARD_LIMIT_LINES - HARD_LIMIT_MARGIN_LINES
+margin_counts = {"a": HARD_LIMIT_LINES, "b": edge, "c": edge, "d": edge - 1, "e": edge - 1, "f": edge}
+margin_failures = hard_limit_margin_failures({
+    "a": "at the limit",
+    "b": f"reviewed; {hard_limit_note(edge)}",
+    "c": f"reviewed; {hard_limit_note(edge + 1)}",
+    "d": "well under",
+    "e": f"moved since; {hard_limit_note(edge)}",
+    "f": "within the margin, silent",
+    "g": "no such program",
+}, margin_counts)
+assert [failure.split(" ")[0] for failure in margin_failures] == ["a", "c", "e", "f"], margin_failures
+assert f"state {hard_limit_note(edge)!r}" in margin_failures[1]
+assert f"must state {hard_limit_note(edge)!r}" in margin_failures[3]
+assert hard_limit_note(edge) == f"{edge} of {HARD_LIMIT_LINES} lines"
+
 entries = suite_entries(_PROJECT_ROOT)
 validators = validator_entries(_PROJECT_ROOT)
 tests = test_entries(_PROJECT_ROOT)
@@ -376,3 +399,4 @@ print(" - suite manifest rejects missing, duplicate, uncategorized, and invalid-
 print(" - JSON Schema keyword handlers preserve paths and isolate combinator branches")
 print(" - literal, dynamic, and filtered filesystem scans fail closed when empty")
 print(" - line-budget figures count tight and exempt programs at their boundaries and fail closed on an empty tree")
+print(" - an exemption within two lines of the hard limit must state its count, and a stated count must match the tree")

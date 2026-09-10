@@ -200,9 +200,11 @@ not the 2026-08-12 build it patches — see `docs/SOURCES.md` for why that matte
 
 47 of 184 programs sit at ≥117 lines and 17 hold a reviewed `SOFT_LIMIT_EXEMPTIONS` entry in
 `validation/validators/validate_ic10.py`; an exemption whose program drops back under 120 fails
-validation, so the list cannot go stale. Do **not** merge adjacent services just to reduce IC count:
-the split boundaries exist to keep transactional ownership explicit and stay under the ceiling. See
-`docs/LINE_COUNT_OPTIMIZATION.md`.
+validation, so the list cannot go stale. An exemption within two lines of the 128-line hard limit
+also states its program's count ("126 of 128 lines"), and a stated count the tree no longer
+matches fails, so the last lines are spent knowingly (issue #176). Do **not** merge adjacent
+services just to reduce IC count: the split boundaries exist to keep transactional ownership
+explicit and stay under the ceiling. See `docs/LINE_COUNT_OPTIMIZATION.md`.
 
 Filenames are *semantic name* + `_v<major>_<minor>` under `ic10/<deployment-family>/`. **Do not infer
 execution order, ABI number, or deployment order from a filename** — version suffixes are revisions,

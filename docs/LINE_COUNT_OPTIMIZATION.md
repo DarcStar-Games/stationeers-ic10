@@ -1,6 +1,6 @@
 # Line Count Optimization
 
-The framework keeps production IC10 programs at or below a **120-line maintainability ceiling**, leaving at least eight lines of margin under the game's 128-line program limit. This document is a current line-pressure inventory, not a historical snapshot of only the original shared-input modules.
+The framework keeps production IC10 programs at or below a **120-line maintainability ceiling**, eight lines under the game's 128-line program limit; a program above the ceiling carries a reviewed exemption that says why, and one within two lines of the limit states its count. This document is a current line-pressure inventory, not a historical snapshot of only the original shared-input modules.
 
 ## Current line-pressure inventory
 
@@ -13,6 +13,8 @@ The three inventory figures quoted in prose are defined once, in `framework/ic10
 - **programs** — every IC10 source file under `ic10/`. Release validation requires each to resolve to exactly one deployment family, so this is also the deployable-program count. It is larger than the explicit `scripts` list in `data/source_manifest.json`, whose generated-deployment rules cover whole generated families without naming their files.
 - **tight programs** — programs at 117 lines or more.
 - **soft-limit exemptions** — programs above the 120-line ceiling. `validation/validators/validate_ic10.py` rejects both an unexempted program over the ceiling and an exemption whose program is within it, so this count is the size of `SOFT_LIMIT_EXEMPTIONS` on any tree that validates.
+
+An exemption says why its program is over the ceiling, not how close to the game's 128-line limit it sits, and the first edit to find out was the one that spent the last line (issue #176). The validator now prints each exempt program's headroom under 128 beside it, and an exemption within two lines of the limit states the count in its reason (`126 of 128 lines`); a stated count the tree no longer matches fails, so every edit that moves one of those programs moves the statement with it. `framework/ic10_line_budget.py` defines the margin and the rule.
 
 ## Shared-input consolidation results
 
