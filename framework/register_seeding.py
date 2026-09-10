@@ -56,6 +56,19 @@ read that is unwritten only on paths through that edge is reported as a
 `same-image` carry, separately from a read unwritten on the fresh-housing path
 -- the clear edge of a guard, or the entry of a program with no guard at all --
 which is the defect the rule exists to catch.
+
+What the edge proves is the contract, not the program. Identity is
+`HASH("<Contract>.v<ABI>")`, and a contract is published by every program that
+implements it: seven identities on the tree are published by two or more
+programs, ten directory adapters and fifteen catalog loaders among them. For the
+header cells that changes nothing -- two programs publishing one contract agree
+on the header by definition. A carried register or a private state cell is read
+as "what this program left", and when a housing is reflashed from one program to
+its twin, the twin left it, with the twin's meaning. So a carry is admissible
+under a shared identity only when every program publishing the identity agrees
+on what it carries: `SHARED_IMAGE_CARRIES` declares that once per identity, and
+`shared_identity_errors` holds every program behind the identity to it (issue
+#175).
 """
 from __future__ import annotations
 
@@ -109,6 +122,26 @@ PRIVATE_STATE_CELLS: dict[str, dict[int, str]] = {
         {117: "generation of the loaded config; cleared to 0 at boot, so the first tick reloads"},
     "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10":
         {11: "SearchId of the search in progress; cleared to 0, which no request may carry"},
+}
+
+# Identities two or more programs publish, with the state every program behind
+# the identity carries over its reflash guard's same-image edge: the registers
+# the walk reports as carries and the private cells each declares, with what
+# each holds. A housing reflashed between two programs publishing one identity
+# takes the skip edge over the other program's registers and cells, so the
+# programs must mean the same thing by them, and the declaration is where that
+# agreement is reviewed. Held to the tree by `shared_identity_errors`: a carry
+# outside the entry fails as a fresh read would, an entry for an identity one
+# program publishes is stale, and so is a register no member carries.
+SHARED_IMAGE_CARRIES: dict[str, dict[str, dict[Any, str]]] = {
+    "StackerFeeder.v1": {
+        "registers": {
+            "r6": "RequestId of the request in progress, from S18; echoed at S8 when the buffer is"
+                  " ready and at S9 when the export completes",
+            "r9": "Quantity requested, from S17; the Stacker's Setting once the buffer holds it",
+        },
+        "cells": {20: "feeder phase; 0 on a fresh housing"},
+    },
 }
 
 _INDIRECT_REGISTER = re.compile(r"^rr(\d+)$")
@@ -313,6 +346,76 @@ class UnseededRead:
     line_number: int
     code_text: str
     reads: int
+
+
+@dataclass(frozen=True, slots=True)
+class ImageState:
+    """What one program leaves for a same-image reflash to find: its identity, private cells, carries."""
+
+    identity: str | None
+    private_cells: frozenset[int]
+    carries: frozenset[str]
+
+
+def image_header(contract: dict[str, Any]) -> dict[str, Any] | None:
+    """The `provides` entry for a program's literal `S0` header, or None when its contract has none."""
+    return next((item for item in contract["contracts"]["provides"] if item["base"] == 0), None)
+
+
+def image_identity(contract: dict[str, Any]) -> str | None:
+    """The `<Contract>.v<ABI>` token a program's `S0` header publishes, from its contract.
+
+    None for a program whose contract names no literal `S0` header: nothing
+    shares an identity it does not publish, so such a program is outside the
+    grouping (every deployable program publishes one today).
+    """
+    header = image_header(contract)
+    if header is None or not header.get("contract"):
+        return None
+    return f"{header['contract']}.v{header['abi']}"
+
+
+def shared_identity_errors(
+    states: dict[str, ImageState],
+    declared: dict[str, dict[str, dict[Any, str]]] = SHARED_IMAGE_CARRIES,
+) -> tuple[dict[str, list[str]], list[str]]:
+    """Group programs by identity and hold each shared group to its `SHARED_IMAGE_CARRIES` entry.
+
+    Returns the members of every identity two or more programs publish, and the
+    failures: a member carrying a register the entry does not name, a member
+    whose private cells differ from the entry's, an entry for an identity fewer
+    than two programs publish, and a declared register no member carries.
+    """
+    groups: dict[str, list[str]] = {}
+    for path, state in sorted(states.items()):
+        if state.identity is not None:
+            groups.setdefault(state.identity, []).append(path)
+    shared = {identity: members for identity, members in sorted(groups.items()) if len(members) > 1}
+    errors: list[str] = []
+    for identity in sorted(declared):
+        if identity not in shared:
+            count = len(groups.get(identity, ()))
+            errors.append(f"stale shared-image declaration: {identity} is published by {count}"
+                          f" program{'s' if count != 1 else ''}; remove the entry")
+    for identity, members in shared.items():
+        entry = declared.get(identity, {})
+        registers = frozenset(entry.get("registers", {}))
+        cells = frozenset(entry.get("cells", {}))
+        carried: set[str] = set()
+        for path in members:
+            state = states[path]
+            carried |= state.carries
+            for register in sorted(state.carries - registers, key=lambda name: (len(name), name)):
+                errors.append(f"{path}: carries {register} over the same-image edge of {identity}, which"
+                              f" {len(members) - 1} other program{'s' if len(members) != 2 else ''} publish"
+                              f"{'es' if len(members) == 2 else ''}; SHARED_IMAGE_CARRIES does not declare it")
+            if state.private_cells != cells:
+                errors.append(f"{path}: declares private cells {sorted(state.private_cells)} under {identity},"
+                              f" whose shared-image declaration names {sorted(cells)}")
+        for register in sorted(registers - carried, key=lambda name: (len(name), name)):
+            errors.append(f"stale shared-image declaration: no program publishing {identity} carries"
+                          f" {register}; remove it")
+    return shared, errors
 
 
 def peer_written_cells(

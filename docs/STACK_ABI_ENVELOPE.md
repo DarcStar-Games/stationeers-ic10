@@ -476,7 +476,23 @@ read of one (issue #168). The skip edge is the one place a register may carry, f
 the reason a cell may: the previous image of this exact contract left it, and a program
 that resumes over it re-validates it against the stack it kept (the Path Enumerator's
 cursors behind its `S11` key). Such a read is reported as a same-image carry, not a
-failure. A guard has to compare the register `get` loaded from `S0` against
+failure.
+
+What the edge proves is the contract, not the program: identity is the hash
+of the contract and its ABI, and seven identities on the tree are published by two or
+more programs (ten directory adapters, fifteen catalog loaders, two stacker feeders
+among them). For the header cells that changes nothing, since two programs publishing
+one contract agree on the header by definition. A carried register or a private state
+cell is read as "what this program left", and a housing reflashed from one program to
+its twin holds what the twin left, with the twin's meaning. So under a shared identity
+a carry is admissible only as `framework.register_seeding.SHARED_IMAGE_CARRIES` declares
+it, once for the identity: the registers every member may carry and the private cells
+every member declares, with what each holds. The validator groups programs by identity,
+refuses a carry outside the entry as it would a fresh read, and refuses an entry no
+member needs (issue #175). The two feeders are the one such pair today: both carry the
+request identity and quantity in `r6` and `r9` across the phase they keep in `S20`.
+
+A guard has to compare the register `get` loaded from `S0` against
 this contract's own magic, and a program that poked its magic
 a line before reading it back has satisfied its own guard and proved nothing.
 The contract layer's header constants read the same proof, so a header an

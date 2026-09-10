@@ -8,24 +8,34 @@ seeded at boot and dispatched on, a state cell the program alone writes, an
 counter that would otherwise widen a state guard away -- and what it must not
 see through: the same shapes with the seed removed. The fixture under
 `tests/ic10/` is the shape the issue was opened on, a reflash guard whose clear
-path never seeds the register the loop compares.
+path never seeds the register the loop compares. The shared-identity cases pin
+the rule of issue #175: a same-image carry under an identity two programs
+publish is admitted only as the identity's declaration names it, and the
+programs must declare the same private cells.
 """
 from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 
+import json
 import sys
 
 from framework.register_seeding import (
     FRESH,
+    PRIVATE_STATE_CELLS,
     SAME_IMAGE,
+    SHARED_IMAGE_CARRIES,
+    ImageState,
     Range,
     decide,
     exact,
+    image_header,
+    image_identity,
     join_environments,
     peer_written_cells,
     refine,
+    shared_identity_errors,
     unseeded_reads,
 )
 
@@ -239,6 +249,70 @@ ENUMERATOR = (ROOT / "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10
 ck(reads(ENUMERATOR, {11}) == {(SAME_IMAGE, f"r{n}") for n in (4, 5, 6, 7, 8)},
    f"the enumerator's cursors carry only over its same-image edge: {reads(ENUMERATOR, {11})}")
 
+# --- a carry under a shared identity is admitted only as the identity declares it (#175)
+TWIN = {"Twin.v1": {"registers": {"r6": "request id"}, "cells": {20: "phase"}}}
+
+
+def state(identity, cells=(20,), carries=("r6",)):
+    return ImageState(identity, frozenset(cells), frozenset(carries))
+
+
+def errors(states, declared=TWIN):
+    return shared_identity_errors(states, declared)[1]
+
+
+UNDECLARED_R6 = ("carries r6 over the same-image edge of Twin.v1, which 1 other program publishes;"
+                 " SHARED_IMAGE_CARRIES does not declare it")
+agreeing = {"ic10/x/a.ic10": state("Twin.v1"), "ic10/x/b.ic10": state("Twin.v1"),
+            "ic10/x/c.ic10": state("Solo.v1", (), ("r3",))}
+shared, found = shared_identity_errors(agreeing, TWIN)
+ck(shared == {"Twin.v1": ["ic10/x/a.ic10", "ic10/x/b.ic10"]},
+   f"only the identity two programs publish is shared: {shared}")
+ck(found == [], f"twins carrying what the declaration names pass, and a lone carry needs no entry: {found}")
+undeclared = errors({**agreeing, "ic10/x/b.ic10": state("Twin.v1", carries=("r6", "r7"))})
+ck(undeclared == ["ic10/x/b.ic10: " + UNDECLARED_R6.replace("r6", "r7")],
+   f"a carry the declaration does not name fails: {undeclared}")
+ck(errors({**agreeing, "ic10/x/b.ic10": state("Twin.v1", cells=(20, 21))})
+   == ["ic10/x/b.ic10: declares private cells [20, 21] under Twin.v1,"
+       " whose shared-image declaration names [20]"],
+   "a member whose private cells differ from the group's fails")
+ck(errors(agreeing, {}) == [
+    "ic10/x/a.ic10: " + UNDECLARED_R6,
+    "ic10/x/a.ic10: declares private cells [20] under Twin.v1, whose shared-image declaration names []",
+    "ic10/x/b.ic10: " + UNDECLARED_R6,
+    "ic10/x/b.ic10: declares private cells [20] under Twin.v1, whose shared-image declaration names []",
+], "without a declaration every carry and private cell under a shared identity fails")
+ck(errors({"ic10/x/a.ic10": state("Twin.v1")})
+   == ["stale shared-image declaration: Twin.v1 is published by 1 program; remove the entry"],
+   "a declaration for an identity one program publishes is stale")
+ck(errors({**agreeing, "ic10/x/a.ic10": state("Twin.v1", carries=()),
+           "ic10/x/b.ic10": state("Twin.v1", carries=())})
+   == ["stale shared-image declaration: no program publishing Twin.v1 carries r6; remove it"],
+   "a declared register no member carries is stale")
+quiet = {"ic10/x/a.ic10": state("Quiet.v1", (), ()), "ic10/x/b.ic10": state("Quiet.v1", (), ())}
+ck(shared_identity_errors(quiet, {}) == ({"Quiet.v1": ["ic10/x/a.ic10", "ic10/x/b.ic10"]}, []),
+   "a shared identity carrying nothing needs no declaration")
+headerless = {"ic10/x/a.ic10": state(None, (), ("r1",)), "ic10/x/b.ic10": state(None, (), ("r1",))}
+ck(shared_identity_errors(headerless, {}) == ({}, []), "programs publishing no S0 header share nothing")
+ck(image_identity({"contracts": {"provides": [{"base": 96, "contract": None, "abi": 2}]}}) is None,
+   "a contract with no base-0 header has no image identity")
+
+# the tree: the two stacker feeders are the one shared identity with a carry
+FEEDERS = ("ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10",
+           "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10")
+declared = SHARED_IMAGE_CARRIES["StackerFeeder.v1"]
+for path in FEEDERS:
+    contract_path = ROOT / "contracts" / path[len("ic10/"):].replace(".ic10", ".contract.json")
+    contract = json.loads(contract_path.read_text())
+    ck(image_identity(contract) == "StackerFeeder.v1", f"{path} publishes {image_identity(contract)}")
+    ck(image_header(contract)["magic"] == 1559898316, f"{path}: the S0 header entry carries the feeder magic")
+    carried = {register for edge, register in reads((ROOT / path).read_text(), PRIVATE_STATE_CELLS[path])
+               if edge == SAME_IMAGE}
+    ck(carried == set(declared["registers"]),
+       f"{path} carries {sorted(carried)}, declared {sorted(declared['registers'])}")
+    ck(set(PRIVATE_STATE_CELLS[path]) == set(declared["cells"]),
+       f"{path} private cells differ from the feeder declaration")
+
 if failures:
     print("IC10 register seeding: FAIL")
     for failure in failures:
@@ -249,3 +323,4 @@ print(" - a register read before any write on a fresh-housing path is reported; 
 print(" - a state register or private state cell seeded at boot prunes the states the entry path cannot take, and loses nothing to widening")
 print(" - rrN resolves through its index, an ordering guard decides a later equality, and NaN never lets a comparison hold")
 print(" - the fixture and the singlehop builder fail exactly without their seeds")
+print(" - a carry under an identity two programs publish is admitted only as the identity's declaration names it; the feeders are that pair")
