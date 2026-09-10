@@ -42,8 +42,8 @@ bne r0 sp Loop
 poke 117 sp
 Profile:
 bdns d1 ProfileBad
-get r9 d1 29
-blez r9 ProfileBad
+get ra d1 29
+blez ra ProfileBad
 get r0 d1 0
 bne r0 HASH("ResourceProfileView.v1") ProfileBad
 get r0 d1 11
@@ -57,7 +57,7 @@ get r15 d1 18
 get r0 d1 9
 poke 106 r0
 get r0 d1 29
-bne r0 r9 Loop
+bne r0 ra Loop
 bdnvl d0 Pressure InputBad
 l sp d0 Pressure
 bnan sp NumericBad
