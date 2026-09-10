@@ -122,6 +122,13 @@ PRIVATE_STATE_CELLS: dict[str, dict[int, str]] = {
         {117: "generation of the loaded config; cleared to 0 at boot, so the first tick reloads"},
     "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10":
         {11: "SearchId of the search in progress; cleared to 0, which no request may carry"},
+    # Postings made so far under the request in flight, written before each posting is
+    # published and cleared after the reply token, so a reflash mid-request continues
+    # the count instead of repeating a token; the idle tick clears it (issue #182).
+    "ic10/dependency-planning/dependency_claim_view_v1_0.ic10": {28: "postings under the request in flight; 0 while idle"},
+    "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10":
+        {25: "postings under the request in flight; 0 while idle"},
+    "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10": {18: "postings under the request in flight; 0 while idle"},
 }
 
 # Identities two or more programs publish, with the state every program behind

@@ -2541,12 +2541,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 11,
-        "highest_literal_cell": 17,
+        "literal_cell_count": 12,
+        "highest_literal_cell": 18,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 82,
-        "line_headroom_120": 38,
+        "line_count": 83,
+        "line_headroom_120": 37,
         "measured_v1_publication_cost_lines": 3,
         "measured_v1_stack_cost_cells": 8
       },
@@ -2582,12 +2582,12 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "35cd49a0b615cc978e8d988192df2af828d27fd460999407f98b87bea3f083d8",
+          "source_sha256": "2dfd2cad2ca1360e3f1755b82f6cf59c357f14fbac325d38abcb43737d03fc61",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
               "start": 10,
-              "end": 17
+              "end": 18
             }
           ],
           "post_init_dynamic_write_ranges": []
@@ -2890,12 +2890,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 16,
-        "highest_literal_cell": 27,
+        "literal_cell_count": 17,
+        "highest_literal_cell": 28,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 116,
-        "line_headroom_120": 4,
+        "line_count": 115,
+        "line_headroom_120": 5,
         "measured_v1_publication_cost_lines": 3,
         "measured_v1_stack_cost_cells": 8
       },
@@ -2931,12 +2931,12 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "c269e3cda8102d827e74ca55f3d96105706b0fe8c4139d7e1a791fb66db846a0",
+          "source_sha256": "a1084e565f92afb2226a0229f4e8280e77b831930ae700567f188fe591e9b437",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
               "start": 15,
-              "end": 27
+              "end": 28
             }
           ],
           "post_init_dynamic_write_ranges": []
@@ -8470,12 +8470,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 13,
-        "highest_literal_cell": 24,
+        "literal_cell_count": 14,
+        "highest_literal_cell": 25,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 113,
-        "line_headroom_120": 7,
+        "line_count": 114,
+        "line_headroom_120": 6,
         "measured_v1_publication_cost_lines": 3,
         "measured_v1_stack_cost_cells": 8
       },
@@ -8513,12 +8513,12 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "8cb05209d782fccf73339b5510b409c3525282e9d23770a57736c4de84c9520a",
+          "source_sha256": "e20c6f31913fe45663337331bf8a55fdd1c5e3ad9821dc8a840d31c8092cb007",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
               "start": 15,
-              "end": 24
+              "end": 25
             }
           ],
           "post_init_dynamic_write_ranges": []

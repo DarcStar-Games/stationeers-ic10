@@ -2,12 +2,11 @@
 poke 0 HASH("DependencyClaimView.v1")
 poke 1 1
 poke 2 0
-move r5 0
 Loop:
 yield
 get r15 db 18
 get r0 db 19
-beq r15 r0 Loop
+beq r15 r0 Reply
 get r2 db 15
 get r3 db 16
 get r4 db 17
@@ -38,8 +37,10 @@ get r11 d0 r0
 blez r11 Next
 get r0 d0 40
 bne r0 r14 Loop
+get r5 db 28
 add r5 r5 1
 bge r5 512 Bad
+poke 28 r5
 put d1 13 r9
 put d1 14 r2
 mul r13 r15 512
@@ -58,13 +59,6 @@ get r13 d1 18
 beq r12 7 Next
 bge r12 11 Next
 get sp d1 20
-j Count
-Unverified:
-move r1 -3
-Next:
-add r7 r7 8
-j Find
-Count:
 move r7 128
 move ra 0
 move r4 0
@@ -102,6 +96,11 @@ poke 26 r13
 poke 27 r4
 poke 20 1
 j Reply
+Unverified:
+move r1 -3
+Next:
+add r7 r7 8
+j Find
 Missing:
 poke 20 r1
 poke 21 0
@@ -111,6 +110,6 @@ j Reply
 Bad:
 poke 20 -1
 Reply:
-move r5 0
 poke 19 r15
+poke 28 0
 j Loop

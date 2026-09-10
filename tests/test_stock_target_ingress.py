@@ -8,6 +8,7 @@ import math
 import sys
 
 from framework.async_request import posting_token
+from framework.fault_injection import Step, inject_every_boundary
 from framework.ic10_harness import Device, IC10, run_round_robin
 
 R = _PROJECT_ROOT
@@ -313,10 +314,15 @@ def counting_validity(first, later):
     return vm
 
 
+def claim_plan():
+    """A Plan Store holding one record: parent 9 plans child 3 for RESOURCE."""
+    return Device(141, {0: "HASH:DependencyPlanStore.v2", 40: 0,
+                        128: 9, 129: 3, 130: RESOURCE, 131: 6, 132: 2, 133: 8, 134: 0, 135: 0})
+
+
 def restarted_claim_scan(source, validity, token):
     """One plan record naming child 3; the Plan Store moves by one mutation after the first reply."""
-    plan = Device(141, {0: "HASH:DependencyPlanStore.v2", 40: 0,
-                        128: 9, 129: 3, 130: RESOURCE, 131: 6, 132: 2, 133: 8, 134: 0, 135: 0})
+    plan = claim_plan()
     claim = IC10(source, {"d0": plan, "d1": Device(142, validity.stack)}, self_ref=143)
     claim.run(1)
     claim.stack.update({15: RESOURCE, 16: 1, 17: 0, 18: token})
@@ -331,7 +337,8 @@ def restarted_claim_scan(source, validity, token):
 
 
 claim_view = "ic10/dependency-planning/dependency_claim_view_v1_0.ic10"
-COUNTED_POST = "add r5 r5 1\nbge r5 512 Bad\nput d1 13 r9\nput d1 14 r2\nmul r13 r15 512\nadd r13 r13 r5\n"
+COUNTED_POST = ("get r5 db 28\nadd r5 r5 1\nbge r5 512 Bad\npoke 28 r5\nput d1 13 r9\nput d1 14 r2\n"
+                "mul r13 r15 512\nadd r13 r13 r5\n")
 POSITIONAL_POST = "put d1 13 r9\nput d1 14 r2\nmul r13 r15 512\nadd r13 r13 r7\nadd r13 r13 1\n"
 ck(COUNTED_POST in src(claim_view), "the Claim View's posting counter is not where the test expects")
 validity = counting_validity(1, -1)
@@ -349,6 +356,93 @@ validity = counting_validity(1, -1)
 claim, first_token = restarted_claim_scan(src(claim_view).replace(COUNTED_POST, POSITIONAL_POST), validity, 7)
 ck(first_token == 3713 and validity.stack.get(30) == 1 and claim.stack.get(20) == 1,
    "witness: under the positional token the restarted Claim View did not consume the earlier reply")
+
+# A Claim View reflashed while serving a request finds its posting count in S28, so the
+# image that resumes the request posts the next token rather than the first one again.
+# The campaign cuts the service of one request after every Claim View instruction,
+# reflashes a fresh image over the same stack, and runs it to the answer: Child Validity
+# latches exactly one more posting unless the request was already answered, the answer
+# follows its last reply, and the count is cleared. A count kept in a register (#181) or
+# a token derived from the position (before it) repeats the first token after every cut
+# between Child Validity's first reply and the answer, and inherits that reply (#182).
+class ClaimScan:
+    def __init__(self, source):
+        self.source = source
+        self.validity = counting_validity(1, -1)
+        self.claim = IC10(source, {"d0": claim_plan(), "d1": Device(142, self.validity.stack)}, self_ref=143)
+        self.claim.run(1)
+        self.claim.stack.update({15: RESOURCE, 16: 1, 17: 0, 18: 7})
+
+    def step(self):
+        if self.claim.run(1, instruction_quantum=1) == "yield":
+            self.validity.run_tick()
+
+    def answered(self):
+        return self.claim.stack.get(19) == 7
+
+    def latched(self):
+        return int(self.validity.stack.get(30, 0))
+
+    def reflash(self, cut):
+        self.before = (self.latched(), self.answered())
+        fresh = IC10(self.source, self.claim.screws, self_ref=143)
+        fresh.stack = self.claim.stack
+        fresh.run(1)
+        self.claim = fresh
+        run_round_robin([self.claim, self.validity], 60)
+        return self
+
+
+def reflash_every_instruction(source):
+    """Per cut: (latched before, answered before, latched after, status after, S28 after)."""
+    reference = ClaimScan(source)
+    steps = []
+    while not reference.answered():
+        reference.step()
+        steps.append(Step(f"instruction {len(steps) + 1}", ClaimScan.step))
+    outcomes = []
+
+    def record(scan, cut):
+        outcomes.append(scan.before + (scan.latched(), scan.claim.stack.get(20), scan.claim.stack.get(28)))
+
+    inject_every_boundary(ClaimScan(source), steps, ClaimScan.reflash, record)
+    return outcomes
+
+
+def register_counter(source):
+    """The Claim View as #181 left it: the count in r5, seeded at boot and reset at the reply."""
+    for old, new in (("poke 2 0\nLoop:\n", "poke 2 0\nmove r5 0\nLoop:\n"), ("beq r15 r0 Reply\n", "beq r15 r0 Loop\n"),
+                     ("get r5 db 28\nadd r5 r5 1\nbge r5 512 Bad\npoke 28 r5\n", "add r5 r5 1\nbge r5 512 Bad\n"),
+                     ("poke 19 r15\npoke 28 0\nj Loop\n", "move r5 0\npoke 19 r15\nj Loop\n")):
+        ck(source.count(old) == 1, f"the Claim View does not hold {old.splitlines()[0]!r} exactly once")
+        source = source.replace(old, new)
+    return source
+
+
+outcomes = reflash_every_instruction(src(claim_view))
+ck(len(outcomes) > 100 and any(o[:2] == (1, False) for o in outcomes),
+   "the reflash campaign never cut between Child Validity's first reply and the Claim View's answer")
+ck(all(after == latched + (0 if answered else 1) and status == (1 if after == 1 else -3) and count == 0
+       for latched, answered, after, status, count in outcomes),
+   "a Claim View reflashed mid-request repeated a token, answered from the wrong reply, or kept its count")
+for name, witness in (("register", register_counter(src(claim_view))),
+                      ("positional", src(claim_view).replace(COUNTED_POST, POSITIONAL_POST))):
+    inherited = [o for o in reflash_every_instruction(witness) if o[:2] == (1, False)]
+    ck(inherited and all(o[2:4] == (1, 1) for o in inherited),
+       f"witness: the {name} counter did not inherit the first reply after a reflash between it and the answer")
+
+# A housing whose S28 holds another program's state, with no request in flight: the idle
+# tick clears the cell before the first request, which counts from 1.
+validity = counting_validity(1, -1)
+claim = IC10(src(claim_view), {"d0": claim_plan(), "d1": Device(142, validity.stack)}, self_ref=143)
+claim.stack[28] = 300
+claim.run(1)
+run_round_robin([claim, validity], 1)
+ck(claim.stack.get(28) == 0, "the idle Claim View did not clear a posting count left on its housing")
+claim.stack.update({15: RESOURCE, 16: 1, 17: 0, 18: 7})
+run_round_robin([claim, validity], 60)
+ck(validity.stack.get(15) == posting_token(7, 1) and claim.stack.get(20) == 1,
+   "the first request on a housing that held a stale count did not count from 1")
 
 # The Future View restarts the same way on a Plan Store change and reposts the same
 # job to the Claim View; the repost is latched and answered too.
@@ -376,6 +470,21 @@ ck(counting_claim.stack.get(30) == 2 and counting_claim.stack.get(18) == posting
 ck(future.stack.get(20) == 30 and future.stack.get(21) == 1 and future.stack.get(22) == 8
    and future.stack.get(24) == 2,
    "the restarted Future View did not complete against the moved Plan Store sequence")
+# Reflashed between the Claim View's reply and its own answer, the Future View continues
+# its count from S25 and the Claim View latches the posting the fresh image makes.
+future.stack[19] = 31
+for _ in range(40):
+    run_round_robin([future, counting_claim], 1)
+    if counting_claim.stack.get(30) == 3:
+        break
+fresh = IC10(src("ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10"), future.screws, self_ref=153)
+fresh.stack = future.stack
+fresh.run(1)
+run_round_robin([fresh, counting_claim], 80)
+ck(counting_claim.stack.get(30) == 4 and counting_claim.stack.get(18) == posting_token(31, 2),
+   "the Claim View did not latch the posting of a Future View reflashed mid-request")
+ck(fresh.stack.get(20) == 31 and fresh.stack.get(21) == 1 and fresh.stack.get(25) == 0,
+   "the reflashed Future View did not answer its request and clear its count")
 
 
 def build_pipeline(inventory_changes=False, output_changes=False, evaluator_source=None):
@@ -615,3 +724,5 @@ print(" - production evaluator-to-Store flow revalidates demand and output metad
 print(" - an Evaluator reflashed mid-Ingress waits for it instead of displacing its Demand View request")
 print(" - the Inventory View bounds the selector leg count at six before walking the quote table")
 print(" - a scan the Plan Store restarts posts again under a new token; the callee latches and answers the repost")
+print(" - a Claim View or Future View reflashed mid-request continues its posting count from the stack,"
+      " so the callee latches the posting the fresh image makes")

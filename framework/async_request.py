@@ -33,7 +33,9 @@ def posting_token(request_token:int, posting:int, span:int=POSTING_SPAN)->int:
     would never latch it, and the caller would consume the earlier reply (issue
     #148). Postings count from 1 under a per-request counter; the span-th is
     refused, which the programs answer with a failed request, so the counter never
-    carries into the token space of the request that follows.
+    carries into the token space of the request that follows. The programs keep
+    the count in a private cell of their own stack, written before the posting is
+    published, so a caller reflashed mid-request continues it (issue #182).
     """
     if not 1<=posting<span: raise ValueError(f'posting {posting} is outside 1..{span-1}')
     return request_token*span+posting

@@ -24,11 +24,13 @@ need("ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10",
      "move r4 2", "get r7 d0 10", "bgt r7 6 Bad")
 # The Future View's scan restarts on a Job Store or Plan Store change and reposts the same job;
 # each posting under one request carries a counter, so the repost is latched rather than
-# answered by the earlier reply (#148).
+# answered by the earlier reply (#148). The count lives in S25, so a reflash mid-request
+# continues it (#182).
 need("ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10",
      'HASH("DependencyClaimView.v1")', 'HASH("DependencyPlanStore.v2")', "get r1 d1 27",
      "beq r0 -2 Root", "beq r0 -3 Unverified", "poke 21 -3",
-     "add r10 r10 1", "bge r10 512 Bad", "add r13 r13 r10", "move r10 0")
+     "get r10 db 25", "add r10 r10 1", "bge r10 512 Bad", "poke 25 r10", "add r13 r13 r10",
+     "poke 25 0")
 need("ic10/manufacturing-ingress/stock_target_demand_view_v1_0.ic10",
      "sub r0 r0 r9", "ble r0 r4 NoNeed", "slt r0 r12 sp")
 need("ic10/manufacturing-ingress/stock_target_producer_view_v1_0.ic10",

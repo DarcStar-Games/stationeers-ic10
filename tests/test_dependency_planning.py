@@ -159,10 +159,11 @@ ck(preflight_status(src(preflight))==-1,'Preflight folded a leg past the six-leg
 # and the restart posts the same parent again. Each posting under one request carries a
 # counter, so the Monitor latches the repost instead of leaving the Guard to consume the
 # earlier reply; the 512th posting under one request fails the request instead (#148).
-def guard_restarts(restarts):
+# Reflashed after the Monitor's reply, the Guard continues its count from S18 (#182).
+def guard_restarts(restarts,reflash=False):
  plan=Device(700,{0:'HASH:DependencyPlanStore.v2',40:0,128:9,129:5,130:101,131:4,132:0,133:6})
  monitor=IC10('poke 0 HASH("GenericJobMonitor.v1")\nLoop:\nyield\nget r15 db 14\nget r0 db 15\nbeq r15 r0 Loop\nget r0 db 30\nadd r0 r0 1\npoke 30 r0\npoke 16 1\npoke 18 0\npoke 19 0\npoke 15 r15\nj Loop\n',self_ref=701);monitor.run(1)
- guard=IC10(src('ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10'),{'d0':plan,'d1':Device(701,monitor.stack)},self_ref=702)
+ guard=IC10(src(GUARD),{'d0':plan,'d1':Device(701,monitor.stack)},self_ref=702)
  guard.run(1);guard.stack.update({10:5,11:1,12:100,13:2,14:200,15:9})
  for posted in range(1,restarts+1):
   for _ in range(60):
@@ -170,11 +171,19 @@ def guard_restarts(restarts):
    if monitor.stack.get(30)==posted:break
   else:ck(False,f'the Ancestry Guard never reached posting {posted}')
   plan.stack[40]+=2
+ if reflash:
+  for _ in range(60):
+   run_round_robin([guard,monitor],1)
+   if monitor.stack.get(30)==restarts+1:break
+  fresh=IC10(src(GUARD),guard.screws,self_ref=702);fresh.stack=guard.stack;fresh.run(1);guard=fresh
  run_round_robin([guard,monitor],80)
- return guard.stack.get(17),guard.stack.get(16),int(monitor.stack.get(30,0)),monitor.stack.get(14)
-ck(guard_restarts(0)==(1,9,1,posting_token(9,1)),'an unrestarted Ancestry Guard scan did not post its first token and answer Good')
-ck(guard_restarts(1)==(1,9,2,posting_token(9,2)),"the Monitor did not latch the Ancestry Guard's posting after the restart")
-ck(guard_restarts(511)==(-1,9,511,posting_token(9,511)),'the 512th posting under one Ancestry Guard request did not fail the request')
+ return guard.stack.get(17),guard.stack.get(16),int(monitor.stack.get(30,0)),monitor.stack.get(14),guard.stack.get(18)
+GUARD='ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10'
+ck(guard_restarts(0)==(1,9,1,posting_token(9,1),0),'an unrestarted Ancestry Guard scan did not post its first token and answer Good')
+ck(guard_restarts(1)==(1,9,2,posting_token(9,2),0),"the Monitor did not latch the Ancestry Guard's posting after the restart")
+ck(guard_restarts(511)==(-1,9,511,posting_token(9,511),0),'the 512th posting under one Ancestry Guard request did not fail the request')
+ck(guard_restarts(0,reflash=True)==(1,9,2,posting_token(9,2),0),"the Monitor did not latch the posting of an Ancestry Guard reflashed mid-request")
+ck(guard_restarts(1,reflash=True)==(1,9,3,posting_token(9,3),0),'an Ancestry Guard reflashed after a restart did not continue its count from S18')
 if fails:
  print('Dependency planning: FAIL');[print(' -',x) for x in fails];sys.exit(1)
 print('Dependency planning: PASS')
@@ -188,3 +197,4 @@ print(' - a reflashed Executor re-checks the Store identity before resuming a pe
 print(' - the Planner names its Existing controller on the cleanup path as well as the plan path')
 print(' - Preflight bounds the Selector leg count at six before walking the quote table')
 print(' - a restarted Ancestry Guard scan posts again under a new token the Monitor latches; the 512th posting fails the request')
+print(' - an Ancestry Guard reflashed mid-request continues its posting count from S18 and the Monitor latches the next posting')

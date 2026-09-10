@@ -138,6 +138,16 @@
           "access": [
             "self-write"
           ]
+        },
+        {
+          "address": 25,
+          "name": "S25",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-read",
+            "self-write"
+          ]
         }
       ],
       "behavior": {
