@@ -274,7 +274,9 @@ synthetic = "\n".join([
     "| Cell | Meaning |", "|---:|---|", "| S0 | magic = PressureGridCostProfile.v1 |", "| S9 | StorageWeight |", "| S14 | not a cost cell |",
     # An indented row (a table inside a list item) is a row of the same table.
     "  | S16 | not a cost cell either |", "",
-    "prose after the table", "| S15 | a row of a table that names no contract |",
+    "prose after the table", "| S15 | a row of a table that names no contract |", "",
+    # Four spaces of indentation after a blank line is a code block, not a table.
+    "    | S0 | magic = PressureGridCostProfile.v1 |", "    | S17 | in a code block, not a table |",
 ])
 fixture_lines = synthetic.split("\n")
 

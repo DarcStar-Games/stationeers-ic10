@@ -539,6 +539,8 @@ def doc_layout_blocks(text: str) -> list[DocLayoutBlock]:
     """Layout blocks whose S0 line names the contract, with every cell line each cites.
 
     A layout line is ``S<n> ...`` inside a fenced block or a ``| S<n> | ... |`` table row.
+    A pipe line indented four or more spaces is an indented code block, not the start of
+    a table; inside a running table it is a row, since a code block cannot interrupt one.
     An ``S0`` line carrying ``<Contract>.v<abi>`` opens a block that runs to the next such
     line, the end of the fence, or the end of the table, so one fence holding two
     services attributes each cell line to its own service. Cell lines before the first
@@ -564,10 +566,13 @@ def doc_layout_blocks(text: str) -> list[DocLayoutBlock]:
             inside = not inside
             continue
         if not inside:
-            is_row = line.lstrip().startswith("|")
+            stripped = line.lstrip(" \t")
+            is_row = stripped.startswith("|") and (in_table or len(line) - len(stripped) < 4)
             if in_table and not is_row:
                 close()
             in_table = is_row
+            if not is_row:
+                continue
         match = _layout_line(line, inside)
         if match is None:
             continue
