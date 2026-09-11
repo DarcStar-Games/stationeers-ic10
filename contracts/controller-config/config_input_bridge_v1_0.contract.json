@@ -157,21 +157,23 @@
       },
       {
         "address": 8,
-        "name": "S8",
+        "name": "ConfigEditorRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 9,
-        "name": "S9",
+        "name": "InputResolverRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "topology"
       }
     ],
     "headers": [

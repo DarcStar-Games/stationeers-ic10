@@ -112,10 +112,24 @@
         "current_layout": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["headers", "schema_fields", "payload_bases", "payload_inventory_status", "existing_consumer_checks"],
+          "required": ["headers", "schema_fields", "payload_fields", "payload_bases", "payload_inventory_status", "existing_consumer_checks"],
           "properties": {
             "headers": {"type": "array", "items": {"type": "object"}},
             "schema_fields": {"type": "array", "items": {"type": "object"}},
+            "payload_fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["protocol_id", "cells", "name", "role"],
+                "properties": {
+                  "protocol_id": {"type": "string", "minLength": 1},
+                  "cells": {"type": "string", "pattern": "^S[0-9]{1,3}(\\.\\.S[0-9]{1,3})?$"},
+                  "name": {"type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$"},
+                  "role": {"type": "string", "minLength": 1}
+                }
+              }
+            },
             "payload_bases": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 510}},
             "payload_inventory_status": {"enum": ["declared-stack-protocol", "no-declared-stack-protocol"]},
             "existing_consumer_checks": {"type": "array", "items": {"type": "object"}}

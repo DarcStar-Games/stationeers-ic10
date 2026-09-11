@@ -159,40 +159,44 @@
       },
       {
         "address": 8,
-        "name": "S8",
+        "name": "DiagnosticInputBridgeRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 9,
-        "name": "S9",
+        "name": "ControllerSelectorRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 10,
-        "name": "S10",
+        "name": "ConsoleSelectorRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 11,
-        "name": "S11",
+        "name": "ObservedConsoleRequestGeneration",
         "value_type": "integer",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "description": "last observed console-request generation"
+        "description": "last observed console-request generation",
+        "role": "generation"
       }
     ],
     "headers": [

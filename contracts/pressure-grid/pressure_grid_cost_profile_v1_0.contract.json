@@ -70,53 +70,58 @@
       },
       {
         "address": 8,
-        "name": "S8",
+        "name": "HopWeight",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 100
+        "const": 100,
+        "role": "metadata"
       },
       {
         "address": 9,
-        "name": "S9",
+        "name": "StorageWeight",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 25
+        "const": 25,
+        "role": "metadata"
       },
       {
         "address": 10,
-        "name": "S10",
+        "name": "LiftWeightPerKPa",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 0.01
+        "const": 0.01,
+        "role": "metadata"
       },
       {
         "address": 11,
-        "name": "S11",
+        "name": "FlowScarcityWeight",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 100
+        "const": 100,
+        "role": "metadata"
       },
       {
         "address": 12,
-        "name": "S12",
+        "name": "CandidateBudget",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 32
+        "const": 32,
+        "role": "metadata"
       }
     ],
     "headers": [

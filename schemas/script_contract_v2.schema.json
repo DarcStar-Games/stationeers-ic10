@@ -511,7 +511,8 @@
         "address": {"type": "integer", "minimum": 0, "maximum": 511},
         "name": {"type": "string", "minLength": 1},
         "value_type": {"enum": ["number", "integer", "enum", "hash", "reference-id", "boolean"]},
-        "semantic_source": {"enum": ["unresolved", "source", "override", "protocol-header"]},
+        "semantic_source": {"enum": ["unresolved", "source", "override", "protocol-header", "protocol-layout"]},
+        "role": {"enum": ["metadata", "schema", "request", "request_token", "current_token", "response_token", "state", "error", "result", "generation", "epoch", "bank", "topology", "table", "telemetry", "reserved"]},
         "access": {
           "type": "array",
           "minItems": 1,

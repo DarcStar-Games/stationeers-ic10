@@ -11,6 +11,68 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "InputScannerRef",
+      "role": "topology"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "LogicalControlCount",
+      "role": "request",
+      "description": "1..32"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "ProfileRef",
+      "role": "request",
+      "description": "0 selects Memory descriptors"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "Status",
+      "role": "state",
+      "description": "1 ready, negative invalid or unavailable"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "SnapshotGeneration",
+      "role": "generation",
+      "description": "written last"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "SelectedControlOrdinal",
+      "role": "result"
+    },
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "ResolvedValue",
+      "role": "result"
+    },
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "ResolvedInputKind",
+      "role": "result"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/shared-input/generic_input_resolver_v1_0.ic10",
@@ -50,77 +112,88 @@
         },
         {
           "address": 8,
-          "name": "S8",
+          "name": "InputScannerRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "topology"
         },
         {
           "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LogicalControlCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "1..32"
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "ProfileRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "0 selects Memory descriptors"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 ready, negative invalid or unavailable"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "source",
+          "name": "SnapshotGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
           ],
-          "description": "coherent resolved snapshot publishes LAST"
+          "description": "coherent resolved snapshot publishes LAST",
+          "role": "generation"
         },
         {
           "address": 13,
-          "name": "S13",
+          "name": "SelectedControlOrdinal",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 14,
-          "name": "S14",
+          "name": "ResolvedValue",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResolvedInputKind",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         }
       ],
       "behavior": {

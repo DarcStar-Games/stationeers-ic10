@@ -225,69 +225,79 @@
       },
       {
         "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Status",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 9,
-        "name": "S9",
+        "name": "NativeProviderRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "NativeGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "generation"
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "PublicationGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "generation",
+        "description": "payload first, generation last"
       },
       {
         "address": 12,
-        "name": "S12",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Unit",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 2
+        "const": 2,
+        "role": "metadata",
+        "description": "1 mole, 2 item quantity, 3 reagent, 4 watt, 5 joule"
       },
       {
         "address": 13,
-        "name": "S13",
+        "name": "PrecisionFlags",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 3
+        "const": 3,
+        "role": "metadata",
+        "description": "exact export 1, exact import 2, exact rate 4"
       },
       {
         "address": 14,
-        "name": "S14",
+        "name": "ResourceProfileViewRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 20,
@@ -419,105 +429,121 @@
       },
       {
         "address": 35,
-        "name": "S35",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "AccessKind",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": -491515906
+        "const": -491515906,
+        "role": "metadata",
+        "description": "ITEM storage access kind; POWER node kind"
       },
       {
         "address": 36,
-        "name": "S36",
+        "name": "PolicyFlags",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "metadata"
       },
       {
         "address": 37,
-        "name": "S37",
+        "name": "ReserveFloor",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "metadata"
       },
       {
         "address": 38,
-        "name": "S38",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ActionHint0",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "ITEM FirstSourceSlot; POWER DomainId"
       },
       {
         "address": 39,
-        "name": "S39",
+        "name": "ActionHint1",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "ITEM FirstSourceQuantity; POWER PolicyId"
       },
       {
         "address": 40,
-        "name": "S40",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ActionHint2",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "ITEM FirstEmptySlot; POWER priority and flags"
       },
       {
         "address": 52,
-        "name": "S52",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResourceClass",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 2
+        "const": 2,
+        "role": "metadata"
       },
       {
         "address": 53,
-        "name": "S53",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 54,
-        "name": "S54",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResourceType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 7
+        "role": "metadata"
+      },
+      {
+        "address": 54,
+        "name": "RoleBits",
+        "value_type": "number",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-write"
+        ],
+        "const": 7,
+        "role": "metadata",
+        "description": "export 1, import 2, storage 4"
       },
       {
         "address": 55,
-        "name": "S55",
+        "name": "ExportAvailable",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 56,
-        "name": "S56",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ImportCapacity",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       }
     ],
     "headers": [

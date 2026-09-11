@@ -13,6 +13,92 @@
   "canonical_refs": [
     "data/resource_transforms.json#"
   ],
+  "layout": [
+    {
+      "cells": "S8..S31",
+      "start": 8,
+      "end": 31,
+      "name": "InputDescriptors",
+      "role": "table",
+      "description": "up to six input descriptors, four cells each"
+    },
+    {
+      "cells": "S32..S63",
+      "start": 32,
+      "end": 63,
+      "name": "OutputDescriptors",
+      "role": "table",
+      "description": "up to eight output descriptors, four cells each"
+    },
+    {
+      "cells": "S64..S67",
+      "start": 64,
+      "end": 67,
+      "name": "ConditionBounds",
+      "role": "result",
+      "description": "pressure and temperature bounds"
+    },
+    {
+      "cells": "S68",
+      "start": 68,
+      "end": 68,
+      "name": "RequestEcho",
+      "role": "response_token",
+      "description": "the TransformType the published view answers"
+    },
+    {
+      "cells": "S69",
+      "start": 69,
+      "end": 69,
+      "name": "ResolveStatus",
+      "role": "state",
+      "description": "1 resolved"
+    },
+    {
+      "cells": "S70",
+      "start": 70,
+      "end": 70,
+      "name": "TransformTypeRequest",
+      "role": "request_token",
+      "description": "written by the consumer; the request and its identity"
+    },
+    {
+      "cells": "S71",
+      "start": 71,
+      "end": 71,
+      "name": "RequiredCapabilityMask",
+      "role": "result",
+      "description": "-2 and -3 publish resolution errors"
+    },
+    {
+      "cells": "S72",
+      "start": 72,
+      "end": 72,
+      "name": "InputCount",
+      "role": "result"
+    },
+    {
+      "cells": "S73",
+      "start": 73,
+      "end": 73,
+      "name": "OutputCount",
+      "role": "result"
+    },
+    {
+      "cells": "S74",
+      "start": 74,
+      "end": 74,
+      "name": "PublicationGeneration",
+      "role": "generation"
+    },
+    {
+      "cells": "S75",
+      "start": 75,
+      "end": 75,
+      "name": "ConditionFlags",
+      "role": "result"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10",
@@ -57,78 +143,90 @@
         },
         {
           "address": 68,
-          "name": "S68",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestEcho",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "response_token",
+          "description": "the TransformType the published view answers"
         },
         {
           "address": 69,
-          "name": "S69",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResolveStatus",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 resolved"
         },
         {
           "address": 70,
-          "name": "S70",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "TransformTypeRequest",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token",
+          "description": "written by the consumer; the request and its identity"
         },
         {
           "address": 71,
-          "name": "S71",
+          "name": "RequiredCapabilityMask",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "-2 and -3 publish resolution errors"
         },
         {
           "address": 72,
-          "name": "S72",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "InputCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 73,
-          "name": "S73",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "OutputCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 74,
-          "name": "S74",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "PublicationGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "generation"
         },
         {
           "address": 75,
-          "name": "S75",
+          "name": "ConditionFlags",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         }
       ],
       "behavior": {

@@ -20,6 +20,7 @@ from framework.script_contracts.parsing import (
     resolve_literal,
 )
 from framework.script_contracts.publication import stable_cells
+from framework.stack_field_map import load_layouts, payload_fields
 
 FORMAT = "IC10_STACK_ENVELOPE_INVENTORY_V1"
 DECLARATION_FORMAT = "IC10_STACK_ENVELOPE_DECLARATIONS_V1"
@@ -1367,6 +1368,7 @@ def build_inventory(
         declarations["standard_participation"], set(migrated)
     )
     exemption = declarations["legacy_exemption"]
+    layouts = load_layouts(root)
     window = set(range(BASE, BASE + LENGTH))
     reservable = set(range(BASE + 2, BASE + LENGTH))
     services = []
@@ -1409,6 +1411,7 @@ def build_inventory(
             "current_layout": {
                 "headers": headers,
                 "schema_fields": _schema_fields(contract, root / source),
+                "payload_fields": payload_fields(contract, layouts),
                 "payload_bases": sorted({header["base"] for header in headers}),
                 "payload_inventory_status": (
                     "declared-stack-protocol" if headers else "no-declared-stack-protocol"

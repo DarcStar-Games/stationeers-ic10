@@ -177,78 +177,90 @@
       },
       {
         "address": 68,
-        "name": "S68",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestEcho",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "response_token",
+        "description": "the TransformType the published view answers"
       },
       {
         "address": 69,
-        "name": "S69",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResolveStatus",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "state",
+        "description": "1 resolved"
       },
       {
         "address": 70,
-        "name": "S70",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "TransformTypeRequest",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token",
+        "description": "written by the consumer; the request and its identity"
       },
       {
         "address": 71,
-        "name": "S71",
+        "name": "RequiredCapabilityMask",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "-2 and -3 publish resolution errors"
       },
       {
         "address": 72,
-        "name": "S72",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "InputCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 73,
-        "name": "S73",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "OutputCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 74,
-        "name": "S74",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "PublicationGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "generation"
       },
       {
         "address": 75,
-        "name": "S75",
+        "name": "ConditionFlags",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       }
     ],
     "headers": [

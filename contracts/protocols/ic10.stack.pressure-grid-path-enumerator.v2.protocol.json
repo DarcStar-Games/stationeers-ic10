@@ -11,6 +11,109 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "PathBottleneckRate",
+      "role": "result"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "Status",
+      "role": "state",
+      "description": "1 candidate, 0 none, -1 fault"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "ResponseToken",
+      "role": "response_token"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "ActiveSearchId",
+      "role": "result"
+    },
+    {
+      "cells": "S16",
+      "start": 16,
+      "end": 16,
+      "name": "Hop1TransferRef",
+      "role": "result"
+    },
+    {
+      "cells": "S17",
+      "start": 17,
+      "end": 17,
+      "name": "Hop2TransferRef",
+      "role": "result"
+    },
+    {
+      "cells": "S18",
+      "start": 18,
+      "end": 18,
+      "name": "Hop3TransferRef",
+      "role": "result"
+    },
+    {
+      "cells": "S24",
+      "start": 24,
+      "end": 24,
+      "name": "ResumeKey",
+      "role": "state",
+      "description": "the search the enumerator may resume; ended on a fault"
+    },
+    {
+      "cells": "S32",
+      "start": 32,
+      "end": 32,
+      "name": "PlannerRef",
+      "role": "request"
+    },
+    {
+      "cells": "S33",
+      "start": 33,
+      "end": 33,
+      "name": "BuildEpoch",
+      "role": "request"
+    },
+    {
+      "cells": "S34",
+      "start": 34,
+      "end": 34,
+      "name": "MediumType",
+      "role": "request"
+    },
+    {
+      "cells": "S35",
+      "start": 35,
+      "end": 35,
+      "name": "SearchId",
+      "role": "request"
+    },
+    {
+      "cells": "S36",
+      "start": 36,
+      "end": 36,
+      "name": "RequestToken",
+      "role": "request_token"
+    },
+    {
+      "cells": "S37",
+      "start": 37,
+      "end": 37,
+      "name": "PathLength",
+      "role": "result",
+      "description": "2 or 3; 0 when enumeration is exhausted"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10",
@@ -56,104 +159,118 @@
         },
         {
           "address": 8,
-          "name": "S8",
+          "name": "PathBottleneckRate",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 candidate, 0 none, -1 fault"
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResponseToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         },
         {
           "address": 11,
-          "name": "S11",
+          "name": "ActiveSearchId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 24,
-          "name": "S24",
+          "name": "ResumeKey",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "the search the enumerator may resume; ended on a fault"
         },
         {
           "address": 32,
-          "name": "S32",
+          "name": "PlannerRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 33,
-          "name": "S33",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "BuildEpoch",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 34,
-          "name": "S34",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "MediumType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 35,
-          "name": "S35",
+          "name": "SearchId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 36,
-          "name": "S36",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 37,
-          "name": "S37",
+          "name": "PathLength",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "2 or 3; 0 when enumeration is exhausted"
         }
       ],
       "behavior": {

@@ -11,6 +11,77 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "RequestToken",
+      "role": "request_token"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "ResponseToken",
+      "role": "response_token"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "Status",
+      "role": "state",
+      "description": "1 done, -2 missing, -3 full, -1 invalid"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "Command",
+      "role": "request",
+      "description": "1 lookup, 2 upsert, 3 clear"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "ParentJobId",
+      "role": "request"
+    },
+    {
+      "cells": "S14..S20",
+      "start": 14,
+      "end": 20,
+      "name": "RecordFields",
+      "role": "request",
+      "description": "ChildJobId, ResourceType, RequiredTotal, BaselineKnown, FutureQty, QuoteFingerprintA, QuoteFingerprintB"
+    },
+    {
+      "cells": "S32..S39",
+      "start": 32,
+      "end": 39,
+      "name": "LookupRecord",
+      "role": "result",
+      "description": "the eight-cell record a lookup copies out"
+    },
+    {
+      "cells": "S40",
+      "start": 40,
+      "end": 40,
+      "name": "PlanSequence",
+      "role": "generation",
+      "description": "global odd/even sequence"
+    },
+    {
+      "cells": "S128..S383",
+      "start": 128,
+      "end": 383,
+      "name": "PlanRecords",
+      "role": "table",
+      "description": "32 eight-cell records; ParentJobId at +0 is the per-record commit marker"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/dependency-planning/dependency_plan_store_v2_0.ic10",
@@ -61,59 +132,68 @@
         },
         {
           "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResponseToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 done, -2 missing, -3 full, -1 invalid"
         },
         {
           "address": 12,
-          "name": "S12",
+          "name": "Command",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "1 lookup, 2 upsert, 3 clear"
         },
         {
           "address": 13,
-          "name": "S13",
+          "name": "ParentJobId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 40,
-          "name": "S40",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "PlanSequence",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "generation",
+          "description": "global odd/even sequence"
         }
       ],
       "behavior": {

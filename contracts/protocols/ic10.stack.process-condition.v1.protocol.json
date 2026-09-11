@@ -11,6 +11,114 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "UnmetConditionMask",
+      "role": "result",
+      "description": "bit0 pressure, bit1 temperature"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "ProcessIdentity",
+      "role": "metadata"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "Active",
+      "role": "state",
+      "description": "1 demand is live"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "PublicationGeneration",
+      "role": "generation",
+      "description": "written last"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "Status",
+      "role": "state",
+      "description": "1 valid, negative invalid"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "Strategy",
+      "role": "metadata"
+    },
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "PressureTargetHint",
+      "role": "result"
+    },
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "TemperatureTargetHint",
+      "role": "result"
+    },
+    {
+      "cells": "S22",
+      "start": 22,
+      "end": 22,
+      "name": "TargetRef",
+      "role": "topology"
+    },
+    {
+      "cells": "S23",
+      "start": 23,
+      "end": 23,
+      "name": "FluidResourceType",
+      "role": "metadata"
+    },
+    {
+      "cells": "S24",
+      "start": 24,
+      "end": 24,
+      "name": "MinimumPressure",
+      "role": "result",
+      "description": "kPa"
+    },
+    {
+      "cells": "S25",
+      "start": 25,
+      "end": 25,
+      "name": "MaximumPressure",
+      "role": "result",
+      "description": "kPa; non-positive means unbounded"
+    },
+    {
+      "cells": "S26",
+      "start": 26,
+      "end": 26,
+      "name": "MinimumTemperature",
+      "role": "result",
+      "description": "K"
+    },
+    {
+      "cells": "S27",
+      "start": 27,
+      "end": 27,
+      "name": "MaximumTemperature",
+      "role": "result",
+      "description": "K; non-positive means unbounded"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/process-furnace/furnace_process_condition_request_v1_0.ic10",
@@ -50,76 +158,88 @@
         },
         {
           "address": 8,
-          "name": "S8",
+          "name": "UnmetConditionMask",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "bit0 pressure, bit1 temperature"
         },
         {
           "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ProcessIdentity",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "metadata"
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "Active",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 demand is live"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "PublicationGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "generation",
+          "description": "written last"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 valid, negative invalid"
         },
         {
           "address": 13,
-          "name": "S13",
+          "name": "Strategy",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "metadata"
         },
         {
           "address": 14,
-          "name": "S14",
+          "name": "PressureTargetHint",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "TemperatureTargetHint",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 16,
@@ -150,57 +270,67 @@
         },
         {
           "address": 22,
-          "name": "S22",
+          "name": "TargetRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "topology"
         },
         {
           "address": 23,
-          "name": "S23",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FluidResourceType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "metadata"
         },
         {
           "address": 24,
-          "name": "S24",
+          "name": "MinimumPressure",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "kPa"
         },
         {
           "address": 25,
-          "name": "S25",
+          "name": "MaximumPressure",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "kPa; non-positive means unbounded"
         },
         {
           "address": 26,
-          "name": "S26",
+          "name": "MinimumTemperature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "K"
         },
         {
           "address": 27,
-          "name": "S27",
+          "name": "MaximumTemperature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "K; non-positive means unbounded"
         }
       ],
       "behavior": {
@@ -265,78 +395,90 @@
         },
         {
           "address": 8,
-          "name": "S8",
+          "name": "UnmetConditionMask",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "bit0 pressure, bit1 temperature"
         },
         {
           "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ProcessIdentity",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1602045313
+          "const": 1602045313,
+          "role": "metadata"
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "Active",
           "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 2
+          "role": "state",
+          "description": "1 demand is live"
+        },
+        {
+          "address": 11,
+          "name": "PublicationGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "role": "generation",
+          "description": "written last"
+        },
+        {
+          "address": 12,
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "state",
+          "description": "1 valid, negative invalid"
+        },
+        {
+          "address": 13,
+          "name": "Strategy",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 2,
+          "role": "metadata"
         },
         {
           "address": 14,
-          "name": "S14",
+          "name": "PressureTargetHint",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "TemperatureTargetHint",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 16,
@@ -394,59 +536,69 @@
         },
         {
           "address": 22,
-          "name": "S22",
+          "name": "TargetRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "topology"
         },
         {
           "address": 23,
-          "name": "S23",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FluidResourceType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "metadata"
         },
         {
           "address": 24,
-          "name": "S24",
+          "name": "MinimumPressure",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "kPa"
         },
         {
           "address": 25,
-          "name": "S25",
+          "name": "MaximumPressure",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "kPa; non-positive means unbounded"
         },
         {
           "address": 26,
-          "name": "S26",
+          "name": "MinimumTemperature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "result",
+          "description": "K"
         },
         {
           "address": 27,
-          "name": "S27",
+          "name": "MaximumTemperature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 5000
+          "const": 5000,
+          "role": "result",
+          "description": "K; non-positive means unbounded"
         }
       ],
       "behavior": {

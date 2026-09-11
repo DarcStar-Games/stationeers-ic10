@@ -30,6 +30,7 @@ from framework.script_contracts.parsing import collect_aliases, parse_rows
 from framework.script_contracts.register_ports import analyze_register_ports, register_port_pins
 from framework.script_contracts.value_bounds import declared_coverage_errors
 from framework.protocol_headers import load_headers
+from framework.stack_field_map import apply_layout, layout_documents, layouts_from_definitions
 from framework.source_metadata import deployable_scripts, load_manifest, resolve_script_metadata
 
 FORMAT = "IC10_SCRIPT_CONTRACT_V2"
@@ -56,7 +57,7 @@ def verify_override_source(path: Path, override: dict[str, Any]) -> None:
         )
 
 
-def build_contract(path: Path, root: Path, manifest: dict[str, Any], declared_headers: list[dict[str, int]], declared_consumers: list[dict[str, Any]], overrides: dict[str, Any] | None = None) -> dict[str, Any]:
+def build_contract(path: Path, root: Path, manifest: dict[str, Any], declared_headers: list[dict[str, int]], declared_consumers: list[dict[str, Any]], overrides: dict[str, Any] | None = None, layouts: dict[str, Any] | None = None) -> dict[str, Any]:
     source = path.read_text(encoding="utf-8")
     rows = parse_rows(source)
     port_aliases, integer_aliases = collect_aliases(rows)
@@ -74,6 +75,10 @@ def build_contract(path: Path, root: Path, manifest: dict[str, Any], declared_he
     for port in ports:
         port["target"] = port_target(port, consumes)
     own_stack, publication_rules = analyze_own_stack(source, rows, integer_aliases, headers, overrides)
+    own_stack = {**own_stack, "headers": headers}
+    # The reviewed per-protocol layout names the payload cells the header publishes
+    # (issue #190); it runs after the source and header passes and yields to an override.
+    apply_layout(own_stack, layouts or {})
     declared_ranges = {
         (port["port"], direction): port["stack"][f"dynamic_{direction}_ranges"]
         for port in ports for direction in ("read", "write")
@@ -105,7 +110,7 @@ def build_contract(path: Path, root: Path, manifest: dict[str, Any], declared_he
         "device_ports": ports,
         **({"register_ports": register_ports} if register_ports else {}),
         "network_dependencies": network_dependencies(source, rows, integer_aliases, overrides),
-        "own_stack": {**own_stack, "headers": headers},
+        "own_stack": own_stack,
         "behavior": {
             "publication_rules": publication_rules,
             "restart": restart_behavior(rows, own_stack["clears_all"]),
@@ -124,8 +129,8 @@ def build_contract(path: Path, root: Path, manifest: dict[str, Any], declared_he
     }
 
 
-def _load_declarations(root: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], dict[str, Any]]:
-    """Load the authoritative override, protocol-definition, and header declarations."""
+def _load_declarations(root: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], dict[str, Any], dict[str, Any]]:
+    """Load the authoritative override, protocol-definition, layout, and header declarations."""
     override_path = root / "data" / "script_contract_overrides.json"
     override_data = json.loads(override_path.read_text()) if override_path.exists() else {"scripts": {}}
     if override_data.get("format") != "IC10_SCRIPT_CONTRACT_OVERRIDES_V1":
@@ -133,14 +138,18 @@ def _load_declarations(root: Path) -> tuple[dict[str, Any], dict[str, Any], dict
     definitions_data = json.loads((root / "data" / "script_contract_protocol_definitions.json").read_text())
     if definitions_data.get("format") != "IC10_PROTOCOL_DEFINITIONS_V1":
         raise ValueError("unsupported script contract protocol definition format")
+    layouts, layout_shape_errors = layouts_from_definitions(definitions_data.get("protocols", {}))
+    if layout_shape_errors:
+        raise ValueError("protocol layout declarations are malformed: " + "; ".join(layout_shape_errors))
     declared_headers, declared_consumers = load_headers(root)
     return (override_data.get("scripts", {}), definitions_data.get("protocols", {}),
-            declared_headers, declared_consumers)
+            declared_headers, declared_consumers, layouts)
 
 
 def _build_contracts(
     root: Path, script_overrides: dict[str, Any],
     declared_headers: dict[str, Any], declared_consumers: dict[str, Any],
+    layouts: dict[str, Any] | None = None,
 ) -> dict[str, dict[str, Any]]:
     """Build every deployable contract, enforcing declaration coverage first."""
     manifest = load_manifest(root)
@@ -155,7 +164,7 @@ def _build_contracts(
         override = script_overrides.get(source_rel)
         if override:
             verify_override_source(source, override)
-        contract = build_contract(source, root, manifest, declared_headers[source_rel], declared_consumers[source_rel], override)
+        contract = build_contract(source, root, manifest, declared_headers[source_rel], declared_consumers[source_rel], override, layouts)
         family = contract["identity"]["deployment_family"]
         rel = f"contracts/{family}/{source.stem}.contract.json"
         if rel in contracts:
@@ -221,9 +230,10 @@ def _protocol_registry(
     return protocol_registry
 
 
-def _protocol_definitions(protocol_registry: dict[str, Any], by_source: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
+def _protocol_definitions(protocol_registry: dict[str, Any], by_source: dict[str, dict[str, Any]], layouts: dict[str, Any] | None = None) -> dict[str, dict[str, Any]]:
     """Expand each registered protocol into its canonical definition document."""
     protocol_definitions: dict[str, dict[str, Any]] = {}
+    layouts = layouts or {}
     for protocol in protocol_registry["protocols"]:
         provider_interfaces = []
         for provider in protocol["providers"]:
@@ -283,6 +293,7 @@ def _protocol_definitions(protocol_registry: dict[str, Any], by_source: dict[str
             "abi": protocol["abi"],
             "header_bases": sorted({item["header_base"] for item in protocol["providers"] + protocol["consumers"]}),
             "canonical_refs": protocol["canonical_refs"],
+            "layout": layout_documents(layouts.get(protocol["protocol_id"], [])),
             "provider_interfaces": provider_interfaces,
             "consumer_interfaces": consumer_interfaces,
         }
@@ -387,11 +398,11 @@ def _contract_index(contracts: dict[str, dict[str, Any]], interface_definitions:
 
 def build_all(root: Path) -> tuple[dict[str, dict[str, Any]], dict[str, Any], dict[str, Any], dict[str, dict[str, Any]]]:
     root = Path(root)
-    script_overrides, definitions, declared_headers, declared_consumers = _load_declarations(root)
-    contracts = _build_contracts(root, script_overrides, declared_headers, declared_consumers)
+    script_overrides, definitions, declared_headers, declared_consumers, layouts = _load_declarations(root)
+    contracts = _build_contracts(root, script_overrides, declared_headers, declared_consumers, layouts)
     by_source = {contract["source"]: contract for contract in contracts.values()}
     protocol_registry = _protocol_registry(contracts, definitions, by_source)
-    protocol_definitions = _protocol_definitions(protocol_registry, by_source)
+    protocol_definitions = _protocol_definitions(protocol_registry, by_source, layouts)
     interface_definitions = _interface_definitions(contracts)
     index = _contract_index(contracts, interface_definitions)
     return contracts, index, protocol_registry, protocol_definitions

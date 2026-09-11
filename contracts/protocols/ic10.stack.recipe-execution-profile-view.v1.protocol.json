@@ -11,6 +11,75 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "RecipeHash",
+      "role": "request",
+      "description": "written by the consumer"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "FamilyHash",
+      "role": "result"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "RequiredCapability",
+      "role": "result"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "InputCount",
+      "role": "result"
+    },
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "StoreGeneration",
+      "role": "generation"
+    },
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "Status",
+      "role": "state",
+      "description": "1 ready, -2 invalid catalog, -3 missing"
+    },
+    {
+      "cells": "S16..S47",
+      "start": 16,
+      "end": 47,
+      "name": "ReagentPairs",
+      "role": "table",
+      "description": "[ManufacturingReagentHash, Quantity] x 16"
+    },
+    {
+      "cells": "S48",
+      "start": 48,
+      "end": 48,
+      "name": "TopologyGeneration",
+      "role": "generation"
+    },
+    {
+      "cells": "S49",
+      "start": 49,
+      "end": 49,
+      "name": "RecipeHashEcho",
+      "role": "response_token",
+      "description": "the request the result answers"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10",
@@ -55,75 +124,86 @@
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RecipeHash",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "written by the consumer"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FamilyHash",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 12,
-          "name": "S12",
+          "name": "RequiredCapability",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "InputCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "StoreGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "generation"
         },
         {
           "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 ready, -2 invalid catalog, -3 missing"
         },
         {
           "address": 48,
-          "name": "S48",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "TopologyGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "generation"
         },
         {
           "address": 49,
-          "name": "S49",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RecipeHashEcho",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "response_token",
+          "description": "the request the result answers"
         }
       ],
       "behavior": {

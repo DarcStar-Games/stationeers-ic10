@@ -143,128 +143,145 @@
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "EntryWidth",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "metadata"
       },
       {
         "address": 12,
-        "name": "S12",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Capacity",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "metadata"
       },
       {
         "address": 14,
-        "name": "S14",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "BridgeRequestGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       },
       {
         "address": 15,
-        "name": "S15",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "AcknowledgedRequestGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       },
       {
         "address": 16,
-        "name": "S16",
+        "name": "BridgeCommand",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request",
+        "description": "1 BEGIN, 2 ADD, 3 COMMIT"
       },
       {
         "address": 20,
-        "name": "S20",
+        "name": "RebuildBank",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "bank",
+        "description": "inactive bank selected during rebuild"
       },
       {
         "address": 21,
-        "name": "S21",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "StagingCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 22,
-        "name": "S22",
+        "name": "StagingOverflow",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 23,
-        "name": "S23",
+        "name": "HostError",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": -1
+        "const": -1,
+        "role": "error"
       },
       {
         "address": 24,
-        "name": "S24",
+        "name": "ActiveBank",
         "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 25,
-        "name": "S25",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 26,
-        "name": "S26",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 31,
-        "name": "S31",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
         ],
-        "const": 891293726
+        "role": "bank",
+        "description": "0 A, 1 B"
+      },
+      {
+        "address": 25,
+        "name": "GenerationA",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read"
+        ],
+        "role": "bank"
+      },
+      {
+        "address": 26,
+        "name": "GenerationB",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read"
+        ],
+        "role": "bank"
+      },
+      {
+        "address": 31,
+        "name": "ReflashIdentity",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read",
+          "self-write"
+        ],
+        "const": 891293726,
+        "role": "metadata",
+        "description": "same-image reflash marker holding the service identity"
       }
     ],
     "headers": [

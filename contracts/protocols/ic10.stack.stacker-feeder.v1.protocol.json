@@ -11,6 +11,118 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "ReadyEpoch",
+      "role": "epoch"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "EmittedEpoch",
+      "role": "epoch"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "PublicationGeneration",
+      "role": "generation"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "SorterRef",
+      "role": "topology"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "SourceRef",
+      "role": "topology",
+      "description": "Vending or SDB"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "StackerRef",
+      "role": "topology"
+    },
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "BufferQuantity",
+      "role": "result"
+    },
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "BufferResourceType",
+      "role": "result"
+    },
+    {
+      "cells": "S16",
+      "start": 16,
+      "end": 16,
+      "name": "RequestedResourceType",
+      "role": "request"
+    },
+    {
+      "cells": "S17",
+      "start": 17,
+      "end": 17,
+      "name": "RequestedQuantity",
+      "role": "request"
+    },
+    {
+      "cells": "S18",
+      "start": 18,
+      "end": 18,
+      "name": "RequestEpoch",
+      "role": "request_token"
+    },
+    {
+      "cells": "S19",
+      "start": 19,
+      "end": 19,
+      "name": "ReleaseEpoch",
+      "role": "request",
+      "description": "Executor writes it only after the sink counter snapshot"
+    },
+    {
+      "cells": "S20..S23",
+      "start": 20,
+      "end": 23,
+      "name": "InternalState",
+      "role": "state",
+      "description": "persistent preparation state"
+    },
+    {
+      "cells": "S24",
+      "start": 24,
+      "end": 24,
+      "name": "Status",
+      "role": "state",
+      "description": "0 idle, 1 exact batch ready, 2 emitted, -1 fault"
+    },
+    {
+      "cells": "S25",
+      "start": 25,
+      "end": 25,
+      "name": "CurrentEpoch",
+      "role": "current_token",
+      "description": "LIVE_CURRENT identity, written last"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/item-storage-sdb/material_sdb_stacker_feeder_v1_0.ic10",
@@ -51,172 +163,198 @@
         },
         {
           "address": 8,
-          "name": "S8",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ReadyEpoch",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 0
+          "role": "epoch"
+        },
+        {
+          "address": 9,
+          "name": "EmittedEpoch",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "epoch"
+        },
+        {
+          "address": 10,
+          "name": "PublicationGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "role": "generation"
+        },
+        {
+          "address": 11,
+          "name": "SorterRef",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 0,
+          "role": "topology"
         },
         {
           "address": 12,
-          "name": "S12",
+          "name": "SourceRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "topology",
+          "description": "Vending or SDB"
         },
         {
           "address": 13,
-          "name": "S13",
+          "name": "StackerRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "topology"
         },
         {
           "address": 14,
-          "name": "S14",
+          "name": "BufferQuantity",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "BufferResourceType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestedResourceType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "RequestedQuantity",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 18,
-          "name": "S18",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestEpoch",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 19,
-          "name": "S19",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ReleaseEpoch",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "Executor writes it only after the sink counter snapshot"
         },
         {
           "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "InternalState",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "persistent preparation state"
         },
         {
           "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "InternalState",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "persistent preparation state"
         },
         {
           "address": 22,
-          "name": "S22",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "InternalState",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "persistent preparation state"
         },
         {
           "address": 23,
-          "name": "S23",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "InternalState",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "persistent preparation state"
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "0 idle, 1 exact batch ready, 2 emitted, -1 fault"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "CurrentEpoch",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "current_token",
+          "description": "LIVE_CURRENT identity, written last"
         }
       ],
       "behavior": {
@@ -282,172 +420,197 @@
         },
         {
           "address": 8,
-          "name": "S8",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ReadyEpoch",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "epoch"
         },
         {
           "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "EmittedEpoch",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "epoch"
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 17,
-          "name": "S17",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 18,
-          "name": "S18",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 19,
-          "name": "S19",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 22,
-          "name": "S22",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 23,
-          "name": "S23",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 25,
-          "name": "LIVECURRENTIdentity",
-          "value_type": "hash",
-          "semantic_source": "source",
+          "name": "PublicationGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
           ],
-          "description": "LIVE_CURRENT identity LAST after request-specific reset/init | accepted fault publishes current identity LAST"
+          "role": "generation"
+        },
+        {
+          "address": 11,
+          "name": "SorterRef",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "topology"
+        },
+        {
+          "address": 12,
+          "name": "SourceRef",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "topology",
+          "description": "Vending or SDB"
+        },
+        {
+          "address": 13,
+          "name": "StackerRef",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "topology"
+        },
+        {
+          "address": 14,
+          "name": "BufferQuantity",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "result"
+        },
+        {
+          "address": 15,
+          "name": "BufferResourceType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "result"
+        },
+        {
+          "address": 16,
+          "name": "RequestedResourceType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read"
+          ],
+          "role": "request"
+        },
+        {
+          "address": 17,
+          "name": "RequestedQuantity",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read"
+          ],
+          "role": "request"
+        },
+        {
+          "address": 18,
+          "name": "RequestEpoch",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read"
+          ],
+          "role": "request_token"
+        },
+        {
+          "address": 19,
+          "name": "ReleaseEpoch",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read"
+          ],
+          "role": "request",
+          "description": "Executor writes it only after the sink counter snapshot"
+        },
+        {
+          "address": 20,
+          "name": "InternalState",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "role": "state",
+          "description": "persistent preparation state"
+        },
+        {
+          "address": 21,
+          "name": "InternalState",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "role": "state",
+          "description": "persistent preparation state"
+        },
+        {
+          "address": 22,
+          "name": "InternalState",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "role": "state",
+          "description": "persistent preparation state"
+        },
+        {
+          "address": 23,
+          "name": "InternalState",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "role": "state",
+          "description": "persistent preparation state"
+        },
+        {
+          "address": 24,
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "state",
+          "description": "0 idle, 1 exact batch ready, 2 emitted, -1 fault"
+        },
+        {
+          "address": 25,
+          "name": "CurrentEpoch",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "description": "LIVE_CURRENT identity LAST after request-specific reset/init | accepted fault publishes current identity LAST",
+          "role": "current_token"
         }
       ],
       "behavior": {

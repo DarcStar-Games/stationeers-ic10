@@ -338,77 +338,93 @@
       },
       {
         "address": 98,
-        "name": "S98",
+        "name": "ChannelMask",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 30
+        "const": 30,
+        "role": "metadata",
+        "description": "bitmask of the telemetry channels the controller publishes"
       },
       {
         "address": 99,
-        "name": "S99",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ControllerType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 1875690426
+        "const": 1875690426,
+        "role": "metadata",
+        "description": "controller family hash"
       },
       {
         "address": 100,
-        "name": "S100",
+        "name": "TelemetryChannels",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "telemetry",
+        "description": "channel n at S99+n; meanings are per controller family"
       },
       {
         "address": 101,
-        "name": "S101",
+        "name": "TelemetryChannels",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "telemetry",
+        "description": "channel n at S99+n; meanings are per controller family"
       },
       {
         "address": 102,
-        "name": "S102",
+        "name": "TelemetryChannels",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "telemetry",
+        "description": "channel n at S99+n; meanings are per controller family"
       },
       {
         "address": 103,
-        "name": "S103",
+        "name": "TelemetryChannels",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "telemetry",
+        "description": "channel n at S99+n; meanings are per controller family"
       },
       {
         "address": 106,
-        "name": "S106",
+        "name": "TelemetryChannels",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "telemetry",
+        "description": "channel n at S99+n; meanings are per controller family"
       },
       {
         "address": 107,
-        "name": "S107",
+        "name": "TelemetryChannels",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "telemetry",
+        "description": "channel n at S99+n; meanings are per controller family"
       },
       {
         "address": 108,
@@ -419,7 +435,8 @@
           "external-read",
           "external-write"
         ],
-        "description": "Allocator-owned staged grant consumed by the paired Grant Guard."
+        "description": "Allocator-owned staged grant consumed by the paired Grant Guard.",
+        "role": "request"
       },
       {
         "address": 109,
@@ -430,7 +447,8 @@
           "external-read",
           "external-write"
         ],
-        "description": "Allocator commit marker written after the staged payload."
+        "description": "Allocator commit marker written after the staged payload.",
+        "role": "epoch"
       },
       {
         "address": 110,
@@ -440,7 +458,8 @@
         "access": [
           "external-read",
           "external-write"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 111,
@@ -450,25 +469,30 @@
         "access": [
           "external-read",
           "external-write"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 115,
-        "name": "S115",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "TelemetryGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "generation",
+        "description": "written last; payload precedes it"
       },
       {
         "address": 116,
-        "name": "S116",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ConfigHostRef",
+        "value_type": "reference-id",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology",
+        "description": "paired Generic Config Host ReferenceId"
       },
       {
         "address": 117,
@@ -478,7 +502,8 @@
         "access": [
           "external-read",
           "external-write"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 118,
@@ -488,7 +513,8 @@
         "access": [
           "external-read",
           "external-write"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 119,
@@ -498,7 +524,8 @@
         "access": [
           "external-read",
           "external-write"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 120,
@@ -508,7 +535,8 @@
         "access": [
           "external-read",
           "external-write"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 121,

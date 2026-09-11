@@ -1,28 +1,4511 @@
 {
  "format": "IC10_PROTOCOL_DEFINITIONS_V1",
  "protocols": {
-  "ic10.stack.generic-snapshot-directory-host.v1": {
-   "name": "Generic Snapshot Directory Host ABI1",
-   "definition_refs": [
-    "data/directory_schemas.json#/snapshot_host"
+  "ic10.stack.27182818.abi1": {
+   "layout": [
+    {
+     "cells": "S98",
+     "name": "ChannelMask",
+     "role": "metadata",
+     "description": "bitmask of the telemetry channels the controller publishes"
+    },
+    {
+     "cells": "S99",
+     "name": "ControllerType",
+     "role": "metadata",
+     "description": "controller family hash"
+    },
+    {
+     "cells": "S100..S109",
+     "name": "TelemetryChannels",
+     "role": "telemetry",
+     "description": "channel n at S99+n; meanings are per controller family"
+    },
+    {
+     "cells": "S116",
+     "name": "ConfigHostRef",
+     "role": "topology",
+     "description": "paired Generic Config Host ReferenceId"
+    },
+    {
+     "cells": "S117",
+     "name": "ConfigHostGeneration",
+     "role": "generation",
+     "description": "effective Config Host generation the runtime loaded"
+    }
    ]
   },
-  "ic10.stack.generic-registry-directory-host.v3": {
-   "name": "Generic Registry Directory Host ABI3",
-   "definition_refs": [
-    "data/directory_schemas.json#/registry_host"
+  "ic10.stack.27182818.abi2": {
+   "layout": [
+    {
+     "cells": "S98",
+     "name": "ChannelMask",
+     "role": "metadata",
+     "description": "bitmask of the telemetry channels the controller publishes"
+    },
+    {
+     "cells": "S99",
+     "name": "ControllerType",
+     "role": "metadata",
+     "description": "controller family hash"
+    },
+    {
+     "cells": "S100..S107",
+     "name": "TelemetryChannels",
+     "role": "telemetry",
+     "description": "channel n at S99+n; meanings are per controller family"
+    },
+    {
+     "cells": "S108",
+     "name": "StagedGrantMolesPerTick",
+     "role": "request",
+     "description": "Allocator-owned staged grant consumed by the paired Grant Guard"
+    },
+    {
+     "cells": "S109",
+     "name": "StagedEpoch",
+     "role": "epoch",
+     "description": "Allocator commit marker written after the staged payload"
+    },
+    {
+     "cells": "S110",
+     "name": "StagedPlannerReferenceId",
+     "role": "request"
+    },
+    {
+     "cells": "S111",
+     "name": "StagedLeaseTicks",
+     "role": "request"
+    },
+    {
+     "cells": "S115",
+     "name": "TelemetryGeneration",
+     "role": "generation",
+     "description": "written last; payload precedes it"
+    },
+    {
+     "cells": "S116",
+     "name": "ConfigHostRef",
+     "role": "topology",
+     "description": "paired Generic Config Host ReferenceId"
+    },
+    {
+     "cells": "S117",
+     "name": "StagedSourceReservationReferenceId",
+     "role": "request"
+    },
+    {
+     "cells": "S118",
+     "name": "StagedSinkReservationReferenceId",
+     "role": "request"
+    },
+    {
+     "cells": "S119",
+     "name": "StagedMediumType",
+     "role": "request"
+    },
+    {
+     "cells": "S120",
+     "name": "StagedRouteKind",
+     "role": "request"
+    }
+   ]
+  },
+  "ic10.stack.catalog-coordinator-core.v4": {
+   "layout": [
+    {
+     "cells": "S8..S13",
+     "name": "DirectorySummary",
+     "role": "telemetry",
+     "description": "aggregate directory health and capacity summary"
+    },
+    {
+     "cells": "S14",
+     "name": "CoordinatorId",
+     "role": "metadata"
+    },
+    {
+     "cells": "S15",
+     "name": "CoordinatorEpoch",
+     "role": "epoch"
+    },
+    {
+     "cells": "S16",
+     "name": "ServiceGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S20",
+     "name": "AssignmentEpochCounter",
+     "role": "epoch"
+    },
+    {
+     "cells": "S21",
+     "name": "PlacementGeneration",
+     "role": "generation",
+     "description": "placement/migration generation; the Migration Worker advances it"
+    },
+    {
+     "cells": "S22",
+     "name": "TopologySequence",
+     "role": "generation",
+     "description": "topology seqlock, stable even"
+    },
+    {
+     "cells": "S23",
+     "name": "RegistryDirectoryRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S25",
+     "name": "CapacityRequestPending",
+     "role": "request",
+     "description": "Router capacity request in S25..S32"
+    },
+    {
+     "cells": "S26",
+     "name": "RequestPartitionKey",
+     "role": "request"
+    },
+    {
+     "cells": "S27",
+     "name": "RequestCatalogSchemaId",
+     "role": "request"
+    },
+    {
+     "cells": "S29",
+     "name": "RequestCatalogInstanceId",
+     "role": "request"
+    },
+    {
+     "cells": "S30",
+     "name": "RequestTailStoreRef",
+     "role": "request"
+    },
+    {
+     "cells": "S31",
+     "name": "RequestNextStoreOrdinal",
+     "role": "request"
+    },
+    {
+     "cells": "S32",
+     "name": "RequestRequiredCells",
+     "role": "request"
+    },
+    {
+     "cells": "S40",
+     "name": "MigrationSourceStoreRef",
+     "role": "topology",
+     "description": "pending move, 0 when idle; hosted for the Planner and Worker, never read by Core"
+    },
+    {
+     "cells": "S41",
+     "name": "MigrationDestinationStoreRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S42",
+     "name": "MigrationPlanCounter",
+     "role": "generation",
+     "description": "advanced by the Planner"
+    }
+   ]
+  },
+  "ic10.stack.config-input-bridge.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "ConfigEditorRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S9",
+     "name": "InputResolverRef",
+     "role": "topology"
+    }
+   ]
+  },
+  "ic10.stack.dependency-claim-view.v1": {
+   "layout": [
+    {
+     "cells": "S15",
+     "name": "ResourceType",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "RequestingParentJobId",
+     "role": "request",
+     "description": "parent whose own claim is excluded from the aggregate"
+    },
+    {
+     "cells": "S17",
+     "name": "ChildJobIdFilter",
+     "role": "request",
+     "description": "0 accepts any child"
+    },
+    {
+     "cells": "S18",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S19",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S20",
+     "name": "Status",
+     "role": "state",
+     "description": "1 active claim, -2 proven absence, -3 unverifiable child, -1 invalid"
+    },
+    {
+     "cells": "S21",
+     "name": "ChildJobId",
+     "role": "result"
+    },
+    {
+     "cells": "S22",
+     "name": "FutureQuantity",
+     "role": "result"
+    },
+    {
+     "cells": "S23",
+     "name": "OtherParentCount",
+     "role": "result"
+    },
+    {
+     "cells": "S24",
+     "name": "ChildState",
+     "role": "result"
+    },
+    {
+     "cells": "S25",
+     "name": "ChildResourceType",
+     "role": "result"
+    },
+    {
+     "cells": "S26",
+     "name": "ChildJobGeneration",
+     "role": "result"
+    },
+    {
+     "cells": "S27",
+     "name": "AggregateClaims",
+     "role": "result"
+    }
+   ]
+  },
+  "ic10.stack.dependency-plan-store.v2": {
+   "layout": [
+    {
+     "cells": "S9",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S10",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S11",
+     "name": "Status",
+     "role": "state",
+     "description": "1 done, -2 missing, -3 full, -1 invalid"
+    },
+    {
+     "cells": "S12",
+     "name": "Command",
+     "role": "request",
+     "description": "1 lookup, 2 upsert, 3 clear"
+    },
+    {
+     "cells": "S13",
+     "name": "ParentJobId",
+     "role": "request"
+    },
+    {
+     "cells": "S14..S20",
+     "name": "RecordFields",
+     "role": "request",
+     "description": "ChildJobId, ResourceType, RequiredTotal, BaselineKnown, FutureQty, QuoteFingerprintA, QuoteFingerprintB"
+    },
+    {
+     "cells": "S32..S39",
+     "name": "LookupRecord",
+     "role": "result",
+     "description": "the eight-cell record a lookup copies out"
+    },
+    {
+     "cells": "S40",
+     "name": "PlanSequence",
+     "role": "generation",
+     "description": "global odd/even sequence"
+    },
+    {
+     "cells": "S128..S383",
+     "name": "PlanRecords",
+     "role": "table",
+     "description": "32 eight-cell records; ParentJobId at +0 is the per-record commit marker"
+    }
+   ]
+  },
+  "ic10.stack.diagnostic-input-bridge.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "InputResolverRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S9",
+     "name": "InputProfileRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S10",
+     "name": "Status",
+     "role": "state",
+     "description": "1 ready"
+    },
+    {
+     "cells": "S16",
+     "name": "DesiredControllerType",
+     "role": "result",
+     "description": "operator-selected ordinal"
+    },
+    {
+     "cells": "S17",
+     "name": "DesiredControllerMember",
+     "role": "result"
+    },
+    {
+     "cells": "S18",
+     "name": "DesiredConsole",
+     "role": "result"
+    },
+    {
+     "cells": "S19",
+     "name": "TelemetryChannel",
+     "role": "result"
+    },
+    {
+     "cells": "S20",
+     "name": "LedMode",
+     "role": "result"
+    },
+    {
+     "cells": "S21",
+     "name": "LedColor",
+     "role": "result"
+    },
+    {
+     "cells": "S22",
+     "name": "CommitSwitchState",
+     "role": "state"
+    },
+    {
+     "cells": "S23",
+     "name": "CommitRequestGeneration",
+     "role": "generation",
+     "description": "rising edges of the commit switch"
+    },
+    {
+     "cells": "S24",
+     "name": "ControllerSelectorRequestGeneration",
+     "role": "request_token"
+    },
+    {
+     "cells": "S25",
+     "name": "ConsoleDesiredRequestGeneration",
+     "role": "request_token"
+    }
+   ]
+  },
+  "ic10.stack.diagnostic-mapping-editor.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "ConsoleSelectorRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S9",
+     "name": "ControllerSelectorRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S10",
+     "name": "DiagnosticRendererRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S11",
+     "name": "HandledCommitGeneration",
+     "role": "response_token"
+    },
+    {
+     "cells": "S12",
+     "name": "Status",
+     "role": "state",
+     "description": "1 ready, 2 committed, negative fault"
+    },
+    {
+     "cells": "S13",
+     "name": "DiagnosticInputBridgeRef",
+     "role": "topology"
+    }
+   ]
+  },
+  "ic10.stack.diagnostic-selector-bridge.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "DiagnosticInputBridgeRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S9",
+     "name": "ControllerSelectorRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S10",
+     "name": "ConsoleSelectorRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S11",
+     "name": "ObservedConsoleRequestGeneration",
+     "role": "generation"
+    }
    ]
   },
   "ic10.stack.directory-adapter.v3": {
    "name": "Generic Directory Adapter ABI3",
    "definition_refs": [
     "data/directory_schemas.json#/adapter_abi"
+   ],
+   "layout": [
+    {
+     "cells": "S10",
+     "name": "EntryWidth",
+     "role": "metadata"
+    },
+    {
+     "cells": "S11",
+     "name": "Capacity",
+     "role": "metadata"
+    },
+    {
+     "cells": "S12",
+     "name": "CandidateCount",
+     "role": "result"
+    },
+    {
+     "cells": "S13",
+     "name": "RebuildSequence",
+     "role": "generation",
+     "description": "odd while rebuilding, even when stable"
+    },
+    {
+     "cells": "S14",
+     "name": "Overflow",
+     "role": "state",
+     "description": "nonzero means the candidate set is incomplete"
+    },
+    {
+     "cells": "S15",
+     "name": "Mode",
+     "role": "metadata",
+     "description": "1 SNAPSHOT, 2 REGISTRY"
+    },
+    {
+     "cells": "S16",
+     "name": "FreezeRequestToken",
+     "role": "request_token",
+     "description": "0 releases"
+    },
+    {
+     "cells": "S17",
+     "name": "FreezeAcknowledgeToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S18..S401",
+     "name": "CandidateRecords",
+     "role": "table",
+     "description": "packed complete candidate records"
+    }
+   ]
+  },
+  "ic10.stack.existing-dependency-plan-controller.v1": {
+   "layout": [
+    {
+     "cells": "S12",
+     "name": "ParentJobId",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "ParentSlot",
+     "role": "request"
+    },
+    {
+     "cells": "S14",
+     "name": "ParentJobGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "JobType",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "Identity",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "RequestedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "Priority",
+     "role": "request"
+    },
+    {
+     "cells": "S19",
+     "name": "Mode",
+     "role": "request",
+     "description": "0 plan, 1 cleanup after a terminal parent"
+    },
+    {
+     "cells": "S20",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S21",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S22",
+     "name": "Decision",
+     "role": "result",
+     "description": "1 ready, 5 replan, -31 child failure, -1 invalid"
+    },
+    {
+     "cells": "S23",
+     "name": "ReleasedFlag",
+     "role": "result",
+     "description": "1 when the existing plan was released"
+    }
+   ]
+  },
+  "ic10.stack.generic-catalog-store.v6": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "StoreOrdinal",
+     "role": "topology",
+     "description": "Coordinator-owned; written at claim"
+    },
+    {
+     "cells": "S9",
+     "name": "LocalItemCount",
+     "role": "result"
+    },
+    {
+     "cells": "S10",
+     "name": "ItemDirectoryBase",
+     "role": "metadata"
+    },
+    {
+     "cells": "S11",
+     "name": "CoordinatorRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S12",
+     "name": "CoordinatorEpoch",
+     "role": "epoch"
+    },
+    {
+     "cells": "S13",
+     "name": "CatalogInstanceId",
+     "role": "metadata",
+     "description": "assigned by the Coordinator"
+    },
+    {
+     "cells": "S14",
+     "name": "ClaimCoordinatorId",
+     "role": "topology"
+    },
+    {
+     "cells": "S15",
+     "name": "ImportGeneration",
+     "role": "generation",
+     "description": "committed item-import generation/count"
+    },
+    {
+     "cells": "S16",
+     "name": "StoreState",
+     "role": "state"
+    },
+    {
+     "cells": "S17",
+     "name": "DataSequence",
+     "role": "generation",
+     "description": "odd while mutating, even stable"
+    },
+    {
+     "cells": "S18",
+     "name": "NodeId",
+     "role": "metadata",
+     "description": "human-assigned 1..64"
+    },
+    {
+     "cells": "S19",
+     "name": "NextDirectoryCell",
+     "role": "result"
+    },
+    {
+     "cells": "S20",
+     "name": "HeapTop",
+     "role": "result"
+    },
+    {
+     "cells": "S21",
+     "name": "PreviousStoreRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S22",
+     "name": "UsedCells",
+     "role": "result"
+    },
+    {
+     "cells": "S23",
+     "name": "PartitionKey",
+     "role": "metadata"
+    },
+    {
+     "cells": "S24",
+     "name": "NextStoreRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S25",
+     "name": "Reserved25",
+     "role": "reserved"
+    },
+    {
+     "cells": "S26",
+     "name": "AssignmentEpoch",
+     "role": "epoch"
+    },
+    {
+     "cells": "S27",
+     "name": "InFlightReservationCells",
+     "role": "result",
+     "description": "capacity promised to an in-flight placement or migration"
+    },
+    {
+     "cells": "S28",
+     "name": "FaultDetail",
+     "role": "error"
+    },
+    {
+     "cells": "S29",
+     "name": "FreeCells",
+     "role": "result"
+    },
+    {
+     "cells": "S30",
+     "name": "Reserved30",
+     "role": "reserved"
+    },
+    {
+     "cells": "S31",
+     "name": "CommittedAssignmentEpoch",
+     "role": "epoch"
+    },
+    {
+     "cells": "S32..S511",
+     "name": "ItemHeap",
+     "role": "table",
+     "description": "two-cell item directory growing up from S32; payload heap growing down from S511"
+    }
+   ]
+  },
+  "ic10.stack.generic-config-editor.v1": {
+   "layout": [
+    {
+     "cells": "S10",
+     "name": "LoadedControllerRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S11",
+     "name": "StagingRevision",
+     "role": "generation"
+    },
+    {
+     "cells": "S12",
+     "name": "DesiredControllerRef",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "CaptureStagingRevision",
+     "role": "generation",
+     "description": "staging revision captured at Apply"
+    },
+    {
+     "cells": "S14",
+     "name": "CapturedControllerRef",
+     "role": "topology",
+     "description": "controller ReferenceId captured at Apply"
+    },
+    {
+     "cells": "S15",
+     "name": "StagingReady",
+     "role": "state"
+    },
+    {
+     "cells": "S16",
+     "name": "EditorStatus",
+     "role": "state",
+     "description": "1 LOADING, 3 MODIFIED, 4 APPLY PENDING"
+    },
+    {
+     "cells": "S17",
+     "name": "ActiveFieldCount",
+     "role": "metadata"
+    },
+    {
+     "cells": "S18",
+     "name": "ConfigHostRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S19",
+     "name": "ControllerConfigSchema",
+     "role": "schema"
+    },
+    {
+     "cells": "S20",
+     "name": "BridgeImageSlot",
+     "role": "request",
+     "description": "physical image slot 0..31 selected through the Config Bridge"
+    },
+    {
+     "cells": "S21",
+     "name": "BridgeResolvedValue",
+     "role": "request"
+    },
+    {
+     "cells": "S22",
+     "name": "BridgeInputKind",
+     "role": "request"
+    },
+    {
+     "cells": "S25",
+     "name": "BridgePublicationValid",
+     "role": "state"
+    },
+    {
+     "cells": "S26",
+     "name": "BridgeHostSnapshot",
+     "role": "generation"
+    },
+    {
+     "cells": "S27",
+     "name": "ValidatedProfileRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S28",
+     "name": "ValidatedProfileAbi",
+     "role": "metadata"
+    },
+    {
+     "cells": "S29",
+     "name": "ValidatedProfileGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S30",
+     "name": "LoadedBlockCount",
+     "role": "metadata"
+    },
+    {
+     "cells": "S32..S63",
+     "name": "StagedImage",
+     "role": "table",
+     "description": "staged physical config image"
+    },
+    {
+     "cells": "S64..S95",
+     "name": "OrdinalSlotMap",
+     "role": "table",
+     "description": "active UI ordinal to physical image slot"
+    },
+    {
+     "cells": "S96..S99",
+     "name": "HostBlockMaskSnapshot",
+     "role": "table"
+    },
+    {
+     "cells": "S100",
+     "name": "ControllerSelectorRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S101..S103",
+     "name": "ButtonPreviousStates",
+     "role": "state",
+     "description": "Save, Reload, Apply"
+    },
+    {
+     "cells": "S104",
+     "name": "ApplyGeneration",
+     "role": "generation"
+    }
+   ]
+  },
+  "ic10.stack.generic-input-resolver.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "InputScannerRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S9",
+     "name": "LogicalControlCount",
+     "role": "request",
+     "description": "1..32"
+    },
+    {
+     "cells": "S10",
+     "name": "ProfileRef",
+     "role": "request",
+     "description": "0 selects Memory descriptors"
+    },
+    {
+     "cells": "S11",
+     "name": "Status",
+     "role": "state",
+     "description": "1 ready, negative invalid or unavailable"
+    },
+    {
+     "cells": "S12",
+     "name": "SnapshotGeneration",
+     "role": "generation",
+     "description": "written last"
+    },
+    {
+     "cells": "S13",
+     "name": "SelectedControlOrdinal",
+     "role": "result"
+    },
+    {
+     "cells": "S14",
+     "name": "ResolvedValue",
+     "role": "result"
+    },
+    {
+     "cells": "S15",
+     "name": "ResolvedInputKind",
+     "role": "result"
+    }
+   ]
+  },
+  "ic10.stack.generic-input-scanner.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "PopulatedScrewMask",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "RequestedControlCount",
+     "role": "request",
+     "description": "1..32"
+    },
+    {
+     "cells": "S10",
+     "name": "SelectedControlOrdinal",
+     "role": "result",
+     "description": "0 unavailable"
+    },
+    {
+     "cells": "S11",
+     "name": "InputProfileRef",
+     "role": "topology",
+     "description": "0 absent"
+    },
+    {
+     "cells": "S12",
+     "name": "SnapshotGeneration",
+     "role": "generation",
+     "description": "written last"
+    },
+    {
+     "cells": "S13",
+     "name": "FieldDialRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S14",
+     "name": "ValueDialRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S15",
+     "name": "LogicMemoryRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S16",
+     "name": "SwitchRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S17",
+     "name": "CapabilityMask",
+     "role": "metadata"
+    }
+   ]
+  },
+  "ic10.stack.generic-job-command-gateway.v5": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "LaneAResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S9",
+     "name": "LaneAStatus",
+     "role": "state"
+    },
+    {
+     "cells": "S10",
+     "name": "LaneAAllocatedJobId",
+     "role": "result"
+    },
+    {
+     "cells": "S11",
+     "name": "LaneACommand",
+     "role": "request",
+     "description": "1 PUBLISH_NEW, 2 SET_STATE, 3 REAP"
+    },
+    {
+     "cells": "S12",
+     "name": "LaneASlot",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "LaneAExpectedJobGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S14",
+     "name": "LaneADesiredState",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "LaneADesiredErrorStatus",
+     "role": "request"
+    },
+    {
+     "cells": "S19",
+     "name": "LaneARequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S24",
+     "name": "PendingLaneClass",
+     "role": "state",
+     "description": "0 idle; the lane class of the command in flight"
+    },
+    {
+     "cells": "S25",
+     "name": "PendingToken",
+     "role": "current_token",
+     "description": "client token of the command in flight"
+    },
+    {
+     "cells": "S26",
+     "name": "PendingLaneBase",
+     "role": "state"
+    },
+    {
+     "cells": "S32",
+     "name": "LaneBRequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S33",
+     "name": "LaneBResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S34",
+     "name": "LaneBStatus",
+     "role": "state",
+     "description": "1 success, negative rejected"
+    },
+    {
+     "cells": "S35",
+     "name": "LaneBAllocatedJobId",
+     "role": "result"
+    },
+    {
+     "cells": "S36",
+     "name": "LaneBCommand",
+     "role": "request",
+     "description": "1 PUBLISH_NEW, 2 SET_STATE, 3 REAP"
+    },
+    {
+     "cells": "S37",
+     "name": "LaneBSlot",
+     "role": "request"
+    },
+    {
+     "cells": "S38",
+     "name": "LaneBExpectedJobGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S39",
+     "name": "LaneBDesiredState",
+     "role": "request"
+    },
+    {
+     "cells": "S40",
+     "name": "LaneBDesiredErrorStatus",
+     "role": "request"
+    },
+    {
+     "cells": "S48",
+     "name": "LaneCRequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S49",
+     "name": "LaneCResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S50",
+     "name": "LaneCStatus",
+     "role": "state",
+     "description": "1 success, negative rejected"
+    },
+    {
+     "cells": "S51",
+     "name": "LaneCAllocatedJobId",
+     "role": "result"
+    },
+    {
+     "cells": "S52",
+     "name": "LaneCAllocatedSlot",
+     "role": "result"
+    },
+    {
+     "cells": "S53",
+     "name": "LaneCParentJobId",
+     "role": "request"
+    },
+    {
+     "cells": "S54",
+     "name": "LaneCParentJobGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S55",
+     "name": "LaneCParentSlot",
+     "role": "request"
+    },
+    {
+     "cells": "S56..S62",
+     "name": "LaneCIntent",
+     "role": "request",
+     "description": "JobType, RequiredCapability, Identity, InputCount, OutputCount, RequestedQuantity, Priority"
+    },
+    {
+     "cells": "S64",
+     "name": "LaneDRequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S65",
+     "name": "LaneDResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S66",
+     "name": "LaneDStatus",
+     "role": "state",
+     "description": "1 success, negative rejected"
+    },
+    {
+     "cells": "S67",
+     "name": "LaneDAllocatedJobId",
+     "role": "result"
+    },
+    {
+     "cells": "S68",
+     "name": "LaneDCommand",
+     "role": "request",
+     "description": "1 PUBLISH_NEW, 2 SET_STATE, 3 REAP"
+    },
+    {
+     "cells": "S69",
+     "name": "LaneDSlot",
+     "role": "request"
+    },
+    {
+     "cells": "S70",
+     "name": "LaneDExpectedJobGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S71",
+     "name": "LaneDDesiredState",
+     "role": "request"
+    },
+    {
+     "cells": "S72",
+     "name": "LaneDDesiredErrorStatus",
+     "role": "request"
+    },
+    {
+     "cells": "S80",
+     "name": "LaneERequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S81",
+     "name": "LaneEResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S82",
+     "name": "LaneEStatus",
+     "role": "state",
+     "description": "1 success, negative rejected"
+    },
+    {
+     "cells": "S83",
+     "name": "LaneEAllocatedJobId",
+     "role": "result"
+    },
+    {
+     "cells": "S84",
+     "name": "LaneEAllocatedSlot",
+     "role": "result"
+    },
+    {
+     "cells": "S85",
+     "name": "LaneEExpectedQueueSequence",
+     "role": "request",
+     "description": "even Job Store QueueSequence observed before publication"
+    },
+    {
+     "cells": "S86",
+     "name": "LaneEExpectedPlanSequence",
+     "role": "request",
+     "description": "even Dependency Plan Store sequence observed before publication"
+    },
+    {
+     "cells": "S87..S93",
+     "name": "LaneEIntent",
+     "role": "request",
+     "description": "JobType, RequiredCapability, Identity, InputCount, OutputCount, RequestedQuantity, Priority"
+    },
+    {
+     "cells": "S96",
+     "name": "LaneFRequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S97",
+     "name": "LaneFResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S98",
+     "name": "LaneFStatus",
+     "role": "state",
+     "description": "1 success, negative rejected"
+    },
+    {
+     "cells": "S99",
+     "name": "LaneFAllocatedJobId",
+     "role": "result"
+    },
+    {
+     "cells": "S100",
+     "name": "LaneFAllocatedSlot",
+     "role": "result"
+    },
+    {
+     "cells": "S101",
+     "name": "LaneFExpectedQueueSequence",
+     "role": "request",
+     "description": "even Job Store QueueSequence observed before publication"
+    },
+    {
+     "cells": "S102",
+     "name": "LaneFExpectedPlanSequence",
+     "role": "request",
+     "description": "even Dependency Plan Store sequence observed before publication"
+    },
+    {
+     "cells": "S103..S109",
+     "name": "LaneFIntent",
+     "role": "request",
+     "description": "JobType, RequiredCapability, Identity, InputCount, OutputCount, RequestedQuantity, Priority"
+    }
+   ]
+  },
+  "ic10.stack.generic-job-store-command-executor.v1": {
+   "layout": [
+    {
+     "cells": "S12",
+     "name": "ParentJobId",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "ParentJobGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S14..S20",
+     "name": "Intent",
+     "role": "request",
+     "description": "JobType, RequiredCapability, Identity, InputCount, OutputCount, RequestedQuantity, Priority"
+    },
+    {
+     "cells": "S21",
+     "name": "CommandClass",
+     "role": "request",
+     "description": "3 child creation, 5 root creation, otherwise a lifecycle command"
+    },
+    {
+     "cells": "S22",
+     "name": "ParentSlot",
+     "role": "request",
+     "description": "-1 is the root sentinel"
+    },
+    {
+     "cells": "S23",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S24",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S25",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S26",
+     "name": "AllocatedJobId",
+     "role": "result"
+    },
+    {
+     "cells": "S27",
+     "name": "AllocatedSlot",
+     "role": "result"
+    },
+    {
+     "cells": "S28",
+     "name": "ExpectedQueueSequence",
+     "role": "request"
+    },
+    {
+     "cells": "S29",
+     "name": "ExpectedPlanSequence",
+     "role": "request"
+    },
+    {
+     "cells": "S30",
+     "name": "StoreRequestCounter",
+     "role": "generation",
+     "description": "source of the Store request generations"
+    },
+    {
+     "cells": "S31",
+     "name": "PendingStoreToken",
+     "role": "request_token",
+     "description": "Store request in flight, kept across reflash"
+    },
+    {
+     "cells": "S32",
+     "name": "PendingClientToken",
+     "role": "current_token"
+    },
+    {
+     "cells": "S34",
+     "name": "PendingSlot",
+     "role": "state"
+    },
+    {
+     "cells": "S35",
+     "name": "StoreCommand",
+     "role": "request",
+     "description": "1 PUBLISH_NEW, 2 SET_STATE, 3 REAP"
+    },
+    {
+     "cells": "S36",
+     "name": "Slot",
+     "role": "request",
+     "description": "-1 lets a creation pick a free slot"
+    },
+    {
+     "cells": "S37",
+     "name": "ExpectedJobGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S38",
+     "name": "DesiredState",
+     "role": "request"
+    },
+    {
+     "cells": "S39",
+     "name": "DesiredErrorStatus",
+     "role": "request"
+    }
    ]
   },
   "ic10.stack.generic-job-store.v1": {
    "name": "Generic Job Store ABI1",
    "definition_refs": [
     "data/generic_job_schema.json#"
+   ],
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "ResponseGeneration",
+     "role": "response_token"
+    },
+    {
+     "cells": "S9",
+     "name": "ResponseStatus",
+     "role": "state",
+     "description": "1 success, negative rejected"
+    },
+    {
+     "cells": "S10",
+     "name": "AllocatedJobId",
+     "role": "result",
+     "description": "for PUBLISH_NEW"
+    },
+    {
+     "cells": "S11",
+     "name": "Command",
+     "role": "request",
+     "description": "1 PUBLISH_NEW, 2 SET_STATE, 3 REAP"
+    },
+    {
+     "cells": "S12",
+     "name": "SlotOrdinal",
+     "role": "request",
+     "description": "0..31"
+    },
+    {
+     "cells": "S13",
+     "name": "ExpectedJobGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S14",
+     "name": "DesiredState",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "DesiredErrorStatus",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "QueueSequence",
+     "role": "generation",
+     "description": "odd while mutating, even stable"
+    },
+    {
+     "cells": "S17",
+     "name": "QueueGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S18",
+     "name": "Capacity",
+     "role": "metadata",
+     "description": "32"
+    },
+    {
+     "cells": "S19",
+     "name": "RequestGeneration",
+     "role": "request_token"
+    },
+    {
+     "cells": "S23",
+     "name": "NextJobId",
+     "role": "result"
+    },
+    {
+     "cells": "S24",
+     "name": "AppliedRequestMarker",
+     "role": "generation",
+     "description": "last applied request generation; the replay marker"
+    },
+    {
+     "cells": "S25",
+     "name": "InFlightStateBase",
+     "role": "bank",
+     "description": "in-flight slot state-base journal"
+    },
+    {
+     "cells": "S26",
+     "name": "InFlightOldActiveBank",
+     "role": "bank"
+    },
+    {
+     "cells": "S32..S287",
+     "name": "IntentSlots",
+     "role": "table",
+     "description": "32 x 8: JobId, JobType, RequiredCapability, Identity, InputCount, OutputCount, RequestedQuantity, Priority"
+    },
+    {
+     "cells": "S288..S511",
+     "name": "StateSlots",
+     "role": "table",
+     "description": "32 x 7: activeBank, A.State, A.Generation, A.ErrorStatus, B.State, B.Generation, B.ErrorStatus"
+    }
+   ]
+  },
+  "ic10.stack.generic-persistent-config-host.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "OperationalStatus",
+     "role": "state",
+     "description": "positive ready"
+    },
+    {
+     "cells": "S9",
+     "name": "EffectiveConfigRevision",
+     "role": "generation"
+    },
+    {
+     "cells": "S10",
+     "name": "BlockCount",
+     "role": "metadata",
+     "description": "1..4"
+    },
+    {
+     "cells": "S11",
+     "name": "TransactionResult",
+     "role": "result",
+     "description": "result of the transaction the header generation names"
+    },
+    {
+     "cells": "S12",
+     "name": "PersistenceSchemaSignature",
+     "role": "schema",
+     "description": "supplied by the Policy"
+    },
+    {
+     "cells": "S13",
+     "name": "PolicyGeneration",
+     "role": "generation",
+     "description": "metadata and defaults precede the increment"
+    },
+    {
+     "cells": "S16..S19",
+     "name": "BlockValidityMasks",
+     "role": "metadata",
+     "description": "physical blocks 0..3"
+    },
+    {
+     "cells": "S20",
+     "name": "PolicyResponseGeneration",
+     "role": "response_token"
+    },
+    {
+     "cells": "S21",
+     "name": "PolicyValidationResult",
+     "role": "result"
+    },
+    {
+     "cells": "S32..S47",
+     "name": "DefaultImage",
+     "role": "table",
+     "description": "Policy defaults for the physical image"
+    },
+    {
+     "cells": "S48",
+     "name": "ControllerType",
+     "role": "metadata"
+    },
+    {
+     "cells": "S50",
+     "name": "ControllerConfigSchema",
+     "role": "schema"
+    },
+    {
+     "cells": "S51",
+     "name": "EffectiveGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S52",
+     "name": "RequestGeneration",
+     "role": "request_token"
+    },
+    {
+     "cells": "S53",
+     "name": "ResponseGeneration",
+     "role": "response_token"
+    },
+    {
+     "cells": "S96..S127",
+     "name": "EffectiveImage",
+     "role": "table"
+    },
+    {
+     "cells": "S128..S159",
+     "name": "CandidateImage",
+     "role": "table"
+    },
+    {
+     "cells": "S160..S191",
+     "name": "BankAImage",
+     "role": "table"
+    },
+    {
+     "cells": "S192..S223",
+     "name": "BankBImage",
+     "role": "table"
+    },
+    {
+     "cells": "S224..S226",
+     "name": "BankAFooter",
+     "role": "bank",
+     "description": "signature, config revision, bank revision"
+    },
+    {
+     "cells": "S227..S229",
+     "name": "BankBFooter",
+     "role": "bank",
+     "description": "signature, config revision, bank revision"
+    }
+   ]
+  },
+  "ic10.stack.generic-registry-directory-host.v3": {
+   "name": "Generic Registry Directory Host ABI3",
+   "definition_refs": [
+    "data/directory_schemas.json#/registry_host"
+   ],
+   "layout": [
+    {
+     "cells": "S16",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S18",
+     "name": "TelemetrySequence",
+     "role": "generation",
+     "description": "odd while the Directory Telemetry rewrites S35..S45"
+    },
+    {
+     "cells": "S20",
+     "name": "RecordWidth",
+     "role": "metadata"
+    },
+    {
+     "cells": "S21",
+     "name": "Capacity",
+     "role": "metadata"
+    },
+    {
+     "cells": "S23",
+     "name": "PublicationSequence",
+     "role": "generation",
+     "description": "odd while mutating, even when stable"
+    },
+    {
+     "cells": "S24",
+     "name": "FreezeTokenCounter",
+     "role": "request_token",
+     "description": "freeze tokens issued to the adapter"
+    },
+    {
+     "cells": "S25",
+     "name": "AcceptedCandidateGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S26",
+     "name": "RegistryGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S35",
+     "name": "NodeCount",
+     "role": "telemetry"
+    },
+    {
+     "cells": "S36",
+     "name": "ActiveCount",
+     "role": "telemetry"
+    },
+    {
+     "cells": "S37",
+     "name": "UnclaimedCount",
+     "role": "telemetry"
+    },
+    {
+     "cells": "S38",
+     "name": "DrainingCount",
+     "role": "telemetry"
+    },
+    {
+     "cells": "S39",
+     "name": "FaultedCount",
+     "role": "telemetry"
+    },
+    {
+     "cells": "S40",
+     "name": "RetiredCount",
+     "role": "telemetry"
+    },
+    {
+     "cells": "S41",
+     "name": "MissingCount",
+     "role": "telemetry"
+    },
+    {
+     "cells": "S42",
+     "name": "DuplicateCount",
+     "role": "telemetry"
+    },
+    {
+     "cells": "S43",
+     "name": "UsedCells",
+     "role": "telemetry"
+    },
+    {
+     "cells": "S44",
+     "name": "FreeCells",
+     "role": "telemetry"
+    },
+    {
+     "cells": "S45",
+     "name": "CapacityCells",
+     "role": "telemetry"
+    },
+    {
+     "cells": "S58..S447",
+     "name": "RegistryRecords",
+     "role": "table",
+     "description": "64 six-cell records at S58+6n for n in 1..64: NodeId, ReferenceId, State, UsedCells, AssignmentEpoch, CatalogInstanceId"
+    }
+   ]
+  },
+  "ic10.stack.generic-snapshot-directory-host.v1": {
+   "name": "Generic Snapshot Directory Host ABI1",
+   "definition_refs": [
+    "data/directory_schemas.json#/snapshot_host"
+   ],
+   "layout": [
+    {
+     "cells": "S9",
+     "name": "DirectorySchemaId",
+     "role": "schema"
+    },
+    {
+     "cells": "S11",
+     "name": "EntryWidth",
+     "role": "metadata"
+    },
+    {
+     "cells": "S12",
+     "name": "Capacity",
+     "role": "metadata"
+    },
+    {
+     "cells": "S14",
+     "name": "BridgeRequestGeneration",
+     "role": "request_token"
+    },
+    {
+     "cells": "S15",
+     "name": "AcknowledgedRequestGeneration",
+     "role": "response_token"
+    },
+    {
+     "cells": "S16",
+     "name": "BridgeCommand",
+     "role": "request",
+     "description": "1 BEGIN, 2 ADD, 3 COMMIT"
+    },
+    {
+     "cells": "S17..S19",
+     "name": "CandidateRecord",
+     "role": "request",
+     "description": "one candidate record during ADD"
+    },
+    {
+     "cells": "S20",
+     "name": "RebuildBank",
+     "role": "bank",
+     "description": "inactive bank selected during rebuild"
+    },
+    {
+     "cells": "S21",
+     "name": "StagingCount",
+     "role": "state"
+    },
+    {
+     "cells": "S22",
+     "name": "StagingOverflow",
+     "role": "state"
+    },
+    {
+     "cells": "S23",
+     "name": "HostError",
+     "role": "error"
+    },
+    {
+     "cells": "S24",
+     "name": "ActiveBank",
+     "role": "bank",
+     "description": "0 A, 1 B"
+    },
+    {
+     "cells": "S25",
+     "name": "GenerationA",
+     "role": "bank"
+    },
+    {
+     "cells": "S26",
+     "name": "GenerationB",
+     "role": "bank"
+    },
+    {
+     "cells": "S27",
+     "name": "CountA",
+     "role": "bank"
+    },
+    {
+     "cells": "S28",
+     "name": "CountB",
+     "role": "bank"
+    },
+    {
+     "cells": "S29",
+     "name": "OverflowA",
+     "role": "bank"
+    },
+    {
+     "cells": "S30",
+     "name": "OverflowB",
+     "role": "bank"
+    },
+    {
+     "cells": "S31",
+     "name": "ReflashIdentity",
+     "role": "metadata",
+     "description": "same-image reflash marker holding the service identity"
+    },
+    {
+     "cells": "S32..S415",
+     "name": "Banks",
+     "role": "table",
+     "description": "bank A then bank B, each capacity x width cells"
+    }
+   ]
+  },
+  "ic10.stack.input-profile-view.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "ContextType",
+     "role": "metadata"
+    },
+    {
+     "cells": "S9",
+     "name": "ContextSchema",
+     "role": "schema"
+    },
+    {
+     "cells": "S10",
+     "name": "LogicalControlCount",
+     "role": "metadata"
+    },
+    {
+     "cells": "S11",
+     "name": "ProfileGeneration",
+     "role": "generation",
+     "description": "written last"
+    },
+    {
+     "cells": "S32..S255",
+     "name": "ControlDescriptors",
+     "role": "table",
+     "description": "four-value control descriptors"
+    }
+   ]
+  },
+  "ic10.stack.item-producer-resolver.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "ResourceType",
+     "role": "request"
+    },
+    {
+     "cells": "S9",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S10",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S11",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S12",
+     "name": "ProducerJobType",
+     "role": "result",
+     "description": "1 TRANSFORM, 2 PRINT"
+    },
+    {
+     "cells": "S13",
+     "name": "ProducerIdentity",
+     "role": "result",
+     "description": "TransformType or RecipeHash"
+    },
+    {
+     "cells": "S32..S65",
+     "name": "ProducerTable",
+     "role": "table",
+     "description": "17 [ResourceType, TransformType] pairs"
+    }
+   ]
+  },
+  "ic10.stack.item-resource-reservation-selector.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "Status",
+     "role": "state",
+     "description": "1 complete quote, -1 invalid, -2 insufficient, -3 directory overflow"
+    },
+    {
+     "cells": "S9",
+     "name": "QuotedTotal",
+     "role": "result"
+    },
+    {
+     "cells": "S10",
+     "name": "LegCount",
+     "role": "result",
+     "description": "1..6 on success"
+    },
+    {
+     "cells": "S11",
+     "name": "ResourceType",
+     "role": "request"
+    },
+    {
+     "cells": "S12",
+     "name": "RequestedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "Direction",
+     "role": "request",
+     "description": "1 export, 2 import"
+    },
+    {
+     "cells": "S14",
+     "name": "RequiredRoleMask",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S16",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S32..S49",
+     "name": "QuoteLegs",
+     "role": "table",
+     "description": "up to six [ReservationRef, Amount, EndpointPublicationGeneration] legs"
+    }
+   ]
+  },
+  "ic10.stack.job-requirement-view.v1": {
+   "layout": [
+    {
+     "cells": "S15",
+     "name": "JobType",
+     "role": "request",
+     "description": "1 TRANSFORM, 2 PRINT"
+    },
+    {
+     "cells": "S16",
+     "name": "Identity",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "RequestedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "InputOrdinal",
+     "role": "request",
+     "description": "-1 asks for the head fields only"
+    },
+    {
+     "cells": "S19",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S20",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S21",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S22",
+     "name": "RequiredCapability",
+     "role": "result"
+    },
+    {
+     "cells": "S23",
+     "name": "InputCount",
+     "role": "result"
+    },
+    {
+     "cells": "S24",
+     "name": "OutputResourceType",
+     "role": "result"
+    },
+    {
+     "cells": "S25",
+     "name": "OutputPerBatch",
+     "role": "result"
+    },
+    {
+     "cells": "S26",
+     "name": "InputResourceType",
+     "role": "result"
+    },
+    {
+     "cells": "S27",
+     "name": "InputRequiredTotal",
+     "role": "result"
+    }
+   ]
+  },
+  "ic10.stack.material-transfer-executor.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "GrantedQuantity",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "InternalState",
+     "role": "state",
+     "description": "0 idle, 1 wait-ready, 2 wait-emitted, 3 wait-sink"
+    },
+    {
+     "cells": "S10",
+     "name": "ElapsedTicks",
+     "role": "state"
+    },
+    {
+     "cells": "S11",
+     "name": "ResourceType",
+     "role": "result"
+    },
+    {
+     "cells": "S12",
+     "name": "SinkProviderRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S13",
+     "name": "ImportCountSnapshot",
+     "role": "result",
+     "description": "taken before batch release"
+    },
+    {
+     "cells": "S14",
+     "name": "ActiveEpoch",
+     "role": "epoch"
+    },
+    {
+     "cells": "S15",
+     "name": "CompletedEpoch",
+     "role": "epoch"
+    },
+    {
+     "cells": "S16",
+     "name": "ExecutionStatus",
+     "role": "state",
+     "description": "1 completed, 0 active or idle, -1 failed"
+    },
+    {
+     "cells": "S17",
+     "name": "ObservedRate",
+     "role": "result"
+    },
+    {
+     "cells": "S18",
+     "name": "BatchElapsedTicks",
+     "role": "result"
+    },
+    {
+     "cells": "S19",
+     "name": "PublicationGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S31",
+     "name": "ReflashIdentity",
+     "role": "metadata",
+     "description": "same-image reflash marker holding the service identity"
+    }
+   ]
+  },
+  "ic10.stack.material-transfer-grant-guard.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "LastConsumedEpoch",
+     "role": "epoch"
+    },
+    {
+     "cells": "S9",
+     "name": "GrantedQuantity",
+     "role": "result"
+    },
+    {
+     "cells": "S10",
+     "name": "ActiveEpoch",
+     "role": "epoch"
+    },
+    {
+     "cells": "S11",
+     "name": "Status",
+     "role": "state",
+     "description": "1 active, 0 no active grant, -1 invalid or consumed"
+    },
+    {
+     "cells": "S12",
+     "name": "MaterialLinkRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S13",
+     "name": "PublicationGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S16",
+     "name": "StagedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "StagedEpoch",
+     "role": "epoch",
+     "description": "written after the staged identity payload"
+    },
+    {
+     "cells": "S18",
+     "name": "AllocatorRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S19",
+     "name": "StagedSourceReservationRef",
+     "role": "request"
+    },
+    {
+     "cells": "S20",
+     "name": "StagedSinkReservationRef",
+     "role": "request"
+    },
+    {
+     "cells": "S21",
+     "name": "StagedResourceType",
+     "role": "request"
+    },
+    {
+     "cells": "S22",
+     "name": "StagedFeederRef",
+     "role": "request"
+    },
+    {
+     "cells": "S23",
+     "name": "StagedSorterRef",
+     "role": "request"
+    },
+    {
+     "cells": "S24",
+     "name": "StagedSinkProviderRef",
+     "role": "request"
+    },
+    {
+     "cells": "S25",
+     "name": "StagedLinkRef",
+     "role": "request"
+    },
+    {
+     "cells": "S26",
+     "name": "StagedExecutorRef",
+     "role": "request"
+    },
+    {
+     "cells": "S31",
+     "name": "ReflashIdentity",
+     "role": "metadata",
+     "description": "same-image reflash marker holding the service identity"
+    }
+   ]
+  },
+  "ic10.stack.material-transform-admission.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S9",
+     "name": "PublicationGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S10",
+     "name": "OutputResourceType",
+     "role": "result"
+    },
+    {
+     "cells": "S11",
+     "name": "OutputUnit",
+     "role": "result"
+    },
+    {
+     "cells": "S12",
+     "name": "ProcessorCapabilityMask",
+     "role": "result"
+    },
+    {
+     "cells": "S13",
+     "name": "TransformViewRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S14",
+     "name": "TransformType",
+     "role": "result"
+    },
+    {
+     "cells": "S15",
+     "name": "ProcessorRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S16",
+     "name": "InputCount",
+     "role": "result"
+    },
+    {
+     "cells": "S17",
+     "name": "OutputQuantity",
+     "role": "result"
+    },
+    {
+     "cells": "S18",
+     "name": "OutputReservationRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S19",
+     "name": "ProfileGeneration",
+     "role": "generation",
+     "description": "stable Transform Profile generation the admission rests on"
+    }
+   ]
+  },
+  "ic10.stack.medium-purity-guard.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "MediumType",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "ObservedRatio",
+     "role": "result"
+    },
+    {
+     "cells": "S10",
+     "name": "RequiredPurity",
+     "role": "result"
+    },
+    {
+     "cells": "S11",
+     "name": "Status",
+     "role": "state",
+     "description": "1 good, -1 profile, -2 sensor, -3 numeric, -4 contaminated"
+    },
+    {
+     "cells": "S12",
+     "name": "ProfileGenerationUsed",
+     "role": "generation"
+    },
+    {
+     "cells": "S13",
+     "name": "PublicationGeneration",
+     "role": "generation",
+     "description": "written last"
+    }
+   ]
+  },
+  "ic10.stack.multi-material-reservation-allocator.v2": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "BatchCount",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "EpochCounter",
+     "role": "epoch",
+     "description": "next epoch"
+    },
+    {
+     "cells": "S14",
+     "name": "CommittedEpoch",
+     "role": "epoch",
+     "description": "written last after every input stages"
+    },
+    {
+     "cells": "S15",
+     "name": "CompletedEpoch",
+     "role": "epoch"
+    },
+    {
+     "cells": "S16",
+     "name": "ConsumedRequestGeneration",
+     "role": "current_token"
+    },
+    {
+     "cells": "S17..S19",
+     "name": "StagerCoordination",
+     "role": "request",
+     "description": "commands and results exchanged with the Stager"
+    },
+    {
+     "cells": "S20",
+     "name": "RuntimeRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S21",
+     "name": "RequestGeneration",
+     "role": "request_token"
+    },
+    {
+     "cells": "S22",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S31",
+     "name": "ReflashIdentity",
+     "role": "metadata",
+     "description": "same-image reflash marker holding the service identity"
+    }
+   ]
+  },
+  "ic10.stack.operator-order-job-ingress.v1": {
+   "layout": [
+    {
+     "cells": "S15",
+     "name": "FamilyHash",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "FamilyOrdinal",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "RequestedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "Priority",
+     "role": "request"
+    },
+    {
+     "cells": "S19",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S20",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S21",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S22",
+     "name": "AllocatedJobId",
+     "role": "result"
+    },
+    {
+     "cells": "S23",
+     "name": "AllocatedSlot",
+     "role": "result"
+    },
+    {
+     "cells": "S30",
+     "name": "PendingGatewayToken",
+     "role": "request_token",
+     "description": "lane F token in flight, kept across reflash"
+    },
+    {
+     "cells": "S31",
+     "name": "PendingClientToken",
+     "role": "current_token"
+    }
+   ]
+  },
+  "ic10.stack.operator-order-recipe-view.v1": {
+   "layout": [
+    {
+     "cells": "S15",
+     "name": "FamilyHash",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "FamilyOrdinal",
+     "role": "request"
+    },
+    {
+     "cells": "S19",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S20",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S21",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S22",
+     "name": "RecipeHash",
+     "role": "result"
+    },
+    {
+     "cells": "S23",
+     "name": "RequiredCapability",
+     "role": "result"
+    },
+    {
+     "cells": "S24",
+     "name": "InputCount",
+     "role": "result"
+    }
+   ]
+  },
+  "ic10.stack.phase-pressure-request-arbiter.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "AggregateRequestedPressure",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "ContributingRequestCount",
+     "role": "result"
+    },
+    {
+     "cells": "S10",
+     "name": "ResultStatus",
+     "role": "state",
+     "description": "0 none, 1 LOW, 2 HIGH, -3 directory invalid, -9 context invalid"
+    },
+    {
+     "cells": "S11",
+     "name": "DirectoryGenerationUsed",
+     "role": "generation"
+    },
+    {
+     "cells": "S12",
+     "name": "ResultGeneration",
+     "role": "generation",
+     "description": "payload is written before it"
+    },
+    {
+     "cells": "S13",
+     "name": "HandledHostGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S14",
+     "name": "HandledMediumType",
+     "role": "result"
+    },
+    {
+     "cells": "S15",
+     "name": "ContextEnabled",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "ContextRole",
+     "role": "request",
+     "description": "1 LOW/EVAP, 2 HIGH/CONDENSE"
+    },
+    {
+     "cells": "S17",
+     "name": "ContextMediumType",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "ContextHostGeneration",
+     "role": "request"
+    }
+   ]
+  },
+  "ic10.stack.power-dispatch-plan-store.v1": {
+   "layout": [
+    {
+     "cells": "S10",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S11",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S12",
+     "name": "Command",
+     "role": "request",
+     "description": "1 BEGIN, 2 ADD, 3 COMMIT"
+    },
+    {
+     "cells": "S13",
+     "name": "Status",
+     "role": "state",
+     "description": "1 done, -2 full, -1 invalid"
+    },
+    {
+     "cells": "S14",
+     "name": "RequestedPlanGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "RequestedPlanStatus",
+     "role": "request"
+    },
+    {
+     "cells": "S16..S23",
+     "name": "StagedFlow",
+     "role": "request",
+     "description": "LinkRef, SourceReservationRef, SinkReservationRef, SinkWatts, SourceWatts, SourceGeneration, SinkGeneration, RouteClass"
+    },
+    {
+     "cells": "S24",
+     "name": "StagedFlowCount",
+     "role": "state"
+    },
+    {
+     "cells": "S27",
+     "name": "PublicationSequence",
+     "role": "generation",
+     "description": "odd during COMMIT, even when stable"
+    },
+    {
+     "cells": "S28",
+     "name": "CommitCount",
+     "role": "generation"
+    },
+    {
+     "cells": "S29",
+     "name": "FlowCount",
+     "role": "result",
+     "description": "0..8 committed flows"
+    },
+    {
+     "cells": "S30",
+     "name": "PlanGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S31",
+     "name": "PlanStatus",
+     "role": "state"
+    },
+    {
+     "cells": "S32..S95",
+     "name": "CommittedFlows",
+     "role": "table",
+     "description": "8 x 8 flow records"
+    },
+    {
+     "cells": "S128..S191",
+     "name": "StagedFlows",
+     "role": "table",
+     "description": "8 x 8 flow records staged before COMMIT"
+    }
+   ]
+  },
+  "ic10.stack.pressure-domain-inventory.v2": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "MolesPerLiter",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "TotalMoles",
+     "role": "result"
+    },
+    {
+     "cells": "S10",
+     "name": "Pressure",
+     "role": "result",
+     "description": "kPa"
+    },
+    {
+     "cells": "S11",
+     "name": "Status",
+     "role": "state",
+     "description": "1 ready, negative fault"
+    },
+    {
+     "cells": "S12",
+     "name": "PublicationGeneration",
+     "role": "generation",
+     "description": "written last"
+    },
+    {
+     "cells": "S13",
+     "name": "PressureDomainRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S14",
+     "name": "Role",
+     "role": "metadata",
+     "description": "1 LOW, 2 HIGH, 3 STORAGE"
+    },
+    {
+     "cells": "S15",
+     "name": "MediumType",
+     "role": "metadata"
+    },
+    {
+     "cells": "S16",
+     "name": "ExportableMoles",
+     "role": "result"
+    },
+    {
+     "cells": "S17",
+     "name": "ImportCapacityMoles",
+     "role": "result"
+    },
+    {
+     "cells": "S18",
+     "name": "MolesPerKPa",
+     "role": "result"
+    }
+   ]
+  },
+  "ic10.stack.pressure-grid-cost-profile.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "HopWeight",
+     "role": "metadata"
+    },
+    {
+     "cells": "S9",
+     "name": "StorageWeight",
+     "role": "metadata"
+    },
+    {
+     "cells": "S10",
+     "name": "LiftWeightPerKPa",
+     "role": "metadata"
+    },
+    {
+     "cells": "S11",
+     "name": "FlowScarcityWeight",
+     "role": "metadata"
+    },
+    {
+     "cells": "S12",
+     "name": "CandidateBudget",
+     "role": "metadata"
+    }
+   ]
+  },
+  "ic10.stack.pressure-grid-path-allocator.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "Result",
+     "role": "state",
+     "description": "1 path staged, 0 no path or admission, -1 dependency fault"
+    },
+    {
+     "cells": "S9",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S10",
+     "name": "StagedLinkCount",
+     "role": "result"
+    },
+    {
+     "cells": "S11",
+     "name": "PathRate",
+     "role": "result",
+     "description": "exact common path mol/tick"
+    },
+    {
+     "cells": "S14",
+     "name": "PlannerRef",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "BuildEpoch",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "MediumType",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "LeaseTicks",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S19",
+     "name": "ReservedMoles",
+     "role": "result",
+     "description": "end-to-end reserved moles at the exact path rate"
+    }
+   ]
+  },
+  "ic10.stack.pressure-grid-path-enumerator.v2": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "PathBottleneckRate",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "Status",
+     "role": "state",
+     "description": "1 candidate, 0 none, -1 fault"
+    },
+    {
+     "cells": "S10",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S11",
+     "name": "ActiveSearchId",
+     "role": "result"
+    },
+    {
+     "cells": "S16",
+     "name": "Hop1TransferRef",
+     "role": "result"
+    },
+    {
+     "cells": "S17",
+     "name": "Hop2TransferRef",
+     "role": "result"
+    },
+    {
+     "cells": "S18",
+     "name": "Hop3TransferRef",
+     "role": "result"
+    },
+    {
+     "cells": "S24",
+     "name": "ResumeKey",
+     "role": "state",
+     "description": "the search the enumerator may resume; ended on a fault"
+    },
+    {
+     "cells": "S32",
+     "name": "PlannerRef",
+     "role": "request"
+    },
+    {
+     "cells": "S33",
+     "name": "BuildEpoch",
+     "role": "request"
+    },
+    {
+     "cells": "S34",
+     "name": "MediumType",
+     "role": "request"
+    },
+    {
+     "cells": "S35",
+     "name": "SearchId",
+     "role": "request"
+    },
+    {
+     "cells": "S36",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S37",
+     "name": "PathLength",
+     "role": "result",
+     "description": "2 or 3; 0 when enumeration is exhausted"
+    }
+   ]
+  },
+  "ic10.stack.pressure-grid-plan-builder.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "ReservedMolesSummary",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S10",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S13",
+     "name": "AcceptedRequestToken",
+     "role": "current_token",
+     "description": "request in flight, kept across reflash"
+    },
+    {
+     "cells": "S14",
+     "name": "PlannerRef",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "BuildEpoch",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "MediumType",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "LeaseTicks",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S19",
+     "name": "StagedLinkCount",
+     "role": "result"
+    }
+   ]
+  },
+  "ic10.stack.pressure-grid-reservation-planner.v2": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "StagedLinkCount",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "ReservedMolesSummary",
+     "role": "result"
+    },
+    {
+     "cells": "S10",
+     "name": "Status",
+     "role": "state",
+     "description": "1 grants, 0 no grants, negative fault"
+    },
+    {
+     "cells": "S11",
+     "name": "LeaseTicks",
+     "role": "result"
+    },
+    {
+     "cells": "S12",
+     "name": "MediumType",
+     "role": "result"
+    },
+    {
+     "cells": "S13",
+     "name": "BuildGenerationCounter",
+     "role": "generation"
+    },
+    {
+     "cells": "S14",
+     "name": "CommittedReservationEpoch",
+     "role": "epoch",
+     "description": "written last on a successful build only"
+    },
+    {
+     "cells": "S15",
+     "name": "PlanBuilderRequestGeneration",
+     "role": "request_token"
+    }
+   ]
+  },
+  "ic10.stack.pressure-grid-route-ranker.v2": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S9",
+     "name": "Status",
+     "role": "state",
+     "description": "1 accepted, -1 invalid"
+    },
+    {
+     "cells": "S10",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S11",
+     "name": "LeaseTicks",
+     "role": "request"
+    },
+    {
+     "cells": "S16..S18",
+     "name": "BestTransferRefs",
+     "role": "result"
+    },
+    {
+     "cells": "S19",
+     "name": "BestPathLength",
+     "role": "result"
+    },
+    {
+     "cells": "S20",
+     "name": "BestAdmissibleBottleneck",
+     "role": "result"
+    },
+    {
+     "cells": "S21",
+     "name": "BestCost",
+     "role": "result"
+    },
+    {
+     "cells": "S22",
+     "name": "ActiveSearchId",
+     "role": "result"
+    },
+    {
+     "cells": "S23",
+     "name": "CandidatesEvaluated",
+     "role": "result"
+    },
+    {
+     "cells": "S24",
+     "name": "CandidateBudget",
+     "role": "result"
+    },
+    {
+     "cells": "S25",
+     "name": "LiftAccumulator",
+     "role": "state",
+     "description": "scratch; not a public contract"
+    },
+    {
+     "cells": "S32",
+     "name": "SearchId",
+     "role": "request"
+    },
+    {
+     "cells": "S33",
+     "name": "PathLength",
+     "role": "request"
+    },
+    {
+     "cells": "S34",
+     "name": "CandidateBottleneck",
+     "role": "request"
+    },
+    {
+     "cells": "S35..S37",
+     "name": "TransferRefs",
+     "role": "request"
+    }
+   ]
+  },
+  "ic10.stack.pressure-grid-route-selector.v2": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "SelectedBottleneck",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "Status",
+     "role": "state",
+     "description": "1 route, 0 none, -1 fault"
+    },
+    {
+     "cells": "S10",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S11",
+     "name": "SelectedRouteCost",
+     "role": "result"
+    },
+    {
+     "cells": "S12",
+     "name": "SearchIdCounter",
+     "role": "generation"
+    },
+    {
+     "cells": "S16..S18",
+     "name": "SelectedTransferRefs",
+     "role": "result"
+    },
+    {
+     "cells": "S20",
+     "name": "SearchActive",
+     "role": "state"
+    },
+    {
+     "cells": "S32",
+     "name": "PlannerRef",
+     "role": "request"
+    },
+    {
+     "cells": "S33",
+     "name": "BuildEpoch",
+     "role": "request"
+    },
+    {
+     "cells": "S34",
+     "name": "MediumType",
+     "role": "request"
+    },
+    {
+     "cells": "S35",
+     "name": "LeaseTicks",
+     "role": "request"
+    },
+    {
+     "cells": "S36",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S37",
+     "name": "SelectedPathLength",
+     "role": "result"
+    }
+   ]
+  },
+  "ic10.stack.pressure-grid-singlehop-builder.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "GrantedLinkCount",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "HopReservedMoles",
+     "role": "result"
+    },
+    {
+     "cells": "S10",
+     "name": "Status",
+     "role": "state",
+     "description": "1 grants, 0 none, negative fault"
+    },
+    {
+     "cells": "S11",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S13",
+     "name": "AcceptedRequestToken",
+     "role": "current_token",
+     "description": "request in flight, kept across reflash"
+    },
+    {
+     "cells": "S14",
+     "name": "PlannerRef",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "BuildEpoch",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "MediumType",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "Mode",
+     "role": "request",
+     "description": "2 direct, 1 fallback"
+    },
+    {
+     "cells": "S18",
+     "name": "RequestToken",
+     "role": "request_token"
+    }
+   ]
+  },
+  "ic10.stack.pressure-inventory-reservation.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "MolesPerKPa",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "MolesPerLiter",
+     "role": "result"
+    },
+    {
+     "cells": "S10",
+     "name": "MirroredInventoryStatus",
+     "role": "state"
+    },
+    {
+     "cells": "S11",
+     "name": "MirrorGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S12",
+     "name": "ReservedExportMoles",
+     "role": "result",
+     "description": "Allocator-owned"
+    },
+    {
+     "cells": "S13",
+     "name": "ReservedImportMoles",
+     "role": "result",
+     "description": "Allocator-owned"
+    },
+    {
+     "cells": "S14",
+     "name": "BuildEpoch",
+     "role": "epoch",
+     "description": "Allocator-owned"
+    },
+    {
+     "cells": "S15",
+     "name": "OwningPlannerRef",
+     "role": "topology",
+     "description": "Allocator-owned"
+    },
+    {
+     "cells": "S16",
+     "name": "InventoryRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S17",
+     "name": "PressureDomainRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S18",
+     "name": "Role",
+     "role": "metadata",
+     "description": "1 LOW, 2 HIGH, 3 STORAGE"
+    },
+    {
+     "cells": "S19",
+     "name": "MediumType",
+     "role": "metadata"
+    },
+    {
+     "cells": "S20",
+     "name": "ExportableMoles",
+     "role": "result"
+    },
+    {
+     "cells": "S21",
+     "name": "ImportCapacityMoles",
+     "role": "result"
+    }
+   ]
+  },
+  "ic10.stack.pressure-reservation-allocator.v3": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "Result",
+     "role": "state",
+     "description": "1 admissible or granted, 0 no grant, -1 rejected"
+    },
+    {
+     "cells": "S9",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S10",
+     "name": "Mode",
+     "role": "request",
+     "description": "1 fallback, 2 direct, 3 path hop"
+    },
+    {
+     "cells": "S11",
+     "name": "MaxRequestedRate",
+     "role": "request",
+     "description": "mol/tick"
+    },
+    {
+     "cells": "S12",
+     "name": "AdmissibleRate",
+     "role": "result",
+     "description": "mol/tick"
+    },
+    {
+     "cells": "S13",
+     "name": "PlannerRef",
+     "role": "request"
+    },
+    {
+     "cells": "S14",
+     "name": "BuildEpoch",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "MediumType",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "Operation",
+     "role": "request",
+     "description": "1 QUOTE, 0 COMMIT"
+    },
+    {
+     "cells": "S17",
+     "name": "TransferRef",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S19",
+     "name": "CommittedLeaseMoles",
+     "role": "result",
+     "description": "0 for QUOTE"
+    }
+   ]
+  },
+  "ic10.stack.pressure-transfer-grant-guard.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "ActiveGrantRate",
+     "role": "result",
+     "description": "GrantMolesPerTick"
+    },
+    {
+     "cells": "S9",
+     "name": "PublicationCounter",
+     "role": "generation",
+     "description": "source of the publication generation"
+    },
+    {
+     "cells": "S10",
+     "name": "ActiveSourceReservationRef",
+     "role": "result"
+    },
+    {
+     "cells": "S11",
+     "name": "ActiveSinkReservationRef",
+     "role": "result"
+    },
+    {
+     "cells": "S12",
+     "name": "ActiveMediumType",
+     "role": "result"
+    },
+    {
+     "cells": "S13",
+     "name": "ActiveRouteKind",
+     "role": "result"
+    },
+    {
+     "cells": "S14",
+     "name": "RemainingLeaseTicks",
+     "role": "result"
+    },
+    {
+     "cells": "S15",
+     "name": "Status",
+     "role": "state",
+     "description": "1 active, 0 off, -1 fault"
+    },
+    {
+     "cells": "S16",
+     "name": "ConsumedPlannerEpoch",
+     "role": "epoch"
+    },
+    {
+     "cells": "S17",
+     "name": "TransferRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S18",
+     "name": "PublicationGeneration",
+     "role": "generation",
+     "description": "written last"
+    }
+   ]
+  },
+  "ic10.stack.process-condition.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "UnmetConditionMask",
+     "role": "result",
+     "description": "bit0 pressure, bit1 temperature"
+    },
+    {
+     "cells": "S9",
+     "name": "ProcessIdentity",
+     "role": "metadata"
+    },
+    {
+     "cells": "S10",
+     "name": "Active",
+     "role": "state",
+     "description": "1 demand is live"
+    },
+    {
+     "cells": "S11",
+     "name": "PublicationGeneration",
+     "role": "generation",
+     "description": "written last"
+    },
+    {
+     "cells": "S12",
+     "name": "Status",
+     "role": "state",
+     "description": "1 valid, negative invalid"
+    },
+    {
+     "cells": "S13",
+     "name": "Strategy",
+     "role": "metadata"
+    },
+    {
+     "cells": "S14",
+     "name": "PressureTargetHint",
+     "role": "result"
+    },
+    {
+     "cells": "S15",
+     "name": "TemperatureTargetHint",
+     "role": "result"
+    },
+    {
+     "cells": "S22",
+     "name": "TargetRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S23",
+     "name": "FluidResourceType",
+     "role": "metadata"
+    },
+    {
+     "cells": "S24",
+     "name": "MinimumPressure",
+     "role": "result",
+     "description": "kPa"
+    },
+    {
+     "cells": "S25",
+     "name": "MaximumPressure",
+     "role": "result",
+     "description": "kPa; non-positive means unbounded"
+    },
+    {
+     "cells": "S26",
+     "name": "MinimumTemperature",
+     "role": "result",
+     "description": "K"
+    },
+    {
+     "cells": "S27",
+     "name": "MaximumTemperature",
+     "role": "result",
+     "description": "K; non-positive means unbounded"
+    }
+   ]
+  },
+  "ic10.stack.recipe-catalog-lookup.v3": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "Status",
+     "role": "state",
+     "description": "1 found, -1 invalid, -2 catalog invalid, -3 missing"
+    },
+    {
+     "cells": "S9",
+     "name": "EligibleRecipeCount",
+     "role": "result",
+     "description": "recipes in the family under the capability ceiling"
+    },
+    {
+     "cells": "S10",
+     "name": "RecipeHash",
+     "role": "result"
+    },
+    {
+     "cells": "S11",
+     "name": "RequiredCapability",
+     "role": "result"
+    },
+    {
+     "cells": "S12",
+     "name": "FamilyHash",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "CapabilityCeiling",
+     "role": "request"
+    },
+    {
+     "cells": "S14",
+     "name": "FamilyOrdinal",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S16",
+     "name": "ResponseToken",
+     "role": "response_token"
+    }
+   ]
+  },
+  "ic10.stack.recipe-execution-profile-view.v1": {
+   "layout": [
+    {
+     "cells": "S10",
+     "name": "RecipeHash",
+     "role": "request",
+     "description": "written by the consumer"
+    },
+    {
+     "cells": "S11",
+     "name": "FamilyHash",
+     "role": "result"
+    },
+    {
+     "cells": "S12",
+     "name": "RequiredCapability",
+     "role": "result"
+    },
+    {
+     "cells": "S13",
+     "name": "InputCount",
+     "role": "result"
+    },
+    {
+     "cells": "S14",
+     "name": "StoreGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S15",
+     "name": "Status",
+     "role": "state",
+     "description": "1 ready, -2 invalid catalog, -3 missing"
+    },
+    {
+     "cells": "S16..S47",
+     "name": "ReagentPairs",
+     "role": "table",
+     "description": "[ManufacturingReagentHash, Quantity] x 16"
+    },
+    {
+     "cells": "S48",
+     "name": "TopologyGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S49",
+     "name": "RecipeHashEcho",
+     "role": "response_token",
+     "description": "the request the result answers"
+    }
+   ]
+  },
+  "ic10.stack.resource-endpoint.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S9",
+     "name": "NativeProviderRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S10",
+     "name": "NativeGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S11",
+     "name": "PublicationGeneration",
+     "role": "generation",
+     "description": "payload first, generation last"
+    },
+    {
+     "cells": "S12",
+     "name": "Unit",
+     "role": "metadata",
+     "description": "1 mole, 2 item quantity, 3 reagent, 4 watt, 5 joule"
+    },
+    {
+     "cells": "S13",
+     "name": "PrecisionFlags",
+     "role": "metadata",
+     "description": "exact export 1, exact import 2, exact rate 4"
+    },
+    {
+     "cells": "S14",
+     "name": "ResourceProfileViewRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S35",
+     "name": "AccessKind",
+     "role": "metadata",
+     "description": "ITEM storage access kind; POWER node kind"
+    },
+    {
+     "cells": "S36",
+     "name": "PolicyFlags",
+     "role": "metadata"
+    },
+    {
+     "cells": "S37",
+     "name": "ReserveFloor",
+     "role": "metadata"
+    },
+    {
+     "cells": "S38",
+     "name": "ActionHint0",
+     "role": "result",
+     "description": "ITEM FirstSourceSlot; POWER DomainId"
+    },
+    {
+     "cells": "S39",
+     "name": "ActionHint1",
+     "role": "result",
+     "description": "ITEM FirstSourceQuantity; POWER PolicyId"
+    },
+    {
+     "cells": "S40",
+     "name": "ActionHint2",
+     "role": "result",
+     "description": "ITEM FirstEmptySlot; POWER priority and flags"
+    },
+    {
+     "cells": "S52",
+     "name": "ResourceClass",
+     "role": "metadata"
+    },
+    {
+     "cells": "S53",
+     "name": "ResourceType",
+     "role": "metadata"
+    },
+    {
+     "cells": "S54",
+     "name": "RoleBits",
+     "role": "metadata",
+     "description": "export 1, import 2, storage 4"
+    },
+    {
+     "cells": "S55",
+     "name": "ExportAvailable",
+     "role": "result"
+    },
+    {
+     "cells": "S56",
+     "name": "ImportCapacity",
+     "role": "result"
+    },
+    {
+     "cells": "S57",
+     "name": "MaxRate",
+     "role": "result",
+     "description": "0 means unknown at the endpoint layer"
+    }
+   ]
+  },
+  "ic10.stack.resource-link.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "CostHint",
+     "role": "result",
+     "description": "normalized; 0 when unavailable"
+    },
+    {
+     "cells": "S9",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S10",
+     "name": "NativeLinkRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S11",
+     "name": "NativeLinkGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S12",
+     "name": "PublicationGeneration",
+     "role": "generation",
+     "description": "written last"
+    },
+    {
+     "cells": "S13",
+     "name": "LinkFlags",
+     "role": "metadata"
+    },
+    {
+     "cells": "S14..S27",
+     "name": "ClassExtension",
+     "role": "result",
+     "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
+    },
+    {
+     "cells": "S28",
+     "name": "SourceReservationRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S29",
+     "name": "SinkReservationRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S30",
+     "name": "ResourceClass",
+     "role": "metadata"
+    },
+    {
+     "cells": "S31",
+     "name": "ResourceType",
+     "role": "metadata"
+    },
+    {
+     "cells": "S32",
+     "name": "NativeRouteClass",
+     "role": "metadata"
+    },
+    {
+     "cells": "S33",
+     "name": "MaxRate",
+     "role": "result",
+     "description": "resource units per tick"
+    }
+   ]
+  },
+  "ic10.stack.resource-profile-view.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "ResourceClass",
+     "role": "metadata"
+    },
+    {
+     "cells": "S9",
+     "name": "ResourceType",
+     "role": "metadata"
+    },
+    {
+     "cells": "S10",
+     "name": "Unit",
+     "role": "metadata"
+    },
+    {
+     "cells": "S11",
+     "name": "ProfileKind",
+     "role": "metadata",
+     "description": "1 PHASE_MEDIUM, 2 ITEM_STACK"
+    },
+    {
+     "cells": "S12",
+     "name": "ProfileSchema",
+     "role": "schema"
+    },
+    {
+     "cells": "S13..S21",
+     "name": "ProfileValues",
+     "role": "result",
+     "description": "kind-specific: PHASE_MEDIUM coefficients and pressure/temperature bounds; ITEM_STACK maximum stack quantity and slot class"
+    },
+    {
+     "cells": "S22",
+     "name": "CatalogInstanceId",
+     "role": "metadata"
+    },
+    {
+     "cells": "S23",
+     "name": "TopologyGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S26",
+     "name": "RequestedResourceClass",
+     "role": "request"
+    },
+    {
+     "cells": "S27",
+     "name": "RequestedResourceType",
+     "role": "request"
+    },
+    {
+     "cells": "S28",
+     "name": "Status",
+     "role": "state",
+     "description": "1 found, -2 catalog invalid, -3 missing"
+    },
+    {
+     "cells": "S29",
+     "name": "PublicationGeneration",
+     "role": "generation",
+     "description": "positive only after a complete resolution"
+    }
+   ]
+  },
+  "ic10.stack.resource-reservation.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "MaxRate",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "EndpointStatus",
+     "role": "state"
+    },
+    {
+     "cells": "S10",
+     "name": "Unit",
+     "role": "metadata"
+    },
+    {
+     "cells": "S11",
+     "name": "PrecisionFlags",
+     "role": "metadata"
+    },
+    {
+     "cells": "S12",
+     "name": "MirrorGeneration",
+     "role": "generation",
+     "description": "semantic mirror generation, written last"
+    },
+    {
+     "cells": "S13",
+     "name": "BuildEpoch",
+     "role": "epoch",
+     "description": "allocator-owned"
+    },
+    {
+     "cells": "S14",
+     "name": "ReservedExport",
+     "role": "result",
+     "description": "allocator-owned"
+    },
+    {
+     "cells": "S15",
+     "name": "ReservedImport",
+     "role": "result",
+     "description": "allocator-owned"
+    },
+    {
+     "cells": "S16",
+     "name": "DirectionLock",
+     "role": "state",
+     "description": "1 export, 2 import"
+    },
+    {
+     "cells": "S17",
+     "name": "OwnerReferenceId",
+     "role": "topology"
+    },
+    {
+     "cells": "S18",
+     "name": "OwnerEpoch",
+     "role": "epoch"
+    },
+    {
+     "cells": "S19",
+     "name": "ReservedSemanticMirrorGeneration",
+     "role": "generation",
+     "description": "mirror generation captured by committed ownership"
+    },
+    {
+     "cells": "S20",
+     "name": "EndpointPublicationGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S21",
+     "name": "MirroredAccessKind",
+     "role": "metadata"
+    },
+    {
+     "cells": "S22",
+     "name": "MirroredActionHint0",
+     "role": "result"
+    },
+    {
+     "cells": "S23",
+     "name": "MirroredActionHint1",
+     "role": "result"
+    },
+    {
+     "cells": "S24",
+     "name": "MirroredActionHint2",
+     "role": "result"
+    },
+    {
+     "cells": "S25",
+     "name": "CommittedSourceSlot",
+     "role": "result"
+    },
+    {
+     "cells": "S26",
+     "name": "CommittedActionQuantity",
+     "role": "result"
+    },
+    {
+     "cells": "S27",
+     "name": "CommittedDestinationSlot",
+     "role": "result"
+    },
+    {
+     "cells": "S28",
+     "name": "EndpointAccessKind",
+     "role": "result",
+     "description": "raw snapshot of Endpoint S35 taken on each refresh"
+    },
+    {
+     "cells": "S29",
+     "name": "EndpointActionHint0",
+     "role": "result",
+     "description": "raw snapshot of Endpoint S38"
+    },
+    {
+     "cells": "S30",
+     "name": "EndpointActionHint1",
+     "role": "result",
+     "description": "raw snapshot of Endpoint S39"
+    },
+    {
+     "cells": "S31",
+     "name": "EndpointActionHint2",
+     "role": "result",
+     "description": "raw snapshot of Endpoint S40"
+    },
+    {
+     "cells": "S32",
+     "name": "EndpointRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S33",
+     "name": "ResourceClass",
+     "role": "metadata"
+    },
+    {
+     "cells": "S34",
+     "name": "ResourceType",
+     "role": "metadata"
+    },
+    {
+     "cells": "S35",
+     "name": "RoleBits",
+     "role": "metadata"
+    },
+    {
+     "cells": "S36",
+     "name": "ExportAvailable",
+     "role": "result"
+    },
+    {
+     "cells": "S37",
+     "name": "ImportCapacity",
+     "role": "result"
+    }
+   ]
+  },
+  "ic10.stack.resource-transform-profile-view.v4": {
+   "layout": [
+    {
+     "cells": "S8..S31",
+     "name": "InputDescriptors",
+     "role": "table",
+     "description": "up to six input descriptors, four cells each"
+    },
+    {
+     "cells": "S32..S63",
+     "name": "OutputDescriptors",
+     "role": "table",
+     "description": "up to eight output descriptors, four cells each"
+    },
+    {
+     "cells": "S64..S67",
+     "name": "ConditionBounds",
+     "role": "result",
+     "description": "pressure and temperature bounds"
+    },
+    {
+     "cells": "S68",
+     "name": "RequestEcho",
+     "role": "response_token",
+     "description": "the TransformType the published view answers"
+    },
+    {
+     "cells": "S69",
+     "name": "ResolveStatus",
+     "role": "state",
+     "description": "1 resolved"
+    },
+    {
+     "cells": "S70",
+     "name": "TransformTypeRequest",
+     "role": "request_token",
+     "description": "written by the consumer; the request and its identity"
+    },
+    {
+     "cells": "S71",
+     "name": "RequiredCapabilityMask",
+     "role": "result",
+     "description": "-2 and -3 publish resolution errors"
+    },
+    {
+     "cells": "S72",
+     "name": "InputCount",
+     "role": "result"
+    },
+    {
+     "cells": "S73",
+     "name": "OutputCount",
+     "role": "result"
+    },
+    {
+     "cells": "S74",
+     "name": "PublicationGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S75",
+     "name": "ConditionFlags",
+     "role": "result"
+    }
+   ]
+  },
+  "ic10.stack.stacker-feeder.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "ReadyEpoch",
+     "role": "epoch"
+    },
+    {
+     "cells": "S9",
+     "name": "EmittedEpoch",
+     "role": "epoch"
+    },
+    {
+     "cells": "S10",
+     "name": "PublicationGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S11",
+     "name": "SorterRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S12",
+     "name": "SourceRef",
+     "role": "topology",
+     "description": "Vending or SDB"
+    },
+    {
+     "cells": "S13",
+     "name": "StackerRef",
+     "role": "topology"
+    },
+    {
+     "cells": "S14",
+     "name": "BufferQuantity",
+     "role": "result"
+    },
+    {
+     "cells": "S15",
+     "name": "BufferResourceType",
+     "role": "result"
+    },
+    {
+     "cells": "S16",
+     "name": "RequestedResourceType",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "RequestedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "RequestEpoch",
+     "role": "request_token"
+    },
+    {
+     "cells": "S19",
+     "name": "ReleaseEpoch",
+     "role": "request",
+     "description": "Executor writes it only after the sink counter snapshot"
+    },
+    {
+     "cells": "S20..S23",
+     "name": "InternalState",
+     "role": "state",
+     "description": "persistent preparation state"
+    },
+    {
+     "cells": "S24",
+     "name": "Status",
+     "role": "state",
+     "description": "0 idle, 1 exact batch ready, 2 emitted, -1 fault"
+    },
+    {
+     "cells": "S25",
+     "name": "CurrentEpoch",
+     "role": "current_token",
+     "description": "LIVE_CURRENT identity, written last"
+    }
+   ]
+  },
+  "ic10.stack.stock-target-demand-view.v1": {
+   "layout": [
+    {
+     "cells": "S15",
+     "name": "ResourceType",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "TargetQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "Hysteresis",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "ProducerJobType",
+     "role": "request"
+    },
+    {
+     "cells": "S19",
+     "name": "ProducerIdentity",
+     "role": "request"
+    },
+    {
+     "cells": "S20",
+     "name": "OutputPerBatch",
+     "role": "request"
+    },
+    {
+     "cells": "S23",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S24",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S25",
+     "name": "Status",
+     "role": "state",
+     "description": "1 publish, 2 no need, 3 ambiguous, -1 invalid"
+    },
+    {
+     "cells": "S26",
+     "name": "RequestedBatches",
+     "role": "result"
+    },
+    {
+     "cells": "S27",
+     "name": "OnHandQuantity",
+     "role": "result"
+    },
+    {
+     "cells": "S28",
+     "name": "UnclaimedFutureQuantity",
+     "role": "result"
+    },
+    {
+     "cells": "S29",
+     "name": "QueueSequence",
+     "role": "generation",
+     "description": "even Job Store sequence the decision rests on"
+    },
+    {
+     "cells": "S30",
+     "name": "PlanSequence",
+     "role": "generation",
+     "description": "even Plan Store sequence the decision rests on"
+    }
+   ]
+  },
+  "ic10.stack.stock-target-future-view.v1": {
+   "layout": [
+    {
+     "cells": "S15",
+     "name": "ResourceType",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "ProducerJobType",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "ProducerIdentity",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "OutputPerBatch",
+     "role": "request"
+    },
+    {
+     "cells": "S19",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S20",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S21",
+     "name": "Status",
+     "role": "state",
+     "description": "1 coherent, -3 ambiguous, -1 invalid"
+    },
+    {
+     "cells": "S22",
+     "name": "UnclaimedFutureQuantity",
+     "role": "result"
+    },
+    {
+     "cells": "S23",
+     "name": "QueueSequence",
+     "role": "generation"
+    },
+    {
+     "cells": "S24",
+     "name": "PlanSequence",
+     "role": "generation"
+    },
+    {
+     "cells": "S25",
+     "name": "ClaimPostingCounter",
+     "role": "state",
+     "description": "postings under the current request, kept across reflash"
+    }
+   ]
+  },
+  "ic10.stack.stock-target-inventory-view.v1": {
+   "layout": [
+    {
+     "cells": "S15",
+     "name": "ResourceType",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "TargetQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S19",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S20",
+     "name": "Status",
+     "role": "state",
+     "description": "1 exact, 2 lower bound only, -3 overflow, -1 invalid"
+    },
+    {
+     "cells": "S21",
+     "name": "OnHandQuantity",
+     "role": "result"
+    },
+    {
+     "cells": "S22",
+     "name": "SelectorRequestCounter",
+     "role": "state",
+     "description": "source of the selector request tokens"
+    }
+   ]
+  },
+  "ic10.stack.stock-target-job-ingress.v1": {
+   "layout": [
+    {
+     "cells": "S15",
+     "name": "ResourceType",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "TargetQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "Hysteresis",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "ProducerJobType",
+     "role": "request"
+    },
+    {
+     "cells": "S19",
+     "name": "RequiredCapability",
+     "role": "request"
+    },
+    {
+     "cells": "S20",
+     "name": "ProducerIdentity",
+     "role": "request"
+    },
+    {
+     "cells": "S21",
+     "name": "InputCount",
+     "role": "request"
+    },
+    {
+     "cells": "S22",
+     "name": "OutputCount",
+     "role": "request"
+    },
+    {
+     "cells": "S24",
+     "name": "Priority",
+     "role": "request"
+    },
+    {
+     "cells": "S25",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S26",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S27",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S28",
+     "name": "AllocatedJobId",
+     "role": "result"
+    },
+    {
+     "cells": "S29",
+     "name": "AllocatedSlot",
+     "role": "result"
+    },
+    {
+     "cells": "S30",
+     "name": "PendingGatewayToken",
+     "role": "request_token",
+     "description": "lane E token in flight, kept across reflash"
+    },
+    {
+     "cells": "S31",
+     "name": "OutputPerBatch",
+     "role": "request"
+    },
+    {
+     "cells": "S32",
+     "name": "ExpectedConfigGeneration",
+     "role": "request",
+     "description": "Config Host effective generation the evaluation rests on"
+    }
+   ]
+  },
+  "ic10.stack.stock-target-producer-view.v1": {
+   "layout": [
+    {
+     "cells": "S15",
+     "name": "LaneAResourceType",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "LaneARequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S19",
+     "name": "LaneAResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S20",
+     "name": "LaneAStatus",
+     "role": "state"
+    },
+    {
+     "cells": "S21",
+     "name": "LaneAProducerJobType",
+     "role": "result"
+    },
+    {
+     "cells": "S22",
+     "name": "LaneARequiredCapability",
+     "role": "result"
+    },
+    {
+     "cells": "S23",
+     "name": "LaneAProducerIdentity",
+     "role": "result"
+    },
+    {
+     "cells": "S24",
+     "name": "LaneAInputCount",
+     "role": "result"
+    },
+    {
+     "cells": "S25",
+     "name": "LaneAOutputCount",
+     "role": "result"
+    },
+    {
+     "cells": "S26",
+     "name": "LaneAOutputPerBatch",
+     "role": "result"
+    },
+    {
+     "cells": "S32",
+     "name": "LaneBResourceType",
+     "role": "request"
+    },
+    {
+     "cells": "S33",
+     "name": "LaneBRequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S34",
+     "name": "LaneBResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S35",
+     "name": "LaneBStatus",
+     "role": "state"
+    },
+    {
+     "cells": "S36",
+     "name": "LaneBProducerJobType",
+     "role": "result"
+    },
+    {
+     "cells": "S37",
+     "name": "LaneBRequiredCapability",
+     "role": "result"
+    },
+    {
+     "cells": "S38",
+     "name": "LaneBProducerIdentity",
+     "role": "result"
+    },
+    {
+     "cells": "S39",
+     "name": "LaneBInputCount",
+     "role": "result"
+    },
+    {
+     "cells": "S40",
+     "name": "LaneBOutputCount",
+     "role": "result"
+    },
+    {
+     "cells": "S41",
+     "name": "LaneBOutputPerBatch",
+     "role": "result"
+    }
    ]
   }
  }

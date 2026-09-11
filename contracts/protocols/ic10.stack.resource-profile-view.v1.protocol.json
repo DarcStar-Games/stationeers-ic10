@@ -13,6 +13,96 @@
   "canonical_refs": [
     "data/resource_profiles.json#"
   ],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "ResourceClass",
+      "role": "metadata"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "ResourceType",
+      "role": "metadata"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "Unit",
+      "role": "metadata"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "ProfileKind",
+      "role": "metadata",
+      "description": "1 PHASE_MEDIUM, 2 ITEM_STACK"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "ProfileSchema",
+      "role": "schema"
+    },
+    {
+      "cells": "S13..S21",
+      "start": 13,
+      "end": 21,
+      "name": "ProfileValues",
+      "role": "result",
+      "description": "kind-specific: PHASE_MEDIUM coefficients and pressure/temperature bounds; ITEM_STACK maximum stack quantity and slot class"
+    },
+    {
+      "cells": "S22",
+      "start": 22,
+      "end": 22,
+      "name": "CatalogInstanceId",
+      "role": "metadata"
+    },
+    {
+      "cells": "S23",
+      "start": 23,
+      "end": 23,
+      "name": "TopologyGeneration",
+      "role": "generation"
+    },
+    {
+      "cells": "S26",
+      "start": 26,
+      "end": 26,
+      "name": "RequestedResourceClass",
+      "role": "request"
+    },
+    {
+      "cells": "S27",
+      "start": 27,
+      "end": 27,
+      "name": "RequestedResourceType",
+      "role": "request"
+    },
+    {
+      "cells": "S28",
+      "start": 28,
+      "end": 28,
+      "name": "Status",
+      "role": "state",
+      "description": "1 found, -2 catalog invalid, -3 missing"
+    },
+    {
+      "cells": "S29",
+      "start": 29,
+      "end": 29,
+      "name": "PublicationGeneration",
+      "role": "generation",
+      "description": "positive only after a complete resolution"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10",
@@ -57,75 +147,85 @@
         },
         {
           "address": 8,
-          "name": "S8",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResourceClass",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "metadata"
         },
         {
           "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResourceType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "metadata"
         },
         {
           "address": 22,
-          "name": "S22",
+          "name": "CatalogInstanceId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "metadata"
         },
         {
           "address": 23,
-          "name": "S23",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "TopologyGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "generation"
         },
         {
           "address": 26,
-          "name": "S26",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestedResourceClass",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 27,
-          "name": "S27",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestedResourceType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 28,
-          "name": "S28",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 found, -2 catalog invalid, -3 missing"
         },
         {
           "address": 29,
-          "name": "S29",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "PublicationGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "generation",
+          "description": "positive only after a complete resolution"
         }
       ],
       "behavior": {

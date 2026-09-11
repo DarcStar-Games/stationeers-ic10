@@ -365,242 +365,285 @@
       },
       {
         "address": 8,
-        "name": "S8",
+        "name": "CostHint",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 0,
+        "role": "result",
+        "description": "normalized; 0 when unavailable"
       },
       {
         "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Status",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 10,
-        "name": "S10",
+        "name": "NativeLinkRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "NativeLinkGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "generation"
       },
       {
         "address": 12,
-        "name": "S12",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "PublicationGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "generation",
+        "description": "written last"
       },
       {
         "address": 13,
-        "name": "S13",
+        "name": "LinkFlags",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 7
+        "const": 7,
+        "role": "metadata"
       },
       {
         "address": 14,
-        "name": "S14",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassExtension",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
       },
       {
         "address": 15,
-        "name": "S15",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassExtension",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
       },
       {
         "address": 16,
-        "name": "S16",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassExtension",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
       },
       {
         "address": 17,
-        "name": "S17",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassExtension",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
       },
       {
         "address": 18,
-        "name": "S18",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassExtension",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
       },
       {
         "address": 19,
-        "name": "S19",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassExtension",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
       },
       {
         "address": 20,
-        "name": "S20",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassExtension",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
       },
       {
         "address": 21,
-        "name": "S21",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassExtension",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
       },
       {
         "address": 22,
-        "name": "S22",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassExtension",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
       },
       {
         "address": 23,
-        "name": "S23",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassExtension",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
       },
       {
         "address": 24,
-        "name": "S24",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassExtension",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
       },
       {
         "address": 25,
-        "name": "S25",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassExtension",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
       },
       {
         "address": 26,
-        "name": "S26",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassExtension",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
       },
       {
         "address": 27,
-        "name": "S27",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassExtension",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
       },
       {
         "address": 28,
-        "name": "S28",
+        "name": "SourceReservationRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 29,
-        "name": "S29",
+        "name": "SinkReservationRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 30,
-        "name": "S30",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResourceClass",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 2
+        "const": 2,
+        "role": "metadata"
       },
       {
         "address": 31,
-        "name": "S31",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 32,
-        "name": "S32",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResourceType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 1826901828
+        "role": "metadata"
+      },
+      {
+        "address": 32,
+        "name": "NativeRouteClass",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-write"
+        ],
+        "const": 1826901828,
+        "role": "metadata"
       },
       {
         "address": 33,
-        "name": "S33",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "MaxRate",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "resource units per tick"
       }
     ],
     "headers": [

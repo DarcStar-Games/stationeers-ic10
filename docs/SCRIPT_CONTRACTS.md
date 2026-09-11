@@ -123,7 +123,16 @@ fallback surfaces for stack-envelope and migration planning.
 locations, consumer locations, and one generated definition path per protocol.
 Each document under `contracts/protocols/` carries typed provider fields,
 published/writable ranges, consumer reads/writes, dynamic ranges, constraints,
-and supplemental domain references. A base-0 protocol is identified by its
+supplemental domain references, and the protocol's reviewed `layout`: a name and a
+role for every payload cell a peer reads or writes, declared once per protocol in
+`data/script_contract_protocol_definitions.json` (issue #190). The generator copies
+the layout onto the provider's `own_stack.fields` as `semantic_source:
+"protocol-layout"` with a `role`; a reviewed per-program `stack_fields` override
+keeps its own name and gains the role. `validation/validators/validate_stack_field_map.py`
+holds every entry to cells its provider touches or declares, every peer-touched
+payload cell to an entry, every layout block in `docs/ABI_REFERENCE.md` that names its
+contract on an `S0` line to the map, and the generated `docs/STACK_FIELD_MAP.md`,
+which lists every role's cells across services, to the tree. A base-0 protocol is identified by its
 contract name, which already carries the ABI, so its document is named
 `contracts/protocols/ic10.stack.*.protocol.json`; the Generic Telemetry block at
 `S96` keeps the numeric `ic10.stack.<magic>.abi<n>` form because its consumers
@@ -301,8 +310,11 @@ override, regenerate and validate:
 
 ```bash
 python3 tools/generate/generate_script_contracts.py
+python3 tools/generate/generate_stack_field_map.py
 python3 validation/validators/validate_script_contracts.py
+python3 validation/validators/validate_stack_field_map.py
 python3 tests/test_script_contracts.py
+python3 tests/test_stack_field_map.py
 ```
 
 The full validation runner performs both checks. Release construction also
@@ -336,7 +348,12 @@ versioned filename.
    `ports.<pin>.requirement: "optional"`, or a commissioning plan fails on it.
 5. Declare each device port's canonical peer in `data/script_wiring.json`
    (`docs/SCRIPT_WIRING.md`).
-6. Regenerate contracts and run the full validation suite.
+6. Give every payload cell a peer will read or write a name and a role in the
+   protocol's `layout` in `data/script_contract_protocol_definitions.json`; the
+   role vocabulary is `framework/stack_field_map.py`. A consumed protocol without
+   a layout, or a layout block in `docs/ABI_REFERENCE.md` citing an unmapped cell,
+   fails `validation/validators/validate_stack_field_map.py`.
+7. Regenerate contracts and the field map, then run the full validation suite.
 
 This inventory is also the measured input for the common stack-envelope design
 in GitHub issue #29: it identifies existing header locations, occupied cells,

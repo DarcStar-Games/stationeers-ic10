@@ -11,6 +11,36 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "DiagnosticInputBridgeRef",
+      "role": "topology"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "ControllerSelectorRef",
+      "role": "topology"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "ConsoleSelectorRef",
+      "role": "topology"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "ObservedConsoleRequestGeneration",
+      "role": "generation"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/diagnostics/diagnostic_selector_bridge_v1_0.ic10",
@@ -50,40 +80,44 @@
         },
         {
           "address": 8,
-          "name": "S8",
+          "name": "DiagnosticInputBridgeRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "topology"
         },
         {
           "address": 9,
-          "name": "S9",
+          "name": "ControllerSelectorRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "topology"
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "ConsoleSelectorRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "topology"
         },
         {
           "address": 11,
-          "name": "S11",
+          "name": "ObservedConsoleRequestGeneration",
           "value_type": "integer",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "description": "last observed console-request generation"
+          "description": "last observed console-request generation",
+          "role": "generation"
         }
       ],
       "behavior": {

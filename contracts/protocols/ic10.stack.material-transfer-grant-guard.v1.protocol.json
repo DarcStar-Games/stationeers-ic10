@@ -11,6 +11,137 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "LastConsumedEpoch",
+      "role": "epoch"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "GrantedQuantity",
+      "role": "result"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "ActiveEpoch",
+      "role": "epoch"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "Status",
+      "role": "state",
+      "description": "1 active, 0 no active grant, -1 invalid or consumed"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "MaterialLinkRef",
+      "role": "topology"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "PublicationGeneration",
+      "role": "generation"
+    },
+    {
+      "cells": "S16",
+      "start": 16,
+      "end": 16,
+      "name": "StagedQuantity",
+      "role": "request"
+    },
+    {
+      "cells": "S17",
+      "start": 17,
+      "end": 17,
+      "name": "StagedEpoch",
+      "role": "epoch",
+      "description": "written after the staged identity payload"
+    },
+    {
+      "cells": "S18",
+      "start": 18,
+      "end": 18,
+      "name": "AllocatorRef",
+      "role": "topology"
+    },
+    {
+      "cells": "S19",
+      "start": 19,
+      "end": 19,
+      "name": "StagedSourceReservationRef",
+      "role": "request"
+    },
+    {
+      "cells": "S20",
+      "start": 20,
+      "end": 20,
+      "name": "StagedSinkReservationRef",
+      "role": "request"
+    },
+    {
+      "cells": "S21",
+      "start": 21,
+      "end": 21,
+      "name": "StagedResourceType",
+      "role": "request"
+    },
+    {
+      "cells": "S22",
+      "start": 22,
+      "end": 22,
+      "name": "StagedFeederRef",
+      "role": "request"
+    },
+    {
+      "cells": "S23",
+      "start": 23,
+      "end": 23,
+      "name": "StagedSorterRef",
+      "role": "request"
+    },
+    {
+      "cells": "S24",
+      "start": 24,
+      "end": 24,
+      "name": "StagedSinkProviderRef",
+      "role": "request"
+    },
+    {
+      "cells": "S25",
+      "start": 25,
+      "end": 25,
+      "name": "StagedLinkRef",
+      "role": "request"
+    },
+    {
+      "cells": "S26",
+      "start": 26,
+      "end": 26,
+      "name": "StagedExecutorRef",
+      "role": "request"
+    },
+    {
+      "cells": "S31",
+      "start": 31,
+      "end": 31,
+      "name": "ReflashIdentity",
+      "role": "metadata",
+      "description": "same-image reflash marker holding the service identity"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/material-grid/material_transfer_grant_guard_v1_0.ic10",
@@ -50,169 +181,190 @@
         },
         {
           "address": 8,
-          "name": "S8",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 17,
-          "name": "S17",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 18,
-          "name": "S18",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 19,
-          "name": "S19",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 22,
-          "name": "S22",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 23,
-          "name": "S23",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 26,
-          "name": "S26",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read"
-          ]
-        },
-        {
-          "address": 31,
-          "name": "S31",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LastConsumedEpoch",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
           ],
-          "const": 754423306
+          "role": "epoch"
+        },
+        {
+          "address": 9,
+          "name": "GrantedQuantity",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "result"
+        },
+        {
+          "address": 10,
+          "name": "ActiveEpoch",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "epoch"
+        },
+        {
+          "address": 11,
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "state",
+          "description": "1 active, 0 no active grant, -1 invalid or consumed"
+        },
+        {
+          "address": 12,
+          "name": "MaterialLinkRef",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "topology"
+        },
+        {
+          "address": 13,
+          "name": "PublicationGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "role": "generation"
+        },
+        {
+          "address": 16,
+          "name": "StagedQuantity",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read"
+          ],
+          "role": "request"
+        },
+        {
+          "address": 17,
+          "name": "StagedEpoch",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read"
+          ],
+          "role": "epoch",
+          "description": "written after the staged identity payload"
+        },
+        {
+          "address": 18,
+          "name": "AllocatorRef",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read"
+          ],
+          "role": "topology"
+        },
+        {
+          "address": 19,
+          "name": "StagedSourceReservationRef",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read"
+          ],
+          "role": "request"
+        },
+        {
+          "address": 20,
+          "name": "StagedSinkReservationRef",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read"
+          ],
+          "role": "request"
+        },
+        {
+          "address": 21,
+          "name": "StagedResourceType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read"
+          ],
+          "role": "request"
+        },
+        {
+          "address": 22,
+          "name": "StagedFeederRef",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read"
+          ],
+          "role": "request"
+        },
+        {
+          "address": 23,
+          "name": "StagedSorterRef",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read"
+          ],
+          "role": "request"
+        },
+        {
+          "address": 24,
+          "name": "StagedSinkProviderRef",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read"
+          ],
+          "role": "request"
+        },
+        {
+          "address": 25,
+          "name": "StagedLinkRef",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read"
+          ],
+          "role": "request"
+        },
+        {
+          "address": 26,
+          "name": "StagedExecutorRef",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read"
+          ],
+          "role": "request"
+        },
+        {
+          "address": 31,
+          "name": "ReflashIdentity",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "const": 754423306,
+          "role": "metadata",
+          "description": "same-image reflash marker holding the service identity"
         }
       ],
       "behavior": {
