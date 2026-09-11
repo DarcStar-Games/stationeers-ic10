@@ -151,7 +151,10 @@ revisions establish *durability*, reservation epochs/ownership tokens authorize 
   changes the value every consumer compares; identity is derived from the name, never hand-allocated.
   Both that identity and the folded schema id at `S3` must match before a directory or catalog is
   consumed. **Never check a peer's `S1`** — `S0` has already proven the ABI, so the comparison can
-  never fire; a program's check of its *own* `S1` is a torn-image guard and stays.
+  never fire; a program's check of its *own* `S1` is a torn-image guard and stays, as
+  defence in depth: the game pauses a chip only at a `yield` or after 128 lines, so a boot
+  with no loop before its first yield runs whole, and the same-image induction in
+  `docs/STACK_ABI_ENVELOPE.md` is held to that shape (issue #135).
   `validation/validators/validate_service_identity.py` is authoritative. Block headers away
   from `S0` (Generic Telemetry at `S96`) keep an assigned magic and a separate version cell, because
   their consumers deliberately accept a version range. **The check is worth only the paths it

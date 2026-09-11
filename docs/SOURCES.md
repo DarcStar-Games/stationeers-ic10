@@ -18,6 +18,30 @@ The current Integrated Circuit reference also documents that IC10 registers and 
 
 - Stationeers Community Wiki, `Integrated Circuit (IC10)`: https://www.stationeers-wiki.com/Integrated_Circuit_%28IC10%29
 
+The same-image induction in `docs/STACK_ABI_ENVELOPE.md` and the own-`S1` check in
+`docs/ABI_REFERENCE.md` both turn on whether a boot can stop between two of its own
+instructions. Checked 2026-09-10 against the two pages above (issue #135):
+
+- the `IC10` page: "Every script will automatically pause for 1 game-tick (0.5 seconds) after
+  having executed 128 lines of code (empty lines also count), or when they reach a Yield (or
+  Sleep) instruction." Its measured-behaviour section records the same figure.
+- the `Integrated Circuit (IC10)` page, its table of what is kept and what resets: on power
+  switched or external power regained, program code, current line, registers and stack are
+  each "kept"; on a program flashed from a computer the code is "new", the current line
+  "resets to 0", registers and stack are "kept"; on insertion the line "resets to 0" and
+  registers and stack are "kept". That the chip carries on from the kept line is the
+  framework's reading of that table, not a sentence on the page.
+
+The framework reads those as: a chip's execution is interrupted only at a tick boundary, a
+tick boundary falls only at a `yield` or after 128 lines, and the game's own state changes
+(power, save, reflash) land between ticks. A boot path with no loop before its first yield,
+in a program of at most 128 lines, therefore runs whole in the tick that starts it, which is
+what lets an `S0` the previous image left vouch for the cells that image wrote after it.
+`framework/script_contracts/publication.py` withholds the induction from any program whose
+boot does not fit that shape. The game's own `yield` text (`data/ic10_instruction_set.json`)
+says only "Pauses execution for 1 tick"; the budget and the resume-in-place behaviour have
+the wiki as their only source here, and Item 12 is where a live check would land.
+
 ## Instruction set provenance
 
 The authoritative mnemonic/signature list is vendored as `data/ic10_instruction_set.json` and enforced by

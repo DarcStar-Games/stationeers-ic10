@@ -10,6 +10,7 @@ from collections import defaultdict
 import re
 from typing import Any
 
+from framework.ic10_line_budget import HARD_LIMIT_LINES
 from framework.ic10_source import IC10Source, parse_ic10
 from framework.script_contracts.control_flow import (
     CallState,
@@ -58,6 +59,12 @@ def same_image_edge(
     poked itself a line earlier is always there, and the branch tells nothing
     about the previous image. Only the first transfer is asked, and only when the
     compared register still holds what `get` loaded from `S0`.
+
+    The edge says the previous image *ran*; that it ran to its first yield is a
+    claim about the game, and `stable_cells` asks it through
+    `publication_fits_one_tick` before it leans on the edge. `register_seeding`
+    reads the edge without asking, since a carry over it is reported, not
+    proved (issue #135).
     """
     if magic is None:
         return None
@@ -91,6 +98,61 @@ def same_image_edge(
     return None
 
 
+def publication_fits_one_tick(
+    source: str, program: list[dict[str, Any]], successors: dict[CallState, set[CallState]]
+) -> bool:
+    """Can a boot of this program stop anywhere before its first yield?
+
+    The game runs a chip for at most `HARD_LIMIT_LINES` lines per tick, empty
+    lines included, and pauses it only there or at a `yield`; a power loss keeps
+    the line, the registers, and the stack, so the chip carries on from that
+    line, and a reflash restarts at line 0 with the stack kept
+    (`docs/SOURCES.md`). So a boot that enters line 0 at the start of a tick
+    runs whole to its first yield unless it runs out of budget first, and a
+    program no longer than the budget can only do that by going round before
+    it yields. A one-shot's tail wraps to line 0 in the same tick, but that
+    pass finds the `S0` the first one published and takes the skip edge, so the
+    first pass is the one asked here. This is the premise the same-image
+    induction rests on: an `S0` the previous image left can sit above a cell it
+    never reached only if that image could stop between the two writes, and a
+    program this returns True for cannot (issue #135). A loop before the first
+    yield, or a source over the budget, costs the induction; the publication
+    behind such a guard then has to prove itself on the skip path like any
+    other, or the loop moves behind the yield.
+    """
+    if len(source.splitlines()) > HARD_LIMIT_LINES:
+        return False
+
+    def pauses(state: CallState) -> bool:
+        row = program[state[0]]["row"]
+        return bool(row) and row[0] in {"yield", "hcf"}
+
+    # A depth-first walk of the states before the first pause on each path; a
+    # successor still open on the walk's own stack closes a cycle.
+    entry: CallState = (0, None)
+    open_states = {entry}
+    closed: set[CallState] = set()
+    stack = [(entry, iter(successors.get(entry, set())))]
+    while stack:
+        state, outgoing = stack[-1]
+        for target in outgoing:
+            if target in open_states:
+                return False
+            if target in closed:
+                continue
+            if pauses(target):
+                closed.add(target)
+                continue
+            open_states.add(target)
+            stack.append((target, iter(successors.get(target, set()))))
+            break
+        else:
+            open_states.discard(state)
+            closed.add(state)
+            stack.pop()
+    return True
+
+
 def stable_cells(
     source: str, integer_aliases: dict[str, int], expected: dict[int, Any]
 ) -> set[int]:
@@ -105,7 +167,9 @@ def stable_cells(
     source is its expected value counts as initialized, because the previous
     image of this same contract left it so. The hypothesis is confined to that
     edge; the path the guard rejects is a fresh or foreign housing and has to
-    publish the cell itself before anything can look.
+    publish the cell itself before anything can look. It holds only where that
+    previous image could not have stopped part-way through its own boot, which
+    `publication_fits_one_tick` decides (issue #135).
     """
     program = parse_program(source)
     if not program:
@@ -116,6 +180,8 @@ def stable_cells(
         return set()
     entry = (0, None)
     guard = same_image_edge(program, integer_aliases, expected.get(0))
+    if guard is not None and not publication_fits_one_tick(source, program, successors):
+        guard = None
     # `ra` is None wherever no call is outstanding, so states need a total order
     # of their own before the fixpoint below can iterate them in one.
     reachable = sorted(successors, key=lambda state: (state[0], -1 if state[1] is None else state[1]))
