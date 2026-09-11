@@ -135,98 +135,109 @@
       },
       {
         "address": 8,
-        "name": "S8",
+        "name": "ResolvedPrinterRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 9,
-        "name": "S9",
+        "name": "OwningBankRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 10,
-        "name": "S10",
+        "name": "OwningPin",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ReservationToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "epoch"
       },
       {
         "address": 12,
-        "name": "S12",
+        "name": "PrinterRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 13,
-        "name": "S13",
+        "name": "ProcessorSpec",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 14,
-        "name": "S14",
+        "name": "Command",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request",
+        "description": "1 reserve, 2 release"
       },
       {
         "address": 15,
-        "name": "S15",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       },
       {
         "address": 16,
-        "name": "S16",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResponseToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       },
       {
         "address": 17,
-        "name": "S17",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Status",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state"
       }
     ],
     "headers": [

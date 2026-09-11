@@ -195,130 +195,147 @@
       },
       {
         "address": 19,
-        "name": "S19",
+        "name": "ParentJobId",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 20,
-        "name": "S20",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ParentSlot",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 21,
-        "name": "S21",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ParentJobGeneration",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request",
+        "description": "copied by the New Plan Controller from Monitor S23; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
       },
       {
         "address": 22,
-        "name": "S22",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ParentJobType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 23,
-        "name": "S23",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ParentIdentity",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 24,
-        "name": "S24",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ParentPriority",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request",
+        "description": "copied by the New Plan Controller from Monitor S21; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
       },
       {
         "address": 25,
-        "name": "S25",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResourceType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 26,
-        "name": "S26",
+        "name": "Deficit",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 30,
-        "name": "S30",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       },
       {
         "address": 31,
-        "name": "S31",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResponseToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       },
       {
         "address": 32,
-        "name": "S32",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Status",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 33,
-        "name": "S33",
+        "name": "ChildJobId",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 34,
-        "name": "S34",
+        "name": "FutureQuantity",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 35,
-        "name": "S35",
+        "name": "CreatedFlag",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "1 when a new child was created, 0 when an active claim was reused"
       }
     ],
     "headers": [

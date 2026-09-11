@@ -242,12 +242,14 @@
       },
       {
         "address": 20,
-        "name": "S20",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassConfiguration[0]",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "metadata",
+        "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
       },
       {
         "address": 35,

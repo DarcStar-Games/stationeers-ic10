@@ -215,59 +215,66 @@
       },
       {
         "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       },
       {
         "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResponseToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "TargetJobState",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 12,
-        "name": "S12",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ErrorStatus",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "error"
       },
       {
         "address": 13,
-        "name": "S13",
+        "name": "Lane",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "state",
+        "description": "1 transform, 2 print"
       },
       {
         "address": 14,
-        "name": "S14",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "CurrentToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "current_token"
       }
     ],
     "headers": [

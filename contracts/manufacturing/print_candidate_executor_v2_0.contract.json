@@ -227,115 +227,127 @@
       },
       {
         "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       },
       {
         "address": 9,
-        "name": "S9",
+        "name": "Result",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "CurrentToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "current_token"
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "TargetJobState",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 12,
-        "name": "S12",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ErrorStatus",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "error"
       },
       {
         "address": 13,
-        "name": "S13",
+        "name": "ProcessorSpec",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 14,
-        "name": "S14",
+        "name": "PrinterRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 15,
-        "name": "S15",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RecipeHash",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 19,
-        "name": "S19",
+        "name": "RequestedQuantity",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 20,
-        "name": "S20",
+        "name": "Phase",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 30,
-        "name": "S30",
+        "name": "ResultCode",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 33,
-        "name": "S33",
+        "name": "ResolvedPrinterRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "result"
       }
     ],
     "headers": [

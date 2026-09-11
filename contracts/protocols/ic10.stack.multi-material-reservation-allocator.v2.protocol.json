@@ -79,6 +79,14 @@
       "role": "state"
     },
     {
+      "cells": "S23",
+      "start": 23,
+      "end": 23,
+      "name": "RuntimeCompletionEpoch",
+      "role": "epoch",
+      "description": "the Runtime writes the epoch it completed"
+    },
+    {
       "cells": "S31",
       "start": 31,
       "end": 31,
@@ -220,7 +228,7 @@
         },
         {
           "address": 17,
-          "name": "StagerCoordination",
+          "name": "StagerCoordination[0]",
           "value_type": "number",
           "semantic_source": "protocol-layout",
           "access": [
@@ -232,7 +240,7 @@
         },
         {
           "address": 18,
-          "name": "StagerCoordination",
+          "name": "StagerCoordination[1]",
           "value_type": "number",
           "semantic_source": "protocol-layout",
           "access": [
@@ -244,7 +252,7 @@
         },
         {
           "address": 19,
-          "name": "StagerCoordination",
+          "name": "StagerCoordination[2]",
           "value_type": "number",
           "semantic_source": "protocol-layout",
           "access": [
@@ -287,12 +295,14 @@
         },
         {
           "address": 23,
-          "name": "S23",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RuntimeCompletionEpoch",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "epoch",
+          "description": "the Runtime writes the epoch it completed"
         },
         {
           "address": 31,

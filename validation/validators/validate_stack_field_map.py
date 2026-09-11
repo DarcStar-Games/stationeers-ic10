@@ -24,6 +24,7 @@ from framework.stack_field_map import (
     load_generated,
     load_layouts,
     peer_touched_cells,
+    wiring_touched_cells,
 )
 
 ROOT = _PROJECT_ROOT
@@ -36,7 +37,10 @@ except ValueError as error:
     raise SystemExit(validation.finish("Stack field map validation"))
 
 definitions, contracts = load_generated(ROOT)
-validation.extend(layout_errors(definitions, contracts, layouts))
+# Peers come from two places: the consumer edges the contracts prove, and the peers the
+# wiring map declares for a port that carries no such edge. Both must find a named cell.
+wired = wiring_touched_cells(ROOT, contracts)
+validation.extend(layout_errors(definitions, contracts, layouts, wired))
 
 reference = (ROOT / ABI_REFERENCE_DOC).read_text()
 validation.extend(doc_layout_errors(reference, layouts))
@@ -60,24 +64,30 @@ for definition in definitions.values():
                 validation.fail(
                     f"{provider['source']}: contract field S{field['address']} carries role "
                     f"{field.get('role')!r}, the layout says {entry.role!r}; regenerate contracts")
-            if field["semantic_source"] != "override" and field["name"] != entry.name:
+            expected_name = entry.field_name(field["address"])
+            if field["semantic_source"] != "override" and field["name"] != expected_name:
                 validation.fail(
                     f"{provider['source']}: contract field S{field['address']} is named {field['name']}, "
-                    f"the layout names it {entry.name}; regenerate contracts")
+                    f"the layout names it {expected_name}; regenerate contracts")
 
 expected = field_map_document(ROOT)
 target = ROOT / FIELD_MAP_DOC
 if not target.is_file() or target.read_text() != expected:
     validation.fail(f"{FIELD_MAP_DOC} is stale; run tools/generate/generate_stack_field_map.py")
 
-touched = sum(len(peer_touched_cells(definition)) for definition in definitions.values())
+touched = sum(len(peer_touched_cells(definition, wired)) for definition in definitions.values())
+wired_only = sum(
+    1 for definition in definitions.values()
+    for cell in peer_touched_cells(definition, wired)
+    if cell not in peer_touched_cells(definition))
 mapped = sum(entry.end - entry.start + 1 for entries in layouts.values() for entry in entries)
 tokens = sum(1 for entries in layouts.values() for entry in entries if entry.role in TOKEN_ROLES)
 blocks = doc_layout_blocks(reference)
 raise SystemExit(validation.finish("Stack field map validation", [
     f"{len(layouts)} protocols carry a reviewed layout naming {mapped} cells across {len(ROLES)} roles",
-    f"every one of the {touched} payload cells a peer reads or writes has a name and a role, and every"
-    " entry sits on cells its provider touches or declares",
+    f"every one of the {touched} payload cells a peer reads or writes has a name and a role ({wired_only} of"
+    " them reached only through a wiring-declared peer), and every entry sits on cells its provider"
+    " touches or declares",
     f"{len(blocks)} layout blocks in {ABI_REFERENCE_DOC} name their contract and cite only header or mapped cells",
     f"{tokens} token cells are named; provider contract fields agree with the map and {FIELD_MAP_DOC} is current",
 ]))

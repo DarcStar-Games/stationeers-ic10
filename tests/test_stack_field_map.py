@@ -31,6 +31,7 @@ from framework.stack_field_map import (
     parse_cells,
     payload_fields,
     peer_touched_cells,
+    wiring_touched_cells,
 )
 
 ROOT = _PROJECT_ROOT
@@ -86,9 +87,10 @@ ck(errors == ["p: layout must be a list of entries"], "a non-list layout was not
 layouts = load_layouts(ROOT)
 definitions, contracts = load_generated(ROOT)
 by_pid = {definition["protocol_id"]: definition for definition in definitions.values()}
+wired = wiring_touched_cells(ROOT, contracts)
 ck(HOST in layouts and STORE in layouts, "the two reference protocols have no layout")
 ck(all(entry.role in ROLES for entries in layouts.values() for entry in entries), "an entry escaped the role vocabulary")
-tree_errors = layout_errors(definitions, contracts, layouts)
+tree_errors = layout_errors(definitions, contracts, layouts, wired)
 ck(tree_errors == [], "the tree's layouts do not hold: " + "; ".join(tree_errors[:5]))
 consumed = {pid for pid, definition in by_pid.items() if peer_touched_cells(definition)}
 ck(consumed <= set(layouts), f"consumed protocols without a layout: {sorted(consumed - set(layouts))[:5]}")
@@ -122,6 +124,28 @@ errors = layout_errors(definitions, contracts, renamed)
 ck(any(f"{STORE_SOURCE} override names S8 StoreOrdinal but the layout names it Other" in error for error in errors),
    "an override disagreement was not reported")
 
+# A per-program override inside a range entry fails: the cell needs its own entry.
+swallowed = deepcopy(layouts)
+swallowed[STORE] = [e for e in swallowed[STORE] if not 8 <= e.start <= 9] + [LayoutEntry(8, 9, "OrdinalAndCount", "result")]
+errors = layout_errors(definitions, contracts, swallowed)
+ck(any(f"{STORE_SOURCE} override names S8 StoreOrdinal inside the range entry OrdinalAndCount S8..S9" in error
+       for error in errors), "an override swallowed by a range was not reported")
+
+# The wiring map's declared peers count: the Dependency Planner writes the Plan Store's request
+# cells through a port with no contract consumer edge, and the map must still name them.
+PLAN_STORE = "ic10.stack.dependency-plan-store.v2"
+planner = "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10"
+ck(planner in wired.get(PLAN_STORE, {}).get(12, set()) and 12 not in peer_touched_cells(by_pid[PLAN_STORE]),
+   "the Planner's wired write to the Plan Store's S12 was not attributed through the wiring map")
+ck(planner in peer_touched_cells(by_pid[PLAN_STORE], wired).get(12, set()),
+   "wiring-declared peers were not merged into the touched cells")
+unmapped_plan = deepcopy(layouts)
+unmapped_plan[PLAN_STORE] = [e for e in unmapped_plan[PLAN_STORE] if e.start != 12]
+ck(not any(f"{PLAN_STORE}: peer-touched" in error for error in layout_errors(definitions, contracts, unmapped_plan)) and any(
+       f"{PLAN_STORE}: peer-touched payload cell(s) have no layout entry: S12 (" in error
+       for error in layout_errors(definitions, contracts, unmapped_plan, wired)),
+   "a cell only a wiring-declared peer writes was not required to be named")
+
 # A layout for a protocol nothing provides or consumes fails.
 orphan = deepcopy(layouts)
 orphan["ic10.stack.nothing.v1"] = [LayoutEntry(8, 8, "X", "state")]
@@ -149,6 +173,10 @@ ck(store_fields[8]["name"] == "StoreOrdinal" and store_fields[8]["semantic_sourc
    and store_fields[8]["role"] == "topology", "an override field lost its name or did not gain the role")
 ck(store_fields[17]["name"] == "DataSequence" and store_fields[17]["role"] == "generation",
    "the Store's S17 did not take the layout")
+resolver = contracts["ic10/dependency-planning/item_producer_resolver_v1_0.ic10"]
+resolver_fields = {field["address"]: field for field in resolver["own_stack"]["fields"]}
+ck(resolver_fields[32]["name"] == "ProducerTable[0]" and resolver_fields[65]["name"] == "ProducerTable[33]"
+   and resolver_fields[65]["role"] == "table", "cells inside a range entry did not take indexed names")
 unresolved_named = sum(
     1 for definition in definitions.values() for provider in definition["provider_interfaces"]
     for field in contracts.get(provider["source"], {"own_stack": {"fields": []}})["own_stack"]["fields"]
@@ -196,21 +224,32 @@ synthetic = "\n".join([
     "```text", "S0   magic = GenericSnapshotDirectoryHost.v1", "S1   ABI = 1", "S24  active bank",
     "S25/S26 generation A/B", "S32..159 bank A", "S450 something new", "```", "",
     "```text", "S0 magic = Nothing.v1", "S8 a cell", "```", "",
-    "```text", "S96 magic = 27182818", "S130 not attributable", "```",
+    "```text", "S96 magic = 27182818", "S130 not attributable", "```", "",
+    # Two services in one fence: each cell line is held to its own service.
+    "```text", "Cost profile", "S0 magic = PressureGridCostProfile.v1", "S8 HopWeight", "S13 not a cost cell", "",
+    "Domain inventory", "S0 magic = PressureDomainInventory.v2", "S13 PressureDomain ReferenceId", "S19 not an inventory cell", "```",
 ])
 errors = doc_layout_errors(synthetic, layouts, "doc.md")
 ck(errors == [
     f"doc.md:7: {HOST} cites S450 but the layout does not name S450",
-    "doc.md:10: layout block for ic10.stack.nothing.v1 but the protocol has no layout in data/script_contract_protocol_definitions.json",
+    "doc.md:11: layout block for ic10.stack.nothing.v1 but the protocol has no layout in data/script_contract_protocol_definitions.json",
+    "doc.md:24: ic10.stack.pressure-grid-cost-profile.v1 cites S13 but the layout does not name S13",
+    "doc.md:29: ic10.stack.pressure-domain-inventory.v2 cites S19 but the layout does not name S19",
 ], f"doc holding reported {errors}")
+sub_blocks = doc_layout_blocks(synthetic)
+ck([block.protocol_id for block in sub_blocks][-2:] == ["ic10.stack.pressure-grid-cost-profile.v1", "ic10.stack.pressure-domain-inventory.v2"]
+   and sub_blocks[-1].cells == ((0, 0, 27), (13, 13, 28), (19, 19, 29)),
+   "a fence holding two services was not split at its second S0 line")
 
 # --- the report ----------------------------------------------------------------------
-by_role = fields_by_role(layouts, definitions)
+by_role = fields_by_role(layouts, definitions, wired)
 token_rows = [row for role in TOKEN_ROLES for row in by_role[role]]
 ck(len(token_rows) >= 60, f"too few token cells in the report ({len(token_rows)})")
 ck(len({row["start"] for row in by_role["request_token"]}) >= 10, "request tokens did not spread across offsets as measured")
 host_row = next(row for row in by_role["bank"] if row["protocol_id"] == HOST and row["name"] == "ActiveBank")
 ck(host_row["consumers"] >= 13 and host_row["peers_touching"] >= 13, "the report's fan-in for the host is wrong")
+plan_row = next(row for row in by_role["request_token"] if row["protocol_id"] == PLAN_STORE)
+ck(plan_row["peers_touching"] >= 1, "the report counts no peer for the Plan Store's request token although the Planner is wired to it")
 document = field_map_document(ROOT)
 ck(document == (ROOT / FIELD_MAP_DOC).read_text(), f"{FIELD_MAP_DOC} is stale")
 ck("### request_token" in document and "## By protocol" in document and f"### {HOST}" in document,
@@ -225,4 +264,5 @@ print("Stack field map: PASS")
 print(" - cell specs, roles, overlap, and name uniqueness are checked at load")
 print(" - unmapped peer-touched cells, stray entries, header entries, override disagreements, and orphans fail")
 print(" - provider contracts, protocol documents, and the envelope inventory carry the map")
-print(" - the ABI reference is held to the map and the per-role report is generated from it")
+print(" - the ABI reference is held to the map per S0 block and the per-role report is generated from it")
+print(" - wiring-declared peers without a contract consumer edge still require a named cell and count in the report")

@@ -3357,7 +3357,62 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.dependency-ancestry-guard.v1",
+            "cells": "S10",
+            "name": "ParentJobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-ancestry-guard.v1",
+            "cells": "S11",
+            "name": "ParentJobType",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-ancestry-guard.v1",
+            "cells": "S12",
+            "name": "ParentIdentity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-ancestry-guard.v1",
+            "cells": "S13",
+            "name": "ProducerJobType",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-ancestry-guard.v1",
+            "cells": "S14",
+            "name": "ProducerIdentity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-ancestry-guard.v1",
+            "cells": "S15",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-ancestry-guard.v1",
+            "cells": "S16",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-ancestry-guard.v1",
+            "cells": "S17",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-ancestry-guard.v1",
+            "cells": "S18",
+            "name": "PostingCounter",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -3527,7 +3582,86 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.dependency-child-creator.v2",
+            "cells": "S14",
+            "name": "ParentJobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-creator.v2",
+            "cells": "S15",
+            "name": "ParentSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-creator.v2",
+            "cells": "S16",
+            "name": "ParentJobGeneration",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-creator.v2",
+            "cells": "S17",
+            "name": "ParentJobType",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-creator.v2",
+            "cells": "S18",
+            "name": "ParentIdentity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-creator.v2",
+            "cells": "S19",
+            "name": "ParentPriority",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-creator.v2",
+            "cells": "S20",
+            "name": "ResourceType",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-creator.v2",
+            "cells": "S21",
+            "name": "Deficit",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-creator.v2",
+            "cells": "S22",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-creator.v2",
+            "cells": "S23",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-creator.v2",
+            "cells": "S24",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-creator.v2",
+            "cells": "S25",
+            "name": "ChildJobId",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-creator.v2",
+            "cells": "S27",
+            "name": "FutureQuantity",
+            "role": "result"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -3616,7 +3750,74 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.dependency-child-validity.v1",
+            "cells": "S13",
+            "name": "ChildJobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-validity.v1",
+            "cells": "S14",
+            "name": "ResourceType",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-validity.v1",
+            "cells": "S15",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-validity.v1",
+            "cells": "S16",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-validity.v1",
+            "cells": "S17",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-validity.v1",
+            "cells": "S18",
+            "name": "ChildSlot",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-validity.v1",
+            "cells": "S19",
+            "name": "ChildState",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-validity.v1",
+            "cells": "S20",
+            "name": "ChildJobGeneration",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-validity.v1",
+            "cells": "S21",
+            "name": "ChildJobType",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-validity.v1",
+            "cells": "S22",
+            "name": "ChildIdentity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-validity.v1",
+            "cells": "S23",
+            "name": "ChildOutputResourceType",
+            "role": "result"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -3771,7 +3972,7 @@
           {
             "protocol_id": "ic10.stack.dependency-claim-view.v1",
             "cells": "S26",
-            "name": "ChildJobGeneration",
+            "name": "ChildSlot",
             "role": "result"
           },
           {
@@ -3874,7 +4075,110 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
+            "cells": "S19",
+            "name": "ParentJobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
+            "cells": "S20",
+            "name": "ParentSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
+            "cells": "S21",
+            "name": "ParentJobGeneration",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
+            "cells": "S22",
+            "name": "ParentJobType",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
+            "cells": "S23",
+            "name": "ParentIdentity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
+            "cells": "S24",
+            "name": "ParentPriority",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
+            "cells": "S25",
+            "name": "ResourceType",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
+            "cells": "S26",
+            "name": "Deficit",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
+            "cells": "S27",
+            "name": "BaselineKnown",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
+            "cells": "S28",
+            "name": "QuoteFingerprintA",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
+            "cells": "S29",
+            "name": "QuoteFingerprintB",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
+            "cells": "S30",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
+            "cells": "S31",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
+            "cells": "S32",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
+            "cells": "S33",
+            "name": "ChildJobId",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
+            "cells": "S34",
+            "name": "FutureQuantity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
+            "cells": "S35",
+            "name": "CreatedFlag",
+            "role": "result"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -3963,7 +4267,116 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S20",
+            "name": "JobType",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S21",
+            "name": "Identity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S22",
+            "name": "RequestedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S23",
+            "name": "ChildJobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S24",
+            "name": "ChildResourceType",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S25",
+            "name": "BaselineKnown",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S26",
+            "name": "FutureQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S27",
+            "name": "QuoteFingerprintA",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S28",
+            "name": "QuoteFingerprintB",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S29",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S30",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S31",
+            "name": "Decision",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S32",
+            "name": "QuotedTotal",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S33",
+            "name": "NewQuoteFingerprintA",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S34",
+            "name": "NewQuoteFingerprintB",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S35",
+            "name": "ChildSlot",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S36",
+            "name": "ChildJobGeneration",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
+            "cells": "S37",
+            "name": "ChildState",
+            "role": "result"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -4052,7 +4465,68 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.dependency-plan-release-advisor.v1",
+            "cells": "S12",
+            "name": "ParentJobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-release-advisor.v1",
+            "cells": "S13",
+            "name": "ChildJobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-release-advisor.v1",
+            "cells": "S14",
+            "name": "ResourceType",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-release-advisor.v1",
+            "cells": "S15",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-release-advisor.v1",
+            "cells": "S16",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-release-advisor.v1",
+            "cells": "S17",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-release-advisor.v1",
+            "cells": "S18",
+            "name": "CancelAdvised",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-release-advisor.v1",
+            "cells": "S19",
+            "name": "ChildSlot",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-release-advisor.v1",
+            "cells": "S20",
+            "name": "ChildJobGeneration",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-plan-release-advisor.v1",
+            "cells": "S21",
+            "name": "ChildState",
+            "role": "result"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -4536,7 +5010,74 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.generic-job-monitor.v1",
+            "cells": "S13",
+            "name": "JobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-monitor.v1",
+            "cells": "S14",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-monitor.v1",
+            "cells": "S15",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-monitor.v1",
+            "cells": "S16",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-monitor.v1",
+            "cells": "S17",
+            "name": "Slot",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-monitor.v1",
+            "cells": "S18",
+            "name": "JobType",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-monitor.v1",
+            "cells": "S19",
+            "name": "Identity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-monitor.v1",
+            "cells": "S20",
+            "name": "RequestedQuantity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-monitor.v1",
+            "cells": "S21",
+            "name": "State",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-monitor.v1",
+            "cells": "S22",
+            "name": "JobGeneration",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-monitor.v1",
+            "cells": "S23",
+            "name": "ErrorStatus",
+            "role": "result"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -4767,7 +5308,86 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.job-inventory-preflight.v1",
+            "cells": "S15",
+            "name": "JobType",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.job-inventory-preflight.v1",
+            "cells": "S16",
+            "name": "Identity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.job-inventory-preflight.v1",
+            "cells": "S17",
+            "name": "RequestedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.job-inventory-preflight.v1",
+            "cells": "S18",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.job-inventory-preflight.v1",
+            "cells": "S19",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.job-inventory-preflight.v1",
+            "cells": "S20",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.job-inventory-preflight.v1",
+            "cells": "S21",
+            "name": "InputOrdinal",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.job-inventory-preflight.v1",
+            "cells": "S22",
+            "name": "InputResourceType",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.job-inventory-preflight.v1",
+            "cells": "S23",
+            "name": "RequiredTotal",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.job-inventory-preflight.v1",
+            "cells": "S24",
+            "name": "QuotedTotal",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.job-inventory-preflight.v1",
+            "cells": "S25",
+            "name": "Deficit",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.job-inventory-preflight.v1",
+            "cells": "S26",
+            "name": "QuoteFingerprintA",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.job-inventory-preflight.v1",
+            "cells": "S27",
+            "name": "QuoteFingerprintB",
+            "role": "result"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -5025,7 +5645,32 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-gate.v2",
+            "cells": "S9",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-gate.v2",
+            "cells": "S10",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-gate.v2",
+            "cells": "S11",
+            "name": "TargetJobState",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-gate.v2",
+            "cells": "S12",
+            "name": "ErrorStatus",
+            "role": "error"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -5110,7 +5755,92 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-planner.v1",
+            "cells": "S12",
+            "name": "JobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-planner.v1",
+            "cells": "S13",
+            "name": "Slot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-planner.v1",
+            "cells": "S14",
+            "name": "JobGeneration",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-planner.v1",
+            "cells": "S15",
+            "name": "JobType",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-planner.v1",
+            "cells": "S16",
+            "name": "Identity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-planner.v1",
+            "cells": "S17",
+            "name": "RequestedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-planner.v1",
+            "cells": "S18",
+            "name": "Priority",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-planner.v1",
+            "cells": "S19",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-planner.v1",
+            "cells": "S20",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-planner.v1",
+            "cells": "S21",
+            "name": "Decision",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-planner.v1",
+            "cells": "S24",
+            "name": "CleanupParentJobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-planner.v1",
+            "cells": "S25",
+            "name": "CleanupRequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-planner.v1",
+            "cells": "S26",
+            "name": "CleanupResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-dependency-planner.v1",
+            "cells": "S27",
+            "name": "CleanupStatus",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -5208,7 +5938,38 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.manufacturing-reagent-resolver.v1",
+            "cells": "S8",
+            "name": "ReagentHash",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-reagent-resolver.v1",
+            "cells": "S9",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-reagent-resolver.v1",
+            "cells": "S10",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-reagent-resolver.v1",
+            "cells": "S11",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-reagent-resolver.v1",
+            "cells": "S12",
+            "name": "ResourceType",
+            "role": "result"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -5293,7 +6054,74 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.new-dependency-plan-controller.v1",
+            "cells": "S20",
+            "name": "ParentJobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.new-dependency-plan-controller.v1",
+            "cells": "S21",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.new-dependency-plan-controller.v1",
+            "cells": "S22",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.new-dependency-plan-controller.v1",
+            "cells": "S23",
+            "name": "Decision",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.new-dependency-plan-controller.v1",
+            "cells": "S31",
+            "name": "ChildJobId",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.new-dependency-plan-controller.v1",
+            "cells": "S32",
+            "name": "ResourceType",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.new-dependency-plan-controller.v1",
+            "cells": "S33",
+            "name": "RequiredTotal",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.new-dependency-plan-controller.v1",
+            "cells": "S34",
+            "name": "BaselineKnown",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.new-dependency-plan-controller.v1",
+            "cells": "S35",
+            "name": "FutureQuantity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.new-dependency-plan-controller.v1",
+            "cells": "S36",
+            "name": "QuoteFingerprintA",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.new-dependency-plan-controller.v1",
+            "cells": "S37",
+            "name": "QuoteFingerprintB",
+            "role": "result"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -7718,7 +8546,110 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.generic-job-selector.v3",
+            "cells": "S8",
+            "name": "JobType",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-selector.v3",
+            "cells": "S9",
+            "name": "RequiredCapability",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-selector.v3",
+            "cells": "S10",
+            "name": "Identity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-selector.v3",
+            "cells": "S11",
+            "name": "InputCount",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-selector.v3",
+            "cells": "S12",
+            "name": "OutputCount",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-selector.v3",
+            "cells": "S13",
+            "name": "RequestedQuantity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-selector.v3",
+            "cells": "S14",
+            "name": "Priority",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-selector.v3",
+            "cells": "S15",
+            "name": "State",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-selector.v3",
+            "cells": "S16",
+            "name": "JobGeneration",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-selector.v3",
+            "cells": "S17",
+            "name": "QueueGeneration",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-selector.v3",
+            "cells": "S18",
+            "name": "Mode",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-selector.v3",
+            "cells": "S19",
+            "name": "Cursor",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-selector.v3",
+            "cells": "S20",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-selector.v3",
+            "cells": "S21",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-selector.v3",
+            "cells": "S22",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-selector.v3",
+            "cells": "S23",
+            "name": "Slot",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-job-selector.v3",
+            "cells": "S24",
+            "name": "JobId",
+            "role": "result"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -9275,8 +10206,74 @@
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S14",
-            "name": "ResourceProfileViewRef",
+            "name": "ClassExtensionRef",
             "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S20..S22",
+            "name": "ClassConfiguration",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S24",
+            "name": "MoveOperation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S25",
+            "name": "MoveSourceStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S26",
+            "name": "MoveSourceSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S27",
+            "name": "MoveDestinationStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S28",
+            "name": "MoveDestinationSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S30",
+            "name": "MoveExpectedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S31",
+            "name": "MoveRequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S32",
+            "name": "MoveStatus",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S33",
+            "name": "MovedQuantity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S34",
+            "name": "MoveResponseToken",
+            "role": "response_token"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -9456,7 +10453,98 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.larre-cargo-storage-service.v1",
+            "cells": "S8",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.larre-cargo-storage-service.v1",
+            "cells": "S9",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.larre-cargo-storage-service.v1",
+            "cells": "S10",
+            "name": "ScanExportAvailable",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.larre-cargo-storage-service.v1",
+            "cells": "S11",
+            "name": "ScanImportCapacity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.larre-cargo-storage-service.v1",
+            "cells": "S12",
+            "name": "ScanFirstSourceSlot",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.larre-cargo-storage-service.v1",
+            "cells": "S13",
+            "name": "MovedQuantity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.larre-cargo-storage-service.v1",
+            "cells": "S14",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.larre-cargo-storage-service.v1",
+            "cells": "S15",
+            "name": "ExpectedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.larre-cargo-storage-service.v1",
+            "cells": "S16",
+            "name": "ScanFirstEmptySlot",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.larre-cargo-storage-service.v1",
+            "cells": "S17",
+            "name": "Operation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.larre-cargo-storage-service.v1",
+            "cells": "S18",
+            "name": "SourceStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.larre-cargo-storage-service.v1",
+            "cells": "S19",
+            "name": "SourceSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.larre-cargo-storage-service.v1",
+            "cells": "S20",
+            "name": "DestinationStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.larre-cargo-storage-service.v1",
+            "cells": "S21",
+            "name": "DestinationSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.larre-cargo-storage-service.v1",
+            "cells": "S22",
+            "name": "ItemHash",
+            "role": "request"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -9583,8 +10671,74 @@
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S14",
-            "name": "ResourceProfileViewRef",
+            "name": "ClassExtensionRef",
             "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S20..S22",
+            "name": "ClassConfiguration",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S24",
+            "name": "MoveOperation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S25",
+            "name": "MoveSourceStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S26",
+            "name": "MoveSourceSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S27",
+            "name": "MoveDestinationStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S28",
+            "name": "MoveDestinationSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S30",
+            "name": "MoveExpectedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S31",
+            "name": "MoveRequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S32",
+            "name": "MoveStatus",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S33",
+            "name": "MovedQuantity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S34",
+            "name": "MoveResponseToken",
+            "role": "response_token"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -10080,8 +11234,74 @@
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S14",
-            "name": "ResourceProfileViewRef",
+            "name": "ClassExtensionRef",
             "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S20..S22",
+            "name": "ClassConfiguration",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S24",
+            "name": "MoveOperation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S25",
+            "name": "MoveSourceStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S26",
+            "name": "MoveSourceSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S27",
+            "name": "MoveDestinationStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S28",
+            "name": "MoveDestinationSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S30",
+            "name": "MoveExpectedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S31",
+            "name": "MoveRequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S32",
+            "name": "MoveStatus",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S33",
+            "name": "MovedQuantity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S34",
+            "name": "MoveResponseToken",
+            "role": "response_token"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -10301,8 +11521,74 @@
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S14",
-            "name": "ResourceProfileViewRef",
+            "name": "ClassExtensionRef",
             "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S20..S22",
+            "name": "ClassConfiguration",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S24",
+            "name": "MoveOperation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S25",
+            "name": "MoveSourceStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S26",
+            "name": "MoveSourceSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S27",
+            "name": "MoveDestinationStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S28",
+            "name": "MoveDestinationSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S30",
+            "name": "MoveExpectedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S31",
+            "name": "MoveRequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S32",
+            "name": "MoveStatus",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S33",
+            "name": "MovedQuantity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S34",
+            "name": "MoveResponseToken",
+            "role": "response_token"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -12293,7 +13579,86 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.generic-print-runtime.v2",
+            "cells": "S8",
+            "name": "TargetJobState",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-print-runtime.v2",
+            "cells": "S9",
+            "name": "ErrorStatus",
+            "role": "error"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-print-runtime.v2",
+            "cells": "S10",
+            "name": "PrinterRef",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-print-runtime.v2",
+            "cells": "S11",
+            "name": "RecipeHash",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-print-runtime.v2",
+            "cells": "S12",
+            "name": "RequestedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-print-runtime.v2",
+            "cells": "S13",
+            "name": "JobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-print-runtime.v2",
+            "cells": "S14",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-print-runtime.v2",
+            "cells": "S15",
+            "name": "CurrentToken",
+            "role": "current_token"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-print-runtime.v2",
+            "cells": "S20",
+            "name": "Phase",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-print-runtime.v2",
+            "cells": "S22",
+            "name": "MaterialRequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-print-runtime.v2",
+            "cells": "S23",
+            "name": "ExportCountBaseline",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-print-runtime.v2",
+            "cells": "S24",
+            "name": "CommittedEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-print-runtime.v2",
+            "cells": "S25",
+            "name": "ExportTicks",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -12387,8 +13752,98 @@
             "abi": 2
           }
         ],
-        "schema_fields": [],
-        "payload_fields": [],
+        "schema_fields": [
+          {
+            "address": 17,
+            "name": "SchemaId"
+          }
+        ],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
+            "cells": "S8",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
+            "cells": "S9",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
+            "cells": "S10",
+            "name": "CandidateRef",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
+            "cells": "S11",
+            "name": "CandidateProcessorRef",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
+            "cells": "S12",
+            "name": "CandidateProcessorSpec",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
+            "cells": "S13",
+            "name": "NextOrdinal",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
+            "cells": "S14",
+            "name": "DirectoryGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
+            "cells": "S16",
+            "name": "DirectoryRef",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
+            "cells": "S17",
+            "name": "SchemaId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
+            "cells": "S18",
+            "name": "Key",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
+            "cells": "S19",
+            "name": "Capability",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
+            "cells": "S20",
+            "name": "ComparisonMode",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
+            "cells": "S21",
+            "name": "StartOrdinal",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
+            "cells": "S22",
+            "name": "RequestToken",
+            "role": "request_token"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -12479,7 +13934,44 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.manufacturing-driver-router.v2",
+            "cells": "S9",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-driver-router.v2",
+            "cells": "S10",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-driver-router.v2",
+            "cells": "S11",
+            "name": "TargetJobState",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-driver-router.v2",
+            "cells": "S12",
+            "name": "ErrorStatus",
+            "role": "error"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-driver-router.v2",
+            "cells": "S13",
+            "name": "Lane",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.manufacturing-driver-router.v2",
+            "cells": "S14",
+            "name": "CurrentToken",
+            "role": "current_token"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -12661,7 +14153,98 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.print-candidate-executor.v2",
+            "cells": "S8",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.print-candidate-executor.v2",
+            "cells": "S9",
+            "name": "Result",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.print-candidate-executor.v2",
+            "cells": "S10",
+            "name": "CurrentToken",
+            "role": "current_token"
+          },
+          {
+            "protocol_id": "ic10.stack.print-candidate-executor.v2",
+            "cells": "S11",
+            "name": "TargetJobState",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.print-candidate-executor.v2",
+            "cells": "S12",
+            "name": "ErrorStatus",
+            "role": "error"
+          },
+          {
+            "protocol_id": "ic10.stack.print-candidate-executor.v2",
+            "cells": "S13",
+            "name": "ProcessorSpec",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.print-candidate-executor.v2",
+            "cells": "S14",
+            "name": "PrinterRef",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.print-candidate-executor.v2",
+            "cells": "S15",
+            "name": "RecipeHash",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.print-candidate-executor.v2",
+            "cells": "S16",
+            "name": "RequiredCapability",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.print-candidate-executor.v2",
+            "cells": "S17",
+            "name": "InputCount",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.print-candidate-executor.v2",
+            "cells": "S18",
+            "name": "OutputCount",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.print-candidate-executor.v2",
+            "cells": "S19",
+            "name": "RequestedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.print-candidate-executor.v2",
+            "cells": "S20",
+            "name": "Phase",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.print-candidate-executor.v2",
+            "cells": "S30",
+            "name": "ResultCode",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.print-candidate-executor.v2",
+            "cells": "S33",
+            "name": "ResolvedPrinterRef",
+            "role": "result"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -12760,7 +14343,104 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.print-job-driver.v2",
+            "cells": "S8",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.print-job-driver.v2",
+            "cells": "S9",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.print-job-driver.v2",
+            "cells": "S10",
+            "name": "TargetJobState",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.print-job-driver.v2",
+            "cells": "S11",
+            "name": "ErrorStatus",
+            "role": "error"
+          },
+          {
+            "protocol_id": "ic10.stack.print-job-driver.v2",
+            "cells": "S12",
+            "name": "JobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.print-job-driver.v2",
+            "cells": "S13",
+            "name": "Identity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.print-job-driver.v2",
+            "cells": "S14",
+            "name": "RequiredCapability",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.print-job-driver.v2",
+            "cells": "S15",
+            "name": "InputCount",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.print-job-driver.v2",
+            "cells": "S16",
+            "name": "OutputCount",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.print-job-driver.v2",
+            "cells": "S17",
+            "name": "RequestedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.print-job-driver.v2",
+            "cells": "S20",
+            "name": "Phase",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.print-job-driver.v2",
+            "cells": "S21",
+            "name": "SelectorToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.print-job-driver.v2",
+            "cells": "S22",
+            "name": "ExecutorToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.print-job-driver.v2",
+            "cells": "S23",
+            "name": "CandidateOrdinal",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.print-job-driver.v2",
+            "cells": "S24",
+            "name": "Outcome",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.print-job-driver.v2",
+            "cells": "S30",
+            "name": "TokenCounter",
+            "role": "generation"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -12859,7 +14539,74 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.print-material-resolver.v1",
+            "cells": "S8",
+            "name": "PrinterRefEcho",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.print-material-resolver.v1",
+            "cells": "S9",
+            "name": "InputCount",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.print-material-resolver.v1",
+            "cells": "S11",
+            "name": "PublicationGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.print-material-resolver.v1",
+            "cells": "S12",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.print-material-resolver.v1",
+            "cells": "S13",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.print-material-resolver.v1",
+            "cells": "S14",
+            "name": "RecipeViewGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.print-material-resolver.v1",
+            "cells": "S15",
+            "name": "RequiredCapability",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.print-material-resolver.v1",
+            "cells": "S16",
+            "name": "PrinterRef",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.print-material-resolver.v1",
+            "cells": "S17",
+            "name": "RequestedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.print-material-resolver.v1",
+            "cells": "S18",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.print-material-resolver.v1",
+            "cells": "S20..S83",
+            "name": "LinkRecords",
+            "role": "table"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -12964,7 +14711,86 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.transform-candidate-executor.v2",
+            "cells": "S8",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-executor.v2",
+            "cells": "S9",
+            "name": "Result",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-executor.v2",
+            "cells": "S10",
+            "name": "CurrentToken",
+            "role": "current_token"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-executor.v2",
+            "cells": "S11",
+            "name": "TargetJobState",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-executor.v2",
+            "cells": "S12",
+            "name": "ErrorStatus",
+            "role": "error"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-executor.v2",
+            "cells": "S14",
+            "name": "JobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-executor.v2",
+            "cells": "S20",
+            "name": "Phase",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-executor.v2",
+            "cells": "S21",
+            "name": "RuntimeRef",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-executor.v2",
+            "cells": "S22",
+            "name": "TransformType",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-executor.v2",
+            "cells": "S23",
+            "name": "RequiredCapability",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-executor.v2",
+            "cells": "S24",
+            "name": "InputCount",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-executor.v2",
+            "cells": "S25",
+            "name": "OutputCount",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-executor.v2",
+            "cells": "S26",
+            "name": "RequestedQuantity",
+            "role": "request"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -13059,7 +14885,80 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.transform-candidate-readiness.v1",
+            "cells": "S8",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-readiness.v1",
+            "cells": "S9",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-readiness.v1",
+            "cells": "S10",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-readiness.v1",
+            "cells": "S11",
+            "name": "RuntimeRef",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-readiness.v1",
+            "cells": "S12",
+            "name": "TransformType",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-readiness.v1",
+            "cells": "S13",
+            "name": "RequiredCapability",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-readiness.v1",
+            "cells": "S14",
+            "name": "InputCount",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-readiness.v1",
+            "cells": "S15",
+            "name": "OutputCount",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-readiness.v1",
+            "cells": "S16",
+            "name": "BatchCount",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-readiness.v1",
+            "cells": "S20",
+            "name": "Phase",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-readiness.v1",
+            "cells": "S30",
+            "name": "AdmissionGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-candidate-readiness.v1",
+            "cells": "S31",
+            "name": "ResolverGeneration",
+            "role": "generation"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -13154,7 +15053,104 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.transform-job-driver.v2",
+            "cells": "S8",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-job-driver.v2",
+            "cells": "S9",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-job-driver.v2",
+            "cells": "S10",
+            "name": "TargetJobState",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-job-driver.v2",
+            "cells": "S11",
+            "name": "ErrorStatus",
+            "role": "error"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-job-driver.v2",
+            "cells": "S12",
+            "name": "JobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-job-driver.v2",
+            "cells": "S13",
+            "name": "Identity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-job-driver.v2",
+            "cells": "S14",
+            "name": "RequiredCapability",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-job-driver.v2",
+            "cells": "S15",
+            "name": "InputCount",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-job-driver.v2",
+            "cells": "S16",
+            "name": "OutputCount",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-job-driver.v2",
+            "cells": "S17",
+            "name": "RequestedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-job-driver.v2",
+            "cells": "S20",
+            "name": "Phase",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-job-driver.v2",
+            "cells": "S21",
+            "name": "SelectorToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-job-driver.v2",
+            "cells": "S22",
+            "name": "ExecutorToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-job-driver.v2",
+            "cells": "S23",
+            "name": "CandidateOrdinal",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-job-driver.v2",
+            "cells": "S24",
+            "name": "Outcome",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.transform-job-driver.v2",
+            "cells": "S30",
+            "name": "TokenCounter",
+            "role": "generation"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -13466,8 +15462,74 @@
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S14",
-            "name": "ResourceProfileViewRef",
+            "name": "ClassExtensionRef",
             "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S20..S22",
+            "name": "ClassConfiguration",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S24",
+            "name": "MoveOperation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S25",
+            "name": "MoveSourceStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S26",
+            "name": "MoveSourceSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S27",
+            "name": "MoveDestinationStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S28",
+            "name": "MoveDestinationSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S30",
+            "name": "MoveExpectedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S31",
+            "name": "MoveRequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S32",
+            "name": "MoveStatus",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S33",
+            "name": "MovedQuantity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S34",
+            "name": "MoveResponseToken",
+            "role": "response_token"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -13683,8 +15745,74 @@
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S14",
-            "name": "ResourceProfileViewRef",
+            "name": "ClassExtensionRef",
             "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S20..S22",
+            "name": "ClassConfiguration",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S24",
+            "name": "MoveOperation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S25",
+            "name": "MoveSourceStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S26",
+            "name": "MoveSourceSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S27",
+            "name": "MoveDestinationStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S28",
+            "name": "MoveDestinationSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S30",
+            "name": "MoveExpectedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S31",
+            "name": "MoveRequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S32",
+            "name": "MoveStatus",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S33",
+            "name": "MovedQuantity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S34",
+            "name": "MoveResponseToken",
+            "role": "response_token"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -14872,7 +17000,50 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.material-transform-link-resolver.v1",
+            "cells": "S8",
+            "name": "TransformType",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.material-transform-link-resolver.v1",
+            "cells": "S9",
+            "name": "InputCount",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.material-transform-link-resolver.v1",
+            "cells": "S10",
+            "name": "ProcessorRef",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.material-transform-link-resolver.v1",
+            "cells": "S11",
+            "name": "ProfileGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.material-transform-link-resolver.v1",
+            "cells": "S12",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.material-transform-link-resolver.v1",
+            "cells": "S13",
+            "name": "PublicationGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.material-transform-link-resolver.v1",
+            "cells": "S20..S83",
+            "name": "LinkRecords",
+            "role": "table"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -15028,6 +17199,12 @@
           },
           {
             "protocol_id": "ic10.stack.multi-material-reservation-allocator.v2",
+            "cells": "S23",
+            "name": "RuntimeCompletionEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.multi-material-reservation-allocator.v2",
             "cells": "S31",
             "name": "ReflashIdentity",
             "role": "metadata"
@@ -15132,7 +17309,56 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.multi-material-reservation-stager.v1",
+            "cells": "S8",
+            "name": "StagedCount",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.multi-material-reservation-stager.v1",
+            "cells": "S9",
+            "name": "Command",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.multi-material-reservation-stager.v1",
+            "cells": "S10",
+            "name": "Epoch",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.multi-material-reservation-stager.v1",
+            "cells": "S11",
+            "name": "BatchCount",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.multi-material-reservation-stager.v1",
+            "cells": "S12",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.multi-material-reservation-stager.v1",
+            "cells": "S13",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.multi-material-reservation-stager.v1",
+            "cells": "S14",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.multi-material-reservation-stager.v1",
+            "cells": "S32..S40",
+            "name": "StagedTriples",
+            "role": "table"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -15278,8 +17504,74 @@
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S14",
-            "name": "ResourceProfileViewRef",
+            "name": "ClassExtensionRef",
             "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S20..S22",
+            "name": "ClassConfiguration",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S24",
+            "name": "MoveOperation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S25",
+            "name": "MoveSourceStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S26",
+            "name": "MoveSourceSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S27",
+            "name": "MoveDestinationStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S28",
+            "name": "MoveDestinationSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S30",
+            "name": "MoveExpectedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S31",
+            "name": "MoveRequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S32",
+            "name": "MoveStatus",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S33",
+            "name": "MovedQuantity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S34",
+            "name": "MoveResponseToken",
+            "role": "response_token"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -15503,8 +17795,74 @@
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S14",
-            "name": "ResourceProfileViewRef",
+            "name": "ClassExtensionRef",
             "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S20..S22",
+            "name": "ClassConfiguration",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S24",
+            "name": "MoveOperation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S25",
+            "name": "MoveSourceStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S26",
+            "name": "MoveSourceSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S27",
+            "name": "MoveDestinationStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S28",
+            "name": "MoveDestinationSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S30",
+            "name": "MoveExpectedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S31",
+            "name": "MoveRequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S32",
+            "name": "MoveStatus",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S33",
+            "name": "MovedQuantity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S34",
+            "name": "MoveResponseToken",
+            "role": "response_token"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -15805,13 +18163,13 @@
           {
             "protocol_id": "ic10.stack.power-dispatch-plan-store.v1",
             "cells": "S14",
-            "name": "RequestedPlanGeneration",
+            "name": "ShedWatts",
             "role": "request"
           },
           {
             "protocol_id": "ic10.stack.power-dispatch-plan-store.v1",
             "cells": "S15",
-            "name": "RequestedPlanStatus",
+            "name": "CriticalShortage",
             "role": "request"
           },
           {
@@ -15835,7 +18193,7 @@
           {
             "protocol_id": "ic10.stack.power-dispatch-plan-store.v1",
             "cells": "S28",
-            "name": "CommitCount",
+            "name": "PlanGeneration",
             "role": "generation"
           },
           {
@@ -15847,13 +18205,13 @@
           {
             "protocol_id": "ic10.stack.power-dispatch-plan-store.v1",
             "cells": "S30",
-            "name": "PlanGeneration",
-            "role": "generation"
+            "name": "CommittedShedWatts",
+            "role": "result"
           },
           {
             "protocol_id": "ic10.stack.power-dispatch-plan-store.v1",
             "cells": "S31",
-            "name": "PlanStatus",
+            "name": "CommittedCriticalShortage",
             "role": "state"
           },
           {
@@ -16041,7 +18399,62 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.power-dispatch-sweep.v1",
+            "cells": "S8",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-dispatch-sweep.v1",
+            "cells": "S9",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-dispatch-sweep.v1",
+            "cells": "S10",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.power-dispatch-sweep.v1",
+            "cells": "S20",
+            "name": "Phase",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.power-dispatch-sweep.v1",
+            "cells": "S21",
+            "name": "CurrentToken",
+            "role": "current_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-dispatch-sweep.v1",
+            "cells": "S22",
+            "name": "SinkCursor",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.power-dispatch-sweep.v1",
+            "cells": "S23",
+            "name": "ShedWatts",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-dispatch-sweep.v1",
+            "cells": "S24",
+            "name": "CriticalShortage",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-dispatch-sweep.v1",
+            "cells": "S25",
+            "name": "SourceWatts",
+            "role": "result"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -16210,7 +18623,68 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.power-link-selector.v1",
+            "cells": "S8",
+            "name": "LinkRef",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-link-selector.v1",
+            "cells": "S9",
+            "name": "SourceWatts",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-link-selector.v1",
+            "cells": "S10",
+            "name": "LinkGeneration",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-link-selector.v1",
+            "cells": "S11",
+            "name": "LinkClass",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-link-selector.v1",
+            "cells": "S12",
+            "name": "SourceReservationRef",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-link-selector.v1",
+            "cells": "S13",
+            "name": "SinkReservationRef",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-link-selector.v1",
+            "cells": "S14",
+            "name": "SinkWatts",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-link-selector.v1",
+            "cells": "S15",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-link-selector.v1",
+            "cells": "S16",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-link-selector.v1",
+            "cells": "S17",
+            "name": "Status",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -16375,7 +18849,32 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.power-plan-validator.v1",
+            "cells": "S8",
+            "name": "PlanGeneration",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-plan-validator.v1",
+            "cells": "S9",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-plan-validator.v1",
+            "cells": "S10",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-plan-validator.v1",
+            "cells": "S11",
+            "name": "Status",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -16500,8 +18999,74 @@
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S14",
-            "name": "ResourceProfileViewRef",
+            "name": "ClassExtensionRef",
             "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S20..S22",
+            "name": "ClassConfiguration",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S24",
+            "name": "MoveOperation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S25",
+            "name": "MoveSourceStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S26",
+            "name": "MoveSourceSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S27",
+            "name": "MoveDestinationStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S28",
+            "name": "MoveDestinationSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S30",
+            "name": "MoveExpectedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S31",
+            "name": "MoveRequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S32",
+            "name": "MoveStatus",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S33",
+            "name": "MovedQuantity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S34",
+            "name": "MoveResponseToken",
+            "role": "response_token"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -16685,7 +19250,50 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.power-reservation-allocator.v1",
+            "cells": "S8",
+            "name": "PlanGeneration",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-reservation-allocator.v1",
+            "cells": "S9",
+            "name": "AuthorityEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.power-reservation-allocator.v1",
+            "cells": "S10",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.power-reservation-allocator.v1",
+            "cells": "S20",
+            "name": "Phase",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.power-reservation-allocator.v1",
+            "cells": "S21",
+            "name": "PendingPlanGeneration",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.power-reservation-allocator.v1",
+            "cells": "S22",
+            "name": "PendingEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.power-reservation-allocator.v1",
+            "cells": "S30",
+            "name": "RequestCounter",
+            "role": "generation"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -16778,7 +19386,38 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.power-reservation-committer.v1",
+            "cells": "S8",
+            "name": "PlanGeneration",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-reservation-committer.v1",
+            "cells": "S9",
+            "name": "OwnerEpoch",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-reservation-committer.v1",
+            "cells": "S10",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-reservation-committer.v1",
+            "cells": "S11",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-reservation-committer.v1",
+            "cells": "S12",
+            "name": "Status",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -17044,7 +19683,62 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.power-sink-flow-builder.v1",
+            "cells": "S8",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.power-sink-flow-builder.v1",
+            "cells": "S9",
+            "name": "SourceWatts",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-sink-flow-builder.v1",
+            "cells": "S10",
+            "name": "SourceReservationRef",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-sink-flow-builder.v1",
+            "cells": "S11",
+            "name": "SinkReservationRef",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-sink-flow-builder.v1",
+            "cells": "S12",
+            "name": "SinkWatts",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-sink-flow-builder.v1",
+            "cells": "S14",
+            "name": "SinkReservationGeneration",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-sink-flow-builder.v1",
+            "cells": "S15",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-sink-flow-builder.v1",
+            "cells": "S16",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-sink-flow-builder.v1",
+            "cells": "S20",
+            "name": "Phase",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -17137,7 +19831,68 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.power-sink-selector.v1",
+            "cells": "S8",
+            "name": "Ordinal",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-sink-selector.v1",
+            "cells": "S9",
+            "name": "ReservationGeneration",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-sink-selector.v1",
+            "cells": "S10",
+            "name": "PriorityFlags",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-sink-selector.v1",
+            "cells": "S11",
+            "name": "CriticalFlag",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-sink-selector.v1",
+            "cells": "S12",
+            "name": "StartOrdinal",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-sink-selector.v1",
+            "cells": "S13",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-sink-selector.v1",
+            "cells": "S14",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-sink-selector.v1",
+            "cells": "S15",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.power-sink-selector.v1",
+            "cells": "S16",
+            "name": "ReservationRef",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-sink-selector.v1",
+            "cells": "S17",
+            "name": "DemandWatts",
+            "role": "result"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -17222,7 +19977,62 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.power-source-selector.v1",
+            "cells": "S8",
+            "name": "Ordinal",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-source-selector.v1",
+            "cells": "S9",
+            "name": "ReservationGeneration",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-source-selector.v1",
+            "cells": "S10",
+            "name": "NodeKind",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-source-selector.v1",
+            "cells": "S11",
+            "name": "StartOrdinal",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-source-selector.v1",
+            "cells": "S12",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-source-selector.v1",
+            "cells": "S13",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-source-selector.v1",
+            "cells": "S14",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.power-source-selector.v1",
+            "cells": "S15",
+            "name": "ReservationRef",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-source-selector.v1",
+            "cells": "S16",
+            "name": "AvailableWatts",
+            "role": "result"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -17669,7 +20479,86 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.power-job-finalize.v1",
+            "cells": "S8",
+            "name": "Identity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-finalize.v1",
+            "cells": "S9",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-finalize.v1",
+            "cells": "S10",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-finalize.v1",
+            "cells": "S11",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-finalize.v1",
+            "cells": "S12",
+            "name": "NewState",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-finalize.v1",
+            "cells": "S13",
+            "name": "NewJobGeneration",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-finalize.v1",
+            "cells": "S14",
+            "name": "Slot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-finalize.v1",
+            "cells": "S15",
+            "name": "JobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-finalize.v1",
+            "cells": "S16",
+            "name": "State",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-finalize.v1",
+            "cells": "S17",
+            "name": "JobGeneration",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-finalize.v1",
+            "cells": "S18",
+            "name": "RequestedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-finalize.v1",
+            "cells": "S19",
+            "name": "RequiredCapability",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-finalize.v1",
+            "cells": "S20",
+            "name": "Phase",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -17758,7 +20647,56 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.power-job-lifecycle-client.v1",
+            "cells": "S8",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-lifecycle-client.v1",
+            "cells": "S9",
+            "name": "NewJobGeneration",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-lifecycle-client.v1",
+            "cells": "S10",
+            "name": "Slot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-lifecycle-client.v1",
+            "cells": "S11",
+            "name": "ExpectedJobGeneration",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-lifecycle-client.v1",
+            "cells": "S12",
+            "name": "DesiredState",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-lifecycle-client.v1",
+            "cells": "S13",
+            "name": "DesiredErrorStatus",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-lifecycle-client.v1",
+            "cells": "S14",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-lifecycle-client.v1",
+            "cells": "S15",
+            "name": "ResponseToken",
+            "role": "response_token"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -17843,7 +20781,80 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.power-job-policy-apply.v1",
+            "cells": "S8",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-policy-apply.v1",
+            "cells": "S9",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-policy-apply.v1",
+            "cells": "S10",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-policy-apply.v1",
+            "cells": "S11",
+            "name": "ReservationRef",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-policy-apply.v1",
+            "cells": "S12",
+            "name": "EndpointRef",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-policy-apply.v1",
+            "cells": "S13",
+            "name": "ReservationGeneration",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-policy-apply.v1",
+            "cells": "S14",
+            "name": "Slot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-policy-apply.v1",
+            "cells": "S15",
+            "name": "JobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-policy-apply.v1",
+            "cells": "S16",
+            "name": "RequiredCapability",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-policy-apply.v1",
+            "cells": "S17",
+            "name": "Identity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-policy-apply.v1",
+            "cells": "S18",
+            "name": "JobGeneration",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-policy-apply.v1",
+            "cells": "S19",
+            "name": "RequestedQuantity",
+            "role": "request"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -17928,7 +20939,44 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.power-job-policy-verify.v1",
+            "cells": "S8",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-policy-verify.v1",
+            "cells": "S9",
+            "name": "ReservationRef",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-policy-verify.v1",
+            "cells": "S10",
+            "name": "PowerMode",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-policy-verify.v1",
+            "cells": "S11",
+            "name": "RequestedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-policy-verify.v1",
+            "cells": "S12",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-policy-verify.v1",
+            "cells": "S13",
+            "name": "ResponseToken",
+            "role": "response_token"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -18013,7 +21061,86 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.power-job-prepare.v1",
+            "cells": "S8",
+            "name": "Identity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-prepare.v1",
+            "cells": "S9",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-prepare.v1",
+            "cells": "S10",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-prepare.v1",
+            "cells": "S11",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-prepare.v1",
+            "cells": "S12",
+            "name": "NewState",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-prepare.v1",
+            "cells": "S13",
+            "name": "NewJobGeneration",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-prepare.v1",
+            "cells": "S14",
+            "name": "Slot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-prepare.v1",
+            "cells": "S15",
+            "name": "JobId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-prepare.v1",
+            "cells": "S16",
+            "name": "State",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-prepare.v1",
+            "cells": "S17",
+            "name": "JobGeneration",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-prepare.v1",
+            "cells": "S18",
+            "name": "RequestedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-prepare.v1",
+            "cells": "S19",
+            "name": "RequiredCapability",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-job-prepare.v1",
+            "cells": "S20",
+            "name": "Phase",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -18187,7 +21314,56 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.power-policy-target-resolver.v1",
+            "cells": "S8",
+            "name": "NodeKind",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-policy-target-resolver.v1",
+            "cells": "S9",
+            "name": "ReservationGeneration",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-policy-target-resolver.v1",
+            "cells": "S10",
+            "name": "PolicyId",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.power-policy-target-resolver.v1",
+            "cells": "S11",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-policy-target-resolver.v1",
+            "cells": "S12",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.power-policy-target-resolver.v1",
+            "cells": "S13",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.power-policy-target-resolver.v1",
+            "cells": "S14",
+            "name": "ReservationRef",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.power-policy-target-resolver.v1",
+            "cells": "S15",
+            "name": "EndpointRef",
+            "role": "result"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -21381,7 +24557,68 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.printer-capacity-client.v2",
+            "cells": "S8",
+            "name": "ResolvedPrinterRef",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.printer-capacity-client.v2",
+            "cells": "S9",
+            "name": "OwningBankRef",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.printer-capacity-client.v2",
+            "cells": "S10",
+            "name": "OwningPin",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.printer-capacity-client.v2",
+            "cells": "S11",
+            "name": "ReservationToken",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.printer-capacity-client.v2",
+            "cells": "S12",
+            "name": "PrinterRef",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.printer-capacity-client.v2",
+            "cells": "S13",
+            "name": "ProcessorSpec",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.printer-capacity-client.v2",
+            "cells": "S14",
+            "name": "Command",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.printer-capacity-client.v2",
+            "cells": "S15",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.printer-capacity-client.v2",
+            "cells": "S16",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.printer-capacity-client.v2",
+            "cells": "S17",
+            "name": "Status",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -23406,8 +26643,74 @@
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S14",
-            "name": "ResourceProfileViewRef",
+            "name": "ClassExtensionRef",
             "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S20..S22",
+            "name": "ClassConfiguration",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S24",
+            "name": "MoveOperation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S25",
+            "name": "MoveSourceStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S26",
+            "name": "MoveSourceSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S27",
+            "name": "MoveDestinationStation",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S28",
+            "name": "MoveDestinationSlot",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S30",
+            "name": "MoveExpectedQuantity",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S31",
+            "name": "MoveRequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S32",
+            "name": "MoveStatus",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S33",
+            "name": "MovedQuantity",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S34",
+            "name": "MoveResponseToken",
+            "role": "response_token"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -24287,7 +27590,38 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.resource-reservation-releaser.v1",
+            "cells": "S8",
+            "name": "OwnerEpoch",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-reservation-releaser.v1",
+            "cells": "S9",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-reservation-releaser.v1",
+            "cells": "S10",
+            "name": "ResponseToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-reservation-releaser.v1",
+            "cells": "S11",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-reservation-releaser.v1",
+            "cells": "S12",
+            "name": "ReleasedCount",
+            "role": "result"
+          }
+        ],
         "payload_bases": [
           0
         ],

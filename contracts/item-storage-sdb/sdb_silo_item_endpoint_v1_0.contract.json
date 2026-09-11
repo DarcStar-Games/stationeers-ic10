@@ -260,31 +260,36 @@
       },
       {
         "address": 14,
-        "name": "ResourceProfileViewRef",
-        "value_type": "number",
+        "name": "ClassExtensionRef",
+        "value_type": "reference-id",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "role": "topology"
+        "role": "topology",
+        "description": "class-specific peer reference; ITEM endpoints publish their Resource Profile View ReferenceId here, POWER and FLUID providers leave it unused"
       },
       {
         "address": 20,
-        "name": "S20",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassConfiguration[0]",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "metadata",
+        "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
       },
       {
         "address": 21,
-        "name": "S21",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassConfiguration[1]",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "metadata",
+        "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
       },
       {
         "address": 35,

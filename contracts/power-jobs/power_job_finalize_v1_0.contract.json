@@ -229,113 +229,128 @@
       },
       {
         "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Identity",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request",
+        "description": "PolicyId"
       },
       {
         "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       },
       {
         "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResponseToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Status",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state",
+        "description": "1 advanced, 0 pending, -1 fault"
       },
       {
         "address": 12,
-        "name": "S12",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "NewState",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 13,
-        "name": "S13",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "NewJobGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 14,
-        "name": "S14",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Slot",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 16,
-        "name": "S16",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "State",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 17,
-        "name": "S17",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "JobGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 18,
-        "name": "S18",
+        "name": "RequestedQuantity",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 19,
-        "name": "S19",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequiredCapability",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request",
+        "description": "PowerMode"
       },
       {
         "address": 20,
-        "name": "S20",
+        "name": "Phase",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "state"
       }
     ],
     "headers": [

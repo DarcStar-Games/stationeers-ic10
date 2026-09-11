@@ -225,6 +225,194 @@
     }
    ]
   },
+  "ic10.stack.dependency-ancestry-guard.v1": {
+   "layout": [
+    {
+     "cells": "S10",
+     "name": "ParentJobId",
+     "role": "request"
+    },
+    {
+     "cells": "S11",
+     "name": "ParentJobType",
+     "role": "request"
+    },
+    {
+     "cells": "S12",
+     "name": "ParentIdentity",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "ProducerJobType",
+     "role": "request"
+    },
+    {
+     "cells": "S14",
+     "name": "ProducerIdentity",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S16",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S17",
+     "name": "Status",
+     "role": "state",
+     "description": "1 admissible, -2 too deep, -3 cycle, -1 invalid"
+    },
+    {
+     "cells": "S18",
+     "name": "PostingCounter",
+     "role": "state",
+     "description": "postings under the current request, kept across reflash (#182)"
+    }
+   ]
+  },
+  "ic10.stack.dependency-child-creator.v2": {
+   "layout": [
+    {
+     "cells": "S14",
+     "name": "ParentJobId",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "ParentSlot",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "ParentJobGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "ParentJobType",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "ParentIdentity",
+     "role": "request"
+    },
+    {
+     "cells": "S19",
+     "name": "ParentPriority",
+     "role": "request",
+     "description": "the child is created one priority higher"
+    },
+    {
+     "cells": "S20",
+     "name": "ResourceType",
+     "role": "request"
+    },
+    {
+     "cells": "S21",
+     "name": "Deficit",
+     "role": "request",
+     "description": "quantity the child must produce"
+    },
+    {
+     "cells": "S22",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S23",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S24",
+     "name": "Status",
+     "role": "state",
+     "description": "1 created, -4 too deep, -32 cycle, -5 no producer, -1 invalid"
+    },
+    {
+     "cells": "S25",
+     "name": "ChildJobId",
+     "role": "result"
+    },
+    {
+     "cells": "S27",
+     "name": "FutureQuantity",
+     "role": "result",
+     "description": "batches times output per batch"
+    }
+   ]
+  },
+  "ic10.stack.dependency-child-validity.v1": {
+   "layout": [
+    {
+     "cells": "S13",
+     "name": "ChildJobId",
+     "role": "request"
+    },
+    {
+     "cells": "S14",
+     "name": "ResourceType",
+     "role": "request",
+     "description": "the plan's ResourceType the child must still promise"
+    },
+    {
+     "cells": "S15",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S16",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S17",
+     "name": "Status",
+     "role": "state",
+     "description": "1 valid, -2 missing, -3 stale, -1 invalid"
+    },
+    {
+     "cells": "S18",
+     "name": "ChildSlot",
+     "role": "result"
+    },
+    {
+     "cells": "S19",
+     "name": "ChildState",
+     "role": "result",
+     "description": "copied from Monitor S22; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+    },
+    {
+     "cells": "S20",
+     "name": "ChildJobGeneration",
+     "role": "result",
+     "description": "copied from Monitor S23; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation. The Claim View reads this cell as the child's ResourceType"
+    },
+    {
+     "cells": "S21",
+     "name": "ChildJobType",
+     "role": "result"
+    },
+    {
+     "cells": "S22",
+     "name": "ChildIdentity",
+     "role": "result"
+    },
+    {
+     "cells": "S23",
+     "name": "ChildOutputResourceType",
+     "role": "result",
+     "description": "the Requirement View's normalized output for the child"
+    }
+   ]
+  },
   "ic10.stack.dependency-claim-view.v1": {
    "layout": [
     {
@@ -278,21 +466,269 @@
     {
      "cells": "S24",
      "name": "ChildState",
-     "role": "result"
+     "role": "result",
+     "description": "copied from Child Validity S19; see issue #193"
     },
     {
      "cells": "S25",
      "name": "ChildResourceType",
-     "role": "result"
+     "role": "result",
+     "description": "copied from Child Validity S20, which Child Validity fills with the Monitor's S23; see issue #193"
     },
     {
      "cells": "S26",
-     "name": "ChildJobGeneration",
-     "role": "result"
+     "name": "ChildSlot",
+     "role": "result",
+     "description": "copied from Child Validity S18"
     },
     {
      "cells": "S27",
      "name": "AggregateClaims",
+     "role": "result"
+    }
+   ]
+  },
+  "ic10.stack.dependency-plan-builder.v2": {
+   "layout": [
+    {
+     "cells": "S19",
+     "name": "ParentJobId",
+     "role": "request"
+    },
+    {
+     "cells": "S20",
+     "name": "ParentSlot",
+     "role": "request"
+    },
+    {
+     "cells": "S21",
+     "name": "ParentJobGeneration",
+     "role": "request",
+     "description": "copied by the New Plan Controller from Monitor S23; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+    },
+    {
+     "cells": "S22",
+     "name": "ParentJobType",
+     "role": "request"
+    },
+    {
+     "cells": "S23",
+     "name": "ParentIdentity",
+     "role": "request"
+    },
+    {
+     "cells": "S24",
+     "name": "ParentPriority",
+     "role": "request",
+     "description": "copied by the New Plan Controller from Monitor S21; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+    },
+    {
+     "cells": "S25",
+     "name": "ResourceType",
+     "role": "request"
+    },
+    {
+     "cells": "S26",
+     "name": "Deficit",
+     "role": "request"
+    },
+    {
+     "cells": "S27",
+     "name": "BaselineKnown",
+     "role": "request"
+    },
+    {
+     "cells": "S28",
+     "name": "QuoteFingerprintA",
+     "role": "request"
+    },
+    {
+     "cells": "S29",
+     "name": "QuoteFingerprintB",
+     "role": "request"
+    },
+    {
+     "cells": "S30",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S31",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S32",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S33",
+     "name": "ChildJobId",
+     "role": "result"
+    },
+    {
+     "cells": "S34",
+     "name": "FutureQuantity",
+     "role": "result"
+    },
+    {
+     "cells": "S35",
+     "name": "CreatedFlag",
+     "role": "result",
+     "description": "1 when a new child was created, 0 when an active claim was reused"
+    }
+   ]
+  },
+  "ic10.stack.dependency-plan-evaluator.v2": {
+   "layout": [
+    {
+     "cells": "S20",
+     "name": "JobType",
+     "role": "request"
+    },
+    {
+     "cells": "S21",
+     "name": "Identity",
+     "role": "request"
+    },
+    {
+     "cells": "S22",
+     "name": "RequestedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S23",
+     "name": "ChildJobId",
+     "role": "request"
+    },
+    {
+     "cells": "S24",
+     "name": "ChildResourceType",
+     "role": "request"
+    },
+    {
+     "cells": "S25",
+     "name": "BaselineKnown",
+     "role": "request"
+    },
+    {
+     "cells": "S26",
+     "name": "FutureQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S27",
+     "name": "QuoteFingerprintA",
+     "role": "request"
+    },
+    {
+     "cells": "S28",
+     "name": "QuoteFingerprintB",
+     "role": "request"
+    },
+    {
+     "cells": "S29",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S30",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S31",
+     "name": "Decision",
+     "role": "result",
+     "description": "1 ready, 2 child active, 3 wait for inventory, 4 probe, 5 replan, -2 overflow, -3 stale child, -4 child failed, -1 invalid"
+    },
+    {
+     "cells": "S32",
+     "name": "QuotedTotal",
+     "role": "result"
+    },
+    {
+     "cells": "S33",
+     "name": "NewQuoteFingerprintA",
+     "role": "result"
+    },
+    {
+     "cells": "S34",
+     "name": "NewQuoteFingerprintB",
+     "role": "result"
+    },
+    {
+     "cells": "S35",
+     "name": "ChildSlot",
+     "role": "result",
+     "description": "copied from Child Validity S18"
+    },
+    {
+     "cells": "S36",
+     "name": "ChildJobGeneration",
+     "role": "result",
+     "description": "copied from Child Validity S20"
+    },
+    {
+     "cells": "S37",
+     "name": "ChildState",
+     "role": "result",
+     "description": "copied from Child Validity S19"
+    }
+   ]
+  },
+  "ic10.stack.dependency-plan-release-advisor.v1": {
+   "layout": [
+    {
+     "cells": "S12",
+     "name": "ParentJobId",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "ChildJobId",
+     "role": "request"
+    },
+    {
+     "cells": "S14",
+     "name": "ResourceType",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S16",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S17",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S18",
+     "name": "CancelAdvised",
+     "role": "result",
+     "description": "1 when no other plan references the active child"
+    },
+    {
+     "cells": "S19",
+     "name": "ChildSlot",
+     "role": "result"
+    },
+    {
+     "cells": "S20",
+     "name": "ChildJobGeneration",
+     "role": "result"
+    },
+    {
+     "cells": "S21",
+     "name": "ChildState",
      "role": "result"
     }
    ]
@@ -1282,6 +1718,161 @@
     }
    ]
   },
+  "ic10.stack.generic-job-monitor.v1": {
+   "layout": [
+    {
+     "cells": "S13",
+     "name": "JobId",
+     "role": "request"
+    },
+    {
+     "cells": "S14",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S15",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S16",
+     "name": "Status",
+     "role": "state",
+     "description": "1 found, -2 missing, -1 invalid"
+    },
+    {
+     "cells": "S17",
+     "name": "Slot",
+     "role": "result"
+    },
+    {
+     "cells": "S18",
+     "name": "JobType",
+     "role": "result"
+    },
+    {
+     "cells": "S19",
+     "name": "Identity",
+     "role": "result"
+    },
+    {
+     "cells": "S20",
+     "name": "RequestedQuantity",
+     "role": "result"
+    },
+    {
+     "cells": "S21",
+     "name": "State",
+     "role": "result",
+     "description": "see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+    },
+    {
+     "cells": "S22",
+     "name": "JobGeneration",
+     "role": "result",
+     "description": "see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+    },
+    {
+     "cells": "S23",
+     "name": "ErrorStatus",
+     "role": "result",
+     "description": "see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+    }
+   ]
+  },
+  "ic10.stack.generic-job-selector.v3": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "JobType",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "RequiredCapability",
+     "role": "result"
+    },
+    {
+     "cells": "S10",
+     "name": "Identity",
+     "role": "result"
+    },
+    {
+     "cells": "S11",
+     "name": "InputCount",
+     "role": "result"
+    },
+    {
+     "cells": "S12",
+     "name": "OutputCount",
+     "role": "result"
+    },
+    {
+     "cells": "S13",
+     "name": "RequestedQuantity",
+     "role": "result"
+    },
+    {
+     "cells": "S14",
+     "name": "Priority",
+     "role": "result"
+    },
+    {
+     "cells": "S15",
+     "name": "State",
+     "role": "result"
+    },
+    {
+     "cells": "S16",
+     "name": "JobGeneration",
+     "role": "result"
+    },
+    {
+     "cells": "S17",
+     "name": "QueueGeneration",
+     "role": "result"
+    },
+    {
+     "cells": "S18",
+     "name": "Mode",
+     "role": "request",
+     "description": "0 manufacturing TRANSFORM/PRINT policy; a JobType selects that type's nonterminal states"
+    },
+    {
+     "cells": "S19",
+     "name": "Cursor",
+     "role": "request",
+     "description": "JobId cursor; eligible JobIds at or below it are skipped"
+    },
+    {
+     "cells": "S20",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S21",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S22",
+     "name": "Status",
+     "role": "state",
+     "description": "1 selected, -2 none, -1 invalid Store"
+    },
+    {
+     "cells": "S23",
+     "name": "Slot",
+     "role": "result"
+    },
+    {
+     "cells": "S24",
+     "name": "JobId",
+     "role": "result"
+    }
+   ]
+  },
   "ic10.stack.generic-job-store-command-executor.v1": {
    "layout": [
     {
@@ -1621,6 +2212,76 @@
      "name": "BankBFooter",
      "role": "bank",
      "description": "signature, config revision, bank revision"
+    }
+   ]
+  },
+  "ic10.stack.generic-print-runtime.v2": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "TargetJobState",
+     "role": "state"
+    },
+    {
+     "cells": "S9",
+     "name": "ErrorStatus",
+     "role": "error"
+    },
+    {
+     "cells": "S10",
+     "name": "PrinterRef",
+     "role": "request"
+    },
+    {
+     "cells": "S11",
+     "name": "RecipeHash",
+     "role": "request"
+    },
+    {
+     "cells": "S12",
+     "name": "RequestedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "JobId",
+     "role": "request"
+    },
+    {
+     "cells": "S14",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S15",
+     "name": "CurrentToken",
+     "role": "current_token"
+    },
+    {
+     "cells": "S20",
+     "name": "Phase",
+     "role": "state"
+    },
+    {
+     "cells": "S22",
+     "name": "MaterialRequestToken",
+     "role": "request_token",
+     "description": "token issued to the Material Allocator"
+    },
+    {
+     "cells": "S23",
+     "name": "ExportCountBaseline",
+     "role": "result"
+    },
+    {
+     "cells": "S24",
+     "name": "CommittedEpoch",
+     "role": "epoch"
+    },
+    {
+     "cells": "S25",
+     "name": "ExportTicks",
+     "role": "state"
     }
    ]
   },
@@ -1981,6 +2642,77 @@
     }
    ]
   },
+  "ic10.stack.job-inventory-preflight.v1": {
+   "layout": [
+    {
+     "cells": "S15",
+     "name": "JobType",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "Identity",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "RequestedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S19",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S20",
+     "name": "Status",
+     "role": "state",
+     "description": "1 satisfied, 2 lower-bound only, 3 deficit, -2 overflow, -1 invalid"
+    },
+    {
+     "cells": "S21",
+     "name": "InputOrdinal",
+     "role": "result",
+     "description": "the input the deficit was found on"
+    },
+    {
+     "cells": "S22",
+     "name": "InputResourceType",
+     "role": "result"
+    },
+    {
+     "cells": "S23",
+     "name": "RequiredTotal",
+     "role": "result"
+    },
+    {
+     "cells": "S24",
+     "name": "QuotedTotal",
+     "role": "result"
+    },
+    {
+     "cells": "S25",
+     "name": "Deficit",
+     "role": "result"
+    },
+    {
+     "cells": "S26",
+     "name": "QuoteFingerprintA",
+     "role": "result"
+    },
+    {
+     "cells": "S27",
+     "name": "QuoteFingerprintB",
+     "role": "result"
+    }
+   ]
+  },
   "ic10.stack.job-requirement-view.v1": {
    "layout": [
     {
@@ -2048,6 +2780,335 @@
     {
      "cells": "S27",
      "name": "InputRequiredTotal",
+     "role": "result"
+    }
+   ]
+  },
+  "ic10.stack.larre-cargo-storage-service.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S9",
+     "name": "Status",
+     "role": "state",
+     "description": "1 success, -1 fault with hand empty, -5 invalid, -6 fault with hand occupied"
+    },
+    {
+     "cells": "S10",
+     "name": "ScanExportAvailable",
+     "role": "result"
+    },
+    {
+     "cells": "S11",
+     "name": "ScanImportCapacity",
+     "role": "result"
+    },
+    {
+     "cells": "S12",
+     "name": "ScanFirstSourceSlot",
+     "role": "result"
+    },
+    {
+     "cells": "S13",
+     "name": "MovedQuantity",
+     "role": "result",
+     "description": "SCAN FirstSourceQuantity; MOVE or RECOVER moved quantity"
+    },
+    {
+     "cells": "S14",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S15",
+     "name": "ExpectedQuantity",
+     "role": "request",
+     "description": "for MOVE"
+    },
+    {
+     "cells": "S16",
+     "name": "ScanFirstEmptySlot",
+     "role": "result"
+    },
+    {
+     "cells": "S17",
+     "name": "Operation",
+     "role": "request",
+     "description": "1 SCAN, 2 MOVE, 3 RECOVER"
+    },
+    {
+     "cells": "S18",
+     "name": "SourceStation",
+     "role": "request"
+    },
+    {
+     "cells": "S19",
+     "name": "SourceSlot",
+     "role": "request",
+     "description": "SCAN first slot"
+    },
+    {
+     "cells": "S20",
+     "name": "DestinationStation",
+     "role": "request",
+     "description": "SCAN slot count"
+    },
+    {
+     "cells": "S21",
+     "name": "DestinationSlot",
+     "role": "request",
+     "description": "SCAN empty-slot MaxStack"
+    },
+    {
+     "cells": "S22",
+     "name": "ItemHash",
+     "role": "request"
+    }
+   ]
+  },
+  "ic10.stack.manufacturing-candidate-selector.v2": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S9",
+     "name": "Status",
+     "role": "state",
+     "description": "1 selected, -2 none, -1 invalid"
+    },
+    {
+     "cells": "S10",
+     "name": "CandidateRef",
+     "role": "result",
+     "description": "Runtime or Printer ReferenceId"
+    },
+    {
+     "cells": "S11",
+     "name": "CandidateProcessorRef",
+     "role": "result",
+     "description": "Processor ReferenceId or FamilyHash"
+    },
+    {
+     "cells": "S12",
+     "name": "CandidateProcessorSpec",
+     "role": "result"
+    },
+    {
+     "cells": "S13",
+     "name": "NextOrdinal",
+     "role": "result"
+    },
+    {
+     "cells": "S14",
+     "name": "DirectoryGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S16",
+     "name": "DirectoryRef",
+     "role": "request",
+     "description": "Snapshot Directory ReferenceId"
+    },
+    {
+     "cells": "S17",
+     "name": "SchemaId",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "Key",
+     "role": "request",
+     "description": "optional FamilyHash"
+    },
+    {
+     "cells": "S19",
+     "name": "Capability",
+     "role": "request"
+    },
+    {
+     "cells": "S20",
+     "name": "ComparisonMode",
+     "role": "request",
+     "description": "1 mask, 2 tier"
+    },
+    {
+     "cells": "S21",
+     "name": "StartOrdinal",
+     "role": "request"
+    },
+    {
+     "cells": "S22",
+     "name": "RequestToken",
+     "role": "request_token"
+    }
+   ]
+  },
+  "ic10.stack.manufacturing-dependency-gate.v2": {
+   "layout": [
+    {
+     "cells": "S9",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S10",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S11",
+     "name": "TargetJobState",
+     "role": "result"
+    },
+    {
+     "cells": "S12",
+     "name": "ErrorStatus",
+     "role": "error"
+    }
+   ]
+  },
+  "ic10.stack.manufacturing-dependency-planner.v1": {
+   "layout": [
+    {
+     "cells": "S12",
+     "name": "JobId",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "Slot",
+     "role": "request"
+    },
+    {
+     "cells": "S14",
+     "name": "JobGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "JobType",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "Identity",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "RequestedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "Priority",
+     "role": "request"
+    },
+    {
+     "cells": "S19",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S20",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S21",
+     "name": "Decision",
+     "role": "result"
+    },
+    {
+     "cells": "S24",
+     "name": "CleanupParentJobId",
+     "role": "request"
+    },
+    {
+     "cells": "S25",
+     "name": "CleanupRequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S26",
+     "name": "CleanupResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S27",
+     "name": "CleanupStatus",
+     "role": "state"
+    }
+   ]
+  },
+  "ic10.stack.manufacturing-driver-router.v2": {
+   "layout": [
+    {
+     "cells": "S9",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S10",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S11",
+     "name": "TargetJobState",
+     "role": "result"
+    },
+    {
+     "cells": "S12",
+     "name": "ErrorStatus",
+     "role": "error"
+    },
+    {
+     "cells": "S13",
+     "name": "Lane",
+     "role": "state",
+     "description": "1 transform, 2 print"
+    },
+    {
+     "cells": "S14",
+     "name": "CurrentToken",
+     "role": "current_token"
+    }
+   ]
+  },
+  "ic10.stack.manufacturing-reagent-resolver.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "ReagentHash",
+     "role": "request"
+    },
+    {
+     "cells": "S9",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S10",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S11",
+     "name": "Status",
+     "role": "state",
+     "description": "1 resolved, -2 unknown"
+    },
+    {
+     "cells": "S12",
+     "name": "ResourceType",
      "role": "result"
     }
    ]
@@ -2287,6 +3348,46 @@
     }
    ]
   },
+  "ic10.stack.material-transform-link-resolver.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "TransformType",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "InputCount",
+     "role": "result"
+    },
+    {
+     "cells": "S10",
+     "name": "ProcessorRef",
+     "role": "result"
+    },
+    {
+     "cells": "S11",
+     "name": "ProfileGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S12",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S13",
+     "name": "PublicationGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S20..S83",
+     "name": "LinkRecords",
+     "role": "table",
+     "description": "four-cell [LinkRef, QuantityPerJob, ResourceType, ResourceClass] records; the Resolver fills up to three, the Stager and Allocator read the same window on the Print Material Resolver"
+    }
+   ]
+  },
   "ic10.stack.medium-purity-guard.v1": {
    "layout": [
     {
@@ -2374,10 +3475,124 @@
      "role": "state"
     },
     {
+     "cells": "S23",
+     "name": "RuntimeCompletionEpoch",
+     "role": "epoch",
+     "description": "the Runtime writes the epoch it completed"
+    },
+    {
      "cells": "S31",
      "name": "ReflashIdentity",
      "role": "metadata",
      "description": "same-image reflash marker holding the service identity"
+    }
+   ]
+  },
+  "ic10.stack.multi-material-reservation-stager.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "StagedCount",
+     "role": "result",
+     "description": "published after each record"
+    },
+    {
+     "cells": "S9",
+     "name": "Command",
+     "role": "request",
+     "description": "1 stage, 2 cleanup"
+    },
+    {
+     "cells": "S10",
+     "name": "Epoch",
+     "role": "request"
+    },
+    {
+     "cells": "S11",
+     "name": "BatchCount",
+     "role": "request"
+    },
+    {
+     "cells": "S12",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S13",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S14",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S32..S40",
+     "name": "StagedTriples",
+     "role": "table",
+     "description": "[LinkRef, SourceReservationRef, SinkReservationRef] per staged input"
+    }
+   ]
+  },
+  "ic10.stack.new-dependency-plan-controller.v1": {
+   "layout": [
+    {
+     "cells": "S20",
+     "name": "ParentJobId",
+     "role": "request"
+    },
+    {
+     "cells": "S21",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S22",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S23",
+     "name": "Decision",
+     "role": "result",
+     "description": "1 ready, 4 probe, 6 planned, -2 overflow, -1 invalid"
+    },
+    {
+     "cells": "S31",
+     "name": "ChildJobId",
+     "role": "result",
+     "description": "plan record proposal the Planner writes to the Plan Store"
+    },
+    {
+     "cells": "S32",
+     "name": "ResourceType",
+     "role": "result"
+    },
+    {
+     "cells": "S33",
+     "name": "RequiredTotal",
+     "role": "result"
+    },
+    {
+     "cells": "S34",
+     "name": "BaselineKnown",
+     "role": "result"
+    },
+    {
+     "cells": "S35",
+     "name": "FutureQuantity",
+     "role": "result"
+    },
+    {
+     "cells": "S36",
+     "name": "QuoteFingerprintA",
+     "role": "result"
+    },
+    {
+     "cells": "S37",
+     "name": "QuoteFingerprintB",
+     "role": "result"
     }
    ]
   },
@@ -2573,13 +3788,15 @@
     },
     {
      "cells": "S14",
-     "name": "RequestedPlanGeneration",
-     "role": "request"
+     "name": "ShedWatts",
+     "role": "request",
+     "description": "total shed watts the sweep reports for the plan being committed"
     },
     {
      "cells": "S15",
-     "name": "RequestedPlanStatus",
-     "role": "request"
+     "name": "CriticalShortage",
+     "role": "request",
+     "description": "1 when a critical load could not be served"
     },
     {
      "cells": "S16..S23",
@@ -2600,8 +3817,9 @@
     },
     {
      "cells": "S28",
-     "name": "CommitCount",
-     "role": "generation"
+     "name": "PlanGeneration",
+     "role": "generation",
+     "description": "advances on every COMMIT; readers fence on it with the even sequence at S27"
     },
     {
      "cells": "S29",
@@ -2611,13 +3829,15 @@
     },
     {
      "cells": "S30",
-     "name": "PlanGeneration",
-     "role": "generation"
+     "name": "CommittedShedWatts",
+     "role": "result",
+     "description": "S14 as of the last COMMIT"
     },
     {
      "cells": "S31",
-     "name": "PlanStatus",
-     "role": "state"
+     "name": "CommittedCriticalShortage",
+     "role": "state",
+     "description": "S15 as of the last COMMIT"
     },
     {
      "cells": "S32..S95",
@@ -2630,6 +3850,703 @@
      "name": "StagedFlows",
      "role": "table",
      "description": "8 x 8 flow records staged before COMMIT"
+    }
+   ]
+  },
+  "ic10.stack.power-dispatch-sweep.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S9",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S10",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S20",
+     "name": "Phase",
+     "role": "state"
+    },
+    {
+     "cells": "S21",
+     "name": "CurrentToken",
+     "role": "current_token"
+    },
+    {
+     "cells": "S22",
+     "name": "SinkCursor",
+     "role": "state"
+    },
+    {
+     "cells": "S23",
+     "name": "ShedWatts",
+     "role": "result"
+    },
+    {
+     "cells": "S24",
+     "name": "CriticalShortage",
+     "role": "result"
+    },
+    {
+     "cells": "S25",
+     "name": "SourceWatts",
+     "role": "result",
+     "description": "source watts of the flow being built"
+    }
+   ]
+  },
+  "ic10.stack.power-job-finalize.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "Identity",
+     "role": "request",
+     "description": "PolicyId"
+    },
+    {
+     "cells": "S9",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S10",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S11",
+     "name": "Status",
+     "role": "state",
+     "description": "1 advanced, 0 pending, -1 fault"
+    },
+    {
+     "cells": "S12",
+     "name": "NewState",
+     "role": "result"
+    },
+    {
+     "cells": "S13",
+     "name": "NewJobGeneration",
+     "role": "result"
+    },
+    {
+     "cells": "S14",
+     "name": "Slot",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "JobId",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "State",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "JobGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "RequestedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S19",
+     "name": "RequiredCapability",
+     "role": "request",
+     "description": "PowerMode"
+    },
+    {
+     "cells": "S20",
+     "name": "Phase",
+     "role": "state"
+    }
+   ]
+  },
+  "ic10.stack.power-job-lifecycle-client.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "Status",
+     "role": "state",
+     "description": "1 applied, -1 rejected"
+    },
+    {
+     "cells": "S9",
+     "name": "NewJobGeneration",
+     "role": "result",
+     "description": "ExpectedJobGeneration plus one on success"
+    },
+    {
+     "cells": "S10",
+     "name": "Slot",
+     "role": "request"
+    },
+    {
+     "cells": "S11",
+     "name": "ExpectedJobGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S12",
+     "name": "DesiredState",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "DesiredErrorStatus",
+     "role": "request"
+    },
+    {
+     "cells": "S14",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S15",
+     "name": "ResponseToken",
+     "role": "response_token"
+    }
+   ]
+  },
+  "ic10.stack.power-job-policy-apply.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S9",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S10",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S11",
+     "name": "ReservationRef",
+     "role": "result"
+    },
+    {
+     "cells": "S12",
+     "name": "EndpointRef",
+     "role": "result"
+    },
+    {
+     "cells": "S13",
+     "name": "ReservationGeneration",
+     "role": "result"
+    },
+    {
+     "cells": "S14",
+     "name": "Slot",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "JobId",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "RequiredCapability",
+     "role": "request",
+     "description": "PowerMode"
+    },
+    {
+     "cells": "S17",
+     "name": "Identity",
+     "role": "request",
+     "description": "PolicyId"
+    },
+    {
+     "cells": "S18",
+     "name": "JobGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S19",
+     "name": "RequestedQuantity",
+     "role": "request",
+     "description": "optional watt cap"
+    }
+   ]
+  },
+  "ic10.stack.power-job-policy-verify.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "Status",
+     "role": "state",
+     "description": "1 verified, 0 pending, -1 fault"
+    },
+    {
+     "cells": "S9",
+     "name": "ReservationRef",
+     "role": "request"
+    },
+    {
+     "cells": "S10",
+     "name": "PowerMode",
+     "role": "request"
+    },
+    {
+     "cells": "S11",
+     "name": "RequestedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S12",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S13",
+     "name": "ResponseToken",
+     "role": "response_token"
+    }
+   ]
+  },
+  "ic10.stack.power-job-prepare.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "Identity",
+     "role": "request",
+     "description": "PolicyId"
+    },
+    {
+     "cells": "S9",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S10",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S11",
+     "name": "Status",
+     "role": "state",
+     "description": "1 advanced, -1 fault"
+    },
+    {
+     "cells": "S12",
+     "name": "NewState",
+     "role": "result"
+    },
+    {
+     "cells": "S13",
+     "name": "NewJobGeneration",
+     "role": "result"
+    },
+    {
+     "cells": "S14",
+     "name": "Slot",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "JobId",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "State",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "JobGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "RequestedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S19",
+     "name": "RequiredCapability",
+     "role": "request",
+     "description": "PowerMode"
+    },
+    {
+     "cells": "S20",
+     "name": "Phase",
+     "role": "state"
+    }
+   ]
+  },
+  "ic10.stack.power-link-selector.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "LinkRef",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "SourceWatts",
+     "role": "result",
+     "description": "sink watts plus transformer overhead"
+    },
+    {
+     "cells": "S10",
+     "name": "LinkGeneration",
+     "role": "result"
+    },
+    {
+     "cells": "S11",
+     "name": "LinkClass",
+     "role": "result"
+    },
+    {
+     "cells": "S12",
+     "name": "SourceReservationRef",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "SinkReservationRef",
+     "role": "request"
+    },
+    {
+     "cells": "S14",
+     "name": "SinkWatts",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S16",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S17",
+     "name": "Status",
+     "role": "state",
+     "description": "1 link, -3 none, -2 directory, -1 invalid"
+    }
+   ]
+  },
+  "ic10.stack.power-plan-validator.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "PlanGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S9",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S10",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S11",
+     "name": "Status",
+     "role": "state",
+     "description": "1 valid, -1 invalid"
+    }
+   ]
+  },
+  "ic10.stack.power-policy-target-resolver.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "NodeKind",
+     "role": "result",
+     "description": "1 producer, 2 consumer, 3 battery"
+    },
+    {
+     "cells": "S9",
+     "name": "ReservationGeneration",
+     "role": "result"
+    },
+    {
+     "cells": "S10",
+     "name": "PolicyId",
+     "role": "request"
+    },
+    {
+     "cells": "S11",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S12",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S13",
+     "name": "Status",
+     "role": "state",
+     "description": "1 resolved, -2 none, -3 ambiguous, -1 invalid"
+    },
+    {
+     "cells": "S14",
+     "name": "ReservationRef",
+     "role": "result"
+    },
+    {
+     "cells": "S15",
+     "name": "EndpointRef",
+     "role": "result"
+    }
+   ]
+  },
+  "ic10.stack.power-reservation-allocator.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "PlanGeneration",
+     "role": "result",
+     "description": "the last plan the allocator committed"
+    },
+    {
+     "cells": "S9",
+     "name": "AuthorityEpoch",
+     "role": "epoch",
+     "description": "executors act only under this epoch"
+    },
+    {
+     "cells": "S10",
+     "name": "Status",
+     "role": "state",
+     "description": "1 authority published, -1 fault"
+    },
+    {
+     "cells": "S20",
+     "name": "Phase",
+     "role": "state"
+    },
+    {
+     "cells": "S21",
+     "name": "PendingPlanGeneration",
+     "role": "state"
+    },
+    {
+     "cells": "S22",
+     "name": "PendingEpoch",
+     "role": "epoch"
+    },
+    {
+     "cells": "S30",
+     "name": "RequestCounter",
+     "role": "generation",
+     "description": "source of the tokens sent to the Validator, Committer, and Releaser"
+    }
+   ]
+  },
+  "ic10.stack.power-reservation-committer.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "PlanGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S9",
+     "name": "OwnerEpoch",
+     "role": "request"
+    },
+    {
+     "cells": "S10",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S11",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S12",
+     "name": "Status",
+     "role": "state",
+     "description": "1 committed, -1 rejected"
+    }
+   ]
+  },
+  "ic10.stack.power-sink-flow-builder.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "Status",
+     "role": "state",
+     "description": "1 flow staged, 0 no source, -1 fault"
+    },
+    {
+     "cells": "S9",
+     "name": "SourceWatts",
+     "role": "result"
+    },
+    {
+     "cells": "S10",
+     "name": "SourceReservationRef",
+     "role": "result"
+    },
+    {
+     "cells": "S11",
+     "name": "SinkReservationRef",
+     "role": "request"
+    },
+    {
+     "cells": "S12",
+     "name": "SinkWatts",
+     "role": "request"
+    },
+    {
+     "cells": "S14",
+     "name": "SinkReservationGeneration",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S16",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S20",
+     "name": "Phase",
+     "role": "state"
+    }
+   ]
+  },
+  "ic10.stack.power-sink-selector.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "Ordinal",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "ReservationGeneration",
+     "role": "result"
+    },
+    {
+     "cells": "S10",
+     "name": "PriorityFlags",
+     "role": "result"
+    },
+    {
+     "cells": "S11",
+     "name": "CriticalFlag",
+     "role": "result"
+    },
+    {
+     "cells": "S12",
+     "name": "StartOrdinal",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S14",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S15",
+     "name": "Status",
+     "role": "state",
+     "description": "1 sink, -3 overflow, -2 none, -1 invalid"
+    },
+    {
+     "cells": "S16",
+     "name": "ReservationRef",
+     "role": "result"
+    },
+    {
+     "cells": "S17",
+     "name": "DemandWatts",
+     "role": "result"
+    }
+   ]
+  },
+  "ic10.stack.power-source-selector.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "Ordinal",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "ReservationGeneration",
+     "role": "result"
+    },
+    {
+     "cells": "S10",
+     "name": "NodeKind",
+     "role": "result"
+    },
+    {
+     "cells": "S11",
+     "name": "StartOrdinal",
+     "role": "request"
+    },
+    {
+     "cells": "S12",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S13",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S14",
+     "name": "Status",
+     "role": "state",
+     "description": "1 source, -3 overflow, -2 none, -1 invalid"
+    },
+    {
+     "cells": "S15",
+     "name": "ReservationRef",
+     "role": "result"
+    },
+    {
+     "cells": "S16",
+     "name": "AvailableWatts",
+     "role": "result"
     }
    ]
   },
@@ -3385,6 +5302,286 @@
     }
    ]
   },
+  "ic10.stack.print-candidate-executor.v2": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S9",
+     "name": "Result",
+     "role": "result"
+    },
+    {
+     "cells": "S10",
+     "name": "CurrentToken",
+     "role": "current_token"
+    },
+    {
+     "cells": "S11",
+     "name": "TargetJobState",
+     "role": "state"
+    },
+    {
+     "cells": "S12",
+     "name": "ErrorStatus",
+     "role": "error"
+    },
+    {
+     "cells": "S13",
+     "name": "ProcessorSpec",
+     "role": "request"
+    },
+    {
+     "cells": "S14",
+     "name": "PrinterRef",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "RecipeHash",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "RequiredCapability",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "InputCount",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "OutputCount",
+     "role": "request"
+    },
+    {
+     "cells": "S19",
+     "name": "RequestedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S20",
+     "name": "Phase",
+     "role": "state"
+    },
+    {
+     "cells": "S30",
+     "name": "ResultCode",
+     "role": "result"
+    },
+    {
+     "cells": "S33",
+     "name": "ResolvedPrinterRef",
+     "role": "result"
+    }
+   ]
+  },
+  "ic10.stack.print-job-driver.v2": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S9",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S10",
+     "name": "TargetJobState",
+     "role": "result"
+    },
+    {
+     "cells": "S11",
+     "name": "ErrorStatus",
+     "role": "error"
+    },
+    {
+     "cells": "S12",
+     "name": "JobId",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "Identity",
+     "role": "request",
+     "description": "RecipeHash"
+    },
+    {
+     "cells": "S14",
+     "name": "RequiredCapability",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "InputCount",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "OutputCount",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "RequestedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S20",
+     "name": "Phase",
+     "role": "state"
+    },
+    {
+     "cells": "S21",
+     "name": "SelectorToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S22",
+     "name": "ExecutorToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S23",
+     "name": "CandidateOrdinal",
+     "role": "state"
+    },
+    {
+     "cells": "S24",
+     "name": "Outcome",
+     "role": "state"
+    },
+    {
+     "cells": "S30",
+     "name": "TokenCounter",
+     "role": "generation"
+    }
+   ]
+  },
+  "ic10.stack.print-material-resolver.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "PrinterRefEcho",
+     "role": "response_token",
+     "description": "the printer the published records answer"
+    },
+    {
+     "cells": "S9",
+     "name": "InputCount",
+     "role": "result"
+    },
+    {
+     "cells": "S11",
+     "name": "PublicationGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S12",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S13",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S14",
+     "name": "RecipeViewGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S15",
+     "name": "RequiredCapability",
+     "role": "result"
+    },
+    {
+     "cells": "S16",
+     "name": "PrinterRef",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "RequestedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S18",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S20..S83",
+     "name": "LinkRecords",
+     "role": "table",
+     "description": "four-cell [LinkRef, QuantityPerOutput, ResourceType, Unit] records"
+    }
+   ]
+  },
+  "ic10.stack.printer-capacity-client.v2": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "ResolvedPrinterRef",
+     "role": "result"
+    },
+    {
+     "cells": "S9",
+     "name": "OwningBankRef",
+     "role": "state"
+    },
+    {
+     "cells": "S10",
+     "name": "OwningPin",
+     "role": "state"
+    },
+    {
+     "cells": "S11",
+     "name": "ReservationToken",
+     "role": "epoch"
+    },
+    {
+     "cells": "S12",
+     "name": "PrinterRef",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "ProcessorSpec",
+     "role": "request"
+    },
+    {
+     "cells": "S14",
+     "name": "Command",
+     "role": "request",
+     "description": "1 reserve, 2 release"
+    },
+    {
+     "cells": "S15",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S16",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S17",
+     "name": "Status",
+     "role": "state"
+    }
+   ]
+  },
   "ic10.stack.process-condition.v1": {
    "layout": [
     {
@@ -3608,8 +5805,66 @@
     },
     {
      "cells": "S14",
-     "name": "ResourceProfileViewRef",
-     "role": "topology"
+     "name": "ClassExtensionRef",
+     "role": "topology",
+     "description": "class-specific peer reference; ITEM endpoints publish their Resource Profile View ReferenceId here, POWER and FLUID providers leave it unused"
+    },
+    {
+     "cells": "S20..S22",
+     "name": "ClassConfiguration",
+     "role": "metadata",
+     "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
+    },
+    {
+     "cells": "S24",
+     "name": "MoveOperation",
+     "role": "request",
+     "description": "LArRE raw movement extension: 2 MOVE, 3 RECOVER"
+    },
+    {
+     "cells": "S25",
+     "name": "MoveSourceStation",
+     "role": "request"
+    },
+    {
+     "cells": "S26",
+     "name": "MoveSourceSlot",
+     "role": "request"
+    },
+    {
+     "cells": "S27",
+     "name": "MoveDestinationStation",
+     "role": "request"
+    },
+    {
+     "cells": "S28",
+     "name": "MoveDestinationSlot",
+     "role": "request"
+    },
+    {
+     "cells": "S30",
+     "name": "MoveExpectedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S31",
+     "name": "MoveRequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S32",
+     "name": "MoveStatus",
+     "role": "state"
+    },
+    {
+     "cells": "S33",
+     "name": "MovedQuantity",
+     "role": "result"
+    },
+    {
+     "cells": "S34",
+     "name": "MoveResponseToken",
+     "role": "response_token"
     },
     {
      "cells": "S35",
@@ -3717,7 +5972,7 @@
      "cells": "S14..S27",
      "name": "ClassExtension",
      "role": "result",
-     "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
+     "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
     },
     {
      "cells": "S28",
@@ -3817,6 +6072,35 @@
      "name": "PublicationGeneration",
      "role": "generation",
      "description": "positive only after a complete resolution"
+    }
+   ]
+  },
+  "ic10.stack.resource-reservation-releaser.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "OwnerEpoch",
+     "role": "request"
+    },
+    {
+     "cells": "S9",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S10",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S11",
+     "name": "Status",
+     "role": "state"
+    },
+    {
+     "cells": "S12",
+     "name": "ReleasedCount",
+     "role": "result"
     }
    ]
   },
@@ -4505,6 +6789,225 @@
      "cells": "S41",
      "name": "LaneBOutputPerBatch",
      "role": "result"
+    }
+   ]
+  },
+  "ic10.stack.transform-candidate-executor.v2": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S9",
+     "name": "Result",
+     "role": "result"
+    },
+    {
+     "cells": "S10",
+     "name": "CurrentToken",
+     "role": "current_token"
+    },
+    {
+     "cells": "S11",
+     "name": "TargetJobState",
+     "role": "state"
+    },
+    {
+     "cells": "S12",
+     "name": "ErrorStatus",
+     "role": "error"
+    },
+    {
+     "cells": "S14",
+     "name": "JobId",
+     "role": "request"
+    },
+    {
+     "cells": "S20",
+     "name": "Phase",
+     "role": "state"
+    },
+    {
+     "cells": "S21",
+     "name": "RuntimeRef",
+     "role": "request"
+    },
+    {
+     "cells": "S22",
+     "name": "TransformType",
+     "role": "request"
+    },
+    {
+     "cells": "S23",
+     "name": "RequiredCapability",
+     "role": "request"
+    },
+    {
+     "cells": "S24",
+     "name": "InputCount",
+     "role": "request"
+    },
+    {
+     "cells": "S25",
+     "name": "OutputCount",
+     "role": "request"
+    },
+    {
+     "cells": "S26",
+     "name": "RequestedQuantity",
+     "role": "request"
+    }
+   ]
+  },
+  "ic10.stack.transform-candidate-readiness.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S9",
+     "name": "Status",
+     "role": "state",
+     "description": "1 ready, -2 processor, -3 resource, -4 capacity, -1 invalid"
+    },
+    {
+     "cells": "S10",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S11",
+     "name": "RuntimeRef",
+     "role": "request"
+    },
+    {
+     "cells": "S12",
+     "name": "TransformType",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "RequiredCapability",
+     "role": "request"
+    },
+    {
+     "cells": "S14",
+     "name": "InputCount",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "OutputCount",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "BatchCount",
+     "role": "request"
+    },
+    {
+     "cells": "S20",
+     "name": "Phase",
+     "role": "state"
+    },
+    {
+     "cells": "S30",
+     "name": "AdmissionGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S31",
+     "name": "ResolverGeneration",
+     "role": "generation"
+    }
+   ]
+  },
+  "ic10.stack.transform-job-driver.v2": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "RequestToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S9",
+     "name": "ResponseToken",
+     "role": "response_token"
+    },
+    {
+     "cells": "S10",
+     "name": "TargetJobState",
+     "role": "result"
+    },
+    {
+     "cells": "S11",
+     "name": "ErrorStatus",
+     "role": "error"
+    },
+    {
+     "cells": "S12",
+     "name": "JobId",
+     "role": "request"
+    },
+    {
+     "cells": "S13",
+     "name": "Identity",
+     "role": "request",
+     "description": "TransformType"
+    },
+    {
+     "cells": "S14",
+     "name": "RequiredCapability",
+     "role": "request"
+    },
+    {
+     "cells": "S15",
+     "name": "InputCount",
+     "role": "request"
+    },
+    {
+     "cells": "S16",
+     "name": "OutputCount",
+     "role": "request"
+    },
+    {
+     "cells": "S17",
+     "name": "RequestedQuantity",
+     "role": "request"
+    },
+    {
+     "cells": "S20",
+     "name": "Phase",
+     "role": "state"
+    },
+    {
+     "cells": "S21",
+     "name": "SelectorToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S22",
+     "name": "ExecutorToken",
+     "role": "request_token"
+    },
+    {
+     "cells": "S23",
+     "name": "CandidateOrdinal",
+     "role": "state"
+    },
+    {
+     "cells": "S24",
+     "name": "Outcome",
+     "role": "state"
+    },
+    {
+     "cells": "S30",
+     "name": "TokenCounter",
+     "role": "generation"
     }
    ]
   }

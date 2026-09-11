@@ -11,7 +11,51 @@
     0
   ],
   "canonical_refs": [],
-  "layout": [],
+  "layout": [
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "RequestToken",
+      "role": "request_token"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "ResponseToken",
+      "role": "response_token"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "TargetJobState",
+      "role": "result"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "ErrorStatus",
+      "role": "error"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "Lane",
+      "role": "state",
+      "description": "1 transform, 2 print"
+    },
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "CurrentToken",
+      "role": "current_token"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10",
@@ -51,59 +95,66 @@
         },
         {
           "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResponseToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "TargetJobState",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ErrorStatus",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "error"
         },
         {
           "address": 13,
-          "name": "S13",
+          "name": "Lane",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 transform, 2 print"
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "CurrentToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "current_token"
         }
       ],
       "behavior": {

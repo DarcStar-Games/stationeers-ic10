@@ -260,72 +260,83 @@
       },
       {
         "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "PlanGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "the last plan the allocator committed"
       },
       {
         "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "AuthorityEpoch",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "epoch",
+        "description": "executors act only under this epoch"
       },
       {
         "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Status",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state",
+        "description": "1 authority published, -1 fault"
       },
       {
         "address": 20,
-        "name": "S20",
+        "name": "Phase",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 21,
-        "name": "S21",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "PendingPlanGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 22,
-        "name": "S22",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "PendingEpoch",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "epoch"
       },
       {
         "address": 30,
-        "name": "S30",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestCounter",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "generation",
+        "description": "source of the tokens sent to the Validator, Committer, and Releaser"
       }
     ],
     "headers": [

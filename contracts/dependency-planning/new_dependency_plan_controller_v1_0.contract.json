@@ -246,103 +246,116 @@
       },
       {
         "address": 20,
-        "name": "S20",
+        "name": "ParentJobId",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 21,
-        "name": "S21",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       },
       {
         "address": 22,
-        "name": "S22",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResponseToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       },
       {
         "address": 23,
-        "name": "S23",
+        "name": "Decision",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "1 ready, 4 probe, 6 planned, -2 overflow, -1 invalid"
       },
       {
         "address": 31,
-        "name": "S31",
+        "name": "ChildJobId",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "plan record proposal the Planner writes to the Plan Store"
       },
       {
         "address": 32,
-        "name": "S32",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResourceType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 33,
-        "name": "S33",
+        "name": "RequiredTotal",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 34,
-        "name": "S34",
+        "name": "BaselineKnown",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 35,
-        "name": "S35",
+        "name": "FutureQuantity",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 36,
-        "name": "S36",
+        "name": "QuoteFingerprintA",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 37,
-        "name": "S37",
+        "name": "QuoteFingerprintB",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       }
     ],
     "headers": [

@@ -73,6 +73,14 @@ class LayoutEntry:
     def covers(self, cell: int) -> bool:
         return self.start <= cell <= self.end
 
+    @property
+    def is_range(self) -> bool:
+        return self.end > self.start
+
+    def field_name(self, cell: int) -> str:
+        """The contract field name at one cell: the entry's name, indexed inside a range."""
+        return f"{self.name}[{cell - self.start}]" if self.is_range else self.name
+
     def document(self) -> dict[str, Any]:
         item: dict[str, Any] = {
             "cells": self.cells, "start": self.start, "end": self.end,
@@ -214,21 +222,78 @@ def _range_cells(ranges: list[dict[str, int]]) -> set[int]:
     return cells
 
 
-def peer_touched_cells(definition: dict[str, Any]) -> dict[int, set[str]]:
-    """Payload cells the protocol's consumers read or write, with the consumers that touch each.
+WIRING_FILE = "data/script_wiring.json"
+DERIVED_RANGE_SOURCES = ("source-derived", "source-fingerprinted-exception")
 
-    A consumer's dynamic range counts when its provenance is a derivation or a reviewed
-    exception; a conservative whole-stack fallback names nothing a layout should answer for.
+
+def _access_cells(access: dict[str, Any]) -> set[int]:
+    """Literal cells plus dynamic ranges whose provenance is a derivation or a reviewed exception.
+
+    A conservative whole-stack fallback names nothing a layout should answer for.
+    """
+    cells = set(access["literal_reads"]) | set(access["literal_writes"])
+    for direction in ("read", "write"):
+        if access[f"dynamic_{direction}_range_source"] in DERIVED_RANGE_SOURCES:
+            cells |= _range_cells(access[f"dynamic_{direction}_ranges"])
+    return cells
+
+
+def peer_touched_cells(
+    definition: dict[str, Any], extra: dict[str, dict[int, set[str]]] | None = None,
+) -> dict[int, set[str]]:
+    """Payload cells the protocol's peers read or write, with the peers that touch each.
+
+    The contract's consumer interfaces are the first source; ``extra`` carries the cells
+    the wiring map's declared peers reach (``wiring_touched_cells``), for a port that
+    names its peer in the wiring without a consumer edge the contracts can prove.
     """
     touched: dict[int, set[str]] = {}
     for interface in definition.get("consumer_interfaces", []):
         excluded = header_cells(interface["header_base"])
-        cells = set(interface["literal_reads"]) | set(interface["literal_writes"])
-        for direction in ("read", "write"):
-            if interface[f"dynamic_{direction}_range_source"] in ("source-derived", "source-fingerprinted-exception"):
-                cells |= _range_cells(interface[f"dynamic_{direction}_ranges"])
-        for cell in cells - excluded:
+        for cell in _access_cells(interface) - excluded:
             touched.setdefault(cell, set()).add(interface["source"])
+    for cell, sources in (extra or {}).get(definition.get("protocol_id", ""), {}).items():
+        touched.setdefault(cell, set()).update(sources)
+    return touched
+
+
+def wiring_touched_cells(root: Path, contracts_by_source: dict[str, dict[str, Any]]) -> dict[str, dict[int, set[str]]]:
+    """Payload cells each wired port reaches on the protocols its declared peer provides.
+
+    ``data/script_wiring.json`` names every port's canonical peer program. A port whose
+    peer is a script reaches that script's protocols with whatever it reads or writes, even
+    when the contracts record no consumer edge for the port (no literal S0 check on that
+    path), so those cells belong in the map and in the report's peer count.
+    """
+    from framework.script_contracts.naming import protocol_id
+    wiring = json.loads((Path(root) / WIRING_FILE).read_text())
+    provided: dict[str, list[tuple[str, int]]] = {}
+    for source, contract in contracts_by_source.items():
+        provided[source] = [
+            (protocol_id(header["magic"], header["abi"], header.get("contract")), header["base"])
+            for header in contract["own_stack"]["headers"]
+        ]
+    touched: dict[str, dict[int, set[str]]] = {}
+    for source, ports in wiring.get("ports", {}).items():
+        contract = contracts_by_source.get(source)
+        if contract is None:
+            continue
+        access_by_port = {port["port"]: port["stack"] for port in contract["device_ports"]}
+        for port, peer in ports.items():
+            if peer.get("kind") != "script" or port not in access_by_port:
+                continue
+            cells = _access_cells(access_by_port[port])
+            for provider in peer.get("providers", []):
+                headers = sorted(provided.get(provider, []), key=lambda item: item[1])
+                if not headers:
+                    continue
+                for cell in cells:
+                    # A program publishing a service header at S0 and a telemetry block at
+                    # S96 owns two protocols; a cell belongs to the one whose header sits
+                    # at or below it.
+                    pid, base = next((item for item in reversed(headers) if item[1] <= cell), headers[0])
+                    if cell not in header_cells(base):
+                        touched.setdefault(pid, {}).setdefault(cell, set()).add(source)
     return touched
 
 
@@ -247,6 +312,7 @@ def layout_errors(
     protocol_definitions: dict[str, dict[str, Any]],
     contracts_by_source: dict[str, dict[str, Any]],
     layouts: dict[str, list[LayoutEntry]],
+    extra_touched: dict[str, dict[int, set[str]]] | None = None,
 ) -> list[str]:
     """Hold the map to the tree: entries inside the surface, peer cells named, overrides agreed."""
     errors: list[str] = []
@@ -256,7 +322,7 @@ def layout_errors(
             errors.append(f"{pid}: layout declared for a protocol nothing provides or consumes")
     for pid, definition in sorted(definitions_by_pid.items()):
         entries = layouts.get(pid)
-        touched = peer_touched_cells(definition)
+        touched = peer_touched_cells(definition, extra_touched)
         if entries is None:
             if touched:
                 cells = format_cell_set(set(touched))
@@ -296,7 +362,14 @@ def layout_errors(
                 if field.get("semantic_source") != "override":
                     continue
                 entry = entry_for(entries, field["address"])
-                if entry is not None and entry.start == entry.end and entry.name != field["name"]:
+                if entry is None:
+                    continue
+                if entry.is_range:
+                    errors.append(
+                        f"{pid}: {provider['source']} override names S{field['address']} {field['name']} "
+                        f"inside the range entry {entry.name} {entry.cells}; split the range so the cell "
+                        "has its own entry")
+                elif entry.name != field["name"]:
                     errors.append(
                         f"{pid}: {provider['source']} override names S{field['address']} "
                         f"{field['name']} but the layout names it {entry.name}")
@@ -340,7 +413,7 @@ def apply_layout(own_stack: dict[str, Any], layouts: dict[str, list[LayoutEntry]
             if field["semantic_source"] == "override":
                 field["role"] = entry.role
                 continue
-            field["name"] = entry.name
+            field["name"] = entry.field_name(field["address"])
             field["role"] = entry.role
             field["semantic_source"] = LAYOUT_SEMANTIC_SOURCE
             if entry.description and "description" not in field:
@@ -364,27 +437,29 @@ def _kebab(contract: str) -> str:
 
 
 def doc_layout_blocks(text: str) -> list[DocLayoutBlock]:
-    """Fenced layout blocks whose S0 line names the contract, with every cell line they cite.
+    """Layout blocks whose S0 line names the contract, with every cell line each cites.
 
-    A block is attributed when an ``S0`` line inside it carries ``<Contract>.v<abi>``; a
-    block that names no contract, such as the numeric telemetry block, is not held.
+    An ``S0`` line carrying ``<Contract>.v<abi>`` opens a block that runs to the next such
+    line or the end of the fence, so one fence holding two services attributes each cell
+    line to its own service. Cell lines before the first S0 line of a fence, and fences
+    whose S0 line names no contract (the numeric telemetry block), are not held.
     """
     blocks: list[DocLayoutBlock] = []
     inside = False
-    start_line = 0
+    current: DocLayoutBlock | None = None
     cited: list[tuple[int, int, int]] = []
-    pid: str | None = None
+
+    def close() -> None:
+        nonlocal current, cited
+        if current is not None and cited:
+            blocks.append(DocLayoutBlock(current.protocol_id, current.line, tuple(cited)))
+        current = None
+        cited = []
+
     for number, line in enumerate(text.splitlines(), 1):
         if line.startswith("```"):
-            if inside:
-                if pid is not None and cited:
-                    blocks.append(DocLayoutBlock(pid, start_line, tuple(cited)))
-                inside = False
-                continue
-            inside = True
-            start_line = number
-            cited = []
-            pid = None
+            close()
+            inside = not inside
             continue
         if not inside:
             continue
@@ -393,16 +468,20 @@ def doc_layout_blocks(text: str) -> list[DocLayoutBlock]:
             continue
         start = int(match.group(1))
         end = int(match.group(3)) if match.group(3) is not None else start
+        if start == 0:
+            magic = _DOC_MAGIC_RE.search(line)
+            if magic is not None:
+                close()
+                current = DocLayoutBlock(f"ic10.stack.{_kebab(magic.group(1))}.v{magic.group(2)}", number, ())
+        if current is None:
+            continue
         if match.group(2) == "/":
             # ``S25/S26`` names two cells, not a range.
             cited.append((start, start, number))
             cited.append((end, end, number))
         else:
             cited.append((start, max(start, end), number))
-        if start == 0:
-            magic = _DOC_MAGIC_RE.search(line)
-            if magic is not None:
-                pid = f"ic10.stack.{_kebab(magic.group(1))}.v{magic.group(2)}"
+    close()
     return blocks
 
 
@@ -428,13 +507,18 @@ def doc_layout_errors(text: str, layouts: dict[str, list[LayoutEntry]], document
 
 def fields_by_role(
     layouts: dict[str, list[LayoutEntry]], protocol_definitions: dict[str, dict[str, Any]],
+    extra_touched: dict[str, dict[int, set[str]]] | None = None,
 ) -> dict[str, list[dict[str, Any]]]:
-    """The alignment review's input: for each role, every protocol's cells and its fan-in."""
+    """The alignment review's input: for each role, every protocol's cells and its fan-in.
+
+    ``consumers`` counts programs with a contract consumer edge; ``peers_touching`` counts
+    every program that reads or writes the entry's cells, wiring-declared peers included.
+    """
     definitions_by_pid = {definition["protocol_id"]: definition for definition in protocol_definitions.values()}
     report: dict[str, list[dict[str, Any]]] = {role: [] for role in ROLES}
     for pid in sorted(layouts):
         definition = definitions_by_pid.get(pid, {})
-        touched = peer_touched_cells(definition) if definition else {}
+        touched = peer_touched_cells(definition, extra_touched) if definition else {}
         consumers = {item["source"] for item in definition.get("consumer_interfaces", [])}
         providers = [item["source"] for item in definition.get("provider_interfaces", [])]
         for entry in layouts[pid]:
@@ -472,8 +556,11 @@ def field_map_document(root: Path) -> str:
     """Render docs/STACK_FIELD_MAP.md from the reviewed layouts and the generated tree."""
     from framework.ic10_line_budget import CEILING_LINES, production_line_counts
     root = Path(root)
-    definitions, _ = load_generated(root)
-    return render_field_map(load_layouts(root), definitions, production_line_counts(root), CEILING_LINES)
+    definitions, contracts = load_generated(root)
+    return render_field_map(
+        load_layouts(root), definitions, production_line_counts(root), CEILING_LINES,
+        wiring_touched_cells(root, contracts),
+    )
 
 
 def render_field_map(
@@ -481,10 +568,11 @@ def render_field_map(
     protocol_definitions: dict[str, dict[str, Any]],
     line_counts: dict[str, int],
     ceiling: int,
+    extra_touched: dict[str, dict[int, set[str]]] | None = None,
 ) -> str:
     """docs/STACK_FIELD_MAP.md: the role vocabulary, every role's spread, and every protocol's map."""
     definitions_by_pid = {definition["protocol_id"]: definition for definition in protocol_definitions.values()}
-    by_role = fields_by_role(layouts, protocol_definitions)
+    by_role = fields_by_role(layouts, protocol_definitions, extra_touched)
     mapped_cells = sum(entry.end - entry.start + 1 for entries in layouts.values() for entry in entries)
     lines = [
         "# Stack Field Map",
@@ -510,9 +598,11 @@ def render_field_map(
         "## By role",
         "",
         "One row per layout entry, grouped by role and ordered by cell, so the offsets services",
-        "use for the same role sit together. Peers is the number of consumer programs that read",
-        "or write the entry's cells; headroom is the smallest line headroom under the",
-        f"{ceiling}-line ceiling among the protocol's providers, the room a move would have to fit in.",
+        "use for the same role sit together. Peers is the number of programs that read or write",
+        "the entry's cells, counting both contract consumer edges and the peers the wiring map",
+        "declares for a port without one; consumers counts contract consumer edges only. Headroom",
+        f"is the smallest line headroom under the {ceiling}-line ceiling among the protocol's",
+        "providers, the room a move would have to fit in.",
         "",
     ]
     for role in ROLES:
@@ -540,7 +630,7 @@ def render_field_map(
         definition = definitions_by_pid.get(pid, {})
         providers = [item["source"] for item in definition.get("provider_interfaces", [])]
         consumers = sorted({item["source"] for item in definition.get("consumer_interfaces", [])})
-        touched = peer_touched_cells(definition) if definition else {}
+        touched = peer_touched_cells(definition, extra_touched) if definition else {}
         lines += [
             f"### {pid}",
             "",

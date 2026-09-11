@@ -61,8 +61,88 @@
       "cells": "S14",
       "start": 14,
       "end": 14,
-      "name": "ResourceProfileViewRef",
-      "role": "topology"
+      "name": "ClassExtensionRef",
+      "role": "topology",
+      "description": "class-specific peer reference; ITEM endpoints publish their Resource Profile View ReferenceId here, POWER and FLUID providers leave it unused"
+    },
+    {
+      "cells": "S20..S22",
+      "start": 20,
+      "end": 22,
+      "name": "ClassConfiguration",
+      "role": "metadata",
+      "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
+    },
+    {
+      "cells": "S24",
+      "start": 24,
+      "end": 24,
+      "name": "MoveOperation",
+      "role": "request",
+      "description": "LArRE raw movement extension: 2 MOVE, 3 RECOVER"
+    },
+    {
+      "cells": "S25",
+      "start": 25,
+      "end": 25,
+      "name": "MoveSourceStation",
+      "role": "request"
+    },
+    {
+      "cells": "S26",
+      "start": 26,
+      "end": 26,
+      "name": "MoveSourceSlot",
+      "role": "request"
+    },
+    {
+      "cells": "S27",
+      "start": 27,
+      "end": 27,
+      "name": "MoveDestinationStation",
+      "role": "request"
+    },
+    {
+      "cells": "S28",
+      "start": 28,
+      "end": 28,
+      "name": "MoveDestinationSlot",
+      "role": "request"
+    },
+    {
+      "cells": "S30",
+      "start": 30,
+      "end": 30,
+      "name": "MoveExpectedQuantity",
+      "role": "request"
+    },
+    {
+      "cells": "S31",
+      "start": 31,
+      "end": 31,
+      "name": "MoveRequestToken",
+      "role": "request_token"
+    },
+    {
+      "cells": "S32",
+      "start": 32,
+      "end": 32,
+      "name": "MoveStatus",
+      "role": "state"
+    },
+    {
+      "cells": "S33",
+      "start": 33,
+      "end": 33,
+      "name": "MovedQuantity",
+      "role": "result"
+    },
+    {
+      "cells": "S34",
+      "start": 34,
+      "end": 34,
+      "name": "MoveResponseToken",
+      "role": "response_token"
     },
     {
       "cells": "S35",
@@ -261,31 +341,36 @@
         },
         {
           "address": 14,
-          "name": "ResourceProfileViewRef",
-          "value_type": "number",
+          "name": "ClassExtensionRef",
+          "value_type": "reference-id",
           "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "role": "topology"
+          "role": "topology",
+          "description": "class-specific peer reference; ITEM endpoints publish their Resource Profile View ReferenceId here, POWER and FLUID providers leave it unused"
         },
         {
           "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ClassConfiguration[0]",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "metadata",
+          "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
         },
         {
           "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ClassConfiguration[1]",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "metadata",
+          "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
         },
         {
           "address": 35,
@@ -539,40 +624,47 @@
         },
         {
           "address": 14,
-          "name": "ResourceProfileViewRef",
-          "value_type": "number",
+          "name": "ClassExtensionRef",
+          "value_type": "reference-id",
           "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "role": "topology"
+          "role": "topology",
+          "description": "class-specific peer reference; ITEM endpoints publish their Resource Profile View ReferenceId here, POWER and FLUID providers leave it unused"
         },
         {
           "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ClassConfiguration[0]",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "metadata",
+          "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
         },
         {
           "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ClassConfiguration[1]",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "metadata",
+          "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
         },
         {
           "address": 22,
-          "name": "S22",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ClassConfiguration[2]",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "metadata",
+          "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
         },
         {
           "address": 23,
@@ -586,94 +678,105 @@
         },
         {
           "address": 24,
-          "name": "S24",
+          "name": "MoveOperation",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "LArRE raw movement extension: 2 MOVE, 3 RECOVER"
         },
         {
           "address": 25,
-          "name": "S25",
+          "name": "MoveSourceStation",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 26,
-          "name": "S26",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "MoveSourceSlot",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 27,
-          "name": "S27",
+          "name": "MoveDestinationStation",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 28,
-          "name": "S28",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "MoveDestinationSlot",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 30,
-          "name": "S30",
+          "name": "MoveExpectedQuantity",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 31,
-          "name": "S31",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "MoveRequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 32,
-          "name": "S32",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "MoveStatus",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state"
         },
         {
           "address": 33,
-          "name": "S33",
+          "name": "MovedQuantity",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 34,
-          "name": "S34",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "MoveResponseToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         },
         {
           "address": 35,
@@ -922,31 +1025,36 @@
         },
         {
           "address": 14,
-          "name": "ResourceProfileViewRef",
-          "value_type": "number",
+          "name": "ClassExtensionRef",
+          "value_type": "reference-id",
           "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "role": "topology"
+          "role": "topology",
+          "description": "class-specific peer reference; ITEM endpoints publish their Resource Profile View ReferenceId here, POWER and FLUID providers leave it unused"
         },
         {
           "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ClassConfiguration[0]",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "metadata",
+          "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
         },
         {
           "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ClassConfiguration[1]",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "metadata",
+          "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
         },
         {
           "address": 35,
@@ -1204,13 +1312,14 @@
         },
         {
           "address": 14,
-          "name": "ResourceProfileViewRef",
-          "value_type": "number",
+          "name": "ClassExtensionRef",
+          "value_type": "reference-id",
           "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "role": "topology"
+          "role": "topology",
+          "description": "class-specific peer reference; ITEM endpoints publish their Resource Profile View ReferenceId here, POWER and FLUID providers leave it unused"
         },
         {
           "address": 35,
@@ -1472,13 +1581,14 @@
         },
         {
           "address": 14,
-          "name": "ResourceProfileViewRef",
-          "value_type": "number",
+          "name": "ClassExtensionRef",
+          "value_type": "reference-id",
           "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "role": "topology"
+          "role": "topology",
+          "description": "class-specific peer reference; ITEM endpoints publish their Resource Profile View ReferenceId here, POWER and FLUID providers leave it unused"
         },
         {
           "address": 35,
@@ -1687,13 +1797,14 @@
         },
         {
           "address": 14,
-          "name": "ResourceProfileViewRef",
-          "value_type": "number",
+          "name": "ClassExtensionRef",
+          "value_type": "reference-id",
           "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "role": "topology"
+          "role": "topology",
+          "description": "class-specific peer reference; ITEM endpoints publish their Resource Profile View ReferenceId here, POWER and FLUID providers leave it unused"
         },
         {
           "address": 52,
@@ -1926,30 +2037,36 @@
         },
         {
           "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ClassConfiguration[0]",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "metadata",
+          "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
         },
         {
           "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ClassConfiguration[1]",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "metadata",
+          "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
         },
         {
           "address": 22,
-          "name": "S22",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ClassConfiguration[2]",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "metadata",
+          "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
         },
         {
           "address": 23,
@@ -2316,21 +2433,25 @@
         },
         {
           "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ClassConfiguration[0]",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "metadata",
+          "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
         },
         {
           "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ClassConfiguration[1]",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "metadata",
+          "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
         },
         {
           "address": 35,
@@ -2628,12 +2749,14 @@
         },
         {
           "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ClassConfiguration[0]",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "metadata",
+          "description": "class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount"
         },
         {
           "address": 35,

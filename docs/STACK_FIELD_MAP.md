@@ -6,48 +6,50 @@ contracts/protocols/. Do not edit by hand. The header cells S0..S7 are described
 docs/STACK_ABI_ENVELOPE.md and are not repeated here; a block header away from S0 keeps its
 magic and version cells out of the map the same way.
 
-Protocols with a layout: 60. Layout entries: 801. Cells named: 3967.
+Protocols with a layout: 101. Layout entries: 1250. Cells named: 4552.
 
 ## Roles
 
 | Role | Meaning | Entries |
 |---|---|---:|
-| metadata | static published configuration or capability: width, capacity, unit, class, limit | 65 |
+| metadata | static published configuration or capability: width, capacity, unit, class, limit | 66 |
 | schema | schema identity, version, or signature published outside the common header | 6 |
-| request | request payload a caller writes before its token | 179 |
-| request_token | request identity a caller writes last | 44 |
-| current_token | LIVE_CURRENT accepted-request identity the service publishes | 7 |
-| response_token | TERMINAL_RESPONSE handled-request identity the service publishes last | 38 |
-| state | status, state, or mode of the service or of the current request | 77 |
-| error | error or fault detail kept apart from the state cell | 2 |
-| result | response payload the service publishes before its token | 189 |
-| generation | publication generation, odd/even sequence, or revision that fences observation | 67 |
-| epoch | epoch, lease, or ownership value that authorizes mutation | 21 |
+| request | request payload a caller writes before its token | 336 |
+| request_token | request identity a caller writes last | 90 |
+| current_token | LIVE_CURRENT accepted-request identity the service publishes | 12 |
+| response_token | TERMINAL_RESPONSE handled-request identity the service publishes last | 77 |
+| state | status, state, or mode of the service or of the current request | 135 |
+| error | error or fault detail kept apart from the state cell | 9 |
+| result | response payload the service publishes before its token | 308 |
+| generation | publication generation, odd/even sequence, or revision that fences observation | 76 |
+| epoch | epoch, lease, or ownership value that authorizes mutation | 26 |
 | bank | A/B bank select and the per-bank generation, count, and overflow cells | 12 |
 | topology | ReferenceId of a peer service or device, or a chain link between peers | 55 |
-| table | record array, slot table, image, heap, or descriptor pool | 23 |
+| table | record array, slot table, image, heap, or descriptor pool | 26 |
 | telemetry | observational channel for operators and monitors | 14 |
 | reserved | held cell that nothing interprets | 2 |
 
 ## By role
 
 One row per layout entry, grouped by role and ordered by cell, so the offsets services
-use for the same role sit together. Peers is the number of consumer programs that read
-or write the entry's cells; headroom is the smallest line headroom under the
-120-line ceiling among the protocol's providers, the room a move would have to fit in.
+use for the same role sit together. Peers is the number of programs that read or write
+the entry's cells, counting both contract consumer edges and the peers the wiring map
+declares for a port without one; consumers counts contract consumer edges only. Headroom
+is the smallest line headroom under the 120-line ceiling among the protocol's
+providers, the room a move would have to fit in.
 
 ### metadata
 
-65 entries at 31 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S28, S30, S31, S32, S33, S34, S35, S36, S37, S48, S52, S53, S54, S98, S99.
+66 entries at 31 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S28, S30, S31, S32, S33, S34, S35, S36, S37, S48, S52, S53, S54, S98, S99.
 
 | Cells | Name | Protocol | Peers | Consumers | Headroom |
 |---|---|---|---:|---:|---:|
 | S8 | ContextType | ic10.stack.input-profile-view.v1 | 0 | 0 | 11 |
 | S8 | HopWeight | ic10.stack.pressure-grid-cost-profile.v1 | 1 | 1 | 108 |
-| S8 | ResourceClass | ic10.stack.resource-profile-view.v1 | 3 | 3 | 29 |
+| S8 | ResourceClass | ic10.stack.resource-profile-view.v1 | 12 | 3 | 29 |
 | S9 | StorageWeight | ic10.stack.pressure-grid-cost-profile.v1 | 1 | 1 | 108 |
 | S9 | ProcessIdentity | ic10.stack.process-condition.v1 | 0 | 1 | 4 |
-| S9 | ResourceType | ic10.stack.resource-profile-view.v1 | 3 | 3 | 29 |
+| S9 | ResourceType | ic10.stack.resource-profile-view.v1 | 13 | 3 | 29 |
 | S10 | EntryWidth | ic10.stack.directory-adapter.v3 | 2 | 2 | 2 |
 | S10 | ItemDirectoryBase | ic10.stack.generic-catalog-store.v6 | 0 | 1 | 0 |
 | S10 | BlockCount | ic10.stack.generic-persistent-config-host.v1 | 6 | 13 | -1 |
@@ -56,18 +58,18 @@ or write the entry's cells; headroom is the smallest line headroom under the
 | S10 | Unit | ic10.stack.resource-profile-view.v1 | 2 | 3 | 29 |
 | S10 | Unit | ic10.stack.resource-reservation.v1 | 2 | 3 | 4 |
 | S11 | Capacity | ic10.stack.directory-adapter.v3 | 2 | 2 | 2 |
-| S11 | EntryWidth | ic10.stack.generic-snapshot-directory-host.v1 | 13 | 13 | -1 |
+| S11 | EntryWidth | ic10.stack.generic-snapshot-directory-host.v1 | 14 | 13 | -1 |
 | S11 | FlowScarcityWeight | ic10.stack.pressure-grid-cost-profile.v1 | 1 | 1 | 108 |
-| S11 | ProfileKind | ic10.stack.resource-profile-view.v1 | 3 | 3 | 29 |
+| S11 | ProfileKind | ic10.stack.resource-profile-view.v1 | 6 | 3 | 29 |
 | S11 | PrecisionFlags | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
-| S12 | Capacity | ic10.stack.generic-snapshot-directory-host.v1 | 12 | 13 | -1 |
+| S12 | Capacity | ic10.stack.generic-snapshot-directory-host.v1 | 13 | 13 | -1 |
 | S12 | CandidateBudget | ic10.stack.pressure-grid-cost-profile.v1 | 1 | 1 | 108 |
 | S12 | Unit | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
-| S13 | CatalogInstanceId | ic10.stack.generic-catalog-store.v6 | 1 | 1 | 0 |
+| S13 | CatalogInstanceId | ic10.stack.generic-catalog-store.v6 | 3 | 1 | 0 |
 | S13 | Strategy | ic10.stack.process-condition.v1 | 0 | 1 | 4 |
 | S13 | PrecisionFlags | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
 | S13 | LinkFlags | ic10.stack.resource-link.v1 | 0 | 1 | 12 |
-| S14 | CoordinatorId | ic10.stack.catalog-coordinator-core.v4 | 0 | 1 | 8 |
+| S14 | CoordinatorId | ic10.stack.catalog-coordinator-core.v4 | 1 | 1 | 8 |
 | S14 | Role | ic10.stack.pressure-domain-inventory.v2 | 2 | 2 | -1 |
 | S15 | Mode | ic10.stack.directory-adapter.v3 | 2 | 2 | 2 |
 | S15 | MediumType | ic10.stack.pressure-domain-inventory.v2 | 2 | 2 | -1 |
@@ -76,14 +78,15 @@ or write the entry's cells; headroom is the smallest line headroom under the
 | S17 | CapabilityMask | ic10.stack.generic-input-scanner.v1 | 0 | 0 | 36 |
 | S18 | NodeId | ic10.stack.generic-catalog-store.v6 | 1 | 1 | 0 |
 | S18 | Capacity | ic10.stack.generic-job-store.v1 | 0 | 6 | -1 |
-| S18 | Role | ic10.stack.pressure-inventory-reservation.v1 | 1 | 1 | 70 |
-| S19 | MediumType | ic10.stack.pressure-inventory-reservation.v1 | 1 | 1 | 70 |
+| S18 | Role | ic10.stack.pressure-inventory-reservation.v1 | 2 | 1 | 70 |
+| S19 | MediumType | ic10.stack.pressure-inventory-reservation.v1 | 2 | 1 | 70 |
 | S20 | RecordWidth | ic10.stack.generic-registry-directory-host.v3 | 0 | 6 | 5 |
+| S20..S22 | ClassConfiguration | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
 | S21 | Capacity | ic10.stack.generic-registry-directory-host.v3 | 0 | 6 | 5 |
 | S21 | MirroredAccessKind | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
 | S22 | CatalogInstanceId | ic10.stack.resource-profile-view.v1 | 0 | 3 | 29 |
 | S23 | PartitionKey | ic10.stack.generic-catalog-store.v6 | 1 | 1 | 0 |
-| S23 | FluidResourceType | ic10.stack.process-condition.v1 | 1 | 1 | 4 |
+| S23 | FluidResourceType | ic10.stack.process-condition.v1 | 2 | 1 | 4 |
 | S28 | ValidatedProfileAbi | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
 | S30 | LoadedBlockCount | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
 | S30 | ResourceClass | ic10.stack.resource-link.v1 | 0 | 1 | 12 |
@@ -91,11 +94,11 @@ or write the entry's cells; headroom is the smallest line headroom under the
 | S31 | ReflashIdentity | ic10.stack.material-transfer-executor.v1 | 0 | 1 | 2 |
 | S31 | ReflashIdentity | ic10.stack.material-transfer-grant-guard.v1 | 0 | 2 | 6 |
 | S31 | ReflashIdentity | ic10.stack.multi-material-reservation-allocator.v2 | 0 | 1 | 5 |
-| S31 | ResourceType | ic10.stack.resource-link.v1 | 1 | 1 | 12 |
+| S31 | ResourceType | ic10.stack.resource-link.v1 | 2 | 1 | 12 |
 | S32 | NativeRouteClass | ic10.stack.resource-link.v1 | 0 | 1 | 12 |
-| S33 | ResourceClass | ic10.stack.resource-reservation.v1 | 3 | 3 | 4 |
-| S34 | ResourceType | ic10.stack.resource-reservation.v1 | 3 | 3 | 4 |
-| S35 | AccessKind | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
+| S33 | ResourceClass | ic10.stack.resource-reservation.v1 | 5 | 3 | 4 |
+| S34 | ResourceType | ic10.stack.resource-reservation.v1 | 4 | 3 | 4 |
+| S35 | AccessKind | ic10.stack.resource-endpoint.v1 | 2 | 1 | -1 |
 | S35 | RoleBits | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
 | S36 | PolicyFlags | ic10.stack.resource-endpoint.v1 | 0 | 1 | -1 |
 | S37 | ReserveFloor | ic10.stack.resource-endpoint.v1 | 0 | 1 | -1 |
@@ -114,152 +117,309 @@ or write the entry's cells; headroom is the smallest line headroom under the
 
 | Cells | Name | Protocol | Peers | Consumers | Headroom |
 |---|---|---|---:|---:|---:|
-| S9 | DirectorySchemaId | ic10.stack.generic-snapshot-directory-host.v1 | 13 | 13 | -1 |
+| S9 | DirectorySchemaId | ic10.stack.generic-snapshot-directory-host.v1 | 14 | 13 | -1 |
 | S9 | ContextSchema | ic10.stack.input-profile-view.v1 | 0 | 0 | 11 |
 | S12 | PersistenceSchemaSignature | ic10.stack.generic-persistent-config-host.v1 | 11 | 13 | -1 |
-| S12 | ProfileSchema | ic10.stack.resource-profile-view.v1 | 1 | 3 | 29 |
+| S12 | ProfileSchema | ic10.stack.resource-profile-view.v1 | 3 | 3 | 29 |
 | S19 | ControllerConfigSchema | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
 | S50 | ControllerConfigSchema | ic10.stack.generic-persistent-config-host.v1 | 7 | 13 | -1 |
 
 ### request
 
-179 entries at 55 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S24, S25, S26, S27, S28, S29, S30, S31, S32, S33, S34, S35, S36, S37, S38, S39, S40, S53, S54, S55, S56, S68, S69, S70, S71, S72, S85, S86, S87, S101, S102, S103, S108, S110, S111, S117, S118, S119, S120.
+336 entries at 55 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S24, S25, S26, S27, S28, S29, S30, S31, S32, S33, S34, S35, S36, S37, S38, S39, S40, S53, S54, S55, S56, S68, S69, S70, S71, S72, S85, S86, S87, S101, S102, S103, S108, S110, S111, S117, S118, S119, S120.
 
 | Cells | Name | Protocol | Peers | Consumers | Headroom |
 |---|---|---|---:|---:|---:|
-| S8 | ResourceType | ic10.stack.item-producer-resolver.v1 | 1 | 1 | 42 |
-| S8 | BatchCount | ic10.stack.multi-material-reservation-allocator.v2 | 0 | 1 | 5 |
+| S8 | ResourceType | ic10.stack.item-producer-resolver.v1 | 2 | 1 | 42 |
+| S8 | ReagentHash | ic10.stack.manufacturing-reagent-resolver.v1 | 1 | 0 | 4 |
+| S8 | BatchCount | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | 5 |
+| S8 | Identity | ic10.stack.power-job-finalize.v1 | 1 | 0 | 30 |
+| S8 | Identity | ic10.stack.power-job-prepare.v1 | 1 | 0 | 15 |
+| S8 | PlanGeneration | ic10.stack.power-plan-validator.v1 | 1 | 0 | 14 |
+| S8 | PlanGeneration | ic10.stack.power-reservation-committer.v1 | 1 | 0 | 21 |
+| S8 | OwnerEpoch | ic10.stack.resource-reservation-releaser.v1 | 1 | 0 | 73 |
 | S9 | LogicalControlCount | ic10.stack.generic-input-resolver.v1 | 1 | 1 | 10 |
 | S9 | RequestedControlCount | ic10.stack.generic-input-scanner.v1 | 0 | 0 | 36 |
+| S9 | Command | ic10.stack.multi-material-reservation-stager.v1 | 1 | 0 | 0 |
+| S9 | ReservationRef | ic10.stack.power-job-policy-verify.v1 | 1 | 0 | 58 |
+| S9 | OwnerEpoch | ic10.stack.power-reservation-committer.v1 | 1 | 0 | 21 |
+| S10 | ParentJobId | ic10.stack.dependency-ancestry-guard.v1 | 1 | 0 | 37 |
 | S10 | ProfileRef | ic10.stack.generic-input-resolver.v1 | 1 | 1 | 10 |
+| S10 | PrinterRef | ic10.stack.generic-print-runtime.v2 | 1 | 0 | 3 |
+| S10 | Epoch | ic10.stack.multi-material-reservation-stager.v1 | 1 | 0 | 0 |
+| S10 | Slot | ic10.stack.power-job-lifecycle-client.v1 | 2 | 0 | 83 |
+| S10 | PowerMode | ic10.stack.power-job-policy-verify.v1 | 1 | 0 | 58 |
+| S10 | PolicyId | ic10.stack.power-policy-target-resolver.v1 | 3 | 0 | 43 |
 | S10 | Mode | ic10.stack.pressure-reservation-allocator.v3 | 2 | 2 | -1 |
-| S10 | RecipeHash | ic10.stack.recipe-execution-profile-view.v1 | 2 | 2 | 5 |
-| S11 | LaneACommand | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S10 | RecipeHash | ic10.stack.recipe-execution-profile-view.v1 | 3 | 2 | 5 |
+| S11 | ParentJobType | ic10.stack.dependency-ancestry-guard.v1 | 1 | 0 | 37 |
+| S11 | LaneACommand | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S11 | Command | ic10.stack.generic-job-store.v1 | 1 | 6 | -1 |
+| S11 | RecipeHash | ic10.stack.generic-print-runtime.v2 | 1 | 0 | 3 |
 | S11 | ResourceType | ic10.stack.item-resource-reservation-selector.v1 | 2 | 3 | 0 |
+| S11 | BatchCount | ic10.stack.multi-material-reservation-stager.v1 | 1 | 0 | 0 |
+| S11 | ExpectedJobGeneration | ic10.stack.power-job-lifecycle-client.v1 | 2 | 0 | 83 |
+| S11 | RequestedQuantity | ic10.stack.power-job-policy-verify.v1 | 1 | 0 | 58 |
+| S11 | SinkReservationRef | ic10.stack.power-sink-flow-builder.v1 | 1 | 0 | 23 |
+| S11 | StartOrdinal | ic10.stack.power-source-selector.v1 | 1 | 0 | 20 |
 | S11 | LeaseTicks | ic10.stack.pressure-grid-route-ranker.v2 | 1 | 1 | 1 |
 | S11 | MaxRequestedRate | ic10.stack.pressure-reservation-allocator.v3 | 2 | 2 | -1 |
-| S12 | Command | ic10.stack.dependency-plan-store.v2 | 0 | 6 | 4 |
+| S11 | RuntimeRef | ic10.stack.transform-candidate-readiness.v1 | 1 | 0 | 13 |
+| S12 | ParentIdentity | ic10.stack.dependency-ancestry-guard.v1 | 1 | 0 | 37 |
+| S12 | ParentJobId | ic10.stack.dependency-plan-release-advisor.v1 | 1 | 0 | 60 |
+| S12 | Command | ic10.stack.dependency-plan-store.v2 | 2 | 6 | 4 |
 | S12 | ParentJobId | ic10.stack.existing-dependency-plan-controller.v1 | 1 | 1 | 7 |
 | S12 | DesiredControllerRef | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
-| S12 | LaneASlot | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S12 | LaneASlot | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S12 | ParentJobId | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | -6 |
 | S12 | SlotOrdinal | ic10.stack.generic-job-store.v1 | 1 | 6 | -1 |
+| S12 | RequestedQuantity | ic10.stack.generic-print-runtime.v2 | 1 | 0 | 3 |
 | S12 | RequestedQuantity | ic10.stack.item-resource-reservation-selector.v1 | 2 | 3 | 0 |
-| S12 | Command | ic10.stack.power-dispatch-plan-store.v1 | 0 | 6 | 32 |
+| S12 | JobId | ic10.stack.manufacturing-dependency-planner.v1 | 1 | 0 | -3 |
+| S12 | Command | ic10.stack.power-dispatch-plan-store.v1 | 2 | 6 | 32 |
+| S12 | DesiredState | ic10.stack.power-job-lifecycle-client.v1 | 2 | 0 | 83 |
+| S12 | SourceReservationRef | ic10.stack.power-link-selector.v1 | 1 | 0 | 41 |
+| S12 | SinkWatts | ic10.stack.power-sink-flow-builder.v1 | 1 | 0 | 23 |
+| S12 | StartOrdinal | ic10.stack.power-sink-selector.v1 | 1 | 0 | 47 |
+| S12 | JobId | ic10.stack.print-job-driver.v2 | 1 | 0 | 0 |
+| S12 | PrinterRef | ic10.stack.printer-capacity-client.v2 | 1 | 0 | 1 |
 | S12 | FamilyHash | ic10.stack.recipe-catalog-lookup.v3 | 1 | 1 | 16 |
-| S13 | ParentJobId | ic10.stack.dependency-plan-store.v2 | 0 | 6 | 4 |
+| S12 | TransformType | ic10.stack.transform-candidate-readiness.v1 | 1 | 0 | 13 |
+| S12 | JobId | ic10.stack.transform-job-driver.v2 | 1 | 0 | 6 |
+| S13 | ProducerJobType | ic10.stack.dependency-ancestry-guard.v1 | 1 | 0 | 37 |
+| S13 | ChildJobId | ic10.stack.dependency-child-validity.v1 | 3 | 0 | 60 |
+| S13 | ChildJobId | ic10.stack.dependency-plan-release-advisor.v1 | 1 | 0 | 60 |
+| S13 | ParentJobId | ic10.stack.dependency-plan-store.v2 | 2 | 6 | 4 |
 | S13 | ParentSlot | ic10.stack.existing-dependency-plan-controller.v1 | 1 | 1 | 7 |
-| S13 | LaneAExpectedJobGeneration | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S13 | LaneAExpectedJobGeneration | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
+| S13 | JobId | ic10.stack.generic-job-monitor.v1 | 4 | 0 | 56 |
 | S13 | ParentJobGeneration | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | -6 |
 | S13 | ExpectedJobGeneration | ic10.stack.generic-job-store.v1 | 1 | 6 | -1 |
+| S13 | JobId | ic10.stack.generic-print-runtime.v2 | 1 | 0 | 3 |
 | S13 | Direction | ic10.stack.item-resource-reservation-selector.v1 | 3 | 3 | 0 |
+| S13 | Slot | ic10.stack.manufacturing-dependency-planner.v1 | 1 | 0 | -3 |
+| S13 | DesiredErrorStatus | ic10.stack.power-job-lifecycle-client.v1 | 2 | 0 | 83 |
+| S13 | SinkReservationRef | ic10.stack.power-link-selector.v1 | 1 | 0 | 41 |
 | S13 | PlannerRef | ic10.stack.pressure-reservation-allocator.v3 | 2 | 2 | -1 |
+| S13 | ProcessorSpec | ic10.stack.print-candidate-executor.v2 | 1 | 0 | 0 |
+| S13 | Identity | ic10.stack.print-job-driver.v2 | 1 | 0 | 0 |
+| S13 | ProcessorSpec | ic10.stack.printer-capacity-client.v2 | 1 | 0 | 1 |
 | S13 | CapabilityCeiling | ic10.stack.recipe-catalog-lookup.v3 | 1 | 1 | 16 |
-| S14..S20 | RecordFields | ic10.stack.dependency-plan-store.v2 | 0 | 6 | 4 |
+| S13 | RequiredCapability | ic10.stack.transform-candidate-readiness.v1 | 1 | 0 | 13 |
+| S13 | Identity | ic10.stack.transform-job-driver.v2 | 1 | 0 | 6 |
+| S14 | ProducerIdentity | ic10.stack.dependency-ancestry-guard.v1 | 1 | 0 | 37 |
+| S14 | ParentJobId | ic10.stack.dependency-child-creator.v2 | 1 | 0 | 14 |
+| S14 | ResourceType | ic10.stack.dependency-child-validity.v1 | 3 | 0 | 60 |
+| S14 | ResourceType | ic10.stack.dependency-plan-release-advisor.v1 | 1 | 0 | 60 |
+| S14..S20 | RecordFields | ic10.stack.dependency-plan-store.v2 | 1 | 6 | 4 |
 | S14 | ParentJobGeneration | ic10.stack.existing-dependency-plan-controller.v1 | 1 | 1 | 7 |
-| S14 | LaneADesiredState | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S14 | LaneADesiredState | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S14..S20 | Intent | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | -6 |
 | S14 | DesiredState | ic10.stack.generic-job-store.v1 | 1 | 6 | -1 |
 | S14 | RequiredRoleMask | ic10.stack.item-resource-reservation-selector.v1 | 2 | 3 | 0 |
-| S14 | RequestedPlanGeneration | ic10.stack.power-dispatch-plan-store.v1 | 0 | 6 | 32 |
+| S14 | JobGeneration | ic10.stack.manufacturing-dependency-planner.v1 | 1 | 0 | -3 |
+| S14 | ShedWatts | ic10.stack.power-dispatch-plan-store.v1 | 1 | 6 | 32 |
+| S14 | Slot | ic10.stack.power-job-finalize.v1 | 1 | 0 | 30 |
+| S14 | Slot | ic10.stack.power-job-policy-apply.v1 | 1 | 0 | 38 |
+| S14 | Slot | ic10.stack.power-job-prepare.v1 | 1 | 0 | 15 |
+| S14 | SinkWatts | ic10.stack.power-link-selector.v1 | 1 | 0 | 41 |
+| S14 | SinkReservationGeneration | ic10.stack.power-sink-flow-builder.v1 | 1 | 0 | 23 |
 | S14 | PlannerRef | ic10.stack.pressure-grid-path-allocator.v1 | 1 | 1 | 2 |
 | S14 | PlannerRef | ic10.stack.pressure-grid-plan-builder.v1 | 1 | 1 | 3 |
 | S14 | PlannerRef | ic10.stack.pressure-grid-singlehop-builder.v1 | 1 | 1 | 0 |
 | S14 | BuildEpoch | ic10.stack.pressure-reservation-allocator.v3 | 2 | 2 | -1 |
+| S14 | PrinterRef | ic10.stack.print-candidate-executor.v2 | 1 | 0 | 0 |
+| S14 | RequiredCapability | ic10.stack.print-job-driver.v2 | 1 | 0 | 0 |
+| S14 | Command | ic10.stack.printer-capacity-client.v2 | 1 | 0 | 1 |
 | S14 | FamilyOrdinal | ic10.stack.recipe-catalog-lookup.v3 | 1 | 1 | 16 |
-| S15 | ResourceType | ic10.stack.dependency-claim-view.v1 | 1 | 1 | 5 |
+| S14 | JobId | ic10.stack.transform-candidate-executor.v2 | 1 | 0 | 39 |
+| S14 | InputCount | ic10.stack.transform-candidate-readiness.v1 | 1 | 0 | 13 |
+| S14 | RequiredCapability | ic10.stack.transform-job-driver.v2 | 1 | 0 | 6 |
+| S15 | ParentSlot | ic10.stack.dependency-child-creator.v2 | 1 | 0 | 14 |
+| S15 | ResourceType | ic10.stack.dependency-claim-view.v1 | 3 | 1 | 5 |
 | S15 | JobType | ic10.stack.existing-dependency-plan-controller.v1 | 1 | 1 | 7 |
-| S15 | LaneADesiredErrorStatus | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S15 | LaneADesiredErrorStatus | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S15 | DesiredErrorStatus | ic10.stack.generic-job-store.v1 | 1 | 6 | -1 |
-| S15 | JobType | ic10.stack.job-requirement-view.v1 | 1 | 1 | 17 |
+| S15 | JobType | ic10.stack.job-inventory-preflight.v1 | 2 | 0 | 4 |
+| S15 | JobType | ic10.stack.job-requirement-view.v1 | 4 | 1 | 17 |
+| S15 | ExpectedQuantity | ic10.stack.larre-cargo-storage-service.v1 | 1 | 0 | 0 |
+| S15 | JobType | ic10.stack.manufacturing-dependency-planner.v1 | 1 | 0 | -3 |
 | S15 | FamilyHash | ic10.stack.operator-order-job-ingress.v1 | 1 | 1 | 5 |
 | S15 | FamilyHash | ic10.stack.operator-order-recipe-view.v1 | 1 | 1 | 38 |
-| S15 | ContextEnabled | ic10.stack.phase-pressure-request-arbiter.v1 | 0 | 0 | -1 |
-| S15 | RequestedPlanStatus | ic10.stack.power-dispatch-plan-store.v1 | 0 | 6 | 32 |
+| S15 | ContextEnabled | ic10.stack.phase-pressure-request-arbiter.v1 | 1 | 0 | -1 |
+| S15 | CriticalShortage | ic10.stack.power-dispatch-plan-store.v1 | 1 | 6 | 32 |
+| S15 | JobId | ic10.stack.power-job-finalize.v1 | 1 | 0 | 30 |
+| S15 | JobId | ic10.stack.power-job-policy-apply.v1 | 1 | 0 | 38 |
+| S15 | JobId | ic10.stack.power-job-prepare.v1 | 1 | 0 | 15 |
 | S15 | BuildEpoch | ic10.stack.pressure-grid-path-allocator.v1 | 1 | 1 | 2 |
 | S15 | BuildEpoch | ic10.stack.pressure-grid-plan-builder.v1 | 1 | 1 | 3 |
 | S15 | BuildEpoch | ic10.stack.pressure-grid-singlehop-builder.v1 | 1 | 1 | 0 |
 | S15 | MediumType | ic10.stack.pressure-reservation-allocator.v3 | 2 | 2 | -1 |
+| S15 | RecipeHash | ic10.stack.print-candidate-executor.v2 | 1 | 0 | 0 |
+| S15 | InputCount | ic10.stack.print-job-driver.v2 | 1 | 0 | 0 |
 | S15 | ResourceType | ic10.stack.stock-target-demand-view.v1 | 2 | 2 | 43 |
 | S15 | ResourceType | ic10.stack.stock-target-future-view.v1 | 1 | 1 | 6 |
 | S15 | ResourceType | ic10.stack.stock-target-inventory-view.v1 | 1 | 1 | 43 |
 | S15 | ResourceType | ic10.stack.stock-target-job-ingress.v1 | 1 | 1 | 0 |
 | S15 | LaneAResourceType | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | 36 |
-| S16 | RequestingParentJobId | ic10.stack.dependency-claim-view.v1 | 1 | 1 | 5 |
+| S15 | OutputCount | ic10.stack.transform-candidate-readiness.v1 | 1 | 0 | 13 |
+| S15 | InputCount | ic10.stack.transform-job-driver.v2 | 1 | 0 | 6 |
+| S16 | ParentJobGeneration | ic10.stack.dependency-child-creator.v2 | 1 | 0 | 14 |
+| S16 | RequestingParentJobId | ic10.stack.dependency-claim-view.v1 | 3 | 1 | 5 |
 | S16 | Identity | ic10.stack.existing-dependency-plan-controller.v1 | 1 | 1 | 7 |
 | S16 | BridgeCommand | ic10.stack.generic-snapshot-directory-host.v1 | 1 | 13 | -1 |
-| S16 | Identity | ic10.stack.job-requirement-view.v1 | 1 | 1 | 17 |
+| S16 | Identity | ic10.stack.job-inventory-preflight.v1 | 2 | 0 | 4 |
+| S16 | Identity | ic10.stack.job-requirement-view.v1 | 4 | 1 | 17 |
+| S16 | DirectoryRef | ic10.stack.manufacturing-candidate-selector.v2 | 2 | 0 | 15 |
+| S16 | Identity | ic10.stack.manufacturing-dependency-planner.v1 | 1 | 0 | -3 |
 | S16 | StagedQuantity | ic10.stack.material-transfer-grant-guard.v1 | 0 | 2 | 6 |
 | S16 | FamilyOrdinal | ic10.stack.operator-order-job-ingress.v1 | 1 | 1 | 5 |
 | S16 | FamilyOrdinal | ic10.stack.operator-order-recipe-view.v1 | 1 | 1 | 38 |
-| S16 | ContextRole | ic10.stack.phase-pressure-request-arbiter.v1 | 0 | 0 | -1 |
-| S16..S23 | StagedFlow | ic10.stack.power-dispatch-plan-store.v1 | 0 | 6 | 32 |
+| S16 | ContextRole | ic10.stack.phase-pressure-request-arbiter.v1 | 1 | 0 | -1 |
+| S16..S23 | StagedFlow | ic10.stack.power-dispatch-plan-store.v1 | 1 | 6 | 32 |
+| S16 | State | ic10.stack.power-job-finalize.v1 | 1 | 0 | 30 |
+| S16 | RequiredCapability | ic10.stack.power-job-policy-apply.v1 | 1 | 0 | 38 |
+| S16 | State | ic10.stack.power-job-prepare.v1 | 1 | 0 | 15 |
 | S16 | MediumType | ic10.stack.pressure-grid-path-allocator.v1 | 1 | 1 | 2 |
 | S16 | MediumType | ic10.stack.pressure-grid-plan-builder.v1 | 1 | 1 | 3 |
 | S16 | MediumType | ic10.stack.pressure-grid-singlehop-builder.v1 | 1 | 1 | 0 |
 | S16 | Operation | ic10.stack.pressure-reservation-allocator.v3 | 2 | 2 | -1 |
-| S16 | RequestedResourceType | ic10.stack.stacker-feeder.v1 | 0 | 1 | -7 |
+| S16 | RequiredCapability | ic10.stack.print-candidate-executor.v2 | 1 | 0 | 0 |
+| S16 | OutputCount | ic10.stack.print-job-driver.v2 | 1 | 0 | 0 |
+| S16 | PrinterRef | ic10.stack.print-material-resolver.v1 | 1 | 0 | 0 |
+| S16 | RequestedResourceType | ic10.stack.stacker-feeder.v1 | 1 | 1 | -7 |
 | S16 | TargetQuantity | ic10.stack.stock-target-demand-view.v1 | 2 | 2 | 43 |
 | S16 | ProducerJobType | ic10.stack.stock-target-future-view.v1 | 1 | 1 | 6 |
 | S16 | TargetQuantity | ic10.stack.stock-target-inventory-view.v1 | 1 | 1 | 43 |
 | S16 | TargetQuantity | ic10.stack.stock-target-job-ingress.v1 | 1 | 1 | 0 |
-| S17 | ChildJobIdFilter | ic10.stack.dependency-claim-view.v1 | 1 | 1 | 5 |
+| S16 | BatchCount | ic10.stack.transform-candidate-readiness.v1 | 1 | 0 | 13 |
+| S16 | OutputCount | ic10.stack.transform-job-driver.v2 | 1 | 0 | 6 |
+| S17 | ParentJobType | ic10.stack.dependency-child-creator.v2 | 1 | 0 | 14 |
+| S17 | ChildJobIdFilter | ic10.stack.dependency-claim-view.v1 | 3 | 1 | 5 |
 | S17 | RequestedQuantity | ic10.stack.existing-dependency-plan-controller.v1 | 1 | 1 | 7 |
 | S17..S19 | CandidateRecord | ic10.stack.generic-snapshot-directory-host.v1 | 1 | 13 | -1 |
-| S17 | RequestedQuantity | ic10.stack.job-requirement-view.v1 | 1 | 1 | 17 |
+| S17 | RequestedQuantity | ic10.stack.job-inventory-preflight.v1 | 2 | 0 | 4 |
+| S17 | RequestedQuantity | ic10.stack.job-requirement-view.v1 | 4 | 1 | 17 |
+| S17 | Operation | ic10.stack.larre-cargo-storage-service.v1 | 1 | 0 | 0 |
+| S17 | SchemaId | ic10.stack.manufacturing-candidate-selector.v2 | 2 | 0 | 15 |
+| S17 | RequestedQuantity | ic10.stack.manufacturing-dependency-planner.v1 | 1 | 0 | -3 |
 | S17..S19 | StagerCoordination | ic10.stack.multi-material-reservation-allocator.v2 | 0 | 1 | 5 |
 | S17 | RequestedQuantity | ic10.stack.operator-order-job-ingress.v1 | 1 | 1 | 5 |
-| S17 | ContextMediumType | ic10.stack.phase-pressure-request-arbiter.v1 | 0 | 0 | -1 |
+| S17 | ContextMediumType | ic10.stack.phase-pressure-request-arbiter.v1 | 1 | 0 | -1 |
+| S17 | JobGeneration | ic10.stack.power-job-finalize.v1 | 1 | 0 | 30 |
+| S17 | Identity | ic10.stack.power-job-policy-apply.v1 | 1 | 0 | 38 |
+| S17 | JobGeneration | ic10.stack.power-job-prepare.v1 | 1 | 0 | 15 |
 | S17 | LeaseTicks | ic10.stack.pressure-grid-path-allocator.v1 | 1 | 1 | 2 |
 | S17 | LeaseTicks | ic10.stack.pressure-grid-plan-builder.v1 | 1 | 1 | 3 |
 | S17 | Mode | ic10.stack.pressure-grid-singlehop-builder.v1 | 1 | 1 | 0 |
 | S17 | TransferRef | ic10.stack.pressure-reservation-allocator.v3 | 2 | 2 | -1 |
-| S17 | RequestedQuantity | ic10.stack.stacker-feeder.v1 | 0 | 1 | -7 |
+| S17 | InputCount | ic10.stack.print-candidate-executor.v2 | 1 | 0 | 0 |
+| S17 | RequestedQuantity | ic10.stack.print-job-driver.v2 | 1 | 0 | 0 |
+| S17 | RequestedQuantity | ic10.stack.print-material-resolver.v1 | 1 | 0 | 0 |
+| S17 | RequestedQuantity | ic10.stack.stacker-feeder.v1 | 1 | 1 | -7 |
 | S17 | Hysteresis | ic10.stack.stock-target-demand-view.v1 | 2 | 2 | 43 |
 | S17 | ProducerIdentity | ic10.stack.stock-target-future-view.v1 | 1 | 1 | 6 |
 | S17 | Hysteresis | ic10.stack.stock-target-job-ingress.v1 | 1 | 1 | 0 |
+| S17 | RequestedQuantity | ic10.stack.transform-job-driver.v2 | 1 | 0 | 6 |
+| S18 | ParentIdentity | ic10.stack.dependency-child-creator.v2 | 1 | 0 | 14 |
 | S18 | Priority | ic10.stack.existing-dependency-plan-controller.v1 | 1 | 1 | 7 |
-| S18 | InputOrdinal | ic10.stack.job-requirement-view.v1 | 1 | 1 | 17 |
+| S18 | Mode | ic10.stack.generic-job-selector.v3 | 1 | 0 | 0 |
+| S18 | InputOrdinal | ic10.stack.job-requirement-view.v1 | 4 | 1 | 17 |
+| S18 | SourceStation | ic10.stack.larre-cargo-storage-service.v1 | 1 | 0 | 0 |
+| S18 | Key | ic10.stack.manufacturing-candidate-selector.v2 | 2 | 0 | 15 |
+| S18 | Priority | ic10.stack.manufacturing-dependency-planner.v1 | 1 | 0 | -3 |
 | S18 | Priority | ic10.stack.operator-order-job-ingress.v1 | 1 | 1 | 5 |
-| S18 | ContextHostGeneration | ic10.stack.phase-pressure-request-arbiter.v1 | 0 | 0 | -1 |
+| S18 | ContextHostGeneration | ic10.stack.phase-pressure-request-arbiter.v1 | 1 | 0 | -1 |
+| S18 | RequestedQuantity | ic10.stack.power-job-finalize.v1 | 1 | 0 | 30 |
+| S18 | JobGeneration | ic10.stack.power-job-policy-apply.v1 | 1 | 0 | 38 |
+| S18 | RequestedQuantity | ic10.stack.power-job-prepare.v1 | 1 | 0 | 15 |
+| S18 | OutputCount | ic10.stack.print-candidate-executor.v2 | 1 | 0 | 0 |
 | S18 | ProducerJobType | ic10.stack.stock-target-demand-view.v1 | 2 | 2 | 43 |
 | S18 | OutputPerBatch | ic10.stack.stock-target-future-view.v1 | 1 | 1 | 6 |
 | S18 | ProducerJobType | ic10.stack.stock-target-job-ingress.v1 | 1 | 1 | 0 |
+| S19 | ParentPriority | ic10.stack.dependency-child-creator.v2 | 1 | 0 | 14 |
+| S19 | ParentJobId | ic10.stack.dependency-plan-builder.v2 | 1 | 0 | 45 |
 | S19 | Mode | ic10.stack.existing-dependency-plan-controller.v1 | 1 | 1 | 7 |
+| S19 | Cursor | ic10.stack.generic-job-selector.v3 | 2 | 0 | 0 |
+| S19 | SourceSlot | ic10.stack.larre-cargo-storage-service.v1 | 1 | 0 | 0 |
+| S19 | Capability | ic10.stack.manufacturing-candidate-selector.v2 | 2 | 0 | 15 |
 | S19 | StagedSourceReservationRef | ic10.stack.material-transfer-grant-guard.v1 | 0 | 2 | 6 |
-| S19 | ReleaseEpoch | ic10.stack.stacker-feeder.v1 | 0 | 1 | -7 |
+| S19 | RequiredCapability | ic10.stack.power-job-finalize.v1 | 1 | 0 | 30 |
+| S19 | RequestedQuantity | ic10.stack.power-job-policy-apply.v1 | 1 | 0 | 38 |
+| S19 | RequiredCapability | ic10.stack.power-job-prepare.v1 | 1 | 0 | 15 |
+| S19 | RequestedQuantity | ic10.stack.print-candidate-executor.v2 | 1 | 0 | 0 |
+| S19 | ReleaseEpoch | ic10.stack.stacker-feeder.v1 | 1 | 1 | -7 |
 | S19 | ProducerIdentity | ic10.stack.stock-target-demand-view.v1 | 2 | 2 | 43 |
 | S19 | RequiredCapability | ic10.stack.stock-target-job-ingress.v1 | 1 | 1 | 0 |
+| S20 | ResourceType | ic10.stack.dependency-child-creator.v2 | 1 | 0 | 14 |
+| S20 | ParentSlot | ic10.stack.dependency-plan-builder.v2 | 1 | 0 | 45 |
+| S20 | JobType | ic10.stack.dependency-plan-evaluator.v2 | 1 | 0 | 33 |
 | S20 | BridgeImageSlot | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
+| S20 | DestinationStation | ic10.stack.larre-cargo-storage-service.v1 | 1 | 0 | 0 |
+| S20 | ComparisonMode | ic10.stack.manufacturing-candidate-selector.v2 | 2 | 0 | 15 |
 | S20 | StagedSinkReservationRef | ic10.stack.material-transfer-grant-guard.v1 | 0 | 2 | 6 |
+| S20 | ParentJobId | ic10.stack.new-dependency-plan-controller.v1 | 1 | 0 | 28 |
 | S20 | OutputPerBatch | ic10.stack.stock-target-demand-view.v1 | 2 | 2 | 43 |
 | S20 | ProducerIdentity | ic10.stack.stock-target-job-ingress.v1 | 1 | 1 | 0 |
+| S21 | Deficit | ic10.stack.dependency-child-creator.v2 | 1 | 0 | 14 |
+| S21 | ParentJobGeneration | ic10.stack.dependency-plan-builder.v2 | 1 | 0 | 45 |
+| S21 | Identity | ic10.stack.dependency-plan-evaluator.v2 | 1 | 0 | 33 |
 | S21 | BridgeResolvedValue | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
 | S21 | CommandClass | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | -6 |
+| S21 | DestinationSlot | ic10.stack.larre-cargo-storage-service.v1 | 1 | 0 | 0 |
+| S21 | StartOrdinal | ic10.stack.manufacturing-candidate-selector.v2 | 2 | 0 | 15 |
 | S21 | StagedResourceType | ic10.stack.material-transfer-grant-guard.v1 | 0 | 2 | 6 |
 | S21 | InputCount | ic10.stack.stock-target-job-ingress.v1 | 1 | 1 | 0 |
+| S21 | RuntimeRef | ic10.stack.transform-candidate-executor.v2 | 1 | 0 | 39 |
+| S22 | ParentJobType | ic10.stack.dependency-plan-builder.v2 | 1 | 0 | 45 |
+| S22 | RequestedQuantity | ic10.stack.dependency-plan-evaluator.v2 | 1 | 0 | 33 |
 | S22 | BridgeInputKind | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
 | S22 | ParentSlot | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | -6 |
+| S22 | ItemHash | ic10.stack.larre-cargo-storage-service.v1 | 1 | 0 | 0 |
 | S22 | StagedFeederRef | ic10.stack.material-transfer-grant-guard.v1 | 0 | 2 | 6 |
 | S22 | OutputCount | ic10.stack.stock-target-job-ingress.v1 | 1 | 1 | 0 |
+| S22 | TransformType | ic10.stack.transform-candidate-executor.v2 | 1 | 0 | 39 |
+| S23 | ParentIdentity | ic10.stack.dependency-plan-builder.v2 | 1 | 0 | 45 |
+| S23 | ChildJobId | ic10.stack.dependency-plan-evaluator.v2 | 1 | 0 | 33 |
 | S23 | StagedSorterRef | ic10.stack.material-transfer-grant-guard.v1 | 0 | 2 | 6 |
+| S23 | RequiredCapability | ic10.stack.transform-candidate-executor.v2 | 1 | 0 | 39 |
+| S24 | ParentPriority | ic10.stack.dependency-plan-builder.v2 | 1 | 0 | 45 |
+| S24 | ChildResourceType | ic10.stack.dependency-plan-evaluator.v2 | 1 | 0 | 33 |
+| S24 | CleanupParentJobId | ic10.stack.manufacturing-dependency-planner.v1 | 1 | 0 | -3 |
 | S24 | StagedSinkProviderRef | ic10.stack.material-transfer-grant-guard.v1 | 0 | 2 | 6 |
+| S24 | MoveOperation | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
 | S24 | Priority | ic10.stack.stock-target-job-ingress.v1 | 1 | 1 | 0 |
-| S25 | CapacityRequestPending | ic10.stack.catalog-coordinator-core.v4 | 0 | 1 | 8 |
+| S24 | InputCount | ic10.stack.transform-candidate-executor.v2 | 1 | 0 | 39 |
+| S25 | CapacityRequestPending | ic10.stack.catalog-coordinator-core.v4 | 1 | 1 | 8 |
+| S25 | ResourceType | ic10.stack.dependency-plan-builder.v2 | 1 | 0 | 45 |
+| S25 | BaselineKnown | ic10.stack.dependency-plan-evaluator.v2 | 1 | 0 | 33 |
 | S25 | StagedLinkRef | ic10.stack.material-transfer-grant-guard.v1 | 0 | 2 | 6 |
-| S26 | RequestPartitionKey | ic10.stack.catalog-coordinator-core.v4 | 0 | 1 | 8 |
+| S25 | MoveSourceStation | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
+| S25 | OutputCount | ic10.stack.transform-candidate-executor.v2 | 1 | 0 | 39 |
+| S26 | RequestPartitionKey | ic10.stack.catalog-coordinator-core.v4 | 1 | 1 | 8 |
+| S26 | Deficit | ic10.stack.dependency-plan-builder.v2 | 1 | 0 | 45 |
+| S26 | FutureQuantity | ic10.stack.dependency-plan-evaluator.v2 | 1 | 0 | 33 |
 | S26 | StagedExecutorRef | ic10.stack.material-transfer-grant-guard.v1 | 0 | 2 | 6 |
+| S26 | MoveSourceSlot | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
 | S26 | RequestedResourceClass | ic10.stack.resource-profile-view.v1 | 0 | 3 | 29 |
-| S27 | RequestCatalogSchemaId | ic10.stack.catalog-coordinator-core.v4 | 0 | 1 | 8 |
+| S26 | RequestedQuantity | ic10.stack.transform-candidate-executor.v2 | 1 | 0 | 39 |
+| S27 | RequestCatalogSchemaId | ic10.stack.catalog-coordinator-core.v4 | 1 | 1 | 8 |
+| S27 | BaselineKnown | ic10.stack.dependency-plan-builder.v2 | 1 | 0 | 45 |
+| S27 | QuoteFingerprintA | ic10.stack.dependency-plan-evaluator.v2 | 1 | 0 | 33 |
+| S27 | MoveDestinationStation | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
 | S27 | RequestedResourceType | ic10.stack.resource-profile-view.v1 | 0 | 3 | 29 |
+| S28 | QuoteFingerprintA | ic10.stack.dependency-plan-builder.v2 | 1 | 0 | 45 |
+| S28 | QuoteFingerprintB | ic10.stack.dependency-plan-evaluator.v2 | 1 | 0 | 33 |
 | S28 | ExpectedQueueSequence | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | -6 |
-| S29 | RequestCatalogInstanceId | ic10.stack.catalog-coordinator-core.v4 | 0 | 1 | 8 |
+| S28 | MoveDestinationSlot | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
+| S29 | RequestCatalogInstanceId | ic10.stack.catalog-coordinator-core.v4 | 1 | 1 | 8 |
+| S29 | QuoteFingerprintB | ic10.stack.dependency-plan-builder.v2 | 1 | 0 | 45 |
 | S29 | ExpectedPlanSequence | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | -6 |
-| S30 | RequestTailStoreRef | ic10.stack.catalog-coordinator-core.v4 | 0 | 1 | 8 |
-| S31 | RequestNextStoreOrdinal | ic10.stack.catalog-coordinator-core.v4 | 0 | 1 | 8 |
+| S30 | RequestTailStoreRef | ic10.stack.catalog-coordinator-core.v4 | 1 | 1 | 8 |
+| S30 | MoveExpectedQuantity | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
+| S31 | RequestNextStoreOrdinal | ic10.stack.catalog-coordinator-core.v4 | 1 | 1 | 8 |
 | S31 | OutputPerBatch | ic10.stack.stock-target-job-ingress.v1 | 1 | 1 | 0 |
-| S32 | RequestRequiredCells | ic10.stack.catalog-coordinator-core.v4 | 0 | 1 | 8 |
+| S32 | RequestRequiredCells | ic10.stack.catalog-coordinator-core.v4 | 1 | 1 | 8 |
 | S32 | PlannerRef | ic10.stack.pressure-grid-path-enumerator.v2 | 1 | 1 | -6 |
 | S32 | SearchId | ic10.stack.pressure-grid-route-ranker.v2 | 1 | 1 | 1 |
 | S32 | PlannerRef | ic10.stack.pressure-grid-route-selector.v2 | 1 | 1 | 5 |
@@ -275,24 +435,24 @@ or write the entry's cells; headroom is the smallest line headroom under the
 | S35 | SearchId | ic10.stack.pressure-grid-path-enumerator.v2 | 1 | 1 | -6 |
 | S35..S37 | TransferRefs | ic10.stack.pressure-grid-route-ranker.v2 | 1 | 1 | 1 |
 | S35 | LeaseTicks | ic10.stack.pressure-grid-route-selector.v2 | 1 | 1 | 5 |
-| S36 | LaneBCommand | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S36 | LaneBCommand | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S36 | Slot | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | -6 |
-| S37 | LaneBSlot | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S37 | LaneBSlot | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S37 | ExpectedJobGeneration | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | -6 |
-| S38 | LaneBExpectedJobGeneration | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S38 | LaneBExpectedJobGeneration | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S38 | DesiredState | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | -6 |
-| S39 | LaneBDesiredState | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S39 | LaneBDesiredState | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S39 | DesiredErrorStatus | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | -6 |
-| S40 | LaneBDesiredErrorStatus | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
-| S53 | LaneCParentJobId | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
-| S54 | LaneCParentJobGeneration | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
-| S55 | LaneCParentSlot | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
-| S56..S62 | LaneCIntent | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
-| S68 | LaneDCommand | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
-| S69 | LaneDSlot | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
-| S70 | LaneDExpectedJobGeneration | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
-| S71 | LaneDDesiredState | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
-| S72 | LaneDDesiredErrorStatus | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S40 | LaneBDesiredErrorStatus | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
+| S53 | LaneCParentJobId | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
+| S54 | LaneCParentJobGeneration | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
+| S55 | LaneCParentSlot | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
+| S56..S62 | LaneCIntent | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
+| S68 | LaneDCommand | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
+| S69 | LaneDSlot | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
+| S70 | LaneDExpectedJobGeneration | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
+| S71 | LaneDDesiredState | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
+| S72 | LaneDDesiredErrorStatus | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S85 | LaneEExpectedQueueSequence | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S86 | LaneEExpectedPlanSequence | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S87..S93 | LaneEIntent | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
@@ -309,193 +469,341 @@ or write the entry's cells; headroom is the smallest line headroom under the
 
 ### request_token
 
-44 entries at 24 distinct starting cells: S8, S9, S10, S14, S15, S16, S18, S19, S20, S21, S23, S24, S25, S30, S31, S32, S33, S36, S48, S52, S64, S70, S80, S96.
+90 entries at 29 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S18, S19, S20, S21, S22, S23, S24, S25, S29, S30, S31, S32, S33, S36, S48, S52, S64, S70, S80, S96.
 
 | Cells | Name | Protocol | Peers | Consumers | Headroom |
 |---|---|---|---:|---:|---:|
+| S8 | RequestToken | ic10.stack.larre-cargo-storage-service.v1 | 1 | 0 | 0 |
+| S8 | RequestToken | ic10.stack.power-dispatch-sweep.v1 | 1 | 0 | 41 |
+| S8 | RequestToken | ic10.stack.power-job-policy-apply.v1 | 1 | 0 | 38 |
 | S8 | RequestToken | ic10.stack.pressure-grid-route-ranker.v2 | 1 | 1 | 1 |
-| S9 | RequestToken | ic10.stack.dependency-plan-store.v2 | 0 | 6 | 4 |
-| S9 | RequestToken | ic10.stack.item-producer-resolver.v1 | 1 | 1 | 42 |
-| S10 | RequestToken | ic10.stack.power-dispatch-plan-store.v1 | 0 | 6 | 32 |
+| S8 | RequestToken | ic10.stack.print-candidate-executor.v2 | 1 | 0 | 0 |
+| S8 | RequestToken | ic10.stack.print-job-driver.v2 | 1 | 0 | 0 |
+| S8 | RequestToken | ic10.stack.transform-candidate-executor.v2 | 1 | 0 | 39 |
+| S8 | RequestToken | ic10.stack.transform-candidate-readiness.v1 | 1 | 0 | 13 |
+| S8 | RequestToken | ic10.stack.transform-job-driver.v2 | 1 | 0 | 6 |
+| S9 | RequestToken | ic10.stack.dependency-plan-store.v2 | 2 | 6 | 4 |
+| S9 | RequestToken | ic10.stack.item-producer-resolver.v1 | 2 | 1 | 42 |
+| S9 | RequestToken | ic10.stack.manufacturing-dependency-gate.v2 | 1 | 0 | 23 |
+| S9 | RequestToken | ic10.stack.manufacturing-driver-router.v2 | 1 | 0 | 44 |
+| S9 | RequestToken | ic10.stack.manufacturing-reagent-resolver.v1 | 1 | 0 | 4 |
+| S9 | RequestToken | ic10.stack.power-job-finalize.v1 | 1 | 0 | 30 |
+| S9 | RequestToken | ic10.stack.power-job-prepare.v1 | 1 | 0 | 15 |
+| S9 | RequestToken | ic10.stack.power-plan-validator.v1 | 1 | 0 | 14 |
+| S9 | RequestToken | ic10.stack.resource-reservation-releaser.v1 | 1 | 0 | 73 |
+| S10 | RequestToken | ic10.stack.power-dispatch-plan-store.v1 | 2 | 6 | 32 |
+| S10 | RequestToken | ic10.stack.power-reservation-committer.v1 | 1 | 0 | 21 |
+| S11 | RequestToken | ic10.stack.power-policy-target-resolver.v1 | 3 | 0 | 43 |
+| S12 | RequestToken | ic10.stack.multi-material-reservation-stager.v1 | 1 | 0 | 0 |
+| S12 | RequestToken | ic10.stack.power-job-policy-verify.v1 | 1 | 0 | 58 |
+| S12 | RequestToken | ic10.stack.power-source-selector.v1 | 1 | 0 | 20 |
+| S13 | RequestToken | ic10.stack.power-sink-selector.v1 | 1 | 0 | 47 |
+| S14 | RequestToken | ic10.stack.generic-job-monitor.v1 | 4 | 0 | 56 |
+| S14 | RequestToken | ic10.stack.generic-print-runtime.v2 | 1 | 0 | 3 |
 | S14 | BridgeRequestGeneration | ic10.stack.generic-snapshot-directory-host.v1 | 1 | 13 | -1 |
+| S14 | RequestToken | ic10.stack.power-job-lifecycle-client.v1 | 2 | 0 | 83 |
+| S15 | RequestToken | ic10.stack.dependency-ancestry-guard.v1 | 1 | 0 | 37 |
+| S15 | RequestToken | ic10.stack.dependency-child-validity.v1 | 3 | 0 | 60 |
+| S15 | RequestToken | ic10.stack.dependency-plan-release-advisor.v1 | 1 | 0 | 60 |
 | S15 | RequestToken | ic10.stack.item-resource-reservation-selector.v1 | 2 | 3 | 0 |
+| S15 | RequestToken | ic10.stack.power-link-selector.v1 | 1 | 0 | 41 |
+| S15 | RequestToken | ic10.stack.power-sink-flow-builder.v1 | 1 | 0 | 23 |
 | S15 | PlanBuilderRequestGeneration | ic10.stack.pressure-grid-reservation-planner.v2 | 0 | 1 | 36 |
+| S15 | RequestToken | ic10.stack.printer-capacity-client.v2 | 1 | 0 | 1 |
 | S15 | RequestToken | ic10.stack.recipe-catalog-lookup.v3 | 1 | 1 | 16 |
 | S16 | FreezeRequestToken | ic10.stack.directory-adapter.v3 | 2 | 2 | 2 |
-| S18 | RequestToken | ic10.stack.dependency-claim-view.v1 | 1 | 1 | 5 |
+| S18 | RequestToken | ic10.stack.dependency-claim-view.v1 | 3 | 1 | 5 |
+| S18 | RequestToken | ic10.stack.job-inventory-preflight.v1 | 2 | 0 | 4 |
 | S18 | RequestToken | ic10.stack.pressure-grid-path-allocator.v1 | 1 | 1 | 2 |
 | S18 | RequestToken | ic10.stack.pressure-grid-plan-builder.v1 | 1 | 1 | 3 |
 | S18 | RequestToken | ic10.stack.pressure-grid-singlehop-builder.v1 | 1 | 1 | 0 |
 | S18 | RequestToken | ic10.stack.pressure-reservation-allocator.v3 | 2 | 2 | -1 |
-| S18 | RequestEpoch | ic10.stack.stacker-feeder.v1 | 0 | 1 | -7 |
+| S18 | RequestToken | ic10.stack.print-material-resolver.v1 | 1 | 0 | 0 |
+| S18 | RequestEpoch | ic10.stack.stacker-feeder.v1 | 1 | 1 | -7 |
 | S18 | RequestToken | ic10.stack.stock-target-inventory-view.v1 | 1 | 1 | 43 |
 | S18 | LaneARequestToken | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | 36 |
-| S19 | LaneARequestToken | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S19 | LaneARequestToken | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S19 | RequestGeneration | ic10.stack.generic-job-store.v1 | 1 | 6 | -1 |
-| S19 | RequestToken | ic10.stack.job-requirement-view.v1 | 1 | 1 | 17 |
+| S19 | RequestToken | ic10.stack.job-requirement-view.v1 | 4 | 1 | 17 |
+| S19 | RequestToken | ic10.stack.manufacturing-dependency-planner.v1 | 1 | 0 | -3 |
 | S19 | RequestToken | ic10.stack.operator-order-job-ingress.v1 | 1 | 1 | 5 |
 | S19 | RequestToken | ic10.stack.operator-order-recipe-view.v1 | 1 | 1 | 38 |
 | S19 | RequestToken | ic10.stack.stock-target-future-view.v1 | 1 | 1 | 6 |
 | S20 | RequestToken | ic10.stack.existing-dependency-plan-controller.v1 | 1 | 1 | 7 |
-| S21 | RequestGeneration | ic10.stack.multi-material-reservation-allocator.v2 | 0 | 1 | 5 |
+| S20 | RequestToken | ic10.stack.generic-job-selector.v3 | 2 | 0 | 0 |
+| S21 | RequestGeneration | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | 5 |
+| S21 | RequestToken | ic10.stack.new-dependency-plan-controller.v1 | 1 | 0 | 28 |
+| S21 | SelectorToken | ic10.stack.print-job-driver.v2 | 0 | 0 | 0 |
+| S21 | SelectorToken | ic10.stack.transform-job-driver.v2 | 0 | 0 | 6 |
+| S22 | RequestToken | ic10.stack.dependency-child-creator.v2 | 1 | 0 | 14 |
+| S22 | MaterialRequestToken | ic10.stack.generic-print-runtime.v2 | 0 | 0 | 3 |
+| S22 | RequestToken | ic10.stack.manufacturing-candidate-selector.v2 | 2 | 0 | 15 |
+| S22 | ExecutorToken | ic10.stack.print-job-driver.v2 | 0 | 0 | 0 |
+| S22 | ExecutorToken | ic10.stack.transform-job-driver.v2 | 0 | 0 | 6 |
 | S23 | RequestToken | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | -6 |
 | S23 | RequestToken | ic10.stack.stock-target-demand-view.v1 | 2 | 2 | 43 |
 | S24 | ControllerSelectorRequestGeneration | ic10.stack.diagnostic-input-bridge.v1 | 0 | 0 | 10 |
 | S24 | FreezeTokenCounter | ic10.stack.generic-registry-directory-host.v3 | 0 | 6 | 5 |
 | S25 | ConsoleDesiredRequestGeneration | ic10.stack.diagnostic-input-bridge.v1 | 0 | 0 | 10 |
+| S25 | CleanupRequestToken | ic10.stack.manufacturing-dependency-planner.v1 | 1 | 0 | -3 |
 | S25 | RequestToken | ic10.stack.stock-target-job-ingress.v1 | 1 | 1 | 0 |
+| S29 | RequestToken | ic10.stack.dependency-plan-evaluator.v2 | 1 | 0 | 33 |
+| S30 | RequestToken | ic10.stack.dependency-plan-builder.v2 | 1 | 0 | 45 |
 | S30 | PendingGatewayToken | ic10.stack.operator-order-job-ingress.v1 | 0 | 1 | 5 |
 | S30 | PendingGatewayToken | ic10.stack.stock-target-job-ingress.v1 | 0 | 1 | 0 |
 | S31 | PendingStoreToken | ic10.stack.generic-job-store-command-executor.v1 | 0 | 1 | -6 |
-| S32 | LaneBRequestToken | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S31 | MoveRequestToken | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
+| S32 | LaneBRequestToken | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S33 | LaneBRequestToken | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | 36 |
 | S36 | RequestToken | ic10.stack.pressure-grid-path-enumerator.v2 | 1 | 1 | -6 |
 | S36 | RequestToken | ic10.stack.pressure-grid-route-selector.v2 | 1 | 1 | 5 |
-| S48 | LaneCRequestToken | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S48 | LaneCRequestToken | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S52 | RequestGeneration | ic10.stack.generic-persistent-config-host.v1 | 6 | 13 | -1 |
-| S64 | LaneDRequestToken | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S64 | LaneDRequestToken | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S70 | TransformTypeRequest | ic10.stack.resource-transform-profile-view.v4 | 1 | 4 | 4 |
 | S80 | LaneERequestToken | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S96 | LaneFRequestToken | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 
 ### current_token
 
-7 entries at 5 distinct starting cells: S13, S16, S25, S31, S32.
+12 entries at 9 distinct starting cells: S10, S13, S14, S15, S16, S21, S25, S31, S32.
 
 | Cells | Name | Protocol | Peers | Consumers | Headroom |
 |---|---|---|---:|---:|---:|
+| S10 | CurrentToken | ic10.stack.print-candidate-executor.v2 | 1 | 0 | 0 |
+| S10 | CurrentToken | ic10.stack.transform-candidate-executor.v2 | 1 | 0 | 39 |
 | S13 | AcceptedRequestToken | ic10.stack.pressure-grid-plan-builder.v1 | 0 | 1 | 3 |
 | S13 | AcceptedRequestToken | ic10.stack.pressure-grid-singlehop-builder.v1 | 0 | 1 | 0 |
-| S16 | ConsumedRequestGeneration | ic10.stack.multi-material-reservation-allocator.v2 | 0 | 1 | 5 |
+| S14 | CurrentToken | ic10.stack.manufacturing-driver-router.v2 | 0 | 0 | 44 |
+| S15 | CurrentToken | ic10.stack.generic-print-runtime.v2 | 1 | 0 | 3 |
+| S16 | ConsumedRequestGeneration | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | 5 |
+| S21 | CurrentToken | ic10.stack.power-dispatch-sweep.v1 | 0 | 0 | 41 |
 | S25 | PendingToken | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
-| S25 | CurrentEpoch | ic10.stack.stacker-feeder.v1 | 0 | 1 | -7 |
+| S25 | CurrentEpoch | ic10.stack.stacker-feeder.v1 | 1 | 1 | -7 |
 | S31 | PendingClientToken | ic10.stack.operator-order-job-ingress.v1 | 0 | 1 | 5 |
 | S32 | PendingClientToken | ic10.stack.generic-job-store-command-executor.v1 | 0 | 1 | -6 |
 
 ### response_token
 
-38 entries at 20 distinct starting cells: S8, S9, S10, S11, S15, S16, S17, S19, S20, S21, S24, S26, S33, S34, S49, S53, S65, S68, S81, S97.
+77 entries at 27 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S19, S20, S21, S22, S23, S24, S26, S30, S31, S33, S34, S49, S53, S65, S68, S81, S97.
 
 | Cells | Name | Protocol | Peers | Consumers | Headroom |
 |---|---|---|---:|---:|---:|
-| S8 | LaneAResponseToken | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S8 | LaneAResponseToken | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S8 | ResponseGeneration | ic10.stack.generic-job-store.v1 | 1 | 6 | -1 |
+| S8 | ResponseToken | ic10.stack.manufacturing-candidate-selector.v2 | 2 | 0 | 15 |
+| S8 | PrinterRefEcho | ic10.stack.print-material-resolver.v1 | 1 | 0 | 0 |
+| S9 | ResponseToken | ic10.stack.power-dispatch-sweep.v1 | 1 | 0 | 41 |
+| S9 | ResponseToken | ic10.stack.power-job-policy-apply.v1 | 1 | 0 | 38 |
 | S9 | ResponseToken | ic10.stack.pressure-grid-path-allocator.v1 | 1 | 1 | 2 |
 | S9 | ResponseToken | ic10.stack.pressure-reservation-allocator.v3 | 2 | 2 | -1 |
-| S10 | ResponseToken | ic10.stack.dependency-plan-store.v2 | 0 | 6 | 4 |
-| S10 | ResponseToken | ic10.stack.item-producer-resolver.v1 | 1 | 1 | 42 |
+| S9 | ResponseToken | ic10.stack.print-job-driver.v2 | 1 | 0 | 0 |
+| S9 | ResponseToken | ic10.stack.transform-job-driver.v2 | 1 | 0 | 6 |
+| S10 | ResponseToken | ic10.stack.dependency-plan-store.v2 | 2 | 6 | 4 |
+| S10 | ResponseToken | ic10.stack.item-producer-resolver.v1 | 2 | 1 | 42 |
+| S10 | ResponseToken | ic10.stack.manufacturing-dependency-gate.v2 | 1 | 0 | 23 |
+| S10 | ResponseToken | ic10.stack.manufacturing-driver-router.v2 | 1 | 0 | 44 |
+| S10 | ResponseToken | ic10.stack.manufacturing-reagent-resolver.v1 | 1 | 0 | 4 |
+| S10 | ResponseToken | ic10.stack.power-job-finalize.v1 | 1 | 0 | 30 |
+| S10 | ResponseToken | ic10.stack.power-job-prepare.v1 | 1 | 0 | 15 |
+| S10 | ResponseToken | ic10.stack.power-plan-validator.v1 | 1 | 0 | 14 |
 | S10 | ResponseToken | ic10.stack.pressure-grid-path-enumerator.v2 | 1 | 1 | -6 |
 | S10 | ResponseToken | ic10.stack.pressure-grid-plan-builder.v1 | 1 | 1 | 3 |
 | S10 | ResponseToken | ic10.stack.pressure-grid-route-ranker.v2 | 1 | 1 | 1 |
 | S10 | ResponseToken | ic10.stack.pressure-grid-route-selector.v2 | 1 | 1 | 5 |
+| S10 | ResponseToken | ic10.stack.resource-reservation-releaser.v1 | 1 | 0 | 73 |
+| S10 | ResponseToken | ic10.stack.transform-candidate-readiness.v1 | 1 | 0 | 13 |
 | S11 | HandledCommitGeneration | ic10.stack.diagnostic-mapping-editor.v1 | 0 | 0 | 5 |
-| S11 | ResponseToken | ic10.stack.power-dispatch-plan-store.v1 | 0 | 6 | 32 |
+| S11 | ResponseToken | ic10.stack.power-dispatch-plan-store.v1 | 2 | 6 | 32 |
+| S11 | ResponseToken | ic10.stack.power-reservation-committer.v1 | 1 | 0 | 21 |
 | S11 | ResponseToken | ic10.stack.pressure-grid-singlehop-builder.v1 | 1 | 1 | 0 |
+| S12 | ResponseToken | ic10.stack.power-policy-target-resolver.v1 | 3 | 0 | 43 |
+| S13 | ResponseToken | ic10.stack.power-job-policy-verify.v1 | 1 | 0 | 58 |
+| S13 | ResponseToken | ic10.stack.power-source-selector.v1 | 1 | 0 | 20 |
+| S13 | ResponseToken | ic10.stack.print-material-resolver.v1 | 1 | 0 | 0 |
+| S14 | ResponseToken | ic10.stack.larre-cargo-storage-service.v1 | 1 | 0 | 0 |
+| S14 | ResponseToken | ic10.stack.multi-material-reservation-stager.v1 | 1 | 0 | 0 |
+| S14 | ResponseToken | ic10.stack.power-sink-selector.v1 | 1 | 0 | 47 |
+| S15 | ResponseToken | ic10.stack.generic-job-monitor.v1 | 4 | 0 | 56 |
 | S15 | AcknowledgedRequestGeneration | ic10.stack.generic-snapshot-directory-host.v1 | 1 | 13 | -1 |
+| S15 | ResponseToken | ic10.stack.power-job-lifecycle-client.v1 | 2 | 0 | 83 |
+| S16 | ResponseToken | ic10.stack.dependency-ancestry-guard.v1 | 1 | 0 | 37 |
+| S16 | ResponseToken | ic10.stack.dependency-child-validity.v1 | 3 | 0 | 60 |
+| S16 | ResponseToken | ic10.stack.dependency-plan-release-advisor.v1 | 1 | 0 | 60 |
 | S16 | ResponseToken | ic10.stack.item-resource-reservation-selector.v1 | 3 | 3 | 0 |
+| S16 | ResponseToken | ic10.stack.power-link-selector.v1 | 1 | 0 | 41 |
+| S16 | ResponseToken | ic10.stack.power-sink-flow-builder.v1 | 1 | 0 | 23 |
+| S16 | ResponseToken | ic10.stack.printer-capacity-client.v2 | 1 | 0 | 1 |
 | S16 | ResponseToken | ic10.stack.recipe-catalog-lookup.v3 | 1 | 1 | 16 |
 | S17 | FreezeAcknowledgeToken | ic10.stack.directory-adapter.v3 | 2 | 2 | 2 |
-| S19 | ResponseToken | ic10.stack.dependency-claim-view.v1 | 1 | 1 | 5 |
+| S19 | ResponseToken | ic10.stack.dependency-claim-view.v1 | 3 | 1 | 5 |
+| S19 | ResponseToken | ic10.stack.job-inventory-preflight.v1 | 2 | 0 | 4 |
 | S19 | ResponseToken | ic10.stack.stock-target-inventory-view.v1 | 1 | 1 | 43 |
 | S19 | LaneAResponseToken | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | 36 |
 | S20 | PolicyResponseGeneration | ic10.stack.generic-persistent-config-host.v1 | 6 | 13 | -1 |
-| S20 | ResponseToken | ic10.stack.job-requirement-view.v1 | 1 | 1 | 17 |
+| S20 | ResponseToken | ic10.stack.job-requirement-view.v1 | 4 | 1 | 17 |
+| S20 | ResponseToken | ic10.stack.manufacturing-dependency-planner.v1 | 1 | 0 | -3 |
 | S20 | ResponseToken | ic10.stack.operator-order-job-ingress.v1 | 1 | 1 | 5 |
 | S20 | ResponseToken | ic10.stack.operator-order-recipe-view.v1 | 1 | 1 | 38 |
 | S20 | ResponseToken | ic10.stack.stock-target-future-view.v1 | 1 | 1 | 6 |
 | S21 | ResponseToken | ic10.stack.existing-dependency-plan-controller.v1 | 1 | 1 | 7 |
+| S21 | ResponseToken | ic10.stack.generic-job-selector.v3 | 2 | 0 | 0 |
+| S22 | ResponseToken | ic10.stack.new-dependency-plan-controller.v1 | 1 | 0 | 28 |
+| S23 | ResponseToken | ic10.stack.dependency-child-creator.v2 | 1 | 0 | 14 |
 | S24 | ResponseToken | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | -6 |
 | S24 | ResponseToken | ic10.stack.stock-target-demand-view.v1 | 2 | 2 | 43 |
+| S26 | CleanupResponseToken | ic10.stack.manufacturing-dependency-planner.v1 | 1 | 0 | -3 |
 | S26 | ResponseToken | ic10.stack.stock-target-job-ingress.v1 | 1 | 1 | 0 |
-| S33 | LaneBResponseToken | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S30 | ResponseToken | ic10.stack.dependency-plan-evaluator.v2 | 1 | 0 | 33 |
+| S31 | ResponseToken | ic10.stack.dependency-plan-builder.v2 | 1 | 0 | 45 |
+| S33 | LaneBResponseToken | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
+| S34 | MoveResponseToken | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
 | S34 | LaneBResponseToken | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | 36 |
-| S49 | LaneCResponseToken | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
-| S49 | RecipeHashEcho | ic10.stack.recipe-execution-profile-view.v1 | 2 | 2 | 5 |
+| S49 | LaneCResponseToken | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
+| S49 | RecipeHashEcho | ic10.stack.recipe-execution-profile-view.v1 | 3 | 2 | 5 |
 | S53 | ResponseGeneration | ic10.stack.generic-persistent-config-host.v1 | 6 | 13 | -1 |
-| S65 | LaneDResponseToken | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S65 | LaneDResponseToken | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S68 | RequestEcho | ic10.stack.resource-transform-profile-view.v4 | 4 | 4 | 4 |
 | S81 | LaneEResponseToken | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S97 | LaneFResponseToken | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 
 ### state
 
-77 entries at 26 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S20, S21, S22, S24, S25, S26, S27, S28, S31, S34, S35, S50, S66, S69, S82, S98, S101.
+135 entries at 30 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S20, S21, S22, S23, S24, S25, S26, S27, S28, S31, S32, S34, S35, S50, S66, S69, S82, S98, S101.
 
 | Cells | Name | Protocol | Peers | Consumers | Headroom |
 |---|---|---|---:|---:|---:|
 | S8 | OperationalStatus | ic10.stack.generic-persistent-config-host.v1 | 6 | 13 | -1 |
+| S8 | TargetJobState | ic10.stack.generic-print-runtime.v2 | 1 | 0 | 3 |
 | S8 | Status | ic10.stack.item-resource-reservation-selector.v1 | 3 | 3 | 0 |
-| S8 | Status | ic10.stack.material-transform-admission.v1 | 1 | 1 | 0 |
+| S8 | Status | ic10.stack.material-transform-admission.v1 | 2 | 1 | 0 |
+| S8 | Status | ic10.stack.power-job-lifecycle-client.v1 | 2 | 0 | 83 |
+| S8 | Status | ic10.stack.power-job-policy-verify.v1 | 1 | 0 | 58 |
+| S8 | Status | ic10.stack.power-sink-flow-builder.v1 | 1 | 0 | 23 |
 | S8 | Result | ic10.stack.pressure-grid-path-allocator.v1 | 1 | 1 | 2 |
 | S8 | Result | ic10.stack.pressure-reservation-allocator.v3 | 2 | 2 | -1 |
 | S8 | Status | ic10.stack.recipe-catalog-lookup.v3 | 1 | 1 | 16 |
 | S8 | Status | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
-| S9 | LaneAStatus | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S9 | LaneAStatus | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S9 | ResponseStatus | ic10.stack.generic-job-store.v1 | 1 | 6 | -1 |
+| S9 | Status | ic10.stack.larre-cargo-storage-service.v1 | 1 | 0 | 0 |
+| S9 | Status | ic10.stack.manufacturing-candidate-selector.v2 | 2 | 0 | 15 |
 | S9 | InternalState | ic10.stack.material-transfer-executor.v1 | 0 | 1 | 2 |
 | S9 | Status | ic10.stack.pressure-grid-path-enumerator.v2 | 1 | 1 | -6 |
 | S9 | Status | ic10.stack.pressure-grid-plan-builder.v1 | 1 | 1 | 3 |
 | S9 | Status | ic10.stack.pressure-grid-route-ranker.v2 | 1 | 1 | 1 |
 | S9 | Status | ic10.stack.pressure-grid-route-selector.v2 | 1 | 1 | 5 |
+| S9 | OwningBankRef | ic10.stack.printer-capacity-client.v2 | 0 | 0 | 1 |
 | S9 | Status | ic10.stack.resource-link.v1 | 1 | 1 | 12 |
 | S9 | EndpointStatus | ic10.stack.resource-reservation.v1 | 1 | 3 | 4 |
+| S9 | Status | ic10.stack.transform-candidate-readiness.v1 | 1 | 0 | 13 |
 | S10 | Status | ic10.stack.diagnostic-input-bridge.v1 | 0 | 0 | 10 |
 | S10 | ElapsedTicks | ic10.stack.material-transfer-executor.v1 | 0 | 1 | 2 |
-| S10 | ResultStatus | ic10.stack.phase-pressure-request-arbiter.v1 | 0 | 0 | -1 |
+| S10 | ResultStatus | ic10.stack.phase-pressure-request-arbiter.v1 | 1 | 0 | -1 |
+| S10 | Status | ic10.stack.power-dispatch-sweep.v1 | 1 | 0 | 41 |
+| S10 | Status | ic10.stack.power-job-policy-apply.v1 | 1 | 0 | 38 |
+| S10 | Status | ic10.stack.power-reservation-allocator.v1 | 2 | 0 | 35 |
 | S10 | Status | ic10.stack.pressure-grid-reservation-planner.v2 | 0 | 1 | 36 |
 | S10 | Status | ic10.stack.pressure-grid-singlehop-builder.v1 | 1 | 1 | 0 |
 | S10 | MirroredInventoryStatus | ic10.stack.pressure-inventory-reservation.v1 | 0 | 1 | 70 |
-| S10 | Active | ic10.stack.process-condition.v1 | 1 | 1 | 4 |
-| S11 | Status | ic10.stack.dependency-plan-store.v2 | 0 | 6 | 4 |
+| S10 | OwningPin | ic10.stack.printer-capacity-client.v2 | 0 | 0 | 1 |
+| S10 | Active | ic10.stack.process-condition.v1 | 3 | 1 | 4 |
+| S11 | Status | ic10.stack.dependency-plan-store.v2 | 2 | 6 | 4 |
 | S11 | Status | ic10.stack.generic-input-resolver.v1 | 1 | 1 | 10 |
-| S11 | Status | ic10.stack.item-producer-resolver.v1 | 1 | 1 | 42 |
+| S11 | Status | ic10.stack.item-producer-resolver.v1 | 2 | 1 | 42 |
+| S11 | Status | ic10.stack.manufacturing-reagent-resolver.v1 | 1 | 0 | 4 |
 | S11 | Status | ic10.stack.material-transfer-grant-guard.v1 | 1 | 2 | 6 |
-| S11 | Status | ic10.stack.medium-purity-guard.v1 | 0 | 0 | 41 |
+| S11 | Status | ic10.stack.medium-purity-guard.v1 | 2 | 0 | 41 |
+| S11 | Status | ic10.stack.power-job-finalize.v1 | 1 | 0 | 30 |
+| S11 | Status | ic10.stack.power-job-prepare.v1 | 1 | 0 | 15 |
+| S11 | Status | ic10.stack.power-plan-validator.v1 | 1 | 0 | 14 |
 | S11 | Status | ic10.stack.pressure-domain-inventory.v2 | 2 | 2 | -1 |
+| S11 | TargetJobState | ic10.stack.print-candidate-executor.v2 | 1 | 0 | 0 |
+| S11 | Status | ic10.stack.resource-reservation-releaser.v1 | 1 | 0 | 73 |
+| S11 | TargetJobState | ic10.stack.transform-candidate-executor.v2 | 1 | 0 | 39 |
 | S12 | Status | ic10.stack.diagnostic-mapping-editor.v1 | 0 | 0 | 5 |
-| S12 | Status | ic10.stack.process-condition.v1 | 1 | 1 | 4 |
-| S13 | Status | ic10.stack.power-dispatch-plan-store.v1 | 0 | 6 | 32 |
+| S12 | Status | ic10.stack.material-transform-link-resolver.v1 | 3 | 0 | 2 |
+| S12 | Status | ic10.stack.power-reservation-committer.v1 | 1 | 0 | 21 |
+| S12 | Status | ic10.stack.print-material-resolver.v1 | 4 | 0 | 0 |
+| S12 | Status | ic10.stack.process-condition.v1 | 3 | 1 | 4 |
+| S13 | Lane | ic10.stack.manufacturing-driver-router.v2 | 0 | 0 | 44 |
+| S13 | Status | ic10.stack.multi-material-reservation-stager.v1 | 1 | 0 | 0 |
+| S13 | Status | ic10.stack.power-dispatch-plan-store.v1 | 2 | 6 | 32 |
+| S13 | Status | ic10.stack.power-policy-target-resolver.v1 | 3 | 0 | 43 |
 | S14 | Overflow | ic10.stack.directory-adapter.v3 | 2 | 2 | 2 |
+| S14 | Status | ic10.stack.power-source-selector.v1 | 1 | 0 | 20 |
 | S15 | StagingReady | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
-| S15 | Status | ic10.stack.pressure-transfer-grant-guard.v1 | 1 | 1 | 9 |
-| S15 | Status | ic10.stack.recipe-execution-profile-view.v1 | 2 | 2 | 5 |
+| S15 | Status | ic10.stack.power-sink-selector.v1 | 1 | 0 | 47 |
+| S15 | Status | ic10.stack.pressure-transfer-grant-guard.v1 | 2 | 1 | 9 |
+| S15 | Status | ic10.stack.recipe-execution-profile-view.v1 | 4 | 2 | 5 |
 | S16 | StoreState | ic10.stack.generic-catalog-store.v6 | 1 | 1 | 0 |
 | S16 | EditorStatus | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
+| S16 | Status | ic10.stack.generic-job-monitor.v1 | 4 | 0 | 56 |
 | S16 | Status | ic10.stack.generic-registry-directory-host.v3 | 0 | 6 | 5 |
 | S16 | ExecutionStatus | ic10.stack.material-transfer-executor.v1 | 1 | 1 | 2 |
-| S16 | DirectionLock | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
-| S20 | Status | ic10.stack.dependency-claim-view.v1 | 1 | 1 | 5 |
+| S16 | DirectionLock | ic10.stack.resource-reservation.v1 | 1 | 3 | 4 |
+| S17 | Status | ic10.stack.dependency-ancestry-guard.v1 | 1 | 0 | 37 |
+| S17 | Status | ic10.stack.dependency-child-validity.v1 | 3 | 0 | 60 |
+| S17 | Status | ic10.stack.dependency-plan-release-advisor.v1 | 0 | 0 | 60 |
+| S17 | Status | ic10.stack.power-link-selector.v1 | 1 | 0 | 41 |
+| S17 | Status | ic10.stack.printer-capacity-client.v2 | 1 | 0 | 1 |
+| S18 | PostingCounter | ic10.stack.dependency-ancestry-guard.v1 | 0 | 0 | 37 |
+| S20 | Status | ic10.stack.dependency-claim-view.v1 | 3 | 1 | 5 |
+| S20 | Phase | ic10.stack.generic-print-runtime.v2 | 0 | 0 | 3 |
+| S20 | Status | ic10.stack.job-inventory-preflight.v1 | 2 | 0 | 4 |
+| S20 | Phase | ic10.stack.power-dispatch-sweep.v1 | 0 | 0 | 41 |
+| S20 | Phase | ic10.stack.power-job-finalize.v1 | 0 | 0 | 30 |
+| S20 | Phase | ic10.stack.power-job-prepare.v1 | 0 | 0 | 15 |
+| S20 | Phase | ic10.stack.power-reservation-allocator.v1 | 0 | 0 | 35 |
+| S20 | Phase | ic10.stack.power-sink-flow-builder.v1 | 0 | 0 | 23 |
 | S20 | SearchActive | ic10.stack.pressure-grid-route-selector.v2 | 0 | 1 | 5 |
+| S20 | Phase | ic10.stack.print-candidate-executor.v2 | 0 | 0 | 0 |
+| S20 | Phase | ic10.stack.print-job-driver.v2 | 0 | 0 | 0 |
 | S20..S23 | InternalState | ic10.stack.stacker-feeder.v1 | 0 | 1 | -7 |
 | S20 | Status | ic10.stack.stock-target-inventory-view.v1 | 1 | 1 | 43 |
 | S20 | LaneAStatus | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | 36 |
+| S20 | Phase | ic10.stack.transform-candidate-executor.v2 | 0 | 0 | 39 |
+| S20 | Phase | ic10.stack.transform-candidate-readiness.v1 | 0 | 0 | 13 |
+| S20 | Phase | ic10.stack.transform-job-driver.v2 | 0 | 0 | 6 |
 | S21 | StagingCount | ic10.stack.generic-snapshot-directory-host.v1 | 1 | 13 | -1 |
-| S21 | Status | ic10.stack.job-requirement-view.v1 | 1 | 1 | 17 |
+| S21 | Status | ic10.stack.job-requirement-view.v1 | 4 | 1 | 17 |
 | S21 | Status | ic10.stack.operator-order-job-ingress.v1 | 1 | 1 | 5 |
 | S21 | Status | ic10.stack.operator-order-recipe-view.v1 | 1 | 1 | 38 |
+| S21 | PendingPlanGeneration | ic10.stack.power-reservation-allocator.v1 | 0 | 0 | 35 |
 | S21 | Status | ic10.stack.stock-target-future-view.v1 | 1 | 1 | 6 |
 | S22 | CommitSwitchState | ic10.stack.diagnostic-input-bridge.v1 | 0 | 0 | 10 |
+| S22 | Status | ic10.stack.generic-job-selector.v3 | 3 | 0 | 0 |
 | S22 | StagingOverflow | ic10.stack.generic-snapshot-directory-host.v1 | 1 | 13 | -1 |
-| S22 | Status | ic10.stack.multi-material-reservation-allocator.v2 | 0 | 1 | 5 |
+| S22 | Status | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | 5 |
+| S22 | SinkCursor | ic10.stack.power-dispatch-sweep.v1 | 0 | 0 | 41 |
 | S22 | SelectorRequestCounter | ic10.stack.stock-target-inventory-view.v1 | 0 | 1 | 43 |
+| S23 | CandidateOrdinal | ic10.stack.print-job-driver.v2 | 0 | 0 | 0 |
+| S23 | CandidateOrdinal | ic10.stack.transform-job-driver.v2 | 0 | 0 | 6 |
+| S24 | Status | ic10.stack.dependency-child-creator.v2 | 1 | 0 | 14 |
 | S24 | PendingLaneClass | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
 | S24 | StagedFlowCount | ic10.stack.power-dispatch-plan-store.v1 | 1 | 6 | 32 |
 | S24 | ResumeKey | ic10.stack.pressure-grid-path-enumerator.v2 | 0 | 1 | -6 |
-| S24 | Status | ic10.stack.stacker-feeder.v1 | 0 | 1 | -7 |
+| S24 | Outcome | ic10.stack.print-job-driver.v2 | 0 | 0 | 0 |
+| S24 | Status | ic10.stack.stacker-feeder.v1 | 1 | 1 | -7 |
+| S24 | Outcome | ic10.stack.transform-job-driver.v2 | 0 | 0 | 6 |
 | S25 | BridgePublicationValid | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
 | S25 | Status | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | -6 |
+| S25 | ExportTicks | ic10.stack.generic-print-runtime.v2 | 0 | 0 | 3 |
 | S25 | LiftAccumulator | ic10.stack.pressure-grid-route-ranker.v2 | 0 | 1 | 1 |
 | S25 | Status | ic10.stack.stock-target-demand-view.v1 | 2 | 2 | 43 |
 | S25 | ClaimPostingCounter | ic10.stack.stock-target-future-view.v1 | 0 | 1 | 6 |
 | S26 | PendingLaneBase | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S27 | CleanupStatus | ic10.stack.manufacturing-dependency-planner.v1 | 0 | 0 | -3 |
 | S27 | Status | ic10.stack.stock-target-job-ingress.v1 | 1 | 1 | 0 |
-| S28 | Status | ic10.stack.resource-profile-view.v1 | 3 | 3 | 29 |
-| S31 | PlanStatus | ic10.stack.power-dispatch-plan-store.v1 | 1 | 6 | 32 |
+| S28 | Status | ic10.stack.resource-profile-view.v1 | 4 | 3 | 29 |
+| S31 | CommittedCriticalShortage | ic10.stack.power-dispatch-plan-store.v1 | 1 | 6 | 32 |
+| S32 | Status | ic10.stack.dependency-plan-builder.v2 | 1 | 0 | 45 |
+| S32 | MoveStatus | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
 | S34 | LaneBStatus | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
 | S34 | PendingSlot | ic10.stack.generic-job-store-command-executor.v1 | 0 | 1 | -6 |
 | S35 | LaneBStatus | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | 36 |
-| S50 | LaneCStatus | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
-| S66 | LaneDStatus | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S50 | LaneCStatus | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
+| S66 | LaneDStatus | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S69 | ResolveStatus | ic10.stack.resource-transform-profile-view.v4 | 4 | 4 | 4 |
 | S82 | LaneEStatus | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S98 | LaneFStatus | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
@@ -503,167 +811,272 @@ or write the entry's cells; headroom is the smallest line headroom under the
 
 ### error
 
-2 entries at 2 distinct starting cells: S23, S28.
+9 entries at 5 distinct starting cells: S9, S11, S12, S23, S28.
 
 | Cells | Name | Protocol | Peers | Consumers | Headroom |
 |---|---|---|---:|---:|---:|
+| S9 | ErrorStatus | ic10.stack.generic-print-runtime.v2 | 1 | 0 | 3 |
+| S11 | ErrorStatus | ic10.stack.print-job-driver.v2 | 1 | 0 | 0 |
+| S11 | ErrorStatus | ic10.stack.transform-job-driver.v2 | 1 | 0 | 6 |
+| S12 | ErrorStatus | ic10.stack.manufacturing-dependency-gate.v2 | 1 | 0 | 23 |
+| S12 | ErrorStatus | ic10.stack.manufacturing-driver-router.v2 | 1 | 0 | 44 |
+| S12 | ErrorStatus | ic10.stack.print-candidate-executor.v2 | 1 | 0 | 0 |
+| S12 | ErrorStatus | ic10.stack.transform-candidate-executor.v2 | 1 | 0 | 39 |
 | S23 | HostError | ic10.stack.generic-snapshot-directory-host.v1 | 0 | 13 | -1 |
 | S28 | FaultDetail | ic10.stack.generic-catalog-store.v6 | 0 | 1 | 0 |
 
 ### result
 
-189 entries at 48 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S24, S25, S26, S27, S28, S29, S30, S31, S32, S33, S35, S36, S37, S38, S39, S40, S41, S51, S52, S55, S56, S57, S64, S67, S71, S72, S73, S75, S83, S84, S99, S100.
+308 entries at 49 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S24, S25, S26, S27, S28, S29, S30, S31, S32, S33, S34, S35, S36, S37, S38, S39, S40, S41, S51, S52, S55, S56, S57, S64, S67, S71, S72, S73, S75, S83, S84, S99, S100.
 
 | Cells | Name | Protocol | Peers | Consumers | Headroom |
 |---|---|---|---:|---:|---:|
 | S8 | PopulatedScrewMask | ic10.stack.generic-input-scanner.v1 | 0 | 0 | 36 |
+| S8 | JobType | ic10.stack.generic-job-selector.v3 | 2 | 0 | 0 |
 | S8 | GrantedQuantity | ic10.stack.material-transfer-executor.v1 | 0 | 1 | 2 |
-| S8 | MediumType | ic10.stack.medium-purity-guard.v1 | 0 | 0 | 41 |
-| S8 | AggregateRequestedPressure | ic10.stack.phase-pressure-request-arbiter.v1 | 0 | 0 | -1 |
+| S8 | TransformType | ic10.stack.material-transform-link-resolver.v1 | 0 | 0 | 2 |
+| S8 | MediumType | ic10.stack.medium-purity-guard.v1 | 1 | 0 | 41 |
+| S8 | StagedCount | ic10.stack.multi-material-reservation-stager.v1 | 0 | 0 | 0 |
+| S8 | AggregateRequestedPressure | ic10.stack.phase-pressure-request-arbiter.v1 | 1 | 0 | -1 |
+| S8 | LinkRef | ic10.stack.power-link-selector.v1 | 1 | 0 | 41 |
+| S8 | NodeKind | ic10.stack.power-policy-target-resolver.v1 | 1 | 0 | 43 |
+| S8 | PlanGeneration | ic10.stack.power-reservation-allocator.v1 | 2 | 0 | 35 |
+| S8 | Ordinal | ic10.stack.power-sink-selector.v1 | 1 | 0 | 47 |
+| S8 | Ordinal | ic10.stack.power-source-selector.v1 | 1 | 0 | 20 |
 | S8 | MolesPerLiter | ic10.stack.pressure-domain-inventory.v2 | 1 | 2 | -1 |
 | S8 | PathBottleneckRate | ic10.stack.pressure-grid-path-enumerator.v2 | 1 | 1 | -6 |
 | S8 | ReservedMolesSummary | ic10.stack.pressure-grid-plan-builder.v1 | 1 | 1 | 3 |
 | S8 | StagedLinkCount | ic10.stack.pressure-grid-reservation-planner.v2 | 0 | 1 | 36 |
 | S8 | SelectedBottleneck | ic10.stack.pressure-grid-route-selector.v2 | 1 | 1 | 5 |
 | S8 | GrantedLinkCount | ic10.stack.pressure-grid-singlehop-builder.v1 | 1 | 1 | 0 |
-| S8 | MolesPerKPa | ic10.stack.pressure-inventory-reservation.v1 | 1 | 1 | 70 |
-| S8 | ActiveGrantRate | ic10.stack.pressure-transfer-grant-guard.v1 | 1 | 1 | 9 |
+| S8 | MolesPerKPa | ic10.stack.pressure-inventory-reservation.v1 | 2 | 1 | 70 |
+| S8 | ActiveGrantRate | ic10.stack.pressure-transfer-grant-guard.v1 | 2 | 1 | 9 |
+| S8 | ResolvedPrinterRef | ic10.stack.printer-capacity-client.v2 | 1 | 0 | 1 |
 | S8 | UnmetConditionMask | ic10.stack.process-condition.v1 | 0 | 1 | 4 |
 | S8 | CostHint | ic10.stack.resource-link.v1 | 0 | 1 | 12 |
 | S8 | MaxRate | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
 | S9 | LocalItemCount | ic10.stack.generic-catalog-store.v6 | 1 | 1 | 0 |
+| S9 | RequiredCapability | ic10.stack.generic-job-selector.v3 | 2 | 0 | 0 |
 | S9 | QuotedTotal | ic10.stack.item-resource-reservation-selector.v1 | 3 | 3 | 0 |
 | S9 | GrantedQuantity | ic10.stack.material-transfer-grant-guard.v1 | 1 | 2 | 6 |
+| S9 | InputCount | ic10.stack.material-transform-link-resolver.v1 | 2 | 0 | 2 |
 | S9 | ObservedRatio | ic10.stack.medium-purity-guard.v1 | 0 | 0 | 41 |
-| S9 | ContributingRequestCount | ic10.stack.phase-pressure-request-arbiter.v1 | 0 | 0 | -1 |
+| S9 | ContributingRequestCount | ic10.stack.phase-pressure-request-arbiter.v1 | 1 | 0 | -1 |
+| S9 | NewJobGeneration | ic10.stack.power-job-lifecycle-client.v1 | 2 | 0 | 83 |
+| S9 | SourceWatts | ic10.stack.power-link-selector.v1 | 1 | 0 | 41 |
+| S9 | ReservationGeneration | ic10.stack.power-policy-target-resolver.v1 | 0 | 0 | 43 |
+| S9 | SourceWatts | ic10.stack.power-sink-flow-builder.v1 | 0 | 0 | 23 |
+| S9 | ReservationGeneration | ic10.stack.power-sink-selector.v1 | 1 | 0 | 47 |
+| S9 | ReservationGeneration | ic10.stack.power-source-selector.v1 | 1 | 0 | 20 |
 | S9 | TotalMoles | ic10.stack.pressure-domain-inventory.v2 | 0 | 2 | -1 |
 | S9 | ReservedMolesSummary | ic10.stack.pressure-grid-reservation-planner.v2 | 0 | 1 | 36 |
 | S9 | HopReservedMoles | ic10.stack.pressure-grid-singlehop-builder.v1 | 1 | 1 | 0 |
-| S9 | MolesPerLiter | ic10.stack.pressure-inventory-reservation.v1 | 1 | 1 | 70 |
+| S9 | MolesPerLiter | ic10.stack.pressure-inventory-reservation.v1 | 2 | 1 | 70 |
+| S9 | Result | ic10.stack.print-candidate-executor.v2 | 1 | 0 | 0 |
+| S9 | InputCount | ic10.stack.print-material-resolver.v1 | 2 | 0 | 0 |
 | S9 | EligibleRecipeCount | ic10.stack.recipe-catalog-lookup.v3 | 0 | 1 | 16 |
+| S9 | Result | ic10.stack.transform-candidate-executor.v2 | 1 | 0 | 39 |
 | S10 | SelectedControlOrdinal | ic10.stack.generic-input-scanner.v1 | 0 | 0 | 36 |
 | S10 | LaneAAllocatedJobId | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S10 | Identity | ic10.stack.generic-job-selector.v3 | 3 | 0 | 0 |
 | S10 | AllocatedJobId | ic10.stack.generic-job-store.v1 | 1 | 6 | -1 |
 | S10 | LegCount | ic10.stack.item-resource-reservation-selector.v1 | 3 | 3 | 0 |
+| S10 | ScanExportAvailable | ic10.stack.larre-cargo-storage-service.v1 | 1 | 0 | 0 |
+| S10 | CandidateRef | ic10.stack.manufacturing-candidate-selector.v2 | 2 | 0 | 15 |
 | S10 | OutputResourceType | ic10.stack.material-transform-admission.v1 | 0 | 1 | 0 |
+| S10 | ProcessorRef | ic10.stack.material-transform-link-resolver.v1 | 0 | 0 | 2 |
 | S10 | RequiredPurity | ic10.stack.medium-purity-guard.v1 | 0 | 0 | 41 |
+| S10 | LinkGeneration | ic10.stack.power-link-selector.v1 | 1 | 0 | 41 |
+| S10 | SourceReservationRef | ic10.stack.power-sink-flow-builder.v1 | 0 | 0 | 23 |
+| S10 | PriorityFlags | ic10.stack.power-sink-selector.v1 | 1 | 0 | 47 |
+| S10 | NodeKind | ic10.stack.power-source-selector.v1 | 0 | 0 | 20 |
 | S10 | Pressure | ic10.stack.pressure-domain-inventory.v2 | 0 | 2 | -1 |
 | S10 | StagedLinkCount | ic10.stack.pressure-grid-path-allocator.v1 | 1 | 1 | 2 |
 | S10 | ActiveSourceReservationRef | ic10.stack.pressure-transfer-grant-guard.v1 | 0 | 1 | 9 |
+| S10 | TargetJobState | ic10.stack.print-job-driver.v2 | 1 | 0 | 0 |
 | S10 | RecipeHash | ic10.stack.recipe-catalog-lookup.v3 | 1 | 1 | 16 |
+| S10 | TargetJobState | ic10.stack.transform-job-driver.v2 | 1 | 0 | 6 |
+| S11 | InputCount | ic10.stack.generic-job-selector.v3 | 1 | 0 | 0 |
 | S11 | TransactionResult | ic10.stack.generic-persistent-config-host.v1 | 0 | 13 | -1 |
+| S11 | ScanImportCapacity | ic10.stack.larre-cargo-storage-service.v1 | 1 | 0 | 0 |
+| S11 | CandidateProcessorRef | ic10.stack.manufacturing-candidate-selector.v2 | 0 | 0 | 15 |
+| S11 | TargetJobState | ic10.stack.manufacturing-dependency-gate.v2 | 1 | 0 | 23 |
+| S11 | TargetJobState | ic10.stack.manufacturing-driver-router.v2 | 1 | 0 | 44 |
 | S11 | ResourceType | ic10.stack.material-transfer-executor.v1 | 0 | 1 | 2 |
 | S11 | OutputUnit | ic10.stack.material-transform-admission.v1 | 0 | 1 | 0 |
+| S11 | ReservationRef | ic10.stack.power-job-policy-apply.v1 | 0 | 0 | 38 |
+| S11 | LinkClass | ic10.stack.power-link-selector.v1 | 0 | 0 | 41 |
+| S11 | CriticalFlag | ic10.stack.power-sink-selector.v1 | 1 | 0 | 47 |
 | S11 | PathRate | ic10.stack.pressure-grid-path-allocator.v1 | 0 | 1 | 2 |
 | S11 | ActiveSearchId | ic10.stack.pressure-grid-path-enumerator.v2 | 0 | 1 | -6 |
 | S11 | LeaseTicks | ic10.stack.pressure-grid-reservation-planner.v2 | 0 | 1 | 36 |
 | S11 | SelectedRouteCost | ic10.stack.pressure-grid-route-selector.v2 | 0 | 1 | 5 |
 | S11 | ActiveSinkReservationRef | ic10.stack.pressure-transfer-grant-guard.v1 | 0 | 1 | 9 |
 | S11 | RequiredCapability | ic10.stack.recipe-catalog-lookup.v3 | 1 | 1 | 16 |
-| S11 | FamilyHash | ic10.stack.recipe-execution-profile-view.v1 | 1 | 2 | 5 |
+| S11 | FamilyHash | ic10.stack.recipe-execution-profile-view.v1 | 2 | 2 | 5 |
 | S12 | CandidateCount | ic10.stack.directory-adapter.v3 | 2 | 2 | 2 |
-| S12 | ProducerJobType | ic10.stack.item-producer-resolver.v1 | 1 | 1 | 42 |
+| S12 | OutputCount | ic10.stack.generic-job-selector.v3 | 1 | 0 | 0 |
+| S12 | ProducerJobType | ic10.stack.item-producer-resolver.v1 | 2 | 1 | 42 |
+| S12 | ScanFirstSourceSlot | ic10.stack.larre-cargo-storage-service.v1 | 1 | 0 | 0 |
+| S12 | CandidateProcessorSpec | ic10.stack.manufacturing-candidate-selector.v2 | 1 | 0 | 15 |
+| S12 | ResourceType | ic10.stack.manufacturing-reagent-resolver.v1 | 1 | 0 | 4 |
 | S12 | ProcessorCapabilityMask | ic10.stack.material-transform-admission.v1 | 0 | 1 | 0 |
+| S12 | NewState | ic10.stack.power-job-finalize.v1 | 1 | 0 | 30 |
+| S12 | EndpointRef | ic10.stack.power-job-policy-apply.v1 | 0 | 0 | 38 |
+| S12 | NewState | ic10.stack.power-job-prepare.v1 | 1 | 0 | 15 |
 | S12 | MediumType | ic10.stack.pressure-grid-reservation-planner.v2 | 0 | 1 | 36 |
 | S12 | ReservedExportMoles | ic10.stack.pressure-inventory-reservation.v1 | 0 | 1 | 70 |
 | S12 | AdmissibleRate | ic10.stack.pressure-reservation-allocator.v3 | 1 | 2 | -1 |
 | S12 | ActiveMediumType | ic10.stack.pressure-transfer-grant-guard.v1 | 0 | 1 | 9 |
 | S12 | RequiredCapability | ic10.stack.recipe-execution-profile-view.v1 | 2 | 2 | 5 |
+| S12 | ReleasedCount | ic10.stack.resource-reservation-releaser.v1 | 0 | 0 | 73 |
 | S13 | SelectedControlOrdinal | ic10.stack.generic-input-resolver.v1 | 1 | 1 | 10 |
-| S13 | ProducerIdentity | ic10.stack.item-producer-resolver.v1 | 1 | 1 | 42 |
+| S13 | RequestedQuantity | ic10.stack.generic-job-selector.v3 | 3 | 0 | 0 |
+| S13 | ProducerIdentity | ic10.stack.item-producer-resolver.v1 | 2 | 1 | 42 |
+| S13 | MovedQuantity | ic10.stack.larre-cargo-storage-service.v1 | 1 | 0 | 0 |
+| S13 | NextOrdinal | ic10.stack.manufacturing-candidate-selector.v2 | 2 | 0 | 15 |
 | S13 | ImportCountSnapshot | ic10.stack.material-transfer-executor.v1 | 0 | 1 | 2 |
+| S13 | NewJobGeneration | ic10.stack.power-job-finalize.v1 | 1 | 0 | 30 |
+| S13 | ReservationGeneration | ic10.stack.power-job-policy-apply.v1 | 0 | 0 | 38 |
+| S13 | NewJobGeneration | ic10.stack.power-job-prepare.v1 | 1 | 0 | 15 |
 | S13 | ReservedImportMoles | ic10.stack.pressure-inventory-reservation.v1 | 0 | 1 | 70 |
 | S13 | ActiveRouteKind | ic10.stack.pressure-transfer-grant-guard.v1 | 0 | 1 | 9 |
-| S13 | InputCount | ic10.stack.recipe-execution-profile-view.v1 | 2 | 2 | 5 |
-| S13..S21 | ProfileValues | ic10.stack.resource-profile-view.v1 | 3 | 3 | 29 |
+| S13 | InputCount | ic10.stack.recipe-execution-profile-view.v1 | 4 | 2 | 5 |
+| S13..S21 | ProfileValues | ic10.stack.resource-profile-view.v1 | 9 | 3 | 29 |
 | S14 | ResolvedValue | ic10.stack.generic-input-resolver.v1 | 1 | 1 | 10 |
+| S14 | Priority | ic10.stack.generic-job-selector.v3 | 1 | 0 | 0 |
 | S14 | TransformType | ic10.stack.material-transform-admission.v1 | 1 | 1 | 0 |
-| S14 | HandledMediumType | ic10.stack.phase-pressure-request-arbiter.v1 | 0 | 0 | -1 |
+| S14 | HandledMediumType | ic10.stack.phase-pressure-request-arbiter.v1 | 1 | 0 | -1 |
+| S14 | ReservationRef | ic10.stack.power-policy-target-resolver.v1 | 2 | 0 | 43 |
 | S14 | RemainingLeaseTicks | ic10.stack.pressure-transfer-grant-guard.v1 | 0 | 1 | 9 |
 | S14 | PressureTargetHint | ic10.stack.process-condition.v1 | 0 | 1 | 4 |
-| S14..S27 | ClassExtension | ic10.stack.resource-link.v1 | 1 | 1 | 12 |
-| S14 | ReservedExport | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
+| S14..S27 | ClassExtension | ic10.stack.resource-link.v1 | 2 | 1 | 12 |
+| S14 | ReservedExport | ic10.stack.resource-reservation.v1 | 1 | 3 | 4 |
 | S14 | BufferQuantity | ic10.stack.stacker-feeder.v1 | 1 | 1 | -7 |
 | S15 | ResolvedInputKind | ic10.stack.generic-input-resolver.v1 | 0 | 1 | 10 |
+| S15 | State | ic10.stack.generic-job-selector.v3 | 2 | 0 | 0 |
+| S15 | EndpointRef | ic10.stack.power-policy-target-resolver.v1 | 1 | 0 | 43 |
+| S15 | ReservationRef | ic10.stack.power-source-selector.v1 | 1 | 0 | 20 |
+| S15 | RequiredCapability | ic10.stack.print-material-resolver.v1 | 0 | 0 | 0 |
 | S15 | TemperatureTargetHint | ic10.stack.process-condition.v1 | 0 | 1 | 4 |
-| S15 | ReservedImport | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
+| S15 | ReservedImport | ic10.stack.resource-reservation.v1 | 1 | 3 | 4 |
 | S15 | BufferResourceType | ic10.stack.stacker-feeder.v1 | 1 | 1 | -7 |
 | S16 | DesiredControllerType | ic10.stack.diagnostic-input-bridge.v1 | 0 | 0 | 10 |
+| S16 | JobGeneration | ic10.stack.generic-job-selector.v3 | 3 | 0 | 0 |
+| S16 | ScanFirstEmptySlot | ic10.stack.larre-cargo-storage-service.v1 | 1 | 0 | 0 |
 | S16 | InputCount | ic10.stack.material-transform-admission.v1 | 1 | 1 | 0 |
+| S16 | ReservationRef | ic10.stack.power-sink-selector.v1 | 1 | 0 | 47 |
+| S16 | AvailableWatts | ic10.stack.power-source-selector.v1 | 1 | 0 | 20 |
 | S16 | ExportableMoles | ic10.stack.pressure-domain-inventory.v2 | 2 | 2 | -1 |
 | S16 | Hop1TransferRef | ic10.stack.pressure-grid-path-enumerator.v2 | 1 | 1 | -6 |
 | S16..S18 | BestTransferRefs | ic10.stack.pressure-grid-route-ranker.v2 | 1 | 1 | 1 |
 | S16..S18 | SelectedTransferRefs | ic10.stack.pressure-grid-route-selector.v2 | 1 | 1 | 5 |
 | S17 | DesiredControllerMember | ic10.stack.diagnostic-input-bridge.v1 | 0 | 0 | 10 |
+| S17 | Slot | ic10.stack.generic-job-monitor.v1 | 2 | 0 | 56 |
+| S17 | QueueGeneration | ic10.stack.generic-job-selector.v3 | 0 | 0 | 0 |
 | S17 | ObservedRate | ic10.stack.material-transfer-executor.v1 | 1 | 1 | 2 |
-| S17 | OutputQuantity | ic10.stack.material-transform-admission.v1 | 0 | 1 | 0 |
+| S17 | OutputQuantity | ic10.stack.material-transform-admission.v1 | 1 | 1 | 0 |
+| S17 | DemandWatts | ic10.stack.power-sink-selector.v1 | 1 | 0 | 47 |
 | S17 | ImportCapacityMoles | ic10.stack.pressure-domain-inventory.v2 | 2 | 2 | -1 |
 | S17 | Hop2TransferRef | ic10.stack.pressure-grid-path-enumerator.v2 | 1 | 1 | -6 |
+| S18 | ChildSlot | ic10.stack.dependency-child-validity.v1 | 3 | 0 | 60 |
+| S18 | CancelAdvised | ic10.stack.dependency-plan-release-advisor.v1 | 1 | 0 | 60 |
 | S18 | DesiredConsole | ic10.stack.diagnostic-input-bridge.v1 | 0 | 0 | 10 |
+| S18 | JobType | ic10.stack.generic-job-monitor.v1 | 3 | 0 | 56 |
 | S18 | BatchElapsedTicks | ic10.stack.material-transfer-executor.v1 | 1 | 1 | 2 |
 | S18 | MolesPerKPa | ic10.stack.pressure-domain-inventory.v2 | 1 | 2 | -1 |
 | S18 | Hop3TransferRef | ic10.stack.pressure-grid-path-enumerator.v2 | 1 | 1 | -6 |
+| S19 | ChildState | ic10.stack.dependency-child-validity.v1 | 3 | 0 | 60 |
+| S19 | ChildSlot | ic10.stack.dependency-plan-release-advisor.v1 | 1 | 0 | 60 |
 | S19 | TelemetryChannel | ic10.stack.diagnostic-input-bridge.v1 | 0 | 0 | 10 |
 | S19 | NextDirectoryCell | ic10.stack.generic-catalog-store.v6 | 0 | 1 | 0 |
+| S19 | Identity | ic10.stack.generic-job-monitor.v1 | 3 | 0 | 56 |
 | S19 | ReservedMoles | ic10.stack.pressure-grid-path-allocator.v1 | 1 | 1 | 2 |
 | S19 | StagedLinkCount | ic10.stack.pressure-grid-plan-builder.v1 | 1 | 1 | 3 |
 | S19 | BestPathLength | ic10.stack.pressure-grid-route-ranker.v2 | 1 | 1 | 1 |
 | S19 | CommittedLeaseMoles | ic10.stack.pressure-reservation-allocator.v3 | 1 | 2 | -1 |
+| S20 | ChildJobGeneration | ic10.stack.dependency-child-validity.v1 | 3 | 0 | 60 |
+| S20 | ChildJobGeneration | ic10.stack.dependency-plan-release-advisor.v1 | 1 | 0 | 60 |
 | S20 | LedMode | ic10.stack.diagnostic-input-bridge.v1 | 0 | 0 | 10 |
 | S20 | HeapTop | ic10.stack.generic-catalog-store.v6 | 0 | 1 | 0 |
+| S20 | RequestedQuantity | ic10.stack.generic-job-monitor.v1 | 2 | 0 | 56 |
 | S20 | BestAdmissibleBottleneck | ic10.stack.pressure-grid-route-ranker.v2 | 1 | 1 | 1 |
-| S20 | ExportableMoles | ic10.stack.pressure-inventory-reservation.v1 | 1 | 1 | 70 |
-| S21 | ChildJobId | ic10.stack.dependency-claim-view.v1 | 1 | 1 | 5 |
+| S20 | ExportableMoles | ic10.stack.pressure-inventory-reservation.v1 | 2 | 1 | 70 |
+| S21 | ChildJobType | ic10.stack.dependency-child-validity.v1 | 0 | 0 | 60 |
+| S21 | ChildJobId | ic10.stack.dependency-claim-view.v1 | 2 | 1 | 5 |
+| S21 | ChildState | ic10.stack.dependency-plan-release-advisor.v1 | 0 | 0 | 60 |
 | S21 | LedColor | ic10.stack.diagnostic-input-bridge.v1 | 0 | 0 | 10 |
+| S21 | State | ic10.stack.generic-job-monitor.v1 | 1 | 0 | 56 |
 | S21 | PolicyValidationResult | ic10.stack.generic-persistent-config-host.v1 | 6 | 13 | -1 |
+| S21 | InputOrdinal | ic10.stack.job-inventory-preflight.v1 | 0 | 0 | 4 |
+| S21 | Decision | ic10.stack.manufacturing-dependency-planner.v1 | 1 | 0 | -3 |
 | S21 | BestCost | ic10.stack.pressure-grid-route-ranker.v2 | 1 | 1 | 1 |
-| S21 | ImportCapacityMoles | ic10.stack.pressure-inventory-reservation.v1 | 1 | 1 | 70 |
+| S21 | ImportCapacityMoles | ic10.stack.pressure-inventory-reservation.v1 | 2 | 1 | 70 |
 | S21 | OnHandQuantity | ic10.stack.stock-target-inventory-view.v1 | 1 | 1 | 43 |
 | S21 | LaneAProducerJobType | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | 36 |
-| S22 | FutureQuantity | ic10.stack.dependency-claim-view.v1 | 1 | 1 | 5 |
+| S22 | ChildIdentity | ic10.stack.dependency-child-validity.v1 | 0 | 0 | 60 |
+| S22 | FutureQuantity | ic10.stack.dependency-claim-view.v1 | 2 | 1 | 5 |
 | S22 | Decision | ic10.stack.existing-dependency-plan-controller.v1 | 1 | 1 | 7 |
 | S22 | UsedCells | ic10.stack.generic-catalog-store.v6 | 1 | 1 | 0 |
-| S22 | RequiredCapability | ic10.stack.job-requirement-view.v1 | 1 | 1 | 17 |
+| S22 | JobGeneration | ic10.stack.generic-job-monitor.v1 | 3 | 0 | 56 |
+| S22 | InputResourceType | ic10.stack.job-inventory-preflight.v1 | 1 | 0 | 4 |
+| S22 | RequiredCapability | ic10.stack.job-requirement-view.v1 | 2 | 1 | 17 |
 | S22 | AllocatedJobId | ic10.stack.operator-order-job-ingress.v1 | 1 | 1 | 5 |
 | S22 | RecipeHash | ic10.stack.operator-order-recipe-view.v1 | 1 | 1 | 38 |
 | S22 | ActiveSearchId | ic10.stack.pressure-grid-route-ranker.v2 | 1 | 1 | 1 |
 | S22 | MirroredActionHint0 | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
 | S22 | UnclaimedFutureQuantity | ic10.stack.stock-target-future-view.v1 | 1 | 1 | 6 |
 | S22 | LaneARequiredCapability | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | 36 |
+| S23 | ChildOutputResourceType | ic10.stack.dependency-child-validity.v1 | 0 | 0 | 60 |
 | S23 | OtherParentCount | ic10.stack.dependency-claim-view.v1 | 0 | 1 | 5 |
 | S23 | ReleasedFlag | ic10.stack.existing-dependency-plan-controller.v1 | 1 | 1 | 7 |
+| S23 | ErrorStatus | ic10.stack.generic-job-monitor.v1 | 2 | 0 | 56 |
+| S23 | Slot | ic10.stack.generic-job-selector.v3 | 3 | 0 | 0 |
 | S23 | NextJobId | ic10.stack.generic-job-store.v1 | 0 | 6 | -1 |
-| S23 | InputCount | ic10.stack.job-requirement-view.v1 | 1 | 1 | 17 |
+| S23 | ExportCountBaseline | ic10.stack.generic-print-runtime.v2 | 0 | 0 | 3 |
+| S23 | RequiredTotal | ic10.stack.job-inventory-preflight.v1 | 1 | 0 | 4 |
+| S23 | InputCount | ic10.stack.job-requirement-view.v1 | 3 | 1 | 17 |
+| S23 | Decision | ic10.stack.new-dependency-plan-controller.v1 | 1 | 0 | 28 |
 | S23 | AllocatedSlot | ic10.stack.operator-order-job-ingress.v1 | 1 | 1 | 5 |
 | S23 | RequiredCapability | ic10.stack.operator-order-recipe-view.v1 | 1 | 1 | 38 |
+| S23 | ShedWatts | ic10.stack.power-dispatch-sweep.v1 | 0 | 0 | 41 |
 | S23 | CandidatesEvaluated | ic10.stack.pressure-grid-route-ranker.v2 | 1 | 1 | 1 |
 | S23 | MirroredActionHint1 | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
 | S23 | LaneAProducerIdentity | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | 36 |
 | S24 | ChildState | ic10.stack.dependency-claim-view.v1 | 0 | 1 | 5 |
-| S24 | OutputResourceType | ic10.stack.job-requirement-view.v1 | 1 | 1 | 17 |
+| S24 | JobId | ic10.stack.generic-job-selector.v3 | 4 | 0 | 0 |
+| S24 | QuotedTotal | ic10.stack.job-inventory-preflight.v1 | 2 | 0 | 4 |
+| S24 | OutputResourceType | ic10.stack.job-requirement-view.v1 | 3 | 1 | 17 |
 | S24 | InputCount | ic10.stack.operator-order-recipe-view.v1 | 1 | 1 | 38 |
+| S24 | CriticalShortage | ic10.stack.power-dispatch-sweep.v1 | 0 | 0 | 41 |
 | S24 | CandidateBudget | ic10.stack.pressure-grid-route-ranker.v2 | 1 | 1 | 1 |
-| S24 | MinimumPressure | ic10.stack.process-condition.v1 | 1 | 1 | 4 |
+| S24 | MinimumPressure | ic10.stack.process-condition.v1 | 3 | 1 | 4 |
 | S24 | MirroredActionHint2 | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
 | S24 | LaneAInputCount | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | 36 |
+| S25 | ChildJobId | ic10.stack.dependency-child-creator.v2 | 1 | 0 | 14 |
 | S25 | ChildResourceType | ic10.stack.dependency-claim-view.v1 | 1 | 1 | 5 |
-| S25 | OutputPerBatch | ic10.stack.job-requirement-view.v1 | 1 | 1 | 17 |
+| S25 | Deficit | ic10.stack.job-inventory-preflight.v1 | 1 | 0 | 4 |
+| S25 | OutputPerBatch | ic10.stack.job-requirement-view.v1 | 2 | 1 | 17 |
+| S25 | SourceWatts | ic10.stack.power-dispatch-sweep.v1 | 0 | 0 | 41 |
 | S25 | MaximumPressure | ic10.stack.process-condition.v1 | 1 | 1 | 4 |
-| S25 | CommittedSourceSlot | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
+| S25 | CommittedSourceSlot | ic10.stack.resource-reservation.v1 | 1 | 3 | 4 |
 | S25 | LaneAOutputCount | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | 36 |
-| S26 | ChildJobGeneration | ic10.stack.dependency-claim-view.v1 | 0 | 1 | 5 |
+| S26 | ChildSlot | ic10.stack.dependency-claim-view.v1 | 0 | 1 | 5 |
 | S26 | AllocatedJobId | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | -6 |
-| S26 | InputResourceType | ic10.stack.job-requirement-view.v1 | 0 | 1 | 17 |
-| S26 | MinimumTemperature | ic10.stack.process-condition.v1 | 0 | 1 | 4 |
-| S26 | CommittedActionQuantity | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
+| S26 | QuoteFingerprintA | ic10.stack.job-inventory-preflight.v1 | 2 | 0 | 4 |
+| S26 | InputResourceType | ic10.stack.job-requirement-view.v1 | 1 | 1 | 17 |
+| S26 | MinimumTemperature | ic10.stack.process-condition.v1 | 1 | 1 | 4 |
+| S26 | CommittedActionQuantity | ic10.stack.resource-reservation.v1 | 1 | 3 | 4 |
 | S26 | RequestedBatches | ic10.stack.stock-target-demand-view.v1 | 1 | 2 | 43 |
 | S26 | LaneAOutputPerBatch | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | 36 |
-| S27 | AggregateClaims | ic10.stack.dependency-claim-view.v1 | 1 | 1 | 5 |
+| S27 | FutureQuantity | ic10.stack.dependency-child-creator.v2 | 1 | 0 | 14 |
+| S27 | AggregateClaims | ic10.stack.dependency-claim-view.v1 | 2 | 1 | 5 |
 | S27 | InFlightReservationCells | ic10.stack.generic-catalog-store.v6 | 0 | 1 | 0 |
 | S27 | AllocatedSlot | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | -6 |
-| S27 | InputRequiredTotal | ic10.stack.job-requirement-view.v1 | 0 | 1 | 17 |
-| S27 | MaximumTemperature | ic10.stack.process-condition.v1 | 0 | 1 | 4 |
-| S27 | CommittedDestinationSlot | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
+| S27 | QuoteFingerprintB | ic10.stack.job-inventory-preflight.v1 | 2 | 0 | 4 |
+| S27 | InputRequiredTotal | ic10.stack.job-requirement-view.v1 | 1 | 1 | 17 |
+| S27 | MaximumTemperature | ic10.stack.process-condition.v1 | 1 | 1 | 4 |
+| S27 | CommittedDestinationSlot | ic10.stack.resource-reservation.v1 | 1 | 3 | 4 |
 | S27 | OnHandQuantity | ic10.stack.stock-target-demand-view.v1 | 0 | 2 | 43 |
 | S28 | EndpointAccessKind | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
 | S28 | UnclaimedFutureQuantity | ic10.stack.stock-target-demand-view.v1 | 0 | 2 | 43 |
@@ -672,13 +1085,34 @@ or write the entry's cells; headroom is the smallest line headroom under the
 | S29 | FlowCount | ic10.stack.power-dispatch-plan-store.v1 | 4 | 6 | 32 |
 | S29 | EndpointActionHint0 | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
 | S29 | AllocatedSlot | ic10.stack.stock-target-job-ingress.v1 | 0 | 1 | 0 |
+| S30 | CommittedShedWatts | ic10.stack.power-dispatch-plan-store.v1 | 1 | 6 | 32 |
+| S30 | ResultCode | ic10.stack.print-candidate-executor.v2 | 0 | 0 | 0 |
 | S30 | EndpointActionHint1 | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
+| S31 | Decision | ic10.stack.dependency-plan-evaluator.v2 | 1 | 0 | 33 |
+| S31 | ChildJobId | ic10.stack.new-dependency-plan-controller.v1 | 1 | 0 | 28 |
 | S31 | EndpointActionHint2 | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
-| S32..S39 | LookupRecord | ic10.stack.dependency-plan-store.v2 | 0 | 6 | 4 |
+| S32 | QuotedTotal | ic10.stack.dependency-plan-evaluator.v2 | 0 | 0 | 33 |
+| S32..S39 | LookupRecord | ic10.stack.dependency-plan-store.v2 | 1 | 6 | 4 |
+| S32 | ResourceType | ic10.stack.new-dependency-plan-controller.v1 | 1 | 0 | 28 |
+| S33 | ChildJobId | ic10.stack.dependency-plan-builder.v2 | 1 | 0 | 45 |
+| S33 | NewQuoteFingerprintA | ic10.stack.dependency-plan-evaluator.v2 | 0 | 0 | 33 |
+| S33 | RequiredTotal | ic10.stack.new-dependency-plan-controller.v1 | 1 | 0 | 28 |
+| S33 | ResolvedPrinterRef | ic10.stack.print-candidate-executor.v2 | 0 | 0 | 0 |
+| S33 | MovedQuantity | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
 | S33 | MaxRate | ic10.stack.resource-link.v1 | 0 | 1 | 12 |
+| S34 | FutureQuantity | ic10.stack.dependency-plan-builder.v2 | 1 | 0 | 45 |
+| S34 | NewQuoteFingerprintB | ic10.stack.dependency-plan-evaluator.v2 | 0 | 0 | 33 |
+| S34 | BaselineKnown | ic10.stack.new-dependency-plan-controller.v1 | 1 | 0 | 28 |
+| S35 | CreatedFlag | ic10.stack.dependency-plan-builder.v2 | 0 | 0 | 45 |
+| S35 | ChildSlot | ic10.stack.dependency-plan-evaluator.v2 | 0 | 0 | 33 |
 | S35 | LaneBAllocatedJobId | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
-| S36 | ExportAvailable | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
+| S35 | FutureQuantity | ic10.stack.new-dependency-plan-controller.v1 | 1 | 0 | 28 |
+| S36 | ChildJobGeneration | ic10.stack.dependency-plan-evaluator.v2 | 0 | 0 | 33 |
+| S36 | QuoteFingerprintA | ic10.stack.new-dependency-plan-controller.v1 | 1 | 0 | 28 |
+| S36 | ExportAvailable | ic10.stack.resource-reservation.v1 | 1 | 3 | 4 |
 | S36 | LaneBProducerJobType | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | 36 |
+| S37 | ChildState | ic10.stack.dependency-plan-evaluator.v2 | 0 | 0 | 33 |
+| S37 | QuoteFingerprintB | ic10.stack.new-dependency-plan-controller.v1 | 1 | 0 | 28 |
 | S37 | PathLength | ic10.stack.pressure-grid-path-enumerator.v2 | 1 | 1 | -6 |
 | S37 | SelectedPathLength | ic10.stack.pressure-grid-route-selector.v2 | 1 | 1 | 5 |
 | S37 | ImportCapacity | ic10.stack.resource-reservation.v1 | 1 | 3 | 4 |
@@ -690,7 +1124,7 @@ or write the entry's cells; headroom is the smallest line headroom under the
 | S40 | ActionHint2 | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
 | S40 | LaneBOutputCount | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | 36 |
 | S41 | LaneBOutputPerBatch | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | 36 |
-| S51 | LaneCAllocatedJobId | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
+| S51 | LaneCAllocatedJobId | ic10.stack.generic-job-command-gateway.v5 | 1 | 2 | 0 |
 | S52 | LaneCAllocatedSlot | ic10.stack.generic-job-command-gateway.v5 | 0 | 2 | 0 |
 | S55 | ExportAvailable | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
 | S56 | ImportCapacity | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
@@ -708,7 +1142,7 @@ or write the entry's cells; headroom is the smallest line headroom under the
 
 ### generation
 
-67 entries at 30 distinct starting cells: S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S24, S25, S26, S27, S28, S29, S30, S40, S42, S48, S51, S74, S104, S115, S117.
+76 entries at 31 distinct starting cells: S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S24, S25, S26, S27, S28, S29, S30, S31, S40, S42, S48, S51, S74, S104, S115, S117.
 
 | Cells | Name | Protocol | Peers | Consumers | Headroom |
 |---|---|---|---:|---:|---:|
@@ -720,40 +1154,45 @@ or write the entry's cells; headroom is the smallest line headroom under the
 | S11 | ObservedConsoleRequestGeneration | ic10.stack.diagnostic-selector-bridge.v1 | 0 | 0 | 79 |
 | S11 | StagingRevision | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
 | S11 | ProfileGeneration | ic10.stack.input-profile-view.v1 | 0 | 0 | 11 |
+| S11 | ProfileGeneration | ic10.stack.material-transform-link-resolver.v1 | 3 | 0 | 2 |
 | S11 | DirectoryGenerationUsed | ic10.stack.phase-pressure-request-arbiter.v1 | 0 | 0 | -1 |
-| S11 | MirrorGeneration | ic10.stack.pressure-inventory-reservation.v1 | 1 | 1 | 70 |
-| S11 | PublicationGeneration | ic10.stack.process-condition.v1 | 1 | 1 | 4 |
+| S11 | MirrorGeneration | ic10.stack.pressure-inventory-reservation.v1 | 2 | 1 | 70 |
+| S11 | PublicationGeneration | ic10.stack.print-material-resolver.v1 | 2 | 0 | 0 |
+| S11 | PublicationGeneration | ic10.stack.process-condition.v1 | 3 | 1 | 4 |
 | S11 | PublicationGeneration | ic10.stack.resource-endpoint.v1 | 1 | 1 | -1 |
 | S11 | NativeLinkGeneration | ic10.stack.resource-link.v1 | 0 | 1 | 12 |
 | S12 | SnapshotGeneration | ic10.stack.generic-input-resolver.v1 | 1 | 1 | 10 |
 | S12 | SnapshotGeneration | ic10.stack.generic-input-scanner.v1 | 0 | 0 | 36 |
 | S12 | ProfileGenerationUsed | ic10.stack.medium-purity-guard.v1 | 0 | 0 | 41 |
-| S12 | ResultGeneration | ic10.stack.phase-pressure-request-arbiter.v1 | 0 | 0 | -1 |
+| S12 | ResultGeneration | ic10.stack.phase-pressure-request-arbiter.v1 | 1 | 0 | -1 |
 | S12 | PublicationGeneration | ic10.stack.pressure-domain-inventory.v2 | 2 | 2 | -1 |
 | S12 | SearchIdCounter | ic10.stack.pressure-grid-route-selector.v2 | 0 | 1 | 5 |
-| S12 | PublicationGeneration | ic10.stack.resource-link.v1 | 1 | 1 | 12 |
-| S12 | MirrorGeneration | ic10.stack.resource-reservation.v1 | 3 | 3 | 4 |
+| S12 | PublicationGeneration | ic10.stack.resource-link.v1 | 2 | 1 | 12 |
+| S12 | MirrorGeneration | ic10.stack.resource-reservation.v1 | 7 | 3 | 4 |
 | S13 | RebuildSequence | ic10.stack.directory-adapter.v3 | 2 | 2 | 2 |
 | S13 | CaptureStagingRevision | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
 | S13 | PolicyGeneration | ic10.stack.generic-persistent-config-host.v1 | 6 | 13 | -1 |
 | S13 | PublicationGeneration | ic10.stack.material-transfer-grant-guard.v1 | 2 | 2 | 6 |
-| S13 | PublicationGeneration | ic10.stack.medium-purity-guard.v1 | 0 | 0 | 41 |
-| S13 | HandledHostGeneration | ic10.stack.phase-pressure-request-arbiter.v1 | 0 | 0 | -1 |
+| S13 | PublicationGeneration | ic10.stack.material-transform-link-resolver.v1 | 0 | 0 | 2 |
+| S13 | PublicationGeneration | ic10.stack.medium-purity-guard.v1 | 2 | 0 | 41 |
+| S13 | HandledHostGeneration | ic10.stack.phase-pressure-request-arbiter.v1 | 1 | 0 | -1 |
 | S13 | BuildGenerationCounter | ic10.stack.pressure-grid-reservation-planner.v2 | 0 | 1 | 36 |
-| S14 | StoreGeneration | ic10.stack.recipe-execution-profile-view.v1 | 1 | 2 | 5 |
+| S14 | DirectoryGeneration | ic10.stack.manufacturing-candidate-selector.v2 | 0 | 0 | 15 |
+| S14 | RecipeViewGeneration | ic10.stack.print-material-resolver.v1 | 0 | 0 | 0 |
+| S14 | StoreGeneration | ic10.stack.recipe-execution-profile-view.v1 | 2 | 2 | 5 |
 | S15 | ImportGeneration | ic10.stack.generic-catalog-store.v6 | 1 | 1 | 0 |
-| S16 | ServiceGeneration | ic10.stack.catalog-coordinator-core.v4 | 0 | 1 | 8 |
+| S16 | ServiceGeneration | ic10.stack.catalog-coordinator-core.v4 | 1 | 1 | 8 |
 | S16 | QueueSequence | ic10.stack.generic-job-store.v1 | 5 | 6 | -1 |
 | S17 | DataSequence | ic10.stack.generic-catalog-store.v6 | 1 | 1 | 0 |
 | S17 | QueueGeneration | ic10.stack.generic-job-store.v1 | 1 | 6 | -1 |
 | S18 | TelemetrySequence | ic10.stack.generic-registry-directory-host.v3 | 2 | 6 | 5 |
-| S18 | PublicationGeneration | ic10.stack.pressure-transfer-grant-guard.v1 | 1 | 1 | 9 |
+| S18 | PublicationGeneration | ic10.stack.pressure-transfer-grant-guard.v1 | 2 | 1 | 9 |
 | S19 | PublicationGeneration | ic10.stack.material-transfer-executor.v1 | 1 | 1 | 2 |
-| S19 | ProfileGeneration | ic10.stack.material-transform-admission.v1 | 1 | 1 | 0 |
-| S19 | ReservedSemanticMirrorGeneration | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
+| S19 | ProfileGeneration | ic10.stack.material-transform-admission.v1 | 2 | 1 | 0 |
+| S19 | ReservedSemanticMirrorGeneration | ic10.stack.resource-reservation.v1 | 1 | 3 | 4 |
 | S20 | EndpointPublicationGeneration | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
-| S21 | PlacementGeneration | ic10.stack.catalog-coordinator-core.v4 | 1 | 1 | 8 |
-| S22 | TopologySequence | ic10.stack.catalog-coordinator-core.v4 | 1 | 1 | 8 |
+| S21 | PlacementGeneration | ic10.stack.catalog-coordinator-core.v4 | 4 | 1 | 8 |
+| S22 | TopologySequence | ic10.stack.catalog-coordinator-core.v4 | 3 | 1 | 8 |
 | S23 | CommitRequestGeneration | ic10.stack.diagnostic-input-bridge.v1 | 0 | 0 | 10 |
 | S23 | PublicationSequence | ic10.stack.generic-registry-directory-host.v3 | 5 | 6 | 5 |
 | S23 | TopologyGeneration | ic10.stack.resource-profile-view.v1 | 0 | 3 | 29 |
@@ -764,15 +1203,19 @@ or write the entry's cells; headroom is the smallest line headroom under the
 | S26 | BridgeHostSnapshot | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
 | S26 | RegistryGeneration | ic10.stack.generic-registry-directory-host.v3 | 0 | 6 | 5 |
 | S27 | PublicationSequence | ic10.stack.power-dispatch-plan-store.v1 | 5 | 6 | 32 |
-| S28 | CommitCount | ic10.stack.power-dispatch-plan-store.v1 | 4 | 6 | 32 |
+| S28 | PlanGeneration | ic10.stack.power-dispatch-plan-store.v1 | 6 | 6 | 32 |
 | S29 | ValidatedProfileGeneration | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
-| S29 | PublicationGeneration | ic10.stack.resource-profile-view.v1 | 3 | 3 | 29 |
+| S29 | PublicationGeneration | ic10.stack.resource-profile-view.v1 | 13 | 3 | 29 |
 | S29 | QueueSequence | ic10.stack.stock-target-demand-view.v1 | 2 | 2 | 43 |
 | S30 | StoreRequestCounter | ic10.stack.generic-job-store-command-executor.v1 | 0 | 1 | -6 |
-| S30 | PlanGeneration | ic10.stack.power-dispatch-plan-store.v1 | 1 | 6 | 32 |
+| S30 | RequestCounter | ic10.stack.power-reservation-allocator.v1 | 0 | 0 | 35 |
+| S30 | TokenCounter | ic10.stack.print-job-driver.v2 | 0 | 0 | 0 |
 | S30 | PlanSequence | ic10.stack.stock-target-demand-view.v1 | 2 | 2 | 43 |
+| S30 | AdmissionGeneration | ic10.stack.transform-candidate-readiness.v1 | 0 | 0 | 13 |
+| S30 | TokenCounter | ic10.stack.transform-job-driver.v2 | 0 | 0 | 6 |
+| S31 | ResolverGeneration | ic10.stack.transform-candidate-readiness.v1 | 0 | 0 | 13 |
 | S40 | PlanSequence | ic10.stack.dependency-plan-store.v2 | 6 | 6 | 4 |
-| S42 | MigrationPlanCounter | ic10.stack.catalog-coordinator-core.v4 | 0 | 1 | 8 |
+| S42 | MigrationPlanCounter | ic10.stack.catalog-coordinator-core.v4 | 1 | 1 | 8 |
 | S48 | TopologyGeneration | ic10.stack.recipe-execution-profile-view.v1 | 0 | 2 | 5 |
 | S51 | EffectiveGeneration | ic10.stack.generic-persistent-config-host.v1 | 7 | 13 | -1 |
 | S74 | PublicationGeneration | ic10.stack.resource-transform-profile-view.v4 | 4 | 4 | 4 |
@@ -782,28 +1225,33 @@ or write the entry's cells; headroom is the smallest line headroom under the
 
 ### epoch
 
-21 entries at 14 distinct starting cells: S8, S9, S10, S12, S13, S14, S15, S16, S17, S18, S20, S26, S31, S109.
+26 entries at 18 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S20, S22, S23, S24, S26, S31, S109.
 
 | Cells | Name | Protocol | Peers | Consumers | Headroom |
 |---|---|---|---:|---:|---:|
 | S8 | LastConsumedEpoch | ic10.stack.material-transfer-grant-guard.v1 | 0 | 2 | 6 |
 | S8 | ReadyEpoch | ic10.stack.stacker-feeder.v1 | 0 | 1 | -7 |
+| S9 | AuthorityEpoch | ic10.stack.power-reservation-allocator.v1 | 2 | 0 | 35 |
 | S9 | EmittedEpoch | ic10.stack.stacker-feeder.v1 | 0 | 1 | -7 |
 | S10 | ActiveEpoch | ic10.stack.material-transfer-grant-guard.v1 | 1 | 2 | 6 |
+| S11 | ReservationToken | ic10.stack.printer-capacity-client.v2 | 0 | 0 | 1 |
 | S12 | CoordinatorEpoch | ic10.stack.generic-catalog-store.v6 | 0 | 1 | 0 |
 | S13 | EpochCounter | ic10.stack.multi-material-reservation-allocator.v2 | 0 | 1 | 5 |
 | S13 | BuildEpoch | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
-| S14 | ActiveEpoch | ic10.stack.material-transfer-executor.v1 | 0 | 1 | 2 |
-| S14 | CommittedEpoch | ic10.stack.multi-material-reservation-allocator.v2 | 1 | 1 | 5 |
+| S14 | ActiveEpoch | ic10.stack.material-transfer-executor.v1 | 1 | 1 | 2 |
+| S14 | CommittedEpoch | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | 5 |
 | S14 | CommittedReservationEpoch | ic10.stack.pressure-grid-reservation-planner.v2 | 1 | 1 | 36 |
 | S14 | BuildEpoch | ic10.stack.pressure-inventory-reservation.v1 | 0 | 1 | 70 |
-| S15 | CoordinatorEpoch | ic10.stack.catalog-coordinator-core.v4 | 0 | 1 | 8 |
+| S15 | CoordinatorEpoch | ic10.stack.catalog-coordinator-core.v4 | 2 | 1 | 8 |
 | S15 | CompletedEpoch | ic10.stack.material-transfer-executor.v1 | 1 | 1 | 2 |
 | S15 | CompletedEpoch | ic10.stack.multi-material-reservation-allocator.v2 | 0 | 1 | 5 |
 | S16 | ConsumedPlannerEpoch | ic10.stack.pressure-transfer-grant-guard.v1 | 0 | 1 | 9 |
 | S17 | StagedEpoch | ic10.stack.material-transfer-grant-guard.v1 | 0 | 2 | 6 |
-| S18 | OwnerEpoch | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
+| S18 | OwnerEpoch | ic10.stack.resource-reservation.v1 | 1 | 3 | 4 |
 | S20 | AssignmentEpochCounter | ic10.stack.catalog-coordinator-core.v4 | 0 | 1 | 8 |
+| S22 | PendingEpoch | ic10.stack.power-reservation-allocator.v1 | 0 | 0 | 35 |
+| S23 | RuntimeCompletionEpoch | ic10.stack.multi-material-reservation-allocator.v2 | 1 | 1 | 5 |
+| S24 | CommittedEpoch | ic10.stack.generic-print-runtime.v2 | 0 | 0 | 3 |
 | S26 | AssignmentEpoch | ic10.stack.generic-catalog-store.v6 | 0 | 1 | 0 |
 | S31 | CommittedAssignmentEpoch | ic10.stack.generic-catalog-store.v6 | 1 | 1 | 0 |
 | S109 | StagedEpoch | ic10.stack.27182818.abi2 | 1 | 4 | -7 |
@@ -815,11 +1263,11 @@ or write the entry's cells; headroom is the smallest line headroom under the
 | Cells | Name | Protocol | Peers | Consumers | Headroom |
 |---|---|---|---:|---:|---:|
 | S20 | RebuildBank | ic10.stack.generic-snapshot-directory-host.v1 | 1 | 13 | -1 |
-| S24 | ActiveBank | ic10.stack.generic-snapshot-directory-host.v1 | 13 | 13 | -1 |
+| S24 | ActiveBank | ic10.stack.generic-snapshot-directory-host.v1 | 14 | 13 | -1 |
 | S25 | InFlightStateBase | ic10.stack.generic-job-store.v1 | 0 | 6 | -1 |
-| S25 | GenerationA | ic10.stack.generic-snapshot-directory-host.v1 | 6 | 13 | -1 |
+| S25 | GenerationA | ic10.stack.generic-snapshot-directory-host.v1 | 7 | 13 | -1 |
 | S26 | InFlightOldActiveBank | ic10.stack.generic-job-store.v1 | 0 | 6 | -1 |
-| S26 | GenerationB | ic10.stack.generic-snapshot-directory-host.v1 | 6 | 13 | -1 |
+| S26 | GenerationB | ic10.stack.generic-snapshot-directory-host.v1 | 7 | 13 | -1 |
 | S27 | CountA | ic10.stack.generic-snapshot-directory-host.v1 | 13 | 13 | -1 |
 | S28 | CountB | ic10.stack.generic-snapshot-directory-host.v1 | 13 | 13 | -1 |
 | S29 | OverflowA | ic10.stack.generic-snapshot-directory-host.v1 | 13 | 13 | -1 |
@@ -848,7 +1296,7 @@ or write the entry's cells; headroom is the smallest line headroom under the
 | S10 | ConsoleSelectorRef | ic10.stack.diagnostic-selector-bridge.v1 | 0 | 0 | 79 |
 | S10 | LoadedControllerRef | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
 | S10 | NativeLinkRef | ic10.stack.resource-link.v1 | 0 | 1 | 12 |
-| S11 | CoordinatorRef | ic10.stack.generic-catalog-store.v6 | 1 | 1 | 0 |
+| S11 | CoordinatorRef | ic10.stack.generic-catalog-store.v6 | 6 | 1 | 0 |
 | S11 | InputProfileRef | ic10.stack.generic-input-scanner.v1 | 0 | 0 | 36 |
 | S11 | SorterRef | ic10.stack.stacker-feeder.v1 | 1 | 1 | -7 |
 | S12 | SinkProviderRef | ic10.stack.material-transfer-executor.v1 | 0 | 1 | 2 |
@@ -862,19 +1310,19 @@ or write the entry's cells; headroom is the smallest line headroom under the
 | S14 | ClaimCoordinatorId | ic10.stack.generic-catalog-store.v6 | 0 | 1 | 0 |
 | S14 | CapturedControllerRef | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
 | S14 | ValueDialRef | ic10.stack.generic-input-scanner.v1 | 0 | 0 | 36 |
-| S14 | ResourceProfileViewRef | ic10.stack.resource-endpoint.v1 | 0 | 1 | -1 |
+| S14 | ClassExtensionRef | ic10.stack.resource-endpoint.v1 | 0 | 1 | -1 |
 | S15 | LogicMemoryRef | ic10.stack.generic-input-scanner.v1 | 0 | 0 | 36 |
 | S15 | ProcessorRef | ic10.stack.material-transform-admission.v1 | 1 | 1 | 0 |
 | S15 | OwningPlannerRef | ic10.stack.pressure-inventory-reservation.v1 | 0 | 1 | 70 |
 | S16 | SwitchRef | ic10.stack.generic-input-scanner.v1 | 0 | 0 | 36 |
 | S16 | InventoryRef | ic10.stack.pressure-inventory-reservation.v1 | 0 | 1 | 70 |
 | S17 | PressureDomainRef | ic10.stack.pressure-inventory-reservation.v1 | 0 | 1 | 70 |
-| S17 | TransferRef | ic10.stack.pressure-transfer-grant-guard.v1 | 1 | 1 | 9 |
-| S17 | OwnerReferenceId | ic10.stack.resource-reservation.v1 | 0 | 3 | 4 |
+| S17 | TransferRef | ic10.stack.pressure-transfer-grant-guard.v1 | 2 | 1 | 9 |
+| S17 | OwnerReferenceId | ic10.stack.resource-reservation.v1 | 1 | 3 | 4 |
 | S18 | ConfigHostRef | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
 | S18 | AllocatorRef | ic10.stack.material-transfer-grant-guard.v1 | 0 | 2 | 6 |
 | S18 | OutputReservationRef | ic10.stack.material-transform-admission.v1 | 0 | 1 | 0 |
-| S20 | RuntimeRef | ic10.stack.multi-material-reservation-allocator.v2 | 0 | 1 | 5 |
+| S20 | RuntimeRef | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | 5 |
 | S21 | PreviousStoreRef | ic10.stack.generic-catalog-store.v6 | 1 | 1 | 0 |
 | S22 | TargetRef | ic10.stack.process-condition.v1 | 1 | 1 | 4 |
 | S23 | RegistryDirectoryRef | ic10.stack.catalog-coordinator-core.v4 | 0 | 1 | 8 |
@@ -882,30 +1330,33 @@ or write the entry's cells; headroom is the smallest line headroom under the
 | S27 | ValidatedProfileRef | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
 | S28 | SourceReservationRef | ic10.stack.resource-link.v1 | 1 | 1 | 12 |
 | S29 | SinkReservationRef | ic10.stack.resource-link.v1 | 1 | 1 | 12 |
-| S32 | EndpointRef | ic10.stack.resource-reservation.v1 | 2 | 3 | 4 |
-| S40 | MigrationSourceStoreRef | ic10.stack.catalog-coordinator-core.v4 | 1 | 1 | 8 |
-| S41 | MigrationDestinationStoreRef | ic10.stack.catalog-coordinator-core.v4 | 1 | 1 | 8 |
+| S32 | EndpointRef | ic10.stack.resource-reservation.v1 | 3 | 3 | 4 |
+| S40 | MigrationSourceStoreRef | ic10.stack.catalog-coordinator-core.v4 | 2 | 1 | 8 |
+| S41 | MigrationDestinationStoreRef | ic10.stack.catalog-coordinator-core.v4 | 2 | 1 | 8 |
 | S100 | ControllerSelectorRef | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
 | S116 | ConfigHostRef | ic10.stack.27182818.abi1 | 0 | 1 | -5 |
 | S116 | ConfigHostRef | ic10.stack.27182818.abi2 | 0 | 4 | -7 |
 
 ### table
 
-23 entries at 11 distinct starting cells: S8, S16, S18, S32, S58, S64, S96, S128, S160, S192, S288.
+26 entries at 12 distinct starting cells: S8, S16, S18, S20, S32, S58, S64, S96, S128, S160, S192, S288.
 
 | Cells | Name | Protocol | Peers | Consumers | Headroom |
 |---|---|---|---:|---:|---:|
 | S8..S31 | InputDescriptors | ic10.stack.resource-transform-profile-view.v4 | 3 | 4 | 4 |
-| S16..S47 | ReagentPairs | ic10.stack.recipe-execution-profile-view.v1 | 1 | 2 | 5 |
+| S16..S47 | ReagentPairs | ic10.stack.recipe-execution-profile-view.v1 | 2 | 2 | 5 |
 | S18..S401 | CandidateRecords | ic10.stack.directory-adapter.v3 | 2 | 2 | 2 |
+| S20..S83 | LinkRecords | ic10.stack.material-transform-link-resolver.v1 | 2 | 0 | 2 |
+| S20..S83 | LinkRecords | ic10.stack.print-material-resolver.v1 | 2 | 0 | 0 |
 | S32..S511 | ItemHeap | ic10.stack.generic-catalog-store.v6 | 0 | 1 | 0 |
 | S32..S63 | StagedImage | ic10.stack.generic-config-editor.v1 | 0 | 0 | 12 |
 | S32..S287 | IntentSlots | ic10.stack.generic-job-store.v1 | 5 | 6 | -1 |
 | S32..S47 | DefaultImage | ic10.stack.generic-persistent-config-host.v1 | 6 | 13 | -1 |
-| S32..S415 | Banks | ic10.stack.generic-snapshot-directory-host.v1 | 12 | 13 | -1 |
+| S32..S415 | Banks | ic10.stack.generic-snapshot-directory-host.v1 | 13 | 13 | -1 |
 | S32..S255 | ControlDescriptors | ic10.stack.input-profile-view.v1 | 0 | 0 | 11 |
 | S32..S65 | ProducerTable | ic10.stack.item-producer-resolver.v1 | 0 | 1 | 42 |
 | S32..S49 | QuoteLegs | ic10.stack.item-resource-reservation-selector.v1 | 3 | 3 | 0 |
+| S32..S40 | StagedTriples | ic10.stack.multi-material-reservation-stager.v1 | 0 | 0 | 0 |
 | S32..S95 | CommittedFlows | ic10.stack.power-dispatch-plan-store.v1 | 4 | 6 | 32 |
 | S32..S63 | OutputDescriptors | ic10.stack.resource-transform-profile-view.v4 | 2 | 4 | 4 |
 | S58..S447 | RegistryRecords | ic10.stack.generic-registry-directory-host.v3 | 4 | 6 | 5 |
@@ -996,23 +1447,23 @@ Consumers: 1.
 | Cells | Name | Role | Peers | Description |
 |---|---|---|---:|---|
 | S8..S13 | DirectorySummary | telemetry | 0 | aggregate directory health and capacity summary |
-| S14 | CoordinatorId | metadata | 0 |  |
-| S15 | CoordinatorEpoch | epoch | 0 |  |
-| S16 | ServiceGeneration | generation | 0 |  |
+| S14 | CoordinatorId | metadata | 1 |  |
+| S15 | CoordinatorEpoch | epoch | 2 |  |
+| S16 | ServiceGeneration | generation | 1 |  |
 | S20 | AssignmentEpochCounter | epoch | 0 |  |
-| S21 | PlacementGeneration | generation | 1 | placement/migration generation; the Migration Worker advances it |
-| S22 | TopologySequence | generation | 1 | topology seqlock, stable even |
+| S21 | PlacementGeneration | generation | 4 | placement/migration generation; the Migration Worker advances it |
+| S22 | TopologySequence | generation | 3 | topology seqlock, stable even |
 | S23 | RegistryDirectoryRef | topology | 0 |  |
-| S25 | CapacityRequestPending | request | 0 | Router capacity request in S25..S32 |
-| S26 | RequestPartitionKey | request | 0 |  |
-| S27 | RequestCatalogSchemaId | request | 0 |  |
-| S29 | RequestCatalogInstanceId | request | 0 |  |
-| S30 | RequestTailStoreRef | request | 0 |  |
-| S31 | RequestNextStoreOrdinal | request | 0 |  |
-| S32 | RequestRequiredCells | request | 0 |  |
-| S40 | MigrationSourceStoreRef | topology | 1 | pending move, 0 when idle; hosted for the Planner and Worker, never read by Core |
-| S41 | MigrationDestinationStoreRef | topology | 1 |  |
-| S42 | MigrationPlanCounter | generation | 0 | advanced by the Planner |
+| S25 | CapacityRequestPending | request | 1 | Router capacity request in S25..S32 |
+| S26 | RequestPartitionKey | request | 1 |  |
+| S27 | RequestCatalogSchemaId | request | 1 |  |
+| S29 | RequestCatalogInstanceId | request | 1 |  |
+| S30 | RequestTailStoreRef | request | 1 |  |
+| S31 | RequestNextStoreOrdinal | request | 1 |  |
+| S32 | RequestRequiredCells | request | 1 |  |
+| S40 | MigrationSourceStoreRef | topology | 2 | pending move, 0 when idle; hosted for the Planner and Worker, never read by Core |
+| S41 | MigrationDestinationStoreRef | topology | 2 |  |
+| S42 | MigrationPlanCounter | generation | 1 | advanced by the Planner |
 
 ### ic10.stack.config-input-bridge.v1
 
@@ -1025,6 +1476,66 @@ Consumers: 0.
 | S8 | ConfigEditorRef | topology | 0 |  |
 | S9 | InputResolverRef | topology | 0 |  |
 
+### ic10.stack.dependency-ancestry-guard.v1
+
+Providers: ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S10 | ParentJobId | request | 1 |  |
+| S11 | ParentJobType | request | 1 |  |
+| S12 | ParentIdentity | request | 1 |  |
+| S13 | ProducerJobType | request | 1 |  |
+| S14 | ProducerIdentity | request | 1 |  |
+| S15 | RequestToken | request_token | 1 |  |
+| S16 | ResponseToken | response_token | 1 |  |
+| S17 | Status | state | 1 | 1 admissible, -2 too deep, -3 cycle, -1 invalid |
+| S18 | PostingCounter | state | 0 | postings under the current request, kept across reflash (#182) |
+
+### ic10.stack.dependency-child-creator.v2
+
+Providers: ic10/dependency-planning/dependency_child_creator_v2_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S14 | ParentJobId | request | 1 |  |
+| S15 | ParentSlot | request | 1 |  |
+| S16 | ParentJobGeneration | request | 1 |  |
+| S17 | ParentJobType | request | 1 |  |
+| S18 | ParentIdentity | request | 1 |  |
+| S19 | ParentPriority | request | 1 | the child is created one priority higher |
+| S20 | ResourceType | request | 1 |  |
+| S21 | Deficit | request | 1 | quantity the child must produce |
+| S22 | RequestToken | request_token | 1 |  |
+| S23 | ResponseToken | response_token | 1 |  |
+| S24 | Status | state | 1 | 1 created, -4 too deep, -32 cycle, -5 no producer, -1 invalid |
+| S25 | ChildJobId | result | 1 |  |
+| S27 | FutureQuantity | result | 1 | batches times output per batch |
+
+### ic10.stack.dependency-child-validity.v1
+
+Providers: ic10/dependency-planning/dependency_child_validity_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S13 | ChildJobId | request | 3 |  |
+| S14 | ResourceType | request | 3 | the plan's ResourceType the child must still promise |
+| S15 | RequestToken | request_token | 3 |  |
+| S16 | ResponseToken | response_token | 3 |  |
+| S17 | Status | state | 3 | 1 valid, -2 missing, -3 stale, -1 invalid |
+| S18 | ChildSlot | result | 3 |  |
+| S19 | ChildState | result | 3 | copied from Monitor S22; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation |
+| S20 | ChildJobGeneration | result | 3 | copied from Monitor S23; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation. The Claim View reads this cell as the child's ResourceType |
+| S21 | ChildJobType | result | 0 |  |
+| S22 | ChildIdentity | result | 0 |  |
+| S23 | ChildOutputResourceType | result | 0 | the Requirement View's normalized output for the child |
+
 ### ic10.stack.dependency-claim-view.v1
 
 Providers: ic10/dependency-planning/dependency_claim_view_v1_0.ic10.
@@ -1033,19 +1544,91 @@ Consumers: 1.
 
 | Cells | Name | Role | Peers | Description |
 |---|---|---|---:|---|
-| S15 | ResourceType | request | 1 |  |
-| S16 | RequestingParentJobId | request | 1 | parent whose own claim is excluded from the aggregate |
-| S17 | ChildJobIdFilter | request | 1 | 0 accepts any child |
-| S18 | RequestToken | request_token | 1 |  |
-| S19 | ResponseToken | response_token | 1 |  |
-| S20 | Status | state | 1 | 1 active claim, -2 proven absence, -3 unverifiable child, -1 invalid |
-| S21 | ChildJobId | result | 1 |  |
-| S22 | FutureQuantity | result | 1 |  |
+| S15 | ResourceType | request | 3 |  |
+| S16 | RequestingParentJobId | request | 3 | parent whose own claim is excluded from the aggregate |
+| S17 | ChildJobIdFilter | request | 3 | 0 accepts any child |
+| S18 | RequestToken | request_token | 3 |  |
+| S19 | ResponseToken | response_token | 3 |  |
+| S20 | Status | state | 3 | 1 active claim, -2 proven absence, -3 unverifiable child, -1 invalid |
+| S21 | ChildJobId | result | 2 |  |
+| S22 | FutureQuantity | result | 2 |  |
 | S23 | OtherParentCount | result | 0 |  |
-| S24 | ChildState | result | 0 |  |
-| S25 | ChildResourceType | result | 1 |  |
-| S26 | ChildJobGeneration | result | 0 |  |
-| S27 | AggregateClaims | result | 1 |  |
+| S24 | ChildState | result | 0 | copied from Child Validity S19; see issue #193 |
+| S25 | ChildResourceType | result | 1 | copied from Child Validity S20, which Child Validity fills with the Monitor's S23; see issue #193 |
+| S26 | ChildSlot | result | 0 | copied from Child Validity S18 |
+| S27 | AggregateClaims | result | 2 |  |
+
+### ic10.stack.dependency-plan-builder.v2
+
+Providers: ic10/dependency-planning/dependency_plan_builder_v2_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S19 | ParentJobId | request | 1 |  |
+| S20 | ParentSlot | request | 1 |  |
+| S21 | ParentJobGeneration | request | 1 | copied by the New Plan Controller from Monitor S23; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation |
+| S22 | ParentJobType | request | 1 |  |
+| S23 | ParentIdentity | request | 1 |  |
+| S24 | ParentPriority | request | 1 | copied by the New Plan Controller from Monitor S21; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation |
+| S25 | ResourceType | request | 1 |  |
+| S26 | Deficit | request | 1 |  |
+| S27 | BaselineKnown | request | 1 |  |
+| S28 | QuoteFingerprintA | request | 1 |  |
+| S29 | QuoteFingerprintB | request | 1 |  |
+| S30 | RequestToken | request_token | 1 |  |
+| S31 | ResponseToken | response_token | 1 |  |
+| S32 | Status | state | 1 |  |
+| S33 | ChildJobId | result | 1 |  |
+| S34 | FutureQuantity | result | 1 |  |
+| S35 | CreatedFlag | result | 0 | 1 when a new child was created, 0 when an active claim was reused |
+
+### ic10.stack.dependency-plan-evaluator.v2
+
+Providers: ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S20 | JobType | request | 1 |  |
+| S21 | Identity | request | 1 |  |
+| S22 | RequestedQuantity | request | 1 |  |
+| S23 | ChildJobId | request | 1 |  |
+| S24 | ChildResourceType | request | 1 |  |
+| S25 | BaselineKnown | request | 1 |  |
+| S26 | FutureQuantity | request | 1 |  |
+| S27 | QuoteFingerprintA | request | 1 |  |
+| S28 | QuoteFingerprintB | request | 1 |  |
+| S29 | RequestToken | request_token | 1 |  |
+| S30 | ResponseToken | response_token | 1 |  |
+| S31 | Decision | result | 1 | 1 ready, 2 child active, 3 wait for inventory, 4 probe, 5 replan, -2 overflow, -3 stale child, -4 child failed, -1 invalid |
+| S32 | QuotedTotal | result | 0 |  |
+| S33 | NewQuoteFingerprintA | result | 0 |  |
+| S34 | NewQuoteFingerprintB | result | 0 |  |
+| S35 | ChildSlot | result | 0 | copied from Child Validity S18 |
+| S36 | ChildJobGeneration | result | 0 | copied from Child Validity S20 |
+| S37 | ChildState | result | 0 | copied from Child Validity S19 |
+
+### ic10.stack.dependency-plan-release-advisor.v1
+
+Providers: ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S12 | ParentJobId | request | 1 |  |
+| S13 | ChildJobId | request | 1 |  |
+| S14 | ResourceType | request | 1 |  |
+| S15 | RequestToken | request_token | 1 |  |
+| S16 | ResponseToken | response_token | 1 |  |
+| S17 | Status | state | 0 |  |
+| S18 | CancelAdvised | result | 1 | 1 when no other plan references the active child |
+| S19 | ChildSlot | result | 1 |  |
+| S20 | ChildJobGeneration | result | 1 |  |
+| S21 | ChildState | result | 0 |  |
 
 ### ic10.stack.dependency-plan-store.v2
 
@@ -1055,13 +1638,13 @@ Consumers: 6.
 
 | Cells | Name | Role | Peers | Description |
 |---|---|---|---:|---|
-| S9 | RequestToken | request_token | 0 |  |
-| S10 | ResponseToken | response_token | 0 |  |
-| S11 | Status | state | 0 | 1 done, -2 missing, -3 full, -1 invalid |
-| S12 | Command | request | 0 | 1 lookup, 2 upsert, 3 clear |
-| S13 | ParentJobId | request | 0 |  |
-| S14..S20 | RecordFields | request | 0 | ChildJobId, ResourceType, RequiredTotal, BaselineKnown, FutureQty, QuoteFingerprintA, QuoteFingerprintB |
-| S32..S39 | LookupRecord | result | 0 | the eight-cell record a lookup copies out |
+| S9 | RequestToken | request_token | 2 |  |
+| S10 | ResponseToken | response_token | 2 |  |
+| S11 | Status | state | 2 | 1 done, -2 missing, -3 full, -1 invalid |
+| S12 | Command | request | 2 | 1 lookup, 2 upsert, 3 clear |
+| S13 | ParentJobId | request | 2 |  |
+| S14..S20 | RecordFields | request | 1 | ChildJobId, ResourceType, RequiredTotal, BaselineKnown, FutureQty, QuoteFingerprintA, QuoteFingerprintB |
+| S32..S39 | LookupRecord | result | 1 | the eight-cell record a lookup copies out |
 | S40 | PlanSequence | generation | 6 | global odd/even sequence |
 | S128..S383 | PlanRecords | table | 3 | 32 eight-cell records; ParentJobId at +0 is the per-record commit marker |
 
@@ -1165,9 +1748,9 @@ Consumers: 1.
 | S8 | StoreOrdinal | topology | 1 | Coordinator-owned; written at claim |
 | S9 | LocalItemCount | result | 1 |  |
 | S10 | ItemDirectoryBase | metadata | 0 |  |
-| S11 | CoordinatorRef | topology | 1 |  |
+| S11 | CoordinatorRef | topology | 6 |  |
 | S12 | CoordinatorEpoch | epoch | 0 |  |
-| S13 | CatalogInstanceId | metadata | 1 | assigned by the Coordinator |
+| S13 | CatalogInstanceId | metadata | 3 | assigned by the Coordinator |
 | S14 | ClaimCoordinatorId | topology | 0 |  |
 | S15 | ImportGeneration | generation | 1 | committed item-import generation/count |
 | S16 | StoreState | state | 1 |  |
@@ -1266,45 +1849,45 @@ Consumers: 2.
 
 | Cells | Name | Role | Peers | Description |
 |---|---|---|---:|---|
-| S8 | LaneAResponseToken | response_token | 0 |  |
-| S9 | LaneAStatus | state | 0 |  |
+| S8 | LaneAResponseToken | response_token | 1 |  |
+| S9 | LaneAStatus | state | 1 |  |
 | S10 | LaneAAllocatedJobId | result | 0 |  |
-| S11 | LaneACommand | request | 0 | 1 PUBLISH_NEW, 2 SET_STATE, 3 REAP |
-| S12 | LaneASlot | request | 0 |  |
-| S13 | LaneAExpectedJobGeneration | request | 0 |  |
-| S14 | LaneADesiredState | request | 0 |  |
-| S15 | LaneADesiredErrorStatus | request | 0 |  |
-| S19 | LaneARequestToken | request_token | 0 |  |
+| S11 | LaneACommand | request | 1 | 1 PUBLISH_NEW, 2 SET_STATE, 3 REAP |
+| S12 | LaneASlot | request | 1 |  |
+| S13 | LaneAExpectedJobGeneration | request | 1 |  |
+| S14 | LaneADesiredState | request | 1 |  |
+| S15 | LaneADesiredErrorStatus | request | 1 |  |
+| S19 | LaneARequestToken | request_token | 1 |  |
 | S24 | PendingLaneClass | state | 0 | 0 idle; the lane class of the command in flight |
 | S25 | PendingToken | current_token | 0 | client token of the command in flight |
 | S26 | PendingLaneBase | state | 0 |  |
-| S32 | LaneBRequestToken | request_token | 0 |  |
-| S33 | LaneBResponseToken | response_token | 0 |  |
+| S32 | LaneBRequestToken | request_token | 1 |  |
+| S33 | LaneBResponseToken | response_token | 1 |  |
 | S34 | LaneBStatus | state | 0 | 1 success, negative rejected |
 | S35 | LaneBAllocatedJobId | result | 0 |  |
-| S36 | LaneBCommand | request | 0 | 1 PUBLISH_NEW, 2 SET_STATE, 3 REAP |
-| S37 | LaneBSlot | request | 0 |  |
-| S38 | LaneBExpectedJobGeneration | request | 0 |  |
-| S39 | LaneBDesiredState | request | 0 |  |
-| S40 | LaneBDesiredErrorStatus | request | 0 |  |
-| S48 | LaneCRequestToken | request_token | 0 |  |
-| S49 | LaneCResponseToken | response_token | 0 |  |
-| S50 | LaneCStatus | state | 0 | 1 success, negative rejected |
-| S51 | LaneCAllocatedJobId | result | 0 |  |
+| S36 | LaneBCommand | request | 1 | 1 PUBLISH_NEW, 2 SET_STATE, 3 REAP |
+| S37 | LaneBSlot | request | 1 |  |
+| S38 | LaneBExpectedJobGeneration | request | 1 |  |
+| S39 | LaneBDesiredState | request | 1 |  |
+| S40 | LaneBDesiredErrorStatus | request | 1 |  |
+| S48 | LaneCRequestToken | request_token | 1 |  |
+| S49 | LaneCResponseToken | response_token | 1 |  |
+| S50 | LaneCStatus | state | 1 | 1 success, negative rejected |
+| S51 | LaneCAllocatedJobId | result | 1 |  |
 | S52 | LaneCAllocatedSlot | result | 0 |  |
-| S53 | LaneCParentJobId | request | 0 |  |
-| S54 | LaneCParentJobGeneration | request | 0 |  |
-| S55 | LaneCParentSlot | request | 0 |  |
-| S56..S62 | LaneCIntent | request | 0 | JobType, RequiredCapability, Identity, InputCount, OutputCount, RequestedQuantity, Priority |
-| S64 | LaneDRequestToken | request_token | 0 |  |
-| S65 | LaneDResponseToken | response_token | 0 |  |
-| S66 | LaneDStatus | state | 0 | 1 success, negative rejected |
+| S53 | LaneCParentJobId | request | 1 |  |
+| S54 | LaneCParentJobGeneration | request | 1 |  |
+| S55 | LaneCParentSlot | request | 1 |  |
+| S56..S62 | LaneCIntent | request | 1 | JobType, RequiredCapability, Identity, InputCount, OutputCount, RequestedQuantity, Priority |
+| S64 | LaneDRequestToken | request_token | 1 |  |
+| S65 | LaneDResponseToken | response_token | 1 |  |
+| S66 | LaneDStatus | state | 1 | 1 success, negative rejected |
 | S67 | LaneDAllocatedJobId | result | 0 |  |
-| S68 | LaneDCommand | request | 0 | 1 PUBLISH_NEW, 2 SET_STATE, 3 REAP |
-| S69 | LaneDSlot | request | 0 |  |
-| S70 | LaneDExpectedJobGeneration | request | 0 |  |
-| S71 | LaneDDesiredState | request | 0 |  |
-| S72 | LaneDDesiredErrorStatus | request | 0 |  |
+| S68 | LaneDCommand | request | 1 | 1 PUBLISH_NEW, 2 SET_STATE, 3 REAP |
+| S69 | LaneDSlot | request | 1 |  |
+| S70 | LaneDExpectedJobGeneration | request | 1 |  |
+| S71 | LaneDDesiredState | request | 1 |  |
+| S72 | LaneDDesiredErrorStatus | request | 1 |  |
 | S80 | LaneERequestToken | request_token | 1 |  |
 | S81 | LaneEResponseToken | response_token | 1 |  |
 | S82 | LaneEStatus | state | 1 | 1 success, negative rejected |
@@ -1321,6 +1904,52 @@ Consumers: 2.
 | S101 | LaneFExpectedQueueSequence | request | 1 | even Job Store QueueSequence observed before publication |
 | S102 | LaneFExpectedPlanSequence | request | 1 | even Dependency Plan Store sequence observed before publication |
 | S103..S109 | LaneFIntent | request | 1 | JobType, RequiredCapability, Identity, InputCount, OutputCount, RequestedQuantity, Priority |
+
+### ic10.stack.generic-job-monitor.v1
+
+Providers: ic10/dependency-planning/generic_job_monitor_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S13 | JobId | request | 4 |  |
+| S14 | RequestToken | request_token | 4 |  |
+| S15 | ResponseToken | response_token | 4 |  |
+| S16 | Status | state | 4 | 1 found, -2 missing, -1 invalid |
+| S17 | Slot | result | 2 |  |
+| S18 | JobType | result | 3 |  |
+| S19 | Identity | result | 3 |  |
+| S20 | RequestedQuantity | result | 2 |  |
+| S21 | State | result | 1 | see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation |
+| S22 | JobGeneration | result | 3 | see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation |
+| S23 | ErrorStatus | result | 2 | see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation |
+
+### ic10.stack.generic-job-selector.v3
+
+Providers: ic10/generic-jobs/generic_job_selector_v3_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | JobType | result | 2 |  |
+| S9 | RequiredCapability | result | 2 |  |
+| S10 | Identity | result | 3 |  |
+| S11 | InputCount | result | 1 |  |
+| S12 | OutputCount | result | 1 |  |
+| S13 | RequestedQuantity | result | 3 |  |
+| S14 | Priority | result | 1 |  |
+| S15 | State | result | 2 |  |
+| S16 | JobGeneration | result | 3 |  |
+| S17 | QueueGeneration | result | 0 |  |
+| S18 | Mode | request | 1 | 0 manufacturing TRANSFORM/PRINT policy; a JobType selects that type's nonterminal states |
+| S19 | Cursor | request | 2 | JobId cursor; eligible JobIds at or below it are skipped |
+| S20 | RequestToken | request_token | 2 |  |
+| S21 | ResponseToken | response_token | 2 |  |
+| S22 | Status | state | 3 | 1 selected, -2 none, -1 invalid Store |
+| S23 | Slot | result | 3 |  |
+| S24 | JobId | result | 4 |  |
 
 ### ic10.stack.generic-job-store-command-executor.v1
 
@@ -1409,6 +2038,28 @@ Consumers: 13.
 | S224..S226 | BankAFooter | bank | 0 | signature, config revision, bank revision |
 | S227..S229 | BankBFooter | bank | 0 | signature, config revision, bank revision |
 
+### ic10.stack.generic-print-runtime.v2
+
+Providers: ic10/manufacturing/generic_print_runtime_v2_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | TargetJobState | state | 1 |  |
+| S9 | ErrorStatus | error | 1 |  |
+| S10 | PrinterRef | request | 1 |  |
+| S11 | RecipeHash | request | 1 |  |
+| S12 | RequestedQuantity | request | 1 |  |
+| S13 | JobId | request | 1 |  |
+| S14 | RequestToken | request_token | 1 |  |
+| S15 | CurrentToken | current_token | 1 |  |
+| S20 | Phase | state | 0 |  |
+| S22 | MaterialRequestToken | request_token | 0 | token issued to the Material Allocator |
+| S23 | ExportCountBaseline | result | 0 |  |
+| S24 | CommittedEpoch | epoch | 0 |  |
+| S25 | ExportTicks | state | 0 |  |
+
 ### ic10.stack.generic-registry-directory-host.v3
 
 Providers: ic10/directory-core/generic_registry_directory_host_v2_0.ic10.
@@ -1446,9 +2097,9 @@ Consumers: 13.
 
 | Cells | Name | Role | Peers | Description |
 |---|---|---|---:|---|
-| S9 | DirectorySchemaId | schema | 13 |  |
-| S11 | EntryWidth | metadata | 13 |  |
-| S12 | Capacity | metadata | 12 |  |
+| S9 | DirectorySchemaId | schema | 14 |  |
+| S11 | EntryWidth | metadata | 14 |  |
+| S12 | Capacity | metadata | 13 |  |
 | S14 | BridgeRequestGeneration | request_token | 1 |  |
 | S15 | AcknowledgedRequestGeneration | response_token | 1 |  |
 | S16 | BridgeCommand | request | 1 | 1 BEGIN, 2 ADD, 3 COMMIT |
@@ -1457,15 +2108,15 @@ Consumers: 13.
 | S21 | StagingCount | state | 1 |  |
 | S22 | StagingOverflow | state | 1 |  |
 | S23 | HostError | error | 0 |  |
-| S24 | ActiveBank | bank | 13 | 0 A, 1 B |
-| S25 | GenerationA | bank | 6 |  |
-| S26 | GenerationB | bank | 6 |  |
+| S24 | ActiveBank | bank | 14 | 0 A, 1 B |
+| S25 | GenerationA | bank | 7 |  |
+| S26 | GenerationB | bank | 7 |  |
 | S27 | CountA | bank | 13 |  |
 | S28 | CountB | bank | 13 |  |
 | S29 | OverflowA | bank | 13 |  |
 | S30 | OverflowB | bank | 13 |  |
 | S31 | ReflashIdentity | metadata | 0 | same-image reflash marker holding the service identity |
-| S32..S415 | Banks | table | 12 | bank A then bank B, each capacity x width cells |
+| S32..S415 | Banks | table | 13 | bank A then bank B, each capacity x width cells |
 
 ### ic10.stack.input-profile-view.v1
 
@@ -1489,12 +2140,12 @@ Consumers: 1.
 
 | Cells | Name | Role | Peers | Description |
 |---|---|---|---:|---|
-| S8 | ResourceType | request | 1 |  |
-| S9 | RequestToken | request_token | 1 |  |
-| S10 | ResponseToken | response_token | 1 |  |
-| S11 | Status | state | 1 |  |
-| S12 | ProducerJobType | result | 1 | 1 TRANSFORM, 2 PRINT |
-| S13 | ProducerIdentity | result | 1 | TransformType or RecipeHash |
+| S8 | ResourceType | request | 2 |  |
+| S9 | RequestToken | request_token | 2 |  |
+| S10 | ResponseToken | response_token | 2 |  |
+| S11 | Status | state | 2 |  |
+| S12 | ProducerJobType | result | 2 | 1 TRANSFORM, 2 PRINT |
+| S13 | ProducerIdentity | result | 2 | TransformType or RecipeHash |
 | S32..S65 | ProducerTable | table | 0 | 17 [ResourceType, TransformType] pairs |
 
 ### ic10.stack.item-resource-reservation-selector.v1
@@ -1516,6 +2167,28 @@ Consumers: 3.
 | S16 | ResponseToken | response_token | 3 |  |
 | S32..S49 | QuoteLegs | table | 3 | up to six [ReservationRef, Amount, EndpointPublicationGeneration] legs |
 
+### ic10.stack.job-inventory-preflight.v1
+
+Providers: ic10/dependency-planning/job_inventory_preflight_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S15 | JobType | request | 2 |  |
+| S16 | Identity | request | 2 |  |
+| S17 | RequestedQuantity | request | 2 |  |
+| S18 | RequestToken | request_token | 2 |  |
+| S19 | ResponseToken | response_token | 2 |  |
+| S20 | Status | state | 2 | 1 satisfied, 2 lower-bound only, 3 deficit, -2 overflow, -1 invalid |
+| S21 | InputOrdinal | result | 0 | the input the deficit was found on |
+| S22 | InputResourceType | result | 1 |  |
+| S23 | RequiredTotal | result | 1 |  |
+| S24 | QuotedTotal | result | 2 |  |
+| S25 | Deficit | result | 1 |  |
+| S26 | QuoteFingerprintA | result | 2 |  |
+| S27 | QuoteFingerprintB | result | 2 |  |
+
 ### ic10.stack.job-requirement-view.v1
 
 Providers: ic10/dependency-planning/job_requirement_view_v1_0.ic10.
@@ -1524,19 +2197,131 @@ Consumers: 1.
 
 | Cells | Name | Role | Peers | Description |
 |---|---|---|---:|---|
-| S15 | JobType | request | 1 | 1 TRANSFORM, 2 PRINT |
+| S15 | JobType | request | 4 | 1 TRANSFORM, 2 PRINT |
+| S16 | Identity | request | 4 |  |
+| S17 | RequestedQuantity | request | 4 |  |
+| S18 | InputOrdinal | request | 4 | -1 asks for the head fields only |
+| S19 | RequestToken | request_token | 4 |  |
+| S20 | ResponseToken | response_token | 4 |  |
+| S21 | Status | state | 4 |  |
+| S22 | RequiredCapability | result | 2 |  |
+| S23 | InputCount | result | 3 |  |
+| S24 | OutputResourceType | result | 3 |  |
+| S25 | OutputPerBatch | result | 2 |  |
+| S26 | InputResourceType | result | 1 |  |
+| S27 | InputRequiredTotal | result | 1 |  |
+
+### ic10.stack.larre-cargo-storage-service.v1
+
+Providers: ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | RequestToken | request_token | 1 |  |
+| S9 | Status | state | 1 | 1 success, -1 fault with hand empty, -5 invalid, -6 fault with hand occupied |
+| S10 | ScanExportAvailable | result | 1 |  |
+| S11 | ScanImportCapacity | result | 1 |  |
+| S12 | ScanFirstSourceSlot | result | 1 |  |
+| S13 | MovedQuantity | result | 1 | SCAN FirstSourceQuantity; MOVE or RECOVER moved quantity |
+| S14 | ResponseToken | response_token | 1 |  |
+| S15 | ExpectedQuantity | request | 1 | for MOVE |
+| S16 | ScanFirstEmptySlot | result | 1 |  |
+| S17 | Operation | request | 1 | 1 SCAN, 2 MOVE, 3 RECOVER |
+| S18 | SourceStation | request | 1 |  |
+| S19 | SourceSlot | request | 1 | SCAN first slot |
+| S20 | DestinationStation | request | 1 | SCAN slot count |
+| S21 | DestinationSlot | request | 1 | SCAN empty-slot MaxStack |
+| S22 | ItemHash | request | 1 |  |
+
+### ic10.stack.manufacturing-candidate-selector.v2
+
+Providers: ic10/manufacturing/manufacturing_candidate_selector_v2_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | ResponseToken | response_token | 2 |  |
+| S9 | Status | state | 2 | 1 selected, -2 none, -1 invalid |
+| S10 | CandidateRef | result | 2 | Runtime or Printer ReferenceId |
+| S11 | CandidateProcessorRef | result | 0 | Processor ReferenceId or FamilyHash |
+| S12 | CandidateProcessorSpec | result | 1 |  |
+| S13 | NextOrdinal | result | 2 |  |
+| S14 | DirectoryGeneration | generation | 0 |  |
+| S16 | DirectoryRef | request | 2 | Snapshot Directory ReferenceId |
+| S17 | SchemaId | request | 2 |  |
+| S18 | Key | request | 2 | optional FamilyHash |
+| S19 | Capability | request | 2 |  |
+| S20 | ComparisonMode | request | 2 | 1 mask, 2 tier |
+| S21 | StartOrdinal | request | 2 |  |
+| S22 | RequestToken | request_token | 2 |  |
+
+### ic10.stack.manufacturing-dependency-gate.v2
+
+Providers: ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S9 | RequestToken | request_token | 1 |  |
+| S10 | ResponseToken | response_token | 1 |  |
+| S11 | TargetJobState | result | 1 |  |
+| S12 | ErrorStatus | error | 1 |  |
+
+### ic10.stack.manufacturing-dependency-planner.v1
+
+Providers: ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S12 | JobId | request | 1 |  |
+| S13 | Slot | request | 1 |  |
+| S14 | JobGeneration | request | 1 |  |
+| S15 | JobType | request | 1 |  |
 | S16 | Identity | request | 1 |  |
 | S17 | RequestedQuantity | request | 1 |  |
-| S18 | InputOrdinal | request | 1 | -1 asks for the head fields only |
+| S18 | Priority | request | 1 |  |
 | S19 | RequestToken | request_token | 1 |  |
 | S20 | ResponseToken | response_token | 1 |  |
-| S21 | Status | state | 1 |  |
-| S22 | RequiredCapability | result | 1 |  |
-| S23 | InputCount | result | 1 |  |
-| S24 | OutputResourceType | result | 1 |  |
-| S25 | OutputPerBatch | result | 1 |  |
-| S26 | InputResourceType | result | 0 |  |
-| S27 | InputRequiredTotal | result | 0 |  |
+| S21 | Decision | result | 1 |  |
+| S24 | CleanupParentJobId | request | 1 |  |
+| S25 | CleanupRequestToken | request_token | 1 |  |
+| S26 | CleanupResponseToken | response_token | 1 |  |
+| S27 | CleanupStatus | state | 0 |  |
+
+### ic10.stack.manufacturing-driver-router.v2
+
+Providers: ic10/manufacturing/manufacturing_driver_router_v2_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S9 | RequestToken | request_token | 1 |  |
+| S10 | ResponseToken | response_token | 1 |  |
+| S11 | TargetJobState | result | 1 |  |
+| S12 | ErrorStatus | error | 1 |  |
+| S13 | Lane | state | 0 | 1 transform, 2 print |
+| S14 | CurrentToken | current_token | 0 |  |
+
+### ic10.stack.manufacturing-reagent-resolver.v1
+
+Providers: ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | ReagentHash | request | 1 |  |
+| S9 | RequestToken | request_token | 1 |  |
+| S10 | ResponseToken | response_token | 1 |  |
+| S11 | Status | state | 1 | 1 resolved, -2 unknown |
+| S12 | ResourceType | result | 1 |  |
 
 ### ic10.stack.material-transfer-executor.v1
 
@@ -1552,7 +2337,7 @@ Consumers: 1.
 | S11 | ResourceType | result | 0 |  |
 | S12 | SinkProviderRef | topology | 0 |  |
 | S13 | ImportCountSnapshot | result | 0 | taken before batch release |
-| S14 | ActiveEpoch | epoch | 0 |  |
+| S14 | ActiveEpoch | epoch | 1 |  |
 | S15 | CompletedEpoch | epoch | 1 |  |
 | S16 | ExecutionStatus | state | 1 | 1 completed, 0 active or idle, -1 failed |
 | S17 | ObservedRate | result | 1 |  |
@@ -1595,7 +2380,7 @@ Consumers: 1.
 
 | Cells | Name | Role | Peers | Description |
 |---|---|---|---:|---|
-| S8 | Status | state | 1 |  |
+| S8 | Status | state | 2 |  |
 | S9 | PublicationGeneration | generation | 1 |  |
 | S10 | OutputResourceType | result | 0 |  |
 | S11 | OutputUnit | result | 0 |  |
@@ -1604,9 +2389,25 @@ Consumers: 1.
 | S14 | TransformType | result | 1 |  |
 | S15 | ProcessorRef | topology | 1 |  |
 | S16 | InputCount | result | 1 |  |
-| S17 | OutputQuantity | result | 0 |  |
+| S17 | OutputQuantity | result | 1 |  |
 | S18 | OutputReservationRef | topology | 0 |  |
-| S19 | ProfileGeneration | generation | 1 | stable Transform Profile generation the admission rests on |
+| S19 | ProfileGeneration | generation | 2 | stable Transform Profile generation the admission rests on |
+
+### ic10.stack.material-transform-link-resolver.v1
+
+Providers: ic10/material-transform/material_transform_link_resolver_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | TransformType | result | 0 |  |
+| S9 | InputCount | result | 2 |  |
+| S10 | ProcessorRef | result | 0 |  |
+| S11 | ProfileGeneration | generation | 3 |  |
+| S12 | Status | state | 3 |  |
+| S13 | PublicationGeneration | generation | 0 |  |
+| S20..S83 | LinkRecords | table | 2 | four-cell [LinkRef, QuantityPerJob, ResourceType, ResourceClass] records; the Resolver fills up to three, the Stager and Allocator read the same window on the Print Material Resolver |
 
 ### ic10.stack.medium-purity-guard.v1
 
@@ -1616,12 +2417,12 @@ Consumers: 0.
 
 | Cells | Name | Role | Peers | Description |
 |---|---|---|---:|---|
-| S8 | MediumType | result | 0 |  |
+| S8 | MediumType | result | 1 |  |
 | S9 | ObservedRatio | result | 0 |  |
 | S10 | RequiredPurity | result | 0 |  |
-| S11 | Status | state | 0 | 1 good, -1 profile, -2 sensor, -3 numeric, -4 contaminated |
+| S11 | Status | state | 2 | 1 good, -1 profile, -2 sensor, -3 numeric, -4 contaminated |
 | S12 | ProfileGenerationUsed | generation | 0 |  |
-| S13 | PublicationGeneration | generation | 0 | written last |
+| S13 | PublicationGeneration | generation | 2 | written last |
 
 ### ic10.stack.multi-material-reservation-allocator.v2
 
@@ -1631,16 +2432,54 @@ Consumers: 1.
 
 | Cells | Name | Role | Peers | Description |
 |---|---|---|---:|---|
-| S8 | BatchCount | request | 0 |  |
+| S8 | BatchCount | request | 2 |  |
 | S13 | EpochCounter | epoch | 0 | next epoch |
-| S14 | CommittedEpoch | epoch | 1 | written last after every input stages |
+| S14 | CommittedEpoch | epoch | 2 | written last after every input stages |
 | S15 | CompletedEpoch | epoch | 0 |  |
-| S16 | ConsumedRequestGeneration | current_token | 0 |  |
+| S16 | ConsumedRequestGeneration | current_token | 2 |  |
 | S17..S19 | StagerCoordination | request | 0 | commands and results exchanged with the Stager |
-| S20 | RuntimeRef | topology | 0 |  |
-| S21 | RequestGeneration | request_token | 0 |  |
-| S22 | Status | state | 0 |  |
+| S20 | RuntimeRef | topology | 2 |  |
+| S21 | RequestGeneration | request_token | 2 |  |
+| S22 | Status | state | 2 |  |
+| S23 | RuntimeCompletionEpoch | epoch | 1 | the Runtime writes the epoch it completed |
 | S31 | ReflashIdentity | metadata | 0 | same-image reflash marker holding the service identity |
+
+### ic10.stack.multi-material-reservation-stager.v1
+
+Providers: ic10/material-transform/multi_material_reservation_stager_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | StagedCount | result | 0 | published after each record |
+| S9 | Command | request | 1 | 1 stage, 2 cleanup |
+| S10 | Epoch | request | 1 |  |
+| S11 | BatchCount | request | 1 |  |
+| S12 | RequestToken | request_token | 1 |  |
+| S13 | Status | state | 1 |  |
+| S14 | ResponseToken | response_token | 1 |  |
+| S32..S40 | StagedTriples | table | 0 | [LinkRef, SourceReservationRef, SinkReservationRef] per staged input |
+
+### ic10.stack.new-dependency-plan-controller.v1
+
+Providers: ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S20 | ParentJobId | request | 1 |  |
+| S21 | RequestToken | request_token | 1 |  |
+| S22 | ResponseToken | response_token | 1 |  |
+| S23 | Decision | result | 1 | 1 ready, 4 probe, 6 planned, -2 overflow, -1 invalid |
+| S31 | ChildJobId | result | 1 | plan record proposal the Planner writes to the Plan Store |
+| S32 | ResourceType | result | 1 |  |
+| S33 | RequiredTotal | result | 1 |  |
+| S34 | BaselineKnown | result | 1 |  |
+| S35 | FutureQuantity | result | 1 |  |
+| S36 | QuoteFingerprintA | result | 1 |  |
+| S37 | QuoteFingerprintB | result | 1 |  |
 
 ### ic10.stack.operator-order-job-ingress.v1
 
@@ -1687,17 +2526,17 @@ Consumers: 0.
 
 | Cells | Name | Role | Peers | Description |
 |---|---|---|---:|---|
-| S8 | AggregateRequestedPressure | result | 0 |  |
-| S9 | ContributingRequestCount | result | 0 |  |
-| S10 | ResultStatus | state | 0 | 0 none, 1 LOW, 2 HIGH, -3 directory invalid, -9 context invalid |
+| S8 | AggregateRequestedPressure | result | 1 |  |
+| S9 | ContributingRequestCount | result | 1 |  |
+| S10 | ResultStatus | state | 1 | 0 none, 1 LOW, 2 HIGH, -3 directory invalid, -9 context invalid |
 | S11 | DirectoryGenerationUsed | generation | 0 |  |
-| S12 | ResultGeneration | generation | 0 | payload is written before it |
-| S13 | HandledHostGeneration | generation | 0 |  |
-| S14 | HandledMediumType | result | 0 |  |
-| S15 | ContextEnabled | request | 0 |  |
-| S16 | ContextRole | request | 0 | 1 LOW/EVAP, 2 HIGH/CONDENSE |
-| S17 | ContextMediumType | request | 0 |  |
-| S18 | ContextHostGeneration | request | 0 |  |
+| S12 | ResultGeneration | generation | 1 | payload is written before it |
+| S13 | HandledHostGeneration | generation | 1 |  |
+| S14 | HandledMediumType | result | 1 |  |
+| S15 | ContextEnabled | request | 1 |  |
+| S16 | ContextRole | request | 1 | 1 LOW/EVAP, 2 HIGH/CONDENSE |
+| S17 | ContextMediumType | request | 1 |  |
+| S18 | ContextHostGeneration | request | 1 |  |
 
 ### ic10.stack.power-dispatch-plan-store.v1
 
@@ -1707,21 +2546,270 @@ Consumers: 6.
 
 | Cells | Name | Role | Peers | Description |
 |---|---|---|---:|---|
-| S10 | RequestToken | request_token | 0 |  |
-| S11 | ResponseToken | response_token | 0 |  |
-| S12 | Command | request | 0 | 1 BEGIN, 2 ADD, 3 COMMIT |
-| S13 | Status | state | 0 | 1 done, -2 full, -1 invalid |
-| S14 | RequestedPlanGeneration | request | 0 |  |
-| S15 | RequestedPlanStatus | request | 0 |  |
-| S16..S23 | StagedFlow | request | 0 | LinkRef, SourceReservationRef, SinkReservationRef, SinkWatts, SourceWatts, SourceGeneration, SinkGeneration, RouteClass |
+| S10 | RequestToken | request_token | 2 |  |
+| S11 | ResponseToken | response_token | 2 |  |
+| S12 | Command | request | 2 | 1 BEGIN, 2 ADD, 3 COMMIT |
+| S13 | Status | state | 2 | 1 done, -2 full, -1 invalid |
+| S14 | ShedWatts | request | 1 | total shed watts the sweep reports for the plan being committed |
+| S15 | CriticalShortage | request | 1 | 1 when a critical load could not be served |
+| S16..S23 | StagedFlow | request | 1 | LinkRef, SourceReservationRef, SinkReservationRef, SinkWatts, SourceWatts, SourceGeneration, SinkGeneration, RouteClass |
 | S24 | StagedFlowCount | state | 1 |  |
 | S27 | PublicationSequence | generation | 5 | odd during COMMIT, even when stable |
-| S28 | CommitCount | generation | 4 |  |
+| S28 | PlanGeneration | generation | 6 | advances on every COMMIT; readers fence on it with the even sequence at S27 |
 | S29 | FlowCount | result | 4 | 0..8 committed flows |
-| S30 | PlanGeneration | generation | 1 |  |
-| S31 | PlanStatus | state | 1 |  |
+| S30 | CommittedShedWatts | result | 1 | S14 as of the last COMMIT |
+| S31 | CommittedCriticalShortage | state | 1 | S15 as of the last COMMIT |
 | S32..S95 | CommittedFlows | table | 4 | 8 x 8 flow records |
 | S128..S191 | StagedFlows | table | 1 | 8 x 8 flow records staged before COMMIT |
+
+### ic10.stack.power-dispatch-sweep.v1
+
+Providers: ic10/power-grid/power_dispatch_sweep_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | RequestToken | request_token | 1 |  |
+| S9 | ResponseToken | response_token | 1 |  |
+| S10 | Status | state | 1 |  |
+| S20 | Phase | state | 0 |  |
+| S21 | CurrentToken | current_token | 0 |  |
+| S22 | SinkCursor | state | 0 |  |
+| S23 | ShedWatts | result | 0 |  |
+| S24 | CriticalShortage | result | 0 |  |
+| S25 | SourceWatts | result | 0 | source watts of the flow being built |
+
+### ic10.stack.power-job-finalize.v1
+
+Providers: ic10/power-jobs/power_job_finalize_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | Identity | request | 1 | PolicyId |
+| S9 | RequestToken | request_token | 1 |  |
+| S10 | ResponseToken | response_token | 1 |  |
+| S11 | Status | state | 1 | 1 advanced, 0 pending, -1 fault |
+| S12 | NewState | result | 1 |  |
+| S13 | NewJobGeneration | result | 1 |  |
+| S14 | Slot | request | 1 |  |
+| S15 | JobId | request | 1 |  |
+| S16 | State | request | 1 |  |
+| S17 | JobGeneration | request | 1 |  |
+| S18 | RequestedQuantity | request | 1 |  |
+| S19 | RequiredCapability | request | 1 | PowerMode |
+| S20 | Phase | state | 0 |  |
+
+### ic10.stack.power-job-lifecycle-client.v1
+
+Providers: ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | Status | state | 2 | 1 applied, -1 rejected |
+| S9 | NewJobGeneration | result | 2 | ExpectedJobGeneration plus one on success |
+| S10 | Slot | request | 2 |  |
+| S11 | ExpectedJobGeneration | request | 2 |  |
+| S12 | DesiredState | request | 2 |  |
+| S13 | DesiredErrorStatus | request | 2 |  |
+| S14 | RequestToken | request_token | 2 |  |
+| S15 | ResponseToken | response_token | 2 |  |
+
+### ic10.stack.power-job-policy-apply.v1
+
+Providers: ic10/power-jobs/power_job_policy_apply_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | RequestToken | request_token | 1 |  |
+| S9 | ResponseToken | response_token | 1 |  |
+| S10 | Status | state | 1 |  |
+| S11 | ReservationRef | result | 0 |  |
+| S12 | EndpointRef | result | 0 |  |
+| S13 | ReservationGeneration | result | 0 |  |
+| S14 | Slot | request | 1 |  |
+| S15 | JobId | request | 1 |  |
+| S16 | RequiredCapability | request | 1 | PowerMode |
+| S17 | Identity | request | 1 | PolicyId |
+| S18 | JobGeneration | request | 1 |  |
+| S19 | RequestedQuantity | request | 1 | optional watt cap |
+
+### ic10.stack.power-job-policy-verify.v1
+
+Providers: ic10/power-jobs/power_job_policy_verify_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | Status | state | 1 | 1 verified, 0 pending, -1 fault |
+| S9 | ReservationRef | request | 1 |  |
+| S10 | PowerMode | request | 1 |  |
+| S11 | RequestedQuantity | request | 1 |  |
+| S12 | RequestToken | request_token | 1 |  |
+| S13 | ResponseToken | response_token | 1 |  |
+
+### ic10.stack.power-job-prepare.v1
+
+Providers: ic10/power-jobs/power_job_prepare_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | Identity | request | 1 | PolicyId |
+| S9 | RequestToken | request_token | 1 |  |
+| S10 | ResponseToken | response_token | 1 |  |
+| S11 | Status | state | 1 | 1 advanced, -1 fault |
+| S12 | NewState | result | 1 |  |
+| S13 | NewJobGeneration | result | 1 |  |
+| S14 | Slot | request | 1 |  |
+| S15 | JobId | request | 1 |  |
+| S16 | State | request | 1 |  |
+| S17 | JobGeneration | request | 1 |  |
+| S18 | RequestedQuantity | request | 1 |  |
+| S19 | RequiredCapability | request | 1 | PowerMode |
+| S20 | Phase | state | 0 |  |
+
+### ic10.stack.power-link-selector.v1
+
+Providers: ic10/power-grid/power_link_selector_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | LinkRef | result | 1 |  |
+| S9 | SourceWatts | result | 1 | sink watts plus transformer overhead |
+| S10 | LinkGeneration | result | 1 |  |
+| S11 | LinkClass | result | 0 |  |
+| S12 | SourceReservationRef | request | 1 |  |
+| S13 | SinkReservationRef | request | 1 |  |
+| S14 | SinkWatts | request | 1 |  |
+| S15 | RequestToken | request_token | 1 |  |
+| S16 | ResponseToken | response_token | 1 |  |
+| S17 | Status | state | 1 | 1 link, -3 none, -2 directory, -1 invalid |
+
+### ic10.stack.power-plan-validator.v1
+
+Providers: ic10/power-grid/power_plan_validator_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | PlanGeneration | request | 1 |  |
+| S9 | RequestToken | request_token | 1 |  |
+| S10 | ResponseToken | response_token | 1 |  |
+| S11 | Status | state | 1 | 1 valid, -1 invalid |
+
+### ic10.stack.power-policy-target-resolver.v1
+
+Providers: ic10/power-jobs/power_policy_target_resolver_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | NodeKind | result | 1 | 1 producer, 2 consumer, 3 battery |
+| S9 | ReservationGeneration | result | 0 |  |
+| S10 | PolicyId | request | 3 |  |
+| S11 | RequestToken | request_token | 3 |  |
+| S12 | ResponseToken | response_token | 3 |  |
+| S13 | Status | state | 3 | 1 resolved, -2 none, -3 ambiguous, -1 invalid |
+| S14 | ReservationRef | result | 2 |  |
+| S15 | EndpointRef | result | 1 |  |
+
+### ic10.stack.power-reservation-allocator.v1
+
+Providers: ic10/power-grid/power_reservation_allocator_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | PlanGeneration | result | 2 | the last plan the allocator committed |
+| S9 | AuthorityEpoch | epoch | 2 | executors act only under this epoch |
+| S10 | Status | state | 2 | 1 authority published, -1 fault |
+| S20 | Phase | state | 0 |  |
+| S21 | PendingPlanGeneration | state | 0 |  |
+| S22 | PendingEpoch | epoch | 0 |  |
+| S30 | RequestCounter | generation | 0 | source of the tokens sent to the Validator, Committer, and Releaser |
+
+### ic10.stack.power-reservation-committer.v1
+
+Providers: ic10/power-grid/power_reservation_committer_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | PlanGeneration | request | 1 |  |
+| S9 | OwnerEpoch | request | 1 |  |
+| S10 | RequestToken | request_token | 1 |  |
+| S11 | ResponseToken | response_token | 1 |  |
+| S12 | Status | state | 1 | 1 committed, -1 rejected |
+
+### ic10.stack.power-sink-flow-builder.v1
+
+Providers: ic10/power-grid/power_sink_flow_builder_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | Status | state | 1 | 1 flow staged, 0 no source, -1 fault |
+| S9 | SourceWatts | result | 0 |  |
+| S10 | SourceReservationRef | result | 0 |  |
+| S11 | SinkReservationRef | request | 1 |  |
+| S12 | SinkWatts | request | 1 |  |
+| S14 | SinkReservationGeneration | request | 1 |  |
+| S15 | RequestToken | request_token | 1 |  |
+| S16 | ResponseToken | response_token | 1 |  |
+| S20 | Phase | state | 0 |  |
+
+### ic10.stack.power-sink-selector.v1
+
+Providers: ic10/power-grid/power_sink_selector_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | Ordinal | result | 1 |  |
+| S9 | ReservationGeneration | result | 1 |  |
+| S10 | PriorityFlags | result | 1 |  |
+| S11 | CriticalFlag | result | 1 |  |
+| S12 | StartOrdinal | request | 1 |  |
+| S13 | RequestToken | request_token | 1 |  |
+| S14 | ResponseToken | response_token | 1 |  |
+| S15 | Status | state | 1 | 1 sink, -3 overflow, -2 none, -1 invalid |
+| S16 | ReservationRef | result | 1 |  |
+| S17 | DemandWatts | result | 1 |  |
+
+### ic10.stack.power-source-selector.v1
+
+Providers: ic10/power-grid/power_source_selector_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | Ordinal | result | 1 |  |
+| S9 | ReservationGeneration | result | 1 |  |
+| S10 | NodeKind | result | 0 |  |
+| S11 | StartOrdinal | request | 1 |  |
+| S12 | RequestToken | request_token | 1 |  |
+| S13 | ResponseToken | response_token | 1 |  |
+| S14 | Status | state | 1 | 1 source, -3 overflow, -2 none, -1 invalid |
+| S15 | ReservationRef | result | 1 |  |
+| S16 | AvailableWatts | result | 1 |  |
 
 ### ic10.stack.pressure-domain-inventory.v2
 
@@ -1909,20 +2997,20 @@ Consumers: 1.
 
 | Cells | Name | Role | Peers | Description |
 |---|---|---|---:|---|
-| S8 | MolesPerKPa | result | 1 |  |
-| S9 | MolesPerLiter | result | 1 |  |
+| S8 | MolesPerKPa | result | 2 |  |
+| S9 | MolesPerLiter | result | 2 |  |
 | S10 | MirroredInventoryStatus | state | 0 |  |
-| S11 | MirrorGeneration | generation | 1 |  |
+| S11 | MirrorGeneration | generation | 2 |  |
 | S12 | ReservedExportMoles | result | 0 | Allocator-owned |
 | S13 | ReservedImportMoles | result | 0 | Allocator-owned |
 | S14 | BuildEpoch | epoch | 0 | Allocator-owned |
 | S15 | OwningPlannerRef | topology | 0 | Allocator-owned |
 | S16 | InventoryRef | topology | 0 |  |
 | S17 | PressureDomainRef | topology | 0 |  |
-| S18 | Role | metadata | 1 | 1 LOW, 2 HIGH, 3 STORAGE |
-| S19 | MediumType | metadata | 1 |  |
-| S20 | ExportableMoles | result | 1 |  |
-| S21 | ImportCapacityMoles | result | 1 |  |
+| S18 | Role | metadata | 2 | 1 LOW, 2 HIGH, 3 STORAGE |
+| S19 | MediumType | metadata | 2 |  |
+| S20 | ExportableMoles | result | 2 |  |
+| S21 | ImportCapacityMoles | result | 2 |  |
 
 ### ic10.stack.pressure-reservation-allocator.v3
 
@@ -1953,17 +3041,105 @@ Consumers: 1.
 
 | Cells | Name | Role | Peers | Description |
 |---|---|---|---:|---|
-| S8 | ActiveGrantRate | result | 1 | GrantMolesPerTick |
+| S8 | ActiveGrantRate | result | 2 | GrantMolesPerTick |
 | S9 | PublicationCounter | generation | 0 | source of the publication generation |
 | S10 | ActiveSourceReservationRef | result | 0 |  |
 | S11 | ActiveSinkReservationRef | result | 0 |  |
 | S12 | ActiveMediumType | result | 0 |  |
 | S13 | ActiveRouteKind | result | 0 |  |
 | S14 | RemainingLeaseTicks | result | 0 |  |
-| S15 | Status | state | 1 | 1 active, 0 off, -1 fault |
+| S15 | Status | state | 2 | 1 active, 0 off, -1 fault |
 | S16 | ConsumedPlannerEpoch | epoch | 0 |  |
-| S17 | TransferRef | topology | 1 |  |
-| S18 | PublicationGeneration | generation | 1 | written last |
+| S17 | TransferRef | topology | 2 |  |
+| S18 | PublicationGeneration | generation | 2 | written last |
+
+### ic10.stack.print-candidate-executor.v2
+
+Providers: ic10/manufacturing/print_candidate_executor_v2_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | RequestToken | request_token | 1 |  |
+| S9 | Result | result | 1 |  |
+| S10 | CurrentToken | current_token | 1 |  |
+| S11 | TargetJobState | state | 1 |  |
+| S12 | ErrorStatus | error | 1 |  |
+| S13 | ProcessorSpec | request | 1 |  |
+| S14 | PrinterRef | request | 1 |  |
+| S15 | RecipeHash | request | 1 |  |
+| S16 | RequiredCapability | request | 1 |  |
+| S17 | InputCount | request | 1 |  |
+| S18 | OutputCount | request | 1 |  |
+| S19 | RequestedQuantity | request | 1 |  |
+| S20 | Phase | state | 0 |  |
+| S30 | ResultCode | result | 0 |  |
+| S33 | ResolvedPrinterRef | result | 0 |  |
+
+### ic10.stack.print-job-driver.v2
+
+Providers: ic10/manufacturing/print_job_driver_v2_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | RequestToken | request_token | 1 |  |
+| S9 | ResponseToken | response_token | 1 |  |
+| S10 | TargetJobState | result | 1 |  |
+| S11 | ErrorStatus | error | 1 |  |
+| S12 | JobId | request | 1 |  |
+| S13 | Identity | request | 1 | RecipeHash |
+| S14 | RequiredCapability | request | 1 |  |
+| S15 | InputCount | request | 1 |  |
+| S16 | OutputCount | request | 1 |  |
+| S17 | RequestedQuantity | request | 1 |  |
+| S20 | Phase | state | 0 |  |
+| S21 | SelectorToken | request_token | 0 |  |
+| S22 | ExecutorToken | request_token | 0 |  |
+| S23 | CandidateOrdinal | state | 0 |  |
+| S24 | Outcome | state | 0 |  |
+| S30 | TokenCounter | generation | 0 |  |
+
+### ic10.stack.print-material-resolver.v1
+
+Providers: ic10/manufacturing/print_material_resolver_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | PrinterRefEcho | response_token | 1 | the printer the published records answer |
+| S9 | InputCount | result | 2 |  |
+| S11 | PublicationGeneration | generation | 2 |  |
+| S12 | Status | state | 4 |  |
+| S13 | ResponseToken | response_token | 1 |  |
+| S14 | RecipeViewGeneration | generation | 0 |  |
+| S15 | RequiredCapability | result | 0 |  |
+| S16 | PrinterRef | request | 1 |  |
+| S17 | RequestedQuantity | request | 1 |  |
+| S18 | RequestToken | request_token | 1 |  |
+| S20..S83 | LinkRecords | table | 2 | four-cell [LinkRef, QuantityPerOutput, ResourceType, Unit] records |
+
+### ic10.stack.printer-capacity-client.v2
+
+Providers: ic10/printer-directory/printer_capacity_client_v2_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | ResolvedPrinterRef | result | 1 |  |
+| S9 | OwningBankRef | state | 0 |  |
+| S10 | OwningPin | state | 0 |  |
+| S11 | ReservationToken | epoch | 0 |  |
+| S12 | PrinterRef | request | 1 |  |
+| S13 | ProcessorSpec | request | 1 |  |
+| S14 | Command | request | 1 | 1 reserve, 2 release |
+| S15 | RequestToken | request_token | 1 |  |
+| S16 | ResponseToken | response_token | 1 |  |
+| S17 | Status | state | 1 |  |
 
 ### ic10.stack.process-condition.v1
 
@@ -1975,18 +3151,18 @@ Consumers: 1.
 |---|---|---|---:|---|
 | S8 | UnmetConditionMask | result | 0 | bit0 pressure, bit1 temperature |
 | S9 | ProcessIdentity | metadata | 0 |  |
-| S10 | Active | state | 1 | 1 demand is live |
-| S11 | PublicationGeneration | generation | 1 | written last |
-| S12 | Status | state | 1 | 1 valid, negative invalid |
+| S10 | Active | state | 3 | 1 demand is live |
+| S11 | PublicationGeneration | generation | 3 | written last |
+| S12 | Status | state | 3 | 1 valid, negative invalid |
 | S13 | Strategy | metadata | 0 |  |
 | S14 | PressureTargetHint | result | 0 |  |
 | S15 | TemperatureTargetHint | result | 0 |  |
 | S22 | TargetRef | topology | 1 |  |
-| S23 | FluidResourceType | metadata | 1 |  |
-| S24 | MinimumPressure | result | 1 | kPa |
+| S23 | FluidResourceType | metadata | 2 |  |
+| S24 | MinimumPressure | result | 3 | kPa |
 | S25 | MaximumPressure | result | 1 | kPa; non-positive means unbounded |
-| S26 | MinimumTemperature | result | 0 | K |
-| S27 | MaximumTemperature | result | 0 | K; non-positive means unbounded |
+| S26 | MinimumTemperature | result | 1 | K |
+| S27 | MaximumTemperature | result | 1 | K; non-positive means unbounded |
 
 ### ic10.stack.recipe-catalog-lookup.v3
 
@@ -2014,15 +3190,15 @@ Consumers: 2.
 
 | Cells | Name | Role | Peers | Description |
 |---|---|---|---:|---|
-| S10 | RecipeHash | request | 2 | written by the consumer |
-| S11 | FamilyHash | result | 1 |  |
+| S10 | RecipeHash | request | 3 | written by the consumer |
+| S11 | FamilyHash | result | 2 |  |
 | S12 | RequiredCapability | result | 2 |  |
-| S13 | InputCount | result | 2 |  |
-| S14 | StoreGeneration | generation | 1 |  |
-| S15 | Status | state | 2 | 1 ready, -2 invalid catalog, -3 missing |
-| S16..S47 | ReagentPairs | table | 1 | [ManufacturingReagentHash, Quantity] x 16 |
+| S13 | InputCount | result | 4 |  |
+| S14 | StoreGeneration | generation | 2 |  |
+| S15 | Status | state | 4 | 1 ready, -2 invalid catalog, -3 missing |
+| S16..S47 | ReagentPairs | table | 2 | [ManufacturingReagentHash, Quantity] x 16 |
 | S48 | TopologyGeneration | generation | 0 |  |
-| S49 | RecipeHashEcho | response_token | 2 | the request the result answers |
+| S49 | RecipeHashEcho | response_token | 3 | the request the result answers |
 
 ### ic10.stack.resource-endpoint.v1
 
@@ -2038,8 +3214,19 @@ Consumers: 1.
 | S11 | PublicationGeneration | generation | 1 | payload first, generation last |
 | S12 | Unit | metadata | 1 | 1 mole, 2 item quantity, 3 reagent, 4 watt, 5 joule |
 | S13 | PrecisionFlags | metadata | 1 | exact export 1, exact import 2, exact rate 4 |
-| S14 | ResourceProfileViewRef | topology | 0 |  |
-| S35 | AccessKind | metadata | 1 | ITEM storage access kind; POWER node kind |
+| S14 | ClassExtensionRef | topology | 0 | class-specific peer reference; ITEM endpoints publish their Resource Profile View ReferenceId here, POWER and FLUID providers leave it unused |
+| S20..S22 | ClassConfiguration | metadata | 1 | class-specific configuration, indexed from S20; LArRE endpoints: StorageStation, FirstSlot, SlotCount |
+| S24 | MoveOperation | request | 1 | LArRE raw movement extension: 2 MOVE, 3 RECOVER |
+| S25 | MoveSourceStation | request | 1 |  |
+| S26 | MoveSourceSlot | request | 1 |  |
+| S27 | MoveDestinationStation | request | 1 |  |
+| S28 | MoveDestinationSlot | request | 1 |  |
+| S30 | MoveExpectedQuantity | request | 1 |  |
+| S31 | MoveRequestToken | request_token | 1 |  |
+| S32 | MoveStatus | state | 1 |  |
+| S33 | MovedQuantity | result | 1 |  |
+| S34 | MoveResponseToken | response_token | 1 |  |
+| S35 | AccessKind | metadata | 2 | ITEM storage access kind; POWER node kind |
 | S36 | PolicyFlags | metadata | 0 |  |
 | S37 | ReserveFloor | metadata | 0 |  |
 | S38 | ActionHint0 | result | 1 | ITEM FirstSourceSlot; POWER DomainId |
@@ -2064,13 +3251,13 @@ Consumers: 1.
 | S9 | Status | state | 1 |  |
 | S10 | NativeLinkRef | topology | 0 |  |
 | S11 | NativeLinkGeneration | generation | 0 |  |
-| S12 | PublicationGeneration | generation | 1 | written last |
+| S12 | PublicationGeneration | generation | 2 | written last |
 | S13 | LinkFlags | metadata | 0 |  |
-| S14..S27 | ClassExtension | result | 1 | class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21 |
+| S14..S27 | ClassExtension | result | 2 | class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused |
 | S28 | SourceReservationRef | topology | 1 |  |
 | S29 | SinkReservationRef | topology | 1 |  |
 | S30 | ResourceClass | metadata | 0 |  |
-| S31 | ResourceType | metadata | 1 |  |
+| S31 | ResourceType | metadata | 2 |  |
 | S32 | NativeRouteClass | metadata | 0 |  |
 | S33 | MaxRate | result | 0 | resource units per tick |
 
@@ -2082,18 +3269,32 @@ Consumers: 3.
 
 | Cells | Name | Role | Peers | Description |
 |---|---|---|---:|---|
-| S8 | ResourceClass | metadata | 3 |  |
-| S9 | ResourceType | metadata | 3 |  |
+| S8 | ResourceClass | metadata | 12 |  |
+| S9 | ResourceType | metadata | 13 |  |
 | S10 | Unit | metadata | 2 |  |
-| S11 | ProfileKind | metadata | 3 | 1 PHASE_MEDIUM, 2 ITEM_STACK |
-| S12 | ProfileSchema | schema | 1 |  |
-| S13..S21 | ProfileValues | result | 3 | kind-specific: PHASE_MEDIUM coefficients and pressure/temperature bounds; ITEM_STACK maximum stack quantity and slot class |
+| S11 | ProfileKind | metadata | 6 | 1 PHASE_MEDIUM, 2 ITEM_STACK |
+| S12 | ProfileSchema | schema | 3 |  |
+| S13..S21 | ProfileValues | result | 9 | kind-specific: PHASE_MEDIUM coefficients and pressure/temperature bounds; ITEM_STACK maximum stack quantity and slot class |
 | S22 | CatalogInstanceId | metadata | 0 |  |
 | S23 | TopologyGeneration | generation | 0 |  |
 | S26 | RequestedResourceClass | request | 0 |  |
 | S27 | RequestedResourceType | request | 0 |  |
-| S28 | Status | state | 3 | 1 found, -2 catalog invalid, -3 missing |
-| S29 | PublicationGeneration | generation | 3 | positive only after a complete resolution |
+| S28 | Status | state | 4 | 1 found, -2 catalog invalid, -3 missing |
+| S29 | PublicationGeneration | generation | 13 | positive only after a complete resolution |
+
+### ic10.stack.resource-reservation-releaser.v1
+
+Providers: ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | OwnerEpoch | request | 1 |  |
+| S9 | RequestToken | request_token | 1 |  |
+| S10 | ResponseToken | response_token | 1 |  |
+| S11 | Status | state | 1 |  |
+| S12 | ReleasedCount | result | 0 |  |
 
 ### ic10.stack.resource-reservation.v1
 
@@ -2107,31 +3308,31 @@ Consumers: 3.
 | S9 | EndpointStatus | state | 1 |  |
 | S10 | Unit | metadata | 2 |  |
 | S11 | PrecisionFlags | metadata | 0 |  |
-| S12 | MirrorGeneration | generation | 3 | semantic mirror generation, written last |
+| S12 | MirrorGeneration | generation | 7 | semantic mirror generation, written last |
 | S13 | BuildEpoch | epoch | 0 | allocator-owned |
-| S14 | ReservedExport | result | 0 | allocator-owned |
-| S15 | ReservedImport | result | 0 | allocator-owned |
-| S16 | DirectionLock | state | 0 | 1 export, 2 import |
-| S17 | OwnerReferenceId | topology | 0 |  |
-| S18 | OwnerEpoch | epoch | 0 |  |
-| S19 | ReservedSemanticMirrorGeneration | generation | 0 | mirror generation captured by committed ownership |
+| S14 | ReservedExport | result | 1 | allocator-owned |
+| S15 | ReservedImport | result | 1 | allocator-owned |
+| S16 | DirectionLock | state | 1 | 1 export, 2 import |
+| S17 | OwnerReferenceId | topology | 1 |  |
+| S18 | OwnerEpoch | epoch | 1 |  |
+| S19 | ReservedSemanticMirrorGeneration | generation | 1 | mirror generation captured by committed ownership |
 | S20 | EndpointPublicationGeneration | generation | 0 |  |
 | S21 | MirroredAccessKind | metadata | 0 |  |
 | S22 | MirroredActionHint0 | result | 0 |  |
 | S23 | MirroredActionHint1 | result | 0 |  |
 | S24 | MirroredActionHint2 | result | 0 |  |
-| S25 | CommittedSourceSlot | result | 0 |  |
-| S26 | CommittedActionQuantity | result | 0 |  |
-| S27 | CommittedDestinationSlot | result | 0 |  |
+| S25 | CommittedSourceSlot | result | 1 |  |
+| S26 | CommittedActionQuantity | result | 1 |  |
+| S27 | CommittedDestinationSlot | result | 1 |  |
 | S28 | EndpointAccessKind | result | 0 | raw snapshot of Endpoint S35 taken on each refresh |
 | S29 | EndpointActionHint0 | result | 0 | raw snapshot of Endpoint S38 |
 | S30 | EndpointActionHint1 | result | 0 | raw snapshot of Endpoint S39 |
 | S31 | EndpointActionHint2 | result | 0 | raw snapshot of Endpoint S40 |
-| S32 | EndpointRef | topology | 2 |  |
-| S33 | ResourceClass | metadata | 3 |  |
-| S34 | ResourceType | metadata | 3 |  |
+| S32 | EndpointRef | topology | 3 |  |
+| S33 | ResourceClass | metadata | 5 |  |
+| S34 | ResourceType | metadata | 4 |  |
 | S35 | RoleBits | metadata | 0 |  |
-| S36 | ExportAvailable | result | 0 |  |
+| S36 | ExportAvailable | result | 1 |  |
 | S37 | ImportCapacity | result | 1 |  |
 
 ### ic10.stack.resource-transform-profile-view.v4
@@ -2170,13 +3371,13 @@ Consumers: 1.
 | S13 | StackerRef | topology | 1 |  |
 | S14 | BufferQuantity | result | 1 |  |
 | S15 | BufferResourceType | result | 1 |  |
-| S16 | RequestedResourceType | request | 0 |  |
-| S17 | RequestedQuantity | request | 0 |  |
-| S18 | RequestEpoch | request_token | 0 |  |
-| S19 | ReleaseEpoch | request | 0 | Executor writes it only after the sink counter snapshot |
+| S16 | RequestedResourceType | request | 1 |  |
+| S17 | RequestedQuantity | request | 1 |  |
+| S18 | RequestEpoch | request_token | 1 |  |
+| S19 | ReleaseEpoch | request | 1 | Executor writes it only after the sink counter snapshot |
 | S20..S23 | InternalState | state | 0 | persistent preparation state |
-| S24 | Status | state | 0 | 0 idle, 1 exact batch ready, 2 emitted, -1 fault |
-| S25 | CurrentEpoch | current_token | 0 | LIVE_CURRENT identity, written last |
+| S24 | Status | state | 1 | 0 idle, 1 exact batch ready, 2 emitted, -1 fault |
+| S25 | CurrentEpoch | current_token | 1 | LIVE_CURRENT identity, written last |
 
 ### ic10.stack.stock-target-demand-view.v1
 
@@ -2291,3 +3492,71 @@ Consumers: 2.
 | S39 | LaneBInputCount | result | 1 |  |
 | S40 | LaneBOutputCount | result | 1 |  |
 | S41 | LaneBOutputPerBatch | result | 1 |  |
+
+### ic10.stack.transform-candidate-executor.v2
+
+Providers: ic10/manufacturing/transform_candidate_executor_v2_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | RequestToken | request_token | 1 |  |
+| S9 | Result | result | 1 |  |
+| S10 | CurrentToken | current_token | 1 |  |
+| S11 | TargetJobState | state | 1 |  |
+| S12 | ErrorStatus | error | 1 |  |
+| S14 | JobId | request | 1 |  |
+| S20 | Phase | state | 0 |  |
+| S21 | RuntimeRef | request | 1 |  |
+| S22 | TransformType | request | 1 |  |
+| S23 | RequiredCapability | request | 1 |  |
+| S24 | InputCount | request | 1 |  |
+| S25 | OutputCount | request | 1 |  |
+| S26 | RequestedQuantity | request | 1 |  |
+
+### ic10.stack.transform-candidate-readiness.v1
+
+Providers: ic10/manufacturing/transform_candidate_readiness_v1_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | RequestToken | request_token | 1 |  |
+| S9 | Status | state | 1 | 1 ready, -2 processor, -3 resource, -4 capacity, -1 invalid |
+| S10 | ResponseToken | response_token | 1 |  |
+| S11 | RuntimeRef | request | 1 |  |
+| S12 | TransformType | request | 1 |  |
+| S13 | RequiredCapability | request | 1 |  |
+| S14 | InputCount | request | 1 |  |
+| S15 | OutputCount | request | 1 |  |
+| S16 | BatchCount | request | 1 |  |
+| S20 | Phase | state | 0 |  |
+| S30 | AdmissionGeneration | generation | 0 |  |
+| S31 | ResolverGeneration | generation | 0 |  |
+
+### ic10.stack.transform-job-driver.v2
+
+Providers: ic10/manufacturing/transform_job_driver_v2_0.ic10.
+
+Consumers: 0.
+
+| Cells | Name | Role | Peers | Description |
+|---|---|---|---:|---|
+| S8 | RequestToken | request_token | 1 |  |
+| S9 | ResponseToken | response_token | 1 |  |
+| S10 | TargetJobState | result | 1 |  |
+| S11 | ErrorStatus | error | 1 |  |
+| S12 | JobId | request | 1 |  |
+| S13 | Identity | request | 1 | TransformType |
+| S14 | RequiredCapability | request | 1 |  |
+| S15 | InputCount | request | 1 |  |
+| S16 | OutputCount | request | 1 |  |
+| S17 | RequestedQuantity | request | 1 |  |
+| S20 | Phase | state | 0 |  |
+| S21 | SelectorToken | request_token | 0 |  |
+| S22 | ExecutorToken | request_token | 0 |  |
+| S23 | CandidateOrdinal | state | 0 |  |
+| S24 | Outcome | state | 0 |  |
+| S30 | TokenCounter | generation | 0 |  |

@@ -11,7 +11,90 @@
     0
   ],
   "canonical_refs": [],
-  "layout": [],
+  "layout": [
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "ChildJobId",
+      "role": "request"
+    },
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "ResourceType",
+      "role": "request",
+      "description": "the plan's ResourceType the child must still promise"
+    },
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "RequestToken",
+      "role": "request_token"
+    },
+    {
+      "cells": "S16",
+      "start": 16,
+      "end": 16,
+      "name": "ResponseToken",
+      "role": "response_token"
+    },
+    {
+      "cells": "S17",
+      "start": 17,
+      "end": 17,
+      "name": "Status",
+      "role": "state",
+      "description": "1 valid, -2 missing, -3 stale, -1 invalid"
+    },
+    {
+      "cells": "S18",
+      "start": 18,
+      "end": 18,
+      "name": "ChildSlot",
+      "role": "result"
+    },
+    {
+      "cells": "S19",
+      "start": 19,
+      "end": 19,
+      "name": "ChildState",
+      "role": "result",
+      "description": "copied from Monitor S22; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+    },
+    {
+      "cells": "S20",
+      "start": 20,
+      "end": 20,
+      "name": "ChildJobGeneration",
+      "role": "result",
+      "description": "copied from Monitor S23; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation. The Claim View reads this cell as the child's ResourceType"
+    },
+    {
+      "cells": "S21",
+      "start": 21,
+      "end": 21,
+      "name": "ChildJobType",
+      "role": "result"
+    },
+    {
+      "cells": "S22",
+      "start": 22,
+      "end": 22,
+      "name": "ChildIdentity",
+      "role": "result"
+    },
+    {
+      "cells": "S23",
+      "start": 23,
+      "end": 23,
+      "name": "ChildOutputResourceType",
+      "role": "result",
+      "description": "the Requirement View's normalized output for the child"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/dependency-planning/dependency_child_validity_v1_0.ic10",
@@ -51,103 +134,119 @@
         },
         {
           "address": 13,
-          "name": "S13",
+          "name": "ChildJobId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResourceType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "the plan's ResourceType the child must still promise"
         },
         {
           "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResponseToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         },
         {
           "address": 17,
-          "name": "S17",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 valid, -2 missing, -3 stale, -1 invalid"
         },
         {
           "address": 18,
-          "name": "S18",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ChildSlot",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 19,
-          "name": "S19",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ChildState",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "copied from Monitor S22; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
         },
         {
           "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ChildJobGeneration",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "copied from Monitor S23; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation. The Claim View reads this cell as the child's ResourceType"
         },
         {
           "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ChildJobType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 22,
-          "name": "S22",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ChildIdentity",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 23,
-          "name": "S23",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ChildOutputResourceType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "the Requirement View's normalized output for the child"
         }
       ],
       "behavior": {

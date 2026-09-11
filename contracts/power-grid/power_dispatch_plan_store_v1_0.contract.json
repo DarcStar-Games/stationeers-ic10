@@ -170,23 +170,25 @@
       },
       {
         "address": 14,
-        "name": "RequestedPlanGeneration",
-        "value_type": "integer",
+        "name": "ShedWatts",
+        "value_type": "number",
         "semantic_source": "protocol-layout",
         "access": [
           "self-read"
         ],
-        "role": "request"
+        "role": "request",
+        "description": "total shed watts the sweep reports for the plan being committed"
       },
       {
         "address": 15,
-        "name": "RequestedPlanStatus",
-        "value_type": "enum",
+        "name": "CriticalShortage",
+        "value_type": "number",
         "semantic_source": "protocol-layout",
         "access": [
           "self-read"
         ],
-        "role": "request"
+        "role": "request",
+        "description": "1 when a critical load could not be served"
       },
       {
         "address": 24,
@@ -233,14 +235,15 @@
       },
       {
         "address": 28,
-        "name": "CommitCount",
+        "name": "PlanGeneration",
         "value_type": "integer",
         "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
         ],
-        "role": "generation"
+        "role": "generation",
+        "description": "advances on every COMMIT; readers fence on it with the even sequence at S27"
       },
       {
         "address": 29,
@@ -255,23 +258,25 @@
       },
       {
         "address": 30,
-        "name": "PlanGeneration",
-        "value_type": "integer",
+        "name": "CommittedShedWatts",
+        "value_type": "number",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "role": "generation"
+        "role": "result",
+        "description": "S14 as of the last COMMIT"
       },
       {
         "address": 31,
-        "name": "PlanStatus",
-        "value_type": "enum",
+        "name": "CommittedCriticalShortage",
+        "value_type": "number",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "role": "state"
+        "role": "state",
+        "description": "S15 as of the last COMMIT"
       }
     ],
     "headers": [

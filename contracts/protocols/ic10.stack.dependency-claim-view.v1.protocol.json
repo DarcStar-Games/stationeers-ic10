@@ -83,21 +83,24 @@
       "start": 24,
       "end": 24,
       "name": "ChildState",
-      "role": "result"
+      "role": "result",
+      "description": "copied from Child Validity S19; see issue #193"
     },
     {
       "cells": "S25",
       "start": 25,
       "end": 25,
       "name": "ChildResourceType",
-      "role": "result"
+      "role": "result",
+      "description": "copied from Child Validity S20, which Child Validity fills with the Monitor's S23; see issue #193"
     },
     {
       "cells": "S26",
       "start": 26,
       "end": 26,
-      "name": "ChildJobGeneration",
-      "role": "result"
+      "name": "ChildSlot",
+      "role": "result",
+      "description": "copied from Child Validity S18"
     },
     {
       "cells": "S27",
@@ -246,7 +249,8 @@
           "access": [
             "self-write"
           ],
-          "role": "result"
+          "role": "result",
+          "description": "copied from Child Validity S19; see issue #193"
         },
         {
           "address": 25,
@@ -256,17 +260,19 @@
           "access": [
             "self-write"
           ],
-          "role": "result"
+          "role": "result",
+          "description": "copied from Child Validity S20, which Child Validity fills with the Monitor's S23; see issue #193"
         },
         {
           "address": 26,
-          "name": "ChildJobGeneration",
+          "name": "ChildSlot",
           "value_type": "integer",
           "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "role": "result"
+          "role": "result",
+          "description": "copied from Child Validity S18"
         },
         {
           "address": 27,

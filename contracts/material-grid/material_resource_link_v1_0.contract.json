@@ -430,157 +430,157 @@
       },
       {
         "address": 14,
-        "name": "ClassExtension",
+        "name": "ClassExtension[0]",
         "value_type": "hash",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "role": "result",
-        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
+        "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
       },
       {
         "address": 15,
-        "name": "ClassExtension",
+        "name": "ClassExtension[1]",
         "value_type": "hash",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "role": "result",
-        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
+        "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
       },
       {
         "address": 16,
-        "name": "ClassExtension",
+        "name": "ClassExtension[2]",
         "value_type": "hash",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "role": "result",
-        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
+        "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
       },
       {
         "address": 17,
-        "name": "ClassExtension",
+        "name": "ClassExtension[3]",
         "value_type": "hash",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "role": "result",
-        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
+        "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
       },
       {
         "address": 18,
-        "name": "ClassExtension",
+        "name": "ClassExtension[4]",
         "value_type": "hash",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "role": "result",
-        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
+        "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
       },
       {
         "address": 19,
-        "name": "ClassExtension",
+        "name": "ClassExtension[5]",
         "value_type": "hash",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "role": "result",
-        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
+        "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
       },
       {
         "address": 20,
-        "name": "ClassExtension",
+        "name": "ClassExtension[6]",
         "value_type": "hash",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "role": "result",
-        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
+        "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
       },
       {
         "address": 21,
-        "name": "ClassExtension",
+        "name": "ClassExtension[7]",
         "value_type": "hash",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "role": "result",
-        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
+        "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
       },
       {
         "address": 22,
-        "name": "ClassExtension",
+        "name": "ClassExtension[8]",
         "value_type": "hash",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "role": "result",
-        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
+        "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
       },
       {
         "address": 23,
-        "name": "ClassExtension",
+        "name": "ClassExtension[9]",
         "value_type": "hash",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "role": "result",
-        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
+        "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
       },
       {
         "address": 24,
-        "name": "ClassExtension",
+        "name": "ClassExtension[10]",
         "value_type": "hash",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "role": "result",
-        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
+        "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
       },
       {
         "address": 25,
-        "name": "ClassExtension",
+        "name": "ClassExtension[11]",
         "value_type": "hash",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "role": "result",
-        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
+        "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
       },
       {
         "address": 26,
-        "name": "ClassExtension",
+        "name": "ClassExtension[12]",
         "value_type": "hash",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "role": "result",
-        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
+        "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
       },
       {
         "address": 27,
-        "name": "ClassExtension",
+        "name": "ClassExtension[13]",
         "value_type": "hash",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "role": "result",
-        "description": "class-specific; Material Link: GrantGuardRef, ExecutorRef, FeederRef, buffer quantity, buffer ResourceType, VendingRef, StackerRef, SorterRef, sink provider ref, completed epoch, execution status, achieved rate, elapsed ticks, semantic ResourceType; POWER links carry source overhead at S14 and the commissioned ceiling and cost at S20..S21"
+        "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
       },
       {
         "address": 28,

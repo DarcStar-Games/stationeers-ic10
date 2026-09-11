@@ -11,7 +11,113 @@
     0
   ],
   "canonical_refs": [],
-  "layout": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "RequestToken",
+      "role": "request_token"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "Result",
+      "role": "result"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "CurrentToken",
+      "role": "current_token"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "TargetJobState",
+      "role": "state"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "ErrorStatus",
+      "role": "error"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "ProcessorSpec",
+      "role": "request"
+    },
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "PrinterRef",
+      "role": "request"
+    },
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "RecipeHash",
+      "role": "request"
+    },
+    {
+      "cells": "S16",
+      "start": 16,
+      "end": 16,
+      "name": "RequiredCapability",
+      "role": "request"
+    },
+    {
+      "cells": "S17",
+      "start": 17,
+      "end": 17,
+      "name": "InputCount",
+      "role": "request"
+    },
+    {
+      "cells": "S18",
+      "start": 18,
+      "end": 18,
+      "name": "OutputCount",
+      "role": "request"
+    },
+    {
+      "cells": "S19",
+      "start": 19,
+      "end": 19,
+      "name": "RequestedQuantity",
+      "role": "request"
+    },
+    {
+      "cells": "S20",
+      "start": 20,
+      "end": 20,
+      "name": "Phase",
+      "role": "state"
+    },
+    {
+      "cells": "S30",
+      "start": 30,
+      "end": 30,
+      "name": "ResultCode",
+      "role": "result"
+    },
+    {
+      "cells": "S33",
+      "start": 33,
+      "end": 33,
+      "name": "ResolvedPrinterRef",
+      "role": "result"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/manufacturing/print_candidate_executor_v2_0.ic10",
@@ -56,115 +162,127 @@
         },
         {
           "address": 8,
-          "name": "S8",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 9,
-          "name": "S9",
+          "name": "Result",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "CurrentToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "current_token"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "TargetJobState",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ErrorStatus",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "error"
         },
         {
           "address": 13,
-          "name": "S13",
+          "name": "ProcessorSpec",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 14,
-          "name": "S14",
+          "name": "PrinterRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RecipeHash",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 19,
-          "name": "S19",
+          "name": "RequestedQuantity",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 20,
-          "name": "S20",
+          "name": "Phase",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "state"
         },
         {
           "address": 30,
-          "name": "S30",
+          "name": "ResultCode",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 33,
-          "name": "S33",
+          "name": "ResolvedPrinterRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "result"
         }
       ],
       "behavior": {
