@@ -35,13 +35,6 @@
       "role": "result"
     },
     {
-      "cells": "S11",
-      "start": 11,
-      "end": 11,
-      "name": "LinkClass",
-      "role": "result"
-    },
-    {
       "cells": "S12",
       "start": 12,
       "end": 12,
@@ -155,13 +148,12 @@
         },
         {
           "address": 11,
-          "name": "LinkClass",
-          "value_type": "enum",
-          "semantic_source": "protocol-layout",
+          "name": "S11",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 12,

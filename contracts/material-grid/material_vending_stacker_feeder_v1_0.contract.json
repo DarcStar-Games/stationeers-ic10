@@ -259,23 +259,21 @@
       },
       {
         "address": 8,
-        "name": "ReadyEpoch",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S8",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "epoch"
+        ]
       },
       {
         "address": 9,
-        "name": "EmittedEpoch",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "epoch"
+        ]
       },
       {
         "address": 10,
@@ -382,51 +380,43 @@
       },
       {
         "address": 20,
-        "name": "InternalState[0]",
-        "value_type": "enum",
-        "semantic_source": "protocol-layout",
+        "name": "S20",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "state",
-        "description": "persistent preparation state"
+        ]
       },
       {
         "address": 21,
-        "name": "InternalState[1]",
-        "value_type": "enum",
-        "semantic_source": "protocol-layout",
+        "name": "S21",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "state",
-        "description": "persistent preparation state"
+        ]
       },
       {
         "address": 22,
-        "name": "InternalState[2]",
-        "value_type": "enum",
-        "semantic_source": "protocol-layout",
+        "name": "S22",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "state",
-        "description": "persistent preparation state"
+        ]
       },
       {
         "address": 23,
-        "name": "InternalState[3]",
-        "value_type": "enum",
-        "semantic_source": "protocol-layout",
+        "name": "S23",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "state",
-        "description": "persistent preparation state"
+        ]
       },
       {
         "address": 24,

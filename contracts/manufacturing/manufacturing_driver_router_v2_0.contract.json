@@ -255,26 +255,23 @@
       },
       {
         "address": 13,
-        "name": "Lane",
+        "name": "S13",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "state",
-        "description": "1 transform, 2 print"
+        ]
       },
       {
         "address": 14,
-        "name": "CurrentToken",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S14",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "current_token"
+        ]
       }
     ],
     "headers": [

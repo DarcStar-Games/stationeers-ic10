@@ -284,66 +284,57 @@
       },
       {
         "address": 32,
-        "name": "QuotedTotal",
+        "name": "S32",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 33,
-        "name": "NewQuoteFingerprintA",
+        "name": "S33",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 34,
-        "name": "NewQuoteFingerprintB",
+        "name": "S34",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 35,
-        "name": "ChildSlot",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S35",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result",
-        "description": "copied from Child Validity S18"
+        ]
       },
       {
         "address": 36,
-        "name": "ChildJobGeneration",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S36",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result",
-        "description": "copied from Child Validity S20"
+        ]
       },
       {
         "address": 37,
-        "name": "ChildState",
-        "value_type": "enum",
-        "semantic_source": "protocol-layout",
+        "name": "S37",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result",
-        "description": "copied from Child Validity S19"
+        ]
       }
     ],
     "headers": [

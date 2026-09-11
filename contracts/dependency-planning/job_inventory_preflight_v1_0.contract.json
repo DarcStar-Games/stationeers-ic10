@@ -261,14 +261,12 @@
       },
       {
         "address": 21,
-        "name": "InputOrdinal",
+        "name": "S21",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result",
-        "description": "the input the deficit was found on"
+        ]
       },
       {
         "address": 22,

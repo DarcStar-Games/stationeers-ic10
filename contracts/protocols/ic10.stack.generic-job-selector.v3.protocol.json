@@ -76,13 +76,6 @@
       "role": "result"
     },
     {
-      "cells": "S17",
-      "start": 17,
-      "end": 17,
-      "name": "QueueGeneration",
-      "role": "result"
-    },
-    {
       "cells": "S18",
       "start": 18,
       "end": 18,
@@ -264,13 +257,12 @@
         },
         {
           "address": 17,
-          "name": "QueueGeneration",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S17",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 18,

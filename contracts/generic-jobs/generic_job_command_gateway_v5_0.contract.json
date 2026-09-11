@@ -279,38 +279,33 @@
       },
       {
         "address": 24,
-        "name": "PendingLaneClass",
-        "value_type": "enum",
-        "semantic_source": "protocol-layout",
+        "name": "S24",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "state",
-        "description": "0 idle; the lane class of the command in flight"
+        ]
       },
       {
         "address": 25,
-        "name": "PendingToken",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S25",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "current_token",
-        "description": "client token of the command in flight"
+        ]
       },
       {
         "address": 26,
-        "name": "PendingLaneBase",
+        "name": "S26",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "state"
+        ]
       },
       {
         "address": 53,

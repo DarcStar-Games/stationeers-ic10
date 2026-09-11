@@ -304,15 +304,14 @@
       },
       {
         "address": 98,
-        "name": "ChannelMask",
+        "name": "Ch1Process",
         "value_type": "enum",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "source",
         "access": [
           "self-write"
         ],
         "const": 62,
-        "description": "ch1 process,2 state,3 state ticks,4 cycles,5 status",
-        "role": "metadata"
+        "description": "ch1 process,2 state,3 state ticks,4 cycles,5 status"
       },
       {
         "address": 99,
@@ -328,69 +327,57 @@
       },
       {
         "address": 100,
-        "name": "TelemetryChannels[0]",
+        "name": "S100",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "telemetry",
-        "description": "channel n at S99+n; meanings are per controller family"
+        ]
       },
       {
         "address": 101,
-        "name": "TelemetryChannels[1]",
+        "name": "S101",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "telemetry",
-        "description": "channel n at S99+n; meanings are per controller family"
+        ]
       },
       {
         "address": 102,
-        "name": "TelemetryChannels[2]",
+        "name": "S102",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "telemetry",
-        "description": "channel n at S99+n; meanings are per controller family"
+        ]
       },
       {
         "address": 103,
-        "name": "TelemetryChannels[3]",
+        "name": "S103",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "telemetry",
-        "description": "channel n at S99+n; meanings are per controller family"
+        ]
       },
       {
         "address": 104,
-        "name": "TelemetryChannels[4]",
+        "name": "S104",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "telemetry",
-        "description": "channel n at S99+n; meanings are per controller family"
+        ]
       },
       {
         "address": 116,
-        "name": "ConfigHostRef",
-        "value_type": "reference-id",
-        "semantic_source": "protocol-layout",
+        "name": "S116",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "topology",
-        "description": "paired Generic Config Host ReferenceId"
+        ]
       }
     ],
     "headers": [

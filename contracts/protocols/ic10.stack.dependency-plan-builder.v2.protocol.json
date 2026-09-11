@@ -125,14 +125,6 @@
       "end": 34,
       "name": "FutureQuantity",
       "role": "result"
-    },
-    {
-      "cells": "S35",
-      "start": 35,
-      "end": 35,
-      "name": "CreatedFlag",
-      "role": "result",
-      "description": "1 when a new child was created, 0 when an active claim was reused"
     }
   ],
   "provider_interfaces": [
@@ -312,14 +304,12 @@
         },
         {
           "address": 35,
-          "name": "CreatedFlag",
+          "name": "S35",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result",
-          "description": "1 when a new child was created, 0 when an active claim was reused"
+          ]
         }
       ],
       "behavior": {

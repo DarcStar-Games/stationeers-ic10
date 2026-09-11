@@ -56,13 +56,6 @@
       "role": "result"
     },
     {
-      "cells": "S20",
-      "start": 20,
-      "end": 20,
-      "name": "SearchActive",
-      "role": "state"
-    },
-    {
       "cells": "S32",
       "start": 32,
       "end": 32,
@@ -201,14 +194,13 @@
         },
         {
           "address": 20,
-          "name": "SearchActive",
+          "name": "S20",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state"
+          ]
         },
         {
           "address": 32,

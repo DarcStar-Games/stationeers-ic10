@@ -20,14 +20,6 @@
       "role": "request"
     },
     {
-      "cells": "S13",
-      "start": 13,
-      "end": 13,
-      "name": "EpochCounter",
-      "role": "epoch",
-      "description": "next epoch"
-    },
-    {
       "cells": "S14",
       "start": 14,
       "end": 14,
@@ -36,26 +28,11 @@
       "description": "written last after every input stages"
     },
     {
-      "cells": "S15",
-      "start": 15,
-      "end": 15,
-      "name": "CompletedEpoch",
-      "role": "epoch"
-    },
-    {
       "cells": "S16",
       "start": 16,
       "end": 16,
       "name": "ConsumedRequestGeneration",
       "role": "current_token"
-    },
-    {
-      "cells": "S17..S19",
-      "start": 17,
-      "end": 19,
-      "name": "StagerCoordination",
-      "role": "request",
-      "description": "commands and results exchanged with the Stager"
     },
     {
       "cells": "S20",
@@ -85,14 +62,6 @@
       "name": "RuntimeCompletionEpoch",
       "role": "epoch",
       "description": "the Runtime writes the epoch it completed"
-    },
-    {
-      "cells": "S31",
-      "start": 31,
-      "end": 31,
-      "name": "ReflashIdentity",
-      "role": "metadata",
-      "description": "same-image reflash marker holding the service identity"
     }
   ],
   "provider_interfaces": [
@@ -183,15 +152,13 @@
         },
         {
           "address": 13,
-          "name": "EpochCounter",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S13",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "epoch",
-          "description": "next epoch"
+          ]
         },
         {
           "address": 14,
@@ -207,13 +174,12 @@
         },
         {
           "address": 15,
-          "name": "CompletedEpoch",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S15",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "epoch"
+          ]
         },
         {
           "address": 16,
@@ -228,39 +194,33 @@
         },
         {
           "address": 17,
-          "name": "StagerCoordination[0]",
+          "name": "S17",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "request",
-          "description": "commands and results exchanged with the Stager"
+          ]
         },
         {
           "address": 18,
-          "name": "StagerCoordination[1]",
+          "name": "S18",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "request",
-          "description": "commands and results exchanged with the Stager"
+          ]
         },
         {
           "address": 19,
-          "name": "StagerCoordination[2]",
+          "name": "S19",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "request",
-          "description": "commands and results exchanged with the Stager"
+          ]
         },
         {
           "address": 20,
@@ -306,16 +266,14 @@
         },
         {
           "address": 31,
-          "name": "ReflashIdentity",
-          "value_type": "hash",
-          "semantic_source": "protocol-layout",
+          "name": "S31",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
           ],
-          "const": 924888977,
-          "role": "metadata",
-          "description": "same-image reflash marker holding the service identity"
+          "const": 924888977
         }
       ],
       "behavior": {

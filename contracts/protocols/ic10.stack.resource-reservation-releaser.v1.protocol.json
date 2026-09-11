@@ -39,13 +39,6 @@
       "end": 11,
       "name": "Status",
       "role": "state"
-    },
-    {
-      "cells": "S12",
-      "start": 12,
-      "end": 12,
-      "name": "ReleasedCount",
-      "role": "result"
     }
   ],
   "provider_interfaces": [
@@ -128,13 +121,12 @@
         },
         {
           "address": 12,
-          "name": "ReleasedCount",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S12",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         }
       ],
       "behavior": {

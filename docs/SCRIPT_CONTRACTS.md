@@ -130,9 +130,14 @@ the layout onto the provider's `own_stack.fields` as `semantic_source:
 "protocol-layout"` with a `role`; a reviewed per-program `stack_fields` override
 keeps its own name and gains the role. `validation/validators/validate_stack_field_map.py`
 holds every entry to cells its provider touches or declares, every peer-touched
-payload cell to an entry, every layout block in `docs/ABI_REFERENCE.md` that names its
-contract on an `S0` line to the map, and the generated `docs/STACK_FIELD_MAP.md`,
-which lists every role's cells across services, to the tree. A base-0 protocol is identified by its
+payload cell to an entry (peers being the contract's consumer edges plus the peers the
+wiring map declares for a port without one), every layout block in
+`docs/ABI_REFERENCE.md` that names its contract on an `S0` line to the map, and the
+generated `docs/STACK_FIELD_MAP.md`, which lists every role's cells across services, to
+the tree. The map covers the peer-visible surface only: an entry must name a cell a peer
+touches (a contract consumer edge, a wiring-declared port, or an attributed network
+write), a documented block cites, or a reviewed external range declares, because a cell
+only its provider reads and writes has nothing outside the program to hold its name to. A base-0 protocol is identified by its
 contract name, which already carries the ABI, so its document is named
 `contracts/protocols/ic10.stack.*.protocol.json`; the Generic Telemetry block at
 `S96` keeps the numeric `ic10.stack.<magic>.abi<n>` form because its consumers

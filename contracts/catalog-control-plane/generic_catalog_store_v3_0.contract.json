@@ -193,14 +193,13 @@
       },
       {
         "address": 10,
-        "name": "ItemDirectoryBase",
+        "name": "S10",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
         ],
-        "const": 32,
-        "role": "metadata"
+        "const": 32
       },
       {
         "address": 11,
@@ -391,14 +390,13 @@
       },
       {
         "address": 28,
-        "name": "FaultDetail",
+        "name": "S28",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
         ],
-        "const": -2,
-        "role": "error"
+        "const": -2
       },
       {
         "address": 29,

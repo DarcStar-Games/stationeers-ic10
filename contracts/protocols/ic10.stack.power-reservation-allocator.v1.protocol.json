@@ -35,35 +35,6 @@
       "name": "Status",
       "role": "state",
       "description": "1 authority published, -1 fault"
-    },
-    {
-      "cells": "S20",
-      "start": 20,
-      "end": 20,
-      "name": "Phase",
-      "role": "state"
-    },
-    {
-      "cells": "S21",
-      "start": 21,
-      "end": 21,
-      "name": "PendingPlanGeneration",
-      "role": "state"
-    },
-    {
-      "cells": "S22",
-      "start": 22,
-      "end": 22,
-      "name": "PendingEpoch",
-      "role": "epoch"
-    },
-    {
-      "cells": "S30",
-      "start": 30,
-      "end": 30,
-      "name": "RequestCounter",
-      "role": "generation",
-      "description": "source of the tokens sent to the Validator, Committer, and Releaser"
     }
   ],
   "provider_interfaces": [
@@ -140,48 +111,43 @@
         },
         {
           "address": 20,
-          "name": "Phase",
+          "name": "S20",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state"
+          ]
         },
         {
           "address": 21,
-          "name": "PendingPlanGeneration",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S21",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state"
+          ]
         },
         {
           "address": 22,
-          "name": "PendingEpoch",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S22",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "epoch"
+          ]
         },
         {
           "address": 30,
-          "name": "RequestCounter",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S30",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "generation",
-          "description": "source of the tokens sent to the Validator, Committer, and Releaser"
+          ]
         }
       ],
       "behavior": {

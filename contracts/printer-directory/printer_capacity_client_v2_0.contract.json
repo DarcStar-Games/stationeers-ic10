@@ -146,36 +146,33 @@
       },
       {
         "address": 9,
-        "name": "OwningBankRef",
+        "name": "S9",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "state"
+        ]
       },
       {
         "address": 10,
-        "name": "OwningPin",
+        "name": "S10",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "state"
+        ]
       },
       {
         "address": 11,
-        "name": "ReservationToken",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S11",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "epoch"
+        ]
       },
       {
         "address": 12,

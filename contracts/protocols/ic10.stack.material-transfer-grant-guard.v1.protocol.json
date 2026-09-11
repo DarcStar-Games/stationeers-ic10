@@ -13,13 +13,6 @@
   "canonical_refs": [],
   "layout": [
     {
-      "cells": "S8",
-      "start": 8,
-      "end": 8,
-      "name": "LastConsumedEpoch",
-      "role": "epoch"
-    },
-    {
       "cells": "S9",
       "start": 9,
       "end": 9,
@@ -132,14 +125,6 @@
       "end": 26,
       "name": "StagedExecutorRef",
       "role": "request"
-    },
-    {
-      "cells": "S31",
-      "start": 31,
-      "end": 31,
-      "name": "ReflashIdentity",
-      "role": "metadata",
-      "description": "same-image reflash marker holding the service identity"
     }
   ],
   "provider_interfaces": [
@@ -181,14 +166,13 @@
         },
         {
           "address": 8,
-          "name": "LastConsumedEpoch",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S8",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "epoch"
+          ]
         },
         {
           "address": 9,
@@ -355,16 +339,14 @@
         },
         {
           "address": 31,
-          "name": "ReflashIdentity",
-          "value_type": "hash",
-          "semantic_source": "protocol-layout",
+          "name": "S31",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
           ],
-          "const": 754423306,
-          "role": "metadata",
-          "description": "same-image reflash marker holding the service identity"
+          "const": 754423306
         }
       ],
       "behavior": {

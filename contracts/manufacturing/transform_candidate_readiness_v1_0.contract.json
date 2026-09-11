@@ -286,36 +286,33 @@
       },
       {
         "address": 20,
-        "name": "Phase",
+        "name": "S20",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "state"
+        ]
       },
       {
         "address": 30,
-        "name": "AdmissionGeneration",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S30",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "generation"
+        ]
       },
       {
         "address": 31,
-        "name": "ResolverGeneration",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S31",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "generation"
+        ]
       }
     ],
     "headers": [

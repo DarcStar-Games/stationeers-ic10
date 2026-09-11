@@ -203,43 +203,39 @@
       },
       {
         "address": 22,
-        "name": "CatalogInstanceId",
+        "name": "S22",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "metadata"
+        ]
       },
       {
         "address": 23,
-        "name": "TopologyGeneration",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S23",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "generation"
+        ]
       },
       {
         "address": 26,
-        "name": "RequestedResourceClass",
-        "value_type": "enum",
-        "semantic_source": "protocol-layout",
+        "name": "S26",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read"
-        ],
-        "role": "request"
+        ]
       },
       {
         "address": 27,
-        "name": "RequestedResourceType",
-        "value_type": "hash",
-        "semantic_source": "protocol-layout",
+        "name": "S27",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read"
-        ],
-        "role": "request"
+        ]
       },
       {
         "address": 28,

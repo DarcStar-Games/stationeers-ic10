@@ -261,24 +261,21 @@
       },
       {
         "address": 23,
-        "name": "OtherParentCount",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S23",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 24,
-        "name": "ChildState",
-        "value_type": "enum",
-        "semantic_source": "protocol-layout",
+        "name": "S24",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result",
-        "description": "copied from Child Validity S19; see issue #193"
+        ]
       },
       {
         "address": 25,
@@ -293,14 +290,12 @@
       },
       {
         "address": 26,
-        "name": "ChildSlot",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S26",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result",
-        "description": "copied from Child Validity S18"
+        ]
       },
       {
         "address": 27,

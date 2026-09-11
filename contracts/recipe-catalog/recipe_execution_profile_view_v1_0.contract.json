@@ -243,13 +243,12 @@
       },
       {
         "address": 48,
-        "name": "TopologyGeneration",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S48",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "generation"
+        ]
       },
       {
         "address": 49,

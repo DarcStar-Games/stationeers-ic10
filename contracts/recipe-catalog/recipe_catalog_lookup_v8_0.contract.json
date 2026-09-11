@@ -179,14 +179,12 @@
       },
       {
         "address": 9,
-        "name": "EligibleRecipeCount",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result",
-        "description": "recipes in the family under the capability ceiling"
+        ]
       },
       {
         "address": 10,

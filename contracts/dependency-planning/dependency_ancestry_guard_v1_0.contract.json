@@ -252,15 +252,13 @@
       },
       {
         "address": 18,
-        "name": "PostingCounter",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S18",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "state",
-        "description": "postings under the current request, kept across reflash (#182)"
+        ]
       }
     ],
     "headers": [

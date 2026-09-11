@@ -293,59 +293,53 @@
       },
       {
         "address": 20,
-        "name": "Phase",
+        "name": "S20",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "state"
+        ]
       },
       {
         "address": 22,
-        "name": "MaterialRequestToken",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S22",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "request_token",
-        "description": "token issued to the Material Allocator"
+        ]
       },
       {
         "address": 23,
-        "name": "ExportCountBaseline",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S23",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 24,
-        "name": "CommittedEpoch",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S24",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "epoch"
+        ]
       },
       {
         "address": 25,
-        "name": "ExportTicks",
+        "name": "S25",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "state"
+        ]
       }
     ],
     "headers": [

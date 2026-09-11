@@ -90,13 +90,6 @@
       "end": 74,
       "name": "PublicationGeneration",
       "role": "generation"
-    },
-    {
-      "cells": "S75",
-      "start": 75,
-      "end": 75,
-      "name": "ConditionFlags",
-      "role": "result"
     }
   ],
   "provider_interfaces": [
@@ -220,13 +213,12 @@
         },
         {
           "address": 75,
-          "name": "ConditionFlags",
+          "name": "S75",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         }
       ],
       "behavior": {

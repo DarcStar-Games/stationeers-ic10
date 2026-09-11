@@ -54,14 +54,6 @@
       "end": 21,
       "name": "OnHandQuantity",
       "role": "result"
-    },
-    {
-      "cells": "S22",
-      "start": 22,
-      "end": 22,
-      "name": "SelectorRequestCounter",
-      "role": "state",
-      "description": "source of the selector request tokens"
     }
   ],
   "provider_interfaces": [
@@ -165,15 +157,13 @@
         },
         {
           "address": 22,
-          "name": "SelectorRequestCounter",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S22",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state",
-          "description": "source of the selector request tokens"
+          ]
         }
       ],
       "behavior": {

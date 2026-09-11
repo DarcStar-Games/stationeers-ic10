@@ -103,20 +103,6 @@
       "description": "mirror generation captured by committed ownership"
     },
     {
-      "cells": "S20",
-      "start": 20,
-      "end": 20,
-      "name": "EndpointPublicationGeneration",
-      "role": "generation"
-    },
-    {
-      "cells": "S21",
-      "start": 21,
-      "end": 21,
-      "name": "MirroredAccessKind",
-      "role": "metadata"
-    },
-    {
       "cells": "S22",
       "start": 22,
       "end": 22,
@@ -157,38 +143,6 @@
       "end": 27,
       "name": "CommittedDestinationSlot",
       "role": "result"
-    },
-    {
-      "cells": "S28",
-      "start": 28,
-      "end": 28,
-      "name": "EndpointAccessKind",
-      "role": "result",
-      "description": "raw snapshot of Endpoint S35 taken on each refresh"
-    },
-    {
-      "cells": "S29",
-      "start": 29,
-      "end": 29,
-      "name": "EndpointActionHint0",
-      "role": "result",
-      "description": "raw snapshot of Endpoint S38"
-    },
-    {
-      "cells": "S30",
-      "start": 30,
-      "end": 30,
-      "name": "EndpointActionHint1",
-      "role": "result",
-      "description": "raw snapshot of Endpoint S39"
-    },
-    {
-      "cells": "S31",
-      "start": 31,
-      "end": 31,
-      "name": "EndpointActionHint2",
-      "role": "result",
-      "description": "raw snapshot of Endpoint S40"
     },
     {
       "cells": "S32",
@@ -417,25 +371,23 @@
         },
         {
           "address": 20,
-          "name": "EndpointPublicationGeneration",
+          "name": "S20",
           "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "source",
           "access": [
             "self-write"
           ],
-          "description": "represented Endpoint PublicationGeneration",
-          "role": "generation"
+          "description": "represented Endpoint PublicationGeneration"
         },
         {
           "address": 21,
-          "name": "MirroredAccessKind",
+          "name": "S21",
           "value_type": "enum",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "source",
           "access": [
             "self-write"
           ],
-          "description": "opaque Endpoint AccessKind extension",
-          "role": "metadata"
+          "description": "opaque Endpoint AccessKind extension"
         },
         {
           "address": 22,
@@ -505,47 +457,39 @@
         },
         {
           "address": 28,
-          "name": "EndpointAccessKind",
-          "value_type": "enum",
-          "semantic_source": "protocol-layout",
+          "name": "S28",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result",
-          "description": "raw snapshot of Endpoint S35 taken on each refresh"
+          ]
         },
         {
           "address": 29,
-          "name": "EndpointActionHint0",
+          "name": "S29",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result",
-          "description": "raw snapshot of Endpoint S38"
+          ]
         },
         {
           "address": 30,
-          "name": "EndpointActionHint1",
+          "name": "S30",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result",
-          "description": "raw snapshot of Endpoint S39"
+          ]
         },
         {
           "address": 31,
-          "name": "EndpointActionHint2",
+          "name": "S31",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result",
-          "description": "raw snapshot of Endpoint S40"
+          ]
         },
         {
           "address": 32,

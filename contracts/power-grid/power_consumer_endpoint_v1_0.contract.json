@@ -307,21 +307,25 @@
       },
       {
         "address": 50,
-        "name": "S50",
+        "name": "PolicyOverride",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request",
+        "description": "POWER endpoints: consumer 0 AUTO, 1 ENABLE, 2 SHED; battery 0 AUTO, 3 CHARGE, 4 DISCHARGE, 5 HOLD"
       },
       {
         "address": 51,
-        "name": "S51",
+        "name": "WattOverride",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request",
+        "description": "POWER endpoints: optional job watt override or cap"
       },
       {
         "address": 52,

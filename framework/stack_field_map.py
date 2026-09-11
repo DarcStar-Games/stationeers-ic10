@@ -258,22 +258,44 @@ def peer_touched_cells(
 
 
 def wiring_touched_cells(root: Path, contracts_by_source: dict[str, dict[str, Any]]) -> dict[str, dict[int, set[str]]]:
-    """Payload cells each wired port reaches on the protocols its declared peer provides.
+    """Payload cells peers reach without a contract consumer edge: wired ports and network writes.
 
     ``data/script_wiring.json`` names every port's canonical peer program. A port whose
     peer is a script reaches that script's protocols with whatever it reads or writes, even
     when the contracts record no consumer edge for the port (no literal S0 check on that
-    path), so those cells belong in the map and in the report's peer count.
+    path). A ``putd`` through a ReferenceId is attributed by the network provenance walk to
+    the contract it targets (issue #174), so its cells reach that contract's protocol the
+    same way. Both belong in the map and in the report's peer count.
     """
     from framework.script_contracts.naming import protocol_id
     wiring = json.loads((Path(root) / WIRING_FILE).read_text())
     provided: dict[str, list[tuple[str, int]]] = {}
+    providers_of: dict[str, set[str]] = {}
     for source, contract in contracts_by_source.items():
-        provided[source] = [
+        provided[source] = sorted((
             (protocol_id(header["magic"], header["abi"], header.get("contract")), header["base"])
             for header in contract["own_stack"]["headers"]
-        ]
+        ), key=lambda item: item[1])
+        for header in contract["own_stack"]["headers"]:
+            if header.get("contract"):
+                providers_of.setdefault(header["contract"], set()).add(source)
     touched: dict[str, dict[int, set[str]]] = {}
+
+    def attribute(cells: set[int], provider: str, peer: str) -> None:
+        # A program publishing a service header at S0 and a telemetry block at S96 owns
+        # two protocols; a cell belongs to the one whose header sits at or below it.
+        headers = provided.get(provider, [])
+        for cell in cells:
+            pid, base = next((item for item in reversed(headers) if item[1] <= cell), headers[0])
+            if cell not in header_cells(base):
+                touched.setdefault(pid, {}).setdefault(cell, set()).add(peer)
+
+    for source, contract in contracts_by_source.items():
+        for dependency in contract["network_dependencies"]:
+            cells = set(dependency.get("literal_reads", [])) | set(dependency.get("literal_writes", []))
+            for target in dependency.get("targets", []):
+                for provider in providers_of.get(target, ()):
+                    attribute(cells, provider, source)
     for source, ports in wiring.get("ports", {}).items():
         contract = contracts_by_source.get(source)
         if contract is None:
@@ -284,16 +306,8 @@ def wiring_touched_cells(root: Path, contracts_by_source: dict[str, dict[str, An
                 continue
             cells = _access_cells(access_by_port[port])
             for provider in peer.get("providers", []):
-                headers = sorted(provided.get(provider, []), key=lambda item: item[1])
-                if not headers:
-                    continue
-                for cell in cells:
-                    # A program publishing a service header at S0 and a telemetry block at
-                    # S96 owns two protocols; a cell belongs to the one whose header sits
-                    # at or below it.
-                    pid, base = next((item for item in reversed(headers) if item[1] <= cell), headers[0])
-                    if cell not in header_cells(base):
-                        touched.setdefault(pid, {}).setdefault(cell, set()).add(source)
+                if provided.get(provider):
+                    attribute(cells, provider, source)
     return touched
 
 
@@ -308,13 +322,29 @@ def provider_surface(contract: dict[str, Any]) -> set[int]:
     )
 
 
+def documented_cells(text: str) -> dict[str, set[int]]:
+    """Cells each attributable layout block in a document cites, by protocol."""
+    cited: dict[str, set[int]] = {}
+    for block in doc_layout_blocks(text):
+        for start, end, _ in block.cells:
+            cited.setdefault(block.protocol_id, set()).update(range(start, end + 1))
+    return cited
+
+
 def layout_errors(
     protocol_definitions: dict[str, dict[str, Any]],
     contracts_by_source: dict[str, dict[str, Any]],
     layouts: dict[str, list[LayoutEntry]],
     extra_touched: dict[str, dict[int, set[str]]] | None = None,
+    documented: dict[str, set[int]] | None = None,
 ) -> list[str]:
-    """Hold the map to the tree: entries inside the surface, peer cells named, overrides agreed."""
+    """Hold the map to the tree: entries inside the surface, peer cells named, overrides agreed.
+
+    With ``documented`` (``documented_cells`` of the ABI reference), every entry must also
+    cover a cell a peer touches or a documented block cites. The map describes the
+    peer-visible surface; a cell only its provider reads and writes has nothing outside
+    the program to hold its name to, so it is not mapped.
+    """
     errors: list[str] = []
     definitions_by_pid = {definition["protocol_id"]: definition for definition in protocol_definitions.values()}
     for pid in sorted(layouts):
@@ -351,6 +381,19 @@ def layout_errors(
                 errors.append(
                     f"{pid}: {entry.name} {entry.cells} names {format_cell_set(outside)}, which no "
                     "provider touches or declares and no peer reaches")
+        if documented is not None:
+            # A reviewed external range is the provider's own statement that peers may
+            # reach those cells, so it grounds a name the same way a peer or a document does.
+            visible = set(touched) | documented.get(pid, set())
+            for provider in providers:
+                own = provider["own_stack"]
+                visible |= _range_cells(own["external_readable_ranges"]) | _range_cells(own["external_writable_ranges"])
+            for entry in entries:
+                if not any(entry.covers(cell) for cell in visible):
+                    errors.append(
+                        f"{pid}: {entry.name} {entry.cells} names only cells the provider keeps to itself; "
+                        "the map covers cells a peer reads or writes, a documented layout cites, or a reviewed "
+                        "external range declares")
         uncovered = {cell for cell in touched if entry_for(entries, cell) is None}
         if uncovered:
             by_cell = ", ".join(
@@ -581,7 +624,11 @@ def render_field_map(
         "data/script_contract_protocol_definitions.json and the generated protocol definitions under",
         "contracts/protocols/. Do not edit by hand. The header cells S0..S7 are described in",
         "docs/STACK_ABI_ENVELOPE.md and are not repeated here; a block header away from S0 keeps its",
-        "magic and version cells out of the map the same way.",
+        "magic and version cells out of the map the same way. The map covers the peer-visible surface:",
+        "every entry names a cell a peer reads or writes (through a contract consumer edge, a",
+        "wiring-declared port, or an attributed network write), one a layout block in",
+        "docs/ABI_REFERENCE.md cites, or one a reviewed external range declares. A cell only its",
+        "provider touches is not mapped, because nothing outside the program could hold its name.",
         "",
         f"Protocols with a layout: {len(layouts)}. Layout entries: "
         f"{sum(len(entries) for entries in layouts.values())}. Cells named: {mapped_cells}.",

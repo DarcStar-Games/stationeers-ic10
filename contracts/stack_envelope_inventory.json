@@ -63,12 +63,6 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.catalog-coordinator-core.v4",
-            "cells": "S8..S13",
-            "name": "DirectorySummary",
-            "role": "telemetry"
-          },
-          {
-            "protocol_id": "ic10.stack.catalog-coordinator-core.v4",
             "cells": "S14",
             "name": "CoordinatorId",
             "role": "metadata"
@@ -87,12 +81,6 @@
           },
           {
             "protocol_id": "ic10.stack.catalog-coordinator-core.v4",
-            "cells": "S20",
-            "name": "AssignmentEpochCounter",
-            "role": "epoch"
-          },
-          {
-            "protocol_id": "ic10.stack.catalog-coordinator-core.v4",
             "cells": "S21",
             "name": "PlacementGeneration",
             "role": "generation"
@@ -102,12 +90,6 @@
             "cells": "S22",
             "name": "TopologySequence",
             "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.catalog-coordinator-core.v4",
-            "cells": "S23",
-            "name": "RegistryDirectoryRef",
-            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.catalog-coordinator-core.v4",
@@ -1168,12 +1150,6 @@
           },
           {
             "protocol_id": "ic10.stack.generic-catalog-store.v6",
-            "cells": "S10",
-            "name": "ItemDirectoryBase",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-catalog-store.v6",
             "cells": "S11",
             "name": "CoordinatorRef",
             "role": "topology"
@@ -1258,12 +1234,6 @@
           },
           {
             "protocol_id": "ic10.stack.generic-catalog-store.v6",
-            "cells": "S25",
-            "name": "Reserved25",
-            "role": "reserved"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-catalog-store.v6",
             "cells": "S26",
             "name": "AssignmentEpoch",
             "role": "epoch"
@@ -1276,33 +1246,15 @@
           },
           {
             "protocol_id": "ic10.stack.generic-catalog-store.v6",
-            "cells": "S28",
-            "name": "FaultDetail",
-            "role": "error"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-catalog-store.v6",
             "cells": "S29",
             "name": "FreeCells",
             "role": "result"
           },
           {
             "protocol_id": "ic10.stack.generic-catalog-store.v6",
-            "cells": "S30",
-            "name": "Reserved30",
-            "role": "reserved"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-catalog-store.v6",
             "cells": "S31",
             "name": "CommittedAssignmentEpoch",
             "role": "epoch"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-catalog-store.v6",
-            "cells": "S32..S511",
-            "name": "ItemHeap",
-            "role": "table"
           }
         ],
         "payload_bases": [
@@ -2519,7 +2471,26 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.controller-selector.v2",
+            "cells": "S10",
+            "name": "DesiredControllerType",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.controller-selector.v2",
+            "cells": "S11",
+            "name": "DesiredControllerMember",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.controller-selector.v2",
+            "cells": "S12",
+            "name": "RequestToken",
+            "role": "request_token"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -2614,12 +2585,6 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.27182818.abi2",
-            "cells": "S98",
-            "name": "ChannelMask",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi2",
             "cells": "S99",
             "name": "ControllerType",
             "role": "metadata"
@@ -2659,12 +2624,6 @@
             "cells": "S115",
             "name": "TelemetryGeneration",
             "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi2",
-            "cells": "S116",
-            "name": "ConfigHostRef",
-            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.27182818.abi2",
@@ -2915,33 +2874,9 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.27182818.abi1",
-            "cells": "S98",
-            "name": "ChannelMask",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi1",
             "cells": "S99",
             "name": "ControllerType",
             "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi1",
-            "cells": "S100..S109",
-            "name": "TelemetryChannels",
-            "role": "telemetry"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi1",
-            "cells": "S116",
-            "name": "ConfigHostRef",
-            "role": "topology"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi1",
-            "cells": "S117",
-            "name": "ConfigHostGeneration",
-            "role": "generation"
           }
         ],
         "payload_bases": [
@@ -3140,33 +3075,9 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.27182818.abi1",
-            "cells": "S98",
-            "name": "ChannelMask",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi1",
             "cells": "S99",
             "name": "ControllerType",
             "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi1",
-            "cells": "S100..S109",
-            "name": "TelemetryChannels",
-            "role": "telemetry"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi1",
-            "cells": "S116",
-            "name": "ConfigHostRef",
-            "role": "topology"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi1",
-            "cells": "S117",
-            "name": "ConfigHostGeneration",
-            "role": "generation"
           }
         ],
         "payload_bases": [
@@ -3404,12 +3315,6 @@
             "protocol_id": "ic10.stack.dependency-ancestry-guard.v1",
             "cells": "S17",
             "name": "Status",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.dependency-ancestry-guard.v1",
-            "cells": "S18",
-            "name": "PostingCounter",
             "role": "state"
           }
         ],
@@ -3798,24 +3703,6 @@
             "cells": "S20",
             "name": "ChildJobGeneration",
             "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.dependency-child-validity.v1",
-            "cells": "S21",
-            "name": "ChildJobType",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.dependency-child-validity.v1",
-            "cells": "S22",
-            "name": "ChildIdentity",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.dependency-child-validity.v1",
-            "cells": "S23",
-            "name": "ChildOutputResourceType",
-            "role": "result"
           }
         ],
         "payload_bases": [
@@ -3953,26 +3840,8 @@
           },
           {
             "protocol_id": "ic10.stack.dependency-claim-view.v1",
-            "cells": "S23",
-            "name": "OtherParentCount",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.dependency-claim-view.v1",
-            "cells": "S24",
-            "name": "ChildState",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.dependency-claim-view.v1",
             "cells": "S25",
             "name": "ChildResourceType",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.dependency-claim-view.v1",
-            "cells": "S26",
-            "name": "ChildSlot",
             "role": "result"
           },
           {
@@ -4171,12 +4040,6 @@
             "cells": "S34",
             "name": "FutureQuantity",
             "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.dependency-plan-builder.v2",
-            "cells": "S35",
-            "name": "CreatedFlag",
-            "role": "result"
           }
         ],
         "payload_bases": [
@@ -4339,42 +4202,6 @@
             "cells": "S31",
             "name": "Decision",
             "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
-            "cells": "S32",
-            "name": "QuotedTotal",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
-            "cells": "S33",
-            "name": "NewQuoteFingerprintA",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
-            "cells": "S34",
-            "name": "NewQuoteFingerprintB",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
-            "cells": "S35",
-            "name": "ChildSlot",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
-            "cells": "S36",
-            "name": "ChildJobGeneration",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.dependency-plan-evaluator.v2",
-            "cells": "S37",
-            "name": "ChildState",
-            "role": "result"
           }
         ],
         "payload_bases": [
@@ -4498,12 +4325,6 @@
           },
           {
             "protocol_id": "ic10.stack.dependency-plan-release-advisor.v1",
-            "cells": "S17",
-            "name": "Status",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.dependency-plan-release-advisor.v1",
             "cells": "S18",
             "name": "CancelAdvised",
             "role": "result"
@@ -4518,12 +4339,6 @@
             "protocol_id": "ic10.stack.dependency-plan-release-advisor.v1",
             "cells": "S20",
             "name": "ChildJobGeneration",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.dependency-plan-release-advisor.v1",
-            "cells": "S21",
-            "name": "ChildState",
             "role": "result"
           }
         ],
@@ -5198,12 +5013,6 @@
             "cells": "S13",
             "name": "ProducerIdentity",
             "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.item-producer-resolver.v1",
-            "cells": "S32..S65",
-            "name": "ProducerTable",
-            "role": "table"
           }
         ],
         "payload_bases": [
@@ -5344,12 +5153,6 @@
             "cells": "S20",
             "name": "Status",
             "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.job-inventory-preflight.v1",
-            "cells": "S21",
-            "name": "InputOrdinal",
-            "role": "result"
           },
           {
             "protocol_id": "ic10.stack.job-inventory-preflight.v1",
@@ -5833,12 +5636,6 @@
             "cells": "S26",
             "name": "CleanupResponseToken",
             "role": "response_token"
-          },
-          {
-            "protocol_id": "ic10.stack.manufacturing-dependency-planner.v1",
-            "cells": "S27",
-            "name": "CleanupStatus",
-            "role": "state"
           }
         ],
         "payload_bases": [
@@ -6326,7 +6123,50 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.console-selector.v1",
+            "cells": "S10",
+            "name": "AdvanceRequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.console-selector.v1",
+            "cells": "S11",
+            "name": "HandledAdvanceToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.console-selector.v1",
+            "cells": "S12",
+            "name": "DesiredConsole",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.console-selector.v1",
+            "cells": "S13",
+            "name": "DesiredRequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.console-selector.v1",
+            "cells": "S14",
+            "name": "HandledDesiredToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.console-selector.v1",
+            "cells": "S16",
+            "name": "DisplayRef",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.console-selector.v1",
+            "cells": "S17",
+            "name": "Status",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -6812,7 +6652,14 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.diagnostic-renderer.v1",
+            "cells": "S8",
+            "name": "RecordCount",
+            "role": "request"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -7104,50 +6951,14 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
-            "cells": "S16",
-            "name": "Status",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
             "cells": "S18",
             "name": "TelemetrySequence",
             "role": "generation"
           },
           {
             "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
-            "cells": "S20",
-            "name": "RecordWidth",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
-            "cells": "S21",
-            "name": "Capacity",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
             "cells": "S23",
             "name": "PublicationSequence",
-            "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
-            "cells": "S24",
-            "name": "FreezeTokenCounter",
-            "role": "request_token"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
-            "cells": "S25",
-            "name": "AcceptedCandidateGeneration",
-            "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
-            "cells": "S26",
-            "name": "RegistryGeneration",
             "role": "generation"
           },
           {
@@ -7705,12 +7516,6 @@
           },
           {
             "protocol_id": "ic10.stack.generic-snapshot-directory-host.v1",
-            "cells": "S23",
-            "name": "HostError",
-            "role": "error"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-snapshot-directory-host.v1",
             "cells": "S24",
             "name": "ActiveBank",
             "role": "bank"
@@ -7750,12 +7555,6 @@
             "cells": "S30",
             "name": "OverflowB",
             "role": "bank"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-snapshot-directory-host.v1",
-            "cells": "S31",
-            "name": "ReflashIdentity",
-            "role": "metadata"
           },
           {
             "protocol_id": "ic10.stack.generic-snapshot-directory-host.v1",
@@ -8005,12 +7804,6 @@
           },
           {
             "protocol_id": "ic10.stack.generic-job-command-gateway.v5",
-            "cells": "S10",
-            "name": "LaneAAllocatedJobId",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-job-command-gateway.v5",
             "cells": "S11",
             "name": "LaneACommand",
             "role": "request"
@@ -8047,24 +7840,6 @@
           },
           {
             "protocol_id": "ic10.stack.generic-job-command-gateway.v5",
-            "cells": "S24",
-            "name": "PendingLaneClass",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-job-command-gateway.v5",
-            "cells": "S25",
-            "name": "PendingToken",
-            "role": "current_token"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-job-command-gateway.v5",
-            "cells": "S26",
-            "name": "PendingLaneBase",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-job-command-gateway.v5",
             "cells": "S32",
             "name": "LaneBRequestToken",
             "role": "request_token"
@@ -8074,18 +7849,6 @@
             "cells": "S33",
             "name": "LaneBResponseToken",
             "role": "response_token"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-job-command-gateway.v5",
-            "cells": "S34",
-            "name": "LaneBStatus",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-job-command-gateway.v5",
-            "cells": "S35",
-            "name": "LaneBAllocatedJobId",
-            "role": "result"
           },
           {
             "protocol_id": "ic10.stack.generic-job-command-gateway.v5",
@@ -8143,12 +7906,6 @@
           },
           {
             "protocol_id": "ic10.stack.generic-job-command-gateway.v5",
-            "cells": "S52",
-            "name": "LaneCAllocatedSlot",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-job-command-gateway.v5",
             "cells": "S53",
             "name": "LaneCParentJobId",
             "role": "request"
@@ -8188,12 +7945,6 @@
             "cells": "S66",
             "name": "LaneDStatus",
             "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-job-command-gateway.v5",
-            "cells": "S67",
-            "name": "LaneDAllocatedJobId",
-            "role": "result"
           },
           {
             "protocol_id": "ic10.stack.generic-job-command-gateway.v5",
@@ -8603,12 +8354,6 @@
           },
           {
             "protocol_id": "ic10.stack.generic-job-selector.v3",
-            "cells": "S17",
-            "name": "QueueGeneration",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-job-selector.v3",
             "cells": "S18",
             "name": "Mode",
             "role": "request"
@@ -8806,30 +8551,6 @@
             "cells": "S29",
             "name": "ExpectedPlanSequence",
             "role": "request"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-job-store-command-executor.v1",
-            "cells": "S30",
-            "name": "StoreRequestCounter",
-            "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-job-store-command-executor.v1",
-            "cells": "S31",
-            "name": "PendingStoreToken",
-            "role": "request_token"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-job-store-command-executor.v1",
-            "cells": "S32",
-            "name": "PendingClientToken",
-            "role": "current_token"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-job-store-command-executor.v1",
-            "cells": "S34",
-            "name": "PendingSlot",
-            "role": "state"
           },
           {
             "protocol_id": "ic10.stack.generic-job-store-command-executor.v1",
@@ -9249,7 +8970,50 @@
             "const": "HASH(\"Catalog.InputProfiles.Schema3\")"
           }
         ],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S10",
+            "name": "CatalogInstanceId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S11",
+            "name": "PartitionKey",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S14",
+            "name": "ItemCount",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S18",
+            "name": "Ready",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S19",
+            "name": "TargetStoreRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S20",
+            "name": "AssignmentEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S21",
+            "name": "ImportedItemIndex",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -9418,7 +9182,50 @@
             "const": "HASH(\"Catalog.InputProfiles.Schema3\")"
           }
         ],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S10",
+            "name": "CatalogInstanceId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S11",
+            "name": "PartitionKey",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S14",
+            "name": "ItemCount",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S18",
+            "name": "Ready",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S19",
+            "name": "TargetStoreRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S20",
+            "name": "AssignmentEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S21",
+            "name": "ImportedItemIndex",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -9559,7 +9366,50 @@
             "const": "HASH(\"Catalog.InputProfiles.Schema3\")"
           }
         ],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S10",
+            "name": "CatalogInstanceId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S11",
+            "name": "PartitionKey",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S14",
+            "name": "ItemCount",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S18",
+            "name": "Ready",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S19",
+            "name": "TargetStoreRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S20",
+            "name": "AssignmentEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S21",
+            "name": "ImportedItemIndex",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -10205,12 +10055,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S14",
-            "name": "ClassExtensionRef",
-            "role": "topology"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S20..S22",
             "name": "ClassConfiguration",
             "role": "metadata"
@@ -10283,18 +10127,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S36",
-            "name": "PolicyFlags",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S37",
-            "name": "ReserveFloor",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S38",
             "name": "ActionHint0",
             "role": "result"
@@ -10310,6 +10142,18 @@
             "cells": "S40",
             "name": "ActionHint2",
             "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S50",
+            "name": "PolicyOverride",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S51",
+            "name": "WattOverride",
+            "role": "request"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -10670,12 +10514,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S14",
-            "name": "ClassExtensionRef",
-            "role": "topology"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S20..S22",
             "name": "ClassConfiguration",
             "role": "metadata"
@@ -10748,18 +10586,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S36",
-            "name": "PolicyFlags",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S37",
-            "name": "ReserveFloor",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S38",
             "name": "ActionHint0",
             "role": "result"
@@ -10775,6 +10601,18 @@
             "cells": "S40",
             "name": "ActionHint2",
             "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S50",
+            "name": "PolicyOverride",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S51",
+            "name": "WattOverride",
+            "role": "request"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -11010,18 +10848,6 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.stacker-feeder.v1",
-            "cells": "S8",
-            "name": "ReadyEpoch",
-            "role": "epoch"
-          },
-          {
-            "protocol_id": "ic10.stack.stacker-feeder.v1",
-            "cells": "S9",
-            "name": "EmittedEpoch",
-            "role": "epoch"
-          },
-          {
-            "protocol_id": "ic10.stack.stacker-feeder.v1",
             "cells": "S10",
             "name": "PublicationGeneration",
             "role": "generation"
@@ -11079,12 +10905,6 @@
             "cells": "S19",
             "name": "ReleaseEpoch",
             "role": "request"
-          },
-          {
-            "protocol_id": "ic10.stack.stacker-feeder.v1",
-            "cells": "S20..S23",
-            "name": "InternalState",
-            "role": "state"
           },
           {
             "protocol_id": "ic10.stack.stacker-feeder.v1",
@@ -11233,12 +11053,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S14",
-            "name": "ClassExtensionRef",
-            "role": "topology"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S20..S22",
             "name": "ClassConfiguration",
             "role": "metadata"
@@ -11311,18 +11125,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S36",
-            "name": "PolicyFlags",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S37",
-            "name": "ReserveFloor",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S38",
             "name": "ActionHint0",
             "role": "result"
@@ -11338,6 +11140,18 @@
             "cells": "S40",
             "name": "ActionHint2",
             "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S50",
+            "name": "PolicyOverride",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S51",
+            "name": "WattOverride",
+            "role": "request"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -11520,12 +11334,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S14",
-            "name": "ClassExtensionRef",
-            "role": "topology"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S20..S22",
             "name": "ClassConfiguration",
             "role": "metadata"
@@ -11598,18 +11406,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S36",
-            "name": "PolicyFlags",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S37",
-            "name": "ReserveFloor",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S38",
             "name": "ActionHint0",
             "role": "result"
@@ -11625,6 +11421,18 @@
             "cells": "S40",
             "name": "ActionHint2",
             "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S50",
+            "name": "PolicyOverride",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S51",
+            "name": "WattOverride",
+            "role": "request"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -12207,18 +12015,6 @@
             "cells": "S23",
             "name": "AllocatedSlot",
             "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.operator-order-job-ingress.v1",
-            "cells": "S30",
-            "name": "PendingGatewayToken",
-            "role": "request_token"
-          },
-          {
-            "protocol_id": "ic10.stack.operator-order-job-ingress.v1",
-            "cells": "S31",
-            "name": "PendingClientToken",
-            "role": "current_token"
           }
         ],
         "payload_bases": [
@@ -12614,18 +12410,6 @@
           },
           {
             "protocol_id": "ic10.stack.stock-target-demand-view.v1",
-            "cells": "S27",
-            "name": "OnHandQuantity",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.stock-target-demand-view.v1",
-            "cells": "S28",
-            "name": "UnclaimedFutureQuantity",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.stock-target-demand-view.v1",
             "cells": "S29",
             "name": "QueueSequence",
             "role": "generation"
@@ -12804,12 +12588,6 @@
             "cells": "S24",
             "name": "PlanSequence",
             "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.stock-target-future-view.v1",
-            "cells": "S25",
-            "name": "ClaimPostingCounter",
-            "role": "state"
           }
         ],
         "payload_bases": [
@@ -12943,12 +12721,6 @@
             "cells": "S21",
             "name": "OnHandQuantity",
             "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.stock-target-inventory-view.v1",
-            "cells": "S22",
-            "name": "SelectorRequestCounter",
-            "role": "state"
           }
         ],
         "payload_bases": [
@@ -13221,18 +12993,6 @@
             "cells": "S28",
             "name": "AllocatedJobId",
             "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.stock-target-job-ingress.v1",
-            "cells": "S29",
-            "name": "AllocatedSlot",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.stock-target-job-ingress.v1",
-            "cells": "S30",
-            "name": "PendingGatewayToken",
-            "role": "request_token"
           },
           {
             "protocol_id": "ic10.stack.stock-target-job-ingress.v1",
@@ -13627,36 +13387,6 @@
             "cells": "S15",
             "name": "CurrentToken",
             "role": "current_token"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-print-runtime.v2",
-            "cells": "S20",
-            "name": "Phase",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-print-runtime.v2",
-            "cells": "S22",
-            "name": "MaterialRequestToken",
-            "role": "request_token"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-print-runtime.v2",
-            "cells": "S23",
-            "name": "ExportCountBaseline",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-print-runtime.v2",
-            "cells": "S24",
-            "name": "CommittedEpoch",
-            "role": "epoch"
-          },
-          {
-            "protocol_id": "ic10.stack.generic-print-runtime.v2",
-            "cells": "S25",
-            "name": "ExportTicks",
-            "role": "state"
           }
         ],
         "payload_bases": [
@@ -13779,12 +13509,6 @@
           },
           {
             "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
-            "cells": "S11",
-            "name": "CandidateProcessorRef",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
             "cells": "S12",
             "name": "CandidateProcessorSpec",
             "role": "result"
@@ -13794,12 +13518,6 @@
             "cells": "S13",
             "name": "NextOrdinal",
             "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
-            "cells": "S14",
-            "name": "DirectoryGeneration",
-            "role": "generation"
           },
           {
             "protocol_id": "ic10.stack.manufacturing-candidate-selector.v2",
@@ -13958,18 +13676,6 @@
             "cells": "S12",
             "name": "ErrorStatus",
             "role": "error"
-          },
-          {
-            "protocol_id": "ic10.stack.manufacturing-driver-router.v2",
-            "cells": "S13",
-            "name": "Lane",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.manufacturing-driver-router.v2",
-            "cells": "S14",
-            "name": "CurrentToken",
-            "role": "current_token"
           }
         ],
         "payload_bases": [
@@ -14225,24 +13931,6 @@
             "cells": "S19",
             "name": "RequestedQuantity",
             "role": "request"
-          },
-          {
-            "protocol_id": "ic10.stack.print-candidate-executor.v2",
-            "cells": "S20",
-            "name": "Phase",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.print-candidate-executor.v2",
-            "cells": "S30",
-            "name": "ResultCode",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.print-candidate-executor.v2",
-            "cells": "S33",
-            "name": "ResolvedPrinterRef",
-            "role": "result"
           }
         ],
         "payload_bases": [
@@ -14403,42 +14091,6 @@
             "cells": "S17",
             "name": "RequestedQuantity",
             "role": "request"
-          },
-          {
-            "protocol_id": "ic10.stack.print-job-driver.v2",
-            "cells": "S20",
-            "name": "Phase",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.print-job-driver.v2",
-            "cells": "S21",
-            "name": "SelectorToken",
-            "role": "request_token"
-          },
-          {
-            "protocol_id": "ic10.stack.print-job-driver.v2",
-            "cells": "S22",
-            "name": "ExecutorToken",
-            "role": "request_token"
-          },
-          {
-            "protocol_id": "ic10.stack.print-job-driver.v2",
-            "cells": "S23",
-            "name": "CandidateOrdinal",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.print-job-driver.v2",
-            "cells": "S24",
-            "name": "Outcome",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.print-job-driver.v2",
-            "cells": "S30",
-            "name": "TokenCounter",
-            "role": "generation"
           }
         ],
         "payload_bases": [
@@ -14569,18 +14221,6 @@
             "cells": "S13",
             "name": "ResponseToken",
             "role": "response_token"
-          },
-          {
-            "protocol_id": "ic10.stack.print-material-resolver.v1",
-            "cells": "S14",
-            "name": "RecipeViewGeneration",
-            "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.print-material-resolver.v1",
-            "cells": "S15",
-            "name": "RequiredCapability",
-            "role": "result"
           },
           {
             "protocol_id": "ic10.stack.print-material-resolver.v1",
@@ -14747,12 +14387,6 @@
             "cells": "S14",
             "name": "JobId",
             "role": "request"
-          },
-          {
-            "protocol_id": "ic10.stack.transform-candidate-executor.v2",
-            "cells": "S20",
-            "name": "Phase",
-            "role": "state"
           },
           {
             "protocol_id": "ic10.stack.transform-candidate-executor.v2",
@@ -14939,24 +14573,6 @@
             "cells": "S16",
             "name": "BatchCount",
             "role": "request"
-          },
-          {
-            "protocol_id": "ic10.stack.transform-candidate-readiness.v1",
-            "cells": "S20",
-            "name": "Phase",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.transform-candidate-readiness.v1",
-            "cells": "S30",
-            "name": "AdmissionGeneration",
-            "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.transform-candidate-readiness.v1",
-            "cells": "S31",
-            "name": "ResolverGeneration",
-            "role": "generation"
           }
         ],
         "payload_bases": [
@@ -15113,42 +14729,6 @@
             "cells": "S17",
             "name": "RequestedQuantity",
             "role": "request"
-          },
-          {
-            "protocol_id": "ic10.stack.transform-job-driver.v2",
-            "cells": "S20",
-            "name": "Phase",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.transform-job-driver.v2",
-            "cells": "S21",
-            "name": "SelectorToken",
-            "role": "request_token"
-          },
-          {
-            "protocol_id": "ic10.stack.transform-job-driver.v2",
-            "cells": "S22",
-            "name": "ExecutorToken",
-            "role": "request_token"
-          },
-          {
-            "protocol_id": "ic10.stack.transform-job-driver.v2",
-            "cells": "S23",
-            "name": "CandidateOrdinal",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.transform-job-driver.v2",
-            "cells": "S24",
-            "name": "Outcome",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.transform-job-driver.v2",
-            "cells": "S30",
-            "name": "TokenCounter",
-            "role": "generation"
           }
         ],
         "payload_bases": [
@@ -15461,12 +15041,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S14",
-            "name": "ClassExtensionRef",
-            "role": "topology"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S20..S22",
             "name": "ClassConfiguration",
             "role": "metadata"
@@ -15539,18 +15113,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S36",
-            "name": "PolicyFlags",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S37",
-            "name": "ReserveFloor",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S38",
             "name": "ActionHint0",
             "role": "result"
@@ -15566,6 +15128,18 @@
             "cells": "S40",
             "name": "ActionHint2",
             "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S50",
+            "name": "PolicyOverride",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S51",
+            "name": "WattOverride",
+            "role": "request"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -15744,12 +15318,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S14",
-            "name": "ClassExtensionRef",
-            "role": "topology"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S20..S22",
             "name": "ClassConfiguration",
             "role": "metadata"
@@ -15822,18 +15390,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S36",
-            "name": "PolicyFlags",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S37",
-            "name": "ReserveFloor",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S38",
             "name": "ActionHint0",
             "role": "result"
@@ -15849,6 +15405,18 @@
             "cells": "S40",
             "name": "ActionHint2",
             "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S50",
+            "name": "PolicyOverride",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S51",
+            "name": "WattOverride",
+            "role": "request"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -16160,42 +15728,6 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.material-transfer-executor.v1",
-            "cells": "S8",
-            "name": "GrantedQuantity",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.material-transfer-executor.v1",
-            "cells": "S9",
-            "name": "InternalState",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.material-transfer-executor.v1",
-            "cells": "S10",
-            "name": "ElapsedTicks",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.material-transfer-executor.v1",
-            "cells": "S11",
-            "name": "ResourceType",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.material-transfer-executor.v1",
-            "cells": "S12",
-            "name": "SinkProviderRef",
-            "role": "topology"
-          },
-          {
-            "protocol_id": "ic10.stack.material-transfer-executor.v1",
-            "cells": "S13",
-            "name": "ImportCountSnapshot",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.material-transfer-executor.v1",
             "cells": "S14",
             "name": "ActiveEpoch",
             "role": "epoch"
@@ -16229,12 +15761,6 @@
             "cells": "S19",
             "name": "PublicationGeneration",
             "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.material-transfer-executor.v1",
-            "cells": "S31",
-            "name": "ReflashIdentity",
-            "role": "metadata"
           }
         ],
         "payload_bases": [
@@ -16339,12 +15865,6 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.material-transfer-grant-guard.v1",
-            "cells": "S8",
-            "name": "LastConsumedEpoch",
-            "role": "epoch"
-          },
-          {
-            "protocol_id": "ic10.stack.material-transfer-grant-guard.v1",
             "cells": "S9",
             "name": "GrantedQuantity",
             "role": "result"
@@ -16438,12 +15958,6 @@
             "cells": "S26",
             "name": "StagedExecutorRef",
             "role": "request"
-          },
-          {
-            "protocol_id": "ic10.stack.material-transfer-grant-guard.v1",
-            "cells": "S31",
-            "name": "ReflashIdentity",
-            "role": "metadata"
           }
         ],
         "payload_bases": [
@@ -16558,18 +16072,6 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.stacker-feeder.v1",
-            "cells": "S8",
-            "name": "ReadyEpoch",
-            "role": "epoch"
-          },
-          {
-            "protocol_id": "ic10.stack.stacker-feeder.v1",
-            "cells": "S9",
-            "name": "EmittedEpoch",
-            "role": "epoch"
-          },
-          {
-            "protocol_id": "ic10.stack.stacker-feeder.v1",
             "cells": "S10",
             "name": "PublicationGeneration",
             "role": "generation"
@@ -16627,12 +16129,6 @@
             "cells": "S19",
             "name": "ReleaseEpoch",
             "role": "request"
-          },
-          {
-            "protocol_id": "ic10.stack.stacker-feeder.v1",
-            "cells": "S20..S23",
-            "name": "InternalState",
-            "role": "state"
           },
           {
             "protocol_id": "ic10.stack.stacker-feeder.v1",
@@ -16742,7 +16238,32 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.generic-material-transform-runtime.v2",
+            "cells": "S8",
+            "name": "BatchCount",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-material-transform-runtime.v2",
+            "cells": "S16",
+            "name": "RequestToken",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-material-transform-runtime.v2",
+            "cells": "S20",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-material-transform-runtime.v2",
+            "cells": "S21",
+            "name": "CurrentToken",
+            "role": "current_token"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -16848,30 +16369,6 @@
           },
           {
             "protocol_id": "ic10.stack.material-transform-admission.v1",
-            "cells": "S10",
-            "name": "OutputResourceType",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.material-transform-admission.v1",
-            "cells": "S11",
-            "name": "OutputUnit",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.material-transform-admission.v1",
-            "cells": "S12",
-            "name": "ProcessorCapabilityMask",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.material-transform-admission.v1",
-            "cells": "S13",
-            "name": "TransformViewRef",
-            "role": "topology"
-          },
-          {
-            "protocol_id": "ic10.stack.material-transform-admission.v1",
             "cells": "S14",
             "name": "TransformType",
             "role": "result"
@@ -16893,12 +16390,6 @@
             "cells": "S17",
             "name": "OutputQuantity",
             "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.material-transform-admission.v1",
-            "cells": "S18",
-            "name": "OutputReservationRef",
-            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.material-transform-admission.v1",
@@ -17003,20 +16494,8 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.material-transform-link-resolver.v1",
-            "cells": "S8",
-            "name": "TransformType",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.material-transform-link-resolver.v1",
             "cells": "S9",
             "name": "InputCount",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.material-transform-link-resolver.v1",
-            "cells": "S10",
-            "name": "ProcessorRef",
             "role": "result"
           },
           {
@@ -17033,15 +16512,15 @@
           },
           {
             "protocol_id": "ic10.stack.material-transform-link-resolver.v1",
-            "cells": "S13",
-            "name": "PublicationGeneration",
-            "role": "generation"
+            "cells": "S20..S31",
+            "name": "LinkRecords",
+            "role": "table"
           },
           {
             "protocol_id": "ic10.stack.material-transform-link-resolver.v1",
-            "cells": "S20..S83",
-            "name": "LinkRecords",
-            "role": "table"
+            "cells": "S32..S83",
+            "name": "UnusedRecordWindow",
+            "role": "reserved"
           }
         ],
         "payload_bases": [
@@ -17151,20 +16630,8 @@
           },
           {
             "protocol_id": "ic10.stack.multi-material-reservation-allocator.v2",
-            "cells": "S13",
-            "name": "EpochCounter",
-            "role": "epoch"
-          },
-          {
-            "protocol_id": "ic10.stack.multi-material-reservation-allocator.v2",
             "cells": "S14",
             "name": "CommittedEpoch",
-            "role": "epoch"
-          },
-          {
-            "protocol_id": "ic10.stack.multi-material-reservation-allocator.v2",
-            "cells": "S15",
-            "name": "CompletedEpoch",
             "role": "epoch"
           },
           {
@@ -17172,12 +16639,6 @@
             "cells": "S16",
             "name": "ConsumedRequestGeneration",
             "role": "current_token"
-          },
-          {
-            "protocol_id": "ic10.stack.multi-material-reservation-allocator.v2",
-            "cells": "S17..S19",
-            "name": "StagerCoordination",
-            "role": "request"
           },
           {
             "protocol_id": "ic10.stack.multi-material-reservation-allocator.v2",
@@ -17202,12 +16663,6 @@
             "cells": "S23",
             "name": "RuntimeCompletionEpoch",
             "role": "epoch"
-          },
-          {
-            "protocol_id": "ic10.stack.multi-material-reservation-allocator.v2",
-            "cells": "S31",
-            "name": "ReflashIdentity",
-            "role": "metadata"
           }
         ],
         "payload_bases": [
@@ -17312,12 +16767,6 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.multi-material-reservation-stager.v1",
-            "cells": "S8",
-            "name": "StagedCount",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.multi-material-reservation-stager.v1",
             "cells": "S9",
             "name": "Command",
             "role": "request"
@@ -17351,12 +16800,6 @@
             "cells": "S14",
             "name": "ResponseToken",
             "role": "response_token"
-          },
-          {
-            "protocol_id": "ic10.stack.multi-material-reservation-stager.v1",
-            "cells": "S32..S40",
-            "name": "StagedTriples",
-            "role": "table"
           }
         ],
         "payload_bases": [
@@ -17503,12 +16946,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S14",
-            "name": "ClassExtensionRef",
-            "role": "topology"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S20..S22",
             "name": "ClassConfiguration",
             "role": "metadata"
@@ -17581,18 +17018,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S36",
-            "name": "PolicyFlags",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S37",
-            "name": "ReserveFloor",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S38",
             "name": "ActionHint0",
             "role": "result"
@@ -17608,6 +17033,18 @@
             "cells": "S40",
             "name": "ActionHint2",
             "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S50",
+            "name": "PolicyOverride",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S51",
+            "name": "WattOverride",
+            "role": "request"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -17794,12 +17231,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S14",
-            "name": "ClassExtensionRef",
-            "role": "topology"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S20..S22",
             "name": "ClassConfiguration",
             "role": "metadata"
@@ -17872,18 +17303,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S36",
-            "name": "PolicyFlags",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S37",
-            "name": "ReserveFloor",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S38",
             "name": "ActionHint0",
             "role": "result"
@@ -17899,6 +17318,18 @@
             "cells": "S40",
             "name": "ActionHint2",
             "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S50",
+            "name": "PolicyOverride",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S51",
+            "name": "WattOverride",
+            "role": "request"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -18417,42 +17848,6 @@
             "cells": "S10",
             "name": "Status",
             "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.power-dispatch-sweep.v1",
-            "cells": "S20",
-            "name": "Phase",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.power-dispatch-sweep.v1",
-            "cells": "S21",
-            "name": "CurrentToken",
-            "role": "current_token"
-          },
-          {
-            "protocol_id": "ic10.stack.power-dispatch-sweep.v1",
-            "cells": "S22",
-            "name": "SinkCursor",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.power-dispatch-sweep.v1",
-            "cells": "S23",
-            "name": "ShedWatts",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.power-dispatch-sweep.v1",
-            "cells": "S24",
-            "name": "CriticalShortage",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.power-dispatch-sweep.v1",
-            "cells": "S25",
-            "name": "SourceWatts",
-            "role": "result"
           }
         ],
         "payload_bases": [
@@ -18640,12 +18035,6 @@
             "protocol_id": "ic10.stack.power-link-selector.v1",
             "cells": "S10",
             "name": "LinkGeneration",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.power-link-selector.v1",
-            "cells": "S11",
-            "name": "LinkClass",
             "role": "result"
           },
           {
@@ -18998,12 +18387,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S14",
-            "name": "ClassExtensionRef",
-            "role": "topology"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S20..S22",
             "name": "ClassConfiguration",
             "role": "metadata"
@@ -19076,18 +18459,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S36",
-            "name": "PolicyFlags",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S37",
-            "name": "ReserveFloor",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S38",
             "name": "ActionHint0",
             "role": "result"
@@ -19103,6 +18474,18 @@
             "cells": "S40",
             "name": "ActionHint2",
             "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S50",
+            "name": "PolicyOverride",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S51",
+            "name": "WattOverride",
+            "role": "request"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -19268,30 +18651,6 @@
             "cells": "S10",
             "name": "Status",
             "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.power-reservation-allocator.v1",
-            "cells": "S20",
-            "name": "Phase",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.power-reservation-allocator.v1",
-            "cells": "S21",
-            "name": "PendingPlanGeneration",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.power-reservation-allocator.v1",
-            "cells": "S22",
-            "name": "PendingEpoch",
-            "role": "epoch"
-          },
-          {
-            "protocol_id": "ic10.stack.power-reservation-allocator.v1",
-            "cells": "S30",
-            "name": "RequestCounter",
-            "role": "generation"
           }
         ],
         "payload_bases": [
@@ -19692,18 +19051,6 @@
           },
           {
             "protocol_id": "ic10.stack.power-sink-flow-builder.v1",
-            "cells": "S9",
-            "name": "SourceWatts",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.power-sink-flow-builder.v1",
-            "cells": "S10",
-            "name": "SourceReservationRef",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.power-sink-flow-builder.v1",
             "cells": "S11",
             "name": "SinkReservationRef",
             "role": "request"
@@ -19731,12 +19078,6 @@
             "cells": "S16",
             "name": "ResponseToken",
             "role": "response_token"
-          },
-          {
-            "protocol_id": "ic10.stack.power-sink-flow-builder.v1",
-            "cells": "S20",
-            "name": "Phase",
-            "role": "state"
           }
         ],
         "payload_bases": [
@@ -19988,12 +19329,6 @@
             "protocol_id": "ic10.stack.power-source-selector.v1",
             "cells": "S9",
             "name": "ReservationGeneration",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.power-source-selector.v1",
-            "cells": "S10",
-            "name": "NodeKind",
             "role": "result"
           },
           {
@@ -20551,12 +19886,6 @@
             "cells": "S19",
             "name": "RequiredCapability",
             "role": "request"
-          },
-          {
-            "protocol_id": "ic10.stack.power-job-finalize.v1",
-            "cells": "S20",
-            "name": "Phase",
-            "role": "state"
           }
         ],
         "payload_bases": [
@@ -20799,24 +20128,6 @@
             "cells": "S10",
             "name": "Status",
             "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.power-job-policy-apply.v1",
-            "cells": "S11",
-            "name": "ReservationRef",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.power-job-policy-apply.v1",
-            "cells": "S12",
-            "name": "EndpointRef",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.power-job-policy-apply.v1",
-            "cells": "S13",
-            "name": "ReservationGeneration",
-            "role": "result"
           },
           {
             "protocol_id": "ic10.stack.power-job-policy-apply.v1",
@@ -21133,12 +20444,6 @@
             "cells": "S19",
             "name": "RequiredCapability",
             "role": "request"
-          },
-          {
-            "protocol_id": "ic10.stack.power-job-prepare.v1",
-            "cells": "S20",
-            "name": "Phase",
-            "role": "state"
           }
         ],
         "payload_bases": [
@@ -21323,12 +20628,6 @@
           },
           {
             "protocol_id": "ic10.stack.power-policy-target-resolver.v1",
-            "cells": "S9",
-            "name": "ReservationGeneration",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.power-policy-target-resolver.v1",
             "cells": "S10",
             "name": "PolicyId",
             "role": "request"
@@ -21456,12 +20755,6 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.27182818.abi2",
-            "cells": "S98",
-            "name": "ChannelMask",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi2",
             "cells": "S99",
             "name": "ControllerType",
             "role": "metadata"
@@ -21501,12 +20794,6 @@
             "cells": "S115",
             "name": "TelemetryGeneration",
             "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi2",
-            "cells": "S116",
-            "name": "ConfigHostRef",
-            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.27182818.abi2",
@@ -21909,12 +21196,6 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.27182818.abi2",
-            "cells": "S98",
-            "name": "ChannelMask",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi2",
             "cells": "S99",
             "name": "ControllerType",
             "role": "metadata"
@@ -21954,12 +21235,6 @@
             "cells": "S115",
             "name": "TelemetryGeneration",
             "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi2",
-            "cells": "S116",
-            "name": "ConfigHostRef",
-            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.27182818.abi2",
@@ -22773,12 +22048,6 @@
           },
           {
             "protocol_id": "ic10.stack.pressure-grid-path-enumerator.v2",
-            "cells": "S11",
-            "name": "ActiveSearchId",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.pressure-grid-path-enumerator.v2",
             "cells": "S16",
             "name": "Hop1TransferRef",
             "role": "result"
@@ -22794,12 +22063,6 @@
             "cells": "S18",
             "name": "Hop3TransferRef",
             "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.pressure-grid-path-enumerator.v2",
-            "cells": "S24",
-            "name": "ResumeKey",
-            "role": "state"
           },
           {
             "protocol_id": "ic10.stack.pressure-grid-path-enumerator.v2",
@@ -22974,12 +22237,6 @@
             "cells": "S10",
             "name": "ResponseToken",
             "role": "response_token"
-          },
-          {
-            "protocol_id": "ic10.stack.pressure-grid-plan-builder.v1",
-            "cells": "S13",
-            "name": "AcceptedRequestToken",
-            "role": "current_token"
           },
           {
             "protocol_id": "ic10.stack.pressure-grid-plan-builder.v1",
@@ -23513,12 +22770,6 @@
           },
           {
             "protocol_id": "ic10.stack.pressure-grid-route-selector.v2",
-            "cells": "S20",
-            "name": "SearchActive",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.pressure-grid-route-selector.v2",
             "cells": "S32",
             "name": "PlannerRef",
             "role": "request"
@@ -23695,12 +22946,6 @@
             "cells": "S11",
             "name": "ResponseToken",
             "role": "response_token"
-          },
-          {
-            "protocol_id": "ic10.stack.pressure-grid-singlehop-builder.v1",
-            "cells": "S13",
-            "name": "AcceptedRequestToken",
-            "role": "current_token"
           },
           {
             "protocol_id": "ic10.stack.pressure-grid-singlehop-builder.v1",
@@ -24405,12 +23650,6 @@
           },
           {
             "protocol_id": "ic10.stack.pressure-transfer-grant-guard.v1",
-            "cells": "S9",
-            "name": "PublicationCounter",
-            "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.pressure-transfer-grant-guard.v1",
             "cells": "S10",
             "name": "ActiveSourceReservationRef",
             "role": "result"
@@ -24563,24 +23802,6 @@
             "cells": "S8",
             "name": "ResolvedPrinterRef",
             "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.printer-capacity-client.v2",
-            "cells": "S9",
-            "name": "OwningBankRef",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.printer-capacity-client.v2",
-            "cells": "S10",
-            "name": "OwningPin",
-            "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.printer-capacity-client.v2",
-            "cells": "S11",
-            "name": "ReservationToken",
-            "role": "epoch"
           },
           {
             "protocol_id": "ic10.stack.printer-capacity-client.v2",
@@ -25189,12 +24410,6 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.27182818.abi2",
-            "cells": "S98",
-            "name": "ChannelMask",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi2",
             "cells": "S99",
             "name": "ControllerType",
             "role": "metadata"
@@ -25234,12 +24449,6 @@
             "cells": "S115",
             "name": "TelemetryGeneration",
             "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi2",
-            "cells": "S116",
-            "name": "ConfigHostRef",
-            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.27182818.abi2",
@@ -25411,18 +24620,6 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.process-condition.v1",
-            "cells": "S8",
-            "name": "UnmetConditionMask",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.process-condition.v1",
-            "cells": "S9",
-            "name": "ProcessIdentity",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.process-condition.v1",
             "cells": "S10",
             "name": "Active",
             "role": "state"
@@ -25438,24 +24635,6 @@
             "cells": "S12",
             "name": "Status",
             "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.process-condition.v1",
-            "cells": "S13",
-            "name": "Strategy",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.process-condition.v1",
-            "cells": "S14",
-            "name": "PressureTargetHint",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.process-condition.v1",
-            "cells": "S15",
-            "name": "TemperatureTargetHint",
-            "role": "result"
           },
           {
             "protocol_id": "ic10.stack.process-condition.v1",
@@ -25599,12 +24778,6 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.27182818.abi2",
-            "cells": "S98",
-            "name": "ChannelMask",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi2",
             "cells": "S99",
             "name": "ControllerType",
             "role": "metadata"
@@ -25644,12 +24817,6 @@
             "cells": "S115",
             "name": "TelemetryGeneration",
             "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.27182818.abi2",
-            "cells": "S116",
-            "name": "ConfigHostRef",
-            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.27182818.abi2",
@@ -26105,18 +25272,6 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.process-condition.v1",
-            "cells": "S8",
-            "name": "UnmetConditionMask",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.process-condition.v1",
-            "cells": "S9",
-            "name": "ProcessIdentity",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.process-condition.v1",
             "cells": "S10",
             "name": "Active",
             "role": "state"
@@ -26132,24 +25287,6 @@
             "cells": "S12",
             "name": "Status",
             "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.process-condition.v1",
-            "cells": "S13",
-            "name": "Strategy",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.process-condition.v1",
-            "cells": "S14",
-            "name": "PressureTargetHint",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.process-condition.v1",
-            "cells": "S15",
-            "name": "TemperatureTargetHint",
-            "role": "result"
           },
           {
             "protocol_id": "ic10.stack.process-condition.v1",
@@ -26291,12 +25428,6 @@
             "cells": "S8",
             "name": "Status",
             "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.recipe-catalog-lookup.v3",
-            "cells": "S9",
-            "name": "EligibleRecipeCount",
-            "role": "result"
           },
           {
             "protocol_id": "ic10.stack.recipe-catalog-lookup.v3",
@@ -26481,12 +25612,6 @@
           },
           {
             "protocol_id": "ic10.stack.recipe-execution-profile-view.v1",
-            "cells": "S48",
-            "name": "TopologyGeneration",
-            "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.recipe-execution-profile-view.v1",
             "cells": "S49",
             "name": "RecipeHashEcho",
             "role": "response_token"
@@ -26642,12 +25767,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S14",
-            "name": "ClassExtensionRef",
-            "role": "topology"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S20..S22",
             "name": "ClassConfiguration",
             "role": "metadata"
@@ -26720,18 +25839,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S36",
-            "name": "PolicyFlags",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
-            "cells": "S37",
-            "name": "ReserveFloor",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S38",
             "name": "ActionHint0",
             "role": "result"
@@ -26747,6 +25854,18 @@
             "cells": "S40",
             "name": "ActionHint2",
             "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S50",
+            "name": "PolicyOverride",
+            "role": "request"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S51",
+            "name": "WattOverride",
+            "role": "request"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -27614,12 +26733,6 @@
             "cells": "S11",
             "name": "Status",
             "role": "state"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-reservation-releaser.v1",
-            "cells": "S12",
-            "name": "ReleasedCount",
-            "role": "result"
           }
         ],
         "payload_bases": [
@@ -27783,18 +26896,6 @@
           },
           {
             "protocol_id": "ic10.stack.resource-reservation.v1",
-            "cells": "S20",
-            "name": "EndpointPublicationGeneration",
-            "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-reservation.v1",
-            "cells": "S21",
-            "name": "MirroredAccessKind",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-reservation.v1",
             "cells": "S22",
             "name": "MirroredActionHint0",
             "role": "result"
@@ -27827,30 +26928,6 @@
             "protocol_id": "ic10.stack.resource-reservation.v1",
             "cells": "S27",
             "name": "CommittedDestinationSlot",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-reservation.v1",
-            "cells": "S28",
-            "name": "EndpointAccessKind",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-reservation.v1",
-            "cells": "S29",
-            "name": "EndpointActionHint0",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-reservation.v1",
-            "cells": "S30",
-            "name": "EndpointActionHint1",
-            "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-reservation.v1",
-            "cells": "S31",
-            "name": "EndpointActionHint2",
             "role": "result"
           },
           {
@@ -28045,7 +27122,50 @@
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
           }
         ],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S10",
+            "name": "CatalogInstanceId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S11",
+            "name": "PartitionKey",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S14",
+            "name": "ItemCount",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S18",
+            "name": "Ready",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S19",
+            "name": "TargetStoreRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S20",
+            "name": "AssignmentEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S21",
+            "name": "ImportedItemIndex",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -28150,7 +27270,50 @@
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
           }
         ],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S10",
+            "name": "CatalogInstanceId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S11",
+            "name": "PartitionKey",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S14",
+            "name": "ItemCount",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S18",
+            "name": "Ready",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S19",
+            "name": "TargetStoreRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S20",
+            "name": "AssignmentEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S21",
+            "name": "ImportedItemIndex",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -28275,7 +27438,50 @@
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
           }
         ],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S10",
+            "name": "CatalogInstanceId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S11",
+            "name": "PartitionKey",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S14",
+            "name": "ItemCount",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S18",
+            "name": "Ready",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S19",
+            "name": "TargetStoreRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S20",
+            "name": "AssignmentEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S21",
+            "name": "ImportedItemIndex",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -28392,7 +27598,50 @@
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
           }
         ],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S10",
+            "name": "CatalogInstanceId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S11",
+            "name": "PartitionKey",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S14",
+            "name": "ItemCount",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S18",
+            "name": "Ready",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S19",
+            "name": "TargetStoreRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S20",
+            "name": "AssignmentEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S21",
+            "name": "ImportedItemIndex",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -28537,7 +27786,50 @@
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
           }
         ],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S10",
+            "name": "CatalogInstanceId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S11",
+            "name": "PartitionKey",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S14",
+            "name": "ItemCount",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S18",
+            "name": "Ready",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S19",
+            "name": "TargetStoreRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S20",
+            "name": "AssignmentEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S21",
+            "name": "ImportedItemIndex",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -28678,7 +27970,50 @@
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
           }
         ],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S10",
+            "name": "CatalogInstanceId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S11",
+            "name": "PartitionKey",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S14",
+            "name": "ItemCount",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S18",
+            "name": "Ready",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S19",
+            "name": "TargetStoreRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S20",
+            "name": "AssignmentEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S21",
+            "name": "ImportedItemIndex",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -28803,7 +28138,50 @@
             "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
           }
         ],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S10",
+            "name": "CatalogInstanceId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S11",
+            "name": "PartitionKey",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S14",
+            "name": "ItemCount",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S18",
+            "name": "Ready",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S19",
+            "name": "TargetStoreRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S20",
+            "name": "AssignmentEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S21",
+            "name": "ImportedItemIndex",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -28933,30 +28311,6 @@
             "cells": "S13..S21",
             "name": "ProfileValues",
             "role": "result"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-profile-view.v1",
-            "cells": "S22",
-            "name": "CatalogInstanceId",
-            "role": "metadata"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-profile-view.v1",
-            "cells": "S23",
-            "name": "TopologyGeneration",
-            "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-profile-view.v1",
-            "cells": "S26",
-            "name": "RequestedResourceClass",
-            "role": "request"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-profile-view.v1",
-            "cells": "S27",
-            "name": "RequestedResourceType",
-            "role": "request"
           },
           {
             "protocol_id": "ic10.stack.resource-profile-view.v1",
@@ -29394,7 +28748,50 @@
             "const": "HASH(\"Catalog.ResourceTransforms.Schema4\")"
           }
         ],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S10",
+            "name": "CatalogInstanceId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S11",
+            "name": "PartitionKey",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S14",
+            "name": "ItemCount",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S18",
+            "name": "Ready",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S19",
+            "name": "TargetStoreRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S20",
+            "name": "AssignmentEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S21",
+            "name": "ImportedItemIndex",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -29523,7 +28920,50 @@
             "const": "HASH(\"Catalog.ResourceTransforms.Schema4\")"
           }
         ],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S10",
+            "name": "CatalogInstanceId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S11",
+            "name": "PartitionKey",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S14",
+            "name": "ItemCount",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S18",
+            "name": "Ready",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S19",
+            "name": "TargetStoreRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S20",
+            "name": "AssignmentEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S21",
+            "name": "ImportedItemIndex",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -29648,7 +29088,50 @@
             "const": "HASH(\"Catalog.ResourceTransforms.Schema4\")"
           }
         ],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S10",
+            "name": "CatalogInstanceId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S11",
+            "name": "PartitionKey",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S14",
+            "name": "ItemCount",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S18",
+            "name": "Ready",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S19",
+            "name": "TargetStoreRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S20",
+            "name": "AssignmentEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S21",
+            "name": "ImportedItemIndex",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -29773,7 +29256,50 @@
             "const": "HASH(\"Catalog.ResourceTransforms.Schema4\")"
           }
         ],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S10",
+            "name": "CatalogInstanceId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S11",
+            "name": "PartitionKey",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S14",
+            "name": "ItemCount",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S18",
+            "name": "Ready",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S19",
+            "name": "TargetStoreRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S20",
+            "name": "AssignmentEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S21",
+            "name": "ImportedItemIndex",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -29894,7 +29420,50 @@
             "const": "HASH(\"Catalog.ResourceTransforms.Schema4\")"
           }
         ],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S10",
+            "name": "CatalogInstanceId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S11",
+            "name": "PartitionKey",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S14",
+            "name": "ItemCount",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S18",
+            "name": "Ready",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S19",
+            "name": "TargetStoreRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S20",
+            "name": "AssignmentEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S21",
+            "name": "ImportedItemIndex",
+            "role": "state"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -30056,12 +29625,6 @@
             "cells": "S74",
             "name": "PublicationGeneration",
             "role": "generation"
-          },
-          {
-            "protocol_id": "ic10.stack.resource-transform-profile-view.v4",
-            "cells": "S75",
-            "name": "ConditionFlags",
-            "role": "result"
           }
         ],
         "payload_bases": [

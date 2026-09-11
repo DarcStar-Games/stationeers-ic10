@@ -13,14 +13,6 @@
   "canonical_refs": [],
   "layout": [
     {
-      "cells": "S8",
-      "start": 8,
-      "end": 8,
-      "name": "StagedCount",
-      "role": "result",
-      "description": "published after each record"
-    },
-    {
       "cells": "S9",
       "start": 9,
       "end": 9,
@@ -62,14 +54,6 @@
       "end": 14,
       "name": "ResponseToken",
       "role": "response_token"
-    },
-    {
-      "cells": "S32..S40",
-      "start": 32,
-      "end": 40,
-      "name": "StagedTriples",
-      "role": "table",
-      "description": "[LinkRef, SourceReservationRef, SinkReservationRef] per staged input"
     }
   ],
   "provider_interfaces": [
@@ -112,15 +96,13 @@
         },
         {
           "address": 8,
-          "name": "StagedCount",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S8",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "result",
-          "description": "published after each record"
+          ]
         },
         {
           "address": 9,

@@ -96,51 +96,6 @@
       "name": "Decision",
       "role": "result",
       "description": "1 ready, 2 child active, 3 wait for inventory, 4 probe, 5 replan, -2 overflow, -3 stale child, -4 child failed, -1 invalid"
-    },
-    {
-      "cells": "S32",
-      "start": 32,
-      "end": 32,
-      "name": "QuotedTotal",
-      "role": "result"
-    },
-    {
-      "cells": "S33",
-      "start": 33,
-      "end": 33,
-      "name": "NewQuoteFingerprintA",
-      "role": "result"
-    },
-    {
-      "cells": "S34",
-      "start": 34,
-      "end": 34,
-      "name": "NewQuoteFingerprintB",
-      "role": "result"
-    },
-    {
-      "cells": "S35",
-      "start": 35,
-      "end": 35,
-      "name": "ChildSlot",
-      "role": "result",
-      "description": "copied from Child Validity S18"
-    },
-    {
-      "cells": "S36",
-      "start": 36,
-      "end": 36,
-      "name": "ChildJobGeneration",
-      "role": "result",
-      "description": "copied from Child Validity S20"
-    },
-    {
-      "cells": "S37",
-      "start": 37,
-      "end": 37,
-      "name": "ChildState",
-      "role": "result",
-      "description": "copied from Child Validity S19"
     }
   ],
   "provider_interfaces": [
@@ -289,66 +244,57 @@
         },
         {
           "address": 32,
-          "name": "QuotedTotal",
+          "name": "S32",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 33,
-          "name": "NewQuoteFingerprintA",
+          "name": "S33",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 34,
-          "name": "NewQuoteFingerprintB",
+          "name": "S34",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 35,
-          "name": "ChildSlot",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S35",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result",
-          "description": "copied from Child Validity S18"
+          ]
         },
         {
           "address": 36,
-          "name": "ChildJobGeneration",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S36",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result",
-          "description": "copied from Child Validity S20"
+          ]
         },
         {
           "address": 37,
-          "name": "ChildState",
-          "value_type": "enum",
-          "semantic_source": "protocol-layout",
+          "name": "S37",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result",
-          "description": "copied from Child Validity S19"
+          ]
         }
       ],
       "behavior": {

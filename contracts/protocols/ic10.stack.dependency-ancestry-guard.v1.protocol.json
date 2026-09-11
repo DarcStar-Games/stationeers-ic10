@@ -68,14 +68,6 @@
       "name": "Status",
       "role": "state",
       "description": "1 admissible, -2 too deep, -3 cycle, -1 invalid"
-    },
-    {
-      "cells": "S18",
-      "start": 18,
-      "end": 18,
-      "name": "PostingCounter",
-      "role": "state",
-      "description": "postings under the current request, kept across reflash (#182)"
     }
   ],
   "provider_interfaces": [
@@ -199,15 +191,13 @@
         },
         {
           "address": 18,
-          "name": "PostingCounter",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S18",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state",
-          "description": "postings under the current request, kept across reflash (#182)"
+          ]
         }
       ],
       "behavior": {

@@ -268,34 +268,30 @@
       },
       {
         "address": 21,
-        "name": "ChildJobType",
-        "value_type": "hash",
-        "semantic_source": "protocol-layout",
+        "name": "S21",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 22,
-        "name": "ChildIdentity",
-        "value_type": "hash",
-        "semantic_source": "protocol-layout",
+        "name": "S22",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 23,
-        "name": "ChildOutputResourceType",
-        "value_type": "hash",
-        "semantic_source": "protocol-layout",
+        "name": "S23",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result",
-        "description": "the Requirement View's normalized output for the child"
+        ]
       }
     ],
     "headers": [

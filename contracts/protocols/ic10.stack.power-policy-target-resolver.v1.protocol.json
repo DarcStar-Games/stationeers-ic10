@@ -21,13 +21,6 @@
       "description": "1 producer, 2 consumer, 3 battery"
     },
     {
-      "cells": "S9",
-      "start": 9,
-      "end": 9,
-      "name": "ReservationGeneration",
-      "role": "result"
-    },
-    {
       "cells": "S10",
       "start": 10,
       "end": 10,
@@ -121,13 +114,12 @@
         },
         {
           "address": 9,
-          "name": "ReservationGeneration",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S9",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 10,

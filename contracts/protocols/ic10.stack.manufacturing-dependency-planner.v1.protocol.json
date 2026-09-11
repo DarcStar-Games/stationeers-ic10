@@ -102,13 +102,6 @@
       "end": 26,
       "name": "CleanupResponseToken",
       "role": "response_token"
-    },
-    {
-      "cells": "S27",
-      "start": 27,
-      "end": 27,
-      "name": "CleanupStatus",
-      "role": "state"
     }
   ],
   "provider_interfaces": [
@@ -222,13 +215,12 @@
         },
         {
           "address": 27,
-          "name": "CleanupStatus",
-          "value_type": "enum",
-          "semantic_source": "protocol-layout",
+          "name": "S27",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "state"
+          ]
         }
       ],
       "behavior": {

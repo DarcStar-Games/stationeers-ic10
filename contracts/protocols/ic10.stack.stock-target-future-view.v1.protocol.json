@@ -82,14 +82,6 @@
       "end": 24,
       "name": "PlanSequence",
       "role": "generation"
-    },
-    {
-      "cells": "S25",
-      "start": 25,
-      "end": 25,
-      "name": "ClaimPostingCounter",
-      "role": "state",
-      "description": "postings under the current request, kept across reflash"
     }
   ],
   "provider_interfaces": [
@@ -233,15 +225,13 @@
         },
         {
           "address": 25,
-          "name": "ClaimPostingCounter",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S25",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state",
-          "description": "postings under the current request, kept across reflash"
+          ]
         }
       ],
       "behavior": {

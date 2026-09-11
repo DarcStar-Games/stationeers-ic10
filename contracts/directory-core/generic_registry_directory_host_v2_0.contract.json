@@ -715,35 +715,32 @@
       },
       {
         "address": 16,
-        "name": "Status",
-        "value_type": "enum",
-        "semantic_source": "protocol-layout",
+        "name": "S16",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "state"
+        ]
       },
       {
         "address": 20,
-        "name": "RecordWidth",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S20",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
         ],
-        "const": 6,
-        "role": "metadata"
+        "const": 6
       },
       {
         "address": 21,
-        "name": "Capacity",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S21",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
         ],
-        "const": 64,
-        "role": "metadata"
+        "const": 64
       },
       {
         "address": 23,
@@ -759,37 +756,33 @@
       },
       {
         "address": 24,
-        "name": "FreezeTokenCounter",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S24",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "request_token",
-        "description": "freeze tokens issued to the adapter"
+        ]
       },
       {
         "address": 25,
-        "name": "AcceptedCandidateGeneration",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S25",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "generation"
+        ]
       },
       {
         "address": 26,
-        "name": "RegistryGeneration",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S26",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "generation"
+        ]
       }
     ],
     "headers": [

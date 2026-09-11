@@ -19,6 +19,7 @@ from framework.stack_field_map import (
     TOKEN_ROLES,
     doc_layout_blocks,
     doc_layout_errors,
+    documented_cells,
     field_map_document,
     layout_errors,
     load_generated,
@@ -37,12 +38,12 @@ except ValueError as error:
     raise SystemExit(validation.finish("Stack field map validation"))
 
 definitions, contracts = load_generated(ROOT)
-# Peers come from two places: the consumer edges the contracts prove, and the peers the
-# wiring map declares for a port that carries no such edge. Both must find a named cell.
-wired = wiring_touched_cells(ROOT, contracts)
-validation.extend(layout_errors(definitions, contracts, layouts, wired))
-
 reference = (ROOT / ABI_REFERENCE_DOC).read_text()
+# Peers come from two places: the consumer edges the contracts prove, and the peers the
+# wiring map declares for a port that carries no such edge. Both must find a named cell,
+# and every entry must name a cell one of them touches or a documented block cites.
+wired = wiring_touched_cells(ROOT, contracts)
+validation.extend(layout_errors(definitions, contracts, layouts, wired, documented_cells(reference)))
 validation.extend(doc_layout_errors(reference, layouts))
 
 # The provider contracts must carry what the layout says, so a hand edit of a generated
@@ -86,8 +87,9 @@ blocks = doc_layout_blocks(reference)
 raise SystemExit(validation.finish("Stack field map validation", [
     f"{len(layouts)} protocols carry a reviewed layout naming {mapped} cells across {len(ROLES)} roles",
     f"every one of the {touched} payload cells a peer reads or writes has a name and a role ({wired_only} of"
-    " them reached only through a wiring-declared peer), and every entry sits on cells its provider"
-    " touches or declares",
-    f"{len(blocks)} layout blocks in {ABI_REFERENCE_DOC} name their contract and cite only header or mapped cells",
+    " them reached only through a wiring-declared port or an attributed network write), and every entry"
+    " sits on cells its provider touches or declares",
+    f"{len(blocks)} layout blocks in {ABI_REFERENCE_DOC} name their contract and cite only header or mapped cells;"
+    " every entry names a peer-touched or documented cell",
     f"{tokens} token cells are named; provider contract fields agree with the map and {FIELD_MAP_DOC} is current",
 ]))

@@ -219,13 +219,12 @@
       },
       {
         "address": 17,
-        "name": "Status",
-        "value_type": "enum",
-        "semantic_source": "protocol-layout",
+        "name": "S17",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "state"
+        ]
       },
       {
         "address": 18,
@@ -260,13 +259,12 @@
       },
       {
         "address": 21,
-        "name": "ChildState",
-        "value_type": "enum",
-        "semantic_source": "protocol-layout",
+        "name": "S21",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result"
+        ]
       }
     ],
     "headers": [

@@ -13,24 +13,10 @@
   "canonical_refs": [],
   "layout": [
     {
-      "cells": "S8",
-      "start": 8,
-      "end": 8,
-      "name": "TransformType",
-      "role": "result"
-    },
-    {
       "cells": "S9",
       "start": 9,
       "end": 9,
       "name": "InputCount",
-      "role": "result"
-    },
-    {
-      "cells": "S10",
-      "start": 10,
-      "end": 10,
-      "name": "ProcessorRef",
       "role": "result"
     },
     {
@@ -48,19 +34,20 @@
       "role": "state"
     },
     {
-      "cells": "S13",
-      "start": 13,
-      "end": 13,
-      "name": "PublicationGeneration",
-      "role": "generation"
-    },
-    {
-      "cells": "S20..S83",
+      "cells": "S20..S31",
       "start": 20,
-      "end": 83,
+      "end": 31,
       "name": "LinkRecords",
       "role": "table",
-      "description": "four-cell [LinkRef, QuantityPerJob, ResourceType, ResourceClass] records; the Resolver fills up to three, the Stager and Allocator read the same window on the Print Material Resolver"
+      "description": "three four-cell [LinkRef, QuantityPerJob, ResourceType, ResourceClass] records"
+    },
+    {
+      "cells": "S32..S83",
+      "start": 32,
+      "end": 83,
+      "name": "UnusedRecordWindow",
+      "role": "reserved",
+      "description": "the Stager and Allocator scan the same S20..S83 window on either resolver and bound the walk by InputCount at S9; the Link Resolver publishes at most three records and never writes here"
     }
   ],
   "provider_interfaces": [
@@ -102,13 +89,12 @@
         },
         {
           "address": 8,
-          "name": "TransformType",
-          "value_type": "hash",
-          "semantic_source": "protocol-layout",
+          "name": "S8",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 9,
@@ -122,13 +108,12 @@
         },
         {
           "address": 10,
-          "name": "ProcessorRef",
+          "name": "S10",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 11,
@@ -152,14 +137,13 @@
         },
         {
           "address": 13,
-          "name": "PublicationGeneration",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S13",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "generation"
+          ]
         }
       ],
       "behavior": {

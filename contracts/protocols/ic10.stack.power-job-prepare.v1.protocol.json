@@ -98,13 +98,6 @@
       "name": "RequiredCapability",
       "role": "request",
       "description": "PowerMode"
-    },
-    {
-      "cells": "S20",
-      "start": 20,
-      "end": 20,
-      "name": "Phase",
-      "role": "state"
     }
   ],
   "provider_interfaces": [
@@ -270,14 +263,13 @@
         },
         {
           "address": 20,
-          "name": "Phase",
+          "name": "S20",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state"
+          ]
         }
       ],
       "behavior": {

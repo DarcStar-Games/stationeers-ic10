@@ -84,20 +84,6 @@
       "role": "result"
     },
     {
-      "cells": "S27",
-      "start": 27,
-      "end": 27,
-      "name": "OnHandQuantity",
-      "role": "result"
-    },
-    {
-      "cells": "S28",
-      "start": 28,
-      "end": 28,
-      "name": "UnclaimedFutureQuantity",
-      "role": "result"
-    },
-    {
       "cells": "S29",
       "start": 29,
       "end": 29,
@@ -255,23 +241,21 @@
         },
         {
           "address": 27,
-          "name": "OnHandQuantity",
+          "name": "S27",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 28,
-          "name": "UnclaimedFutureQuantity",
+          "name": "S28",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 29,

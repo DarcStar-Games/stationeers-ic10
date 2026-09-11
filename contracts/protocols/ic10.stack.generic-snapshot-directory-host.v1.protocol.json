@@ -88,13 +88,6 @@
       "role": "state"
     },
     {
-      "cells": "S23",
-      "start": 23,
-      "end": 23,
-      "name": "HostError",
-      "role": "error"
-    },
-    {
       "cells": "S24",
       "start": 24,
       "end": 24,
@@ -143,14 +136,6 @@
       "end": 30,
       "name": "OverflowB",
       "role": "bank"
-    },
-    {
-      "cells": "S31",
-      "start": 31,
-      "end": 31,
-      "name": "ReflashIdentity",
-      "role": "metadata",
-      "description": "same-image reflash marker holding the service identity"
     },
     {
       "cells": "S32..S415",
@@ -316,14 +301,13 @@
         },
         {
           "address": 23,
-          "name": "HostError",
+          "name": "S23",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
           ],
-          "const": -1,
-          "role": "error"
+          "const": -1
         },
         {
           "address": 24,
@@ -359,16 +343,14 @@
         },
         {
           "address": 31,
-          "name": "ReflashIdentity",
-          "value_type": "hash",
-          "semantic_source": "protocol-layout",
+          "name": "S31",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
           ],
-          "const": 891293726,
-          "role": "metadata",
-          "description": "same-image reflash marker holding the service identity"
+          "const": 891293726
         }
       ],
       "behavior": {

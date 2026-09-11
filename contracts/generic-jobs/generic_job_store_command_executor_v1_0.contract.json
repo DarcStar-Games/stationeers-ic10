@@ -320,49 +320,43 @@
       },
       {
         "address": 30,
-        "name": "StoreRequestCounter",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S30",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "generation",
-        "description": "source of the Store request generations"
+        ]
       },
       {
         "address": 31,
-        "name": "PendingStoreToken",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S31",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "request_token",
-        "description": "Store request in flight, kept across reflash"
+        ]
       },
       {
         "address": 32,
-        "name": "PendingClientToken",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S32",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "current_token"
+        ]
       },
       {
         "address": 34,
-        "name": "PendingSlot",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S34",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "state"
+        ]
       },
       {
         "address": 35,

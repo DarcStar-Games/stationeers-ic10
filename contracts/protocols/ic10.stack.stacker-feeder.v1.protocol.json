@@ -13,20 +13,6 @@
   "canonical_refs": [],
   "layout": [
     {
-      "cells": "S8",
-      "start": 8,
-      "end": 8,
-      "name": "ReadyEpoch",
-      "role": "epoch"
-    },
-    {
-      "cells": "S9",
-      "start": 9,
-      "end": 9,
-      "name": "EmittedEpoch",
-      "role": "epoch"
-    },
-    {
       "cells": "S10",
       "start": 10,
       "end": 10,
@@ -99,14 +85,6 @@
       "description": "Executor writes it only after the sink counter snapshot"
     },
     {
-      "cells": "S20..S23",
-      "start": 20,
-      "end": 23,
-      "name": "InternalState",
-      "role": "state",
-      "description": "persistent preparation state"
-    },
-    {
       "cells": "S24",
       "start": 24,
       "end": 24,
@@ -163,23 +141,21 @@
         },
         {
           "address": 8,
-          "name": "ReadyEpoch",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S8",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "epoch"
+          ]
         },
         {
           "address": 9,
-          "name": "EmittedEpoch",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S9",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "epoch"
+          ]
         },
         {
           "address": 10,
@@ -287,51 +263,43 @@
         },
         {
           "address": 20,
-          "name": "InternalState[0]",
-          "value_type": "enum",
-          "semantic_source": "protocol-layout",
+          "name": "S20",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state",
-          "description": "persistent preparation state"
+          ]
         },
         {
           "address": 21,
-          "name": "InternalState[1]",
-          "value_type": "enum",
-          "semantic_source": "protocol-layout",
+          "name": "S21",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state",
-          "description": "persistent preparation state"
+          ]
         },
         {
           "address": 22,
-          "name": "InternalState[2]",
-          "value_type": "enum",
-          "semantic_source": "protocol-layout",
+          "name": "S22",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state",
-          "description": "persistent preparation state"
+          ]
         },
         {
           "address": 23,
-          "name": "InternalState[3]",
-          "value_type": "enum",
-          "semantic_source": "protocol-layout",
+          "name": "S23",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state",
-          "description": "persistent preparation state"
+          ]
         },
         {
           "address": 24,
@@ -420,23 +388,21 @@
         },
         {
           "address": 8,
-          "name": "ReadyEpoch",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S8",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "epoch"
+          ]
         },
         {
           "address": 9,
-          "name": "EmittedEpoch",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S9",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "epoch"
+          ]
         },
         {
           "address": 10,
@@ -543,51 +509,43 @@
         },
         {
           "address": 20,
-          "name": "InternalState[0]",
-          "value_type": "enum",
-          "semantic_source": "protocol-layout",
+          "name": "S20",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state",
-          "description": "persistent preparation state"
+          ]
         },
         {
           "address": 21,
-          "name": "InternalState[1]",
-          "value_type": "enum",
-          "semantic_source": "protocol-layout",
+          "name": "S21",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state",
-          "description": "persistent preparation state"
+          ]
         },
         {
           "address": 22,
-          "name": "InternalState[2]",
-          "value_type": "enum",
-          "semantic_source": "protocol-layout",
+          "name": "S22",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state",
-          "description": "persistent preparation state"
+          ]
         },
         {
           "address": 23,
-          "name": "InternalState[3]",
-          "value_type": "enum",
-          "semantic_source": "protocol-layout",
+          "name": "S23",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state",
-          "description": "persistent preparation state"
+          ]
         },
         {
           "address": 24,

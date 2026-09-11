@@ -21,20 +21,6 @@
       "description": "1 flow staged, 0 no source, -1 fault"
     },
     {
-      "cells": "S9",
-      "start": 9,
-      "end": 9,
-      "name": "SourceWatts",
-      "role": "result"
-    },
-    {
-      "cells": "S10",
-      "start": 10,
-      "end": 10,
-      "name": "SourceReservationRef",
-      "role": "result"
-    },
-    {
       "cells": "S11",
       "start": 11,
       "end": 11,
@@ -68,13 +54,6 @@
       "end": 16,
       "name": "ResponseToken",
       "role": "response_token"
-    },
-    {
-      "cells": "S20",
-      "start": 20,
-      "end": 20,
-      "name": "Phase",
-      "role": "state"
     }
   ],
   "provider_interfaces": [
@@ -128,23 +107,21 @@
         },
         {
           "address": 9,
-          "name": "SourceWatts",
+          "name": "S9",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 10,
-          "name": "SourceReservationRef",
+          "name": "S10",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 11,
@@ -199,14 +176,13 @@
         },
         {
           "address": 20,
-          "name": "Phase",
+          "name": "S20",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state"
+          ]
         }
       ],
       "behavior": {

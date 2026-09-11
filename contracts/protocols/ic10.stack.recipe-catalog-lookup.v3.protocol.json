@@ -21,14 +21,6 @@
       "description": "1 found, -1 invalid, -2 catalog invalid, -3 missing"
     },
     {
-      "cells": "S9",
-      "start": 9,
-      "end": 9,
-      "name": "EligibleRecipeCount",
-      "role": "result",
-      "description": "recipes in the family under the capability ceiling"
-    },
-    {
       "cells": "S10",
       "start": 10,
       "end": 10,
@@ -128,14 +120,12 @@
         },
         {
           "address": 9,
-          "name": "EligibleRecipeCount",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S9",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result",
-          "description": "recipes in the family under the capability ceiling"
+          ]
         },
         {
           "address": 10,

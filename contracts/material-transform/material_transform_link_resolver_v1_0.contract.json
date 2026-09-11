@@ -300,13 +300,12 @@
       },
       {
         "address": 8,
-        "name": "TransformType",
-        "value_type": "hash",
-        "semantic_source": "protocol-layout",
+        "name": "S8",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 9,
@@ -320,13 +319,12 @@
       },
       {
         "address": 10,
-        "name": "ProcessorRef",
+        "name": "S10",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 11,
@@ -350,14 +348,13 @@
       },
       {
         "address": 13,
-        "name": "PublicationGeneration",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S13",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "generation"
+        ]
       }
     ],
     "headers": [

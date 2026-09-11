@@ -95,27 +95,6 @@
       "end": 19,
       "name": "RequestedQuantity",
       "role": "request"
-    },
-    {
-      "cells": "S20",
-      "start": 20,
-      "end": 20,
-      "name": "Phase",
-      "role": "state"
-    },
-    {
-      "cells": "S30",
-      "start": 30,
-      "end": 30,
-      "name": "ResultCode",
-      "role": "result"
-    },
-    {
-      "cells": "S33",
-      "start": 33,
-      "end": 33,
-      "name": "ResolvedPrinterRef",
-      "role": "result"
     }
   ],
   "provider_interfaces": [
@@ -253,36 +232,33 @@
         },
         {
           "address": 20,
-          "name": "Phase",
+          "name": "S20",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state"
+          ]
         },
         {
           "address": 30,
-          "name": "ResultCode",
+          "name": "S30",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 33,
-          "name": "ResolvedPrinterRef",
+          "name": "S33",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "result"
+          ]
         }
       ],
       "behavior": {

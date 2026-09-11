@@ -104,21 +104,6 @@
       "role": "result"
     },
     {
-      "cells": "S29",
-      "start": 29,
-      "end": 29,
-      "name": "AllocatedSlot",
-      "role": "result"
-    },
-    {
-      "cells": "S30",
-      "start": 30,
-      "end": 30,
-      "name": "PendingGatewayToken",
-      "role": "request_token",
-      "description": "lane E token in flight, kept across reflash"
-    },
-    {
       "cells": "S31",
       "start": 31,
       "end": 31,
@@ -312,25 +297,22 @@
         },
         {
           "address": 29,
-          "name": "AllocatedSlot",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S29",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 30,
-          "name": "PendingGatewayToken",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S30",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "request_token",
-          "description": "lane E token in flight, kept across reflash"
+          ]
         },
         {
           "address": 31,

@@ -75,27 +75,6 @@
       "end": 16,
       "name": "BatchCount",
       "role": "request"
-    },
-    {
-      "cells": "S20",
-      "start": 20,
-      "end": 20,
-      "name": "Phase",
-      "role": "state"
-    },
-    {
-      "cells": "S30",
-      "start": 30,
-      "end": 30,
-      "name": "AdmissionGeneration",
-      "role": "generation"
-    },
-    {
-      "cells": "S31",
-      "start": 31,
-      "end": 31,
-      "name": "ResolverGeneration",
-      "role": "generation"
     }
   ],
   "provider_interfaces": [
@@ -230,36 +209,33 @@
         },
         {
           "address": 20,
-          "name": "Phase",
+          "name": "S20",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state"
+          ]
         },
         {
           "address": 30,
-          "name": "AdmissionGeneration",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S30",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "generation"
+          ]
         },
         {
           "address": 31,
-          "name": "ResolverGeneration",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S31",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "generation"
+          ]
         }
       ],
       "behavior": {

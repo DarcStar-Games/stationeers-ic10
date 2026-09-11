@@ -74,21 +74,6 @@
       "end": 23,
       "name": "AllocatedSlot",
       "role": "result"
-    },
-    {
-      "cells": "S30",
-      "start": 30,
-      "end": 30,
-      "name": "PendingGatewayToken",
-      "role": "request_token",
-      "description": "lane F token in flight, kept across reflash"
-    },
-    {
-      "cells": "S31",
-      "start": 31,
-      "end": 31,
-      "name": "PendingClientToken",
-      "role": "current_token"
     }
   ],
   "provider_interfaces": [
@@ -223,26 +208,23 @@
         },
         {
           "address": 30,
-          "name": "PendingGatewayToken",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S30",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "request_token",
-          "description": "lane F token in flight, kept across reflash"
+          ]
         },
         {
           "address": 31,
-          "name": "PendingClientToken",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S31",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "current_token"
+          ]
         }
       ],
       "behavior": {

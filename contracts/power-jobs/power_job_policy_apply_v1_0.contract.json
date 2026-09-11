@@ -240,33 +240,30 @@
       },
       {
         "address": 11,
-        "name": "ReservationRef",
+        "name": "S11",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 12,
-        "name": "EndpointRef",
+        "name": "S12",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 13,
-        "name": "ReservationGeneration",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S13",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 14,

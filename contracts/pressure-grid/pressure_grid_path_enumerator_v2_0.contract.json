@@ -240,25 +240,22 @@
       },
       {
         "address": 11,
-        "name": "ActiveSearchId",
+        "name": "S11",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 24,
-        "name": "ResumeKey",
+        "name": "S24",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "state",
-        "description": "the search the enumerator may resume; ended on a fault"
+        ]
       },
       {
         "address": 32,

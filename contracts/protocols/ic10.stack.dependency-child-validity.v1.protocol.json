@@ -71,28 +71,6 @@
       "name": "ChildJobGeneration",
       "role": "result",
       "description": "copied from Monitor S23; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation. The Claim View reads this cell as the child's ResourceType"
-    },
-    {
-      "cells": "S21",
-      "start": 21,
-      "end": 21,
-      "name": "ChildJobType",
-      "role": "result"
-    },
-    {
-      "cells": "S22",
-      "start": 22,
-      "end": 22,
-      "name": "ChildIdentity",
-      "role": "result"
-    },
-    {
-      "cells": "S23",
-      "start": 23,
-      "end": 23,
-      "name": "ChildOutputResourceType",
-      "role": "result",
-      "description": "the Requirement View's normalized output for the child"
     }
   ],
   "provider_interfaces": [
@@ -219,34 +197,30 @@
         },
         {
           "address": 21,
-          "name": "ChildJobType",
-          "value_type": "hash",
-          "semantic_source": "protocol-layout",
+          "name": "S21",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 22,
-          "name": "ChildIdentity",
-          "value_type": "hash",
-          "semantic_source": "protocol-layout",
+          "name": "S22",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 23,
-          "name": "ChildOutputResourceType",
-          "value_type": "hash",
-          "semantic_source": "protocol-layout",
+          "name": "S23",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result",
-          "description": "the Requirement View's normalized output for the child"
+          ]
         }
       ],
       "behavior": {

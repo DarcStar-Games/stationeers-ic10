@@ -20,27 +20,6 @@
       "role": "result"
     },
     {
-      "cells": "S9",
-      "start": 9,
-      "end": 9,
-      "name": "OwningBankRef",
-      "role": "state"
-    },
-    {
-      "cells": "S10",
-      "start": 10,
-      "end": 10,
-      "name": "OwningPin",
-      "role": "state"
-    },
-    {
-      "cells": "S11",
-      "start": 11,
-      "end": 11,
-      "name": "ReservationToken",
-      "role": "epoch"
-    },
-    {
       "cells": "S12",
       "start": 12,
       "end": 12,
@@ -134,36 +113,33 @@
         },
         {
           "address": 9,
-          "name": "OwningBankRef",
+          "name": "S9",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state"
+          ]
         },
         {
           "address": 10,
-          "name": "OwningPin",
+          "name": "S10",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state"
+          ]
         },
         {
           "address": 11,
-          "name": "ReservationToken",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S11",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "epoch"
+          ]
         },
         {
           "address": 12,

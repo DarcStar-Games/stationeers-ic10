@@ -259,69 +259,57 @@
       },
       {
         "address": 8,
-        "name": "DirectorySummary[0]",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S8",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "telemetry",
-        "description": "aggregate directory health and capacity summary"
+        ]
       },
       {
         "address": 9,
-        "name": "DirectorySummary[1]",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "telemetry",
-        "description": "aggregate directory health and capacity summary"
+        ]
       },
       {
         "address": 10,
-        "name": "DirectorySummary[2]",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S10",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "telemetry",
-        "description": "aggregate directory health and capacity summary"
+        ]
       },
       {
         "address": 11,
-        "name": "DirectorySummary[3]",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S11",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "telemetry",
-        "description": "aggregate directory health and capacity summary"
+        ]
       },
       {
         "address": 12,
-        "name": "DirectorySummary[4]",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S12",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "telemetry",
-        "description": "aggregate directory health and capacity summary"
+        ]
       },
       {
         "address": 13,
-        "name": "DirectorySummary[5]",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S13",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "telemetry",
-        "description": "aggregate directory health and capacity summary"
+        ]
       },
       {
         "address": 14,
@@ -387,14 +375,13 @@
       },
       {
         "address": 20,
-        "name": "AssignmentEpochCounter",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S20",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "epoch"
+        ]
       },
       {
         "address": 21,
@@ -422,13 +409,12 @@
       },
       {
         "address": 23,
-        "name": "RegistryDirectoryRef",
+        "name": "S23",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "topology"
+        ]
       },
       {
         "address": 25,

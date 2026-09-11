@@ -260,15 +260,13 @@
       },
       {
         "address": 13,
-        "name": "EpochCounter",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S13",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "epoch",
-        "description": "next epoch"
+        ]
       },
       {
         "address": 14,
@@ -284,13 +282,12 @@
       },
       {
         "address": 15,
-        "name": "CompletedEpoch",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S15",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "epoch"
+        ]
       },
       {
         "address": 16,
@@ -305,39 +302,33 @@
       },
       {
         "address": 17,
-        "name": "StagerCoordination[0]",
+        "name": "S17",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "request",
-        "description": "commands and results exchanged with the Stager"
+        ]
       },
       {
         "address": 18,
-        "name": "StagerCoordination[1]",
+        "name": "S18",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "request",
-        "description": "commands and results exchanged with the Stager"
+        ]
       },
       {
         "address": 19,
-        "name": "StagerCoordination[2]",
+        "name": "S19",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "request",
-        "description": "commands and results exchanged with the Stager"
+        ]
       },
       {
         "address": 20,
@@ -383,16 +374,14 @@
       },
       {
         "address": 31,
-        "name": "ReflashIdentity",
-        "value_type": "hash",
-        "semantic_source": "protocol-layout",
+        "name": "S31",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
         ],
-        "const": 924888977,
-        "role": "metadata",
-        "description": "same-image reflash marker holding the service identity"
+        "const": 924888977
       }
     ],
     "headers": [

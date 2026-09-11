@@ -15,7 +15,61 @@
     "data/resource_profiles.json#",
     "data/resource_transforms.json#"
   ],
-  "layout": [],
+  "layout": [
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "CatalogInstanceId",
+      "role": "metadata"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "PartitionKey",
+      "role": "metadata"
+    },
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "ItemCount",
+      "role": "metadata"
+    },
+    {
+      "cells": "S18",
+      "start": 18,
+      "end": 18,
+      "name": "Ready",
+      "role": "state",
+      "description": "immutable candidate publication, written last"
+    },
+    {
+      "cells": "S19",
+      "start": 19,
+      "end": 19,
+      "name": "TargetStoreRef",
+      "role": "topology",
+      "description": "Router-owned placement; begins zero"
+    },
+    {
+      "cells": "S20",
+      "start": 20,
+      "end": 20,
+      "name": "AssignmentEpoch",
+      "role": "epoch",
+      "description": "Router-owned assignment token; begins zero"
+    },
+    {
+      "cells": "S21",
+      "start": 21,
+      "end": 21,
+      "name": "ImportedItemIndex",
+      "role": "state",
+      "description": "next imported item index, advanced by the Router and Store"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/input-profile-catalog/input_profile_catalog_loader_00_v4_0.ic10",
@@ -70,13 +124,14 @@
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "CatalogInstanceId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1256571547
+          "const": -1256571547,
+          "role": "metadata"
         },
         {
           "address": 12,
@@ -100,13 +155,14 @@
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 2
+          "const": 2,
+          "role": "metadata"
         },
         {
           "address": 15,
@@ -140,14 +196,15 @@
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "Ready",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
           "const": 1,
-          "description": "immutable candidate publication LAST"
+          "description": "immutable candidate publication LAST",
+          "role": "state"
         },
         {
           "address": 19,
@@ -158,7 +215,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import.",
+          "role": "topology"
         },
         {
           "address": 20,
@@ -169,7 +227,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime assignment token from the Router."
+          "description": "Runtime assignment token from the Router.",
+          "role": "epoch"
         },
         {
           "address": 21,
@@ -180,7 +239,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Next item index already imported, advanced by the Store."
+          "description": "Next item index already imported, advanced by the Store.",
+          "role": "state"
         },
         {
           "address": 24,
@@ -1199,13 +1259,14 @@
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "CatalogInstanceId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1256571547
+          "const": -1256571547,
+          "role": "metadata"
         },
         {
           "address": 12,
@@ -1229,13 +1290,14 @@
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "metadata"
         },
         {
           "address": 15,
@@ -1269,14 +1331,15 @@
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "Ready",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
           "const": 1,
-          "description": "immutable candidate publication LAST"
+          "description": "immutable candidate publication LAST",
+          "role": "state"
         },
         {
           "address": 19,
@@ -1287,7 +1350,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import.",
+          "role": "topology"
         },
         {
           "address": 20,
@@ -1298,7 +1362,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime assignment token from the Router."
+          "description": "Runtime assignment token from the Router.",
+          "role": "epoch"
         },
         {
           "address": 21,
@@ -1309,7 +1374,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Next item index already imported, advanced by the Store."
+          "description": "Next item index already imported, advanced by the Store.",
+          "role": "state"
         },
         {
           "address": 24,
@@ -2056,13 +2122,14 @@
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "CatalogInstanceId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1256571547
+          "const": -1256571547,
+          "role": "metadata"
         },
         {
           "address": 12,
@@ -2086,13 +2153,14 @@
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 3
+          "const": 3,
+          "role": "metadata"
         },
         {
           "address": 15,
@@ -2126,14 +2194,15 @@
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "Ready",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
           "const": 1,
-          "description": "immutable candidate publication LAST"
+          "description": "immutable candidate publication LAST",
+          "role": "state"
         },
         {
           "address": 19,
@@ -2144,7 +2213,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import.",
+          "role": "topology"
         },
         {
           "address": 20,
@@ -2155,7 +2225,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime assignment token from the Router."
+          "description": "Runtime assignment token from the Router.",
+          "role": "epoch"
         },
         {
           "address": 21,
@@ -2166,7 +2237,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Next item index already imported, advanced by the Store."
+          "description": "Next item index already imported, advanced by the Store.",
+          "role": "state"
         },
         {
           "address": 24,
@@ -3232,23 +3304,25 @@
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "CatalogInstanceId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -2092815670
+          "const": -2092815670,
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
+          "name": "PartitionKey",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 5
+          "const": 5,
+          "role": "metadata"
         },
         {
           "address": 12,
@@ -3272,13 +3346,14 @@
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "metadata"
         },
         {
           "address": 15,
@@ -3312,14 +3387,15 @@
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "Ready",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
           "const": 1,
-          "description": "immutable candidate publication LAST"
+          "description": "immutable candidate publication LAST",
+          "role": "state"
         },
         {
           "address": 19,
@@ -3330,7 +3406,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import.",
+          "role": "topology"
         },
         {
           "address": 20,
@@ -3341,7 +3418,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime assignment token from the Router."
+          "description": "Runtime assignment token from the Router.",
+          "role": "epoch"
         },
         {
           "address": 21,
@@ -3352,7 +3430,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Next item index already imported, advanced by the Store."
+          "description": "Next item index already imported, advanced by the Store.",
+          "role": "state"
         },
         {
           "address": 24,
@@ -3510,23 +3589,25 @@
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "CatalogInstanceId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -2092815670
+          "const": -2092815670,
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
+          "name": "PartitionKey",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "metadata"
         },
         {
           "address": 12,
@@ -3550,13 +3631,14 @@
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 6
+          "const": 6,
+          "role": "metadata"
         },
         {
           "address": 15,
@@ -3590,14 +3672,15 @@
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "Ready",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
           "const": 1,
-          "description": "immutable candidate publication LAST"
+          "description": "immutable candidate publication LAST",
+          "role": "state"
         },
         {
           "address": 19,
@@ -3608,7 +3691,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import.",
+          "role": "topology"
         },
         {
           "address": 20,
@@ -3619,7 +3703,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime assignment token from the Router."
+          "description": "Runtime assignment token from the Router.",
+          "role": "epoch"
         },
         {
           "address": 21,
@@ -3630,7 +3715,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Next item index already imported, advanced by the Store."
+          "description": "Next item index already imported, advanced by the Store.",
+          "role": "state"
         },
         {
           "address": 24,
@@ -4677,23 +4763,25 @@
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "CatalogInstanceId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -2092815670
+          "const": -2092815670,
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
+          "name": "PartitionKey",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "metadata"
         },
         {
           "address": 12,
@@ -4717,13 +4805,14 @@
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 4
+          "const": 4,
+          "role": "metadata"
         },
         {
           "address": 15,
@@ -4757,14 +4846,15 @@
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "Ready",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
           "const": 1,
-          "description": "immutable candidate publication LAST"
+          "description": "immutable candidate publication LAST",
+          "role": "state"
         },
         {
           "address": 19,
@@ -4775,7 +4865,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import.",
+          "role": "topology"
         },
         {
           "address": 20,
@@ -4786,7 +4877,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime assignment token from the Router."
+          "description": "Runtime assignment token from the Router.",
+          "role": "epoch"
         },
         {
           "address": 21,
@@ -4797,7 +4889,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Next item index already imported, advanced by the Store."
+          "description": "Next item index already imported, advanced by the Store.",
+          "role": "state"
         },
         {
           "address": 24,
@@ -5523,23 +5616,25 @@
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "CatalogInstanceId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -2092815670
+          "const": -2092815670,
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
+          "name": "PartitionKey",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 2
+          "const": 2,
+          "role": "metadata"
         },
         {
           "address": 12,
@@ -5563,13 +5658,14 @@
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 11
+          "const": 11,
+          "role": "metadata"
         },
         {
           "address": 15,
@@ -5603,14 +5699,15 @@
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "Ready",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
           "const": 1,
-          "description": "immutable candidate publication LAST"
+          "description": "immutable candidate publication LAST",
+          "role": "state"
         },
         {
           "address": 19,
@@ -5621,7 +5718,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import.",
+          "role": "topology"
         },
         {
           "address": 20,
@@ -5632,7 +5730,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime assignment token from the Router."
+          "description": "Runtime assignment token from the Router.",
+          "role": "epoch"
         },
         {
           "address": 21,
@@ -5643,7 +5742,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Next item index already imported, advanced by the Store."
+          "description": "Next item index already imported, advanced by the Store.",
+          "role": "state"
         },
         {
           "address": 24,
@@ -6741,23 +6841,25 @@
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "CatalogInstanceId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -2092815670
+          "const": -2092815670,
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
+          "name": "PartitionKey",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 2
+          "const": 2,
+          "role": "metadata"
         },
         {
           "address": 12,
@@ -6781,13 +6883,14 @@
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 10
+          "const": 10,
+          "role": "metadata"
         },
         {
           "address": 15,
@@ -6821,14 +6924,15 @@
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "Ready",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
           "const": 1,
-          "description": "immutable candidate publication LAST"
+          "description": "immutable candidate publication LAST",
+          "role": "state"
         },
         {
           "address": 19,
@@ -6839,7 +6943,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import.",
+          "role": "topology"
         },
         {
           "address": 20,
@@ -6850,7 +6955,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime assignment token from the Router."
+          "description": "Runtime assignment token from the Router.",
+          "role": "epoch"
         },
         {
           "address": 21,
@@ -6861,7 +6967,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Next item index already imported, advanced by the Store."
+          "description": "Next item index already imported, advanced by the Store.",
+          "role": "state"
         },
         {
           "address": 24,
@@ -7958,23 +8065,25 @@
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "CatalogInstanceId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -2092815670
+          "const": -2092815670,
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
+          "name": "PartitionKey",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 2
+          "const": 2,
+          "role": "metadata"
         },
         {
           "address": 12,
@@ -7998,13 +8107,14 @@
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 6
+          "const": 6,
+          "role": "metadata"
         },
         {
           "address": 15,
@@ -8038,14 +8148,15 @@
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "Ready",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
           "const": 1,
-          "description": "immutable candidate publication LAST"
+          "description": "immutable candidate publication LAST",
+          "role": "state"
         },
         {
           "address": 19,
@@ -8056,7 +8167,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import.",
+          "role": "topology"
         },
         {
           "address": 20,
@@ -8067,7 +8179,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime assignment token from the Router."
+          "description": "Runtime assignment token from the Router.",
+          "role": "epoch"
         },
         {
           "address": 21,
@@ -8078,7 +8191,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Next item index already imported, advanced by the Store."
+          "description": "Next item index already imported, advanced by the Store.",
+          "role": "state"
         },
         {
           "address": 24,
@@ -8771,23 +8885,25 @@
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "CatalogInstanceId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -2092815670
+          "const": -2092815670,
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
+          "name": "PartitionKey",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 4
+          "const": 4,
+          "role": "metadata"
         },
         {
           "address": 12,
@@ -8811,13 +8927,14 @@
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "metadata"
         },
         {
           "address": 15,
@@ -8851,14 +8968,15 @@
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "Ready",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
           "const": 1,
-          "description": "immutable candidate publication LAST"
+          "description": "immutable candidate publication LAST",
+          "role": "state"
         },
         {
           "address": 19,
@@ -8869,7 +8987,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import.",
+          "role": "topology"
         },
         {
           "address": 20,
@@ -8880,7 +8999,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime assignment token from the Router."
+          "description": "Runtime assignment token from the Router.",
+          "role": "epoch"
         },
         {
           "address": 21,
@@ -8891,7 +9011,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Next item index already imported, advanced by the Store."
+          "description": "Next item index already imported, advanced by the Store.",
+          "role": "state"
         },
         {
           "address": 24,
@@ -9049,13 +9170,14 @@
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "CatalogInstanceId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1369564795
+          "const": -1369564795,
+          "role": "metadata"
         },
         {
           "address": 12,
@@ -9079,13 +9201,14 @@
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 5
+          "const": 5,
+          "role": "metadata"
         },
         {
           "address": 15,
@@ -9119,14 +9242,15 @@
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "Ready",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
           "const": 1,
-          "description": "immutable candidate publication LAST"
+          "description": "immutable candidate publication LAST",
+          "role": "state"
         },
         {
           "address": 19,
@@ -9137,7 +9261,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import.",
+          "role": "topology"
         },
         {
           "address": 20,
@@ -9148,7 +9273,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime assignment token from the Router."
+          "description": "Runtime assignment token from the Router.",
+          "role": "epoch"
         },
         {
           "address": 21,
@@ -9159,7 +9285,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Next item index already imported, advanced by the Store."
+          "description": "Next item index already imported, advanced by the Store.",
+          "role": "state"
         },
         {
           "address": 24,
@@ -10201,13 +10328,14 @@
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "CatalogInstanceId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1369564795
+          "const": -1369564795,
+          "role": "metadata"
         },
         {
           "address": 12,
@@ -10231,13 +10359,14 @@
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 4
+          "const": 4,
+          "role": "metadata"
         },
         {
           "address": 15,
@@ -10271,14 +10400,15 @@
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "Ready",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
           "const": 1,
-          "description": "immutable candidate publication LAST"
+          "description": "immutable candidate publication LAST",
+          "role": "state"
         },
         {
           "address": 19,
@@ -10289,7 +10419,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import.",
+          "role": "topology"
         },
         {
           "address": 20,
@@ -10300,7 +10431,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime assignment token from the Router."
+          "description": "Runtime assignment token from the Router.",
+          "role": "epoch"
         },
         {
           "address": 21,
@@ -10311,7 +10443,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Next item index already imported, advanced by the Store."
+          "description": "Next item index already imported, advanced by the Store.",
+          "role": "state"
         },
         {
           "address": 24,
@@ -11242,13 +11375,14 @@
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "CatalogInstanceId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1369564795
+          "const": -1369564795,
+          "role": "metadata"
         },
         {
           "address": 12,
@@ -11272,13 +11406,14 @@
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 4
+          "const": 4,
+          "role": "metadata"
         },
         {
           "address": 15,
@@ -11312,14 +11447,15 @@
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "Ready",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
           "const": 1,
-          "description": "immutable candidate publication LAST"
+          "description": "immutable candidate publication LAST",
+          "role": "state"
         },
         {
           "address": 19,
@@ -11330,7 +11466,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import.",
+          "role": "topology"
         },
         {
           "address": 20,
@@ -11341,7 +11478,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime assignment token from the Router."
+          "description": "Runtime assignment token from the Router.",
+          "role": "epoch"
         },
         {
           "address": 21,
@@ -11352,7 +11490,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Next item index already imported, advanced by the Store."
+          "description": "Next item index already imported, advanced by the Store.",
+          "role": "state"
         },
         {
           "address": 24,
@@ -12403,13 +12542,14 @@
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "CatalogInstanceId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1369564795
+          "const": -1369564795,
+          "role": "metadata"
         },
         {
           "address": 12,
@@ -12433,13 +12573,14 @@
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 3
+          "const": 3,
+          "role": "metadata"
         },
         {
           "address": 15,
@@ -12473,14 +12614,15 @@
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "Ready",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
           "const": 1,
-          "description": "immutable candidate publication LAST"
+          "description": "immutable candidate publication LAST",
+          "role": "state"
         },
         {
           "address": 19,
@@ -12491,7 +12633,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import.",
+          "role": "topology"
         },
         {
           "address": 20,
@@ -12502,7 +12645,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime assignment token from the Router."
+          "description": "Runtime assignment token from the Router.",
+          "role": "epoch"
         },
         {
           "address": 21,
@@ -12513,7 +12657,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Next item index already imported, advanced by the Store."
+          "description": "Next item index already imported, advanced by the Store.",
+          "role": "state"
         },
         {
           "address": 24,
@@ -13413,13 +13558,14 @@
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "CatalogInstanceId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1369564795
+          "const": -1369564795,
+          "role": "metadata"
         },
         {
           "address": 12,
@@ -13443,13 +13589,14 @@
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "metadata"
         },
         {
           "address": 15,
@@ -13483,14 +13630,15 @@
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "Ready",
           "value_type": "number",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
           "const": 1,
-          "description": "immutable candidate publication LAST"
+          "description": "immutable candidate publication LAST",
+          "role": "state"
         },
         {
           "address": 19,
@@ -13501,7 +13649,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import."
+          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import.",
+          "role": "topology"
         },
         {
           "address": 20,
@@ -13512,7 +13661,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Runtime assignment token from the Router."
+          "description": "Runtime assignment token from the Router.",
+          "role": "epoch"
         },
         {
           "address": 21,
@@ -13523,7 +13673,8 @@
             "external-read",
             "external-write"
           ],
-          "description": "Next item index already imported, advanced by the Store."
+          "description": "Next item index already imported, advanced by the Store.",
+          "role": "state"
         },
         {
           "address": 24,

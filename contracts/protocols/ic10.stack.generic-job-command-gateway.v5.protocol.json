@@ -27,13 +27,6 @@
       "role": "state"
     },
     {
-      "cells": "S10",
-      "start": 10,
-      "end": 10,
-      "name": "LaneAAllocatedJobId",
-      "role": "result"
-    },
-    {
       "cells": "S11",
       "start": 11,
       "end": 11,
@@ -77,29 +70,6 @@
       "role": "request_token"
     },
     {
-      "cells": "S24",
-      "start": 24,
-      "end": 24,
-      "name": "PendingLaneClass",
-      "role": "state",
-      "description": "0 idle; the lane class of the command in flight"
-    },
-    {
-      "cells": "S25",
-      "start": 25,
-      "end": 25,
-      "name": "PendingToken",
-      "role": "current_token",
-      "description": "client token of the command in flight"
-    },
-    {
-      "cells": "S26",
-      "start": 26,
-      "end": 26,
-      "name": "PendingLaneBase",
-      "role": "state"
-    },
-    {
       "cells": "S32",
       "start": 32,
       "end": 32,
@@ -112,21 +82,6 @@
       "end": 33,
       "name": "LaneBResponseToken",
       "role": "response_token"
-    },
-    {
-      "cells": "S34",
-      "start": 34,
-      "end": 34,
-      "name": "LaneBStatus",
-      "role": "state",
-      "description": "1 success, negative rejected"
-    },
-    {
-      "cells": "S35",
-      "start": 35,
-      "end": 35,
-      "name": "LaneBAllocatedJobId",
-      "role": "result"
     },
     {
       "cells": "S36",
@@ -194,13 +149,6 @@
       "role": "result"
     },
     {
-      "cells": "S52",
-      "start": 52,
-      "end": 52,
-      "name": "LaneCAllocatedSlot",
-      "role": "result"
-    },
-    {
       "cells": "S53",
       "start": 53,
       "end": 53,
@@ -250,13 +198,6 @@
       "name": "LaneDStatus",
       "role": "state",
       "description": "1 success, negative rejected"
-    },
-    {
-      "cells": "S67",
-      "start": 67,
-      "end": 67,
-      "name": "LaneDAllocatedJobId",
-      "role": "result"
     },
     {
       "cells": "S68",
@@ -502,38 +443,33 @@
         },
         {
           "address": 24,
-          "name": "PendingLaneClass",
-          "value_type": "enum",
-          "semantic_source": "protocol-layout",
+          "name": "S24",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state",
-          "description": "0 idle; the lane class of the command in flight"
+          ]
         },
         {
           "address": 25,
-          "name": "PendingToken",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S25",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "current_token",
-          "description": "client token of the command in flight"
+          ]
         },
         {
           "address": 26,
-          "name": "PendingLaneBase",
+          "name": "S26",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state"
+          ]
         },
         {
           "address": 53,

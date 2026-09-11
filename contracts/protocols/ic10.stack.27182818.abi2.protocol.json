@@ -12,14 +12,6 @@
   "canonical_refs": [],
   "layout": [
     {
-      "cells": "S98",
-      "start": 98,
-      "end": 98,
-      "name": "ChannelMask",
-      "role": "metadata",
-      "description": "bitmask of the telemetry channels the controller publishes"
-    },
-    {
       "cells": "S99",
       "start": 99,
       "end": 99,
@@ -72,14 +64,6 @@
       "name": "TelemetryGeneration",
       "role": "generation",
       "description": "written last; payload precedes it"
-    },
-    {
-      "cells": "S116",
-      "start": 116,
-      "end": 116,
-      "name": "ConfigHostRef",
-      "role": "topology",
-      "description": "paired Generic Config Host ReferenceId"
     },
     {
       "cells": "S117",
@@ -179,15 +163,13 @@
         },
         {
           "address": 98,
-          "name": "ChannelMask",
+          "name": "S98",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
           ],
-          "const": 254,
-          "role": "metadata",
-          "description": "bitmask of the telemetry channels the controller publishes"
+          "const": 254
         },
         {
           "address": 99,
@@ -291,15 +273,13 @@
         },
         {
           "address": 116,
-          "name": "ConfigHostRef",
-          "value_type": "reference-id",
-          "semantic_source": "protocol-layout",
+          "name": "S116",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "topology",
-          "description": "paired Generic Config Host ReferenceId"
+          ]
         },
         {
           "address": 117,
@@ -430,15 +410,13 @@
         },
         {
           "address": 98,
-          "name": "ChannelMask",
+          "name": "S98",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
           ],
-          "const": 126,
-          "role": "metadata",
-          "description": "bitmask of the telemetry channels the controller publishes"
+          "const": 126
         },
         {
           "address": 99,
@@ -531,15 +509,13 @@
         },
         {
           "address": 116,
-          "name": "ConfigHostRef",
-          "value_type": "reference-id",
-          "semantic_source": "protocol-layout",
+          "name": "S116",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "topology",
-          "description": "paired Generic Config Host ReferenceId"
+          ]
         },
         {
           "address": 117,
@@ -670,15 +646,13 @@
         },
         {
           "address": 98,
-          "name": "ChannelMask",
+          "name": "S98",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
           ],
-          "const": 30,
-          "role": "metadata",
-          "description": "bitmask of the telemetry channels the controller publishes"
+          "const": 30
         },
         {
           "address": 99,
@@ -817,14 +791,12 @@
         },
         {
           "address": 116,
-          "name": "ConfigHostRef",
-          "value_type": "reference-id",
-          "semantic_source": "protocol-layout",
+          "name": "S116",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "topology",
-          "description": "paired Generic Config Host ReferenceId"
+          ]
         },
         {
           "address": 117,
@@ -1032,15 +1004,13 @@
         },
         {
           "address": 98,
-          "name": "ChannelMask",
+          "name": "S98",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
           ],
-          "const": 30,
-          "role": "metadata",
-          "description": "bitmask of the telemetry channels the controller publishes"
+          "const": 30
         },
         {
           "address": 99,
@@ -1336,15 +1306,13 @@
         },
         {
           "address": 98,
-          "name": "ChannelMask",
+          "name": "S98",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
           ],
-          "const": 126,
-          "role": "metadata",
-          "description": "bitmask of the telemetry channels the controller publishes"
+          "const": 126
         },
         {
           "address": 99,

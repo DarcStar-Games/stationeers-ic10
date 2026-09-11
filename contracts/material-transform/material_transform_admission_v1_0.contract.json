@@ -271,43 +271,39 @@
       },
       {
         "address": 10,
-        "name": "OutputResourceType",
-        "value_type": "hash",
-        "semantic_source": "protocol-layout",
+        "name": "S10",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 11,
-        "name": "OutputUnit",
-        "value_type": "enum",
-        "semantic_source": "protocol-layout",
+        "name": "S11",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 12,
-        "name": "ProcessorCapabilityMask",
+        "name": "S12",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 13,
-        "name": "TransformViewRef",
+        "name": "S13",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "topology"
+        ]
       },
       {
         "address": 14,
@@ -351,13 +347,12 @@
       },
       {
         "address": 18,
-        "name": "OutputReservationRef",
+        "name": "S18",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "topology"
+        ]
       },
       {
         "address": 19,

@@ -227,70 +227,62 @@
       },
       {
         "address": 8,
-        "name": "GrantedQuantity",
+        "name": "S8",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 9,
-        "name": "InternalState",
-        "value_type": "enum",
-        "semantic_source": "protocol-layout",
+        "name": "S9",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "state",
-        "description": "0 idle, 1 wait-ready, 2 wait-emitted, 3 wait-sink"
+        ]
       },
       {
         "address": 10,
-        "name": "ElapsedTicks",
+        "name": "S10",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "state"
+        ]
       },
       {
         "address": 11,
-        "name": "ResourceType",
-        "value_type": "hash",
-        "semantic_source": "protocol-layout",
+        "name": "S11",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result"
+        ]
       },
       {
         "address": 12,
-        "name": "SinkProviderRef",
+        "name": "S12",
         "value_type": "number",
-        "semantic_source": "protocol-layout",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "topology"
+        ]
       },
       {
         "address": 13,
-        "name": "ImportCountSnapshot",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S13",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "result",
-        "description": "taken before batch release"
+        ]
       },
       {
         "address": 14,
@@ -357,16 +349,14 @@
       },
       {
         "address": 31,
-        "name": "ReflashIdentity",
-        "value_type": "hash",
-        "semantic_source": "protocol-layout",
+        "name": "S31",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
         ],
-        "const": -1929928026,
-        "role": "metadata",
-        "description": "same-image reflash marker holding the service identity"
+        "const": -1929928026
       }
     ],
     "headers": [

@@ -42,14 +42,6 @@
       "role": "response_token"
     },
     {
-      "cells": "S13",
-      "start": 13,
-      "end": 13,
-      "name": "AcceptedRequestToken",
-      "role": "current_token",
-      "description": "request in flight, kept across reflash"
-    },
-    {
       "cells": "S14",
       "start": 14,
       "end": 14,
@@ -176,15 +168,13 @@
         },
         {
           "address": 13,
-          "name": "AcceptedRequestToken",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S13",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "current_token",
-          "description": "request in flight, kept across reflash"
+          ]
         },
         {
           "address": 14,

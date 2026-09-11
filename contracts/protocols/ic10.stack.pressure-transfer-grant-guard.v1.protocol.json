@@ -21,14 +21,6 @@
       "description": "GrantMolesPerTick"
     },
     {
-      "cells": "S9",
-      "start": 9,
-      "end": 9,
-      "name": "PublicationCounter",
-      "role": "generation",
-      "description": "source of the publication generation"
-    },
-    {
       "cells": "S10",
       "start": 10,
       "end": 10,
@@ -144,15 +136,13 @@
         },
         {
           "address": 9,
-          "name": "PublicationCounter",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S9",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "generation",
-          "description": "source of the publication generation"
+          ]
         },
         {
           "address": 10,

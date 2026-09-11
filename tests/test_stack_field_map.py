@@ -20,6 +20,7 @@ from framework.stack_field_map import (
     apply_layout,
     doc_layout_blocks,
     doc_layout_errors,
+    documented_cells,
     field_map_document,
     fields_by_role,
     format_cell_set,
@@ -88,9 +89,11 @@ layouts = load_layouts(ROOT)
 definitions, contracts = load_generated(ROOT)
 by_pid = {definition["protocol_id"]: definition for definition in definitions.values()}
 wired = wiring_touched_cells(ROOT, contracts)
+reference = (ROOT / ABI_REFERENCE_DOC).read_text()
+documented = documented_cells(reference)
 ck(HOST in layouts and STORE in layouts, "the two reference protocols have no layout")
 ck(all(entry.role in ROLES for entries in layouts.values() for entry in entries), "an entry escaped the role vocabulary")
-tree_errors = layout_errors(definitions, contracts, layouts, wired)
+tree_errors = layout_errors(definitions, contracts, layouts, wired, documented)
 ck(tree_errors == [], "the tree's layouts do not hold: " + "; ".join(tree_errors[:5]))
 consumed = {pid for pid, definition in by_pid.items() if peer_touched_cells(definition)}
 ck(consumed <= set(layouts), f"consumed protocols without a layout: {sorted(consumed - set(layouts))[:5]}")
@@ -131,6 +134,12 @@ errors = layout_errors(definitions, contracts, swallowed)
 ck(any(f"{STORE_SOURCE} override names S8 StoreOrdinal inside the range entry OrdinalAndCount S8..S9" in error
        for error in errors), "an override swallowed by a range was not reported")
 
+# Attributed network writes count as peers: the Reservation Stager prepares the Grant Guard's
+# S16..S26 through a ReferenceId, which the contracts record as a network dependency.
+GUARD = "ic10.stack.material-transfer-grant-guard.v1"
+stager = "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10"
+ck(stager in wired.get(GUARD, {}).get(17, set()), "the Stager's network write to the Grant Guard's S17 was not attributed")
+
 # The wiring map's declared peers count: the Dependency Planner writes the Plan Store's request
 # cells through a port with no contract consumer edge, and the map must still name them.
 PLAN_STORE = "ic10.stack.dependency-plan-store.v2"
@@ -145,6 +154,16 @@ ck(not any(f"{PLAN_STORE}: peer-touched" in error for error in layout_errors(def
        f"{PLAN_STORE}: peer-touched payload cell(s) have no layout entry: S12 (" in error
        for error in layout_errors(definitions, contracts, unmapped_plan, wired)),
    "a cell only a wiring-declared peer writes was not required to be named")
+
+# An entry on cells only the provider touches fails under the grounding rule: the Snapshot
+# Host's S31 is its reflash marker, read and written by nobody else and cited by no block.
+private = deepcopy(layouts)
+private[HOST] = private[HOST] + [LayoutEntry(31, 31, "ReflashIdentity", "metadata")]
+errors = layout_errors(definitions, contracts, private, wired, documented)
+ck(any(f"{HOST}: ReflashIdentity S31 names only cells the provider keeps to itself" in error for error in errors),
+   "an entry nothing outside the provider can hold was accepted")
+ck(not any("keeps to itself" in error for error in layout_errors(definitions, contracts, private, wired)),
+   "the grounding rule ran without a documented-cells map")
 
 # A layout for a protocol nothing provides or consumes fails.
 orphan = deepcopy(layouts)
@@ -173,10 +192,10 @@ ck(store_fields[8]["name"] == "StoreOrdinal" and store_fields[8]["semantic_sourc
    and store_fields[8]["role"] == "topology", "an override field lost its name or did not gain the role")
 ck(store_fields[17]["name"] == "DataSequence" and store_fields[17]["role"] == "generation",
    "the Store's S17 did not take the layout")
-resolver = contracts["ic10/dependency-planning/item_producer_resolver_v1_0.ic10"]
-resolver_fields = {field["address"]: field for field in resolver["own_stack"]["fields"]}
-ck(resolver_fields[32]["name"] == "ProducerTable[0]" and resolver_fields[65]["name"] == "ProducerTable[33]"
-   and resolver_fields[65]["role"] == "table", "cells inside a range entry did not take indexed names")
+editor = contracts["ic10/controller-config/generic_config_editor_v1_0.ic10"]
+editor_fields = {field["address"]: field for field in editor["own_stack"]["fields"]}
+ck(editor_fields[101]["name"] == "ButtonPreviousStates[0]" and editor_fields[103]["name"] == "ButtonPreviousStates[2]"
+   and editor_fields[103]["role"] == "state", "cells inside a range entry did not take indexed names")
 unresolved_named = sum(
     1 for definition in definitions.values() for provider in definition["provider_interfaces"]
     for field in contracts.get(provider["source"], {"own_stack": {"fields": []}})["own_stack"]["fields"]
@@ -216,7 +235,6 @@ ck(sum(len(item["current_layout"]["payload_fields"]) for item in inventory["serv
    "the inventory carries too few payload fields")
 
 # --- the ABI reference is held to the map ----------------------------------------------
-reference = (ROOT / ABI_REFERENCE_DOC).read_text()
 blocks = doc_layout_blocks(reference)
 ck(len(blocks) >= 25 and any(block.protocol_id == HOST for block in blocks), "the ABI reference layout blocks were not found")
 ck(doc_layout_errors(reference, layouts) == [], "the ABI reference cites a cell the map does not name")
@@ -229,17 +247,29 @@ synthetic = "\n".join([
     "```text", "Cost profile", "S0 magic = PressureGridCostProfile.v1", "S8 HopWeight", "S13 not a cost cell", "",
     "Domain inventory", "S0 magic = PressureDomainInventory.v2", "S13 PressureDomain ReferenceId", "S19 not an inventory cell", "```",
 ])
+fixture_lines = synthetic.split("\n")
+
+
+def line_of(text):
+    return fixture_lines.index(text) + 1
+
+
 errors = doc_layout_errors(synthetic, layouts, "doc.md")
 ck(errors == [
-    f"doc.md:7: {HOST} cites S450 but the layout does not name S450",
-    "doc.md:11: layout block for ic10.stack.nothing.v1 but the protocol has no layout in data/script_contract_protocol_definitions.json",
-    "doc.md:24: ic10.stack.pressure-grid-cost-profile.v1 cites S13 but the layout does not name S13",
-    "doc.md:29: ic10.stack.pressure-domain-inventory.v2 cites S19 but the layout does not name S19",
+    f"doc.md:{line_of('S450 something new')}: {HOST} cites S450 but the layout does not name S450",
+    f"doc.md:{line_of('S0 magic = Nothing.v1')}: layout block for ic10.stack.nothing.v1 but the protocol has no layout in data/script_contract_protocol_definitions.json",
+    f"doc.md:{line_of('S13 not a cost cell')}: ic10.stack.pressure-grid-cost-profile.v1 cites S13 but the layout does not name S13",
+    f"doc.md:{line_of('S19 not an inventory cell')}: ic10.stack.pressure-domain-inventory.v2 cites S19 but the layout does not name S19",
 ], f"doc holding reported {errors}")
 sub_blocks = doc_layout_blocks(synthetic)
 ck([block.protocol_id for block in sub_blocks][-2:] == ["ic10.stack.pressure-grid-cost-profile.v1", "ic10.stack.pressure-domain-inventory.v2"]
-   and sub_blocks[-1].cells == ((0, 0, 27), (13, 13, 28), (19, 19, 29)),
+   and sub_blocks[-1].cells == (
+       (0, 0, line_of("S0 magic = PressureDomainInventory.v2")),
+       (13, 13, line_of("S13 PressureDomain ReferenceId")),
+       (19, 19, line_of("S19 not an inventory cell"))),
    "a fence holding two services was not split at its second S0 line")
+ck(documented[HOST] >= {9, 11, 12, 24, 25, 26, 32, 415} and 31 not in documented[HOST],
+   "documented cells were not collected from the ABI reference blocks")
 
 # --- the report ----------------------------------------------------------------------
 by_role = fields_by_role(layouts, definitions, wired)
@@ -266,3 +296,4 @@ print(" - unmapped peer-touched cells, stray entries, header entries, override d
 print(" - provider contracts, protocol documents, and the envelope inventory carry the map")
 print(" - the ABI reference is held to the map per S0 block and the per-role report is generated from it")
 print(" - wiring-declared peers without a contract consumer edge still require a named cell and count in the report")
+print(" - every entry names a cell a peer touches or a documented block cites; provider-private cells are not mapped")

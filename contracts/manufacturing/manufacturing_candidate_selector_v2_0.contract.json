@@ -144,14 +144,12 @@
       },
       {
         "address": 11,
-        "name": "CandidateProcessorRef",
-        "value_type": "reference-id",
-        "semantic_source": "protocol-layout",
+        "name": "S11",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "result",
-        "description": "Processor ReferenceId or FamilyHash"
+        ]
       },
       {
         "address": 12,
@@ -175,13 +173,12 @@
       },
       {
         "address": 14,
-        "name": "DirectoryGeneration",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S14",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "role": "generation"
+        ]
       },
       {
         "address": 16,

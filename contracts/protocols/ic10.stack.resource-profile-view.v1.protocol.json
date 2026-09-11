@@ -59,34 +59,6 @@
       "description": "kind-specific: PHASE_MEDIUM coefficients and pressure/temperature bounds; ITEM_STACK maximum stack quantity and slot class"
     },
     {
-      "cells": "S22",
-      "start": 22,
-      "end": 22,
-      "name": "CatalogInstanceId",
-      "role": "metadata"
-    },
-    {
-      "cells": "S23",
-      "start": 23,
-      "end": 23,
-      "name": "TopologyGeneration",
-      "role": "generation"
-    },
-    {
-      "cells": "S26",
-      "start": 26,
-      "end": 26,
-      "name": "RequestedResourceClass",
-      "role": "request"
-    },
-    {
-      "cells": "S27",
-      "start": 27,
-      "end": 27,
-      "name": "RequestedResourceType",
-      "role": "request"
-    },
-    {
       "cells": "S28",
       "start": 28,
       "end": 28,
@@ -167,43 +139,39 @@
         },
         {
           "address": 22,
-          "name": "CatalogInstanceId",
+          "name": "S22",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "metadata"
+          ]
         },
         {
           "address": 23,
-          "name": "TopologyGeneration",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S23",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "generation"
+          ]
         },
         {
           "address": 26,
-          "name": "RequestedResourceClass",
-          "value_type": "enum",
-          "semantic_source": "protocol-layout",
+          "name": "S26",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read"
-          ],
-          "role": "request"
+          ]
         },
         {
           "address": 27,
-          "name": "RequestedResourceType",
-          "value_type": "hash",
-          "semantic_source": "protocol-layout",
+          "name": "S27",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read"
-          ],
-          "role": "request"
+          ]
         },
         {
           "address": 28,

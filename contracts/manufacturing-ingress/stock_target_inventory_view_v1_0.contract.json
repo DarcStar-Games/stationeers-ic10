@@ -204,15 +204,13 @@
       },
       {
         "address": 22,
-        "name": "SelectorRequestCounter",
-        "value_type": "integer",
-        "semantic_source": "protocol-layout",
+        "name": "S22",
+        "value_type": "number",
+        "semantic_source": "unresolved",
         "access": [
           "self-read",
           "self-write"
-        ],
-        "role": "state",
-        "description": "source of the selector request tokens"
+        ]
       }
     ],
     "headers": [

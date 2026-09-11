@@ -100,36 +100,6 @@
       "role": "request"
     },
     {
-      "cells": "S30",
-      "start": 30,
-      "end": 30,
-      "name": "StoreRequestCounter",
-      "role": "generation",
-      "description": "source of the Store request generations"
-    },
-    {
-      "cells": "S31",
-      "start": 31,
-      "end": 31,
-      "name": "PendingStoreToken",
-      "role": "request_token",
-      "description": "Store request in flight, kept across reflash"
-    },
-    {
-      "cells": "S32",
-      "start": 32,
-      "end": 32,
-      "name": "PendingClientToken",
-      "role": "current_token"
-    },
-    {
-      "cells": "S34",
-      "start": 34,
-      "end": 34,
-      "name": "PendingSlot",
-      "role": "state"
-    },
-    {
       "cells": "S35",
       "start": 35,
       "end": 35,
@@ -326,49 +296,43 @@
         },
         {
           "address": 30,
-          "name": "StoreRequestCounter",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S30",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "generation",
-          "description": "source of the Store request generations"
+          ]
         },
         {
           "address": 31,
-          "name": "PendingStoreToken",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S31",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "request_token",
-          "description": "Store request in flight, kept across reflash"
+          ]
         },
         {
           "address": 32,
-          "name": "PendingClientToken",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S32",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "current_token"
+          ]
         },
         {
           "address": 34,
-          "name": "PendingSlot",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S34",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-read",
             "self-write"
-          ],
-          "role": "state"
+          ]
         },
         {
           "address": 35,

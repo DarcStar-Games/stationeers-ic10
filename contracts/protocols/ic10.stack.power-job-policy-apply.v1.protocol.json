@@ -34,27 +34,6 @@
       "role": "state"
     },
     {
-      "cells": "S11",
-      "start": 11,
-      "end": 11,
-      "name": "ReservationRef",
-      "role": "result"
-    },
-    {
-      "cells": "S12",
-      "start": 12,
-      "end": 12,
-      "name": "EndpointRef",
-      "role": "result"
-    },
-    {
-      "cells": "S13",
-      "start": 13,
-      "end": 13,
-      "name": "ReservationGeneration",
-      "role": "result"
-    },
-    {
       "cells": "S14",
       "start": 14,
       "end": 14,
@@ -170,33 +149,30 @@
         },
         {
           "address": 11,
-          "name": "ReservationRef",
+          "name": "S11",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 12,
-          "name": "EndpointRef",
+          "name": "S12",
           "value_type": "number",
-          "semantic_source": "protocol-layout",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 13,
-          "name": "ReservationGeneration",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S13",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result"
+          ]
         },
         {
           "address": 14,

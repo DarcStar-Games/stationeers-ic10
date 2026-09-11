@@ -36,14 +36,6 @@
       "description": "Runtime or Printer ReferenceId"
     },
     {
-      "cells": "S11",
-      "start": 11,
-      "end": 11,
-      "name": "CandidateProcessorRef",
-      "role": "result",
-      "description": "Processor ReferenceId or FamilyHash"
-    },
-    {
       "cells": "S12",
       "start": 12,
       "end": 12,
@@ -56,13 +48,6 @@
       "end": 13,
       "name": "NextOrdinal",
       "role": "result"
-    },
-    {
-      "cells": "S14",
-      "start": 14,
-      "end": 14,
-      "name": "DirectoryGeneration",
-      "role": "generation"
     },
     {
       "cells": "S16",
@@ -189,14 +174,12 @@
         },
         {
           "address": 11,
-          "name": "CandidateProcessorRef",
-          "value_type": "reference-id",
-          "semantic_source": "protocol-layout",
+          "name": "S11",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "result",
-          "description": "Processor ReferenceId or FamilyHash"
+          ]
         },
         {
           "address": 12,
@@ -220,13 +203,12 @@
         },
         {
           "address": 14,
-          "name": "DirectoryGeneration",
-          "value_type": "integer",
-          "semantic_source": "protocol-layout",
+          "name": "S14",
+          "value_type": "number",
+          "semantic_source": "unresolved",
           "access": [
             "self-write"
-          ],
-          "role": "generation"
+          ]
         },
         {
           "address": 16,
