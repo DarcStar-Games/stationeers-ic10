@@ -372,7 +372,7 @@
             "additionalProperties": false,
             "required": ["cell", "targets"],
             "properties": {
-              "cell": {"type": ["integer", "string"]},
+              "cell": {"oneOf": [{"type": "integer", "minimum": 0, "maximum": 511}, {"const": "*"}]},
               "targets": {"type": "array", "items": {"type": "string", "minLength": 1}}
             }
           }
@@ -416,7 +416,7 @@
           "required": ["kind"],
           "properties": {
             "kind": {"enum": ["peer-cell", "own-cell", "reference-cell", "port-cell", "port-device", "index-cell"]},
-            "identity": {"type": ["string", "integer"]},
+            "identity": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "integer"}]},
             "cells": {
               "oneOf": [
                 {"const": "any"},

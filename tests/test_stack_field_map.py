@@ -271,7 +271,9 @@ synthetic = "\n".join([
     "```text", "Cost profile", "S0 magic = PressureGridCostProfile.v1", "S8 HopWeight", "S13 not a cost cell", "",
     "Domain inventory", "S0 magic = PressureDomainInventory.v2", "S13 PressureDomain ReferenceId", "S19 not an inventory cell", "```", "",
     # A table names its contract on an S0 row and ends at the first non-row line.
-    "| Cell | Meaning |", "|---:|---|", "| S0 | magic = PressureGridCostProfile.v1 |", "| S9 | StorageWeight |", "| S14 | not a cost cell |", "",
+    "| Cell | Meaning |", "|---:|---|", "| S0 | magic = PressureGridCostProfile.v1 |", "| S9 | StorageWeight |", "| S14 | not a cost cell |",
+    # An indented row (a table inside a list item) is a row of the same table.
+    "  | S16 | not a cost cell either |", "",
     "prose after the table", "| S15 | a row of a table that names no contract |",
 ])
 fixture_lines = synthetic.split("\n")
@@ -288,6 +290,7 @@ ck(errors == [
     f"doc.md:{line_of('S13 not a cost cell')}: ic10.stack.pressure-grid-cost-profile.v1 cites S13 but the layout does not name S13",
     f"doc.md:{line_of('S19 not an inventory cell')}: ic10.stack.pressure-domain-inventory.v2 cites S19 but the layout does not name S19",
     f"doc.md:{line_of('| S14 | not a cost cell |')}: ic10.stack.pressure-grid-cost-profile.v1 cites S14 but the layout does not name S14",
+    f"doc.md:{line_of('  | S16 | not a cost cell either |')}: ic10.stack.pressure-grid-cost-profile.v1 cites S16 but the layout does not name S16",
 ], f"doc holding reported {errors}")
 sub_blocks = doc_layout_blocks(synthetic)
 ck([block.protocol_id for block in sub_blocks][-3:] == ["ic10.stack.pressure-grid-cost-profile.v1", "ic10.stack.pressure-domain-inventory.v2", "ic10.stack.pressure-grid-cost-profile.v1"]

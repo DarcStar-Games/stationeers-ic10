@@ -178,6 +178,12 @@
       ],
       "site_targets": [
         {
+          "cell": 3,
+          "targets": [
+            "GenericRegistryDirectoryHost"
+          ]
+        },
+        {
           "cell": 12,
           "targets": [
             "GenericRegistryDirectoryHost"
@@ -215,12 +221,6 @@
         },
         {
           "cell": 26,
-          "targets": [
-            "GenericRegistryDirectoryHost"
-          ]
-        },
-        {
-          "cell": 3,
           "targets": [
             "GenericRegistryDirectoryHost"
           ]

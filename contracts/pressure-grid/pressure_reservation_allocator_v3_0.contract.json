@@ -129,6 +129,13 @@
       ],
       "site_targets": [
         {
+          "cell": 99,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
           "cell": 100,
           "targets": [
             "ControllerPressureTransferRuntime",
@@ -221,13 +228,6 @@
         },
         {
           "cell": 120,
-          "targets": [
-            "ControllerPressureTransferRuntime",
-            "EmbeddedPressureTransferRuntime"
-          ]
-        },
-        {
-          "cell": 99,
           "targets": [
             "ControllerPressureTransferRuntime",
             "EmbeddedPressureTransferRuntime"

@@ -374,9 +374,13 @@ def _contract_index(contracts: dict[str, dict[str, Any]], interface_definitions:
         },
         "network_write_inventory": {
             "writing_dependency_count": len(network_writes),
+            # The write inventory counts the declarations on writing references; a
+            # read-only reference's declarations serve the stack field map (issue #190)
+            # and are held by the same walk, but they are not part of this answer.
             "declared_provenance_count": sum(
                 len(dependency.get("provenance", ()))
                 for contract in contracts.values() for dependency in contract["network_dependencies"]
+                if dependency["literal_writes"] or dependency["dynamic_write"]
             ),
             "unattributed_count": sum(bool(item["unattributed"]) for item in network_writes),
             "writes": network_writes,

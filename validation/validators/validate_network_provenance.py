@@ -92,6 +92,10 @@ def main() -> int:
                                                if writing(item) and item["unattributed"]):
         print("FAIL the index's unattributed count disagrees with the contracts")
         failed = True
+    if inventory["declared_provenance_count"] != declarations:
+        print(f"FAIL the index counts {inventory['declared_provenance_count']} declarations on writing references,"
+              f" the contracts carry {declarations}")
+        failed = True
     print(f"Network writes: {references} references in {len(writers)} programs,"
           f" {declarations} reviewed provenance declarations")
     print(f"Writes with no attributed target: {unattributed_total}")

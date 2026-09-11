@@ -288,8 +288,7 @@ class ReferenceOrigins:
                 env[_ORIGIN + register] = untracked
             return env
         written = self.paths.writes(row, env)
-        if written:
-            headers = [(key, value[0]) for key, value in env.items() if key.startswith(_HEADER)]
+        headers = [(key, value[0]) for key, value in env.items() if key.startswith(_HEADER)] if written else []
         for register in written:
             env[_ORIGIN + register] = untracked
             env.pop(_HEADER + register, None)
@@ -469,11 +468,14 @@ def accessing(dependency: dict[str, Any]) -> bool:
 def attribute_network_writes(contracts: dict[str, dict[str, Any]], root: Path) -> None:
     """Record, on every accessing network dependency, what its reads and writes can reach.
 
-    Adds `origins` (every token an access site's reference arrived holding),
-    `targets` (contract names the accesses are attributed to), `devices`
-    (declared non-program targets), and `unattributed` (tokens no identity
+    Adds `origins` (every token the reference arrived holding at the sites the
+    answer is held to: the write sites of a writing dependency, the read sites
+    otherwise), `targets` (contract names those sites are attributed to),
+    `devices` (declared non-program targets), `unattributed` (tokens no identity
     check and no declaration covers; `untracked` when nothing on the path
-    loaded the register). Raises for a declaration no site loads from.
+    loaded the register), and `site_targets` (per accessed cell, the targets
+    its sites establish, reads and writes alike). Raises for a declaration no
+    site, read or write, loads from.
 
     Only a write has to be attributed (`validate_network_provenance.py`); a
     read is attributed when the same walk can, so the stack field map counts
@@ -548,14 +550,14 @@ def attribute_network_writes(contracts: dict[str, dict[str, Any]], root: Path) -
             for number, declaration in enumerate(declarations):
                 if not used[number]:
                     raise ValueError(
-                        f"{contract['source']}: network provenance declaration matches no write site load"
+                        f"{contract['source']}: network provenance declaration matches no access site load"
                         f" (origins seen: {sorted(seen)}): {declaration}"
                     )
             dependency["origins"] = sorted(seen)
             dependency["targets"] = sorted(targets)
             dependency["site_targets"] = [
                 {"cell": cell, "targets": sorted(names)}
-                for cell, names in sorted(site_targets.items(), key=lambda item: (isinstance(item[0], str), str(item[0])))
+                for cell, names in sorted(site_targets.items(), key=lambda item: (1, 0) if isinstance(item[0], str) else (0, item[0]))
                 if names
             ]
             if devices:

@@ -53,13 +53,6 @@
       ],
       "site_targets": [
         {
-          "cell": 116,
-          "targets": [
-            "ic10.stack.27182818.abi1",
-            "ic10.stack.27182818.abi2"
-          ]
-        },
-        {
           "cell": 97,
           "targets": [
             "ic10.stack.27182818.abi1",
@@ -68,6 +61,13 @@
         },
         {
           "cell": 99,
+          "targets": [
+            "ic10.stack.27182818.abi1",
+            "ic10.stack.27182818.abi2"
+          ]
+        },
+        {
+          "cell": 116,
           "targets": [
             "ic10.stack.27182818.abi1",
             "ic10.stack.27182818.abi2"
@@ -122,12 +122,6 @@
       "site_targets": [
         {
           "cell": 10,
-          "targets": [
-            "GenericConfigEditor"
-          ]
-        },
-        {
-          "cell": 104,
           "targets": [
             "GenericConfigEditor"
           ]
@@ -199,6 +193,12 @@
           ]
         },
         {
+          "cell": 104,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
           "cell": "*",
           "targets": [
             "GenericConfigEditor"
@@ -250,6 +250,12 @@
       ],
       "site_targets": [
         {
+          "cell": 8,
+          "targets": [
+            "GenericPersistentConfigHost"
+          ]
+        },
+        {
           "cell": 10,
           "targets": [
             "GenericPersistentConfigHost"
@@ -281,12 +287,6 @@
         },
         {
           "cell": 53,
-          "targets": [
-            "GenericPersistentConfigHost"
-          ]
-        },
-        {
-          "cell": 8,
           "targets": [
             "GenericPersistentConfigHost"
           ]
@@ -340,6 +340,18 @@
       ],
       "site_targets": [
         {
+          "cell": 8,
+          "targets": [
+            "InputProfileView"
+          ]
+        },
+        {
+          "cell": 9,
+          "targets": [
+            "InputProfileView"
+          ]
+        },
+        {
           "cell": 10,
           "targets": [
             "InputProfileView"
@@ -349,18 +361,6 @@
           "cell": 11,
           "targets": [
             "GenericInputScanner",
-            "InputProfileView"
-          ]
-        },
-        {
-          "cell": 8,
-          "targets": [
-            "InputProfileView"
-          ]
-        },
-        {
-          "cell": 9,
-          "targets": [
             "InputProfileView"
           ]
         }

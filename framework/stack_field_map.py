@@ -55,7 +55,7 @@ VALUE_TYPES = frozenset({"number", "integer", "enum", "hash", "reference-id", "b
 ENTRY_KEYS = frozenset({"cells", "name", "role", "description", "value_type"})
 _DOC_MAGIC_RE = re.compile(r"\b([A-Z][A-Za-z0-9]*)\.v(\d+)\b")
 _DOC_CELL_RE = re.compile(r"^S(\d{1,3})(?:(\.\.|/)S?(\d{1,3}))?(?:\.\.)?(?=\s|$)")
-_DOC_TABLE_ROW_RE = re.compile(r"^\|\s*(S\d{1,3}(?:(?:\.\.|/)S?\d{1,3})?(?:\.\.)?)\s*\|(.*)$")
+_DOC_TABLE_ROW_RE = re.compile(r"^\s*\|\s*(S\d{1,3}(?:(?:\.\.|/)S?\d{1,3})?(?:\.\.)?)\s*\|(.*)$")
 DOC_GLOB = "docs/*.md"
 
 
