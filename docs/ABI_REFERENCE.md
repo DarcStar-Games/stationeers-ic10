@@ -35,10 +35,19 @@ Three rules keep the guarantee alive, all enforced by
   Header Reader reports it for an unknown target — but branching on it as an
   acceptance test is not.
 
-A program's check of its **own** `S1` is a different thing and stays. The stack
-survives reflash, so a crash between `poke 0` and `poke 1` leaves a valid
-identity above an unwritten payload; the own-`S1` check is what detects that torn
-image and forces a rebuild. Eight programs rely on it.
+A program's check of its **own** `S1` is a different thing and stays. It was
+written as a torn-image guard: the stack survives reflash, so a boot stopped
+between `poke 0` and `poke 1` would leave a valid identity above an unwritten
+payload, and the check would find it and force a rebuild. The game does not stop
+there: a chip pauses only at a `yield` or after 128 lines, and a power loss
+resumes it at the line it reached (`docs/SOURCES.md`), so a boot path with no
+loop before its first yield runs whole, and the same-image induction in
+`docs/STACK_ABI_ENVELOPE.md` rests on exactly that and is held to it. The
+own-`S1` check is defence in depth under the same premise, not the reason the
+header is sound — a boot that could stop mid-way could as well stop after
+`poke 1`, above an unwritten `S2`. Twelve programs read their own `S1` before
+their first yield; whether those lines are worth reclaiming is a separate
+decision, and none was taken here (issue #135).
 
 **Block headers away from `S0` are deliberately different.** The Generic
 Telemetry block at `S96` keeps a hand-assigned magic (`27182818`) and a separate

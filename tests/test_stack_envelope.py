@@ -968,6 +968,25 @@ ck(stable_cells(DIVERGENT_HEADER, guard_aliases(DIVERGENT_HEADER), guard_expecte
    "a cell this source also writes with another literal was assumed to hold its expected value")
 ck(stable_cells(COMPUTED_HEADER, guard_aliases(COMPUTED_HEADER), guard_expected) == {0, 2},
    "a cell a computed write can reach was assumed to hold its expected value")
+# The induction rests on the game pausing a chip only at a `yield` or after 128
+# lines, so the previous image either ran its boot to the first yield or never
+# started it. A boot that goes round before it yields can run out of budget
+# between two header writes, and a source longer than the budget cannot run
+# whole at all; either withholds the induction (issue #135).
+FILL = "move r1 0\nFill:\npoke 16 r1\nadd r1 r1 1\nblt r1 40 Fill\n"
+LOOPED_BOOT = GUARDED_HEADER.replace(f"poke 0 {GUARD_MAGIC}\npoke 1 1\n", f"poke 0 {GUARD_MAGIC}\n{FILL}poke 1 1\n", 1)
+LOOP_BEHIND_YIELD = GUARDED_HEADER.replace("Loop:\nyield\nj Loop\n", f"Loop:\nyield\n{FILL}j Loop\n", 1)
+OVERLONG_BOOT = GUARDED_HEADER.replace("Loop:\nyield\n", "# pad\n" * (128 - GUARDED_HEADER.count("\n") + 1) + "Loop:\nyield\n", 1)
+ck(stable_cells(LOOPED_BOOT, guard_aliases(LOOPED_BOOT), guard_expected) == set(),
+   "a header whose publication loops before the first yield was vouched for by the same-image edge")
+ck(stable_cells(LOOP_BEHIND_YIELD, guard_aliases(LOOP_BEHIND_YIELD), guard_expected) == {0, 1, 2},
+   "a loop behind the first yield cost a one-tick boot its induction")
+ck(OVERLONG_BOOT.count("\n") == 129 and stable_cells(OVERLONG_BOOT, guard_aliases(OVERLONG_BOOT), guard_expected) == set(),
+   "a source longer than the tick budget kept the same-image induction")
+ck("control transfer occurs before the first envelope-bearing yield" in guard_publication_errors(LOOPED_BOOT),
+   "publication validator accepted a guarded header whose boot can stop between two writes")
+ck(not guard_publication_errors(LOOP_BEHIND_YIELD),
+   "publication validator rejected a guarded header whose only loop sits behind its first yield")
 # The envelope layer reads the same proof, so it accepts the guarded header, and
 # no longer excuses a cell the graph could not prove just because every literal
 # write of it is the expected value.

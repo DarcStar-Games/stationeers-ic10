@@ -466,7 +466,24 @@ stability proof rather than a rule beside it: on the edge the guard takes only
 when `S0` already equals this contract's magic, a cell whose every literal write
 in the source is its expected value counts as initialized, because the previous
 image of this exact contract left it so -- identity is `HASH("<Contract>.v<ABI>")`,
-so an equal `S0` names the contract and its ABI both. Nothing else is assumed.
+so an equal `S0` names the contract and its ABI both. One thing more is assumed, and
+it is a claim about the game rather than the tree: the previous image ran its boot
+whole. The game runs a chip for at most 128 lines a tick, empty lines included, and
+pauses it only there or at a `yield`; a power loss keeps the line, the registers, and
+the stack, so the chip carries on from that line, and a reflash restarts at line 0 with
+the stack kept (`docs/SOURCES.md`). A boot that enters line 0 at the start of a tick therefore runs to
+its first yield unless it spends the budget first, which a program no longer than the
+budget can do only by going round before it yields. `stable_cells` applies the
+induction only to a program whose boot cannot (`publication_fits_one_tick`): a loop
+before the first yield, or a source over 128 lines, withholds it, and a guarded header
+then has to publish on the skip path like any other (issue #135). A one-shot that runs
+off its last line re-enters line 0 in the same tick (`control_flow_with_wrap`), but that
+pass finds the `S0` the first one published and takes the skip edge, so the first pass is
+the one asked. No program on the tree loops before its first yield today; a guarded one
+that came to would lose its induction, and an unguarded one is not asked. The own-`S1` check twelve guarded programs make
+(`docs/ABI_REFERENCE.md`) is a defence against the boot this premise rules out, not the
+reason the header is sound; with `S2` and later cells published after `S1`, a boot
+that could stop mid-way would pass it with a torn payload anyway.
 The path the guard rejects is a fresh or foreign housing and has to publish every
 cell before anything can look -- and to write every *register* it will read, which is
 the other half of the same rule: registers survive a reflash exactly as the stack does,
