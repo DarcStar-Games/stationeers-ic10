@@ -8,6 +8,7 @@ import json
 import re
 from typing import Any
 
+from framework.ic10_line_budget import CEILING_LINES, HARD_LIMIT_LINES
 from framework.ic10_source import game_hash, parse_ic10
 from framework.protocol_headers import header_name, header_token
 from framework.script_contracts.control_flow import can_reach_avoiding_calls
@@ -41,6 +42,13 @@ FIELD_CAPABILITY_BITS_V1 = (
 HAS_ASYNC_REQUEST_V1 = 32
 HAS_BANKED_TRANSACTION_V1 = 64
 HAS_GENERIC_JOB_ABI_V1 = 128
+# The inventory's headroom field, `line_headroom_120` today, carries the ceiling it was
+# measured against in its name, and schemas/stack_envelope_inventory.schema.json requires
+# that name, so a
+# moved ceiling renames the field and fails the schema until the contract is revised
+# on purpose, instead of a field called `_120` quietly holding headroom under another
+# number (issue #172).
+LINE_HEADROOM_FIELD = f"line_headroom_{CEILING_LINES}"
 STANDARD_CAPABILITY_BITS_V1 = {
     "ASYNC_REQUEST_V1": HAS_ASYNC_REQUEST_V1,
     "BANKED_TRANSACTION_V1": HAS_BANKED_TRANSACTION_V1,
@@ -1181,8 +1189,10 @@ def publication_rule_errors(
         ),
     )
     line_count = len((Path(root) / declaration.source).read_text().splitlines())
-    if line_count > 128:
-        errors.append(f"migrated pilot is {line_count} lines, above the 128-line hard limit")
+    if line_count > HARD_LIMIT_LINES:
+        errors.append(
+            f"migrated pilot is {line_count} lines, above the {HARD_LIMIT_LINES}-line hard limit"
+        )
     return errors
 
 
@@ -1411,7 +1421,7 @@ def build_inventory(
                 "dynamic_read_ranges": own["dynamic_read_ranges"],
                 "dynamic_write_ranges": own["dynamic_write_ranges"],
                 "line_count": line_count,
-                "line_headroom_120": 120 - line_count,
+                LINE_HEADROOM_FIELD: CEILING_LINES - line_count,
                 "measured_v1_publication_cost_lines": publication_cost_lines(
                     capability_mask, externally_assigned_fields
                 ),

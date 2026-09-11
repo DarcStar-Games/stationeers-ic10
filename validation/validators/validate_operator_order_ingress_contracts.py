@@ -4,6 +4,7 @@ import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 
+from framework.ic10_line_budget import CEILING_LINES
 from framework.validation import Validation
 
 R = _PROJECT_ROOT
@@ -53,13 +54,16 @@ for path in [
     R / "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10",
     *sorted((R / "ic10/manufacturing-ingress").glob("operator_order_*.ic10")),
 ]:
-    lines = len(path.read_text().splitlines())
-    if lines > 120:
-        validation.fail(f"{path.relative_to(R)}: {lines} lines > operator-order ceiling 120")
+    # validate_ic10.py lets a reviewed SOFT_LIMIT_EXEMPTIONS entry carry a program past the
+    # ceiling; this family takes none, so over the ceiling fails here whatever that list says.
+    validation.line_limit(
+        path, CEILING_LINES, rule="operator-order family takes no soft-limit exemption"
+    )
 
 raise SystemExit(validation.finish("Operator-order ingress contracts", [
     "shared-input values stage independently and only a rising commit edge submits an order",
     "family/ordinal selection resolves through Recipe Lookup and exact execution metadata is revalidated",
     "Gateway lane F preserves quantity and priority while the sole Store executor publishes one PRINT root",
-    "all Item-13.2 IC10 programs and the six-lane Gateway remain within 120 lines",
+    f"all Item-13.2 IC10 programs and the six-lane Gateway remain within {CEILING_LINES} lines"
+    " with no soft-limit exemption",
 ]))

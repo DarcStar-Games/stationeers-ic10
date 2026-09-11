@@ -4,6 +4,7 @@ import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 
+from framework.ic10_line_budget import CEILING_LINES
 from framework.validation import Validation
 
 R = _PROJECT_ROOT
@@ -49,10 +50,12 @@ need("ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10",
      "beq r5 3 FindStart", "bne r5 5 Bad", "beq r5 5 Root", "bne r6 -1 Bad",
      'HASH("DependencyPlanStore.v2")', "get r2 db 28", "get r2 db 29")
 
+# validate_ic10.py lets a reviewed SOFT_LIMIT_EXEMPTIONS entry carry a program past the
+# ceiling; this family takes none, so over the ceiling fails here whatever that list says.
 for path in (R / "ic10/manufacturing-ingress").glob("*.ic10"):
-    lines = len(path.read_text().splitlines())
-    if lines > 120:
-        validation.fail(f"{path.relative_to(R)}: {lines} lines > stock-ingress ceiling 120")
+    validation.line_limit(
+        path, CEILING_LINES, rule="stock-target ingress family takes no soft-limit exemption"
+    )
 
 raise SystemExit(validation.finish("Stock-target ingress contracts", [
     "four Config Policy targets feed exact stock plus active unclaimed future-output decisions",

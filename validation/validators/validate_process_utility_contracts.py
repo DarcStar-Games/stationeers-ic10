@@ -3,6 +3,7 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.ic10_line_budget import HARD_LIMIT_LINES
 from framework.validation import Validation
 from pathlib import Path
 import json,sys
@@ -26,8 +27,8 @@ checks={
 for fn,toks in checks.items():
  if not result.file_exists(fn,rule='process utility source'):continue
  t=result.source(fn)
- # validate_ic10.py owns the 120-line soft ceiling and its reviewed exemptions.
- if len(t.splitlines())>128:result.fail(fn+': exceeds the 128-line hard limit')
+ # validate_ic10.py owns the ceiling and its reviewed exemptions; only the hard limit is rechecked.
+ if len(t.splitlines())>HARD_LIMIT_LINES:result.fail(f'{fn}: exceeds the {HARD_LIMIT_LINES}-line hard limit')
  result.contains(fn,*toks,rule='process utility contract')
 # Planning must be compositional: new furnace/GFG services do not mutate Job Store or Power Plan Store.
 result.contains('docs/PROCESS_UTILITY_ORCHESTRATION.md','ProcessCondition ABI1','Pressure movement remains authorized by PressureGrid reservations','ic10/material-transform/material_transform_admission_v1_0.ic10','POWER -> Electrolyzer -> Fuel.H2O2 -> GFG -> POWER',rule='orchestration documentation')

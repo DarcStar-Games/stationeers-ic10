@@ -5,6 +5,7 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from pathlib import Path
 from framework.ic10_harness import IC10
+from framework.ic10_line_budget import CEILING_LINES
 from framework.catalog_test_helpers import load_catalog_chain,generate_recipe_fixture
 from framework.generator_productivity import prove_generated_tree_restoration
 from framework.scan_coverage import require_nonempty_glob
@@ -66,7 +67,7 @@ with tempfile.TemporaryDirectory() as td:
  m=json.loads((o/'recipe_catalog_manifest.json').read_text());loader_invariants(o,m)
  if m['recipe_count']!=780 or m['runtime_min_store_count']!=18 or any(f['runtime_min_store_count']!=3 or f['runtime_store_item_counts']!=[48,48,34] for f in m['families']):fails.append('780-recipe runtime capacity estimate mismatch')
  generated_programs=require_nonempty_glob(o/'ic10','*.ic10',recursive=True)
- if any(len(p.read_text().splitlines())>120 for p in generated_programs):fails.append('generated Recipe IC exceeds 120-line soft limit')
+ if any(len(p.read_text().splitlines())>CEILING_LINES for p in generated_programs):fails.append(f'generated Recipe IC exceeds {CEILING_LINES}-line soft limit')
 # Execute the minimum overflowing family plus one item in each other family so runtime cross-Store placement is exercised without redundant interpreter work. The 780-item generator stress above still proves 48+48+34 capacity geometry.
 with tempfile.TemporaryDirectory() as td:
  d=Path(td)/'data';o=Path(td)/'out';d.mkdir()

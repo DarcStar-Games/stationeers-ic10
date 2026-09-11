@@ -13,6 +13,7 @@ import sys
 from tempfile import TemporaryDirectory
 
 from framework.ic10_harness import Device, IC10
+from framework.ic10_line_budget import HARD_LIMIT_LINES
 from framework.json_schema import validate
 from framework.script_contracts import build_all
 from framework.script_contracts.own_stack import analyze_own_stack
@@ -997,7 +998,7 @@ ck(stable_cells(COMPUTED_HEADER, guard_aliases(COMPUTED_HEADER), guard_expected)
 FILL = "move r1 0\nFill:\npoke 16 r1\nadd r1 r1 1\nblt r1 40 Fill\n"
 LOOPED_BOOT = GUARDED_HEADER.replace(f"poke 0 {GUARD_MAGIC}\npoke 1 1\n", f"poke 0 {GUARD_MAGIC}\n{FILL}poke 1 1\n", 1)
 LOOP_BEHIND_YIELD = GUARDED_HEADER.replace("Loop:\nyield\nj Loop\n", f"Loop:\nyield\n{FILL}j Loop\n", 1)
-OVERLONG_BOOT = GUARDED_HEADER.replace("Loop:\nyield\n", "# pad\n" * (128 - GUARDED_HEADER.count("\n") + 1) + "Loop:\nyield\n", 1)
+OVERLONG_BOOT = GUARDED_HEADER.replace("Loop:\nyield\n", "# pad\n" * (HARD_LIMIT_LINES - GUARDED_HEADER.count("\n") + 1) + "Loop:\nyield\n", 1)
 ck(stable_cells(LOOPED_BOOT, guard_aliases(LOOPED_BOOT), guard_expected) == set(),
    "a header whose publication loops before the first yield was vouched for by the same-image edge")
 ck(stable_cells(LOOP_BEHIND_YIELD, guard_aliases(LOOP_BEHIND_YIELD), guard_expected) == {0, 1, 2},
