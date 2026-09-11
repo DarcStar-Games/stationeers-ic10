@@ -15,8 +15,8 @@ job_path='ic10/generic-jobs/generic_job_store_v1_0.ic10';cfg_path='ic10/controll
 participants=set(json.loads((R/'data/stack_envelope_declarations.json').read_text())['standard_participation']['BANKED_TRANSACTION_V1'])
 ck(participants=={job_path,cfg_path},'BANKED_TRANSACTION_V1 capability participants differ from executable coverage')
 job=result.source(job_path);cfg=result.source(cfg_path)
-result.line_limit(job_path,121,rule='Job Store line budget')
-result.line_limit(cfg_path,121,rule='Config Host line budget')
+# Both carry a reviewed SOFT_LIMIT_EXEMPTIONS entry; validate_ic10.py holds their line counts,
+# so a private ceiling here was a second number to keep in step (issue #172).
 for token in ('bne r0 HASH("GenericJobStore.v1") Reset','get r0 db 1','beq r0 1 Recover'):
     ck(token in job,f'Job Store missing storage compatibility gate {token!r}')
 for token in ('get r15 db 52','get r0 db 9','bne r15 r0 NoReplay','poke 11 5','poke 53 r15'):
@@ -32,4 +32,4 @@ for f in ('framework/banked_transaction.py','tests/test_banked_transaction.py','
 raise SystemExit(result.finish('Banked transaction contract validation',[
  'Config Host implements REVISION_BANK with post-commit replay acknowledgement',
  'Job Store implements SELECTOR_BANK and gates recovery on exact magic+ABI',
- 'both production ICs remain within the 120-line project ceiling']))
+ 'both production ICs sit above the project ceiling under reviewed soft-limit exemptions']))

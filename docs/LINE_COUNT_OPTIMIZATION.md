@@ -4,7 +4,7 @@ The framework keeps production IC10 programs at or below a **120-line maintainab
 
 ## Current line-pressure inventory
 
-`validation/validators/validate_ic10.py` is authoritative for the 120-line project ceiling. `docs/SCRIPT_INDEX.md` is regenerated directly from source plus `data/source_manifest.json` metadata and records the exact current line count for every deployable program, so this document deliberately does not duplicate a second manually synchronized line-count table. Repetitive thin directory adapters are emitted from `data/directory_adapter_specs.json` rather than maintained as copy-pasted source.
+`validation/validators/validate_ic10.py` is authoritative for the 120-line project ceiling, and every other check that names a limit imports it from `framework/ic10_line_budget.py`: a generator that refuses to emit over the ceiling, a family validator that takes no exemption and says so, a hard-limit recheck. No validator keeps a per-file ceiling of its own beside `SOFT_LIMIT_EXEMPTIONS` (issue #172). `docs/SCRIPT_INDEX.md` is regenerated directly from source plus `data/source_manifest.json` metadata and records the exact current line count for every deployable program, so this document deliberately does not duplicate a second manually synchronized line-count table. Repetitive thin directory adapters are emitted from `data/directory_adapter_specs.json` rather than maintained as copy-pasted source.
 
 For review, treat programs at **117 lines or more** as tight: they have at most three lines of framework headroom. The release evidence under `validation/evidence/` captures the validator result for the exact packaged source.
 

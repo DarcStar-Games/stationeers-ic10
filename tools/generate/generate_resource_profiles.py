@@ -7,6 +7,7 @@ from collections import defaultdict
 from framework.catalog_generation import (
  CatalogFamily,CatalogPartition,declared_output_inventory,run_catalog_generation,
 )
+from framework.ic10_line_budget import CEILING_LINES
 from framework.catalog_schema import (
  CELL_BLOCK_WIDTH,COORDINATION_PROGRAM_FILES,COORD_TOKEN,GENERIC_STORE_FILE,STORE_ABI,STORE_TOKEN,CatalogItem,
 )
@@ -148,7 +149,7 @@ j Loop'''
  rl += ['poke 11 -2','poke 12 0','poke 10 r15','j Loop']
  for i,(_,rt) in enumerate(reagents): rl += [f'R{i}:',f'poke 12 {rt}','poke 11 1','poke 10 r15','j Loop']
  reagent_text='\n'.join(rl)+'\n'
- if len(reagent_text.splitlines())>120: raise SystemExit('215 reagent resolver exceeds 120-line IC10 ceiling')
+ if len(reagent_text.splitlines())>CEILING_LINES: raise SystemExit(f'215 reagent resolver exceeds {CEILING_LINES}-line IC10 ceiling')
  return {VIEW_FILE:view,RESOLVER_FILE:reagent_text}
 
 def loader_filename(partition,ordinal):

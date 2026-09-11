@@ -14,6 +14,7 @@ from dataclasses import dataclass
 import hashlib, json
 from pathlib import Path
 
+from framework.ic10_line_budget import CEILING_LINES
 from framework.ic10_source import game_hash
 from framework.protocol_headers import header_name, header_token
 from framework.stack_envelope import declared_capability_mask
@@ -106,7 +107,7 @@ def make_item_loader(*,label,schema_name,schema_version,instance_name,partition_
     L.append('poke 18 1 # immutable candidate publication LAST')
     return '\n'.join(L)+'\n'
 
-def split_catalog_items(*,label,schema_name,schema_version,instance_name,partition_key_expr,items,max_lines=120):
+def split_catalog_items(*,label,schema_name,schema_version,instance_name,partition_key_expr,items,max_lines=CEILING_LINES):
     """Split source only between complete logical items. Loader ordinals are not Store ordinals."""
     out=[];pos=0;li=0
     while pos<len(items):

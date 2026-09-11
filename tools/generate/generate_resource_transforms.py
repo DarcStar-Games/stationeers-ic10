@@ -6,6 +6,7 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 from framework.catalog_generation import (
  CatalogFamily,CatalogPartition,declared_output_inventory,run_catalog_generation,
 )
+from framework.ic10_line_budget import CEILING_LINES
 from framework.ic10_source import game_hash
 from framework.protocol_headers import header_name
 from framework.catalog_schema import (
@@ -160,7 +161,7 @@ j ra'''
  for i,(rt,name) in enumerate(producer): pl += [f'poke {32+2*i} {rt}',f'poke {33+2*i} HASH("{name}")']
  pl += ['Loop:','yield','get r15 db 9','get r0 db 10','beq r15 r0 Loop','get r2 db 8','beqz r2 Bad','move r6 0','move r7 32','Find:',f'bge r6 {len(producer)} Print','get r0 db r7','beq r0 r2 Found','add r7 r7 2','add r6 r6 1','j Find','Found:','add r7 r7 1','get r0 db r7','poke 12 1','poke 13 r0','j Good','Print:','poke 12 2','poke 13 r2','Good:','poke 11 1','poke 10 r15','j Loop','Bad:','poke 11 -1','poke 12 0','poke 13 0','poke 10 r15','j Loop']
  producer_text='\n'.join(pl)+'\n'
- if len(producer_text.splitlines())>120: raise SystemExit('201 producer resolver exceeds 120-line IC10 ceiling')
+ if len(producer_text.splitlines())>CEILING_LINES: raise SystemExit(f'201 producer resolver exceeds {CEILING_LINES}-line IC10 ceiling')
  return {VIEW_FILE:view,RESOLVER_FILE:producer_text}
 
 def loader_filename(partition,ordinal):

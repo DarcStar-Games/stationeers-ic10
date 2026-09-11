@@ -32,17 +32,13 @@ req={
 'ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10':['poke 0 HASH("DependencyPlanReleaseAdvisor.v1")'],
 'ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10':['poke 0 HASH("ExistingDependencyPlanController.v1")','beq r0 5 Replan','put d3 32 r15'],
 'ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10':['poke 0 HASH("NewDependencyPlanController.v1")']}
-# Per-file ceilings above the 120-line framework limit; each also carries a reviewed
-# SOFT_LIMIT_EXEMPTIONS entry in validate_ic10.py naming what the margin buys.
-SOFT={'ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10':120,
-'ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10':128,
-'ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10':123}
+# Line limits are validate_ic10.py's: its ceiling, its reviewed SOFT_LIMIT_EXEMPTIONS, and
+# the hard limit apply to every program here, so a per-file ceiling beside them was a
+# second list that tracked each program's size and held nothing back (issue #172).
 for rel,pats in req.items():
  p=R/rel
  if not p.exists():validation.fail(f'{rel}: missing implementation');continue
- t=p.read_text();lines=len(t.splitlines())
- soft=SOFT.get(rel,120)
- if lines>soft:validation.fail(f'{rel}: {lines} lines > {soft}')
+ t=p.read_text()
  for pat in pats:
   if pat not in t:validation.fail(f"{rel}: missing {pat!r}")
 t=(R/'ic10/item-storage-common/item_resource_reservation_selector_v1_0.ic10').read_text()

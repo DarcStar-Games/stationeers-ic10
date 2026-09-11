@@ -9,6 +9,7 @@ from framework.validation import Validation
 from pathlib import Path
 import json
 
+from framework.ic10_line_budget import CEILING_LINES
 from framework.json_schema import SchemaValidationError, validate
 from framework.script_contracts import (
     access_interface_id,
@@ -31,7 +32,7 @@ validation = Validation(ROOT)
 UNENFORCED_RANGES = {
     ("ic10/manufacturing/print_material_resolver_v1_0.ic10", "d0"):
         "pins the Recipe Execution View's S15 ready status. Not blocked, priced: the"
-        " program sits exactly on the 120-line limit, so checking both its ports takes it"
+        f" program sits exactly on the {CEILING_LINES}-line limit, so checking both its ports takes it"
         " to 124 and needs a reviewed SOFT_LIMIT_EXEMPTIONS entry of its own (issue #90"
         " argues the comparison belongs somewhere that costs the consumer no lines)",
     ("ic10/manufacturing/print_material_resolver_v1_0.ic10", "d1"):

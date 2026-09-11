@@ -3,6 +3,7 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.ic10_line_budget import CEILING_LINES, HARD_LIMIT_LINES
 from framework.validation import Validation
 from pathlib import Path
 import json,sys,tempfile
@@ -70,11 +71,11 @@ item6=[
 for rel in item6:
     p=R/rel
     if not p.exists(): fail(f'missing manufacturing service {rel}')
-    elif len(p.read_text().splitlines())>128: fail(rel+': exceeds the 128-line hard limit')
+    elif len(p.read_text().splitlines())>HARD_LIMIT_LINES: fail(f'{rel}: exceeds the {HARD_LIMIT_LINES}-line hard limit')
 raise SystemExit(result.finish('Manufacturing contracts',[
  'async state/error publication is request-token fenced end-to-end',
  'Transform readiness is profile/generation-qualified with no arbitrary 16-tick timeout',
  'WAIT traversal reaches lower-priority runnable jobs across multiple waiters',
  'Printer reservation separates request/response identity from exact-ref lock ownership',
  'one dynamic manufacturing selector implementation can serve Transform and Print domains',
- 'manufacturing execution contains 16 bounded semantic services/adapters, all <=120 lines']))
+ f'manufacturing execution contains 16 bounded semantic services/adapters, none over the {HARD_LIMIT_LINES}-line hard limit; the ceiling and its exemptions are validate_ic10.py\'s']))

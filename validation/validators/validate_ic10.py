@@ -18,9 +18,10 @@ LIMIT_LINES = HARD_LIMIT_LINES
 LIMIT_CHARS = 90
 LIMIT_BYTES = 4096
 MAINTAINABILITY_LINES = CEILING_LINES
-# Reviewed spends of the deliberate 120..128 margin. The hard limit still applies. An
-# exemption within HARD_LIMIT_MARGIN_LINES of it states the program's count as
-# "<lines> of 128 lines", and a stated count the tree no longer matches fails, so the
+# Reviewed spends of the deliberate CEILING_LINES..HARD_LIMIT_LINES margin. The hard limit
+# still applies. An exemption within HARD_LIMIT_MARGIN_LINES of it states the program's
+# count in the form framework.ic10_line_budget.hard_limit_note gives it ("<lines> of
+# <hard limit> lines"), and a stated count the tree no longer matches fails, so the
 # margin is reviewed by the edit that moves it, not discovered by the one that spends it
 # (issue #176).
 SOFT_LIMIT_EXEMPTIONS = {

@@ -20,6 +20,13 @@ tree cannot disagree about what is being counted (issue #164):
 A program's line count is what ``framework.ic10_source.parse_ic10`` sees, the same
 measure ``validate_ic10.py`` applies its limits to.
 
+Every other check that names a limit imports it from here: the generators that refuse
+to emit over the ceiling, the catalog splitter that sizes a loader to it, the envelope
+inventory that records headroom under it, and the family validators that take no
+exemption. A limit restated as a number elsewhere is a copy that can drift, and a
+per-file ceiling beside ``SOFT_LIMIT_EXEMPTIONS`` is a second list saying less than the
+exemption already does (issue #172).
+
 An exemption says why its program is over the ceiling, not how close to the game's
 limit it sits. ``hard_limit_margin_failures`` holds the ones within
 ``HARD_LIMIT_MARGIN_LINES`` of ``HARD_LIMIT_LINES`` to stating the count, so the margin
