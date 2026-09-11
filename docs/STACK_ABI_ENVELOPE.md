@@ -154,7 +154,15 @@ reach it before the first yield, which the validator asks of the control-flow
 graph rather than of the file. A clear the entry jumps over zeroes nothing on any
 housing, and does not count. A clear behind a reflash guard does: on a foreign or
 stale housing the guard fails and the clear runs, and on a same-image reflash the
-generation carries forward, which is what a durable generation is for.
+generation carries forward, which is what a durable generation is for. The
+publication rule admits the same carry: on the guard's same-image edge the
+generation is whatever this contract last published, so `stable_cells` counts it
+initialized there without a literal write, the one expected cell it treats so
+(issue #136). A literal `poke 7 0` after the guard would satisfy both rules and
+defeat the carry, since it runs on the skip path too and resets the generation
+under a consumer that snapshotted it. The fresh path still has to zero the cell,
+and only the clear does. What carries is the last value published, which is still
+zero if the previous image never advanced it.
 
 ### State
 
@@ -518,21 +526,23 @@ against, and the two layers cannot disagree about one program. The taken path
 is what the clear exemption is for, and it reaches exactly as far as the graph
 does. A clear behind the guard is initialization where every envelope
 cell it zeroes is written again -- with its literal value, on every path out --
-before anything can look: another `yield`, an `hcf`, or any cycle at all, since a
-program that can go round with the cell still zeroed can be read with it zeroed.
-Asking for the cycle rather than for a backward edge is what lets the rule stay
-silent about whether a transfer was a loop, a call, or a return -- a distinction
-the stability proof needs its call states to draw, and one a graph of plain
-indices has already lost. Anywhere else the clear is erasure, and the error names
-the cells it leaves at zero. The exemption used to be
+before anything can look: another `yield`, an `hcf`, or the program going round
+in the same call context, since a program that can go round with the cell still
+zeroed can be read with it zeroed. The stability proof is the one authority on
+that path: it reads `clr db` as costing a cell its value and earning a cell that
+expects zero the one it wants, and a clear that erases fails it before anything
+else is asked. The exemption used to be
 unconditional, and the induction used to be a second rule in the envelope layer
 that cleared the guard's own missing set -- sound about the skip path, where the
 stack already holds what this contract published -- and so spoke for the path
-that erases too. Every migrated program clears first and publishes after, so
-nothing had ever forced the two apart; as one edge of the stability proof the
-induction cannot reach the other path at all. The stability proof reads the
-instruction the same way the erasure proof does: `clr db` costs a cell its value,
-and earns a cell that expects zero the one it wants.
+that erases too; a walk over the projected graph (`cells_erased_by_clear`) was
+put beside it to close that route. Confining the induction to the skip edge
+closed it for good, and the walk came out of the envelope layer (issue #136):
+over the projection a return lands wherever the routine was called from, so a
+subroutine called twice between the clear and the republication read as the
+program going round with the envelope erased, when the call states show it
+republishing before it yields. The walk stays in the tests as the record of
+that over-approximation.
 
 `tools/plan_header_migration.py` plans a family's move from those contracts. It
 takes free cells from the analysed footprint rather than the literal one — a

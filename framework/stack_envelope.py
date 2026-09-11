@@ -18,7 +18,7 @@ from framework.script_contracts.parsing import (
     resolve_integer,
     resolve_literal,
 )
-from framework.script_contracts.publication import cells_erased_by_clear, stable_cells
+from framework.script_contracts.publication import stable_cells
 
 FORMAT = "IC10_STACK_ENVELOPE_INVENTORY_V1"
 DECLARATION_FORMAT = "IC10_STACK_ENVELOPE_DECLARATIONS_V1"
@@ -626,8 +626,10 @@ def publication_errors(
             # a reflash-marker guard branches before publishing; the contract layer proves
             # whether every expected cell still holds its value at every observation
             # point, and the same-image induction that lets an identity guard speak
-            # for the skip path lives in that proof, so both layers answer with one rule
-            stable = stable_cells(path.read_text(), aliases, expected)
+            # for the skip path lives in that proof, so both layers answer with one rule.
+            # A cell the service may mutate after publication (the generation) is, on
+            # that edge, what the previous image last published, and carries (#136).
+            stable = stable_cells(path.read_text(), aliases, expected, carried=mutable_cells)
             missing = sorted(set(expected) - stable)
             if missing:
                 errors.append("control transfer occurs before the first envelope-bearing yield")
@@ -664,21 +666,17 @@ def publication_errors(
     dynamic_after = False
     # After a proven-stable reflash-guard branch, everything past the branch is
     # post-publication for reserved-cell purposes, so the clear the boot idiom
-    # puts there is initialization rather than erasure -- but only where the
-    # publication that follows it puts back everything it zeroed. The induction
-    # that proved the guard speaks for the skip path, which runs over a stack
-    # this contract already published; it says nothing about the path that
-    # clears, so that path is asked separately and by the graph.
+    # puts there is initialization rather than erasure. The stability proof is
+    # what says so: it reads `clr db` as a write of zero to every cell and asks
+    # the path that clears to re-establish each expected value before anything
+    # can look, so a clear that erases has already failed above. A second walk
+    # over the projected graph used to run here and was retired once the
+    # induction was confined to the skip edge (#136): the one shape it still
+    # refused, a subroutine called twice between the clear and the republication,
+    # it refused for a cycle the projection invents.
     guard_proved = first_yield is None and branch_proved
     if guard_proved:
         first_yield = scan_from
-        erased = cells_erased_by_clear(path.read_text(), aliases, expected)
-        if erased:
-            errors.append(
-                "clr db leaves "
-                + ", ".join(f"S{address}" for address in sorted(erased))
-                + " at zero where a consumer can read them; nothing republishes them"
-            )
     if first_yield is not None:
         for row in rows[first_yield + 1:]:
             op = row[0]

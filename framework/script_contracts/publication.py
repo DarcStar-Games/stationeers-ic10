@@ -154,9 +154,19 @@ def publication_fits_one_tick(
 
 
 def stable_cells(
-    source: str, integer_aliases: dict[str, int], expected: dict[int, Any]
+    source: str,
+    integer_aliases: dict[str, int],
+    expected: dict[int, Any],
+    carried: frozenset[int] = frozenset(),
 ) -> set[int]:
-    """Find cells initialized to an expected value before every observable control-flow boundary.
+    """Find cells initialized before every observable control-flow boundary.
+
+    For every cell but a carried one, initialized means holding its expected
+    value, and `analyze_own_stack` reads the result as the constants it
+    derives header invariants from. A carried cell's membership means only that
+    something this contract published is there; on the skip edge that is the
+    previous generation, not zero, so a caller that passes `carried` must not
+    read the result as constants.
 
     `clr db` de-initializes: it costs a cell whatever it held and hands a cell
     that expects zero the value it wants, so a clear is a write of 0 to all 512
@@ -170,6 +180,13 @@ def stable_cells(
     publish the cell itself before anything can look. It holds only where that
     previous image could not have stopped part-way through its own boot, which
     `publication_fits_one_tick` decides (issue #135).
+
+    `carried` names the cells the caller knows the previous image went on to
+    write after its boot and means a same-image reflash to keep: the generation
+    fence, whose only writes are computed. On the same-image edge such a cell
+    counts as initialized whatever its literal writes say, because what it
+    holds there is what this contract last published; every other path still
+    has to establish the expected value itself (issue #136).
     """
     program = parse_program(source)
     if not program:
@@ -243,9 +260,12 @@ def stable_cells(
             if entry["row"][:1] == ["poke"] and len(entry["row"]) >= 3
             and resolve_integer(entry["row"][1], integer_aliases) == address
         ]
-        assumed = {guard} if (
-            guard is not None and value is not None and literal_writes
-            and all(resolve_literal(row[2], integer_aliases) == value for row in literal_writes)
+        assumed = {guard} if guard is not None and (
+            address in carried
+            or (
+                value is not None and literal_writes
+                and all(resolve_literal(row[2], integer_aliases) == value for row in literal_writes)
+            )
         ) else set()
         initialized_after = {state: True for state in reachable}
         changed = True

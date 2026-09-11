@@ -20,6 +20,8 @@ from framework.ic10_source import game_hash, parse_ic10
 from framework.script_contracts.parsing import collect_aliases
 from framework.script_contracts.publication import cells_erased_by_clear, stable_cells
 from framework.stack_envelope import (
+    _parse_source,
+    _writes,
     BASE,
     CAPABILITY_BITS_V1,
     FIELD_CAPABILITY_BITS_V1,
@@ -790,11 +792,12 @@ with TemporaryDirectory() as temporary:
 # A `clr db` behind a proven reflash guard is initialization only where the
 # publication that follows puts back everything it zeroed. The induction that
 # proves the guard speaks for the skip path alone, so the stability proof holds
-# the path that clears to account itself; the erasure proof behind it asks the
-# same of the projected graph and fails closed where that projection invents a
-# path. A program that publishes first and then reads its own magic back has
-# satisfied its own guard, so neither shape below is a guard at all, and the
-# stability proof is what rejects them.
+# the path that clears to account itself, and it is the only proof the envelope
+# layer runs on that path (issue #136); the erasure walk over the projected
+# graph is asserted directly below as a record of where the projection
+# over-approximates. A program that publishes first and then reads its own
+# magic back has satisfied its own guard, so neither shape below is a guard at
+# all, and the stability proof is what rejects them.
 GUARD_MAGIC = game_hash("StackCellMonitor.v1")
 guard_expected = {0: GUARD_MAGIC, 1: 1, 2: 0}
 ERASING = (
@@ -903,6 +906,24 @@ ck(cells_erased_by_clear(SPINNING_RETURN, guard_aliases(SPINNING_RETURN), {0: GU
 COMPUTED_ONLY = IDIOM.replace(f"poke 2 0\n", "poke 2 r1\n", 1)
 ck(cells_erased_by_clear(COMPUTED_ONLY, guard_aliases(COMPUTED_ONLY), {0: GUARD_MAGIC, 2: None}) == {2},
    "a computed write satisfied an expected value that resolves to nothing either")
+# A subroutine called twice between the clear and the republication: the projected
+# graph reads the second call as the first going round, the call states know the
+# program republishes before it yields. The envelope layer takes the call states'
+# answer, which is why the erasure walk no longer runs there (issue #136).
+DOUBLE_CALL = (
+    f"get r0 db 0\nbeq r0 {GUARD_MAGIC} Wipe\npoke 0 {GUARD_MAGIC}\npoke 1 1\nj Loop\n"
+    f"Wipe:\nclr db\njal Nop\njal Nop\npoke 0 {GUARD_MAGIC}\npoke 1 1\nj Loop\n"
+    "Nop:\nj ra\nLoop:\nyield\nj Loop\n"
+)
+double_call_expected = {0: GUARD_MAGIC, 1: 1}
+ck(cells_erased_by_clear(DOUBLE_CALL, guard_aliases(DOUBLE_CALL), double_call_expected) == {0, 1},
+   "the projected graph stopped reading a second call to one routine as a cycle; the record here is stale")
+ck(stable_cells(DOUBLE_CALL, guard_aliases(DOUBLE_CALL), double_call_expected) == {0, 1},
+   "the stability proof read a return to the next call site as the program going round")
+ck(not guard_publication_errors(DOUBLE_CALL, double_call_expected),
+   "the envelope layer refused a republication the call states prove, on the projection's word")
+ck(stable_cells(CONDITIONAL, guard_aliases(CONDITIONAL), guard_expected) == {2},
+   "the stability proof alone did not refuse a guarded clear whose republication one path skips")
 
 # `clr db` de-initializes: it costs a cell its nonzero value and establishes a zero one.
 ck(stable_cells(ERASING, guard_aliases(ERASING), guard_expected) == {2},
@@ -1047,6 +1068,65 @@ ck(any("initialized to 0" in error for error in generation_rule_errors(ENTRY_YIE
 ck(not generation_rule_errors(
     "poke 7 0\nLoop:\nyield\npoke 7 r0\nj Loop\n", {7: {0, None}}
 ), "an explicit literal zero of the generation was rejected")
+
+# The guarded-clear generation carry the envelope doc describes: on the same-image
+# edge the generation is what the previous image last published, so the
+# publication rule counts it initialized there without a literal write, the one
+# expected cell it treats so. The fresh path still has to zero it, and only the
+# clear does; an unguarded skip of the clear or no clear at all is still refused,
+# and no other computed cell rides the same carry (issue #136).
+EXAMPLE_MAGIC = game_hash("Example.v1")
+GENERATION_CARRY = (
+    f"get r0 db 0\nbeq r0 {EXAMPLE_MAGIC} Init\nclr db\n"
+    f"Init:\npoke 0 {EXAMPLE_MAGIC}\npoke 1 1\npoke 2 16\n"
+    "Loop:\nyield\npoke 9 r0\npoke 7 r3\nj Loop\n"
+)
+UNGUARDED_CARRY = GENERATION_CARRY.replace(f"get r0 db 0\nbeq r0 {EXAMPLE_MAGIC} Init\nclr db\n", "j Init\nclr db\n", 1)
+UNCLEARED_CARRY = GENERATION_CARRY.replace(f"get r0 db 0\nbeq r0 {EXAMPLE_MAGIC} Init\nclr db\n", "", 1)
+COMPUTED_MASK_CARRY = GENERATION_CARRY.replace("poke 2 16\n", "poke 2 r4\n", 1)
+GUARDED_UNCLEARED_CARRY = GENERATION_CARRY.replace("clr db\n", "", 1)
+
+
+def generation_carry_errors(text):
+    with TemporaryDirectory() as temporary:
+        case = _ProjectPath(temporary) / "carry.ic10"
+        case.write_text(text)
+        declaration = replace(
+            generation_declaration, source=case.name,
+            source_sha256=hashlib.sha256(case.read_bytes()).hexdigest(),
+        )
+        rows, aliases = _parse_source(text)
+        writes = _writes(rows, aliases)
+        extension = extension_rule_result(declaration, writes)
+        return (
+            publication_rule_errors(
+                _ProjectPath(temporary), declaration, minimal_contract,
+                extension.published_cells, extension.reserved_cells, writes,
+            ),
+            state_generation_rule_errors(declaration, rows, aliases, writes, text),
+        )
+
+
+carry_publication, carry_generation = generation_carry_errors(GENERATION_CARRY)
+ck(not carry_publication and not carry_generation,
+   f"the guarded-clear generation carry the doc describes was refused: {carry_publication + carry_generation}")
+unguarded_publication, unguarded_generation = generation_carry_errors(UNGUARDED_CARRY)
+ck(any("control transfer occurs before" in error for error in unguarded_publication)
+   and any("initialized to 0" in error for error in unguarded_generation),
+   "an unconditional skip of the clear was credited with the generation carry")
+uncleared_publication, uncleared_generation = generation_carry_errors(UNCLEARED_CARRY)
+ck(any("does not retain S7 = 0" in error for error in uncleared_publication)
+   and any("initialized to 0" in error for error in uncleared_generation),
+   "a fresh housing reaching its first yield with S7 unwritten and no clear was accepted")
+ck(any("control transfer occurs before" in error for error in generation_carry_errors(COMPUTED_MASK_CARRY)[0]),
+   "a computed capability mask rode the carry reserved for the generation")
+guarded_uncleared_publication, guarded_uncleared_generation = generation_carry_errors(GUARDED_UNCLEARED_CARRY)
+ck(any("control transfer occurs before" in error for error in guarded_uncleared_publication)
+   and any("initialized to 0" in error for error in guarded_uncleared_generation)
+   and 7 not in stable_cells(GUARDED_UNCLEARED_CARRY, {}, {0: EXAMPLE_MAGIC, 1: 1, 2: 16, 7: 0}, carried=frozenset({7})),
+   "the generation carry reached the fresh path of a guarded program that never clears")
+ck(stable_cells(GENERATION_CARRY, {}, {0: EXAMPLE_MAGIC, 7: 0}) == {0},
+   "the stability proof carried the generation without being told it may")
 
 if fails:
     print("Stack header tests: FAIL")
