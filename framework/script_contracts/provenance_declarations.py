@@ -1,7 +1,8 @@
 """The shape of a reviewed `network_provenance` declaration (issue #174).
 
-A declaration says where a network write's reference register is loaded from
-and which contracts a ReferenceId in that place names. The walk that holds it
+A declaration says where a network access's reference register is loaded from
+and which contracts a ReferenceId in that place names. A write must be
+attributed; a read is attributed so its reader counts as a peer (issue #190). The walk that holds it
 to the source lives in `framework.network_provenance`; this module is only the
 vocabulary, so the contract build can check a declaration's shape without
 importing the walk.
@@ -30,13 +31,13 @@ FILLED_BY = ("self", "peer", "operator")
 def validate_provenance(declarations: list[dict[str, Any]], references: set[str]) -> list[dict[str, Any]]:
     """Check the shape of a program's `network_provenance` declarations.
 
-    `references` are the reference operands the program writes through; a
-    declaration for anything else is stale.
+    `references` are the reference operands the program reads or writes
+    through; a declaration for anything else is stale.
     """
     for declaration in declarations:
         reference = declaration.get("reference")
         if reference not in references:
-            raise ValueError(f"network provenance declaration names a reference with no network write: {declaration}")
+            raise ValueError(f"network provenance declaration names a reference with no network access: {declaration}")
         origin = declaration.get("origin")
         if not isinstance(origin, dict) or origin.get("kind") not in ORIGIN_KINDS:
             raise ValueError(f"network provenance declaration has no recognized origin kind: {declaration}")

@@ -81,14 +81,15 @@
         },
         {
           "address": 98,
-          "name": "Ch1Process",
+          "name": "ChannelMask",
           "value_type": "enum",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
           "const": 62,
-          "description": "ch1 process,2 state,3 state ticks,4 cycles,5 status"
+          "description": "ch1 process,2 state,3 state ticks,4 cycles,5 status",
+          "role": "metadata"
         },
         {
           "address": 99,
@@ -149,12 +150,14 @@
         },
         {
           "address": 116,
-          "name": "S116",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ConfigHostRef",
+          "value_type": "reference-id",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "topology",
+          "description": "paired Generic Config Host ReferenceId"
         }
       ],
       "behavior": {

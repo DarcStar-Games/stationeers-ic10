@@ -4,15 +4,33 @@
   "ic10.stack.27182818.abi1": {
    "layout": [
     {
+     "cells": "S98",
+     "name": "ChannelMask",
+     "role": "metadata",
+     "description": "bitmask of the telemetry channels the controller publishes"
+    },
+    {
      "cells": "S99",
      "name": "ControllerType",
      "role": "metadata",
      "description": "controller family hash"
+    },
+    {
+     "cells": "S116",
+     "name": "ConfigHostRef",
+     "role": "topology",
+     "description": "paired Generic Config Host ReferenceId"
     }
    ]
   },
   "ic10.stack.27182818.abi2": {
    "layout": [
+    {
+     "cells": "S98",
+     "name": "ChannelMask",
+     "role": "metadata",
+     "description": "bitmask of the telemetry channels the controller publishes"
+    },
     {
      "cells": "S99",
      "name": "ControllerType",
@@ -54,6 +72,12 @@
      "description": "written last; payload precedes it"
     },
     {
+     "cells": "S116",
+     "name": "ConfigHostRef",
+     "role": "topology",
+     "description": "paired Generic Config Host ReferenceId"
+    },
+    {
      "cells": "S117",
      "name": "StagedSourceReservationReferenceId",
      "role": "request"
@@ -78,6 +102,12 @@
   "ic10.stack.catalog-coordinator-core.v4": {
    "layout": [
     {
+     "cells": "S8..S13",
+     "name": "DirectorySummary",
+     "role": "telemetry",
+     "description": "aggregate directory health and capacity summary"
+    },
+    {
      "cells": "S14",
      "name": "CoordinatorId",
      "role": "metadata"
@@ -93,6 +123,17 @@
      "role": "generation"
     },
     {
+     "cells": "S19",
+     "name": "ClaimStatus",
+     "role": "state",
+     "description": "-1 after a failed Store claim; the Inspector republishes it"
+    },
+    {
+     "cells": "S20",
+     "name": "AssignmentEpochCounter",
+     "role": "epoch"
+    },
+    {
      "cells": "S21",
      "name": "PlacementGeneration",
      "role": "generation",
@@ -103,6 +144,11 @@
      "name": "TopologySequence",
      "role": "generation",
      "description": "topology seqlock, stable even"
+    },
+    {
+     "cells": "S23",
+     "name": "RegistryDirectoryRef",
+     "role": "topology"
     },
     {
      "cells": "S25",
@@ -172,9 +218,37 @@
      "role": "metadata"
     },
     {
+     "cells": "S12",
+     "name": "LoaderId",
+     "role": "metadata",
+     "description": "stable generated identity"
+    },
+    {
+     "cells": "S13",
+     "name": "LoaderGeneration",
+     "role": "generation",
+     "description": "Loader publication generation or version"
+    },
+    {
      "cells": "S14",
      "name": "ItemCount",
      "role": "metadata"
+    },
+    {
+     "cells": "S15",
+     "name": "ItemDirectoryBase",
+     "role": "metadata",
+     "description": "24"
+    },
+    {
+     "cells": "S16",
+     "name": "TotalPayloadCells",
+     "role": "metadata"
+    },
+    {
+     "cells": "S17",
+     "name": "PayloadSignature",
+     "role": "schema"
     },
     {
      "cells": "S18",
@@ -199,6 +273,12 @@
      "name": "ImportedItemIndex",
      "role": "state",
      "description": "next imported item index, advanced by the Router and Store"
+    },
+    {
+     "cells": "S24..S27",
+     "name": "ItemDirectory",
+     "role": "table",
+     "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
     }
    ]
   },
@@ -213,6 +293,16 @@
      "cells": "S9",
      "name": "InputResolverRef",
      "role": "topology"
+    }
+   ]
+  },
+  "ic10.stack.console-registry.v1": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "ActiveBank",
+     "role": "bank",
+     "description": "0 A, 1 B"
     }
    ]
   },
@@ -259,6 +349,12 @@
   "ic10.stack.controller-selector.v2": {
    "layout": [
     {
+     "cells": "S8",
+     "name": "Status",
+     "role": "state",
+     "description": "1 resolved, negative fault; -3 an overflowed directory"
+    },
+    {
      "cells": "S10",
      "name": "DesiredControllerType",
      "role": "request"
@@ -272,6 +368,17 @@
      "cells": "S12",
      "name": "RequestToken",
      "role": "request_token"
+    },
+    {
+     "cells": "S13",
+     "name": "HandledRequestToken",
+     "role": "response_token",
+     "description": "TERMINAL_RESPONSE token, written last"
+    },
+    {
+     "cells": "S17",
+     "name": "SelectedControllerRef",
+     "role": "result"
     }
    ]
   },
@@ -1030,6 +1137,11 @@
      "role": "result"
     },
     {
+     "cells": "S10",
+     "name": "ItemDirectoryBase",
+     "role": "metadata"
+    },
+    {
      "cells": "S11",
      "name": "CoordinatorRef",
      "role": "topology"
@@ -1104,6 +1216,11 @@
      "role": "topology"
     },
     {
+     "cells": "S25",
+     "name": "Reserved25",
+     "role": "reserved"
+    },
+    {
      "cells": "S26",
      "name": "AssignmentEpoch",
      "role": "epoch"
@@ -1115,14 +1232,30 @@
      "description": "capacity promised to an in-flight placement or migration"
     },
     {
+     "cells": "S28",
+     "name": "FaultDetail",
+     "role": "error"
+    },
+    {
      "cells": "S29",
      "name": "FreeCells",
      "role": "result"
     },
     {
+     "cells": "S30",
+     "name": "Reserved30",
+     "role": "reserved"
+    },
+    {
      "cells": "S31",
      "name": "CommittedAssignmentEpoch",
      "role": "epoch"
+    },
+    {
+     "cells": "S32..S511",
+     "name": "ItemHeap",
+     "role": "table",
+     "description": "two-cell item directory growing up from S32; payload heap growing down from S511"
     }
    ]
   },
@@ -1981,9 +2114,33 @@
      "role": "request"
     },
     {
+     "cells": "S14",
+     "name": "ProcessorRef",
+     "role": "topology",
+     "description": "ReferenceId of the processor on d0"
+    },
+    {
+     "cells": "S15",
+     "name": "OutputReservationRef",
+     "role": "topology",
+     "description": "ReferenceId of the output Reservation on d4"
+    },
+    {
      "cells": "S16",
      "name": "RequestToken",
      "role": "request_token"
+    },
+    {
+     "cells": "S17",
+     "name": "AdmissionRef",
+     "role": "topology",
+     "description": "ReferenceId of the Admission on d1"
+    },
+    {
+     "cells": "S18",
+     "name": "LinkResolverRef",
+     "role": "topology",
+     "description": "ReferenceId of the Link Resolver on d2"
     },
     {
      "cells": "S20",
@@ -2166,16 +2323,53 @@
    ],
    "layout": [
     {
+     "cells": "S12..S15",
+     "name": "UnpublishedAdapterCells",
+     "role": "reserved",
+     "description": "the Catalog Inspector reads these as the Adapter ABI3 candidate count, sequence, overflow, and mode, but the Registry Host never writes them; see issue #194"
+    },
+    {
+     "cells": "S16",
+     "name": "Status",
+     "role": "state"
+    },
+    {
      "cells": "S18",
      "name": "TelemetrySequence",
      "role": "generation",
      "description": "odd while the Directory Telemetry rewrites S35..S45"
     },
     {
+     "cells": "S20",
+     "name": "RecordWidth",
+     "role": "metadata"
+    },
+    {
+     "cells": "S21",
+     "name": "Capacity",
+     "role": "metadata"
+    },
+    {
      "cells": "S23",
      "name": "PublicationSequence",
      "role": "generation",
      "description": "odd while mutating, even when stable"
+    },
+    {
+     "cells": "S24",
+     "name": "FreezeTokenCounter",
+     "role": "request_token",
+     "description": "freeze tokens issued to the adapter"
+    },
+    {
+     "cells": "S25",
+     "name": "AcceptedCandidateGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S26",
+     "name": "RegistryGeneration",
+     "role": "generation"
     },
     {
      "cells": "S35",
@@ -2298,6 +2492,11 @@
      "cells": "S22",
      "name": "StagingOverflow",
      "role": "state"
+    },
+    {
+     "cells": "S23",
+     "name": "HostError",
+     "role": "error"
     },
     {
      "cells": "S24",
@@ -3040,6 +3239,11 @@
      "role": "generation"
     },
     {
+     "cells": "S13",
+     "name": "TransformViewRef",
+     "role": "topology"
+    },
+    {
      "cells": "S14",
      "name": "TransformType",
      "role": "result"
@@ -3070,6 +3274,11 @@
   "ic10.stack.material-transform-link-resolver.v1": {
    "layout": [
     {
+     "cells": "S8",
+     "name": "TransformType",
+     "role": "result"
+    },
+    {
      "cells": "S9",
      "name": "InputCount",
      "role": "result"
@@ -3083,6 +3292,11 @@
      "cells": "S12",
      "name": "Status",
      "role": "state"
+    },
+    {
+     "cells": "S13",
+     "name": "PublicationGeneration",
+     "role": "generation"
     },
     {
      "cells": "S20..S31",
@@ -4414,6 +4628,12 @@
      "cells": "S15",
      "name": "PlanBuilderRequestGeneration",
      "role": "request_token"
+    },
+    {
+     "cells": "S21",
+     "name": "LeaseTicksAsRead",
+     "role": "result",
+     "description": "the Reservation Allocator divides remaining capacity by this cell as the lease length, but the Planner publishes LeaseTicks at S11 and never writes S21; see issue #194"
     }
    ]
   },
@@ -5035,8 +5255,29 @@
     }
    ]
   },
+  "ic10.stack.printer-execution-bank.v2": {
+   "layout": [
+    {
+     "cells": "S8",
+     "name": "ScanSequence",
+     "role": "generation",
+     "description": "odd while the pin scan rewrites the per-pin cells"
+    }
+   ]
+  },
   "ic10.stack.process-condition.v1": {
    "layout": [
+    {
+     "cells": "S8",
+     "name": "UnmetConditionMask",
+     "role": "result",
+     "description": "bit0 pressure, bit1 temperature"
+    },
+    {
+     "cells": "S9",
+     "name": "ProcessIdentity",
+     "role": "metadata"
+    },
     {
      "cells": "S10",
      "name": "Active",
@@ -5054,6 +5295,21 @@
      "name": "Status",
      "role": "state",
      "description": "1 valid, negative invalid"
+    },
+    {
+     "cells": "S13",
+     "name": "Strategy",
+     "role": "metadata"
+    },
+    {
+     "cells": "S14",
+     "name": "PressureTargetHint",
+     "role": "result"
+    },
+    {
+     "cells": "S15",
+     "name": "TemperatureTargetHint",
+     "role": "result"
     },
     {
      "cells": "S22",
@@ -5177,6 +5433,11 @@
      "description": "[ManufacturingReagentHash, Quantity] x 16"
     },
     {
+     "cells": "S48",
+     "name": "TopologyGeneration",
+     "role": "generation"
+    },
+    {
      "cells": "S49",
      "name": "RecipeHashEcho",
      "role": "response_token",
@@ -5218,6 +5479,12 @@
      "name": "PrecisionFlags",
      "role": "metadata",
      "description": "exact export 1, exact import 2, exact rate 4"
+    },
+    {
+     "cells": "S14",
+     "name": "ClassExtensionRef",
+     "role": "topology",
+     "description": "class-specific peer reference; ITEM endpoints publish their Resource Profile View ReferenceId here, POWER and FLUID providers leave it unused"
     },
     {
      "cells": "S20..S22",
@@ -5454,6 +5721,16 @@
      "description": "kind-specific: PHASE_MEDIUM coefficients and pressure/temperature bounds; ITEM_STACK maximum stack quantity and slot class"
     },
     {
+     "cells": "S22",
+     "name": "CatalogInstanceId",
+     "role": "metadata"
+    },
+    {
+     "cells": "S23",
+     "name": "TopologyGeneration",
+     "role": "generation"
+    },
+    {
      "cells": "S28",
      "name": "Status",
      "role": "state",
@@ -5560,6 +5837,16 @@
      "description": "mirror generation captured by committed ownership"
     },
     {
+     "cells": "S20",
+     "name": "EndpointPublicationGeneration",
+     "role": "generation"
+    },
+    {
+     "cells": "S21",
+     "name": "MirroredAccessKind",
+     "role": "metadata"
+    },
+    {
      "cells": "S22",
      "name": "MirroredActionHint0",
      "role": "result"
@@ -5588,6 +5875,30 @@
      "cells": "S27",
      "name": "CommittedDestinationSlot",
      "role": "result"
+    },
+    {
+     "cells": "S28",
+     "name": "EndpointAccessKind",
+     "role": "result",
+     "description": "raw snapshot of Endpoint S35 taken on each refresh"
+    },
+    {
+     "cells": "S29",
+     "name": "EndpointActionHint0",
+     "role": "result",
+     "description": "raw snapshot of Endpoint S38"
+    },
+    {
+     "cells": "S30",
+     "name": "EndpointActionHint1",
+     "role": "result",
+     "description": "raw snapshot of Endpoint S39"
+    },
+    {
+     "cells": "S31",
+     "name": "EndpointActionHint2",
+     "role": "result",
+     "description": "raw snapshot of Endpoint S40"
     },
     {
      "cells": "S32",

@@ -43,6 +43,38 @@
       "targets": [
         "ConsoleSelector"
       ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "ConsoleSelector"
+          ]
+        },
+        {
+          "cell": 11,
+          "targets": [
+            "ConsoleSelector"
+          ]
+        },
+        {
+          "cell": 14,
+          "targets": [
+            "ConsoleSelector"
+          ]
+        },
+        {
+          "cell": 16,
+          "targets": [
+            "ConsoleSelector"
+          ]
+        },
+        {
+          "cell": 17,
+          "targets": [
+            "ConsoleSelector"
+          ]
+        }
+      ],
       "unattributed": []
     },
     {
@@ -63,7 +95,35 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:1512745005",
+        "own:9"
+      ],
+      "targets": [
+        "ControllerSelector"
+      ],
+      "site_targets": [
+        {
+          "cell": 13,
+          "targets": [
+            "ControllerSelector"
+          ]
+        },
+        {
+          "cell": 17,
+          "targets": [
+            "ControllerSelector"
+          ]
+        },
+        {
+          "cell": 8,
+          "targets": [
+            "ControllerSelector"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -93,7 +153,61 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:1404237530",
+        "own:13"
+      ],
+      "targets": [
+        "DiagnosticInputBridge"
+      ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "DiagnosticInputBridge"
+          ]
+        },
+        {
+          "cell": 19,
+          "targets": [
+            "DiagnosticInputBridge"
+          ]
+        },
+        {
+          "cell": 20,
+          "targets": [
+            "DiagnosticInputBridge"
+          ]
+        },
+        {
+          "cell": 21,
+          "targets": [
+            "DiagnosticInputBridge"
+          ]
+        },
+        {
+          "cell": 23,
+          "targets": [
+            "DiagnosticInputBridge"
+          ]
+        },
+        {
+          "cell": 24,
+          "targets": [
+            "DiagnosticInputBridge"
+          ]
+        },
+        {
+          "cell": 25,
+          "targets": [
+            "DiagnosticInputBridge"
+          ]
+        }
+      ],
+      "unattributed": [
+        "own:13"
+      ]
     },
     {
       "transport": "reference-id",
@@ -115,6 +229,20 @@
       "targets": [
         "DiagnosticRenderer"
       ],
+      "site_targets": [
+        {
+          "cell": 8,
+          "targets": [
+            "DiagnosticRenderer"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "DiagnosticRenderer"
+          ]
+        }
+      ],
       "unattributed": []
     },
     {
@@ -127,7 +255,48 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "rr7",
+          "origin": {
+            "kind": "own-cell",
+            "cells": [
+              8,
+              9,
+              10
+            ],
+            "filled_by": "operator"
+          },
+          "targets": [
+            "ConsoleSelector",
+            "ControllerSelector",
+            "DiagnosticRenderer"
+          ],
+          "reason": "S8, S9, and S10 are the operator-configured Console Selector, Controller Selector, and Renderer ReferenceIds; the editor probes each peer's S0 through them"
+        }
+      ],
+      "origins": [
+        "own:10",
+        "own:8",
+        "own:9"
+      ],
+      "targets": [
+        "ConsoleSelector",
+        "ControllerSelector",
+        "DiagnosticRenderer"
+      ],
+      "site_targets": [
+        {
+          "cell": 0,
+          "targets": [
+            "ConsoleSelector",
+            "ControllerSelector",
+            "DiagnosticRenderer"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

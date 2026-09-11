@@ -66,7 +66,11 @@
       "dynamic_read": true,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "origins": [],
+      "targets": [],
+      "site_targets": [],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -107,6 +111,62 @@
       "targets": [
         "CatalogLoader"
       ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 11,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 14,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 18,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 19,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 20,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 21,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 3,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "CatalogLoader"
+          ]
+        }
+      ],
       "unattributed": []
     },
     {
@@ -142,6 +202,50 @@
       "targets": [
         "CatalogCoordinatorCore"
       ],
+      "site_targets": [
+        {
+          "cell": 25,
+          "targets": [
+            "CatalogCoordinatorCore"
+          ]
+        },
+        {
+          "cell": 26,
+          "targets": [
+            "CatalogCoordinatorCore"
+          ]
+        },
+        {
+          "cell": 27,
+          "targets": [
+            "CatalogCoordinatorCore"
+          ]
+        },
+        {
+          "cell": 29,
+          "targets": [
+            "CatalogCoordinatorCore"
+          ]
+        },
+        {
+          "cell": 30,
+          "targets": [
+            "CatalogCoordinatorCore"
+          ]
+        },
+        {
+          "cell": 31,
+          "targets": [
+            "CatalogCoordinatorCore"
+          ]
+        },
+        {
+          "cell": 32,
+          "targets": [
+            "CatalogCoordinatorCore"
+          ]
+        }
+      ],
       "unattributed": []
     },
     {
@@ -173,7 +277,67 @@
           "value": 2
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:875310516",
+        "index:0:*"
+      ],
+      "targets": [
+        "GenericCatalogStore"
+      ],
+      "site_targets": [
+        {
+          "cell": 11,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 13,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 16,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 23,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 27,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 29,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 3,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 8,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        }
+      ],
+      "unattributed": [
+        "index:0:*"
+      ]
     },
     {
       "transport": "reference-id",
@@ -192,6 +356,14 @@
       ],
       "targets": [
         "GenericCatalogStore"
+      ],
+      "site_targets": [
+        {
+          "cell": 27,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        }
       ],
       "unattributed": []
     }

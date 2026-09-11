@@ -12,20 +12,20 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from framework.validation import Validation
 from framework.stack_field_map import (
-    ABI_REFERENCE_DOC,
     DEFINITIONS_FILE,
     FIELD_MAP_DOC,
     ROLES,
     TOKEN_ROLES,
+    all_doc_layout_errors,
+    all_documented_cells,
+    declared_peer_cells,
     doc_layout_blocks,
-    doc_layout_errors,
-    documented_cells,
     field_map_document,
+    layout_documents_in,
     layout_errors,
     load_generated,
     load_layouts,
     peer_touched_cells,
-    wiring_touched_cells,
 )
 
 ROOT = _PROJECT_ROOT
@@ -38,13 +38,14 @@ except ValueError as error:
     raise SystemExit(validation.finish("Stack field map validation"))
 
 definitions, contracts = load_generated(ROOT)
-reference = (ROOT / ABI_REFERENCE_DOC).read_text()
-# Peers come from two places: the consumer edges the contracts prove, and the peers the
-# wiring map declares for a port that carries no such edge. Both must find a named cell,
-# and every entry must name a cell one of them touches or a documented block cites.
-wired = wiring_touched_cells(ROOT, contracts)
-validation.extend(layout_errors(definitions, contracts, layouts, wired, documented_cells(reference)))
-validation.extend(doc_layout_errors(reference, layouts))
+documents = layout_documents_in(ROOT)
+# Peers come from three places: the consumer edges the contracts prove, the peers the
+# wiring map declares for a port that carries no such edge, and the targets the network
+# provenance walk attributes to a reference. All must find a named cell, and every entry
+# must name a cell one of them touches or a documented layout cites.
+wired = declared_peer_cells(ROOT, contracts)
+validation.extend(layout_errors(definitions, contracts, layouts, wired, all_documented_cells(documents)))
+validation.extend(all_doc_layout_errors(documents, layouts))
 
 # The provider contracts must carry what the layout says, so a hand edit of a generated
 # contract, or a generator that stopped applying the map, is caught here rather than
@@ -83,13 +84,14 @@ wired_only = sum(
     if cell not in peer_touched_cells(definition))
 mapped = sum(entry.end - entry.start + 1 for entries in layouts.values() for entry in entries)
 tokens = sum(1 for entries in layouts.values() for entry in entries if entry.role in TOKEN_ROLES)
-blocks = doc_layout_blocks(reference)
+blocks = [block for text in documents.values() for block in doc_layout_blocks(text)]
+held_documents = sorted(name for name, text in documents.items() if doc_layout_blocks(text))
 raise SystemExit(validation.finish("Stack field map validation", [
     f"{len(layouts)} protocols carry a reviewed layout naming {mapped} cells across {len(ROLES)} roles",
     f"every one of the {touched} payload cells a peer reads or writes has a name and a role ({wired_only} of"
-    " them reached only through a wiring-declared port or an attributed network write), and every entry"
+    " them reached only through a wiring-declared port or an attributed network access), and every entry"
     " sits on cells its provider touches or declares",
-    f"{len(blocks)} layout blocks in {ABI_REFERENCE_DOC} name their contract and cite only header or mapped cells;"
-    " every entry names a peer-touched or documented cell",
+    f"{len(blocks)} layout blocks and tables in {len(held_documents)} documents name their contract and cite"
+    " only header or mapped cells; every entry names a peer-touched or documented cell",
     f"{tokens} token cells are named; provider contract fields agree with the map and {FIELD_MAP_DOC} is current",
 ]))

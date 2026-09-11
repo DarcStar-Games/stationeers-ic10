@@ -72,6 +72,7 @@ from framework.script_contracts.parsing import (
     RegisterPorts,
     collect_aliases,
     parse_rows,
+    resolve_integer,
     resolve_literal,
     resolve_ports,
 )
@@ -93,6 +94,21 @@ _HEADER = "header:"
 # bound beyond `VALUE_CAP`, and a magic held in a register for an `rrN`
 # comparison (the Mapping Editor's service loop) is exactly such a value.
 _LITERAL = "literal:"
+
+
+def _reference_operand(row: list[str] | None) -> str | None:
+    """The register a row accesses a peer through: `putd ref cell value` or `getd dest ref cell`.
+
+    A write site is what the validator holds; a read site is recorded so a reader
+    can be attributed as a peer of what it reads (the stack field map, issue #190).
+    """
+    if not row or len(row) < 4:
+        return None
+    if row[0] == "putd":
+        return row[1]
+    if row[0] == "getd":
+        return row[2]
+    return None
 
 
 def _register_aliases(rows: list[list[str]]) -> dict[str, str]:
@@ -129,8 +145,11 @@ class ReferenceOrigins:
         # is what a register carried over the reflash guard's same-image edge
         # can hold: the previous image was this program.
         self.carried: dict[str, frozenset[str]] = {}
-        # The registers the program writes through, the only ones whose
-        # origins the question turns on.
+        # The registers the program writes through, the only ones the walk
+        # partitions its widening by. Read sites are recorded too (`run`), but a
+        # read register shares the join of the arrivals it is reached with: the
+        # question the validator asks is about writes, and partitioning by every
+        # read register multiplied the states past the generator's time budget.
         self.references = {
             self.register_aliases.get(entry["row"][1], entry["row"][1])
             for entry in self.paths.program
@@ -269,12 +288,16 @@ class ReferenceOrigins:
                 env[_ORIGIN + register] = untracked
             return env
         written = self.paths.writes(row, env)
+        if written:
+            headers = [(key, value[0]) for key, value in env.items() if key.startswith(_HEADER)]
         for register in written:
             env[_ORIGIN + register] = untracked
             env.pop(_HEADER + register, None)
             env.pop(_LITERAL + register, None)
-            for key in [key for key, value in env.items() if key.startswith(_HEADER) and value[0] == register]:
-                del env[key]
+            # A header held in this register is forgotten with it.
+            for key, holder in headers:
+                if holder == register:
+                    env.pop(key, None)
         destination = self._register(row[1], env) if len(row) >= 2 and self.paths._writes_first(row) else None
         if destination and destination in written:
             if loaded is not None:
@@ -330,17 +353,29 @@ class ReferenceOrigins:
                 for register, tokens in carried.items()
             }
         for index, row, env in self.paths.walk(mark=self._mark, partition=self._established):
-            if row and row[0] == "putd" and len(row) >= 4:
-                register = self._register(row[1], env)
+            operand = _reference_operand(row)
+            if operand is not None:
+                register = self._register(operand, env)
                 self.sites[index].add(env.get(_ORIGIN + register, frozenset({UNTRACKED})) if register else frozenset())
-        return dict(self.sites)
+        # Every site is kept for `reference_sites`; the walk's own answer is still the writes.
+        return {
+            index: sets for index, sets in self.sites.items()
+            if self.paths.program[index]["row"][0] == "putd"
+        }
 
-    def reference_sites(self, reference: str) -> dict[int, set[frozenset[str]]]:
-        """The sites whose reference operand is `reference` (a register or its alias)."""
+    def reference_sites(self, reference: str, ops: frozenset[str] = frozenset({"putd", "getd"})) -> dict[int, set[frozenset[str]]]:
+        """The sites whose reference operand is `reference` (a register or its alias), of the given ops.
+
+        A write's attribution is held to its write sites alone: a read that probes the
+        peer's S0 before the identity check arrives with the register unchecked, and
+        that is the check working, not an unattributed write.
+        """
         register = self.register_aliases.get(reference, reference)
         return {
             index: sets for index, sets in self.sites.items()
-            if self.register_aliases.get(self.paths.program[index]["row"][1], self.paths.program[index]["row"][1]) == register
+            for row in [self.paths.program[index]["row"]]
+            for operand in [_reference_operand(row)]
+            if operand is not None and row[0] in ops and self.register_aliases.get(operand, operand) == register
         }
 
 
@@ -359,7 +394,10 @@ def origin_matches(token: str, origin: dict[str, Any], aliases: dict[str, str]) 
     if cells != "any" and (parts[-1] == "*" or int(parts[-1]) not in cells):
         return False
     if kind == "peer-cell":
-        return parts[0] == CELL and int(parts[1]) == game_hash(origin["identity"])
+        identity = origin["identity"]
+        # A block header away from S0 has a numeric magic and no contract name.
+        expected = identity if isinstance(identity, int) else game_hash(identity)
+        return parts[0] == CELL and int(parts[1]) == expected
     if kind == "own-cell":
         return parts[0] == OWN
     if kind == "reference-cell":
@@ -423,18 +461,27 @@ def writing(dependency: dict[str, Any]) -> bool:
     return bool(dependency["literal_writes"]) or bool(dependency["dynamic_write"])
 
 
-def attribute_network_writes(contracts: dict[str, dict[str, Any]], root: Path) -> None:
-    """Record, on every writing network dependency, what its writes can reach.
+def accessing(dependency: dict[str, Any]) -> bool:
+    """A dependency that reads or writes through its reference; a bare identity probe is neither."""
+    return writing(dependency) or bool(dependency["literal_reads"]) or bool(dependency["dynamic_read"])
 
-    Adds `origins` (every token a write site's reference arrived holding),
-    `targets` (contract names the writes are attributed to), `devices`
+
+def attribute_network_writes(contracts: dict[str, dict[str, Any]], root: Path) -> None:
+    """Record, on every accessing network dependency, what its reads and writes can reach.
+
+    Adds `origins` (every token an access site's reference arrived holding),
+    `targets` (contract names the accesses are attributed to), `devices`
     (declared non-program targets), and `unattributed` (tokens no identity
     check and no declaration covers; `untracked` when nothing on the path
     loaded the register). Raises for a declaration no site loads from.
+
+    Only a write has to be attributed (`validate_network_provenance.py`); a
+    read is attributed when the same walk can, so the stack field map counts
+    the reader as a peer of the target's protocol (issue #190).
     """
     providers = provider_index(contracts)
     for contract in contracts.values():
-        dependencies = [item for item in contract["network_dependencies"] if writing(item)]
+        dependencies = [item for item in contract["network_dependencies"] if accessing(item)]
         if not dependencies:
             continue
         own = next((item.get("contract") for item in contract["contracts"]["provides"] if item["base"] == 0), None)
@@ -452,9 +499,24 @@ def attribute_network_writes(contracts: dict[str, dict[str, Any]], root: Path) -
             targets: set[str] = set()
             devices: set[str] = set()
             unattributed: set[str] = set()
-            for _index, arrivals in origins.reference_sites(dependency["reference"]).items():
+            # cell operand of each site -> the targets its arrivals establish; a register
+            # re-pointed from one peer to a record's target reaches different cells under
+            # each, and the stack field map needs them apart (issue #190).
+            site_targets: dict[int | str, set[str]] = {}
+            # `targets`, `origins`, and `unattributed` answer for the writes when the
+            # dependency writes (what the validator holds) and for the reads otherwise;
+            # `site_targets` covers every site, so a reader is a peer at each cell it reads.
+            held_ops = frozenset({"putd"}) if writing(dependency) else frozenset({"getd"})
+            for index, arrivals in origins.reference_sites(dependency["reference"]).items():
+                row = origins.paths.program[index]["row"]
+                counts = row[0] in held_ops
+                cell_token = row[2] if row[0] == "putd" else row[3]
+                cell_literal = resolve_integer(cell_token, origins.paths.integers)
+                site_cell: int | str = cell_literal if cell_literal is not None else "*"
+                site_targets.setdefault(site_cell, set())
                 for held in arrivals:
-                    seen |= held
+                    if counts:
+                        seen |= held
                     checked = {
                         name for token in held if token.startswith(CHECKED + ":")
                         for name in providers.get((int(token.split(":")[1]), _magic_value(token.split(":")[2])), ())
@@ -462,7 +524,9 @@ def attribute_network_writes(contracts: dict[str, dict[str, Any]], root: Path) -
                     if SELF in held and own:
                         checked.add(own)
                     if checked:
-                        targets |= checked
+                        if counts:
+                            targets |= checked
+                        site_targets[site_cell] |= checked
                         continue
                     loads = {token for token in held if not token.startswith(CHECKED + ":")} or {UNTRACKED}
                     for token in loads:
@@ -471,13 +535,16 @@ def attribute_network_writes(contracts: dict[str, dict[str, Any]], root: Path) -
                             if origin_matches(token, declaration["origin"], origins.register_aliases)
                         ]
                         if not matched:
-                            unattributed.add(token)
+                            if counts:
+                                unattributed.add(token)
                             continue
                         for number in matched:
                             used[number] = True
-                            targets |= set(declarations[number]["targets"])
-                            if declarations[number].get("device"):
-                                devices.add(declarations[number]["device"])
+                            site_targets[site_cell] |= set(declarations[number]["targets"])
+                            if counts:
+                                targets |= set(declarations[number]["targets"])
+                                if declarations[number].get("device"):
+                                    devices.add(declarations[number]["device"])
             for number, declaration in enumerate(declarations):
                 if not used[number]:
                     raise ValueError(
@@ -486,6 +553,11 @@ def attribute_network_writes(contracts: dict[str, dict[str, Any]], root: Path) -
                     )
             dependency["origins"] = sorted(seen)
             dependency["targets"] = sorted(targets)
+            dependency["site_targets"] = [
+                {"cell": cell, "targets": sorted(names)}
+                for cell, names in sorted(site_targets.items(), key=lambda item: (isinstance(item[0], str), str(item[0])))
+                if names
+            ]
             if devices:
                 dependency["devices"] = sorted(devices)
             dependency["unattributed"] = sorted(unattributed)

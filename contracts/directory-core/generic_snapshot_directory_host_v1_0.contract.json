@@ -229,13 +229,14 @@
       },
       {
         "address": 23,
-        "name": "S23",
+        "name": "HostError",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": -1
+        "const": -1,
+        "role": "error"
       },
       {
         "address": 24,

@@ -127,7 +127,36 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r9",
+          "origin": {
+            "kind": "port-cell",
+            "port": "d0",
+            "cells": "any"
+          },
+          "targets": [
+            "ResourceLink"
+          ],
+          "reason": "a Link Resolver record (S20 + 4k) holds a Link ReferenceId; the Allocator waits for each Link's completed epoch"
+        }
+      ],
+      "origins": [
+        "port:d0:*"
+      ],
+      "targets": [
+        "ResourceLink"
+      ],
+      "site_targets": [
+        {
+          "cell": 23,
+          "targets": [
+            "ResourceLink"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

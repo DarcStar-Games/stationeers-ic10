@@ -28,6 +28,13 @@
       "role": "result"
     },
     {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "ItemDirectoryBase",
+      "role": "metadata"
+    },
+    {
       "cells": "S11",
       "start": 11,
       "end": 11,
@@ -130,6 +137,13 @@
       "role": "topology"
     },
     {
+      "cells": "S25",
+      "start": 25,
+      "end": 25,
+      "name": "Reserved25",
+      "role": "reserved"
+    },
+    {
       "cells": "S26",
       "start": 26,
       "end": 26,
@@ -145,6 +159,13 @@
       "description": "capacity promised to an in-flight placement or migration"
     },
     {
+      "cells": "S28",
+      "start": 28,
+      "end": 28,
+      "name": "FaultDetail",
+      "role": "error"
+    },
+    {
       "cells": "S29",
       "start": 29,
       "end": 29,
@@ -152,11 +173,26 @@
       "role": "result"
     },
     {
+      "cells": "S30",
+      "start": 30,
+      "end": 30,
+      "name": "Reserved30",
+      "role": "reserved"
+    },
+    {
       "cells": "S31",
       "start": 31,
       "end": 31,
       "name": "CommittedAssignmentEpoch",
       "role": "epoch"
+    },
+    {
+      "cells": "S32..S511",
+      "start": 32,
+      "end": 511,
+      "name": "ItemHeap",
+      "role": "table",
+      "description": "two-cell item directory growing up from S32; payload heap growing down from S511"
     }
   ],
   "provider_interfaces": [
@@ -242,13 +278,14 @@
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "ItemDirectoryBase",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 32
+          "const": 32,
+          "role": "metadata"
         },
         {
           "address": 11,
@@ -439,13 +476,14 @@
         },
         {
           "address": 28,
-          "name": "S28",
+          "name": "FaultDetail",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -2
+          "const": -2,
+          "role": "error"
         },
         {
           "address": 29,

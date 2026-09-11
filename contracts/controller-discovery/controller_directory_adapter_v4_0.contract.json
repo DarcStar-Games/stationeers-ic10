@@ -21,7 +21,11 @@
       "dynamic_read": true,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "origins": [],
+      "targets": [],
+      "site_targets": [],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -66,6 +70,33 @@
           "abi": 2,
           "publication_requirements": []
         }
+      ],
+      "origins": [
+        "checked:96:27182818",
+        "index:0:*"
+      ],
+      "targets": [
+        "ic10.stack.27182818.abi1",
+        "ic10.stack.27182818.abi2"
+      ],
+      "site_targets": [
+        {
+          "cell": 97,
+          "targets": [
+            "ic10.stack.27182818.abi1",
+            "ic10.stack.27182818.abi2"
+          ]
+        },
+        {
+          "cell": 99,
+          "targets": [
+            "ic10.stack.27182818.abi1",
+            "ic10.stack.27182818.abi2"
+          ]
+        }
+      ],
+      "unattributed": [
+        "index:0:*"
       ]
     }
   ],

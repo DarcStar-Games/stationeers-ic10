@@ -21,7 +21,11 @@
       "dynamic_read": true,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "origins": [],
+      "targets": [],
+      "site_targets": [],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -61,6 +65,56 @@
       ],
       "targets": [
         "CatalogLoader"
+      ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 11,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 14,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 18,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 19,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 21,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 3,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "CatalogLoader"
+          ]
+        }
       ],
       "unattributed": []
     }
@@ -193,13 +247,14 @@
       },
       {
         "address": 10,
-        "name": "S10",
+        "name": "ItemDirectoryBase",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 32
+        "const": 32,
+        "role": "metadata"
       },
       {
         "address": 11,
@@ -390,13 +445,14 @@
       },
       {
         "address": 28,
-        "name": "S28",
+        "name": "FaultDetail",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": -2
+        "const": -2,
+        "role": "error"
       },
       {
         "address": 29,

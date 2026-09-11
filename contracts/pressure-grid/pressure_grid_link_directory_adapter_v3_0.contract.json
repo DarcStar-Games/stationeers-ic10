@@ -91,7 +91,60 @@
           "value": 2
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r1",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "GenericSnapshotDirectoryHost.v1",
+            "cells": "any"
+          },
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ],
+          "reason": "a DirectorySchema.Controller record holds a controller ReferenceId; the adapter reads the PressureTransfer telemetry block of each candidate"
+        }
+      ],
+      "origins": [
+        "cell:891293726:*"
+      ],
+      "targets": [
+        "ControllerPressureTransferRuntime",
+        "EmbeddedPressureTransferRuntime"
+      ],
+      "site_targets": [
+        {
+          "cell": 106,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 107,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 115,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 97,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

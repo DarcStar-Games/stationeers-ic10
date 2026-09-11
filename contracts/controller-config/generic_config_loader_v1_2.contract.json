@@ -42,7 +42,41 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "cell:-533009584:12",
+        "checked:96:27182818"
+      ],
+      "targets": [
+        "ic10.stack.27182818.abi1",
+        "ic10.stack.27182818.abi2"
+      ],
+      "site_targets": [
+        {
+          "cell": 116,
+          "targets": [
+            "ic10.stack.27182818.abi1",
+            "ic10.stack.27182818.abi2"
+          ]
+        },
+        {
+          "cell": 97,
+          "targets": [
+            "ic10.stack.27182818.abi1",
+            "ic10.stack.27182818.abi2"
+          ]
+        },
+        {
+          "cell": 99,
+          "targets": [
+            "ic10.stack.27182818.abi1",
+            "ic10.stack.27182818.abi2"
+          ]
+        }
+      ],
+      "unattributed": [
+        "cell:-533009584:12"
+      ]
     },
     {
       "transport": "reference-id",
@@ -85,6 +119,92 @@
       "targets": [
         "GenericConfigEditor"
       ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 104,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 11,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 12,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 15,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 16,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 17,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 18,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 19,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 27,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 28,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 29,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 30,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        }
+      ],
       "unattributed": []
     },
     {
@@ -120,7 +240,67 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "cell:27182818:116",
+        "checked:0:-759746849"
+      ],
+      "targets": [
+        "GenericPersistentConfigHost"
+      ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "GenericPersistentConfigHost"
+          ]
+        },
+        {
+          "cell": 48,
+          "targets": [
+            "GenericPersistentConfigHost"
+          ]
+        },
+        {
+          "cell": 50,
+          "targets": [
+            "GenericPersistentConfigHost"
+          ]
+        },
+        {
+          "cell": 51,
+          "targets": [
+            "GenericPersistentConfigHost"
+          ]
+        },
+        {
+          "cell": 52,
+          "targets": [
+            "GenericPersistentConfigHost"
+          ]
+        },
+        {
+          "cell": 53,
+          "targets": [
+            "GenericPersistentConfigHost"
+          ]
+        },
+        {
+          "cell": 8,
+          "targets": [
+            "GenericPersistentConfigHost"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "GenericPersistentConfigHost"
+          ]
+        }
+      ],
+      "unattributed": [
+        "cell:27182818:116"
+      ]
     },
     {
       "transport": "reference-id",
@@ -147,7 +327,48 @@
           "value": 940078290
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "cell:-1082737849:11",
+        "checked:0:-1082737849",
+        "checked:0:940078290",
+        "own:9"
+      ],
+      "targets": [
+        "GenericInputScanner",
+        "InputProfileView"
+      ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "InputProfileView"
+          ]
+        },
+        {
+          "cell": 11,
+          "targets": [
+            "GenericInputScanner",
+            "InputProfileView"
+          ]
+        },
+        {
+          "cell": 8,
+          "targets": [
+            "InputProfileView"
+          ]
+        },
+        {
+          "cell": 9,
+          "targets": [
+            "InputProfileView"
+          ]
+        }
+      ],
+      "unattributed": [
+        "cell:-1082737849:11",
+        "own:9"
+      ]
     }
   ],
   "own_stack": {

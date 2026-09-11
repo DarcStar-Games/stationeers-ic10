@@ -11,7 +11,16 @@
     0
   ],
   "canonical_refs": [],
-  "layout": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "ScanSequence",
+      "role": "generation",
+      "description": "odd while the pin scan rewrites the per-pin cells"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/printer-directory/printer_execution_bank_v2_0.ic10",
@@ -53,13 +62,15 @@
         },
         {
           "address": 8,
-          "name": "S8",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ScanSequence",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "generation",
+          "description": "odd while the pin scan rewrites the per-pin cells"
         },
         {
           "address": 9,

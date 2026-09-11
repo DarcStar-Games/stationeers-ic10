@@ -48,6 +48,74 @@
       "targets": [
         "GenericConfigEditor"
       ],
+      "site_targets": [
+        {
+          "cell": 15,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 17,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 18,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 20,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 21,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 22,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 25,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 26,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 27,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 29,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        }
+      ],
       "unattributed": []
     },
     {
@@ -60,7 +128,38 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r7",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "GenericConfigEditor.v1",
+            "cells": [
+              27
+            ]
+          },
+          "targets": [
+            "InputProfileView"
+          ],
+          "reason": "Config Editor S27 is the Loader-validated Profile ReferenceId; the Bridge reads the profile's generation from it"
+        }
+      ],
+      "origins": [
+        "cell:-533009584:27"
+      ],
+      "targets": [
+        "InputProfileView"
+      ],
+      "site_targets": [
+        {
+          "cell": 11,
+          "targets": [
+            "InputProfileView"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -98,6 +197,50 @@
       ],
       "targets": [
         "GenericInputResolver"
+      ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "GenericInputResolver"
+          ]
+        },
+        {
+          "cell": 11,
+          "targets": [
+            "GenericInputResolver"
+          ]
+        },
+        {
+          "cell": 12,
+          "targets": [
+            "GenericInputResolver"
+          ]
+        },
+        {
+          "cell": 13,
+          "targets": [
+            "GenericInputResolver"
+          ]
+        },
+        {
+          "cell": 14,
+          "targets": [
+            "GenericInputResolver"
+          ]
+        },
+        {
+          "cell": 15,
+          "targets": [
+            "GenericInputResolver"
+          ]
+        },
+        {
+          "cell": 9,
+          "targets": [
+            "GenericInputResolver"
+          ]
+        }
       ],
       "unattributed": []
     }

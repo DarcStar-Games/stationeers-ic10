@@ -298,12 +298,13 @@
       },
       {
         "address": 13,
-        "name": "S13",
+        "name": "TransformViewRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 14,

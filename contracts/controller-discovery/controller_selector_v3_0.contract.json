@@ -42,7 +42,43 @@
           "value": 2
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:891293726",
+        "own:14"
+      ],
+      "targets": [
+        "GenericSnapshotDirectoryHost"
+      ],
+      "site_targets": [
+        {
+          "cell": 11,
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        },
+        {
+          "cell": 24,
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        },
+        {
+          "cell": 9,
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        }
+      ],
+      "unattributed": [
+        "own:14"
+      ]
     }
   ],
   "own_stack": {
@@ -113,12 +149,14 @@
       },
       {
         "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Status",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state",
+        "description": "1 resolved, negative fault; -3 an overflowed directory"
       },
       {
         "address": 9,
@@ -161,14 +199,15 @@
       },
       {
         "address": 13,
-        "name": "TERMINALRESPONSEToken",
+        "name": "HandledRequestToken",
         "value_type": "integer",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
         ],
-        "description": "TERMINAL_RESPONSE token LAST"
+        "description": "TERMINAL_RESPONSE token LAST",
+        "role": "response_token"
       },
       {
         "address": 14,
@@ -201,12 +240,13 @@
       },
       {
         "address": 17,
-        "name": "S17",
+        "name": "SelectedControllerRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 18,

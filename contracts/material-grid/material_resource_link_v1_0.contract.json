@@ -257,7 +257,38 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r0",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r5",
+            "cells": [
+              14
+            ]
+          },
+          "targets": [
+            "ResourceProfileView"
+          ],
+          "reason": "an ITEM Endpoint's S14 is its Resource Profile View ReferenceId; the Link reads the profile's ProfileKind"
+        }
+      ],
+      "origins": [
+        "ref:r5:14"
+      ],
+      "targets": [
+        "ResourceProfileView"
+      ],
+      "site_targets": [
+        {
+          "cell": 15,
+          "targets": [
+            "ResourceProfileView"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -270,7 +301,44 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r5",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "ResourceReservation.v1",
+            "cells": [
+              32
+            ]
+          },
+          "targets": [
+            "ResourceEndpoint"
+          ],
+          "reason": "Reservation S32 is the Generic Resource Endpoint the Reservation mirrors; the Link reads the source Endpoint's status and its Resource Profile View reference"
+        }
+      ],
+      "origins": [
+        "cell:-1742884202:32"
+      ],
+      "targets": [
+        "ResourceEndpoint"
+      ],
+      "site_targets": [
+        {
+          "cell": 14,
+          "targets": [
+            "ResourceEndpoint"
+          ]
+        },
+        {
+          "cell": 9,
+          "targets": [
+            "ResourceEndpoint"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -282,7 +350,38 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r6",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "ResourceReservation.v1",
+            "cells": [
+              32
+            ]
+          },
+          "targets": [
+            "ResourceEndpoint"
+          ],
+          "reason": "the sink Reservation's S32 names its Endpoint; the Link reads its status"
+        }
+      ],
+      "origins": [
+        "cell:-1742884202:32"
+      ],
+      "targets": [
+        "ResourceEndpoint"
+      ],
+      "site_targets": [
+        {
+          "cell": 9,
+          "targets": [
+            "ResourceEndpoint"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

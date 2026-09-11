@@ -338,13 +338,15 @@
       },
       {
         "address": 98,
-        "name": "S98",
+        "name": "ChannelMask",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 30
+        "const": 30,
+        "role": "metadata",
+        "description": "bitmask of the telemetry channels the controller publishes"
       },
       {
         "address": 99,
@@ -483,12 +485,14 @@
       },
       {
         "address": 116,
-        "name": "S116",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ConfigHostRef",
+        "value_type": "reference-id",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology",
+        "description": "paired Generic Config Host ReferenceId"
       },
       {
         "address": 117,

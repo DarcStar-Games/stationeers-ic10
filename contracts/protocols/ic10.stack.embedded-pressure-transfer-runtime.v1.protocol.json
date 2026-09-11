@@ -126,13 +126,15 @@
         },
         {
           "address": 98,
-          "name": "S98",
+          "name": "ChannelMask",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 30
+          "const": 30,
+          "role": "metadata",
+          "description": "bitmask of the telemetry channels the controller publishes"
         },
         {
           "address": 99,

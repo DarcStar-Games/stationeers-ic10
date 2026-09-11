@@ -146,6 +146,26 @@
       "targets": [
         "GenericCatalogStore"
       ],
+      "site_targets": [
+        {
+          "cell": 11,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 12,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 14,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        }
+      ],
       "unattributed": []
     },
     {
@@ -156,7 +176,22 @@
       "dynamic_read": true,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:-1822968058"
+      ],
+      "targets": [
+        "GenericRegistryDirectoryHost"
+      ],
+      "site_targets": [
+        {
+          "cell": "*",
+          "targets": [
+            "GenericRegistryDirectoryHost"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

@@ -30,7 +30,31 @@
           "value": 1352670811
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:1352670811",
+        "own:9"
+      ],
+      "targets": [
+        "ConsoleRegistry"
+      ],
+      "site_targets": [
+        {
+          "cell": 8,
+          "targets": [
+            "ConsoleRegistry"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "ConsoleRegistry"
+          ]
+        }
+      ],
+      "unattributed": [
+        "own:9"
+      ]
     }
   ],
   "own_stack": {

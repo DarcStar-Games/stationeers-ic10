@@ -377,21 +377,25 @@
       },
       {
         "address": 14,
-        "name": "S14",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ProcessorRef",
+        "value_type": "reference-id",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology",
+        "description": "ReferenceId of the processor on d0"
       },
       {
         "address": 15,
-        "name": "S15",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "OutputReservationRef",
+        "value_type": "reference-id",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology",
+        "description": "ReferenceId of the output Reservation on d4"
       },
       {
         "address": 16,
@@ -405,21 +409,25 @@
       },
       {
         "address": 17,
-        "name": "S17",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "AdmissionRef",
+        "value_type": "reference-id",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology",
+        "description": "ReferenceId of the Admission on d1"
       },
       {
         "address": 18,
-        "name": "S18",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "LinkResolverRef",
+        "value_type": "reference-id",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology",
+        "description": "ReferenceId of the Link Resolver on d2"
       },
       {
         "address": 19,

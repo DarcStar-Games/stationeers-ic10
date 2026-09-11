@@ -15,6 +15,21 @@
   ],
   "layout": [
     {
+      "cells": "S12..S15",
+      "start": 12,
+      "end": 15,
+      "name": "UnpublishedAdapterCells",
+      "role": "reserved",
+      "description": "the Catalog Inspector reads these as the Adapter ABI3 candidate count, sequence, overflow, and mode, but the Registry Host never writes them; see issue #194"
+    },
+    {
+      "cells": "S16",
+      "start": 16,
+      "end": 16,
+      "name": "Status",
+      "role": "state"
+    },
+    {
       "cells": "S18",
       "start": 18,
       "end": 18,
@@ -23,12 +38,48 @@
       "description": "odd while the Directory Telemetry rewrites S35..S45"
     },
     {
+      "cells": "S20",
+      "start": 20,
+      "end": 20,
+      "name": "RecordWidth",
+      "role": "metadata"
+    },
+    {
+      "cells": "S21",
+      "start": 21,
+      "end": 21,
+      "name": "Capacity",
+      "role": "metadata"
+    },
+    {
       "cells": "S23",
       "start": 23,
       "end": 23,
       "name": "PublicationSequence",
       "role": "generation",
       "description": "odd while mutating, even when stable"
+    },
+    {
+      "cells": "S24",
+      "start": 24,
+      "end": 24,
+      "name": "FreezeTokenCounter",
+      "role": "request_token",
+      "description": "freeze tokens issued to the adapter"
+    },
+    {
+      "cells": "S25",
+      "start": 25,
+      "end": 25,
+      "name": "AcceptedCandidateGeneration",
+      "role": "generation"
+    },
+    {
+      "cells": "S26",
+      "start": 26,
+      "end": 26,
+      "name": "RegistryGeneration",
+      "role": "generation"
     },
     {
       "cells": "S35",
@@ -188,32 +239,35 @@
         },
         {
           "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state"
         },
         {
           "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RecordWidth",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 6
+          "const": 6,
+          "role": "metadata"
         },
         {
           "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Capacity",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 64
+          "const": 64,
+          "role": "metadata"
         },
         {
           "address": 23,
@@ -229,33 +283,37 @@
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeTokenCounter",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "request_token",
+          "description": "freeze tokens issued to the adapter"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "AcceptedCandidateGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "generation"
         },
         {
           "address": 26,
-          "name": "S26",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RegistryGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "generation"
         }
       ],
       "behavior": {

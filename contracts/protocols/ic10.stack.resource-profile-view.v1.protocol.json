@@ -59,6 +59,20 @@
       "description": "kind-specific: PHASE_MEDIUM coefficients and pressure/temperature bounds; ITEM_STACK maximum stack quantity and slot class"
     },
     {
+      "cells": "S22",
+      "start": 22,
+      "end": 22,
+      "name": "CatalogInstanceId",
+      "role": "metadata"
+    },
+    {
+      "cells": "S23",
+      "start": 23,
+      "end": 23,
+      "name": "TopologyGeneration",
+      "role": "generation"
+    },
+    {
       "cells": "S28",
       "start": 28,
       "end": 28,
@@ -139,21 +153,23 @@
         },
         {
           "address": 22,
-          "name": "S22",
+          "name": "CatalogInstanceId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "metadata"
         },
         {
           "address": 23,
-          "name": "S23",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "TopologyGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "generation"
         },
         {
           "address": 26,

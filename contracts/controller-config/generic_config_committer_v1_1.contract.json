@@ -42,7 +42,41 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "cell:-533009584:14",
+        "checked:96:27182818"
+      ],
+      "targets": [
+        "ic10.stack.27182818.abi1",
+        "ic10.stack.27182818.abi2"
+      ],
+      "site_targets": [
+        {
+          "cell": 116,
+          "targets": [
+            "ic10.stack.27182818.abi1",
+            "ic10.stack.27182818.abi2"
+          ]
+        },
+        {
+          "cell": 97,
+          "targets": [
+            "ic10.stack.27182818.abi1",
+            "ic10.stack.27182818.abi2"
+          ]
+        },
+        {
+          "cell": 99,
+          "targets": [
+            "ic10.stack.27182818.abi1",
+            "ic10.stack.27182818.abi2"
+          ]
+        }
+      ],
+      "unattributed": [
+        "cell:-533009584:14"
+      ]
     },
     {
       "transport": "reference-id",
@@ -83,6 +117,68 @@
       ],
       "targets": [
         "GenericConfigEditor"
+      ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 104,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 11,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 13,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 14,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 16,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 18,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 19,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": 30,
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "GenericConfigEditor"
+          ]
+        }
       ],
       "unattributed": []
     },
@@ -128,6 +224,56 @@
       ],
       "targets": [
         "GenericPersistentConfigHost"
+      ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "GenericPersistentConfigHost"
+          ]
+        },
+        {
+          "cell": 11,
+          "targets": [
+            "GenericPersistentConfigHost"
+          ]
+        },
+        {
+          "cell": 48,
+          "targets": [
+            "GenericPersistentConfigHost"
+          ]
+        },
+        {
+          "cell": 50,
+          "targets": [
+            "GenericPersistentConfigHost"
+          ]
+        },
+        {
+          "cell": 52,
+          "targets": [
+            "GenericPersistentConfigHost"
+          ]
+        },
+        {
+          "cell": 53,
+          "targets": [
+            "GenericPersistentConfigHost"
+          ]
+        },
+        {
+          "cell": 8,
+          "targets": [
+            "GenericPersistentConfigHost"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "GenericPersistentConfigHost"
+          ]
+        }
       ],
       "unattributed": []
     }

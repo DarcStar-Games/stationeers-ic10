@@ -136,7 +136,66 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r1",
+          "origin": {
+            "kind": "port-cell",
+            "port": "d1",
+            "cells": "any"
+          },
+          "targets": [
+            "ResourceLink"
+          ],
+          "reason": "d1 is the ResourceLink Snapshot Directory; a record holds a Link ReferenceId, and the Resolver reads the link's status, sink, class, and ResourceType"
+        }
+      ],
+      "origins": [
+        "port:d1:*"
+      ],
+      "targets": [
+        "ResourceLink"
+      ],
+      "site_targets": [
+        {
+          "cell": 22,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 27,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 28,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 29,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 31,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 9,
+          "targets": [
+            "ResourceLink"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -148,7 +207,38 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r3",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r1",
+            "cells": [
+              28
+            ]
+          },
+          "targets": [
+            "ResourceReservation"
+          ],
+          "reason": "Link S28 is the source Reservation ReferenceId; the Resolver reads its ExportAvailable"
+        }
+      ],
+      "origins": [
+        "ref:r1:28"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 36,
+          "targets": [
+            "ResourceReservation"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -160,7 +250,38 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r4",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r1",
+            "cells": [
+              29
+            ]
+          },
+          "targets": [
+            "ResourceReservation"
+          ],
+          "reason": "Link S29 is the sink Reservation ReferenceId; the Resolver reads its ImportCapacity"
+        }
+      ],
+      "origins": [
+        "ref:r1:29"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 37,
+          "targets": [
+            "ResourceReservation"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

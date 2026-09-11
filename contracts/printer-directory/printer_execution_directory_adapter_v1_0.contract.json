@@ -80,7 +80,11 @@
       "dynamic_read": true,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "origins": [],
+      "targets": [],
+      "site_targets": [],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -99,7 +103,31 @@
           "value": -1743126326
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:-1743126326",
+        "index:0:*"
+      ],
+      "targets": [
+        "PrinterExecutionBank"
+      ],
+      "site_targets": [
+        {
+          "cell": 8,
+          "targets": [
+            "PrinterExecutionBank"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "PrinterExecutionBank"
+          ]
+        }
+      ],
+      "unattributed": [
+        "index:0:*"
+      ]
     }
   ],
   "own_stack": {

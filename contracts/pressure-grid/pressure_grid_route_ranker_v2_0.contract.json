@@ -67,7 +67,46 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r10",
+          "origin": {
+            "kind": "own-cell",
+            "cells": "any",
+            "filled_by": "self"
+          },
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ],
+          "reason": "S35..S37 are the candidate path's Transfer ReferenceIds the Route Selector writes; the Ranker reads each hop's telemetry block"
+        }
+      ],
+      "origins": [
+        "own:*"
+      ],
+      "targets": [
+        "ControllerPressureTransferRuntime",
+        "EmbeddedPressureTransferRuntime"
+      ],
+      "site_targets": [
+        {
+          "cell": 106,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 107,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -82,7 +121,53 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r11",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r10",
+            "cells": [
+              106
+            ]
+          },
+          "targets": [
+            "PressureInventoryReservation"
+          ],
+          "reason": "Transfer telemetry S106 is the source Reservation ReferenceId"
+        }
+      ],
+      "origins": [
+        "ref:r10:106",
+        "ref:r11:16"
+      ],
+      "targets": [
+        "PressureInventoryReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 12,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        },
+        {
+          "cell": 16,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        },
+        {
+          "cell": 20,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        }
+      ],
+      "unattributed": [
+        "ref:r11:16"
+      ]
     },
     {
       "transport": "reference-id",
@@ -97,7 +182,53 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r12",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r10",
+            "cells": [
+              107
+            ]
+          },
+          "targets": [
+            "PressureInventoryReservation"
+          ],
+          "reason": "Transfer telemetry S107 is the sink Reservation ReferenceId"
+        }
+      ],
+      "origins": [
+        "ref:r10:107",
+        "ref:r12:16"
+      ],
+      "targets": [
+        "PressureInventoryReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 13,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        },
+        {
+          "cell": 16,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        },
+        {
+          "cell": 21,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        }
+      ],
+      "unattributed": [
+        "ref:r12:16"
+      ]
     }
   ],
   "own_stack": {

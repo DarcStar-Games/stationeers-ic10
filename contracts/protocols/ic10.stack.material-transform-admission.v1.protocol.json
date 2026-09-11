@@ -27,6 +27,13 @@
       "role": "generation"
     },
     {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "TransformViewRef",
+      "role": "topology"
+    },
+    {
       "cells": "S14",
       "start": 14,
       "end": 14,
@@ -150,12 +157,13 @@
         },
         {
           "address": 13,
-          "name": "S13",
+          "name": "TransformViewRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "topology"
         },
         {
           "address": 14,

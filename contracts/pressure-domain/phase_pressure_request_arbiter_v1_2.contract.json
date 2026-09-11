@@ -99,7 +99,108 @@
           "value": -820323123
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "ra",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "GenericSnapshotDirectoryHost.v1",
+            "cells": "any"
+          },
+          "targets": [
+            "ControllerPhasePressureRuntime",
+            "ControllerPressureDomainRuntime",
+            "ProcessPressureDomainRuntime",
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ],
+          "reason": "a DirectorySchema.Controller record on the Snapshot Host holds a controller housing ReferenceId; the Arbiter reads its telemetry block"
+        }
+      ],
+      "origins": [
+        "cell:891293726:*"
+      ],
+      "targets": [
+        "ControllerPhasePressureRuntime",
+        "ControllerPressureDomainRuntime",
+        "ControllerPressureTransferRuntime",
+        "EmbeddedPressureTransferRuntime",
+        "ProcessPressureDomainRuntime"
+      ],
+      "site_targets": [
+        {
+          "cell": 103,
+          "targets": [
+            "ControllerPhasePressureRuntime",
+            "ControllerPressureDomainRuntime",
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime",
+            "ProcessPressureDomainRuntime"
+          ]
+        },
+        {
+          "cell": 104,
+          "targets": [
+            "ControllerPhasePressureRuntime",
+            "ControllerPressureDomainRuntime",
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime",
+            "ProcessPressureDomainRuntime"
+          ]
+        },
+        {
+          "cell": 105,
+          "targets": [
+            "ControllerPhasePressureRuntime",
+            "ControllerPressureDomainRuntime",
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime",
+            "ProcessPressureDomainRuntime"
+          ]
+        },
+        {
+          "cell": 106,
+          "targets": [
+            "ControllerPhasePressureRuntime",
+            "ControllerPressureDomainRuntime",
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime",
+            "ProcessPressureDomainRuntime"
+          ]
+        },
+        {
+          "cell": 115,
+          "targets": [
+            "ControllerPhasePressureRuntime",
+            "ControllerPressureDomainRuntime",
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime",
+            "ProcessPressureDomainRuntime"
+          ]
+        },
+        {
+          "cell": 97,
+          "targets": [
+            "ControllerPhasePressureRuntime",
+            "ControllerPressureDomainRuntime",
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime",
+            "ProcessPressureDomainRuntime"
+          ]
+        },
+        {
+          "cell": 99,
+          "targets": [
+            "ControllerPhasePressureRuntime",
+            "ControllerPressureDomainRuntime",
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime",
+            "ProcessPressureDomainRuntime"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

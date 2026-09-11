@@ -21,7 +21,11 @@
       "dynamic_read": true,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "origins": [],
+      "targets": [],
+      "site_targets": [],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -42,7 +46,37 @@
           "value": 25991561
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:25991561",
+        "index:0:*"
+      ],
+      "targets": [
+        "ResourceEndpoint"
+      ],
+      "site_targets": [
+        {
+          "cell": 11,
+          "targets": [
+            "ResourceEndpoint"
+          ]
+        },
+        {
+          "cell": 52,
+          "targets": [
+            "ResourceEndpoint"
+          ]
+        },
+        {
+          "cell": 53,
+          "targets": [
+            "ResourceEndpoint"
+          ]
+        }
+      ],
+      "unattributed": [
+        "index:0:*"
+      ]
     }
   ],
   "own_stack": {

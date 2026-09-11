@@ -92,7 +92,67 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r10",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "GenericSnapshotDirectoryHost.v1",
+            "cells": "any"
+          },
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ],
+          "reason": "a DirectorySchema.PressureGridLink record holds a Transfer ReferenceId; the Enumerator reads its telemetry block"
+        }
+      ],
+      "origins": [
+        "cell:891293726:*"
+      ],
+      "targets": [
+        "ControllerPressureTransferRuntime",
+        "EmbeddedPressureTransferRuntime"
+      ],
+      "site_targets": [
+        {
+          "cell": 100,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 102,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 103,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 109,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 110,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -110,7 +170,36 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r11",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "GenericSnapshotDirectoryHost.v1",
+            "cells": "any"
+          },
+          "targets": [
+            "PressureInventoryReservation"
+          ],
+          "reason": "a PressureGridLink record holds the source Reservation ReferenceId; the Enumerator reads its role"
+        }
+      ],
+      "origins": [
+        "cell:891293726:*"
+      ],
+      "targets": [
+        "PressureInventoryReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 18,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -122,7 +211,36 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r12",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "GenericSnapshotDirectoryHost.v1",
+            "cells": "any"
+          },
+          "targets": [
+            "PressureInventoryReservation"
+          ],
+          "reason": "a PressureGridLink record holds the sink Reservation ReferenceId; the Enumerator reads its role"
+        }
+      ],
+      "origins": [
+        "cell:891293726:*"
+      ],
+      "targets": [
+        "PressureInventoryReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 18,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

@@ -133,7 +133,53 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r9",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "GenericSnapshotDirectoryHost.v1",
+            "cells": "any"
+          },
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ],
+          "reason": "a DirectorySchema.PressureGridLink record holds a Transfer ReferenceId; the builder reads its telemetry block"
+        }
+      ],
+      "origins": [
+        "cell:891293726:*"
+      ],
+      "targets": [
+        "ControllerPressureTransferRuntime",
+        "EmbeddedPressureTransferRuntime"
+      ],
+      "site_targets": [
+        {
+          "cell": 101,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 106,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 107,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -146,7 +192,46 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "sp",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r9",
+            "cells": [
+              106,
+              107
+            ]
+          },
+          "targets": [
+            "PressureInventoryReservation"
+          ],
+          "reason": "Transfer telemetry S106 and S107 are the source and sink Reservation ReferenceIds"
+        }
+      ],
+      "origins": [
+        "ref:r9:106",
+        "ref:r9:107"
+      ],
+      "targets": [
+        "PressureInventoryReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 12,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        },
+        {
+          "cell": 13,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

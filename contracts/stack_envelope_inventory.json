@@ -63,6 +63,12 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.catalog-coordinator-core.v4",
+            "cells": "S8..S13",
+            "name": "DirectorySummary",
+            "role": "telemetry"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-coordinator-core.v4",
             "cells": "S14",
             "name": "CoordinatorId",
             "role": "metadata"
@@ -81,6 +87,18 @@
           },
           {
             "protocol_id": "ic10.stack.catalog-coordinator-core.v4",
+            "cells": "S19",
+            "name": "ClaimStatus",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-coordinator-core.v4",
+            "cells": "S20",
+            "name": "AssignmentEpochCounter",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-coordinator-core.v4",
             "cells": "S21",
             "name": "PlacementGeneration",
             "role": "generation"
@@ -90,6 +108,12 @@
             "cells": "S22",
             "name": "TopologySequence",
             "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-coordinator-core.v4",
+            "cells": "S23",
+            "name": "RegistryDirectoryRef",
+            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.catalog-coordinator-core.v4",
@@ -1150,6 +1174,12 @@
           },
           {
             "protocol_id": "ic10.stack.generic-catalog-store.v6",
+            "cells": "S10",
+            "name": "ItemDirectoryBase",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-catalog-store.v6",
             "cells": "S11",
             "name": "CoordinatorRef",
             "role": "topology"
@@ -1234,6 +1264,12 @@
           },
           {
             "protocol_id": "ic10.stack.generic-catalog-store.v6",
+            "cells": "S25",
+            "name": "Reserved25",
+            "role": "reserved"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-catalog-store.v6",
             "cells": "S26",
             "name": "AssignmentEpoch",
             "role": "epoch"
@@ -1246,15 +1282,33 @@
           },
           {
             "protocol_id": "ic10.stack.generic-catalog-store.v6",
+            "cells": "S28",
+            "name": "FaultDetail",
+            "role": "error"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-catalog-store.v6",
             "cells": "S29",
             "name": "FreeCells",
             "role": "result"
           },
           {
             "protocol_id": "ic10.stack.generic-catalog-store.v6",
+            "cells": "S30",
+            "name": "Reserved30",
+            "role": "reserved"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-catalog-store.v6",
             "cells": "S31",
             "name": "CommittedAssignmentEpoch",
             "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-catalog-store.v6",
+            "cells": "S32..S511",
+            "name": "ItemHeap",
+            "role": "table"
           }
         ],
         "payload_bases": [
@@ -2474,6 +2528,12 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.controller-selector.v2",
+            "cells": "S8",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.controller-selector.v2",
             "cells": "S10",
             "name": "DesiredControllerType",
             "role": "request"
@@ -2489,6 +2549,18 @@
             "cells": "S12",
             "name": "RequestToken",
             "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.controller-selector.v2",
+            "cells": "S13",
+            "name": "HandledRequestToken",
+            "role": "response_token"
+          },
+          {
+            "protocol_id": "ic10.stack.controller-selector.v2",
+            "cells": "S17",
+            "name": "SelectedControllerRef",
+            "role": "result"
           }
         ],
         "payload_bases": [
@@ -2585,6 +2657,12 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.27182818.abi2",
+            "cells": "S98",
+            "name": "ChannelMask",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.27182818.abi2",
             "cells": "S99",
             "name": "ControllerType",
             "role": "metadata"
@@ -2624,6 +2702,12 @@
             "cells": "S115",
             "name": "TelemetryGeneration",
             "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.27182818.abi2",
+            "cells": "S116",
+            "name": "ConfigHostRef",
+            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.27182818.abi2",
@@ -2874,9 +2958,21 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.27182818.abi1",
+            "cells": "S98",
+            "name": "ChannelMask",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.27182818.abi1",
             "cells": "S99",
             "name": "ControllerType",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.27182818.abi1",
+            "cells": "S116",
+            "name": "ConfigHostRef",
+            "role": "topology"
           }
         ],
         "payload_bases": [
@@ -3075,9 +3171,21 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.27182818.abi1",
+            "cells": "S98",
+            "name": "ChannelMask",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.27182818.abi1",
             "cells": "S99",
             "name": "ControllerType",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.27182818.abi1",
+            "cells": "S116",
+            "name": "ConfigHostRef",
+            "role": "topology"
           }
         ],
         "payload_bases": [
@@ -6007,7 +6115,14 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.console-registry.v1",
+            "cells": "S8",
+            "name": "ActiveBank",
+            "role": "bank"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -6951,14 +7066,56 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
+            "cells": "S12..S15",
+            "name": "UnpublishedAdapterCells",
+            "role": "reserved"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
+            "cells": "S16",
+            "name": "Status",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
             "cells": "S18",
             "name": "TelemetrySequence",
             "role": "generation"
           },
           {
             "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
+            "cells": "S20",
+            "name": "RecordWidth",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
+            "cells": "S21",
+            "name": "Capacity",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
             "cells": "S23",
             "name": "PublicationSequence",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
+            "cells": "S24",
+            "name": "FreezeTokenCounter",
+            "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
+            "cells": "S25",
+            "name": "AcceptedCandidateGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
+            "cells": "S26",
+            "name": "RegistryGeneration",
             "role": "generation"
           },
           {
@@ -7513,6 +7670,12 @@
             "cells": "S22",
             "name": "StagingOverflow",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-snapshot-directory-host.v1",
+            "cells": "S23",
+            "name": "HostError",
+            "role": "error"
           },
           {
             "protocol_id": "ic10.stack.generic-snapshot-directory-host.v1",
@@ -8985,9 +9148,39 @@
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S12",
+            "name": "LoaderId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S13",
+            "name": "LoaderGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
             "cells": "S14",
             "name": "ItemCount",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S15",
+            "name": "ItemDirectoryBase",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S16",
+            "name": "TotalPayloadCells",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S17",
+            "name": "PayloadSignature",
+            "role": "schema"
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
@@ -9012,6 +9205,12 @@
             "cells": "S21",
             "name": "ImportedItemIndex",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S24..S27",
+            "name": "ItemDirectory",
+            "role": "table"
           }
         ],
         "payload_bases": [
@@ -9197,9 +9396,39 @@
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S12",
+            "name": "LoaderId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S13",
+            "name": "LoaderGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
             "cells": "S14",
             "name": "ItemCount",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S15",
+            "name": "ItemDirectoryBase",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S16",
+            "name": "TotalPayloadCells",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S17",
+            "name": "PayloadSignature",
+            "role": "schema"
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
@@ -9224,6 +9453,12 @@
             "cells": "S21",
             "name": "ImportedItemIndex",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S24..S27",
+            "name": "ItemDirectory",
+            "role": "table"
           }
         ],
         "payload_bases": [
@@ -9381,9 +9616,39 @@
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S12",
+            "name": "LoaderId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S13",
+            "name": "LoaderGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
             "cells": "S14",
             "name": "ItemCount",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S15",
+            "name": "ItemDirectoryBase",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S16",
+            "name": "TotalPayloadCells",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S17",
+            "name": "PayloadSignature",
+            "role": "schema"
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
@@ -9408,6 +9673,12 @@
             "cells": "S21",
             "name": "ImportedItemIndex",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S24..S27",
+            "name": "ItemDirectory",
+            "role": "table"
           }
         ],
         "payload_bases": [
@@ -10055,6 +10326,12 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S14",
+            "name": "ClassExtensionRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S20..S22",
             "name": "ClassConfiguration",
             "role": "metadata"
@@ -10511,6 +10788,12 @@
             "cells": "S13",
             "name": "PrecisionFlags",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S14",
+            "name": "ClassExtensionRef",
+            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -11053,6 +11336,12 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S14",
+            "name": "ClassExtensionRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S20..S22",
             "name": "ClassConfiguration",
             "role": "metadata"
@@ -11331,6 +11620,12 @@
             "cells": "S13",
             "name": "PrecisionFlags",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S14",
+            "name": "ClassExtensionRef",
+            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -15041,6 +15336,12 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S14",
+            "name": "ClassExtensionRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S20..S22",
             "name": "ClassConfiguration",
             "role": "metadata"
@@ -15315,6 +15616,12 @@
             "cells": "S13",
             "name": "PrecisionFlags",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S14",
+            "name": "ClassExtensionRef",
+            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -16247,9 +16554,33 @@
           },
           {
             "protocol_id": "ic10.stack.generic-material-transform-runtime.v2",
+            "cells": "S14",
+            "name": "ProcessorRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-material-transform-runtime.v2",
+            "cells": "S15",
+            "name": "OutputReservationRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-material-transform-runtime.v2",
             "cells": "S16",
             "name": "RequestToken",
             "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-material-transform-runtime.v2",
+            "cells": "S17",
+            "name": "AdmissionRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.generic-material-transform-runtime.v2",
+            "cells": "S18",
+            "name": "LinkResolverRef",
+            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.generic-material-transform-runtime.v2",
@@ -16366,6 +16697,12 @@
             "cells": "S9",
             "name": "PublicationGeneration",
             "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.material-transform-admission.v1",
+            "cells": "S13",
+            "name": "TransformViewRef",
+            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.material-transform-admission.v1",
@@ -16494,6 +16831,12 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.material-transform-link-resolver.v1",
+            "cells": "S8",
+            "name": "TransformType",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.material-transform-link-resolver.v1",
             "cells": "S9",
             "name": "InputCount",
             "role": "result"
@@ -16509,6 +16852,12 @@
             "cells": "S12",
             "name": "Status",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.material-transform-link-resolver.v1",
+            "cells": "S13",
+            "name": "PublicationGeneration",
+            "role": "generation"
           },
           {
             "protocol_id": "ic10.stack.material-transform-link-resolver.v1",
@@ -16946,6 +17295,12 @@
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S14",
+            "name": "ClassExtensionRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
             "cells": "S20..S22",
             "name": "ClassConfiguration",
             "role": "metadata"
@@ -17228,6 +17583,12 @@
             "cells": "S13",
             "name": "PrecisionFlags",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S14",
+            "name": "ClassExtensionRef",
+            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -18384,6 +18745,12 @@
             "cells": "S13",
             "name": "PrecisionFlags",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S14",
+            "name": "ClassExtensionRef",
+            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -20755,6 +21122,12 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.27182818.abi2",
+            "cells": "S98",
+            "name": "ChannelMask",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.27182818.abi2",
             "cells": "S99",
             "name": "ControllerType",
             "role": "metadata"
@@ -20794,6 +21167,12 @@
             "cells": "S115",
             "name": "TelemetryGeneration",
             "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.27182818.abi2",
+            "cells": "S116",
+            "name": "ConfigHostRef",
+            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.27182818.abi2",
@@ -21196,6 +21575,12 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.27182818.abi2",
+            "cells": "S98",
+            "name": "ChannelMask",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.27182818.abi2",
             "cells": "S99",
             "name": "ControllerType",
             "role": "metadata"
@@ -21235,6 +21620,12 @@
             "cells": "S115",
             "name": "TelemetryGeneration",
             "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.27182818.abi2",
+            "cells": "S116",
+            "name": "ConfigHostRef",
+            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.27182818.abi2",
@@ -22418,6 +22809,12 @@
             "cells": "S15",
             "name": "PlanBuilderRequestGeneration",
             "role": "request_token"
+          },
+          {
+            "protocol_id": "ic10.stack.pressure-grid-reservation-planner.v2",
+            "cells": "S21",
+            "name": "LeaseTicksAsRead",
+            "role": "result"
           }
         ],
         "payload_bases": [
@@ -24103,7 +24500,14 @@
           }
         ],
         "schema_fields": [],
-        "payload_fields": [],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.printer-execution-bank.v2",
+            "cells": "S8",
+            "name": "ScanSequence",
+            "role": "generation"
+          }
+        ],
         "payload_bases": [
           0
         ],
@@ -24410,6 +24814,12 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.27182818.abi2",
+            "cells": "S98",
+            "name": "ChannelMask",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.27182818.abi2",
             "cells": "S99",
             "name": "ControllerType",
             "role": "metadata"
@@ -24449,6 +24859,12 @@
             "cells": "S115",
             "name": "TelemetryGeneration",
             "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.27182818.abi2",
+            "cells": "S116",
+            "name": "ConfigHostRef",
+            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.27182818.abi2",
@@ -24620,6 +25036,18 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.process-condition.v1",
+            "cells": "S8",
+            "name": "UnmetConditionMask",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.process-condition.v1",
+            "cells": "S9",
+            "name": "ProcessIdentity",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.process-condition.v1",
             "cells": "S10",
             "name": "Active",
             "role": "state"
@@ -24635,6 +25063,24 @@
             "cells": "S12",
             "name": "Status",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.process-condition.v1",
+            "cells": "S13",
+            "name": "Strategy",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.process-condition.v1",
+            "cells": "S14",
+            "name": "PressureTargetHint",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.process-condition.v1",
+            "cells": "S15",
+            "name": "TemperatureTargetHint",
+            "role": "result"
           },
           {
             "protocol_id": "ic10.stack.process-condition.v1",
@@ -24778,6 +25224,12 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.27182818.abi2",
+            "cells": "S98",
+            "name": "ChannelMask",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.27182818.abi2",
             "cells": "S99",
             "name": "ControllerType",
             "role": "metadata"
@@ -24817,6 +25269,12 @@
             "cells": "S115",
             "name": "TelemetryGeneration",
             "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.27182818.abi2",
+            "cells": "S116",
+            "name": "ConfigHostRef",
+            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.27182818.abi2",
@@ -25272,6 +25730,18 @@
         "payload_fields": [
           {
             "protocol_id": "ic10.stack.process-condition.v1",
+            "cells": "S8",
+            "name": "UnmetConditionMask",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.process-condition.v1",
+            "cells": "S9",
+            "name": "ProcessIdentity",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.process-condition.v1",
             "cells": "S10",
             "name": "Active",
             "role": "state"
@@ -25287,6 +25757,24 @@
             "cells": "S12",
             "name": "Status",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.process-condition.v1",
+            "cells": "S13",
+            "name": "Strategy",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.process-condition.v1",
+            "cells": "S14",
+            "name": "PressureTargetHint",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.process-condition.v1",
+            "cells": "S15",
+            "name": "TemperatureTargetHint",
+            "role": "result"
           },
           {
             "protocol_id": "ic10.stack.process-condition.v1",
@@ -25612,6 +26100,12 @@
           },
           {
             "protocol_id": "ic10.stack.recipe-execution-profile-view.v1",
+            "cells": "S48",
+            "name": "TopologyGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.recipe-execution-profile-view.v1",
             "cells": "S49",
             "name": "RecipeHashEcho",
             "role": "response_token"
@@ -25764,6 +26258,12 @@
             "cells": "S13",
             "name": "PrecisionFlags",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-endpoint.v1",
+            "cells": "S14",
+            "name": "ClassExtensionRef",
+            "role": "topology"
           },
           {
             "protocol_id": "ic10.stack.resource-endpoint.v1",
@@ -26896,6 +27396,18 @@
           },
           {
             "protocol_id": "ic10.stack.resource-reservation.v1",
+            "cells": "S20",
+            "name": "EndpointPublicationGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-reservation.v1",
+            "cells": "S21",
+            "name": "MirroredAccessKind",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-reservation.v1",
             "cells": "S22",
             "name": "MirroredActionHint0",
             "role": "result"
@@ -26928,6 +27440,30 @@
             "protocol_id": "ic10.stack.resource-reservation.v1",
             "cells": "S27",
             "name": "CommittedDestinationSlot",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-reservation.v1",
+            "cells": "S28",
+            "name": "EndpointAccessKind",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-reservation.v1",
+            "cells": "S29",
+            "name": "EndpointActionHint0",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-reservation.v1",
+            "cells": "S30",
+            "name": "EndpointActionHint1",
+            "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-reservation.v1",
+            "cells": "S31",
+            "name": "EndpointActionHint2",
             "role": "result"
           },
           {
@@ -27137,9 +27673,39 @@
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S12",
+            "name": "LoaderId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S13",
+            "name": "LoaderGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
             "cells": "S14",
             "name": "ItemCount",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S15",
+            "name": "ItemDirectoryBase",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S16",
+            "name": "TotalPayloadCells",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S17",
+            "name": "PayloadSignature",
+            "role": "schema"
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
@@ -27164,6 +27730,12 @@
             "cells": "S21",
             "name": "ImportedItemIndex",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S24..S27",
+            "name": "ItemDirectory",
+            "role": "table"
           }
         ],
         "payload_bases": [
@@ -27285,9 +27857,39 @@
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S12",
+            "name": "LoaderId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S13",
+            "name": "LoaderGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
             "cells": "S14",
             "name": "ItemCount",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S15",
+            "name": "ItemDirectoryBase",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S16",
+            "name": "TotalPayloadCells",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S17",
+            "name": "PayloadSignature",
+            "role": "schema"
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
@@ -27312,6 +27914,12 @@
             "cells": "S21",
             "name": "ImportedItemIndex",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S24..S27",
+            "name": "ItemDirectory",
+            "role": "table"
           }
         ],
         "payload_bases": [
@@ -27453,9 +28061,39 @@
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S12",
+            "name": "LoaderId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S13",
+            "name": "LoaderGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
             "cells": "S14",
             "name": "ItemCount",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S15",
+            "name": "ItemDirectoryBase",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S16",
+            "name": "TotalPayloadCells",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S17",
+            "name": "PayloadSignature",
+            "role": "schema"
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
@@ -27480,6 +28118,12 @@
             "cells": "S21",
             "name": "ImportedItemIndex",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S24..S27",
+            "name": "ItemDirectory",
+            "role": "table"
           }
         ],
         "payload_bases": [
@@ -27613,9 +28257,39 @@
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S12",
+            "name": "LoaderId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S13",
+            "name": "LoaderGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
             "cells": "S14",
             "name": "ItemCount",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S15",
+            "name": "ItemDirectoryBase",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S16",
+            "name": "TotalPayloadCells",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S17",
+            "name": "PayloadSignature",
+            "role": "schema"
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
@@ -27640,6 +28314,12 @@
             "cells": "S21",
             "name": "ImportedItemIndex",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S24..S27",
+            "name": "ItemDirectory",
+            "role": "table"
           }
         ],
         "payload_bases": [
@@ -27801,9 +28481,39 @@
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S12",
+            "name": "LoaderId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S13",
+            "name": "LoaderGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
             "cells": "S14",
             "name": "ItemCount",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S15",
+            "name": "ItemDirectoryBase",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S16",
+            "name": "TotalPayloadCells",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S17",
+            "name": "PayloadSignature",
+            "role": "schema"
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
@@ -27828,6 +28538,12 @@
             "cells": "S21",
             "name": "ImportedItemIndex",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S24..S27",
+            "name": "ItemDirectory",
+            "role": "table"
           }
         ],
         "payload_bases": [
@@ -27985,9 +28701,39 @@
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S12",
+            "name": "LoaderId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S13",
+            "name": "LoaderGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
             "cells": "S14",
             "name": "ItemCount",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S15",
+            "name": "ItemDirectoryBase",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S16",
+            "name": "TotalPayloadCells",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S17",
+            "name": "PayloadSignature",
+            "role": "schema"
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
@@ -28012,6 +28758,12 @@
             "cells": "S21",
             "name": "ImportedItemIndex",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S24..S27",
+            "name": "ItemDirectory",
+            "role": "table"
           }
         ],
         "payload_bases": [
@@ -28153,9 +28905,39 @@
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S12",
+            "name": "LoaderId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S13",
+            "name": "LoaderGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
             "cells": "S14",
             "name": "ItemCount",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S15",
+            "name": "ItemDirectoryBase",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S16",
+            "name": "TotalPayloadCells",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S17",
+            "name": "PayloadSignature",
+            "role": "schema"
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
@@ -28180,6 +28962,12 @@
             "cells": "S21",
             "name": "ImportedItemIndex",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S24..S27",
+            "name": "ItemDirectory",
+            "role": "table"
           }
         ],
         "payload_bases": [
@@ -28311,6 +29099,18 @@
             "cells": "S13..S21",
             "name": "ProfileValues",
             "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-profile-view.v1",
+            "cells": "S22",
+            "name": "CatalogInstanceId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.resource-profile-view.v1",
+            "cells": "S23",
+            "name": "TopologyGeneration",
+            "role": "generation"
           },
           {
             "protocol_id": "ic10.stack.resource-profile-view.v1",
@@ -28763,9 +29563,39 @@
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S12",
+            "name": "LoaderId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S13",
+            "name": "LoaderGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
             "cells": "S14",
             "name": "ItemCount",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S15",
+            "name": "ItemDirectoryBase",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S16",
+            "name": "TotalPayloadCells",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S17",
+            "name": "PayloadSignature",
+            "role": "schema"
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
@@ -28790,6 +29620,12 @@
             "cells": "S21",
             "name": "ImportedItemIndex",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S24..S27",
+            "name": "ItemDirectory",
+            "role": "table"
           }
         ],
         "payload_bases": [
@@ -28935,9 +29771,39 @@
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S12",
+            "name": "LoaderId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S13",
+            "name": "LoaderGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
             "cells": "S14",
             "name": "ItemCount",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S15",
+            "name": "ItemDirectoryBase",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S16",
+            "name": "TotalPayloadCells",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S17",
+            "name": "PayloadSignature",
+            "role": "schema"
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
@@ -28962,6 +29828,12 @@
             "cells": "S21",
             "name": "ImportedItemIndex",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S24..S27",
+            "name": "ItemDirectory",
+            "role": "table"
           }
         ],
         "payload_bases": [
@@ -29103,9 +29975,39 @@
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S12",
+            "name": "LoaderId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S13",
+            "name": "LoaderGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
             "cells": "S14",
             "name": "ItemCount",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S15",
+            "name": "ItemDirectoryBase",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S16",
+            "name": "TotalPayloadCells",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S17",
+            "name": "PayloadSignature",
+            "role": "schema"
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
@@ -29130,6 +30032,12 @@
             "cells": "S21",
             "name": "ImportedItemIndex",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S24..S27",
+            "name": "ItemDirectory",
+            "role": "table"
           }
         ],
         "payload_bases": [
@@ -29271,9 +30179,39 @@
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S12",
+            "name": "LoaderId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S13",
+            "name": "LoaderGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
             "cells": "S14",
             "name": "ItemCount",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S15",
+            "name": "ItemDirectoryBase",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S16",
+            "name": "TotalPayloadCells",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S17",
+            "name": "PayloadSignature",
+            "role": "schema"
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
@@ -29298,6 +30236,12 @@
             "cells": "S21",
             "name": "ImportedItemIndex",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S24..S27",
+            "name": "ItemDirectory",
+            "role": "table"
           }
         ],
         "payload_bases": [
@@ -29435,9 +30379,39 @@
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S12",
+            "name": "LoaderId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S13",
+            "name": "LoaderGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
             "cells": "S14",
             "name": "ItemCount",
             "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S15",
+            "name": "ItemDirectoryBase",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S16",
+            "name": "TotalPayloadCells",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S17",
+            "name": "PayloadSignature",
+            "role": "schema"
           },
           {
             "protocol_id": "ic10.stack.catalog-loader.v5",
@@ -29462,6 +30436,12 @@
             "cells": "S21",
             "name": "ImportedItemIndex",
             "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S24..S27",
+            "name": "ItemDirectory",
+            "role": "table"
           }
         ],
         "payload_bases": [

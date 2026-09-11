@@ -155,6 +155,30 @@
       "GenericCatalogStore"
      ],
      "reason": "a Registry record slot (S58 + 6k) holds the ReferenceId of a Store the Catalog Store Directory Adapter registered after checking its S0 against GenericCatalogStore.v6 (DirRef); the Planner reserves the destination Store's capacity in its S27"
+    },
+    {
+     "reference": "r1",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "GenericRegistryDirectoryHost.v3",
+      "cells": "any"
+     },
+     "targets": [
+      "GenericCatalogStore"
+     ],
+     "reason": "a Registry record slot (S58 + 6k) holds the ReferenceId of a Store the Catalog Store Directory Adapter registered after checking its S0; the Planner reads the source Store's item count and state"
+    },
+    {
+     "reference": "r13",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "GenericRegistryDirectoryHost.v3",
+      "cells": "any"
+     },
+     "targets": [
+      "GenericCatalogStore"
+     ],
+     "reason": "the same Registry records; the Planner reads the destination Store's schema, ordinal, instance, partition, and chain link"
     }
    ]
   },
@@ -726,7 +750,21 @@
       ]
      ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "r1",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "ItemResourceReservationSelector.v1",
+      "cells": "any"
+     },
+     "targets": [
+      "ResourceReservation"
+     ],
+     "reason": "a quote leg (S32 + 3k) of the ITEM Reservation Selector holds a Reservation ReferenceId; Preflight reads each leg's precision flags to fingerprint the quote"
+    }
+   ]
   },
   "ic10/dependency-planning/job_requirement_view_v1_0.ic10": {
    "source_sha256": "a8c97008efc0245d620ba58cbcd7123a5ef9e34a5e1bb46fefbbf41887e102d3",
@@ -935,11 +973,76 @@
   "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10": {
    "source_sha256": "e95d386c114a95346460a3c4bd999e29e41754b9f02f776b9b56cba717dff515",
    "dynamic_write_ranges": [
-    [8, 10], [33, 35], [49, 52], [65, 67], [81, 84], [97, 100]
+    [
+     8,
+     10
+    ],
+    [
+     33,
+     35
+    ],
+    [
+     49,
+     52
+    ],
+    [
+     65,
+     67
+    ],
+    [
+     81,
+     84
+    ],
+    [
+     97,
+     100
+    ]
    ],
    "dynamic_read_ranges": [
-    [11, 15], [19, 19], [32, 33], [36, 40], [48, 62],
-    [64, 65], [68, 72], [80, 81], [85, 93], [96, 97], [101, 109]
+    [
+     11,
+     15
+    ],
+    [
+     19,
+     19
+    ],
+    [
+     32,
+     33
+    ],
+    [
+     36,
+     40
+    ],
+    [
+     48,
+     62
+    ],
+    [
+     64,
+     65
+    ],
+    [
+     68,
+     72
+    ],
+    [
+     80,
+     81
+    ],
+    [
+     85,
+     93
+    ],
+    [
+     96,
+     97
+    ],
+    [
+     101,
+     109
+    ]
    ],
    "external_readable_ranges": [
     [
@@ -1188,7 +1291,12 @@
    "source_sha256": "e20c6f31913fe45663337331bf8a55fdd1c5e3ad9821dc8a840d31c8092cb007",
    "ports": {
     "d0": {
-     "dynamic_read_ranges": [[32, 511]]
+     "dynamic_read_ranges": [
+      [
+       32,
+       511
+      ]
+     ]
     }
    }
   },
@@ -1196,9 +1304,28 @@
    "source_sha256": "8760bae57182c7ce4a5784add69c4c7cd83358e33d80a27b74158fccd48874a0",
    "ports": {
     "d0": {
-     "dynamic_read_ranges": [[32, 49]]
+     "dynamic_read_ranges": [
+      [
+       32,
+       49
+      ]
+     ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "r10",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "ItemResourceReservationSelector.v1",
+      "cells": "any"
+     },
+     "targets": [
+      "ResourceReservation"
+     ],
+     "reason": "a quote leg (S32 + 3k) of the ITEM Reservation Selector holds a Reservation ReferenceId; the view reads each leg's precision flags and mirror generation"
+    }
+   ]
   },
   "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10": {
    "source_sha256": "d0881afad3945530d729536c47706fe0efbb0ed12ef2f03914b39f150c679e90",
@@ -1260,7 +1387,21 @@
       ]
      ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "ra",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "GenericSnapshotDirectoryHost.v1",
+      "cells": "any"
+     },
+     "targets": [
+      "ResourceReservation"
+     ],
+     "reason": "a DirectorySchema.ResourceReservation record on the Snapshot Host holds a Reservation ReferenceId; the Selector reads each candidate's status, type, unit, and export or import cells"
+    }
+   ]
   },
   "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10": {
    "source_sha256": "4d6587aa0fafda860dfb177f1dd6213ce89439abe685c6b2d054e480d1b6e6a3",
@@ -1326,7 +1467,49 @@
       ]
      ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "r1",
+     "origin": {
+      "kind": "port-cell",
+      "port": "d1",
+      "cells": "any"
+     },
+     "targets": [
+      "ResourceLink"
+     ],
+     "reason": "d1 is the ResourceLink Snapshot Directory; a record holds a Link ReferenceId, and the Resolver reads the link's status, sink, class, and ResourceType"
+    },
+    {
+     "reference": "r3",
+     "origin": {
+      "kind": "reference-cell",
+      "via": "r1",
+      "cells": [
+       28
+      ]
+     },
+     "targets": [
+      "ResourceReservation"
+     ],
+     "reason": "Link S28 is the source Reservation ReferenceId; the Resolver reads its ExportAvailable"
+    },
+    {
+     "reference": "r4",
+     "origin": {
+      "kind": "reference-cell",
+      "via": "r1",
+      "cells": [
+       29
+      ]
+     },
+     "targets": [
+      "ResourceReservation"
+     ],
+     "reason": "Link S29 is the sink Reservation ReferenceId; the Resolver reads its ImportCapacity"
+    }
+   ]
   },
   "ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10": {
    "source_sha256": "ff7b08ed3b265aa0aa88183f70134d2c439fe389af6c54d94a9d2666cbdc20ed",
@@ -1386,7 +1569,21 @@
       ]
      ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "r9",
+     "origin": {
+      "kind": "port-cell",
+      "port": "d0",
+      "cells": "any"
+     },
+     "targets": [
+      "ResourceLink"
+     ],
+     "reason": "a Link Resolver record (S20 + 4k) holds a Link ReferenceId; the Allocator waits for each Link's completed epoch"
+    }
+   ]
   },
   "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10": {
    "source_sha256": "c459656f07e05d4265e2a2c76db02a8c9db373b6a1f7be229d85bbc79b4274b8",
@@ -1472,6 +1669,18 @@
       "MaterialTransferGrantGuard"
      ],
      "reason": "Link S14 is the Material Grant Guard ReferenceId (docs/MATERIAL_TRANSFER_SYSTEM.md); Stage writes the Guard's staged payload (S16..S26)"
+    },
+    {
+     "reference": "r9",
+     "origin": {
+      "kind": "port-cell",
+      "port": "d0",
+      "cells": "any"
+     },
+     "targets": [
+      "ResourceLink"
+     ],
+     "reason": "a Link Resolver record (S20 + 4k) holds a Link ReferenceId; the Stager reads the link's Guard, source and sink Reservations, and ResourceType"
     }
    ]
   },
@@ -1531,7 +1740,33 @@
       ]
      ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "r14",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "PowerDispatchPlanStore.v1",
+      "cells": "any"
+     },
+     "targets": [
+      "ResourceReservation"
+     ],
+     "reason": "a committed flow record (S32 + 8k) holds the source Reservation ReferenceId at +1; the executor rechecks its owner and epoch"
+    },
+    {
+     "reference": "r15",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "PowerDispatchPlanStore.v1",
+      "cells": "any"
+     },
+     "targets": [
+      "ResourceReservation"
+     ],
+     "reason": "a committed flow record holds the sink Reservation ReferenceId at +2; the executor rechecks its owner and epoch"
+    }
+   ]
   },
   "ic10/power-grid/power_link_selector_v1_0.ic10": {
    "source_sha256": "8c4035e6f1ad62794db29b1ba6f2db056f9b2121f3f0cdd43b3025287e99fc17",
@@ -1561,7 +1796,23 @@
       ]
      ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "r3",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "ResourceReservation.v1",
+      "cells": [
+       32
+      ]
+     },
+     "targets": [
+      "ResourceEndpoint"
+     ],
+     "reason": "Reservation S32 names the Endpoint whose native provider the executor switches"
+    }
+   ]
   },
   "ic10/power-grid/power_plan_validator_v1_0.ic10": {
    "source_sha256": "41eecff035efb38f12865ba9192eecc5db1582d0d12d897427489e8351fb3b94",
@@ -1806,7 +2057,25 @@
       ]
      ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "ra",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "GenericSnapshotDirectoryHost.v1",
+      "cells": "any"
+     },
+     "targets": [
+      "ControllerPhasePressureRuntime",
+      "ControllerPressureDomainRuntime",
+      "ProcessPressureDomainRuntime",
+      "ControllerPressureTransferRuntime",
+      "EmbeddedPressureTransferRuntime"
+     ],
+     "reason": "a DirectorySchema.Controller record on the Snapshot Host holds a controller housing ReferenceId; the Arbiter reads its telemetry block"
+    }
+   ]
   },
   "ic10/pressure-domain/pressure_domain_config_policy_v1_1.ic10": {
    "source_sha256": "19d85a306027490bed7adc9ad9aec8c02e7df3719bb8fe8e1fbb9d589596dfe6",
@@ -1933,7 +2202,22 @@
       ]
      ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "r1",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "GenericSnapshotDirectoryHost.v1",
+      "cells": "any"
+     },
+     "targets": [
+      "ControllerPressureTransferRuntime",
+      "EmbeddedPressureTransferRuntime"
+     ],
+     "reason": "a DirectorySchema.Controller record holds a controller ReferenceId; the adapter reads the PressureTransfer telemetry block of each candidate"
+    }
+   ]
   },
   "ic10/pressure-grid/pressure_grid_path_allocator_v1_2.ic10": {
    "source_sha256": "7fe4ed03e051eb3b0ebfe798dd4a5ad7a3b277d19730d7e9ad1a06f5e937aaf8",
@@ -1996,7 +2280,46 @@
       ]
      ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "r10",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "GenericSnapshotDirectoryHost.v1",
+      "cells": "any"
+     },
+     "targets": [
+      "ControllerPressureTransferRuntime",
+      "EmbeddedPressureTransferRuntime"
+     ],
+     "reason": "a DirectorySchema.PressureGridLink record holds a Transfer ReferenceId; the Enumerator reads its telemetry block"
+    },
+    {
+     "reference": "r11",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "GenericSnapshotDirectoryHost.v1",
+      "cells": "any"
+     },
+     "targets": [
+      "PressureInventoryReservation"
+     ],
+     "reason": "a PressureGridLink record holds the source Reservation ReferenceId; the Enumerator reads its role"
+    },
+    {
+     "reference": "r12",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "GenericSnapshotDirectoryHost.v1",
+      "cells": "any"
+     },
+     "targets": [
+      "PressureInventoryReservation"
+     ],
+     "reason": "a PressureGridLink record holds the sink Reservation ReferenceId; the Enumerator reads its role"
+    }
+   ]
   },
   "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10": {
    "source_sha256": "a2bbb5e218ddb643ded1915b0c60cd63a9aa5c064a51fa212409d6d96f59698a",
@@ -2024,6 +2347,49 @@
      32,
      37
     ]
+   ],
+   "network_provenance": [
+    {
+     "reference": "r10",
+     "origin": {
+      "kind": "own-cell",
+      "cells": "any",
+      "filled_by": "self"
+     },
+     "targets": [
+      "ControllerPressureTransferRuntime",
+      "EmbeddedPressureTransferRuntime"
+     ],
+     "reason": "S35..S37 are the candidate path's Transfer ReferenceIds the Route Selector writes; the Ranker reads each hop's telemetry block"
+    },
+    {
+     "reference": "r11",
+     "origin": {
+      "kind": "reference-cell",
+      "via": "r10",
+      "cells": [
+       106
+      ]
+     },
+     "targets": [
+      "PressureInventoryReservation"
+     ],
+     "reason": "Transfer telemetry S106 is the source Reservation ReferenceId"
+    },
+    {
+     "reference": "r12",
+     "origin": {
+      "kind": "reference-cell",
+      "via": "r10",
+      "cells": [
+       107
+      ]
+     },
+     "targets": [
+      "PressureInventoryReservation"
+     ],
+     "reason": "Transfer telemetry S107 is the sink Reservation ReferenceId"
+    }
    ]
   },
   "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10": {
@@ -2050,7 +2416,37 @@
       ]
      ]
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "r9",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "GenericSnapshotDirectoryHost.v1",
+      "cells": "any"
+     },
+     "targets": [
+      "ControllerPressureTransferRuntime",
+      "EmbeddedPressureTransferRuntime"
+     ],
+     "reason": "a DirectorySchema.PressureGridLink record holds a Transfer ReferenceId; the builder reads its telemetry block"
+    },
+    {
+     "reference": "sp",
+     "origin": {
+      "kind": "reference-cell",
+      "via": "r9",
+      "cells": [
+       106,
+       107
+      ]
+     },
+     "targets": [
+      "PressureInventoryReservation"
+     ],
+     "reason": "Transfer telemetry S106 and S107 are the source and sink Reservation ReferenceIds"
+    }
+   ]
   },
   "ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10": {
    "source_sha256": "067f6dd4c6f3ed49b7130f38db7bfb3c832ef27959c4f31a148f4b5b41fb4590",
@@ -2382,7 +2778,75 @@
     "d5": {
      "requirement": "optional"
     }
-   }
+   },
+   "network_provenance": [
+    {
+     "reference": "ref",
+     "origin": {
+      "kind": "port-device",
+      "port": "d0"
+     },
+     "targets": [
+      "InputProfileView"
+     ],
+     "reason": "the scanner probes the S0 of whatever sits on each screw to find an Input Profile View"
+    },
+    {
+     "reference": "ref",
+     "origin": {
+      "kind": "port-device",
+      "port": "d1"
+     },
+     "targets": [
+      "InputProfileView"
+     ],
+     "reason": "the scanner probes the S0 of whatever sits on each screw to find an Input Profile View"
+    },
+    {
+     "reference": "ref",
+     "origin": {
+      "kind": "port-device",
+      "port": "d2"
+     },
+     "targets": [
+      "InputProfileView"
+     ],
+     "reason": "the scanner probes the S0 of whatever sits on each screw to find an Input Profile View"
+    },
+    {
+     "reference": "ref",
+     "origin": {
+      "kind": "port-device",
+      "port": "d3"
+     },
+     "targets": [
+      "InputProfileView"
+     ],
+     "reason": "the scanner probes the S0 of whatever sits on each screw to find an Input Profile View"
+    },
+    {
+     "reference": "ref",
+     "origin": {
+      "kind": "port-device",
+      "port": "d4"
+     },
+     "targets": [
+      "InputProfileView"
+     ],
+     "reason": "the scanner probes the S0 of whatever sits on each screw to find an Input Profile View"
+    },
+    {
+     "reference": "ref",
+     "origin": {
+      "kind": "port-device",
+      "port": "d5"
+     },
+     "targets": [
+      "InputProfileView"
+     ],
+     "reason": "the scanner probes the S0 of whatever sits on each screw to find an Input Profile View"
+    }
+   ]
   },
   "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": {
    "source_sha256": "684f8545b583e37e0e11862e58df68bebb810c961e6d6840b448a2cde786fa4d",
@@ -2531,6 +2995,62 @@
       "ResourceTransformProfileView"
      ],
      "reason": "r9 is the Runtime's Admission (Runtime S17, the d1 ReferenceId it publishes at boot), and Admission S13 is the Transform Profile View ReferenceId it publishes once the view's identity check has passed; Readiness posts the TransformType request into the view's S70"
+    },
+    {
+     "reference": "r1",
+     "origin": {
+      "kind": "own-cell",
+      "cells": [
+       11
+      ],
+      "filled_by": "peer"
+     },
+     "targets": [
+      "GenericMaterialTransformRuntime"
+     ],
+     "reason": "S11 is the selected Runtime ReferenceId the Transform Candidate Executor writes with its request"
+    },
+    {
+     "reference": "r9",
+     "origin": {
+      "kind": "reference-cell",
+      "via": "r1",
+      "cells": [
+       17
+      ]
+     },
+     "targets": [
+      "MaterialTransformAdmission"
+     ],
+     "reason": "Runtime S17 is the Admission ReferenceId the Runtime captured from its d1"
+    },
+    {
+     "reference": "r10",
+     "origin": {
+      "kind": "reference-cell",
+      "via": "r1",
+      "cells": [
+       18
+      ]
+     },
+     "targets": [
+      "MaterialTransformLinkResolver"
+     ],
+     "reason": "Runtime S18 is the Link Resolver ReferenceId the Runtime captured from its d2"
+    },
+    {
+     "reference": "r11",
+     "origin": {
+      "kind": "reference-cell",
+      "via": "r1",
+      "cells": [
+       15
+      ]
+     },
+     "targets": [
+      "ResourceReservation"
+     ],
+     "reason": "Runtime S15 is the output Reservation ReferenceId the Runtime captured from its d4"
     }
    ]
   },
@@ -2579,6 +3099,20 @@
       "PressureInventoryReservation"
      ],
      "reason": "Transfer S107 is the SinkReservationRef (docs/PRESSURE_GRID_CONTROLLER.md); Prep checks its identity through sp, and CommitRate adds the granted rate to its ReservedImportMoles (S13)"
+    },
+    {
+     "reference": "r1",
+     "origin": {
+      "kind": "own-cell",
+      "cells": [
+       13
+      ],
+      "filled_by": "peer"
+     },
+     "targets": [
+      "PressureGridReservationPlanner"
+     ],
+     "reason": "S13 is the Planner ReferenceId the Path Allocator and Single-Hop Builder write with their request; the Allocator reads the Planner's LeaseTicks"
     }
    ]
   },
@@ -3289,6 +3823,175 @@
       "external-write"
      ],
      "description": "Allocator-owned."
+    }
+   ]
+  },
+  "ic10/controller-config/config_input_bridge_v1_0.ic10": {
+   "source_sha256": "5cc3712ec953490f50a87db2cffe186db2fad9ca74ba8624a6b1202f5f2bbf58",
+   "network_provenance": [
+    {
+     "reference": "r7",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "GenericConfigEditor.v1",
+      "cells": [
+       27
+      ]
+     },
+     "targets": [
+      "InputProfileView"
+     ],
+     "reason": "Config Editor S27 is the Loader-validated Profile ReferenceId; the Bridge reads the profile's generation from it"
+    }
+   ]
+  },
+  "ic10/material-grid/material_resource_link_v1_0.ic10": {
+   "source_sha256": "902d3d30937fce9b9630a4a4d567a959dadf6b6bef29a7ddbebc4f1ea88107f1",
+   "network_provenance": [
+    {
+     "reference": "r5",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "ResourceReservation.v1",
+      "cells": [
+       32
+      ]
+     },
+     "targets": [
+      "ResourceEndpoint"
+     ],
+     "reason": "Reservation S32 is the Generic Resource Endpoint the Reservation mirrors; the Link reads the source Endpoint's status and its Resource Profile View reference"
+    },
+    {
+     "reference": "r6",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "ResourceReservation.v1",
+      "cells": [
+       32
+      ]
+     },
+     "targets": [
+      "ResourceEndpoint"
+     ],
+     "reason": "the sink Reservation's S32 names its Endpoint; the Link reads its status"
+    },
+    {
+     "reference": "r0",
+     "origin": {
+      "kind": "reference-cell",
+      "via": "r5",
+      "cells": [
+       14
+      ]
+     },
+     "targets": [
+      "ResourceProfileView"
+     ],
+     "reason": "an ITEM Endpoint's S14 is its Resource Profile View ReferenceId; the Link reads the profile's ProfileKind"
+    }
+   ]
+  },
+  "ic10/power-jobs/power_job_policy_verify_v1_0.ic10": {
+   "source_sha256": "3a735383fb16ea55652b94edb41dcbae2f195904091009534d8e1723d690dc13",
+   "network_provenance": [
+    {
+     "reference": "r6",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "ResourceReservation.v1",
+      "cells": [
+       32
+      ]
+     },
+     "targets": [
+      "ResourceEndpoint"
+     ],
+     "reason": "Reservation S32 names the Endpoint whose override cells S50 and S51 the verifier rechecks"
+    }
+   ]
+  },
+  "ic10/resource-grid-core/pressure_resource_link_adapter_v1_0.ic10": {
+   "source_sha256": "9c0dedb23c71cb919ed3a0f04c854cc5467c08fda24734ff98800efca3bdd2e5",
+   "network_provenance": [
+    {
+     "reference": "r9",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "ResourceReservation.v1",
+      "cells": [
+       32
+      ]
+     },
+     "targets": [
+      "ResourceEndpoint"
+     ],
+     "reason": "the source Reservation's S32 names its Endpoint; the adapter reads its status"
+    },
+    {
+     "reference": "r10",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": "ResourceReservation.v1",
+      "cells": [
+       32
+      ]
+     },
+     "targets": [
+      "ResourceEndpoint"
+     ],
+     "reason": "the sink Reservation's S32 names its Endpoint; the adapter reads its status"
+    },
+    {
+     "reference": "r7",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": 27182818,
+      "cells": [
+       106
+      ]
+     },
+     "targets": [
+      "PressureInventoryReservation"
+     ],
+     "reason": "PressureTransfer telemetry S106 is the source Reservation ReferenceId; the adapter reads its role and medium"
+    },
+    {
+     "reference": "r8",
+     "origin": {
+      "kind": "peer-cell",
+      "identity": 27182818,
+      "cells": [
+       107
+      ]
+     },
+     "targets": [
+      "PressureInventoryReservation"
+     ],
+     "reason": "PressureTransfer telemetry S107 is the sink Reservation ReferenceId; the adapter reads its role and medium"
+    }
+   ]
+  },
+  "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10": {
+   "source_sha256": "c0af69acc33aa2c3f635afeccddd3c5b83f4b5031b22b8b5ca0ccbf4b52eb2b8",
+   "network_provenance": [
+    {
+     "reference": "rr7",
+     "origin": {
+      "kind": "own-cell",
+      "cells": [
+       8,
+       9,
+       10
+      ],
+      "filled_by": "operator"
+     },
+     "targets": [
+      "ConsoleSelector",
+      "ControllerSelector",
+      "DiagnosticRenderer"
+     ],
+     "reason": "S8, S9, and S10 are the operator-configured Console Selector, Controller Selector, and Renderer ReferenceIds; the editor probes each peer's S0 through them"
     }
    ]
   }

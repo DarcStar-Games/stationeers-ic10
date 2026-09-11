@@ -31,11 +31,49 @@
       "role": "metadata"
     },
     {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "LoaderId",
+      "role": "metadata",
+      "description": "stable generated identity"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "LoaderGeneration",
+      "role": "generation",
+      "description": "Loader publication generation or version"
+    },
+    {
       "cells": "S14",
       "start": 14,
       "end": 14,
       "name": "ItemCount",
       "role": "metadata"
+    },
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "ItemDirectoryBase",
+      "role": "metadata",
+      "description": "24"
+    },
+    {
+      "cells": "S16",
+      "start": 16,
+      "end": 16,
+      "name": "TotalPayloadCells",
+      "role": "metadata"
+    },
+    {
+      "cells": "S17",
+      "start": 17,
+      "end": 17,
+      "name": "PayloadSignature",
+      "role": "schema"
     },
     {
       "cells": "S18",
@@ -68,6 +106,14 @@
       "name": "ImportedItemIndex",
       "role": "state",
       "description": "next imported item index, advanced by the Router and Store"
+    },
+    {
+      "cells": "S24..S27",
+      "start": 24,
+      "end": 27,
+      "name": "ItemDirectory",
+      "role": "table",
+      "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
     }
   ],
   "provider_interfaces": [
@@ -135,23 +181,27 @@
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderId",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -476247937
+          "const": -476247937,
+          "role": "metadata",
+          "description": "stable generated identity"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "generation",
+          "description": "Loader publication generation or version"
         },
         {
           "address": 14,
@@ -166,33 +216,37 @@
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "ItemDirectoryBase",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 24
+          "const": 24,
+          "role": "metadata",
+          "description": "24"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "TotalPayloadCells",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 132
+          "const": 132,
+          "role": "metadata"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "PayloadSignature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 2128398938
+          "const": 2128398938,
+          "role": "schema"
         },
         {
           "address": 18,
@@ -244,43 +298,51 @@
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[0]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 412
+          "const": 412,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[1]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 100
+          "const": 100,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 26,
-          "name": "S26",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[2]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 380
+          "const": 380,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 27,
-          "name": "S27",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[3]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 32
+          "const": 32,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 380,
@@ -1270,23 +1332,27 @@
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderId",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 2146715177
+          "const": 2146715177,
+          "role": "metadata",
+          "description": "stable generated identity"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "generation",
+          "description": "Loader publication generation or version"
         },
         {
           "address": 14,
@@ -1301,33 +1367,37 @@
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "ItemDirectoryBase",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 24
+          "const": 24,
+          "role": "metadata",
+          "description": "24"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "TotalPayloadCells",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 84
+          "const": 84,
+          "role": "metadata"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "PayloadSignature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -3845611
+          "const": -3845611,
+          "role": "schema"
         },
         {
           "address": 18,
@@ -1379,23 +1449,27 @@
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[0]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 428
+          "const": 428,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[1]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 84
+          "const": 84,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 428,
@@ -2133,23 +2207,27 @@
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderId",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1031597176
+          "const": -1031597176,
+          "role": "metadata",
+          "description": "stable generated identity"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "generation",
+          "description": "Loader publication generation or version"
         },
         {
           "address": 14,
@@ -2164,33 +2242,37 @@
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "ItemDirectoryBase",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 24
+          "const": 24,
+          "role": "metadata",
+          "description": "24"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "TotalPayloadCells",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 120
+          "const": 120,
+          "role": "metadata"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "PayloadSignature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 180145971
+          "const": 180145971,
+          "role": "schema"
         },
         {
           "address": 18,
@@ -2242,43 +2324,51 @@
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[0]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 460
+          "const": 460,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[1]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 52
+          "const": 52,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 26,
-          "name": "S26",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[2]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 412
+          "const": 412,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 27,
-          "name": "S27",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[3]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 48
+          "const": 48,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 28,
@@ -3326,23 +3416,27 @@
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderId",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1892676421
+          "const": -1892676421,
+          "role": "metadata",
+          "description": "stable generated identity"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "generation",
+          "description": "Loader publication generation or version"
         },
         {
           "address": 14,
@@ -3357,33 +3451,37 @@
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "ItemDirectoryBase",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 24
+          "const": 24,
+          "role": "metadata",
+          "description": "24"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "TotalPayloadCells",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 16
+          "const": 16,
+          "role": "metadata"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "PayloadSignature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1933435701
+          "const": 1933435701,
+          "role": "schema"
         },
         {
           "address": 18,
@@ -3435,23 +3533,27 @@
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[0]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 496
+          "const": 496,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[1]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 16
+          "const": 16,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 496,
@@ -3611,23 +3713,27 @@
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderId",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 263276886
+          "const": 263276886,
+          "role": "metadata",
+          "description": "stable generated identity"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "generation",
+          "description": "Loader publication generation or version"
         },
         {
           "address": 14,
@@ -3642,33 +3748,37 @@
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "ItemDirectoryBase",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 24
+          "const": 24,
+          "role": "metadata",
+          "description": "24"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "TotalPayloadCells",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 96
+          "const": 96,
+          "role": "metadata"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "PayloadSignature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 414478154
+          "const": 414478154,
+          "role": "schema"
         },
         {
           "address": 18,
@@ -3720,43 +3830,51 @@
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[0]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 496
+          "const": 496,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[1]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 16
+          "const": 16,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 26,
-          "name": "S26",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[2]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 480
+          "const": 480,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 27,
-          "name": "S27",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[3]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 16
+          "const": 16,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 28,
@@ -4785,23 +4903,27 @@
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderId",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1457061104
+          "const": 1457061104,
+          "role": "metadata",
+          "description": "stable generated identity"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "generation",
+          "description": "Loader publication generation or version"
         },
         {
           "address": 14,
@@ -4816,33 +4938,37 @@
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "ItemDirectoryBase",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 24
+          "const": 24,
+          "role": "metadata",
+          "description": "24"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "TotalPayloadCells",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 64
+          "const": 64,
+          "role": "metadata"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "PayloadSignature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 147657193
+          "const": 147657193,
+          "role": "schema"
         },
         {
           "address": 18,
@@ -4894,43 +5020,51 @@
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[0]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 496
+          "const": 496,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[1]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 16
+          "const": 16,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 26,
-          "name": "S26",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[2]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 480
+          "const": 480,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 27,
-          "name": "S27",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[3]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 16
+          "const": 16,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 28,
@@ -5638,23 +5772,27 @@
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderId",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1337589594
+          "const": -1337589594,
+          "role": "metadata",
+          "description": "stable generated identity"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "generation",
+          "description": "Loader publication generation or version"
         },
         {
           "address": 14,
@@ -5669,33 +5807,37 @@
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "ItemDirectoryBase",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 24
+          "const": 24,
+          "role": "metadata",
+          "description": "24"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "TotalPayloadCells",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 176
+          "const": 176,
+          "role": "metadata"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "PayloadSignature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 431698170
+          "const": 431698170,
+          "role": "schema"
         },
         {
           "address": 18,
@@ -5747,43 +5889,51 @@
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[0]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 496
+          "const": 496,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[1]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 16
+          "const": 16,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 26,
-          "name": "S26",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[2]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 480
+          "const": 480,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 27,
-          "name": "S27",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[3]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 16
+          "const": 16,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 28,
@@ -6863,23 +7013,27 @@
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderId",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 417763707
+          "const": 417763707,
+          "role": "metadata",
+          "description": "stable generated identity"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "generation",
+          "description": "Loader publication generation or version"
         },
         {
           "address": 14,
@@ -6894,33 +7048,37 @@
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "ItemDirectoryBase",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 24
+          "const": 24,
+          "role": "metadata",
+          "description": "24"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "TotalPayloadCells",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 160
+          "const": 160,
+          "role": "metadata"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "PayloadSignature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 721208220
+          "const": 721208220,
+          "role": "schema"
         },
         {
           "address": 18,
@@ -6972,43 +7130,51 @@
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[0]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 496
+          "const": 496,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[1]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 16
+          "const": 16,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 26,
-          "name": "S26",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[2]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 480
+          "const": 480,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 27,
-          "name": "S27",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[3]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 16
+          "const": 16,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 28,
@@ -8087,23 +8253,27 @@
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderId",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1264030432
+          "const": 1264030432,
+          "role": "metadata",
+          "description": "stable generated identity"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "generation",
+          "description": "Loader publication generation or version"
         },
         {
           "address": 14,
@@ -8118,33 +8288,37 @@
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "ItemDirectoryBase",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 24
+          "const": 24,
+          "role": "metadata",
+          "description": "24"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "TotalPayloadCells",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 96
+          "const": 96,
+          "role": "metadata"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "PayloadSignature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1127989572
+          "const": 1127989572,
+          "role": "schema"
         },
         {
           "address": 18,
@@ -8196,43 +8370,51 @@
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[0]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 496
+          "const": 496,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[1]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 16
+          "const": 16,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 26,
-          "name": "S26",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[2]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 480
+          "const": 480,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 27,
-          "name": "S27",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[3]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 16
+          "const": 16,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 28,
@@ -8907,23 +9089,27 @@
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderId",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1120087981
+          "const": 1120087981,
+          "role": "metadata",
+          "description": "stable generated identity"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "generation",
+          "description": "Loader publication generation or version"
         },
         {
           "address": 14,
@@ -8938,33 +9124,37 @@
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "ItemDirectoryBase",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 24
+          "const": 24,
+          "role": "metadata",
+          "description": "24"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "TotalPayloadCells",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 16
+          "const": 16,
+          "role": "metadata"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "PayloadSignature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -978672797
+          "const": -978672797,
+          "role": "schema"
         },
         {
           "address": 18,
@@ -9016,23 +9206,27 @@
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[0]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 496
+          "const": 496,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[1]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 16
+          "const": 16,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 496,
@@ -9181,23 +9375,27 @@
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderId",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -7978827
+          "const": -7978827,
+          "role": "metadata",
+          "description": "stable generated identity"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "generation",
+          "description": "Loader publication generation or version"
         },
         {
           "address": 14,
@@ -9212,33 +9410,37 @@
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "ItemDirectoryBase",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 24
+          "const": 24,
+          "role": "metadata",
+          "description": "24"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "TotalPayloadCells",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 100
+          "const": 100,
+          "role": "metadata"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "PayloadSignature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1911430965
+          "const": -1911430965,
+          "role": "schema"
         },
         {
           "address": 18,
@@ -9290,43 +9492,51 @@
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[0]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 492
+          "const": 492,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[1]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 20
+          "const": 20,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 26,
-          "name": "S26",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[2]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 472
+          "const": 472,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 27,
-          "name": "S27",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[3]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 20
+          "const": 20,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 28,
@@ -10339,23 +10549,27 @@
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderId",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1804468140
+          "const": 1804468140,
+          "role": "metadata",
+          "description": "stable generated identity"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "generation",
+          "description": "Loader publication generation or version"
         },
         {
           "address": 14,
@@ -10370,33 +10584,37 @@
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "ItemDirectoryBase",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 24
+          "const": 24,
+          "role": "metadata",
+          "description": "24"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "TotalPayloadCells",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 88
+          "const": 88,
+          "role": "metadata"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "PayloadSignature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1897029509
+          "const": -1897029509,
+          "role": "schema"
         },
         {
           "address": 18,
@@ -10448,43 +10666,51 @@
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[0]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 492
+          "const": 492,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[1]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 20
+          "const": 20,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 26,
-          "name": "S26",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[2]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 472
+          "const": 472,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 27,
-          "name": "S27",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[3]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 20
+          "const": 20,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 28,
@@ -11386,23 +11612,27 @@
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderId",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1753299202
+          "const": 1753299202,
+          "role": "metadata",
+          "description": "stable generated identity"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "generation",
+          "description": "Loader publication generation or version"
         },
         {
           "address": 14,
@@ -11417,33 +11647,37 @@
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "ItemDirectoryBase",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 24
+          "const": 24,
+          "role": "metadata",
+          "description": "24"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "TotalPayloadCells",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 100
+          "const": 100,
+          "role": "metadata"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "PayloadSignature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1105056343
+          "const": -1105056343,
+          "role": "schema"
         },
         {
           "address": 18,
@@ -11495,43 +11729,51 @@
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[0]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 488
+          "const": 488,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[1]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 24
+          "const": 24,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 26,
-          "name": "S26",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[2]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 464
+          "const": 464,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 27,
-          "name": "S27",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[3]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 24
+          "const": 24,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 28,
@@ -12553,23 +12795,27 @@
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderId",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1173415892
+          "const": 1173415892,
+          "role": "metadata",
+          "description": "stable generated identity"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "generation",
+          "description": "Loader publication generation or version"
         },
         {
           "address": 14,
@@ -12584,33 +12830,37 @@
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "ItemDirectoryBase",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 24
+          "const": 24,
+          "role": "metadata",
+          "description": "24"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "TotalPayloadCells",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 84
+          "const": 84,
+          "role": "metadata"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "PayloadSignature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 957579703
+          "const": 957579703,
+          "role": "schema"
         },
         {
           "address": 18,
@@ -12662,43 +12912,51 @@
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[0]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 484
+          "const": 484,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[1]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 28
+          "const": 28,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 26,
-          "name": "S26",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[2]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 456
+          "const": 456,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 27,
-          "name": "S27",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[3]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 28
+          "const": 28,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 28,
@@ -13569,23 +13827,27 @@
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderId",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1042423420
+          "const": 1042423420,
+          "role": "metadata",
+          "description": "stable generated identity"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LoaderGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "generation",
+          "description": "Loader publication generation or version"
         },
         {
           "address": 14,
@@ -13600,33 +13862,37 @@
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "ItemDirectoryBase",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 24
+          "const": 24,
+          "role": "metadata",
+          "description": "24"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "TotalPayloadCells",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 28
+          "const": 28,
+          "role": "metadata"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "PayloadSignature",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1257542938
+          "const": -1257542938,
+          "role": "schema"
         },
         {
           "address": 18,
@@ -13678,23 +13944,27 @@
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[0]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 484
+          "const": 484,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemDirectory[1]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 28
+          "const": 28,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
         },
         {
           "address": 484,

@@ -97,7 +97,45 @@
           "value": 4
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "cell:891293726:*",
+        "checked:0:-1742884202",
+        "untracked"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 12,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 28,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 32,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 33,
+          "targets": [
+            "ResourceReservation"
+          ]
+        }
+      ],
+      "unattributed": [
+        "cell:891293726:*",
+        "untracked"
+      ]
     }
   ],
   "own_stack": {

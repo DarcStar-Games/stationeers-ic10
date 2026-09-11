@@ -77,7 +77,42 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r10",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "ItemResourceReservationSelector.v1",
+            "cells": "any"
+          },
+          "targets": [
+            "ResourceReservation"
+          ],
+          "reason": "a quote leg (S32 + 3k) of the ITEM Reservation Selector holds a Reservation ReferenceId; the view reads each leg's precision flags and mirror generation"
+        }
+      ],
+      "origins": [
+        "cell:1606529514:*"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 11,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 12,
+          "targets": [
+            "ResourceReservation"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

@@ -136,7 +136,48 @@
           "value": 3
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r1",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "GenericRegistryDirectoryHost.v3",
+            "cells": "any"
+          },
+          "targets": [
+            "GenericCatalogStore"
+          ],
+          "reason": "a Registry record slot (S58 + 6k) holds the ReferenceId of a Store the Catalog Store Directory Adapter registered after checking its S0; the Planner reads the source Store's item count and state"
+        }
+      ],
+      "origins": [
+        "cell:-1822968058:*"
+      ],
+      "targets": [
+        "GenericCatalogStore"
+      ],
+      "site_targets": [
+        {
+          "cell": 16,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 9,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -152,7 +193,63 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r13",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "GenericRegistryDirectoryHost.v3",
+            "cells": "any"
+          },
+          "targets": [
+            "GenericCatalogStore"
+          ],
+          "reason": "the same Registry records; the Planner reads the destination Store's schema, ordinal, instance, partition, and chain link"
+        }
+      ],
+      "origins": [
+        "cell:-1822968058:*",
+        "untracked"
+      ],
+      "targets": [
+        "GenericCatalogStore"
+      ],
+      "site_targets": [
+        {
+          "cell": 13,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 23,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 24,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 3,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 8,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        }
+      ],
+      "unattributed": [
+        "untracked"
+      ]
     },
     {
       "transport": "reference-id",
@@ -197,6 +294,44 @@
       ],
       "targets": [
         "GenericCatalogStore"
+      ],
+      "site_targets": [
+        {
+          "cell": 13,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 16,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 23,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 27,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 29,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 3,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        }
       ],
       "unattributed": []
     }

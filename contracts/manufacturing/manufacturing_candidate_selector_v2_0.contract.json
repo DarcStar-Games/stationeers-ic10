@@ -40,7 +40,61 @@
           "value": 3
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:891293726",
+        "own:16"
+      ],
+      "targets": [
+        "GenericSnapshotDirectoryHost"
+      ],
+      "site_targets": [
+        {
+          "cell": 11,
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        },
+        {
+          "cell": 12,
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        },
+        {
+          "cell": 24,
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        },
+        {
+          "cell": 25,
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        },
+        {
+          "cell": 26,
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        },
+        {
+          "cell": 9,
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        }
+      ],
+      "unattributed": [
+        "own:16"
+      ]
     }
   ],
   "own_stack": {

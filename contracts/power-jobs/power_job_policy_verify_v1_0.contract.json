@@ -40,7 +40,55 @@
           "value": 4
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:-1742884202",
+        "own:9"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 12,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 28,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 32,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 33,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 36,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 37,
+          "targets": [
+            "ResourceReservation"
+          ]
+        }
+      ],
+      "unattributed": [
+        "own:9"
+      ]
     },
     {
       "transport": "reference-id",
@@ -53,7 +101,44 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r6",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "ResourceReservation.v1",
+            "cells": [
+              32
+            ]
+          },
+          "targets": [
+            "ResourceEndpoint"
+          ],
+          "reason": "Reservation S32 names the Endpoint whose override cells S50 and S51 the verifier rechecks"
+        }
+      ],
+      "origins": [
+        "cell:-1742884202:32"
+      ],
+      "targets": [
+        "ResourceEndpoint"
+      ],
+      "site_targets": [
+        {
+          "cell": 50,
+          "targets": [
+            "ResourceEndpoint"
+          ]
+        },
+        {
+          "cell": 51,
+          "targets": [
+            "ResourceEndpoint"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

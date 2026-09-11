@@ -31,7 +31,37 @@
           "value": 940078290
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:940078290",
+        "own:10"
+      ],
+      "targets": [
+        "InputProfileView"
+      ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "InputProfileView"
+          ]
+        },
+        {
+          "cell": 11,
+          "targets": [
+            "InputProfileView"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "InputProfileView"
+          ]
+        }
+      ],
+      "unattributed": [
+        "own:10"
+      ]
     },
     {
       "transport": "reference-id",
@@ -60,6 +90,32 @@
       ],
       "targets": [
         "GenericInputScanner"
+      ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "GenericInputScanner"
+          ]
+        },
+        {
+          "cell": 12,
+          "targets": [
+            "GenericInputScanner"
+          ]
+        },
+        {
+          "cell": 9,
+          "targets": [
+            "GenericInputScanner"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "GenericInputScanner"
+          ]
+        }
       ],
       "unattributed": []
     }

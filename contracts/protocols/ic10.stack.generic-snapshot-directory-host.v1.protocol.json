@@ -88,6 +88,13 @@
       "role": "state"
     },
     {
+      "cells": "S23",
+      "start": 23,
+      "end": 23,
+      "name": "HostError",
+      "role": "error"
+    },
+    {
       "cells": "S24",
       "start": 24,
       "end": 24,
@@ -301,13 +308,14 @@
         },
         {
           "address": 23,
-          "name": "S23",
+          "name": "HostError",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1
+          "const": -1,
+          "role": "error"
         },
         {
           "address": 24,

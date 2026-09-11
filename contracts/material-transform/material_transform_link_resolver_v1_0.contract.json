@@ -194,7 +194,49 @@
           "value": 2
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "cell:891293726:*",
+        "checked:0:1484497288"
+      ],
+      "targets": [
+        "ResourceLink"
+      ],
+      "site_targets": [
+        {
+          "cell": 22,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 28,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 30,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 31,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 9,
+          "targets": [
+            "ResourceLink"
+          ]
+        }
+      ],
+      "unattributed": [
+        "cell:891293726:*"
+      ]
     },
     {
       "transport": "reference-id",
@@ -227,7 +269,49 @@
           "value": 2
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "cell:1484497288:28",
+        "checked:0:-1742884202"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 33,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 34,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 36,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 9,
+          "targets": [
+            "ResourceReservation"
+          ]
+        }
+      ],
+      "unattributed": [
+        "cell:1484497288:28"
+      ]
     }
   ],
   "own_stack": {
@@ -300,12 +384,13 @@
       },
       {
         "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "TransformType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 9,
@@ -348,13 +433,14 @@
       },
       {
         "address": 13,
-        "name": "S13",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "PublicationGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "generation"
       }
     ],
     "headers": [

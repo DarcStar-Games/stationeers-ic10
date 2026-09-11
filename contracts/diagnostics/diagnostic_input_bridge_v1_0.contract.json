@@ -48,7 +48,43 @@
           "value": 7
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:940078290",
+        "own:9"
+      ],
+      "targets": [
+        "InputProfileView"
+      ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "InputProfileView"
+          ]
+        },
+        {
+          "cell": 11,
+          "targets": [
+            "InputProfileView"
+          ]
+        },
+        {
+          "cell": 8,
+          "targets": [
+            "InputProfileView"
+          ]
+        },
+        {
+          "cell": 9,
+          "targets": [
+            "InputProfileView"
+          ]
+        }
+      ],
+      "unattributed": [
+        "own:9"
+      ]
     },
     {
       "transport": "reference-id",
@@ -85,6 +121,44 @@
       ],
       "targets": [
         "GenericInputResolver"
+      ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "GenericInputResolver"
+          ]
+        },
+        {
+          "cell": 11,
+          "targets": [
+            "GenericInputResolver"
+          ]
+        },
+        {
+          "cell": 12,
+          "targets": [
+            "GenericInputResolver"
+          ]
+        },
+        {
+          "cell": 13,
+          "targets": [
+            "GenericInputResolver"
+          ]
+        },
+        {
+          "cell": 14,
+          "targets": [
+            "GenericInputResolver"
+          ]
+        },
+        {
+          "cell": 9,
+          "targets": [
+            "GenericInputResolver"
+          ]
+        }
       ],
       "unattributed": []
     }

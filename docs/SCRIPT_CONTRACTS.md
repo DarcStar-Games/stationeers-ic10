@@ -73,13 +73,15 @@ Each generated per-script contract document is validated by
   slot selection;
 - `getd`/`putd` ReferenceId dependencies and `db:n` device-index discovery,
   including literal stack cells and accepted network-discovered protocols. A
-  dependency that writes also records where its reference came from at every
-  write site (`origins`), the contracts the writes are attributed to
+  dependency that reads or writes also records where its reference came from at
+  every access site (`origins`), the contracts the accesses are attributed to
   (`targets`: the identity the path checked, or a reviewed `network_provenance`
   declaration of what the reference's source cell holds), and anything neither
-  covers (`unattributed`), which `contracts/index.json` counts and
-  `validation/validators/validate_network_provenance.py` refuses (issue #174,
-  `docs/SCRIPT_WIRING.md`);
+  covers (`unattributed`). A write's attribution is held to its write sites, and
+  an unattributed write is refused by
+  `validation/validators/validate_network_provenance.py` and counted in
+  `contracts/index.json` (issue #174, `docs/SCRIPT_WIRING.md`); a read is
+  attributed so the stack field map counts the reader as a peer (issue #190);
 - literal and dynamic access to the housing's own 512-cell stack. An access the
   branch bounds derive whole emits an exact source-derived range, including the
   disjoint singletons a non-unit address stride reaches. A reviewed bound stands
@@ -134,10 +136,12 @@ payload cell to an entry (peers being the contract's consumer edges plus the pee
 wiring map declares for a port without one), every layout block in
 `docs/ABI_REFERENCE.md` that names its contract on an `S0` line to the map, and the
 generated `docs/STACK_FIELD_MAP.md`, which lists every role's cells across services, to
-the tree. The map covers the peer-visible surface only: an entry must name a cell a peer
-touches (a contract consumer edge, a wiring-declared port, or an attributed network
-write), a documented block cites, or a reviewed external range declares, because a cell
-only its provider reads and writes has nothing outside the program to hold its name to. A base-0 protocol is identified by its
+the tree. Every markdown document under `docs/` is held the same way: a fenced block or
+a table whose `S0` line names the contract cites only mapped cells. The map covers the
+peer-visible surface only: an entry must name a cell a peer touches (a contract consumer
+edge, a wiring-declared port, or a network read or write the provenance walk attributes)
+or a documented layout cites, because a cell only its provider reads and writes has
+nothing outside the program to hold its name to. A base-0 protocol is identified by its
 contract name, which already carries the ABI, so its document is named
 `contracts/protocols/ic10.stack.*.protocol.json`; the Generic Telemetry block at
 `S96` keeps the numeric `ic10.stack.<magic>.abi<n>` form because its consumers

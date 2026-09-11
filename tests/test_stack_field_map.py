@@ -11,13 +11,15 @@ import sys
 
 from framework.json_schema import validate
 from framework.stack_field_map import (
-    ABI_REFERENCE_DOC,
     FIELD_MAP_DOC,
     LAYOUT_SEMANTIC_SOURCE,
     LayoutEntry,
     ROLES,
     TOKEN_ROLES,
     apply_layout,
+    all_doc_layout_errors,
+    all_documented_cells,
+    declared_peer_cells,
     doc_layout_blocks,
     doc_layout_errors,
     documented_cells,
@@ -25,6 +27,7 @@ from framework.stack_field_map import (
     fields_by_role,
     format_cell_set,
     header_cells,
+    layout_documents_in,
     layout_errors,
     load_generated,
     load_layouts,
@@ -32,7 +35,6 @@ from framework.stack_field_map import (
     parse_cells,
     payload_fields,
     peer_touched_cells,
-    wiring_touched_cells,
 )
 
 ROOT = _PROJECT_ROOT
@@ -88,9 +90,11 @@ ck(errors == ["p: layout must be a list of entries"], "a non-list layout was not
 layouts = load_layouts(ROOT)
 definitions, contracts = load_generated(ROOT)
 by_pid = {definition["protocol_id"]: definition for definition in definitions.values()}
-wired = wiring_touched_cells(ROOT, contracts)
-reference = (ROOT / ABI_REFERENCE_DOC).read_text()
-documented = documented_cells(reference)
+wired = declared_peer_cells(ROOT, contracts)
+documents = layout_documents_in(ROOT)
+documented = all_documented_cells(documents)
+ck(FIELD_MAP_DOC not in documents and "docs/ABI_REFERENCE.md" in documents and "docs/CATALOG_STORAGE.md" in documents,
+   "the documents held to the map are not the markdown under docs/ minus the generated map")
 ck(HOST in layouts and STORE in layouts, "the two reference protocols have no layout")
 ck(all(entry.role in ROLES for entries in layouts.values() for entry in entries), "an entry escaped the role vocabulary")
 tree_errors = layout_errors(definitions, contracts, layouts, wired, documented)
@@ -164,6 +168,21 @@ ck(any(f"{HOST}: ReflashIdentity S31 names only cells the provider keeps to itse
    "an entry nothing outside the provider can hold was accepted")
 ck(not any("keeps to itself" in error for error in layout_errors(definitions, contracts, private, wired)),
    "the grounding rule ran without a documented-cells map")
+# A document grounds a name only through a layout block or table that names its contract on an
+# S0 line; a reviewed external range does not. The Store's S30 is reserved in the storage table
+# and nothing reads it, so it stands or falls with the table.
+store_documented = deepcopy(documented)
+store_documented[STORE] = store_documented[STORE] - {30}
+errors = layout_errors(definitions, contracts, layouts, wired, store_documented)
+ck(any(f"{STORE}: Reserved30 S30 names only cells the provider keeps to itself" in error for error in errors),
+   "a table-documented cell was grounded by something other than the table")
+ck(not any("Reserved30" in error for error in layout_errors(definitions, contracts, layouts, wired, documented)),
+   "the storage table did not ground the Store's reserved cell")
+
+# Network reads attributed by the provenance walk count as peers too: the Catalog Inspector reads
+# Store cells through a reference it checked against the Store's identity.
+INSPECTOR = "ic10/catalog-control-plane/catalog_inspector_v4_0.ic10"
+ck(INSPECTOR in wired.get(STORE, {}).get(9, set()), "an attributed network read did not make the reader a peer")
 
 # A layout for a protocol nothing provides or consumes fails.
 orphan = deepcopy(layouts)
@@ -234,10 +253,15 @@ ck(payload_fields(host, layouts) == host_service["current_layout"]["payload_fiel
 ck(sum(len(item["current_layout"]["payload_fields"]) for item in inventory["services"]) > 500,
    "the inventory carries too few payload fields")
 
-# --- the ABI reference is held to the map ----------------------------------------------
+# --- the documents under docs/ are held to the map -------------------------------------
+reference = documents["docs/ABI_REFERENCE.md"]
 blocks = doc_layout_blocks(reference)
 ck(len(blocks) >= 25 and any(block.protocol_id == HOST for block in blocks), "the ABI reference layout blocks were not found")
-ck(doc_layout_errors(reference, layouts) == [], "the ABI reference cites a cell the map does not name")
+ck(all_doc_layout_errors(documents, layouts) == [], "a document cites a cell the map does not name")
+table_blocks = doc_layout_blocks(documents["docs/CATALOG_STORAGE.md"])
+ck([block.protocol_id for block in table_blocks] == [STORE, "ic10.stack.catalog-loader.v5"]
+   and any(start == 32 for start, _, _ in table_blocks[0].cells),
+   "markdown table rows were not read as layout lines")
 synthetic = "\n".join([
     "```text", "S0   magic = GenericSnapshotDirectoryHost.v1", "S1   ABI = 1", "S24  active bank",
     "S25/S26 generation A/B", "S32..159 bank A", "S450 something new", "```", "",
@@ -245,7 +269,10 @@ synthetic = "\n".join([
     "```text", "S96 magic = 27182818", "S130 not attributable", "```", "",
     # Two services in one fence: each cell line is held to its own service.
     "```text", "Cost profile", "S0 magic = PressureGridCostProfile.v1", "S8 HopWeight", "S13 not a cost cell", "",
-    "Domain inventory", "S0 magic = PressureDomainInventory.v2", "S13 PressureDomain ReferenceId", "S19 not an inventory cell", "```",
+    "Domain inventory", "S0 magic = PressureDomainInventory.v2", "S13 PressureDomain ReferenceId", "S19 not an inventory cell", "```", "",
+    # A table names its contract on an S0 row and ends at the first non-row line.
+    "| Cell | Meaning |", "|---:|---|", "| S0 | magic = PressureGridCostProfile.v1 |", "| S9 | StorageWeight |", "| S14 | not a cost cell |", "",
+    "prose after the table", "| S15 | a row of a table that names no contract |",
 ])
 fixture_lines = synthetic.split("\n")
 
@@ -260,10 +287,11 @@ ck(errors == [
     f"doc.md:{line_of('S0 magic = Nothing.v1')}: layout block for ic10.stack.nothing.v1 but the protocol has no layout in data/script_contract_protocol_definitions.json",
     f"doc.md:{line_of('S13 not a cost cell')}: ic10.stack.pressure-grid-cost-profile.v1 cites S13 but the layout does not name S13",
     f"doc.md:{line_of('S19 not an inventory cell')}: ic10.stack.pressure-domain-inventory.v2 cites S19 but the layout does not name S19",
+    f"doc.md:{line_of('| S14 | not a cost cell |')}: ic10.stack.pressure-grid-cost-profile.v1 cites S14 but the layout does not name S14",
 ], f"doc holding reported {errors}")
 sub_blocks = doc_layout_blocks(synthetic)
-ck([block.protocol_id for block in sub_blocks][-2:] == ["ic10.stack.pressure-grid-cost-profile.v1", "ic10.stack.pressure-domain-inventory.v2"]
-   and sub_blocks[-1].cells == (
+ck([block.protocol_id for block in sub_blocks][-3:] == ["ic10.stack.pressure-grid-cost-profile.v1", "ic10.stack.pressure-domain-inventory.v2", "ic10.stack.pressure-grid-cost-profile.v1"]
+   and sub_blocks[-2].cells == (
        (0, 0, line_of("S0 magic = PressureDomainInventory.v2")),
        (13, 13, line_of("S13 PressureDomain ReferenceId")),
        (19, 19, line_of("S19 not an inventory cell"))),
@@ -272,7 +300,9 @@ ck(documented[HOST] >= {9, 11, 12, 24, 25, 26, 32, 415} and 31 not in documented
    "documented cells were not collected from the ABI reference blocks")
 
 # --- the report ----------------------------------------------------------------------
-by_role = fields_by_role(layouts, definitions, wired)
+by_role = fields_by_role(layouts, definitions, wired, documented)
+ck({row["grounding"] for rows in by_role.values() for row in rows} <= {"peer", "document", "peer, document"},
+   "an entry in the report has no grounding")
 token_rows = [row for role in TOKEN_ROLES for row in by_role[role]]
 ck(len(token_rows) >= 60, f"too few token cells in the report ({len(token_rows)})")
 ck(len({row["start"] for row in by_role["request_token"]}) >= 10, "request tokens did not spread across offsets as measured")
@@ -296,4 +326,5 @@ print(" - unmapped peer-touched cells, stray entries, header entries, override d
 print(" - provider contracts, protocol documents, and the envelope inventory carry the map")
 print(" - the ABI reference is held to the map per S0 block and the per-role report is generated from it")
 print(" - wiring-declared peers without a contract consumer edge still require a named cell and count in the report")
-print(" - every entry names a cell a peer touches or a documented block cites; provider-private cells are not mapped")
+print(" - every entry names a cell a peer touches or a documented block or table cites; provider-private cells are not mapped")
+print(" - attributed network reads make their reader a peer, and every markdown document under docs/ is held to the map")

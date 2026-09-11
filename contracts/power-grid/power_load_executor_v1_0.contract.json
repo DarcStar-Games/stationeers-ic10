@@ -116,7 +116,11 @@
       "dynamic_read": true,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "origins": [],
+      "targets": [],
+      "site_targets": [],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -146,7 +150,61 @@
           "value": 4
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:-1742884202",
+        "index:0:*"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 17,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 18,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 19,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 28,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 31,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 32,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 33,
+          "targets": [
+            "ResourceReservation"
+          ]
+        }
+      ],
+      "unattributed": [
+        "index:0:*"
+      ]
     },
     {
       "transport": "reference-id",
@@ -158,7 +216,38 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r3",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "ResourceReservation.v1",
+            "cells": [
+              32
+            ]
+          },
+          "targets": [
+            "ResourceEndpoint"
+          ],
+          "reason": "Reservation S32 names the Endpoint whose native provider the executor switches"
+        }
+      ],
+      "origins": [
+        "cell:-1742884202:32"
+      ],
+      "targets": [
+        "ResourceEndpoint"
+      ],
+      "site_targets": [
+        {
+          "cell": 9,
+          "targets": [
+            "ResourceEndpoint"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

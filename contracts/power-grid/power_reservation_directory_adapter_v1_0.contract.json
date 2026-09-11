@@ -21,7 +21,11 @@
       "dynamic_read": true,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "origins": [],
+      "targets": [],
+      "site_targets": [],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -51,7 +55,61 @@
           "value": 4
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:-1742884202",
+        "index:0:*"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 12,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 17,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 28,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 30,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 31,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 33,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 35,
+          "targets": [
+            "ResourceReservation"
+          ]
+        }
+      ],
+      "unattributed": [
+        "index:0:*"
+      ]
     }
   ],
   "own_stack": {

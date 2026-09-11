@@ -65,6 +65,13 @@
       "description": "[ManufacturingReagentHash, Quantity] x 16"
     },
     {
+      "cells": "S48",
+      "start": 48,
+      "end": 48,
+      "name": "TopologyGeneration",
+      "role": "generation"
+    },
+    {
       "cells": "S49",
       "start": 49,
       "end": 49,
@@ -179,12 +186,13 @@
         },
         {
           "address": 48,
-          "name": "S48",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "TopologyGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "generation"
         },
         {
           "address": 49,

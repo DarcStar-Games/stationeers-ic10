@@ -154,7 +154,31 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:1512745005",
+        "own:100"
+      ],
+      "targets": [
+        "ControllerSelector"
+      ],
+      "site_targets": [
+        {
+          "cell": 17,
+          "targets": [
+            "ControllerSelector"
+          ]
+        },
+        {
+          "cell": 8,
+          "targets": [
+            "ControllerSelector"
+          ]
+        }
+      ],
+      "unattributed": [
+        "own:100"
+      ]
     }
   ],
   "own_stack": {

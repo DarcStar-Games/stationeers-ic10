@@ -174,7 +174,38 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r10",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "ResourceReservation.v1",
+            "cells": [
+              32
+            ]
+          },
+          "targets": [
+            "ResourceEndpoint"
+          ],
+          "reason": "the sink Reservation's S32 names its Endpoint; the adapter reads its status"
+        }
+      ],
+      "origins": [
+        "cell:-1742884202:32"
+      ],
+      "targets": [
+        "ResourceEndpoint"
+      ],
+      "site_targets": [
+        {
+          "cell": 9,
+          "targets": [
+            "ResourceEndpoint"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -186,7 +217,38 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r7",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": 27182818,
+            "cells": [
+              106
+            ]
+          },
+          "targets": [
+            "PressureInventoryReservation"
+          ],
+          "reason": "PressureTransfer telemetry S106 is the source Reservation ReferenceId; the adapter reads its role and medium"
+        }
+      ],
+      "origins": [
+        "cell:27182818:106"
+      ],
+      "targets": [
+        "PressureInventoryReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 16,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -198,7 +260,38 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r8",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": 27182818,
+            "cells": [
+              107
+            ]
+          },
+          "targets": [
+            "PressureInventoryReservation"
+          ],
+          "reason": "PressureTransfer telemetry S107 is the sink Reservation ReferenceId; the adapter reads its role and medium"
+        }
+      ],
+      "origins": [
+        "cell:27182818:107"
+      ],
+      "targets": [
+        "PressureInventoryReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 16,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -210,7 +303,38 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r9",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "ResourceReservation.v1",
+            "cells": [
+              32
+            ]
+          },
+          "targets": [
+            "ResourceEndpoint"
+          ],
+          "reason": "the source Reservation's S32 names its Endpoint; the adapter reads its status"
+        }
+      ],
+      "origins": [
+        "cell:-1742884202:32"
+      ],
+      "targets": [
+        "ResourceEndpoint"
+      ],
+      "site_targets": [
+        {
+          "cell": 9,
+          "targets": [
+            "ResourceEndpoint"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {

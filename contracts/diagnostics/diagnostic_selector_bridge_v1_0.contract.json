@@ -40,6 +40,20 @@
       "targets": [
         "ConsoleSelector"
       ],
+      "site_targets": [
+        {
+          "cell": 12,
+          "targets": [
+            "ConsoleSelector"
+          ]
+        },
+        {
+          "cell": 13,
+          "targets": [
+            "ConsoleSelector"
+          ]
+        }
+      ],
       "unattributed": []
     },
     {
@@ -70,6 +84,26 @@
       "targets": [
         "ControllerSelector"
       ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "ControllerSelector"
+          ]
+        },
+        {
+          "cell": 11,
+          "targets": [
+            "ControllerSelector"
+          ]
+        },
+        {
+          "cell": 12,
+          "targets": [
+            "ControllerSelector"
+          ]
+        }
+      ],
       "unattributed": []
     },
     {
@@ -99,7 +133,55 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:1404237530",
+        "own:8"
+      ],
+      "targets": [
+        "DiagnosticInputBridge"
+      ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "DiagnosticInputBridge"
+          ]
+        },
+        {
+          "cell": 16,
+          "targets": [
+            "DiagnosticInputBridge"
+          ]
+        },
+        {
+          "cell": 17,
+          "targets": [
+            "DiagnosticInputBridge"
+          ]
+        },
+        {
+          "cell": 18,
+          "targets": [
+            "DiagnosticInputBridge"
+          ]
+        },
+        {
+          "cell": 24,
+          "targets": [
+            "DiagnosticInputBridge"
+          ]
+        },
+        {
+          "cell": 25,
+          "targets": [
+            "DiagnosticInputBridge"
+          ]
+        }
+      ],
+      "unattributed": [
+        "own:8"
+      ]
     }
   ],
   "own_stack": {

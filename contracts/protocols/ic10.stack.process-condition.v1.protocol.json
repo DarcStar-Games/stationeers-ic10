@@ -13,6 +13,21 @@
   "canonical_refs": [],
   "layout": [
     {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "UnmetConditionMask",
+      "role": "result",
+      "description": "bit0 pressure, bit1 temperature"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "ProcessIdentity",
+      "role": "metadata"
+    },
+    {
       "cells": "S10",
       "start": 10,
       "end": 10,
@@ -35,6 +50,27 @@
       "name": "Status",
       "role": "state",
       "description": "1 valid, negative invalid"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "Strategy",
+      "role": "metadata"
+    },
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "PressureTargetHint",
+      "role": "result"
+    },
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "TemperatureTargetHint",
+      "role": "result"
     },
     {
       "cells": "S22",
@@ -122,21 +158,24 @@
         },
         {
           "address": 8,
-          "name": "S8",
+          "name": "UnmetConditionMask",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "bit0 pressure, bit1 temperature"
         },
         {
           "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ProcessIdentity",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "metadata"
         },
         {
           "address": 10,
@@ -174,30 +213,33 @@
         },
         {
           "address": 13,
-          "name": "S13",
+          "name": "Strategy",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "metadata"
         },
         {
           "address": 14,
-          "name": "S14",
+          "name": "PressureTargetHint",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "TemperatureTargetHint",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 16,
@@ -353,22 +395,25 @@
         },
         {
           "address": 8,
-          "name": "S8",
+          "name": "UnmetConditionMask",
           "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1602045313
+          "role": "result",
+          "description": "bit0 pressure, bit1 temperature"
+        },
+        {
+          "address": 9,
+          "name": "ProcessIdentity",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 1602045313,
+          "role": "metadata"
         },
         {
           "address": 10,
@@ -406,31 +451,34 @@
         },
         {
           "address": 13,
-          "name": "S13",
+          "name": "Strategy",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 2
+          "const": 2,
+          "role": "metadata"
         },
         {
           "address": 14,
-          "name": "S14",
+          "name": "PressureTargetHint",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "TemperatureTargetHint",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 16,

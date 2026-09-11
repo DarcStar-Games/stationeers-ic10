@@ -41,7 +41,41 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:96:27182818",
+        "own:*"
+      ],
+      "targets": [
+        "ic10.stack.27182818.abi1",
+        "ic10.stack.27182818.abi2"
+      ],
+      "site_targets": [
+        {
+          "cell": 97,
+          "targets": [
+            "ic10.stack.27182818.abi1",
+            "ic10.stack.27182818.abi2"
+          ]
+        },
+        {
+          "cell": 98,
+          "targets": [
+            "ic10.stack.27182818.abi1",
+            "ic10.stack.27182818.abi2"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "ic10.stack.27182818.abi1",
+            "ic10.stack.27182818.abi2"
+          ]
+        }
+      ],
+      "unattributed": [
+        "own:*"
+      ]
     }
   ],
   "own_stack": {

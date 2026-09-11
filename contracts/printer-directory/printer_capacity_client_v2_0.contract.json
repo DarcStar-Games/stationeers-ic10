@@ -21,7 +21,11 @@
       "dynamic_read": true,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "origins": [],
+      "targets": [],
+      "site_targets": [],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -63,6 +67,14 @@
       ],
       "targets": [
         "PrinterExecutionBank"
+      ],
+      "site_targets": [
+        {
+          "cell": "*",
+          "targets": [
+            "PrinterExecutionBank"
+          ]
+        }
       ],
       "unattributed": []
     }
