@@ -314,7 +314,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"submits child intent through Gateway lane C\"; docs/DEPLOYMENT.md: \"lane C Child Creator\" [Gateway lane C cells confirmed in gateway source: lane C token S48/response S49 (get r15 db 48 / get r0 db 49), request payload S53..S62, reply S50 status, S51 allocated JobId. Creator writes d3 S53..S62 + token S48, reads S49, S50 (status==1), S51 (child JobId).]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"submits child intent through Gateway lane C\"; docs/DEPLOYMENT.md: \"lane C Child Creator\" [Gateway lane C cells confirmed in gateway source: lane C token S48/response S49 (the Gateway reads every lane's token and response through its lane-base register, `get r15 db r7` with r7 at 48 for lane C), request payload S53..S62, reply S50 status, S51 allocated JobId. Creator writes d3 S53..S62 + token S48, reads S49, S50 (status==1), S51 (child JobId).]"
    }
   },
   "ic10/dependency-planning/dependency_child_validity_v1_0.ic10": {
@@ -425,7 +425,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"Planner may request cancellation through Gateway lane B\"; docs/DEPLOYMENT.md: \"lane B dependency Planner cancellation\" [Gateway lane B cells confirmed in gateway source: token S32/response S33 (get r15 db 32 / get r0 db 33), lifecycle payload copied from S36..S40. Controller writes d3 36=2 (SET_STATE), 37 child JobId, 38 generation, 39=12, 40=-20, token 32; reads 33. Docs attribute lane B to \"Planner cancellation\"; the existing-plan controller is the component that physically writes it on the planner's behalf.]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"Planner may request cancellation through Gateway lane B\"; docs/DEPLOYMENT.md: \"lane B dependency Planner cancellation\" [Gateway lane B cells confirmed in gateway source: token S32/response S33 (the Gateway reads every lane's token and response through its lane-base register, `get r15 db r7` with r7 at 32 for lane B), lifecycle payload copied from S36..S40. Controller writes d3 36=2 (SET_STATE), 37 child JobId, 38 generation, 39=12, 40=-20, token 32; reads 33. Docs attribute lane B to \"Planner cancellation\"; the existing-plan controller is the component that physically writes it on the planner's behalf.]"
    }
   },
   "ic10/dependency-planning/generic_job_monitor_v1_0.ic10": {
