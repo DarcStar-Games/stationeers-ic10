@@ -216,13 +216,13 @@
       {
         "address": 21,
         "name": "ParentJobGeneration",
-        "value_type": "enum",
+        "value_type": "integer",
         "semantic_source": "protocol-layout",
         "access": [
           "self-read"
         ],
         "role": "request",
-        "description": "copied by the New Plan Controller from Monitor S23; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+        "description": "copied by the New Plan Controller from Monitor S23"
       },
       {
         "address": 22,
@@ -247,13 +247,13 @@
       {
         "address": 24,
         "name": "ParentPriority",
-        "value_type": "enum",
+        "value_type": "number",
         "semantic_source": "protocol-layout",
         "access": [
           "self-read"
         ],
         "role": "request",
-        "description": "copied by the New Plan Controller from Monitor S21; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+        "description": "copied by the New Plan Controller from Monitor S21"
       },
       {
         "address": 25,

@@ -58,7 +58,7 @@ get r12 d1 19
 get r13 d1 18
 beq r12 7 Next
 bge r12 11 Next
-get sp d1 20
+get sp d1 23
 move r7 128
 move ra 0
 move r4 0

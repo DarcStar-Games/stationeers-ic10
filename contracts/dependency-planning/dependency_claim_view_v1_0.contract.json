@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/dependency_claim_view_v1_0.ic10",
-  "source_sha256": "a1084e565f92afb2226a0229f4e8280e77b831930ae700567f188fe591e9b437",
+  "source_sha256": "774deca22193737e6f0aa0005711670cae412fd182da8854ed165984895b8d6e",
   "identity": {
     "service_id": "ic10.script.dependency.claim.view",
     "implementation_revision": "1.0",
@@ -72,7 +72,7 @@
           17,
           18,
           19,
-          20
+          23
         ],
         "literal_writes": [
           13,
@@ -95,8 +95,8 @@
       "target": {
         "kind": "stack-interface",
         "verification": "access-only",
-        "interface_id": "ic10.interface.access.93a2e5f04da23062",
-        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.93a2e5f04da23062",
+        "interface_id": "ic10.interface.access.14acad0eb03f9077",
+        "definition_ref": "contracts/index.json#/interfaces/ic10.interface.access.14acad0eb03f9077",
         "provider_resolution": "deployment-supplied",
         "assumptions": {
           "properties_read": [],
@@ -286,7 +286,7 @@
           "self-write"
         ],
         "role": "result",
-        "description": "copied from Child Validity S20, which Child Validity fills with the Monitor's S23; see issue #193"
+        "description": "copied from Child Validity S23"
       },
       {
         "address": 26,

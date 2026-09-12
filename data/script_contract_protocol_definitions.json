@@ -538,13 +538,19 @@
      "cells": "S19",
      "name": "ChildState",
      "role": "result",
-     "description": "copied from Monitor S22; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+     "description": "copied from Monitor S22"
     },
     {
      "cells": "S20",
      "name": "ChildJobGeneration",
      "role": "result",
-     "description": "copied from Monitor S23; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation. The Claim View reads this cell as the child's ResourceType"
+     "description": "copied from Monitor S23"
+    },
+    {
+     "cells": "S23",
+     "name": "ChildResourceType",
+     "role": "result",
+     "description": "the output ResourceType the Requirement View reports for the child; equal to the requested S14 when the status is 1"
     }
    ]
   },
@@ -597,7 +603,7 @@
      "cells": "S25",
      "name": "ChildResourceType",
      "role": "result",
-     "description": "copied from Child Validity S20, which Child Validity fills with the Monitor's S23; see issue #193"
+     "description": "copied from Child Validity S23"
     },
     {
      "cells": "S27",
@@ -622,7 +628,7 @@
      "cells": "S21",
      "name": "ParentJobGeneration",
      "role": "request",
-     "description": "copied by the New Plan Controller from Monitor S23; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+     "description": "copied by the New Plan Controller from Monitor S23"
     },
     {
      "cells": "S22",
@@ -638,7 +644,7 @@
      "cells": "S24",
      "name": "ParentPriority",
      "role": "request",
-     "description": "copied by the New Plan Controller from Monitor S21; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+     "description": "copied by the New Plan Controller from Monitor S21"
     },
     {
      "cells": "S25",
@@ -1799,21 +1805,21 @@
     },
     {
      "cells": "S21",
-     "name": "State",
+     "name": "Priority",
      "role": "result",
-     "description": "see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+     "description": "the record's Priority intent cell"
     },
     {
      "cells": "S22",
-     "name": "JobGeneration",
+     "name": "State",
      "role": "result",
-     "description": "see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+     "description": "State from the active state bank; a GENERIC_JOB_ABI_V1 lifecycle state"
     },
     {
      "cells": "S23",
-     "name": "ErrorStatus",
+     "name": "JobGeneration",
      "role": "result",
-     "description": "see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+     "description": "JobGeneration from the active state bank; the generation a SET_STATE must expect"
     }
    ]
   },

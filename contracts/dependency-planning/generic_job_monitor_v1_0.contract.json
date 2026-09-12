@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/dependency-planning/generic_job_monitor_v1_0.ic10",
-  "source_sha256": "a9a634752900a71e9404762e98c71d4a4989d20089b93270981eea6701f86784",
+  "source_sha256": "9dae73a46a64338cca98d96861538ad2792de26b3d1d82e24a1a9a7a42eec4a9",
   "identity": {
     "service_id": "ic10.script.generic.job.monitor",
     "implementation_revision": "1.0",
@@ -204,6 +204,17 @@
       },
       {
         "address": 21,
+        "name": "Priority",
+        "value_type": "number",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-write"
+        ],
+        "role": "result",
+        "description": "the record's Priority intent cell"
+      },
+      {
+        "address": 22,
         "name": "State",
         "value_type": "enum",
         "semantic_source": "protocol-layout",
@@ -211,10 +222,10 @@
           "self-write"
         ],
         "role": "result",
-        "description": "see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+        "description": "State from the active state bank; a GENERIC_JOB_ABI_V1 lifecycle state"
       },
       {
-        "address": 22,
+        "address": 23,
         "name": "JobGeneration",
         "value_type": "enum",
         "semantic_source": "protocol-layout",
@@ -222,18 +233,7 @@
           "self-write"
         ],
         "role": "result",
-        "description": "see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
-      },
-      {
-        "address": 23,
-        "name": "ErrorStatus",
-        "value_type": "enum",
-        "semantic_source": "protocol-layout",
-        "access": [
-          "self-write"
-        ],
-        "role": "result",
-        "description": "see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+        "description": "JobGeneration from the active state bank; the generation a SET_STATE must expect"
       }
     ],
     "headers": [
