@@ -54,10 +54,10 @@ Each port entry is one of:
 - `note` is required for script edges and cites the evidence for the edge —
   the `docs/DEPLOYMENT.md` wiring line, the deployment-guide chapter, or the
   `S0` magic check that names the peer mechanically. A note that names cells
-  (`S<n>`, or a range `S<a>..S<b>`) names only the cells the consumer reads or
-  writes on that port; the peer's own layout lives in `contracts/` and
-  `docs/STACK_FIELD_MAP.md`, and a note restating it is a second copy that
-  drifts.
+  (`S<n>`, or a range written `S<a>..S<b>`, `S<a>..<b>`, or `S<a>-S<b>`) names
+  only the cells the consumer reads or writes on that port; the peer's own
+  layout lives in `contracts/` and `docs/STACK_FIELD_MAP.md`, and a note
+  restating it is a second copy that drifts.
 - `header_reads` optionally declares reviewed, deliberate reads of a migrated
   peer's `S2..S7` header cells (for example reading `S3` as SchemaId). Anything
   not declared there is treated as a stranded payload read and fails validation.
@@ -111,14 +111,15 @@ when:
   cells;
 - a `header_reads` declaration names a cell outside `S2..S7` or one the port
   never reaches;
-- a script edge's `note` names a cell (`S<n>`, or a range written `S<a>..S<b>`
-  or `S<a>-S<b>`) the port never reads or writes, literally or through a
-  declared dynamic range. The notes carried the mailbox numbering from before
-  the mailboxes moved above the envelope long after the source left it, since
-  nothing compared the prose with the tree (issue #196). `S0` is exempt — a
-  note names it for the identity check, which the rule above already holds the
-  note to — and a bare number is not a citation, since notes also quote line
-  numbers and status codes;
+- a script edge's `note` names a cell (`S<n>`, or a range written `S<a>..S<b>`,
+  `S<a>..<b>`, or `S<a>-S<b>`) the port never reads or writes, literally or
+  through a declared dynamic range. The notes carried the mailbox numbering
+  from before the mailboxes moved above the envelope long after the source left
+  it, since nothing compared the prose with the tree (issue #196). `S0` is the
+  one exemption — a note names it for the identity check, which the rule above
+  already holds the note to. `S1` is not exempt: no port reads a peer's `S1`,
+  so a note that names it is stale. A bare number is not a citation, since
+  notes also quote line numbers and status codes;
 - a port reads a cell no declared provider publishes, or writes a cell no
   declared provider accepts. See below.
 

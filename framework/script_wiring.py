@@ -48,8 +48,9 @@ def cited_cells(note: str) -> set[int]:
 
     `S0` is left out: a note names it for what it is, the identity cell whose
     check the identity rule in `check_port` already holds the note to, not as a
-    mailbox cell the port reads or writes. A bare number is not a citation -- a
-    note also quotes line numbers, status codes, and ABI numbers.
+    mailbox cell the port reads or writes. `S1` is not left out -- no port reads
+    a peer's `S1`, so a note naming it is stale. A bare number is not a citation:
+    a note also quotes line numbers, status codes, and ABI numbers.
     """
     cells: set[int] = set()
     for match in CITED_CELL.finditer(note):

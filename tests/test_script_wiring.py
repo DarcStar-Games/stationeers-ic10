@@ -150,6 +150,9 @@ cited["ports"][CONSUMER]["d0"]["note"] = "peer named by S0 magic check; reads 9,
 identity_only = deepcopy(PORTS)
 identity_only[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], reads={9})
 expect("S0 and bare numbers are not citations", failing(cited, ports=identity_only) == [])
+cited["ports"][CONSUMER]["d0"]["note"] = "peer named by S0 magic check; S1 carries the ABI"
+expect("S1 is not exempt on a port that never reads it",
+       any("cites S[1]" in f for f in failing(cited, ports=identity_only)))
 walked = deepcopy(PORTS)
 walked[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], read_ranges=[(11, 13)])
 cited["ports"][CONSUMER]["d0"]["note"] = "walks the record at S11..S13 by register"
