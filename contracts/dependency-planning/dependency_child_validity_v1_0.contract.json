@@ -253,18 +253,18 @@
           "self-write"
         ],
         "role": "result",
-        "description": "copied from Monitor S22; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation"
+        "description": "copied from Monitor S22"
       },
       {
         "address": 20,
         "name": "ChildJobGeneration",
-        "value_type": "hash",
+        "value_type": "integer",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "role": "result",
-        "description": "copied from Monitor S23; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation. The Claim View reads this cell as the child's ResourceType"
+        "description": "copied from Monitor S23"
       },
       {
         "address": 21,
@@ -286,12 +286,14 @@
       },
       {
         "address": 23,
-        "name": "S23",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ChildResourceType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "the output ResourceType the Requirement View reports for the child; equal to the requested S14 when the status is 1"
       }
     ],
     "headers": [

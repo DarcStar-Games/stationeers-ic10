@@ -10,7 +10,7 @@ wiring-declared port, or an attributed network access) or one a layout block or 
 docs/ cites beside the contract's S0 line. A cell only its provider touches is not mapped,
 because nothing outside the program could hold its name.
 
-Protocols with a layout: 108. Layout entries: 1160. Cells named: 4412.
+Protocols with a layout: 108. Layout entries: 1161. Cells named: 4413.
 
 ## Roles
 
@@ -24,7 +24,7 @@ Protocols with a layout: 108. Layout entries: 1160. Cells named: 4412.
 | response_token | TERMINAL_RESPONSE handled-request identity the service publishes last | 80 |
 | state | status, state, or mode of the service or of the current request | 106 |
 | error | error or fault detail kept apart from the state cell | 9 |
-| result | response payload the service publishes before its token | 260 |
+| result | response payload the service publishes before its token | 261 |
 | generation | publication generation, odd/even sequence, or revision that fences observation | 68 |
 | epoch | epoch, lease, or ownership value that authorizes mutation | 19 |
 | bank | A/B bank select and the per-bank generation, count, and overflow cells | 13 |
@@ -801,7 +801,7 @@ room a move would have to fit in.
 
 ### result
 
-260 entries at 46 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S24, S25, S26, S27, S28, S29, S30, S31, S32, S33, S34, S35, S36, S37, S38, S39, S40, S41, S51, S55, S56, S57, S64, S71, S72, S73, S83, S84, S99, S100.
+261 entries at 46 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S24, S25, S26, S27, S28, S29, S30, S31, S32, S33, S34, S35, S36, S37, S38, S39, S40, S41, S51, S55, S56, S57, S64, S71, S72, S73, S83, S84, S99, S100.
 
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
@@ -948,7 +948,7 @@ room a move would have to fit in.
 | S19 | StagedLinkCount | ic10.stack.pressure-grid-plan-builder.v1 | 1 | 1 | peer, document | 3 |
 | S19 | BestPathLength | ic10.stack.pressure-grid-route-ranker.v2 | 1 | 1 | peer, document | 1 |
 | S19 | CommittedLeaseMoles | ic10.stack.pressure-reservation-allocator.v3 | 1 | 2 | peer, document | -1 |
-| S20 | ChildJobGeneration | ic10.stack.dependency-child-validity.v1 | 3 | 0 | peer | 60 |
+| S20 | ChildJobGeneration | ic10.stack.dependency-child-validity.v1 | 2 | 0 | peer | 60 |
 | S20 | ChildJobGeneration | ic10.stack.dependency-plan-release-advisor.v1 | 1 | 0 | peer | 60 |
 | S20 | LedMode | ic10.stack.diagnostic-input-bridge.v1 | 1 | 0 | peer, document | 10 |
 | S20 | HeapTop | ic10.stack.generic-catalog-store.v6 | 1 | 1 | peer, document | 0 |
@@ -957,7 +957,7 @@ room a move would have to fit in.
 | S20 | ExportableMoles | ic10.stack.pressure-inventory-reservation.v1 | 4 | 1 | peer, document | 70 |
 | S21 | ChildJobId | ic10.stack.dependency-claim-view.v1 | 2 | 1 | peer | 5 |
 | S21 | LedColor | ic10.stack.diagnostic-input-bridge.v1 | 1 | 0 | peer, document | 10 |
-| S21 | State | ic10.stack.generic-job-monitor.v1 | 1 | 0 | peer | 56 |
+| S21 | Priority | ic10.stack.generic-job-monitor.v1 | 1 | 0 | peer | 56 |
 | S21 | PolicyValidationResult | ic10.stack.generic-persistent-config-host.v1 | 6 | 13 | peer, document | -1 |
 | S21 | Decision | ic10.stack.manufacturing-dependency-planner.v1 | 1 | 0 | peer | -3 |
 | S21 | LeaseTicksAsRead | ic10.stack.pressure-grid-reservation-planner.v2 | 1 | 1 | peer | 36 |
@@ -968,7 +968,7 @@ room a move would have to fit in.
 | S22 | FutureQuantity | ic10.stack.dependency-claim-view.v1 | 2 | 1 | peer | 5 |
 | S22 | Decision | ic10.stack.existing-dependency-plan-controller.v1 | 1 | 1 | peer | 7 |
 | S22 | UsedCells | ic10.stack.generic-catalog-store.v6 | 3 | 1 | peer, document | 0 |
-| S22 | JobGeneration | ic10.stack.generic-job-monitor.v1 | 3 | 0 | peer | 56 |
+| S22 | State | ic10.stack.generic-job-monitor.v1 | 3 | 0 | peer | 56 |
 | S22 | InputResourceType | ic10.stack.job-inventory-preflight.v1 | 1 | 0 | peer | 4 |
 | S22 | RequiredCapability | ic10.stack.job-requirement-view.v1 | 2 | 1 | peer | 17 |
 | S22 | AllocatedJobId | ic10.stack.operator-order-job-ingress.v1 | 1 | 1 | peer | 5 |
@@ -977,8 +977,9 @@ room a move would have to fit in.
 | S22 | MirroredActionHint0 | ic10.stack.resource-reservation.v1 | 1 | 3 | peer, document | 4 |
 | S22 | UnclaimedFutureQuantity | ic10.stack.stock-target-future-view.v1 | 1 | 1 | peer | 6 |
 | S22 | LaneARequiredCapability | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | peer | 36 |
+| S23 | ChildResourceType | ic10.stack.dependency-child-validity.v1 | 1 | 0 | peer | 60 |
 | S23 | ReleasedFlag | ic10.stack.existing-dependency-plan-controller.v1 | 1 | 1 | peer | 7 |
-| S23 | ErrorStatus | ic10.stack.generic-job-monitor.v1 | 2 | 0 | peer | 56 |
+| S23 | JobGeneration | ic10.stack.generic-job-monitor.v1 | 2 | 0 | peer | 56 |
 | S23 | Slot | ic10.stack.generic-job-selector.v3 | 3 | 0 | peer | 0 |
 | S23 | NextJobId | ic10.stack.generic-job-store.v1 | 0 | 6 | document | -1 |
 | S23 | RequiredTotal | ic10.stack.job-inventory-preflight.v1 | 1 | 0 | peer | 4 |
@@ -1506,8 +1507,9 @@ Consumers: 0.
 | S16 | ResponseToken | response_token | 3 | peer |  |
 | S17 | Status | state | 3 | peer | 1 valid, -2 missing, -3 stale, -1 invalid |
 | S18 | ChildSlot | result | 3 | peer |  |
-| S19 | ChildState | result | 3 | peer | copied from Monitor S22; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation |
-| S20 | ChildJobGeneration | result | 3 | peer | copied from Monitor S23; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation. The Claim View reads this cell as the child's ResourceType |
+| S19 | ChildState | result | 3 | peer | copied from Monitor S22 |
+| S20 | ChildJobGeneration | result | 2 | peer | copied from Monitor S23 |
+| S23 | ChildResourceType | result | 1 | peer | the output ResourceType the Requirement View reports for the child; equal to the requested S14 when the status is 1 |
 
 ### ic10.stack.dependency-claim-view.v1
 
@@ -1525,7 +1527,7 @@ Consumers: 1.
 | S20 | Status | state | 3 | peer | 1 active claim, -2 proven absence, -3 unverifiable child, -1 invalid |
 | S21 | ChildJobId | result | 2 | peer |  |
 | S22 | FutureQuantity | result | 2 | peer |  |
-| S25 | ChildResourceType | result | 1 | peer | copied from Child Validity S20, which Child Validity fills with the Monitor's S23; see issue #193 |
+| S25 | ChildResourceType | result | 1 | peer | copied from Child Validity S23 |
 | S27 | AggregateClaims | result | 2 | peer |  |
 
 ### ic10.stack.dependency-plan-builder.v2
@@ -1538,10 +1540,10 @@ Consumers: 0.
 |---|---|---|---:|---|---|
 | S19 | ParentJobId | request | 1 | peer |  |
 | S20 | ParentSlot | request | 1 | peer |  |
-| S21 | ParentJobGeneration | request | 1 | peer | copied by the New Plan Controller from Monitor S23; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation |
+| S21 | ParentJobGeneration | request | 1 | peer | copied by the New Plan Controller from Monitor S23 |
 | S22 | ParentJobType | request | 1 | peer |  |
 | S23 | ParentIdentity | request | 1 | peer |  |
-| S24 | ParentPriority | request | 1 | peer | copied by the New Plan Controller from Monitor S21; see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation |
+| S24 | ParentPriority | request | 1 | peer | copied by the New Plan Controller from Monitor S21 |
 | S25 | ResourceType | request | 1 | peer |  |
 | S26 | Deficit | request | 1 | peer |  |
 | S27 | BaselineKnown | request | 1 | peer |  |
@@ -1884,9 +1886,9 @@ Consumers: 0.
 | S18 | JobType | result | 3 | peer |  |
 | S19 | Identity | result | 3 | peer |  |
 | S20 | RequestedQuantity | result | 2 | peer |  |
-| S21 | State | result | 1 | peer | see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation |
-| S22 | JobGeneration | result | 3 | peer | see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation |
-| S23 | ErrorStatus | result | 2 | peer | see issue #193: the Monitor publishes State, Generation, ErrorStatus at S21..S23 while its consumers read S21 as Priority, S22 as State, and S23 as Generation |
+| S21 | Priority | result | 1 | peer |  |
+| S22 | State | result | 3 | peer | GENERIC_JOB_ABI_V1 lifecycle state of the active state bank |
+| S23 | JobGeneration | result | 2 | peer |  |
 
 ### ic10.stack.generic-job-selector.v3
 

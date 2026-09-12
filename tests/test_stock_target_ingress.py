@@ -255,25 +255,35 @@ def validity_stub(*replies):
     return vm
 
 
-def claim_scan(child_record, validity, token):
-    """Real Job Store, Plan Store, Claim View, and Future View; only Child Validity is a stub."""
-    store = boot_store()
-    job = publish(store, 1, 2, RESOURCE, 5)
+def claim_over(store, validity, child_record):
+    """A real Plan Store, holding one record naming the Store's first job as a child when asked,
+    and a real Claim View over it and `validity`."""
     plan = IC10(src("ic10/dependency-planning/dependency_plan_store_v2_0.ic10"), self_ref=131)
     plan.run(1)
     if child_record:
         # [ParentJobId, ChildJobId, ResourceType, RequiredTotal, BaselineKnown, FutureQty, fpA, fpB]
-        record = (9, job, RESOURCE, 6, 2, 8, 0, 0)
+        record = (9, int(store.stack[32]), RESOURCE, 6, 2, 8, 0, 0)
         plan.stack.update({128 + offset: value for offset, value in enumerate(record)})
     claim = IC10(src("ic10/dependency-planning/dependency_claim_view_v1_0.ic10"),
                  {"d0": Device(131, plan.stack), "d1": Device(132, validity.stack)}, self_ref=133)
     claim.run(1)
+    return plan, claim
+
+
+def claim_scan(child_record, validity, token, store=None, behind=()):
+    """Real Job Store, Plan Store, Claim View, and Future View. Child Validity is a stub unless
+    `store` already holds the job and `behind` runs the Monitor and Requirement View under a
+    real Child Validity."""
+    if store is None:
+        store = boot_store()
+        publish(store, 1, 2, RESOURCE, 5)
+    plan, claim = claim_over(store, validity, child_record)
     future = IC10(src("ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10"),
                   {"d0": Device(130, store.stack), "d1": Device(133, claim.stack),
                    "d2": Device(131, plan.stack)}, self_ref=134)
     future.run(1)
     future.stack.update({15: RESOURCE, 16: 2, 17: RESOURCE, 18: 2, 19: token})
-    run_round_robin([future, claim, validity, plan, store], 120)
+    run_round_robin([future, claim, validity, *behind, plan, store], 120)
     return claim, future
 
 
@@ -281,10 +291,10 @@ claim, future = claim_scan(False, validity_stub((17, 1)), 40)
 ck(future.stack.get(20) == 40 and future.stack.get(21) == 1 and future.stack.get(22) == 10,
    "a job no plan record names was not counted as a root at full output")
 ck(claim.stack.get(20) == -2, "Claim View did not report a proven absence as -2")
-claim, future = claim_scan(True, validity_stub((17, 1), (19, 2), (20, RESOURCE)), 41)
+claim, future = claim_scan(True, validity_stub((17, 1), (19, 2), (20, 1), (23, RESOURCE)), 41)
 ck(future.stack.get(20) == 41 and future.stack.get(21) == 1 and future.stack.get(22) == 4,
    "a validated child was not counted at FutureQty minus the other parents' claims")
-claim, future = claim_scan(True, validity_stub((17, 1), (19, 7), (20, RESOURCE)), 42)
+claim, future = claim_scan(True, validity_stub((17, 1), (19, 7), (20, 1), (23, RESOURCE)), 42)
 ck(claim.stack.get(20) == -2, "a validated terminal child was not reported as no active claim")
 for status in (-1, -2, -3):
     claim, future = claim_scan(True, validity_stub((17, status)), 50 + status)
@@ -294,6 +304,62 @@ for status in (-1, -2, -3):
        f"Future View did not report an unverifiable child (Child Validity {status}) as ambiguous")
     ck(future.stack.get(22, 0) == 0,
        f"Future View counted root output for an unverifiable child (Child Validity {status})")
+
+
+# The stubs above encode what the Claim View reads of Child Validity. The real chain has to
+# agree with it: the Monitor publishes State and JobGeneration at S22 and S23, Child Validity
+# copies them to its S19 and S20 and publishes the child's ResourceType at S23, and the Claim
+# View republishes that ResourceType at S25 for the Future View's check. The Monitor used to
+# publish State one cell lower, and the Claim View read the child's JobGeneration as its
+# ResourceType, so every live child failed the Future View's check (#193).
+def set_state(store, token, slot, new_state):
+    base = 288 + 7 * slot
+    generation = int(store.stack.get(base + 2 + 3 * int(store.stack.get(base, 0)), 0))
+    store.stack.update({11: 2, 12: slot, 13: generation, 14: new_state, 15: 0, 19: token})
+    store.run(1)
+
+
+def real_validity(child_edges, promised_resource):
+    """A real Monitor and Child Validity over a Job Store whose only job walked `child_edges`;
+    the Requirement View behind them reports `promised_resource` as the child's output."""
+    store = boot_store()
+    publish(store, 1, 2, RESOURCE, 5)
+    for token, new_state in enumerate(child_edges, 2):
+        set_state(store, token, 0, new_state)
+    monitor = IC10(src("ic10/dependency-planning/generic_job_monitor_v1_0.ic10"),
+                   {"d0": Device(130, store.stack)}, self_ref=135)
+    monitor.run(1)
+    requirement = IC10("\n".join([
+        'poke 0 HASH("JobRequirementView.v1")', "Loop:", "yield", "get r15 db 19", "get r0 db 20",
+        "beq r15 r0 Loop", "poke 21 1", "poke 22 0", "poke 23 1", f"poke 24 {promised_resource}",
+        "poke 25 1", "poke 20 r15", "j Loop"]) + "\n", self_ref=136)
+    requirement.run(1)
+    validity = IC10(src("ic10/dependency-planning/dependency_child_validity_v1_0.ic10"),
+                    {"d0": Device(135, monitor.stack), "d1": Device(136, requirement.stack)}, self_ref=132)
+    validity.run(1)
+    return store, validity, [monitor, requirement]
+
+
+store, validity, behind = real_validity([], RESOURCE)
+claim, future = claim_scan(True, validity, 43, store=store, behind=behind)
+ck(validity.stack.get(17) == 1 and tuple(validity.stack.get(c) for c in (19, 20, 23)) == (1, 1, RESOURCE),
+   "Child Validity did not publish the child's State, JobGeneration, and ResourceType at S19, S20, S23")
+ck(claim.stack.get(20) == 1 and claim.stack.get(24) == 1 and claim.stack.get(25) == RESOURCE,
+   "the Claim View did not republish the live child's ResourceType at S25")
+ck(future.stack.get(20) == 43 and future.stack.get(21) == 1 and future.stack.get(22) == 4,
+   "the Future View did not count the live child the real chain validated")
+store, validity, behind = real_validity([], RESOURCE + 1)
+claim, future = claim_scan(True, validity, 44, store=store, behind=behind)
+ck(validity.stack.get(17) == -3 and claim.stack.get(20) == -3 and future.stack.get(21) == -3,
+   "a live child that no longer promises the ResourceType was counted")
+# The Future View skips a COMPLETE job itself; the Plan Builder asks the Claim View directly.
+store, validity, behind = real_validity([2, 3, 4, 5, 6, 7], RESOURCE)
+plan, claim = claim_over(store, validity, True)
+claim.stack.update({15: RESOURCE, 16: 1, 17: 0, 18: 45})
+run_round_robin([claim, validity, *behind, plan], 120)
+ck(validity.stack.get(17) == 1 and validity.stack.get(19) == 7 and claim.stack.get(19) == 45
+   and claim.stack.get(20) == -2,
+   "a COMPLETE child the real chain validated was offered for reuse")
 
 
 # A Plan Store change after Child Validity has answered restarts the Claim View's
@@ -720,6 +786,8 @@ print(" - lane E atomically rejects stale Job/Plan snapshots and survives Gatewa
 print(" - active root output and only unclaimed child surplus contribute to stock targets")
 print(" - a job counts as a root only when the real Claim View proves no active claim names it;"
       " an unverifiable child makes the scan ambiguous")
+print(" - the real Monitor, Child Validity, and Claim View agree on their cells: a live child's"
+      " ResourceType reaches the Future View and a COMPLETE child is not reused")
 print(" - production evaluator-to-Store flow revalidates demand and output metadata at mutation time")
 print(" - an Evaluator reflashed mid-Ingress waits for it instead of displacing its Demand View request")
 print(" - the Inventory View bounds the selector leg count at six before walking the quote table")

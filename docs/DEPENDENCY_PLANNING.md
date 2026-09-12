@@ -144,7 +144,7 @@ While an internal Job Store request is outstanding, Executor stays in `StoreWait
 
 ## Child validity and catalog changes
 
-`ic10/dependency-planning/dependency_child_validity_v1_0.ic10` combines exact Job monitoring with the normalized Requirement View. A stored ChildJobId is never treated as sufficient proof by itself. The child must still exist, have coherent state/generation, and still promise the ResourceType stored in the plan under current catalog metadata.
+`ic10/dependency-planning/dependency_child_validity_v1_0.ic10` combines exact Job monitoring with the normalized Requirement View. A stored ChildJobId is never treated as sufficient proof by itself. The child must still exist, have coherent state/generation, and still promise the ResourceType stored in the plan under current catalog metadata. The Monitor answers `Slot, JobType, Identity, RequestedQuantity, Priority, State, JobGeneration` at `S17..S23`; Child Validity republishes the child's slot, State, and JobGeneration at `S18..S20` and the ResourceType the Requirement View reports at `S23`, and the Claim View carries that ResourceType at its `S25` for the Future View's check. `tests/test_stock_target_ingress.py` runs the four programs together, so a stub cannot stand in for the cells they agree on.
 
 This means a transform/recipe catalog change can invalidate a plan even when the child JobId itself remains valid.
 

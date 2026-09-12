@@ -184,6 +184,38 @@ ck(guard_restarts(1)==(1,9,2,posting_token(9,2),0),"the Monitor did not latch th
 ck(guard_restarts(511)==(-1,9,511,posting_token(9,511),0),'the 512th posting under one Ancestry Guard request did not fail the request')
 ck(guard_restarts(0,reflash=True)==(1,9,2,posting_token(9,2),0),"the Monitor did not latch the posting of an Ancestry Guard reflashed mid-request")
 ck(guard_restarts(1,reflash=True)==(1,9,3,posting_token(9,3),0),'an Ancestry Guard reflashed after a restart did not continue its count from S18')
+
+# The Monitor answers Priority, State, JobGeneration at S21..S23, where the New controller,
+# Child Validity, and the Cancellation Guard read them. It used to publish State, Generation,
+# ErrorStatus there, so a PLANNING parent was planned only when its Generation happened to be
+# 2, and the Builder was handed the parent's State as its Priority and its ErrorStatus as the
+# generation the Gateway checks (#193). The parent here has waited once, so its Generation is
+# 4 and nothing lines up by accident.
+def plan_new(parent_edges):
+ st=boot_store()
+ for i,v in enumerate([1,1,500,1,1,1,20],1):st.stack[32+i]=v
+ _,parent=store_req(st,1,1,0)
+ for t,new in enumerate(parent_edges,2):
+  _,g=state(st,0);store_req(st,t,2,0,g,new)
+ monitor=IC10(src('ic10/dependency-planning/generic_job_monitor_v1_0.ic10'),{'d0':Device(800,st.stack)},self_ref=801);monitor.run(1)
+ preflight=IC10('poke 0 HASH("JobInventoryPreflight.v1")\nLoop:\nyield\nget r15 db 18\nget r0 db 19\nbeq r15 r0 Loop\npoke 20 3\npoke 22 101\npoke 23 6\npoke 24 2\npoke 25 1\npoke 26 11\npoke 27 12\npoke 19 r15\nj Loop\n',self_ref=802);preflight.run(1)
+ builder=IC10('poke 0 HASH("DependencyPlanBuilder.v2")\nLoop:\nyield\nget r15 db 30\nget r0 db 31\nbeq r15 r0 Loop\npoke 32 1\npoke 33 55\npoke 34 8\npoke 31 r15\nj Loop\n',self_ref=803);builder.run(1)
+ ctl=IC10(src('ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10'),
+  {'d0':Device(802,preflight.stack),'d1':Device(803,builder.stack),'d2':Device(801,monitor.stack)},self_ref=804)
+ ctl.run(1);ctl.stack.update({20:parent,21:3})
+ run_round_robin([ctl,monitor,preflight,builder],40)
+ return ctl,builder,monitor,parent,state(st,0)
+ctl,builder,monitor,parent,(pst,pgen)=plan_new([2,8,2])
+ck((pst,pgen)==(2,4),'the parent did not return to PLANNING at Generation 4')
+ck((monitor.stack.get(16),monitor.stack.get(21),monitor.stack.get(22),monitor.stack.get(23))==(1,20,2,4),
+   'the Monitor did not publish Priority, State, JobGeneration at S21..S23')
+ck(ctl.stack.get(22)==3 and ctl.stack.get(23)==6 and ctl.stack.get(31)==55 and ctl.stack.get(32)==101,
+   'the New controller did not plan a PLANNING parent over the real Monitor')
+ck(tuple(builder.stack.get(c) for c in range(19,25))==(parent,0,4,1,500,20),
+   "the Builder was not handed the parent's JobId, slot, JobGeneration, JobType, Identity, and Priority")
+ctl,builder,monitor,parent,(pst,pgen)=plan_new([2,3])
+ck(pst==3 and ctl.stack.get(22)==3 and ctl.stack.get(23)==-1 and 30 not in builder.stack,
+   'a RESERVING parent was planned over the real Monitor')
 if fails:
  print('Dependency planning: FAIL');[print(' -',x) for x in fails];sys.exit(1)
 print('Dependency planning: PASS')
@@ -198,3 +230,4 @@ print(' - the Planner names its Existing controller on the cleanup path as well 
 print(' - Preflight bounds the Selector leg count at six before walking the quote table')
 print(' - a restarted Ancestry Guard scan posts again under a new token the Monitor latches; the 512th posting fails the request')
 print(' - an Ancestry Guard reflashed mid-request continues its posting count from S18 and the Monitor latches the next posting')
+print(' - the real Monitor hands the New controller a PLANNING parent with its Priority and JobGeneration where the controller reads them')

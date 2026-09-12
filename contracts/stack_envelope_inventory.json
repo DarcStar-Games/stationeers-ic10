@@ -3811,6 +3811,12 @@
             "cells": "S20",
             "name": "ChildJobGeneration",
             "role": "result"
+          },
+          {
+            "protocol_id": "ic10.stack.dependency-child-validity.v1",
+            "cells": "S23",
+            "name": "ChildResourceType",
+            "role": "result"
           }
         ],
         "payload_bases": [
@@ -4024,7 +4030,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "a1084e565f92afb2226a0229f4e8280e77b831930ae700567f188fe591e9b437",
+          "source_sha256": "774deca22193737e6f0aa0005711670cae412fd182da8854ed165984895b8d6e",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -4985,19 +4991,19 @@
           {
             "protocol_id": "ic10.stack.generic-job-monitor.v1",
             "cells": "S21",
-            "name": "State",
+            "name": "Priority",
             "role": "result"
           },
           {
             "protocol_id": "ic10.stack.generic-job-monitor.v1",
             "cells": "S22",
-            "name": "JobGeneration",
+            "name": "State",
             "role": "result"
           },
           {
             "protocol_id": "ic10.stack.generic-job-monitor.v1",
             "cells": "S23",
-            "name": "ErrorStatus",
+            "name": "JobGeneration",
             "role": "result"
           }
         ],
@@ -5057,7 +5063,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "a9a634752900a71e9404762e98c71d4a4989d20089b93270981eea6701f86784",
+          "source_sha256": "9dae73a46a64338cca98d96861538ad2792de26b3d1d82e24a1a9a7a42eec4a9",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
