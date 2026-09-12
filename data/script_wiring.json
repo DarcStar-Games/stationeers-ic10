@@ -293,21 +293,21 @@
     "providers": [
      "ic10/dependency-planning/item_producer_resolver_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"item_producer_resolver_v1_0.ic10 ... Known transform outputs resolve to ProducerKind=TRANSFORM\"; creator \"validates producer identity\" [No pin comment. Resolver interface matches exactly and uniquely: request S2 ResourceType + S3 token (creator writes d0 2,3), response S4 token, S5 status==1, S6 ProducerKind, S7 identity (creator reads 4,5,6,7; branches to NoProducer on status!=1).]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"item_producer_resolver_v1_0.ic10 ... Known transform outputs resolve to ProducerKind=TRANSFORM\"; creator \"validates producer identity\" [No pin comment. Resolver interface matches exactly and uniquely: request S8 ResourceType + S9 token (creator writes d0 8,9), response S10 token, S11 status==1, S12 ProducerJobType, S13 ProducerIdentity (creator reads 10,11,12,13; branches to NoProducer on status!=1).]"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/dependency-planning/job_requirement_view_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"dependency_child_creator_v2_0.ic10 validates producer identity, ancestry/depth, current output semantics\" (output semantics come from the normalized Requirement View) [No pin comment. Requirement View interface matches exactly: request S2..S5 + S6 token (creator writes 2..6), response S7 token, S8 status==1, S11 promised output ResourceType (creator checks d1 11 == requested resource), S12 per-unit output qty; also reads S9/S10 into sp/ra.]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"dependency_child_creator_v2_0.ic10 validates producer identity, ancestry/depth, current output semantics\" (output semantics come from the normalized Requirement View) [No pin comment. Requirement View interface matches exactly: request S15..S18 + S19 token (creator writes 15..19), response S20 token, S21 status==1, S24 promised output ResourceType (creator checks d1 24 == requested resource), S25 per-unit output qty; also reads S22/S23 into sp/ra.]"
    },
    "d2": {
     "kind": "script",
     "providers": [
      "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"Self-dependencies and immediate ancestor cycles ... are rejected before child publication\"; creator validates \"ancestry/depth\" [No pin comment. Ancestry guard interface matches exactly: request S2..S6 + S7 token (creator writes 2..7), response S8 token, S9 status with -2 depth / -3 cycle (guard pokes 9 -2 / 9 -3; creator branches beq -2 Depth / beq -3 Cycle on d2 9).]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"Self-dependencies and immediate ancestor cycles ... are rejected before child publication\"; creator validates \"ancestry/depth\" [No pin comment. Ancestry guard interface matches exactly: request S10..S14 + S15 token (creator writes 10..15), response S16 token, S17 status with -2 depth / -3 cycle (creator branches to Depth / Cycle on d2 17).]"
    },
    "d3": {
     "kind": "script",
@@ -362,7 +362,7 @@
     "providers": [
      "ic10/dependency-planning/dependency_child_creator_v2_0.ic10"
     ],
-    "note": "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10:1: \"d1 ChildCreator\" [Child Creator cells match: request S2..S9 + S10 token, response S11 token, S12 status==1, S13 child JobId, S15 promised quantity.]"
+    "note": "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10:1: \"d1 ChildCreator\" [Child Creator cells match: request S14..S21 + S22 token, response S23 token, S24 status==1, S25 child JobId, S27 promised quantity.]"
    }
   },
   "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10": {
@@ -378,7 +378,7 @@
     "providers": [
      "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10"
     ],
-    "note": "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10:1: \"d1 Preflight\"; docs/DEPENDENCY_PLANNING.md: \"dependency_plan_evaluator_v2_0.ic10 runs a fresh parent inventory preflight\" [Preflight cells match: request S2..S4 + S5 token; response S6 token, S7 status, S11 known qty, S13/S14 quote fingerprints (used for the changed-vs-unchanged replan decision).]"
+    "note": "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10:1: \"d1 Preflight\"; docs/DEPENDENCY_PLANNING.md: \"dependency_plan_evaluator_v2_0.ic10 runs a fresh parent inventory preflight\" [Preflight cells match: request S15..S17 + S18 token; response S19 token, S20 status, S24 quoted total, S26/S27 quote fingerprints (used for the changed-vs-unchanged replan decision).]"
    }
   },
   "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10": {
@@ -411,14 +411,14 @@
     "providers": [
      "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md decision table (\"inventory now satisfies -> READY ... quote fingerprints changed -> replan\") matches the controller's branch on d1 13 codes 1/2/3/4/5/-3/-4 [No pin comment. Evaluator cells match exactly: request S2..S10 + S11 token (controller writes 2..11), response S12 token, S13 decision code (evaluator pokes 12 r15 / 13 r0).]"
+    "note": "docs/DEPENDENCY_PLANNING.md decision table (\"inventory now satisfies -> READY ... quote fingerprints changed -> replan\") matches the controller's branch on d1 31 codes 1/2/3/4/5/-3/-4 [No pin comment. Evaluator cells match exactly: request S20..S28 + S29 token (controller writes 20..29), response S30 token, S31 decision code.]"
    },
    "d2": {
     "kind": "script",
     "providers": [
      "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"dependency_plan_release_advisor_v1_0.ic10 decides whether a child can be cancelled when one parent releases its plan\"; controller header: \"Existing-plan decision + ref-aware cancel\" [No pin comment. Release advisor cells match exactly: request S2 parent, S3 child, S4 resource + S5 token; response S6 token, S8 cancellable flag, S9/S10 child JobId/generation used to build the lane-B cancel command.]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"dependency_plan_release_advisor_v1_0.ic10 decides whether a child can be cancelled when one parent releases its plan\"; controller header: \"Existing-plan decision + ref-aware cancel\" [No pin comment. Release advisor cells match exactly: request S12 parent, S13 child, S14 resource + S15 token; response S16 token, S18 cancellable flag, S19/S20 child slot/generation used to build the lane-B cancel command.]"
    },
    "d3": {
     "kind": "script",
@@ -444,7 +444,7 @@
     "providers": [
      "ic10/dependency-planning/job_requirement_view_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: the Requirement View \"normalizes TRANSFORM and PRINT metadata into one bounded ITEM view\" that preflight iterates per input [No pin comment. Requirement View interface matches exactly: request S2 JobType, S3 metadata, S4 quantity, S5 input index + S6 token (preflight's Req subroutine writes 2..6), response S7 token, S8 status==1, S10 input count, S13 input ResourceType, S14 required qty (RV pokes 9..14).]"
+    "note": "docs/DEPENDENCY_PLANNING.md: the Requirement View \"normalizes TRANSFORM and PRINT metadata into one bounded ITEM view\" that preflight iterates per input [No pin comment. Requirement View interface matches exactly: request S15 JobType, S16 metadata, S17 quantity, S18 input index + S19 token (preflight's Req subroutine writes 15..19), response S20 token, S21 status==1, S23 input count, S26 input ResourceType, S27 required qty (the view pokes 22..27).]"
    },
    "d1": {
     "kind": "script",
@@ -474,7 +474,7 @@
     "providers": [
      "ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"Print requirements come from ... manufacturing_reagent_resolver_v1_0.ic10, which maps ManufacturingReagentHash aliases back to canonical ITEM ResourceType values\" [Resolver cells match: request S2 alias + S3 token (consumer writes 2,3), response S4 token, S5 status==1, S6 resolved ResourceType.]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"Print requirements come from ... manufacturing_reagent_resolver_v1_0.ic10, which maps ManufacturingReagentHash aliases back to canonical ITEM ResourceType values\" [Resolver cells match: request S8 alias + S9 token (consumer writes 8,9), response S10 token, S11 status==1, S12 resolved ResourceType.]"
    }
   },
   "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10": {
@@ -483,7 +483,7 @@
     "providers": [
      "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10"
     ],
-    "note": "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10:1: \"# Dependency Gate ABI2. d0 Planner,d1 DriverRouter,d2 JobSelector.\" [Planner cells match: request S2 parent + S3..S8 job metadata + S9 token (gate writes 2..9), response S10 token, S11 status (planner pokes 10 r15 / 11 r4).]"
+    "note": "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10:1: \"# Dependency Gate ABI2. d0 Planner,d1 DriverRouter,d2 JobSelector.\" [Planner cells match: request S12 parent + S13..S18 job metadata + S19 token (gate writes 12..19), response S20 token, S21 decision (planner pokes 20 r15 / 21 r4).]"
    },
    "d1": {
     "kind": "script",
@@ -497,7 +497,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_selector_v3_0.ic10"
     ],
-    "note": "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10:1: \"d2 JobSelector\" [Read-only consumption of the selector's published selection: S5 status==1, S6 slot, S7 JobId, S8, S10, S13, S14, S16 - all cells the selector pokes (5..17).]"
+    "note": "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10:1: \"d2 JobSelector\" [Read-only consumption of the selector's published selection: S22 status==1, S23 slot, S24 JobId, S8 JobType, S10 Identity, S13 RequestedQuantity, S14 Priority, S16 JobGeneration - all cells the selector pokes.]"
    }
   },
   "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10": {
@@ -513,14 +513,14 @@
     "providers": [
      "ic10/dependency-planning/existing_dependency_plan_controller_v1_0.ic10"
     ],
-    "note": "Peer named by d1 S0 magic check (HASH(\"ExistingDependencyPlanController.v1\")). docs/DEPENDENCY_PLANNING.md control-flow diagram: \"208 Dependency Planner -> 217 Existing-plan controller\" [Existing controller cells match: request S2 parent, S3..S8 copied job metadata (planner's CopyExisting loop = the dynamic write), S9 mode (0 evaluate / 1 cleanup), S10 token; response S11 token, S12 result, S13 cleared flag.]"
+    "note": "Peer named by d1 S0 magic check (HASH(\"ExistingDependencyPlanController.v1\")). docs/DEPENDENCY_PLANNING.md control-flow diagram: \"208 Dependency Planner -> 217 Existing-plan controller\" [Existing controller cells match: request S12 parent, S13..S18 copied job metadata (planner's CopyExisting loop = the dynamic write), S19 mode (0 evaluate / 1 cleanup), S20 token; response S21 token, S22 decision, S23 released flag.]"
    },
    "d2": {
     "kind": "script",
     "providers": [
      "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md new-plan flow; request S2/S3, echo S4, status 6 at S5, payload S13..S19 match the controller exactly"
+    "note": "docs/DEPENDENCY_PLANNING.md new-plan flow; request S20/S21, echo S22, decision 6 at S23, payload S31..S37 match the controller exactly"
    }
   },
   "ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10": {},
@@ -530,14 +530,14 @@
     "providers": [
      "ic10/dependency-planning/job_inventory_preflight_v1_0.ic10"
     ],
-    "note": "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10:1: \"# New-plan decision. d0 Preflight,d1 Builder,d2 JobMonitor.\" [Preflight cells match: request S2..S4 + S5 token, response S6 token, S7 status (1 ready / 2 probe / 3 deficit / -2 overflow), results S8..S14 including S13/S14 fingerprints.]"
+    "note": "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10:1: \"# New-plan decision. d0 Preflight,d1 Builder,d2 JobMonitor.\" [Preflight cells match: request S15..S17 + S18 token, response S19 token, S20 status (1 ready / 2 probe / 3 deficit / -2 overflow), results S22..S27 including S26/S27 fingerprints.]"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10"
     ],
-    "note": "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10:1: \"d1 Builder\" [Builder cells match: request S2..S12 + S13 token (controller writes 2..13), response S14 token, S15 status==1, S16 child JobId, S17 FutureQty.]"
+    "note": "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10:1: \"d1 Builder\" [Builder cells match: request S19..S29 + S30 token (controller writes 19..30), response S31 token, S32 status==1, S33 child JobId, S34 FutureQty.]"
    },
    "d2": {
     "kind": "script",
@@ -1357,7 +1357,7 @@
     "providers": [
      "ic10/power-grid/power_reservation_allocator_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_link_executor_v1_0.ic10: '# Break-before-make Transformer Setting/On executor. d0 PlanStore,d1 Allocator.' [Reads d1 S2/S3/S4 with S4==1 - exactly the allocator's published authority [PlanGeneration, Epoch, ACTIVE] (allocator Publish: poke 2 gen, poke 3 epoch, poke 4 1); also reads d1 ReferenceId to match Reservation owner. tests/test_fault_injection.py wires 'alloc' device stack {2:5,3:10,4:1} to d1.]"
+    "note": "ic10/power-grid/power_link_executor_v1_0.ic10: '# Break-before-make Transformer Setting/On executor. d0 PlanStore,d1 Allocator.' [Reads d1 S8/S9/S10 with S10==1 - exactly the allocator's published authority [PlanGeneration, AuthorityEpoch, Status] (allocator Publish: poke 8 gen, poke 9 epoch, poke 10 1); also reads d1 ReferenceId to match Reservation owner. tests/test_fault_injection.py holds the allocator's S8, S9, S10 across a reflash.]"
    }
   },
   "ic10/power-grid/power_link_selector_v1_0.ic10": {
@@ -1382,7 +1382,7 @@
     "providers": [
      "ic10/power-grid/power_reservation_allocator_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_load_executor_v1_0.ic10: '# Break-before-make managed POWER load/battery On executor. d0 PlanStore,d1 Allocator.' [Reads d1 S2/S3/S4 with S4==1 ([PlanGeneration, Epoch, ACTIVE]) plus d1 ReferenceId as reservation owner identity - matches allocator publication and tests/test_fault_injection.py 'alloc' wiring.]"
+    "note": "ic10/power-grid/power_load_executor_v1_0.ic10: '# Break-before-make managed POWER load/battery On executor. d0 PlanStore,d1 Allocator.' [Reads d1 S8/S9/S10 with S10==1 ([PlanGeneration, AuthorityEpoch, Status]) plus d1 ReferenceId as reservation owner identity - matches the allocator's publication.]"
    }
   },
   "ic10/power-grid/power_plan_validator_v1_0.ic10": {
@@ -1459,7 +1459,7 @@
     "providers": [
      "ic10/power-grid/power_link_selector_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_sink_flow_builder_v1_0.ic10: '# Build one POWER sink flow. d0 SourceSelector,d1 LinkSelector,d2 PlanStore.' [Link selector request surface: S2/S3/S4 source/sink/watts params, S5 token, S6 ack (poke 6 r15), S7 status (poke 7), S8-S11 results - matches builder d1 access [writes 2..5; reads 6..10; S7==1].]"
+    "note": "ic10/power-grid/power_sink_flow_builder_v1_0.ic10: '# Build one POWER sink flow. d0 SourceSelector,d1 LinkSelector,d2 PlanStore.' [Link selector request surface: S12/S13/S14 source/sink/watts params, S15 token, S16 ack token, S17 status (poke 17), S8..S10 LinkRef/SourceWatts/LinkGeneration results - matches builder d1 access [writes 12..15; reads 8..10, 16, 17; S17==1].]"
    },
    "d2": {
     "kind": "script",
