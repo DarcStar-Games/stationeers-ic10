@@ -232,12 +232,15 @@ def guard_cleanups(parent_edges):
  guard=IC10(src('ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10'),
   {'d0':plan,'d1':Device(805,monitor.stack),'d2':Device(806,planner.stack)},self_ref=808)
  guard.run(1);run_round_robin([guard,monitor,planner],60)
- return parent,int(planner.stack.get(30,0)),planner.stack.get(31),state(st,0)
-parent,cleanups,cleaned,(pst,pgen)=guard_cleanups([2,3,8,2,8,2])
+ asked=(monitor.stack.get(13),monitor.stack.get(16),monitor.stack.get(22))
+ return parent,asked,int(planner.stack.get(30,0)),planner.stack.get(31),state(st,0)
+parent,asked,cleanups,cleaned,(pst,pgen)=guard_cleanups([2,3,8,2,8,2])
 ck((pst,pgen)==(2,7),'the parent did not reach PLANNING at Generation 7')
+ck(asked==(parent,1,2),'the Cancellation Guard did not ask the Monitor about the live parent, or the Monitor did not answer PLANNING')
 ck(cleanups==0,'the Cancellation Guard cleaned up a live parent at Generation 7 over the real Monitor')
-parent,cleanups,cleaned,(pst,pgen)=guard_cleanups([2,3,4,5,6,7])
-ck(pst==7 and cleanups>=1 and cleaned==parent,'the Cancellation Guard did not clean up a COMPLETE parent over the real Monitor')
+parent,asked,cleanups,cleaned,(pst,pgen)=guard_cleanups([2,3,4,5,6,7])
+ck(pst==7 and asked==(parent,1,7) and cleanups>=1 and cleaned==parent,
+   'the Cancellation Guard did not clean up a COMPLETE parent over the real Monitor')
 if fails:
  print('Dependency planning: FAIL');[print(' -',x) for x in fails];sys.exit(1)
 print('Dependency planning: PASS')

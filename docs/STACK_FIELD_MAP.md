@@ -1887,7 +1887,7 @@ Consumers: 0.
 | S19 | Identity | result | 3 | peer |  |
 | S20 | RequestedQuantity | result | 2 | peer |  |
 | S21 | Priority | result | 1 | peer | the record's Priority intent cell |
-| S22 | State | result | 3 | peer | GENERIC_JOB_ABI_V1 lifecycle state from the active state bank |
+| S22 | State | result | 3 | peer | State from the active state bank; a GENERIC_JOB_ABI_V1 lifecycle state |
 | S23 | JobGeneration | result | 2 | peer | JobGeneration from the active state bank; the generation a SET_STATE must expect |
 
 ### ic10.stack.generic-job-selector.v3
