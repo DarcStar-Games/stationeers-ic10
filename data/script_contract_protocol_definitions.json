@@ -1806,18 +1806,20 @@
     {
      "cells": "S21",
      "name": "Priority",
-     "role": "result"
+     "role": "result",
+     "description": "the record's Priority intent cell"
     },
     {
      "cells": "S22",
      "name": "State",
      "role": "result",
-     "description": "GENERIC_JOB_ABI_V1 lifecycle state of the active state bank"
+     "description": "GENERIC_JOB_ABI_V1 lifecycle state from the active state bank"
     },
     {
      "cells": "S23",
      "name": "JobGeneration",
-     "role": "result"
+     "role": "result",
+     "description": "JobGeneration from the active state bank; the generation a SET_STATE must expect"
     }
    ]
   },

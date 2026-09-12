@@ -291,6 +291,7 @@ claim, future = claim_scan(False, validity_stub((17, 1)), 40)
 ck(future.stack.get(20) == 40 and future.stack.get(21) == 1 and future.stack.get(22) == 10,
    "a job no plan record names was not counted as a root at full output")
 ck(claim.stack.get(20) == -2, "Claim View did not report a proven absence as -2")
+# Child Validity's reply: S17 status, S19 ChildState, S20 ChildJobGeneration, S23 ChildResourceType.
 claim, future = claim_scan(True, validity_stub((17, 1), (19, 2), (20, 1), (23, RESOURCE)), 41)
 ck(future.stack.get(20) == 41 and future.stack.get(21) == 1 and future.stack.get(22) == 4,
    "a validated child was not counted at FutureQty minus the other parents' claims")
@@ -353,12 +354,14 @@ claim, future = claim_scan(True, validity, 44, store=store, behind=behind)
 ck(validity.stack.get(17) == -3 and claim.stack.get(20) == -3 and future.stack.get(21) == -3,
    "a live child that no longer promises the ResourceType was counted")
 # The Future View skips a COMPLETE job itself; the Plan Builder asks the Claim View directly.
-store, validity, behind = real_validity([2, 3, 4, 5, 6, 7], RESOURCE)
+# The child waits once on its way, so it completes at Generation 9: a Generation of 7 would
+# itself read as COMPLETE and hide a Monitor publishing the Generation where State belongs.
+store, validity, behind = real_validity([2, 8, 2, 3, 4, 5, 6, 7], RESOURCE)
 plan, claim = claim_over(store, validity, True)
 claim.stack.update({15: RESOURCE, 16: 1, 17: 0, 18: 45})
 run_round_robin([claim, validity, *behind, plan], 120)
-ck(validity.stack.get(17) == 1 and validity.stack.get(19) == 7 and claim.stack.get(19) == 45
-   and claim.stack.get(20) == -2,
+ck(validity.stack.get(17) == 1 and (validity.stack.get(19), validity.stack.get(20)) == (7, 9)
+   and claim.stack.get(19) == 45 and claim.stack.get(20) == -2,
    "a COMPLETE child the real chain validated was offered for reuse")
 
 

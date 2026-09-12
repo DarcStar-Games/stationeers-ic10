@@ -210,7 +210,8 @@
         "access": [
           "self-write"
         ],
-        "role": "result"
+        "role": "result",
+        "description": "the record's Priority intent cell"
       },
       {
         "address": 22,
@@ -221,17 +222,18 @@
           "self-write"
         ],
         "role": "result",
-        "description": "GENERIC_JOB_ABI_V1 lifecycle state of the active state bank"
+        "description": "GENERIC_JOB_ABI_V1 lifecycle state from the active state bank"
       },
       {
         "address": 23,
         "name": "JobGeneration",
-        "value_type": "integer",
+        "value_type": "enum",
         "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "role": "result"
+        "role": "result",
+        "description": "JobGeneration from the active state bank; the generation a SET_STATE must expect"
       }
     ],
     "headers": [

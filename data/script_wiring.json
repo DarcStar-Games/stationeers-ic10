@@ -261,7 +261,7 @@
     "providers": [
      "ic10/dependency-planning/generic_job_monitor_v1_0.ic10"
     ],
-    "note": "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10:1: \"# Bounded depth/cycle guard. d0 Plan Store,d1 Job Monitor.\" [Job Monitor interface matches exactly: request S2 JobId, S3 token (writes 2,3), response S4 token, S5 status==1, results S6..S12 (reads 4,5,7,8).]"
+    "note": "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10:1: \"# Bounded depth/cycle guard. d0 Plan Store,d1 Job Monitor.\" [Monitor cells match: request S13 JobId + S14 token (writes 13,14), response S15 token, S16 status==1, results S18 JobType and S19 Identity (reads 15,16,18,19).]"
    }
   },
   "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10": {
@@ -277,7 +277,7 @@
     "providers": [
      "ic10/dependency-planning/generic_job_monitor_v1_0.ic10"
     ],
-    "note": "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10:1: \"# Parent-terminal cleanup guard. d0 PlanStore,d1 JobMonitor,d2 Planner.\" [Matches generic_job_monitor cells: request S2/S3, response S4 token, S5 status, S11 job state.]"
+    "note": "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10:1: \"# Parent-terminal cleanup guard. d0 PlanStore,d1 JobMonitor,d2 Planner.\" [Monitor cells match: request S13 JobId + S14 token, response S15 token, S16 status (-2 missing cleans up), S22 State (7 or 11..12 cleans up).]"
    },
    "d2": {
     "kind": "script",
@@ -323,14 +323,14 @@
     "providers": [
      "ic10/dependency-planning/generic_job_monitor_v1_0.ic10"
     ],
-    "note": "ic10/dependency-planning/dependency_child_validity_v1_0.ic10:1: \"# Validate live child identity and promised output. d0 Monitor,d1 RequirementView.\" [Monitor cells match: request S2 JobId + S3 token, response S4 token, S5 status==1, results S6..S12.]"
+    "note": "ic10/dependency-planning/dependency_child_validity_v1_0.ic10:1: \"# Validate live child identity and promised output. d0 Monitor,d1 RequirementView.\" [Monitor cells match: request S13 JobId + S14 token, response S15 token, S16 status==1, results S17..S20 Slot, JobType, Identity, RequestedQuantity and S22 State, S23 JobGeneration.]"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/dependency-planning/job_requirement_view_v1_0.ic10"
     ],
-    "note": "ic10/dependency-planning/dependency_child_validity_v1_0.ic10:1: \"d1 RequirementView\"; docs/DEPENDENCY_PLANNING.md: \"combines exact Job monitoring with the normalized Requirement View\" [Requirement View cells match: request S2..S5 + S6 token, response S7 token, S8 status==1, S11 promised output ResourceType.]"
+    "note": "ic10/dependency-planning/dependency_child_validity_v1_0.ic10:1: \"d1 RequirementView\"; docs/DEPENDENCY_PLANNING.md: \"combines exact Job monitoring with the normalized Requirement View\" [Requirement View cells match: request S15..S18 + S19 token, response S20 token, S21 status==1, S24 promised output ResourceType.]"
    }
   },
   "ic10/dependency-planning/dependency_claim_view_v1_0.ic10": {
@@ -346,7 +346,7 @@
     "providers": [
      "ic10/dependency-planning/dependency_child_validity_v1_0.ic10"
     ],
-    "note": "ic10/dependency-planning/dependency_claim_view_v1_0.ic10:1: \"# Active future-output claim lookup over Plan Store + Child Validity.\" [d0 is Plan Store (checked by magic DependencyPlanStore.v2 in claim view source), so the header's Child Validity peer is d1; cells match child validity exactly: request S2 ChildJobId, S3 ResourceType, S4 token; response S5 token, S6 status==1, S7..S9 state/output data (claim view rejects state 7 / >=11 = terminal).]"
+    "note": "ic10/dependency-planning/dependency_claim_view_v1_0.ic10:1: \"# Active future-output claim lookup over Plan Store + Child Validity.\" [d0 is Plan Store (checked by magic DependencyPlanStore.v2 in claim view source), so the header's Child Validity peer is d1; cells match Child Validity exactly: request S13 ChildJobId, S14 ResourceType, S15 token; response S16 token, S17 status==1, S18 ChildSlot, S19 ChildState (the Claim View rejects 7 and >=11 as terminal), S23 ChildResourceType.]"
    }
   },
   "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10": {
@@ -355,7 +355,7 @@
     "providers": [
      "ic10/dependency-planning/dependency_claim_view_v1_0.ic10"
     ],
-    "note": "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10:1: \"# Reuse active future-output claim or create one child. d0 ClaimView,d1 ChildCreator.\" [Claim View cells match: request S2 ResourceType, S3 parent, S4, S5 token; response S6 token, S7 status==1, S8/S9 shared child/FutureQty, S14 aggregate claims.]"
+    "note": "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10:1: \"# Reuse active future-output claim or create one child. d0 ClaimView,d1 ChildCreator.\" [Claim View cells match: request S15 ResourceType, S16 parent, S17, S18 token; response S19 token, S20 status==1, S21/S22 shared child/FutureQty, S27 aggregate claims.]"
    },
    "d1": {
     "kind": "script",
@@ -371,7 +371,7 @@
     "providers": [
      "ic10/dependency-planning/dependency_child_validity_v1_0.ic10"
     ],
-    "note": "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10:1: \"# Evaluate one persisted dependency plan. d0 ChildValidity,d1 Preflight.\" [Child validity cells match: request S2,S3 + S4 token; response S5 token, S6 status, S7..S9.]"
+    "note": "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10:1: \"# Evaluate one persisted dependency plan. d0 ChildValidity,d1 Preflight.\" [Child Validity cells match: request S13,S14 + S15 token; response S16 token, S17 status, S18..S20.]"
    },
    "d1": {
     "kind": "script",
@@ -387,14 +387,14 @@
     "providers": [
      "ic10/dependency-planning/dependency_claim_view_v1_0.ic10"
     ],
-    "note": "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10:1: \"# Advise ref-aware child cancellation. d0 ClaimView,d1 ChildValidity.\" [Claim View cells match: request S2..S4 + S5 token; response S6 token, S7 status.]"
+    "note": "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10:1: \"# Advise ref-aware child cancellation. d0 ClaimView,d1 ChildValidity.\" [Claim View cells match: request S15..S17 + S18 token; response S19 token, S20 status.]"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/dependency-planning/dependency_child_validity_v1_0.ic10"
     ],
-    "note": "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10:1: \"d1 ChildValidity\" [Child validity cells match: request S2,S3 + S4 token; response S5 token, S6 status, S7..S9 child state/generation data.]"
+    "note": "ic10/dependency-planning/dependency_plan_release_advisor_v1_0.ic10:1: \"d1 ChildValidity\" [Child Validity cells match: request S13,S14 + S15 token; response S16 token, S17 status, S18..S20 child slot/state/generation.]"
    }
   },
   "ic10/dependency-planning/dependency_plan_store_v2_0.ic10": {},
@@ -544,7 +544,7 @@
     "providers": [
      "ic10/dependency-planning/generic_job_monitor_v1_0.ic10"
     ],
-    "note": "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10:1: \"d2 JobMonitor\" [Monitor cells match: request S2 JobId + S3 token, response S4 token, S5 status==1, results S6..S12; the constraint d2[11]==2 is the monitor's S11 job state cell requiring the parent to still be PLANNING.]"
+    "note": "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10:1: \"d2 JobMonitor\" [Monitor cells match: request S13 JobId + S14 token, response S15 token, S16 status==1, results S17..S23; the constraint d2[22]==2 is the Monitor's S22 State cell requiring the parent to still be PLANNING.]"
    }
   },
   "ic10/diagnostics/console_registry_v1_1.ic10": {},

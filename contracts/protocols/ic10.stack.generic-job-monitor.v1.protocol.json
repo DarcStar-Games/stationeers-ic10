@@ -74,7 +74,8 @@
       "start": 21,
       "end": 21,
       "name": "Priority",
-      "role": "result"
+      "role": "result",
+      "description": "the record's Priority intent cell"
     },
     {
       "cells": "S22",
@@ -82,14 +83,15 @@
       "end": 22,
       "name": "State",
       "role": "result",
-      "description": "GENERIC_JOB_ABI_V1 lifecycle state of the active state bank"
+      "description": "GENERIC_JOB_ABI_V1 lifecycle state from the active state bank"
     },
     {
       "cells": "S23",
       "start": 23,
       "end": 23,
       "name": "JobGeneration",
-      "role": "result"
+      "role": "result",
+      "description": "JobGeneration from the active state bank; the generation a SET_STATE must expect"
     }
   ],
   "provider_interfaces": [
@@ -219,7 +221,8 @@
           "access": [
             "self-write"
           ],
-          "role": "result"
+          "role": "result",
+          "description": "the record's Priority intent cell"
         },
         {
           "address": 22,
@@ -230,17 +233,18 @@
             "self-write"
           ],
           "role": "result",
-          "description": "GENERIC_JOB_ABI_V1 lifecycle state of the active state bank"
+          "description": "GENERIC_JOB_ABI_V1 lifecycle state from the active state bank"
         },
         {
           "address": 23,
           "name": "JobGeneration",
-          "value_type": "integer",
+          "value_type": "enum",
           "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "role": "result"
+          "role": "result",
+          "description": "JobGeneration from the active state bank; the generation a SET_STATE must expect"
         }
       ],
       "behavior": {

@@ -216,6 +216,28 @@ ck(tuple(builder.stack.get(c) for c in range(19,25))==(parent,0,4,1,500,20),
 ctl,builder,monitor,parent,(pst,pgen)=plan_new([2,3])
 ck(pst==3 and ctl.stack.get(22)==3 and ctl.stack.get(23)==-1 and 30 not in builder.stack,
    'a RESERVING parent was planned over the real Monitor')
+# The Cancellation Guard reads the Monitor's S22 as State and asks the Planner to clean up a
+# parent at 7 or 11..12. With State one cell lower it read the JobGeneration there, so a live
+# parent at Generation 7 was cleaned up (#193). The parent here waits twice on its way back to
+# PLANNING, reaching it at Generation 7; the same parent run to COMPLETE is cleaned up.
+def guard_cleanups(parent_edges):
+ st=boot_store()
+ for i,v in enumerate([1,1,500,1,1,1,20],1):st.stack[32+i]=v
+ _,parent=store_req(st,1,1,0)
+ for t,new in enumerate(parent_edges,2):
+  _,g=state(st,0);store_req(st,t,2,0,g,new)
+ monitor=IC10(src('ic10/dependency-planning/generic_job_monitor_v1_0.ic10'),{'d0':Device(800,st.stack)},self_ref=805);monitor.run(1)
+ planner=IC10('poke 0 HASH("ManufacturingDependencyPlanner.v1")\nLoop:\nyield\nget r15 db 25\nget r0 db 26\nbeq r15 r0 Loop\nget r0 db 30\nadd r0 r0 1\npoke 30 r0\nget r0 db 24\npoke 31 r0\npoke 26 r15\nj Loop\n',self_ref=806);planner.run(1)
+ plan=Device(807,{0:'HASH:DependencyPlanStore.v2',40:0,128:parent})
+ guard=IC10(src('ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10'),
+  {'d0':plan,'d1':Device(805,monitor.stack),'d2':Device(806,planner.stack)},self_ref=808)
+ guard.run(1);run_round_robin([guard,monitor,planner],60)
+ return parent,int(planner.stack.get(30,0)),planner.stack.get(31),state(st,0)
+parent,cleanups,cleaned,(pst,pgen)=guard_cleanups([2,3,8,2,8,2])
+ck((pst,pgen)==(2,7),'the parent did not reach PLANNING at Generation 7')
+ck(cleanups==0,'the Cancellation Guard cleaned up a live parent at Generation 7 over the real Monitor')
+parent,cleanups,cleaned,(pst,pgen)=guard_cleanups([2,3,4,5,6,7])
+ck(pst==7 and cleanups>=1 and cleaned==parent,'the Cancellation Guard did not clean up a COMPLETE parent over the real Monitor')
 if fails:
  print('Dependency planning: FAIL');[print(' -',x) for x in fails];sys.exit(1)
 print('Dependency planning: PASS')
@@ -231,3 +253,4 @@ print(' - Preflight bounds the Selector leg count at six before walking the quot
 print(' - a restarted Ancestry Guard scan posts again under a new token the Monitor latches; the 512th posting fails the request')
 print(' - an Ancestry Guard reflashed mid-request continues its posting count from S18 and the Monitor latches the next posting')
 print(' - the real Monitor hands the New controller a PLANNING parent with its Priority and JobGeneration where the controller reads them')
+print(' - over the real Monitor the Cancellation Guard leaves a live parent at Generation 7 alone and cleans up a COMPLETE one')
