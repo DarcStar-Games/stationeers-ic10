@@ -92,7 +92,67 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r10",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "GenericSnapshotDirectoryHost.v1",
+            "cells": "any"
+          },
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ],
+          "reason": "a DirectorySchema.PressureGridLink record holds a Transfer ReferenceId; the Enumerator reads its telemetry block"
+        }
+      ],
+      "origins": [
+        "cell:891293726:*"
+      ],
+      "targets": [
+        "ControllerPressureTransferRuntime",
+        "EmbeddedPressureTransferRuntime"
+      ],
+      "site_targets": [
+        {
+          "cell": 100,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 102,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 103,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 109,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 110,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -110,7 +170,36 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r11",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "GenericSnapshotDirectoryHost.v1",
+            "cells": "any"
+          },
+          "targets": [
+            "PressureInventoryReservation"
+          ],
+          "reason": "a PressureGridLink record holds the source Reservation ReferenceId; the Enumerator reads its role"
+        }
+      ],
+      "origins": [
+        "cell:891293726:*"
+      ],
+      "targets": [
+        "PressureInventoryReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 18,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -122,7 +211,36 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r12",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "GenericSnapshotDirectoryHost.v1",
+            "cells": "any"
+          },
+          "targets": [
+            "PressureInventoryReservation"
+          ],
+          "reason": "a PressureGridLink record holds the sink Reservation ReferenceId; the Enumerator reads its role"
+        }
+      ],
+      "origins": [
+        "cell:891293726:*"
+      ],
+      "targets": [
+        "PressureInventoryReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 18,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {
@@ -208,31 +326,35 @@
       },
       {
         "address": 8,
-        "name": "S8",
+        "name": "PathBottleneckRate",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Status",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state",
+        "description": "1 candidate, 0 none, -1 fault"
       },
       {
         "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResponseToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       },
       {
         "address": 11,
@@ -255,57 +377,64 @@
       },
       {
         "address": 32,
-        "name": "S32",
+        "name": "PlannerRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 33,
-        "name": "S33",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "BuildEpoch",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 34,
-        "name": "S34",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "MediumType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 35,
-        "name": "S35",
+        "name": "SearchId",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 36,
-        "name": "S36",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       },
       {
         "address": 37,
-        "name": "S37",
+        "name": "PathLength",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "2 or 3; 0 when enumeration is exhausted"
       }
     ],
     "headers": [

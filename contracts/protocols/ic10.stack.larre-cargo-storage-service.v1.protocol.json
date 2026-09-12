@@ -11,6 +11,120 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "RequestToken",
+      "role": "request_token"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "Status",
+      "role": "state",
+      "description": "1 success, -1 fault with hand empty, -5 invalid, -6 fault with hand occupied"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "ScanExportAvailable",
+      "role": "result"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "ScanImportCapacity",
+      "role": "result"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "ScanFirstSourceSlot",
+      "role": "result"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "MovedQuantity",
+      "role": "result",
+      "description": "SCAN FirstSourceQuantity; MOVE or RECOVER moved quantity"
+    },
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "ResponseToken",
+      "role": "response_token"
+    },
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "ExpectedQuantity",
+      "role": "request",
+      "description": "for MOVE"
+    },
+    {
+      "cells": "S16",
+      "start": 16,
+      "end": 16,
+      "name": "ScanFirstEmptySlot",
+      "role": "result"
+    },
+    {
+      "cells": "S17",
+      "start": 17,
+      "end": 17,
+      "name": "Operation",
+      "role": "request",
+      "description": "1 SCAN, 2 MOVE, 3 RECOVER"
+    },
+    {
+      "cells": "S18",
+      "start": 18,
+      "end": 18,
+      "name": "SourceStation",
+      "role": "request"
+    },
+    {
+      "cells": "S19",
+      "start": 19,
+      "end": 19,
+      "name": "SourceSlot",
+      "role": "request",
+      "description": "SCAN first slot"
+    },
+    {
+      "cells": "S20",
+      "start": 20,
+      "end": 20,
+      "name": "DestinationStation",
+      "role": "request",
+      "description": "SCAN slot count"
+    },
+    {
+      "cells": "S21",
+      "start": 21,
+      "end": 21,
+      "name": "DestinationSlot",
+      "role": "request",
+      "description": "SCAN empty-slot MaxStack"
+    },
+    {
+      "cells": "S22",
+      "start": 22,
+      "end": 22,
+      "name": "ItemHash",
+      "role": "request"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/item-storage-larre/larre_cargo_storage_service_v1_0.ic10",
@@ -50,139 +164,161 @@
         },
         {
           "address": 8,
-          "name": "S8",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 success, -1 fault with hand empty, -5 invalid, -6 fault with hand occupied"
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "ScanExportAvailable",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ScanImportCapacity",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ScanFirstSourceSlot",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 13,
-          "name": "S13",
+          "name": "MovedQuantity",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "SCAN FirstSourceQuantity; MOVE or RECOVER moved quantity"
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResponseToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "ExpectedQuantity",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "for MOVE"
         },
         {
           "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ScanFirstEmptySlot",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "Operation",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "1 SCAN, 2 MOVE, 3 RECOVER"
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "SourceStation",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 19,
-          "name": "S19",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "SourceSlot",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "SCAN first slot"
         },
         {
           "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "DestinationStation",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "SCAN slot count"
         },
         {
           "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "DestinationSlot",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "SCAN empty-slot MaxStack"
         },
         {
           "address": 22,
-          "name": "S22",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ItemHash",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         }
       ],
       "behavior": {

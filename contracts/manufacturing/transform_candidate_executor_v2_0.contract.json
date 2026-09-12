@@ -98,6 +98,32 @@
       "targets": [
         "GenericMaterialTransformRuntime"
       ],
+      "site_targets": [
+        {
+          "cell": 8,
+          "targets": [
+            "GenericMaterialTransformRuntime"
+          ]
+        },
+        {
+          "cell": 16,
+          "targets": [
+            "GenericMaterialTransformRuntime"
+          ]
+        },
+        {
+          "cell": 20,
+          "targets": [
+            "GenericMaterialTransformRuntime"
+          ]
+        },
+        {
+          "cell": 21,
+          "targets": [
+            "GenericMaterialTransformRuntime"
+          ]
+        }
+      ],
       "unattributed": []
     }
   ],
@@ -169,58 +195,64 @@
       },
       {
         "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       },
       {
         "address": 9,
-        "name": "S9",
+        "name": "Result",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "CurrentToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "current_token"
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "TargetJobState",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 12,
-        "name": "S12",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ErrorStatus",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "error"
       },
       {
         "address": 14,
-        "name": "S14",
+        "name": "JobId",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 20,
@@ -234,57 +266,63 @@
       },
       {
         "address": 21,
-        "name": "S21",
+        "name": "RuntimeRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 22,
-        "name": "S22",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "TransformType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 23,
-        "name": "S23",
+        "name": "RequiredCapability",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 24,
-        "name": "S24",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "InputCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 25,
-        "name": "S25",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "OutputCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 26,
-        "name": "S26",
+        "name": "RequestedQuantity",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       }
     ],
     "headers": [

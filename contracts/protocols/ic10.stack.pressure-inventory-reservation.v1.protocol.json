@@ -11,6 +11,111 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "MolesPerKPa",
+      "role": "result"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "MolesPerLiter",
+      "role": "result"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "MirroredInventoryStatus",
+      "role": "state"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "MirrorGeneration",
+      "role": "generation"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "ReservedExportMoles",
+      "role": "result",
+      "description": "Allocator-owned"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "ReservedImportMoles",
+      "role": "result",
+      "description": "Allocator-owned"
+    },
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "BuildEpoch",
+      "role": "epoch",
+      "description": "Allocator-owned"
+    },
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "OwningPlannerRef",
+      "role": "topology",
+      "description": "Allocator-owned"
+    },
+    {
+      "cells": "S16",
+      "start": 16,
+      "end": 16,
+      "name": "InventoryRef",
+      "role": "topology"
+    },
+    {
+      "cells": "S17",
+      "start": 17,
+      "end": 17,
+      "name": "PressureDomainRef",
+      "role": "topology"
+    },
+    {
+      "cells": "S18",
+      "start": 18,
+      "end": 18,
+      "name": "Role",
+      "role": "metadata",
+      "description": "1 LOW, 2 HIGH, 3 STORAGE"
+    },
+    {
+      "cells": "S19",
+      "start": 19,
+      "end": 19,
+      "name": "MediumType",
+      "role": "metadata"
+    },
+    {
+      "cells": "S20",
+      "start": 20,
+      "end": 20,
+      "name": "ExportableMoles",
+      "role": "result"
+    },
+    {
+      "cells": "S21",
+      "start": 21,
+      "end": 21,
+      "name": "ImportCapacityMoles",
+      "role": "result"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/pressure-grid/pressure_inventory_reservation_v1_1.ic10",
@@ -55,40 +160,44 @@
         },
         {
           "address": 8,
-          "name": "S8",
+          "name": "MolesPerKPa",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 9,
-          "name": "S9",
+          "name": "MolesPerLiter",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "MirroredInventoryStatus",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "MirrorGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "generation"
         },
         {
           "address": 12,
@@ -100,7 +209,8 @@
             "external-write",
             "self-write"
           ],
-          "description": "Allocator-owned."
+          "description": "Allocator-owned.",
+          "role": "result"
         },
         {
           "address": 13,
@@ -112,7 +222,8 @@
             "external-write",
             "self-write"
           ],
-          "description": "Allocator-owned."
+          "description": "Allocator-owned.",
+          "role": "result"
         },
         {
           "address": 14,
@@ -124,7 +235,8 @@
             "external-write",
             "self-write"
           ],
-          "description": "Allocator-owned."
+          "description": "Allocator-owned.",
+          "role": "epoch"
         },
         {
           "address": 15,
@@ -136,61 +248,69 @@
             "external-write",
             "self-write"
           ],
-          "description": "Allocator-owned."
+          "description": "Allocator-owned.",
+          "role": "topology"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "InventoryRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "topology"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "PressureDomainRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "topology"
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "Role",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "metadata",
+          "description": "1 LOW, 2 HIGH, 3 STORAGE"
         },
         {
           "address": 19,
-          "name": "S19",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "MediumType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "metadata"
         },
         {
           "address": 20,
-          "name": "S20",
+          "name": "ExportableMoles",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ImportCapacityMoles",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         }
       ],
       "behavior": {

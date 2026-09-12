@@ -11,6 +11,123 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "JobType",
+      "role": "result"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "RequiredCapability",
+      "role": "result"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "Identity",
+      "role": "result"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "InputCount",
+      "role": "result"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "OutputCount",
+      "role": "result"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "RequestedQuantity",
+      "role": "result"
+    },
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "Priority",
+      "role": "result"
+    },
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "State",
+      "role": "result"
+    },
+    {
+      "cells": "S16",
+      "start": 16,
+      "end": 16,
+      "name": "JobGeneration",
+      "role": "result"
+    },
+    {
+      "cells": "S18",
+      "start": 18,
+      "end": 18,
+      "name": "Mode",
+      "role": "request",
+      "description": "0 manufacturing TRANSFORM/PRINT policy; a JobType selects that type's nonterminal states"
+    },
+    {
+      "cells": "S19",
+      "start": 19,
+      "end": 19,
+      "name": "Cursor",
+      "role": "request",
+      "description": "JobId cursor; eligible JobIds at or below it are skipped"
+    },
+    {
+      "cells": "S20",
+      "start": 20,
+      "end": 20,
+      "name": "RequestToken",
+      "role": "request_token"
+    },
+    {
+      "cells": "S21",
+      "start": 21,
+      "end": 21,
+      "name": "ResponseToken",
+      "role": "response_token"
+    },
+    {
+      "cells": "S22",
+      "start": 22,
+      "end": 22,
+      "name": "Status",
+      "role": "state",
+      "description": "1 selected, -2 none, -1 invalid Store"
+    },
+    {
+      "cells": "S23",
+      "start": 23,
+      "end": 23,
+      "name": "Slot",
+      "role": "result"
+    },
+    {
+      "cells": "S24",
+      "start": 24,
+      "end": 24,
+      "name": "JobId",
+      "role": "result"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/generic-jobs/generic_job_selector_v3_0.ic10",
@@ -50,84 +167,93 @@
         },
         {
           "address": 8,
-          "name": "S8",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "JobType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 9,
-          "name": "S9",
+          "name": "RequiredCapability",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Identity",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "InputCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "OutputCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 13,
-          "name": "S13",
+          "name": "RequestedQuantity",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 14,
-          "name": "S14",
+          "name": "Priority",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "State",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "JobGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 17,
@@ -140,67 +266,77 @@
         },
         {
           "address": 18,
-          "name": "S18",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Mode",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "0 manufacturing TRANSFORM/PRINT policy; a JobType selects that type's nonterminal states"
         },
         {
           "address": 19,
-          "name": "S19",
+          "name": "Cursor",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "JobId cursor; eligible JobIds at or below it are skipped"
         },
         {
           "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResponseToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         },
         {
           "address": 22,
-          "name": "S22",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 selected, -2 none, -1 invalid Store"
         },
         {
           "address": 23,
-          "name": "S23",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Slot",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 24,
-          "name": "S24",
+          "name": "JobId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         }
       ],
       "behavior": {

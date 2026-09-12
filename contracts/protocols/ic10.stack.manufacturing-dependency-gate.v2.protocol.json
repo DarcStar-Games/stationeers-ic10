@@ -11,6 +11,36 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "RequestToken",
+      "role": "request_token"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "ResponseToken",
+      "role": "response_token"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "TargetJobState",
+      "role": "result"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "ErrorStatus",
+      "role": "error"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10",
@@ -50,40 +80,44 @@
         },
         {
           "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResponseToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "TargetJobState",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ErrorStatus",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "error"
         }
       ],
       "behavior": {

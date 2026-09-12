@@ -23,7 +23,38 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r1",
+          "origin": {
+            "kind": "own-cell",
+            "cells": [
+              13
+            ],
+            "filled_by": "peer"
+          },
+          "targets": [
+            "PressureGridReservationPlanner"
+          ],
+          "reason": "S13 is the Planner ReferenceId the Path Allocator and Single-Hop Builder write with their request; the Allocator reads the Planner's LeaseTicks"
+        }
+      ],
+      "origins": [
+        "own:13"
+      ],
+      "targets": [
+        "PressureGridReservationPlanner"
+      ],
+      "site_targets": [
+        {
+          "cell": 21,
+          "targets": [
+            "PressureGridReservationPlanner"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -96,6 +127,113 @@
         "ControllerPressureTransferRuntime",
         "EmbeddedPressureTransferRuntime"
       ],
+      "site_targets": [
+        {
+          "cell": 99,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 100,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 101,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 102,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 103,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 106,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 107,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 108,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 109,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 110,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 111,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 117,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 118,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 119,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 120,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        }
+      ],
       "unattributed": []
     },
     {
@@ -134,6 +272,20 @@
       "targets": [
         "PressureInventoryReservation"
       ],
+      "site_targets": [
+        {
+          "cell": 12,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        },
+        {
+          "cell": 20,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        }
+      ],
       "unattributed": []
     },
     {
@@ -171,6 +323,20 @@
       ],
       "targets": [
         "PressureInventoryReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 13,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        },
+        {
+          "cell": 21,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        }
       ],
       "unattributed": []
     },
@@ -212,6 +378,44 @@
       ],
       "targets": [
         "PressureInventoryReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 10,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        },
+        {
+          "cell": 12,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        },
+        {
+          "cell": 13,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        },
+        {
+          "cell": 14,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        },
+        {
+          "cell": 15,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        },
+        {
+          "cell": 19,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        }
       ],
       "unattributed": []
     }
@@ -281,111 +485,129 @@
       },
       {
         "address": 8,
-        "name": "S8",
+        "name": "Result",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state",
+        "description": "1 admissible or granted, 0 no grant, -1 rejected"
       },
       {
         "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResponseToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       },
       {
         "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Mode",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request",
+        "description": "1 fallback, 2 direct, 3 path hop"
       },
       {
         "address": 11,
-        "name": "S11",
+        "name": "MaxRequestedRate",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request",
+        "description": "mol/tick"
       },
       {
         "address": 12,
-        "name": "S12",
+        "name": "AdmissibleRate",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "mol/tick"
       },
       {
         "address": 13,
-        "name": "S13",
+        "name": "PlannerRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 14,
-        "name": "S14",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "BuildEpoch",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 15,
-        "name": "S15",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "MediumType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 16,
-        "name": "S16",
+        "name": "Operation",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request",
+        "description": "1 QUOTE, 0 COMMIT"
       },
       {
         "address": 17,
-        "name": "S17",
+        "name": "TransferRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 18,
-        "name": "S18",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       },
       {
         "address": 19,
-        "name": "S19",
+        "name": "CommittedLeaseMoles",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "0 for QUOTE"
       }
     ],
     "headers": [

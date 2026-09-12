@@ -387,7 +387,7 @@ assert hard_limit_note(edge) == f"{edge} of {HARD_LIMIT_LINES} lines"
 entries = suite_entries(_PROJECT_ROOT)
 validators = validator_entries(_PROJECT_ROOT)
 tests = test_entries(_PROJECT_ROOT)
-assert len(entries) == 85 and len(validators) == 34 and len(tests) == 51
+assert len(entries) == 87 and len(validators) == 35 and len(tests) == 52
 assert entries == validators + tests
 assert entries[0].evidence_filename == "VALIDATE_ABI_CONTRACTS.txt"
 assert entries[-1].evidence_filename == "TEST_GAME_EXPORT.txt"

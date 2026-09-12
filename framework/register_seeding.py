@@ -73,7 +73,8 @@ on what it carries: `SHARED_IMAGE_CARRIES` declares that once per identity, and
 from __future__ import annotations
 
 from collections.abc import Callable, Iterator
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field
+from functools import lru_cache
 import re
 from typing import Any
 
@@ -84,7 +85,6 @@ from framework.script_contracts.control_flow import (
     call_state_graph,
     call_state_successors,
     program_labels,
-    writes_register,
 )
 from framework.script_contracts.parsing import collect_aliases, resolve_literal
 from framework.script_contracts.publication import same_image_edge
@@ -164,7 +164,9 @@ _OWN_STACK_UNKNOWN_WRITES = {"push", "putd", "clrd"}
 _CLEARED = "clr"
 _INDIRECT_FRESH = "rr"
 Environment = dict[str, Any]
-EnvironmentKey = tuple[tuple[str, Any], ...]
+# An environment as a hashable value: its items, unordered, since the walk keys
+# every arrival by one and a sort per arrival is a cost with nothing to show.
+EnvironmentKey = frozenset[tuple[str, Any]]
 
 
 @dataclass(frozen=True, slots=True)
@@ -176,6 +178,15 @@ class Range:
     low_open: bool = False
     high_open: bool = False
     nan: bool = True
+    # The walk keys every arrival by its whole environment and a tuple never
+    # caches its hash, so each value is hashed many times over; computed once.
+    _hash: int = field(default=0, init=False, repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "_hash", hash((self.low, self.high, self.low_open, self.high_open, self.nan)))
+
+    def __hash__(self) -> int:
+        return self._hash
 
     @property
     def exact(self) -> int | None:
@@ -197,10 +208,13 @@ UNKNOWN = Range()
 
 
 def _cap(value: Range) -> Range:
-    low = None if value.low is not None and abs(value.low) > VALUE_CAP else value.low
-    high = None if value.high is not None and abs(value.high) > VALUE_CAP else value.high
-    return replace(value, low=low, low_open=value.low_open and low is not None,
-                   high=high, high_open=value.high_open and high is not None)
+    low_over = value.low is not None and abs(value.low) > VALUE_CAP
+    high_over = value.high is not None and abs(value.high) > VALUE_CAP
+    if not low_over and not high_over:
+        # Nothing to drop; the walk caps every joined value, so this is the common case.
+        return value
+    return Range(None if low_over else value.low, None if high_over else value.high,
+                 value.low_open and not low_over, value.high_open and not high_over, value.nan)
 
 
 def meet(first: Range, second: Range) -> Range | None:
@@ -254,6 +268,11 @@ def join_environments(first: Environment, second: Environment) -> Environment:
         if other is None:
             continue
         if isinstance(value, Range) and isinstance(other, Range):
+            if value == other:
+                # Every value in an environment is already capped, so the join of
+                # a value with itself is that value; most arrivals agree.
+                joined[key] = value
+                continue
             widened = _cap(join(value, other))
             if not widened.unknown:
                 joined[key] = widened
@@ -519,6 +538,7 @@ class BootPaths:
         return len(row) > 1 and self.assigning.get(row[0], True)
 
     @staticmethod
+    @lru_cache(maxsize=None)
     def _index_register(token: str) -> str | None:
         match = _INDIRECT_REGISTER.fullmatch(token)
         return f"r{int(match.group(1))}" if match else None
@@ -567,11 +587,25 @@ class BootPaths:
                 found.add(f"r{int(device.group(1))}")
         return found
 
-    def writes(self, row: list[str], env: Environment) -> set[str]:
-        """Registers `row` writes under `env`; an `rrN` whose index is unknown writes none."""
-        found = {register for register in REGISTERS if writes_register(row, register)}
+    def _direct_writes(self, row: list[str]) -> set[str]:
+        """The named registers `row` writes: `writes_register` for every register, asked once.
+
+        A row names at most one destination, `push`/`pop` move `sp`, and `jal`
+        links `ra`; the walk asks this of every row on every path, so it is
+        computed from the row rather than by trying each of the 18 registers.
+        """
+        found: set[str] = set()
+        if row[0] in {"push", "pop"}:
+            found.add("sp")
+        if len(row) >= 2 and row[1] in REGISTERS and self.assigning.get(row[0], True):
+            found.add(row[1])
         if row[0] == "jal":
             found.add("ra")
+        return found
+
+    def writes(self, row: list[str], env: Environment) -> set[str]:
+        """Registers `row` writes under `env`; an `rrN` whose index is unknown writes none."""
+        found = self._direct_writes(row)
         if self._writes_first(row):
             index = self._index_register(row[1])
             if index:
@@ -634,9 +668,8 @@ class BootPaths:
                 # the register this write just wrote.
                 new[_INDIRECT_FRESH] = index
             return new
-        for register in REGISTERS:
-            if writes_register(row, register) or (op == "jal" and register == "ra"):
-                new.pop(register, None)
+        for register in self._direct_writes(row):
+            new.pop(register, None)
         if op == "clr" and len(row) == 2 and row[1] == "db":
             self._forget_cells(new)
             new[_CLEARED] = 1
@@ -748,7 +781,8 @@ class BootPaths:
         visited: set[tuple[CallState, EnvironmentKey]] = set()
         arrivals: dict[tuple[int, Any], set[EnvironmentKey]] = {}
         widened: dict[tuple[int, Any], Environment] = {}
-        pending: list[tuple[CallState, EnvironmentKey]] = [((0, None), ())]
+        successors: dict[CallState, set[CallState]] = {}
+        pending: list[tuple[CallState, EnvironmentKey]] = [((0, None), frozenset())]
         while pending:
             state, env_key = pending.pop()
             if (state, env_key) in visited:
@@ -760,7 +794,10 @@ class BootPaths:
             yield index, row, env
             if stop is not None and stop(index, row, env):
                 continue
-            outgoing, _ = call_state_successors(self.program, self.labels, state)
+            outgoing = successors.get(state)
+            if outgoing is None:
+                outgoing, _ = call_state_successors(self.program, self.labels, state)
+                successors[state] = outgoing
             edges: list[tuple[CallState, bool | None, Environment]] = []
             after = self.step(row, env) if tracked else env
             target = (state[1] if row[-1] == "ra" else self.labels.get(row[-1])) if row else None
@@ -783,7 +820,7 @@ class BootPaths:
                 if arrival in widened:
                     next_env = join_environments(widened[arrival], next_env)
                     widened[arrival] = next_env
-                key: EnvironmentKey = tuple(sorted(next_env.items()))
+                key: EnvironmentKey = frozenset(next_env.items())
                 if key not in seen:
                     seen.add(key)
                     if len(seen) > ENVIRONMENT_CAP and arrival not in widened:
@@ -791,7 +828,7 @@ class BootPaths:
                         for other in seen:
                             joined = join_environments(joined, dict(other))
                         widened[arrival] = joined
-                        key = tuple(sorted(joined.items()))
+                        key = frozenset(joined.items())
                 pending.append((next_state, key))
 
     def unwritten_reads(

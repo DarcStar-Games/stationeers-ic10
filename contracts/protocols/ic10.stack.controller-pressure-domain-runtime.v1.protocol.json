@@ -11,6 +11,7 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [],
   "provider_interfaces": [
     {
       "source": "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10",
@@ -80,116 +81,138 @@
         },
         {
           "address": 98,
-          "name": "S98",
+          "name": "ChannelMask",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 126
+          "const": 126,
+          "role": "metadata",
+          "description": "bitmask of the telemetry channels the controller publishes"
         },
         {
           "address": 99,
-          "name": "S99",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ControllerType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1770891776
+          "const": 1770891776,
+          "role": "metadata",
+          "description": "controller family hash"
         },
         {
           "address": 100,
-          "name": "S100",
+          "name": "TelemetryChannels[0]",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "telemetry",
+          "description": "channel n at S99+n; meanings are per controller family"
         },
         {
           "address": 101,
-          "name": "S101",
+          "name": "TelemetryChannels[1]",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "telemetry",
+          "description": "channel n at S99+n; meanings are per controller family"
         },
         {
           "address": 102,
-          "name": "S102",
+          "name": "TelemetryChannels[2]",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "telemetry",
+          "description": "channel n at S99+n; meanings are per controller family"
         },
         {
           "address": 103,
-          "name": "S103",
+          "name": "TelemetryChannels[3]",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "telemetry",
+          "description": "channel n at S99+n; meanings are per controller family"
         },
         {
           "address": 104,
-          "name": "S104",
+          "name": "TelemetryChannels[4]",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "telemetry",
+          "description": "channel n at S99+n; meanings are per controller family"
         },
         {
           "address": 105,
-          "name": "S105",
+          "name": "TelemetryChannels[5]",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "telemetry",
+          "description": "channel n at S99+n; meanings are per controller family"
         },
         {
           "address": 115,
-          "name": "S115",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "TelemetryGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "generation",
+          "description": "written last; payload precedes it"
         },
         {
           "address": 116,
-          "name": "S116",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ConfigHostRef",
+          "value_type": "reference-id",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "topology",
+          "description": "paired Generic Config Host ReferenceId"
         },
         {
           "address": 117,
-          "name": "S117",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "StagedSourceReservationReferenceId",
+          "value_type": "reference-id",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 119,
-          "name": "S119",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "StagedMediumType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "request"
         }
       ],
       "behavior": {

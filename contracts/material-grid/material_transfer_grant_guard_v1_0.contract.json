@@ -175,7 +175,51 @@
           "value": 2
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "cell:1484497288:28",
+        "cell:1484497288:29",
+        "checked:0:-1742884202"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 9,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 10,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 12,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 33,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 34,
+          "targets": [
+            "ResourceReservation"
+          ]
+        }
+      ],
+      "unattributed": [
+        "cell:1484497288:28",
+        "cell:1484497288:29"
+      ]
     }
   ],
   "own_stack": {
@@ -262,148 +306,166 @@
       },
       {
         "address": 9,
-        "name": "S9",
+        "name": "GrantedQuantity",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ActiveEpoch",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "epoch"
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Status",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state",
+        "description": "1 active, 0 no active grant, -1 invalid or consumed"
       },
       {
         "address": 12,
-        "name": "S12",
+        "name": "MaterialLinkRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 13,
-        "name": "S13",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "PublicationGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "generation"
       },
       {
         "address": 16,
-        "name": "S16",
+        "name": "StagedQuantity",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 17,
-        "name": "S17",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "StagedEpoch",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "epoch",
+        "description": "written after the staged identity payload"
       },
       {
         "address": 18,
-        "name": "S18",
+        "name": "AllocatorRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 19,
-        "name": "S19",
+        "name": "StagedSourceReservationRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 20,
-        "name": "S20",
+        "name": "StagedSinkReservationRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 21,
-        "name": "S21",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "StagedResourceType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 22,
-        "name": "S22",
+        "name": "StagedFeederRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 23,
-        "name": "S23",
+        "name": "StagedSorterRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 24,
-        "name": "S24",
+        "name": "StagedSinkProviderRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 25,
-        "name": "S25",
+        "name": "StagedLinkRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 26,
-        "name": "S26",
+        "name": "StagedExecutorRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 31,

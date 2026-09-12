@@ -136,7 +136,66 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r1",
+          "origin": {
+            "kind": "port-cell",
+            "port": "d1",
+            "cells": "any"
+          },
+          "targets": [
+            "ResourceLink"
+          ],
+          "reason": "d1 is the ResourceLink Snapshot Directory; a record holds a Link ReferenceId, and the Resolver reads the link's status, sink, class, and ResourceType"
+        }
+      ],
+      "origins": [
+        "port:d1:*"
+      ],
+      "targets": [
+        "ResourceLink"
+      ],
+      "site_targets": [
+        {
+          "cell": 9,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 22,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 27,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 28,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 29,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 31,
+          "targets": [
+            "ResourceLink"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -148,7 +207,38 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r3",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r1",
+            "cells": [
+              28
+            ]
+          },
+          "targets": [
+            "ResourceReservation"
+          ],
+          "reason": "Link S28 is the source Reservation ReferenceId; the Resolver reads its ExportAvailable"
+        }
+      ],
+      "origins": [
+        "ref:r1:28"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 36,
+          "targets": [
+            "ResourceReservation"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -160,7 +250,38 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r4",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r1",
+            "cells": [
+              29
+            ]
+          },
+          "targets": [
+            "ResourceReservation"
+          ],
+          "reason": "Link S29 is the sink Reservation ReferenceId; the Resolver reads its ImportCapacity"
+        }
+      ],
+      "origins": [
+        "ref:r1:29"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 37,
+          "targets": [
+            "ResourceReservation"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {
@@ -239,50 +360,56 @@
       },
       {
         "address": 8,
-        "name": "S8",
+        "name": "PrinterRefEcho",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "response_token",
+        "description": "the printer the published records answer"
       },
       {
         "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "InputCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "PublicationGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "generation"
       },
       {
         "address": 12,
-        "name": "S12",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Status",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 13,
-        "name": "S13",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResponseToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       },
       {
         "address": 14,
@@ -305,30 +432,33 @@
       },
       {
         "address": 16,
-        "name": "S16",
+        "name": "PrinterRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 17,
-        "name": "S17",
+        "name": "RequestedQuantity",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 18,
-        "name": "S18",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       }
     ],
     "headers": [

@@ -11,6 +11,68 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "BatchCount",
+      "role": "request"
+    },
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "ProcessorRef",
+      "role": "topology",
+      "description": "ReferenceId of the processor on d0"
+    },
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "OutputReservationRef",
+      "role": "topology",
+      "description": "ReferenceId of the output Reservation on d4"
+    },
+    {
+      "cells": "S16",
+      "start": 16,
+      "end": 16,
+      "name": "RequestToken",
+      "role": "request_token"
+    },
+    {
+      "cells": "S17",
+      "start": 17,
+      "end": 17,
+      "name": "AdmissionRef",
+      "role": "topology",
+      "description": "ReferenceId of the Admission on d1"
+    },
+    {
+      "cells": "S18",
+      "start": 18,
+      "end": 18,
+      "name": "LinkResolverRef",
+      "role": "topology",
+      "description": "ReferenceId of the Link Resolver on d2"
+    },
+    {
+      "cells": "S20",
+      "start": 20,
+      "end": 20,
+      "name": "Status",
+      "role": "state"
+    },
+    {
+      "cells": "S21",
+      "start": 21,
+      "end": 21,
+      "name": "CurrentToken",
+      "role": "current_token"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/material-transform/generic_material_transform_runtime_v2_0.ic10",
@@ -50,12 +112,13 @@
         },
         {
           "address": 8,
-          "name": "S8",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "BatchCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 9,
@@ -108,48 +171,57 @@
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ProcessorRef",
+          "value_type": "reference-id",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "topology",
+          "description": "ReferenceId of the processor on d0"
         },
         {
           "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "OutputReservationRef",
+          "value_type": "reference-id",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "topology",
+          "description": "ReferenceId of the output Reservation on d4"
         },
         {
           "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 17,
-          "name": "S17",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "AdmissionRef",
+          "value_type": "reference-id",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "topology",
+          "description": "ReferenceId of the Admission on d1"
         },
         {
           "address": 18,
-          "name": "S18",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LinkResolverRef",
+          "value_type": "reference-id",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "topology",
+          "description": "ReferenceId of the Link Resolver on d2"
         },
         {
           "address": 19,
@@ -163,22 +235,24 @@
         },
         {
           "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state"
         },
         {
           "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "CurrentToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "current_token"
         },
         {
           "address": 22,

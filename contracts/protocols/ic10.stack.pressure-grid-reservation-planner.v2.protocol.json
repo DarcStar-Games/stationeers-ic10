@@ -11,6 +11,74 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "StagedLinkCount",
+      "role": "result"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "ReservedMolesSummary",
+      "role": "result"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "Status",
+      "role": "state",
+      "description": "1 grants, 0 no grants, negative fault"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "LeaseTicks",
+      "role": "result"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "MediumType",
+      "role": "result"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "BuildGenerationCounter",
+      "role": "generation"
+    },
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "CommittedReservationEpoch",
+      "role": "epoch",
+      "description": "written last on a successful build only"
+    },
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "PlanBuilderRequestGeneration",
+      "role": "request_token"
+    },
+    {
+      "cells": "S21",
+      "start": 21,
+      "end": 21,
+      "name": "LeaseTicksAsRead",
+      "role": "result",
+      "description": "the Reservation Allocator divides remaining capacity by this cell as the lease length, but the Planner publishes LeaseTicks at S11 and never writes S21; see issue #194"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/pressure-grid/pressure_grid_reservation_planner_v2_1.ic10",
@@ -50,77 +118,87 @@
         },
         {
           "address": 8,
-          "name": "S8",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "StagedLinkCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 9,
-          "name": "S9",
+          "name": "ReservedMolesSummary",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 grants, 0 no grants, negative fault"
         },
         {
           "address": 11,
-          "name": "S11",
+          "name": "LeaseTicks",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "MediumType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "BuildGenerationCounter",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "generation"
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "CommittedReservationEpoch",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "epoch",
+          "description": "written last on a successful build only"
         },
         {
           "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "PlanBuilderRequestGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "request_token"
         }
       ],
       "behavior": {

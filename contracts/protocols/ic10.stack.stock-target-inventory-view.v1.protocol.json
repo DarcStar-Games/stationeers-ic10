@@ -11,6 +11,51 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "ResourceType",
+      "role": "request"
+    },
+    {
+      "cells": "S16",
+      "start": 16,
+      "end": 16,
+      "name": "TargetQuantity",
+      "role": "request"
+    },
+    {
+      "cells": "S18",
+      "start": 18,
+      "end": 18,
+      "name": "RequestToken",
+      "role": "request_token"
+    },
+    {
+      "cells": "S19",
+      "start": 19,
+      "end": 19,
+      "name": "ResponseToken",
+      "role": "response_token"
+    },
+    {
+      "cells": "S20",
+      "start": 20,
+      "end": 20,
+      "name": "Status",
+      "role": "state",
+      "description": "1 exact, 2 lower bound only, -3 overflow, -1 invalid"
+    },
+    {
+      "cells": "S21",
+      "start": 21,
+      "end": 21,
+      "name": "OnHandQuantity",
+      "role": "result"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10",
@@ -50,58 +95,65 @@
         },
         {
           "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResourceType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "TargetQuantity",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 18,
-          "name": "S18",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 19,
-          "name": "S19",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResponseToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         },
         {
           "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 exact, 2 lower bound only, -3 overflow, -1 invalid"
         },
         {
           "address": 21,
-          "name": "S21",
+          "name": "OnHandQuantity",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 22,

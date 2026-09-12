@@ -282,23 +282,27 @@
       },
       {
         "address": 98,
-        "name": "S98",
+        "name": "ChannelMask",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 2046
+        "const": 2046,
+        "role": "metadata",
+        "description": "bitmask of the telemetry channels the controller publishes"
       },
       {
         "address": 99,
-        "name": "S99",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ControllerType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": -1020491928
+        "const": -1020491928,
+        "role": "metadata",
+        "description": "controller family hash"
       },
       {
         "address": 100,
@@ -396,13 +400,15 @@
       },
       {
         "address": 116,
-        "name": "S116",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ConfigHostRef",
+        "value_type": "reference-id",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "topology",
+        "description": "paired Generic Config Host ReferenceId"
       },
       {
         "address": 117,

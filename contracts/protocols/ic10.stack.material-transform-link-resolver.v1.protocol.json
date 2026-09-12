@@ -11,6 +11,59 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "TransformType",
+      "role": "result"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "InputCount",
+      "role": "result"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "ProfileGeneration",
+      "role": "generation"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "Status",
+      "role": "state"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "PublicationGeneration",
+      "role": "generation"
+    },
+    {
+      "cells": "S20..S31",
+      "start": 20,
+      "end": 31,
+      "name": "LinkRecords",
+      "role": "table",
+      "description": "three four-cell [LinkRef, QuantityPerJob, ResourceType, ResourceClass] records"
+    },
+    {
+      "cells": "S32..S83",
+      "start": 32,
+      "end": 83,
+      "name": "UnusedRecordWindow",
+      "role": "reserved",
+      "description": "the Stager and Allocator scan the same S20..S83 window on either resolver and bound the walk by InputCount at S9; the Link Resolver publishes at most three records and never writes here"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/material-transform/material_transform_link_resolver_v1_0.ic10",
@@ -50,21 +103,23 @@
         },
         {
           "address": 8,
-          "name": "S8",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "TransformType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "InputCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 10,
@@ -77,31 +132,34 @@
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ProfileGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "generation"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "PublicationGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "generation"
         }
       ],
       "behavior": {

@@ -154,7 +154,31 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:1512745005",
+        "own:100"
+      ],
+      "targets": [
+        "ControllerSelector"
+      ],
+      "site_targets": [
+        {
+          "cell": 8,
+          "targets": [
+            "ControllerSelector"
+          ]
+        },
+        {
+          "cell": 17,
+          "targets": [
+            "ControllerSelector"
+          ]
+        }
+      ],
+      "unattributed": [
+        "own:100"
+      ]
     }
   ],
   "own_stack": {
@@ -256,69 +280,75 @@
       },
       {
         "address": 10,
-        "name": "S10",
+        "name": "LoadedControllerRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "StagingRevision",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "generation"
       },
       {
         "address": 12,
-        "name": "S12",
+        "name": "DesiredControllerRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 13,
         "name": "CaptureStagingRevision",
         "value_type": "integer",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "description": "capture staging revision"
+        "description": "capture staging revision",
+        "role": "generation"
       },
       {
         "address": 14,
-        "name": "S14",
+        "name": "CapturedControllerRef",
         "value_type": "number",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "description": "capture physical controller RefId"
+        "description": "capture physical controller RefId",
+        "role": "topology"
       },
       {
         "address": 15,
-        "name": "S15",
+        "name": "StagingReady",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
         ],
-        "const": 0
+        "const": 0,
+        "role": "state"
       },
       {
         "address": 16,
-        "name": "S16",
-        "value_type": "number",
-        "semantic_source": "source",
+        "name": "EditorStatus",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
@@ -333,7 +363,8 @@
             "value": 3,
             "name": "MODIFIED"
           }
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 17,
@@ -344,16 +375,18 @@
           "external-read",
           "external-write"
         ],
-        "description": "Written by the Config Loader with the loaded image."
+        "description": "Written by the Config Loader with the loaded image.",
+        "role": "metadata"
       },
       {
         "address": 18,
-        "name": "S18",
+        "name": "ConfigHostRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 19,
@@ -364,26 +397,29 @@
           "external-read",
           "external-write"
         ],
-        "description": "Written by the Config Loader with the loaded image."
+        "description": "Written by the Config Loader with the loaded image.",
+        "role": "schema"
       },
       {
         "address": 20,
-        "name": "S20",
+        "name": "BridgeImageSlot",
         "value_type": "integer",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
         ],
-        "description": "physical config-image slot 0..31 from Config Bridge"
+        "description": "physical config-image slot 0..31 from Config Bridge",
+        "role": "request"
       },
       {
         "address": 21,
-        "name": "S21",
+        "name": "BridgeResolvedValue",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 22,
@@ -394,27 +430,30 @@
           "external-read",
           "external-write"
         ],
-        "description": "Written by the Config Input Bridge with a resolved value."
+        "description": "Written by the Config Input Bridge with a resolved value.",
+        "role": "request"
       },
       {
         "address": 25,
-        "name": "S25",
+        "name": "BridgePublicationValid",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
         ],
-        "const": 0
+        "const": 0,
+        "role": "state"
       },
       {
         "address": 26,
-        "name": "S26",
+        "name": "BridgeHostSnapshot",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "generation"
       },
       {
         "address": 27,
@@ -425,7 +464,8 @@
           "external-read",
           "external-write"
         ],
-        "description": "Loader-validated Profile ReferenceId."
+        "description": "Loader-validated Profile ReferenceId.",
+        "role": "topology"
       },
       {
         "address": 28,
@@ -436,7 +476,8 @@
           "external-read",
           "external-write"
         ],
-        "description": "Loader-validated Profile ABI."
+        "description": "Loader-validated Profile ABI.",
+        "role": "metadata"
       },
       {
         "address": 29,
@@ -447,7 +488,8 @@
           "external-read",
           "external-write"
         ],
-        "description": "Loader-validated Profile generation."
+        "description": "Loader-validated Profile generation.",
+        "role": "generation"
       },
       {
         "address": 30,
@@ -458,57 +500,66 @@
           "external-read",
           "external-write"
         ],
-        "description": "Written by the Config Loader with the loaded image."
+        "description": "Written by the Config Loader with the loaded image.",
+        "role": "metadata"
       },
       {
         "address": 100,
-        "name": "S100",
+        "name": "ControllerSelectorRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 101,
-        "name": "S101",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ButtonPreviousStates[0]",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "state",
+        "description": "Save, Reload, Apply"
       },
       {
         "address": 102,
-        "name": "S102",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ButtonPreviousStates[1]",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "state",
+        "description": "Save, Reload, Apply"
       },
       {
         "address": 103,
-        "name": "S103",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ButtonPreviousStates[2]",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "state",
+        "description": "Save, Reload, Apply"
       },
       {
         "address": 104,
-        "name": "S104",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ApplyGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "generation"
       }
     ],
     "headers": [

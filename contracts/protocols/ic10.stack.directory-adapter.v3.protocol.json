@@ -13,6 +13,76 @@
   "canonical_refs": [
     "data/directory_schemas.json#/adapter_abi"
   ],
+  "layout": [
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "EntryWidth",
+      "role": "metadata"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "Capacity",
+      "role": "metadata"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "CandidateCount",
+      "role": "result"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "RebuildSequence",
+      "role": "generation",
+      "description": "odd while rebuilding, even when stable"
+    },
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "Overflow",
+      "role": "state",
+      "description": "nonzero means the candidate set is incomplete"
+    },
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "Mode",
+      "role": "metadata",
+      "description": "1 SNAPSHOT, 2 REGISTRY"
+    },
+    {
+      "cells": "S16",
+      "start": 16,
+      "end": 16,
+      "name": "FreezeRequestToken",
+      "role": "request_token",
+      "description": "0 releases"
+    },
+    {
+      "cells": "S17",
+      "start": 17,
+      "end": 17,
+      "name": "FreezeAcknowledgeToken",
+      "role": "response_token"
+    },
+    {
+      "cells": "S18..S401",
+      "start": 18,
+      "end": 401,
+      "name": "CandidateRecords",
+      "role": "table",
+      "description": "packed complete candidate records"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/catalog-control-plane/catalog_coordinator_directory_adapter_v2_0.ic10",
@@ -77,79 +147,91 @@
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "EntryWidth",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 6
+          "const": 6,
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Capacity",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 64
+          "const": 64,
+          "role": "metadata"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "CandidateCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 2
+          "role": "result"
+        },
+        {
+          "address": 13,
+          "name": "RebuildSequence",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "role": "generation",
+          "description": "odd while rebuilding, even when stable"
+        },
+        {
+          "address": 14,
+          "name": "Overflow",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "state",
+          "description": "nonzero means the candidate set is incomplete"
+        },
+        {
+          "address": 15,
+          "name": "Mode",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 2,
+          "role": "metadata",
+          "description": "1 SNAPSHOT, 2 REGISTRY"
         },
         {
           "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeRequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token",
+          "description": "0 releases"
         },
         {
           "address": 17,
-          "name": "S17",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeAcknowledgeToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         }
       ],
       "behavior": {
@@ -239,79 +321,91 @@
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "EntryWidth",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 2
+          "const": 2,
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Capacity",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 64
+          "const": 64,
+          "role": "metadata"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "CandidateCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "role": "result"
+        },
+        {
+          "address": 13,
+          "name": "RebuildSequence",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "role": "generation",
+          "description": "odd while rebuilding, even when stable"
+        },
+        {
+          "address": 14,
+          "name": "Overflow",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "state",
+          "description": "nonzero means the candidate set is incomplete"
+        },
+        {
+          "address": 15,
+          "name": "Mode",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 1,
+          "role": "metadata",
+          "description": "1 SNAPSHOT, 2 REGISTRY"
         },
         {
           "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeRequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token",
+          "description": "0 releases"
         },
         {
           "address": 17,
-          "name": "S17",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeAcknowledgeToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         }
       ],
       "behavior": {
@@ -401,79 +495,91 @@
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "EntryWidth",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 3
+          "const": 3,
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Capacity",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 64
+          "const": 64,
+          "role": "metadata"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "CandidateCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "role": "result"
+        },
+        {
+          "address": 13,
+          "name": "RebuildSequence",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "role": "generation",
+          "description": "odd while rebuilding, even when stable"
+        },
+        {
+          "address": 14,
+          "name": "Overflow",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "state",
+          "description": "nonzero means the candidate set is incomplete"
+        },
+        {
+          "address": 15,
+          "name": "Mode",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 1,
+          "role": "metadata",
+          "description": "1 SNAPSHOT, 2 REGISTRY"
         },
         {
           "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeRequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token",
+          "description": "0 releases"
         },
         {
           "address": 17,
-          "name": "S17",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeAcknowledgeToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         }
       ],
       "behavior": {
@@ -572,79 +678,91 @@
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "EntryWidth",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 3
+          "const": 3,
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Capacity",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 64
+          "const": 64,
+          "role": "metadata"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "CandidateCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "role": "result"
+        },
+        {
+          "address": 13,
+          "name": "RebuildSequence",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "role": "generation",
+          "description": "odd while rebuilding, even when stable"
+        },
+        {
+          "address": 14,
+          "name": "Overflow",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "state",
+          "description": "nonzero means the candidate set is incomplete"
+        },
+        {
+          "address": 15,
+          "name": "Mode",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 1,
+          "role": "metadata",
+          "description": "1 SNAPSHOT, 2 REGISTRY"
         },
         {
           "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeRequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token",
+          "description": "0 releases"
         },
         {
           "address": 17,
-          "name": "S17",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeAcknowledgeToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         }
       ],
       "behavior": {
@@ -734,79 +852,91 @@
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "EntryWidth",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 3
+          "const": 3,
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Capacity",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 64
+          "const": 64,
+          "role": "metadata"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "CandidateCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "role": "result"
+        },
+        {
+          "address": 13,
+          "name": "RebuildSequence",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "role": "generation",
+          "description": "odd while rebuilding, even when stable"
+        },
+        {
+          "address": 14,
+          "name": "Overflow",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "state",
+          "description": "nonzero means the candidate set is incomplete"
+        },
+        {
+          "address": 15,
+          "name": "Mode",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 1,
+          "role": "metadata",
+          "description": "1 SNAPSHOT, 2 REGISTRY"
         },
         {
           "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeRequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token",
+          "description": "0 releases"
         },
         {
           "address": 17,
-          "name": "S17",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeAcknowledgeToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         }
       ],
       "behavior": {
@@ -896,79 +1026,91 @@
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "EntryWidth",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 3
+          "const": 3,
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Capacity",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 64
+          "const": 64,
+          "role": "metadata"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "CandidateCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "role": "result"
+        },
+        {
+          "address": 13,
+          "name": "RebuildSequence",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "role": "generation",
+          "description": "odd while rebuilding, even when stable"
+        },
+        {
+          "address": 14,
+          "name": "Overflow",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "state",
+          "description": "nonzero means the candidate set is incomplete"
+        },
+        {
+          "address": 15,
+          "name": "Mode",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 1,
+          "role": "metadata",
+          "description": "1 SNAPSHOT, 2 REGISTRY"
         },
         {
           "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeRequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token",
+          "description": "0 releases"
         },
         {
           "address": 17,
-          "name": "S17",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeAcknowledgeToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         }
       ],
       "behavior": {
@@ -1058,79 +1200,91 @@
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "EntryWidth",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 3
+          "const": 3,
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Capacity",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 64
+          "const": 64,
+          "role": "metadata"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "CandidateCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "role": "result"
+        },
+        {
+          "address": 13,
+          "name": "RebuildSequence",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "role": "generation",
+          "description": "odd while rebuilding, even when stable"
+        },
+        {
+          "address": 14,
+          "name": "Overflow",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "state",
+          "description": "nonzero means the candidate set is incomplete"
+        },
+        {
+          "address": 15,
+          "name": "Mode",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 1,
+          "role": "metadata",
+          "description": "1 SNAPSHOT, 2 REGISTRY"
         },
         {
           "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeRequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token",
+          "description": "0 releases"
         },
         {
           "address": 17,
-          "name": "S17",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeAcknowledgeToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         }
       ],
       "behavior": {
@@ -1220,79 +1374,91 @@
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "EntryWidth",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 3
+          "const": 3,
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Capacity",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 64
+          "const": 64,
+          "role": "metadata"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "CandidateCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "role": "result"
+        },
+        {
+          "address": 13,
+          "name": "RebuildSequence",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "role": "generation",
+          "description": "odd while rebuilding, even when stable"
+        },
+        {
+          "address": 14,
+          "name": "Overflow",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "state",
+          "description": "nonzero means the candidate set is incomplete"
+        },
+        {
+          "address": 15,
+          "name": "Mode",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 1,
+          "role": "metadata",
+          "description": "1 SNAPSHOT, 2 REGISTRY"
         },
         {
           "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeRequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token",
+          "description": "0 releases"
         },
         {
           "address": 17,
-          "name": "S17",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeAcknowledgeToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         }
       ],
       "behavior": {
@@ -1382,79 +1548,91 @@
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "EntryWidth",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "const": 1,
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Capacity",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 64
+          "const": 64,
+          "role": "metadata"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "CandidateCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "role": "result"
+        },
+        {
+          "address": 13,
+          "name": "RebuildSequence",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "role": "generation",
+          "description": "odd while rebuilding, even when stable"
+        },
+        {
+          "address": 14,
+          "name": "Overflow",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "state",
+          "description": "nonzero means the candidate set is incomplete"
+        },
+        {
+          "address": 15,
+          "name": "Mode",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 1,
+          "role": "metadata",
+          "description": "1 SNAPSHOT, 2 REGISTRY"
         },
         {
           "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeRequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token",
+          "description": "0 releases"
         },
         {
           "address": 17,
-          "name": "S17",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeAcknowledgeToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         }
       ],
       "behavior": {
@@ -1544,79 +1722,91 @@
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "EntryWidth",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 3
+          "const": 3,
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Capacity",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 64
+          "const": 64,
+          "role": "metadata"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-read",
-            "self-write"
-          ]
-        },
-        {
-          "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
-          "access": [
-            "self-write"
-          ]
-        },
-        {
-          "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "CandidateCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 1
+          "role": "result"
+        },
+        {
+          "address": 13,
+          "name": "RebuildSequence",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-read",
+            "self-write"
+          ],
+          "role": "generation",
+          "description": "odd while rebuilding, even when stable"
+        },
+        {
+          "address": 14,
+          "name": "Overflow",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "role": "state",
+          "description": "nonzero means the candidate set is incomplete"
+        },
+        {
+          "address": 15,
+          "name": "Mode",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 1,
+          "role": "metadata",
+          "description": "1 SNAPSHOT, 2 REGISTRY"
         },
         {
           "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeRequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token",
+          "description": "0 releases"
         },
         {
           "address": 17,
-          "name": "S17",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FreezeAcknowledgeToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         }
       ],
       "behavior": {

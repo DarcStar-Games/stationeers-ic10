@@ -379,155 +379,179 @@
       },
       {
         "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResponseGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       },
       {
         "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 12,
-        "name": "S12",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 13,
-        "name": "S13",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 14,
-        "name": "S14",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 15,
-        "name": "S15",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 16,
-        "name": "S16",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 17,
-        "name": "S17",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 18,
-        "name": "S18",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResponseStatus",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 32
+        "role": "state",
+        "description": "1 success, negative rejected"
+      },
+      {
+        "address": 10,
+        "name": "AllocatedJobId",
+        "value_type": "number",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-write"
+        ],
+        "role": "result",
+        "description": "for PUBLISH_NEW"
+      },
+      {
+        "address": 11,
+        "name": "Command",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read"
+        ],
+        "role": "request",
+        "description": "1 PUBLISH_NEW, 2 SET_STATE, 3 REAP"
+      },
+      {
+        "address": 12,
+        "name": "SlotOrdinal",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read"
+        ],
+        "role": "request",
+        "description": "0..31"
+      },
+      {
+        "address": 13,
+        "name": "ExpectedJobGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read"
+        ],
+        "role": "request"
+      },
+      {
+        "address": 14,
+        "name": "DesiredState",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read"
+        ],
+        "role": "request"
+      },
+      {
+        "address": 15,
+        "name": "DesiredErrorStatus",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read"
+        ],
+        "role": "request"
+      },
+      {
+        "address": 16,
+        "name": "QueueSequence",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read",
+          "self-write"
+        ],
+        "role": "generation",
+        "description": "odd while mutating, even stable"
+      },
+      {
+        "address": 17,
+        "name": "QueueGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read",
+          "self-write"
+        ],
+        "role": "generation"
+      },
+      {
+        "address": 18,
+        "name": "Capacity",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-write"
+        ],
+        "const": 32,
+        "role": "metadata",
+        "description": "32"
       },
       {
         "address": 19,
-        "name": "S19",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       },
       {
         "address": 23,
-        "name": "S23",
+        "name": "NextJobId",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 24,
-        "name": "S24",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "AppliedRequestMarker",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "generation",
+        "description": "last applied request generation; the replay marker"
       },
       {
         "address": 25,
-        "name": "S25",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "InFlightStateBase",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "bank",
+        "description": "in-flight slot state-base journal"
       },
       {
         "address": 26,
-        "name": "S26",
+        "name": "InFlightOldActiveBank",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "bank"
       }
     ],
     "headers": [

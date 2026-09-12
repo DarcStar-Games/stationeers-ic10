@@ -11,6 +11,122 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "RequestToken",
+      "role": "request_token"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "Status",
+      "role": "state",
+      "description": "1 accepted, -1 invalid"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "ResponseToken",
+      "role": "response_token"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "LeaseTicks",
+      "role": "request"
+    },
+    {
+      "cells": "S16..S18",
+      "start": 16,
+      "end": 18,
+      "name": "BestTransferRefs",
+      "role": "result"
+    },
+    {
+      "cells": "S19",
+      "start": 19,
+      "end": 19,
+      "name": "BestPathLength",
+      "role": "result"
+    },
+    {
+      "cells": "S20",
+      "start": 20,
+      "end": 20,
+      "name": "BestAdmissibleBottleneck",
+      "role": "result"
+    },
+    {
+      "cells": "S21",
+      "start": 21,
+      "end": 21,
+      "name": "BestCost",
+      "role": "result"
+    },
+    {
+      "cells": "S22",
+      "start": 22,
+      "end": 22,
+      "name": "ActiveSearchId",
+      "role": "result"
+    },
+    {
+      "cells": "S23",
+      "start": 23,
+      "end": 23,
+      "name": "CandidatesEvaluated",
+      "role": "result"
+    },
+    {
+      "cells": "S24",
+      "start": 24,
+      "end": 24,
+      "name": "CandidateBudget",
+      "role": "result"
+    },
+    {
+      "cells": "S25",
+      "start": 25,
+      "end": 25,
+      "name": "LiftAccumulator",
+      "role": "state",
+      "description": "scratch; not a public contract"
+    },
+    {
+      "cells": "S32",
+      "start": 32,
+      "end": 32,
+      "name": "SearchId",
+      "role": "request"
+    },
+    {
+      "cells": "S33",
+      "start": 33,
+      "end": 33,
+      "name": "PathLength",
+      "role": "request"
+    },
+    {
+      "cells": "S34",
+      "start": 34,
+      "end": 34,
+      "name": "CandidateBottleneck",
+      "role": "request"
+    },
+    {
+      "cells": "S35..S37",
+      "start": 35,
+      "end": 37,
+      "name": "TransferRefs",
+      "role": "request"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/pressure-grid/pressure_grid_route_ranker_v2_0.ic10",
@@ -60,135 +176,151 @@
         },
         {
           "address": 8,
-          "name": "S8",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 accepted, -1 invalid"
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResponseToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         },
         {
           "address": 11,
-          "name": "S11",
+          "name": "LeaseTicks",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 19,
-          "name": "S19",
+          "name": "BestPathLength",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 20,
-          "name": "S20",
+          "name": "BestAdmissibleBottleneck",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 21,
-          "name": "S21",
+          "name": "BestCost",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 22,
-          "name": "S22",
+          "name": "ActiveSearchId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 23,
-          "name": "S23",
+          "name": "CandidatesEvaluated",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 24,
-          "name": "S24",
+          "name": "CandidateBudget",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 25,
-          "name": "S25",
+          "name": "LiftAccumulator",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "scratch; not a public contract"
         },
         {
           "address": 32,
-          "name": "S32",
+          "name": "SearchId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 33,
-          "name": "S33",
+          "name": "PathLength",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 34,
-          "name": "S34",
+          "name": "CandidateBottleneck",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         }
       ],
       "behavior": {

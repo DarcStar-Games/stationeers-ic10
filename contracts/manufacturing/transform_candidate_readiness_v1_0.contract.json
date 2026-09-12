@@ -25,7 +25,50 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r1",
+          "origin": {
+            "kind": "own-cell",
+            "cells": [
+              11
+            ],
+            "filled_by": "peer"
+          },
+          "targets": [
+            "GenericMaterialTransformRuntime"
+          ],
+          "reason": "S11 is the selected Runtime ReferenceId the Transform Candidate Executor writes with its request"
+        }
+      ],
+      "origins": [
+        "own:11"
+      ],
+      "targets": [
+        "GenericMaterialTransformRuntime"
+      ],
+      "site_targets": [
+        {
+          "cell": 15,
+          "targets": [
+            "GenericMaterialTransformRuntime"
+          ]
+        },
+        {
+          "cell": 17,
+          "targets": [
+            "GenericMaterialTransformRuntime"
+          ]
+        },
+        {
+          "cell": 18,
+          "targets": [
+            "GenericMaterialTransformRuntime"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -45,7 +88,50 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r10",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r1",
+            "cells": [
+              18
+            ]
+          },
+          "targets": [
+            "MaterialTransformLinkResolver"
+          ],
+          "reason": "Runtime S18 is the Link Resolver ReferenceId the Runtime captured from its d2"
+        }
+      ],
+      "origins": [
+        "ref:r1:18"
+      ],
+      "targets": [
+        "MaterialTransformLinkResolver"
+      ],
+      "site_targets": [
+        {
+          "cell": 8,
+          "targets": [
+            "MaterialTransformLinkResolver"
+          ]
+        },
+        {
+          "cell": 12,
+          "targets": [
+            "MaterialTransformLinkResolver"
+          ]
+        },
+        {
+          "cell": 13,
+          "targets": [
+            "MaterialTransformLinkResolver"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -57,7 +143,38 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r11",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r1",
+            "cells": [
+              15
+            ]
+          },
+          "targets": [
+            "ResourceReservation"
+          ],
+          "reason": "Runtime S15 is the output Reservation ReferenceId the Runtime captured from its d4"
+        }
+      ],
+      "origins": [
+        "ref:r1:15"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 37,
+          "targets": [
+            "ResourceReservation"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -100,6 +217,56 @@
       "targets": [
         "ResourceTransformProfileView"
       ],
+      "site_targets": [
+        {
+          "cell": 35,
+          "targets": [
+            "ResourceTransformProfileView"
+          ]
+        },
+        {
+          "cell": 68,
+          "targets": [
+            "ResourceTransformProfileView"
+          ]
+        },
+        {
+          "cell": 69,
+          "targets": [
+            "ResourceTransformProfileView"
+          ]
+        },
+        {
+          "cell": 70,
+          "targets": [
+            "ResourceTransformProfileView"
+          ]
+        },
+        {
+          "cell": 71,
+          "targets": [
+            "ResourceTransformProfileView"
+          ]
+        },
+        {
+          "cell": 72,
+          "targets": [
+            "ResourceTransformProfileView"
+          ]
+        },
+        {
+          "cell": 73,
+          "targets": [
+            "ResourceTransformProfileView"
+          ]
+        },
+        {
+          "cell": 74,
+          "targets": [
+            "ResourceTransformProfileView"
+          ]
+        }
+      ],
       "unattributed": []
     },
     {
@@ -120,7 +287,50 @@
           "value": 1
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r9",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r1",
+            "cells": [
+              17
+            ]
+          },
+          "targets": [
+            "MaterialTransformAdmission"
+          ],
+          "reason": "Runtime S17 is the Admission ReferenceId the Runtime captured from its d1"
+        }
+      ],
+      "origins": [
+        "ref:r1:17"
+      ],
+      "targets": [
+        "MaterialTransformAdmission"
+      ],
+      "site_targets": [
+        {
+          "cell": 8,
+          "targets": [
+            "MaterialTransformAdmission"
+          ]
+        },
+        {
+          "cell": 9,
+          "targets": [
+            "MaterialTransformAdmission"
+          ]
+        },
+        {
+          "cell": 13,
+          "targets": [
+            "MaterialTransformAdmission"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {
@@ -194,85 +404,95 @@
       },
       {
         "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       },
       {
         "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Status",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state",
+        "description": "1 ready, -2 processor, -3 resource, -4 capacity, -1 invalid"
       },
       {
         "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResponseToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       },
       {
         "address": 11,
-        "name": "S11",
+        "name": "RuntimeRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 12,
-        "name": "S12",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "TransformType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 13,
-        "name": "S13",
+        "name": "RequiredCapability",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 14,
-        "name": "S14",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "InputCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 15,
-        "name": "S15",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "OutputCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 16,
-        "name": "S16",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "BatchCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 20,

@@ -232,144 +232,165 @@
       },
       {
         "address": 8,
-        "name": "S8",
+        "name": "CostHint",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "normalized; 0 when unavailable"
       },
       {
         "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Status",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 10,
-        "name": "S10",
+        "name": "NativeLinkRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "NativeLinkGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 0
+        "const": 0,
+        "role": "generation"
       },
       {
         "address": 12,
-        "name": "S12",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "PublicationGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "generation",
+        "description": "written last"
       },
       {
         "address": 13,
-        "name": "S13",
+        "name": "LinkFlags",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 3
+        "const": 3,
+        "role": "metadata"
       },
       {
         "address": 14,
-        "name": "S14",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassExtension[0]",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
       },
       {
         "address": 20,
-        "name": "S20",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassExtension[6]",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "result",
+        "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
       },
       {
         "address": 21,
-        "name": "S21",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClassExtension[7]",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "result",
+        "description": "class-specific cells, indexed from S14. Material Link: [0] GrantGuardRef, [1] ExecutorRef, [2] FeederRef, [3] BufferQuantity, [4] BufferResourceType, [5] VendingRef, [6] StackerRef, [7] SorterRef, [8] SinkProviderRef, [9] CompletedEpoch, [10] ExecutionStatus, [11] AchievedRate, [12] ElapsedTicks, [13] SemanticResourceType. POWER links: [0] source overhead watts, [6] commissioned ceiling watts, [7] cost hint; the rest unused"
       },
       {
         "address": 28,
-        "name": "S28",
+        "name": "SourceReservationRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 29,
-        "name": "S29",
+        "name": "SinkReservationRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 30,
-        "name": "S30",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResourceClass",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 4
+        "const": 4,
+        "role": "metadata"
       },
       {
         "address": 31,
-        "name": "S31",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResourceType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 1977405139
+        "const": 1977405139,
+        "role": "metadata"
       },
       {
         "address": 32,
-        "name": "S32",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "NativeRouteClass",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 2
+        "const": 2,
+        "role": "metadata"
       },
       {
         "address": 33,
-        "name": "S33",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "MaxRate",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "resource units per tick"
       }
     ],
     "headers": [

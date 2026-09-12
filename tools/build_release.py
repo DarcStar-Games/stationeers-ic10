@@ -64,6 +64,7 @@ def main():
     subprocess.run([sys.executable,str(ROOT/'tools'/'generate'/'generate_source_catalog.py')],cwd=ROOT,check=True)
     subprocess.run([sys.executable,str(ROOT/'tools'/'generate'/'update_magic_registry.py')],cwd=ROOT,check=True)
     subprocess.run([sys.executable,str(ROOT/'tools'/'generate'/'generate_script_contracts.py')],cwd=ROOT,check=True)
+    subprocess.run([sys.executable,str(ROOT/'tools'/'generate'/'generate_stack_field_map.py')],cwd=ROOT,check=True)
     # Releases always regenerate evidence from scratch. Local validation may use
     # --resume, but a release must not package output reused from an earlier run.
     subprocess.run([sys.executable,str(ROOT/'tools'/'run_validation.py')],cwd=ROOT,check=True)

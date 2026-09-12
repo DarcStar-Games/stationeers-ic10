@@ -10,6 +10,32 @@
     96
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S98",
+      "start": 98,
+      "end": 98,
+      "name": "ChannelMask",
+      "role": "metadata",
+      "description": "bitmask of the telemetry channels the controller publishes"
+    },
+    {
+      "cells": "S99",
+      "start": 99,
+      "end": 99,
+      "name": "ControllerType",
+      "role": "metadata",
+      "description": "controller family hash"
+    },
+    {
+      "cells": "S116",
+      "start": 116,
+      "end": 116,
+      "name": "ConfigHostRef",
+      "role": "topology",
+      "description": "paired Generic Config Host ReferenceId"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/controller-pi/controller_pi_runtime_v1_1.ic10",
@@ -79,23 +105,27 @@
         },
         {
           "address": 98,
-          "name": "S98",
+          "name": "ChannelMask",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": 2046
+          "const": 2046,
+          "role": "metadata",
+          "description": "bitmask of the telemetry channels the controller publishes"
         },
         {
           "address": 99,
-          "name": "S99",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ControllerType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1020491928
+          "const": -1020491928,
+          "role": "metadata",
+          "description": "controller family hash"
         },
         {
           "address": 100,
@@ -193,13 +223,15 @@
         },
         {
           "address": 116,
-          "name": "S116",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ConfigHostRef",
+          "value_type": "reference-id",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "topology",
+          "description": "paired Generic Config Host ReferenceId"
         },
         {
           "address": 117,
@@ -327,24 +359,27 @@
         },
         {
           "address": 98,
-          "name": "Ch1Process",
+          "name": "ChannelMask",
           "value_type": "enum",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
           "const": 62,
-          "description": "ch1 process,2 state,3 state ticks,4 cycles,5 status"
+          "description": "ch1 process,2 state,3 state ticks,4 cycles,5 status",
+          "role": "metadata"
         },
         {
           "address": 99,
-          "name": "S99",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ControllerType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1495862074
+          "const": -1495862074,
+          "role": "metadata",
+          "description": "controller family hash"
         },
         {
           "address": 100,
@@ -393,12 +428,14 @@
         },
         {
           "address": 116,
-          "name": "S116",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ConfigHostRef",
+          "value_type": "reference-id",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "topology",
+          "description": "paired Generic Config Host ReferenceId"
         }
       ],
       "behavior": {

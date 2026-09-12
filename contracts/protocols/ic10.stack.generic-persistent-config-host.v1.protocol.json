@@ -11,6 +11,164 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "OperationalStatus",
+      "role": "state",
+      "description": "positive ready"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "EffectiveConfigRevision",
+      "role": "generation"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "BlockCount",
+      "role": "metadata",
+      "description": "1..4"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "TransactionResult",
+      "role": "result",
+      "description": "result of the transaction the header generation names"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "PersistenceSchemaSignature",
+      "role": "schema",
+      "description": "supplied by the Policy"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "PolicyGeneration",
+      "role": "generation",
+      "description": "metadata and defaults precede the increment"
+    },
+    {
+      "cells": "S16..S19",
+      "start": 16,
+      "end": 19,
+      "name": "BlockValidityMasks",
+      "role": "metadata",
+      "description": "physical blocks 0..3"
+    },
+    {
+      "cells": "S20",
+      "start": 20,
+      "end": 20,
+      "name": "PolicyResponseGeneration",
+      "role": "response_token"
+    },
+    {
+      "cells": "S21",
+      "start": 21,
+      "end": 21,
+      "name": "PolicyValidationResult",
+      "role": "result"
+    },
+    {
+      "cells": "S32..S47",
+      "start": 32,
+      "end": 47,
+      "name": "DefaultImage",
+      "role": "table",
+      "description": "Policy defaults for the physical image"
+    },
+    {
+      "cells": "S48",
+      "start": 48,
+      "end": 48,
+      "name": "ControllerType",
+      "role": "metadata"
+    },
+    {
+      "cells": "S50",
+      "start": 50,
+      "end": 50,
+      "name": "ControllerConfigSchema",
+      "role": "schema"
+    },
+    {
+      "cells": "S51",
+      "start": 51,
+      "end": 51,
+      "name": "EffectiveGeneration",
+      "role": "generation"
+    },
+    {
+      "cells": "S52",
+      "start": 52,
+      "end": 52,
+      "name": "RequestGeneration",
+      "role": "request_token"
+    },
+    {
+      "cells": "S53",
+      "start": 53,
+      "end": 53,
+      "name": "ResponseGeneration",
+      "role": "response_token"
+    },
+    {
+      "cells": "S96..S127",
+      "start": 96,
+      "end": 127,
+      "name": "EffectiveImage",
+      "role": "table"
+    },
+    {
+      "cells": "S128..S159",
+      "start": 128,
+      "end": 159,
+      "name": "CandidateImage",
+      "role": "table"
+    },
+    {
+      "cells": "S160..S191",
+      "start": 160,
+      "end": 191,
+      "name": "BankAImage",
+      "role": "table"
+    },
+    {
+      "cells": "S192..S223",
+      "start": 192,
+      "end": 223,
+      "name": "BankBImage",
+      "role": "table"
+    },
+    {
+      "cells": "S224..S226",
+      "start": 224,
+      "end": 226,
+      "name": "BankAFooter",
+      "role": "bank",
+      "description": "signature, config revision, bank revision"
+    },
+    {
+      "cells": "S227..S229",
+      "start": 227,
+      "end": 229,
+      "name": "BankBFooter",
+      "role": "bank",
+      "description": "signature, config revision, bank revision"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/controller-config/generic_persistent_config_host_v1_1.ic10",
@@ -76,79 +234,90 @@
         },
         {
           "address": 8,
-          "name": "S8",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "OperationalStatus",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "positive ready"
         },
         {
           "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "EffectiveConfigRevision",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "generation"
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "BlockCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "metadata",
+          "description": "1..4"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "TransactionResult",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "result of the transaction the header generation names"
         },
         {
           "address": 12,
           "name": "PersistenceSchemaSignature",
           "value_type": "hash",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
           ],
-          "description": "persistence schema signature supplied by Policy"
+          "description": "persistence schema signature supplied by Policy",
+          "role": "schema"
         },
         {
           "address": 13,
           "name": "PolicyGeneration",
           "value_type": "integer",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
           ],
-          "description": "Policy generation; Policy publishes metadata/defaults first"
+          "description": "Policy generation; Policy publishes metadata/defaults first",
+          "role": "generation"
         },
         {
           "address": 20,
           "name": "PolicyResponseGeneration",
           "value_type": "integer",
-          "semantic_source": "source",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
           ],
-          "description": "Policy response generation; normalized candidate precedes it"
+          "description": "Policy response generation; normalized candidate precedes it",
+          "role": "response_token"
         },
         {
           "address": 21,
-          "name": "S21",
+          "name": "PolicyValidationResult",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 24,
@@ -182,32 +351,35 @@
         },
         {
           "address": 51,
-          "name": "S51",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "EffectiveGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "generation"
         },
         {
           "address": 52,
-          "name": "S52",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 53,
-          "name": "S53",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResponseGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         }
       ],
       "behavior": {

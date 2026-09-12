@@ -20,7 +20,7 @@ Two things follow from that, and they drive almost every convention in the repo:
 Run everything from the repository root (Python 3.10+; `python3` locally).
 
 ```bash
-python3 tools/run_validation.py                   # full suite: 34 validators + 51 protocol/execution tests
+python3 tools/run_validation.py                   # full suite: 35 validators + 52 protocol/execution tests
 python3 tools/run_validation.py --resume          # reuse prior PASSes, only if the input-tree fingerprint matches
 python3 tests/test_job_abi.py                     # run one test  (plain script, exit code = pass/fail)
 python3 validation/validators/validate_ic10.py    # run one validator
@@ -50,6 +50,7 @@ python3 tools/generate/generate_resource_profiles.py            # from data/reso
 python3 tools/generate/generate_resource_transforms.py          # from data/resource_transforms.json
 python3 tools/generate/generate_recipe_catalog.py --game-data tests/fixtures/recipe_game_data --output <tmpdir> --clean
 python3 tools/generate/generate_script_contracts.py              # from deployable IC10 source and contract metadata
+python3 tools/generate/generate_stack_field_map.py               # regenerates docs/STACK_FIELD_MAP.md from the reviewed protocol layouts
 ```
 
 Field evidence (Roadmap Item 12, the one active milestone):
@@ -222,6 +223,7 @@ not ABIs. Use `data/source_manifest.json`, `docs/SCRIPT_INDEX.md`, and `USER_DEP
 | `ic10/resource-profile-catalog/*`, `ic10/dependency-planning/manufacturing_reagent_resolver_*` | `tools/generate/generate_resource_profiles.py` | `data/resource_profiles.json` |
 | `ic10/transform-catalog/*`, `ic10/dependency-planning/item_producer_resolver_*` | `tools/generate/generate_resource_transforms.py` | `data/resource_transforms.json` |
 | `docs/SCRIPT_INDEX.md` | `tools/generate/generate_source_catalog.py` | `ic10/` + `data/source_manifest.json` |
+| `contracts/**`, `docs/STACK_FIELD_MAP.md` | `tools/generate/generate_script_contracts.py`, then `tools/generate/generate_stack_field_map.py` | `ic10/`, `data/script_contract_overrides.json`, `data/script_protocol_headers.json`, and the reviewed `layout` lists in `data/script_contract_protocol_definitions.json` (issue #190) |
 | `<!-- FAMILY_PROGRAMS:… -->` blocks in `USER_DEPLOYMENT_GUIDE.md` | `tools/generate/update_user_deployment_inventory.py` | `data/source_manifest.json` |
 | `<!-- PUBLISHED_HEADERS -->` block in `docs/ABI_REFERENCE.md` | `tools/generate/update_magic_registry.py` | `data/script_protocol_headers.json` |
 | `validation/evidence/`, `VALIDATION_SUMMARY.txt`, `validation/FULL_VALIDATION_RUN.txt`, `validation/VALIDATION_STATE.json` (ignored locally; packaged in releases), `DEPLOYMENT_BASELINE.sha256` | `tools/run_validation.py` / `tools/build_release.py` | — |

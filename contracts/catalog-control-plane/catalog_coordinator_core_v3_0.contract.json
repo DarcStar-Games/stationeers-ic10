@@ -114,6 +114,80 @@
       "targets": [
         "GenericCatalogStore"
       ],
+      "site_targets": [
+        {
+          "cell": 3,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 8,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 11,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 12,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 13,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 14,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 16,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 21,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 23,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 26,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 29,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        },
+        {
+          "cell": 31,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        }
+      ],
       "unattributed": []
     },
     {
@@ -126,7 +200,28 @@
       "dynamic_read": true,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:-1822968058"
+      ],
+      "targets": [
+        "GenericRegistryDirectoryHost"
+      ],
+      "site_targets": [
+        {
+          "cell": 23,
+          "targets": [
+            "GenericRegistryDirectoryHost"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "GenericRegistryDirectoryHost"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -160,6 +255,14 @@
       ],
       "targets": [
         "GenericCatalogStore"
+      ],
+      "site_targets": [
+        {
+          "cell": 24,
+          "targets": [
+            "GenericCatalogStore"
+          ]
+        }
       ],
       "unattributed": []
     }
@@ -259,87 +362,102 @@
       },
       {
         "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "DirectorySummary[0]",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "telemetry",
+        "description": "aggregate directory health and capacity summary"
       },
       {
         "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "DirectorySummary[1]",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "telemetry",
+        "description": "aggregate directory health and capacity summary"
       },
       {
         "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "DirectorySummary[2]",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "telemetry",
+        "description": "aggregate directory health and capacity summary"
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "DirectorySummary[3]",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "telemetry",
+        "description": "aggregate directory health and capacity summary"
       },
       {
         "address": 12,
-        "name": "S12",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "DirectorySummary[4]",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "telemetry",
+        "description": "aggregate directory health and capacity summary"
       },
       {
         "address": 13,
-        "name": "S13",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "DirectorySummary[5]",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "telemetry",
+        "description": "aggregate directory health and capacity summary"
       },
       {
         "address": 14,
-        "name": "S14",
+        "name": "CoordinatorId",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "metadata"
       },
       {
         "address": 15,
-        "name": "S15",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "CoordinatorEpoch",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "epoch"
       },
       {
         "address": 16,
-        "name": "S16",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ServiceGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "generation"
       },
       {
         "address": 17,
@@ -362,117 +480,133 @@
       },
       {
         "address": 19,
-        "name": "S19",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ClaimStatus",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": -1
+        "const": -1,
+        "role": "state",
+        "description": "-1 after a failed Store claim; the Inspector republishes it"
       },
       {
         "address": 20,
-        "name": "S20",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 21,
-        "name": "S21",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 22,
-        "name": "S22",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 23,
-        "name": "S23",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 25,
-        "name": "S25",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "AssignmentEpochCounter",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
         ],
-        "const": 0
+        "role": "epoch"
+      },
+      {
+        "address": 21,
+        "name": "PlacementGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read",
+          "self-write"
+        ],
+        "role": "generation",
+        "description": "placement/migration generation; the Migration Worker advances it"
+      },
+      {
+        "address": 22,
+        "name": "TopologySequence",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read",
+          "self-write"
+        ],
+        "role": "generation",
+        "description": "topology seqlock, stable even"
+      },
+      {
+        "address": 23,
+        "name": "RegistryDirectoryRef",
+        "value_type": "number",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-write"
+        ],
+        "role": "topology"
+      },
+      {
+        "address": 25,
+        "name": "CapacityRequestPending",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read",
+          "self-write"
+        ],
+        "const": 0,
+        "role": "request",
+        "description": "Router capacity request in S25..S32"
       },
       {
         "address": 26,
-        "name": "S26",
+        "name": "RequestPartitionKey",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 27,
-        "name": "S27",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestCatalogSchemaId",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 29,
-        "name": "S29",
+        "name": "RequestCatalogInstanceId",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 30,
-        "name": "S30",
+        "name": "RequestTailStoreRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 31,
-        "name": "S31",
+        "name": "RequestNextStoreOrdinal",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 32,
-        "name": "S32",
+        "name": "RequestRequiredCells",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       }
     ],
     "headers": [

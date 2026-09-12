@@ -11,6 +11,82 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "ResourceType",
+      "role": "request"
+    },
+    {
+      "cells": "S16",
+      "start": 16,
+      "end": 16,
+      "name": "RequestingParentJobId",
+      "role": "request",
+      "description": "parent whose own claim is excluded from the aggregate"
+    },
+    {
+      "cells": "S17",
+      "start": 17,
+      "end": 17,
+      "name": "ChildJobIdFilter",
+      "role": "request",
+      "description": "0 accepts any child"
+    },
+    {
+      "cells": "S18",
+      "start": 18,
+      "end": 18,
+      "name": "RequestToken",
+      "role": "request_token"
+    },
+    {
+      "cells": "S19",
+      "start": 19,
+      "end": 19,
+      "name": "ResponseToken",
+      "role": "response_token"
+    },
+    {
+      "cells": "S20",
+      "start": 20,
+      "end": 20,
+      "name": "Status",
+      "role": "state",
+      "description": "1 active claim, -2 proven absence, -3 unverifiable child, -1 invalid"
+    },
+    {
+      "cells": "S21",
+      "start": 21,
+      "end": 21,
+      "name": "ChildJobId",
+      "role": "result"
+    },
+    {
+      "cells": "S22",
+      "start": 22,
+      "end": 22,
+      "name": "FutureQuantity",
+      "role": "result"
+    },
+    {
+      "cells": "S25",
+      "start": 25,
+      "end": 25,
+      "name": "ChildResourceType",
+      "role": "result",
+      "description": "copied from Child Validity S20, which Child Validity fills with the Monitor's S23; see issue #193"
+    },
+    {
+      "cells": "S27",
+      "start": 27,
+      "end": 27,
+      "name": "AggregateClaims",
+      "role": "result"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/dependency-planning/dependency_claim_view_v1_0.ic10",
@@ -50,76 +126,87 @@
         },
         {
           "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResourceType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "RequestingParentJobId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "parent whose own claim is excluded from the aggregate"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "ChildJobIdFilter",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "0 accepts any child"
         },
         {
           "address": 18,
-          "name": "S18",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 19,
-          "name": "S19",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResponseToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         },
         {
           "address": 20,
-          "name": "S20",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 active claim, -2 proven absence, -3 unverifiable child, -1 invalid"
         },
         {
           "address": 21,
-          "name": "S21",
+          "name": "ChildJobId",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 22,
-          "name": "S22",
+          "name": "FutureQuantity",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 23,
@@ -141,12 +228,14 @@
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ChildResourceType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "copied from Child Validity S20, which Child Validity fills with the Monitor's S23; see issue #193"
         },
         {
           "address": 26,
@@ -159,12 +248,13 @@
         },
         {
           "address": 27,
-          "name": "S27",
+          "name": "AggregateClaims",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 28,

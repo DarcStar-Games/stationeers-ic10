@@ -216,13 +216,16 @@ def network_dependencies(
                 "publication_requirements": declaration.get("publication_requirements", []),
             })
 
-    # Where a written reference came from and what it names, reviewed (issue
-    # #174). The shape is checked here; `framework.network_provenance` holds
-    # each declaration to the loads the walk actually sees at the write sites.
+    # Where an accessed reference came from and what it names, reviewed (issue
+    # #174 for writes, which must be attributed; issue #190 for reads, which are
+    # attributed so the reader counts as a peer). The shape is checked here;
+    # `framework.network_provenance` holds each declaration to the loads the
+    # walk actually sees at the access sites.
     declarations = overrides.get("network_provenance", [])
-    written = {reference for (transport, reference), item in dependencies.items()
-               if transport == "reference-id" and (item["literal_writes"] or item["dynamic_write"])}
-    for declaration in validate_provenance(declarations, written):
+    accessed = {reference for (transport, reference), item in dependencies.items()
+                if transport == "reference-id"
+                and (item["literal_writes"] or item["dynamic_write"] or item["literal_reads"] or item["dynamic_read"])}
+    for declaration in validate_provenance(declarations, accessed):
         dependencies[("reference-id", declaration["reference"])].setdefault("provenance", []).append(declaration)
 
     result = []

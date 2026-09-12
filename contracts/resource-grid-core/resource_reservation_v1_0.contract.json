@@ -198,303 +198,337 @@
       },
       {
         "address": 8,
-        "name": "S8",
+        "name": "MaxRate",
         "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 12,
-        "name": "SemanticMirrorGenerationInitialization",
-        "value_type": "integer",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
         ],
-        "description": "semantic mirror generation initialization | semantic mirror generation LAST"
+        "role": "result"
+      },
+      {
+        "address": 9,
+        "name": "EndpointStatus",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read",
+          "self-write"
+        ],
+        "role": "state"
+      },
+      {
+        "address": 10,
+        "name": "Unit",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read",
+          "self-write"
+        ],
+        "role": "metadata"
+      },
+      {
+        "address": 11,
+        "name": "PrecisionFlags",
+        "value_type": "number",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read",
+          "self-write"
+        ],
+        "role": "metadata"
+      },
+      {
+        "address": 12,
+        "name": "MirrorGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read",
+          "self-write"
+        ],
+        "description": "semantic mirror generation initialization | semantic mirror generation LAST",
+        "role": "generation"
       },
       {
         "address": 13,
         "name": "BuildEpoch",
         "value_type": "integer",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "description": "build epoch; allocator-owned"
+        "description": "build epoch; allocator-owned",
+        "role": "epoch"
       },
       {
         "address": 14,
         "name": "ReservedExport",
         "value_type": "number",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "description": "reserved export",
-        "reserved": true
+        "reserved": true,
+        "role": "result"
       },
       {
         "address": 15,
         "name": "ReservedImport",
         "value_type": "number",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "description": "reserved import",
-        "reserved": true
+        "reserved": true,
+        "role": "result"
       },
       {
         "address": 16,
-        "name": "S16",
+        "name": "DirectionLock",
         "value_type": "number",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "description": "direction lock"
+        "description": "direction lock",
+        "role": "state"
       },
       {
         "address": 17,
         "name": "OwnerReferenceId",
         "value_type": "reference-id",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "description": "owner ReferenceId"
+        "description": "owner ReferenceId",
+        "role": "topology"
       },
       {
         "address": 18,
         "name": "OwnerEpoch",
         "value_type": "integer",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "description": "owner epoch"
+        "description": "owner epoch",
+        "role": "epoch"
       },
       {
         "address": 19,
         "name": "ReservedSemanticMirrorGeneration",
         "value_type": "integer",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
         "description": "reserved semantic mirror generation",
-        "reserved": true
+        "reserved": true,
+        "role": "generation"
       },
       {
         "address": 20,
-        "name": "S20",
+        "name": "EndpointPublicationGeneration",
         "value_type": "integer",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "description": "represented Endpoint PublicationGeneration"
+        "description": "represented Endpoint PublicationGeneration",
+        "role": "generation"
       },
       {
         "address": 21,
-        "name": "S21",
+        "name": "MirroredAccessKind",
         "value_type": "enum",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "description": "opaque Endpoint AccessKind extension"
+        "description": "opaque Endpoint AccessKind extension",
+        "role": "metadata"
       },
       {
         "address": 22,
-        "name": "S22",
+        "name": "MirroredActionHint0",
         "value_type": "integer",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "description": "opaque action hint 0 / FirstSourceSlot"
+        "description": "opaque action hint 0 / FirstSourceSlot",
+        "role": "result"
       },
       {
         "address": 23,
-        "name": "S23",
+        "name": "MirroredActionHint1",
         "value_type": "number",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "description": "opaque action hint 1 / FirstSourceQuantity"
+        "description": "opaque action hint 1 / FirstSourceQuantity",
+        "role": "result"
       },
       {
         "address": 24,
-        "name": "S24",
+        "name": "MirroredActionHint2",
         "value_type": "integer",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "description": "opaque action hint 2 / FirstEmptySlot"
+        "description": "opaque action hint 2 / FirstEmptySlot",
+        "role": "result"
       },
       {
         "address": 25,
-        "name": "S25",
+        "name": "CommittedSourceSlot",
         "value_type": "integer",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "description": "committed action source slot"
+        "description": "committed action source slot",
+        "role": "result"
       },
       {
         "address": 26,
-        "name": "ActionQuantity",
+        "name": "CommittedActionQuantity",
         "value_type": "number",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "description": "committed action quantity"
+        "description": "committed action quantity",
+        "role": "result"
       },
       {
         "address": 27,
-        "name": "S27",
+        "name": "CommittedDestinationSlot",
         "value_type": "integer",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "description": "committed action destination slot"
+        "description": "committed action destination slot",
+        "role": "result"
       },
       {
         "address": 28,
-        "name": "S28",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "EndpointAccessKind",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "raw snapshot of Endpoint S35 taken on each refresh"
       },
       {
         "address": 29,
-        "name": "S29",
+        "name": "EndpointActionHint0",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "raw snapshot of Endpoint S38"
       },
       {
         "address": 30,
-        "name": "S30",
+        "name": "EndpointActionHint1",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "raw snapshot of Endpoint S39"
       },
       {
         "address": 31,
-        "name": "S31",
+        "name": "EndpointActionHint2",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "raw snapshot of Endpoint S40"
       },
       {
         "address": 32,
-        "name": "S32",
+        "name": "EndpointRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 33,
-        "name": "S33",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResourceClass",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "metadata"
       },
       {
         "address": 34,
-        "name": "S34",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResourceType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "metadata"
       },
       {
         "address": 35,
-        "name": "S35",
+        "name": "RoleBits",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "metadata"
       },
       {
         "address": 36,
-        "name": "S36",
+        "name": "ExportAvailable",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 37,
-        "name": "S37",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ImportCapacity",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "result"
       }
     ],
     "headers": [

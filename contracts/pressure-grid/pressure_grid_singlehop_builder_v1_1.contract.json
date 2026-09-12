@@ -133,7 +133,53 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r9",
+          "origin": {
+            "kind": "peer-cell",
+            "identity": "GenericSnapshotDirectoryHost.v1",
+            "cells": "any"
+          },
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ],
+          "reason": "a DirectorySchema.PressureGridLink record holds a Transfer ReferenceId; the builder reads its telemetry block"
+        }
+      ],
+      "origins": [
+        "cell:891293726:*"
+      ],
+      "targets": [
+        "ControllerPressureTransferRuntime",
+        "EmbeddedPressureTransferRuntime"
+      ],
+      "site_targets": [
+        {
+          "cell": 101,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 106,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        },
+        {
+          "cell": 107,
+          "targets": [
+            "ControllerPressureTransferRuntime",
+            "EmbeddedPressureTransferRuntime"
+          ]
+        }
+      ],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -146,7 +192,46 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "sp",
+          "origin": {
+            "kind": "reference-cell",
+            "via": "r9",
+            "cells": [
+              106,
+              107
+            ]
+          },
+          "targets": [
+            "PressureInventoryReservation"
+          ],
+          "reason": "Transfer telemetry S106 and S107 are the source and sink Reservation ReferenceIds"
+        }
+      ],
+      "origins": [
+        "ref:r9:106",
+        "ref:r9:107"
+      ],
+      "targets": [
+        "PressureInventoryReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 12,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        },
+        {
+          "cell": 13,
+          "targets": [
+            "PressureInventoryReservation"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {
@@ -215,39 +300,44 @@
       },
       {
         "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "GrantedLinkCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 9,
-        "name": "S9",
+        "name": "HopReservedMoles",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Status",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state",
+        "description": "1 grants, 0 none, negative fault"
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResponseToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       },
       {
         "address": 12,
@@ -271,48 +361,54 @@
       },
       {
         "address": 14,
-        "name": "S14",
+        "name": "PlannerRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 15,
-        "name": "S15",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "BuildEpoch",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 16,
-        "name": "S16",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "MediumType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 17,
-        "name": "S17",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Mode",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request",
+        "description": "2 direct, 1 fallback"
       },
       {
         "address": 18,
-        "name": "S18",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       }
     ],
     "headers": [

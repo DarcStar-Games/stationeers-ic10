@@ -88,7 +88,55 @@
           "value": 4515138
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "cell:875310516:11",
+        "checked:0:4515138"
+      ],
+      "targets": [
+        "CatalogCoordinatorCore"
+      ],
+      "site_targets": [
+        {
+          "cell": 15,
+          "targets": [
+            "CatalogCoordinatorCore"
+          ]
+        },
+        {
+          "cell": 19,
+          "targets": [
+            "CatalogCoordinatorCore"
+          ]
+        },
+        {
+          "cell": 21,
+          "targets": [
+            "CatalogCoordinatorCore"
+          ]
+        },
+        {
+          "cell": 22,
+          "targets": [
+            "CatalogCoordinatorCore"
+          ]
+        },
+        {
+          "cell": 23,
+          "targets": [
+            "CatalogCoordinatorCore"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "CatalogCoordinatorCore"
+          ]
+        }
+      ],
+      "unattributed": [
+        "cell:875310516:11"
+      ]
     },
     {
       "transport": "reference-id",
@@ -120,7 +168,79 @@
           "value": -698837900
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "cell:4515138:23",
+        "checked:0:-1822968058"
+      ],
+      "targets": [
+        "GenericRegistryDirectoryHost"
+      ],
+      "site_targets": [
+        {
+          "cell": 3,
+          "targets": [
+            "GenericRegistryDirectoryHost"
+          ]
+        },
+        {
+          "cell": 12,
+          "targets": [
+            "GenericRegistryDirectoryHost"
+          ]
+        },
+        {
+          "cell": 13,
+          "targets": [
+            "GenericRegistryDirectoryHost"
+          ]
+        },
+        {
+          "cell": 14,
+          "targets": [
+            "GenericRegistryDirectoryHost"
+          ]
+        },
+        {
+          "cell": 15,
+          "targets": [
+            "GenericRegistryDirectoryHost"
+          ]
+        },
+        {
+          "cell": 18,
+          "targets": [
+            "GenericRegistryDirectoryHost"
+          ]
+        },
+        {
+          "cell": 23,
+          "targets": [
+            "GenericRegistryDirectoryHost"
+          ]
+        },
+        {
+          "cell": 26,
+          "targets": [
+            "GenericRegistryDirectoryHost"
+          ]
+        },
+        {
+          "cell": 35,
+          "targets": [
+            "GenericRegistryDirectoryHost"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "GenericRegistryDirectoryHost"
+          ]
+        }
+      ],
+      "unattributed": [
+        "cell:4515138:23"
+      ]
     }
   ],
   "own_stack": {

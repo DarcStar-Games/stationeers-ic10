@@ -11,6 +11,32 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "PlanGeneration",
+      "role": "result",
+      "description": "the last plan the allocator committed"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "AuthorityEpoch",
+      "role": "epoch",
+      "description": "executors act only under this epoch"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "Status",
+      "role": "state",
+      "description": "1 authority published, -1 fault"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/power-grid/power_reservation_allocator_v1_0.ic10",
@@ -50,32 +76,38 @@
         },
         {
           "address": 8,
-          "name": "S8",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "PlanGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "the last plan the allocator committed"
         },
         {
           "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "AuthorityEpoch",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "epoch",
+          "description": "executors act only under this epoch"
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 authority published, -1 fault"
         },
         {
           "address": 20,

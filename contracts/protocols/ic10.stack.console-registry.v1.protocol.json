@@ -11,6 +11,16 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "ActiveBank",
+      "role": "bank",
+      "description": "0 A, 1 B"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/diagnostics/console_registry_v1_1.ic10",
@@ -50,13 +60,15 @@
         },
         {
           "address": 8,
-          "name": "S8",
+          "name": "ActiveBank",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "bank",
+          "description": "0 A, 1 B"
         },
         {
           "address": 9,

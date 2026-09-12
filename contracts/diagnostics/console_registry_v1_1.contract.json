@@ -21,7 +21,11 @@
       "dynamic_read": true,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "origins": [],
+      "targets": [],
+      "site_targets": [],
+      "unattributed": []
     }
   ],
   "own_stack": {
@@ -108,13 +112,15 @@
       },
       {
         "address": 8,
-        "name": "S8",
+        "name": "ActiveBank",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "bank",
+        "description": "0 A, 1 B"
       },
       {
         "address": 9,

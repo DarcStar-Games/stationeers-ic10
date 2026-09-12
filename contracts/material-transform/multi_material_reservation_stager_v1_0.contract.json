@@ -152,6 +152,38 @@
       "targets": [
         "ResourceReservation"
       ],
+      "site_targets": [
+        {
+          "cell": 9,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 13,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 14,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 16,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 36,
+          "targets": [
+            "ResourceReservation"
+          ]
+        }
+      ],
       "unattributed": []
     },
     {
@@ -205,6 +237,38 @@
       "targets": [
         "ResourceReservation"
       ],
+      "site_targets": [
+        {
+          "cell": 9,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 13,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 15,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 16,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 37,
+          "targets": [
+            "ResourceReservation"
+          ]
+        }
+      ],
       "unattributed": []
     },
     {
@@ -250,6 +314,74 @@
       "targets": [
         "MaterialTransferGrantGuard"
       ],
+      "site_targets": [
+        {
+          "cell": 16,
+          "targets": [
+            "MaterialTransferGrantGuard"
+          ]
+        },
+        {
+          "cell": 17,
+          "targets": [
+            "MaterialTransferGrantGuard"
+          ]
+        },
+        {
+          "cell": 18,
+          "targets": [
+            "MaterialTransferGrantGuard"
+          ]
+        },
+        {
+          "cell": 19,
+          "targets": [
+            "MaterialTransferGrantGuard"
+          ]
+        },
+        {
+          "cell": 20,
+          "targets": [
+            "MaterialTransferGrantGuard"
+          ]
+        },
+        {
+          "cell": 21,
+          "targets": [
+            "MaterialTransferGrantGuard"
+          ]
+        },
+        {
+          "cell": 22,
+          "targets": [
+            "MaterialTransferGrantGuard"
+          ]
+        },
+        {
+          "cell": 23,
+          "targets": [
+            "MaterialTransferGrantGuard"
+          ]
+        },
+        {
+          "cell": 24,
+          "targets": [
+            "MaterialTransferGrantGuard"
+          ]
+        },
+        {
+          "cell": 25,
+          "targets": [
+            "MaterialTransferGrantGuard"
+          ]
+        },
+        {
+          "cell": 26,
+          "targets": [
+            "MaterialTransferGrantGuard"
+          ]
+        }
+      ],
       "unattributed": []
     },
     {
@@ -269,7 +401,78 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "r9",
+          "origin": {
+            "kind": "port-cell",
+            "port": "d0",
+            "cells": "any"
+          },
+          "targets": [
+            "ResourceLink"
+          ],
+          "reason": "a Link Resolver record (S20 + 4k) holds a Link ReferenceId; the Stager reads the link's Guard, source and sink Reservations, and ResourceType"
+        }
+      ],
+      "origins": [
+        "port:d0:*"
+      ],
+      "targets": [
+        "ResourceLink"
+      ],
+      "site_targets": [
+        {
+          "cell": 14,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 15,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 16,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 21,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 22,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 28,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 29,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 31,
+          "targets": [
+            "ResourceLink"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {
@@ -362,59 +565,66 @@
       },
       {
         "address": 9,
-        "name": "S9",
+        "name": "Command",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "request",
+        "description": "1 stage, 2 cleanup"
       },
       {
         "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Epoch",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "BatchCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 12,
-        "name": "S12",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       },
       {
         "address": 13,
-        "name": "S13",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Status",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 14,
-        "name": "S14",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResponseToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       }
     ],
     "headers": [

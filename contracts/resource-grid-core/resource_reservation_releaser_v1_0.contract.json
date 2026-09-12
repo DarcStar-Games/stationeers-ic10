@@ -59,7 +59,11 @@
       "dynamic_read": true,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "origins": [],
+      "targets": [],
+      "site_targets": [],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -97,6 +101,68 @@
       ],
       "targets": [
         "ResourceReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 13,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 14,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 15,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 16,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 17,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 18,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 19,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 25,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 26,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 27,
+          "targets": [
+            "ResourceReservation"
+          ]
+        }
       ],
       "unattributed": []
     }
@@ -160,40 +226,44 @@
       },
       {
         "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "OwnerEpoch",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       },
       {
         "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResponseToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Status",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 12,

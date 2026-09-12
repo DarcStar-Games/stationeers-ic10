@@ -32,6 +32,7 @@ from framework.network_provenance import (
     filled_by_errors,
     origin_matches,
     validate_provenance,
+    writing,
 )
 from framework.script_contracts import build_all
 
@@ -328,10 +329,23 @@ with tempfile.TemporaryDirectory() as temporary:
     (root / "ic10/copier.ic10").write_text(COPY)
     (root / "ic10/loader.ic10").write_text("get r1 db 10\nputd r1 8 1\nget r2 d0 40\nputd r2 9 1\nputd r3 9 1\n")
     (root / "ic10/peer.ic10").write_text("poke 0 HASH(\"Peer.v1\")\nyield\n")
+    # A register loaded off the checked port, then re-pointed at what the peer's S30 holds:
+    # the read before the re-point reaches the peer, the reads after it reach the target the
+    # declaration names, and a read at a computed cell is recorded under `*`.
+    (root / "ic10/repointer.ic10").write_text(
+        "l r1 d0 ReferenceId\ngetd r2 r1 20\ngetd r1 r1 30\nmove r5 6\ngetd r3 r1 5\ngetd r4 r1 r5\nyield\n")
+    # A read through a register nothing loaded: recorded, never refused.
+    (root / "ic10/reader.ic10").write_text("getd r0 r3 5\nyield\n")
     declaration = {"reference": "r1", "origin": {"kind": "own-cell", "cells": [10], "filled_by": "peer"},
                    "targets": ["Peer"], "reason": "the request names the peer"}
+    accepted_peer = [{"port": "d0", "accepted": [{"header_base": 0, "magic": MAGIC, "contract": "Peer", "abi": 1}]}]
+    repoint = {"reference": "r1", "origin": {"kind": "peer-cell", "identity": "Peer.v1", "cells": [30]},
+               "targets": ["Other"], "reason": "the peer's S30 names the record's target"}
     contracts = {
         "peer": contract("ic10/peer.ic10", PEER, [], []),
+        "repointer": contract("ic10/repointer.ic10", [], accepted_peer,
+                              [{**dependency("r1", [], [repoint]), "literal_reads": [5, 20, 30], "dynamic_read": True}]),
+        "reader": contract("ic10/reader.ic10", [], [], [{**dependency("r3", []), "literal_reads": [5]}]),
         "writer": contract("ic10/writer.ic10", [], [], [dependency("r1", [8, 9])]),
         "copier": contract("ic10/copier.ic10", [], [], [dependency("ra", [27]), dependency("r2", [8])]),
         "loader": contract("ic10/loader.ic10", [], [{"port": "d0", "accepted": [{"header_base": 0, "magic": MAGIC, "contract": "Peer", "abi": 1}]}],
@@ -344,6 +358,17 @@ with tempfile.TemporaryDirectory() as temporary:
     copier = {item["reference"]: item for item in contracts["copier"]["network_dependencies"]}
     ck(copier["ra"]["targets"] == ["Peer"] and not copier["ra"]["unattributed"], f"a copy of a checked reference is attributed: {copier['ra']}")
     ck(copier["r2"]["targets"] == [] and copier["r2"]["unattributed"] == ["own:11"], f"a reload is not: {copier['r2']}")
+    repointer = contracts["repointer"]["network_dependencies"][0]
+    ck(repointer["site_targets"] == [
+        {"cell": 5, "targets": ["Other"]}, {"cell": 20, "targets": ["Peer"]}, {"cell": 30, "targets": ["Peer"]},
+        {"cell": "*", "targets": ["Other"]},
+    ], f"each read site is attributed to what the register named there: {repointer['site_targets']}")
+    ck(repointer["targets"] == ["Other", "Peer"] and repointer["unattributed"] == [] and not writing(repointer),
+       f"a read-only reference's answer comes from its read sites: {repointer}")
+    reader = contracts["reader"]["network_dependencies"][0]
+    ck(reader["unattributed"] == [UNTRACKED] and reader["site_targets"] == [] and reader["targets"] == []
+       and not writing(reader),
+       f"a read nothing attributes is recorded on a read-only reference, which the write rule does not hold: {reader}")
     loader = {item["reference"]: item for item in contracts["loader"]["network_dependencies"]}
     ck(loader["r1"]["targets"] == ["Peer"] and not loader["r1"]["unattributed"], f"a declared origin attributes: {loader['r1']}")
     ck(loader["r2"]["unattributed"] == [f"cell:{MAGIC}:40"], f"a peer's cell needs a declaration: {loader['r2']}")
@@ -358,7 +383,7 @@ with tempfile.TemporaryDirectory() as temporary:
     contracts["loader"]["network_dependencies"][0]["provenance"] = [stale]
     try:
         attribute_network_writes(contracts, root)
-        failures.append("a declaration matching no write site load was accepted")
+        failures.append("a declaration matching no access site load was accepted")
     except ValueError:
         pass
 

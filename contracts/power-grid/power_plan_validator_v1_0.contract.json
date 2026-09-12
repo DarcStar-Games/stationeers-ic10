@@ -92,7 +92,61 @@
           "value": 4
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "cell:-788162592:*",
+        "checked:0:1484497288"
+      ],
+      "targets": [
+        "ResourceLink"
+      ],
+      "site_targets": [
+        {
+          "cell": 9,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 12,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 14,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 28,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 29,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 30,
+          "targets": [
+            "ResourceLink"
+          ]
+        },
+        {
+          "cell": 32,
+          "targets": [
+            "ResourceLink"
+          ]
+        }
+      ],
+      "unattributed": [
+        "cell:-788162592:*"
+      ]
     },
     {
       "transport": "reference-id",
@@ -118,7 +172,37 @@
           "value": 4
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "cell:-788162592:*",
+        "checked:0:-1742884202"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 9,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 12,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 33,
+          "targets": [
+            "ResourceReservation"
+          ]
+        }
+      ],
+      "unattributed": [
+        "cell:-788162592:*"
+      ]
     },
     {
       "transport": "reference-id",
@@ -144,7 +228,37 @@
           "value": 4
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "cell:-788162592:*",
+        "checked:0:-1742884202"
+      ],
+      "targets": [
+        "ResourceReservation"
+      ],
+      "site_targets": [
+        {
+          "cell": 9,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 12,
+          "targets": [
+            "ResourceReservation"
+          ]
+        },
+        {
+          "cell": 33,
+          "targets": [
+            "ResourceReservation"
+          ]
+        }
+      ],
+      "unattributed": [
+        "cell:-788162592:*"
+      ]
     }
   ],
   "own_stack": {
@@ -205,40 +319,45 @@
       },
       {
         "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "PlanGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       },
       {
         "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResponseToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Status",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state",
+        "description": "1 valid, -1 invalid"
       }
     ],
     "headers": [

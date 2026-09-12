@@ -328,7 +328,95 @@
       "dynamic_read": false,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "provenance": [
+        {
+          "reference": "ref",
+          "origin": {
+            "kind": "port-device",
+            "port": "d0"
+          },
+          "targets": [
+            "InputProfileView"
+          ],
+          "reason": "the scanner probes the S0 of whatever sits on each screw to find an Input Profile View"
+        },
+        {
+          "reference": "ref",
+          "origin": {
+            "kind": "port-device",
+            "port": "d1"
+          },
+          "targets": [
+            "InputProfileView"
+          ],
+          "reason": "the scanner probes the S0 of whatever sits on each screw to find an Input Profile View"
+        },
+        {
+          "reference": "ref",
+          "origin": {
+            "kind": "port-device",
+            "port": "d2"
+          },
+          "targets": [
+            "InputProfileView"
+          ],
+          "reason": "the scanner probes the S0 of whatever sits on each screw to find an Input Profile View"
+        },
+        {
+          "reference": "ref",
+          "origin": {
+            "kind": "port-device",
+            "port": "d3"
+          },
+          "targets": [
+            "InputProfileView"
+          ],
+          "reason": "the scanner probes the S0 of whatever sits on each screw to find an Input Profile View"
+        },
+        {
+          "reference": "ref",
+          "origin": {
+            "kind": "port-device",
+            "port": "d4"
+          },
+          "targets": [
+            "InputProfileView"
+          ],
+          "reason": "the scanner probes the S0 of whatever sits on each screw to find an Input Profile View"
+        },
+        {
+          "reference": "ref",
+          "origin": {
+            "kind": "port-device",
+            "port": "d5"
+          },
+          "targets": [
+            "InputProfileView"
+          ],
+          "reason": "the scanner probes the S0 of whatever sits on each screw to find an Input Profile View"
+        }
+      ],
+      "origins": [
+        "device:d0",
+        "device:d1",
+        "device:d2",
+        "device:d3",
+        "device:d4",
+        "device:d5"
+      ],
+      "targets": [
+        "InputProfileView"
+      ],
+      "site_targets": [
+        {
+          "cell": 0,
+          "targets": [
+            "InputProfileView"
+          ]
+        }
+      ],
+      "unattributed": []
     }
   ],
   "own_stack": {
@@ -395,95 +483,108 @@
       },
       {
         "address": 8,
-        "name": "S8",
+        "name": "PopulatedScrewMask",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestedControlCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request",
+        "description": "1..32"
       },
       {
         "address": 10,
-        "name": "S10",
+        "name": "SelectedControlOrdinal",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "0 unavailable"
       },
       {
         "address": 11,
-        "name": "S11",
+        "name": "InputProfileRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology",
+        "description": "0 absent"
       },
       {
         "address": 12,
-        "name": "S12",
-        "value_type": "number",
-        "semantic_source": "source",
+        "name": "SnapshotGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
         ],
-        "description": "complete hardware snapshot publishes LAST"
+        "description": "complete hardware snapshot publishes LAST",
+        "role": "generation"
       },
       {
         "address": 13,
-        "name": "S13",
+        "name": "FieldDialRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 14,
-        "name": "S14",
+        "name": "ValueDialRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 15,
-        "name": "S15",
+        "name": "LogicMemoryRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 16,
-        "name": "S16",
+        "name": "SwitchRef",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "topology"
       },
       {
         "address": 17,
-        "name": "S17",
+        "name": "CapabilityMask",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "metadata"
       }
     ],
     "headers": [

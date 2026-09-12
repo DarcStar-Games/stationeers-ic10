@@ -11,6 +11,125 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "RequestToken",
+      "role": "request_token"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "ResponseToken",
+      "role": "response_token"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "Command",
+      "role": "request",
+      "description": "1 BEGIN, 2 ADD, 3 COMMIT"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "Status",
+      "role": "state",
+      "description": "1 done, -2 full, -1 invalid"
+    },
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "ShedWatts",
+      "role": "request",
+      "description": "total shed watts the sweep reports for the plan being committed"
+    },
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "CriticalShortage",
+      "role": "request",
+      "description": "1 when a critical load could not be served"
+    },
+    {
+      "cells": "S16..S23",
+      "start": 16,
+      "end": 23,
+      "name": "StagedFlow",
+      "role": "request",
+      "description": "LinkRef, SourceReservationRef, SinkReservationRef, SinkWatts, SourceWatts, SourceGeneration, SinkGeneration, RouteClass"
+    },
+    {
+      "cells": "S24",
+      "start": 24,
+      "end": 24,
+      "name": "StagedFlowCount",
+      "role": "state"
+    },
+    {
+      "cells": "S27",
+      "start": 27,
+      "end": 27,
+      "name": "PublicationSequence",
+      "role": "generation",
+      "description": "odd during COMMIT, even when stable"
+    },
+    {
+      "cells": "S28",
+      "start": 28,
+      "end": 28,
+      "name": "PlanGeneration",
+      "role": "generation",
+      "description": "advances on every COMMIT; readers fence on it with the even sequence at S27"
+    },
+    {
+      "cells": "S29",
+      "start": 29,
+      "end": 29,
+      "name": "FlowCount",
+      "role": "result",
+      "description": "0..8 committed flows"
+    },
+    {
+      "cells": "S30",
+      "start": 30,
+      "end": 30,
+      "name": "CommittedShedWatts",
+      "role": "result",
+      "description": "S14 as of the last COMMIT"
+    },
+    {
+      "cells": "S31",
+      "start": 31,
+      "end": 31,
+      "name": "CommittedCriticalShortage",
+      "role": "state",
+      "description": "S15 as of the last COMMIT"
+    },
+    {
+      "cells": "S32..S95",
+      "start": 32,
+      "end": 95,
+      "name": "CommittedFlows",
+      "role": "table",
+      "description": "8 x 8 flow records"
+    },
+    {
+      "cells": "S128..S191",
+      "start": 128,
+      "end": 191,
+      "name": "StagedFlows",
+      "role": "table",
+      "description": "8 x 8 flow records staged before COMMIT"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10",
@@ -60,68 +179,79 @@
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResponseToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         },
         {
           "address": 12,
-          "name": "S12",
+          "name": "Command",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "1 BEGIN, 2 ADD, 3 COMMIT"
         },
         {
           "address": 13,
-          "name": "S13",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 done, -2 full, -1 invalid"
         },
         {
           "address": 14,
-          "name": "S14",
+          "name": "ShedWatts",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "total shed watts the sweep reports for the plan being committed"
         },
         {
           "address": 15,
-          "name": "S15",
+          "name": "CriticalShortage",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "1 when a critical load could not be served"
         },
         {
           "address": 24,
-          "name": "S24",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "StagedFlowCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "state"
         },
         {
           "address": 25,
@@ -145,50 +275,60 @@
         },
         {
           "address": 27,
-          "name": "S27",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "PublicationSequence",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "generation",
+          "description": "odd during COMMIT, even when stable"
         },
         {
           "address": 28,
-          "name": "S28",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "PlanGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "generation",
+          "description": "advances on every COMMIT; readers fence on it with the even sequence at S27"
         },
         {
           "address": 29,
-          "name": "S29",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "FlowCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "0..8 committed flows"
         },
         {
           "address": 30,
-          "name": "S30",
+          "name": "CommittedShedWatts",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result",
+          "description": "S14 as of the last COMMIT"
         },
         {
           "address": 31,
-          "name": "S31",
+          "name": "CommittedCriticalShortage",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "S15 as of the last COMMIT"
         }
       ],
       "behavior": {

@@ -13,6 +13,45 @@
   "canonical_refs": [
     "data/input_profiles.json#"
   ],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "ContextType",
+      "role": "metadata"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "ContextSchema",
+      "role": "schema"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "LogicalControlCount",
+      "role": "metadata"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "ProfileGeneration",
+      "role": "generation",
+      "description": "written last"
+    },
+    {
+      "cells": "S32..S255",
+      "start": 32,
+      "end": 255,
+      "name": "ControlDescriptors",
+      "role": "table",
+      "description": "four-value control descriptors"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/input-profile-catalog/input_profile_view_v5_0.ic10",
@@ -52,39 +91,44 @@
         },
         {
           "address": 8,
-          "name": "S8",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ContextType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "metadata"
         },
         {
           "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ContextSchema",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "schema"
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "LogicalControlCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "metadata"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ProfileGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "generation",
+          "description": "written last"
         }
       ],
       "behavior": {

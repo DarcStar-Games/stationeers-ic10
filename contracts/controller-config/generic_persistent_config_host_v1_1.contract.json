@@ -144,79 +144,90 @@
       },
       {
         "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "OperationalStatus",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state",
+        "description": "positive ready"
       },
       {
         "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "EffectiveConfigRevision",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "generation"
       },
       {
         "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "BlockCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "metadata",
+        "description": "1..4"
       },
       {
         "address": 11,
-        "name": "S11",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "TransactionResult",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "result of the transaction the header generation names"
       },
       {
         "address": 12,
         "name": "PersistenceSchemaSignature",
         "value_type": "hash",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
         ],
-        "description": "persistence schema signature supplied by Policy"
+        "description": "persistence schema signature supplied by Policy",
+        "role": "schema"
       },
       {
         "address": 13,
         "name": "PolicyGeneration",
         "value_type": "integer",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
         ],
-        "description": "Policy generation; Policy publishes metadata/defaults first"
+        "description": "Policy generation; Policy publishes metadata/defaults first",
+        "role": "generation"
       },
       {
         "address": 20,
         "name": "PolicyResponseGeneration",
         "value_type": "integer",
-        "semantic_source": "source",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
         ],
-        "description": "Policy response generation; normalized candidate precedes it"
+        "description": "Policy response generation; normalized candidate precedes it",
+        "role": "response_token"
       },
       {
         "address": 21,
-        "name": "S21",
+        "name": "PolicyValidationResult",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 24,
@@ -250,32 +261,35 @@
       },
       {
         "address": 51,
-        "name": "S51",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "EffectiveGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "generation"
       },
       {
         "address": 52,
-        "name": "S52",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       },
       {
         "address": 53,
-        "name": "S53",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResponseGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       }
     ],
     "headers": [

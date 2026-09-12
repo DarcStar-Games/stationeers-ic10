@@ -239,15 +239,17 @@ that fails takes it back -- or one loaded from a place whose meaning a reviewer
 has declared. `framework/network_provenance.py` walks the paths with the same
 machinery as the register and identity rules and records, on each contract's
 `network_dependencies` entry, where the reference came from (`origins`), the
-contracts the writes reach (`targets`), and anything neither covers
+contracts the accesses reach (`targets`), and anything neither covers
 (`unattributed`); `contracts/index.json` counts the unattributed writes and
-`validation/validators/validate_network_provenance.py` fails on any.
+`validation/validators/validate_network_provenance.py` fails on any. A read
+through a reference is attributed the same way, held to its own read sites, so
+`docs/STACK_FIELD_MAP.md` counts the reader as a peer of what it reads.
 
 Where the reference came from is what the walk knows: a cell of an identified
 peer (`cell`), one of the program's own cells (`own`), a cell of another
 reference (`ref`), a cell of a port with no declared identity (`port`). What a
 ReferenceId *in that place* names is a fact about the peer's layout, declared
-once per writing reference in `data/script_contract_overrides.json`:
+once per accessing reference in `data/script_contract_overrides.json`:
 
 ```json
 "network_provenance": [

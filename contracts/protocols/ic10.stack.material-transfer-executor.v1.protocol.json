@@ -11,6 +11,51 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "ActiveEpoch",
+      "role": "epoch"
+    },
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "CompletedEpoch",
+      "role": "epoch"
+    },
+    {
+      "cells": "S16",
+      "start": 16,
+      "end": 16,
+      "name": "ExecutionStatus",
+      "role": "state",
+      "description": "1 completed, 0 active or idle, -1 failed"
+    },
+    {
+      "cells": "S17",
+      "start": 17,
+      "end": 17,
+      "name": "ObservedRate",
+      "role": "result"
+    },
+    {
+      "cells": "S18",
+      "start": 18,
+      "end": 18,
+      "name": "BatchElapsedTicks",
+      "role": "result"
+    },
+    {
+      "cells": "S19",
+      "start": 19,
+      "end": 19,
+      "name": "PublicationGeneration",
+      "role": "generation"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/material-grid/material_transfer_executor_v1_0.ic10",
@@ -109,59 +154,66 @@
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ActiveEpoch",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "epoch"
         },
         {
           "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "CompletedEpoch",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "epoch"
         },
         {
           "address": 16,
-          "name": "S16",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ExecutionStatus",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 completed, 0 active or idle, -1 failed"
         },
         {
           "address": 17,
-          "name": "S17",
+          "name": "ObservedRate",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 18,
-          "name": "S18",
+          "name": "BatchElapsedTicks",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 19,
-          "name": "S19",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "PublicationGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "generation"
         },
         {
           "address": 31,

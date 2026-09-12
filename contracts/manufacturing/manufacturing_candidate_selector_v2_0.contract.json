@@ -40,7 +40,61 @@
           "value": 3
         }
       ],
-      "accepted": []
+      "accepted": [],
+      "origins": [
+        "checked:0:891293726",
+        "own:16"
+      ],
+      "targets": [
+        "GenericSnapshotDirectoryHost"
+      ],
+      "site_targets": [
+        {
+          "cell": 9,
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        },
+        {
+          "cell": 11,
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        },
+        {
+          "cell": 12,
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        },
+        {
+          "cell": 24,
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        },
+        {
+          "cell": 25,
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        },
+        {
+          "cell": 26,
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "GenericSnapshotDirectoryHost"
+          ]
+        }
+      ],
+      "unattributed": [
+        "own:16"
+      ]
     }
   ],
   "own_stack": {
@@ -111,31 +165,36 @@
       },
       {
         "address": 8,
-        "name": "S8",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ResponseToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       },
       {
         "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Status",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state",
+        "description": "1 selected, -2 none, -1 invalid"
       },
       {
         "address": 10,
-        "name": "S10",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "CandidateRef",
+        "value_type": "reference-id",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result",
+        "description": "Runtime or Printer ReferenceId"
       },
       {
         "address": 11,
@@ -148,21 +207,23 @@
       },
       {
         "address": 12,
-        "name": "S12",
+        "name": "CandidateProcessorSpec",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 13,
-        "name": "S13",
+        "name": "NextOrdinal",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 14,
@@ -175,66 +236,76 @@
       },
       {
         "address": 16,
-        "name": "S16",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "DirectoryRef",
+        "value_type": "reference-id",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request",
+        "description": "Snapshot Directory ReferenceId"
       },
       {
         "address": 17,
-        "name": "S17",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "SchemaId",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 18,
-        "name": "S18",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "Key",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request",
+        "description": "optional FamilyHash"
       },
       {
         "address": 19,
-        "name": "S19",
+        "name": "Capability",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 20,
-        "name": "S20",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ComparisonMode",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request",
+        "description": "1 mask, 2 tier"
       },
       {
         "address": 21,
-        "name": "S21",
+        "name": "StartOrdinal",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 22,
-        "name": "S22",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "RequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       }
     ],
     "headers": [

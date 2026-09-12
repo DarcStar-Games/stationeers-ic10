@@ -11,6 +11,93 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "SelectedBottleneck",
+      "role": "result"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "Status",
+      "role": "state",
+      "description": "1 route, 0 none, -1 fault"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "ResponseToken",
+      "role": "response_token"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "SelectedRouteCost",
+      "role": "result"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "SearchIdCounter",
+      "role": "generation"
+    },
+    {
+      "cells": "S16..S18",
+      "start": 16,
+      "end": 18,
+      "name": "SelectedTransferRefs",
+      "role": "result"
+    },
+    {
+      "cells": "S32",
+      "start": 32,
+      "end": 32,
+      "name": "PlannerRef",
+      "role": "request"
+    },
+    {
+      "cells": "S33",
+      "start": 33,
+      "end": 33,
+      "name": "BuildEpoch",
+      "role": "request"
+    },
+    {
+      "cells": "S34",
+      "start": 34,
+      "end": 34,
+      "name": "MediumType",
+      "role": "request"
+    },
+    {
+      "cells": "S35",
+      "start": 35,
+      "end": 35,
+      "name": "LeaseTicks",
+      "role": "request"
+    },
+    {
+      "cells": "S36",
+      "start": 36,
+      "end": 36,
+      "name": "RequestToken",
+      "role": "request_token"
+    },
+    {
+      "cells": "S37",
+      "start": 37,
+      "end": 37,
+      "name": "SelectedPathLength",
+      "role": "result"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/pressure-grid/pressure_grid_route_selector_v2_0.ic10",
@@ -55,49 +142,55 @@
         },
         {
           "address": 8,
-          "name": "S8",
+          "name": "SelectedBottleneck",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 9,
-          "name": "S9",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 route, 0 none, -1 fault"
         },
         {
           "address": 10,
-          "name": "S10",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "ResponseToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         },
         {
           "address": 11,
-          "name": "S11",
+          "name": "SelectedRouteCost",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "SearchIdCounter",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "generation"
         },
         {
           "address": 20,
@@ -111,57 +204,63 @@
         },
         {
           "address": 32,
-          "name": "S32",
+          "name": "PlannerRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 33,
-          "name": "S33",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "BuildEpoch",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 34,
-          "name": "S34",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "MediumType",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 35,
-          "name": "S35",
+          "name": "LeaseTicks",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request"
         },
         {
           "address": 36,
-          "name": "S36",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "RequestToken",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 37,
-          "name": "S37",
+          "name": "SelectedPathLength",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "result"
         }
       ],
       "behavior": {

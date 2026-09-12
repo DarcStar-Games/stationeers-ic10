@@ -190,187 +190,207 @@
       },
       {
         "address": 15,
-        "name": "S15",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "LaneAResourceType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request"
       },
       {
         "address": 18,
-        "name": "S18",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "LaneARequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "request_token"
       },
       {
         "address": 19,
-        "name": "S19",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "LaneAResponseToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "response_token"
       },
       {
         "address": 20,
-        "name": "S20",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "LaneAStatus",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 21,
-        "name": "S21",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "LaneAProducerJobType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 22,
-        "name": "S22",
+        "name": "LaneARequiredCapability",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 23,
-        "name": "S23",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "LaneAProducerIdentity",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 24,
-        "name": "S24",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "LaneAInputCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 25,
-        "name": "S25",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "LaneAOutputCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 1
+        "const": 1,
+        "role": "result"
       },
       {
         "address": 26,
-        "name": "S26",
+        "name": "LaneAOutputPerBatch",
         "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 32,
-        "name": "S32",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 33,
-        "name": "S33",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read"
-        ]
-      },
-      {
-        "address": 34,
-        "name": "S34",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-read",
-          "self-write"
-        ]
-      },
-      {
-        "address": 35,
-        "name": "S35",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 36,
-        "name": "S36",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 37,
-        "name": "S37",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 38,
-        "name": "S38",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 39,
-        "name": "S39",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 40,
-        "name": "S40",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 1
+        "role": "result"
+      },
+      {
+        "address": 32,
+        "name": "LaneBResourceType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read"
+        ],
+        "role": "request"
+      },
+      {
+        "address": 33,
+        "name": "LaneBRequestToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read"
+        ],
+        "role": "request_token"
+      },
+      {
+        "address": 34,
+        "name": "LaneBResponseToken",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-read",
+          "self-write"
+        ],
+        "role": "response_token"
+      },
+      {
+        "address": 35,
+        "name": "LaneBStatus",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-write"
+        ],
+        "role": "state"
+      },
+      {
+        "address": 36,
+        "name": "LaneBProducerJobType",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-write"
+        ],
+        "role": "result"
+      },
+      {
+        "address": 37,
+        "name": "LaneBRequiredCapability",
+        "value_type": "number",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-write"
+        ],
+        "role": "result"
+      },
+      {
+        "address": 38,
+        "name": "LaneBProducerIdentity",
+        "value_type": "hash",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-write"
+        ],
+        "role": "result"
+      },
+      {
+        "address": 39,
+        "name": "LaneBInputCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-write"
+        ],
+        "role": "result"
+      },
+      {
+        "address": 40,
+        "name": "LaneBOutputCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
+        "access": [
+          "self-write"
+        ],
+        "const": 1,
+        "role": "result"
       },
       {
         "address": 41,
-        "name": "S41",
+        "name": "LaneBOutputPerBatch",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
-        ]
+        ],
+        "role": "result"
       }
     ],
     "headers": [

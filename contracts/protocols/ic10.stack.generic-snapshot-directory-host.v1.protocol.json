@@ -13,6 +13,146 @@
   "canonical_refs": [
     "data/directory_schemas.json#/snapshot_host"
   ],
+  "layout": [
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "DirectorySchemaId",
+      "role": "schema"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "EntryWidth",
+      "role": "metadata"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "Capacity",
+      "role": "metadata"
+    },
+    {
+      "cells": "S14",
+      "start": 14,
+      "end": 14,
+      "name": "BridgeRequestGeneration",
+      "role": "request_token"
+    },
+    {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "AcknowledgedRequestGeneration",
+      "role": "response_token"
+    },
+    {
+      "cells": "S16",
+      "start": 16,
+      "end": 16,
+      "name": "BridgeCommand",
+      "role": "request",
+      "description": "1 BEGIN, 2 ADD, 3 COMMIT"
+    },
+    {
+      "cells": "S17..S19",
+      "start": 17,
+      "end": 19,
+      "name": "CandidateRecord",
+      "role": "request",
+      "description": "one candidate record during ADD"
+    },
+    {
+      "cells": "S20",
+      "start": 20,
+      "end": 20,
+      "name": "RebuildBank",
+      "role": "bank",
+      "description": "inactive bank selected during rebuild"
+    },
+    {
+      "cells": "S21",
+      "start": 21,
+      "end": 21,
+      "name": "StagingCount",
+      "role": "state"
+    },
+    {
+      "cells": "S22",
+      "start": 22,
+      "end": 22,
+      "name": "StagingOverflow",
+      "role": "state"
+    },
+    {
+      "cells": "S23",
+      "start": 23,
+      "end": 23,
+      "name": "HostError",
+      "role": "error"
+    },
+    {
+      "cells": "S24",
+      "start": 24,
+      "end": 24,
+      "name": "ActiveBank",
+      "role": "bank",
+      "description": "0 A, 1 B"
+    },
+    {
+      "cells": "S25",
+      "start": 25,
+      "end": 25,
+      "name": "GenerationA",
+      "role": "bank"
+    },
+    {
+      "cells": "S26",
+      "start": 26,
+      "end": 26,
+      "name": "GenerationB",
+      "role": "bank"
+    },
+    {
+      "cells": "S27",
+      "start": 27,
+      "end": 27,
+      "name": "CountA",
+      "role": "bank"
+    },
+    {
+      "cells": "S28",
+      "start": 28,
+      "end": 28,
+      "name": "CountB",
+      "role": "bank"
+    },
+    {
+      "cells": "S29",
+      "start": 29,
+      "end": 29,
+      "name": "OverflowA",
+      "role": "bank"
+    },
+    {
+      "cells": "S30",
+      "start": 30,
+      "end": 30,
+      "name": "OverflowB",
+      "role": "bank"
+    },
+    {
+      "cells": "S32..S415",
+      "start": 32,
+      "end": 415,
+      "name": "Banks",
+      "role": "table",
+      "description": "bank A then bank B, each capacity x width cells"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10",
@@ -82,117 +222,132 @@
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "EntryWidth",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "metadata"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Capacity",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "metadata"
         },
         {
           "address": 14,
-          "name": "S14",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "BridgeRequestGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request_token"
         },
         {
           "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "AcknowledgedRequestGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "response_token"
         },
         {
           "address": 16,
-          "name": "S16",
+          "name": "BridgeCommand",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "request",
+          "description": "1 BEGIN, 2 ADD, 3 COMMIT"
         },
         {
           "address": 20,
-          "name": "S20",
+          "name": "RebuildBank",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "bank",
+          "description": "inactive bank selected during rebuild"
         },
         {
           "address": 21,
-          "name": "S21",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "StagingCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "state"
         },
         {
           "address": 22,
-          "name": "S22",
+          "name": "StagingOverflow",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "state"
         },
         {
           "address": 23,
-          "name": "S23",
+          "name": "HostError",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
           ],
-          "const": -1
+          "const": -1,
+          "role": "error"
         },
         {
           "address": 24,
-          "name": "S24",
+          "name": "ActiveBank",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
-          ]
+          ],
+          "role": "bank",
+          "description": "0 A, 1 B"
         },
         {
           "address": 25,
-          "name": "S25",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "GenerationA",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "bank"
         },
         {
           "address": 26,
-          "name": "S26",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "GenerationB",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "bank"
         },
         {
           "address": 31,

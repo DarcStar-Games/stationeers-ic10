@@ -21,7 +21,11 @@
       "dynamic_read": true,
       "dynamic_write": false,
       "constraints": [],
-      "accepted": []
+      "accepted": [],
+      "origins": [],
+      "targets": [],
+      "site_targets": [],
+      "unattributed": []
     },
     {
       "transport": "reference-id",
@@ -61,6 +65,56 @@
       ],
       "targets": [
         "CatalogLoader"
+      ],
+      "site_targets": [
+        {
+          "cell": 3,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 10,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 11,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 14,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 18,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 19,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": 21,
+          "targets": [
+            "CatalogLoader"
+          ]
+        },
+        {
+          "cell": "*",
+          "targets": [
+            "CatalogLoader"
+          ]
+        }
       ],
       "unattributed": []
     }
@@ -177,27 +231,30 @@
           "external-read",
           "external-write"
         ],
-        "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it."
+        "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it.",
+        "role": "topology"
       },
       {
         "address": 9,
-        "name": "S9",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "LocalItemCount",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 10,
-        "name": "S10",
+        "name": "ItemDirectoryBase",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": 32
+        "const": 32,
+        "role": "metadata"
       },
       {
         "address": 11,
@@ -208,7 +265,8 @@
           "external-read",
           "external-write"
         ],
-        "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it."
+        "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it.",
+        "role": "topology"
       },
       {
         "address": 12,
@@ -219,16 +277,19 @@
           "external-read",
           "external-write"
         ],
-        "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it."
+        "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it.",
+        "role": "epoch"
       },
       {
         "address": 13,
-        "name": "S13",
+        "name": "CatalogInstanceId",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "metadata",
+        "description": "assigned by the Coordinator"
       },
       {
         "address": 14,
@@ -239,67 +300,77 @@
           "external-read",
           "external-write"
         ],
-        "description": "Listed reserved in the Store ABI6 table; Claim writes the Coordinator's CoordinatorId here and the Store does not read it."
+        "description": "Listed reserved in the Store ABI6 table; Claim writes the Coordinator's CoordinatorId here and the Store does not read it.",
+        "role": "topology"
       },
       {
         "address": 15,
-        "name": "S15",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "ImportGeneration",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "generation",
+        "description": "committed item-import generation/count"
       },
       {
         "address": 16,
-        "name": "S16",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "StoreState",
+        "value_type": "enum",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "state"
       },
       {
         "address": 17,
-        "name": "S17",
-        "value_type": "number",
-        "semantic_source": "unresolved",
+        "name": "DataSequence",
+        "value_type": "integer",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "generation",
+        "description": "odd while mutating, even stable"
       },
       {
         "address": 18,
-        "name": "S18",
+        "name": "NodeId",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "metadata",
+        "description": "human-assigned 1..64"
       },
       {
         "address": 19,
-        "name": "S19",
+        "name": "NextDirectoryCell",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 20,
-        "name": "S20",
+        "name": "HeapTop",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 21,
@@ -310,26 +381,29 @@
           "external-read",
           "external-write"
         ],
-        "description": "Topology chain link written by Claim and unlinked by the Retirement Manager; the Store does not read it."
+        "description": "Topology chain link written by Claim and unlinked by the Retirement Manager; the Store does not read it.",
+        "role": "topology"
       },
       {
         "address": 22,
-        "name": "S22",
+        "name": "UsedCells",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 23,
-        "name": "S23",
+        "name": "PartitionKey",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read"
-        ]
+        ],
+        "role": "metadata"
       },
       {
         "address": 24,
@@ -340,7 +414,8 @@
           "external-read",
           "external-write"
         ],
-        "description": "Topology chain link written by Claim and unlinked by the Retirement Manager; the Store does not read it."
+        "description": "Topology chain link written by Claim and unlinked by the Retirement Manager; the Store does not read it.",
+        "role": "topology"
       },
       {
         "address": 26,
@@ -351,7 +426,8 @@
           "external-read",
           "external-write"
         ],
-        "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it."
+        "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it.",
+        "role": "epoch"
       },
       {
         "address": 27,
@@ -364,27 +440,30 @@
           "self-write"
         ],
         "const": 0,
-        "description": "Capacity promised to an in-flight Loader placement or migration; the Router, Planner, and Worker write it, the Store resets it."
+        "description": "Capacity promised to an in-flight Loader placement or migration; the Router, Planner, and Worker write it, the Store resets it.",
+        "role": "result"
       },
       {
         "address": 28,
-        "name": "S28",
+        "name": "FaultDetail",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-write"
         ],
-        "const": -2
+        "const": -2,
+        "role": "error"
       },
       {
         "address": 29,
-        "name": "S29",
+        "name": "FreeCells",
         "value_type": "number",
-        "semantic_source": "unresolved",
+        "semantic_source": "protocol-layout",
         "access": [
           "self-read",
           "self-write"
-        ]
+        ],
+        "role": "result"
       },
       {
         "address": 31,
@@ -395,7 +474,8 @@
           "external-read",
           "external-write"
         ],
-        "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it."
+        "description": "Coordinator-owned topology cell (docs/CATALOG_STORAGE.md), written by Claim and Recovery; the Store publishes it and does not read it.",
+        "role": "epoch"
       }
     ],
     "headers": [

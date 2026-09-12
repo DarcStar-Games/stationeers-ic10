@@ -11,6 +11,51 @@
     0
   ],
   "canonical_refs": [],
+  "layout": [
+    {
+      "cells": "S8",
+      "start": 8,
+      "end": 8,
+      "name": "ConsoleSelectorRef",
+      "role": "topology"
+    },
+    {
+      "cells": "S9",
+      "start": 9,
+      "end": 9,
+      "name": "ControllerSelectorRef",
+      "role": "topology"
+    },
+    {
+      "cells": "S10",
+      "start": 10,
+      "end": 10,
+      "name": "DiagnosticRendererRef",
+      "role": "topology"
+    },
+    {
+      "cells": "S11",
+      "start": 11,
+      "end": 11,
+      "name": "HandledCommitGeneration",
+      "role": "response_token"
+    },
+    {
+      "cells": "S12",
+      "start": 12,
+      "end": 12,
+      "name": "Status",
+      "role": "state",
+      "description": "1 ready, 2 committed, negative fault"
+    },
+    {
+      "cells": "S13",
+      "start": 13,
+      "end": 13,
+      "name": "DiagnosticInputBridgeRef",
+      "role": "topology"
+    }
+  ],
   "provider_interfaces": [
     {
       "source": "ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10",
@@ -50,59 +95,66 @@
         },
         {
           "address": 8,
-          "name": "S8",
+          "name": "ConsoleSelectorRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "topology"
         },
         {
           "address": 9,
-          "name": "S9",
+          "name": "ControllerSelectorRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "topology"
         },
         {
           "address": 10,
-          "name": "S10",
+          "name": "DiagnosticRendererRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "topology"
         },
         {
           "address": 11,
-          "name": "S11",
-          "value_type": "number",
-          "semantic_source": "source",
+          "name": "HandledCommitGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read",
             "self-write"
           ],
-          "description": "consume commit only after mapping + advance request are complete"
+          "description": "consume commit only after mapping + advance request are complete",
+          "role": "response_token"
         },
         {
           "address": 12,
-          "name": "S12",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "Status",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "state",
+          "description": "1 ready, 2 committed, negative fault"
         },
         {
           "address": 13,
-          "name": "S13",
+          "name": "DiagnosticInputBridgeRef",
           "value_type": "number",
-          "semantic_source": "unresolved",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-read"
-          ]
+          ],
+          "role": "topology"
         }
       ],
       "behavior": {
