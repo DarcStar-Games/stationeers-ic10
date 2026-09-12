@@ -13,6 +13,7 @@ from collections.abc import Callable, Iterable
 from pathlib import Path
 from typing import Any
 import json
+import re
 
 from framework.json_schema import validate
 from framework.script_contracts.checks import accepted_cells, published_cells
@@ -22,6 +23,8 @@ FORMAT = "IC10_SCRIPT_WIRING_V1"
 HEADER_CELLS = frozenset(range(BASE + 2, BASE + LENGTH))
 ENVELOPE_CELLS = frozenset(range(BASE, BASE + LENGTH))
 STACK_CELLS = frozenset(range(512))
+# A cell a note names: `S<n>`, or a range written `S<a>..S<b>`, `S<a>..<b>`, or `S<a>-S<b>`.
+CITED_CELL = re.compile(r"\bS(\d{1,3})(?:(?:\.\.|-)S?(\d{1,3}))?\b")
 
 
 def load_wiring(root: Path) -> dict[str, Any]:
@@ -38,6 +41,23 @@ def ranged(ranges: list[tuple[int, int]], cells: frozenset[int]) -> set[int]:
     for start, end in ranges:
         hit |= cells & set(range(start, end + 1))
     return hit
+
+
+def cited_cells(note: str) -> set[int]:
+    """Every stack cell a wiring note names as `S<n>` or as a range of them.
+
+    `S0` is left out: a note names it for what it is, the identity cell whose
+    check the identity rule in `check_port` already holds the note to, not as a
+    mailbox cell the port reads or writes. A bare number is not a citation -- a
+    note also quotes line numbers, status codes, and ABI numbers.
+    """
+    cells: set[int] = set()
+    for match in CITED_CELL.finditer(note):
+        first = int(match.group(1))
+        last = int(match.group(2) or first)
+        cells.update(range(min(first, last), max(first, last) + 1))
+    cells.discard(0)
+    return cells
 
 
 def port_index(contracts: dict[str, dict[str, Any]]) -> dict[str, dict[str, dict[str, Any]]]:
@@ -210,6 +230,18 @@ def check_port(
     if unused:
         failures.append(f"{source} {name}: header_reads declares S{sorted(unused)}"
                         " which the port never reads")
+    # A note's cells are evidence for the edge only while they are the cells the port
+    # touches. The notes once carried the mailbox numbering from before the mailboxes
+    # moved above the envelope, and nothing compared the prose with the source; the
+    # peer's own layout lives in the contracts, so a note restating it adds a second
+    # copy that drifts (issue #196).
+    reached = (port["reads"] | port["writes"]
+               | ranged(port["read_ranges"], STACK_CELLS)
+               | ranged(port["write_ranges"], STACK_CELLS))
+    stale = sorted(cited_cells(peer["note"]) - reached)
+    if stale:
+        failures.append(f"{source} {name}: the note cites S{stale}, cells the port never reads"
+                        " or writes -- name only the cells the consumer touches on this port")
     failures.extend(surface_failures(source, name, peer, port, surfaces))
     return failures
 

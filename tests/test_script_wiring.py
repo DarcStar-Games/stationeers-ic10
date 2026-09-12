@@ -10,7 +10,9 @@ import json
 
 from framework.json_schema import SchemaValidationError, validate
 from framework.script_contracts import compatibility_errors
-from framework.script_wiring import check_wiring, inbound_edges, port_index, stack_surfaces
+from framework.script_wiring import (
+    check_wiring, cited_cells, inbound_edges, port_index, stack_surfaces,
+)
 
 ROOT = _PROJECT_ROOT
 SCHEMA = json.loads((ROOT / "schemas/script_wiring.schema.json").read_text())
@@ -127,6 +129,38 @@ told = deepcopy(WIRING)
 told["ports"][CONSUMER]["d0"]["note"] = 'peer named by d0 S0 magic check (TestProvider.v2)'
 expect("naming the identity in the note passes", failing(told, publishers=named) == [])
 expect("a numeric block header exempts the note", failing() == [])
+
+# A note's cells are held to the port: every `S<n>` it names, alone or in a range,
+# must be a cell the port reads or writes, literally or through a declared range.
+expect("cited cells are read as S<n> and as ranges, with S0 left out",
+       cited_cells("S3, S5..S7, S9-S10, S12..14, S0 magic, line 40, -2 status")
+       == {3, 5, 6, 7, 9, 10, 12, 13, 14})
+cited = deepcopy(WIRING)
+cited["ports"][CONSUMER]["d0"]["note"] = "writes S10 token; reads S9 status and S1 ABI"
+expect("a note naming only cells the port touches passes", failing(cited) == [])
+cited["ports"][CONSUMER]["d0"]["note"] = "writes S10 token; reads S8 status"
+expect("a note naming a cell the port never touches fails",
+       any("cites S[8]" in f for f in failing(cited)))
+cited["ports"][CONSUMER]["d0"]["note"] = "mailbox S9..S10"
+expect("a cited range inside the port's cells passes", failing(cited) == [])
+cited["ports"][CONSUMER]["d0"]["note"] = "mailbox S8-S11"
+expect("a cited range reaching past the port's cells reports the cells outside it",
+       any("cites S[8, 11]" in f for f in failing(cited)))
+cited["ports"][CONSUMER]["d0"]["note"] = "peer named by S0 magic check; reads 9, writes 10"
+identity_only = deepcopy(PORTS)
+identity_only[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], reads={9})
+expect("S0 and bare numbers are not citations", failing(cited, ports=identity_only) == [])
+walked = deepcopy(PORTS)
+walked[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], read_ranges=[(11, 13)])
+cited["ports"][CONSUMER]["d0"]["note"] = "walks the record at S11..S13 by register"
+expect("a declared dynamic range covers the cells a note cites in it",
+       failing(cited, ports=walked) == [])
+cited["ports"][CONSUMER]["d0"]["note"] = "walks the record at S11..S14 by register"
+expect("a cited range one cell past the declared range fails",
+       any("cites S[14]" in f for f in failing(cited, ports=walked)))
+physical_note = deepcopy(WIRING)
+physical_note["ports"][CONSUMER]["d1"]["note"] = "Pressure, Temperature; no S5 here"
+expect("a physical-device note is not held to stack cells", failing(physical_note) == [])
 
 wrong_magic = deepcopy(PORTS)
 wrong_magic[CONSUMER]["d0"] = dict(PORTS[CONSUMER]["d0"], constraints={0: 31419999})
@@ -319,3 +353,5 @@ print("   surface, any-of across providers, with reviewed envelopes as the escap
 print(" - the declared-consumer-edge check gives a windowed access the same verdict")
 print(" - a note must name the contract identity its port pins, so the reviewed evidence")
 print("   cannot keep citing cell shape for an edge the source names outright")
+print(" - every cell a note names is one its port reads or writes, literally or through")
+print("   a declared range, so the prose cannot keep a numbering the source has left")

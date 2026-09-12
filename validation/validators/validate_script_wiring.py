@@ -13,6 +13,7 @@ from framework.protocol_headers import load_headers
 from framework.script_contracts import build_all
 from framework.script_wiring import (
     check_wiring,
+    cited_cells,
     inbound_edges,
     load_wiring,
     port_index,
@@ -85,3 +86,5 @@ print(f" - {constrained} of them can actually fail; on the rest a declared provi
       " every cell the port could ask for, by a reviewed whole-stack readable range")
 print(f" - {guarded} edges into migrated programs touch no S2..S7 header cell;"
       f" {reviewed} reviewed header reads are declared in the map")
+citing = sum(1 for peer in script_edges if cited_cells(peer["note"]))
+print(f" - {citing} notes name cells, and every cell named is one the port reads or writes")
