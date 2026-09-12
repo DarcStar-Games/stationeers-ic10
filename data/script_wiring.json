@@ -314,7 +314,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"submits child intent through Gateway lane C\"; docs/DEPLOYMENT.md: \"lane C Child Creator\" [Gateway lane C cells confirmed in gateway source: lane C token S48/response S49 (get r15 db 48 / get r0 db 49), request payload S53..S62, reply pokes 50,51,52. Creator writes d3 53..62 + token 48, reads 49,50(status==1),51 (child JobId).]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"submits child intent through Gateway lane C\"; docs/DEPLOYMENT.md: \"lane C Child Creator\" [Gateway lane C cells confirmed in gateway source: lane C token S48/response S49 (get r15 db 48 / get r0 db 49), request payload S53..S62, reply S50 status, S51 allocated JobId. Creator writes d3 S53..S62 + token S48, reads S49, S50 (status==1), S51 (child JobId).]"
    }
   },
   "ic10/dependency-planning/dependency_child_validity_v1_0.ic10": {
@@ -444,7 +444,7 @@
     "providers": [
      "ic10/dependency-planning/job_requirement_view_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: the Requirement View \"normalizes TRANSFORM and PRINT metadata into one bounded ITEM view\" that preflight iterates per input [No pin comment. Requirement View interface matches exactly: request S15 JobType, S16 metadata, S17 quantity, S18 input index + S19 token (preflight's Req subroutine writes 15..19), response S20 token, S21 status==1, S23 input count, S26 input ResourceType, S27 required qty (the view pokes 22..27).]"
+    "note": "docs/DEPENDENCY_PLANNING.md: the Requirement View \"normalizes TRANSFORM and PRINT metadata into one bounded ITEM view\" that preflight iterates per input [No pin comment. Requirement View interface matches exactly: request S15 JobType, S16 metadata, S17 quantity, S18 input index + S19 token (preflight's Req subroutine writes S15..S19), response S20 token, S21 status==1, S23 input count, S26 input ResourceType, S27 required qty.]"
    },
    "d1": {
     "kind": "script",
@@ -612,7 +612,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10"
     ],
-    "note": "Peer named by d0 S0 magic check (HASH(\"GenericJobStoreCommandExecutor.v1\")). docs/GENERIC_JOB_ABI.md:379: \"Both serialize mutations through the Job Gateway and sole physical Store command executor\"; USER_DEPLOYMENT_GUIDE.md:1086 chain Store -> Gateway -> Executor. [Also the correspondence is cell-exact: Gateway writes d0 cells 7..20/22 (payload), handshakes via d0 2 vs 3, and reads replies at d0 3,4,5,6; the Executor reads its own db 2,7..22 and replies at db 3,4,5,6 (poke 3/4/5/6). No other program has that mailbox shape.]"
+    "note": "Peer named by d0 S0 magic check (HASH(\"GenericJobStoreCommandExecutor.v1\")). docs/GENERIC_JOB_ABI.md:379: \"Both serialize mutations through the Job Gateway and sole physical Store command executor\"; USER_DEPLOYMENT_GUIDE.md:1086 chain Store -> Gateway -> Executor. [Also the correspondence is cell-exact: Gateway writes d0 S12 ParentJobId, S13 ParentJobGeneration, S14..S20 Intent (copied by register), S21 CommandClass, S22 ParentSlot, S28/S29 expected sequences, S35..S39 lifecycle command, then S23 RequestToken; reads the reply at S24 ResponseToken, S25 Status, S26 AllocatedJobId, S27 AllocatedSlot. No other program has that mailbox shape.]"
    }
   },
   "ic10/generic-jobs/generic_job_selector_v3_0.ic10": {
@@ -876,7 +876,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_selector_v3_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:269: \"(`d0 -> Transform Driver`, `d1 -> Print Driver`, `d2 -> Job Selector`)\"; docs/MANUFACTURING_SCHEDULER.md:427: \"`d2 -> Job Selector`\" [Port is read-only (reads 7..13), consistent with mirroring the Selector's published selection cells.]"
+    "note": "docs/DEPLOYMENT.md:269: \"(`d0 -> Transform Driver`, `d1 -> Print Driver`, `d2 -> Job Selector`)\"; docs/MANUFACTURING_SCHEDULER.md:427: \"`d2 -> Job Selector`\" [Port is read-only (reads S8 JobType, S9 RequiredCapability, S10 Identity, S11 InputCount, S12 OutputCount, S13 RequestedQuantity, S24 JobId), consistent with mirroring the Selector's published selection cells.]"
    }
   },
   "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10": {
@@ -922,7 +922,7 @@
     "providers": [
      "ic10/printer-directory/printer_capacity_client_v2_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:275: \"`d3 -> Printer Capacity Client`. Capacity Client discovers Execution Banks and revalidates exact PrinterReferenceId at reservation time\"; docs/MANUFACTURING_SCHEDULER.md:431: \"`d3 -> 186 Capacity Client ABI2`\" [Writes 2..5 / reads 6..8 with addr7==1 fit the client's request/acknowledged-response transaction (ExpectedPrinterRef + RequestToken in, status/ack out).]"
+    "note": "docs/DEPLOYMENT.md:275: \"`d3 -> Printer Capacity Client`. Capacity Client discovers Execution Banks and revalidates exact PrinterReferenceId at reservation time\"; docs/MANUFACTURING_SCHEDULER.md:431: \"`d3 -> 186 Capacity Client ABI2`\" [Writes S12 PrinterRef, S13 ProcessorSpec, S14 Command (1 reserve / 2 release), S15 RequestToken; reads S16 ResponseToken, S17 Status, S8 ResolvedPrinterRef - the client's request/acknowledged-response transaction.]"
    }
   },
   "ic10/manufacturing/print_job_driver_v2_0.ic10": {
@@ -1609,7 +1609,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_selector_v3_0.ic10"
     ],
-    "note": "USER_DEPLOYMENT_GUIDE.md (power-jobs chapter): 'Generic selector `ic10/generic-jobs/generic_job_selector_v3_0.ic10` is configured for exact `JobType.POWER`.' + pin comment '# POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.' [Scheduler boot-writes d0 S18=4 (exact JobType.POWER mode) - the selector's mode cell driven identically in tests/test_power_management.py (gsel.stack.update({...,18:4})); request/ack/result cells (writes 2,3; reads 4..7 etc.) match selector v3's cursor/token/result surface. docs/POWER_MANAGEMENT.md: 'generic_job_selector_v3_0.ic10 is the shared coherent Job selector. POWER Scheduler configures exact JobType.POWER mode.']"
+    "note": "USER_DEPLOYMENT_GUIDE.md (power-jobs chapter): 'Generic selector `ic10/generic-jobs/generic_job_selector_v3_0.ic10` is configured for exact `JobType.POWER`.' + pin comment '# POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.' [Scheduler boot-writes d0 S18=4 (exact JobType.POWER mode) - the selector's mode cell driven identically in tests/test_power_management.py (gsel.stack.update({...,18:4})); request S19 Cursor + S20 RequestToken, reply S21 ResponseToken, S22 Status, S23 Slot, S24 JobId, and the selected record's S9 RequiredCapability, S10 Identity, S13 RequestedQuantity, S15 State, S16 JobGeneration match selector v3's surface. docs/POWER_MANAGEMENT.md: 'generic_job_selector_v3_0.ic10 is the shared coherent Job selector. POWER Scheduler configures exact JobType.POWER mode.']"
    },
    "d1": {
     "kind": "script",
