@@ -171,7 +171,7 @@ The current policy intentionally moves newest items first. Arbitrary hole-produc
 - Prev/Next links;
 - used/free capacity;
 - import generation and AssignmentEpoch;
-- Registry state/last-seen values;
+- the node's registry state and last-seen epoch, the registry generation, and the Registry Host's status, publication sequence, freeze-token counter, and accepted candidate generation;
 - Coordinator aggregate active/unclaimed/draining/fault/missing counts and capacity.
 
 `ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10` provides the directory-oriented commissioning view.

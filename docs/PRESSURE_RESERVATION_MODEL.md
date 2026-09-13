@@ -110,6 +110,8 @@ AdmissibleRate = min(
 )
 ```
 
+`LeaseTicks` is the Planner's published `S11`, read through the request's `S13` Planner RefId; the Planner publishes it before it posts the build, so every hop of one build divides by the same lease.
+
 It does **not** modify endpoint counters and does not stage a Transfer grant.
 
 ### COMMIT

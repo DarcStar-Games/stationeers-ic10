@@ -15,14 +15,6 @@
   ],
   "layout": [
     {
-      "cells": "S12..S15",
-      "start": 12,
-      "end": 15,
-      "name": "UnpublishedAdapterCells",
-      "role": "reserved",
-      "description": "the Catalog Inspector reads these as the Adapter ABI3 candidate count, sequence, overflow, and mode, but the Registry Host never writes them; see issue #194"
-    },
-    {
       "cells": "S16",
       "start": 16,
       "end": 16,
@@ -164,7 +156,7 @@
       "end": 447,
       "name": "RegistryRecords",
       "role": "table",
-      "description": "64 six-cell records at S58+6n for n in 1..64: NodeId, ReferenceId, State, UsedCells, AssignmentEpoch, CatalogInstanceId"
+      "description": "64 six-cell records at S58+6n indexed by NodeId n in 1..64: ReferenceId, State, UsedCells, AssignmentEpoch, CatalogInstanceId, LastSeenEpoch"
     }
   ],
   "provider_interfaces": [

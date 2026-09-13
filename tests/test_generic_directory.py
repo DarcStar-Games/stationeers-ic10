@@ -119,6 +119,15 @@ for _ in range(40):av.run(1,max_steps=50000);rv.run(1,max_steps=50000)
 if not adapter_ok(av,2) or rv.stack.get(0)!='HASH:GenericRegistryDirectoryHost.v3' or rv.stack.get(1)!=3 or rv.stack.get(3)!='HASH:DirectorySchema.CatalogStoreNode.v1':fails.append('Registry Adapter ABI/header mismatch')
 base7=64+(7-1)*6;base9=64+(9-1)*6
 if rv.stack.get(base7)!=701 or rv.stack.get(base7+1)!=2 or rv.stack.get(base9)!=702:fails.append('Registry Host NodeId indexing mismatch')
+# The Catalog Inspector's registry diagnostics S35..S38 read only cells the Registry Host publishes: S16 status,
+# S23 publication sequence, S24 freeze-token counter, S25 accepted candidate generation (issue #194).
+core=Device(712,stack={0:'HASH:CatalogCoordinatorCore.v4',1:4,22:4,23:711},props={'ReferenceId':712})
+iv=IC10((R/'ic10/catalog-control-plane/catalog_inspector_v4_0.ic10').read_text(),{'d0':Device(701,{**store1.stack,11:712},{'ReferenceId':701}),'core':core,'host':Device(711,rv.stack,{'ReferenceId':711})},self_ref=713)
+for _ in range(4):iv.run(1,max_steps=50000)
+if iv.stack.get(41)!=1:fails.append('Inspector did not publish a coherent registry snapshot: S41=%r'%iv.stack.get(41))
+if rv.stack.get(24,0)<1 or rv.stack.get(25,0)<1:fails.append('Registry Host published no freeze token or accepted generation to inspect')
+if [iv.stack.get(c) for c in (35,36,37,38)]!=[rv.stack.get(16),rv.stack.get(23),rv.stack.get(24),rv.stack.get(25)]:fails.append('Inspector S35..S38 are not the Host S16, S23, S24, S25: %r'%[iv.stack.get(c) for c in (35,36,37,38)])
+if (iv.stack.get(30),iv.stack.get(31),iv.stack.get(32))!=(rv.stack.get(base7+1),rv.stack.get(base7+5),rv.stack.get(26)):fails.append('Inspector node state, last-seen generation, or registry generation mismatch: %r'%[iv.stack.get(c) for c in (30,31,32)])
 # Removing Node9 from adapter discovery marks its persistent record MISSING on a later adapter generation.
 del av.screws['s2']
 for _ in range(20):av.run(1,max_steps=50000);rv.run(1,max_steps=50000)
@@ -234,6 +243,7 @@ print(' - DIRECTORY_ADAPTER_ABI_V2 freezes coherent candidate generations across
 print(' - Snapshot Bridge/Host publishes one generic ABI with schema-qualified stable generations')
 print(' - Snapshot Bridge rejects live schema-geometry changes until Host reinitialization')
 print(' - Registry Host ABI3 consumes the same Adapter ABI with S23 transactional publication fencing')
+print(' - Catalog Inspector registry diagnostics read only cells the Registry Host publishes')
 print(' - 65th snapshot candidate sets overflow without splitting/corrupting a record')
 print(' - exact duplicate at full capacity does not falsely overflow')
 print(' - 128-instruction/8-instruction adversarial scheduler never publishes a torn Adapter generation')
