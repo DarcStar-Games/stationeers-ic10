@@ -261,7 +261,7 @@
     "providers": [
      "ic10/dependency-planning/generic_job_monitor_v1_0.ic10"
     ],
-    "note": "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10:1: \"# Bounded depth/cycle guard. d0 Plan Store,d1 Job Monitor.\" [Monitor cells match: request S13 JobId + S14 token (writes 13,14), response S15 token, S16 status==1, results S18 JobType and S19 Identity (reads 15,16,18,19).]"
+    "note": "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10:1: \"# Bounded depth/cycle guard. d0 Plan Store,d1 Job Monitor.\" [Monitor cells match: the guard writes S13 JobId and S14 RequestToken, reads S15 ResponseToken, S16 Status==1, and the S18 JobType and S19 Identity results.]"
    }
   },
   "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10": {
@@ -284,7 +284,7 @@
     "providers": [
      "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10"
     ],
-    "note": "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10:1: \"d2 Planner\"; docs/DEPENDENCY_PLANNING.md: \"dependency_cancellation_guard ... requests cleanup through the Planner\" [Planner cleanup interface matches: planner reads db24 parent + db25 token, replies db26 token/db27 status; guard writes 24,25 and reads 26.]"
+    "note": "ic10/dependency-planning/dependency_cancellation_guard_v1_0.ic10:1: \"d2 Planner\"; docs/DEPENDENCY_PLANNING.md: \"dependency_cancellation_guard ... requests cleanup through the Planner\" [Planner cleanup interface matches: the guard writes S24 CleanupParentJobId and S25 CleanupRequestToken and reads S26 CleanupResponseToken; the Planner reads those two request cells and answers through the response token, and the guard never reads the cleanup status cell beside it.]"
    }
   },
   "ic10/dependency-planning/dependency_child_creator_v2_0.ic10": {
@@ -293,21 +293,21 @@
     "providers": [
      "ic10/dependency-planning/item_producer_resolver_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"item_producer_resolver_v1_0.ic10 ... Known transform outputs resolve to ProducerKind=TRANSFORM\"; creator \"validates producer identity\" [No pin comment. Resolver interface matches exactly and uniquely: request S8 ResourceType + S9 token (creator writes d0 8,9), response S10 token, S11 status==1, S12 ProducerJobType, S13 ProducerIdentity (creator reads 10,11,12,13; branches to NoProducer on status!=1).]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"item_producer_resolver_v1_0.ic10 ... Known transform outputs resolve to ProducerKind=TRANSFORM\"; creator \"validates producer identity\" [No pin comment. Resolver interface matches exactly and uniquely: the creator writes S8 ResourceType and S9 RequestToken, reads S10 ResponseToken, S11 Status==1, S12 ProducerJobType and S13 ProducerIdentity, and branches to NoProducer on Status!=1.]"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/dependency-planning/job_requirement_view_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"dependency_child_creator_v2_0.ic10 validates producer identity, ancestry/depth, current output semantics\" (output semantics come from the normalized Requirement View) [No pin comment. Requirement View interface matches exactly: request S15..S18 + S19 token (creator writes 15..19), response S20 token, S21 status==1, S24 promised output ResourceType (creator checks d1 24 == requested resource), S25 per-unit output qty; also reads S22/S23 into sp/ra.]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"dependency_child_creator_v2_0.ic10 validates producer identity, ancestry/depth, current output semantics\" (output semantics come from the normalized Requirement View) [No pin comment. Requirement View interface matches exactly: the creator writes the S15..S18 request (JobType, Identity, RequestedQuantity, InputOrdinal) and S19 RequestToken, reads S20 ResponseToken, S21 Status==1, S24 OutputResourceType (checked against the requested resource) and S25 OutputPerBatch, and reads S22/S23 into sp/ra.]"
    },
    "d2": {
     "kind": "script",
     "providers": [
      "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"Self-dependencies and immediate ancestor cycles ... are rejected before child publication\"; creator validates \"ancestry/depth\" [No pin comment. Ancestry guard interface matches exactly: request S10..S14 + S15 token (creator writes 10..15), response S16 token, S17 status with -2 depth / -3 cycle (creator branches to Depth / Cycle on d2 17).]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"Self-dependencies and immediate ancestor cycles ... are rejected before child publication\"; creator validates \"ancestry/depth\" [No pin comment. Ancestry guard interface matches exactly: the creator writes the S10..S14 request (ParentJobId, ParentJobType, ParentIdentity, ProducerJobType, ProducerIdentity) and S15 RequestToken, reads S16 ResponseToken and S17 Status, branching to Depth on -2 and Cycle on -3.]"
    },
    "d3": {
     "kind": "script",
@@ -411,7 +411,7 @@
     "providers": [
      "ic10/dependency-planning/dependency_plan_evaluator_v2_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md decision table (\"inventory now satisfies -> READY ... quote fingerprints changed -> replan\") matches the controller's branch on d1 31 codes 1/2/3/4/5/-3/-4 [No pin comment. Evaluator cells match exactly: request S20..S28 + S29 token (controller writes 20..29), response S30 token, S31 decision code.]"
+    "note": "docs/DEPENDENCY_PLANNING.md decision table (\"inventory now satisfies -> READY ... quote fingerprints changed -> replan\") matches the controller's branch on S31 Decision codes 1/2/3/4/5/-3/-4 [No pin comment. Evaluator cells match exactly: the controller writes the S20..S28 request and S29 RequestToken, reads S30 ResponseToken and S31 Decision.]"
    },
    "d2": {
     "kind": "script",
@@ -425,7 +425,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"Planner may request cancellation through Gateway lane B\"; docs/DEPLOYMENT.md: \"lane B dependency Planner cancellation\" [Gateway lane B cells confirmed in gateway source: token S32/response S33 (the Gateway reads every lane's token and response through its lane-base register, `get r15 db r7` with r7 at 32 for lane B), lifecycle payload copied from S36..S40. Controller writes d3 36=2 (SET_STATE), 37 child JobId, 38 generation, 39=12, 40=-20, token 32; reads 33. Docs attribute lane B to \"Planner cancellation\"; the existing-plan controller is the component that physically writes it on the planner's behalf.]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"Planner may request cancellation through Gateway lane B\"; docs/DEPLOYMENT.md: \"lane B dependency Planner cancellation\" [Gateway lane B cells confirmed in gateway source: token S32/response S33 (the Gateway reads every lane's token and response through its lane-base register, `get r15 db r7` with r7 at 32 for lane B), lifecycle payload copied from S36..S40. Controller writes S36=2 (SET_STATE), S37 child JobId, S38 generation, S39=12, S40=-20 and the S32 token; reads S33. Docs attribute lane B to \"Planner cancellation\"; the existing-plan controller is the component that physically writes it on the planner's behalf.]"
    }
   },
   "ic10/dependency-planning/generic_job_monitor_v1_0.ic10": {
@@ -474,7 +474,7 @@
     "providers": [
      "ic10/dependency-planning/manufacturing_reagent_resolver_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"Print requirements come from ... manufacturing_reagent_resolver_v1_0.ic10, which maps ManufacturingReagentHash aliases back to canonical ITEM ResourceType values\" [Resolver cells match: request S8 alias + S9 token (consumer writes 8,9), response S10 token, S11 status==1, S12 resolved ResourceType.]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"Print requirements come from ... manufacturing_reagent_resolver_v1_0.ic10, which maps ManufacturingReagentHash aliases back to canonical ITEM ResourceType values\" [Resolver cells match: the view writes S8 ReagentHash and S9 RequestToken, reads S10 ResponseToken, S11 Status==1 and S12 ResourceType.]"
    }
   },
   "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10": {
@@ -483,14 +483,14 @@
     "providers": [
      "ic10/dependency-planning/manufacturing_dependency_planner_v1_0.ic10"
     ],
-    "note": "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10:1: \"# Dependency Gate ABI2. d0 Planner,d1 DriverRouter,d2 JobSelector.\" [Planner cells match: request S12 parent + S13..S18 job metadata + S19 token (gate writes 12..19), response S20 token, S21 decision (planner pokes 20 r15 / 21 r4).]"
+    "note": "ic10/dependency-planning/manufacturing_dependency_gate_v2_0.ic10:1: \"# Dependency Gate ABI2. d0 Planner,d1 DriverRouter,d2 JobSelector.\" [Planner cells match: the gate writes S12 JobId, the S13..S18 job metadata and S19 RequestToken, reads S20 ResponseToken and S21 Decision; the Planner publishes the decision before the token.]"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/manufacturing/manufacturing_driver_router_v2_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md: \"manufacturing_dependency_gate_v2_0.ic10 between Scheduler and ic10/manufacturing/manufacturing_driver_router_v2_0.ic10\"; pin comment \"d1 DriverRouter\" [Driver Router ABI2 cells match: request token S9 (gate writes d1 9), response S10 token, S11/S12 status/result (router pokes 10 r15, 11, 12).]"
+    "note": "docs/DEPLOYMENT.md: \"manufacturing_dependency_gate_v2_0.ic10 between Scheduler and ic10/manufacturing/manufacturing_driver_router_v2_0.ic10\"; pin comment \"d1 DriverRouter\" [Driver Router ABI2 cells match: the gate writes S9 RequestToken, reads S10 ResponseToken, S11 TargetJobState and S12 ErrorStatus.]"
    },
    "d2": {
     "kind": "script",
@@ -537,7 +537,7 @@
     "providers": [
      "ic10/dependency-planning/dependency_plan_builder_v2_0.ic10"
     ],
-    "note": "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10:1: \"d1 Builder\" [Builder cells match: request S19..S29 + S30 token (controller writes 19..30), response S31 token, S32 status==1, S33 child JobId, S34 FutureQty.]"
+    "note": "ic10/dependency-planning/new_dependency_plan_controller_v1_0.ic10:1: \"d1 Builder\" [Builder cells match: the controller writes the S19..S29 request and S30 RequestToken, reads S31 ResponseToken, S32 Status==1, S33 ChildJobId and S34 FutureQuantity.]"
    },
    "d2": {
     "kind": "script",
@@ -714,7 +714,7 @@
     "providers": [
      "ic10/item-storage-larre/larre_item_storage_endpoint_v1_0.ic10"
     ],
-    "note": "docs/ITEM_STORAGE_SYSTEM.md: \"d0  189 LArRE ITEM Storage Endpoint\" (section 9 wiring block) [Consumer requires d0 S35 == HASH(\"StorageAccess.LArRE\"); the endpoint's line 8 is exactly `poke 35 HASH(\"StorageAccess.LArRE\")`, and it is the only program publishing that access magic. Doc also states the client is the sole movement client for one larre_item_storage_endpoint instance.]"
+    "note": "docs/ITEM_STORAGE_SYSTEM.md: \"d0  189 LArRE ITEM Storage Endpoint\" (section 9 wiring block) [Consumer requires d0 S35 == HASH(\"StorageAccess.LArRE\"); the endpoint publishes S35 AccessKind as HASH(\"StorageAccess.LArRE\") on its line 9, and it is the only program publishing that access magic. Doc also states the client is the sole movement client for one larre_item_storage_endpoint instance.]"
    },
    "d1": {
     "kind": "script",
@@ -975,7 +975,7 @@
     "providers": [
      "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10"
     ],
-    "note": "docs/MANUFACTURING_SCHEDULER.md:429: \"configure `175 d0 -> 187 Transform Candidate Readiness`\"; source pin comment: \"Transform Candidate Executor ABI2: d0 Readiness; exact request-token fencing\" [SCRIPT_INDEX describes the readiness program as fencing Transform Profile/Admission/Link-Resolver completion to one exact candidate request, matching the executor's request/response cell usage (writes 8,11..16; reads 9,10).]"
+    "note": "docs/MANUFACTURING_SCHEDULER.md:429: \"configure `175 d0 -> 187 Transform Candidate Readiness`\"; source pin comment: \"Transform Candidate Executor ABI2: d0 Readiness; exact request-token fencing\" [SCRIPT_INDEX describes the readiness program as fencing Transform Profile/Admission/Link-Resolver completion to one exact candidate request, matching the executor's cell usage: it writes S8 RequestToken and the S11..S16 request (RuntimeRef, TransformType, RequiredCapability, InputCount, OutputCount, BatchCount) and reads S9 Status and S10 ResponseToken.]"
    }
   },
   "ic10/manufacturing/transform_candidate_readiness_v1_0.ic10": {},
@@ -1197,7 +1197,7 @@
     "providers": [
      "ic10/material-transform/material_transform_link_resolver_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md: \"165 Runtime: ... d2 Link Resolver ...\" [Consumer reads d2 S11 and S12==1; the Link Resolver pokes 11 and 12 (status, asserted ==1 in tests/test_material_transform_protocol.py). ABI_REFERENCE (GenericMaterialTransformRuntime.v2) confirms \"d2 Resolver\".]"
+    "note": "docs/DEPLOYMENT.md: \"165 Runtime: ... d2 Link Resolver ...\" [Consumer reads d2 S11 and S12==1; the Link Resolver publishes S11 ProfileGeneration and S12 Status (asserted ==1 in tests/test_material_transform_protocol.py). ABI_REFERENCE (GenericMaterialTransformRuntime.v2) confirms \"d2 Resolver\".]"
    },
    "d3": {
     "kind": "script",
@@ -1272,7 +1272,7 @@
     "providers": [
      "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md: \"164 Allocator ABI2: d0 Link Resolver, d1 Stager\"; pin comment \"d0 Resolver,d1 Stager\" [Consumer writes d1 S9..S12 and reads d1 S13/S14 (S13 in {1,2}); the Stager reads its own db 9 (command: 1 stage, 2 cleanup), db 12/db 14 and pokes 13 (status/ack). Exact source-level mailbox match; tests wire stager_dev to allocator d1.]"
+    "note": "docs/DEPLOYMENT.md: \"164 Allocator ABI2: d0 Link Resolver, d1 Stager\"; pin comment \"d0 Resolver,d1 Stager\" [Consumer writes d1 S9..S12 and reads d1 S13/S14 (S13 in {1,2}); the Stager reads S9 Command (1 stage, 2 cleanup), S12 RequestToken and S14, and publishes S13 Status then S14 ResponseToken. Exact source-level mailbox match; tests wire stager_dev to allocator d1.]"
    }
   },
   "ic10/material-transform/multi_material_reservation_stager_v1_0.ic10": {
@@ -1357,7 +1357,7 @@
     "providers": [
      "ic10/power-grid/power_reservation_allocator_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_link_executor_v1_0.ic10: '# Break-before-make Transformer Setting/On executor. d0 PlanStore,d1 Allocator.' [Reads d1 S8/S9/S10 with S10==1 - exactly the allocator's published authority [PlanGeneration, AuthorityEpoch, Status] (allocator Publish: poke 8 gen, poke 9 epoch, poke 10 1); also reads d1 ReferenceId to match Reservation owner. tests/test_fault_injection.py holds the allocator's S8, S9, S10 across a reflash.]"
+    "note": "ic10/power-grid/power_link_executor_v1_0.ic10: '# Break-before-make Transformer Setting/On executor. d0 PlanStore,d1 Allocator.' [Reads d1 S8/S9/S10 with S10==1 - exactly the allocator's published authority [PlanGeneration, AuthorityEpoch, Status] (the allocator's Publish writes S8, S9, then S10=1); also reads d1 ReferenceId to match Reservation owner. tests/test_fault_injection.py holds the allocator's S8, S9, S10 across a reflash.]"
    }
   },
   "ic10/power-grid/power_link_selector_v1_0.ic10": {
@@ -1459,7 +1459,7 @@
     "providers": [
      "ic10/power-grid/power_link_selector_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_sink_flow_builder_v1_0.ic10: '# Build one POWER sink flow. d0 SourceSelector,d1 LinkSelector,d2 PlanStore.' [Link selector request surface: S12/S13/S14 source/sink/watts params, S15 token, S16 ack token, S17 status (poke 17), S8..S10 LinkRef/SourceWatts/LinkGeneration results - matches builder d1 access [writes 12..15; reads 8..10, 16, 17; S17==1].]"
+    "note": "ic10/power-grid/power_sink_flow_builder_v1_0.ic10: '# Build one POWER sink flow. d0 SourceSelector,d1 LinkSelector,d2 PlanStore.' [Link selector request surface: S12/S13/S14 source/sink/watts params, S15 token, S16 ack token, S17 status, S8..S10 LinkRef/SourceWatts/LinkGeneration results - matches builder d1 access [writes S12..S15; reads S8..S10, S16, S17; S17==1].]"
    },
    "d2": {
     "kind": "script",
@@ -1537,7 +1537,7 @@
     "providers": [
      "ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10"
     ],
-    "note": "ic10/power-jobs/power_job_finalize_v1_0.ic10: '# Finalize one POWER job step. d0 lifecycle,d1 resolver,d2 verify.' [Lifecycle client surface: S10-S13 params, S14 token, S15 ack (poke 15 r15), S8 status (poke 8 +/-1), S9 resulting generation - matches finalize d0 access [writes 10..14; reads 8,9,15; S8==1]. tests/test_power_management.py wires 'life' device to d0.]"
+    "note": "ic10/power-jobs/power_job_finalize_v1_0.ic10: '# Finalize one POWER job step. d0 lifecycle,d1 resolver,d2 verify.' [Lifecycle client surface: S10-S13 params, S14 token, S15 ack, S8 status (+1/-1), S9 resulting generation - matches finalize d0 access [writes S10..S14; reads S8, S9, S15; S8==1]. tests/test_power_management.py wires 'life' device to d0.]"
    },
    "d1": {
     "kind": "script",
@@ -1551,7 +1551,7 @@
     "providers": [
      "ic10/power-jobs/power_job_policy_verify_v1_0.ic10"
     ],
-    "note": "ic10/power-jobs/power_job_finalize_v1_0.ic10: '# Finalize one POWER job step. d0 lifecycle,d1 resolver,d2 verify.' [Verify surface: S9-S11 params, S12 token, S13 ack (poke 13 r15), S8 status (poke 8 1/0/-1) - matches finalize d2 access [writes 9..12; reads 8,13]. tests/test_power_management.py wires 'verify' device to d2.]"
+    "note": "ic10/power-jobs/power_job_finalize_v1_0.ic10: '# Finalize one POWER job step. d0 lifecycle,d1 resolver,d2 verify.' [Verify surface: S9-S11 params, S12 token, S13 ack, S8 status (1/0/-1) - matches finalize d2 access [writes S9..S12; reads S8, S13]. tests/test_power_management.py wires 'verify' device to d2.]"
    }
   },
   "ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10": {
@@ -1600,7 +1600,7 @@
     "providers": [
      "ic10/power-jobs/power_job_policy_apply_v1_0.ic10"
     ],
-    "note": "ic10/power-jobs/power_job_prepare_v1_0.ic10: '# Prepare one POWER job step. d0 lifecycle,d1 resolver,d2 apply.' [Apply surface: S14-S18(+19) params, S8 token, S9 ack (poke 9 r15), S10 status (poke 10 1/-1) - matches prepare d2 access [writes 8,14..19; reads 9,10; S10==1]. tests/test_power_management.py wires 'apply' device to d2.]"
+    "note": "ic10/power-jobs/power_job_prepare_v1_0.ic10: '# Prepare one POWER job step. d0 lifecycle,d1 resolver,d2 apply.' [Apply surface: S14-S19 params, S8 token, S9 ack, S10 status (1/-1) - matches prepare d2 access [writes S8, S14..S19; reads S9, S10; S10==1]. tests/test_power_management.py wires 'apply' device to d2.]"
    }
   },
   "ic10/power-jobs/power_job_scheduler_v1_0.ic10": {
@@ -1616,14 +1616,14 @@
     "providers": [
      "ic10/power-jobs/power_job_prepare_v1_0.ic10"
     ],
-    "note": "pin comment '# POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.' [Reached through register-indexed dr9: `select r9 r1 2 1` picks 1 (this pin) unless the selected job is RUNNING or VERIFYING, and the reviewed register_ports override resolves dr9 to d1/d2 because WaitWork reloads r9 from the Scheduler's own resume key. Request surface: S14 Slot, S15 JobId, S16 State, S17 JobGeneration, S18 RequestedQuantity, S19 RequiredCapability, S8 Identity, S9 RequestToken - matches Prepare's own reads (get r2..r7 db 14..19, get r8 db 8, get r15 db 9); reply S10 ResponseToken, S11 Status, S12 NewState, S13 NewJobGeneration. Until #163 the six fields went to Prepare's header cells; tests/test_power_management.py now drives the real Scheduler through this mailbox.]"
+    "note": "pin comment '# POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.' [Reached through register-indexed dr9: `select r9 r1 2 1` picks 1 (this pin) unless the selected job is RUNNING or VERIFYING, and the reviewed register_ports override resolves dr9 to d1/d2 because WaitWork reloads r9 from the Scheduler's own resume key. Request surface: S14 Slot, S15 JobId, S16 State, S17 JobGeneration, S18 RequestedQuantity, S19 RequiredCapability, S8 Identity, S9 RequestToken - matches the cells Prepare reads for itself (S14..S19 into r2..r7, S8 into r8, S9 into r15); reply S10 ResponseToken, S11 Status, S12 NewState, S13 NewJobGeneration. Until #163 the six fields went to Prepare's header cells; tests/test_power_management.py now drives the real Scheduler through this mailbox.]"
    },
    "d2": {
     "kind": "script",
     "providers": [
      "ic10/power-jobs/power_job_finalize_v1_0.ic10"
     ],
-    "note": "pin comment '# POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.' [Reached through register-indexed dr9: `select r9 r1 2 1` picks 2 (this pin) when the selected job is RUNNING (5) or VERIFYING (6), and the reviewed register_ports override resolves dr9 to d1/d2 because WaitWork reloads r9 from the Scheduler's own resume key. Same request surface as d1 - S14..S19 fields, S8 Identity, S9 RequestToken - matches Finalize's own reads (get r2,r4..r7 db 14,16..19, get r8 db 8, get r15 db 9); S15 JobId is part of the shared record layout that Finalize stopped reading in #160 and accepts through a reviewed external_writable_ranges entry; reply S10 ResponseToken, S11 Status, S12 NewState, S13 NewJobGeneration (issue #163).]"
+    "note": "pin comment '# POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.' [Reached through register-indexed dr9: `select r9 r1 2 1` picks 2 (this pin) when the selected job is RUNNING (5) or VERIFYING (6), and the reviewed register_ports override resolves dr9 to d1/d2 because WaitWork reloads r9 from the Scheduler's own resume key. Same request surface as d1 - S14..S19 fields, S8 Identity, S9 RequestToken - matches the cells Finalize reads for itself (S14 and S16..S19 into r2 and r4..r7, S8 into r8, S9 into r15); S15 JobId is part of the shared record layout that Finalize stopped reading in #160 and accepts through a reviewed external_writable_ranges entry; reply S10 ResponseToken, S11 Status, S12 NewState, S13 NewJobGeneration (issue #163).]"
    }
   },
   "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": {
