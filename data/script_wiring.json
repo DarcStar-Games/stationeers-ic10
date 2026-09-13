@@ -1560,7 +1560,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10"
     ],
-    "note": "docs/POWER_MANAGEMENT.md: 'power_job_lifecycle_client_v1_0.ic10 uses Job Gateway lane D.' + docs/DEPLOYMENT.md: 'lane D Power Scheduler. Do not connect two writers to one lane.' [Client writes d0 S68-S72 (command 2 + params) and S64 token, reads S65 ack / S66 status==1 - exactly gateway v3's lane-D window (gateway: get r15 db 64 / get r0 db 65; lane base registers 64/68). Header: '# Lane-D POWER lifecycle client'.]"
+    "note": "docs/POWER_MANAGEMENT.md: 'power_job_lifecycle_client_v1_0.ic10 uses Job Gateway lane D.' + docs/DEPLOYMENT.md: 'lane D Power Scheduler. Do not connect two writers to one lane.' [Client writes d0 S68-S72 (command 2 + params) and S64 token, reads S65 ack / S66 status==1 - exactly the Gateway's lane D window (the Gateway reads every lane's token and response through its lane-base register, `get r15 db r7` with r7 at 64 for lane D). Header: '# Lane-D POWER lifecycle client'.]"
    }
   },
   "ic10/power-jobs/power_job_policy_apply_v1_0.ic10": {
