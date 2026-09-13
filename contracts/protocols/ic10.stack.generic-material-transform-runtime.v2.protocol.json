@@ -239,6 +239,7 @@
           "value_type": "enum",
           "semantic_source": "protocol-layout",
           "access": [
+            "self-read",
             "self-write"
           ],
           "role": "state"

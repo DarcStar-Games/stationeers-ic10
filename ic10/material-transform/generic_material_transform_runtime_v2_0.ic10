@@ -21,8 +21,12 @@ beq r0 1 WaitAlloc
 beq r0 2 WaitInput
 beq r0 3 WaitOutput
 get r15 db 16
+get r0 db 20
+beq r0 2 Accept
+bgt r0 2 Fault
 get r0 db 21
-beq r15 r0 Idle
+beq r15 r0 Loop
+Accept:
 get r6 db 8
 poke 20 2
 poke 21 r15
@@ -37,7 +41,6 @@ blez r14 Fault
 get r0 d1 8
 bne r0 1 Fault
 get r13 d2 11
-blez r13 Fault
 get r0 d2 12
 bne r0 1 Fault
 bne r13 r14 Fault
@@ -48,27 +51,27 @@ put d3 8 r6
 put d3 20 r7
 put d3 21 r15
 poke 19 1
-j Publish
+j Loop
 WaitAlloc:
 get r15 db 16
 get r0 d3 16
-bne r0 r15 Publish
+bne r0 r15 Loop
 get r0 d3 22
 bltz r0 Fault
-bne r0 1 Publish
+bne r0 1 Loop
 get r0 d3 14
 blez r0 Fault
 poke 22 r0
 poke 19 2
 poke 20 3
-j Publish
+j Loop
 WaitInput:
 get r15 db 16
 get r0 d3 16
 bne r0 r15 Fault
 get r0 d3 22
 bltz r0 Fault
-bne r0 2 Publish
+bne r0 2 Loop
 get r0 d4 36
 poke 11 r0
 get r0 d4 12
@@ -77,7 +80,7 @@ s d0 Activate 1
 poke 13 0
 poke 19 3
 poke 20 4
-j Publish
+j Loop
 WaitOutput:
 get r0 db 13
 add r0 r0 1
@@ -93,28 +96,25 @@ bne r0 r1 Fault
 get r0 d2 12
 bne r0 1 Fault
 get r0 d2 11
-get r1 db 9
 bne r0 r1 Fault
 get r0 d4 12
 get r1 db 12
-beq r0 r1 Publish
+beq r0 r1 Loop
 get r0 d4 36
 get r1 db 11
 sub r0 r0 r1
 get r1 d1 17
 get r2 db 8
 mul r1 r1 r2
-blt r0 r1 Publish
+blt r0 r1 Loop
 s d0 Activate 0
-poke 19 0
-Idle:
 poke 20 1
-j Publish
+poke 19 0
+j Loop
 Fault:
 s d0 Activate 0
 get r0 db 16
 put d3 23 r0
 poke 19 0
 poke 20 -1
-Publish:
 j Loop

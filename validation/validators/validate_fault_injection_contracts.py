@@ -32,6 +32,12 @@ ordered('ic10/power-grid/power_reservation_allocator_v1_0.ic10','poke 8 0','Wait
 # Executors are gated by allocator active flag and exact PlanGeneration.
 result.ordered('ic10/power-grid/power_load_executor_v1_0.ic10','get r0 d1 10','get r0 d1 8','get r0 d1 9','Write:','sd r3 On r4',after='Set:',rule='post-anchor order')
 result.ordered('ic10/power-grid/power_link_executor_v1_0.ic10','get r0 d1 10','get r0 d1 8','get r0 d1 9','Write:','sd r3 Setting r4','sd r3 On r5',after='Set:',rule='post-anchor order')
+# Transform Runtime snapshots the output Reservation, switches the furnace on, and publishes its state last;
+# a served token leaves the published status alone, and an interrupted acceptance or fault is resumed (issue #165).
+ordered('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','poke 11 r0','poke 12 r0','s d0 Activate 1','poke 13 0','poke 19 3')
+ordered('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','get r0 db 20','beq r0 2 Accept','bgt r0 2 Fault','beq r15 r0 Loop','Accept:','poke 20 2','poke 21 r15')
+ordered('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','s d0 Activate 0','poke 20 1','poke 19 0',rule='completion publishes status before state')
+result.ordered('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','s d0 Activate 0','poke 19 0','poke 20 -1',after='Fault:',rule='fault publishes state before status')
 # Item 10 documentation must be present and marked complete.
 need('docs/INTERRUPTION_FAULT_INJECTION.md','Catalog migration','Directory mutation','LArRE','POWER replacement','Generic Job lifecycle')
 need('ROADMAP.md','10. Broad interruption and fault-injection suite — COMPLETE','Items **1–11 are implemented and automatically validated**','Item **12 is ACTIVE**')
