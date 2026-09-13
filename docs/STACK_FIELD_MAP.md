@@ -47,6 +47,8 @@ room a move would have to fit in.
 
 66 entries at 29 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S28, S30, S31, S32, S33, S34, S35, S48, S52, S53, S54, S98, S99.
 
+Most common starting cells: S10 in 8 entries, S11 in 6 entries, S12 in 4 entries, S13 in 4 entries, S8 in 3 entries.
+
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
 | S8 | ContextType | ic10.stack.input-profile-view.v1 | 2 | 0 | peer, document | 11 |
@@ -120,6 +122,8 @@ room a move would have to fit in.
 
 7 entries at 5 distinct starting cells: S9, S12, S17, S19, S50.
 
+Most common starting cells: S9 in 2 entries, S12 in 2 entries, S17 in 1 entry, S19 in 1 entry, S50 in 1 entry.
+
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
 | S9 | DirectorySchemaId | ic10.stack.generic-snapshot-directory-host.v1 | 16 | 13 | peer, document | -1 |
@@ -133,6 +137,8 @@ room a move would have to fit in.
 ### request
 
 340 entries at 57 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S24, S25, S26, S27, S28, S29, S30, S31, S32, S33, S34, S35, S36, S37, S38, S39, S40, S50, S51, S53, S54, S55, S56, S68, S69, S70, S71, S72, S85, S86, S87, S101, S102, S103, S108, S110, S111, S117, S118, S119, S120.
+
+Most common starting cells: S16 in 30 entries, S15 in 29 entries, S14 in 28 entries, S17 in 26 entries, S12 in 22 entries.
 
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
@@ -481,6 +487,8 @@ room a move would have to fit in.
 
 86 entries at 29 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S18, S19, S20, S21, S22, S23, S24, S25, S29, S30, S31, S32, S33, S36, S48, S52, S64, S70, S80, S96.
 
+Most common starting cells: S18 in 10 entries, S8 in 9 entries, S9 in 9 entries, S15 in 9 entries, S19 in 7 entries.
+
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
 | S8 | RequestToken | ic10.stack.larre-cargo-storage-service.v1 | 1 | 0 | peer | 0 |
@@ -574,6 +582,8 @@ room a move would have to fit in.
 
 6 entries at 5 distinct starting cells: S10, S15, S16, S21, S25.
 
+Most common starting cells: S10 in 2 entries, S15 in 1 entry, S16 in 1 entry, S21 in 1 entry, S25 in 1 entry.
+
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
 | S10 | CurrentToken | ic10.stack.print-candidate-executor.v2 | 1 | 0 | peer | 0 |
@@ -586,6 +596,8 @@ room a move would have to fit in.
 ### response_token
 
 80 entries at 27 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S19, S20, S21, S22, S23, S24, S26, S30, S31, S33, S34, S49, S53, S65, S68, S81, S97.
+
+Most common starting cells: S10 in 14 entries, S16 in 8 entries, S9 in 6 entries, S20 in 6 entries, S11 in 5 entries.
 
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
@@ -673,6 +685,8 @@ room a move would have to fit in.
 ### state
 
 106 entries at 28 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S24, S25, S27, S28, S31, S32, S35, S50, S66, S69, S82, S98, S101.
+
+Most common starting cells: S11 in 13 entries, S8 in 12 entries, S9 in 11 entries, S10 in 9 entries, S16 in 6 entries.
 
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
@@ -787,6 +801,8 @@ room a move would have to fit in.
 
 9 entries at 5 distinct starting cells: S9, S11, S12, S23, S28.
 
+Most common starting cells: S12 in 4 entries, S11 in 2 entries, S9 in 1 entry, S23 in 1 entry, S28 in 1 entry.
+
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
 | S9 | ErrorStatus | ic10.stack.generic-print-runtime.v2 | 1 | 0 | peer | 3 |
@@ -802,6 +818,8 @@ room a move would have to fit in.
 ### result
 
 260 entries at 46 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S24, S25, S26, S27, S28, S29, S30, S31, S32, S33, S34, S35, S36, S37, S38, S39, S40, S41, S51, S55, S56, S57, S64, S71, S72, S73, S83, S84, S99, S100.
+
+Most common starting cells: S8 in 22 entries, S9 in 18 entries, S10 in 15 entries, S12 in 13 entries, S23 in 13 entries.
 
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
@@ -1070,6 +1088,8 @@ room a move would have to fit in.
 
 68 entries at 30 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S24, S25, S26, S27, S28, S29, S30, S40, S42, S48, S51, S74, S104, S115.
 
+Most common starting cells: S11 in 10 entries, S13 in 9 entries, S12 in 8 entries, S23 in 4 entries, S19 in 3 entries.
+
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
 | S8 | ScanSequence | ic10.stack.printer-execution-bank.v2 | 1 | 0 | peer | -1 |
@@ -1145,6 +1165,8 @@ room a move would have to fit in.
 
 19 entries at 14 distinct starting cells: S9, S10, S12, S13, S14, S15, S16, S17, S18, S20, S23, S26, S31, S109.
 
+Most common starting cells: S14 in 4 entries, S15 in 2 entries, S20 in 2 entries, S9 in 1 entry, S10 in 1 entry.
+
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
 | S9 | AuthorityEpoch | ic10.stack.power-reservation-allocator.v1 | 2 | 0 | peer | 35 |
@@ -1171,6 +1193,8 @@ room a move would have to fit in.
 
 13 entries at 11 distinct starting cells: S8, S20, S24, S25, S26, S27, S28, S29, S30, S224, S227.
 
+Most common starting cells: S25 in 2 entries, S26 in 2 entries, S8 in 1 entry, S20 in 1 entry, S24 in 1 entry.
+
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
 | S8 | ActiveBank | ic10.stack.console-registry.v1 | 1 | 0 | peer | 35 |
@@ -1190,6 +1214,8 @@ room a move would have to fit in.
 ### topology
 
 58 entries at 25 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S24, S27, S28, S29, S32, S40, S41, S100, S116.
+
+Most common starting cells: S8 in 6 entries, S9 in 5 entries, S13 in 5 entries, S14 in 5 entries, S10 in 4 entries.
 
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
@@ -1256,6 +1282,8 @@ room a move would have to fit in.
 
 25 entries at 13 distinct starting cells: S8, S16, S18, S20, S24, S32, S58, S64, S96, S128, S160, S192, S288.
 
+Most common starting cells: S32 in 9 entries, S128 in 3 entries, S20 in 2 entries, S96 in 2 entries, S8 in 1 entry.
+
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
 | S8..S31 | InputDescriptors | ic10.stack.resource-transform-profile-view.v4 | 3 | 4 | peer | 4 |
@@ -1288,6 +1316,8 @@ room a move would have to fit in.
 
 13 entries at 13 distinct starting cells: S8, S35, S36, S37, S38, S39, S40, S41, S42, S43, S44, S45, S100.
 
+Most common starting cells: S8 in 1 entry, S35 in 1 entry, S36 in 1 entry, S37 in 1 entry, S38 in 1 entry.
+
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
 | S8..S13 | DirectorySummary | ic10.stack.catalog-coordinator-core.v4 | 0 | 1 | document | 8 |
@@ -1307,6 +1337,8 @@ room a move would have to fit in.
 ### reserved
 
 3 entries at 3 distinct starting cells: S25, S30, S32.
+
+Most common starting cells: S25 in 1 entry, S30 in 1 entry, S32 in 1 entry.
 
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
