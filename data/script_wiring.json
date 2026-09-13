@@ -314,7 +314,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"submits child intent through Gateway lane C\"; docs/DEPLOYMENT.md: \"lane C Child Creator\" [Gateway lane C cells confirmed in gateway source: lane C token S48/response S49 (get r15 db 48 / get r0 db 49), request payload S53..S62, reply pokes 50,51,52. Creator writes d3 53..62 + token 48, reads 49,50(status==1),51 (child JobId).]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"submits child intent through Gateway lane C\"; docs/DEPLOYMENT.md: \"lane C Child Creator\" [Gateway lane C cells confirmed in gateway source: lane C token S48/response S49 (the Gateway reads every lane's token and response through its lane-base register, `get r15 db r7` with r7 at 48 for lane C), request payload S53..S62, reply S50 status, S51 allocated JobId. Creator writes d3 S53..S62 + token S48, reads S49, S50 (status==1), S51 (child JobId).]"
    }
   },
   "ic10/dependency-planning/dependency_child_validity_v1_0.ic10": {
@@ -404,7 +404,7 @@
     "providers": [
      "ic10/dependency-planning/dependency_plan_store_v2_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"The Plan Store supports only three operations: lookup parent, upsert, and clear\"; plan store source: op S12 (1..3), parent S13, token S9, response S10/S11, lookup record copied to S32..S39 [No pin comment. Interface match is exact and unique: controller writes d0 12=1 (lookup op), 13=ParentJobId, 9=token; reads 10 resp, 11 status (-2 missing), 33 ChildJobId, 34 ResourceType, 36..39 BaselineKnown/FutureQty/fingerprints - exactly the plan store record copy-out at S32..S39.]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"The Plan Store supports only three operations: lookup parent, upsert, and clear\"; plan store source: Command S12 (1..3), ParentJobId S13, RequestToken S9, ResponseToken S10, Status S11, lookup record copied out to the LookupRecord window [No pin comment. Interface match is exact and unique: controller writes d0 S12=1 (lookup), S13 ParentJobId, S9 token; reads S10 response token, S11 status (-2 missing), S33 ChildJobId, S34 ResourceType, S36..S39 BaselineKnown/FutureQty/quote fingerprints of the store's eight-cell LookupRecord copy-out.]"
    },
    "d1": {
     "kind": "script",
@@ -425,7 +425,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"Planner may request cancellation through Gateway lane B\"; docs/DEPLOYMENT.md: \"lane B dependency Planner cancellation\" [Gateway lane B cells confirmed in gateway source: token S32/response S33 (get r15 db 32 / get r0 db 33), lifecycle payload copied from S36..S40. Controller writes d3 36=2 (SET_STATE), 37 child JobId, 38 generation, 39=12, 40=-20, token 32; reads 33. Docs attribute lane B to \"Planner cancellation\"; the existing-plan controller is the component that physically writes it on the planner's behalf.]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"Planner may request cancellation through Gateway lane B\"; docs/DEPLOYMENT.md: \"lane B dependency Planner cancellation\" [Gateway lane B cells confirmed in gateway source: token S32/response S33 (the Gateway reads every lane's token and response through its lane-base register, `get r15 db r7` with r7 at 32 for lane B), lifecycle payload copied from S36..S40. Controller writes d3 36=2 (SET_STATE), 37 child JobId, 38 generation, 39=12, 40=-20, token 32; reads 33. Docs attribute lane B to \"Planner cancellation\"; the existing-plan controller is the component that physically writes it on the planner's behalf.]"
    }
   },
   "ic10/dependency-planning/generic_job_monitor_v1_0.ic10": {
@@ -444,7 +444,7 @@
     "providers": [
      "ic10/dependency-planning/job_requirement_view_v1_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: the Requirement View \"normalizes TRANSFORM and PRINT metadata into one bounded ITEM view\" that preflight iterates per input [No pin comment. Requirement View interface matches exactly: request S15 JobType, S16 metadata, S17 quantity, S18 input index + S19 token (preflight's Req subroutine writes 15..19), response S20 token, S21 status==1, S23 input count, S26 input ResourceType, S27 required qty (the view pokes 22..27).]"
+    "note": "docs/DEPENDENCY_PLANNING.md: the Requirement View \"normalizes TRANSFORM and PRINT metadata into one bounded ITEM view\" that preflight iterates per input [No pin comment. Requirement View interface matches exactly: request S15 JobType, S16 metadata, S17 quantity, S18 input index + S19 token (preflight's Req subroutine writes S15..S19), response S20 token, S21 status==1, S23 input count, S26 input ResourceType, S27 required qty.]"
    },
    "d1": {
     "kind": "script",
@@ -460,7 +460,7 @@
     "providers": [
      "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10"
     ],
-    "note": "Peer named by d0 S0 magic check (HASH(\"ResourceTransformProfileView.v4\")). docs/DEPENDENCY_PLANNING.md: \"Transform requirements come from Transform Profile ABI4\"; consumer uses the S68..S75 resolved-request mailbox of the v8 view"
+    "note": "Peer named by d0 S0 magic check (HASH(\"ResourceTransformProfileView.v4\")). docs/DEPENDENCY_PLANNING.md: \"Transform requirements come from Transform Profile ABI4\"; consumer writes S70 TransformTypeRequest, fences on S74 PublicationGeneration and S68 RequestEcho, reads S69 ResolveStatus, S71 RequiredCapabilityMask, S72 InputCount, two cells of the first OutputDescriptor (S33, S35), and walks the InputDescriptors table by register"
    },
    "d1": {
     "kind": "script",
@@ -612,7 +612,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_store_command_executor_v1_0.ic10"
     ],
-    "note": "Peer named by d0 S0 magic check (HASH(\"GenericJobStoreCommandExecutor.v1\")). docs/GENERIC_JOB_ABI.md:379: \"Both serialize mutations through the Job Gateway and sole physical Store command executor\"; USER_DEPLOYMENT_GUIDE.md:1086 chain Store -> Gateway -> Executor. [Also the correspondence is cell-exact: Gateway writes d0 cells 7..20/22 (payload), handshakes via d0 2 vs 3, and reads replies at d0 3,4,5,6; the Executor reads its own db 2,7..22 and replies at db 3,4,5,6 (poke 3/4/5/6). No other program has that mailbox shape.]"
+    "note": "Peer named by d0 S0 magic check (HASH(\"GenericJobStoreCommandExecutor.v1\")). docs/GENERIC_JOB_ABI.md:379: \"Both serialize mutations through the Job Gateway and sole physical Store command executor\"; USER_DEPLOYMENT_GUIDE.md:1086 chain Store -> Gateway -> Executor. [Also the correspondence is cell-exact: Gateway writes d0 S12 ParentJobId, S13 ParentJobGeneration, S14..S20 Intent (copied by register), S21 CommandClass, S22 ParentSlot, S28/S29 expected sequences, S35..S39 lifecycle command, then S23 RequestToken; reads the reply at S24 ResponseToken, S25 Status, S26 AllocatedJobId, S27 AllocatedSlot. No other program has that mailbox shape.]"
    }
   },
   "ic10/generic-jobs/generic_job_selector_v3_0.ic10": {
@@ -876,7 +876,7 @@
     "providers": [
      "ic10/generic-jobs/generic_job_selector_v3_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:269: \"(`d0 -> Transform Driver`, `d1 -> Print Driver`, `d2 -> Job Selector`)\"; docs/MANUFACTURING_SCHEDULER.md:427: \"`d2 -> Job Selector`\" [Port is read-only (reads 7..13), consistent with mirroring the Selector's published selection cells.]"
+    "note": "docs/DEPLOYMENT.md:269: \"(`d0 -> Transform Driver`, `d1 -> Print Driver`, `d2 -> Job Selector`)\"; docs/MANUFACTURING_SCHEDULER.md:427: \"`d2 -> Job Selector`\" [Port is read-only (reads S8 JobType, S9 RequiredCapability, S10 Identity, S11 InputCount, S12 OutputCount, S13 RequestedQuantity, S24 JobId), consistent with mirroring the Selector's published selection cells.]"
    }
   },
   "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10": {
@@ -922,7 +922,7 @@
     "providers": [
      "ic10/printer-directory/printer_capacity_client_v2_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:275: \"`d3 -> Printer Capacity Client`. Capacity Client discovers Execution Banks and revalidates exact PrinterReferenceId at reservation time\"; docs/MANUFACTURING_SCHEDULER.md:431: \"`d3 -> 186 Capacity Client ABI2`\" [Writes 2..5 / reads 6..8 with addr7==1 fit the client's request/acknowledged-response transaction (ExpectedPrinterRef + RequestToken in, status/ack out).]"
+    "note": "docs/DEPLOYMENT.md:275: \"`d3 -> Printer Capacity Client`. Capacity Client discovers Execution Banks and revalidates exact PrinterReferenceId at reservation time\"; docs/MANUFACTURING_SCHEDULER.md:431: \"`d3 -> 186 Capacity Client ABI2`\" [Writes S12 PrinterRef, S13 ProcessorSpec, S14 Command (1 reserve / 2 release), S15 RequestToken; reads S16 ResponseToken, S17 Status, S8 ResolvedPrinterRef - the client's request/acknowledged-response transaction.]"
    }
   },
   "ic10/manufacturing/print_job_driver_v2_0.ic10": {
@@ -1119,14 +1119,14 @@
     "providers": [
      "ic10/material-grid/material_resource_link_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md: \"Executor `d0` -> Link, `d1` -> Feeder, `d2` -> Guard.\" (section C step 6); pin comment \"d0 Link,d1 Feeder,d2 Guard\" [docs/MATERIAL_TRANSFER_SYSTEM.md Transfer Executor block repeats \"d0 -> Material Resource Link\". Consumer reads d0 S5/S12/S16/S22 which match the Link's ResourceType/status/Feeder-ref/native-sink cells as modeled in tests/test_material_transform_protocol.py.]"
+    "note": "docs/DEPLOYMENT.md: \"Executor `d0` -> Link, `d1` -> Feeder, `d2` -> Guard.\" (section C step 6); pin comment \"d0 Link,d1 Feeder,d2 Guard\" [docs/MATERIAL_TRANSFER_SYSTEM.md Transfer Executor block repeats \"d0 -> Material Resource Link\". Consumer reads d0 S12 PublicationGeneration, S31 ResourceType, S16 FeederRef, S22 SinkProviderRef, the Link cells tests/test_material_transform_protocol.py models.]"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md: \"Executor `d0` -> Link, `d1` -> Feeder, `d2` -> Guard.\"; pin comment \"d0 Link,d1 Feeder,d2 Guard\" [Consumer writes d1 S16..S19 and reads d1 S6/S7; the Feeder reads its own db 16..19 as the request mailbox and pokes 6 (status) and 7 (LIVE_CURRENT identity) as responses. Exact cell-level match.]"
+    "note": "docs/DEPLOYMENT.md: \"Executor `d0` -> Link, `d1` -> Feeder, `d2` -> Guard.\"; pin comment \"d0 Link,d1 Feeder,d2 Guard\" [Consumer writes d1 S16 RequestedResourceType, S17 RequestedQuantity, S19 ReleaseEpoch, then S18 RequestEpoch last; reads d1 S24 Status and S25 CurrentEpoch (the LIVE_CURRENT identity). Exact cell-level match with the Feeder's layout.]"
    },
    "d2": {
     "kind": "script",
@@ -1159,7 +1159,7 @@
     "providers": [
      "ic10/material-grid/material_transfer_executor_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md: \"Guard `d0` -> Link, `d1` -> `ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10`, `d2` -> Executor;\"; pin comment \"d0 Link,d1 Allocator,d2 Executor\" [docs/MATERIAL_TRANSFER_SYSTEM.md Grant Guard block: \"d2 -> Material Transfer Executor\". Guard reads d2 S2 and d2 ReferenceId; the Executor publishes S2 (poke 2 at lines 103/116) and topology binding by ReferenceId is the Guard's documented job.]"
+    "note": "docs/DEPLOYMENT.md: \"Guard `d0` -> Link, `d1` -> `ic10/material-transform/multi_material_reservation_allocator_v2_0.ic10`, `d2` -> Executor;\"; pin comment \"d0 Link,d1 Allocator,d2 Executor\" [docs/MATERIAL_TRANSFER_SYSTEM.md Grant Guard block: \"d2 -> Material Transfer Executor\". Guard reads d2 S14 ActiveEpoch and d2 ReferenceId; the Executor publishes its ActiveEpoch at S14, and topology binding by ReferenceId is the Guard's documented job.]"
    }
   },
   "ic10/material-grid/material_vending_stacker_feeder_v1_0.ic10": {
@@ -1190,7 +1190,7 @@
     "providers": [
      "ic10/material-transform/material_transform_admission_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md: \"165 Runtime: d0 Processor, d1 Admission, d2 Link Resolver, d3 Multi Allocator, d4 Output Reservation\" (section F) [docs/ABI_REFERENCE.md (GenericMaterialTransformRuntime.v2): \"wires d0 processor, d1 Admission...\". Consumer reads d1 S8==1, S17, S19; Admission pokes 8 (admit status 1/-1), 17, 19 among its S14..S19 payload. Exact match.]"
+    "note": "docs/DEPLOYMENT.md: \"165 Runtime: d0 Processor, d1 Admission, d2 Link Resolver, d3 Multi Allocator, d4 Output Reservation\" (section F) [docs/ABI_REFERENCE.md (GenericMaterialTransformRuntime.v2): \"wires d0 processor, d1 Admission...\". Consumer reads d1 S8 Status==1, S17 OutputQuantity, S19 ProfileGeneration, three cells the Admission publishes. Exact match.]"
    },
    "d2": {
     "kind": "script",
@@ -1211,7 +1211,7 @@
     "providers": [
      "ic10/resource-grid-core/resource_reservation_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md: \"165 Runtime: ... d4 Output Reservation\" [Only program publishing Generic Resource Reservation ABI1 (magic ResourceReservation.v1). Consumer reads d4 S6 (mirrored ExportAvailable) and S12 (semantic mirror generation) to confirm coherent output growth, matching the Reservation's poked cells 6/12.]"
+    "note": "docs/DEPLOYMENT.md: \"165 Runtime: ... d4 Output Reservation\" [Only program publishing Generic Resource Reservation ABI1 (magic ResourceReservation.v1). Consumer reads d4 S36 ExportAvailable and S12 MirrorGeneration to confirm coherent output growth, matching the Reservation's published cells.]"
    }
   },
   "ic10/material-transform/material_transform_admission_v1_0.ic10": {
@@ -1310,14 +1310,14 @@
     "providers": [
      "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_dispatch_cycle_v1_0.ic10: '# Power dispatch cycle: PlanStore BEGIN -> sweep -> COMMIT.' + docs/POWER_MANAGEMENT.md section 5: 'power_dispatch_cycle_v1_0.ic10 owns: PlanStore BEGIN -> priority sweep -> PlanStore COMMIT' [Cycle writes d0 S12=1/3 (BEGIN/COMMIT command) + S10 token, reads S11 ack, S13 status, S3 committed PlanGeneration - the exact Plan Store mailbox layout tests/test_power_management.py drives (stack 12/10 command/token, S2 seq, S3 gen).]"
+    "note": "ic10/power-grid/power_dispatch_cycle_v1_0.ic10: '# Power dispatch cycle: PlanStore BEGIN -> sweep -> COMMIT.' + docs/POWER_MANAGEMENT.md section 5: 'power_dispatch_cycle_v1_0.ic10 owns: PlanStore BEGIN -> priority sweep -> PlanStore COMMIT' [Cycle writes d0 S12 Command (1 BEGIN / 3 COMMIT) then S10 RequestToken, reads S11 ResponseToken, S13 Status, and S28 PlanGeneration after the COMMIT - the Plan Store's request mailbox and published generation.]"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/power-grid/power_dispatch_sweep_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_dispatch_cycle_v1_0.ic10: '# Power dispatch cycle: PlanStore BEGIN -> sweep -> COMMIT.' (cycle writes d1 S2 request, awaits d1 S3 ack / S4 status) [Sweep's own request surface is S2 incoming token, S3 ack (poke 3 r15), S4 status (+1/-1) - matches cycle's d1 access [reads 3,4; writes 2; S4==1] exactly.]"
+    "note": "ic10/power-grid/power_dispatch_cycle_v1_0.ic10: '# Power dispatch cycle: PlanStore BEGIN -> sweep -> COMMIT.' (cycle writes d1 S8 request token, awaits d1 S9 response token / S10 status) [Sweep's own request surface is S8 RequestToken, S9 ResponseToken, S10 Status (+1/-1) - matches the cycle's d1 access [writes S8; reads S9, S10; S10==1] exactly.]"
    }
   },
   "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10": {},
@@ -1327,14 +1327,14 @@
     "providers": [
      "ic10/power-grid/power_sink_selector_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_dispatch_sweep_v1_0.ic10: '# Sweep priority-ordered POWER sinks. d0 SinkSelector,d1 FlowBuilder,d2 PlanStore.' [Sink selector request surface: S2 cursor, S3 token, S4 ack (poke 4 r15), S5 status, S6-S11 results - matches sweep's d0 access [writes 2,3; reads 4..11].]"
+    "note": "ic10/power-grid/power_dispatch_sweep_v1_0.ic10: '# Sweep priority-ordered POWER sinks. d0 SinkSelector,d1 FlowBuilder,d2 PlanStore.' [Sink selector request surface: S12 StartOrdinal, S13 RequestToken, S14 ResponseToken, S15 Status, S16 ReservationRef, S17 DemandWatts, and the published S8 Ordinal, S9 ReservationGeneration, S10 PriorityFlags, S11 CriticalFlag - matches the sweep's d0 access [writes S12, S13; reads S8..S11, S14..S17].]"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/power-grid/power_sink_flow_builder_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_dispatch_sweep_v1_0.ic10: '# Sweep priority-ordered POWER sinks. d0 SinkSelector,d1 FlowBuilder,d2 PlanStore.' [Flow builder request surface: S11 sink Reservation, S12 watts, S14 partial-allowed flag, S15 incoming token; S16 ack, S8 status - matches sweep's d1 access [writes 11,12,14,15; reads 8,16]. S13 is a reserved hole: the builder never read the sink's priority key the sweep used to mirror there (issue #160).]"
+    "note": "ic10/power-grid/power_dispatch_sweep_v1_0.ic10: '# Sweep priority-ordered POWER sinks. d0 SinkSelector,d1 FlowBuilder,d2 PlanStore.' [Flow builder request surface: S11 SinkReservationRef, S12 SinkWatts, S14 SinkReservationGeneration, S15 RequestToken; S16 ResponseToken, S8 Status - matches the sweep's d1 access [writes S11, S12, S14, S15; reads S8, S16]. The sweep skips the builder's reserved hole between SinkWatts and SinkReservationGeneration: the builder never read the sink's priority key the sweep used to mirror there (issue #160).]"
    },
    "d2": {
     "kind": "script",
@@ -1407,28 +1407,28 @@
     "providers": [
      "ic10/power-grid/power_dispatch_plan_store_v1_0.ic10"
     ],
-    "note": "tests/test_fault_injection.py: \"plan=Device(3000,stack={3:5},...) ... a=IC10(asrc,{'d0':plan,'d1':validator,'d2':committer,'d3':releaser},...)\" [Allocator reads only d0 S3 (PlanGeneration) to detect a new plan, then feeds that generation to the validator; matches Plan Store S3 and the docs/POWER_MANAGEMENT.md validate->commit->release->publish pipeline.]"
+    "note": "tests/test_fault_injection.py: \"plan=Device(3000,stack={28:5},...) ... a=IC10(asrc,{'d0':plan,'d1':validator,'d2':committer,'d3':releaser},...)\" [Allocator reads only d0 S28 PlanGeneration to detect a new plan, then feeds that generation to the validator; matches the Plan Store's published PlanGeneration and the docs/POWER_MANAGEMENT.md validate->commit->release->publish pipeline.]"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/power-grid/power_plan_validator_v1_0.ic10"
     ],
-    "note": "tests/test_fault_injection.py: \"'allocator did not revalidate unchanged current plan after reflash'\" (d1 named 'validator') + docs/POWER_MANAGEMENT.md: 'validate complete plan -> commit new Reservation epoch -> ...' [Allocator writes d1 S2 (PlanGeneration) + S3 (request token), reads S4 ack / S5 status - exactly power_plan_validator's request surface (get r2 db 2; token db 3 vs ack db 4; status S5).]"
+    "note": "tests/test_fault_injection.py: \"'allocator did not revalidate unchanged current plan after reflash'\" (d1 named 'validator') + docs/POWER_MANAGEMENT.md: 'validate complete plan -> commit new Reservation epoch -> ...' [Allocator writes d1 S8 PlanGeneration + S9 RequestToken, reads S10 ResponseToken / S11 Status - exactly power_plan_validator's request surface.]"
    },
    "d2": {
     "kind": "script",
     "providers": [
      "ic10/power-grid/power_reservation_committer_v1_0.ic10"
     ],
-    "note": "tests/test_fault_injection.py: \"'allocator did not advance to fresh reservation commit'\" (d2 named 'committer') + docs/POWER_MANAGEMENT.md: 'power_reservation_committer_v1_0.ic10 writes one common allocator epoch' [Allocator writes d2 S2 (PlanGeneration), S3 (new epoch), S4 (token), reads S5 ack / S6 status - exactly the committer's request surface (get r2 db 2 / r3 db 3; token db 4 vs ack db 5).]"
+    "note": "tests/test_fault_injection.py: \"'allocator did not advance to fresh reservation commit'\" (d2 named 'committer') + docs/POWER_MANAGEMENT.md: 'power_reservation_committer_v1_0.ic10 writes one common allocator epoch' [Allocator writes d2 S8 PlanGeneration, S9 OwnerEpoch (the new epoch), S10 RequestToken, reads S11 ResponseToken / S12 Status - exactly the committer's request surface.]"
    },
    "d3": {
     "kind": "script",
     "providers": [
      "ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10"
     ],
-    "note": "tests/test_fault_injection.py: \"releaser=Device(3003,...)\" wired to d3; \"'allocator did not release prior epoch before republish'\" + docs/POWER_MANAGEMENT.md: 'release previous owner epoch' [No doc line names the exact script for this pin, but resource_reservation_releaser_v1_0 is the only epoch-release service in the repo and its surface matches exactly: S2 epoch, S3 token, S4 ack (poke 4 r15 last), S5 status (poke 5 +/-1); its own d0 must point back at the allocator ('d0 owner service' - it releases only reservations owned by d0's ReferenceId + the given epoch). Used for both release-prior-epoch (WaitR) and cleanup-of-new-epoch (WaitCleanup).]"
+    "note": "tests/test_fault_injection.py: \"releaser=Device(3003,...)\" wired to d3; \"'allocator did not release prior epoch before republish'\" + docs/POWER_MANAGEMENT.md: 'release previous owner epoch' [No doc line names the exact script for this pin, but resource_reservation_releaser_v1_0 is the only epoch-release service in the repo and its surface matches exactly: S8 OwnerEpoch, S9 RequestToken, S10 ResponseToken (published last), S11 Status (+/-1); its own d0 must point back at the allocator ('d0 owner service' - it releases only reservations owned by d0's ReferenceId + the given epoch). Used for both release-prior-epoch (WaitR) and cleanup-of-new-epoch (WaitCleanup).]"
    }
   },
   "ic10/power-grid/power_reservation_committer_v1_0.ic10": {
@@ -1452,7 +1452,7 @@
     "providers": [
      "ic10/power-grid/power_source_selector_v1_0.ic10"
     ],
-    "note": "ic10/power-grid/power_sink_flow_builder_v1_0.ic10: '# Build one POWER sink flow. d0 SourceSelector,d1 LinkSelector,d2 PlanStore.' [Source selector request surface: S2 cursor, S3 token, S4 ack, S5 status (poke 5 1), S6+ results - matches builder d0 access [writes 2,3; reads 4..9; S5==1].]"
+    "note": "ic10/power-grid/power_sink_flow_builder_v1_0.ic10: '# Build one POWER sink flow. d0 SourceSelector,d1 LinkSelector,d2 PlanStore.' [Source selector request surface: S11 StartOrdinal, S12 RequestToken, S13 ResponseToken, S14 Status, S15 ReservationRef, S16 AvailableWatts, and the published S8 Ordinal, S9 ReservationGeneration - matches the builder's d0 access [writes S11, S12; reads S8, S9, S13..S16; S14==1].]"
    },
    "d1": {
     "kind": "script",
@@ -1544,7 +1544,7 @@
     "providers": [
      "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10"
     ],
-    "note": "ic10/power-jobs/power_job_finalize_v1_0.ic10: '# Finalize one POWER job step. d0 lifecycle,d1 resolver,d2 verify.' [Resolver surface: S10 PolicyId param, S11 token, S12 ack (poke 12 r15), S13 status (poke 13), S14/S15 resolved refs - matches finalize d1 access [writes 10,11; reads 12,13,14; S13==1].]"
+    "note": "ic10/power-jobs/power_job_finalize_v1_0.ic10: '# Finalize one POWER job step. d0 lifecycle,d1 resolver,d2 verify.' [Resolver surface: S10 PolicyId, S11 RequestToken, S12 ResponseToken, S13 Status, S14 ReservationRef - matches finalize's d1 access [writes S10, S11; reads S12, S13, S14; S13==1].]"
    },
    "d2": {
     "kind": "script",
@@ -1576,7 +1576,7 @@
     "providers": [
      "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10"
     ],
-    "note": "ic10/power-jobs/power_job_policy_apply_v1_0.ic10: '# Apply guarded POWER policy while exact job remains READY. d0 JobStore,d1 Resolver.' [Resolver surface: S10 param, S11 token, S12 ack, S13 status, S14/S15 results plus published S8/S9 (poke 8 r5 / poke 9 r14) - matches apply d1 access [writes 10,11; reads 8,12,13,14,15; S13==1].]"
+    "note": "ic10/power-jobs/power_job_policy_apply_v1_0.ic10: '# Apply guarded POWER policy while exact job remains READY. d0 JobStore,d1 Resolver.' [Resolver surface: S10 PolicyId, S11 RequestToken, S12 ResponseToken, S13 Status, S14 ReservationRef, S15 EndpointRef, plus the published S8 NodeKind - matches apply's d1 access [writes S10, S11; reads S8, S12..S15; S13==1].]"
    }
   },
   "ic10/power-jobs/power_job_policy_verify_v1_0.ic10": {},
@@ -1609,21 +1609,21 @@
     "providers": [
      "ic10/generic-jobs/generic_job_selector_v3_0.ic10"
     ],
-    "note": "USER_DEPLOYMENT_GUIDE.md (power-jobs chapter): 'Generic selector `ic10/generic-jobs/generic_job_selector_v3_0.ic10` is configured for exact `JobType.POWER`.' + pin comment '# POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.' [Scheduler boot-writes d0 S18=4 (exact JobType.POWER mode) - the selector's mode cell driven identically in tests/test_power_management.py (gsel.stack.update({...,18:4})); request/ack/result cells (writes 2,3; reads 4..7 etc.) match selector v3's cursor/token/result surface. docs/POWER_MANAGEMENT.md: 'generic_job_selector_v3_0.ic10 is the shared coherent Job selector. POWER Scheduler configures exact JobType.POWER mode.']"
+    "note": "USER_DEPLOYMENT_GUIDE.md (power-jobs chapter): 'Generic selector `ic10/generic-jobs/generic_job_selector_v3_0.ic10` is configured for exact `JobType.POWER`.' + pin comment '# POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.' [Scheduler boot-writes d0 S18=4 (exact JobType.POWER mode) - the selector's mode cell driven identically in tests/test_power_management.py (gsel.stack.update({...,18:4})); request S19 Cursor + S20 RequestToken, reply S21 ResponseToken, S22 Status, S23 Slot, S24 JobId, and the selected record's S9 RequiredCapability, S10 Identity, S13 RequestedQuantity, S15 State, S16 JobGeneration match selector v3's surface. docs/POWER_MANAGEMENT.md: 'generic_job_selector_v3_0.ic10 is the shared coherent Job selector. POWER Scheduler configures exact JobType.POWER mode.']"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/power-jobs/power_job_prepare_v1_0.ic10"
     ],
-    "note": "pin comment '# POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.' [Reached through register-indexed dr9: `select r9 r1 2 1` picks 1 (this pin) unless the selected job is RUNNING or VERIFYING, and the reviewed register_ports override resolves dr9 to d1/d2 because WaitWork reloads r9 from own S21. Request surface: S14 slot, S15 JobId, S16 state, S17 JobGeneration, S18 RequestedQuantity, S19 RequiredCapability, S8 Identity, S9 token - matches Prepare's own reads (get r2..r7 db 14..19, get r8 db 8, get r15 db 9); reply S10 token, S11 status, S12 new state, S13 generation. Until #163 the six fields went to S2..S7, Prepare's header cells; tests/test_power_management.py now drives the real Scheduler through this mailbox.]"
+    "note": "pin comment '# POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.' [Reached through register-indexed dr9: `select r9 r1 2 1` picks 1 (this pin) unless the selected job is RUNNING or VERIFYING, and the reviewed register_ports override resolves dr9 to d1/d2 because WaitWork reloads r9 from the Scheduler's own resume key. Request surface: S14 Slot, S15 JobId, S16 State, S17 JobGeneration, S18 RequestedQuantity, S19 RequiredCapability, S8 Identity, S9 RequestToken - matches Prepare's own reads (get r2..r7 db 14..19, get r8 db 8, get r15 db 9); reply S10 ResponseToken, S11 Status, S12 NewState, S13 NewJobGeneration. Until #163 the six fields went to Prepare's header cells; tests/test_power_management.py now drives the real Scheduler through this mailbox.]"
    },
    "d2": {
     "kind": "script",
     "providers": [
      "ic10/power-jobs/power_job_finalize_v1_0.ic10"
     ],
-    "note": "pin comment '# POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.' [Reached through register-indexed dr9: `select r9 r1 2 1` picks 2 (this pin) when the selected job is RUNNING (5) or VERIFYING (6), and the reviewed register_ports override resolves dr9 to d1/d2 because WaitWork reloads r9 from own S21. Same request surface as d1 - S14..S19 fields, S8 Identity, S9 token - matches Finalize's own reads (get r2,r4..r7 db 14,16..19, get r8 db 8, get r15 db 9); S15 JobId is part of the shared record layout that Finalize stopped reading in #160 and accepts through a reviewed external_writable_ranges entry; reply S10 token, S11 status, S12 new state, S13 generation (issue #163).]"
+    "note": "pin comment '# POWER Job scheduler. d0 selector,d1 prepare,d2 finalize.' [Reached through register-indexed dr9: `select r9 r1 2 1` picks 2 (this pin) when the selected job is RUNNING (5) or VERIFYING (6), and the reviewed register_ports override resolves dr9 to d1/d2 because WaitWork reloads r9 from the Scheduler's own resume key. Same request surface as d1 - S14..S19 fields, S8 Identity, S9 RequestToken - matches Finalize's own reads (get r2,r4..r7 db 14,16..19, get r8 db 8, get r15 db 9); S15 JobId is part of the shared record layout that Finalize stopped reading in #160 and accepts through a reviewed external_writable_ranges entry; reply S10 ResponseToken, S11 Status, S12 NewState, S13 NewJobGeneration (issue #163).]"
    }
   },
   "ic10/power-jobs/power_policy_target_resolver_v1_0.ic10": {
