@@ -57,7 +57,9 @@ Each port entry is one of:
   (`S<n>`, or a range written `S<a>..S<b>`, `S<a>..<b>`, or `S<a>-S<b>`) names
   only the cells the consumer reads or writes on that port; the peer's own
   layout lives in `contracts/` and `docs/STACK_FIELD_MAP.md`, and a note
-  restating it is a second copy that drifts.
+  restating it is a second copy that drifts. Write every cell as `S<n>`: a
+  bare number (`writes 9..12`) is invisible to the check, so nothing holds it
+  to the tree (issue #199).
 - `header_reads` optionally declares reviewed, deliberate reads of a migrated
   peer's `S2..S7` header cells (for example reading `S3` as SchemaId). Anything
   not declared there is treated as a stranded payload read and fails validation.
