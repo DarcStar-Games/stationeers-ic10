@@ -127,7 +127,7 @@ for _ in range(4):iv.run(1,max_steps=50000)
 if iv.stack.get(41)!=1:fails.append('Inspector did not publish a coherent registry snapshot: S41=%r'%iv.stack.get(41))
 if rv.stack.get(24,0)<1 or rv.stack.get(25,0)<1:fails.append('Registry Host published no freeze token or accepted generation to inspect')
 if [iv.stack.get(c) for c in (35,36,37,38)]!=[rv.stack.get(16),rv.stack.get(23),rv.stack.get(24),rv.stack.get(25)]:fails.append('Inspector S35..S38 are not the Host S16, S23, S24, S25: %r'%[iv.stack.get(c) for c in (35,36,37,38)])
-if (iv.stack.get(30),iv.stack.get(31),iv.stack.get(32))!=(rv.stack.get(base7+1),rv.stack.get(base7+5),rv.stack.get(26)):fails.append('Inspector node state, last-seen generation, or registry generation mismatch: %r'%[iv.stack.get(c) for c in (30,31,32)])
+if (iv.stack.get(30),iv.stack.get(31),iv.stack.get(32))!=(rv.stack.get(base7+1),rv.stack.get(base7+5),rv.stack.get(26)):fails.append('Inspector node state, LastSeenEpoch, or registry generation mismatch: %r'%[iv.stack.get(c) for c in (30,31,32)])
 # Removing Node9 from adapter discovery marks its persistent record MISSING on a later adapter generation.
 del av.screws['s2']
 for _ in range(20):av.run(1,max_steps=50000);rv.run(1,max_steps=50000)

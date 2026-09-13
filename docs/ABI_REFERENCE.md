@@ -1131,11 +1131,11 @@ S9   reserved-moles summary in committed plan
 S10  status: 1 grants, 0 no grants, negative dependency/build fault
 S12  MediumType hash
 S13  persistent build-generation counter
-S14  committed reservation epoch; written LAST on successful build only
+S14  committed reservation epoch; written LAST on every build the Plan Builder answers without a fault
 S15  persistent Plan-Builder request generation
 ```
 
-A failed build does not write `S14`; partial staged state therefore remains inert.
+A faulted build does not write `S14`; partial staged state therefore remains inert. A build the Plan Builder answers with no grants (`S10` = 0) still commits its epoch, so `S14` moves on every answered build, not only on one that granted.
 
 ## ControllerPressureTransfer telemetry ABI v2
 
