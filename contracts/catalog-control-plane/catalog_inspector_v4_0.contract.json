@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/catalog-control-plane/catalog_inspector_v4_0.ic10",
-  "source_sha256": "f6f0fefc14f313504770d67d2343f16605e521b7b784ee2b1ef0728e96685837",
+  "source_sha256": "341721ec52991468a6a9fe7b3ab8b4ce0ef3bd2cc1f754fe5e3b79619ebbdff3",
   "identity": {
     "service_id": "ic10.script.catalog.inspector",
     "implementation_revision": "4.0",
@@ -144,12 +144,11 @@
       "literal_reads": [
         0,
         3,
-        12,
-        13,
-        14,
-        15,
+        16,
         18,
         23,
+        24,
+        25,
         26,
         35
       ],
@@ -184,25 +183,7 @@
           ]
         },
         {
-          "cell": 12,
-          "targets": [
-            "GenericRegistryDirectoryHost"
-          ]
-        },
-        {
-          "cell": 13,
-          "targets": [
-            "GenericRegistryDirectoryHost"
-          ]
-        },
-        {
-          "cell": 14,
-          "targets": [
-            "GenericRegistryDirectoryHost"
-          ]
-        },
-        {
-          "cell": 15,
+          "cell": 16,
           "targets": [
             "GenericRegistryDirectoryHost"
           ]
@@ -215,6 +196,18 @@
         },
         {
           "cell": 23,
+          "targets": [
+            "GenericRegistryDirectoryHost"
+          ]
+        },
+        {
+          "cell": 24,
+          "targets": [
+            "GenericRegistryDirectoryHost"
+          ]
+        },
+        {
+          "cell": 25,
           "targets": [
             "GenericRegistryDirectoryHost"
           ]

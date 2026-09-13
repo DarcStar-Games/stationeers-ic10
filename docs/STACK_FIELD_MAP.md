@@ -10,7 +10,7 @@ wiring-declared port, or an attributed network access) or one a layout block or 
 docs/ cites beside the contract's S0 line. A cell only its provider touches is not mapped,
 because nothing outside the program could hold its name.
 
-Protocols with a layout: 108. Layout entries: 1161. Cells named: 4413.
+Protocols with a layout: 108. Layout entries: 1159. Cells named: 4408.
 
 ## Roles
 
@@ -24,14 +24,14 @@ Protocols with a layout: 108. Layout entries: 1161. Cells named: 4413.
 | response_token | TERMINAL_RESPONSE handled-request identity the service publishes last | 80 |
 | state | status, state, or mode of the service or of the current request | 106 |
 | error | error or fault detail kept apart from the state cell | 9 |
-| result | response payload the service publishes before its token | 261 |
+| result | response payload the service publishes before its token | 260 |
 | generation | publication generation, odd/even sequence, or revision that fences observation | 68 |
 | epoch | epoch, lease, or ownership value that authorizes mutation | 19 |
 | bank | A/B bank select and the per-bank generation, count, and overflow cells | 13 |
 | topology | ReferenceId of a peer service or device, or a chain link between peers | 58 |
 | table | record array, slot table, image, heap, or descriptor pool | 25 |
 | telemetry | observational channel for operators and monitors | 13 |
-| reserved | held cell that nothing interprets | 4 |
+| reserved | held cell that nothing interprets | 3 |
 
 ## By role
 
@@ -552,7 +552,7 @@ room a move would have to fit in.
 | S23 | RequestToken | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | peer | -6 |
 | S23 | RequestToken | ic10.stack.stock-target-demand-view.v1 | 2 | 2 | peer | 43 |
 | S24 | ControllerSelectorRequestGeneration | ic10.stack.diagnostic-input-bridge.v1 | 2 | 0 | peer, document | 10 |
-| S24 | FreezeTokenCounter | ic10.stack.generic-registry-directory-host.v3 | 0 | 6 | document | 5 |
+| S24 | FreezeTokenCounter | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer, document | 5 |
 | S25 | ConsoleDesiredRequestGeneration | ic10.stack.diagnostic-input-bridge.v1 | 2 | 0 | peer, document | 10 |
 | S25 | CleanupRequestToken | ic10.stack.manufacturing-dependency-planner.v1 | 1 | 0 | peer | -3 |
 | S25 | RequestToken | ic10.stack.stock-target-job-ingress.v1 | 1 | 1 | peer | 0 |
@@ -738,7 +738,7 @@ room a move would have to fit in.
 | S16 | StoreState | ic10.stack.generic-catalog-store.v6 | 6 | 1 | peer, document | 0 |
 | S16 | EditorStatus | ic10.stack.generic-config-editor.v1 | 2 | 0 | peer, document | 12 |
 | S16 | Status | ic10.stack.generic-job-monitor.v1 | 4 | 0 | peer | 56 |
-| S16 | Status | ic10.stack.generic-registry-directory-host.v3 | 0 | 6 | document | 5 |
+| S16 | Status | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer, document | 5 |
 | S16 | ExecutionStatus | ic10.stack.material-transfer-executor.v1 | 1 | 1 | peer | 2 |
 | S16 | DirectionLock | ic10.stack.resource-reservation.v1 | 5 | 3 | peer, document | 4 |
 | S17 | Status | ic10.stack.console-selector.v1 | 1 | 0 | peer | 29 |
@@ -801,7 +801,7 @@ room a move would have to fit in.
 
 ### result
 
-261 entries at 46 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S24, S25, S26, S27, S28, S29, S30, S31, S32, S33, S34, S35, S36, S37, S38, S39, S40, S41, S51, S55, S56, S57, S64, S71, S72, S73, S83, S84, S99, S100.
+260 entries at 46 distinct starting cells: S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S24, S25, S26, S27, S28, S29, S30, S31, S32, S33, S34, S35, S36, S37, S38, S39, S40, S41, S51, S55, S56, S57, S64, S71, S72, S73, S83, S84, S99, S100.
 
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
@@ -867,7 +867,7 @@ room a move would have to fit in.
 | S11 | TargetJobState | ic10.stack.manufacturing-driver-router.v2 | 1 | 0 | peer | 44 |
 | S11 | CriticalFlag | ic10.stack.power-sink-selector.v1 | 1 | 0 | peer | 47 |
 | S11 | PathRate | ic10.stack.pressure-grid-path-allocator.v1 | 0 | 1 | document | 2 |
-| S11 | LeaseTicks | ic10.stack.pressure-grid-reservation-planner.v2 | 0 | 1 | document | 36 |
+| S11 | LeaseTicks | ic10.stack.pressure-grid-reservation-planner.v2 | 1 | 1 | peer, document | 36 |
 | S11 | SelectedRouteCost | ic10.stack.pressure-grid-route-selector.v2 | 0 | 1 | document | 5 |
 | S11 | ActiveSinkReservationRef | ic10.stack.pressure-transfer-grant-guard.v1 | 0 | 1 | document | 9 |
 | S11 | RequiredCapability | ic10.stack.recipe-catalog-lookup.v3 | 1 | 1 | peer | 16 |
@@ -960,7 +960,6 @@ room a move would have to fit in.
 | S21 | Priority | ic10.stack.generic-job-monitor.v1 | 1 | 0 | peer | 56 |
 | S21 | PolicyValidationResult | ic10.stack.generic-persistent-config-host.v1 | 6 | 13 | peer, document | -1 |
 | S21 | Decision | ic10.stack.manufacturing-dependency-planner.v1 | 1 | 0 | peer | -3 |
-| S21 | LeaseTicksAsRead | ic10.stack.pressure-grid-reservation-planner.v2 | 1 | 1 | peer | 36 |
 | S21 | BestCost | ic10.stack.pressure-grid-route-ranker.v2 | 1 | 1 | peer, document | 1 |
 | S21 | ImportCapacityMoles | ic10.stack.pressure-inventory-reservation.v1 | 4 | 1 | peer, document | 70 |
 | S21 | OnHandQuantity | ic10.stack.stock-target-inventory-view.v1 | 1 | 1 | peer | 43 |
@@ -1125,7 +1124,7 @@ room a move would have to fit in.
 | S23 | QueueSequence | ic10.stack.stock-target-future-view.v1 | 1 | 1 | peer | 6 |
 | S24 | AppliedRequestMarker | ic10.stack.generic-job-store.v1 | 0 | 6 | document | -1 |
 | S24 | PlanSequence | ic10.stack.stock-target-future-view.v1 | 1 | 1 | peer | 6 |
-| S25 | AcceptedCandidateGeneration | ic10.stack.generic-registry-directory-host.v3 | 0 | 6 | document | 5 |
+| S25 | AcceptedCandidateGeneration | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer, document | 5 |
 | S26 | BridgeHostSnapshot | ic10.stack.generic-config-editor.v1 | 1 | 0 | peer, document | 12 |
 | S26 | RegistryGeneration | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer, document | 5 |
 | S27 | PublicationSequence | ic10.stack.power-dispatch-plan-store.v1 | 5 | 6 | peer | 32 |
@@ -1307,11 +1306,10 @@ room a move would have to fit in.
 
 ### reserved
 
-4 entries at 4 distinct starting cells: S12, S25, S30, S32.
+3 entries at 3 distinct starting cells: S25, S30, S32.
 
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
-| S12..S15 | UnpublishedAdapterCells | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer | 5 |
 | S25 | Reserved25 | ic10.stack.generic-catalog-store.v6 | 0 | 1 | document | 0 |
 | S30 | Reserved30 | ic10.stack.generic-catalog-store.v6 | 0 | 1 | document | 0 |
 | S32..S83 | UnusedRecordWindow | ic10.stack.material-transform-link-resolver.v1 | 1 | 0 | peer | 2 |
@@ -2040,14 +2038,13 @@ Consumers: 6.
 
 | Cells | Name | Role | Peers | Grounding | Description |
 |---|---|---|---:|---|---|
-| S12..S15 | UnpublishedAdapterCells | reserved | 1 | peer | the Catalog Inspector reads these as the Adapter ABI3 candidate count, sequence, overflow, and mode, but the Registry Host never writes them; see issue #194 |
-| S16 | Status | state | 0 | document |  |
+| S16 | Status | state | 1 | peer, document |  |
 | S18 | TelemetrySequence | generation | 3 | peer | odd while the Directory Telemetry rewrites S35..S45 |
 | S20 | RecordWidth | metadata | 0 | document |  |
 | S21 | Capacity | metadata | 0 | document |  |
 | S23 | PublicationSequence | generation | 7 | peer, document | odd while mutating, even when stable |
-| S24 | FreezeTokenCounter | request_token | 0 | document | freeze tokens issued to the adapter |
-| S25 | AcceptedCandidateGeneration | generation | 0 | document |  |
+| S24 | FreezeTokenCounter | request_token | 1 | peer, document | freeze tokens issued to the adapter |
+| S25 | AcceptedCandidateGeneration | generation | 1 | peer, document |  |
 | S26 | RegistryGeneration | generation | 1 | peer, document |  |
 | S35 | NodeCount | telemetry | 2 | peer |  |
 | S36 | ActiveCount | telemetry | 2 | peer |  |
@@ -2060,7 +2057,7 @@ Consumers: 6.
 | S43 | UsedCells | telemetry | 1 | peer |  |
 | S44 | FreeCells | telemetry | 2 | peer |  |
 | S45 | CapacityCells | telemetry | 1 | peer |  |
-| S58..S447 | RegistryRecords | table | 4 | peer, document | 64 six-cell records at S58+6n for n in 1..64: NodeId, ReferenceId, State, UsedCells, AssignmentEpoch, CatalogInstanceId |
+| S58..S447 | RegistryRecords | table | 4 | peer, document | 64 six-cell records at S58+6n indexed by NodeId n in 1..64: ReferenceId, State, UsedCells, AssignmentEpoch, CatalogInstanceId, LastSeenEpoch |
 
 ### ic10.stack.generic-snapshot-directory-host.v1
 
@@ -2837,12 +2834,11 @@ Consumers: 1.
 | S8 | StagedLinkCount | result | 0 | document |  |
 | S9 | ReservedMolesSummary | result | 0 | document |  |
 | S10 | Status | state | 0 | document | 1 grants, 0 no grants, negative fault |
-| S11 | LeaseTicks | result | 0 | document |  |
+| S11 | LeaseTicks | result | 1 | peer, document |  |
 | S12 | MediumType | result | 0 | document |  |
 | S13 | BuildGenerationCounter | generation | 0 | document |  |
 | S14 | CommittedReservationEpoch | epoch | 1 | peer, document | written last on a successful build only |
 | S15 | PlanBuilderRequestGeneration | request_token | 0 | document |  |
-| S21 | LeaseTicksAsRead | result | 1 | peer | the Reservation Allocator divides remaining capacity by this cell as the lease length, but the Planner publishes LeaseTicks at S11 and never writes S21; see issue #194 |
 
 ### ic10.stack.pressure-grid-route-ranker.v2
 

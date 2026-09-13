@@ -2329,12 +2329,6 @@
    ],
    "layout": [
     {
-     "cells": "S12..S15",
-     "name": "UnpublishedAdapterCells",
-     "role": "reserved",
-     "description": "the Catalog Inspector reads these as the Adapter ABI3 candidate count, sequence, overflow, and mode, but the Registry Host never writes them; see issue #194"
-    },
-    {
      "cells": "S16",
      "name": "Status",
      "role": "state"
@@ -2436,7 +2430,7 @@
      "cells": "S58..S447",
      "name": "RegistryRecords",
      "role": "table",
-     "description": "64 six-cell records at S58+6n for n in 1..64: NodeId, ReferenceId, State, UsedCells, AssignmentEpoch, CatalogInstanceId"
+     "description": "64 six-cell records at S58+6n indexed by NodeId n in 1..64: ReferenceId, State, UsedCells, AssignmentEpoch, CatalogInstanceId, LastSeenEpoch"
     }
    ]
   },
@@ -4634,12 +4628,6 @@
      "cells": "S15",
      "name": "PlanBuilderRequestGeneration",
      "role": "request_token"
-    },
-    {
-     "cells": "S21",
-     "name": "LeaseTicksAsRead",
-     "role": "result",
-     "description": "the Reservation Allocator divides remaining capacity by this cell as the lease length, but the Planner publishes LeaseTicks at S11 and never writes S21; see issue #194"
     }
    ]
   },

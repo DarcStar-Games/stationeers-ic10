@@ -45,7 +45,7 @@ beqz r0 Reject
 move sp r6
 jal Prep
 beqz r0 Reject
-getd r10 r1 21
+getd r10 r1 11
 blez r10 Reject
 getd r0 r5 20
 getd sp r5 12

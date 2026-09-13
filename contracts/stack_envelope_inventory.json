@@ -764,8 +764,8 @@
             "end": 25
           }
         ],
-        "line_count": 108,
-        "line_headroom_120": 12,
+        "line_count": 107,
+        "line_headroom_120": 13,
         "measured_v1_publication_cost_lines": 3,
         "measured_v1_stack_cost_cells": 8
       },
@@ -801,7 +801,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "f6f0fefc14f313504770d67d2343f16605e521b7b784ee2b1ef0728e96685837",
+          "source_sha256": "341721ec52991468a6a9fe7b3ab8b4ce0ef3bd2cc1f754fe5e3b79619ebbdff3",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -7070,12 +7070,6 @@
         ],
         "schema_fields": [],
         "payload_fields": [
-          {
-            "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
-            "cells": "S12..S15",
-            "name": "UnpublishedAdapterCells",
-            "role": "reserved"
-          },
           {
             "protocol_id": "ic10.stack.generic-registry-directory-host.v3",
             "cells": "S16",
@@ -22815,12 +22809,6 @@
             "cells": "S15",
             "name": "PlanBuilderRequestGeneration",
             "role": "request_token"
-          },
-          {
-            "protocol_id": "ic10.stack.pressure-grid-reservation-planner.v2",
-            "cells": "S21",
-            "name": "LeaseTicksAsRead",
-            "role": "result"
           }
         ],
         "payload_bases": [
@@ -23934,7 +23922,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "914455f713c3b12700875b8c7b2387d7c2733839d5c2fd46f7cfa54187c10309",
+          "source_sha256": "b521920a5a8b5a1b0e0a2d81e440c7bf116870853f792d8cb78a9ad18efed2f5",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
