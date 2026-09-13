@@ -731,7 +731,7 @@ identity `HASH("TransformCandidateReadiness.v1")`. `ic10/manufacturing/transform
 
 ### Transform Candidate Executor ABI2
 
-identity `HASH("TransformCandidateExecutor.v2")`. `ic10/manufacturing/transform_candidate_executor_v2_0.ic10` delegates planning to Readiness on d0, launches the exact Runtime only after readiness succeeds, and consumes Runtime state only when Runtime ABI2 current request token S21 matches its request. It writes the TransformType to Runtime S8 and the request token to Runtime S16 last, and reads Runtime status at S20 -- the cells the material-transform migration moved those fields to. S11 is target Job state, S12 ErrorStatus, S10 current request token.
+identity `HASH("TransformCandidateExecutor.v2")`. `ic10/manufacturing/transform_candidate_executor_v2_0.ic10` delegates planning to Readiness on d0, launches the exact Runtime only after readiness succeeds, and consumes Runtime state only when Runtime ABI2 current request token S21 matches its request. It writes the BatchCount to Runtime S8 and the request token to Runtime S16 last, and reads Runtime status at S20 -- the cells the material-transform migration moved those fields to. S11 is target Job state, S12 ErrorStatus, S10 current request token.
 
 ### Print Candidate Executor ABI2
 

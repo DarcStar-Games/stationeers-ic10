@@ -251,38 +251,60 @@ def rt_walk(src,error_after=None):
    if vm.stack.get(19)==3 and proc.props.get('Activate')!=1: off+=1
    if rt_settled(s): break
   for _ in range(5): vm.run(1);rt_advance(s)  # the published status must outlive the idle ticks
+  snapshot=vm.stack.get(11)
   records.append({'cut':cut,'after':'START' if cut==0 else names[cut-1],'status':vm.stack.get(20),
-   'produced':s['produced'],'activate':proc.props.get('Activate'),'off':off,'snapshot':vm.stack.get(11),
-   'growth':s['screws']['d4'].stack[36]-vm.stack.get(11,0)})
+   'produced':s['produced'],'activate':proc.props.get('Activate'),'off':off,'snapshot':snapshot,
+   'growth':None if snapshot is None else s['screws']['d4'].stack[36]-snapshot})
  inject_every_boundary(rt_initial(src,error_after),[Step(n,rt_step) for n in names],rt_recover,check)
  return names,base,records
+def rt_cut(names,text):
+ """The cut just after the one instruction whose text is *text*; a line-number shift does not move it."""
+ hits=[i for i,n in enumerate(names) if n.split(':',1)[1]==text]
+ ck(len(hits)==1,f'Transform Runtime run executes {text!r} {len(hits)} times; the walk expects once')
+ return hits[0]+1
 rnames,rbase,rrecords=rt_walk(rsrc)
 ck(rbase['produced']==Q and rbase['vm'].stack.get(20)==1,'uninterrupted Transform Runtime did not complete on exactly the declared output')
-activate_cut=rnames.index('79:s d0 Activate 1')+1
+activate_cut=rt_cut(rnames,'s d0 Activate 1')
 for r in rrecords:
  where=f"Transform Runtime cut after {r['after']}"
  # (a) completion needs the declared growth past a snapshot this job took after the epoch committed
  ck(r['status']==1 and r['activate']==0,f'{where}: ended with status {r["status"]}, Activate {r["activate"]}')
- ck(r['snapshot'] is not None and r['snapshot']>=STOCK and r['growth']>=Q,f'{where}: completed with growth {r["growth"]} past snapshot {r["snapshot"]}')
+ ck(r['snapshot'] is not None and r['snapshot']>=STOCK and r['growth']>=Q,f'{where}: completed with no snapshot taken' if r['snapshot'] is None else f'{where}: completed with growth {r["growth"]} past snapshot {r["snapshot"]}')
  # (b) WaitOutput never waits on a furnace the program did not switch on
  ck(r['off']==0,f'{where}: {r["off"]} WaitOutput ticks with the furnace off')
  # (c) the over-run is bounded by the furnace's output over the outage plus the boot tick
  over=r['produced']-Q
  ck(over<=(OUTAGE+1)*RATE,f'{where}: over-run {over} exceeds the outage bound')
  if r['cut']<activate_cut: ck(over==0,f'{where}: over-run {over} before the furnace was switched on')
-window=[r for r in rrecords if r['after'] in ('79:s d0 Activate 1','80:poke 13 0')]
+window_cuts={activate_cut,rt_cut(rnames,'poke 13 0')}
+window=[r for r in rrecords if r['cut'] in window_cuts]
 ck(len(window)==2 and all(r['produced']-Q==(OUTAGE+1)*RATE for r in window),'a cut between Activate and the state publish did not cost exactly the outage production')
 # A fault published by the Runtime stays published; a cut inside the Fault path reasserts it.
 fnames,fbase,frecords=rt_walk(rsrc,error_after=2)
-ck(fbase['vm'].stack.get(20)==-1 and any(n.startswith('90:bgtz r0 Fault') for n in fnames),'faulting Transform Runtime run did not reach the Fault path')
+ck(fbase['vm'].stack.get(20)==-1 and rt_cut(fnames,'put d3 23 r0'),'faulting Transform Runtime run did not reach the Fault path')
 for r in frecords:
  ck(r['status']==-1 and r['activate']==0 and r['off']==0,f"Transform Runtime fault cut after {r['after']}: status {r['status']} after the idle ticks, Activate {r['activate']}")
+# The fault notice names the token the Runtime served, not whatever the caller's request cell holds by then:
+# a caller that reads status 1 after the completion cut and posts its next request before the one-tick
+# re-check must not have that request cancelled by the Allocator.
+early=rt_initial(rsrc,error_after=2)
+for _ in range(40):
+ early['vm'].run(1);rt_advance(early)
+ if early['vm'].stack.get(19)==3: break
+ck(early['vm'].stack.get(19)==3,'faulting Transform Runtime run did not reach WaitOutput')
+early['vm'].stack[16]=TOKEN+1;early['vm'].stack[8]=BATCH+1
+for _ in range(40):
+ early['vm'].run(1);rt_advance(early)
+ if early['vm'].stack.get(20)==-1: break
+ck(early['screws']['d3'].stack.get(23)==TOKEN,f"Transform Runtime fault notice carried {early['screws']['d3'].stack.get(23)}, not the served token {TOKEN}")
+early['vm'].run(1);rt_advance(early)
+ck(early['vm'].stack.get(21)==TOKEN+1 and early['screws']['d3'].stack.get(21)==TOKEN+1,'Transform Runtime did not take up the next request after the fault')
 # Control: publishing the state before Activate strands WaitOutput on a cold furnace until the 512-tick timeout.
 swapped=rsrc.replace('s d0 Activate 1\npoke 13 0\npoke 19 3\n','poke 19 3\npoke 13 0\ns d0 Activate 1\n')
 ck(swapped!=rsrc,'Transform Runtime activation sequence changed; update the control')
 snames,sbase,srecords=rt_walk(swapped)
-stranded={r['after']:(r['off'],r['status']) for r in srecords if r['off']}
-ck(stranded=={'79:poke 19 3':(512,-1),'80:poke 13 0':(512,-1)},f'swapped activation order did not strand exactly the two window cuts: {stranded}')
+stranded={r['cut']:(r['off'],r['status']) for r in srecords if r['off']}
+ck(stranded=={rt_cut(snames,'poke 19 3'):(512,-1),rt_cut(snames,'poke 13 0'):(512,-1)},f'swapped activation order did not strand exactly the two window cuts: {stranded}')
 
 print('Broad interruption/fault-injection campaign: PASS')
 print(f' - {len(mcuts)} catalog-migration cuts + {len(pcuts)} power-replacement cuts')

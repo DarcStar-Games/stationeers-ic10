@@ -113,7 +113,7 @@ poke 19 0
 j Loop
 Fault:
 s d0 Activate 0
-get r0 db 16
+get r0 db 21
 put d3 23 r0
 poke 19 0
 poke 20 -1
