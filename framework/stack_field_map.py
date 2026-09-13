@@ -12,6 +12,7 @@ to the map.
 """
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 import json
@@ -745,9 +746,14 @@ def render_field_map(
             lines += ["No entry carries this role.", ""]
             continue
         offsets = sorted({row["start"] for row in rows})
+        # The alignment review's headline (issue #191): how far the plurality cell is from a majority.
+        common = sorted(Counter(row["start"] for row in rows).items(), key=lambda item: (-item[1], item[0]))[:5]
         lines += [
             f"{len(rows)} entries at {len(offsets)} distinct starting cells: "
             + ", ".join(f"S{cell}" for cell in offsets) + ".",
+            "",
+            "Most common starting cells: "
+            + ", ".join(f"S{cell} in {count} entr{'y' if count == 1 else 'ies'}" for cell, count in common) + ".",
             "",
             "| Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |",
             "|---|---|---|---:|---:|---|---:|",
