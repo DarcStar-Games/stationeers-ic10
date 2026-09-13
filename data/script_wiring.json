@@ -111,7 +111,7 @@
     "providers": [
      "ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:114: \"Program ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10; connect Router `d0` -> Coordinator Core.\" (also DEPLOYMENT.md:391) [Corroborated: router source checks d0 stack cell 0 == CatalogCoordinatorCore.v4, the Coordinator Core magic (catalog_coordinator_core_v3_0 boot checks the same value); pin comment says 'd0 Coordinator ABI3'.]"
+    "note": "docs/DEPLOYMENT.md:114: \"Program ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10; connect Router `d0` -> Coordinator Core.\" (also DEPLOYMENT.md:391) [Corroborated: router source checks the d0 device's S0 == CatalogCoordinatorCore.v4 through its ReferenceId (`getd r0 r15 0`), the Coordinator Core magic (catalog_coordinator_core_v3_0 boot checks the same value); pin comment says 'd0 Coordinator ABI3'.]"
    }
   },
   "ic10/catalog-control-plane/catalog_store_retirement_manager_v2_0.ic10": {
@@ -175,7 +175,7 @@
     "providers": [
      "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
     ],
-    "note": "Peer named by d2 S0 magic check (HASH(\"GenericPersistentConfigHost.v1\")). docs/PHASE_PRESSURE_CONTROLLER.md:71: \"| `d2` | paired Generic Persistent Config Host | Supplies coherent accepted controller configuration. |\" [Corroborated: consumer requires d2 cell 12 == HASH(\"CFG1|ControllerPhasePressure|...\"); the Host holds the 'persistence schema signature supplied by Policy' at its S12 (generic_persistent_config_host_v1_1.ic10 line 11).]"
+    "note": "Peer named by d2 S0 magic check (HASH(\"GenericPersistentConfigHost.v1\")). docs/PHASE_PRESSURE_CONTROLLER.md:71: \"| `d2` | paired Generic Persistent Config Host | Supplies coherent accepted controller configuration. |\" [Corroborated: consumer requires d2 S12 == HASH(\"CFG1|ControllerPhasePressure|...\"); the Host holds the 'persistence schema signature supplied by Policy' at its S12 PersistenceSchemaSignature (generic_persistent_config_host_v1_1.ic10 line 12).]"
    }
   },
   "ic10/controller-phase-pressure/phase_pressure_config_policy_v1_0.ic10": {
@@ -236,7 +236,7 @@
     "providers": [
      "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
     ],
-    "note": "docs/SEQUENCER_CONTROLLER.md:42: \"| `d3` | Paired Generic Persistent Config Host. |\" [Corroborated: consumer requires d3 cell 0 == HASH(\"GenericPersistentConfigHost.v1\"), the Host's published identity, and cell 12 == HASH(\"CFG1|ControllerSequencer|...\") matching the Host's S12 persistence schema signature.]"
+    "note": "docs/SEQUENCER_CONTROLLER.md:42: \"| `d3` | Paired Generic Persistent Config Host. |\" [Corroborated: consumer requires d3 S0 == HASH(\"GenericPersistentConfigHost.v1\"), the Host's published identity, and S12 == HASH(\"CFG1|ControllerSequencer|...\") matching the Host's S12 PersistenceSchemaSignature.]"
    }
   },
   "ic10/controller-sequencer/sequencer_config_policy_v1_0.ic10": {
@@ -506,7 +506,7 @@
     "providers": [
      "ic10/dependency-planning/dependency_plan_store_v2_0.ic10"
     ],
-    "note": "docs/DEPENDENCY_PLANNING.md: \"manufacturing_dependency_planner_v1_0.ic10 alone mutates Plan Store through its request interface\" [Plan store request interface matches exactly: token S9, response S10, status S11, op S12 (planner uses 2=upsert, 3=clear), parent S13, upsert payload S14..S20 (plan store copies db14..db20 into the record). No pin comment, but the doc statement plus unique cell match are decisive.]"
+    "note": "docs/DEPENDENCY_PLANNING.md: \"manufacturing_dependency_planner_v1_0.ic10 alone mutates Plan Store through its request interface\" [Plan store request interface matches exactly: token S9, response S10, status S11, op S12 (planner uses 2=upsert, 3=clear), parent S13, upsert payload S14..S20 (the plan store copies S14..S20 into the record by register). No pin comment, but the doc statement plus unique cell match are decisive.]"
    },
    "d1": {
     "kind": "script",
@@ -650,7 +650,7 @@
     "providers": [
      "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
     ],
-    "note": "docs/CONFIG_INPUTS.md:40: \"Connect ic10/input-profile-catalog/input_profile_view_v5_0.ic10 d0 to the Store\" (the Store is the coordinator-claimed generic_catalog_store_v3_0 added in step 1, CONFIG_INPUTS.md:37). [Corroborated: View reads d0 cell 11 (Coordinator ReferenceId, checked against Coordinator magic CatalogCoordinatorCore.v4) and cell 13 (CatalogSchemaId), then walks the NextStoreRef chain (cell 21) to a node with Store magic GenericCatalogStore.v6 == generic_catalog_store_v3_0. Any claimed Input Profile Store instance qualifies.]"
+    "note": "docs/CONFIG_INPUTS.md:40: \"Connect ic10/input-profile-catalog/input_profile_view_v5_0.ic10 d0 to the Store\" (the Store is the coordinator-claimed generic_catalog_store_v3_0 added in step 1, CONFIG_INPUTS.md:37). [Corroborated: View reads d0 S11 CoordinatorRef (checked against Coordinator magic CatalogCoordinatorCore.v4) and S13 CatalogInstanceId, then walks the Store chain by network reference to a node with Store magic GenericCatalogStore.v6 == generic_catalog_store_v3_0. Any claimed Input Profile Store instance qualifies.]"
    }
   },
   "ic10/item-storage-common/item_resource_reservation_allocator_v1_0.ic10": {
@@ -845,7 +845,7 @@
     "providers": [
      "ic10/manufacturing/print_material_resolver_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:277: \"then wire Generic Print Runtime `d0 -> Print Material Resolver`, `d1 -> print Allocator`\"; docs/MANUFACTURING_SCHEDULER.md:433: \"Configure Print Runtime `d0 -> Print Material Resolver`\" [Constraint addr12==1 matches the resolver's status cell (resolver initializes cells 11 and 12 to 0 and publishes readiness there).]"
+    "note": "docs/DEPLOYMENT.md:277: \"then wire Generic Print Runtime `d0 -> Print Material Resolver`, `d1 -> print Allocator`\"; docs/MANUFACTURING_SCHEDULER.md:433: \"Configure Print Runtime `d0 -> Print Material Resolver`\" [The runtime reads S8 PrinterRefEcho and S12 Status; the S12==1 constraint matches the resolver's status cell, which it zeroes at boot and publishes readiness through.]"
    },
    "d1": {
     "kind": "script",
@@ -938,7 +938,7 @@
     "providers": [
      "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:274: \"`d1 -> ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10`\"; docs/MANUFACTURING_SCHEDULER.md:430: \"Configure Print Job Driver `d1 -> 172 Recipe Execution Profile View`\" [Constraint addr15==1 matches the view's status cell (view initializes cells 14 and 15 to 0); read of cell 49 fits the view's bounded reagent-requirement records.]"
+    "note": "docs/DEPLOYMENT.md:274: \"`d1 -> ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10`\"; docs/MANUFACTURING_SCHEDULER.md:430: \"Configure Print Job Driver `d1 -> 172 Recipe Execution Profile View`\" [The driver writes S10 RecipeHash and reads S11 FamilyHash, S13 InputCount, S15 Status and S49 RecipeHashEcho; the S15==1 constraint matches the view's status cell, which it zeroes at boot.]"
    },
    "d2": {
     "kind": "script",
@@ -959,14 +959,14 @@
     "providers": [
      "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:276: \"Wire `177 d0 -> Recipe Execution View`, `d1 -> ResourceLink Snapshot Directory`\" (177 = Print Material Resolver per docs/MANUFACTURING_SCHEDULER.md:431); docs/MANUFACTURING_SCHEDULER.md:432: \"Configure Print Material Resolver `d0 -> Recipe Execution Profile View`\" [Constraint addr15==1 matches the view's status cell (view initializes cells 14 and 15 to 0).]"
+    "note": "docs/DEPLOYMENT.md:276: \"Wire `177 d0 -> Recipe Execution View`, `d1 -> ResourceLink Snapshot Directory`\" (177 = Print Material Resolver per docs/MANUFACTURING_SCHEDULER.md:431); docs/MANUFACTURING_SCHEDULER.md:432: \"Configure Print Material Resolver `d0 -> Recipe Execution Profile View`\" [The resolver reads S13 InputCount, S14 StoreGeneration, S15 Status and the S16..S47 records by register; the S15==1 constraint matches the view's status cell, which it zeroes at boot with S14.]"
    },
    "d1": {
     "kind": "script",
     "providers": [
      "ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:276: \"`d1 -> ResourceLink Snapshot Directory`\"; docs/MANUFACTURING_SCHEDULER.md:432: \"`d1 -> ResourceLink Snapshot Directory`\"; docs/DIRECTORY_STANDARD.md:90: \"S9 DirectorySchemaId, HASH(\\\"<schema>.v<version>\\\")\" [The docs name the directory role, not a file; the ResourceLink snapshot directory is a dedicated Generic Snapshot Host instance (166) fed via generic_directory_adapter_bridge from the ResourceLink adapter. The consumer's constraint addr9==HASH(\"DirectorySchema.ResourceLink.v1\") matches the host's S9 DirectorySchemaId cell exactly.]"
+    "note": "docs/DEPLOYMENT.md:276: \"`d1 -> ResourceLink Snapshot Directory`\"; docs/MANUFACTURING_SCHEDULER.md:432: \"`d1 -> ResourceLink Snapshot Directory`\"; docs/DIRECTORY_STANDARD.md:90: \"S9 DirectorySchemaId, HASH(\\\"<schema>.v<version>\\\")\" [The docs name the directory role, not a file; the ResourceLink snapshot directory is a dedicated Generic Snapshot Host instance (166) fed via generic_directory_adapter_bridge from the ResourceLink adapter. The consumer's constraint S9==HASH(\"DirectorySchema.ResourceLink.v1\") matches the host's S9 DirectorySchemaId cell exactly.]"
    }
   },
   "ic10/manufacturing/transform_candidate_executor_v2_0.ic10": {
@@ -1670,7 +1670,7 @@
     "providers": [
      "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
     ],
-    "note": "Peer named by d5 S0 magic check (HASH(\"GenericPersistentConfigHost.v1\")). docs/PRESSURE_DOMAIN_CONTROLLER.md:196: \"| `d5` | Generic Persistent Config Host | Supplies the accepted PressureDomain configuration. |\" [Corroborated: consumer requires d5 cell 12 == HASH(\"CFG1|ControllerPressureDomain|...\") matching the Host's S12 persistence schema signature.]"
+    "note": "Peer named by d5 S0 magic check (HASH(\"GenericPersistentConfigHost.v1\")). docs/PRESSURE_DOMAIN_CONTROLLER.md:196: \"| `d5` | Generic Persistent Config Host | Supplies the accepted PressureDomain configuration. |\" [Corroborated: consumer requires d5 S12 == HASH(\"CFG1|ControllerPressureDomain|...\") matching the Host's S12 PersistenceSchemaSignature.]"
    }
   },
   "ic10/pressure-domain/phase_pressure_request_arbiter_v1_2.ic10": {
@@ -1723,7 +1723,7 @@
     "providers": [
      "ic10/controller-config/generic_persistent_config_host_v1_1.ic10"
     ],
-    "note": "docs/PRESSURE_GRID_CONTROLLER.md:251: \"| `d4` | paired Generic Persistent Config Host | tuning/config |\" [Pin comment 'd4 Host' agrees. Consumer requires d4 cell 0 == HASH(\"GenericPersistentConfigHost.v1\"), the Host's published identity; reads cells 5/8 of the Host's published state.]"
+    "note": "docs/PRESSURE_GRID_CONTROLLER.md:251: \"| `d4` | paired Generic Persistent Config Host | tuning/config |\" [Pin comment 'd4 Host' agrees. Consumer requires d4 S0 == HASH(\"GenericPersistentConfigHost.v1\"), the Host's published identity; reads S8 OperationalStatus, S51 EffectiveGeneration and the S96..S99 block by register.]"
    }
   },
   "ic10/pressure-grid/pressure_domain_inventory_v1_1.ic10": {
@@ -1732,7 +1732,7 @@
     "providers": [
      "ic10/pressure-domain/controller_pressure_domain_runtime_v1_2.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:76: \"Inventory `d0` -> PressureDomain runtime, `d1` -> Pipe Analyzer ..., and `d2` -> that domain's Pressure Medium Purity Guard\" [Corroborated: consumer requires d0 cells 96==27182818, 97==2, 99==HASH(\"ControllerPressureDomain\"); the runtime pokes exactly those header values (lines 6-9).]"
+    "note": "docs/DEPLOYMENT.md:76: \"Inventory `d0` -> PressureDomain runtime, `d1` -> Pipe Analyzer ..., and `d2` -> that domain's Pressure Medium Purity Guard\" [Corroborated: consumer requires d0 S96==27182818, S97==2, S99==HASH(\"ControllerPressureDomain\"); the runtime publishes exactly those header values (lines 6-9).]"
    },
    "d1": {
     "kind": "physical-device",
@@ -2117,7 +2117,7 @@
     "providers": [
      "ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:439: \"Deploy ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10 with GFG d0, Power Plan Store d1, ambient sensor d2, mixture guard d3\"; docs/PROCESS_UTILITY_ORCHESTRATION.md:235: \"the mixture PurityGuard reports valid prepared fuel\". [The 'mixture guard' is defined at PROCESS_UTILITY_ORCHESTRATION.md:115 as gas_mixture_purity_guard_v1_0 (consumes Resource Profile kind 5 prepared fuel mixture, publishes PurityGuard ABI1 MediumPurityGuard.v1). Cell shape matches: consumer reads d3 cell 5 (valid flag, must be 1) and cell 7 (generation), which the guard pokes at lines 71/75. ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10 publishes the same ABI1 surface, but the docs specify the mixture guard for GFG fuel.]"
+    "note": "docs/DEPLOYMENT.md:439: \"Deploy ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10 with GFG d0, Power Plan Store d1, ambient sensor d2, mixture guard d3\"; docs/PROCESS_UTILITY_ORCHESTRATION.md:235: \"the mixture PurityGuard reports valid prepared fuel\". [The 'mixture guard' is defined at PROCESS_UTILITY_ORCHESTRATION.md:115 as gas_mixture_purity_guard_v1_0 (consumes Resource Profile kind 5 prepared fuel mixture, publishes PurityGuard ABI1 MediumPurityGuard.v1). Cell shape matches: consumer reads d3 S11 Status (must be 1) and S13 PublicationGeneration, which the guard writes at lines 74 and 78. ic10/pressure-grid/pressure_medium_purity_guard_v1_0.ic10 publishes the same ABI1 surface, but the docs specify the mixture guard for GFG fuel.]"
    }
   },
   "ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10": {
@@ -2126,7 +2126,7 @@
     "providers": [
      "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
     ],
-    "note": "docs/RECIPE_CATALOG.md:104: \"`d0` may point to any Recipe Store ABI6 node\"; docs/RECIPE_CATALOG.md:154: \"Provide enough unclaimed Generic Stores for the generated manifest's runtime minimum\". [A 'Recipe Store' is a coordinator-claimed generic_catalog_store_v3_0 instance holding Recipe schema v3 items (recipe Loaders are generated per deployment and never shipped). Corroborated: lookup reads d0 cell 11 (Coordinator ref, magic CatalogCoordinatorCore.v4) and walks the cell-21 chain to Store magic GenericCatalogStore.v6.]"
+    "note": "docs/RECIPE_CATALOG.md:104: \"`d0` may point to any Recipe Store ABI6 node\"; docs/RECIPE_CATALOG.md:154: \"Provide enough unclaimed Generic Stores for the generated manifest's runtime minimum\". [A 'Recipe Store' is a coordinator-claimed generic_catalog_store_v3_0 instance holding Recipe schema v3 items (recipe Loaders are generated per deployment and never shipped). Corroborated: lookup reads d0 S11 CoordinatorRef (magic CatalogCoordinatorCore.v4) and walks the Store chain by network reference to Store magic GenericCatalogStore.v6.]"
    }
   },
   "ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10": {
@@ -2135,7 +2135,7 @@
     "providers": [
      "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
     ],
-    "note": "docs/RECIPE_CATALOG.md:112: \"`d0` points to any Store in the Recipe topology\"; docs/RECIPE_CATALOG.md:158: \"Attach ... recipe_execution_profile_view_v1_0.ic10 to any Recipe Store\". [Same Store ABI6 topology walk as the Lookup: d0 cell 11 -> Coordinator (CatalogCoordinatorCore.v4), chain via cell 21 to Store magic GenericCatalogStore.v6 (generic_catalog_store_v3_0). Pin comment agrees: 'd0=any Recipe Store'.]"
+    "note": "docs/RECIPE_CATALOG.md:112: \"`d0` points to any Store in the Recipe topology\"; docs/RECIPE_CATALOG.md:158: \"Attach ... recipe_execution_profile_view_v1_0.ic10 to any Recipe Store\". [Same Store ABI6 topology walk as the Lookup: d0 S11 CoordinatorRef -> Coordinator (CatalogCoordinatorCore.v4), then walks the Store chain by network reference to Store magic GenericCatalogStore.v6 (generic_catalog_store_v3_0). Pin comment agrees: 'd0=any Recipe Store'.]"
    }
   },
   "ic10/resource-grid-core/pressure_resource_endpoint_adapter_v1_0.ic10": {
@@ -2153,7 +2153,7 @@
     "providers": [
      "ic10/pressure-grid/controller_pressure_transfer_runtime_v2_0.ic10"
     ],
-    "note": "Pin comment: \"PressureTransfer -> Generic Resource Link ABI1. d0 Transfer\"; docs/RESOURCE_GRID_CORE.md:192: \"verifies that its generic source/sink Reservations ultimately resolve to the same PressureDomain Inventories used by the native PressureTransfer\". [Corroborated: consumer requires d0 cells 96==27182818, 97==2, 99==HASH(\"ControllerPressureTransfer\"), matching controller_pressure_transfer_runtime_v2_0's poked header. ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10 publishes the same header and would pass the check, but no doc describes projecting the furnace-embedded pump into the Generic Resource Core (DEPLOYMENT.md:379 scopes the adapter to PressureGrid projection), so it is not listed.]"
+    "note": "Pin comment: \"PressureTransfer -> Generic Resource Link ABI1. d0 Transfer\"; docs/RESOURCE_GRID_CORE.md:192: \"verifies that its generic source/sink Reservations ultimately resolve to the same PressureDomain Inventories used by the native PressureTransfer\". [Corroborated: consumer requires d0 S96==27182818, S97==2, S99==HASH(\"ControllerPressureTransfer\"), matching controller_pressure_transfer_runtime_v2_0's poked header. ic10/process-furnace/embedded_pressure_transfer_runtime_v1_0.ic10 publishes the same header and would pass the check, but no doc describes projecting the furnace-embedded pump into the Generic Resource Core (DEPLOYMENT.md:379 scopes the adapter to PressureGrid projection), so it is not listed.]"
    },
    "d1": {
     "kind": "script",
@@ -2211,7 +2211,7 @@
     "providers": [
      "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
     ],
-    "note": "docs/RESOURCE_PROFILES.md:93: \"resource_profile_view_v4_0.ic10 accepts any Store ABI6 node from the Resource Profile catalog on `d0`.\" [Pin comment agrees ('d0=any Store'). Corroborated: reads d0 cell 11 (Coordinator ref, magic CatalogCoordinatorCore.v4) and cell 13 (CatalogSchemaId), walks the store chain to magic GenericCatalogStore.v6 == generic_catalog_store_v3_0. Any claimed Resource Profile Store instance qualifies.]"
+    "note": "docs/RESOURCE_PROFILES.md:93: \"resource_profile_view_v4_0.ic10 accepts any Store ABI6 node from the Resource Profile catalog on `d0`.\" [Pin comment agrees ('d0=any Store'). Corroborated: reads d0 S11 CoordinatorRef (magic CatalogCoordinatorCore.v4) and S13 CatalogInstanceId, walks the Store chain by network reference to magic GenericCatalogStore.v6 == generic_catalog_store_v3_0. Any claimed Resource Profile Store instance qualifies.]"
    }
   },
   "ic10/shared-input/generic_input_resolver_v1_0.ic10": {},
@@ -2258,7 +2258,7 @@
     "providers": [
      "ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10"
     ],
-    "note": "docs/DEPLOYMENT.md:346-349 (section E): transform items 'reside in ACTIVE Store capacity' provided as Generic Store capacity, then \"Deploy ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10\"; source checks d0 chain ends at Store magic GenericCatalogStore.v6. [No single literal 'd0 -> Store' sentence, but the View's d0 handling is byte-identical in shape to resource_profile_view_v4_0 (whose doc is explicit): d0 cell 11 -> Coordinator magic CatalogCoordinatorCore.v4, cell-21 chain to Store magic GenericCatalogStore.v6 / ABI6, which only generic_catalog_store_v3_0 publishes. Any claimed Transform catalog Store instance qualifies.]"
+    "note": "docs/DEPLOYMENT.md:346-349 (section E): transform items 'reside in ACTIVE Store capacity' provided as Generic Store capacity, then \"Deploy ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10\"; source checks d0 chain ends at Store magic GenericCatalogStore.v6. [No single literal 'd0 -> Store' sentence, but the View's d0 handling is byte-identical in shape to resource_profile_view_v4_0 (whose doc is explicit): d0 S11 CoordinatorRef -> Coordinator magic CatalogCoordinatorCore.v4, then walks the Store chain by network reference to Store magic GenericCatalogStore.v6 / ABI6, which only generic_catalog_store_v3_0 publishes. Any claimed Transform catalog Store instance qualifies.]"
    }
   }
  }
