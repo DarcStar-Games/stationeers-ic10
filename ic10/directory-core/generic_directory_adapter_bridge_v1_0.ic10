@@ -27,7 +27,9 @@ get r10 d0 7
 get r14 db 8
 beq r10 r14 Release
 get r2 d0 10
+bgt r2 3 Release
 get r3 d0 11
+bgt r3 64 Release
 get r0 d0 3
 get r1 d1 9
 beqz r1 Configure
@@ -49,6 +51,7 @@ jal Send
 get r0 d0 14
 put d1 22 r0
 get r13 d0 12
+bgt r13 r3 Release
 move r7 0
 Candidate:
 bge r7 r13 Verify
@@ -84,11 +87,10 @@ get r4 d1 22
 bne r1 r4 Commit
 mul r4 r2 r3
 mul r1 r0 r4
-add r1 r1 32
 get r0 d1 20
 mul r0 r0 r4
-add r0 r0 32
-move r5 0
+add r4 r4 32
+move r5 32
 Same:
 bge r5 r4 Remember
 add sp r1 r5

@@ -39,6 +39,7 @@ get r14 d0 7
 get r0 db 25
 beq r14 r0 Release
 get r13 d0 12
+bgt r13 64 SourceBad
 get r10 db 23
 mod r0 r10 2
 bnez r0 Mutating

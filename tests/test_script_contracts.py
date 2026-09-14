@@ -1809,6 +1809,7 @@ for far_end_source, far_end_port, far_end_short, far_end_cell in (
     ("ic10/power-grid/power_source_selector_v1_0.ic10", "d1", [[128, 183]], "S185"),
     ("ic10/dependency-planning/job_inventory_preflight_v1_0.ic10", "d1", [[32, 46]], "S47"),
     ("ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10", "d0", [[32, 46]], "S47"),
+    ("ic10/directory-core/generic_registry_directory_host_v2_0.ic10", "d0", [[18, 400]], "S401"),
 ):
     far_end_text = (_PROJECT_ROOT / far_end_source).read_text()
     far_end_ports, far_end_aliases = collect_aliases(parse_rows(far_end_text))

@@ -2,7 +2,7 @@
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
   "source": "ic10/directory-core/generic_registry_directory_host_v2_0.ic10",
-  "source_sha256": "718020ebe4014f4bb1a33c183ef8d99504416d01ff13006929bb57e9eb36c92e",
+  "source_sha256": "7e02fa607a5164689ab33ed2f5a66e33b432fdfe8478f703e9c4fafde26e6a6c",
   "identity": {
     "service_id": "ic10.script.generic.registry.directory.host",
     "implementation_revision": "2.0",
@@ -43,12 +43,12 @@
         "dynamic_write": false,
         "dynamic_read_ranges": [
           {
-            "start": 16,
-            "end": 399
+            "start": 18,
+            "end": 401
           }
         ],
         "dynamic_write_ranges": [],
-        "dynamic_read_range_source": "source-fingerprinted-exception",
+        "dynamic_read_range_source": "source-derived",
         "dynamic_write_range_source": "none",
         "constraints": [
           {

@@ -104,7 +104,7 @@ S20  Runtime ReferenceId
 S21  RequestGeneration
 ```
 
-The Allocator validates a stable Link Resolver publication, allocates a new candidate epoch, and commands the Stager to prepare all one-to-three inputs.
+The Allocator validates a stable Link Resolver publication, holds its input count to the sixteen four-cell records a Resolver's table can hold (`S20..S83`) and rejects a larger one before it stages anything (issue #151), allocates a new candidate epoch, and commands the Stager to prepare all one-to-three inputs.
 
 For each input quantity `Q`, the Stager provisionally writes:
 

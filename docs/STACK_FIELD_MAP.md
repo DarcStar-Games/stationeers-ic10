@@ -93,9 +93,9 @@ Most common starting cells: S10 in 8 entries, S11 in 6 entries, S12 in 4 entries
 | S18 | Capacity | ic10.stack.generic-job-store.v1 | 0 | 6 | document | -1 |
 | S18 | Role | ic10.stack.pressure-inventory-reservation.v1 | 3 | 1 | peer, document | 70 |
 | S19 | MediumType | ic10.stack.pressure-inventory-reservation.v1 | 3 | 1 | peer, document | 70 |
-| S20 | RecordWidth | ic10.stack.generic-registry-directory-host.v3 | 0 | 6 | document | 5 |
+| S20 | RecordWidth | ic10.stack.generic-registry-directory-host.v3 | 0 | 6 | document | 4 |
 | S20..S22 | ClassConfiguration | ic10.stack.resource-endpoint.v1 | 1 | 1 | peer | -1 |
-| S21 | Capacity | ic10.stack.generic-registry-directory-host.v3 | 0 | 6 | document | 5 |
+| S21 | Capacity | ic10.stack.generic-registry-directory-host.v3 | 0 | 6 | document | 4 |
 | S21 | MirroredAccessKind | ic10.stack.resource-reservation.v1 | 1 | 3 | peer, document | 4 |
 | S22 | CatalogInstanceId | ic10.stack.resource-profile-view.v1 | 0 | 3 | document | 29 |
 | S23 | PartitionKey | ic10.stack.generic-catalog-store.v6 | 5 | 1 | peer, document | 0 |
@@ -146,7 +146,7 @@ Most common starting cells: S16 in 30 entries, S15 in 29 entries, S14 in 28 entr
 | S8 | BatchCount | ic10.stack.generic-material-transform-runtime.v2 | 1 | 0 | peer | 1 |
 | S8 | ResourceType | ic10.stack.item-producer-resolver.v1 | 2 | 1 | peer | 42 |
 | S8 | ReagentHash | ic10.stack.manufacturing-reagent-resolver.v1 | 1 | 0 | peer | 4 |
-| S8 | BatchCount | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | peer | 5 |
+| S8 | BatchCount | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | peer | 4 |
 | S8 | Identity | ic10.stack.power-job-finalize.v1 | 1 | 0 | peer | 30 |
 | S8 | Identity | ic10.stack.power-job-prepare.v1 | 1 | 0 | peer | 15 |
 | S8 | PlanGeneration | ic10.stack.power-plan-validator.v1 | 1 | 0 | peer | 14 |
@@ -553,14 +553,14 @@ Most common starting cells: S18 in 10 entries, S8 in 9 entries, S9 in 9 entries,
 | S19 | RequestToken | ic10.stack.stock-target-future-view.v1 | 1 | 1 | peer | 6 |
 | S20 | RequestToken | ic10.stack.existing-dependency-plan-controller.v1 | 1 | 1 | peer | 7 |
 | S20 | RequestToken | ic10.stack.generic-job-selector.v3 | 2 | 0 | peer | 0 |
-| S21 | RequestGeneration | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | peer | 5 |
+| S21 | RequestGeneration | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | peer | 4 |
 | S21 | RequestToken | ic10.stack.new-dependency-plan-controller.v1 | 1 | 0 | peer | 28 |
 | S22 | RequestToken | ic10.stack.dependency-child-creator.v2 | 1 | 0 | peer | 14 |
 | S22 | RequestToken | ic10.stack.manufacturing-candidate-selector.v2 | 2 | 0 | peer | 15 |
 | S23 | RequestToken | ic10.stack.generic-job-store-command-executor.v1 | 1 | 1 | peer | -6 |
 | S23 | RequestToken | ic10.stack.stock-target-demand-view.v1 | 2 | 2 | peer | 43 |
 | S24 | ControllerSelectorRequestGeneration | ic10.stack.diagnostic-input-bridge.v1 | 2 | 0 | peer, document | 10 |
-| S24 | FreezeTokenCounter | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer, document | 5 |
+| S24 | FreezeTokenCounter | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer, document | 4 |
 | S25 | ConsoleDesiredRequestGeneration | ic10.stack.diagnostic-input-bridge.v1 | 2 | 0 | peer, document | 10 |
 | S25 | CleanupRequestToken | ic10.stack.manufacturing-dependency-planner.v1 | 1 | 0 | peer | -3 |
 | S25 | RequestToken | ic10.stack.stock-target-job-ingress.v1 | 1 | 1 | peer | 0 |
@@ -589,7 +589,7 @@ Most common starting cells: S10 in 2 entries, S15 in 1 entry, S16 in 1 entry, S2
 | S10 | CurrentToken | ic10.stack.print-candidate-executor.v2 | 1 | 0 | peer | 0 |
 | S10 | CurrentToken | ic10.stack.transform-candidate-executor.v2 | 1 | 0 | peer | 39 |
 | S15 | CurrentToken | ic10.stack.generic-print-runtime.v2 | 1 | 0 | peer | 3 |
-| S16 | ConsumedRequestGeneration | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | peer | 5 |
+| S16 | ConsumedRequestGeneration | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | peer | 4 |
 | S21 | CurrentToken | ic10.stack.generic-material-transform-runtime.v2 | 2 | 0 | peer | 1 |
 | S25 | CurrentEpoch | ic10.stack.stacker-feeder.v1 | 1 | 1 | peer | -7 |
 
@@ -752,7 +752,7 @@ Most common starting cells: S11 in 13 entries, S8 in 12 entries, S9 in 11 entrie
 | S16 | StoreState | ic10.stack.generic-catalog-store.v6 | 6 | 1 | peer, document | 0 |
 | S16 | EditorStatus | ic10.stack.generic-config-editor.v1 | 2 | 0 | peer, document | 12 |
 | S16 | Status | ic10.stack.generic-job-monitor.v1 | 4 | 0 | peer | 56 |
-| S16 | Status | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer, document | 5 |
+| S16 | Status | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer, document | 4 |
 | S16 | ExecutionStatus | ic10.stack.material-transfer-executor.v1 | 1 | 1 | peer | 2 |
 | S16 | DirectionLock | ic10.stack.resource-reservation.v1 | 5 | 3 | peer, document | 4 |
 | S17 | Status | ic10.stack.console-selector.v1 | 1 | 0 | peer | 29 |
@@ -776,7 +776,7 @@ Most common starting cells: S11 in 13 entries, S8 in 12 entries, S9 in 11 entrie
 | S22 | CommitSwitchState | ic10.stack.diagnostic-input-bridge.v1 | 0 | 0 | document | 10 |
 | S22 | Status | ic10.stack.generic-job-selector.v3 | 3 | 0 | peer | 0 |
 | S22 | StagingOverflow | ic10.stack.generic-snapshot-directory-host.v1 | 1 | 13 | peer, document | -1 |
-| S22 | Status | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | peer | 5 |
+| S22 | Status | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | peer | 4 |
 | S24 | Status | ic10.stack.dependency-child-creator.v2 | 1 | 0 | peer | 14 |
 | S24 | StagedFlowCount | ic10.stack.power-dispatch-plan-store.v1 | 1 | 6 | peer | 32 |
 | S24 | Status | ic10.stack.stacker-feeder.v1 | 1 | 1 | peer | -7 |
@@ -1130,7 +1130,7 @@ Most common starting cells: S11 in 10 entries, S13 in 9 entries, S12 in 8 entrie
 | S16 | QueueSequence | ic10.stack.generic-job-store.v1 | 5 | 6 | peer, document | -1 |
 | S17 | DataSequence | ic10.stack.generic-catalog-store.v6 | 6 | 1 | peer, document | 0 |
 | S17 | QueueGeneration | ic10.stack.generic-job-store.v1 | 1 | 6 | peer, document | -1 |
-| S18 | TelemetrySequence | ic10.stack.generic-registry-directory-host.v3 | 3 | 6 | peer | 5 |
+| S18 | TelemetrySequence | ic10.stack.generic-registry-directory-host.v3 | 3 | 6 | peer | 4 |
 | S18 | PublicationGeneration | ic10.stack.pressure-transfer-grant-guard.v1 | 2 | 1 | peer, document | 9 |
 | S19 | PublicationGeneration | ic10.stack.material-transfer-executor.v1 | 1 | 1 | peer | 2 |
 | S19 | ProfileGeneration | ic10.stack.material-transform-admission.v1 | 2 | 1 | peer | 0 |
@@ -1139,14 +1139,14 @@ Most common starting cells: S11 in 10 entries, S13 in 9 entries, S12 in 8 entrie
 | S21 | PlacementGeneration | ic10.stack.catalog-coordinator-core.v4 | 7 | 1 | peer, document | 8 |
 | S22 | TopologySequence | ic10.stack.catalog-coordinator-core.v4 | 9 | 1 | peer, document | 8 |
 | S23 | CommitRequestGeneration | ic10.stack.diagnostic-input-bridge.v1 | 1 | 0 | peer, document | 10 |
-| S23 | PublicationSequence | ic10.stack.generic-registry-directory-host.v3 | 7 | 6 | peer, document | 5 |
+| S23 | PublicationSequence | ic10.stack.generic-registry-directory-host.v3 | 7 | 6 | peer, document | 4 |
 | S23 | TopologyGeneration | ic10.stack.resource-profile-view.v1 | 0 | 3 | document | 29 |
 | S23 | QueueSequence | ic10.stack.stock-target-future-view.v1 | 1 | 1 | peer | 6 |
 | S24 | AppliedRequestMarker | ic10.stack.generic-job-store.v1 | 0 | 6 | document | -1 |
 | S24 | PlanSequence | ic10.stack.stock-target-future-view.v1 | 1 | 1 | peer | 6 |
-| S25 | AcceptedCandidateGeneration | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer, document | 5 |
+| S25 | AcceptedCandidateGeneration | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer, document | 4 |
 | S26 | BridgeHostSnapshot | ic10.stack.generic-config-editor.v1 | 1 | 0 | peer, document | 12 |
-| S26 | RegistryGeneration | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer, document | 5 |
+| S26 | RegistryGeneration | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer, document | 4 |
 | S27 | PublicationSequence | ic10.stack.power-dispatch-plan-store.v1 | 5 | 6 | peer | 32 |
 | S28 | PlanGeneration | ic10.stack.power-dispatch-plan-store.v1 | 6 | 6 | peer | 32 |
 | S29 | ValidatedProfileGeneration | ic10.stack.generic-config-editor.v1 | 2 | 0 | peer, document | 12 |
@@ -1174,18 +1174,18 @@ Most common starting cells: S14 in 4 entries, S15 in 3 entries, S20 in 2 entries
 | S12 | CoordinatorEpoch | ic10.stack.generic-catalog-store.v6 | 2 | 1 | peer, document | 0 |
 | S13 | BuildEpoch | ic10.stack.resource-reservation.v1 | 4 | 3 | peer, document | 4 |
 | S14 | ActiveEpoch | ic10.stack.material-transfer-executor.v1 | 1 | 1 | peer | 2 |
-| S14 | CommittedEpoch | ic10.stack.multi-material-reservation-allocator.v2 | 1 | 1 | peer | 5 |
+| S14 | CommittedEpoch | ic10.stack.multi-material-reservation-allocator.v2 | 1 | 1 | peer | 4 |
 | S14 | CommittedReservationEpoch | ic10.stack.pressure-grid-reservation-planner.v2 | 1 | 1 | peer, document | 36 |
 | S14 | BuildEpoch | ic10.stack.pressure-inventory-reservation.v1 | 1 | 1 | peer, document | 70 |
 | S15 | CoordinatorEpoch | ic10.stack.catalog-coordinator-core.v4 | 3 | 1 | peer, document | 8 |
 | S15 | CompletedEpoch | ic10.stack.material-transfer-executor.v1 | 1 | 1 | peer | 2 |
-| S15 | CompletedEpoch | ic10.stack.multi-material-reservation-allocator.v2 | 1 | 1 | peer | 5 |
+| S15 | CompletedEpoch | ic10.stack.multi-material-reservation-allocator.v2 | 1 | 1 | peer | 4 |
 | S16 | ConsumedPlannerEpoch | ic10.stack.pressure-transfer-grant-guard.v1 | 0 | 1 | document | 9 |
 | S17 | StagedEpoch | ic10.stack.material-transfer-grant-guard.v1 | 1 | 2 | peer | 6 |
 | S18 | OwnerEpoch | ic10.stack.resource-reservation.v1 | 6 | 3 | peer, document | 4 |
 | S20 | AssignmentEpochCounter | ic10.stack.catalog-coordinator-core.v4 | 0 | 1 | document | 8 |
 | S20 | AssignmentEpoch | ic10.stack.catalog-loader.v5 | 1 | 0 | peer, document | 5 |
-| S23 | RuntimeCompletionEpoch | ic10.stack.multi-material-reservation-allocator.v2 | 1 | 1 | peer | 5 |
+| S23 | RuntimeCompletionEpoch | ic10.stack.multi-material-reservation-allocator.v2 | 1 | 1 | peer | 4 |
 | S26 | AssignmentEpoch | ic10.stack.generic-catalog-store.v6 | 2 | 1 | peer, document | 0 |
 | S31 | CommittedAssignmentEpoch | ic10.stack.generic-catalog-store.v6 | 2 | 1 | peer, document | 0 |
 | S109 | StagedEpoch | ic10.stack.27182818.abi2 | 4 | 4 | peer | -7 |
@@ -1264,7 +1264,7 @@ Most common starting cells: S8 in 6 entries, S9 in 5 entries, S13 in 5 entries, 
 | S18 | LinkResolverRef | ic10.stack.generic-material-transform-runtime.v2 | 1 | 0 | peer | 1 |
 | S18 | AllocatorRef | ic10.stack.material-transfer-grant-guard.v1 | 1 | 2 | peer | 6 |
 | S19 | TargetStoreRef | ic10.stack.catalog-loader.v5 | 2 | 0 | peer, document | 5 |
-| S20 | RuntimeRef | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | peer | 5 |
+| S20 | RuntimeRef | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | peer | 4 |
 | S21 | PreviousStoreRef | ic10.stack.generic-catalog-store.v6 | 3 | 1 | peer, document | 0 |
 | S22 | TargetRef | ic10.stack.process-condition.v1 | 1 | 1 | peer, document | 4 |
 | S23 | RegistryDirectoryRef | ic10.stack.catalog-coordinator-core.v4 | 1 | 1 | peer, document | 8 |
@@ -1302,7 +1302,7 @@ Most common starting cells: S32 in 9 entries, S128 in 3 entries, S20 in 2 entrie
 | S32..S49 | QuoteLegs | ic10.stack.item-resource-reservation-selector.v1 | 3 | 3 | peer | 0 |
 | S32..S95 | CommittedFlows | ic10.stack.power-dispatch-plan-store.v1 | 4 | 6 | peer | 32 |
 | S32..S63 | OutputDescriptors | ic10.stack.resource-transform-profile-view.v4 | 3 | 4 | peer | 4 |
-| S58..S447 | RegistryRecords | ic10.stack.generic-registry-directory-host.v3 | 4 | 6 | peer, document | 5 |
+| S58..S447 | RegistryRecords | ic10.stack.generic-registry-directory-host.v3 | 4 | 6 | peer, document | 4 |
 | S64..S95 | OrdinalSlotMap | ic10.stack.generic-config-editor.v1 | 0 | 0 | document | 12 |
 | S96..S99 | HostBlockMaskSnapshot | ic10.stack.generic-config-editor.v1 | 0 | 0 | document | 12 |
 | S96..S127 | EffectiveImage | ic10.stack.generic-persistent-config-host.v1 | 6 | 13 | peer, document | -1 |
@@ -1322,17 +1322,17 @@ Most common starting cells: S8 in 1 entry, S35 in 1 entry, S36 in 1 entry, S37 i
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
 | S8..S13 | DirectorySummary | ic10.stack.catalog-coordinator-core.v4 | 0 | 1 | document | 8 |
-| S35 | NodeCount | ic10.stack.generic-registry-directory-host.v3 | 2 | 6 | peer | 5 |
-| S36 | ActiveCount | ic10.stack.generic-registry-directory-host.v3 | 2 | 6 | peer | 5 |
-| S37 | UnclaimedCount | ic10.stack.generic-registry-directory-host.v3 | 2 | 6 | peer | 5 |
-| S38 | DrainingCount | ic10.stack.generic-registry-directory-host.v3 | 2 | 6 | peer | 5 |
-| S39 | FaultedCount | ic10.stack.generic-registry-directory-host.v3 | 2 | 6 | peer | 5 |
-| S40 | RetiredCount | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer | 5 |
-| S41 | MissingCount | ic10.stack.generic-registry-directory-host.v3 | 2 | 6 | peer | 5 |
-| S42 | DuplicateCount | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer | 5 |
-| S43 | UsedCells | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer | 5 |
-| S44 | FreeCells | ic10.stack.generic-registry-directory-host.v3 | 2 | 6 | peer | 5 |
-| S45 | CapacityCells | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer | 5 |
+| S35 | NodeCount | ic10.stack.generic-registry-directory-host.v3 | 2 | 6 | peer | 4 |
+| S36 | ActiveCount | ic10.stack.generic-registry-directory-host.v3 | 2 | 6 | peer | 4 |
+| S37 | UnclaimedCount | ic10.stack.generic-registry-directory-host.v3 | 2 | 6 | peer | 4 |
+| S38 | DrainingCount | ic10.stack.generic-registry-directory-host.v3 | 2 | 6 | peer | 4 |
+| S39 | FaultedCount | ic10.stack.generic-registry-directory-host.v3 | 2 | 6 | peer | 4 |
+| S40 | RetiredCount | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer | 4 |
+| S41 | MissingCount | ic10.stack.generic-registry-directory-host.v3 | 2 | 6 | peer | 4 |
+| S42 | DuplicateCount | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer | 4 |
+| S43 | UsedCells | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer | 4 |
+| S44 | FreeCells | ic10.stack.generic-registry-directory-host.v3 | 2 | 6 | peer | 4 |
+| S45 | CapacityCells | ic10.stack.generic-registry-directory-host.v3 | 1 | 6 | peer | 4 |
 | S100..S107 | TelemetryChannels | ic10.stack.27182818.abi2 | 9 | 4 | peer | -7 |
 
 ### reserved
