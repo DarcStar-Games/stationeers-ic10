@@ -2416,7 +2416,7 @@ Consumers: 1.
 |---|---|---|---:|---|---|
 | S8 | BatchCount | request | 2 | peer |  |
 | S14 | CommittedEpoch | epoch | 1 | peer | written last after every input stages |
-| S15 | CompletedEpoch | epoch | 1 | peer | the epoch the last completed allocation committed, written before the status leaves 1; the Runtime mirrors it once the status reads 2 |
+| S15 | CompletedEpoch | epoch | 1 | peer | the epoch the last completed allocation committed; on completion, written before the status leaves 1, and the Runtime mirrors it once the status reads 2 |
 | S16 | ConsumedRequestGeneration | current_token | 2 | peer |  |
 | S20 | RuntimeRef | topology | 2 | peer |  |
 | S21 | RequestGeneration | request_token | 2 | peer |  |

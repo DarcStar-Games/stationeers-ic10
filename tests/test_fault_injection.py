@@ -309,7 +309,7 @@ snames,sbase,srecords=rt_walk(swapped)
 stranded={r['cut']:(r['off'],r['status']) for r in srecords if r['off']}
 ck(stranded=={rt_cut(snames,'poke 19 3'):(512,-1),rt_cut(snames,'poke 13 0'):(512,-1)},f'swapped activation order did not strand exactly the two window cuts: {stranded}')
 # Control for issue #204: a WaitAlloc that must see the Allocator's S22 at exactly 1 strands every cut from
-# the request post to its own state publish, because the outage spans the committed window and the
+# the request post up to its own state publish, because the outage spans the committed window and the
 # Allocator reads 2 by the time the Runtime looks. The echo alone is the commit the Runtime needs.
 witness=rsrc.replace('bltz r0 Fault\npoke 19 2\n','bltz r0 Fault\nbne r0 1 Loop\npoke 19 2\n')
 ck(witness!=rsrc,'Transform Runtime WaitAlloc changed; update the control')

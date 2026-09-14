@@ -318,7 +318,7 @@
           "self-write"
         ],
         "role": "epoch",
-        "description": "the epoch the last completed allocation committed, written before the status leaves 1; the Runtime mirrors it once the status reads 2"
+        "description": "the epoch the last completed allocation committed; on completion, written before the status leaves 1, and the Runtime mirrors it once the status reads 2"
       },
       {
         "address": 16,
