@@ -930,6 +930,61 @@ skipped_exit, _ = analyze_own_stack(skipped_exit_source, skipped_exit_rows, skip
 ck(skipped_exit["dynamic_read_range_source"] == "conservative-full-stack",
    "a register advanced by a step some pass skips was counted from outside its loop")
 
+# An exit that tests a register the loop carries fires only on the pass its
+# own comparison holds, so it is not one that can fire on any pass: reading
+# `bge r7 40 Print` as an early exit would put S32..S64 behind the `Print` read
+# and call it whole. The counted exit still leaves its one value there.
+carried_exit_source = counted_exit_source.replace(
+    "add r7 r7 2\n", "bnez r0 Step\nbge r7 40 Print\nStep:\nadd r7 r7 2\n",
+)
+carried_exit_rows = parse_rows(carried_exit_source)
+carried_exit_ports, carried_exit_aliases = collect_aliases(carried_exit_rows)
+carried_exit, _ = analyze_own_stack(
+    carried_exit_source, carried_exit_rows, carried_exit_aliases, [], {},
+)
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       carried_exit_source, carried_exit_ports, carried_exit_aliases)] ==
+   [list(range(32, 65, 2)), [66]] and
+   carried_exit["dynamic_read_range_source"] == "conservative-full-stack",
+   "an exit testing the carried register was read as one that fires on any pass")
+
+# What the scan leaves behind may seed a second loop, and reach that loop's
+# access through the loop's own advance: the advance is transparent to the
+# reader, so the walk from the exit does not stop at it, and the copy reads
+# S33..S66 -- one and two past each match -- whole.
+seeded_copy_source = early_exit_source.replace(
+    "Found:\nadd r7 r7 1\nget r0 db r7\npoke 13 r0\n",
+    "Found:\nmove r6 0\nCopy:\nadd r7 r7 1\nget r0 db r7\npoke 13 r0\nadd r6 r6 1\nblt r6 2 Copy\n",
+)
+seeded_copy_rows = parse_rows(seeded_copy_source)
+seeded_copy_ports, seeded_copy_aliases = collect_aliases(seeded_copy_rows)
+seeded_copy, _ = analyze_own_stack(seeded_copy_source, seeded_copy_rows, seeded_copy_aliases, [], {})
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       seeded_copy_source, seeded_copy_ports, seeded_copy_aliases)] ==
+   [list(range(32, 65, 2)), list(range(33, 67))] and
+   seeded_copy["dynamic_read_ranges"] == [{"start": 32, "end": 66}] and
+   seeded_copy["dynamic_read_range_source"] == "source-derived",
+   "a loop's leavings did not reach the access of a second loop it seeds through that loop's advance")
+
+# The block a restarting scan runs once it succeeds stands inside the scan's
+# span and outside its pass, where the advance is transparent and the passes
+# fold onto the seed as they always did. The seed has to stand there: reading
+# it through the exits instead would leave the success block with nothing.
+success_block_source = (
+    "move r6 0\nmove r7 32\nScan:\nbge r6 4 Done\nget r0 db r7\nbnez r0 Next\nget r1 db r7\n"
+    "poke 13 r1\nj Done\nNext:\nadd r7 r7 2\nadd r6 r6 1\nj Scan\nDone:\nyield\n"
+)
+success_block_rows = parse_rows(success_block_source)
+success_block_ports, success_block_aliases = collect_aliases(success_block_rows)
+success_block, _ = analyze_own_stack(
+    success_block_source, success_block_rows, success_block_aliases, [], {},
+)
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       success_block_source, success_block_ports, success_block_aliases)] ==
+   [[32, 34, 36, 38]] * 2 and
+   success_block["dynamic_read_range_source"] == "source-derived",
+   "a success block inside the scan's span lost the seed the scan folds its passes onto")
+
 # A write inside the loop read from outside it holds what its operand held on
 # whichever pass ran it: `move r7 r6` on the pass that found the slot leaves the
 # slot index, any of the 32, and the record head derives from it whole. Read

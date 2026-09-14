@@ -260,8 +260,9 @@ ceiling decides nothing exactly, and the read behind such an exit stays a review
 obligation. That is what lets the generated Item Producer Resolver's one-past
 read (`Found: add r7 r7 1; get r0 db r7` after a scan that leaves on a match)
 and the Dependency Plan Store's record head (`Found: move r7 r6`) derive whole,
-so neither generated table size nor scan carries a fingerprinted window
-(issue #156).
+so neither program carries a fingerprinted window any more, and a change to
+the transforms data no longer invalidates a fingerprint whose only content was
+the table size (issue #156).
 
 What that derives is the surface the program *permits*, not what one execution
 performs: a declaration has to cover every cell a legal peer can steer the loop

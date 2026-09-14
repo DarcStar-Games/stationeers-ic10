@@ -655,8 +655,17 @@ class ValueBounds:
         A match that leaves mid-scan can fire on any pass up to the trip count;
         the loop's own test fires on the one pass `exit_pass` names, and where
         that is not a single number the exit witnesses nothing and takes the
-        closure with it. A register two loops advance, or one advanced by a
-        step some pass skips, is not counted from out here at all.
+        closure with it. So does any other exit that tests a register the loop
+        carries: `bge r8 64 Overflow` on some ways round the scan fires only on
+        the pass its own comparison holds, which is not every pass. A register
+        two loops advance, or one advanced by a step some pass skips, is not
+        counted from out here at all.
+
+        The walk from an exit to the reader stops at the header and at any
+        other write to the register, bar the advances of the reader's own loops:
+        those are transparent to the reader, whose caller folds them onto
+        whatever arrives here, so a value that seeds a second loop through its
+        advance still arrives.
         """
         if not self.complete or depth > MAX_DEPTH or (header, token) in seen:
             return OPEN
@@ -677,10 +686,13 @@ class ValueBounds:
         if not entering or not trips:
             return OPEN
         pass_nodes = self.pass_nodes(header)
+        transparent = self.sites(index).get(token, set())
         blocked = {header} | {
             node for node, entry in enumerate(self.program)
-            if node != index and entry["row"] and writes_register(entry["row"], token)
+            if node != index and node not in transparent
+            and entry["row"] and writes_register(entry["row"], token)
         }
+        carried = self.region_carried(header)
         values: set[int] = set()
         whole = entering_whole and counted
         for state, outgoing in self.states.items():
@@ -692,12 +704,16 @@ class ValueBounds:
                 prefix = self.standing_before(header, state[0], updates)
                 if prefix is None:
                     return OPEN
+                row = self.program[state[0]]["row"]
                 if any(test[0] == state[0] for test in self.counting_tests(header)):
                     fired = self.exit_pass(header, state[0], target[0], depth, seen)
                     if fired is None:
                         whole = False
                         continue
                     passes: Iterable[int] = (fired,)
+                elif any(operand in carried for operand in row[1:-1]):
+                    whole = False
+                    continue
                 else:
                     passes = range(1, trips + 1)
                 values |= {seed + prefix + (ran - 1) * stride for seed in entering for ran in passes}
@@ -966,11 +982,16 @@ class ValueBounds:
         flow has whether or not the count lets the exit fire there. What such a
         reader holds is what the loop leaves behind, so the seed is read through
         `after_loop_values` rather than as itself.
+
+        A reader inside the span but outside the pass -- the block a restarting
+        scan runs once it succeeds -- is not such a reader: the loop's advance
+        is transparent there and `carried` folds the passes onto the seed, so
+        the seed has to stand.
         """
         return {
             header for header in self.regions
             if token in self.region_carried(header)
-            and index not in self.pass_nodes(header)
+            and index not in self.region_span(header)
             and back not in self.region_span(header)
             and index not in self.forward(back, header)
         }
