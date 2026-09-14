@@ -4,10 +4,13 @@ import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from pathlib import Path
+from copy import deepcopy
 from framework.ic10_harness import IC10
 from framework.catalog_test_helpers import load_catalog_chain
 from framework.generator_productivity import prove_restoration
-from tools.generate.generate_resource_transforms import MANIFEST_FILE,SOURCE_FILE,declared_outputs
+from framework.script_contracts.own_stack import analyze_own_stack
+from framework.script_contracts.parsing import collect_aliases,parse_rows
+from tools.generate.generate_resource_transforms import MANIFEST_FILE,RESOLVER_FILE,SOURCE_FILE,declared_outputs,render_outputs
 import json,re,sys
 R=_PROJECT_ROOT;fails=[]
 
@@ -52,8 +55,19 @@ for x in T:
 cap=D.get('processor_capability_model',{})
 if cap.get('StructureArcFurnace')!=1 or cap.get('StructureFurnace')!=3 or cap.get('StructureAdvancedFurnace')!=7:fails.append('processor capability hierarchy mismatch')
 if any(x['required_capability_mask'] not in (1,2,4) for x in T):fails.append('invalid transform capability requirement')
+# Issue #156: the generated resolver's lookup table is bounded by its own scan, so adding a transform
+# moves the table and the one-past match read with it and the contract build needs no reviewed window.
+def resolver_read_range(transforms):
+ D2=deepcopy(D);D2['transforms']=transforms;text=render_outputs(D2)[RESOLVER_FILE];rows=parse_rows(text);_,aliases=collect_aliases(rows)
+ own,_=analyze_own_stack(text,rows,aliases,[],{});return own['dynamic_read_range_source'],own['dynamic_read_ranges'],text
+extra=deepcopy(T[0]);extra['name']='FixtureTransform';extra['outputs'][0]['resource_type']=424242
+shipped=resolver_read_range(T);grown=resolver_read_range(T+[extra])
+if shipped[2]!=(R/RESOLVER_FILE).read_text():fails.append('rendered resolver differs from the shipped program')
+if shipped[:2]!=('source-derived',[{'start':32,'end':32+2*len(T)-1}]):fails.append(f'shipped resolver table is not source-derived over S32..S{32+2*len(T)-1}: {shipped[:2]}')
+if grown[:2]!=('source-derived',[{'start':32,'end':32+2*len(T)+1}]) or f'bge r6 {len(T)+1} Print' not in grown[2]:fails.append(f'resolver with one more producer is not source-derived over the grown table: {grown[:2]}')
 if fails:
  print('Resource Transform catalog schema: FAIL');[print(' -',x) for x in fails];sys.exit(1)
 print('Resource Transform catalog schema: PASS')
 print(f' - 17 self-contained transform items runtime-place into one Generic Store from {len(loaders)} sparse loaders')
 print(' - each item carries its complete input/output descriptors; View ABI4 and capability hierarchy are preserved')
+print(' - the generated resolver table derives source-derived from its own scan, shipped and with one more producer')

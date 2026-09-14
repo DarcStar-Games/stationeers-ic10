@@ -250,8 +250,19 @@ subroutine, because dominance and reachability are read off the call states
 rather than their projection onto indices, where every return lands on every
 caller's fallthrough. An equality test rules its value out -- or pins it -- on
 the edge it guards, so a counter `beqz` sends away at zero never steps down from
-zero. And a loop advance read from outside the loop witnesses nothing, because
-the value the loop leaves behind is the seed plus every pass it ran, not one.
+zero. And a loop advance read from outside the loop is not one step past the
+seed but what the loop leaves behind, counted from the exits that reach the
+reader: a match that leaves mid-scan can fire on any pass, so the register is
+the seed plus any number of strides up to the trip count, while the loop's own
+test fires on exactly one pass and leaves exactly one value -- and only where a
+single value decides which pass that is. A limit a peer publishes under a
+ceiling decides nothing exactly, and the read behind such an exit stays a review
+obligation. That is what lets the generated Item Producer Resolver's one-past
+read (`Found: add r7 r7 1; get r0 db r7` after a scan that leaves on a match)
+and the Dependency Plan Store's record head (`Found: move r7 r6`) derive whole,
+so neither program carries a fingerprinted window any more, and a change to
+the transforms data no longer invalidates a fingerprint whose only content was
+the table size (issue #156).
 
 What that derives is the surface the program *permits*, not what one execution
 performs: a declaration has to cover every cell a legal peer can steer the loop
