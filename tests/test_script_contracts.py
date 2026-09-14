@@ -705,7 +705,9 @@ ck(not declared_coverage_errors(third_cell_source, third_cell_ports, third_cell_
    "the window an offset record walk really reads was rejected")
 
 # Two advances a branch chooses between move the register by one or the other,
-# never their sum: reading them as a sequence would claim S47 and S50.
+# never their sum: reading them as a sequence would claim S47 and S50. What
+# the first pass reads is S33 or S34, whichever arm it took, and never S32:
+# every way to the read passes one advance.
 either_source = (
     "move r1 32\nmove r0 0\nWalk:\nbeqz r5 Alt\nadd r1 r1 1\nj Read\nAlt:\nadd r1 r1 2\n"
     "Read:\nget r2 db r1\nadd r0 r0 1\nblt r0 6 Walk\n"
@@ -713,12 +715,13 @@ either_source = (
 either_rows = parse_rows(either_source)
 either_ports, either_aliases = collect_aliases(either_rows)
 ck([sorted(item[2]) for item in
-    dynamic_access_cells(either_source, either_ports, either_aliases)] == [[32]],
-   "advances a branch chooses between were summed into a stride no pass makes")
+    dynamic_access_cells(either_source, either_ports, either_aliases)] == [[33, 34]],
+   "advances a branch chooses between were summed into a stride no pass makes, or the seed was read")
 
 # One advance asks less of the analysis as a stride than as a prefix. Skipping
 # it leaves the register on a cell the stride already names, but a prefix says
-# the access stands behind it, and the pass that took the `bnez` reads S32.
+# the access stands behind it, and the first pass reads S32 when it took the
+# `bnez` and S33 when it did not.
 skipped_advance_source = (
     "move r1 32\nmove r0 0\nLoop:\nbnez r5 Skip\nadd r1 r1 1\nSkip:\n"
     "get r2 db r1\nadd r0 r0 1\nblt r0 4 Loop\n"
@@ -729,7 +732,7 @@ skipped_advance, _ = analyze_own_stack(
     skipped_advance_source, skipped_advance_rows, skipped_advance_aliases, [], {},
 )
 ck([sorted(item[2]) for item in dynamic_access_cells(
-       skipped_advance_source, skipped_advance_ports, skipped_advance_aliases)] == [[32]] and
+       skipped_advance_source, skipped_advance_ports, skipped_advance_aliases)] == [[32, 33]] and
    skipped_advance["dynamic_read_range_source"] == "conservative-full-stack",
    "an advance the access can be reached without was read as one it stands behind")
 

@@ -905,6 +905,39 @@ class ValueBounds:
                 sum(amount for _, amount in updates),
                 sum(amount for _, amount in standing))
 
+    def first_pass_offsets(self, index: int, token: str) -> set[int] | None:
+        """How far the innermost loop carrying `token` has advanced it when its first pass reaches `index`.
+
+        One sum per way from the header to the access that does not pass the
+        header again, each the amounts of the advances standing on that way.
+        Where `carried` reads one prefix this is a single number; where a branch
+        chooses between advances, or skips one, it is each choice. The sets are
+        capped so a way through an inner loop that also advances the register
+        fails closed rather than enumerating it.
+        """
+        header = max(self.carrying_regions(index, token))
+        amounts = dict(self.region_carried(header)[token])
+        offsets: dict[CallState, set[int]] = {state: {0} for state in self._by_index.get(header, ())}
+        pending = list(offsets)
+        while pending:
+            state = pending.pop()
+            leaving = offsets[state]
+            if state[0] in amounts and state[0] != index:
+                leaving = {offset + amounts[state[0]] for offset in leaving}
+            if state[0] == index:
+                continue
+            for target in self.states.get(state, ()):
+                if target[0] == header:
+                    continue
+                known = offsets.setdefault(target, set())
+                if not leaving <= known:
+                    known |= leaving
+                    if len(known) > 64:
+                        return None
+                    pending.append(target)
+        found = set().union(*(offsets.get(state, set()) for state in self._by_index.get(index, ())))
+        return found or None
+
     def interval_of(self, index: int, token: str, sites, depth: int, seen) -> tuple:
         """How far `token` can reach either way, even where its values do not enumerate.
 
@@ -959,6 +992,16 @@ class ValueBounds:
             # somewhere past the seed, and an enclosing loop that advances it too
             # leaves it somewhere past the innermost pass read below.
             whole = whole and alone
+        if carried is None and token in sites and self.carrying_regions(index, token):
+            # Advances a branch chooses between, or one the access stands behind
+            # on some ways round and not others, leave the register at its first
+            # pass: the seed plus whatever the pass advanced it by on the way to
+            # the access, which is one of a few sums and never the bare seed
+            # when every way passes an advance.
+            offsets = self.first_pass_offsets(index, token)
+            if offsets is None:
+                return OPEN
+            values = {value + offset for value in values for offset in offsets}
         if carried is not None:
             region, stride, prefix = carried
             values = {value + prefix for value in values}
