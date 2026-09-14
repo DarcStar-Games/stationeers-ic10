@@ -731,7 +731,7 @@ identity `HASH("TransformCandidateReadiness.v1")`. `ic10/manufacturing/transform
 
 ### Transform Candidate Executor ABI2
 
-identity `HASH("TransformCandidateExecutor.v2")`. `ic10/manufacturing/transform_candidate_executor_v2_0.ic10` delegates planning to Readiness on d0, launches the exact Runtime only after readiness succeeds, and consumes Runtime state only when Runtime ABI2 current request token S21 matches its request. It writes the TransformType to Runtime S8 and the request token to Runtime S16 last, and reads Runtime status at S20 -- the cells the material-transform migration moved those fields to. S11 is target Job state, S12 ErrorStatus, S10 current request token.
+identity `HASH("TransformCandidateExecutor.v2")`. `ic10/manufacturing/transform_candidate_executor_v2_0.ic10` delegates planning to Readiness on d0, launches the exact Runtime only after readiness succeeds, and consumes Runtime state only when Runtime ABI2 current request token S21 matches its request. It writes the BatchCount to Runtime S8 and the request token to Runtime S16 last, and reads Runtime status at S20 -- the cells the material-transform migration moved those fields to. S11 is target Job state, S12 ErrorStatus, S10 current request token.
 
 ### Print Candidate Executor ABI2
 
@@ -1131,11 +1131,11 @@ S9   reserved-moles summary in committed plan
 S10  status: 1 grants, 0 no grants, negative dependency/build fault
 S12  MediumType hash
 S13  persistent build-generation counter
-S14  committed reservation epoch; written LAST on successful build only
+S14  committed reservation epoch; written LAST on every build the Plan Builder answers without a fault
 S15  persistent Plan-Builder request generation
 ```
 
-A failed build does not write `S14`; partial staged state therefore remains inert.
+A faulted build does not write `S14`; partial staged state therefore remains inert. A build the Plan Builder answers with no grants (`S10` = 0) still commits its epoch, so `S14` moves on every answered build, not only on one that granted.
 
 ## ControllerPressureTransfer telemetry ABI v2
 
@@ -1784,7 +1784,7 @@ identity `HASH("MultiMaterialReservationAllocator.v2")` in `ic10/material-transf
 
 ### Generic Material Transform Runtime ABI v2
 
-identity `HASH("GenericMaterialTransformRuntime.v2")`. `ic10/material-transform/generic_material_transform_runtime_v2_0.ic10` wires `d0` processor, `d1` Admission, `d2` Resolver, `d3` Allocator ABI2 and `d4` output Reservation. S8 is requested batch count, S9/S10 bind Admission/Resolver generations, S11/S12 snapshot output quantity/generation, S13 is output-wait ticks, S16 is request generation, S19 is internal state, S20 is status, S21 is the current accepted request token, and S22 is the committed material epoch mirrored from Allocator S14. It resets S20 before publishing S21 and binds even immediately-invalid accepted requests to S21 before reporting fault, so callers cannot wait forever on an identity that is never published. It activates the processor only after every input Link reports completion of the common epoch and completes only after a newer coherent output Reservation snapshot grows by the declared output quantity.
+identity `HASH("GenericMaterialTransformRuntime.v2")`. `ic10/material-transform/generic_material_transform_runtime_v2_0.ic10` wires `d0` processor, `d1` Admission, `d2` Resolver, `d3` Allocator ABI2 and `d4` output Reservation. S8 is requested batch count, S9/S10 bind Admission/Resolver generations, S11/S12 snapshot output quantity/generation, S13 is output-wait ticks, S16 is request generation, S19 is internal state, S20 is status, S21 is the current accepted request token, and S22 is the committed material epoch mirrored from Allocator S14. It resets S20 before publishing S21 and binds even immediately-invalid accepted requests to S21 before reporting fault, so callers cannot wait forever on an identity that is never published. S20 then keeps the status the request last published, `1` complete or `-1` fault, until the next request; an idle tick writes nothing, and S20 is `0` on a housing that has served no request. A restart whose state cell S19 is `0` resumes what S20 says was in flight: `2` re-runs the acceptance, `3` or `4` reasserts the fault (issue #165). It activates the processor only after every input Link reports completion of the common epoch, in the order snapshot, Activate, state cell, and completes only after a newer coherent output Reservation snapshot grows by the declared output quantity.
 
 
 ## Item Storage / Reservation extensions (Item 7)

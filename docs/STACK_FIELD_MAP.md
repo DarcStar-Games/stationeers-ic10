@@ -2869,7 +2869,7 @@ Consumers: 1.
 | S11 | LeaseTicks | result | 1 | peer, document |  |
 | S12 | MediumType | result | 0 | document |  |
 | S13 | BuildGenerationCounter | generation | 0 | document |  |
-| S14 | CommittedReservationEpoch | epoch | 1 | peer, document | written last on a successful build only |
+| S14 | CommittedReservationEpoch | epoch | 1 | peer, document | written last on every build the Plan Builder answers without a fault, a no-grant build included; a faulted build leaves it |
 | S15 | PlanBuilderRequestGeneration | request_token | 0 | document |  |
 
 ### ic10.stack.pressure-grid-route-ranker.v2

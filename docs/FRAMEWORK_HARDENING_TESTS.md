@@ -44,7 +44,7 @@ A failing automated contract should be fixed before treating a live-game symptom
 
 ## Automated interruption campaign
 
-`framework/fault_injection.py`, `validation/validators/validate_fault_injection_contracts.py`, and `tests/test_fault_injection.py` implement Roadmap Item 10. The campaign injects restart after every ordered transaction prefix for catalog migration and POWER replacement, exhaustively checks Generic Job cancellation states, and exercises actual Power Dispatch Plan Store IC10 at many instruction boundaries.
+`framework/fault_injection.py`, `validation/validators/validate_fault_injection_contracts.py`, and `tests/test_fault_injection.py` implement Roadmap Item 10. The campaign injects restart after every ordered transaction prefix for catalog migration and POWER replacement, exhaustively checks Generic Job cancellation states, exercises actual Power Dispatch Plan Store IC10 at many instruction boundaries, and reflashes the actual Transform Runtime IC10 after every instruction from a request to its completion.
 
 The automated safety criterion is old-complete/new-complete/invalid only. A torn state may cause a safe outage, but it may not become mutation or actuation authority. Physical live-game cases below remain required for Stationeers-specific device/network behavior. See `docs/INTERRUPTION_FAULT_INJECTION.md`.
 
@@ -335,7 +335,7 @@ The direct execution layer runs the actual IC10 and currently proves:
 - source ReservedExport and sink ReservedImport both equal exactly 10;
 - destination ImportCount completion is detected even when delivery occurs immediately after Stacker release;
 - a real Arc Furnace Admission accepts a valid typed Iron-smelting job;
-- Transform Runtime requests input, waits for the committed material epoch, activates the furnace, survives a simulated mid-job reflash, and completes only after coherent output inventory growth.
+- Transform Runtime requests input, waits for the committed material epoch, activates the furnace, and completes only after coherent output inventory growth; `tests/test_fault_injection.py` reflashes it after every instruction from the request to completion, and every cut completes on growth past a post-commit snapshot with an over-run no larger than the furnace's output during the outage.
 
 ### Live-game MaterialGrid hardening still required
 

@@ -61,7 +61,7 @@
       "end": 14,
       "name": "CommittedReservationEpoch",
       "role": "epoch",
-      "description": "written last on a successful build only"
+      "description": "written last on every build the Plan Builder answers without a fault, a no-grant build included; a faulted build leaves it"
     },
     {
       "cells": "S15",
@@ -179,7 +179,7 @@
             "self-write"
           ],
           "role": "epoch",
-          "description": "written last on a successful build only"
+          "description": "written last on every build the Plan Builder answers without a fault, a no-grant build included; a faulted build leaves it"
         },
         {
           "address": 15,
