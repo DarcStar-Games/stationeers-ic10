@@ -190,6 +190,7 @@ forbidden={
  'publishes TransformType S2':'Material Transform Admission publishes TransformType at S14',
  'S2 is requested batch count, S3 request generation':'Material Transform Runtime receives requests at S8/S16',
  'Runtime S7 = committed material epoch':'Material Transform Runtime mirrors the committed epoch at S22',
+ 'mirrored from Allocator S14':'Material Transform Runtime mirrors the completed epoch from Allocator S15 once delivery reads 2 (issue #204)',
  # Both cases: the phrase opens a sentence in the authority list and appears
  # mid-sentence elsewhere, and this table is matched literally.
  'literal-seeded':'one branch-bounds proof derives dynamic ranges; the linear loop proof beside it is gone',
@@ -222,6 +223,7 @@ for p in mds:
 wiring=(ROOT/'data/script_wiring.json').read_text()
 for phrase,why in {
     'Runtime S7 = committed material epoch':'Material Transform Runtime mirrors the committed epoch at S22',
+    'mirrors that S14 read':'the Runtime reads the completed epoch at Allocator S15 once delivery reads 2 (issue #204)',
 }.items():
     if phrase in wiring:validation.fail(f'data/script_wiring.json: stale phrase {phrase!r} ({why})')
 

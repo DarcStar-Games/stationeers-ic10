@@ -38,6 +38,11 @@ ordered('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','
 ordered('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','get r0 db 20','beq r0 2 Accept','bgt r0 2 Fault','beq r15 r0 Loop','Accept:','poke 20 2','poke 21 r15')
 ordered('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','s d0 Activate 0','poke 20 1','poke 19 0',rule='completion publishes status before state')
 result.ordered('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','s d0 Activate 0','get r0 db 21','put d3 23 r0','poke 19 0','poke 20 -1',after='Fault:',rule='fault notices the served token, then publishes state before status')
+# The Allocator's echo of the token is the commit: WaitAlloc takes the echo and a non-negative status, never a
+# status value an outage can consume, and WaitInput mirrors the completed epoch once delivery reads 2 (#204).
+result.ordered('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','get r0 d3 16','bne r0 r15 Loop','get r0 d3 22','bltz r0 Fault','poke 19 2','poke 20 3',after='WaitAlloc:',rule='WaitAlloc commits on the echo')
+result.ordered('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','bne r0 r15 Fault','get r0 d3 22','bltz r0 Fault','bne r0 2 Loop','get r0 d3 15','blez r0 Fault','poke 22 r0','get r0 d4 36',after='WaitInput:',rule='WaitInput mirrors the completed epoch once delivery reads 2')
+result.excludes('ic10/material-transform/generic_material_transform_runtime_v2_0.ic10','bne r0 1 Loop','get r0 d3 14',rule='no wait on an Allocator status or epoch cell an outage can consume')
 # Item 10 documentation must be present and marked complete.
 need('docs/INTERRUPTION_FAULT_INJECTION.md','Catalog migration','Directory mutation','LArRE','POWER replacement','Generic Job lifecycle','Transform Runtime')
 need('ROADMAP.md','10. Broad interruption and fault-injection suite — COMPLETE','Items **1–11 are implemented and automatically validated**','Item **12 is ACTIVE**')
@@ -46,4 +51,4 @@ raise SystemExit(result.finish('Fault-injection contracts',[
  'reusable cut-at-every-boundary harness is part of the release suite',
  'catalog/LArRE/dependency/Gateway/POWER publication order is statically fenced',
  'POWER Plan Store reflash recovery invalidates torn plans before restoring readability',
- 'Transform Runtime snapshots, activates, then publishes state; a served token keeps its status and an interrupted acceptance or fault resumes']))
+ 'Transform Runtime snapshots, activates, then publishes state; a served token keeps its status and an interrupted acceptance or fault resumes; the Allocator echo is its commit and no wait needs a status an outage can consume']))

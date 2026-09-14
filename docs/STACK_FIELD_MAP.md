@@ -10,7 +10,7 @@ wiring-declared port, or an attributed network access) or one a layout block or 
 docs/ cites beside the contract's S0 line. A cell only its provider touches is not mapped,
 because nothing outside the program could hold its name.
 
-Protocols with a layout: 108. Layout entries: 1159. Cells named: 4408.
+Protocols with a layout: 108. Layout entries: 1160. Cells named: 4409.
 
 ## Roles
 
@@ -26,7 +26,7 @@ Protocols with a layout: 108. Layout entries: 1159. Cells named: 4408.
 | error | error or fault detail kept apart from the state cell | 9 |
 | result | response payload the service publishes before its token | 260 |
 | generation | publication generation, odd/even sequence, or revision that fences observation | 68 |
-| epoch | epoch, lease, or ownership value that authorizes mutation | 19 |
+| epoch | epoch, lease, or ownership value that authorizes mutation | 20 |
 | bank | A/B bank select and the per-bank generation, count, and overflow cells | 13 |
 | topology | ReferenceId of a peer service or device, or a chain link between peers | 58 |
 | table | record array, slot table, image, heap, or descriptor pool | 25 |
@@ -143,7 +143,7 @@ Most common starting cells: S16 in 30 entries, S15 in 29 entries, S14 in 28 entr
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
 | S8 | RecordCount | ic10.stack.diagnostic-renderer.v1 | 1 | 0 | peer | 53 |
-| S8 | BatchCount | ic10.stack.generic-material-transform-runtime.v2 | 1 | 0 | peer | 0 |
+| S8 | BatchCount | ic10.stack.generic-material-transform-runtime.v2 | 1 | 0 | peer | 1 |
 | S8 | ResourceType | ic10.stack.item-producer-resolver.v1 | 2 | 1 | peer | 42 |
 | S8 | ReagentHash | ic10.stack.manufacturing-reagent-resolver.v1 | 1 | 0 | peer | 4 |
 | S8 | BatchCount | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | peer | 5 |
@@ -533,7 +533,7 @@ Most common starting cells: S18 in 10 entries, S8 in 9 entries, S9 in 9 entries,
 | S15 | RequestToken | ic10.stack.printer-capacity-client.v2 | 1 | 0 | peer | 1 |
 | S15 | RequestToken | ic10.stack.recipe-catalog-lookup.v3 | 1 | 1 | peer | 16 |
 | S16 | FreezeRequestToken | ic10.stack.directory-adapter.v3 | 2 | 2 | peer, document | 2 |
-| S16 | RequestToken | ic10.stack.generic-material-transform-runtime.v2 | 2 | 0 | peer | 0 |
+| S16 | RequestToken | ic10.stack.generic-material-transform-runtime.v2 | 2 | 0 | peer | 1 |
 | S18 | RequestToken | ic10.stack.dependency-claim-view.v1 | 3 | 1 | peer | 5 |
 | S18 | RequestToken | ic10.stack.job-inventory-preflight.v1 | 2 | 0 | peer | 4 |
 | S18 | RequestToken | ic10.stack.pressure-grid-path-allocator.v1 | 1 | 1 | peer, document | 2 |
@@ -590,7 +590,7 @@ Most common starting cells: S10 in 2 entries, S15 in 1 entry, S16 in 1 entry, S2
 | S10 | CurrentToken | ic10.stack.transform-candidate-executor.v2 | 1 | 0 | peer | 39 |
 | S15 | CurrentToken | ic10.stack.generic-print-runtime.v2 | 1 | 0 | peer | 3 |
 | S16 | ConsumedRequestGeneration | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | peer | 5 |
-| S21 | CurrentToken | ic10.stack.generic-material-transform-runtime.v2 | 2 | 0 | peer | 0 |
+| S21 | CurrentToken | ic10.stack.generic-material-transform-runtime.v2 | 2 | 0 | peer | 1 |
 | S25 | CurrentEpoch | ic10.stack.stacker-feeder.v1 | 1 | 1 | peer | -7 |
 
 ### response_token
@@ -763,7 +763,7 @@ Most common starting cells: S11 in 13 entries, S8 in 12 entries, S9 in 11 entrie
 | S18 | Ready | ic10.stack.catalog-loader.v5 | 2 | 0 | peer, document | 5 |
 | S19 | ClaimStatus | ic10.stack.catalog-coordinator-core.v4 | 1 | 1 | peer | 8 |
 | S20 | Status | ic10.stack.dependency-claim-view.v1 | 3 | 1 | peer | 5 |
-| S20 | Status | ic10.stack.generic-material-transform-runtime.v2 | 1 | 0 | peer | 0 |
+| S20 | Status | ic10.stack.generic-material-transform-runtime.v2 | 1 | 0 | peer | 1 |
 | S20 | Status | ic10.stack.job-inventory-preflight.v1 | 2 | 0 | peer | 4 |
 | S20 | Status | ic10.stack.stock-target-inventory-view.v1 | 1 | 1 | peer | 43 |
 | S20 | LaneAStatus | ic10.stack.stock-target-producer-view.v1 | 1 | 2 | peer | 36 |
@@ -1163,9 +1163,9 @@ Most common starting cells: S11 in 10 entries, S13 in 9 entries, S12 in 8 entrie
 
 ### epoch
 
-19 entries at 14 distinct starting cells: S9, S10, S12, S13, S14, S15, S16, S17, S18, S20, S23, S26, S31, S109.
+20 entries at 14 distinct starting cells: S9, S10, S12, S13, S14, S15, S16, S17, S18, S20, S23, S26, S31, S109.
 
-Most common starting cells: S14 in 4 entries, S15 in 2 entries, S20 in 2 entries, S9 in 1 entry, S10 in 1 entry.
+Most common starting cells: S14 in 4 entries, S15 in 3 entries, S20 in 2 entries, S9 in 1 entry, S10 in 1 entry.
 
 | Cells | Name | Protocol | Peers | Consumers | Grounding | Headroom |
 |---|---|---|---:|---:|---|---:|
@@ -1174,11 +1174,12 @@ Most common starting cells: S14 in 4 entries, S15 in 2 entries, S20 in 2 entries
 | S12 | CoordinatorEpoch | ic10.stack.generic-catalog-store.v6 | 2 | 1 | peer, document | 0 |
 | S13 | BuildEpoch | ic10.stack.resource-reservation.v1 | 4 | 3 | peer, document | 4 |
 | S14 | ActiveEpoch | ic10.stack.material-transfer-executor.v1 | 1 | 1 | peer | 2 |
-| S14 | CommittedEpoch | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | peer | 5 |
+| S14 | CommittedEpoch | ic10.stack.multi-material-reservation-allocator.v2 | 1 | 1 | peer | 5 |
 | S14 | CommittedReservationEpoch | ic10.stack.pressure-grid-reservation-planner.v2 | 1 | 1 | peer, document | 36 |
 | S14 | BuildEpoch | ic10.stack.pressure-inventory-reservation.v1 | 1 | 1 | peer, document | 70 |
 | S15 | CoordinatorEpoch | ic10.stack.catalog-coordinator-core.v4 | 3 | 1 | peer, document | 8 |
 | S15 | CompletedEpoch | ic10.stack.material-transfer-executor.v1 | 1 | 1 | peer | 2 |
+| S15 | CompletedEpoch | ic10.stack.multi-material-reservation-allocator.v2 | 1 | 1 | peer | 5 |
 | S16 | ConsumedPlannerEpoch | ic10.stack.pressure-transfer-grant-guard.v1 | 0 | 1 | document | 9 |
 | S17 | StagedEpoch | ic10.stack.material-transfer-grant-guard.v1 | 1 | 2 | peer | 6 |
 | S18 | OwnerEpoch | ic10.stack.resource-reservation.v1 | 6 | 3 | peer, document | 4 |
@@ -1247,20 +1248,20 @@ Most common starting cells: S8 in 6 entries, S9 in 5 entries, S13 in 5 entries, 
 | S14 | ClaimCoordinatorId | ic10.stack.generic-catalog-store.v6 | 2 | 1 | peer, document | 0 |
 | S14 | CapturedControllerRef | ic10.stack.generic-config-editor.v1 | 1 | 0 | peer, document | 12 |
 | S14 | ValueDialRef | ic10.stack.generic-input-scanner.v1 | 0 | 0 | document | 36 |
-| S14 | ProcessorRef | ic10.stack.generic-material-transform-runtime.v2 | 1 | 0 | peer | 0 |
+| S14 | ProcessorRef | ic10.stack.generic-material-transform-runtime.v2 | 1 | 0 | peer | 1 |
 | S14 | ClassExtensionRef | ic10.stack.resource-endpoint.v1 | 1 | 1 | peer | -1 |
 | S15 | LogicMemoryRef | ic10.stack.generic-input-scanner.v1 | 0 | 0 | document | 36 |
-| S15 | OutputReservationRef | ic10.stack.generic-material-transform-runtime.v2 | 1 | 0 | peer | 0 |
+| S15 | OutputReservationRef | ic10.stack.generic-material-transform-runtime.v2 | 1 | 0 | peer | 1 |
 | S15 | ProcessorRef | ic10.stack.material-transform-admission.v1 | 1 | 1 | peer | 0 |
 | S15 | OwningPlannerRef | ic10.stack.pressure-inventory-reservation.v1 | 1 | 1 | peer, document | 70 |
 | S16 | SwitchRef | ic10.stack.generic-input-scanner.v1 | 0 | 0 | document | 36 |
 | S16 | InventoryRef | ic10.stack.pressure-inventory-reservation.v1 | 2 | 1 | peer, document | 70 |
-| S17 | AdmissionRef | ic10.stack.generic-material-transform-runtime.v2 | 1 | 0 | peer | 0 |
+| S17 | AdmissionRef | ic10.stack.generic-material-transform-runtime.v2 | 1 | 0 | peer | 1 |
 | S17 | PressureDomainRef | ic10.stack.pressure-inventory-reservation.v1 | 0 | 1 | document | 70 |
 | S17 | TransferRef | ic10.stack.pressure-transfer-grant-guard.v1 | 2 | 1 | peer, document | 9 |
 | S17 | OwnerReferenceId | ic10.stack.resource-reservation.v1 | 8 | 3 | peer, document | 4 |
 | S18 | ConfigHostRef | ic10.stack.generic-config-editor.v1 | 3 | 0 | peer, document | 12 |
-| S18 | LinkResolverRef | ic10.stack.generic-material-transform-runtime.v2 | 1 | 0 | peer | 0 |
+| S18 | LinkResolverRef | ic10.stack.generic-material-transform-runtime.v2 | 1 | 0 | peer | 1 |
 | S18 | AllocatorRef | ic10.stack.material-transfer-grant-guard.v1 | 1 | 2 | peer | 6 |
 | S19 | TargetStoreRef | ic10.stack.catalog-loader.v5 | 2 | 0 | peer, document | 5 |
 | S20 | RuntimeRef | ic10.stack.multi-material-reservation-allocator.v2 | 2 | 1 | peer | 5 |
@@ -2414,7 +2415,8 @@ Consumers: 1.
 | Cells | Name | Role | Peers | Grounding | Description |
 |---|---|---|---:|---|---|
 | S8 | BatchCount | request | 2 | peer |  |
-| S14 | CommittedEpoch | epoch | 2 | peer | written last after every input stages |
+| S14 | CommittedEpoch | epoch | 1 | peer | written last after every input stages |
+| S15 | CompletedEpoch | epoch | 1 | peer | the epoch the last completed allocation committed, written before the status leaves 1; the Runtime mirrors it once the status reads 2 |
 | S16 | ConsumedRequestGeneration | current_token | 2 | peer |  |
 | S20 | RuntimeRef | topology | 2 | peer |  |
 | S21 | RequestGeneration | request_token | 2 | peer |  |
