@@ -56,7 +56,12 @@ readings would let one in. An equality test that sends a register elsewhere at
 one value rules that value out on the edge it guards, so `beqz r8 Back` before
 `sub r8 r8 1` never steps down from zero. And an advance inside a loop, read
 from outside the loop, is not one step past the seed but the seed plus however
-many passes ran, which nothing counts from out there -- so it witnesses nothing,
+many passes ran before control left. What the loop leaves behind is counted
+from the exits that reach the reader: a match that leaves mid-scan can fire on
+any pass, so the counter is the seed plus any number of strides up to the trip
+count, while the loop's own exit test fires on exactly one pass and leaves
+exactly one value. A loop nothing counts out, or one that carries the register
+through an advance some pass skips, still witnesses nothing from out there,
 rather than witnessing a cell the loop never leaves its address on.
 
 A seed is only as good as the arithmetic between it and the access, and that
@@ -523,21 +528,11 @@ class ValueBounds:
         """
         if not self.complete:
             return None, False
-        span = self.region_span(header)
         pass_nodes = self.pass_nodes(header)
-        carried = self.region_carried(header)
-        sites = {register: {place for place, _ in updates} for register, updates in carried.items()}
+        sites = self.region_sites(header)
         trips, counted = None, False
-        for index in sorted(span):
-            compared = self.comparison(index)
-            if compared is None or not self.every_latch(header, index):
-                continue
-            operator, counter, against, target = compared
-            updates = carried.get(counter, ())
-            step = sum(amount for _, amount in updates)
+        for index, operator, counter, against, target, step in self.counting_tests(header):
             table = LAST_PASS_CONTINUING if target in pass_nodes else LAST_PASS_EXITING
-            if not step or operator not in table:
-                continue
             leaving = target if table is LAST_PASS_EXITING else index + 1
             _, limit, limit_trusted = self.interval_of(index, against, sites, depth + 1, seen)
             # The counter enters the loop at its seed: asking for its value here
@@ -547,13 +542,166 @@ class ValueBounds:
                 continue
             passes = max(0, (limit + table[operator] - min(entering)) // step + 1)
             whole = leaving not in pass_nodes and limit_trusted and entering_whole and all(
-                self.every_latch(header, place) for place, _ in updates
+                self.every_latch(header, place) for place, _ in self.region_carried(header)[counter]
             )
             if trips is None or passes < trips:
                 trips, counted = passes, whole
             elif passes == trips:
                 counted = counted or whole
         return trips, counted
+
+    def region_sites(self, header: int) -> dict[str, set[int]]:
+        """The advance sites of every register the loop at `header` carries."""
+        return {
+            register: {place for place, _ in updates}
+            for register, updates in self.region_carried(header).items()
+        }
+
+    def counting_tests(self, header: int) -> list[tuple[int, str, str, str, int, int]]:
+        """Every test that can count the loop at `header` out, with its counter's step.
+
+        `(index, operator, counter, compared token, branch target, step)` for
+        each ordering test in the loop that stands on every way around it,
+        names a register the loop advances, and is written in a direction the
+        counter moves: continuing into the loop while the counter is below a
+        limit, or leaving once it is not.
+        """
+        pass_nodes = self.pass_nodes(header)
+        carried = self.region_carried(header)
+        found = []
+        for index in sorted(self.region_span(header)):
+            compared = self.comparison(index)
+            if compared is None or not self.every_latch(header, index):
+                continue
+            operator, counter, against, target = compared
+            step = sum(amount for _, amount in carried.get(counter, ()))
+            table = LAST_PASS_CONTINUING if target in pass_nodes else LAST_PASS_EXITING
+            if step and operator in table:
+                found.append((index, operator, counter, against, target, step))
+        return found
+
+    def exit_pass(self, header: int, index: int, leaving: int, depth: int, seen) -> int | None:
+        """On which pass, counted from one, the loop's own test at `index` leaves along `leaving`.
+
+        An early exit can fire on any pass; the counted exit fires on exactly
+        one, and which one is only exact when everything that decides it is a
+        single value -- one counting test in the loop, a limit and a seed each
+        shown whole and single, and an advance every pass makes. A limit a peer
+        publishes is not a single value, and the exit it decides may fire on any
+        pass up to the ceiling, so it leaves nothing exact behind it.
+
+        A test that continues into the loop while it holds leaves on the last
+        pass, after that pass's advances; one that leaves when it holds fires on
+        the arrival after the last pass, with only the advances that stand before
+        it in the body made.
+        """
+        tests = self.counting_tests(header)
+        if len(tests) != 1 or tests[0][0] != index:
+            return None
+        _, operator, counter, against, target, step = tests[0]
+        pass_nodes = self.pass_nodes(header)
+        table = LAST_PASS_CONTINUING if target in pass_nodes else LAST_PASS_EXITING
+        if leaving != (target if table is LAST_PASS_EXITING else index + 1) or leaving in pass_nodes:
+            return None
+        if not all(self.every_latch(header, place) for place, _ in self.region_carried(header)[counter]):
+            return None
+        sites = self.region_sites(header)
+        limits, limits_whole = self.values(index, against, sites, depth + 1, seen)
+        entering, entering_whole = self.seed_values(header, counter, sites, depth + 1, seen)
+        if not (limits_whole and entering_whole) or limits is None or len(limits) != 1 or len(entering) != 1:
+            return None
+        passes = max(0, (min(limits) + table[operator] - min(entering)) // step + 1)
+        return passes + 1 if table is LAST_PASS_EXITING else passes
+
+    def reaches(self, origin: CallState, index: int, blocked: set[int]) -> bool:
+        """Does `origin` reach `index` without passing any blocked index on the way?"""
+        seen: set[CallState] = set()
+        pending = [origin]
+        while pending:
+            state = pending.pop()
+            if state[0] == index:
+                return True
+            if state in seen or state[0] in blocked:
+                continue
+            seen.add(state)
+            pending.extend(self.states.get(state, ()))
+        return False
+
+    def standing_before(self, header: int, place: int, updates: list[tuple[int, int]]) -> int | None:
+        """How far the loop's advances have moved a register by the time a pass reaches `place`.
+
+        The same question `carried` asks of an access, asked of an exit: an
+        advance counts when every pass reaches `place` through it, is ignored
+        when no pass reaches `place` from it, and stands the answer down in
+        between.
+        """
+        standing = 0
+        for site, amount in updates:
+            if site == place or place not in self.forward(site, header):
+                continue
+            if site not in self.dominators.get(place, ()):
+                return None
+            standing += amount
+        return standing
+
+    def after_loop_values(self, header: int, index: int, token: str, depth: int, seen) -> Derived:
+        """What the loop at `header` leaves in `token` for a reader outside its passes.
+
+        The value is the seed plus the advances of every pass that ran before
+        control left, so it is counted from the exits: each edge out of the pass
+        that reaches the reader -- without passing the header again or another
+        write to the register -- contributes the seed, plus the advances standing
+        before the exit in the body, plus one stride for every completed pass.
+        A match that leaves mid-scan can fire on any pass up to the trip count;
+        the loop's own test fires on the one pass `exit_pass` names, and where
+        that is not a single number the exit witnesses nothing and takes the
+        closure with it. A register two loops advance, or one advanced by a
+        step some pass skips, is not counted from out here at all.
+        """
+        if not self.complete or depth > MAX_DEPTH or (header, token) in seen:
+            return OPEN
+        seen = seen | {(header, token)}
+        updates = self.region_carried(header).get(token, [])
+        around = [
+            other for other in self.regions
+            if token in self.region_carried(other)
+            and any(place in self.region_span(other) for place, _ in updates)
+        ]
+        if not updates or around != [header]:
+            return OPEN
+        if not all(self.every_latch(header, place) for place, _ in updates):
+            return OPEN
+        stride = sum(amount for _, amount in updates)
+        entering, entering_whole = self.seed_values(header, token, self.region_sites(header), depth + 1, seen)
+        trips, counted = self.trip_bound(header, depth + 1, seen)
+        if not entering or not trips:
+            return OPEN
+        pass_nodes = self.pass_nodes(header)
+        blocked = {header} | {
+            node for node, entry in enumerate(self.program)
+            if node != index and entry["row"] and writes_register(entry["row"], token)
+        }
+        values: set[int] = set()
+        whole = entering_whole and counted
+        for state, outgoing in self.states.items():
+            if state[0] not in pass_nodes:
+                continue
+            for target in outgoing:
+                if target[0] in pass_nodes or not self.reaches(target, index, blocked):
+                    continue
+                prefix = self.standing_before(header, state[0], updates)
+                if prefix is None:
+                    return OPEN
+                if any(test[0] == state[0] for test in self.counting_tests(header)):
+                    fired = self.exit_pass(header, state[0], target[0], depth, seen)
+                    if fired is None:
+                        whole = False
+                        continue
+                    passes: Iterable[int] = (fired,)
+                else:
+                    passes = range(1, trips + 1)
+                values |= {seed + prefix + (ran - 1) * stride for seed in entering for ran in passes}
+        return (values, whole) if values else OPEN
 
     def region_carried(self, header: int) -> dict[str, list[tuple[int, int]]]:
         if header not in self._carried:
@@ -767,10 +915,23 @@ class ValueBounds:
         known: set[int] = set()
         closed = None not in reaching
         for back in sorted(node for node in reaching if node is not None):
-            if self.leaves_loop(back, index, token):
-                closed = False
+            left = self.leaves_loop(back, index, token)
+            entered = self.enters_loop(back, index, token)
+            if left:
+                values, whole = (self.after_loop_values(left.pop(), index, token, depth, seen)
+                                 if len(left) == 1 else OPEN)
+            elif entered:
+                # The write gets here only by entering a loop that advances the
+                # register and leaving it again, so what arrives is what the loop
+                # leaves behind, and that is counted from the loop's advance
+                # above -- a first-arrival exit included. Reading the write
+                # itself here would witness the seed along the path that leaves
+                # before any pass, which a count the test decides may never take.
+                advances = {place for header in entered for place, _ in self.region_carried(header)[token]}
+                closed = closed and bool(advances & reaching)
                 continue
-            values, whole = self.definition_values(back, token, sites, depth, seen)
+            else:
+                values, whole = self.definition_values(back, token, depth, seen)
             if values is None:
                 closed = False
             else:
@@ -778,8 +939,8 @@ class ValueBounds:
                 closed = closed and whole
         return (known, closed) if known else OPEN
 
-    def leaves_loop(self, back: int, index: int, token: str) -> bool:
-        """Is `back` an advance of a loop whose passes `index` stands outside of?
+    def leaves_loop(self, back: int, index: int, token: str) -> set[int]:
+        """The loops `back` advances `token` around whose passes `index` stands outside of.
 
         Read from inside the pass, an advance is transparent and the caller
         folds the trip count in. Read from outside -- after the loop has left, or
@@ -789,16 +950,46 @@ class ValueBounds:
         runs seven passes never leaves its address one past the seed. That
         reading would put a cell the program never writes in the witness set,
         and a declaration is held to every cell in it, so from out here the
-        advance witnesses nothing.
+        advance is read as what the loop leaves behind, by `after_loop_values`.
         """
-        return any(
-            index not in self.pass_nodes(header)
+        return {
+            header for header in self.regions
+            if index not in self.pass_nodes(header)
             and any(place == back for place, _ in self.region_carried(header).get(token, ()))
-            for header in self.regions
-        )
+        }
 
-    def definition_values(self, back: int, token: str, sites, depth: int, seen) -> Derived:
-        """The values one write leaves in `token`."""
+    def enters_loop(self, back: int, index: int, token: str) -> set[int]:
+        """The loops carrying `token` that every path from the write at `back` to `index` passes through.
+
+        A seed written before a loop reaches a reader after it along the path
+        that leaves on the first arrival, before any pass -- which the control
+        flow has whether or not the count lets the exit fire there. What such a
+        reader holds is what the loop leaves behind, so the seed is read through
+        `after_loop_values` rather than as itself.
+        """
+        return {
+            header for header in self.regions
+            if token in self.region_carried(header)
+            and index not in self.pass_nodes(header)
+            and back not in self.region_span(header)
+            and index not in self.forward(back, header)
+        }
+
+    def definition_values(self, back: int, token: str, depth: int, seen) -> Derived:
+        """The values one write leaves in `token`.
+
+        Its operands are read at the write, with the loops around *it*
+        transparent and not the loops around the reader. A write inside a loop
+        read from outside it -- `move r7 r6` on the pass that found the slot,
+        read once the scan is over -- holds what the operand held on whichever
+        pass ran it, which is the operand folded over the writer's own loop;
+        read with the reader's set the scan's advance is an ordinary write that
+        reaches itself round the back edge and evaluates to nothing. And a seed
+        the loop enters on -- `add r0 r0 128` before a copy that advances `r0`
+        -- stands outside every loop that carries the register, so the
+        reader's advances have nothing to say about what it computed.
+        """
+        sites = self.sites(back)
         row = self.program[back]["row"]
         if row[0] in BOOLEAN_RESULTS:
             return {0, 1}, True

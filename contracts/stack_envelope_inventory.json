@@ -4695,8 +4695,8 @@
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
-        "dynamic_read_provenance": "source-fingerprinted-exception",
-        "dynamic_write_provenance": "source-fingerprinted-exception"
+        "dynamic_read_provenance": "source-derived",
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.dependency.plan.store",
@@ -5175,7 +5175,7 @@
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
-        "dynamic_read_provenance": "source-fingerprinted-exception",
+        "dynamic_read_provenance": "source-derived",
         "dynamic_write_provenance": "none"
       },
       "envelope": {

@@ -181,9 +181,14 @@ The accepted surface had the mirror-image gap. A provider's own computed *reads*
 are the cells a peer may write into it, so a program whose read range fell back
 to the whole stack accepted every cell, and every port writing into it — ten of
 them, mostly request mailboxes — passed whatever it posted. Each of those ten
-programs now carries a reviewed `dynamic_read_ranges` window beside the write
+programs gained a reviewed `dynamic_read_ranges` window beside the write
 window, held from below by the same proof, and the validator refuses the read
-fallback exactly as it refuses the write one. A read window is a claim about what
+fallback exactly as it refuses the write one. Two of the ten have since retired:
+the branch bounds now count what a scan leaves in its counter from the exits
+that reach the reader, so the generated Item Producer Resolver's table and the
+Dependency Plan Store's record block derive whole (issue #156), and a change to
+the transforms data no longer invalidates a fingerprint whose only content was
+the table size. A read window is a claim about what
 the owner reads: for a record scan it is the record block, and for a request
 mailbox it is the request cells the owner names in its own
 `external_writable_ranges`, so the two declarations describe one layout. No

@@ -351,12 +351,16 @@ proven_own_reads = {
     item["source"]: item["read"]["proven_ranges"]
     for item in own_inventory["scripts"] if item["read"]["proven_ranges"]
 }
-# The Gateway's source proves its five-lane B-F request/response scan. Its
-# source-fingerprinted override separately bounds computed payload copies.
+# The Gateway's source proves its five-lane B-F request/response scan, and the
+# payload copies behind it: the lane the scan matched leaves `r7` on one of the
+# five lane heads, and lane A seeds it by hand, so each copy loop derives from
+# there. Its source-fingerprinted override still stands for the copies after
+# `Wait:`, whose lane head is restored from the stack.
 ck(proven_own_reads.get("ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10") ==
-   [{"start": 32, "end": 33}, {"start": 48, "end": 49},
-    {"start": 64, "end": 65}, {"start": 80, "end": 81},
-    {"start": 96, "end": 97}],
+   [{"start": 11, "end": 15}, {"start": 32, "end": 33}, {"start": 36, "end": 40},
+    {"start": 48, "end": 49}, {"start": 56, "end": 62}, {"start": 64, "end": 65},
+    {"start": 68, "end": 72}, {"start": 80, "end": 81}, {"start": 85, "end": 93},
+    {"start": 96, "end": 97}, {"start": 101, "end": 109}],
    "bounded Generic Job gateway own-stack loop is absent from proven occupancy")
 # One loop walking `sp` and `ra` together bounds both: the hint mirror at S21 is
 # read through the register the exit test counts, and the endpoint copy at S28
@@ -844,20 +848,106 @@ ck(not dynamic_access_cells(dead_pin_source, dead_pin_ports, dead_pin_aliases),
 # A loop advance read from outside the loop is not one step past the seed: the
 # copy below always runs seven passes, so its address is never 121 when the
 # record head is rewritten. Witnessing 121 would reject the window that is right.
+# What the loop leaves behind is counted from its exit instead: the exit test
+# fires on the seventh pass, after that pass's advance, so the address is 135
+# and the rewrite lands on S127 -- whole, so the window is the derivation.
 after_loop_source = (
     "move r0 128\nmove r6 0\nCopy:\npoke r0 1\nadd r0 r0 1\nadd r6 r6 1\nblt r6 7 Copy\n"
     "sub r0 r0 8\npoke r0 2\nyield\n"
 )
 after_loop_rows = parse_rows(after_loop_source)
 after_loop_ports, after_loop_aliases = collect_aliases(after_loop_rows)
-after_loop, _ = analyze_own_stack(
-    after_loop_source, after_loop_rows, after_loop_aliases, [], {"dynamic_write_ranges": [[127, 134]]},
-)
-ck(after_loop["dynamic_write_range_source"] == "source-fingerprinted-exception"
-   and after_loop["dynamic_write_proven_ranges"] == [{"start": 128, "end": 134}]
+after_loop, _ = analyze_own_stack(after_loop_source, after_loop_rows, after_loop_aliases, [], {})
+ck(after_loop["dynamic_write_range_source"] == "source-derived"
+   and after_loop["dynamic_write_ranges"] == [{"start": 127, "end": 134}]
    and not declared_coverage_errors(after_loop_source, after_loop_ports, after_loop_aliases,
                                     {("db", "write"): [{"start": 127, "end": 134}]}),
-   "a loop advance read after the loop witnessed the value after one pass")
+   "a loop advance read after the loop was not counted from the loop's exit")
+
+# A match that leaves mid-scan can fire on any pass, so the counter it leaves
+# behind is the seed plus any number of strides up to the trip count: the
+# one-past read here is S33, S35, ..., S65, and with the scan's own S32..S64 the
+# table derives whole (issue #156). The exit the count fires is not one the
+# reader stands behind, so it contributes nothing to that set.
+early_exit_source = (
+    "get r2 db 8\nmove r6 0\nmove r7 32\nFind:\nbge r6 17 Print\nget r0 db r7\n"
+    "beq r0 r2 Found\nadd r7 r7 2\nadd r6 r6 1\nj Find\nFound:\nadd r7 r7 1\nget r0 db r7\n"
+    "poke 13 r0\nPrint:\nyield\n"
+)
+early_exit_rows = parse_rows(early_exit_source)
+early_exit_ports, early_exit_aliases = collect_aliases(early_exit_rows)
+early_exit, _ = analyze_own_stack(early_exit_source, early_exit_rows, early_exit_aliases, [], {})
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       early_exit_source, early_exit_ports, early_exit_aliases)] ==
+   [list(range(32, 65, 2)), list(range(33, 66, 2))] and
+   early_exit["dynamic_read_range_source"] == "source-derived" and
+   early_exit["dynamic_read_ranges"] == [{"start": 32, "end": 65}],
+   "a counter read after an early exit was not counted over every pass the exit can fire on")
+
+# A reader only the counted exit reaches sees exactly one value. The exit test
+# at the top fires on the arrival after the last pass, with every advance made:
+# 32 + 17 * 2 = 66, one cell, and the read past it is whole.
+counted_exit_source = early_exit_source.replace("get r2 db 8\n", "Start:\nget r2 db 8\n").replace(
+    "Found:\nadd r7 r7 1\nget r0 db r7\npoke 13 r0\nPrint:\n",
+    "Found:\npoke 13 0\nyield\nj Start\nPrint:\nget r0 db r7\npoke 13 r0\n",
+)
+counted_exit_rows = parse_rows(counted_exit_source)
+counted_exit_ports, counted_exit_aliases = collect_aliases(counted_exit_rows)
+counted_exit, _ = analyze_own_stack(
+    counted_exit_source, counted_exit_rows, counted_exit_aliases, [], {},
+)
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       counted_exit_source, counted_exit_ports, counted_exit_aliases)] ==
+   [list(range(32, 65, 2)), [66]] and
+   counted_exit["dynamic_read_range_source"] == "source-derived",
+   "a reader only the counted exit reaches was not left on the one value that exit leaves")
+
+# The counted exit fires on one pass only when a single value decides which. A
+# limit a peer publishes under a ceiling can end the scan on any pass up to
+# it, so the value it leaves is not one number and the read behind it is not
+# whole -- while the scan's own read still counts over every pass the ceiling
+# permits. (The guard on the limit leaves for `Found`, not `Print`: a jump to
+# `Print` from before the seed would carry the previous scan's counter there.)
+peer_limit_source = counted_exit_source.replace(
+    "get r2 db 8\n", "get r2 db 8\nget r3 db 9\nbgt r3 17 Found\n"
+).replace("bge r6 17 Print", "bge r6 r3 Print")
+peer_limit_rows = parse_rows(peer_limit_source)
+peer_limit_ports, peer_limit_aliases = collect_aliases(peer_limit_rows)
+peer_limit, _ = analyze_own_stack(peer_limit_source, peer_limit_rows, peer_limit_aliases, [], {})
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       peer_limit_source, peer_limit_ports, peer_limit_aliases)] == [list(range(32, 65, 2))] and
+   peer_limit["dynamic_read_range_source"] == "conservative-full-stack",
+   "a counted exit a peer's limit decides was read as leaving one value")
+
+# An advance some pass skips leaves the loop somewhere the stride names but not
+# somewhere the pass count reaches, so from outside nothing is counted.
+skipped_exit_source = early_exit_source.replace(
+    "add r7 r7 2\n", "beqz r2 Hold\nadd r7 r7 2\nHold:\n"
+)
+skipped_exit_rows = parse_rows(skipped_exit_source)
+skipped_exit_ports, skipped_exit_aliases = collect_aliases(skipped_exit_rows)
+skipped_exit, _ = analyze_own_stack(skipped_exit_source, skipped_exit_rows, skipped_exit_aliases, [], {})
+ck(skipped_exit["dynamic_read_range_source"] == "conservative-full-stack",
+   "a register advanced by a step some pass skips was counted from outside its loop")
+
+# A write inside the loop read from outside it holds what its operand held on
+# whichever pass ran it: `move r7 r6` on the pass that found the slot leaves the
+# slot index, any of the 32, and the record head derives from it whole. Read
+# with the outside reader's transparent set instead, the scan's advance is an
+# ordinary write that reaches itself round the back edge and evaluates to nothing.
+inner_write_source = (
+    "get r3 db 13\nmove r6 0\nmove r7 -1\nScan:\nbge r6 32 Done\nmul r0 r6 8\nadd r0 r0 128\n"
+    "get r1 db r0\nbnez r1 Next\nbgez r7 Next\nmove r7 r6\nNext:\nadd r6 r6 1\nj Scan\nDone:\n"
+    "bltz r7 Full\nmul r0 r7 8\nadd r0 r0 128\npoke r0 r3\nFull:\nyield\n"
+)
+inner_write_rows = parse_rows(inner_write_source)
+inner_write_ports, inner_write_aliases = collect_aliases(inner_write_rows)
+inner_write, _ = analyze_own_stack(inner_write_source, inner_write_rows, inner_write_aliases, [], {})
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       inner_write_source, inner_write_ports, inner_write_aliases)] ==
+   [list(range(128, 377, 8))] * 2 and
+   inner_write["dynamic_write_range_source"] == "source-derived",
+   "a write inside the scan read after it was not folded over the scan's passes")
 
 # A record loop is exactly the thing a program writes as a subroutine, so a call
 # is followed and the loop's own exit test is read on the far side of it. The

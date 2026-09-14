@@ -118,19 +118,6 @@
     }
    }
   },
-  "ic10/catalog-control-plane/catalog_coordinator_directory_view_v2_0.ic10": {
-   "source_sha256": "ea31831ca3a520147b089a280fd10d9924ed54e0a18a7c9dac1017d191a6734d",
-   "ports": {
-    "d0": {
-     "dynamic_read_ranges": [
-      [
-       64,
-       447
-      ]
-     ]
-    }
-   }
-  },
   "ic10/catalog-control-plane/catalog_item_migration_planner_v2_0.ic10": {
    "source_sha256": "49cb7f55209f3bb3416d9f7431b8165011d5a1a0eafc9c4e3475f493fda9663f",
    "ports": {
@@ -669,26 +656,6 @@
   },
   "ic10/dependency-planning/dependency_plan_store_v2_0.ic10": {
    "source_sha256": "45b2df22309b90253281494fb3b7bb0622598c20caf7dbd92a2601d3b5738637",
-   "dynamic_read_ranges": [
-    [
-     14,
-     20
-    ],
-    [
-     128,
-     383
-    ]
-   ],
-   "dynamic_write_ranges": [
-    [
-     32,
-     39
-    ],
-    [
-     128,
-     383
-    ]
-   ],
    "publication_rules": [
     {
      "kind": "seqlock",
@@ -705,15 +672,6 @@
     [
      128,
      383
-    ]
-   ]
-  },
-  "ic10/dependency-planning/item_producer_resolver_v1_0.ic10": {
-   "source_sha256": "f228093388bad95bb6772754fba4776684afe33140b8f85dc2928865a49ec1a2",
-   "dynamic_read_ranges": [
-    [
-     32,
-     65
     ]
    ]
   },
