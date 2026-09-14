@@ -788,6 +788,14 @@ class ValueBounds:
         what that register permits, and against data nothing bounds not at all.
         `None` for an exit that tests some other register the pass derives from
         a carried one, whose passes this does not follow.
+
+        The cut is by what the compared side is *permitted* to hold, which is
+        the standard every derivation here is held to: a guard that admits a
+        count of eight admits every count up to eight however the peer fills it
+        in, so an interval read off the guards is exact by definition, and one
+        read off a set not shown whole can only be too narrow -- which drops
+        values and takes the closure with it through the trusted flag, never
+        adding one.
         """
         row = self.program[index]["row"]
         derived = self.derived_in_pass(header).get(index, set())
@@ -796,6 +804,9 @@ class ValueBounds:
             return (None, None, None, set(), True)
         if involved != [token] or row[1] != token:
             return None
+        # The two edges of an exit never coincide: a pass node has one edge that
+        # reaches a latch and an exit has one that leaves, so a branch to its own
+        # next line is either wholly inside the pass or not a pass node at all.
         table = TAKEN if leaving == self.labels.get(row[-1]) else FALLTHROUGH
         compared = self.comparison(index)
         if compared is not None:
