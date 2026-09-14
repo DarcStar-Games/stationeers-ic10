@@ -335,7 +335,7 @@ The direct execution layer runs the actual IC10 and currently proves:
 - source ReservedExport and sink ReservedImport both equal exactly 10;
 - destination ImportCount completion is detected even when delivery occurs immediately after Stacker release;
 - a real Arc Furnace Admission accepts a valid typed Iron-smelting job;
-- Transform Runtime requests input, waits for the committed material epoch, activates the furnace, and completes only after coherent output inventory growth; `tests/test_fault_injection.py` reflashes it after every instruction from the request to completion, and every cut completes on growth past a post-commit snapshot with an over-run no larger than the furnace's output during the outage.
+- Transform Runtime requests input, waits for the Allocator's echo and then its delivery, activates the furnace, and completes only after coherent output inventory growth; `tests/test_fault_injection.py` reflashes it after every instruction from the request to completion with the Allocator delivering inside the outage, and every cut completes on growth past a post-commit snapshot with an over-run no larger than the furnace's output during the outage, none of them waiting on an Allocator status the outage consumed (issue #204).
 
 ### Live-game MaterialGrid hardening still required
 

@@ -3362,6 +3362,12 @@
      "description": "written last after every input stages"
     },
     {
+     "cells": "S15",
+     "name": "CompletedEpoch",
+     "role": "epoch",
+     "description": "the epoch the last completed allocation committed; on completion, written before the status leaves 1, and the Runtime mirrors it once the status reads 2"
+    },
+    {
      "cells": "S16",
      "name": "ConsumedRequestGeneration",
      "role": "current_token"

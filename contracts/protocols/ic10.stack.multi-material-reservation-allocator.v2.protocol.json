@@ -28,6 +28,14 @@
       "description": "written last after every input stages"
     },
     {
+      "cells": "S15",
+      "start": 15,
+      "end": 15,
+      "name": "CompletedEpoch",
+      "role": "epoch",
+      "description": "the epoch the last completed allocation committed; on completion, written before the status leaves 1, and the Runtime mirrors it once the status reads 2"
+    },
+    {
       "cells": "S16",
       "start": 16,
       "end": 16,
@@ -174,12 +182,14 @@
         },
         {
           "address": 15,
-          "name": "S15",
-          "value_type": "number",
-          "semantic_source": "unresolved",
+          "name": "CompletedEpoch",
+          "value_type": "enum",
+          "semantic_source": "protocol-layout",
           "access": [
             "self-write"
-          ]
+          ],
+          "role": "epoch",
+          "description": "the epoch the last completed allocation committed; on completion, written before the status leaves 1, and the Runtime mirrors it once the status reads 2"
         },
         {
           "address": 16,

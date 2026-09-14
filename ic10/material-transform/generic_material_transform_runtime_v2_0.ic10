@@ -58,10 +58,6 @@ get r0 d3 16
 bne r0 r15 Loop
 get r0 d3 22
 bltz r0 Fault
-bne r0 1 Loop
-get r0 d3 14
-blez r0 Fault
-poke 22 r0
 poke 19 2
 poke 20 3
 j Loop
@@ -72,6 +68,9 @@ bne r0 r15 Fault
 get r0 d3 22
 bltz r0 Fault
 bne r0 2 Loop
+get r0 d3 15
+blez r0 Fault
+poke 22 r0
 get r0 d4 36
 poke 11 r0
 get r0 d4 12

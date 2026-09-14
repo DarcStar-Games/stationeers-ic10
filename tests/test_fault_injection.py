@@ -197,10 +197,12 @@ ck(xf.props.get('Setting')==0 and xf.props.get('On')==0,'transformer actuated af
 # 13. Transform Runtime: a reflash after every instruction from the request to
 # completion (issue #165). The furnace keeps its Activate through the outage and
 # produces RATE per tick while on; the Allocator stub commits the epoch the tick
-# after the post and reports every input delivered DELIVERY ticks later, longer
-# than the outage so a cut in WaitAlloc still finds the committed state.
+# after the post and, DELIVERY ticks later, moves the epoch from S14 to S15 and
+# reports every input delivered, the way Allocator ABI2 does. DELIVERY is shorter
+# than the outage, so a cut between the post and the Runtime's own commit
+# observation resumes to an Allocator already at 2 with S14 zeroed (issue #204).
 rsrc=(R/'ic10/material-transform/generic_material_transform_runtime_v2_0.ic10').read_text()
-TOKEN=3;EPOCH=5;BATCH=2;PER_BATCH=3;Q=BATCH*PER_BATCH;RATE=1;OUTAGE=3;DELIVERY=6;STOCK=50
+TOKEN=3;EPOCH=5;BATCH=2;PER_BATCH=3;Q=BATCH*PER_BATCH;RATE=1;OUTAGE=3;DELIVERY=2;STOCK=50
 def rt_world():
  return {'d0':Device(700,props={'ReferenceId':700,'Error':0,'Activate':0}),
   'd1':Device(701,stack={8:1,17:PER_BATCH,19:EPOCH},props={'ReferenceId':701}),
@@ -218,7 +220,8 @@ def rt_advance(s):
  if alloc.stack.get(21)==TOKEN and alloc.stack.get(16)!=TOKEN: alloc.stack.update({16:TOKEN,14:EPOCH,22:1});s['age']=0
  elif alloc.stack.get(22)==1:
   s['age']+=1
-  if s['age']>=DELIVERY: alloc.stack[22]=2
+  if s['age']>=DELIVERY: alloc.stack.update({14:0,15:EPOCH,22:4})  # StartClean: the epoch leaves S14 for S15
+ elif alloc.stack.get(22)==4: alloc.stack[22]=2
  if proc.props.get('Activate')==1:
   out.stack[36]+=RATE;out.stack[12]+=1;s['produced']+=RATE
   if s['error_after'] is not None and s['produced']>=s['error_after']: proc.props['Error']=1
@@ -252,7 +255,7 @@ def rt_walk(src,error_after=None):
    if rt_settled(s): break
   for _ in range(5): vm.run(1);rt_advance(s)  # the published status must outlive the idle ticks
   snapshot=vm.stack.get(11)
-  records.append({'cut':cut,'after':'START' if cut==0 else names[cut-1],'status':vm.stack.get(20),
+  records.append({'cut':cut,'after':'START' if cut==0 else names[cut-1],'status':vm.stack.get(20),'state':vm.stack.get(19),
    'produced':s['produced'],'activate':proc.props.get('Activate'),'off':off,'snapshot':snapshot,
    'growth':None if snapshot is None else s['screws']['d4'].stack[36]-snapshot})
  inject_every_boundary(rt_initial(src,error_after),[Step(n,rt_step) for n in names],rt_recover,check)
@@ -305,9 +308,18 @@ ck(swapped!=rsrc,'Transform Runtime activation sequence changed; update the cont
 snames,sbase,srecords=rt_walk(swapped)
 stranded={r['cut']:(r['off'],r['status']) for r in srecords if r['off']}
 ck(stranded=={rt_cut(snames,'poke 19 3'):(512,-1),rt_cut(snames,'poke 13 0'):(512,-1)},f'swapped activation order did not strand exactly the two window cuts: {stranded}')
+# Control for issue #204: a WaitAlloc that must see the Allocator's S22 at exactly 1 strands every cut from
+# the request post up to its own state publish, because the outage spans the committed window and the
+# Allocator reads 2 by the time the Runtime looks. The echo alone is the commit the Runtime needs.
+witness=rsrc.replace('bltz r0 Fault\npoke 19 2\n','bltz r0 Fault\nbne r0 1 Loop\npoke 19 2\n')
+ck(witness!=rsrc,'Transform Runtime WaitAlloc changed; update the control')
+wnames,wbase,wrecords=rt_walk(witness)
+stranded={r['cut']:(r['state'],r['status']) for r in wrecords if r['status'] not in (1,-1)}
+expected={c:(1,2) for c in range(rt_cut(wnames,'put d3 21 r15'),rt_cut(wnames,'bne r0 1 Loop')+1)}
+ck(stranded==expected,f'a WaitAlloc that waits for S22 == 1 did not strand exactly the cuts from the post to its state publish: {sorted(stranded)} vs {sorted(expected)}')
 
 print('Broad interruption/fault-injection campaign: PASS')
 print(f' - {len(mcuts)} catalog-migration cuts + {len(pcuts)} power-replacement cuts')
 print(f' - {odd_cuts} real IC10 Power Plan Store interrupted-COMMIT cuts recover fail-closed')
-print(f' - {len(rrecords)} Transform Runtime instruction-boundary cuts complete on growth past a post-commit snapshot; over-run at most the outage production, exactly that inside the activation window; {len(frecords)} faulting cuts keep their fault published')
+print(f' - {len(rrecords)} Transform Runtime instruction-boundary cuts complete on growth past a post-commit snapshot with the Allocator delivering inside the outage; over-run at most the outage production, exactly that inside the activation window; {len(frecords)} faulting cuts keep their fault published; {len(stranded)} cuts strand a WaitAlloc that must witness the commit')
 print(f' - {checks} invariant assertions across directory, processor, ITEM/LArRE, dependency, Gateway, POWER, Job lifecycle, and Transform Runtime boundaries')
