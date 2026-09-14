@@ -116,6 +116,12 @@ BOOLEAN_RESULTS = {
     "sap", "sapz", "sdns", "sdse", "seq", "seqz", "sge", "sgez", "sgt", "sgtz",
     "sle", "slez", "slt", "sltz", "sna", "snan", "snanz", "snaz", "sne", "snez",
 }
+# Instructions whose result is what a cell, a device, or the stack holds rather
+# than anything computed from their operands: a load through a derived address
+# reads data, and the data is not the pass number.
+LOADS = {
+    "get", "getd", "l", "lb", "lbn", "lbns", "lbs", "ld", "lr", "ls", "peek", "pop", "rand", "rmap",
+}
 # Operand pairs one arithmetic step may enumerate. Each operand is already
 # capped at `STACK_CELLS` values, so this only bounds the work of combining
 # them; a whole-stack window built from a bank base and a record counter is the
@@ -250,6 +256,7 @@ class ValueBounds:
         self._carried: dict[int, dict[str, list[tuple[int, int]]]] = {}
         self._pass_nodes: dict[int, set[int]] = {}
         self._span: dict[int, set[int]] = {}
+        self._derived: dict[int, dict[int, set[str]]] = {}
         self._reaching: dict[tuple[str, frozenset[int]], dict[int, frozenset[int | None]]] = {}
 
     def sites(self, index: int) -> dict[str, set[int]]:
@@ -655,11 +662,16 @@ class ValueBounds:
         A match that leaves mid-scan can fire on any pass up to the trip count;
         the loop's own test fires on the one pass `exit_pass` names, and where
         that is not a single number the exit witnesses nothing and takes the
-        closure with it. So does any other exit that tests a register the loop
-        carries: `bge r8 64 Overflow` on some ways round the scan fires only on
-        the pass its own comparison holds, which is not every pass. A register
-        two loops advance, or one advanced by a step some pass skips, is not
-        counted from out here at all.
+        closure with it. Any other exit that tests the register itself fires
+        only on the passes its comparison holds, so its values are cut to what
+        the compared side permits: `bge r7 40 Out` leaves `S40` and up, an
+        equality against a literal leaves that one value, and a comparison
+        against data nothing bounds leaves every pass, since the data can take
+        any value. An exit that tests a different register the pass derives
+        from a carried one -- `mul r0 r7 2` then `bge r0 80 Out` -- fires on
+        passes this does not follow, so it witnesses nothing and takes the
+        closure with it. A register two loops advance, or one advanced by a
+        step some pass skips, is not counted from out here at all.
 
         The walk from an exit to the reader stops at the header and at any
         other write to the register, bar the advances of the reader's own loops:
@@ -692,7 +704,6 @@ class ValueBounds:
             if node != index and node not in transparent
             and entry["row"] and writes_register(entry["row"], token)
         }
-        carried = self.region_carried(header)
         values: set[int] = set()
         whole = entering_whole and counted
         for state, outgoing in self.states.items():
@@ -704,20 +715,118 @@ class ValueBounds:
                 prefix = self.standing_before(header, state[0], updates)
                 if prefix is None:
                     return OPEN
-                row = self.program[state[0]]["row"]
+                left = {seed + prefix + (ran - 1) * stride for seed in entering for ran in range(1, trips + 1)}
                 if any(test[0] == state[0] for test in self.counting_tests(header)):
                     fired = self.exit_pass(header, state[0], target[0], depth, seen)
                     if fired is None:
                         whole = False
                         continue
-                    passes: Iterable[int] = (fired,)
-                elif any(operand in carried for operand in row[1:-1]):
-                    whole = False
-                    continue
+                    left = {seed + prefix + (fired - 1) * stride for seed in entering}
                 else:
-                    passes = range(1, trips + 1)
-                values |= {seed + prefix + (ran - 1) * stride for seed in entering for ran in passes}
+                    cut = self.exit_constraint(header, state[0], target[0], token, depth, seen)
+                    if cut is None:
+                        whole = False
+                        continue
+                    low, high, pinned, excluded, trusted = cut
+                    left = {
+                        value for value in left - excluded
+                        if (low is None or value >= low) and (high is None or value <= high)
+                        and (pinned is None or value in pinned)
+                    }
+                    whole = whole and trusted
+                values |= left
         return (values, whole) if values else OPEN
+
+    def derived_in_pass(self, header: int) -> dict[int, set[str]]:
+        """At each node of the pass, the registers holding something computed from a carried one.
+
+        A register the loop carries is derived everywhere in the pass. A `move`
+        or arithmetic from a derived register derives its destination; a load
+        does not, however derived its address -- `get r0 db r7` reads data, and
+        the data is not the pass number. Any other write ends the derivation.
+        The answer is a forward flow over the pass, joined at every node, so a
+        register derived on one way round stays derived where the ways meet.
+        """
+        if header in self._derived:
+            return self._derived[header]
+        pass_nodes = self.pass_nodes(header)
+        carried = set(self.region_carried(header))
+        predecessors: dict[int, set[int]] = {node: set() for node in pass_nodes}
+        for state, outgoing in self.states.items():
+            if state[0] in pass_nodes:
+                for target in outgoing:
+                    if target[0] in pass_nodes:
+                        predecessors[target[0]].add(state[0])
+        entering: dict[int, set[str]] = {node: set(carried) for node in pass_nodes}
+        leaving: dict[int, set[str]] = {}
+        changed = True
+        while changed:
+            changed = False
+            for node in sorted(pass_nodes):
+                incoming = set(carried)
+                for previous in predecessors[node]:
+                    incoming |= leaving.get(previous, set())
+                row = self.program[node]["row"]
+                outgoing = set(incoming)
+                if row and len(row) > 1 and writes_register(row, row[1]) and row[1] not in carried:
+                    outgoing.discard(row[1])
+                    if row[0] not in LOADS and any(operand in incoming for operand in row[2:]):
+                        outgoing.add(row[1])
+                if entering[node] != incoming or leaving.get(node) != outgoing:
+                    entering[node], leaving[node] = incoming, outgoing
+                    changed = True
+        self._derived[header] = entering
+        return entering
+
+    def exit_constraint(self, header: int, index: int, leaving: int, token: str, depth: int, seen):
+        """What the exit at `index`, taken along `leaving`, permits `token` to hold as it fires.
+
+        `(low, high, pinned, excluded, trusted)` for an exit whose passes this
+        can follow: one that tests nothing the pass derives, and so fires on any
+        pass, or one that tests `token` itself, whose comparison cuts the values
+        it fires on -- against a literal exactly, against a bounded register to
+        what that register permits, and against data nothing bounds not at all.
+        `None` for an exit that tests some other register the pass derives from
+        a carried one, whose passes this does not follow.
+        """
+        row = self.program[index]["row"]
+        derived = self.derived_in_pass(header).get(index, set())
+        involved = [operand for operand in row[1:-1] if operand in derived]
+        if not involved:
+            return (None, None, None, set(), True)
+        if involved != [token] or row[1] != token:
+            return None
+        table = TAKEN if leaving == self.labels.get(row[-1]) else FALLTHROUGH
+        compared = self.comparison(index)
+        if compared is not None:
+            operator, _register, against, _target = compared
+            other_low, other_high, trusted = self.interval_of(
+                index, against, self.region_sites(header), depth + 1, seen
+            )
+            low_delta, high_delta = table[operator]
+            low = None if low_delta is None or other_low is None else other_low + low_delta
+            high = None if high_delta is None or other_high is None else other_high + high_delta
+            return (low, high, None, set(), trusted or (low is None and high is None))
+        equal = self.equality(index)
+        if equal is not None:
+            _register, value, _target, equal_when_taken = equal
+            if (table is TAKEN) == equal_when_taken:
+                return (None, None, {value}, set(), True)
+            return (None, None, None, {value}, True)
+        operator = EQUALITY_AGAINST_ZERO.get(row[0], row[0])
+        if operator in EQUAL_WHEN_TAKEN and len(row) >= 4:
+            # An equality against a register: the equal edge fires only where
+            # the other side can be, the unequal edge everywhere but a single
+            # value the other side is pinned to.
+            other_low, other_high, trusted = self.interval_of(
+                index, row[2], self.region_sites(header), depth + 1, seen
+            )
+            if (table is TAKEN) == EQUAL_WHEN_TAKEN[operator]:
+                return (other_low, other_high, None, set(), trusted or (other_low is None and other_high is None))
+            if other_low is not None and other_low == other_high:
+                return (None, None, None, {other_low}, trusted)
+            return (None, None, None, set(), True)
+        return None
 
     def region_carried(self, header: int) -> dict[str, list[tuple[int, int]]]:
         if header not in self._carried:

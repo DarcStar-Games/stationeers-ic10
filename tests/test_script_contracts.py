@@ -930,10 +930,10 @@ skipped_exit, _ = analyze_own_stack(skipped_exit_source, skipped_exit_rows, skip
 ck(skipped_exit["dynamic_read_range_source"] == "conservative-full-stack",
    "a register advanced by a step some pass skips was counted from outside its loop")
 
-# An exit that tests a register the loop carries fires only on the pass its
-# own comparison holds, so it is not one that can fire on any pass: reading
-# `bge r7 40 Print` as an early exit would put S32..S64 behind the `Print` read
-# and call it whole. The counted exit still leaves its one value there.
+# An exit that tests the carried register fires only on the passes its own
+# comparison holds, so its values are cut to what the compared side permits:
+# `bge r7 40 Print` leaves S40..S64 behind the `Print` read, never S32..S38,
+# and with the counted exit's S66 the read is whole.
 carried_exit_source = counted_exit_source.replace(
     "add r7 r7 2\n", "bnez r0 Step\nbge r7 40 Print\nStep:\nadd r7 r7 2\n",
 )
@@ -944,9 +944,40 @@ carried_exit, _ = analyze_own_stack(
 )
 ck([sorted(item[2]) for item in dynamic_access_cells(
        carried_exit_source, carried_exit_ports, carried_exit_aliases)] ==
+   [list(range(32, 65, 2)), list(range(40, 67, 2))] and
+   carried_exit["dynamic_read_range_source"] == "source-derived",
+   "an exit testing the carried register was not cut to the passes its comparison holds on")
+
+# Compared against data nothing bounds, the same register can leave on any
+# pass -- the data can equal any of its values -- so the exit counts them all.
+data_exit_source = counted_exit_source.replace(
+    "get r2 db 8\n", "get r2 db 8\nget r3 db 9\n",
+).replace("add r7 r7 2\n", "beq r7 r3 Print\nadd r7 r7 2\n")
+data_exit_rows = parse_rows(data_exit_source)
+data_exit_ports, data_exit_aliases = collect_aliases(data_exit_rows)
+data_exit, _ = analyze_own_stack(data_exit_source, data_exit_rows, data_exit_aliases, [], {})
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       data_exit_source, data_exit_ports, data_exit_aliases)] ==
+   [list(range(32, 65, 2)), list(range(32, 67, 2))] and
+   data_exit["dynamic_read_range_source"] == "source-derived",
+   "an equality of the carried register against unbounded data was not read as firing on any pass")
+
+# An exit that tests a register the pass computes from the carried one fires
+# on passes this does not follow, so it witnesses nothing: reading it as an
+# early exit would put S32..S64 behind the `Print` read and call it whole.
+derived_exit_source = counted_exit_source.replace(
+    "add r7 r7 2\n", "bnez r0 Step\nmul r1 r7 2\nbge r1 100 Print\nStep:\nadd r7 r7 2\n",
+)
+derived_exit_rows = parse_rows(derived_exit_source)
+derived_exit_ports, derived_exit_aliases = collect_aliases(derived_exit_rows)
+derived_exit, _ = analyze_own_stack(
+    derived_exit_source, derived_exit_rows, derived_exit_aliases, [], {},
+)
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       derived_exit_source, derived_exit_ports, derived_exit_aliases)] ==
    [list(range(32, 65, 2)), [66]] and
-   carried_exit["dynamic_read_range_source"] == "conservative-full-stack",
-   "an exit testing the carried register was read as one that fires on any pass")
+   derived_exit["dynamic_read_range_source"] == "conservative-full-stack",
+   "an exit testing a register derived from the carried one was read as firing on any pass")
 
 # What the scan leaves behind may seed a second loop, and reach that loop's
 # access through the loop's own advance: the advance is transparent to the
