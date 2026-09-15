@@ -188,6 +188,8 @@ d1 -> Pressure Reservation Allocator ABI3
 
 The same service performs either direct or fallback sweeps depending on its request mode.
 
+The Builder holds one Allocator request at a time and finishes it before anything else: while a staging request is in flight its loop head dispatches straight to the wait, and the Grid Link Directory's generation is re-checked only once the Allocator has answered. Before issue #146 the generation check ran first, so a topology change mid-request failed the build and replied to the Plan Builder while a `COMMIT` was still outstanding at the Allocator, which then staged a lease the failed build never reported, held until the next build epoch reset the endpoint's ledger.
+
 Modes:
 
 ```text

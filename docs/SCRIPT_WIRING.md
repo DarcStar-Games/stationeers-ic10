@@ -313,10 +313,26 @@ reviewed answer for every mailbox whose writers overlap on a cell:
 - `serial` -- the writers are one call tree: a named root posts and waits at
   every hop, so no two of them are ever mid-request at once. The map proves
   the shape (each writer sits downstream of the root through declared mailbox
-  writes) and the review vouches for the blocking. A root that drives a peer
-  through a register-indexed port (the POWER Scheduler's `dr9`) reaches it
-  through a declared `d<n>` like any other, because the contract resolves the
-  register to its pins (see *Register-indexed ports* above).
+  writes), and `framework/request_blocking.py` proves the waiting: every
+  program on the tree from the root to a writer is walked from its entry, and
+  a post some path leaves unanswered when the program writes another peer's
+  request token or its own response token fails (issue #146). Which cells are
+  tokens comes from the protocol layouts behind the contracts. The walk
+  carries the program's registers and its private state cells
+  (`framework.register_seeding.PRIVATE_STATE_CELLS`), which is how a post
+  that arms `S20` and returns to the loop head is followed to the block the
+  head dispatches to on the next tick; a program whose dispatch the walk
+  cannot decide is reported, and a finding the review accepts needs a
+  `BLOCKING_EXEMPTIONS` entry in the validator with its reason, and the
+  validator lists every entry it used. The Driver Router carries one per
+  driver port: a `LIVE_CURRENT` mirror that re-dispatches on a token change
+  the walk cannot decide, so the Candidate Selector's group still rests on
+  review at that hop, as the entry says. A root that drives a peer through
+  a register-indexed port (the POWER Scheduler's `dr9`) reaches it through
+  a declared `d<n>` like any other, because the contract resolves the
+  register to its pins (see
+  *Register-indexed ports* above), and a wait on the same set of pins answers
+  a post on it.
 - `dedicated` -- the writers are independent loops, and each gets its own
   instance of the program. An instance brings every request mailbox it reaches
   downstream, or the sharing moves one hop, so each instance cites the
@@ -339,7 +355,13 @@ map. `validation/validators/validate_mailbox_arbitration.py` runs all of it;
 `tests/test_mailbox_arbitration.py` exercises the checks on a synthetic map and
 then shows the race on the production programs: one Claim View shared by the
 stock-target Future View and the Plan Builder strands one of them, and one per
-caller answers both. Thirty mailboxes carry an entry. The deployment
+caller answers both. It also runs the waiting proof on two programs beside
+copies with one line removed: the Dispatch Sweep without its `WaitFlow`
+dispatch asks the Sink Selector with a Flow Builder request in flight, and
+the Single-Hop Builder without its wait state replies to the Plan Builder
+with a Reservation Allocator `COMMIT` outstanding, which is what the shipped
+Builder did on a directory generation change before issue #146. Thirty
+mailboxes carry an entry. The deployment
 consequences are in `docs/STOCK_TARGET_INGRESS.md` (seven dedicated instances)
 and `docs/DEPENDENCY_PLANNING.md` (the Cancellation Guard's own Job Monitor).
 

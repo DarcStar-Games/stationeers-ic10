@@ -241,10 +241,11 @@ ck(len(written["ic10/x/c.ic10"]) == 512, "a program with no wiring entry has eve
 # --- the shape the issue was opened on, in the tree ----------------------------------
 BUILDER = (ROOT / "ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10").read_text()
 ck(fresh(BUILDER) == set(), f"the singlehop builder seeds every register it reads: {fresh(BUILDER)}")
-ck("move r13 0\nmove r14 1\n" in BUILDER, "the builder's New block no longer seeds r13 before arming the state")
-unseeded_builder = BUILDER.replace("move r13 0\nmove r14 1\n", "move r14 1\n", 1)
-ck(fresh(unseeded_builder) == {"r13"},
-   f"the builder without its allocation-token seed waits on whatever r13 held: {fresh(unseeded_builder)}")
+ck("move r8 0\nmove r10 0\nmove r11 0\nmove r14 1\n" in BUILDER,
+   "the builder's New block no longer seeds its link cursor before arming the state")
+unseeded_builder = BUILDER.replace("move r8 0\nmove r10 0\n", "move r10 0\n", 1)
+ck(fresh(unseeded_builder) == {"r8"},
+   f"the builder without its link-cursor seed scans from whatever r8 held: {fresh(unseeded_builder)}")
 ENUMERATOR = (ROOT / "ic10/pressure-grid/pressure_grid_path_enumerator_v2_0.ic10").read_text()
 ck(reads(ENUMERATOR, {11}) == {(SAME_IMAGE, f"r{n}") for n in (4, 5, 6, 7, 8)},
    f"the enumerator's cursors carry only over its same-image edge: {reads(ENUMERATOR, {11})}")

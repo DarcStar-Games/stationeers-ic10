@@ -129,6 +129,18 @@ PRIVATE_STATE_CELLS: dict[str, dict[int, str]] = {
     "ic10/manufacturing-ingress/stock_target_future_view_v1_0.ic10":
         {25: "postings under the request in flight; 0 while idle"},
     "ic10/dependency-planning/dependency_ancestry_guard_v1_0.ic10": {18: "postings under the request in flight; 0 while idle"},
+    # Roots and hops of serialized call trees: the state cell the loop head dispatches
+    # on is what routes the tick after a post back to the block that waits on it, so
+    # the blocking proof reads it (issue #146).
+    "ic10/power-grid/power_dispatch_cycle_v1_0.ic10": {20: "step of the dispatch transaction; 0 at boot"},
+    "ic10/power-grid/power_dispatch_sweep_v1_0.ic10": {20: "step of the sweep request; 0 at boot"},
+    "ic10/power-jobs/power_job_scheduler_v1_0.ic10": {20: "step of the job in hand; 0 at boot"},
+    "ic10/manufacturing/manufacturing_scheduler_v1_0.ic10":
+        {20: "step of the job in hand; cleared to 0 on a fresh housing, kept over the reflash guard"},
+    "ic10/manufacturing/print_job_driver_v2_0.ic10":
+        {20: "phase of the print job; written before each hop, not seeded at boot"},
+    "ic10/manufacturing/transform_job_driver_v2_0.ic10":
+        {20: "phase of the transform job; written before each hop, not seeded at boot"},
 }
 
 # Identities two or more programs publish, with the state every program behind
