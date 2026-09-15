@@ -323,10 +323,11 @@ reviewed answer for every mailbox whose writers overlap on a cell:
   that arms `S20` and returns to the loop head is followed to the block the
   head dispatches to on the next tick; a program whose dispatch the walk
   cannot decide is reported, and a finding the review accepts needs a
-  `BLOCKING_EXEMPTIONS` entry in the validator with its reason. The Driver
-  Router carries the only two: a `LIVE_CURRENT` mirror that re-dispatches on
-  a token change the walk cannot decide, fed by a Gate the walk does prove
-  waits. A root that drives a peer through a register-indexed port (the
+  `BLOCKING_EXEMPTIONS` entry in the validator with its reason, and the
+  validator lists every entry it used. The Driver Router carries one per
+  driver port: a `LIVE_CURRENT` mirror that re-dispatches on a token change
+  the walk cannot decide, so the Candidate Selector's group still rests on
+  review at that hop, as the entry says. A root that drives a peer through a register-indexed port (the
   POWER Scheduler's `dr9`) reaches it through a declared `d<n>` like any
   other, because the contract resolves the register to its pins (see
   *Register-indexed ports* above), and a wait on the same set of pins answers

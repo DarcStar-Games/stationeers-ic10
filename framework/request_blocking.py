@@ -36,12 +36,20 @@ reached while the old one is pending. A state cell prunes only when the program
 declares it private (`PRIVATE_STATE_CELLS`); a program whose dispatch the walk
 cannot decide is reported, and the finding names the post and what it reached.
 
+The wait is the match, not the read. A post is answered on the edge of the
+`beq` or `bne` that compares the register the response token was read into
+where equality holds; on the other edge the post stays pending, so a caller
+whose mismatch edge went back to accepting requests and posted elsewhere is
+reported. A read whose register is overwritten before any compare leaves the
+post pending too.
+
 Two things this does not read. A second post to the *same* peer before its
 response is not reported: it replaces the program's own request and strands no
 sibling, and one caller in the tree re-posts its token every tick while it
-waits. And a read of the response token counts as the wait whether or not the
-program compares it; the async validator pins the compare for the services it
-covers.
+waits. And a post made through `putd`, to a mailbox named by ReferenceId, is
+not a post here: the walk knows the token cells of what a declared pin faces,
+and nothing about a device the program names at run time. No program on a
+serialized tree posts that way.
 """
 from __future__ import annotations
 
@@ -54,6 +62,7 @@ from framework.script_contracts.control_flow import CallState
 from framework.script_contracts.parsing import RegisterPorts, collect_aliases, parse_rows, resolve_ports
 
 _PENDING = "post:"
+_READ = "read:"
 
 
 @dataclass(frozen=True, slots=True)
@@ -150,12 +159,18 @@ class RequestBlocking:
         port_aliases, self.integers = collect_aliases(parse_rows(source))
         self.ports = ports
         self.own_response = own_response
-        # Per row: ("post", pins) | ("wait", pins) | ("reply", ()) | ("halt", ()).
+        # Per row: ("post", pins) | ("reply", ()) | ("halt", ()); waits are kept
+        # apart with the register the response token is read into.
         self.actions: dict[int, tuple[str, frozenset[str]]] = {}
+        self.waits: dict[int, tuple[frozenset[str], str]] = {}
         for index, entry in enumerate(self.paths.program):
             row = entry["row"]
             action = self._classify(row, port_aliases, register_ports)
-            if action is not None:
+            if action is None:
+                continue
+            if action[0] == "wait":
+                self.waits[index] = (action[1], row[1])
+            else:
                 self.actions[index] = action
         self._found: set[tuple[int, int, str]] = set()
 
@@ -187,33 +202,58 @@ class RequestBlocking:
 
     @staticmethod
     def _key(pins: frozenset[str]) -> str:
-        return _PENDING + "/".join(sorted(pins))
+        return "/".join(sorted(pins))
 
-    def _mark(self, state: CallState, _taken: bool | None, env: Environment) -> Environment:
-        """What leaving `state` does to the posts a path holds unanswered."""
-        action = self.actions.get(state[0])
+    @staticmethod
+    def _pins(key: str) -> set[str]:
+        return set(key.split(":", 1)[1].split("/"))
+
+    def _mark(self, state: CallState, taken: bool | None, env: Environment) -> Environment:
+        """What leaving `state` does to the posts a path holds unanswered and the replies it has read."""
+        index = state[0]
+        row = self.paths.program[index]["row"]
+        if not row:
+            return env
+        env = dict(env)
+        reads = {key: register for key, register in env.items() if key.startswith(_READ)}
+        # A compare on a register holding a response token answers the post on the
+        # edge where equality holds and settles the read either way.
+        if row[0] in {"beq", "bne"} and len(row) == 4 and taken is not None:
+            equal = taken if row[0] == "beq" else not taken
+            for key, register in reads.items():
+                if register in row[1:3]:
+                    del env[key]
+                    if equal:
+                        self._answer(env, self._pins(key))
+        # A register written before its compare no longer holds the token it read.
+        for written in self.paths.writes(row, env):
+            for key, register in reads.items():
+                if register == written:
+                    env.pop(key, None)
+        wait = self.waits.get(index)
+        if wait is not None:
+            pins, register = wait
+            env[_READ + self._key(pins)] = register
+            return env
+        action = self.actions.get(index)
         if action is None:
             return env
         kind, pins = action
-        env = dict(env)
         pending = {key: posts for key, posts in env.items() if key.startswith(_PENDING)}
-        if kind == "wait":
-            answered = self._key(pins)
-            for key in pending:
-                if key == answered or set(key[len(_PENDING):].split("/")) <= pins:
-                    del env[key]
-            return env
         if kind == "post":
-            key = self._key(pins)
+            key = _PENDING + self._key(pins)
             for other, posts in pending.items():
                 if other != key:
-                    self._found.update((post, state[0], "posts to " + "/".join(sorted(pins))) for post in posts)
-            env[key] = env.get(key, frozenset()) | {state[0]}
-            return env
-        if kind == "reply":
+                    self._found.update((post, index, "posts to " + self._key(pins)) for post in posts)
+            env[key] = env.get(key, frozenset()) | {index}
+        elif kind == "reply":
             for posts in pending.values():
-                self._found.update((post, state[0], "replies to its own caller") for post in posts)
+                self._found.update((post, index, "replies to its own caller") for post in posts)
         return env
+
+    def _answer(self, env: Environment, pins: set[str]) -> None:
+        for key in [key for key in env if key.startswith(_PENDING) and self._pins(key) <= pins]:
+            del env[key]
 
     @staticmethod
     def _partition(env: Environment) -> frozenset[str]:

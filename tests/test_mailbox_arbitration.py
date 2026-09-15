@@ -205,7 +205,8 @@ def unblocked(source, ports=PEERS, private=frozenset(), register_ports=None):
 WAITS = ACCEPT + ("put d0 12 r15\nput d0 10 r15\nWaitA:\nyield\nget r0 d0 11\nbne r0 r15 WaitA\n"
                   "put d1 10 r15\nWaitB:\nyield\nget r0 d1 11\nbne r0 r15 WaitB\npoke 9 r15\nj Loop\n")
 ck(unblocked(WAITS) == [], f"a caller that waits on each post before the next passed nothing: {unblocked(WAITS)}")
-PARALLEL = ACCEPT + "put d0 10 r15\nput d1 10 r15\nWaitA:\nyield\nget r0 d0 11\nbne r0 r15 WaitA\nget r0 d1 11\npoke 9 r15\nj Loop\n"
+PARALLEL = ACCEPT + ("put d0 10 r15\nput d1 10 r15\nWaitA:\nyield\nget r0 d0 11\nbne r0 r15 WaitA\n"
+                     "WaitB:\nyield\nget r0 d1 11\nbne r0 r15 WaitB\npoke 9 r15\nj Loop\n")
 ck(unblocked(PARALLEL) == [("d0", 6, "posts to d1", 7)],
    f"posting to two peers before waiting on either was not reported once, at the second post: {unblocked(PARALLEL)}")
 EARLY_REPLY = ACCEPT + "put d0 10 r15\npoke 9 r15\nWaitA:\nyield\nget r0 d0 11\nbne r0 r15 WaitA\nj Loop\n"
@@ -230,6 +231,19 @@ ck(unblocked(STATE_MACHINE) == [("d0", 10, "replies to its own caller", 24), ("d
 NEXT_REQUEST = ACCEPT + "get r0 db 12\nbeqz r0 First\nput d1 10 r15\nj Loop\nFirst:\nput d0 10 r15\nj Loop\n"
 ck(unblocked(NEXT_REQUEST) == [("d0", 11, "posts to d1", 8), ("d1", 8, "posts to d0", 11)],
    f"a caller that never waits and serves the next request elsewhere passed: {unblocked(NEXT_REQUEST)}")
+# The wait is the compare's equality edge, not the read: a caller whose mismatch
+# edge posts elsewhere is reported, one that replies on the match is not, and a
+# token read into a register that is overwritten before any compare leaves the
+# post pending.
+MISMATCH = ACCEPT + ("put d0 10 r15\nget r0 d0 11\nbne r0 r15 Other\npoke 9 r15\nj Loop\nOther:\nput d1 10 r15\n"
+                     "WaitB:\nyield\nget r0 d1 11\nbne r0 r15 WaitB\nj Loop\n")
+ck(unblocked(MISMATCH) == [("d0", 6, "posts to d1", 12)],
+   f"a caller posting elsewhere on its mismatch edge was not reported, or its match edge was: {unblocked(MISMATCH)}")
+MATCHED = ACCEPT + "put d0 10 r15\nWaitA:\nyield\nget r0 d0 11\nbeq r0 r15 Done\nj WaitA\nDone:\npoke 9 r15\nj Loop\n"
+ck(unblocked(MATCHED) == [], f"a wait taken through beq was not read as the match: {unblocked(MATCHED)}")
+CLOBBERED = ACCEPT + "put d0 10 r15\nget r0 d0 11\nmove r0 1\nbne r0 r15 Loop\npoke 9 r15\nj Loop\n"
+ck(unblocked(CLOBBERED) == [("d0", 6, "replies to its own caller", 10)],
+   f"a token read that was overwritten before its compare counted as the wait: {unblocked(CLOBBERED)}")
 # A second post to the same peer replaces the program's own request and strands
 # nobody; the token is not this check's business.
 REPOST = ACCEPT + "put d0 10 r15\nput d0 10 r15\nWaitA:\nyield\nget r0 d0 11\nbne r0 r15 WaitA\npoke 9 r15\nj Loop\n"

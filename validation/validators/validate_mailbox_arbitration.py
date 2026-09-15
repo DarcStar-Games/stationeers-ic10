@@ -37,12 +37,16 @@ ROOT = _PROJECT_ROOT
 BLOCKING_EXEMPTIONS: dict[tuple[str, str], str] = {
     ("ic10/manufacturing/manufacturing_driver_router_v2_0.ic10", "d0"):
         "LIVE_CURRENT mirror: a new token from the Gate re-dispatches to the selected driver at once,"
-        " and the walk cannot decide the token-change branch; the Gate posts a token only after"
-        " reading the Router's reply to the last one, which the walk proves",
+        " and the walk cannot decide the token-change branch. The Gate is proven to post a token only"
+        " after reading the Router's reply, but that reply follows the driver's accept echo, not its"
+        " release of the Candidate Selector; what keeps the other driver off the Selector meanwhile is"
+        " the Scheduler's handling of the mirrored job state, which stays on review",
     ("ic10/manufacturing/manufacturing_driver_router_v2_0.ic10", "d1"):
         "LIVE_CURRENT mirror: a new token from the Gate re-dispatches to the selected driver at once,"
-        " and the walk cannot decide the token-change branch; the Gate posts a token only after"
-        " reading the Router's reply to the last one, which the walk proves",
+        " and the walk cannot decide the token-change branch. The Gate is proven to post a token only"
+        " after reading the Router's reply, but that reply follows the driver's accept echo, not its"
+        " release of the Candidate Selector; what keeps the other driver off the Selector meanwhile is"
+        " the Scheduler's handling of the mirrored job state, which stays on review",
 }
 
 try:
@@ -68,19 +72,24 @@ classes = {source: resolve_script_metadata(source, manifest, ROOT)["deployment_c
            for source in wiring["ports"]}
 walked: dict[str, int] = {}
 exempted: dict[tuple[str, str], int] = {}
+memo: dict[str, list[str]] = {}
 
 
 def blocking(path: str) -> list[str]:
-    """The posts `path` leaves unanswered before posting elsewhere or replying, one line each."""
+    """The posts `path` leaves unanswered before posting elsewhere or replying, one line each.
+
+    A program on several trees is walked once; the exempt counts count it once.
+    """
+    if path in memo:
+        return memo[path]
+    memo[path] = out = []
     contract = by_source[path]
     private = frozenset(PRIVATE_STATE_CELLS.get(path, {})) - peer_written[path]
     pins = {token: tuple(item["pins"]) for token, item in contract.get("register_ports", {}).items()}
     check = RequestBlocking((ROOT / path).read_text(), port_tokens(path, contract, wiring, by_source),
                             own_response_cells(contract), private, pins)
-    findings = check.findings()
     walked[path] = check.posts
-    out: list[str] = []
-    for item in findings:
+    for item in check.findings():
         if (path, item.port) in BLOCKING_EXEMPTIONS:
             exempted[(path, item.port)] = exempted.get((path, item.port), 0) + 1
             continue
