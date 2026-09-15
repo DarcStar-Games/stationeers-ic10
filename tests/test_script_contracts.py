@@ -4,6 +4,7 @@ from pathlib import Path as _ProjectPath
 import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
+from framework.ic10_harness import without_lines
 from framework.ic10_source import game_hash
 
 from copy import deepcopy
@@ -511,7 +512,7 @@ boot_clear_source = (
 recovery_clear_source = boot_clear_source.replace(
     "poke r5 7\n", "poke r5 7\nbnez r6 Skip\nclr db\nSkip:\n"
 )
-wrapped_clear_source = boot_clear_source.replace("Done:\nj Done\n", "")
+wrapped_clear_source = without_lines(boot_clear_source, "Done:\nj Done")
 unmodeled_clear_source = boot_clear_source.replace("Init:\n", "Init:\nj ra\n")
 
 
@@ -1195,7 +1196,7 @@ ck([sorted(item[2]) for item in dynamic_access_cells(
 # registers survive a reflash, so nothing names what is in one. The path that
 # takes the branch writes nothing, so S32..S35 is what the other path reaches
 # and not the whole of what the access does.
-reflash_source = two_seed_source.replace("move r1 96\n", "")
+reflash_source = without_lines(two_seed_source, "move r1 96")
 reflash_rows = parse_rows(reflash_source)
 reflash_ports, reflash_aliases = collect_aliases(reflash_rows)
 reflash, _ = analyze_own_stack(reflash_source, reflash_rows, reflash_aliases, [], {})

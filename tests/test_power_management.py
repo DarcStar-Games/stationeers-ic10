@@ -4,7 +4,7 @@ import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from pathlib import Path
-from framework.ic10_harness import IC10,Device
+from framework.ic10_harness import IC10,Device,without_lines
 from framework.job_abi import JobIntent,JobType
 import sys
 R=_PROJECT_ROOT;fails=[]
@@ -163,11 +163,6 @@ ck(pvv.stack.get(8)==-1 and pvv.stack.get(13)==2,'policy verify accepted a non-R
 # carry the walk past S95 into the staging area at S128, where the next plan's first
 # flow sits uncommitted. Each scenario runs the production program and the same
 # program with its guard removed, so the guard is shown to be what stops the walk.
-def without_guard(path,*lines):
- text=(R/path).read_text()
- for line in lines:
-  ck(line+'\n' in text,f'{path} lost its count guard `{line}`');text=text.replace(line+'\n','')
- return text
 def torn_plan(staged):
  stack={0:'HASH:PowerDispatchPlanStore.v1',27:2,28:5,29:13}
  stack.update({128+i:v for i,v in enumerate(staged)})
@@ -184,7 +179,7 @@ def transformer_after(source):
  vm=IC10(source,{'d0':pl,'d1':alloc,'x0':link,'x1':sr,'x2':kr,'x3':xf},self_ref=2390);vm.run(2)
  return xf.props.get('Setting'),xf.props.get('On')
 link_executor='ic10/power-grid/power_link_executor_v1_0.ic10'
-ck(transformer_after(without_guard(link_executor,'blt r10 0 Set','bgt r10 8 Set'))==(80,1),
+ck(transformer_after(without_lines((R/link_executor).read_text(),'blt r10 0 Set','bgt r10 8 Set'))==(80,1),
    'witness: the unguarded transformer executor did not actuate the staged flow')
 ck(transformer_after((R/link_executor).read_text())==(0,0),'transformer executor actuated a flow past the eight-record plan window')
 def load_after(source):
@@ -196,7 +191,7 @@ def load_after(source):
  vm=IC10(source,{'d0':pl,'d1':alloc,'x0':res,'x1':endpoint,'x2':load},self_ref=2391);vm.run(2)
  return load.props.get('On')
 load_executor='ic10/power-grid/power_load_executor_v1_0.ic10'
-ck(load_after(without_guard(load_executor,'blt r10 0 Set','bgt r10 8 Set'))==1,
+ck(load_after(without_lines((R/load_executor).read_text(),'blt r10 0 Set','bgt r10 8 Set'))==1,
    'witness: the unguarded load executor did not energize the staged flow')
 ck(load_after((R/load_executor).read_text())==0,'load executor energized a flow past the eight-record plan window')
 def committed(source):
@@ -210,7 +205,7 @@ def committed(source):
  vm.run(1);vm.stack.update({8:5,9:11,10:1});vm.run(2)
  return vm.stack.get(12),src_res.stack.get(14)
 committer='ic10/power-grid/power_reservation_committer_v1_0.ic10'
-ck(committed(without_guard(committer,'blt r6 0 Bad','bgt r6 8 Bad'))==(1,130),
+ck(committed(without_lines((R/committer).read_text(),'blt r6 0 Bad','bgt r6 8 Bad'))==(1,130),
    'witness: the unguarded committer did not reserve export for thirteen records')
 ck(committed((R/committer).read_text())==(-1,None),'committer reserved export from a window that holds eight records')
 # A sink's ReservedImport is the sum of SinkW over every committed flow into it, read from
@@ -236,7 +231,7 @@ def source_quote(source):
  vm.stack.update({11:0,12:1});vm.run(3)
  return vm.stack.get(14),vm.stack.get(16,0)
 source_selector='ic10/power-grid/power_source_selector_v1_0.ic10'
-ck(source_quote(without_guard(source_selector,'blt r12 0 Bad','bgt r12 8 Bad'))==(1,60),
+ck(source_quote(without_lines((R/source_selector).read_text(),'blt r12 0 Bad','bgt r12 8 Bad'))==(1,60),
    'witness: the unguarded source selector did not charge the phantom staged usage')
 ck(source_quote((R/source_selector).read_text())==(-1,0),'source selector walked staged usage past the eight-record staging window')
 # The Scheduler hands a selected job to Prepare or Finalize through register-indexed dr9,

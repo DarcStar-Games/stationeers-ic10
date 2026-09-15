@@ -307,6 +307,8 @@ Run these with pump actuation disabled or with a harmless test medium first:
 
 `framework/ic10_harness.py` is a small deterministic interpreter for the instruction subset required by transaction-critical tests. `tests/test_ic10_execution.py` executes actual IC10 for the generated Resource Profile Catalog + Pollutant View, Purity Guard, Pressure Transfer Grant Guard, Generic Resource adapters, the complete committed MaterialGrid batch path, and the Arc Furnace Transform Admission/Runtime. This complements, rather than replaces, the broader model tests.
 
+A test that proves a guard is what stops a failure runs the production program beside a copy with the guard's lines removed, and takes that copy through `without_lines` in `framework/ic10_harness.py`. The copy has to be a different program: a guard that moved or was reworded would otherwise leave the witness as the unchanged source, and the test would pass both ways. The helper therefore refuses a line the program does not hold whole, and one it holds twice, since that names no single guard (issue #153). `tests/test_ic10_execution.py` holds the helper's own cases.
+
 Additional hardening models verify directory overflow, telemetry generation coherence, Medium Profile generation-last publication, purity gating, Allocator ABI3 quote/commit behavior, topology-bound grants, and reservation-aware route ranking.
 
 

@@ -7,7 +7,7 @@ from pathlib import Path
 from dataclasses import dataclass
 import sys
 from framework.async_request import posting_token
-from framework.ic10_harness import IC10,Device,run_round_robin
+from framework.ic10_harness import IC10,Device,run_round_robin,without_lines
 R=_PROJECT_ROOT; fails=[]
 def ck(v,m):
  if not v:fails.append(m)
@@ -137,11 +137,6 @@ ck(sorted(notctl.stack)==[0],'Planner cleanup posted to a d1 that is not its Exi
 # publishes before folding legs into its fingerprints: a count of seven would
 # read S50 and S52, past the quote table the Selector's contract declares, and
 # fingerprint whatever sat there as a seventh leg.
-def without_guard(path,*lines):
- text=src(path)
- for line in lines:
-  ck(line+'\n' in text,f'{path} lost its count guard `{line}`');text=text.replace(line+'\n','')
- return text
 def preflight_status(source):
  requirement=IC10("Loop:\nyield\nget r15 db 19\nget r0 db 20\nbeq r15 r0 Loop\npoke 21 1\npoke 23 1\npoke 26 777\npoke 27 5\npoke 20 r15\nj Loop\n");requirement.run(1)
  selector=IC10('poke 0 HASH("ItemResourceReservationSelector.v1")\nLoop:\nyield\nget r15 db 15\nget r0 db 16\nbeq r15 r0 Loop\npoke 8 -2\npoke 9 3\npoke 10 7\npoke 16 r15\nj Loop\n');selector.run(1)
@@ -151,7 +146,7 @@ def preflight_status(source):
  vm.run(1);vm.stack.update({15:41,16:1,17:1,18:9});run_round_robin([vm,requirement,selector],40)
  return vm.stack.get(20)
 preflight='ic10/dependency-planning/job_inventory_preflight_v1_0.ic10'
-ck(preflight_status(without_guard(preflight,'blt r12 0 Bad','bgt r12 6 Bad'))==3,
+ck(preflight_status(without_lines(src(preflight),'blt r12 0 Bad','bgt r12 6 Bad'))==3,
    'witness: the unguarded Preflight did not fingerprint a seventh leg as a deficit quote')
 ck(preflight_status(src(preflight))==-1,'Preflight folded a leg past the six-leg quote table into its fingerprints')
 

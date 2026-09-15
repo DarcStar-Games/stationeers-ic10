@@ -20,6 +20,7 @@ import json
 import sys
 
 import framework.register_seeding as register_seeding
+from framework.ic10_harness import without_lines
 from framework.identity_coverage import declared_identities, unchecked_accesses
 from framework.register_seeding import PRIVATE_STATE_CELLS
 
@@ -37,11 +38,6 @@ def unchecked(source, identities=D0, private=frozenset(), pins=None):
     return {item.port for item in unchecked_accesses(source, identities, frozenset(private), pins)}
 
 
-def without(source, line):
-    ck(f"{line}\n" in source, f"witness line {line!r} is not in the source")
-    return source.replace(f"{line}\n", "", 1)
-
-
 def tree(path):
     """A tree program's source and what its contract declares it consumes."""
     contract = json.loads((ROOT / "contracts" / path[len("ic10/"):-len(".ic10")]).with_suffix(".contract.json").read_text())
@@ -50,7 +46,8 @@ def tree(path):
 
 
 # --- a state register armed after the check gates the accesses of later ticks ---------
-STATE_MACHINE = """move r14 0
+STATE_MACHINE = """Reset:
+move r14 0
 Loop:
 yield
 beqz r14 New
@@ -58,8 +55,7 @@ get r0 d0 11
 bne r0 r13 Loop
 get r1 d0 8
 poke 8 r1
-move r14 0
-j Loop
+j Reset
 New:
 get r13 db 14
 beqz r13 Loop
@@ -70,8 +66,8 @@ move r14 1
 j Loop
 """
 ck(unchecked(STATE_MACHINE) == set(), f"the wait state is reached only after New checked the pin: {unchecked(STATE_MACHINE)}")
-ck(unchecked(without(STATE_MACHINE, "move r14 0")) == {"d0"},
-   f"an unseeded state register dispatches the entry into the wait state unchecked: {unchecked(without(STATE_MACHINE, 'move r14 0'))}")
+ck(unchecked(without_lines(STATE_MACHINE, "move r14 0")) == {"d0"},
+   f"an unseeded state register dispatches the entry into the wait state unchecked: {unchecked(without_lines(STATE_MACHINE, 'move r14 0'))}")
 bypassed = STATE_MACHINE.replace("beqz r13 Loop\n", "beqz r13 Loop\nbgtz r13 Armed\n", 1).replace(
     "put d0 14 r13\n", "Armed:\nput d0 14 r13\n", 1)
 ck(unchecked(bypassed) == {"d0"}, f"a branch around the check reaches the write unchecked: {unchecked(bypassed)}")
@@ -156,8 +152,8 @@ j ra
 """
 D2 = {"d2": {(0, 1234)}}
 ck(unchecked(SUBROUTINE, D2) == set(), f"a guard returning through ra rejects as the check does: {unchecked(SUBROUTINE, D2)}")
-ck(unchecked(without(SUBROUTINE, "bne r0 1234 ra"), D2) == {"d2"},
-   f"without the check the subroutine acts on the pin: {unchecked(without(SUBROUTINE, 'bne r0 1234 ra'), D2)}")
+ck(unchecked(without_lines(SUBROUTINE, "bne r0 1234 ra"), D2) == {"d2"},
+   f"without the check the subroutine acts on the pin: {unchecked(without_lines(SUBROUTINE, 'bne r0 1234 ra'), D2)}")
 
 # --- a reject path that reads the pin has not checked it -----------------------------
 ECHO = """Loop:
@@ -230,7 +226,7 @@ ck(unchecked(*sibling) == {"d1"}, f"the check below the Cleanup fork leaves Clea
 BUILDER = tree("ic10/pressure-grid/pressure_grid_plan_builder_v1_0.ic10")
 ck(unchecked(*BUILDER) == set(),
    f"the Plan Builder's Path and Wait blocks run only once New has checked both peers: {unchecked(*BUILDER)}")
-ck(unchecked(without(BUILDER[0], 'bne r0 HASH("PressureGridPathAllocator.v1") Reject'), *BUILDER[1:]) == {"d1"},
+ck(unchecked(without_lines(BUILDER[0], 'bne r0 HASH("PressureGridPathAllocator.v1") Reject'), *BUILDER[1:]) == {"d1"},
    "without the Allocator check every Path block access is unchecked")
 
 # --- the tree: what this walk found ---------------------------------------------------

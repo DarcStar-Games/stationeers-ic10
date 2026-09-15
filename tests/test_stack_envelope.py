@@ -12,7 +12,7 @@ import json
 import sys
 from tempfile import TemporaryDirectory
 
-from framework.ic10_harness import Device, IC10
+from framework.ic10_harness import Device, IC10, without_lines
 from framework.ic10_line_budget import HARD_LIMIT_LINES
 from framework.json_schema import validate
 from framework.script_contracts import build_all
@@ -1083,9 +1083,9 @@ GENERATION_CARRY = (
     "Loop:\nyield\npoke 9 r0\npoke 7 r3\nj Loop\n"
 )
 UNGUARDED_CARRY = GENERATION_CARRY.replace(f"get r0 db 0\nbeq r0 {EXAMPLE_MAGIC} Init\nclr db\n", "j Init\nclr db\n", 1)
-UNCLEARED_CARRY = GENERATION_CARRY.replace(f"get r0 db 0\nbeq r0 {EXAMPLE_MAGIC} Init\nclr db\n", "", 1)
+UNCLEARED_CARRY = without_lines(GENERATION_CARRY, f"get r0 db 0\nbeq r0 {EXAMPLE_MAGIC} Init\nclr db")
 COMPUTED_MASK_CARRY = GENERATION_CARRY.replace("poke 2 16\n", "poke 2 r4\n", 1)
-GUARDED_UNCLEARED_CARRY = GENERATION_CARRY.replace("clr db\n", "", 1)
+GUARDED_UNCLEARED_CARRY = without_lines(GENERATION_CARRY, "clr db")
 
 
 def generation_carry_errors(text):
