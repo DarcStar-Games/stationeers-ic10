@@ -226,7 +226,8 @@ class RequestBlocking:
         # where equality holds and settles the read either way. A compare against
         # a literal is a poll for "not yet" or a status test, not the match, and
         # leaves the post pending.
-        if row[0] in {"beq", "bne"} and len(row) == 4 and taken is not None and row[1] in REGISTERS and row[2] in REGISTERS:
+        compared = len(row) == 4 and row[1] in REGISTERS and row[2] in REGISTERS
+        if row[0] in {"beq", "bne"} and compared and taken is not None:
             equal = taken if row[0] == "beq" else not taken
             for key, register in reads.items():
                 if register in row[1:3]:
