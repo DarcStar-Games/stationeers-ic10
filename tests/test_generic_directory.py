@@ -6,7 +6,7 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 from framework.ic10_source import game_hash
 from pathlib import Path
 import json,sys
-from framework.ic10_harness import Device,IC10,run_round_robin
+from framework.ic10_harness import Device,IC10,run_round_robin,without_lines
 R=_PROJECT_ROOT;fails=[]
 H=(R/'ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10').read_text();B=(R/'ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10').read_text()
 S=json.loads((R/'data/directory_schemas.json').read_text())
@@ -188,11 +188,6 @@ yield
 get r0 db 16
 poke 17 r0
 j Loop"""
-def without(text,*lines):
- for line in lines:
-  if line+'\n' not in text:fails.append('witness lost its guard line '+line)
-  text=text.replace(line+'\n','')
- return text
 registry_src=(R/'ic10/directory-core/generic_registry_directory_host_v2_0.ic10').read_text()
 overfull={7:1,10:6,11:64,12:65,13:2,14:0}
 for n in range(64):overfull.update({18+6*n:n+1,19+6*n:1000+n,20+6*n:2})
@@ -203,7 +198,7 @@ def registry_after(source):
  for _ in range(40):av.run(1,max_steps=50000);rv.run(1,max_steps=50000)
  return rv.stack.get(16),rv.stack.get(100)
 if registry_after(registry_src)!=(-4,None):fails.append('Registry Host accepted a candidate count above its 64-node capacity: %r'%(registry_after(registry_src),))
-if registry_after(without(registry_src,'bgt r13 64 SourceBad'))!=(0,9999):fails.append('witness: the unguarded Registry Host did not read the 65th record past the candidate table: %r'%(registry_after(without(registry_src,'bgt r13 64 SourceBad')),))
+if registry_after(without_lines(registry_src,'bgt r13 64 SourceBad'))!=(0,9999):fails.append('witness: the unguarded Registry Host did not read the 65th record past the candidate table: %r'%(registry_after(without_lines(registry_src,'bgt r13 64 SourceBad')),))
 # The Bridge trusts the same header for the Snapshot Host it feeds. Its candidate copy lands at Host
 # S17 + cell, so a width above three writes over the Host's rebuild state at S20/S21; a capacity above 64
 # is configured into the Host, which then errors every command; and a count above the capacity walks the
@@ -220,7 +215,7 @@ many={7:1,10:3,11:64,12:65,13:2,14:0}
 for n in range(65):many.update({18+3*n:n+1,19+3*n:n+1,20+3*n:n+1})
 if bridged(B,wide)!=(0,0,0,0,0) or bridged(B,deep)!=(0,0,0,0,0) or bridged(B,many)!=(3,64,0,0,0):
  fails.append('Bridge published from an Adapter header its Host cannot hold: %r'%([bridged(B,c) for c in (wide,deep,many)],))
-unguarded_bridge=without(B,*bridge_guards)
+unguarded_bridge=without_lines(B,*bridge_guards)
 w=bridged(unguarded_bridge,wide);d=bridged(unguarded_bridge,deep);m=bridged(unguarded_bridge,many)
 if (w[0],w[2])!=(5,5):fails.append('witness: the unguarded Bridge did not write a five-cell candidate over the Host rebuild state: %r'%(w,))
 if d[1]!=100:fails.append('witness: the unguarded Bridge did not configure a capacity of 100 into the Host: %r'%(d,))

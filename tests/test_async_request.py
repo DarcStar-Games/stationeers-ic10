@@ -54,7 +54,6 @@ def no_alias(source,replacements):
     return source
 map_src=no_alias(src('ic10/diagnostics/diagnostic_mapping_editor_v1_2.ic10'),{
  'consoleSelector':'r1','controllerSelector':'r2','renderer':'r3','input':'r4','display':'r5','controller':'r6'})
-map_src=map_src.replace('move r10 HASH("ConsoleSelector.v1")\nmove r11 HASH("ControllerSelector.v2")\nmove r12 HASH("DiagnosticRenderer.v1")\nmove r7 1\nValidateService:\nblez rr7 NoService\ngetd r0 rr7 0\nadd r8 r7 9\nbne r0 rr8 NoService\ngetd r0 rr7 1\nseq r8 r7 2\nselect r8 r8 2 1\nbne r0 r8 NoService\nadd r7 r7 1\nble r7 3 ValidateService\n','')
 old_controller=Device(706,props={'ReferenceId':706});new_controller=Device(707,props={'ReferenceId':707})
 display=Device(705,props={'ReferenceId':705,'On':1})
 cs=Device(701,stack={0:'HASH:ControllerSelector.v2',1:2,17:706,8:1,13:1},props={'ReferenceId':701})

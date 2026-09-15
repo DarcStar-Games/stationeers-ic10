@@ -22,6 +22,7 @@ import sys
 import tempfile
 from pathlib import Path
 
+from framework.ic10_harness import without_lines
 from framework.ic10_source import game_hash
 from framework.identity_coverage import declared_identities
 from framework.network_provenance import (
@@ -60,11 +61,6 @@ def arrivals(source, identities=None, private=frozenset(), known=KNOWN):
 def tokens(source, **kwargs):
     """Every origin token seen at any `putd` in `source`."""
     return {token for sets in arrivals(source, **kwargs).values() for held in sets for token in held}
-
-
-def without(source, line):
-    ck(f"{line}\n" in source, f"witness line {line!r} is not in the source")
-    return source.replace(f"{line}\n", "", 1)
 
 
 # --- an identity check establishes the reference; the reject edge does not -----------
@@ -240,7 +236,7 @@ RESUME = STATE_CELL.replace("beq r0 1 Ready\n", "beq r0 1 Ready\nbeq r0 2 Resume
     "Ready:\n", "Resume:\nputd r2 1 4\nj Loop\nReady:\n", 1)
 ck(arrivals(RESUME, private={20}).get(16) == {frozenset({"own:10"})},
    f"a resume block reached only over the same-image edge carries the fresh loads: {arrivals(RESUME, private={20})}")
-ck(16 not in arrivals(without(RESUME, 'beq r0 HASH("Peer.v1") Init'), private={20}),
+ck(16 not in arrivals(without_lines(RESUME, 'beq r0 HASH("Peer.v1") Init'), private={20}),
    "without the guard the resume block is unreachable")
 
 # --- declarations ----------------------------------------------------------------------------
