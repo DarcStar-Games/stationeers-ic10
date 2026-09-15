@@ -5,7 +5,7 @@ _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from pathlib import Path
 import sys
-from framework.ic10_harness import Device, IC10
+from framework.ic10_harness import Device, IC10, without_lines
 R=_PROJECT_ROOT
 fails=[]
 def src(n): return (R/n).read_text()
@@ -109,7 +109,7 @@ def alloc_intake(source):
     return vm.stack.get(22),stg.stack.get(9)
 if alloc_intake(m)!=(-1,None):
     fails.append('multi allocator staged a request with more input records than a Resolver publishes')
-if 'bgt r8 16 Reject\n' not in m or alloc_intake(m.replace('bgt r8 16 Reject\n',''))!=(3,1):
+if alloc_intake(without_lines(m,'bgt r8 16 Reject'))!=(3,1):
     fails.append('witness: the unguarded allocator did not stage the seventeen-record request')
 
 # A reflash preserves the whole stack, so a housing that last ran something else hands

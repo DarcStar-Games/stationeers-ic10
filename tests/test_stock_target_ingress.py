@@ -9,7 +9,7 @@ import sys
 
 from framework.async_request import posting_token
 from framework.fault_injection import Step, inject_every_boundary
-from framework.ic10_harness import Device, IC10, run_round_robin
+from framework.ic10_harness import Device, IC10, run_round_robin, without_lines
 
 R = _PROJECT_ROOT
 fails = []
@@ -87,14 +87,6 @@ ck(selector_stub.stack.get(15) == 401,
 # table, and sum whatever sat there as a seventh leg.
 
 
-def without_guard(path, *lines):
-    text = src(path)
-    for line in lines:
-        ck(line + "\n" in text, f"{path} lost its count guard `{line}`")
-        text = text.replace(line + "\n", "")
-    return text
-
-
 def seven_leg_quote(source):
     stub = IC10(
         'poke 0 HASH("ItemResourceReservationSelector.v1")\nLoop:\nyield\nget r15 db 15\n'
@@ -114,7 +106,7 @@ def seven_leg_quote(source):
 
 
 inventory_view = "ic10/manufacturing-ingress/stock_target_inventory_view_v1_0.ic10"
-ck(seven_leg_quote(without_guard(inventory_view, "blt r7 0 Bad", "bgt r7 6 Bad")) == 1,
+ck(seven_leg_quote(without_lines(src(inventory_view), "blt r7 0 Bad", "bgt r7 6 Bad")) == 1,
    "witness: the unguarded Inventory View did not accept a seven-leg quote as exact")
 ck(seven_leg_quote(src(inventory_view)) == -1,
    "Inventory View walked a quote past the six-leg table the selector publishes")
@@ -768,10 +760,8 @@ ck(guarded["evaluator"].stack.get(8) == 0,
    "the reflashed Evaluator did not complete an evaluation once the Ingress was idle")
 # The same program without its idle check is the race: the Ingress never gets its
 # reply, and the root it was about to publish never reaches the Store.
-unguarded_source = src("ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10")
-ck("bne r0 r1 Loop\n" in unguarded_source, "the Evaluator's idle check is not where the test expects")
-unguarded, unguarded_token, unguarded_displaced = reflash_during_ingress(
-    unguarded_source.replace("bne r0 r1 Loop\n", ""))
+unguarded, unguarded_token, unguarded_displaced = reflash_during_ingress(without_lines(
+    src("ic10/manufacturing-ingress/stock_target_job_evaluator_v1_0.ic10"), "bne r0 r1 Loop"))
 ck(unguarded_displaced and unguarded["ingress"].stack.get(26) != unguarded_token
    and unguarded["store"].stack.get(23) == 1,
    "without the idle check the Evaluator reflash did not strand the Ingress")

@@ -4,7 +4,7 @@ import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from pathlib import Path
-from framework.ic10_harness import IC10, Device
+from framework.ic10_harness import IC10, Device, without_lines
 from framework.catalog_test_helpers import load_catalog_store,load_catalog_chain
 import sys,json
 R=_PROJECT_ROOT
@@ -96,6 +96,16 @@ if 'Setting' in wdev.props: fails.append('IC10 harness bdnvs failed to branch on
 
 # Material transform execution is covered exhaustively by tests/test_material_transform_protocol.py.
 
+# A witness runs the program beside a copy with its guard lines removed; the copy has to differ, so
+# the helper refuses a line that is not there whole, and one that occurs twice names no single guard.
+guarded='move r1 1\nblt r1 0 Bad\nbgt r1 8 Bad\nyield\nBad:\nyield\n'
+if without_lines(guarded,'blt r1 0 Bad','bgt r1 8 Bad')!='move r1 1\nyield\nBad:\nyield\n': fails.append('witness helper did not strip the two guard lines')
+if without_lines(guarded,'move r1 1\nblt r1 0 Bad')!='bgt r1 8 Bad\nyield\nBad:\nyield\n': fails.append('witness helper did not strip a block from the first line')
+for absent,source,why in [('blt r1 0 Done',guarded,'a line that is not in the source'),('r1 0 Bad',guarded,'the tail of a longer line'),
+                          ('yield',guarded,'a line that occurs twice'),('move r1 1',guarded+'move r1 1\n','a first line that occurs again')]:
+ try: without_lines(source,absent); fails.append(f'witness helper stripped {why}')
+ except ValueError as error:
+  if absent not in str(error): fails.append(f'witness helper refused {why} without naming it: {error}')
 if fails:
  print('IC10 execution harness: FAIL'); [print(' -',f) for f in fails]; sys.exit(1)
 print('IC10 execution harness: PASS')

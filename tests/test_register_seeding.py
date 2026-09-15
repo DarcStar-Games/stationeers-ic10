@@ -21,6 +21,7 @@ if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_P
 import json
 import sys
 
+from framework.ic10_harness import without_lines
 from framework.register_seeding import (
     FRESH,
     PRIVATE_STATE_CELLS,
@@ -56,11 +57,6 @@ def fresh(source, private=frozenset()):
     return {register for edge, register in reads(source, private) if edge == FRESH}
 
 
-def without(source, line):
-    ck(f"{line}\n" in source, f"witness line {line!r} is not in the source")
-    return source.replace(f"{line}\n", "", 1)
-
-
 # --- the fixture: a reflash guard whose clear path never seeds the echo register ------
 FIXTURE = (ROOT / "tests/ic10/reflash_guard_unseeded_fixture_v1_0.ic10").read_text()
 found = reads(FIXTURE)
@@ -70,12 +66,13 @@ ck(not {register for edge, register in found if register != "r15"},
 seeded = FIXTURE.replace("clr db\n", "clr db\nmove r15 0\n", 1)
 ck(reads(seeded) == {(SAME_IMAGE, "r15")},
    f"seeding r15 on the clear path should leave only the same-image carry: {reads(seeded)}")
-unguarded = FIXTURE.replace('get r0 db 0\nbeq r0 HASH("ReflashGuardUnseededFixture.v1") Header\n', "", 1)
+unguarded = without_lines(FIXTURE, 'get r0 db 0\nbeq r0 HASH("ReflashGuardUnseededFixture.v1") Header')
 ck(reads(unguarded) == {(FRESH, "r15")},
    f"without a guard every path is a fresh housing: {reads(unguarded)}")
 
 # --- a state register seeded at boot prunes the blocks the entry path cannot take -----
-STATE_MACHINE = """move r14 0
+STATE_MACHINE = """Reset:
+move r14 0
 Loop:
 yield
 beqz r14 New
@@ -93,17 +90,17 @@ j Loop
 Done:
 poke 8 r8
 Fail:
-move r14 0
-j Loop
+j Reset
 """
 ck(fresh(STATE_MACHINE) == set(), f"a seeded state register should prune every other state: {fresh(STATE_MACHINE)}")
-ck(fresh(without(STATE_MACHINE, "move r14 0")) >= {"r5", "r7", "r8"},
-   f"an unseeded state register reaches every state: {fresh(without(STATE_MACHINE, 'move r14 0'))}")
-ck(fresh(without(STATE_MACHINE, "move r8 0")) == {"r8"},
-   f"a register the taken state never seeds is reported: {fresh(without(STATE_MACHINE, 'move r8 0'))}")
+ck(fresh(without_lines(STATE_MACHINE, "move r14 0")) >= {"r5", "r7", "r8"},
+   f"an unseeded state register reaches every state: {fresh(without_lines(STATE_MACHINE, 'move r14 0'))}")
+ck(fresh(without_lines(STATE_MACHINE, "move r8 0")) == {"r8"},
+   f"a register the taken state never seeds is reported: {fresh(without_lines(STATE_MACHINE, 'move r8 0'))}")
 
 # --- a state cell the program alone writes prunes exactly as a register does ----------
-STATE_CELL = """poke 20 0
+STATE_CELL = """Reset:
+poke 20 0
 Loop:
 yield
 get r0 db 20
@@ -116,14 +113,13 @@ Wait:
 get r0 d0 11
 beqz r0 Loop
 put d0 12 r2
-poke 20 0
-j Loop
+j Reset
 """
 ck(fresh(STATE_CELL, {20}) == set(), f"a private state cell should prune: {fresh(STATE_CELL, {20})}")
 ck(fresh(STATE_CELL) == {"r2"}, f"a cell a peer may write proves nothing: {fresh(STATE_CELL)}")
-ck(fresh(without(STATE_CELL, "poke 20 0"), {20}) == {"r2"},
-   f"an unseeded state cell proves nothing: {fresh(without(STATE_CELL, 'poke 20 0'), {20})}")
-CLEARED_CELL = "clr db\n" + STATE_CELL.replace("poke 20 0\n", "", 1)
+ck(fresh(without_lines(STATE_CELL, "poke 20 0"), {20}) == {"r2"},
+   f"an unseeded state cell proves nothing: {fresh(without_lines(STATE_CELL, 'poke 20 0'), {20})}")
+CLEARED_CELL = "clr db\n" + without_lines(STATE_CELL, "poke 20 0")
 ck(fresh(CLEARED_CELL, {20}) == set(), f"a boot clear zeroes a private cell: {fresh(CLEARED_CELL, {20})}")
 
 # --- an rrN load loop writes the registers its index names ---------------------------
@@ -175,8 +171,8 @@ j Loop
 """
 ck(reads(KEYED, {11}) == {(SAME_IMAGE, "r4")},
    f"a positive key never matches the cleared cell, so r4 carries only over the guard: {reads(KEYED, {11})}")
-ck(fresh(without(KEYED, "blez r0 Bad"), {11}) == {"r4"},
-   f"without the sign guard a zero key resumes over an unseeded cursor: {fresh(without(KEYED, 'blez r0 Bad'), {11})}")
+ck(fresh(without_lines(KEYED, "blez r0 Bad"), {11}) == {"r4"},
+   f"without the sign guard a zero key resumes over an unseeded cursor: {fresh(without_lines(KEYED, 'blez r0 Bad'), {11})}")
 ck(fresh(KEYED) == {"r4"}, f"the key cell proves nothing unless it is private: {fresh(KEYED)}")
 
 # --- a counter bounded by a peer's number must not widen a state guard away ----------
@@ -202,8 +198,8 @@ poke 8 r6
 j Loop
 """
 ck(fresh(COUNTED) == set(), f"the first pass always chooses, so r7 is written before read: {fresh(COUNTED)}")
-ck(fresh(without(COUNTED, "move r6 -1")) == {"r6", "r7"},
-   f"an unseeded chooser reads the comparison register: {fresh(without(COUNTED, 'move r6 -1'))}")
+ck(fresh(without_lines(COUNTED, "move r6 -1")) == {"r6", "r7"},
+   f"an unseeded chooser reads the comparison register: {fresh(without_lines(COUNTED, 'move r6 -1'))}")
 
 # --- the interval arithmetic: NaN never lets a comparison hold, only fail -------------
 positive_or_nan = refine("ble", Range(), exact(0), False)
