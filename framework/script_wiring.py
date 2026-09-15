@@ -333,7 +333,10 @@ def inbound_edges(
 # `data/mailbox_arbitration.json` is where that review lives. What the map can
 # derive on its own is *laned* sharing: writers whose write cells never overlap
 # post into separate request lanes the callee serves one at a time, as the Job
-# Command Gateway does.
+# Command Gateway does. A `serial` claim is checked in two halves: the map
+# proves every writer sits under the named root, and `framework.request_blocking`
+# proves every program on the tree waits on each post before it posts elsewhere
+# or replies (issue #146).
 
 ARBITRATION_FORMAT = "IC10_MAILBOX_ARBITRATION_V1"
 RESIDENT_CLASSES = frozenset({"resident", "conditional-resident"})
@@ -434,6 +437,22 @@ def dedicated_closure(
     return seen
 
 
+def serialized_tree(
+    edges: dict[str, dict[str, dict[str, set[int]]]], root: str, group: Iterable[str],
+) -> set[str]:
+    """The programs a serial claim rests on: the root and everything on a mailbox path from it to a writer.
+
+    A program below every writer is served by the tree and never posts for
+    it, so what it does with its own posts is not this claim's business.
+    """
+    writers = set(group)
+    tree = {root}
+    for program in reachable(edges, [root]):
+        if program in writers or writers & reachable(edges, [program]):
+            tree.add(program)
+    return tree
+
+
 def _serial_failures(
     provider: str,
     label: str,
@@ -441,14 +460,20 @@ def _serial_failures(
     root: str | None,
     edges: dict[str, dict[str, dict[str, set[int]]]],
     wiring: dict[str, Any],
+    blocking: Callable[[str], list[str]] | None = None,
+    reported: set[tuple[str, str]] | None = None,
 ) -> list[str]:
     """A serial group is one call tree: every writer posts only while the root waits on it.
 
     The map proves the shape -- each writer sits downstream of the root through
-    declared mailbox writes -- and the review vouches for the blocking. A root
-    that drives a peer through a register-indexed port (`dr<n>`) reaches it the
-    same way: the contract resolves the register to its pins, so the edge is a
-    declared `d<n>` like any other (issue #163).
+    declared mailbox writes -- and `blocking(path)` proves the waiting: for every
+    program on the tree from the root to a writer it returns the posts some path
+    leaves unanswered when the program posts to another peer or replies to its
+    own caller (`framework.request_blocking`, issue #146). A root that drives a
+    peer through a register-indexed port (`dr<n>`) reaches it the same way: the
+    contract resolves the register to its pins, so the edge is a declared `d<n>`
+    like any other (issue #163). One program serves several trees; `reported`
+    keeps each of its findings to the first group that names it.
     """
     failures: list[str] = []
     if root is None:
@@ -463,6 +488,18 @@ def _serial_failures(
         failures.append(
             f"{provider}: {label} serialized_by {root} does not reach {missing} through"
             " declared mailbox writes -- they post from an independent loop")
+        return failures
+    if blocking is None:
+        return failures
+    seen = reported if reported is not None else set()
+    for program in sorted(serialized_tree(edges, root, group)):
+        for finding in blocking(program):
+            if (program, finding) in seen:
+                continue
+            seen.add((program, finding))
+            failures.append(
+                f"{program}: {finding}; {provider}'s {label} is serialized by {root} through it,"
+                " which needs every post on the tree answered before the next")
     return failures
 
 
@@ -472,14 +509,18 @@ def arbitration_failures(
     declarations: dict[str, Any],
     classes: dict[str, str],
     source: Callable[[str], str],
+    blocking: Callable[[str], list[str]] | None = None,
 ) -> list[str]:
     """Every defect in the reviewed mailbox arbitration, one message each.
 
     `declarations` is the `mailboxes` section of `data/mailbox_arbitration.json`,
-    `classes` maps each deployable program to its deployment class, and
-    `source(path)` returns a program's or document's text.
+    `classes` maps each deployable program to its deployment class,
+    `source(path)` returns a program's or document's text, and `blocking(path)`
+    names the posts a program leaves unanswered before posting elsewhere or
+    replying (None checks the shape of a serial group and not its waiting).
     """
     failures: list[str] = []
+    reported: set[tuple[str, str]] = set()
     edges = writer_edges(wiring, ports)
     contended = {p for p, w in edges.items() if len(w) > 1 and contended_pairs(w)}
     for provider in sorted(contended - set(declarations)):
@@ -513,7 +554,8 @@ def arbitration_failures(
             continue
         if kind == "serial":
             failures.extend(_serial_failures(
-                provider, "serial group", writers, entry.get("serialized_by"), edges, wiring))
+                provider, "serial group", writers, entry.get("serialized_by"), edges, wiring,
+                blocking, reported))
         elif kind == "dedicated":
             claimed: list[str] = []
             closure = sorted(dedicated_closure(edges, declarations, provider))
@@ -526,7 +568,8 @@ def arbitration_failures(
                 claimed.extend(group)
                 if len(group) > 1:
                     failures.extend(_serial_failures(
-                        provider, label, group, instance.get("serialized_by"), edges, wiring))
+                        provider, label, group, instance.get("serialized_by"), edges, wiring,
+                        blocking, reported))
                 doc = instance["documented_in"]
                 text = source(doc)
                 unnamed = [item for item in closure if item not in text]

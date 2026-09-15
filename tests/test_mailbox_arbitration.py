@@ -11,10 +11,18 @@ import sys
 
 from framework.ic10_harness import Device, IC10, run_round_robin
 from framework.json_schema import SchemaValidationError, validate
+from framework.request_blocking import (
+    PortTokens,
+    RequestBlocking,
+    own_response_cells,
+    port_tokens,
+    token_cells,
+)
 from framework.script_wiring import (
     arbitration_failures,
     contended_pairs,
     dedicated_closure,
+    serialized_tree,
     writer_edges,
 )
 
@@ -77,8 +85,8 @@ def text(path):
     return TEXTS.get(path, "")
 
 
-def failing(declarations, wiring=WIRING, ports=PORTS, classes=CLASSES, source=text):
-    return arbitration_failures(wiring, ports, declarations, classes, source)
+def failing(declarations, wiring=WIRING, ports=PORTS, classes=CLASSES, source=text, blocking=None):
+    return arbitration_failures(wiring, ports, declarations, classes, source, blocking)
 
 
 def mentions(failures, fragment):
@@ -179,6 +187,147 @@ try:
     ck(False, "the schema accepted an entry without a note")
 except SchemaValidationError:
     pass
+
+# --- The waiting half of a serial claim (#146) ------------------------------------
+#
+# The map puts every writer under the root; the walk proves each program on the
+# tree reads a peer's response token before it posts to another peer or replies.
+PEERS = {"d0": PortTokens(frozenset({10}), frozenset({11})), "d1": PortTokens(frozenset({10}), frozenset({11}))}
+OWN_REPLY = frozenset({9})
+ACCEPT = "Loop:\nyield\nget r15 db 8\nget r0 db 9\nbeq r15 r0 Loop\n"
+
+
+def unblocked(source, ports=PEERS, private=frozenset(), register_ports=None):
+    return sorted((item.port, item.line_number, item.offence, item.offence_line)
+                  for item in RequestBlocking(source, ports, OWN_REPLY, private, register_ports).findings())
+
+
+WAITS = ACCEPT + ("put d0 12 r15\nput d0 10 r15\nWaitA:\nyield\nget r0 d0 11\nbne r0 r15 WaitA\n"
+                  "put d1 10 r15\nWaitB:\nyield\nget r0 d1 11\nbne r0 r15 WaitB\npoke 9 r15\nj Loop\n")
+ck(unblocked(WAITS) == [], f"a caller that waits on each post before the next passed nothing: {unblocked(WAITS)}")
+PARALLEL = ACCEPT + "put d0 10 r15\nput d1 10 r15\nWaitA:\nyield\nget r0 d0 11\nbne r0 r15 WaitA\nget r0 d1 11\npoke 9 r15\nj Loop\n"
+ck(unblocked(PARALLEL) == [("d0", 6, "posts to d1", 7)],
+   f"posting to two peers before waiting on either was not reported once, at the second post: {unblocked(PARALLEL)}")
+EARLY_REPLY = ACCEPT + "put d0 10 r15\npoke 9 r15\nWaitA:\nyield\nget r0 d0 11\nbne r0 r15 WaitA\nj Loop\n"
+ck(unblocked(EARLY_REPLY) == [("d0", 6, "replies to its own caller", 7)],
+   f"replying with a request in flight was not reported: {unblocked(EARLY_REPLY)}")
+HALTS = ACCEPT + "put d0 10 r15\nhcf\n"
+ck(unblocked(HALTS) == [("d0", 6, "halts", 7)], f"halting with a request in flight was not reported: {unblocked(HALTS)}")
+
+# A post that arms a private state cell and returns to the loop head is followed
+# to the block the head dispatches to on the next tick; without the cell the
+# accept block and the reply are reachable with the request pending.
+STATE_MACHINE = ("poke 20 0\nLoop:\nyield\nget r0 db 20\nbeq r0 1 WaitA\nbeq r0 2 WaitB\nget r15 db 8\nget r0 db 9\n"
+                 "beq r15 r0 Loop\nput d0 10 r15\npoke 20 1\nj Loop\nWaitA:\nget r15 db 8\nget r0 d0 11\nbne r0 r15 Loop\n"
+                 "put d1 10 r15\npoke 20 2\nj Loop\nWaitB:\nget r15 db 8\nget r0 d1 11\nbne r0 r15 Loop\npoke 9 r15\n"
+                 "poke 20 0\nj Loop\n")
+ck(unblocked(STATE_MACHINE, private=frozenset({20})) == [],
+   f"a state machine dispatching on a private cell was not followed to its wait: {unblocked(STATE_MACHINE, private=frozenset({20}))}")
+ck(unblocked(STATE_MACHINE) == [("d0", 10, "replies to its own caller", 24), ("d1", 17, "posts to d0", 10)],
+   f"the same machine with the cell unknown did not reach the reply and the accept block while pending: {unblocked(STATE_MACHINE)}")
+# Returning to the loop head with no state to route the next tick back to a wait
+# is not refused as such; what fails is what the next request then does.
+NEXT_REQUEST = ACCEPT + "get r0 db 12\nbeqz r0 First\nput d1 10 r15\nj Loop\nFirst:\nput d0 10 r15\nj Loop\n"
+ck(unblocked(NEXT_REQUEST) == [("d0", 11, "posts to d1", 8), ("d1", 8, "posts to d0", 11)],
+   f"a caller that never waits and serves the next request elsewhere passed: {unblocked(NEXT_REQUEST)}")
+# A second post to the same peer replaces the program's own request and strands
+# nobody; the token is not this check's business.
+REPOST = ACCEPT + "put d0 10 r15\nput d0 10 r15\nWaitA:\nyield\nget r0 d0 11\nbne r0 r15 WaitA\npoke 9 r15\nj Loop\n"
+ck(unblocked(REPOST) == [], f"a second post to the same peer was reported: {unblocked(REPOST)}")
+
+# A register-indexed port is the pins its register can hold; a wait on the same
+# set answers a post on it, and an unresolved one is no port at all.
+INDEXED = ACCEPT + "get r9 db 12\nput dr9 10 r15\nWait:\nyield\nget r0 dr9 11\nbne r0 r15 Wait\npoke 9 r15\nj Loop\n"
+indexed = RequestBlocking(INDEXED, PEERS, OWN_REPLY, register_ports={"dr9": ("d0", "d1")})
+ck(indexed.posts == 1 and indexed.findings() == [], "a post and wait through dr9 did not pair up")
+ck(RequestBlocking(INDEXED, PEERS, OWN_REPLY).posts == 0, "an unresolved dr9 was read as a port")
+MIXED = ACCEPT + "get r9 db 12\nput dr9 10 r15\nput d0 10 r15\nWait:\nyield\nget r0 dr9 11\nbne r0 r15 Wait\npoke 9 r15\nj Loop\n"
+ck(unblocked(MIXED, register_ports={"dr9": ("d0", "d1")}) == [("d0/d1", 7, "posts to d0", 8)],
+   f"a post on one pin of dr9's set was not told from the post on the set: {unblocked(MIXED, register_ports={'dr9': ('d0', 'd1')})}")
+
+# A register-addressed write is a post only where the contract's proven write
+# range for the port reaches a request cell.
+DYNAMIC = ACCEPT + "move r1 10\nput d0 r1 r15\npoke 9 r15\nj Loop\n"
+ck(unblocked(DYNAMIC) == [], f"a register-addressed write on a port whose range stays below the token was a post: {unblocked(DYNAMIC)}")
+reaching = {"d0": PortTokens(frozenset({10}), frozenset({11}), True)}
+ck(unblocked(DYNAMIC, reaching) == [("d0", 7, "replies to its own caller", 8)],
+   f"a register-addressed write whose range reaches the token was not a post: {unblocked(DYNAMIC, reaching)}")
+
+# Token cells come from the reviewed layouts behind the contracts: a
+# LIVE_CURRENT producer answers at its current token.
+LAYOUT = {"own_stack": {"fields": [
+    {"address": 8, "role": "request_token"}, {"address": 9, "role": "response_token"},
+    {"address": 10, "role": "current_token"}, {"address": 11, "role": "state"}, {"address": 0}]}}
+ck(token_cells(LAYOUT) == (frozenset({8}), frozenset({9, 10})), "token roles were not read from the layout")
+ck(own_response_cells(LAYOUT) == frozenset({9, 10}), "a program's answering cells are its response and current tokens")
+CALLER = {"device_ports": [
+    {"port": "d0", "stack": {"dynamic_write": True, "dynamic_write_ranges": [{"start": 4, "end": 8}]}},
+    {"port": "d1", "stack": {"dynamic_write": False, "dynamic_write_ranges": []}}]}
+CALLER_WIRING = {"ports": {"ic10/x/caller.ic10": {
+    "d0": {"kind": "script", "providers": ["ic10/x/peer.ic10"]},
+    "d1": {"kind": "script", "providers": ["ic10/x/peer.ic10", "ic10/x/unknown.ic10"]},
+    "d2": {"kind": "device", "device": "Pump"}}}}
+tokens = port_tokens("ic10/x/caller.ic10", CALLER, CALLER_WIRING, {"ic10/x/peer.ic10": LAYOUT})
+ck(tokens == {"d0": PortTokens(frozenset({8}), frozenset({9, 10}), True),
+              "d1": PortTokens(frozenset({8}), frozenset({9, 10}), False)},
+   f"port tokens did not follow the wiring to the peer's layout, with the write range reaching d0's token: {tokens}")
+
+# The tree a serial claim rests on is the root and every hop down to a writer;
+# the check runs on those and its findings name the group they break.
+ck(serialized_tree(writer_edges(WIRING, PORTS), ROOT_P, [A, B]) == {ROOT_P, A, B},
+   "the serialized tree did not stop at the writers")
+asked = []
+
+
+def blocking(path):
+    asked.append(path)
+    return ["posts to d0 at line 6 `put d0 10 r1` and posts to d1 at line 7 `put d1 10 r1`"] if path == A else []
+
+
+found = failing(serial, blocking=blocking)
+ck(found == [f"{A}: posts to d0 at line 6 `put d0 10 r1` and posts to d1 at line 7 `put d1 10 r1`;"
+             f" {P}'s serial group is serialized by {ROOT_P} through it, which needs every post on the tree"
+             " answered before the next"],
+   f"a writer that does not wait did not fail its serial group: {found}")
+ck(sorted(asked) == sorted([ROOT_P, A, B]), f"the walk ran on programs off the tree or missed one on it: {asked}")
+ck(failing(serial, blocking=lambda path: []) == [], "a tree whose every program waits failed")
+
+# On the tree: the Dispatch Sweep posts to the Flow Builder and returns to its
+# loop head, which dispatches on S20 to the block that waits; with that dispatch
+# removed the next tick asks the Sink Selector with the Flow Builder's request
+# in flight. The Single-Hop Builder holds one Allocator COMMIT at a time behind
+# its wait state; with that state's dispatch removed a directory generation
+# change replies to the Plan Builder with the COMMIT outstanding, which is what
+# the shipped Builder did before #146.
+SWEEP = src("ic10/power-grid/power_dispatch_sweep_v1_0.ic10")
+SWEEP_PEERS = {"d0": PortTokens(frozenset({13}), frozenset({14})), "d1": PortTokens(frozenset({15}), frozenset({16})),
+               "d2": PortTokens(frozenset({10}), frozenset({11}))}
+
+
+def sweep_unblocked(source):
+    return sorted((item.port, item.offence, item.offence_text)
+                  for item in RequestBlocking(source, SWEEP_PEERS, frozenset({9}), frozenset({20})).findings())
+
+
+ck(sweep_unblocked(SWEEP) == [], f"the Sweep does not wait on each post: {sweep_unblocked(SWEEP)}")
+ck("beq r0 2 WaitFlow\n" in SWEEP, "the Sweep no longer dispatches to WaitFlow on S20")
+ck(sweep_unblocked(SWEEP.replace("beq r0 2 WaitFlow\n", "")) == [
+    ("d1", "posts to d0", "put d0 13 r15"), ("d1", "replies to its own caller", "poke 9 r15")],
+   "the Sweep without its WaitFlow dispatch did not post to the Sink Selector with the Flow Builder's request in flight")
+BUILDER = src("ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10")
+BUILDER_PEERS = {"d0": PortTokens(frozenset({14}), frozenset({15})), "d1": PortTokens(frozenset({18}), frozenset({9}))}
+
+
+def builder_unblocked(source):
+    return sorted((item.port, item.code_text, item.offence, item.offence_text)
+                  for item in RequestBlocking(source, BUILDER_PEERS, frozenset({11})).findings())
+
+
+ck(builder_unblocked(BUILDER) == [], f"the Single-Hop Builder does not wait on its Allocator request: {builder_unblocked(BUILDER)}")
+ck("put d1 18 r13\nmove r14 2\nj Loop\n" in BUILDER and "beqz r14 New\nbeq r14 2 Wait\n" in BUILDER,
+   "the Builder no longer arms its wait state at the post and dispatches on it first")
+ck(builder_unblocked(BUILDER.replace("beq r14 2 Wait\n", "")) == [("d1", "put d1 18 r13", "replies to its own caller", "poke 11 r15")],
+   "the Builder without its wait dispatch did not reply with the Allocator's COMMIT outstanding")
 
 # --- The race, on the production programs ------------------------------------------
 #
@@ -311,6 +460,8 @@ if fails:
 print("Mailbox arbitration: PASS")
 print(" - a contended mailbox needs a declaration; laned and single-writer mailboxes refuse one")
 print(" - serial groups must sit downstream of their root, with dr-port edges named and checked")
+print(" - every program on a serialized tree reads a peer's response token before it posts elsewhere or replies,"
+      " followed through a private state cell's dispatch; the Sweep and the Single-Hop Builder fail without theirs")
 print(" - dedicated instances partition the writers and are named, with their closure, in the cited document")
 print(" - one Claim View shared by the Future View's loop and the Plan Builder strands one caller; one per caller answers both")
 print(" - one Item Producer Resolver shared by Producer View and Child Creator strands one caller; one per caller answers both")

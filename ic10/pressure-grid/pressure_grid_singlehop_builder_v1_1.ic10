@@ -6,12 +6,12 @@ move r14 0
 Loop:
 yield
 beqz r14 New
+beq r14 2 Wait
 get r0 d0 24
 bne r0 r5 Fail
 add sp r5 25
 get r0 d0 sp
 bne r0 r6 Fail
-bgtz r13 Wait
 bge r8 r7 Done
 get r0 d0 11
 bne r0 3 Fail
@@ -46,6 +46,7 @@ put d1 10 r4
 put d1 11 pinf
 put d1 16 0
 put d1 18 r13
+move r14 2
 j Loop
 Wait:
 get r0 d1 9
@@ -56,7 +57,7 @@ add r10 r10 1
 get r0 d1 19
 add r11 r11 r0
 Next:
-move r13 0
+move r14 1
 Skip:
 add r8 r8 1
 j Loop
@@ -95,7 +96,6 @@ clamp r7 r7 0 64
 move r8 0
 move r10 0
 move r11 0
-move r13 0
 move r14 1
 j Loop
 Done:
