@@ -41,7 +41,12 @@ The wait is the match, not the read. A post is answered on the edge of the
 where equality holds; on the other edge the post stays pending, so a caller
 whose mismatch edge went back to accepting requests and posted elsewhere is
 reported. A read whose register is overwritten before any compare leaves the
-post pending too.
+post pending too, as does a compare against a literal, which is a poll or a
+status test rather than the match. What a path knows about a read is one
+register name, and two paths arriving at one instruction holding the token in
+different registers lose it when the walk widens past its environment cap; the
+post then stays pending on the joined path, which costs a finding to review
+and never hides one.
 
 Two things this does not read. A second post to the *same* peer before its
 response is not reported: it replaces the program's own request and strands no
@@ -57,7 +62,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from framework.ic10_source import integer_value
-from framework.register_seeding import BootPaths, Environment
+from framework.register_seeding import REGISTERS, BootPaths, Environment
 from framework.script_contracts.control_flow import CallState
 from framework.script_contracts.parsing import RegisterPorts, collect_aliases, parse_rows, resolve_ports
 
@@ -216,9 +221,12 @@ class RequestBlocking:
             return env
         env = dict(env)
         reads = {key: register for key, register in env.items() if key.startswith(_READ)}
-        # A compare on a register holding a response token answers the post on the
-        # edge where equality holds and settles the read either way.
-        if row[0] in {"beq", "bne"} and len(row) == 4 and taken is not None:
+        # A compare of the register holding a response token against another
+        # register, the token the caller posted, answers the post on the edge
+        # where equality holds and settles the read either way. A compare against
+        # a literal is a poll for "not yet" or a status test, not the match, and
+        # leaves the post pending.
+        if row[0] in {"beq", "bne"} and len(row) == 4 and taken is not None and row[1] in REGISTERS and row[2] in REGISTERS:
             equal = taken if row[0] == "beq" else not taken
             for key, register in reads.items():
                 if register in row[1:3]:

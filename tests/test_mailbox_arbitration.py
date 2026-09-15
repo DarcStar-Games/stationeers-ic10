@@ -244,6 +244,9 @@ ck(unblocked(MATCHED) == [], f"a wait taken through beq was not read as the matc
 CLOBBERED = ACCEPT + "put d0 10 r15\nget r0 d0 11\nmove r0 1\nbne r0 r15 Loop\npoke 9 r15\nj Loop\n"
 ck(unblocked(CLOBBERED) == [("d0", 6, "replies to its own caller", 10)],
    f"a token read that was overwritten before its compare counted as the wait: {unblocked(CLOBBERED)}")
+LITERAL = ACCEPT + "put d0 10 r15\nWaitA:\nyield\nget r0 d0 11\nbeq r0 0 WaitA\npoke 9 r15\nj Loop\n"
+ck(unblocked(LITERAL) == [("d0", 6, "replies to its own caller", 11)],
+   f"a compare of the token against a literal counted as the match: {unblocked(LITERAL)}")
 # A second post to the same peer replaces the program's own request and strands
 # nobody; the token is not this check's business.
 REPOST = ACCEPT + "put d0 10 r15\nput d0 10 r15\nWaitA:\nyield\nget r0 d0 11\nbne r0 r15 WaitA\npoke 9 r15\nj Loop\n"

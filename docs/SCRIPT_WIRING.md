@@ -327,9 +327,10 @@ reviewed answer for every mailbox whose writers overlap on a cell:
   validator lists every entry it used. The Driver Router carries one per
   driver port: a `LIVE_CURRENT` mirror that re-dispatches on a token change
   the walk cannot decide, so the Candidate Selector's group still rests on
-  review at that hop, as the entry says. A root that drives a peer through a register-indexed port (the
-  POWER Scheduler's `dr9`) reaches it through a declared `d<n>` like any
-  other, because the contract resolves the register to its pins (see
+  review at that hop, as the entry says. A root that drives a peer through
+  a register-indexed port (the POWER Scheduler's `dr9`) reaches it through
+  a declared `d<n>` like any other, because the contract resolves the
+  register to its pins (see
   *Register-indexed ports* above), and a wait on the same set of pins answers
   a post on it.
 - `dedicated` -- the writers are independent loops, and each gets its own
