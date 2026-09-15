@@ -240,7 +240,12 @@ top against the counter or at the bottom against a different one. Between them
 the whole `S32..S95` plan window falls out of a validator that only ever names
 `8` and `32`, and the generator rejects any declared range that omits a cell
 they reach -- a window anchored in the wrong place, and one anchored right and
-cut short.
+cut short. The Registry Host's candidate scan derives the same way once it rejects a
+count above its 64-node capacity, and the derivation held the window it had
+carried under review to `S18..S401` where the review had stopped at `S399`, two
+cells short of the last record; the Adapter Bridge's candidate copy into the
+Snapshot Host derives `S17..S19` once the width it copies is held to three
+(issue #151).
 
 Because a declared range is rejected for omitting any derived cell, the
 derivation may witness only cells the program can really compute, and three

@@ -171,6 +171,60 @@ j Loop'''
 wv=IC10(wrong,self_ref=720);wd=Device(720,wv.stack,{'ReferenceId':720});wr=IC10((R/'ic10/directory-core/generic_registry_directory_host_v2_0.ic10').read_text(),{'d0':wd},self_ref=721)
 for _ in range(20):wv.run(1,max_steps=50000);wr.run(1,max_steps=50000)
 if wr.stack.get(16)!=-4 or wr.stack.get(3,0)!=0:fails.append('Registry Host accepted wrong schema/version')
+# A count above the capacity is a malformed source (issue #151). The Adapter header says 64 six-cell
+# records at S18..S401; a count of 65 walks the unguarded Host into S402, past the table, where it finds
+# a record naming node 7 again and overwrites node 7's ReferenceId with it. The guarded Host rejects the
+# count before it reads a record. Each witness runs the production program beside the same program with
+# its guard lines removed, so the guard is shown to be what stops the walk.
+def acking_adapter(mode,schema):
+ return f"""Boot:
+poke 0 HASH("DirectoryAdapter.v3")
+poke 1 3
+poke 2 17
+poke 3 HASH("{schema}")
+poke 15 {mode}
+Loop:
+yield
+get r0 db 16
+poke 17 r0
+j Loop"""
+def without(text,*lines):
+ for line in lines:
+  if line+'\n' not in text:fails.append('witness lost its guard line '+line)
+  text=text.replace(line+'\n','')
+ return text
+registry_src=(R/'ic10/directory-core/generic_registry_directory_host_v2_0.ic10').read_text()
+overfull={7:1,10:6,11:64,12:65,13:2,14:0}
+for n in range(64):overfull.update({18+6*n:n+1,19+6*n:1000+n,20+6*n:2})
+overfull.update({402:7,403:9999,404:2})
+def registry_after(source):
+ av=IC10(acking_adapter(2,'DirectorySchema.CatalogStoreNode.v1'),self_ref=740);av.stack.update(overfull);ad=Device(740,av.stack,{'ReferenceId':740})
+ rv=IC10(source,{'d0':ad},self_ref=741)
+ for _ in range(40):av.run(1,max_steps=50000);rv.run(1,max_steps=50000)
+ return rv.stack.get(16),rv.stack.get(100)
+if registry_after(registry_src)!=(-4,None):fails.append('Registry Host accepted a candidate count above its 64-node capacity: %r'%(registry_after(registry_src),))
+if registry_after(without(registry_src,'bgt r13 64 SourceBad'))!=(0,9999):fails.append('witness: the unguarded Registry Host did not read the 65th record past the candidate table: %r'%(registry_after(without(registry_src,'bgt r13 64 SourceBad')),))
+# The Bridge trusts the same header for the Snapshot Host it feeds. Its candidate copy lands at Host
+# S17 + cell, so a width above three writes over the Host's rebuild state at S20/S21; a capacity above 64
+# is configured into the Host, which then errors every command; and a count above the capacity walks the
+# copy past the Adapter's table, here into a 65th record the Adapter never counted, which the unguarded
+# Bridge publishes as an overflow the Adapter never reported.
+bridge_guards=('bgt r2 3 Release','bgt r3 64 Release','bgt r13 r3 Release')
+def bridged(source,cells):
+ hv,hd=host(750);av=IC10(acking_adapter(1,'DirectorySchema.Test.v1'),self_ref=751);av.stack.update(cells);ad=Device(751,av.stack,{'ReferenceId':751});bv=IC10(source,{'d0':ad,'d1':hd},self_ref=752)
+ for _ in range(400):av.run(1,max_steps=50000);bv.run(1,max_steps=50000);hv.run(1,max_steps=50000)
+ return hd.stack.get(11,0),hd.stack.get(12,0),hd.stack.get(21,0),max(hd.stack.get(25,0),hd.stack.get(26,0)),hd.stack.get(29,0)+hd.stack.get(30,0)
+wide={7:1,10:5,11:64,12:1,13:2,14:0,18:1,19:2,20:3,21:4,22:5}
+deep={7:1,10:3,11:100,12:1,13:2,14:0,18:1,19:2,20:3}
+many={7:1,10:3,11:64,12:65,13:2,14:0}
+for n in range(65):many.update({18+3*n:n+1,19+3*n:n+1,20+3*n:n+1})
+if bridged(B,wide)!=(0,0,0,0,0) or bridged(B,deep)!=(0,0,0,0,0) or bridged(B,many)!=(3,64,0,0,0):
+ fails.append('Bridge published from an Adapter header its Host cannot hold: %r'%([bridged(B,c) for c in (wide,deep,many)],))
+unguarded_bridge=without(B,*bridge_guards)
+w=bridged(unguarded_bridge,wide);d=bridged(unguarded_bridge,deep);m=bridged(unguarded_bridge,many)
+if (w[0],w[2])!=(5,5):fails.append('witness: the unguarded Bridge did not write a five-cell candidate over the Host rebuild state: %r'%(w,))
+if d[1]!=100:fails.append('witness: the unguarded Bridge did not configure a capacity of 100 into the Host: %r'%(d,))
+if not (m[3]>0 and m[4]==1):fails.append('witness: the unguarded Bridge did not publish a 65th candidate as an overflow the Adapter never reported: %r'%(m,))
 # Harness models the automatic execution quantum even without explicit yield.
 q=IC10('Loop:\nadd r0 r0 1\nj Loop\n')
 if q.run_tick(128)!='quantum' or q.reg.get('r0',0)<=0:fails.append('IC10 harness does not preempt a no-yield loop at the instruction quantum')
@@ -249,4 +303,5 @@ print(' - exact duplicate at full capacity does not falsely overflow')
 print(' - 128-instruction/8-instruction adversarial scheduler never publishes a torn Adapter generation')
 print(' - freeze request is reasserted and recovers after Adapter reboot')
 print(' - Registry Host rejects wrong schema/version before mutation')
+print(' - Registry Host and Adapter Bridge hold the Adapter count, width, and capacity to the table they walk')
 print(' - Power Reservation Adapter keys producer/consumer/battery dispatch and honors the S8 owner binding')

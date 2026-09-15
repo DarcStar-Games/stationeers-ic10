@@ -21,8 +21,8 @@ sh=D.get('snapshot_host',{}); rh=D.get('registry_host',{})
 if sh.get('boot_marker_slot')!=31 or 'generic_magic_slot' in sh: fail('snapshot boot marker metadata mismatch')
 if rh.get('publication_sequence_slot')!=23 or 'generic_magic_slot' in rh: fail('registry publication metadata mismatch')
 need('ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','poke 0 HASH("GenericSnapshotDirectoryHost.v1")','poke 1 1','bgt r2 3 Error','bgt r3 64 Error','poke 22 1','poke 24 r6','poke 15 r15','Shift:\nbge r6 r3 Full','Insert:\nbge r6 r3 Full')
-need('ic10/directory-core/generic_registry_directory_host_v2_0.ic10','poke 0 HASH("GenericRegistryDirectoryHost.v3")','poke 1 3','put d0 16 r11','get r0 d0 17','bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") SourceBad','bne r0 6 SourceBad','get r10 db 23','poke 23 r10','put d0 16 0')
-need('ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10','bne r0 HASH("DirectoryAdapter.v3") Loop','put d0 16 r11','get r0 d0 17','get r15 d0 13','get r10 d0 7','bne r0 r15 Release','bne r0 r10 Release','get r1 d1 9\nbeqz r1 Configure\nbne r1 r0 Release','get r1 d1 11\nbeqz r1 Configure\nbne r1 r2 Release','get r1 d1 12\nbeqz r1 Configure\nbne r1 r3 Release','Configure:\nput d1 9 r0\nput d1 11 r2\nput d1 12 r3\nBegin:','put d0 16 0')
+need('ic10/directory-core/generic_registry_directory_host_v2_0.ic10','poke 0 HASH("GenericRegistryDirectoryHost.v3")','poke 1 3','put d0 16 r11','get r0 d0 17','bne r0 HASH("DirectorySchema.CatalogStoreNode.v1") SourceBad','bne r0 6 SourceBad','get r13 d0 12\nbgt r13 64 SourceBad','get r10 db 23','poke 23 r10','put d0 16 0')
+need('ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10','bne r0 HASH("DirectoryAdapter.v3") Loop','put d0 16 r11','get r0 d0 17','get r15 d0 13','get r10 d0 7','bne r0 r15 Release','bne r0 r10 Release','get r2 d0 10\nbgt r2 3 Release\nget r3 d0 11\nbgt r3 64 Release','get r13 d0 12\nbgt r13 r3 Release','get r1 d1 9\nbeqz r1 Configure\nbne r1 r0 Release','get r1 d1 11\nbeqz r1 Configure\nbne r1 r2 Release','get r1 d1 12\nbeqz r1 Configure\nbne r1 r3 Release','Configure:\nput d1 9 r0\nput d1 11 r2\nput d1 12 r3\nBegin:','put d0 16 0')
 expected={
  'DirectorySchema.Controller':('ic10/controller-discovery/controller_directory_adapter_v4_0.ic10',1,2),
  'DirectorySchema.PressureGridLink':('ic10/pressure-grid/pressure_grid_link_directory_adapter_v3_0.ic10',1,3),
@@ -160,6 +160,7 @@ raise SystemExit(result.finish('Generic Directory contracts',[
  'Adapter ABI3 feeds Controller/Pressure/Resource/Reservation/Printer/TransformLane/PrinterExecution snapshots',
  'Snapshot Directory consumers derive each bank stride from the Host width and capacity',
  'Snapshot Bridge treats nonzero Host schema geometry as immutable until reinitialization',
+ 'Registry Host and Adapter Bridge reject an Adapter count, width, or capacity above the table they walk',
  'Printer v2 and TransformLane v1 share ProcessorSpec capability/power/busy/error semantics',
  'PrinterExecution v1 preserves exact PrinterRef and overlays locally verified output capacity',
  'transaction-critical snapshot consumers fail closed on overflow and revalidate active bank/generation']))

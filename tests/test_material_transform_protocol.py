@@ -24,7 +24,7 @@ for tok in ('get r10 d2 r0','getd r0 r1 22','getd r0 r15 36','poke r0 r1'):
     need(r,tok,'link resolver')
 for tok in ('putd r2 14 r10','putd r3 15 r10','putd r4 17 r1','poke 13 1'):
     need(s,tok,'reservation stager')
-for tok in ('poke 14 r1','poke 14 0','getd r0 r9 23','put d1 9 2'):
+for tok in ('poke 14 r1','poke 14 0','getd r0 r9 23','put d1 9 2','bgt r8 16 Reject'):
     need(m,tok,'multi allocator')
 if s.index('putd r4 17 r1') >= m.index('poke 14 r1'):
     pass # separate programs: semantic ordering checked dynamically below
@@ -97,6 +97,20 @@ over_stager_vm.stack.update({9:1,10:1,11:1,12:1,14:0})
 over_stager_vm.run(1)
 if over_stager_vm.stack.get(13)!=-1 or [c for c in over_stager_vm.stack if c>14]:
     fails.append('reservation stager accepted a resolved count above the admitted three')
+
+# The Allocator reads the same count and later walks the Resolver's four-cell records by it, so it
+# holds the count to the sixteen records a Resolver's table holds (S20..S83) where it first reads it;
+# a seventeenth record would be read from S84 (issue #151). The unguarded program stages the request.
+over_alloc_res=Device(960,dict(res_vm.stack)|{9:17},{'ReferenceId':960})
+def alloc_intake(source):
+    stg=Device(961,{},{'ReferenceId':961})
+    vm=IC10(source,{'d0':over_alloc_res,'d1':stg,**dyn},self_ref=962)
+    vm.run(1); vm.stack.update({8:2,20:999,21:5}); vm.run(2)
+    return vm.stack.get(22),stg.stack.get(9)
+if alloc_intake(m)!=(-1,None):
+    fails.append('multi allocator staged a request with more input records than a Resolver publishes')
+if 'bgt r8 16 Reject\n' not in m or alloc_intake(m.replace('bgt r8 16 Reject\n',''))!=(3,1):
+    fails.append('witness: the unguarded allocator did not stage the seventeen-record request')
 
 # A reflash preserves the whole stack, so a housing that last ran something else hands
 # the stager both a staged count at S8 and an unread request at S9..S12/S14. Only its own
@@ -223,6 +237,7 @@ print('Generic Material Transform protocol: PASS')
 print(' - admission validates 1..3 inputs, hierarchical processor capabilities, universal transform conditions, and output capacity')
 print(' - resolver selects complete typed Material Links terminating at the exact processor')
 print(' - stager prepares every reservation/Guard before allocator publishes one common epoch')
+print(' - allocator holds the Resolver input count to the sixteen records a Resolver table holds')
 print(' - any failed input rolls back partial reservations without publishing a commit epoch')
 print(' - Grant Guard accepts only the current Allocator ABI2 contract')
 print(' - generic runtime completes a simulated 3-input transform and confirms output growth')
