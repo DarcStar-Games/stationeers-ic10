@@ -773,24 +773,6 @@
     ]
    ]
   },
-  "ic10/diagnostics/diagnostic_hash_console_mode_v1_0.ic10": {
-   "source_sha256": "16d5cd1fef43830934d5ac553267bc6fa0fe89f94628f4d80a61c049587ce6a6",
-   "dynamic_read_ranges": [
-    [
-     16,
-     39
-    ]
-   ]
-  },
-  "ic10/diagnostics/diagnostic_renderer_v1_1.ic10": {
-   "source_sha256": "4eb6aaa100314c46049a6c43a2506c75e2dcba412078bb205fdf4f8cf71ecc02",
-   "dynamic_read_ranges": [
-    [
-     64,
-     383
-    ]
-   ]
-  },
   "ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10": {
    "source_sha256": "566e8993d2c4287046d6075ab4c68046de6b2a1760586a317b3b53d55f3b44d2",
    "ports": {
@@ -1824,12 +1806,6 @@
   },
   "ic10/power-grid/power_reservation_directory_adapter_v1_0.ic10": {
    "source_sha256": "1c8b4dab5aeea7aa7cbf33a7f5de6d0ed5db358458955788c9fb605bd787949f",
-   "dynamic_write_ranges": [
-    [
-     18,
-     209
-    ]
-   ],
    "external_readable_ranges": [
     [
      0,
@@ -2472,12 +2448,6 @@
   },
   "ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10": {
    "source_sha256": "d95e36ff6472f3c75e1aad52547aea1aa74ac9af6bb02dd5aa6a9fe957b775cb",
-   "dynamic_write_ranges": [
-    [
-     18,
-     209
-    ]
-   ],
    "external_readable_ranges": [
     [
      0,
@@ -2792,12 +2762,6 @@
   },
   "ic10/transform-catalog/resource_transform_profile_view_v8_0.ic10": {
    "source_sha256": "684f8545b583e37e0e11862e58df68bebb810c961e6d6840b448a2cde786fa4d",
-   "dynamic_write_ranges": [
-    [
-     8,
-     67
-    ]
-   ],
    "external_readable_ranges": [
     [
      0,

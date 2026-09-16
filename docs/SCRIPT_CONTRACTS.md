@@ -269,6 +269,41 @@ so neither program carries a fingerprinted window any more, and a change to
 the transforms data no longer invalidates a fingerprint whose only content was
 the table size (issue #156).
 
+Four more readings retire windows the same way (issue #139). A `clamp` between
+two literals holds its operand to them whatever the operand was, and a `mod` by
+a divisor held to `[1, high]` leaves `[0, high - 1]` whatever the dividend was
+-- the game's `mod` is a true modulo -- so the Diagnostic Hash Console Mode's
+eight records (`S16..S39`) and the Diagnostic Renderer's 64 (`S64..S383`)
+derive whole with no window. A loop is everywhere its pass runs and not the
+text between its header and its last latch, so the counter a scan advances
+inside a subroutine standing after that latch is the scan's counter: the Power
+Reservation Directory Adapter's `Add` is called once or twice a pass and lands
+its records on `S18..S209`. And one advance site under two loops, or one a pass
+may run twice, moves its register by one amount however the loops interleave,
+so a trusted ceiling at the access counts it out exactly wherever some loop
+around it is counted by nothing else, which is the Printer Execution Directory
+Adapter's bank-and-pin walk over the same `S18..S209`. A limit checked from
+above alone never enumerates, but its ceiling now carries through `move`, `add`,
+`sub`, and a `mul` by a literal to the loop counted against it, since a smaller
+limit only runs fewer passes; an interval is only ever a bound here and never a
+witness set, so the sparse-gap objection to widening does not arise. That
+ceiling alone did not retire the fifth window, the Resource Transform Profile
+View's `S8..S67`: its `CopyPool` is called from three sites, each with its own
+seed in `r1` and its own count in `r11`, and read merged the smallest seed pairs
+with the largest limit and the copy appears to reach `S151`, a cell no call
+writes. A register is therefore read once per state of the access, and every
+guard, header, and limit it asks about is placed against that state: a state
+of the asked index counts when the access is reachable from it without passing
+the index again, which is the visit the access's own execution last made. The
+other callers' copies of the exit test cannot reach this caller's `poke` without
+re-passing the test, so a limit one caller computed gates that caller's copy
+alone; the three copies land on `S64..S67`, `S8..S31`, and `S32..S63`, and
+their union is the window. The return address alone would not do: it persists
+past the return, so the first pass of a loop whose body calls a subroutine runs
+the guards before the call with no return address and every later pass with
+one, and a reader after the call is gated by both. Where no state of an index
+can reach the access, every state there answers, which is the merged reading.
+
 What that derives is the surface the program *permits*, not what one execution
 performs: a declaration has to cover every cell a legal peer can steer the loop
 to. It is always a floor a declaration must contain, and where the derivation

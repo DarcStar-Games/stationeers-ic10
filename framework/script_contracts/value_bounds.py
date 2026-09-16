@@ -74,6 +74,40 @@ values that matter are small: a set-instruction answers one of two things, and a
 service multiplies its published record width by, so without them the programs
 that bound themselves most explicitly -- the generic hosts, which read a width
 from a peer and guard it -- derive nothing at all.
+
+Where a value does not enumerate, its interval still can, and an interval is
+only ever a bound here and never a witness set, so widening it claims no cell.
+A count checked from above alone has a ceiling and no floor, and the ceiling
+carries through a `move`, an `add`, a `sub`, or a `mul` by a literal to the
+limit a loop is counted against, where the ceiling is all a trip count needs. A
+`clamp` between two literals is its bounds whatever it clamped, and a `mod` by a
+divisor held above zero is `[0, divisor - 1]` whatever it divided, the game's
+`mod` being a true modulo.
+
+A loop is everywhere its pass runs and not the text between its header and its
+last latch: a scan that calls a subroutine standing after that latch runs it
+every pass, so an access inside the subroutine is advanced by the scan. One
+advance site shared by every loop around an access, or one a pass may run
+twice, moves the register by one amount however the loops interleave, so a
+trusted ceiling at the access counts it out exactly wherever some loop around
+it is counted by nothing else -- and a loop whose own test stops it short of
+the ceiling keeps the closure from it, since the upper values may never run.
+
+A register is read once per state of the access, and every guard, header, and
+limit it asks about is placed against that state: a state of the asked index
+counts when the access is reachable from it without passing the index again,
+which is the visit the access's own execution last made. A copy loop a program
+calls from three sites is three loops here, each with the seed and the limit its
+own caller computed, because the other callers' copies of the exit test cannot
+reach this caller's access without re-passing the test. Read merged, the
+smallest seed would pair with the largest limit and the copy would appear to
+reach cells no call writes -- and since a declaration is held to every cell
+derived, that reading could never be published whole. The return address alone
+does not tell the visits apart, since it persists past the return: the first
+pass of a loop whose body calls a subroutine runs the guards before the call
+with no return address and the later passes with one, and a reader after the
+call is gated by both. Where no state of an index can reach the access, every
+state there answers, which is the merged reading.
 """
 from __future__ import annotations
 
@@ -233,6 +267,25 @@ def meet(first: tuple[int | None, int | None], second: tuple[int | None, int | N
     return (low, high)
 
 
+def join(first: tuple[int | None, int | None], second: tuple[int | None, int | None]):
+    """The looser of two intervals -- what holds when either constraint may apply."""
+    low = None if first[0] is None or second[0] is None else min(first[0], second[0])
+    high = None if first[1] is None or second[1] is None else max(first[1], second[1])
+    return (low, high)
+
+
+def context_order(ra: int | None) -> int:
+    """A sort key for return addresses, with the no-call context first."""
+    return -1 if ra is None else ra
+
+
+def state_order(state: CallState | None) -> tuple[int, int]:
+    """A sort key for call states, so a walk over them is deterministic; `None` (no write) sorts first."""
+    if state is None:
+        return (-1, -1)
+    return (state[0], context_order(state[1]))
+
+
 class ValueBounds:
     """What one program's branches permit its registers and dynamic addresses to hold."""
 
@@ -256,15 +309,56 @@ class ValueBounds:
         self._carried: dict[int, dict[str, list[tuple[int, int]]]] = {}
         self._pass_nodes: dict[int, set[int]] = {}
         self._span: dict[int, set[int]] = {}
+        self._members: dict[int, set[int]] = {}
+        self._written: dict[tuple[int, frozenset[CallState], str], tuple] = {}
+        self._last_visits: dict[tuple[int, frozenset[CallState]], list[CallState]] = {}
         self._derived: dict[int, dict[int, set[str]]] = {}
-        self._reaching: dict[tuple[str, frozenset[int]], dict[int, frozenset[int | None]]] = {}
+        self._reaching: dict[tuple[str, frozenset[int]], dict[CallState, frozenset[CallState | None]]] = {}
+
+    def states_at(self, index: int, focus: frozenset[CallState]) -> list[CallState]:
+        """The states at `index` a reader in `focus` last passed through, or every state there when none.
+
+        A reader asking about a guard, a header, or a limit wants the visit to
+        that index that its own execution last made, and a state at the index
+        is that visit when some focus state is reachable from it without
+        passing the index again. Three copies of a loop a program calls from
+        three sites are told apart this way: the other callers' copies of the
+        exit test cannot reach this caller's access without re-passing the
+        test. It is not the return address alone that tells them apart, because
+        `ra` persists past the return: the first pass of a loop whose body calls
+        a subroutine runs the guards before the call with no return address
+        and the later passes run them with one, and a reader after the call is
+        gated by both. Where no state at the index can reach the focus, every
+        state there answers, which is the merged reading this refines.
+        """
+        states = self._by_index.get(index, [])
+        key = (index, focus)
+        if key not in self._last_visits:
+            # One backward walk from the focus, stopping at the index: every
+            # state of the index it steps onto is a last visit, and a focus
+            # state standing at the index is its own.
+            found = {state for state in focus if state[0] == index}
+            seen: set[CallState] = set(found)
+            pending = [state for state in focus if state[0] != index]
+            while pending:
+                state = pending.pop()
+                if state in seen:
+                    continue
+                seen.add(state)
+                for previous in self._state_predecessors.get(state, ()):
+                    if previous[0] == index:
+                        found.add(previous)
+                    elif previous not in seen:
+                        pending.append(previous)
+            self._last_visits[key] = [state for state in states if state in found] or list(states)
+        return self._last_visits[key]
 
     def sites(self, index: int) -> dict[str, set[int]]:
         """Every loop advance around `index`, by register -- the writes a seed scan skips."""
         if index not in self._sites:
             found: dict[str, set[int]] = {}
             for header in self.regions:
-                if index in self.region_span(header):
+                if index in self.region_members(header):
                     for register, updates in self.region_carried(header).items():
                         found.setdefault(register, set()).update(place for place, _ in updates)
             self._sites[index] = found
@@ -395,6 +489,23 @@ class ValueBounds:
             self._span[header] = set(range(header, max(self.regions[header]) + 1))
         return self._span[header]
 
+    def region_members(self, header: int) -> set[int]:
+        """Everywhere the loop at `header` runs: its span, and whatever its pass reaches beyond it.
+
+        Membership -- is this access inside the loop, so that the loop's
+        advances are folded onto its seed -- is a question about where the
+        pass runs and not about the text. A scan that calls a subroutine
+        standing after its last latch runs that subroutine every pass, and an
+        access inside it is advanced by the scan exactly as one between the
+        header and the latch is. The span alone would leave the subroutine's
+        accesses outside, where the advance reads as an ordinary write that
+        reaches itself round the back edge and evaluates to nothing. This is
+        the same net the disqualifying write scan is cast over.
+        """
+        if header not in self._members:
+            self._members[header] = self.region_span(header) | self.pass_nodes(header)
+        return self._members[header]
+
     def every_latch(self, header: int, place: int) -> bool:
         """Does `place` stand on every way around the loop at `header`?"""
         return all(place in self.dominators.get(latch, ()) for latch in self.regions[header])
@@ -459,13 +570,15 @@ class ValueBounds:
                 excluded.add(value)
         return pinned, excluded
 
-    def guard_interval(self, access: int, register: str, sites, depth: int, seen) -> tuple:
+    def guard_interval(self, access: int, register: str, sites, depth: int, seen, focus) -> tuple:
         """The interval every branch that gates `access` permits `register` to hold.
 
         The third answer is whether those ends can be trusted not to cut a value
         the register really reaches. A limit read from a token whose own values
         were never shown whole may be smaller than the real one, and a bound that
-        is too tight bounds nothing.
+        is too tight bounds nothing. The compared side is read at the visits to
+        the guard the access's own states last made, so a limit one caller
+        computed gates that caller's copy alone.
         """
         interval = UNBOUNDED
         trusted = True
@@ -480,7 +593,7 @@ class ValueBounds:
             if table is None or self.rewritten(entered, index, access, register):
                 continue
             other_low, other_high, other_trusted = self.interval_of(
-                index, against, sites, depth + 1, seen
+                index, against, sites, depth + 1, seen, focus
             )
             low_delta, high_delta = table[operator]
             low = None if low_delta is None or other_low is None else other_low + low_delta
@@ -511,7 +624,7 @@ class ValueBounds:
             for node in live
         )
 
-    def trip_bound(self, header: int, depth: int, seen) -> tuple[int | None, bool]:
+    def trip_bound(self, header: int, depth: int, seen, focus) -> tuple[int | None, bool]:
         """Most passes the loop at `header` can make, from whatever branch counts it out.
 
         The test may sit at the top and leave when it holds, or at the bottom and
@@ -541,10 +654,10 @@ class ValueBounds:
         for index, operator, counter, against, target, step in self.counting_tests(header):
             table = LAST_PASS_CONTINUING if target in pass_nodes else LAST_PASS_EXITING
             leaving = target if table is LAST_PASS_EXITING else index + 1
-            _, limit, limit_trusted = self.interval_of(index, against, sites, depth + 1, seen)
+            _, limit, limit_trusted = self.interval_of(index, against, sites, depth + 1, seen, focus)
             # The counter enters the loop at its seed: asking for its value here
             # would ask for the trip count that is being derived.
-            entering, entering_whole = self.seed_values(header, counter, sites, depth + 1, seen)
+            entering, entering_whole = self.seed_values(header, counter, sites, depth + 1, seen, focus)
             if limit is None or not entering:
                 continue
             passes = max(0, (limit + table[operator] - min(entering)) // step + 1)
@@ -587,7 +700,7 @@ class ValueBounds:
                 found.append((index, operator, counter, against, target, step))
         return found
 
-    def exit_pass(self, header: int, index: int, leaving: int, depth: int, seen) -> int | None:
+    def exit_pass(self, header: int, index: int, leaving: int, depth: int, seen, focus) -> int | None:
         """On which pass, counted from one, the loop's own test at `index` leaves along `leaving`.
 
         An early exit can fire on any pass; the counted exit fires on exactly
@@ -613,20 +726,20 @@ class ValueBounds:
         if not all(self.every_latch(header, place) for place, _ in self.region_carried(header)[counter]):
             return None
         sites = self.region_sites(header)
-        limits, limits_whole = self.values(index, against, sites, depth + 1, seen)
-        entering, entering_whole = self.seed_values(header, counter, sites, depth + 1, seen)
+        limits, limits_whole = self.values_at(index, focus, against, sites, depth + 1, seen)
+        entering, entering_whole = self.seed_values(header, counter, sites, depth + 1, seen, focus)
         if not (limits_whole and entering_whole) or limits is None or len(limits) != 1 or len(entering) != 1:
             return None
         passes = max(0, (min(limits) + table[operator] - min(entering)) // step + 1)
         return passes + 1 if table is LAST_PASS_EXITING else passes
 
-    def reaches(self, origin: CallState, index: int, blocked: set[int]) -> bool:
-        """Does `origin` reach `index` without passing any blocked index on the way?"""
+    def reaches(self, origin: CallState, targets: set[CallState], blocked: set[int]) -> bool:
+        """Does `origin` reach one of `targets` without passing any blocked index on the way?"""
         seen: set[CallState] = set()
         pending = [origin]
         while pending:
             state = pending.pop()
-            if state[0] == index:
+            if state in targets:
                 return True
             if state in seen or state[0] in blocked:
                 continue
@@ -651,7 +764,7 @@ class ValueBounds:
             standing += amount
         return standing
 
-    def after_loop_values(self, header: int, index: int, token: str, depth: int, seen) -> Derived:
+    def after_loop_values(self, header: int, index: int, token: str, depth: int, seen, focus) -> Derived:
         """What the loop at `header` leaves in `token` for a reader outside its passes.
 
         The value is the seed plus the advances of every pass that ran before
@@ -686,15 +799,17 @@ class ValueBounds:
         around = [
             other for other in self.regions
             if token in self.region_carried(other)
-            and any(place in self.region_span(other) for place, _ in updates)
+            and any(place in self.region_members(other) for place, _ in updates)
         ]
         if not updates or around != [header]:
             return OPEN
         if not all(self.every_latch(header, place) for place, _ in updates):
             return OPEN
         stride = sum(amount for _, amount in updates)
-        entering, entering_whole = self.seed_values(header, token, self.region_sites(header), depth + 1, seen)
-        trips, counted = self.trip_bound(header, depth + 1, seen)
+        entering, entering_whole = self.seed_values(
+            header, token, self.region_sites(header), depth + 1, seen, focus
+        )
+        trips, counted = self.trip_bound(header, depth + 1, seen, focus)
         if not entering or not trips:
             return OPEN
         pass_nodes = self.pass_nodes(header)
@@ -704,26 +819,27 @@ class ValueBounds:
             if node != index and node not in transparent
             and entry["row"] and writes_register(entry["row"], token)
         }
+        readers = set(self.states_at(index, focus))
         values: set[int] = set()
         whole = entering_whole and counted
         for state, outgoing in self.states.items():
             if state[0] not in pass_nodes:
                 continue
             for target in outgoing:
-                if target[0] in pass_nodes or not self.reaches(target, index, blocked):
+                if target[0] in pass_nodes or not self.reaches(target, readers, blocked):
                     continue
                 prefix = self.standing_before(header, state[0], updates)
                 if prefix is None:
                     return OPEN
                 left = {seed + prefix + (ran - 1) * stride for seed in entering for ran in range(1, trips + 1)}
                 if any(test[0] == state[0] for test in self.counting_tests(header)):
-                    fired = self.exit_pass(header, state[0], target[0], depth, seen)
+                    fired = self.exit_pass(header, state[0], target[0], depth, seen, frozenset({state}))
                     if fired is None:
                         whole = False
                         continue
                     left = {seed + prefix + (fired - 1) * stride for seed in entering}
                 else:
-                    cut = self.exit_constraint(header, state[0], target[0], token, depth, seen)
+                    cut = self.exit_constraint(header, state[0], target[0], token, depth, seen, frozenset({state}))
                     if cut is None:
                         whole = False
                         continue
@@ -778,7 +894,7 @@ class ValueBounds:
         self._derived[header] = entering
         return entering
 
-    def exit_constraint(self, header: int, index: int, leaving: int, token: str, depth: int, seen):
+    def exit_constraint(self, header: int, index: int, leaving: int, token: str, depth: int, seen, focus):
         """What the exit at `index`, taken along `leaving`, permits `token` to hold as it fires.
 
         `(low, high, pinned, excluded, trusted)` for an exit whose passes this
@@ -812,7 +928,7 @@ class ValueBounds:
         if compared is not None:
             operator, _register, against, _target = compared
             other_low, other_high, trusted = self.interval_of(
-                index, against, self.region_sites(header), depth + 1, seen
+                index, against, self.region_sites(header), depth + 1, seen, focus
             )
             low_delta, high_delta = table[operator]
             low = None if low_delta is None or other_low is None else other_low + low_delta
@@ -830,7 +946,7 @@ class ValueBounds:
             # the other side can be, the unequal edge everywhere but a single
             # value the other side is pinned to.
             other_low, other_high, trusted = self.interval_of(
-                index, row[2], self.region_sites(header), depth + 1, seen
+                index, row[2], self.region_sites(header), depth + 1, seen, focus
             )
             if (table is TAKEN) == EQUAL_WHEN_TAKEN[operator]:
                 return (other_low, other_high, None, set(), trusted or (other_low is None and other_high is None))
@@ -850,8 +966,32 @@ class ValueBounds:
         """Every loop around `index` that advances `token` and never resets it."""
         return [
             header for header in self.regions
-            if index in self.region_span(header) and token in self.region_carried(header)
+            if index in self.region_members(header) and token in self.region_carried(header)
         ]
+
+    def shared_advance(self, around: list[int], token: str) -> int | None:
+        """The amount of the one site every loop in `around` advances `token` through, if there is one."""
+        sites = {place: amount for header in around for place, amount in self.region_carried(header)[token]}
+        if len(sites) != 1:
+            return None
+        return next(iter(sites.values()))
+
+    def ceiling_counts(self, around: list[int], token: str, high, trusted: bool, depth: int, seen, focus) -> bool:
+        """Does a ceiling at the access count `token` out exactly, whichever loop in `around` moved it?
+
+        Two loops advancing one register through the same site, or one loop
+        whose pass may run the site twice, move it by the same amount however
+        they interleave, so a trusted ceiling at the access names the last
+        value it reaches and the values are the seed plus every multiple of the
+        amount up to it. That set is exact only where some loop around the
+        access is counted by nothing but the ceiling, since it can re-enter the
+        site until the guard fires; a loop whose own test stops it short leaves
+        the upper values unreached, and a value in the set has to be one the
+        program reaches.
+        """
+        if high is None or not trusted or self.shared_advance(around, token) is None:
+            return False
+        return any(self.trip_bound(header, depth, seen, focus)[0] is None for header in around)
 
     def carried(self, index: int, token: str) -> tuple[int, int, int] | None:
         """`(region, stride, prefix)` for the innermost loop that advances `token`.
@@ -905,7 +1045,7 @@ class ValueBounds:
                 sum(amount for _, amount in updates),
                 sum(amount for _, amount in standing))
 
-    def first_pass_offsets(self, index: int, token: str) -> set[int] | None:
+    def first_pass_offsets(self, index: int, token: str, focus) -> set[int] | None:
         """How far the innermost loop carrying `token` has advanced it when its first pass reaches `index`.
 
         One sum per way from the header to the access that does not pass the
@@ -935,20 +1075,106 @@ class ValueBounds:
                     if len(known) > 64:
                         return None
                     pending.append(target)
-        found = set().union(*(offsets.get(state, set()) for state in self._by_index.get(index, ())))
+        found = set().union(*(offsets.get(state, set()) for state in self.states_at(index, focus)))
         return found or None
 
-    def interval_of(self, index: int, token: str, sites, depth: int, seen) -> tuple:
+    def interval_of(self, index: int, token: str, sites, depth: int, seen, focus) -> tuple:
         """How far `token` can reach either way, even where its values do not enumerate.
 
         A count checked by `bgt r3 8 Bad` alone has a ceiling and no floor, so it
         never enumerates -- but the ceiling is the whole of what a loop counted
         against it needs.
         """
-        values, whole = self.values(index, token, sites, depth, seen)
+        # The guards and the writes asked about below are placed against this
+        # index's own visits, as `values_at` places its own: a guard on a limit
+        # gates the limit's test, not the reader that asked about the limit,
+        # and a later visit to that guard on the way to the reader is not it.
+        focus = frozenset(self.states_at(index, focus))
+        values, whole = self.values_at(index, focus, token, sites, depth, seen)
         if values is not None:
             return (min(values), max(values), whole)
-        return self.guard_interval(index, token, sites, depth, seen)
+        low, high, trusted = self.guard_interval(index, token, sites, depth, seen, focus)
+        written_low, written_high, written_trusted = self.written_interval(index, token, depth, seen, focus)
+        return (*meet((low, high), (written_low, written_high)), trusted and written_trusted)
+
+    def written_interval(self, index: int, token: str, depth: int, seen, focus) -> tuple:
+        """How far the writes reaching `index` can move `token`, where they do not enumerate.
+
+        The join over every write that can still be in the register: an
+        interval is open on any side some write leaves open, and a register
+        arriving from a reflash is open on both. A loop advance is a write like
+        any other here, and one that reaches itself round the back edge leaves
+        the side it moves open, which is what an uncounted loop does to it. A
+        graph with a transfer nobody can follow may be missing a write, so it
+        bounds nothing, as every other bound reader here stands down on it.
+        """
+        if not self.complete or depth > MAX_DEPTH or ("written", index, focus, token) in seen:
+            return (*UNBOUNDED, True)
+        key = (index, focus, token)
+        if key not in self._written:
+            # A cut deeper down only ever widens the answer, so what one walk
+            # found under its own cuts is a sound answer for every later asker.
+            # The cycle key is its own, so a walk through here never stands a
+            # value derivation down by looking like one.
+            seen = seen | {("written", index, focus, token)}
+            joined: tuple[int | None, int | None] | None = None
+            trusted = True
+            reaching = self.reaching(index, focus, token, frozenset()) or frozenset({None})
+            for back in sorted(reaching, key=state_order):
+                if back is None:
+                    found = (*UNBOUNDED, True)
+                else:
+                    found = self.definition_interval(back, token, depth + 1, seen)
+                joined = found[:2] if joined is None else join(joined, found[:2])
+                trusted = trusted and found[2]
+            self._written[key] = (*(UNBOUNDED if joined is None else joined), trusted)
+        return self._written[key]
+
+    def definition_interval(self, back: CallState, token: str, depth: int, seen) -> tuple:
+        """How far one write can move `token`, read as an interval where its values do not enumerate.
+
+        A count checked from above alone has a ceiling and no floor, so
+        nothing along `move r11 r4` / `mul r9 r11 4` / `add r9 r9 r1`
+        enumerates -- but the ceiling carries through each of them, and the
+        ceiling is the whole of what a loop counted against the result needs:
+        a smaller limit only runs fewer passes. `move` carries the operand's
+        interval, `add` and `sub` combine two, and `mul` scales one by a
+        literal; anything else leaves both sides open.
+        """
+        values, whole = self.definition_values(back, token, depth, seen)
+        if values is not None:
+            return (min(values), max(values), whole)
+        index, focus = back[0], frozenset({back})
+        row = self.program[index]["row"]
+        sites = self.sites(index)
+        if row[0] == "move" and len(row) >= 3:
+            return self.interval_of(index, row[2], sites, depth + 1, seen, focus)
+        if row[0] == "select" and len(row) >= 5:
+            when_true = self.interval_of(index, row[3], sites, depth + 1, seen, focus)
+            when_false = self.interval_of(index, row[4], sites, depth + 1, seen, focus)
+            return (*join(when_true[:2], when_false[:2]), when_true[2] and when_false[2])
+        if row[0] in {"add", "sub", "mul"} and len(row) >= 4:
+            left_low, left_high, left_trusted = self.interval_of(index, row[2], sites, depth + 1, seen, focus)
+            right_low, right_high, right_trusted = self.interval_of(index, row[3], sites, depth + 1, seen, focus)
+            trusted = left_trusted and right_trusted
+            if row[0] == "add":
+                low = None if left_low is None or right_low is None else left_low + right_low
+                high = None if left_high is None or right_high is None else left_high + right_high
+                return (low, high, trusted)
+            if row[0] == "sub":
+                low = None if left_low is None or right_high is None else left_low - right_high
+                high = None if left_high is None or right_low is None else left_high - right_low
+                return (low, high, trusted)
+            scale = resolve_integer(row[3], self.integer_aliases)
+            scaled = (left_low, left_high)
+            if scale is None:
+                scale, scaled = resolve_integer(row[2], self.integer_aliases), (right_low, right_high)
+            if scale is None or scale <= 0:
+                return (*UNBOUNDED, True)
+            low = None if scaled[0] is None else scaled[0] * scale
+            high = None if scaled[1] is None else scaled[1] * scale
+            return (low, high, trusted)
+        return (*UNBOUNDED, True)
 
     def values(self, index: int, token: str, sites, depth: int = 0, seen=frozenset()) -> Derived:
         """Every value `token` can hold just before `program[index]`, and whether that is all.
@@ -959,15 +1185,41 @@ class ValueBounds:
         second, and every step that leaves a value unaccounted for -- a write
         nothing evaluates, a loop nothing counts out, a guard read off an
         untrusted limit -- takes it away.
+
+        An index runs once per state it has, and each state is read on its own
+        and joined here. A copy loop a program calls from three sites with a
+        different seed and limit at each is three loops to this: read merged,
+        the smallest seed would be paired with the largest limit and the copy
+        would appear to reach cells no call reaches, and since a declaration is
+        held to every cell derived, that reading could not be published as
+        whole at all (issue #139).
         """
+        states = sorted(self._by_index.get(index, ()), key=state_order) or [None]
+        known: set[int] = set()
+        closed = True
+        for state in states:
+            focus = frozenset() if state is None else frozenset({state})
+            found, whole = self.values_at(index, focus, token, sites, depth, seen)
+            if found is None:
+                closed = False
+            else:
+                known |= found
+                closed = closed and whole
+        return (known, closed) if known else OPEN
+
+    def values_at(self, index: int, focus, token: str, sites, depth: int, seen) -> Derived:
+        """`values`, read for the readers in `focus` alone -- see `states_at` for how an index is placed against them."""
         literal = resolve_integer(token, self.integer_aliases)
         if literal is not None:
             return {literal}, True
-        if depth > MAX_DEPTH or (index, token) in seen:
+        # From here on the focus is this index's own visits, so every guard,
+        # header, and limit asked about below is placed relative to them.
+        focus = frozenset(self.states_at(index, focus))
+        if depth > MAX_DEPTH or (index, focus, token) in seen:
             return OPEN
-        seen = seen | {(index, token)}
-        values, whole = self.seed_values(index, token, sites, depth, seen)
-        low, high, trusted = self.guard_interval(index, token, sites, depth, seen)
+        seen = seen | {(index, focus, token)}
+        values, whole = self.seed_values(index, token, sites, depth, seen, focus)
+        low, high, trusted = self.guard_interval(index, token, sites, depth, seen, focus)
         pinned, excluded = self.equality_constraints(index, token)
         if pinned is not None and (values is None or not whole):
             # An equality guard on the only edge that reaches here names the
@@ -985,23 +1237,31 @@ class ValueBounds:
             # cell a peer can steer this to and every cell it can reach at all.
             values = set(range(low, high + 1)) - excluded
             return (values, trusted) if values else OPEN
-        carried = self.carried(index, token) if token in sites else None
-        alone = carried is not None and len(self.carrying_regions(index, token)) == 1
-        if token in sites:
+        around = self.carrying_regions(index, token) if token in sites else []
+        carried = self.carried(index, token) if around else None
+        alone = carried is not None and len(around) == 1
+        if around and not alone:
             # A loop this cannot read the advances of leaves the register
             # somewhere past the seed, and an enclosing loop that advances it too
-            # leaves it somewhere past the innermost pass read below.
-            whole = whole and alone
-        if carried is None and token in sites and self.carrying_regions(index, token):
+            # leaves it somewhere past the innermost pass read below -- unless
+            # one advance site is all that moves the register, whichever loop
+            # re-entered it, and a trusted ceiling at the access counts it out.
+            whole = whole and self.ceiling_counts(around, token, high, trusted, depth, seen, focus)
+        if carried is None and around:
             # Advances a branch chooses between, or one the access stands behind
             # on some ways round and not others, leave the register at its first
             # pass: the seed plus whatever the pass advanced it by on the way to
             # the access, which is one of a few sums and never the bare seed
-            # when every way passes an advance.
-            offsets = self.first_pass_offsets(index, token)
+            # when every way passes an advance. Past that first pass a single
+            # shared site moves it by one amount at a time up to the ceiling.
+            offsets = self.first_pass_offsets(index, token, focus)
             if offsets is None:
                 return OPEN
             values = {value + offset for value in values for offset in offsets}
+            shared = self.shared_advance(around, token)
+            if shared is not None and high is not None:
+                reachable = (high - min(values)) // shared
+                values = {value + step * shared for value in values for step in range(reachable + 1)}
         if carried is not None:
             region, stride, prefix = carried
             values = {value + prefix for value in values}
@@ -1010,7 +1270,7 @@ class ValueBounds:
             # re-enters the inner one, so the inner count bounds a pass and not
             # the register, and what the register can hold is then whatever the
             # guards at the access permit.
-            trips, counted = self.trip_bound(region, depth, seen) if alone else (None, False)
+            trips, counted = self.trip_bound(region, depth, seen, focus) if alone else (None, False)
             advances = -1 if trips is None else trips - 1
             if high is not None:
                 # A guard at the access counts the loop out as well as its own
@@ -1039,8 +1299,13 @@ class ValueBounds:
             return OPEN
         return values, whole and trusted
 
-    def arriving(self, token: str, transparent: frozenset[int]) -> dict[int, frozenset[int | None]]:
-        """Which write is still in `token` at each index, over the call states.
+    def reaching(self, index: int, focus, token: str, transparent: frozenset[int]) -> frozenset[CallState | None]:
+        """The writer states still in `token` at the visits to `index` a reader in `focus` last made."""
+        arriving = self.arriving(token, transparent)
+        return frozenset().union(*(arriving.get(state, frozenset()) for state in self.states_at(index, focus)))
+
+    def arriving(self, token: str, transparent: frozenset[int]) -> dict[CallState, frozenset[CallState | None]]:
+        """Which write is still in `token` at each state, as the state that made it.
 
         The nearest write in program order is not the answer: a register holds
         what the last write on the path that got here left in it, and different
@@ -1055,7 +1320,10 @@ class ValueBounds:
         rather than too strictly. Merging a subroutine's call strings joins each
         caller's entry to every caller's return, and a path stitched from two of
         them carries a write no execution does -- so the walk is over the call
-        states, where a return goes back to the site that made it.
+        states, where a return goes back to the site that made it. The write
+        is kept as the state that made it, not its index, so a reader in one
+        caller's context evaluates the write's operands in the context they
+        were computed in.
         """
         key = (token, transparent)
         if key not in self._reaching:
@@ -1063,7 +1331,7 @@ class ValueBounds:
                 node for node, entry in enumerate(self.program)
                 if entry["row"] and writes_register(entry["row"], token)
             } - transparent
-            incoming: dict[CallState, frozenset[int | None]] = {state: frozenset() for state in self.states}
+            incoming: dict[CallState, frozenset[CallState | None]] = {state: frozenset() for state in self.states}
             start: CallState = (0, None)
             pending: list[CallState] = []
             if start in incoming:
@@ -1071,33 +1339,31 @@ class ValueBounds:
                 pending.append(start)
             while pending:
                 state = pending.pop()
-                leaving = frozenset({state[0]}) if state[0] in writers else incoming[state]
+                leaving = frozenset({state}) if state[0] in writers else incoming[state]
                 for target in self.states.get(state, ()):
                     if not leaving <= incoming[target]:
                         incoming[target] |= leaving
                         pending.append(target)
-            merged: dict[int, frozenset[int | None]] = {}
-            for state, reaching in incoming.items():
-                merged[state[0]] = merged.get(state[0], frozenset()) | reaching
-            self._reaching[key] = merged
+            self._reaching[key] = incoming
         return self._reaching[key]
 
-    def seed_values(self, index: int, token: str, sites, depth: int, seen) -> Derived:
-        """The join over every write that can still be in `token` at `index`.
+    def seed_values(self, index: int, token: str, sites, depth: int, seen, focus) -> Derived:
+        """The join over every write that can still be in `token` at `index`, in the context `ra` names.
 
         One write is enough to witness a value, so a write nothing can evaluate
         costs the join its closure and not its other terms. Arriving with no
         write at all costs the closure too: what a reflash left in the register
         is not something a branch here bounds.
         """
-        reaching = self.arriving(token, frozenset(sites.get(token, ()))).get(index, frozenset())
+        reaching = self.reaching(index, focus, token, frozenset(sites.get(token, ())))
+        writers = {back[0] for back in reaching if back is not None}
         known: set[int] = set()
         closed = None not in reaching
-        for back in sorted(node for node in reaching if node is not None):
-            left = self.leaves_loop(back, index, token)
-            entered = self.enters_loop(back, index, token)
+        for back in sorted((state for state in reaching if state is not None), key=state_order):
+            left = self.leaves_loop(back[0], index, token)
+            entered = self.enters_loop(back[0], index, token)
             if left:
-                values, whole = (self.after_loop_values(left.pop(), index, token, depth, seen)
+                values, whole = (self.after_loop_values(left.pop(), index, token, depth, seen, focus)
                                  if len(left) == 1 else OPEN)
             elif entered:
                 # The write gets here only by entering a loop that advances the
@@ -1107,7 +1373,7 @@ class ValueBounds:
                 # itself here would witness the seed along the path that leaves
                 # before any pass, which a count the test decides may never take.
                 advances = {place for header in entered for place, _ in self.region_carried(header)[token]}
-                closed = closed and bool(advances & reaching)
+                closed = closed and bool(advances & writers)
                 continue
             else:
                 values, whole = self.definition_values(back, token, depth, seen)
@@ -1154,12 +1420,12 @@ class ValueBounds:
         return {
             header for header in self.regions
             if token in self.region_carried(header)
-            and index not in self.region_span(header)
-            and back not in self.region_span(header)
+            and index not in self.region_members(header)
+            and back not in self.region_members(header)
             and index not in self.forward(back, header)
         }
 
-    def definition_values(self, back: int, token: str, depth: int, seen) -> Derived:
+    def definition_values(self, back: CallState, token: str, depth: int, seen) -> Derived:
         """The values one write leaves in `token`.
 
         Its operands are read at the write, with the loops around *it*
@@ -1173,21 +1439,35 @@ class ValueBounds:
         -- stands outside every loop that carries the register, so the
         reader's advances have nothing to say about what it computed.
         """
-        sites = self.sites(back)
-        row = self.program[back]["row"]
+        index, focus = back[0], frozenset({back})
+        sites = self.sites(index)
+        row = self.program[index]["row"]
         if row[0] in BOOLEAN_RESULTS:
             return {0, 1}, True
         if row[0] == "select" and len(row) >= 5:
-            when_true, true_whole = self.values(back, row[3], sites, depth + 1, seen)
-            when_false, false_whole = self.values(back, row[4], sites, depth + 1, seen)
+            when_true, true_whole = self.values_at(index, focus, row[3], sites, depth + 1, seen)
+            when_false, false_whole = self.values_at(index, focus, row[4], sites, depth + 1, seen)
             if when_true is None or when_false is None:
                 return OPEN
             return when_true | when_false, true_whole and false_whole
         if row[0] == "move" and len(row) >= 3:
-            return self.values(back, row[2], sites, depth + 1, seen)
+            return self.values_at(index, focus, row[2], sites, depth + 1, seen)
+        if row[0] == "clamp" and len(row) >= 5:
+            # A clamp holds its operand to the bounds whatever the operand is,
+            # so the bounds are the whole answer and the operand is never read.
+            # Bounds held in registers are not read: what a register permits is
+            # a question about its own writes, and a clamp between two of them
+            # is not the shape a count guard takes.
+            low = resolve_integer(row[3], self.integer_aliases)
+            high = resolve_integer(row[4], self.integer_aliases)
+            if low is None or high is None or not 0 <= high - low < STACK_CELLS:
+                return OPEN
+            return set(range(low, high + 1)), True
+        if row[0] == "mod" and len(row) >= 4:
+            return self.modulo_values(back, row, sites, depth, seen)
         if row[0] in {"add", "sub", "mul"} and len(row) >= 4:
-            left, left_whole = self.values(back, row[2], sites, depth + 1, seen)
-            right, right_whole = self.values(back, row[3], sites, depth + 1, seen)
+            left, left_whole = self.values_at(index, focus, row[2], sites, depth + 1, seen)
+            right, right_whole = self.values_at(index, focus, row[3], sites, depth + 1, seen)
             if left is None or right is None or len(left) * len(right) > PAIR_BUDGET:
                 return OPEN
             whole = left_whole and right_whole
@@ -1197,6 +1477,28 @@ class ValueBounds:
                 return {first - second for first in left for second in right}, whole
             return {first * second for first in left for second in right}, whole
         return OPEN
+
+    def modulo_values(self, back: CallState, row: list[str], sites, depth: int, seen) -> Derived:
+        """What `mod` leaves: the game's `mod` is a true modulo, never negative for a positive divisor.
+
+        Where both operands enumerate the result is enumerated like any other
+        arithmetic. Where the dividend does not -- a cursor that wraps through
+        the same `mod` every pass -- the divisor's ceiling is the whole answer:
+        `a mod b` for `b` in `[1, high]` is in `[0, high - 1]` whatever `a`
+        holds, and every value in it is one some dividend reaches. A divisor
+        that can be zero or negative bounds nothing.
+        """
+        index, focus = back[0], frozenset({back})
+        low, high, trusted = self.interval_of(index, row[3], sites, depth + 1, seen, focus)
+        if low is None or low < 1 or high is None or high > STACK_CELLS:
+            return OPEN
+        left, left_whole = self.values_at(index, focus, row[2], sites, depth + 1, seen)
+        right, right_whole = self.values_at(index, focus, row[3], sites, depth + 1, seen)
+        if left is not None and right is not None and len(left) * len(right) <= PAIR_BUDGET:
+            return {first % second for first in left for second in right}, left_whole and right_whole
+        if left is not None:
+            return OPEN
+        return set(range(high)), trusted
 
     def access_bounds(self, index: int, token: str) -> Derived:
         """The stack cells one dynamic access reaches, and whether that is all of them.
