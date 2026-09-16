@@ -104,3 +104,32 @@ def run_round_robin(vms, rounds=1, max_instructions=128):
     for _ in range(rounds):
         for vm in vms:
             vm.run_tick(max_instructions)
+
+def without_lines(source: str, *lines: str) -> str:
+    """The program with each of ``lines`` removed, for the witness run beside the production one.
+
+    A harness test proves a guard is what stops a failure by running the program beside a copy
+    with the guard's lines removed. The copy must be a different program: a guard that moved or
+    was reworded leaves ``source.replace(line, "")`` returning the unchanged source, and a test
+    that then passes both ways. Each entry is one whole line, or a block of whole lines joined
+    by newlines, matched from the start of a line to its end and removed once; an entry that is
+    not there, or that occurs more than once so it names no single guard, raises ``ValueError``,
+    as does naming no line at all, which would hand back the program itself. A source whose last
+    line has no newline is read as though it had one, so that line can be named too.
+    """
+    if not lines:
+        raise ValueError("a witness names at least one line to remove")
+    if not source.endswith("\n"):
+        source += "\n"
+    for block in lines:
+        needle = block.rstrip("\n") + "\n"
+        if source.startswith(needle):
+            at = 0
+        else:
+            at = source.find("\n" + needle) + 1
+            if at == 0:
+                raise ValueError(f"witness line {block!r} is not in the source")
+        if source.find("\n" + needle, at) >= 0:
+            raise ValueError(f"witness line {block!r} occurs more than once in the source")
+        source = source[:at] + source[at + len(needle):]
+    return source

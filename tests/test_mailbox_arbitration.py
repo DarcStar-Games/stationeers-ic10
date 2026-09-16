@@ -9,7 +9,7 @@ from copy import deepcopy
 import json
 import sys
 
-from framework.ic10_harness import Device, IC10, run_round_robin
+from framework.ic10_harness import Device, IC10, run_round_robin, without_lines
 from framework.json_schema import SchemaValidationError, validate
 from framework.request_blocking import (
     PortTokens,
@@ -327,8 +327,7 @@ def sweep_unblocked(source):
 
 
 ck(sweep_unblocked(SWEEP) == [], f"the Sweep does not wait on each post: {sweep_unblocked(SWEEP)}")
-ck("beq r0 2 WaitFlow\n" in SWEEP, "the Sweep no longer dispatches to WaitFlow on S20")
-ck(sweep_unblocked(SWEEP.replace("beq r0 2 WaitFlow\n", "")) == [
+ck(sweep_unblocked(without_lines(SWEEP, "beq r0 2 WaitFlow")) == [
     ("d1", "posts to d0", "put d0 13 r15"), ("d1", "replies to its own caller", "poke 9 r15")],
    "the Sweep without its WaitFlow dispatch did not post to the Sink Selector with the Flow Builder's request in flight")
 BUILDER = src("ic10/pressure-grid/pressure_grid_singlehop_builder_v1_1.ic10")
@@ -343,7 +342,7 @@ def builder_unblocked(source):
 ck(builder_unblocked(BUILDER) == [], f"the Single-Hop Builder does not wait on its Allocator request: {builder_unblocked(BUILDER)}")
 ck("put d1 18 r13\nmove r14 2\nj Loop\n" in BUILDER and "beqz r14 New\nbeq r14 2 Wait\n" in BUILDER,
    "the Builder no longer arms its wait state at the post and dispatches on it first")
-ck(builder_unblocked(BUILDER.replace("beq r14 2 Wait\n", "")) == [("d1", "put d1 18 r13", "replies to its own caller", "poke 11 r15")],
+ck(builder_unblocked(without_lines(BUILDER, "beq r14 2 Wait")) == [("d1", "put d1 18 r13", "replies to its own caller", "poke 11 r15")],
    "the Builder without its wait dispatch did not reply with the Allocator's COMMIT outstanding")
 
 # --- The race, on the production programs ------------------------------------------

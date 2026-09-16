@@ -279,7 +279,10 @@ through `framework.scan_coverage.require_nonempty`, so a filter cannot remove ev
 silently disable the check.
 
 `framework/ic10_harness.py` is a tiny deterministic IC10 interpreter (not a Stationeers emulator) supporting only
-the instruction subset the tests exercise; extend it when a test needs a new opcode.
+the instruction subset the tests exercise; extend it when a test needs a new opcode. A witness that runs a
+program beside a copy with a guard line removed takes the copy from its `without_lines`, which refuses a
+line the program no longer holds whole, or holds twice; a bare `.replace(line, "")` passes both ways once
+the line moves (issue #153).
 `framework/fault_injection.py` replays a scenario with a crash after every operation boundary — use it for any
 new restart/interruption coverage rather than hand-rolling cut points.
 
