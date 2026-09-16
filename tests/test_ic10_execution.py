@@ -108,6 +108,7 @@ for absent,source,why in [('blt r1 0 Done',guarded,'a line that is not in the so
   if absent not in str(error): fails.append(f'witness helper refused {why} without naming it: {error}')
 try: without_lines(guarded); fails.append('witness helper handed back the program when no line was named')
 except ValueError: pass
+if without_lines(guarded.rstrip('\n'),'yield\nBad:\nyield')!='move r1 1\nblt r1 0 Bad\nbgt r1 8 Bad\n': fails.append('witness helper did not strip a last line that had no newline')
 if fails:
  print('IC10 execution harness: FAIL'); [print(' -',f) for f in fails]; sys.exit(1)
 print('IC10 execution harness: PASS')

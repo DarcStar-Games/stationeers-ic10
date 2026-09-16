@@ -114,10 +114,13 @@ def without_lines(source: str, *lines: str) -> str:
     that then passes both ways. Each entry is one whole line, or a block of whole lines joined
     by newlines, matched from the start of a line to its end and removed once; an entry that is
     not there, or that occurs more than once so it names no single guard, raises ``ValueError``,
-    as does naming no line at all, which would hand back the program itself.
+    as does naming no line at all, which would hand back the program itself. A source whose last
+    line has no newline is read as though it had one, so that line can be named too.
     """
     if not lines:
         raise ValueError("a witness names at least one line to remove")
+    if not source.endswith("\n"):
+        source += "\n"
     for block in lines:
         needle = block.rstrip("\n") + "\n"
         if source.startswith(needle):
