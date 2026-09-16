@@ -124,13 +124,12 @@ def without_lines(source: str, *lines: str) -> str:
     for block in lines:
         needle = block.rstrip("\n") + "\n"
         if source.startswith(needle):
-            at, later = 0, source.find("\n" + needle)
+            at = 0
         else:
-            at, later = source.find("\n" + needle) + 1, -1
+            at = source.find("\n" + needle) + 1
             if at == 0:
                 raise ValueError(f"witness line {block!r} is not in the source")
-            later = source.find("\n" + needle, at)
-        if later >= 0:
+        if source.find("\n" + needle, at) >= 0:
             raise ValueError(f"witness line {block!r} occurs more than once in the source")
         source = source[:at] + source[at + len(needle):]
     return source
