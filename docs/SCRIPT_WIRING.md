@@ -171,7 +171,13 @@ about the source. Each of those now carries a reviewed, source-fingerprinted
 `validation/validators/validate_script_contracts.py` refuses a deployable program
 whose own-stack write range falls back to the whole stack, so the gap cannot
 reopen silently: a new computed write is proved by the branches around it or
-reviewed into a window before the program builds. What still absorbs an edge is a
+reviewed into a window before the program builds. Three of those windows have
+since retired: the Power Reservation and Printer Execution Directory Adapters'
+record tables, once a loop was read as everywhere its pass runs and a single
+advance site under two loops as counted out by the ceiling at the access, and
+the Resource Transform Profile View's pool copies, once a subroutine called from
+three sites was read once per call with that call's seed and limit (issue #139).
+What still absorbs an edge is a
 reviewed `external_readable_ranges` naming the whole stack — the Generic Catalog
 Store declares its heap that way — which leaves 230 of 236 edges able to fail.
 The first edge the narrowing exposed was a real one: the Manufacturing Scheduler
@@ -183,12 +189,14 @@ to the whole stack accepted every cell, and every port writing into it — ten o
 them, mostly request mailboxes — passed whatever it posted. Each of those ten
 programs gained a reviewed `dynamic_read_ranges` window beside the write
 window, held from below by the same proof, and the validator refuses the read
-fallback exactly as it refuses the write one. Two of the ten have since retired:
+fallback exactly as it refuses the write one. Four of the ten have since retired:
 the branch bounds now count what a scan leaves in its counter from the exits
 that reach the reader, so the generated Item Producer Resolver's table and the
 Dependency Plan Store's record block derive whole (issue #156), and a change to
 the transforms data no longer invalidates a fingerprint whose only content was
-the table size. A read window is a claim about what
+the table size; and they read a literal `clamp` and a `mod` by a bounded divisor
+as the bounds they are, so the Diagnostic Hash Console Mode's and the Diagnostic
+Renderer's record blocks derive whole too (issue #139). A read window is a claim about what
 the owner reads: for a record scan it is the record block, and for a request
 mailbox it is the request cells the owner names in its own
 `external_writable_ranges`, so the two declarations describe one layout. No

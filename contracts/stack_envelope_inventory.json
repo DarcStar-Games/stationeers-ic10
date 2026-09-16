@@ -6412,7 +6412,7 @@
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
-        "dynamic_read_provenance": "source-fingerprinted-exception",
+        "dynamic_read_provenance": "source-derived",
         "dynamic_write_provenance": "none"
       },
       "envelope": {
@@ -6818,7 +6818,7 @@
         ],
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
-        "dynamic_read_provenance": "source-fingerprinted-exception",
+        "dynamic_read_provenance": "source-derived",
         "dynamic_write_provenance": "none"
       },
       "envelope": {
@@ -19353,7 +19353,7 @@
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-fingerprinted-exception"
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.power.reservation.directory.adapter",
@@ -24748,7 +24748,7 @@
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-fingerprinted-exception"
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.printer.execution.directory.adapter",
@@ -30678,7 +30678,7 @@
         "dynamic_read_cells": [],
         "dynamic_write_cells": [],
         "dynamic_read_provenance": "none",
-        "dynamic_write_provenance": "source-fingerprinted-exception"
+        "dynamic_write_provenance": "source-derived"
       },
       "envelope": {
         "service_id": "ic10.script.resource.transform.profile.view",

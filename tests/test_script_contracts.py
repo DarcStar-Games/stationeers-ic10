@@ -1039,6 +1039,224 @@ ck([sorted(item[2]) for item in dynamic_access_cells(
    inner_write["dynamic_write_range_source"] == "source-derived",
    "a write inside the scan read after it was not folded over the scan's passes")
 
+# A clamp holds its operand to its bounds whatever the operand is, so a count
+# read through `clamp r14 r14 0 8` is 0..8 however the cell was filled, and the
+# loop counted against it reaches all eight records (issue #139). Bounds held
+# in registers are not read, and the count stays at its first pass.
+clamp_source = (
+    "get r14 db 8\nclamp r14 r14 0 8\nbeqz r14 Done\nmove r6 0\nEach:\nmul r12 r6 3\n"
+    "add r12 r12 16\nget r1 db r12\nadd r6 r6 1\nblt r6 r14 Each\nDone:\nyield\n"
+)
+clamp_rows = parse_rows(clamp_source)
+clamp_ports, clamp_aliases = collect_aliases(clamp_rows)
+clamp_count, _ = analyze_own_stack(clamp_source, clamp_rows, clamp_aliases, [], {})
+ck([sorted(item[2]) for item in dynamic_access_cells(clamp_source, clamp_ports, clamp_aliases)] ==
+   [list(range(16, 38, 3))] and clamp_count["dynamic_read_range_source"] == "source-derived",
+   "a count held by a literal clamp did not bound the loop counted against it")
+register_clamp_source = clamp_source.replace(
+    "clamp r14 r14 0 8\n", "get r2 db 9\nget r3 db 10\nclamp r14 r14 r2 r3\n"
+)
+register_clamp_rows = parse_rows(register_clamp_source)
+register_clamp_ports, register_clamp_aliases = collect_aliases(register_clamp_rows)
+register_clamp, _ = analyze_own_stack(
+    register_clamp_source, register_clamp_rows, register_clamp_aliases, [], {},
+)
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       register_clamp_source, register_clamp_ports, register_clamp_aliases)] == [[16]] and
+   register_clamp["dynamic_read_range_source"] == "conservative-full-stack",
+   "a clamp between two registers was read as a bound")
+
+# The game's `mod` is a true modulo, so a cursor wrapped through `mod r6 r6 r14`
+# by a divisor held to 1..64 is 0..63 whatever the cursor held, and all 64
+# records are witnessed. A divisor with no ceiling bounds nothing.
+mod_source = (
+    "move r6 0\nLoop:\nyield\nget r14 db 8\nclamp r14 r14 0 64\nbeqz r14 Loop\nmod r6 r6 r14\n"
+    "mul r12 r6 5\nadd r12 r12 64\nget r1 db r12\nadd r6 r6 1\nj Loop\n"
+)
+mod_rows = parse_rows(mod_source)
+mod_ports, mod_aliases = collect_aliases(mod_rows)
+mod_cursor, _ = analyze_own_stack(mod_source, mod_rows, mod_aliases, [], {})
+ck([sorted(item[2]) for item in dynamic_access_cells(mod_source, mod_ports, mod_aliases)] ==
+   [list(range(64, 380, 5))] and mod_cursor["dynamic_read_range_source"] == "source-derived",
+   "a cursor wrapped by a bounded divisor was not held to the divisor's ceiling")
+open_mod_source = mod_source.replace("clamp r14 r14 0 64\nbeqz r14 Loop\n", "blez r14 Loop\n")
+open_mod_rows = parse_rows(open_mod_source)
+open_mod_ports, open_mod_aliases = collect_aliases(open_mod_rows)
+open_mod, _ = analyze_own_stack(open_mod_source, open_mod_rows, open_mod_aliases, [], {})
+ck(not dynamic_access_cells(open_mod_source, open_mod_ports, open_mod_aliases) and
+   open_mod["dynamic_read_range_source"] == "conservative-full-stack",
+   "a modulo by a divisor with no ceiling was read as a bound")
+
+# A scan that calls a subroutine standing after its last latch runs it every
+# pass, so the counter the subroutine advances is the scan's and the access
+# inside it is inside the scan, whichever side of the latch the text puts it.
+# A pass may call it twice, so the advance dominates nothing and no prefix is
+# read; the guard's ceiling counts the counter out instead, to 64 records of
+# three cells at S18..S209. A subroutine only the success block calls is not
+# run by the scan's pass: the outer loop calls it once and reseeds the counter
+# first, so the counter at the access is the seed.
+subroutine_advance_source = (
+    "move r7 0\nmove r8 0\nScan:\nget r1 d0 r7\nblt r1 0 Done\nadd r7 r7 1\nbeq r1 1 Twice\n"
+    "jal Add\nj Scan\nTwice:\njal Add\njal Add\nj Scan\nAdd:\nbge r8 64 Full\nmul r0 r8 3\n"
+    "add r0 r0 18\npoke r0 r1\nadd r8 r8 1\nj ra\nFull:\npoke 14 1\nj ra\nDone:\nyield\n"
+)
+subroutine_advance_rows = parse_rows(subroutine_advance_source)
+subroutine_advance_ports, subroutine_advance_aliases = collect_aliases(subroutine_advance_rows)
+subroutine_advance, _ = analyze_own_stack(
+    subroutine_advance_source, subroutine_advance_rows, subroutine_advance_aliases, [], {},
+)
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       subroutine_advance_source, subroutine_advance_ports, subroutine_advance_aliases)
+    if item[0] == "db"] == [list(range(18, 208, 3))] and
+   subroutine_advance["dynamic_write_range_source"] == "source-derived",
+   "an advance in a subroutine the pass calls was not read as the scan's advance")
+success_call_source = (
+    "Loop:\nyield\nmove r7 0\nmove r8 0\nScan:\nget r1 d0 r7\nblt r1 0 Loop\nadd r7 r7 1\n"
+    "beq r1 1 Found\nj Scan\nFound:\njal Add\nj Loop\nAdd:\nbge r8 64 Full\nmul r0 r8 3\n"
+    "add r0 r0 18\npoke r0 r1\nadd r8 r8 1\nj ra\nFull:\npoke 14 1\nj ra\n"
+)
+success_call_rows = parse_rows(success_call_source)
+success_call_ports, success_call_aliases = collect_aliases(success_call_rows)
+success_call, _ = analyze_own_stack(
+    success_call_source, success_call_rows, success_call_aliases, [], {},
+)
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       success_call_source, success_call_ports, success_call_aliases) if item[0] == "db"] ==
+   [[18]] and success_call["dynamic_write_range_source"] == "source-derived",
+   "a subroutine the pass never calls was folded over the scan's passes")
+
+# One advance site under two loops moves the register by one amount whichever
+# loop re-entered it, so the ceiling at the access is the whole count: the pin
+# loop runs six passes, the bank loop is counted by nothing, and every record
+# up to the guard's 64 is reached. Two sites with different amounts leave the
+# register at its first pass, and two loops both counted short of the ceiling
+# reach the same cells without the closure, since the upper ones may never run.
+nested_advance_source = (
+    "move r7 0\nmove r8 0\nBank:\nget r1 d0 r7\nblt r1 0 Done\nadd r7 r7 1\nmove r6 0\nPin:\n"
+    "bge r6 6 Bank\nadd r0 r6 16\ngetd r2 r1 r0\nblez r2 NextPin\nbge r8 64 Overflow\nmul r0 r8 3\n"
+    "add r0 r0 18\npoke r0 r2\nadd r8 r8 1\nj NextPin\nOverflow:\npoke 14 1\nNextPin:\nadd r6 r6 1\n"
+    "j Pin\nDone:\nyield\n"
+)
+nested_advance_rows = parse_rows(nested_advance_source)
+nested_advance_ports, nested_advance_aliases = collect_aliases(nested_advance_rows)
+nested_advance, _ = analyze_own_stack(
+    nested_advance_source, nested_advance_rows, nested_advance_aliases, [], {},
+)
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       nested_advance_source, nested_advance_ports, nested_advance_aliases) if item[0] == "db"] ==
+   [list(range(18, 208, 3))] and nested_advance["dynamic_write_range_source"] == "source-derived",
+   "one advance site under two loops was not counted out by the ceiling at the access")
+two_amounts_source = nested_advance_source.replace(
+    "blez r2 NextPin\n", "blez r2 Skip\n"
+).replace("j NextPin\nOverflow:", "j NextPin\nSkip:\nadd r8 r8 2\nj NextPin\nOverflow:")
+two_amounts_rows = parse_rows(two_amounts_source)
+two_amounts_ports, two_amounts_aliases = collect_aliases(two_amounts_rows)
+two_amounts, _ = analyze_own_stack(two_amounts_source, two_amounts_rows, two_amounts_aliases, [], {})
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       two_amounts_source, two_amounts_ports, two_amounts_aliases) if item[0] == "db"] == [[18]] and
+   two_amounts["dynamic_write_range_source"] == "conservative-full-stack",
+   "two advance sites of different amounts were counted out by the ceiling")
+all_counted_source = nested_advance_source.replace(
+    "get r1 d0 r7\nblt r1 0 Done\n", "bge r7 4 Done\n"
+).replace("getd r2 r1 r0\n", "get r2 db r0\n")
+all_counted_rows = parse_rows(all_counted_source)
+all_counted_ports, all_counted_aliases = collect_aliases(all_counted_rows)
+all_counted, _ = analyze_own_stack(all_counted_source, all_counted_rows, all_counted_aliases, [], {})
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       all_counted_source, all_counted_ports, all_counted_aliases) if item[1] == "write"] ==
+   [list(range(18, 208, 3))] and all_counted["dynamic_write_range_source"] == "conservative-full-stack",
+   "two loops both counted short of the ceiling were read as reaching it")
+
+# A count checked from above alone has a ceiling and no floor, so it never
+# enumerates -- but the ceiling carries through `move r11 r4`, `mul r9 r11 4`
+# and `add r9 r9 r1` to the copy's limit, and a limit's ceiling is all a trip
+# count needs: 24 passes from S8. A limit whose ceiling nothing states, however
+# its floor is guarded, runs the copy to its first pass alone.
+one_sided_source = (
+    "Loop:\nyield\nget r4 db 72\nbgt r4 6 Loop\nmove r1 8\nmove r11 r4\njal Copy\nj Loop\n"
+    "Copy:\nmul r9 r11 4\nadd r9 r9 r1\nCell:\nbge r1 r9 Done\npoke r1 0\nadd r1 r1 1\nj Cell\n"
+    "Done:\nj ra\n"
+)
+one_sided_rows = parse_rows(one_sided_source)
+one_sided_ports, one_sided_aliases = collect_aliases(one_sided_rows)
+one_sided, _ = analyze_own_stack(one_sided_source, one_sided_rows, one_sided_aliases, [], {})
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       one_sided_source, one_sided_ports, one_sided_aliases)] == [list(range(8, 32))] and
+   one_sided["dynamic_write_range_source"] == "source-derived",
+   "a limit with a ceiling and no floor did not count the copy it bounds")
+floor_only_source = one_sided_source.replace("bgt r4 6 Loop\n", "blt r4 0 Loop\n")
+floor_only_rows = parse_rows(floor_only_source)
+floor_only_ports, floor_only_aliases = collect_aliases(floor_only_rows)
+floor_only, _ = analyze_own_stack(floor_only_source, floor_only_rows, floor_only_aliases, [], {})
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       floor_only_source, floor_only_ports, floor_only_aliases)] == [[8]] and
+   floor_only["dynamic_write_range_source"] == "conservative-full-stack",
+   "a limit with a floor and no ceiling counted the copy it cannot bound")
+
+# The same copy called from three sites, each with its own seed and limit, is
+# three loops: read in each call's context the copies land on S64..S67, S8..S31
+# and S32..S63, and their union is the whole window. Read merged, the smallest
+# seed pairs with the largest limit and the copy appears to reach S151 -- a
+# cell no call writes, which no declaration could then cover.
+three_copies_source = (
+    "Loop:\nyield\nget r4 db 72\nbgt r4 6 Loop\nget r5 db 73\nbgt r5 8 Loop\nmove r1 64\n"
+    "move r11 1\njal Copy\nmove r1 8\nmove r11 r4\njal Copy\nmove r1 32\nmove r11 r5\njal Copy\n"
+    "j Loop\nCopy:\nmul r9 r11 4\nadd r9 r9 r1\nCell:\nbge r1 r9 Done\npoke r1 0\nadd r1 r1 1\n"
+    "j Cell\nDone:\nj ra\n"
+)
+three_copies_rows = parse_rows(three_copies_source)
+three_copies_ports, three_copies_aliases = collect_aliases(three_copies_rows)
+three_copies, _ = analyze_own_stack(
+    three_copies_source, three_copies_rows, three_copies_aliases, [], {},
+)
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       three_copies_source, three_copies_ports, three_copies_aliases)] == [list(range(8, 68))] and
+   three_copies["dynamic_write_range_source"] == "source-derived" and
+   three_copies["dynamic_write_ranges"] == [{"start": 8, "end": 67}],
+   "a copy called from three sites was not read once per call, with that call's seed and limit")
+
+# The return address alone does not tell the calls apart, because it persists
+# past the return: the first pass of this loop runs its guard with no return
+# address and every later pass runs it with one, and the reader after the call
+# is gated by both. Read by return address alone the guard's first-pass limit
+# of 8 is dropped and the copy appears to stop at S3, whole -- a cell the first
+# pass writes, S6, gone from a range published as exact. A guard state counts
+# when the reader is reachable from it without passing the guard again.
+first_pass_guard_source = (
+    "get r0 db 9\nselect r1 r0 2 6\nmove r3 8\nLoop:\nbge r1 r3 Done\njal Sub\npoke r1 1\n"
+    "add r1 r1 1\nmove r3 4\nj Loop\nSub:\nj ra\nDone:\nyield\n"
+)
+first_pass_guard_rows = parse_rows(first_pass_guard_source)
+first_pass_guard_ports, first_pass_guard_aliases = collect_aliases(first_pass_guard_rows)
+first_pass_guard, _ = analyze_own_stack(
+    first_pass_guard_source, first_pass_guard_rows, first_pass_guard_aliases, [], {},
+)
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       first_pass_guard_source, first_pass_guard_ports, first_pass_guard_aliases)] ==
+   [list(range(2, 8))] and first_pass_guard["dynamic_write_ranges"] == [{"start": 2, "end": 7}],
+   "a guard run before the call on the first pass was dropped from the reader after the call")
+
+# A guard on the loop's limit gates the limit's test, not the reader that asked
+# about the limit. `Check` holds the count to 8 on every pass of the scan, and
+# the success block rewrites the count and the bound and calls `Check` again on
+# its way to the reader: placed against the reader, that later visit would hold
+# the limit to 2 and the scan to two passes, and S0..S1 would be published whole
+# for a copy that writes S0..S7. Placed against the test's own visits it is 8.
+revisited_guard_source = (
+    "get r2 db 10\nMain:\nyield\nget r3 db 9\nmove r4 8\nmove r1 0\nmove r7 32\nScan:\njal Check\n"
+    "bge r1 r3 Main\nget r0 db r7\nbeq r0 r2 Found\nadd r7 r7 1\nadd r1 r1 1\nj Scan\nFound:\n"
+    "move r4 2\nmove r3 1\njal Check\npoke r1 1\nj Main\nCheck:\nbgt r3 r4 Main\nj ra\n"
+)
+revisited_guard_rows = parse_rows(revisited_guard_source)
+revisited_guard_ports, revisited_guard_aliases = collect_aliases(revisited_guard_rows)
+revisited_guard, _ = analyze_own_stack(
+    revisited_guard_source, revisited_guard_rows, revisited_guard_aliases, [], {},
+)
+ck([sorted(item[2]) for item in dynamic_access_cells(
+       revisited_guard_source, revisited_guard_ports, revisited_guard_aliases) if item[1] == "write"] ==
+   [list(range(8))] and revisited_guard["dynamic_write_ranges"] == [{"start": 0, "end": 7}],
+   "a guard on a limit was placed against the reader rather than against the limit's test")
+
 # A record loop is exactly the thing a program writes as a subroutine, so a call
 # is followed and the loop's own exit test is read on the far side of it. The
 # same window falls out whether the `jal` stands before the loop or after it.

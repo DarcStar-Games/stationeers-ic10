@@ -3,7 +3,7 @@
   "contract_count": 184,
   "own_stack_range_inventory": {
     "dynamic_script_count": 42,
-    "source_proven_surface_count": 49,
+    "source_proven_surface_count": 53,
     "unresolved_fallback_count": 0,
     "scripts": [
       {
@@ -374,8 +374,13 @@
               "end": 39
             }
           ],
-          "proven_ranges": [],
-          "provenance": "source-fingerprinted-exception"
+          "proven_ranges": [
+            {
+              "start": 16,
+              "end": 39
+            }
+          ],
+          "provenance": "source-derived"
         },
         "write": {
           "dynamic": false,
@@ -429,8 +434,13 @@
               "end": 383
             }
           ],
-          "proven_ranges": [],
-          "provenance": "source-fingerprinted-exception"
+          "proven_ranges": [
+            {
+              "start": 64,
+              "end": 383
+            }
+          ],
+          "provenance": "source-derived"
         },
         "write": {
           "dynamic": false,
@@ -1724,8 +1734,13 @@
               "end": 209
             }
           ],
-          "proven_ranges": [],
-          "provenance": "source-fingerprinted-exception"
+          "proven_ranges": [
+            {
+              "start": 18,
+              "end": 209
+            }
+          ],
+          "provenance": "source-derived"
         }
       },
       {
@@ -1966,8 +1981,13 @@
               "end": 209
             }
           ],
-          "proven_ranges": [],
-          "provenance": "source-fingerprinted-exception"
+          "proven_ranges": [
+            {
+              "start": 18,
+              "end": 209
+            }
+          ],
+          "provenance": "source-derived"
         }
       },
       {
@@ -2160,7 +2180,7 @@
               "end": 67
             }
           ],
-          "provenance": "source-fingerprinted-exception"
+          "provenance": "source-derived"
         }
       }
     ]

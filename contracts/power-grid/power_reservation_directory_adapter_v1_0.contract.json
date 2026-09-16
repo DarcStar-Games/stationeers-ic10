@@ -144,9 +144,14 @@
       }
     ],
     "dynamic_read_proven_ranges": [],
-    "dynamic_write_proven_ranges": [],
+    "dynamic_write_proven_ranges": [
+      {
+        "start": 18,
+        "end": 209
+      }
+    ],
     "dynamic_read_range_source": "none",
-    "dynamic_write_range_source": "source-fingerprinted-exception",
+    "dynamic_write_range_source": "source-derived",
     "clears_all": true,
     "external_readable_ranges": [
       {
