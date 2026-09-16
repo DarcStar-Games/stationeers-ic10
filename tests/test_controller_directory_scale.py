@@ -24,9 +24,7 @@ if max(64,4*64+16)!=272:fails.append('64-link lease !=272')
 dir=Device(700,stack={0:'HASH:GenericSnapshotDirectoryHost.v1',1:1,24:0,25:9,27:5,29:0,9:'HASH:DirectorySchema.Controller.v1',11:2,12:64})
 records=[('HASH:ControllerA',101),('HASH:ControllerA',102),('HASH:ControllerB',201),('HASH:ControllerB',202),('HASH:ControllerC',301)]
 for i,(typ,ref) in enumerate(records):dir.stack[32+2*i]=typ;dir.stack[33+2*i]=ref
-import re
-execS='\n'.join(x for x in S.splitlines() if not x.lstrip().startswith('alias '))
-execS=re.sub(r'\bdirectory\b','r1',execS)
+execS=S
 vm=IC10(execS,{'d0':dir});vm.stack[14]=700;vm.stack[10]=2;vm.stack[11]=2;vm.stack[12]=1
 vm.run(3,max_steps=10000)
 if (vm.stack.get(15),vm.stack.get(16),vm.stack.get(17),vm.stack.get(18),vm.stack.get(19),vm.stack.get(8))!=(2,2,202,3,'HASH:ControllerB',1):fails.append('Selector direct type/member resolution failed')
