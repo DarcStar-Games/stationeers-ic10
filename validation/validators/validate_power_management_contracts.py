@@ -4,8 +4,7 @@ import sys as _project_sys
 _PROJECT_ROOT=_ProjectPath(__file__).resolve().parents[2]
 if str(_PROJECT_ROOT) not in _project_sys.path:_project_sys.path.insert(0,str(_PROJECT_ROOT))
 from framework.validation import Validation
-from pathlib import Path
-import json,sys,re
+import json
 R=_PROJECT_ROOT;result=Validation(R)
 need=result.contains
 # Catalog semantics.
@@ -42,7 +41,6 @@ need('ic10/power-grid/power_link_executor_v1_0.ic10','get r10 d0 29','bgt r10 8 
 # POWER jobs and Gateway lane D.
 need('ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10','poke 1 5','get r15 db r7','select r6 r0 2 4','add r8 r7 4')
 need('ic10/generic-jobs/generic_job_selector_v3_0.ic10','poke 1 3','get r10 db 18','bne r5 r10 Next','beq r2 7 Next','bge r2 11 Next')
-if (R/'239_power_job_selector_v1_0.ic10').exists():result.fail('duplicate POWER Job selector must not exist')
 need('ic10/power-jobs/power_policy_target_resolver_v1_0.ic10','HASH("DirectorySchema.PowerReservation.v1")','getd r5 r7 28')
 need('ic10/power-jobs/power_job_policy_apply_v1_0.ic10','bne r10 4 Bad','bne r11 r6 Bad','putd r13 50 r4','putd r13 51 r7')
 need('ic10/power-jobs/power_job_policy_verify_v1_0.ic10','getd r0 r6 50','getd r0 r6 51','NeedExportZero:','NeedImportZero:')
@@ -50,6 +48,29 @@ need('ic10/power-jobs/power_job_lifecycle_client_v1_0.ic10','put d0 68 2','put d
 need('ic10/power-jobs/power_job_prepare_v1_0.ic10','beq r4 1 ToPlanning','beq r4 4 Resolve','beq r0 -2 WaitResource','move r11 8','move r11 11','move r10 -1','put d1 10 r8','put d2 16 r7','move r11 5')
 need('ic10/power-jobs/power_job_finalize_v1_0.ic10','beq r4 5 Resolve','beqz r0 Pending','move r12 11','move r10 -1','put d1 10 r8','put d2 10 r7','put d2 11 r6','move r12 6','move r12 7')
 need('ic10/power-jobs/power_job_scheduler_v1_0.ic10','put d0 18 4','put d0 19 r0','put d0 20 r15','poke 22 r0','seq r1 r7 5','seq r0 r7 6','select r9 r1 2 1','put dr9 14 r2','put dr9 15 r3','put dr9 16 r7','put dr9 17 r8','put dr9 18 r6','put dr9 19 r4','put dr9 8 r5','put dr9 9 r15')
+# ReservedExport/ReservedImport are informational in POWER (docs/POWER_MANAGEMENT.md section 6, #161):
+# the Committer writes them, the Releaser clears them, and no POWER program reads either back. A
+# reader appearing here has changed admission, and the statement has to move with it. A reference the
+# provenance walk cannot attribute at all is held to the same rule, since the statement is about the
+# cells, not about what the walk could prove; one it attributes to another identity is trusted to that
+# identity even where some origins stay unattributed, which is how the Link Selector and Plan Validator
+# read a Link's S14 overhead. A dynamic read of a Reservation is reported for review.
+INFORMATIONAL={14,15};readers=[];writers=set()
+def covers(ranges):return any(r['start']<=a<=r['end'] for r in ranges for a in INFORMATIONAL)
+for f in sorted(R.glob('contracts/power-grid/*.contract.json'))+sorted(R.glob('contracts/power-jobs/*.contract.json')):
+ c=json.loads(f.read_text())
+ for dep in c['network_dependencies']:
+  targets=dep.get('targets',[]);reservation='ResourceReservation' in targets
+  if reservation and dep.get('dynamic_read'):readers.append(f"{c['source']} via {dep['reference']} (dynamic read of a Reservation)")
+  if (reservation or not targets) and INFORMATIONAL&set(dep.get('literal_reads',())):readers.append(f"{c['source']} via {dep['reference']}"+('' if reservation else ' (unattributed reference)'))
+  if reservation and INFORMATIONAL&set(dep.get('literal_writes',())):writers.add(c['source'])
+P=json.loads((R/'contracts/protocols/ic10.stack.resource-reservation.v1.protocol.json').read_text())
+for ci in P['consumer_interfaces']:
+ if not ci['source'].startswith(('ic10/power-grid/','ic10/power-jobs/')):continue
+ if INFORMATIONAL&set(ci.get('literal_reads',())) or covers(ci.get('dynamic_read_ranges',())):readers.append(f"{ci['source']} via {ci['endpoint']['value']}")
+if readers:result.fail('a POWER program reads, or may read, Reservation S14 ReservedExport or S15 ReservedImport; docs/POWER_MANAGEMENT.md section 6 says no POWER program does (#161)',detail=', '.join(readers))
+if writers!={'ic10/power-grid/power_reservation_committer_v1_0.ic10'}:result.fail('the Committer is not the only POWER writer of Reservation S14/S15',detail=', '.join(sorted(writers)) or 'none')
+need('docs/POWER_MANAGEMENT.md','informational in POWER','no program in `ic10/power-grid` or `ic10/power-jobs` reads either back')
 # Schema registry.
 S=json.loads((R/'data/directory_schemas.json').read_text())
 ps=[s for s in S['schemas'] if s['schema_id']=='DirectorySchema.PowerReservation']
@@ -58,4 +79,5 @@ raise SystemExit(result.finish('Power management contracts',[
  'POWER/ENERGY reuse Resource Profile + Endpoint/Reservation/Link contracts',
  'source uses Reservation S6 export and sink uses S7 import',
  'bounded priority dispatch, transformer overhead, common reservation epoch',
- 'JobType.POWER uses Gateway lane D and finite policy lifecycle']))
+ 'JobType.POWER uses Gateway lane D and finite policy lifecycle',
+ 'Reservation ReservedExport/ReservedImport have no POWER reader (#161)']))

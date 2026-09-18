@@ -191,6 +191,8 @@ captured semantic Reservation generation and committed action hints
 
 The selected quote's ResponseToken is rechecked immediately before mutation. The allocator may be superseded by another allocator only by overwriting ownership; any earlier physical consumer then fails its owner/generation fence rather than double-spending stock.
 
+In ITEM the two reserved sums are **enforced**. The Selector skips any Reservation that already carries an `S17` owner, and the Allocator refuses one immediately before mutation, so a quote that has gone stale against a completed later commit fails on ownership. Both then subtract `S14 ReservedExport` or `S15 ReservedImport` from `S36 ExportAvailable` or `S37 ImportCapacity`, the Selector before it quotes what remains and the Allocator against the quoted amount. That subtraction guards the torn commit: the Allocator writes the epoch and the sum before the owner, so a Reservation interrupted between those writes carries a sum with no owner, passes the owner check, and is kept out of the next quote by its sum alone. The orphaned sum has no releaser and is cleared only by the next commit on that Reservation or by the Reservation's boot; #330 records that outcome as a decision still to be stated. The POWER Reservation Committer writes the same two cells and nothing in POWER reads them back; that domain admits by ownership instead, as `docs/POWER_MANAGEMENT.md` section 6 records (#161).
+
 ### 6.3 Releaser — `ic10/resource-grid-core/resource_reservation_releaser_v1_0.ic10`
 
 Release is owner-scoped. It clears only Reservations whose `S17 OwnerReferenceId` and `S18 OwnerEpoch` both match the requested owner/epoch. Numeric epoch equality from a different allocator is never treated as authority.
