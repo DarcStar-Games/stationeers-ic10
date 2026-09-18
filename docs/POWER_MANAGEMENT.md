@@ -203,6 +203,12 @@ Planning is read-only until the complete plan validates.
 
 `ic10/power-grid/power_reservation_committer_v1_0.ic10` writes one common allocator epoch. When one source feeds multiple flows, its ReservedExport is the **sum** of all SourceW entries; a later flow never overwrites an earlier source reservation. A sink fed by several sources likewise carries ReservedImport as the **sum** of their SinkW entries. Both sums walk the plan's records from each record's base, adding SourceW for every record whose source is the flow's source and SinkW for every record whose sink is the flow's sink; the two tests are independent, and the flow's own record contributes to both.
 
+Those two sums are **informational in POWER**. The Committer is the only POWER program that writes `S14 ReservedExport` and `S15 ReservedImport`, the Releaser zeroes them with the rest of the owner cells, and no program in `ic10/power-grid` or `ic10/power-jobs` reads either back. The Source Selector charges watts already staged in the *same* plan from the Plan Store's staging window. The Plan Validator checks a Reservation's identity, class, health, and semantic generation. Policy Verify checks identity, class, role, and generation, then the Endpoint's override cells and the Reservation's `S36`/`S37` capacities. Only the two executors check owner, epoch, and reserved generation, at `S17..S19`.
+
+That is deliberate. The allocator replaces the whole plan every cycle and releases the previous epoch only after the new one commits, so while a plan is being built a source's `ReservedExport` still holds this allocator's own outgoing commitment; charging it against `S36 ExportAvailable` would make a source used in one plan unavailable to the next. A source committed by *another* allocator is refused by ownership instead: the Committer fails the plan when a Reservation's `S17 OwnerReferenceId` names a different owner, and the executors fence on owner and epoch before any write. The sums exist for diagnostics and for a future admission check, which would have to be owner-scoped and would need its own design note before any IC10 moves.
+
+Their guards today are `tests/test_power_management.py`, which asserts the summed export and import over one flow and over several flows into one Reservation, and `validation/validators/validate_power_management_contracts.py`, which refuses a POWER program that starts reading either cell until this statement is revised (#161). The ITEM domain reads the same two cells for admission; `docs/ITEM_STORAGE_SYSTEM.md` section 6 records that side. MATERIAL writes them and has not yet stated its reader (#328).
+
 `ic10/power-grid/power_reservation_allocator_v1_0.ic10` performs:
 
 ```text
@@ -283,10 +289,11 @@ Power management deliberately retains these boundaries:
 8. Battery reserve/target constrain capacity before planning; `RespectPhysicalOn` optionally turns external Off into a hard lockout without creating a framework self-lock.
 9. POWER jobs change policy; they do not bypass dispatch/reservation safety.
 10. Stale JobGeneration, Reservation generation, Link generation, plan generation, directory generation, or allocator epoch fails closed.
+11. Reservation `ReservedExport` and `ReservedImport` are informational in POWER. Admission across allocators is by Reservation ownership; admission within a plan is by the Plan Store's staging window (#161).
 
 ## 9. Validation and adversarial coverage
 
-`validation/validators/validate_power_management_contracts.py` protects the structural contract, including the Generic Reservation **S6 export / S7 import** direction regression, foreign-ownership filtering, allocator cleanup, exact transformer authority, POWER intent mapping, and Gateway lifecycle-generation interpretation.
+`validation/validators/validate_power_management_contracts.py` protects the structural contract, including the Generic Reservation **S6 export / S7 import** direction regression, foreign-ownership filtering, allocator cleanup, exact transformer authority, POWER intent mapping, and Gateway lifecycle-generation interpretation. It also holds the section 6 statement that no POWER program reads a Reservation's `ReservedExport` or `ReservedImport`: a reference read of either cell attributed to a Reservation or left wholly unattributed, a dynamic reference read of a Reservation, or a device-port read of the Reservation protocol whose literal cells or dynamic range cover `S14` or `S15`, from a program under `ic10/power-grid` or `ic10/power-jobs`, fails until the statement is revised, and the Committer must remain the only POWER writer (#161). A reference the provenance walk attributes to another identity is trusted to that identity even where some of its origins stay unattributed, which is the shape of the Link Selector's and Plan Validator's reads of a Link's `S14` transformer overhead.
 
 `tests/test_power_management.py` covers:
 
@@ -301,6 +308,8 @@ Power management deliberately retains these boundaries:
 - coherent Plan Store BEGIN/ADD/COMMIT;
 - live Plan -> validate -> Reservation commit -> allocator epoch;
 - foreign Reservation ownership rejection and source aggregation within a plan;
+- the summed `ReservedImport` of two sources feeding one sink, read from each record's own base (#150);
+- the eight-record plan window held by the Committer, both executors, and the Source Selector, each beside a witness copy with its bound removed that walks past it; the Plan Validator's bound is held by token in the contracts validator, since no test executes it (#95);
 - committed load/transformer actuation;
 - orphan-epoch cleanup plus break-before-make safe-off on stale plan authority;
 - POWER Job SHED through Job Store, Gateway lane D, exact `Identity=PolicyId` / `RequiredCapability=PowerMode` / watt-cap mapping, WAIT-state resumption, endpoint apply, Reservation verification and COMPLETE;

@@ -168,6 +168,8 @@ S37  ImportCapacity
 
 `S12` is the Reservation's semantic generation-last publication marker. `ic10/resource-grid-core/resource_reservation_v1_0.ic10` observes Endpoint `S11`, but advances S12 only when reservation-relevant base fields or the mirrored action hints actually change. This prevents harmless identical endpoint republishes from invalidating ownership. A committed Item Storage allocator stores S12 in S19 and snapshots the action hints; movement requires current `S12 == S19`. Native actuators still perform their own final physical checks.
 
+Whether a consumer reads `S14 ReservedExport` and `S15 ReservedImport` back is a domain decision. The ITEM Selector and Allocator subtract them from `S36` and `S37` before quoting and before committing (`docs/ITEM_STORAGE_SYSTEM.md`); POWER writes them under the epoch, admits by ownership, and has no reader (`docs/POWER_MANAGEMENT.md`, #161); MATERIAL writes them through the Multi Material Reservation Stager and has not yet stated its reader (#328).
+
 `ic10/resource-grid-core/resource_reservation_v1_0.ic10` contains no pressure magic or pressure-role knowledge. The same service can therefore mirror a fluid endpoint or a material endpoint.
 
 The pressure scheduler still uses its hardened pressure-specific Reservation/Allocator ABI. MaterialGrid uses the same Generic Resource Reservation cells through Multi Material Allocator ABI2, which stages one to three exact-quantity ITEM routes and publishes one shared commit epoch. A single cross-domain Generic Resource Allocator should still be promoted only after more discrete-material cases prove which admission semantics are truly universal across continuous flow and item batches.
