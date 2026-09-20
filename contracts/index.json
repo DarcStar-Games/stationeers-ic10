@@ -1,6 +1,6 @@
 {
   "format": "IC10_SCRIPT_CONTRACT_INDEX_V1",
-  "contract_count": 184,
+  "contract_count": 185,
   "own_stack_range_inventory": {
     "dynamic_script_count": 42,
     "source_proven_surface_count": 53,
@@ -11552,6 +11552,15 @@
       "source": "ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10",
       "contract": "contracts/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.contract.json",
       "service_id": "ic10.script.resource.profile.loader.fluid.01",
+      "provides": [
+        "ic10.stack.catalog-loader.v5"
+      ],
+      "consumes": []
+    },
+    {
+      "source": "ic10/resource-profile-catalog/resource_profile_loader_fluid_02_v4_0.ic10",
+      "contract": "contracts/resource-profile-catalog/resource_profile_loader_fluid_02_v4_0.contract.json",
+      "service_id": "ic10.script.resource.profile.loader.fluid.02",
       "provides": [
         "ic10.stack.catalog-loader.v5"
       ],

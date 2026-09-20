@@ -62,7 +62,7 @@ for p in loaders:
 # S0 is HASH("<Contract>.v<ABI>"), so the identity *is* the contract and the ABI
 # together, and validate_service_identity.py proves both that every identity is
 # derived that way and that no two contracts collide under CRC32.
-for name,count,ver in [('resource_profiles.json',39,2),('input_profiles.json',6,3),('resource_transforms.json',17,4)]:
+for name,count,ver in [('resource_profiles.json',44,2),('input_profiles.json',6,3),('resource_transforms.json',17,4)]:
  d=json.loads((R/'data'/name).read_text());rows=d.get('profiles',d.get('transforms',[]))
  if len(rows)!=count or d.get('catalog_schema_version')!=ver:result.fail(name+': cardinality/schema version mismatch')
 raise SystemExit(result.finish('ABI contract validation',[

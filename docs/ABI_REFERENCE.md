@@ -167,6 +167,7 @@ appear nowhere below.
 | `HASH("CatalogLoader.v5")` | `-284599001` | 5 | `S0` | `ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10` | One-shot relocatable ENERGY Resource Profile Loader ABI5 candidate. |
 | `HASH("CatalogLoader.v5")` | `-284599001` | 5 | `S0` | `ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
 | `HASH("CatalogLoader.v5")` | `-284599001` | 5 | `S0` | `ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
+| `HASH("CatalogLoader.v5")` | `-284599001` | 5 | `S0` | `ic10/resource-profile-catalog/resource_profile_loader_fluid_02_v4_0.ic10` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
 | `HASH("CatalogLoader.v5")` | `-284599001` | 5 | `S0` | `ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
 | `HASH("CatalogLoader.v5")` | `-284599001` | 5 | `S0` | `ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
 | `HASH("CatalogLoader.v5")` | `-284599001` | 5 | `S0` | `ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
@@ -673,7 +674,7 @@ The Bridge configures Resolver count/Profile from the Loader-validated Editor st
 
 Resource Profiles use Store ABI6, `CatalogSchemaId=HASH("CatalogSchema.ResourceProfile")`, **schema version 2**, and instance `HASH("Catalog.ResourceProfiles.Schema2")`. Every profile is a fixed 16-cell item: 14 semantic cells plus two zero padding cells (`SchemaCellMask=0x3fff`). PartitionKey is ResourceClass.
 
-With the 2-cell Store item-directory overhead, a Store holds 26 such items. The current 39 records derive at runtime as one FLUID Store (10), two ITEM Stores (26+1), one POWER Store (1), and one ENERGY Store (1). Seven Loader ABI5 candidates provide the records; none contains a Store ordinal or physical target.
+With the 2-cell Store item-directory overhead, a Store holds 26 such items. The current 44 records derive at runtime as one FLUID Store (15), two ITEM Stores (26+1), one POWER Store (1), and one ENERGY Store (1). Eight Loader ABI5 candidates provide the records; none contains a Store ordinal or physical target.
 
 `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` accepts any Store in the catalog, follows runtime topology under a stable Coordinator sequence, scans `[ItemBase,ItemCellCount]` entries, and republishes Resource Profile View ABI1 with its existing S8..S21 semantic surface.
 

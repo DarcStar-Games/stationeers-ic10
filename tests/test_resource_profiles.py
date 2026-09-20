@@ -17,8 +17,8 @@ M=json.loads((R/MANIFEST_FILE).read_text())
 fails += prove_restoration(R,generated_files(),[sys.executable,str(R/'tools'/'generate'/'generate_resource_profiles.py')],preserve_inputs=[R/SOURCE_FILE])
 M=json.loads((R/MANIFEST_FILE).read_text())
 if (M.get('format'),M.get('catalog_store_abi'),M.get('catalog_loader_abi'),M.get('catalog_coordinator_abi'))!=('RESOURCE_PROFILE_CATALOG_V6',6,5,4):fails.append('runtime-placement ABI metadata mismatch')
-if M.get('runtime_store_placement') is not True or M.get('runtime_min_store_count')!=5 or M.get('profile_count')!=39 or M.get('physical_item_width')!=16:fails.append('Resource Profile runtime geometry/count mismatch')
-if [(p['partition_key'],p['item_count']) for p in M['partitions']]!=[(1,10),(2,27),(4,1),(5,1)]:fails.append('ResourceClass partition/count mismatch')
+if M.get('runtime_store_placement') is not True or M.get('runtime_min_store_count')!=5 or M.get('profile_count')!=44 or M.get('physical_item_width')!=16:fails.append('Resource Profile runtime geometry/count mismatch')
+if [(p['partition_key'],p['item_count']) for p in M['partitions']]!=[(1,15),(2,27),(4,1),(5,1)]:fails.append('ResourceClass partition/count mismatch')
 loader_sources=[[(R/f).read_text() for f in p['loaders']] for p in M['partitions']]
 for src in (x for g in loader_sources for x in g):
  code=[z.split('#',1)[0].strip() for z in src.splitlines() if z.split('#',1)[0].strip()]
@@ -31,7 +31,7 @@ coord=vms[0].coord;active=[s for s in stores if s.stack.get(16)==2]
 if len(active)!=5:fails.append(f'runtime placement expected 5 ACTIVE Stores, got {len(active)}')
 partitions={1:[],2:[],4:[],5:[]}
 for s in active:partitions.setdefault(s.stack.get(23),[]).append(s)
-if sorted(int(s.stack.get(9,0)) for s in partitions.get(1,[]))!=[10]:fails.append('FLUID runtime placement must fit one Store with 10 items')
+if sorted(int(s.stack.get(9,0)) for s in partitions.get(1,[]))!=[15]:fails.append('FLUID runtime placement must fit one Store with 15 items')
 if sorted(int(s.stack.get(9,0)) for s in partitions.get(2,[]))!=[1,26]:fails.append('ITEM runtime placement must be capacity-derived 26+1')
 if sorted(int(s.stack.get(9,0)) for s in partitions.get(4,[]))!=[1]:fails.append('POWER runtime placement must contain one profile')
 if sorted(int(s.stack.get(9,0)) for s in partitions.get(5,[]))!=[1]:fails.append('ENERGY runtime placement must contain one profile')
@@ -64,7 +64,7 @@ for p in P:
 if fails:
  print('Unified Resource Profile catalog schema: FAIL');[print(' -',x) for x in fails];sys.exit(1)
 print('Unified Resource Profile catalog schema: PASS')
-print(f' - 39 profiles placed at runtime into FLUID=10, ITEM=26+1, POWER=1, ENERGY=1 across 5 generic Stores')
+print(f' - 44 profiles placed at runtime into FLUID=15, ITEM=26+1, POWER=1, ENERGY=1 across 5 generic Stores')
 print(f' - {len(all_loaders)} sparse relocatable loaders contain only whole 16-cell profile items')
 print(' - no Loader preassigns a Store; Router capacity placement leaves no outstanding reservations')
 print(' - View resolves all profiles from an arbitrary Store anchor; human-name comments preserved')

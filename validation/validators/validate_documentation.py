@@ -162,7 +162,7 @@ forbidden={
     'listed under `unmapped`':'register-indexed ports resolve to declared pins, so every serial writer is mapped (#163)',
     'the wiring map cannot carry a dr port':'register-indexed ports resolve to declared pins (#163)',
     '10. Broad interruption and fault-injection suite — NEXT':'fault-injection milestone is complete',
-    '36 Resource Profiles':'39 Resource Profiles are current',
+    '36 Resource Profiles':'44 Resource Profiles are current',
     '32 six-cell parent/child plan records':'Plan Store ABI2 uses eight-cell records',
     '181_manufacturing_job_selector_v2_0.ic10':'Generic Job Selector v3 is current',
     '239_power_job_selector_v1_0.ic10':'POWER reuses Generic Job Selector v3',
@@ -172,8 +172,10 @@ forbidden={
     'sole production Job Store lifecycle writer':'domain lifecycle policy uses Gateway; executor 213 is sole physical writer',
     'sole production Job Store SET_STATE writer':'domain lifecycle policy uses Gateway; executor 213 is sole physical writer',
     'Items **1–10 are implemented and validated**':'Items 1–11 are current',
-    '**38 Resource Profiles**':'39 Resource Profiles are current',
-    'current 38-profile commissioning estimate':'39 Resource Profiles are current',
+    '**38 Resource Profiles**':'44 Resource Profiles are current',
+    'current 38-profile commissioning estimate':'44 Resource Profiles are current',
+    '**39 Resource Profiles**':'44 Resource Profiles are current; five prepared fuels joined Fuel.H2O2 (#326)',
+    'current 39-profile commissioning estimate':'44 Resource Profiles are current (#326)',
     'No numbered roadmap milestone remains active':'Item 12 live commissioning is active',
     'recipe_fixture_data':'Recipe fixture GameData moved to tests/fixtures/recipe_game_data/',
  'S320':'the common header is S0..S7; no fixed window at S320 exists',
@@ -201,6 +203,7 @@ forbidden={
  'must exactly match any retained override':'an override wider than a whole derivation is kept as the published range',
  'a boot `clr db` puts all 512 cells in the':'a boot clear is not in the derived write range; only a clear reachable after a yield is',
  'a program that runs `clr db` writes the whole stack':'a boot clear is not in the derived write range; what is left there is an unproven computed write',
+ 'RatioVolatiles':'the target build names the gas Methane; the LogicType is RatioMethane (#326)',
 }
 for p in mds:
     txt=p.read_text(errors='replace')
@@ -238,7 +241,7 @@ required={
  'README.md':['ROADMAP.md','docs/PROCESS_UTILITY_ORCHESTRATION.md','docs/INTERRUPTION_FAULT_INJECTION.md','docs/LIVE_COMMISSIONING.md','docs/STOCK_TARGET_INGRESS.md','docs/OPERATOR_ORDER_INGRESS.md','complete validator/test inventory defined by `framework/validation_suite.py`','docs/DEPENDENCY_PLANNING.md','docs/COMPLETED_MILESTONES.md','docs/CATALOG_COORDINATION.md','docs/CATALOG_STORAGE.md','docs/DIRECTORY_STANDARD.md','docs/PRINTER_DIRECTORY.md','docs/GENERIC_JOB_ABI.md','docs/MANUFACTURING_SCHEDULER.md','docs/ASYNC_REQUEST_STANDARD.md','docs/BANKED_TRANSACTION_STANDARD.md','docs/SCRIPT_INDEX.md','tools/run_validation.py','tools/build_release.py','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/generic-jobs/generic_job_store_v1_0.ic10','ic10/manufacturing/manufacturing_scheduler_v1_0.ic10','docs/POWER_MANAGEMENT.md','ic10/generic-jobs/generic_job_command_gateway_v5_0.ic10','ic10/power-jobs/power_job_scheduler_v1_0.ic10'],
  'docs/DIRECTORY_STANDARD.md':['DIRECTORY_ADAPTER_ABI_V3','ic10/directory-core/generic_snapshot_directory_host_v1_0.ic10','ic10/directory-core/generic_registry_directory_host_v2_0.ic10','ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ic10/manufacturing/transform_lane_directory_adapter_v1_0.ic10','ic10/printer-directory/printer_execution_directory_adapter_v1_0.ic10','data/directory_schemas.json','DirectorySchema.Controller','DirectorySchema.ResourceReservation','DirectorySchema.Printer','DirectorySchema.TransformLane','DirectorySchema.PrinterExecution','DirectorySchema.CatalogStoreNode','DirectorySchema.PowerReservation','overflow'],
  'docs/PRINTER_DIRECTORY.md':['DirectorySchema.Printer','ic10/printer-directory/printer_directory_adapter_v1_0.ic10','ProcessorSpec','Printer.Autolathe','Printer.SecurityPrinter','Printer.RocketManufactory','StructureFabricator','Capacity remains 64','DirectorySchema.PrinterExecution','tests/test_printer_directory.py'],
- 'docs/RESOURCE_PROFILES.md':['39 Resource Profiles','ProfileKind=5','Fuel.H2O2','physical width is 16 cells','26','FLUID','ITEM','POWER','ENERGY','ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10','ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10','ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10','Store ABI6'],
+ 'docs/RESOURCE_PROFILES.md':['44 Resource Profiles','ProfileKind=5','Fuel.H2O2','physical width is 16 cells','26','FLUID','ITEM','POWER','ENERGY','ic10/resource-profile-catalog/resource_profile_loader_power_00_v4_0.ic10','ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10','ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10','Store ABI6'],
  'docs/RECIPE_CATALOG.md':['Recipe schema v3','Lookup ABI3','FamilyHash','PartitionKey','18','ic10/recipe-catalog/recipe_catalog_lookup_v8_0.ic10','ic10/recipe-catalog/recipe_execution_profile_view_v1_0.ic10','ManufacturingReagentHash','Store ABI6'],
  'docs/ORE_PROCESSING_TRANSFORMS.md':['## 2. Catalog schema','4-cell-aligned','RequiredCapabilityMask','FURNACE_ALLOY','ADVANCED_ALLOY','Advanced Furnace','complete transform','pressure and temperature bounds','Item 6'],
  'docs/DEPLOYMENT.md':['Catalog control-plane v3 commissioning','ic10/directory-core/generic_directory_adapter_bridge_v1_0.ic10','generated FLUID and ITEM Resource Profile loader candidates','runtime','Item Migration Planner','Item Migration Worker','one current material transform transaction path','Allocator ABI2 exactly','Generic Job Store','ic10/generic-jobs/generic_job_store_v1_0.ic10','ExpectedJobGeneration','Manufacturing Scheduler and dependency-planner deployment','ic10/manufacturing/manufacturing_scheduler_v1_0.ic10','ic10/printer-directory/printer_execution_bank_v2_0.ic10'],

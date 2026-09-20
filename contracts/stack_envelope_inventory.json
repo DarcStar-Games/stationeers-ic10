@@ -33,8 +33,8 @@
     "implementation_id": "optional extension field; never derived from a versioned filename"
   },
   "totals": {
-    "deployable_programs": 184,
-    "migrated_v1": 184,
+    "deployable_programs": 185,
+    "migrated_v1": 185,
     "legacy_exempt": 0,
     "backlog_reserved_cell_users": 0,
     "backlog_dynamic_range_users": 0
@@ -28141,12 +28141,12 @@
         ]
       },
       "stack_pressure": {
-        "literal_cell_count": 77,
+        "literal_cell_count": 109,
         "highest_literal_cell": 509,
         "dynamic_read_ranges": [],
         "dynamic_write_ranges": [],
-        "line_count": 79,
-        "line_headroom_120": 41,
+        "line_count": 111,
+        "line_headroom_120": 9,
         "measured_v1_publication_cost_lines": 4,
         "measured_v1_stack_cost_cells": 8
       },
@@ -28183,7 +28183,7 @@
         "implementation_id": null,
         "implementation_id_hash": null,
         "publication_validation": {
-          "source_sha256": "b07e0c9f0c40b4c30355f9fda5a6cac504a95315a7e88715e0aa3e78ffc16604",
+          "source_sha256": "fd8b778d31c0217ff7cca3c24decf0ebf37b2542147e3b961d5b48e54a38a5b0",
           "entry_path": "straight-line-before-first-yield",
           "legacy_owned_ranges": [
             {
@@ -28192,11 +28192,211 @@
             },
             {
               "start": 24,
-              "end": 31
+              "end": 35
+            },
+            {
+              "start": 416,
+              "end": 429
+            },
+            {
+              "start": 432,
+              "end": 445
             },
             {
               "start": 448,
               "end": 461
+            },
+            {
+              "start": 464,
+              "end": 477
+            },
+            {
+              "start": 480,
+              "end": 493
+            },
+            {
+              "start": 496,
+              "end": 509
+            }
+          ],
+          "post_init_dynamic_write_ranges": []
+        },
+        "pilot_family": "catalog-loader"
+      }
+    },
+    {
+      "source": "ic10/resource-profile-catalog/resource_profile_loader_fluid_02_v4_0.ic10",
+      "service_contract_id": "ic10.script.resource.profile.loader.fluid.02",
+      "deployment_family": "resource-profile-catalog",
+      "status": "migrated-v1",
+      "current_layout": {
+        "headers": [
+          {
+            "base": 0,
+            "contract": "CatalogLoader",
+            "magic": -284599001,
+            "abi": 5
+          }
+        ],
+        "schema_fields": [
+          {
+            "address": 3,
+            "name": "SchemaId",
+            "const": "HASH(\"CatalogSchema.ResourceProfile.v2\")"
+          },
+          {
+            "address": 10,
+            "name": "SchemaIdentityHash",
+            "const": "HASH(\"Catalog.ResourceProfiles.Schema2\")"
+          }
+        ],
+        "payload_fields": [
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S10",
+            "name": "CatalogInstanceId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S11",
+            "name": "PartitionKey",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S12",
+            "name": "LoaderId",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S13",
+            "name": "LoaderGeneration",
+            "role": "generation"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S14",
+            "name": "ItemCount",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S15",
+            "name": "ItemDirectoryBase",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S16",
+            "name": "TotalPayloadCells",
+            "role": "metadata"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S17",
+            "name": "PayloadSignature",
+            "role": "schema"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S18",
+            "name": "Ready",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S19",
+            "name": "TargetStoreRef",
+            "role": "topology"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S20",
+            "name": "AssignmentEpoch",
+            "role": "epoch"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S21",
+            "name": "ImportedItemIndex",
+            "role": "state"
+          },
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "cells": "S24..S27",
+            "name": "ItemDirectory",
+            "role": "table"
+          }
+        ],
+        "payload_bases": [
+          0
+        ],
+        "payload_inventory_status": "declared-stack-protocol",
+        "existing_consumer_checks": [
+          {
+            "protocol_id": "ic10.stack.catalog-loader.v5",
+            "provider_header_bases": [
+              0
+            ],
+            "consumers": []
+          }
+        ]
+      },
+      "stack_pressure": {
+        "literal_cell_count": 61,
+        "highest_literal_cell": 509,
+        "dynamic_read_ranges": [],
+        "dynamic_write_ranges": [],
+        "line_count": 63,
+        "line_headroom_120": 57,
+        "measured_v1_publication_cost_lines": 4,
+        "measured_v1_stack_cost_cells": 8
+      },
+      "window_collision": {
+        "literal_cells": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "dynamic_read_cells": [],
+        "dynamic_write_cells": [],
+        "dynamic_read_provenance": "none",
+        "dynamic_write_provenance": "none"
+      },
+      "envelope": {
+        "service_id": "ic10.script.resource.profile.loader.fluid.02",
+        "contract": "CatalogLoader",
+        "magic": -284599001,
+        "magic_token": "HASH(\"CatalogLoader.v5\")",
+        "service_abi": 5,
+        "schema_id": "CatalogSchema.ResourceProfile",
+        "schema_id_hash": "HASH(\"CatalogSchema.ResourceProfile.v2\")",
+        "schema_version": 2,
+        "schema_assigned_externally": false,
+        "extension_base": 0,
+        "telemetry_base": 0,
+        "publishes_state": false,
+        "custom_state_bits": 0,
+        "publishes_generation": false,
+        "standard_capabilities": [],
+        "capability_mask": 1,
+        "extension_flags": 0,
+        "implementation_id": null,
+        "implementation_id_hash": null,
+        "publication_validation": {
+          "source_sha256": "8c3a91010b41ab26c140300f10b2975d22b22c6aae313788d0c99b859dc0549c",
+          "entry_path": "straight-line-before-first-yield",
+          "legacy_owned_ranges": [
+            {
+              "start": 10,
+              "end": 18
+            },
+            {
+              "start": 24,
+              "end": 29
             },
             {
               "start": 464,

@@ -763,6 +763,7 @@ This family contains the deployment classes shown in its generated program inven
 | `ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10` | `one-shot` | One-shot relocatable ENERGY Resource Profile Loader ABI5 candidate. |
 | `ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
 | `ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
+| `ic10/resource-profile-catalog/resource_profile_loader_fluid_02_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
 | `ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
 | `ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
 | `ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |

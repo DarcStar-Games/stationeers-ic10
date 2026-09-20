@@ -4909,7 +4909,7 @@
           "access": [
             "self-write"
           ],
-          "const": 1457061104,
+          "const": -1492053523,
           "role": "metadata",
           "description": "stable generated identity"
         },
@@ -4933,7 +4933,7 @@
           "access": [
             "self-write"
           ],
-          "const": 4,
+          "const": 6,
           "role": "metadata"
         },
         {
@@ -4956,7 +4956,7 @@
           "access": [
             "self-write"
           ],
-          "const": 64,
+          "const": 96,
           "role": "metadata"
         },
         {
@@ -4967,7 +4967,7 @@
           "access": [
             "self-write"
           ],
-          "const": 147657193,
+          "const": 461236780,
           "role": "schema"
         },
         {
@@ -5107,6 +5107,324 @@
           "const": 16
         },
         {
+          "address": 32,
+          "name": "S32",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 432
+        },
+        {
+          "address": 33,
+          "name": "S33",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 16
+        },
+        {
+          "address": 34,
+          "name": "S34",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 416
+        },
+        {
+          "address": 35,
+          "name": "S35",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 16
+        },
+        {
+          "address": 416,
+          "name": "S416",
+          "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "const": 1612185115,
+          "description": "Prepared 1:1 Hydrogen/Nitrous Oxide fuel mixture"
+        },
+        {
+          "address": 417,
+          "name": "S417",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 418,
+          "name": "S418",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 419,
+          "name": "S419",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 5
+        },
+        {
+          "address": 420,
+          "name": "S420",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 421,
+          "name": "S421",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 422,
+          "name": "S422",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0.5
+        },
+        {
+          "address": 423,
+          "name": "S423",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 424,
+          "name": "S424",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0.5
+        },
+        {
+          "address": 425,
+          "name": "S425",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0.005
+        },
+        {
+          "address": 426,
+          "name": "S426",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 427,
+          "name": "S427",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 313
+        },
+        {
+          "address": 428,
+          "name": "S428",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 19208
+        },
+        {
+          "address": 429,
+          "name": "S429",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 432,
+          "name": "S432",
+          "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "const": -33134514,
+          "description": "Prepared 2:1 Methane/Oxygen fuel mixture"
+        },
+        {
+          "address": 433,
+          "name": "S433",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 434,
+          "name": "S434",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 435,
+          "name": "S435",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 5
+        },
+        {
+          "address": 436,
+          "name": "S436",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 437,
+          "name": "S437",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 438,
+          "name": "S438",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0.666666666667
+        },
+        {
+          "address": 439,
+          "name": "S439",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 440,
+          "name": "S440",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0.333333333333
+        },
+        {
+          "address": 441,
+          "name": "S441",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0.005
+        },
+        {
+          "address": 442,
+          "name": "S442",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 443,
+          "name": "S443",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 563
+        },
+        {
+          "address": 444,
+          "name": "S444",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 11968
+        },
+        {
+          "address": 445,
+          "name": "S445",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
           "address": 448,
           "name": "S448",
           "value_type": "number",
@@ -5115,7 +5433,7 @@
             "self-write"
           ],
           "const": -1325297737,
-          "description": "Prepared 2:1 Volatiles/Oxygen fuel mixture"
+          "description": "Prepared 2:1 Hydrogen/Oxygen fuel mixture"
         },
         {
           "address": 449,
@@ -5223,7 +5541,7 @@
           "access": [
             "self-write"
           ],
-          "const": 5000
+          "const": 563
         },
         {
           "address": 460,
@@ -5664,6 +5982,713 @@
             "self-write"
           ],
           "const": 600
+        }
+      ],
+      "behavior": {
+        "publication_rules": [
+          {
+            "kind": "commit-last",
+            "address": 18,
+            "description": "immutable candidate publication LAST",
+            "source": "verified-inline-order"
+          }
+        ],
+        "restart": {
+          "mode": "cleared-on-init",
+          "source": "static-entry-path-analysis"
+        },
+        "invariants": [
+          {
+            "id": "header.s0.magic",
+            "kind": "cell-equals",
+            "address": 0,
+            "equals": -284599001,
+            "source": "generated-protocol-header"
+          },
+          {
+            "id": "header.s0.abi",
+            "kind": "cell-equals",
+            "address": 1,
+            "equals": 5,
+            "source": "generated-protocol-header"
+          }
+        ]
+      }
+    },
+    {
+      "source": "ic10/resource-profile-catalog/resource_profile_loader_fluid_02_v4_0.ic10",
+      "header_base": 0,
+      "readable_ranges": [],
+      "writable_ranges": [
+        {
+          "start": 19,
+          "end": 21
+        }
+      ],
+      "fields": [
+        {
+          "address": 0,
+          "name": "Header@S0.Magic",
+          "value_type": "hash",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ],
+          "const": -284599001
+        },
+        {
+          "address": 1,
+          "name": "Header@S0.ABI",
+          "value_type": "integer",
+          "semantic_source": "protocol-header",
+          "access": [
+            "self-write"
+          ],
+          "const": 5
+        },
+        {
+          "address": 2,
+          "name": "S2",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 3,
+          "name": "S3",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": -118800371
+        },
+        {
+          "address": 10,
+          "name": "CatalogInstanceId",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": -2092815670,
+          "role": "metadata"
+        },
+        {
+          "address": 11,
+          "name": "PartitionKey",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 1,
+          "role": "metadata"
+        },
+        {
+          "address": 12,
+          "name": "LoaderId",
+          "value_type": "hash",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 156195528,
+          "role": "metadata",
+          "description": "stable generated identity"
+        },
+        {
+          "address": 13,
+          "name": "LoaderGeneration",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 1,
+          "role": "generation",
+          "description": "Loader publication generation or version"
+        },
+        {
+          "address": 14,
+          "name": "ItemCount",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 3,
+          "role": "metadata"
+        },
+        {
+          "address": 15,
+          "name": "ItemDirectoryBase",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 24,
+          "role": "metadata",
+          "description": "24"
+        },
+        {
+          "address": 16,
+          "name": "TotalPayloadCells",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 48,
+          "role": "metadata"
+        },
+        {
+          "address": 17,
+          "name": "PayloadSignature",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 186523118,
+          "role": "schema"
+        },
+        {
+          "address": 18,
+          "name": "Ready",
+          "value_type": "number",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 1,
+          "description": "immutable candidate publication LAST",
+          "role": "state"
+        },
+        {
+          "address": 19,
+          "name": "TargetStoreRef",
+          "value_type": "reference-id",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ],
+          "description": "Runtime-assigned Store ReferenceId; the Router assigns it and the Store clears it after import.",
+          "role": "topology"
+        },
+        {
+          "address": 20,
+          "name": "AssignmentEpoch",
+          "value_type": "integer",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ],
+          "description": "Runtime assignment token from the Router.",
+          "role": "epoch"
+        },
+        {
+          "address": 21,
+          "name": "ImportedItemIndex",
+          "value_type": "number",
+          "semantic_source": "override",
+          "access": [
+            "external-read",
+            "external-write"
+          ],
+          "description": "Next item index already imported, advanced by the Store.",
+          "role": "state"
+        },
+        {
+          "address": 24,
+          "name": "ItemDirectory[0]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 496,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
+        },
+        {
+          "address": 25,
+          "name": "ItemDirectory[1]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 16,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
+        },
+        {
+          "address": 26,
+          "name": "ItemDirectory[2]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 480,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
+        },
+        {
+          "address": 27,
+          "name": "ItemDirectory[3]",
+          "value_type": "integer",
+          "semantic_source": "protocol-layout",
+          "access": [
+            "self-write"
+          ],
+          "const": 16,
+          "role": "table",
+          "description": "[ItemBase, ItemCellCount] per item; the generated loaders carry at most two items"
+        },
+        {
+          "address": 28,
+          "name": "S28",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 464
+        },
+        {
+          "address": 29,
+          "name": "S29",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 16
+        },
+        {
+          "address": 464,
+          "name": "S464",
+          "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "const": -1996400424,
+          "description": "Prepared 3:2 Methane/Ozone fuel mixture"
+        },
+        {
+          "address": 465,
+          "name": "S465",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 466,
+          "name": "S466",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 467,
+          "name": "S467",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 5
+        },
+        {
+          "address": 468,
+          "name": "S468",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 469,
+          "name": "S469",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 470,
+          "name": "S470",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0.6
+        },
+        {
+          "address": 471,
+          "name": "S471",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 472,
+          "name": "S472",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0.4
+        },
+        {
+          "address": 473,
+          "name": "S473",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0.005
+        },
+        {
+          "address": 474,
+          "name": "S474",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 475,
+          "name": "S475",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 413
+        },
+        {
+          "address": 476,
+          "name": "S476",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 21543
+        },
+        {
+          "address": 477,
+          "name": "S477",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 480,
+          "name": "S480",
+          "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "const": -972636383,
+          "description": "Prepared 3:1 Hydrogen/Ozone fuel mixture"
+        },
+        {
+          "address": 481,
+          "name": "S481",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 482,
+          "name": "S482",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 483,
+          "name": "S483",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 5
+        },
+        {
+          "address": 484,
+          "name": "S484",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 485,
+          "name": "S485",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 486,
+          "name": "S486",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0.75
+        },
+        {
+          "address": 487,
+          "name": "S487",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 488,
+          "name": "S488",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0.25
+        },
+        {
+          "address": 489,
+          "name": "S489",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0.005
+        },
+        {
+          "address": 490,
+          "name": "S490",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 491,
+          "name": "S491",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 413
+        },
+        {
+          "address": 492,
+          "name": "S492",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 28811
+        },
+        {
+          "address": 493,
+          "name": "S493",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 496,
+          "name": "S496",
+          "value_type": "number",
+          "semantic_source": "source",
+          "access": [
+            "self-write"
+          ],
+          "const": -1539722428,
+          "description": "Prepared 1:1 Methane/Nitrous Oxide fuel mixture"
+        },
+        {
+          "address": 497,
+          "name": "S497",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 498,
+          "name": "S498",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 499,
+          "name": "S499",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 5
+        },
+        {
+          "address": 500,
+          "name": "S500",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 501,
+          "name": "S501",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 502,
+          "name": "S502",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0.5
+        },
+        {
+          "address": 503,
+          "name": "S503",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ]
+        },
+        {
+          "address": 504,
+          "name": "S504",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0.5
+        },
+        {
+          "address": 505,
+          "name": "S505",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 0.005
+        },
+        {
+          "address": 506,
+          "name": "S506",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
+        },
+        {
+          "address": 507,
+          "name": "S507",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 313
+        },
+        {
+          "address": 508,
+          "name": "S508",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 17952
+        },
+        {
+          "address": 509,
+          "name": "S509",
+          "value_type": "number",
+          "semantic_source": "unresolved",
+          "access": [
+            "self-write"
+          ],
+          "const": 1
         }
       ],
       "behavior": {

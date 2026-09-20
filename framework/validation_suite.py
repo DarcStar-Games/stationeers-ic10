@@ -46,6 +46,7 @@ SUITE_ENTRIES = (
     SuiteEntry("validation/validators/validate_documentation.py", VALIDATOR_CATEGORY, "VALIDATE_DOCUMENTATION"),
     SuiteEntry("validation/validators/validate_ic10.py", VALIDATOR_CATEGORY, "VALIDATE_IC10"),
     SuiteEntry("validation/validators/validate_ic10_opcodes.py", VALIDATOR_CATEGORY, "VALIDATE_IC10_OPCODES"),
+    SuiteEntry("validation/validators/validate_logic_enum_tokens.py", VALIDATOR_CATEGORY, "VALIDATE_LOGIC_ENUM_TOKENS"),
     SuiteEntry("validation/validators/validate_input_contracts.py", VALIDATOR_CATEGORY, "VALIDATE_INPUT_CONTRACTS"),
     SuiteEntry("validation/validators/validate_job_contracts.py", VALIDATOR_CATEGORY, "VALIDATE_JOB_CONTRACTS"),
     SuiteEntry("validation/validators/validate_manufacturing_contracts.py", VALIDATOR_CATEGORY, "VALIDATE_MANUFACTURING_CONTRACTS"),
