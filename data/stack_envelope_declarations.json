@@ -1654,7 +1654,7 @@
    "publishes_state": false,
    "custom_state_bits": 0,
    "publishes_generation": false,
-   "source_sha256": "b07e0c9f0c40b4c30355f9fda5a6cac504a95315a7e88715e0aa3e78ffc16604",
+   "source_sha256": "fd8b778d31c0217ff7cca3c24decf0ebf37b2542147e3b961d5b48e54a38a5b0",
    "legacy_owned_ranges": [
     [
      10,
@@ -1662,11 +1662,58 @@
     ],
     [
      24,
-     31
+     35
+    ],
+    [
+     416,
+     429
+    ],
+    [
+     432,
+     445
     ],
     [
      448,
      461
+    ],
+    [
+     464,
+     477
+    ],
+    [
+     480,
+     493
+    ],
+    [
+     496,
+     509
+    ]
+   ],
+   "post_init_dynamic_write_ranges": [],
+   "pilot_family": "catalog-loader"
+  },
+  "ic10/resource-profile-catalog/resource_profile_loader_fluid_02_v4_0.ic10": {
+   "service_id": "ic10.script.resource.profile.loader.fluid.02",
+   "contract": "CatalogLoader",
+   "service_abi": 5,
+   "schema_id": "CatalogSchema.ResourceProfile",
+   "schema_version": 2,
+   "extension_base": 0,
+   "extension_flags": 0,
+   "implementation_id": null,
+   "telemetry_base": 0,
+   "publishes_state": false,
+   "custom_state_bits": 0,
+   "publishes_generation": false,
+   "source_sha256": "8c3a91010b41ab26c140300f10b2975d22b22c6aae313788d0c99b859dc0549c",
+   "legacy_owned_ranges": [
+    [
+     10,
+     18
+    ],
+    [
+     24,
+     29
     ],
     [
      464,

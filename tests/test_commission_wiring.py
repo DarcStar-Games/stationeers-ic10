@@ -101,8 +101,8 @@ conflicting_bindings = wiring("ic10.script.gas.mixer.utility.controller", {
     "d2": device(
         "Pipe Analyzer", "mixture output",
         caps(
-            read=["Pressure", "TotalMoles", "RatioNitrogen", "RatioVolatiles"],
-            bindings={"r2": "RatioNitrogen", "r4": "RatioVolatiles"},
+            read=["Pressure", "TotalMoles", "RatioNitrogen", "RatioHydrogen"],
+            bindings={"r2": "RatioNitrogen", "r4": "RatioHydrogen"},
         ),
     ),
 })

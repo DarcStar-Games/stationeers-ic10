@@ -6,12 +6,12 @@ poke 2 1
 poke 3 HASH("CatalogSchema.ResourceProfile.v2")
 poke 10 HASH("Catalog.ResourceProfiles.Schema2")
 poke 11 1
-poke 12 HASH("LoaderId:0520dc6483d951d1")
+poke 12 HASH("LoaderId:c34d915835666280")
 poke 13 1
-poke 14 4
+poke 14 6
 poke 15 24
-poke 16 64
-poke 17 HASH("LD4:bafc7012ec80e6de")
+poke 16 96
+poke 17 HASH("LD4:0c718bd1411136c7")
 poke 24 496
 poke 25 16
 poke 496 HASH("CarbonDioxide") # CarbonDioxide
@@ -62,18 +62,50 @@ poke 476 0.995
 poke 477 200
 poke 30 448
 poke 31 16
-poke 448 HASH("Fuel.H2O2") # Prepared 2:1 Volatiles/Oxygen fuel mixture
+poke 448 HASH("Fuel.H2O2") # Prepared 2:1 Hydrogen/Oxygen fuel mixture
 poke 449 1
 poke 450 1
 poke 451 5
 poke 452 1
-poke 453 RatioVolatiles
+poke 453 RatioHydrogen
 poke 454 0.666666666667
 poke 455 RatioOxygen
 poke 456 0.333333333333
 poke 457 0.005
 poke 458 1
-poke 459 5000
+poke 459 563
 poke 460 12805
 poke 461 1
+poke 32 432
+poke 33 16
+poke 432 HASH("Fuel.CH4O2") # Prepared 2:1 Methane/Oxygen fuel mixture
+poke 433 1
+poke 434 1
+poke 435 5
+poke 436 1
+poke 437 RatioMethane
+poke 438 0.666666666667
+poke 439 RatioOxygen
+poke 440 0.333333333333
+poke 441 0.005
+poke 442 1
+poke 443 563
+poke 444 11968
+poke 445 1
+poke 34 416
+poke 35 16
+poke 416 HASH("Fuel.H2N2O") # Prepared 1:1 Hydrogen/Nitrous Oxide fuel mixture
+poke 417 1
+poke 418 1
+poke 419 5
+poke 420 1
+poke 421 RatioHydrogen
+poke 422 0.5
+poke 423 RatioNitrousOxide
+poke 424 0.5
+poke 425 0.005
+poke 426 1
+poke 427 313
+poke 428 19208
+poke 429 1
 poke 18 1 # immutable candidate publication LAST

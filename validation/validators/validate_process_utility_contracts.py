@@ -9,13 +9,24 @@ from pathlib import Path
 import json,sys
 R=_PROJECT_ROOT;result=Validation(R)
 P=json.loads((R/'data/resource_profiles.json').read_text())['profiles']
-f=[p for p in P if p.get('resource_type')=='Fuel.H2O2']
-if len(f)!=1:result.fail('expected exactly one Fuel.H2O2 Resource Profile')
-else:
+# The prepared fuels are the game's six gas fuel:oxidiser reactions (docs/SOURCES.md, combustion table):
+# fuel LogicType, oxidiser LogicType, fuel mole fraction, and the auto-ignition point the mixture must stay
+# under (573.15 K for Methane and Hydrogen, lowered 250 K by Nitrous Oxide and 150 K by Ozone). A kind-5
+# profile outside this table is an unreviewed fuel.
+REACTIONS={'Fuel.H2O2':('RatioHydrogen','RatioOxygen',2/3,573.15),'Fuel.CH4O2':('RatioMethane','RatioOxygen',2/3,573.15),
+ 'Fuel.H2N2O':('RatioHydrogen','RatioNitrousOxide',1/2,323.15),'Fuel.CH4N2O':('RatioMethane','RatioNitrousOxide',1/2,323.15),
+ 'Fuel.H2O3':('RatioHydrogen','RatioOzone',3/4,423.15),'Fuel.CH4O3':('RatioMethane','RatioOzone',3/5,423.15)}
+kind5={p['resource_type'] for p in P if p.get('profile_kind')==5}
+if kind5!=set(REACTIONS):result.fail('prepared-mixture profiles are not exactly the six reviewed reactions',detail=', '.join(sorted(kind5^set(REACTIONS))))
+for fuel,(component,oxidiser,fraction,ignition) in REACTIONS.items():
+ f=[p for p in P if p.get('resource_type')==fuel]
+ if len(f)!=1:result.fail(f'expected exactly one {fuel} Resource Profile');continue
  p=f[0]
- if (p['resource_class'],p['unit'],p['profile_kind'],p['profile_schema'])!=(1,1,5,1):result.fail('Fuel.H2O2 profile identity/schema mismatch')
- if abs(float(p['params'][1])+float(p['params'][3])-1)>1e-9:result.fail('Fuel.H2O2 fractions do not sum to 1')
- if p['params'][0]!='RatioVolatiles' or p['params'][2]!='RatioOxygen':result.fail('Fuel.H2O2 component LogicTypes wrong')
+ if (p['resource_class'],p['unit'],p['profile_kind'],p['profile_schema'])!=(1,1,5,1):result.fail(f'{fuel} profile identity/schema mismatch')
+ if abs(float(p['params'][1])+float(p['params'][3])-1)>1e-9:result.fail(f'{fuel} fractions do not sum to 1')
+ if abs(float(p['params'][1])-fraction)>1e-9:result.fail(f'{fuel} is not the fuel:oxidiser reaction the game combusts')
+ if p['params'][0]!=component or p['params'][2]!=oxidiser:result.fail(f'{fuel} component LogicTypes wrong')
+ if not float(p['params'][6])<ignition:result.fail(f'{fuel} MaxTemperature is not under the mixture auto-ignition point {ignition} K')
 checks={
 'ic10/process-furnace/furnace_process_condition_request_v1_0.ic10':['poke 0 HASH("ProcessCondition.v1")','get r5 d0 64','get r7 d0 66','poke 11 r0'],
 'ic10/process-furnace/process_pressure_domain_runtime_v1_0.ic10':['poke 97 2','poke 99 HASH("ControllerPressureDomain")','poke 103 3','poke 105 3'],

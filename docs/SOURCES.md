@@ -121,7 +121,26 @@ Relevant references:
 - `Oxygen`: https://stationeers-wiki.com/Oxygen
 - `Hydrogen`: https://stationeers-wiki.com/Hydrogen
 
-The profile files intentionally use the **current gas identity names** (`Methane`, not deprecated `Volatiles`) and game-model values rather than real-world constants.
+The profile files intentionally use the **current gas identity names** (`Methane`, not deprecated `Volatiles`) and game-model values rather than real-world constants. The LogicType followed the gas: the target build has `RatioMethane` and no Volatiles-named ratio, and `validation/validators/validate_logic_enum_tokens.py` holds every bare LogicType and LogicSlotType token in `ic10/**` to `data/logic_enums.json`, the enum table extracted from that build, so a name the game removes fails validation instead of compiling nowhere (#326).
+
+## Combustion table
+
+The six prepared fuel profiles take their fuel:oxidiser fractions from the game's reaction table, not from real chemistry. The table is the static constructor of `Assets.Scripts.Atmospherics.Combustion` in the installed target build's `Assembly-CSharp.dll` (0.2.6428.27798), read on 2026-09-20 with the same `dnfile` metadata reader that produced `data/logic_enums.json`; each `CombustionResult` is constructed from fuel moles, oxidiser moles, and its products, and `Chemistry` holds the enthalpy constants beside it. The Stationpedia's Combustion Info Panel shows the same figures in-game.
+
+| Fuel | Oxidiser | Fuel : oxidiser (moles) | Products (moles) |
+|---|---|---|---|
+| Methane | Oxygen | 2 : 1 | 3 Pollutant, 6 CarbonDioxide |
+| Methane | NitrousOxide | 1 : 1 | 2 CarbonDioxide, 2 Nitrogen |
+| Methane | Ozone | 3 : 2 | 3 Pollutant, 6 CarbonDioxide, 1 Steam |
+| Hydrogen | Oxygen | 2 : 1 | 3 Steam |
+| Hydrogen | NitrousOxide | 1 : 1 | 1 Steam, 1 Nitrogen |
+| Hydrogen | Ozone | 3 : 1 | 4 Steam |
+| LiquidAlcohol | Oxygen | 1 : 3 | 8 CarbonDioxide, 2 Steam |
+| LiquidAlcohol | NitrousOxide | 1 : 2 | 4 Nitrogen, 2 Steam |
+| LiquidAlcohol | Ozone | 1 : 2 | 1 CarbonDioxide, 3 Steam |
+| Hydrazine | none (hypergolic) | 1 : 1 with itself | 8 Pollutant |
+
+Fuels are Methane and Hydrogen with their liquid forms, and LiquidAlcohol; oxidisers are Oxygen, NitrousOxide, and Ozone with theirs; Hydrazine combusts alone. `Mole.Enthalpy` is keyed by fuel type (286000 for Methane, 306000 for Hydrogen and Hydrazine, 566000 for ethanol) and `Mole.EnthalpyMultiplier` by oxidiser type (1.0 for Oxygen, 2.0 for NitrousOxide and Ozone); `CombustionResult.RunCombustion` releases the fuel's enthalpy times the oxidiser's multiplier times the fuel moles burned, so per mole of stoichiometric mixture the energy scales with the fuel fraction. NitrousOxide and Ozone lower the auto-ignition point by 250 K and 150 K. Methane and Hydrogen auto-ignite at 573.15 K, alcohol at 673.15 K. The six gas rows are the six prepared fuel profiles: `Fuel.H2O2`, `Fuel.CH4O2`, `Fuel.H2N2O`, `Fuel.CH4N2O`, `Fuel.H2O3`, and `Fuel.CH4O3`, each at the table's fuel fraction and with `MaxTemperature` under the mixture's auto-ignition point. Alcohol is a liquid and Hydrazine needs no second component, so neither has a profile. The game's `GasType.Fuel` flag is Methane with Oxygen, the historical Volatiles mix.
 
 
 ## Pressure-domain references
@@ -244,7 +263,7 @@ Current public Stationeers references used for the bounded Item-11 physical mode
 - **Furnace temperature and pressure math** — gas/fuel/diluent and thermal relationships: https://stationeers-wiki.com/Furnace_temperature_and_pressure_math
 - **Pipe Gas Mixer** — temperature-corrected mole-ratio and hot/cold mixing formulas: https://stationeers-wiki.com/Pipe_Gas_Mixer
 - **Gas Fuel Generator** — current mole/feed behavior and ambient operating envelope: https://stationeers-wiki.com/Kit_%28Gas_Fuel_Generator%29
-- **Electrolyzer** — 2:1 Volatiles/Oxygen output composition: https://stationeers-wiki.com/Kit_%28Atmospherics%29_Electrolyzer
+- **Electrolyzer** — 2:1 Hydrogen/Oxygen output composition since the March 2026 Gases Update, which split Hydrogen from the renamed Methane: https://stationeers-wiki.com/Kit_%28Atmospherics%29_Electrolyzer
 - **IC10 instructions** — `bdnvl`/`bdnvs` mean branch when a LogicType is not valid to load/store: https://stationeers-wiki.com/IC10/instructions
 
 These references guide the physical specialization only. Live-game commissioning remains authoritative for exact device availability, property writability, timing, and numerical behavior on the target game build.

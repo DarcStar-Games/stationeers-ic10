@@ -218,7 +218,7 @@ A source being production-capable does not imply it must remain powered. After c
 - Catalog Inspector, Catalog Directory Telemetry/View, Catalog Coordinator Recovery, Item Migration Planner/Worker, and Store Retirement Manager are optional/on-demand unless the operator explicitly wants continuous observability or is performing lifecycle work;
 - `ic10/generic-jobs/generic_job_store_v1_0.ic10` is resident only when the installation accepts/retains Generic Jobs. It is not needed by controller-only deployments that do not use manufacturing/direct-transfer scheduling.
 
-The production source inventory is **184 IC10 programs**; a normal steady-state installation uses only the subset required by its active controller/resource domains. Test-only ControllerTest programs live under `tests/ic10/` and are not counted here.
+The production source inventory is **185 IC10 programs**; a normal steady-state installation uses only the subset required by its active controller/resource domains. Test-only ControllerTest programs live under `tests/ic10/` and are not counted here.
 
 ## Printer Directory / manufacturing discovery
 
@@ -291,7 +291,7 @@ The generalized Resource Core is additive and is not required for an existing pr
 2. Provide Generic Store capacity by programming `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` on unclaimed IC housings and assigning each a unique `S18 NodeId` from 1..64. The current profile catalog needs at least three Stores under Store ABI6 geometry, but no Store is preassigned to FLUID or ITEM.
 3. Deploy the generated FLUID and ITEM Resource Profile loader candidates. They contain relocatable whole 16-cell profile items and require no Store wiring or Store ordinal.
 4. The Router places each item into matching runtime capacity; the Coordinator claims/links more Stores only when needed.
-5. Verify the 39 profiles settle into healthy ACTIVE Stores with stable even `S17`. Use Coordinator telemetry/View rather than Loader counts to determine readiness.
+5. Verify the 44 profiles settle into healthy ACTIVE Stores with stable even `S17`. Use Coordinator telemetry/View rather than Loader counts to determine readiness.
 6. Deploy `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` for each simultaneously selected resource and wait for `S28=1` with positive `S29` before wiring consumers.
 
 ### B. Deploy ITEM sources and processor sinks
@@ -436,12 +436,12 @@ For one Advanced Furnace:
 4. If thermal preparation is needed, deploy `ic10/process-gas-preparation/thermal_gas_mixer_controller_v1_0.ic10` with hot/cold source analyzers, conditioned output analyzer, Gas Mixer, and the furnace ProcessCondition. Commission the conditioned output network as a PressureDomain STORAGE source.
 5. Keep `ic10/material-transform/material_transform_admission_v1_0.ic10` as final transform P/T admission authority; do not wire utility status as permission to bypass it.
 
-For H2/O2 fuel-backed GFG generation:
+For prepared-fuel GFG generation, with `Fuel.H2O2` as the example (any of the six kind-5 profiles in `docs/RESOURCE_PROFILES.md` deploys the same way):
 
-1. Load Resource Profile `Fuel.H2O2` (kind 5) through the ordinary Resource Profile catalog.
-2. Deploy `ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10` on the prepared-fuel output network; connect it to a Resource Profile View selecting `Fuel.H2O2`.
+1. Load the selected fuel's Resource Profile (kind 5; `Fuel.H2O2` here) through the ordinary Resource Profile catalog.
+2. Deploy `ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10` on the prepared-fuel output network; connect it to a Resource Profile View selecting the same profile.
 3. Deploy `ic10/process-gfg/gas_fuel_generator_utility_controller_v1_0.ic10` with GFG d0, Power Plan Store d1, ambient sensor d2, mixture guard d3; configure S16 medium, S17/S18 fuel pressure envelope, S19 shortage trigger, S20 enable.
-4. Feed the GFG utility controller's ProcessCondition to `ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10` d5. That mixer controller uses d0/d1 for pure Volatiles/Oxygen sources, d2 for the prepared-fuel buffer, d3 for the Gas Mixer, and d4 for the `Fuel.H2O2` profile.
+4. Feed the GFG utility controller's ProcessCondition to `ic10/process-gas-preparation/gas_mixer_utility_controller_v1_0.ic10` d5. That mixer controller uses d0/d1 for the pure sources of the profile's two component gases (Hydrogen and Oxygen for `Fuel.H2O2`), d2 for the prepared-fuel buffer, d3 for the Gas Mixer, and d4 for the same profile View; it reads both component LogicTypes from the profile.
 5. Expose the prepared-fuel buffer and GFG fuel-side network through ordinary PressureDomains/Reservations/PressureTransfers. PressureGrid, not the gas-mixer or GFG utility controller, owns physical delivery.
 
 Do not configure an Electrolyzer to start recursively from the same GFG shortage. Surplus-power-to-fuel operation requires a separate storage policy that prevents simultaneous charge/discharge justification.

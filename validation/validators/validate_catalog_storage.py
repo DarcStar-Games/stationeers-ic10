@@ -65,7 +65,7 @@ for f,needles in checks.items():
     for n in needles:
         if n not in t: fail(f+': missing '+n)
 expected_schema={
- 'resource_profile_catalog_manifest.json':('CatalogSchema.ResourceProfile',2,39),
+ 'resource_profile_catalog_manifest.json':('CatalogSchema.ResourceProfile',2,44),
  'input_profile_catalog_manifest.json':('CatalogSchema.InputProfile',3,6),
  'resource_transform_catalog_manifest.json':('CatalogSchema.ResourceTransform',4,17),
 }
@@ -77,7 +77,7 @@ for name,(schema,version,count) in expected_schema.items():
     if not m.get('runtime_store_placement'): fail(name+': runtime placement flag missing')
 rp=json.loads((R/'data/resource_profile_catalog_manifest.json').read_text())
 if rp.get('storage_partition')!='resource_class' or rp.get('runtime_min_store_count')!=5: fail('Resource Profile runtime partition/capacity estimate mismatch')
-if [p.get('item_count') for p in rp.get('partitions',[])]!=[10,27,1,1]: fail('Resource Profile partition item counts mismatch')
+if [p.get('item_count') for p in rp.get('partitions',[])]!=[15,27,1,1]: fail('Resource Profile partition item counts mismatch')
 if (rc.get('catalog_store_abi'),rc.get('catalog_loader_abi'),rc.get('catalog_coordinator_abi'),rc.get('catalog_schema_id'),rc.get('catalog_schema_version'))!=(6,5,4,'CatalogSchema.Recipe',3): fail('Recipe common ABI/schema mismatch')
 if rc.get('storage_partition')!='printer_family' or rc.get('runtime_min_store_count')!=6: fail('Recipe fixture runtime family capacity mismatch')
 raise SystemExit(result.finish('Catalog coordination/storage invariant validation',[

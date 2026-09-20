@@ -15,21 +15,22 @@
   "catalog_schema_version": 2,
   "catalog_instance_id": "Catalog.ResourceProfiles.Schema2",
   "store_count": 5,
-  "total_item_count": 39,
-  "catalog_sha256": "c17a1b88463adec5ae90ef1b3016cbd798799d9c0b704e3778d4d3d323ff34cc",
+  "total_item_count": 44,
+  "catalog_sha256": "c25257c17dc5bc88be3a52974cd2eaf3a8b8b30af15367de076c0eb22108b2a6",
   "regions": [],
   "format": "RESOURCE_PROFILE_CATALOG_V6",
-  "catalog_token": "RP6:c17a1b88463adec5",
-  "profile_count": 39,
+  "catalog_token": "RP6:c25257c17dc5bc88",
+  "profile_count": 44,
   "semantic_record_width": 14,
   "physical_item_width": 16,
   "storage_partition": "resource_class",
   "runtime_store_placement": true,
   "runtime_min_store_count": 5,
-  "loader_segment_count": 7,
+  "loader_segment_count": 8,
   "loaders": [
     "ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10",
     "ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10",
+    "ic10/resource-profile-catalog/resource_profile_loader_fluid_02_v4_0.ic10",
     "ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10",
     "ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10",
     "ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10",
@@ -40,13 +41,14 @@
     {
       "partition_key": 1,
       "partition": "ResourceClass.FLUID",
-      "item_count": 10,
+      "item_count": 15,
       "item_cells": 16,
       "runtime_min_store_count": 1,
-      "loader_count": 2,
+      "loader_count": 3,
       "loaders": [
         "ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10",
-        "ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10"
+        "ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10",
+        "ic10/resource-profile-catalog/resource_profile_loader_fluid_02_v4_0.ic10"
       ]
     },
     {

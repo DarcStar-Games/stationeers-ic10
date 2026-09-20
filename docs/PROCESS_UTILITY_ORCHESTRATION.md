@@ -98,20 +98,22 @@ No manufacturing service writes the embedded pumps.
 
 A prepared mixture is a semantic resource, not a pressure link. Mixing changes ResourceType, so a Gas Mixer must never be represented as an ordinary type-preserving Generic Resource Link.
 
-Resource Profile kind `5`, schema `1`, describes the first two-component prepared mixture:
+Resource Profile kind `5`, schema `1`, describes a two-component prepared mixture. The first is the Electrolyzer's output:
 
 ```text
 Fuel.H2O2
 ResourceClass = FLUID
 Unit = MOLE
-Component1LogicType = RatioVolatiles
+Component1LogicType = RatioHydrogen
 Component1Fraction  = 2/3
 Component2LogicType = RatioOxygen
 Component2Fraction  = 1/3
 RatioTolerance      = 0.005
 ```
 
-The profile is stored in the existing Resource Profile catalog alongside pure gases. This raises the current catalog to 39 profiles: FLUID 10, ITEM 27, POWER 1, ENERGY 1, still fitting the existing five-Store minimum commissioning geometry.
+`Fuel.CH4O2` is the second, with `RatioMethane` as component 1 at the same 2:1 ratio: the ice-refined fuel the Pumped Gas Engine specifies and the Gas Fuel Generator's Methane reaction takes. Four more profiles pair each fuel with Nitrous Oxide (`Fuel.H2N2O`, `Fuel.CH4N2O`, 1:1) and Ozone (`Fuel.H2O3` 3:1, `Fuel.CH4O3` 3:2), with temperature windows held under the lower auto-ignition points those oxidisers bring. Every ratio is the target build's own combustion stoichiometry (`docs/SOURCES.md`, combustion table). A deployment selects one by the GFG utility controller's `S16` medium and the profile its View and mixer are pointed at.
+
+The profiles are stored in the existing Resource Profile catalog alongside pure gases. This raises the current catalog to 44 profiles: FLUID 15, ITEM 27, POWER 1, ENERGY 1, still fitting the existing five-Store minimum commissioning geometry.
 
 `ic10/process-gas-preparation/gas_mixture_purity_guard_v1_0.ic10` consumes Resource Profile kind 5 and publishes the existing PurityGuard ABI1 (`HASH("MediumPurityGuard.v1")`). The ordinary Pressure Inventory service can therefore purity-gate a prepared mixture exactly as it does a pure phase medium without learning two-component chemistry.
 
@@ -155,7 +157,7 @@ POWER shortage
    |                         +--> 251 composition mixer
    |                                  ^       ^
    |                                  |       |
-   |                              Volatiles  Oxygen
+   |                               Hydrogen  Oxygen
    |                                  \       /
    |                                  fuel buffer
    |                                      |
@@ -246,7 +248,7 @@ The controller intentionally requests **fuel pressure as a commissioned operatin
 
 ## 9. Electrolyzer and cycle safety
 
-The current prepared `Fuel.H2O2` mixture is compatible with the 2:1 Volatiles/Oxygen output of an Electrolyzer, which makes an Electrolyzer a natural future alternative producer for the same semantic FLUID resource.
+The prepared `Fuel.H2O2` mixture is the 2:1 Hydrogen/Oxygen output of an Electrolyzer, which makes an Electrolyzer a natural future alternative producer for the same semantic FLUID resource. `Fuel.CH4O2` has no such path; its Methane comes from refined ice.
 
 Item 11 deliberately does **not** turn on an Electrolyzer as an immediate dependency of a GFG shortage. That would create the dependency cycle:
 

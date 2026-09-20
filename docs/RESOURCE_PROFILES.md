@@ -1,6 +1,6 @@
 # Unified Resource Profiles
 
-`data/resource_profiles.json` is the canonical source for **39 Resource Profiles**: nine PHASE_MEDIUM pure-gas FLUID profiles, one prepared-mixture FLUID profile, 27 ITEM_STACK material profiles, one POWER service profile, and one ENERGY storage profile. `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` republishes the stable Resource Profile View ABI1.
+`data/resource_profiles.json` is the canonical source for **44 Resource Profiles**: nine PHASE_MEDIUM pure-gas FLUID profiles, six prepared-mixture FLUID profiles, 27 ITEM_STACK material profiles, one POWER service profile, and one ENERGY storage profile. `ic10/resource-profile-catalog/resource_profile_view_v4_0.ic10` republishes the stable Resource Profile View ABI1.
 
 ## Catalog schema
 
@@ -27,7 +27,13 @@ PartitionKey is ResourceClass:
 
 ### Prepared-mixture profiles
 
-`ProfileKind=5`, `ProfileSchema=1` is the first cross-domain prepared-mixture shape. Its nine parameters are `Component1LogicType`, `Component1Fraction`, `Component2LogicType`, `Component2Fraction`, `RatioTolerance`, `MinTemperature`, `MaxTemperature`, `ReferenceWatts`, and `Flags`. `Fuel.H2O2` uses `RatioVolatiles=2/3` and `RatioOxygen=1/3`. The profile describes semantic composition; physical creation is owned by the gas-mixer utility and physical transport remains PressureGrid-owned. See `docs/PROCESS_UTILITY_ORCHESTRATION.md`.
+`ProfileKind=5`, `ProfileSchema=1` is the first cross-domain prepared-mixture shape. Its nine parameters are `Component1LogicType`, `Component1Fraction`, `Component2LogicType`, `Component2Fraction`, `RatioTolerance`, `MinTemperature`, `MaxTemperature`, `ReferenceWatts`, and `Flags`. The profile describes semantic composition; physical creation is owned by the gas-mixer utility and physical transport remains PressureGrid-owned. See `docs/PROCESS_UTILITY_ORCHESTRATION.md`.
+
+Six profiles use the shape, one per gas fuel reaction the target build combusts, each at the game's own stoichiometry read from its reaction table (`docs/SOURCES.md`, combustion table). `Fuel.H2O2` is `RatioHydrogen=2/3` with `RatioOxygen=1/3`, the mixture an Electrolyzer produces; `Fuel.CH4O2` is `RatioMethane=2/3` with `RatioOxygen=1/3`, the ice-refined fuel the Pumped Gas Engine specifies; `Fuel.H2N2O` and `Fuel.CH4N2O` are 1:1 with `RatioNitrousOxide`; `Fuel.H2O3` is 3:1 and `Fuel.CH4O3` 3:2 with `RatioOzone`. `validation/validators/validate_process_utility_contracts.py` holds the set of kind-5 profiles to exactly these six and each to its components and fraction. The game renamed the Volatiles gas and its LogicType to Methane and added Hydrogen as a separate gas; `validation/validators/validate_logic_enum_tokens.py` holds every bare LogicType name in the tree to the enum of the target build (#326).
+
+Every profile's `MaxTemperature` sits under its mixture's auto-ignition point, and the same validator holds it there: 563 K for the two Oxygen pairs under the 573.15 K of Methane and Hydrogen, 313 K under Nitrous Oxide and 413 K under Ozone, which lower that point by 250 K and 150 K. `ReferenceWatts` is a reference figure: `Fuel.H2O2` keeps its original 12805, and each other profile carries that figure scaled by fuel fraction times fuel enthalpy times the oxidiser's enthalpy multiplier (2.0 for Nitrous Oxide and Ozone) relative to `Fuel.H2O2`, which is how the game's `RunCombustion` releases energy.
+
+Alcohol is a liquid and Hydrazine has no second component, so neither has a profile. The purity guard, the composition mixer, and the GFG utility controller read every component LogicType from the selected profile, so any of the six deploys the same way, and `tests/test_process_utility.py` runs all six through them.
 
 ## Runtime placement
 
@@ -35,6 +41,7 @@ Resource Profile Loaders are **Loader ABI5** relocatable candidates:
 
 - `ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10`
 - `ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10`
+- `ic10/resource-profile-catalog/resource_profile_loader_fluid_02_v4_0.ic10`
 - `ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10`
 - `ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10`
 - `ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10`
@@ -116,9 +123,9 @@ Consumers therefore do not need to know how many Stores the Coordinator selected
 ## Deployment
 
 1. Start `ic10/catalog-control-plane/catalog_coordinator_core_v3_0.ic10`, the Catalog Store Registry path, and `ic10/catalog-control-plane/catalog_loader_router_v3_0.ic10`.
-2. Add at least five `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` nodes for the current 39-profile commissioning estimate. Give each a unique S18 NodeId 1..64; leave them UNCLAIMED.
+2. Add at least five `ic10/catalog-control-plane/generic_catalog_store_v3_0.ic10` nodes for the current 44-profile commissioning estimate. Give each a unique S18 NodeId 1..64; leave them UNCLAIMED.
 3. Program the generated `ic10/resource-profile-catalog/resource_profile_loader_*_v4_0.ic10` set anywhere on the discoverable network. They need no Store screw.
-4. Wait for runtime placement to produce one FLUID Store, two ITEM Stores, one POWER Store, and one ENERGY Store with all 39 items committed.
+4. Wait for runtime placement to produce one FLUID Store, two ITEM Stores, one POWER Store, and one ENERGY Store with all 44 items committed.
 5. Point the Resource Profile View at any Store in the catalog and select class/type through S26/S27.
 
 Extra unclaimed Store capacity may remain available for later catalog growth.

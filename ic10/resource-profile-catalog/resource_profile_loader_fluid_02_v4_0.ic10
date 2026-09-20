@@ -1,0 +1,63 @@
+# GENERATED Resource Profile FLUID loader; relocatable sparse Loader ABI5; whole items.
+clr db
+poke 0 HASH("CatalogLoader.v5")
+poke 1 5
+poke 2 1
+poke 3 HASH("CatalogSchema.ResourceProfile.v2")
+poke 10 HASH("Catalog.ResourceProfiles.Schema2")
+poke 11 1
+poke 12 HASH("LoaderId:1efa23641f018127")
+poke 13 1
+poke 14 3
+poke 15 24
+poke 16 48
+poke 17 HASH("LD4:57495da46bd4cd43")
+poke 24 496
+poke 25 16
+poke 496 HASH("Fuel.CH4N2O") # Prepared 1:1 Methane/Nitrous Oxide fuel mixture
+poke 497 1
+poke 498 1
+poke 499 5
+poke 500 1
+poke 501 RatioMethane
+poke 502 0.5
+poke 503 RatioNitrousOxide
+poke 504 0.5
+poke 505 0.005
+poke 506 1
+poke 507 313
+poke 508 17952
+poke 509 1
+poke 26 480
+poke 27 16
+poke 480 HASH("Fuel.H2O3") # Prepared 3:1 Hydrogen/Ozone fuel mixture
+poke 481 1
+poke 482 1
+poke 483 5
+poke 484 1
+poke 485 RatioHydrogen
+poke 486 0.75
+poke 487 RatioOzone
+poke 488 0.25
+poke 489 0.005
+poke 490 1
+poke 491 413
+poke 492 28811
+poke 493 1
+poke 28 464
+poke 29 16
+poke 464 HASH("Fuel.CH4O3") # Prepared 3:2 Methane/Ozone fuel mixture
+poke 465 1
+poke 466 1
+poke 467 5
+poke 468 1
+poke 469 RatioMethane
+poke 470 0.6
+poke 471 RatioOzone
+poke 472 0.4
+poke 473 0.005
+poke 474 1
+poke 475 413
+poke 476 21543
+poke 477 1
+poke 18 1 # immutable candidate publication LAST

@@ -2,7 +2,7 @@
 
 Generated from the deployable `ic10/` inventory. Semantic paths plus version suffixes are the executable source identity; historical numeric source ordinals are intentionally not part of filenames. Deployment family/class metadata is resolved from `data/source_manifest.json`.
 
-Production IC10 programs: 184
+Production IC10 programs: 185
 
 ## Script index
 
@@ -178,7 +178,8 @@ Production IC10 programs: 184
 | `ic10/resource-grid-core/resource_reservation_v1_0.ic10` | 116 | Resource-grid core | `resource-grid-core` | `conditional-resident` | Mirrors any Generic Resource Endpoint into a domain-neutral reservation surface. |
 | `ic10/resource-profile-catalog/resource_profile_loader_energy_00_v4_0.ic10` | 22 | Resource metadata | `resource-profile-catalog` | `one-shot` | One-shot relocatable ENERGY Resource Profile Loader ABI5 candidate. |
 | `ic10/resource-profile-catalog/resource_profile_loader_fluid_00_v4_0.ic10` | 111 | Resource metadata | `resource-profile-catalog` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
-| `ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10` | 79 | Resource metadata | `resource-profile-catalog` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
+| `ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10` | 111 | Resource metadata | `resource-profile-catalog` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
+| `ic10/resource-profile-catalog/resource_profile_loader_fluid_02_v4_0.ic10` | 63 | Resource metadata | `resource-profile-catalog` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
 | `ic10/resource-profile-catalog/resource_profile_loader_item_00_v4_0.ic10` | 115 | Resource metadata | `resource-profile-catalog` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
 | `ic10/resource-profile-catalog/resource_profile_loader_item_01_v4_0.ic10` | 115 | Resource metadata | `resource-profile-catalog` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |
 | `ic10/resource-profile-catalog/resource_profile_loader_item_02_v4_0.ic10` | 75 | Resource metadata | `resource-profile-catalog` | `one-shot` | One-shot relocatable Resource Profile Loader ABI5 candidate; whole records only, own-stack zero-init. |

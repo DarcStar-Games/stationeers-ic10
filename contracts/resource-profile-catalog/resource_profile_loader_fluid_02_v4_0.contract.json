@@ -1,10 +1,10 @@
 {
   "$schema": "../../schemas/script_contract_v2.schema.json",
   "format": "IC10_SCRIPT_CONTRACT_V2",
-  "source": "ic10/resource-profile-catalog/resource_profile_loader_fluid_01_v4_0.ic10",
-  "source_sha256": "fd8b778d31c0217ff7cca3c24decf0ebf37b2542147e3b961d5b48e54a38a5b0",
+  "source": "ic10/resource-profile-catalog/resource_profile_loader_fluid_02_v4_0.ic10",
+  "source_sha256": "8c3a91010b41ab26c140300f10b2975d22b22c6aae313788d0c99b859dc0549c",
   "identity": {
-    "service_id": "ic10.script.resource.profile.loader.fluid.01",
+    "service_id": "ic10.script.resource.profile.loader.fluid.02",
     "implementation_revision": "4.0",
     "deployment_family": "resource-profile-catalog",
     "deployment_class": "one-shot",
@@ -36,54 +36,6 @@
       27,
       28,
       29,
-      30,
-      31,
-      32,
-      33,
-      34,
-      35,
-      416,
-      417,
-      418,
-      419,
-      420,
-      421,
-      422,
-      423,
-      424,
-      425,
-      426,
-      427,
-      428,
-      429,
-      432,
-      433,
-      434,
-      435,
-      436,
-      437,
-      438,
-      439,
-      440,
-      441,
-      442,
-      443,
-      444,
-      445,
-      448,
-      449,
-      450,
-      451,
-      452,
-      453,
-      454,
-      455,
-      456,
-      457,
-      458,
-      459,
-      460,
-      461,
       464,
       465,
       466,
@@ -214,7 +166,7 @@
         "access": [
           "self-write"
         ],
-        "const": -1492053523,
+        "const": 156195528,
         "role": "metadata",
         "description": "stable generated identity"
       },
@@ -238,7 +190,7 @@
         "access": [
           "self-write"
         ],
-        "const": 6,
+        "const": 3,
         "role": "metadata"
       },
       {
@@ -261,7 +213,7 @@
         "access": [
           "self-write"
         ],
-        "const": 96,
+        "const": 48,
         "role": "metadata"
       },
       {
@@ -272,7 +224,7 @@
         "access": [
           "self-write"
         ],
-        "const": 461236780,
+        "const": 186523118,
         "role": "schema"
       },
       {
@@ -392,483 +344,6 @@
         "const": 16
       },
       {
-        "address": 30,
-        "name": "S30",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 448
-      },
-      {
-        "address": 31,
-        "name": "S31",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 16
-      },
-      {
-        "address": 32,
-        "name": "S32",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 432
-      },
-      {
-        "address": 33,
-        "name": "S33",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 16
-      },
-      {
-        "address": 34,
-        "name": "S34",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 416
-      },
-      {
-        "address": 35,
-        "name": "S35",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 16
-      },
-      {
-        "address": 416,
-        "name": "S416",
-        "value_type": "number",
-        "semantic_source": "source",
-        "access": [
-          "self-write"
-        ],
-        "const": 1612185115,
-        "description": "Prepared 1:1 Hydrogen/Nitrous Oxide fuel mixture"
-      },
-      {
-        "address": 417,
-        "name": "S417",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 1
-      },
-      {
-        "address": 418,
-        "name": "S418",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 1
-      },
-      {
-        "address": 419,
-        "name": "S419",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 5
-      },
-      {
-        "address": 420,
-        "name": "S420",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 1
-      },
-      {
-        "address": 421,
-        "name": "S421",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 422,
-        "name": "S422",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 0.5
-      },
-      {
-        "address": 423,
-        "name": "S423",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 424,
-        "name": "S424",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 0.5
-      },
-      {
-        "address": 425,
-        "name": "S425",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 0.005
-      },
-      {
-        "address": 426,
-        "name": "S426",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 1
-      },
-      {
-        "address": 427,
-        "name": "S427",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 313
-      },
-      {
-        "address": 428,
-        "name": "S428",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 19208
-      },
-      {
-        "address": 429,
-        "name": "S429",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 1
-      },
-      {
-        "address": 432,
-        "name": "S432",
-        "value_type": "number",
-        "semantic_source": "source",
-        "access": [
-          "self-write"
-        ],
-        "const": -33134514,
-        "description": "Prepared 2:1 Methane/Oxygen fuel mixture"
-      },
-      {
-        "address": 433,
-        "name": "S433",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 1
-      },
-      {
-        "address": 434,
-        "name": "S434",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 1
-      },
-      {
-        "address": 435,
-        "name": "S435",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 5
-      },
-      {
-        "address": 436,
-        "name": "S436",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 1
-      },
-      {
-        "address": 437,
-        "name": "S437",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 438,
-        "name": "S438",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 0.666666666667
-      },
-      {
-        "address": 439,
-        "name": "S439",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 440,
-        "name": "S440",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 0.333333333333
-      },
-      {
-        "address": 441,
-        "name": "S441",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 0.005
-      },
-      {
-        "address": 442,
-        "name": "S442",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 1
-      },
-      {
-        "address": 443,
-        "name": "S443",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 563
-      },
-      {
-        "address": 444,
-        "name": "S444",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 11968
-      },
-      {
-        "address": 445,
-        "name": "S445",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 1
-      },
-      {
-        "address": 448,
-        "name": "S448",
-        "value_type": "number",
-        "semantic_source": "source",
-        "access": [
-          "self-write"
-        ],
-        "const": -1325297737,
-        "description": "Prepared 2:1 Hydrogen/Oxygen fuel mixture"
-      },
-      {
-        "address": 449,
-        "name": "S449",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 1
-      },
-      {
-        "address": 450,
-        "name": "S450",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 1
-      },
-      {
-        "address": 451,
-        "name": "S451",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 5
-      },
-      {
-        "address": 452,
-        "name": "S452",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 1
-      },
-      {
-        "address": 453,
-        "name": "S453",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 454,
-        "name": "S454",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 0.666666666667
-      },
-      {
-        "address": 455,
-        "name": "S455",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ]
-      },
-      {
-        "address": 456,
-        "name": "S456",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 0.333333333333
-      },
-      {
-        "address": 457,
-        "name": "S457",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 0.005
-      },
-      {
-        "address": 458,
-        "name": "S458",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 1
-      },
-      {
-        "address": 459,
-        "name": "S459",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 563
-      },
-      {
-        "address": 460,
-        "name": "S460",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 12805
-      },
-      {
-        "address": 461,
-        "name": "S461",
-        "value_type": "number",
-        "semantic_source": "unresolved",
-        "access": [
-          "self-write"
-        ],
-        "const": 1
-      },
-      {
         "address": 464,
         "name": "S464",
         "value_type": "number",
@@ -876,8 +351,8 @@
         "access": [
           "self-write"
         ],
-        "const": 1786807399,
-        "description": "Hydrogen"
+        "const": -1996400424,
+        "description": "Prepared 3:2 Methane/Ozone fuel mixture"
       },
       {
         "address": 465,
@@ -907,7 +382,7 @@
         "access": [
           "self-write"
         ],
-        "const": 1
+        "const": 5
       },
       {
         "address": 468,
@@ -917,7 +392,7 @@
         "access": [
           "self-write"
         ],
-        "const": 2
+        "const": 1
       },
       {
         "address": 469,
@@ -926,8 +401,7 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "const": 3.18041e-05
+        ]
       },
       {
         "address": 470,
@@ -937,7 +411,7 @@
         "access": [
           "self-write"
         ],
-        "const": 4.4843872973
+        "const": 0.6
       },
       {
         "address": 471,
@@ -946,8 +420,7 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "const": 6.3
+        ]
       },
       {
         "address": 472,
@@ -957,7 +430,7 @@
         "access": [
           "self-write"
         ],
-        "const": 6000
+        "const": 0.4
       },
       {
         "address": 473,
@@ -967,7 +440,7 @@
         "access": [
           "self-write"
         ],
-        "const": 15.1767057463
+        "const": 0.005
       },
       {
         "address": 474,
@@ -977,7 +450,7 @@
         "access": [
           "self-write"
         ],
-        "const": 70.0551551908
+        "const": 1
       },
       {
         "address": 475,
@@ -986,7 +459,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 413
       },
       {
         "address": 476,
@@ -996,7 +470,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0.995
+        "const": 21543
       },
       {
         "address": 477,
@@ -1006,7 +480,7 @@
         "access": [
           "self-write"
         ],
-        "const": 200
+        "const": 1
       },
       {
         "address": 480,
@@ -1016,8 +490,8 @@
         "access": [
           "self-write"
         ],
-        "const": 1866552090,
-        "description": "Oxygen"
+        "const": -972636383,
+        "description": "Prepared 3:1 Hydrogen/Ozone fuel mixture"
       },
       {
         "address": 481,
@@ -1047,7 +521,7 @@
         "access": [
           "self-write"
         ],
-        "const": 1
+        "const": 5
       },
       {
         "address": 484,
@@ -1057,7 +531,7 @@
         "access": [
           "self-write"
         ],
-        "const": 2
+        "const": 1
       },
       {
         "address": 485,
@@ -1066,8 +540,7 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "const": 2.6854996004e-11
+        ]
       },
       {
         "address": 486,
@@ -1077,7 +550,7 @@
         "access": [
           "self-write"
         ],
-        "const": 6.49214937325
+        "const": 0.75
       },
       {
         "address": 487,
@@ -1086,8 +559,7 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "const": 6.3
+        ]
       },
       {
         "address": 488,
@@ -1097,7 +569,7 @@
         "access": [
           "self-write"
         ],
-        "const": 6000
+        "const": 0.25
       },
       {
         "address": 489,
@@ -1107,7 +579,7 @@
         "access": [
           "self-write"
         ],
-        "const": 56.416
+        "const": 0.005
       },
       {
         "address": 490,
@@ -1117,7 +589,7 @@
         "access": [
           "self-write"
         ],
-        "const": 162.2
+        "const": 1
       },
       {
         "address": 491,
@@ -1126,7 +598,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 413
       },
       {
         "address": 492,
@@ -1136,7 +609,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0.995
+        "const": 28811
       },
       {
         "address": 493,
@@ -1146,7 +619,7 @@
         "access": [
           "self-write"
         ],
-        "const": 800
+        "const": 1
       },
       {
         "address": 496,
@@ -1156,8 +629,8 @@
         "access": [
           "self-write"
         ],
-        "const": -667224881,
-        "description": "CarbonDioxide"
+        "const": -1539722428,
+        "description": "Prepared 1:1 Methane/Nitrous Oxide fuel mixture"
       },
       {
         "address": 497,
@@ -1187,7 +660,7 @@
         "access": [
           "self-write"
         ],
-        "const": 1
+        "const": 5
       },
       {
         "address": 500,
@@ -1197,7 +670,7 @@
         "access": [
           "self-write"
         ],
-        "const": 2
+        "const": 1
       },
       {
         "address": 501,
@@ -1206,8 +679,7 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "const": 1.579573e-26
+        ]
       },
       {
         "address": 502,
@@ -1217,7 +689,7 @@
         "access": [
           "self-write"
         ],
-        "const": 12.195837931
+        "const": 0.5
       },
       {
         "address": 503,
@@ -1226,8 +698,7 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ],
-        "const": 517
+        ]
       },
       {
         "address": 504,
@@ -1237,7 +708,7 @@
         "access": [
           "self-write"
         ],
-        "const": 6000
+        "const": 0.5
       },
       {
         "address": 505,
@@ -1247,7 +718,7 @@
         "access": [
           "self-write"
         ],
-        "const": 217.82
+        "const": 0.005
       },
       {
         "address": 506,
@@ -1257,7 +728,7 @@
         "access": [
           "self-write"
         ],
-        "const": 265
+        "const": 1
       },
       {
         "address": 507,
@@ -1266,7 +737,8 @@
         "semantic_source": "unresolved",
         "access": [
           "self-write"
-        ]
+        ],
+        "const": 313
       },
       {
         "address": 508,
@@ -1276,7 +748,7 @@
         "access": [
           "self-write"
         ],
-        "const": 0.995
+        "const": 17952
       },
       {
         "address": 509,
@@ -1286,7 +758,7 @@
         "access": [
           "self-write"
         ],
-        "const": 600
+        "const": 1
       }
     ],
     "headers": [

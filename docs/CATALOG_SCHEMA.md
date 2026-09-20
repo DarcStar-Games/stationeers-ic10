@@ -60,7 +60,7 @@ PartitionKey is ResourceClass:
 - `4` = POWER;
 - `5` = ENERGY.
 
-The current 39 profiles require a commissioning estimate of five Stores under Store ABI6 geometry: one FLUID Store (10 profiles), two ITEM Stores (26+1), one POWER Store, and one ENERGY Store. That estimate is not a generated placement assignment. FLUID `ProfileKind=5`, schema 1 is the prepared two-component mixture shape introduced by Item 11; see `docs/PROCESS_UTILITY_ORCHESTRATION.md`.
+The current 44 profiles require a commissioning estimate of five Stores under Store ABI6 geometry: one FLUID Store (15 profiles), two ITEM Stores (26+1), one POWER Store, and one ENERGY Store. That estimate is not a generated placement assignment. FLUID `ProfileKind=5`, schema 1 is the prepared two-component mixture shape introduced by Item 11; see `docs/PROCESS_UTILITY_ORCHESTRATION.md`.
 
 ## Input Profile schema v3
 
